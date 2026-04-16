@@ -94,6 +94,7 @@ more than one contract for it, for example:
 | `feature.direct_canonical_init_directive` | [t/corpus/direct_canonical_init_directive.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_canonical_init_directive.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_size_expression_widths` | [t/corpus/direct_size_expression_widths.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_size_expression_widths.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_runtime_div_mod` | [t/corpus/direct_runtime_div_mod.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_runtime_div_mod.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
+| `feature.direct_assignment_pair_form` | [t/corpus/direct_assignment_pair_form.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_assignment_pair_form.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `legacy.mipicsi2_txccore_ulp.default_compat` | [fsm/mipicsi2_txccore_ulp.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/mipicsi2_txccore_ulp.fsm) | `legacy_out_of_scope` | `legacy_root_default_pipeline_cli` |
 | `legacy.mipicsi2_txccore_ulp.strict_rejection` | [fsm/mipicsi2_txccore_ulp.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/mipicsi2_txccore_ulp.fsm) | `expected_failure` | `strict_root_rejection_pipeline_cli` |
 | `legacy.empty_size_noop.default_compat` | [t/corpus/legacy_empty_size_noop.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_empty_size_noop.fsm) | `legacy_out_of_scope` | `legacy_section_default_pipeline_cli` |
@@ -145,7 +146,12 @@ more than one contract for it, for example:
   negative terms, and unsized based literals before HDL generation. The
   `feature.direct_runtime_div_mod` entry proves that runtime RHS `/`, `%`,
   `div`, and `mod` expressions lower through pipeline and CLI, including the
-  left-associative n-ary shape for three-operand forms.
+  left-associative n-ary shape for three-operand forms. The
+  `feature.direct_assignment_pair_form` entry proves that canonical
+  `(assign-op (lhs rhs))` syntax reaches the same pipeline and CLI HDL shapes
+  as infix compatibility assignments, including guarded nested RHS
+  expressions, dual-output assignment families, delayed pulse, and LHS
+  deconstruct.
 - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
   checks that the catalog stays named, classified, unique, and pointed at real
   repo assets.

@@ -1,20 +1,26 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
-## 2026-04-16: planned canonical assignment pair form
-- User proposed and we agreed on a future canonical assignment surface:
+## 2026-04-16: canonical assignment pair form is active syntax
+- Implemented the canonical assignment surface:
   `(assign-op (lhs rhs))` plus optional guard form
   `(assign-op (lhs rhs) <cond)`.
 - Important continuity note:
   - book coverage now lives in [docs/book/src/02-language-basics.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/02-language-basics.md)
-    under planned canonical pair form,
+    under canonical pair form,
   - live contract/roadmap steering now lives in [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md),
     [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md),
     and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md),
-  - this is not active parser syntax yet,
-  - implementation should retain current infix assignment forms as
-    compatibility spellings and normalize both syntaxes into the same
-    assignment AST/IR,
+  - this is active parser syntax for `=`, `<-`, `<=`, `<-=`, `<=+`, and
+    delayed-pulse `<N`,
+  - current infix assignment forms remain compatibility spellings and both
+    syntaxes normalize into the same assignment AST/IR,
   - `<cond>` is assignment-level guard metadata, not part of the RHS.
+- Regression coverage:
+  - [t/29-language-contract-core-forms.t](/Users/richarddje/Documents/github/fsmgen/t/29-language-contract-core-forms.t)
+    locks parser/CoreAST/HDL behavior for simple, guarded, nested-RHS,
+    sequential, pulse, and LHS-deconstruct pair assignments,
+  - [t/corpus/direct_assignment_pair_form.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_assignment_pair_form.fsm)
+    is the named supported-smoke corpus fixture for pipeline and CLI coverage.
 
 ## 2026-04-16: corpus now covers runtime division and modulus expressions
 - Continued `R12` by adding the named supported-smoke sibling for runtime RHS

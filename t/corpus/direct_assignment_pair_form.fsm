@@ -1,0 +1,38 @@
+(?fsm:direct_assignment_pair_form
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+
+  (+size
+    (COND 1)
+    (LOAD 1)
+    (SRC 8)
+    (A 8)
+    (B 8)
+    (D 8)
+    (COMB 8)
+    (SUM 8)
+    (Q 8)
+    (DIN 8)
+    (QN 8)
+    (QR 8)
+    (PULSE 1)
+    (HI 4)
+    (LO 4)
+    (DATA 8)
+  )
+
+  (idle
+    (<COND
+      (= (COMB SRC))
+      (= (SUM (+ A B)) <LOAD)
+      (<- (Q D))
+      (<= (DIN D))
+      (<-= (QN D))
+      (<=+ (QR D))
+      (<1 (PULSE 1))
+      (= ((concat HI LO) DATA) <LOAD)
+    )
+  )
+)

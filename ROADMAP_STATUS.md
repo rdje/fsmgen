@@ -602,14 +602,15 @@ Done:
 - [t/260-partial-target-width-inference.t](/Users/richarddje/Documents/github/fsmgen/t/260-partial-target-width-inference.t) now locks the same partial-write contract when no explicit `+size` is present for the target at all:
   - slice bounds alone now stay regression-backed as a source of base-signal width for partial `=`, `<-=`, and `<=+` writes,
   - and indexed targets such as `IDXOUT[4]` / `IDXOUT[0]` now stay regression-backed as a source of a 5-bit base width too.
+- Canonical Lisp-ish assignment pair form is now active syntax and normalizes into the same assignment AST/IR as the existing infix compatibility spellings before generation:
+  - `(assign-op (lhs rhs))` and `(assign-op (lhs rhs) <cond)` are accepted for `=`, `<-`, `<=`, `<-=`, `<=+`, and delayed-pulse `<N`,
+  - nested RHS expressions, guarded assignments, and LHS deconstruct targets share the existing assignment validator/generator path,
+  - [t/29-language-contract-core-forms.t](/Users/richarddje/Documents/github/fsmgen/t/29-language-contract-core-forms.t) locks the parser/CoreAST/HDL behavior,
+  - and [t/corpus/direct_assignment_pair_form.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_assignment_pair_form.fsm) plus the regression corpus catalog lock pipeline and CLI coverage for the supported surface.
 Left:
 - Resolve the remaining gray-zone families, especially:
   - any remaining parser-accepted legacy constructs not yet cleanly bucketed.
 - Continue adding focused regression coverage per adopted construct family so support claims are continuously provable.
-- Implement and regression-lock the planned canonical assignment pair form:
-  - `(assign-op (lhs rhs))`,
-  - `(assign-op (lhs rhs) <cond)`,
-  - with existing infix assignment forms retained as compatibility spellings and normalized into the same assignment AST/IR before generation.
 - Decide whether the same partial-LHS lowering contract should now also be widened into future pulse/vector edge cases beyond the current `=`, `<-`, `<=`, `<-=`, and `<=+` family.
 Exit criteria:
 - Every parser-visible active-language construct is bucketed clearly and documented normatively, with matching regression coverage for the supported tier.

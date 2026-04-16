@@ -1,7 +1,7 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
-## 2026-04-16: planned canonical assignment pair form
-- Captured user steering for a future canonical assignment surface:
+## 2026-04-16: canonical assignment pair form is the preferred assignment surface
+- Captured and implemented user steering for a canonical assignment surface:
   `(assign-op (lhs rhs))` and `(assign-op (lhs rhs) <cond)`.
 - Rationale:
   - the shape is more consistently Lisp-ish than the current infix assignment
@@ -19,9 +19,15 @@ This document captures engineering rationale, design constraints, and working de
     existing infix forms into the same assignment AST/IR so generation remains a
     pure walk over normalized semantics.
 - Status:
-  - documented as planned/future syntax only,
-  - not active parser syntax yet,
-  - existing infix forms remain the shipped supported syntax.
+  - active parser syntax for `=`, `<-`, `<=`, `<-=`, `<=+`, and delayed-pulse
+    `<N`,
+  - existing infix forms remain shipped compatibility syntax,
+  - both surfaces normalize through the same assignment builder before width,
+    LHS, guard, and generation validation,
+  - [t/29-language-contract-core-forms.t](/Users/richarddje/Documents/github/fsmgen/t/29-language-contract-core-forms.t)
+    locks parser/CoreAST/HDL behavior,
+  - and [t/corpus/direct_assignment_pair_form.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_assignment_pair_form.fsm)
+    makes the support claim visible in the maintained pipeline/CLI corpus.
 
 ## 2026-04-16: runtime div/mod support belongs in the support corpus
 - Continued `R12` by adding direct runtime RHS division and modulus to the

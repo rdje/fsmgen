@@ -105,13 +105,13 @@ The split is intentional source syntax, not emitted HDL pasted into the
 renderer. `HIGH` receives the high RHS slice, `LOW` receives the low slice, and
 the same high-to-low rule applies to later operands.
 
-### Planned Canonical Pair Form
+### Canonical Pair Form
 
-FSMGen is moving toward a more regular Lisp-ish assignment spelling, but this
-form is not shipped yet. Treat it as the preferred future direction, not as
-current accepted syntax.
+FSMGen also supports the regular Lisp-ish assignment spelling. This is the
+preferred authoring form for new `.fsm` files because the operator is the form
+head and the payload is one explicit `(lhs rhs)` pair.
 
-The intended shape is:
+The shape is:
 
 ```lisp
 (assign-op (lhs rhs))
@@ -141,7 +141,8 @@ That condition is not part of the RHS expression. It means “perform this
 assignment when the guard is true,” exactly like today’s assignment suffix
 guards.
 
-The same pair form should eventually cover the full LHS/RHS surface:
+The same pair form covers the active LHS/RHS surface, including nested
+expressions, RHS concat, aggregate leaves, and LHS deconstruct:
 
 ```lisp
 (=  (OUT (concat HI LO)))
@@ -150,10 +151,10 @@ The same pair form should eventually cover the full LHS/RHS surface:
 (=  (FRAME.payload TAIL))
 ```
 
-The compatibility plan is to keep existing infix forms such as `(OUT = VALUE)`
-and `(Q <- D)` while normalizing both spellings into the same assignment AST/IR.
-Backends should continue to see normalized assignments, not renderer-specific
-syntax.
+Existing infix forms such as `(OUT = VALUE)` and `(Q <- D)` remain compatibility
+spellings. Both surfaces normalize into the same assignment AST/IR before HDL
+generation, so backends see normalized assignment intent rather than
+renderer-specific syntax.
 
 ## Combinational Safety Rule
 

@@ -56,6 +56,7 @@ for my $required_id (qw(
     feature.direct_canonical_init_directive
     feature.direct_size_expression_widths
     feature.direct_runtime_div_mod
+    feature.direct_assignment_pair_form
     legacy.mipicsi2_txccore_ulp.default_compat
     legacy.mipicsi2_txccore_ulp.strict_rejection
     legacy.empty_size_noop.default_compat
@@ -136,8 +137,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    13,
-    'catalog now keeps thirteen named supported-smoke entries including the first language-feature fixtures',
+    14,
+    'catalog now keeps fourteen named supported-smoke entries including the first language-feature fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),

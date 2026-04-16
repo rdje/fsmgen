@@ -2490,12 +2490,59 @@ sub is_array_target_assignment_action($self, $action) {
     my ($target, $spec) = @$action[0, 1];
     return 0 unless ref($target) eq 'ARRAY';
     return 0 unless ref($spec) eq 'ARRAY' && @$spec >= 2 && !ref($spec->[0]);
-    return 0 unless $spec->[0] =~ /^(?:=|<-|<-=|<=|<=\+|<[0-9]+)$/;
+    return 0 unless $self->is_assignment_operator_token($spec->[0]);
 
     my $head = $target->[0];
     return 0 if ref($head);
     my $normalized_operator = $self->{expression_builder}->normalize_expression_operator($head);
     return defined($normalized_operator) && $normalized_operator eq 'concat' ? 1 : 0;
+}
+
+sub is_assignment_operator_token($self, $token) {
+    return defined($token)
+        && !ref($token)
+        && $token =~ /^(?:=|<-|<-=|<=|<=\+|<[0-9]+)$/;
+}
+
+sub normalize_assignment_pair_action($self, $action) {
+    my ($operator, @raw_payload) = @$action;
+
+    Carp::confess
+        "Malformed assignment pair form '".$self->describe_action_for_error($action)."'. ".
+        "Canonical pair assignments must use '(assign-op (lhs rhs))' or '(assign-op (lhs rhs) <cond)'. ".
+        "Supported assign-op tokens are '=', '<-', '<=', '<-=', '<=+', and delayed-pulse forms such as '<1'. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless $self->is_assignment_operator_token($operator);
+
+    my @payload_items = @raw_payload == 1 && ref($raw_payload[0]) eq 'ARRAY'
+        ? @{$raw_payload[0]}
+        : @raw_payload;
+
+    Carp::confess
+        "Malformed assignment pair form '".$self->describe_action_for_error($action)."'. ".
+        "Canonical pair assignments must use '(assign-op (lhs rhs))' or '(assign-op (lhs rhs) <cond)'. ".
+        "The first payload after the operator must be one '(lhs rhs)' pair. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless @payload_items >= 1;
+
+    my $pair = $self->unwrap_scalar_token(shift @payload_items);
+    Carp::confess
+        "Malformed assignment pair form '".$self->describe_action_for_error($action)."'. ".
+        "Canonical pair assignments must use one '(lhs rhs)' payload after the operator, for example '(= (OUT VALUE))'. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless ref($pair) eq 'ARRAY' && @$pair == 2;
+
+    my ($lhs, $rhs) = @$pair;
+    $lhs = $self->unwrap_scalar_token($lhs);
+    $rhs = $self->unwrap_scalar_token($rhs);
+
+    Carp::confess
+        "Malformed assignment pair form '".$self->describe_action_for_error($action)."'. ".
+        "Canonical pair assignments require both LHS and RHS payloads, for example '(= (OUT VALUE))'. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless defined($lhs) && defined($rhs);
+
+    return [$lhs, [$operator, $rhs, @payload_items]];
 }
 
 sub describe_action_for_error($self, $action) {
@@ -2545,6 +2592,8 @@ sub parse_action($self, $action) {
         return $self->parse_test_node_new_format($action);
     } elsif ($self->is_compound_update_shorthand($action_target, $action_spec)) {
         return $self->parse_compound_update_shorthand($action);
+    } elsif ($self->is_assignment_operator_token($action_target)) {
+        return $self->parse_signal_action($self->normalize_assignment_pair_action($action));
     } elsif (!ref($action_target) && $action_target =~ /^[<>]/) {
         return $self->parse_nested_condition_new_format($action);
     } elsif (ref($action_spec) eq 'ARRAY' && @$action_spec >= 2) {

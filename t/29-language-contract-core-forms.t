@@ -324,6 +324,129 @@ FSM
     like($hdl, qr/\balias_packed\s*=\s*\{\s*hi,\s*lo\s*\}/s, 'operator-contract HDL emits direct RHS cat alias as an SV concat');
 };
 
+subtest 'canonical assignment pair form normalizes into existing assignment ASTs' => sub {
+    my $fsm_module = parse_fsm_module(<<'FSM');
+(?fsm:assignment_pair_contract
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (COMB 8)
+    (SRC 8)
+    (SUM 8)
+    (A 8)
+    (B 8)
+    (valid 1)
+    (Q 8)
+    (D 8)
+    (DIN 8)
+    (QN 8)
+    (QR 8)
+    (PULSE 1)
+    (HI 4)
+    (LO 4)
+    (DATA 8)
+    (load 1)
+  )
+  (idle
+    (= (COMB SRC))
+    (= (SUM (+ A B)) <valid)
+    (<- (Q D))
+    (<= (DIN D))
+    (<-= (QN D))
+    (<=+ (QR D))
+    (<1 (PULSE 1))
+    (= ((concat HI LO) DATA) <load)
+  )
+)
+FSM
+
+    my $idle_elements = state_elements($fsm_module, 'idle');
+    is(scalar(@$idle_elements), 8, 'idle state keeps all pair-form actions');
+
+    my %assignment_by_target = map {
+        extract_target_name($_) => $_
+    } grep {
+        $_->isa('FSM::CoreAST::Assignment') || $_->isa('FSM::CoreAST::RegisterAssignment')
+    } @$idle_elements;
+
+    is($assignment_by_target{COMB}->operator_symbol, '=', 'pair-form = keeps combinational assignment intent');
+    is($assignment_by_target{Q}->operator_symbol, '<-', 'pair-form <- keeps output-named register intent');
+    is($assignment_by_target{DIN}->operator_symbol, '<=', 'pair-form <= keeps input-named register intent');
+    is($assignment_by_target{QN}->operator_symbol, '<-=', 'pair-form <-= keeps next-output register intent');
+    is($assignment_by_target{QR}->operator_symbol, '<=+', 'pair-form <=+ keeps q-output register intent');
+    is($assignment_by_target{PULSE}->operator_symbol, '<1', 'pair-form <N keeps delayed pulse intent');
+
+    my ($sum_guard) = grep {
+        $_->isa('FSM::CoreAST::ConditionalBranch')
+            && defined(extract_target_name($_->branches->[0]{actions}[0]))
+            && extract_target_name($_->branches->[0]{actions}[0]) eq 'SUM'
+    } @$idle_elements;
+    ok($sum_guard, 'pair-form assignment guard lowers to ConditionalBranch');
+    is($sum_guard->condition->operator, '!=', 'pair-form <valid guard uses truthiness comparison');
+    is($sum_guard->condition->left->signal->name, 'valid', 'pair-form guard compares the expected signal');
+    assert_left_associative_binary_tree(
+        $sum_guard->branches->[0]{actions}[0]->source,
+        '+',
+        [qw(A B)],
+        'pair-form nested RHS expression'
+    );
+
+    my ($deconstruct_guard) = grep {
+        $_->isa('FSM::CoreAST::ConditionalBranch')
+            && $_->branches->[0]{actions}[0]->target->isa('FSM::CoreAST::Concatenation')
+    } @$idle_elements;
+    ok($deconstruct_guard, 'pair-form LHS deconstruct accepts the same concat target surface');
+    is($deconstruct_guard->condition->left->signal->name, 'load', 'pair-form deconstruct guard preserves the load condition');
+
+    my $hdl = FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($fsm_module);
+    like($hdl, qr/module\s+assignment_pair_contract\b/s, 'assignment-pair contract FSM generates HDL through the active backend');
+    like($hdl, qr/\bCOMB\s*=\s*SRC;/s, 'pair-form HDL emits combinational assignment payload');
+    like($hdl, qr/\bSUM\s*=\s*A\s*\+\s*B;/s, 'pair-form HDL emits nested RHS expression payload');
+    like($hdl, qr/\bHI\s*=\s*DATA\[7:4\];/s, 'pair-form LHS deconstruct emits high fragment');
+    like($hdl, qr/\bLO\s*=\s*DATA\[3:0\];/s, 'pair-form LHS deconstruct emits low fragment');
+
+    my $missing_pair_error = eval {
+        parse_fsm_module(<<'FSM');
+(?fsm:bad_assignment_pair_contract
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (OUT 1)
+    (VALUE 1)
+  )
+  (idle
+    (= OUT VALUE)
+  )
+)
+FSM
+        1;
+    } ? '' : $@;
+    like($missing_pair_error, qr/Malformed assignment pair form/s, 'head-operator assignment without an (lhs rhs) pair is rejected clearly');
+
+    my $missing_rhs_error = eval {
+        parse_fsm_module(<<'FSM');
+(?fsm:bad_assignment_pair_missing_rhs
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (OUT 1)
+  )
+  (idle
+    (= (OUT))
+  )
+)
+FSM
+        1;
+    } ? '' : $@;
+    like($missing_rhs_error, qr/Canonical pair assignments require both LHS and RHS/s, 'head-operator assignment pair without RHS is rejected clearly');
+};
+
 done_testing();
 
 sub parse_fsm_module {

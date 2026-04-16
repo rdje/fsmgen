@@ -186,6 +186,23 @@ my @REGRESSION_CORPUS = (
         ],
     },
     {
+        id => 'feature.direct_assignment_pair_form',
+        relpath => 't/corpus/direct_assignment_pair_form.fsm',
+        family => 'language_feature_fixture',
+        classification => 'supported_smoke',
+        coverage => 'direct_root_pipeline_cli',
+        source_kind => 'fsm',
+        expected_module_name => 'direct_assignment_pair_form',
+        expected_hdl_patterns => [
+            qr/\bCOMB\s*=\s*SRC;/s,
+            qr/\bSUM\s*=\s*A\s*\+\s*B;/s,
+            qr/\bHI\s*=\s*DATA\[7:4\];/s,
+            qr/\bLO\s*=\s*DATA\[3:0\];/s,
+            qr/\boutput\s+reg\s+\[7:0\]\s+next_QN\b/s,
+            qr/\boutput\s+reg\s+\[7:0\]\s+QR_r\b/s,
+        ],
+    },
+    {
         id => 'legacy.mipicsi2_txccore_ulp.default_compat',
         relpath => 'fsm/mipicsi2_txccore_ulp.fsm',
         family => 'legacy_fixture',
