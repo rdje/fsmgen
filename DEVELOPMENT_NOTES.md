@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-16: focused width hardening should graduate into corpus evidence
+- Continued `R12` immediately after the shared integer-literal parser slice.
+- Rationale:
+  - the focused helper and `+size` boundary tests are the right first lock for
+    parser details, but they do not by themselves make a user-facing support
+    claim auditable,
+  - `feature.direct_size_expression_widths` is already the named supported
+    corpus asset for expression-backed direct `+size` widths, so widening that
+    asset is better than creating a second near-duplicate fixture,
+  - keeping the catalog count unchanged is intentional because the feature
+    family did not split; the existing feature claim simply became stronger,
+  - and the supported-feature corpus harness proves both pipeline and CLI HDL
+    shape, which is exactly where visual SV-generation regressions should be
+    caught automatically.
+
 ## 2026-04-16: one helper must own integer literal to BigInt parsing
 - Continued `R8` after expression-backed `+size` exposed one more duplicate
   parser pocket between width-symbol resolution and width-expression

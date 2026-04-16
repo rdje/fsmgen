@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-16: corpus now covers shared literal width expressions
+- Continued `R12` by widening the existing supported-smoke
+  `feature.direct_size_expression_widths` corpus entry instead of leaving the
+  newly shared integer-literal behavior only in focused helper tests.
+- Important continuity note:
+  - [t/corpus/direct_size_expression_widths.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_size_expression_widths.fsm)
+    now includes `0d` decimal width terms, signed SystemVerilog based negative
+    terms, and unsized based literals in direct `+size` expressions,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm)
+    now checks the generated widths for the added `F`, `G`, and `H` signals
+    through both pipeline and CLI via the existing supported-feature harness,
+  - [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t)
+    is the primary locking test for this corpus slice, and
+  - catalog counts do not change because the slice strengthens an existing
+    supported feature entry rather than adding a new entry.
+
 ## 2026-04-16: integer literal parsing now has one width-expression owner
 - Continued the `R8` language-contract hardening lane by extracting common
   integer literal to `Math::BigInt` parsing into

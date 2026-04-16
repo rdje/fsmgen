@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-16
+### supported corpus now covers shared literal width expressions
+- Widened [t/corpus/direct_size_expression_widths.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_size_expression_widths.fsm) so the named supported-smoke `+size` expression asset now covers `0d` decimal terms, signed SystemVerilog based negative terms, and unsized based literals in addition to constants, enums, params, aggregate scalar leaves, and bitwise aliases.
+- Updated [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) so [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t) checks the widened generated widths through both pipeline and CLI.
+- Left catalog counts unchanged because this strengthens an existing supported feature entry rather than adding a new corpus entry.
+
 ### integer literal parsing is shared by width symbols and +size expressions
 - Added [perl/FSM/Package/IntegerLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/IntegerLiteralSupport.pm) as the shared integer literal to `Math::BigInt` owner for decimal, `0d`, `0b`, `0o`, `0x`, and SystemVerilog-style based scalar spellings.
 - Routed [perl/FSM/Package/ScalarWidthSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/ScalarWidthSupport.pm) and [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) through that helper so positive scalar width symbols and direct `+size` constant-expression literals no longer maintain separate parsers.

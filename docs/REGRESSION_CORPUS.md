@@ -127,7 +127,10 @@ more than one contract for it, for example:
 - [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t)
   executes the named supported language-feature entries through pipeline and
   CLI, and keeps specific HDL-shape expectations instead of compile smoke
-  only.
+  only. The `feature.direct_size_expression_widths` entry now specifically
+  proves that direct `+size` expressions support constants, enums, params,
+  aggregate scalar leaves, bitwise aliases, `0d` decimal terms, signed based
+  negative terms, and unsized based literals before HDL generation.
 - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
   checks that the catalog stays named, classified, unique, and pointed at real
   repo assets.

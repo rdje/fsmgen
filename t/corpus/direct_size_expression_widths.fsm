@@ -18,6 +18,7 @@
 
   (+params
     (PARAM_W (+ BASE_W INC_W))
+    (PARAM_DEC_W (+ 0d10 -2))
   )
 
   (+size
@@ -26,6 +27,9 @@
     (C WIDTHS[1])
     (D 0x4)
     (E (and 7 3))
+    (F PARAM_DEC_W)
+    (G (+ 8'sd9 8'sd-1))
+    (H (+ 'h8 0d1))
   )
 
   (idle
@@ -34,5 +38,8 @@
     (C = 8'hA5)
     (D = 4'hC)
     (E = 3'b111)
+    (F = 8'h5A)
+    (G = 8'hA5)
+    (H = 9'h101)
   )
 )

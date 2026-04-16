@@ -163,6 +163,9 @@ my @REGRESSION_CORPUS = (
             qr/\breg\s+\[7:0\]\s+C;/s,
             qr/\breg\s+\[3:0\]\s+D;/s,
             qr/\breg\s+\[2:0\]\s+E;/s,
+            qr/\breg\s+\[7:0\]\s+F;/s,
+            qr/\breg\s+\[7:0\]\s+G;/s,
+            qr/\breg\s+\[8:0\]\s+H;/s,
         ],
     },
     {
