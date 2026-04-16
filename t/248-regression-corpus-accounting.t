@@ -15,7 +15,7 @@ my @entries = regression_corpus_entries();
 my @protocol_entries = protocol_fixture_entries();
 
 ok(@entries >= 7, 'regression corpus catalog starts with named entries across multiple classifications');
-ok(@entries >= 49, 'regression corpus catalog now covers supported language-feature fixtures plus root-level, section-level, child-root, direct-generation, and composition-contract residue families');
+ok(@entries >= 50, 'regression corpus catalog now covers supported language-feature fixtures plus root-level, section-level, child-root, direct-generation, and composition-contract residue families');
 is(scalar(@protocol_entries), 4, 'first visible corpus slice contains the four named protocol fixtures');
 
 my %allowed_classifications = map { $_ => 1 } qw(
@@ -55,6 +55,7 @@ for my $required_id (qw(
     feature.direct_areset_active_low
     feature.direct_canonical_init_directive
     feature.direct_size_expression_widths
+    feature.direct_runtime_div_mod
     legacy.mipicsi2_txccore_ulp.default_compat
     legacy.mipicsi2_txccore_ulp.strict_rejection
     legacy.empty_size_noop.default_compat
@@ -135,8 +136,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    12,
-    'catalog now keeps twelve named supported-smoke entries including the first language-feature fixtures',
+    13,
+    'catalog now keeps thirteen named supported-smoke entries including the first language-feature fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),

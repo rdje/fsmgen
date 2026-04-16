@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-16: runtime div/mod support belongs in the support corpus
+- Continued `R12` by adding direct runtime RHS division and modulus to the
+  named supported-smoke corpus.
+- Rationale:
+  - `/` and `%` already existed in the regression-backed operator family, but a
+    user-facing support claim should also have one named corpus asset,
+  - `div` and `mod` aliases should be checked at the emitted-HDL boundary, not
+    only at parse/operator normalization level,
+  - the fixture intentionally includes three-operand forms so the documented
+    left-associative n-ary behavior is support-accounted,
+  - and this keeps the book/user-guide documentation aligned with a maintained
+    `supported_smoke` entry instead of relying on scattered focused tests.
+
 ## 2026-04-16: mdBook is the canonical user-facing FSMGen surface
 - Reinforced the documentation contract after user steering: the mdBook is not
   just a nicer rendering of selected notes; it is the public product surface.

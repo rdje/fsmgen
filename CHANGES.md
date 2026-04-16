@@ -1,6 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-16
+### supported corpus now covers runtime division and modulus expressions
+- Added [t/corpus/direct_runtime_div_mod.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_runtime_div_mod.fsm) as a named `supported_smoke` direct-root corpus asset for runtime RHS `/`, `%`, `div`, and `mod` expressions, including three-operand left-associative forms.
+- Updated [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm), [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t), [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/book/src/02-language-basics.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/02-language-basics.md), and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so runtime division/modulus support is documented and support-accounted through both pipeline and CLI.
+
 ### mdBook public documentation contract strengthened
 - Updated [docs/BOOK_PLAN.md](/Users/richarddje/Documents/github/fsmgen/docs/BOOK_PLAN.md), [docs/book/src/00-introduction.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/00-introduction.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) to make the book's role explicit: it is the canonical user-facing FSMGen surface, and every visible `.fsm`, composition, package/type/import, CLI/debug, diagnostic, generated-HDL, and support-boundary behavior should be documented there with rationale, boundaries, and plentiful realistic examples. The book and live continuity docs are both essential, but distinct: the book teaches users, while live docs preserve implementation continuity across crashes, handoffs, and long-running work.
 

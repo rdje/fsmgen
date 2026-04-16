@@ -137,6 +137,17 @@ division or modulo by zero is rejected before emission. Runtime RHS
 expressions with dynamic divisors are still emitted as AST/HDL expressions; the
 tool does not yet prove that every dynamic divisor is nonzero.
 
+Examples:
+
+```lisp
+(QUO = (/ A B))
+(REM = (% A B))
+(QUO_ALIAS = (div A B))
+(REM_ALIAS = (mod A B))
+(QUO_CHAIN = (/ A B C))  ; emits left-to-right as A / B / C
+(REM_CHAIN = (% A B C))  ; emits left-to-right as A % B % C
+```
+
 ## Guards, Tests, and Updates
 
 Common authoring shapes:

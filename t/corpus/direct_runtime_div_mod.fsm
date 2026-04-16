@@ -1,0 +1,30 @@
+(?fsm:direct_runtime_div_mod
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+
+  (+size
+    (COND 1)
+    (A 8)
+    (B 8)
+    (C 8)
+    (QUO 8)
+    (REM 8)
+    (QUO_ALIAS 8)
+    (REM_ALIAS 8)
+    (QUO_CHAIN 8)
+    (REM_CHAIN 8)
+  )
+
+  (idle
+    (<COND
+      (QUO = (/ A B))
+      (REM = (% A B))
+      (QUO_ALIAS = (div A B))
+      (REM_ALIAS = (mod A B))
+      (QUO_CHAIN = (/ A B C))
+      (REM_CHAIN = (% A B C))
+    )
+  )
+)

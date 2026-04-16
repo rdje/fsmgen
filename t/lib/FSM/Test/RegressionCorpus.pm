@@ -169,6 +169,23 @@ my @REGRESSION_CORPUS = (
         ],
     },
     {
+        id => 'feature.direct_runtime_div_mod',
+        relpath => 't/corpus/direct_runtime_div_mod.fsm',
+        family => 'language_feature_fixture',
+        classification => 'supported_smoke',
+        coverage => 'direct_root_pipeline_cli',
+        source_kind => 'fsm',
+        expected_module_name => 'direct_runtime_div_mod',
+        expected_hdl_patterns => [
+            qr/\bQUO\s*=\s*A\s*\/\s*B;/s,
+            qr/\bREM\s*=\s*A\s*%\s*B;/s,
+            qr/\bQUO_ALIAS\s*=\s*A\s*\/\s*B;/s,
+            qr/\bREM_ALIAS\s*=\s*A\s*%\s*B;/s,
+            qr/\bQUO_CHAIN\s*=\s*A\s*\/\s*B\s*\/\s*C;/s,
+            qr/\bREM_CHAIN\s*=\s*A\s*%\s*B\s*%\s*C;/s,
+        ],
+    },
+    {
         id => 'legacy.mipicsi2_txccore_ulp.default_compat',
         relpath => 'fsm/mipicsi2_txccore_ulp.fsm',
         family => 'legacy_fixture',

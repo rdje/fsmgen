@@ -444,6 +444,7 @@ Operator expressions:
   - `(diff = (- a b c d))`
   - `(prod = (* a b c d))`
   - `(quo = (/ a b c d))`
+  - `(rem = (% a b c d))`
   - `(between = (< low value high))`
   - `(equal_chain = (eq a b c d))`
   - `(mask = (^ x y z))`

@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-16: corpus now covers runtime division and modulus expressions
+- Continued `R12` by adding the named supported-smoke sibling for runtime RHS
+  integer division and modulus support. Focused language-contract tests already
+  covered `/` and `%`; this slice makes the support claim visible in the
+  maintained corpus.
+- Important continuity note:
+  - [t/corpus/direct_runtime_div_mod.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_runtime_div_mod.fsm)
+    uses `/`, `%`, `div`, and `mod` in ordinary direct RHS assignments,
+    including three-operand forms,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm)
+    records it as `feature.direct_runtime_div_mod` under
+    `direct_root_pipeline_cli`,
+  - [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t)
+    checks that pipeline and CLI emit `A / B`, `A % B`, `A / B / C`, and
+    `A % B % C`, and
+  - [docs/book/src/02-language-basics.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/02-language-basics.md)
+    now includes a visible runtime div/mod example beside the semantic
+    boundary that dynamic runtime divisors are not yet statically proven
+    nonzero.
+
 ## 2026-04-16: book is the user-facing FSMGen surface
 - User reinforced that all aspects of `.fsm` files, composition, and every
   other user-facing surface should be extensively documented in the mdBook with
