@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-16: one helper must own integer literal to BigInt parsing
+- Continued `R8` after expression-backed `+size` exposed one more duplicate
+  parser pocket between width-symbol resolution and width-expression
+  evaluation.
+- Rationale:
+  - direct `+size` constant expressions and positive scalar width symbols are
+    the same semantic family: both need to turn authored integer spellings into
+    one exact integer before any width contract is accepted,
+  - keeping separate literal parsers invites subtle dialect drift, especially
+    around `0d`, signed based literals, underscores, and negative terms inside
+    constant expressions,
+  - the shared owner should return exact `Math::BigInt` values first; callers
+    then decide whether negative, zero, or width-implicit results are legal for
+    their own contract,
+  - signed numeric terms must be tokenized contextually, not greedily: in
+    `1+2` the `+` is a binary operator, while in `3+-2` the second sign belongs
+    to an operand term,
+  - and this belongs before generation because the HDL backend should only walk
+    already-resolved AST/metadata, not compensate for frontend literal dialect
+    inconsistencies.
+
 ## 2026-04-16: scalar integer literal spellings should not fork by lane
 - Continued `R8` with a small consistency hardening slice after the
   expression-backed `+size` work exposed a narrower scalar-width path.

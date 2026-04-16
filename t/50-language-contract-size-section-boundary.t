@@ -111,6 +111,7 @@ subtest '+size width entries accept constant-expression values' => sub {
   )
   (+params
     (PARAM_W (+ BASE_W INC_W))
+    (PARAM_DEC_W (+ 0d10 -2))
   )
   (+size
     (A (+ BASE_W INC_W))
@@ -118,6 +119,9 @@ subtest '+size width entries accept constant-expression values' => sub {
     (C WIDTHS[1])
     (D 0x4)
     (E (and 7 3))
+    (F PARAM_DEC_W)
+    (G (+ 8'sd9 8'sd-1))
+    (H (+ 'h8 0d1))
   )
   (idle
     (A <= 1)
@@ -125,6 +129,9 @@ subtest '+size width entries accept constant-expression values' => sub {
     (C <= B)
     (D <= C)
     (E <= A)
+    (F <= C)
+    (G <= F)
+    (H <= G)
   )
 )
 FSM
@@ -135,6 +142,9 @@ FSM
     is($adapter->{signal_manager}->get_signal('C')->width, 8, '+size resolves aggregate scalar leaves');
     is($adapter->{signal_manager}->get_signal('D')->width, 4, '+size resolves unsized hex literal widths');
     is($adapter->{signal_manager}->get_signal('E')->width, 3, '+size resolves Lisp-ish bitwise aliases');
+    is($adapter->{signal_manager}->get_signal('F')->width, 8, '+size resolves 0d literals and negative terms through scalar params');
+    is($adapter->{signal_manager}->get_signal('G')->width, 8, '+size resolves direct signed based negative terms');
+    is($adapter->{signal_manager}->get_signal('H')->width, 9, '+size resolves unsized SV and prefixed decimal literals directly');
 };
 
 subtest 'pipeline and CLI do not emit HDL for malformed +size sections' => sub {

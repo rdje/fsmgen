@@ -9,8 +9,30 @@ use FindBin;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Adapter::FSMGenFull::ExpressionBuilder;
+use FSM::Adapter::FSMGenFull::Parser;
 use FSM::Adapter::FSMGenFull::SignalManager;
+use FSM::Package::IntegerLiteralSupport;
 use FSM::Package::ScalarWidthSupport;
+
+my @integer_cases = (
+    [ '8', '8', 'plain decimal' ],
+    [ '-8', '-8', 'negative plain decimal' ],
+    [ '+8', '8', 'positive signed plain decimal' ],
+    [ '0d16', '16', 'prefixed decimal' ],
+    [ '0d-16', '-16', 'negative prefixed decimal' ],
+    [ '0b1000', '8', 'prefixed binary' ],
+    [ '0o10', '8', 'prefixed octal' ],
+    [ '0x10', '16', 'prefixed hex' ],
+    [ q{'h10}, '16', 'unsized SV hex' ],
+    [ q{8'sd-1}, '-1', 'signed negative sized SV decimal' ],
+    [ q{'sh-1}, '-1', 'signed negative unsized SV hex' ],
+);
+
+for my $case (@integer_cases) {
+    my ($payload, $expected, $label) = @$case;
+    my $value = FSM::Package::IntegerLiteralSupport->integer_from_literal_like($payload);
+    is(defined($value) ? $value->bstr : undef, $expected, "integer literal resolves from $label");
+}
 
 my @positive_cases = (
     [ '8', 8, 'plain decimal' ],
@@ -27,6 +49,7 @@ my @positive_cases = (
     [ q{'h10}, 16, 'unsized SV hex' ],
     [ q{8'h10}, 16, 'sized SV hex' ],
     [ q{8'sh10}, 16, 'signed positive SV hex' ],
+    [ q{'sd16}, 16, 'signed positive unsized SV decimal' ],
     [ { kind => 'scalar', payload => q{'h10} }, 16, 'scalar payload hash' ],
 );
 
@@ -79,6 +102,33 @@ subtest 'expression builder accepts common integer literal spellings' => sub {
         my ($token, $expected_sv, $label) = @$case;
         my $expr = $builder->parse_scalar_expression($token);
         is($expr->to_systemverilog, $expected_sv, "expression builder parses $label");
+    }
+};
+
+subtest 'constant integer expression tokenizer separates signs from compact infix operators' => sub {
+    my $signal_manager = FSM::Adapter::FSMGenFull::SignalManager->new(debug => 0);
+    my $builder = FSM::Adapter::FSMGenFull::ExpressionBuilder->new(
+        debug => 0,
+        signal_manager => $signal_manager,
+    );
+    my $parser = FSM::Adapter::FSMGenFull::Parser->new(
+        debug => 0,
+        signal_manager => $signal_manager,
+        expression_builder => $builder,
+    );
+
+    my @expression_cases = (
+        [ '1+2', '3', 'compact addition' ],
+        [ '4-2', '2', 'compact subtraction' ],
+        [ '3+-2', '1', 'binary plus followed by signed literal' ],
+        [ '+8+0d-1', '7', 'leading signed literal with prefixed negative term' ],
+        [ q{8'sd-1+9}, '8', 'compact signed based literal followed by operator' ],
+    );
+
+    for my $case (@expression_cases) {
+        my ($expr_text, $expected, $label) = @$case;
+        my $value = $parser->evaluate_infix_constant_integer_expression($expr_text, $label);
+        is($value->bstr, $expected, "constant integer expression resolves $label");
     }
 };
 

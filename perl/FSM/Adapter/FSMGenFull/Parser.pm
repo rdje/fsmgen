@@ -7,7 +7,6 @@ use Carp qw(confess);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 use Data::Dumper;
-use Math::BigInt;
 use Scalar::Util qw(blessed);
 use FSM::CoreAST;
 use FSM::Debug;
@@ -16,6 +15,7 @@ use FSM::Package::AggregatePathSupport;
 use FSM::Package::DeclarativeSymbolResolver;
 use FSM::Package::DeclarativeTypeSupport;
 use FSM::Package::DeclarativeTypeResolver;
+use FSM::Package::IntegerLiteralSupport;
 use FSM::Package::PayloadTypeSupport;
 use FSM::Package::SignalManagerProjectionSupport;
 use FSM::Package::Symbols;
@@ -948,6 +948,7 @@ sub evaluate_infix_constant_integer_expression($self, $expr_text, $context) {
 
 sub tokenize_infix_constant_integer_expression($self, $expr_text, $context) {
     my @tokens;
+    my $expect_operand = 1;
     pos($expr_text) = 0;
     while (pos($expr_text) < length($expr_text)) {
         if ($expr_text =~ /\G\s+/gc) {
@@ -955,18 +956,25 @@ sub tokenize_infix_constant_integer_expression($self, $expr_text, $context) {
         }
         if ($expr_text =~ /\G([()])\s*/gc) {
             push @tokens, $1;
-            next;
-        }
-        if ($expr_text =~ /\G([+\-*\/%&|^])\s*/gc) {
-            push @tokens, $1;
+            $expect_operand = $1 eq '(' ? 1 : 0;
             next;
         }
         if ($expr_text =~ /\G([A-Za-z_]\w*(?:\.[A-Za-z_]\w*)?(?:\[\d+\])*)\s*/gc) {
             push @tokens, $1;
+            $expect_operand = 0;
             next;
         }
-        if ($expr_text =~ /\G((?:\d+)?'s?[bodh][0-9A-Fa-f_+-]+|0x[0-9A-Fa-f_]+|0b[01_]+|0o[0-7_]+|[+-]?\d[\d_]*)\s*/gci) {
+        my $literal_pattern = $expect_operand
+            ? qr/(?:\d+)?'s?[bodh][+-]?[0-9A-Fa-f_]+|0d[+-]?\d[\d_]*|0x[0-9A-Fa-f_]+|0b[01_]+|0o[0-7_]+|[+-]?\d[\d_]*/i
+            : qr/(?:\d+)?'s?[bodh][+-]?[0-9A-Fa-f_]+|0d[+-]?\d[\d_]*|0x[0-9A-Fa-f_]+|0b[01_]+|0o[0-7_]+|\d[\d_]*/i;
+        if ($expr_text =~ /\G($literal_pattern)\s*/gc) {
             push @tokens, $1;
+            $expect_operand = 0;
+            next;
+        }
+        if ($expr_text =~ /\G([+\-*\/%&|^])\s*/gc) {
+            push @tokens, $1;
+            $expect_operand = 1;
             next;
         }
 
@@ -1017,65 +1025,7 @@ sub constant_infix_binding_power($self, $operator) {
 }
 
 sub parse_constant_integer_literal($self, $literal) {
-    return undef unless defined($literal) && !ref($literal);
-
-    my $text = $literal;
-    $text =~ s/_//g;
-
-    if ($text =~ /\A([+-]?)(\d+)\z/) {
-        return $self->bigint_from_digits($2, 10, $1);
-    }
-
-    if ($text =~ /\A0b([01]+)\z/i) {
-        return $self->bigint_from_digits($1, 2);
-    }
-
-    if ($text =~ /\A0o([0-7]+)\z/i) {
-        return $self->bigint_from_digits($1, 8);
-    }
-
-    if ($text =~ /\A0x([0-9A-Fa-f]+)\z/i) {
-        return $self->bigint_from_digits($1, 16);
-    }
-
-    if ($text =~ /\A(?:\d+)?'(s?)([bodh])([+-]?[0-9A-Fa-f]+)\z/i) {
-        my ($radix, $digits) = (lc($2), $3);
-        my %base_for = (
-            b => 2,
-            o => 8,
-            d => 10,
-            h => 16,
-        );
-        return $self->bigint_from_digits($digits, $base_for{$radix});
-    }
-
-    return undef;
-}
-
-sub bigint_from_digits($self, $digits, $base, $sign = '') {
-    return undef unless defined($digits) && !ref($digits) && defined($base);
-
-    my $negative = 0;
-    if ($digits =~ s/\A([+-])//) {
-        $negative = $1 eq '-' ? 1 : 0;
-    }
-    $negative = 1 if defined($sign) && $sign eq '-';
-
-    my %value_for = (
-        0 => 0, 1 => 1, 2 => 2, 3 => 3, 4 => 4,
-        5 => 5, 6 => 6, 7 => 7, 8 => 8, 9 => 9,
-        a => 10, b => 11, c => 12, d => 13, e => 14, f => 15,
-    );
-
-    return undef unless length $digits;
-    my $result = Math::BigInt->new(0);
-    for my $char (split //, lc($digits)) {
-        return undef unless exists $value_for{$char} && $value_for{$char} < $base;
-        $result->bmul($base);
-        $result->badd($value_for{$char});
-    }
-    $result->bneg if $negative;
-    return $result;
+    return FSM::Package::IntegerLiteralSupport->integer_from_literal_like($literal);
 }
 
 sub canonicalize_scalar_type_spec($self, %args) {

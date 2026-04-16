@@ -138,6 +138,20 @@ attach a declared aggregate/scalar type rather than computing a raw width.
 Positive integer scalar symbols used as direct `+size` widths or composition
 `?ports` widths accept the same common scalar literal spellings, so a shared
 `(BYTE_W 0x8)` or `(BYTE_W 'h8)` can safely drive a width contract.
+The direct `+size` expression path and the scalar-width-symbol path share the
+same integer literal interpreter for decimal, `0d`, `0b`, `0o`, `0x`, and
+SystemVerilog-style based spellings. Signed literal terms are valid ingredients
+when the final width remains positive, for example:
+
+```lisp
+(+params
+  (DEC_W (+ 0d10 -2))
+)
+(+size
+  (from_param DEC_W)
+  (from_terms (+ 8'sd9 8'sd-1))
+)
+```
 
 ## Constants
 
@@ -309,6 +323,12 @@ Direct-root `+size` and composition `?ports` widths may now come from:
 - imported package-qualified scalar type aliases
 - local positive integer scalar symbols
 - imported positive integer scalar symbols
+
+Those scalar width symbols use the same literal interpretation as direct
+`+size` expression terms, including decimal, `0d`, `0b`, `0o`, `0x`, and
+SystemVerilog-style based spellings. This keeps a package constant such as
+`(BYTE_W 0d8)` or `(BYTE_W 'h8)` usable anywhere a positive width scalar is
+allowed.
 
 Example:
 

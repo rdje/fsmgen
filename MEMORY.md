@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-16: integer literal parsing now has one width-expression owner
+- Continued the `R8` language-contract hardening lane by extracting common
+  integer literal to `Math::BigInt` parsing into
+  [perl/FSM/Package/IntegerLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/IntegerLiteralSupport.pm).
+- Important continuity note:
+  - [perl/FSM/Package/ScalarWidthSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/ScalarWidthSupport.pm)
+    now delegates positive width-symbol parsing to that shared helper instead
+    of owning a second parser,
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm)
+    now uses the same helper for `+size` constant-expression literals,
+  - the direct `+size` expression tokenizer now treats signed literals as
+    operands only where an operand is expected, so compact forms like `1+2`
+    still parse as binary arithmetic while `3+-2` remains a valid signed
+    literal term,
+  - [t/294-scalar-width-support.t](/Users/richarddje/Documents/github/fsmgen/t/294-scalar-width-support.t)
+    locks the helper and tokenizer boundary, and
+  - [t/50-language-contract-size-section-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/50-language-contract-size-section-boundary.t)
+    now proves `+size` expressions resolve `0d`, signed based negative terms,
+    and unsized SystemVerilog literals through the shared path.
+
 ## 2026-04-16: scalar width symbols share common integer literal support
 - Continued the `R8` language-contract hardening lane by removing a literal
   dialect split between scalar constants, scalar width symbols, and expression

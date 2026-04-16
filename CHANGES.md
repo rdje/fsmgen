@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-16
+### integer literal parsing is shared by width symbols and +size expressions
+- Added [perl/FSM/Package/IntegerLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/IntegerLiteralSupport.pm) as the shared integer literal to `Math::BigInt` owner for decimal, `0d`, `0b`, `0o`, `0x`, and SystemVerilog-style based scalar spellings.
+- Routed [perl/FSM/Package/ScalarWidthSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/ScalarWidthSupport.pm) and [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) through that helper so positive scalar width symbols and direct `+size` constant-expression literals no longer maintain separate parsers.
+- Hardened direct `+size` scalar-expression tokenization so signed numeric literals are accepted only in operand position, preserving compact binary forms such as `1+2` while still accepting terms such as `3+-2` or `+8+0d-1`.
+- Extended [t/294-scalar-width-support.t](/Users/richarddje/Documents/github/fsmgen/t/294-scalar-width-support.t) and [t/50-language-contract-size-section-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/50-language-contract-size-section-boundary.t) to lock the shared helper, compact-token boundary, `0d` literals, signed based negative terms, and unsized SystemVerilog literal width expressions.
+
 ### scalar width symbols now share common integer literal support
 - Widened the shared scalar literal path so direct, composition, and package constants can parse common integer spellings such as `0xA5`, `0b1010`, `0o10`, unsized SystemVerilog based literals like `'hA5`, and underscore-separated digits.
 - Hardened positive integer scalar-width resolution so direct `+size` and composition `?ports` width symbols resolve those same literal families consistently instead of accepting only decimal or sized literals.

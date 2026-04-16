@@ -496,14 +496,16 @@ This is the current `R8` draft normative contract for the symbol-definition and 
 `(+size ...)`:
 - Declares signal widths through `(signal width_or_type)` entries.
 - `width_or_type` may be:
-  - a positive integer literal such as `1`, `8`, `0x10`, `0b1000`, or `8'h10`
+  - a positive integer literal such as `1`, `8`, `0d8`, `0x10`, `0b1000`, `'h8`, or `8'h10`
   - a named scalar or aggregate type such as `bit`, `byte_t`, `frame_t`, or `pkg_name.byte_t`
   - a positive integer constant expression using literals, same-root/imported constants, enum members, params/generics, aggregate scalar leaves, and the bounded Lisp-ish arithmetic/bitwise operators `+`, `-`, `*`, `/`, `%`, `&`, `|`, `^` plus aliases `add`, `sub`, `mul`, `div`, `mod`, `and`, `or`, `xor`
+- Direct `+size` expression literals and positive scalar width symbols use the same integer-literal interpretation for decimal, `0d`, `0b`, `0o`, `0x`, and SystemVerilog-style based spellings; signed literal terms may participate inside an expression when the final resolved width is still positive, for example `(+ 8'sd9 8'sd-1)`.
 - The legacy empty form `(+size)` remains supported as a no-op in default mode because it still exists in compatibility coverage.
 - Strict mode rejects the empty no-op form and requires either explicit width entries or no `+size` section at all.
 - Current active use:
   - `(+size (A 8) (B 8))`
   - `(+size (DATA (+ BYTE_W 1)) (MODE mode.WIDTH) (LANE LANES[0]))`
+  - `(+size (SIGNED_TERM_W (+ 8'sd9 8'sd-1)) (DEC_TERM_W (+ 0d10 -2)))`
   - `(+size)`
 - Malformed payloads like `(+size BROKEN)`, malformed entries like `(+size (A))`, and non-positive widths like `(+size (A 0))` are rejected explicitly.
 
