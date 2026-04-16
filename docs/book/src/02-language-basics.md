@@ -154,7 +154,9 @@ expressions, RHS concat, aggregate leaves, and LHS deconstruct:
 Existing infix forms such as `(OUT = VALUE)` and `(Q <- D)` remain compatibility
 spellings. Both surfaces normalize into the same assignment AST/IR before HDL
 generation, so backends see normalized assignment intent rather than
-renderer-specific syntax.
+renderer-specific syntax. Strict mode accepts the canonical pair form and
+rejects the infix compatibility spelling so sources can opt into the cleaner
+forward contract.
 
 ## Combinational Safety Rule
 

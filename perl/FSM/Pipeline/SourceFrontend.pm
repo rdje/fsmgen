@@ -242,6 +242,14 @@ sub enforce_strict_source_boundary ($class, %args) {
               . "or re-run without strict mode if you still need the compact ':=' surface. "
               . "See docs/USER_GUIDE.md for the current strict-mode boundary.\n";
         }
+
+        if (my $infix_issue = $class->_find_strict_infix_assignment_issue($body_items)) {
+            confess
+                "Strict mode rejects infix assignment '$infix_issue->{display}' in source '$source_label'. "
+              . "Use the canonical pair form '$infix_issue->{canonical_hint}' for strict-mode assignment intent, "
+              . "or re-run without strict mode if you still need infix assignment compatibility. "
+              . "See docs/USER_GUIDE.md for the current strict-mode boundary.\n";
+        }
     }
 }
 
@@ -464,6 +472,94 @@ sub _is_legacy_compact_init_directive ($class, $node) {
                 && $unwrapped =~ /\A[A-Za-z_]\w*=.+\z/;
     }
     return 0;
+}
+
+sub _find_strict_infix_assignment_issue ($class, $node) {
+    return undef unless ref($node) eq 'ARRAY';
+
+    if (my $issue = $class->_strict_infix_assignment_issue_for_action($node)) {
+        return $issue;
+    }
+
+    for my $child (@$node) {
+        next unless ref($child) eq 'ARRAY';
+        if (my $issue = $class->_find_strict_infix_assignment_issue($child)) {
+            return $issue;
+        }
+    }
+
+    return undef;
+}
+
+sub _strict_infix_assignment_issue_for_action ($class, $node) {
+    return undef unless ref($node) eq 'ARRAY' && @$node >= 2;
+
+    my ($target, $spec) = @$node[0, 1];
+    return undef if defined($target) && !ref($target) && $class->_is_assignment_operator_token($target);
+    return undef unless $class->_is_strict_infix_assignment_target($target);
+    return undef unless ref($spec) eq 'ARRAY' && @$spec >= 2;
+
+    my $operator = $class->_unwrap_scalar_token($spec->[0]);
+    return undef unless $class->_is_assignment_operator_token($operator);
+
+    my $rhs = $class->_unwrap_scalar_token($spec->[1]);
+    return {
+        operator => $operator,
+        target => $target,
+        rhs => $rhs,
+        display => $class->_render_infix_assignment_action($target, $spec),
+        canonical_hint => $class->_render_canonical_assignment_pair_hint($operator, $target, $rhs),
+    };
+}
+
+sub _is_strict_infix_assignment_target ($class, $target) {
+    return 1 if defined($target) && !ref($target);
+
+    my $unwrapped = $class->_unwrap_scalar_token($target);
+    return 0 unless ref($unwrapped) eq 'ARRAY' && @$unwrapped;
+    return 0 if ref($unwrapped->[0]);
+
+    return $unwrapped->[0] eq 'concat' || $unwrapped->[0] eq 'cat';
+}
+
+sub _is_assignment_operator_token ($class, $token) {
+    return defined($token)
+        && !ref($token)
+        && $token =~ /\A(?:=|<-|<-=|<=|<=\+|<[0-9]+)\z/;
+}
+
+sub _render_infix_assignment_action ($class, $target, $spec) {
+    my @parts = (
+        $class->_render_lispish_node($target),
+        map { $class->_render_lispish_node($_) } @$spec,
+    );
+    return '(' . join(' ', @parts) . ')';
+}
+
+sub _render_canonical_assignment_pair_hint ($class, $operator, $target, $rhs) {
+    return '('
+        . $operator
+        . ' ('
+        . $class->_render_lispish_node($target)
+        . ' '
+        . $class->_render_lispish_node($rhs)
+        . '))';
+}
+
+sub _render_lispish_node ($class, $node) {
+    return 'undef' unless defined $node;
+    return $node unless ref($node) eq 'ARRAY';
+    return '()' unless @$node;
+
+    if (@$node == 1) {
+        return $class->_render_lispish_node($node->[0]);
+    }
+
+    if (@$node == 2 && defined($node->[0]) && !ref($node->[0]) && ref($node->[1]) eq 'ARRAY') {
+        return '(' . join(' ', $node->[0], map { $class->_render_lispish_node($_) } @{$node->[1]}) . ')';
+    }
+
+    return '(' . join(' ', map { $class->_render_lispish_node($_) } @$node) . ')';
 }
 
 sub _direct_root_package_imports ($class, %args) {

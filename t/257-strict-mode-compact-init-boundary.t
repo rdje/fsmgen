@@ -92,7 +92,7 @@ write_file(
   )
   (:= (tester_reset 1))
   (idle
-    (A = tester_reset)
+    (= (A tester_reset))
   )
 )
 FSM

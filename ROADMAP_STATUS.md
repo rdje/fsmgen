@@ -674,6 +674,11 @@ Done:
   - strict mode now accepts the canonical `(:= (signal value))` pair form and points compact users to that replacement,
   - [t/257-strict-mode-compact-init-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/257-strict-mode-compact-init-boundary.t) now locks the boundary through the shared frontend plus pipeline and CLI entry points for both direct roots and external `?dtc` child sources,
   - and the compact form remains compatibility residue rather than the endorsed modern authoring surface.
+- The next assignment-surface strict-mode cut is now also shipped:
+  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now rejects infix assignment compatibility spellings such as `(OUT = IN)` in strict mode while leaving default mode unchanged,
+  - strict mode accepts canonical assignment pairs such as `(= (OUT IN))`, `(<- (Q D))`, and the rest of the active pair-form assignment family,
+  - generated child sources run through the same shared direct-root strict owner, so external `?fsmc` / `?dtc` children receive the same boundary with child-source context,
+  - and [t/295-strict-mode-infix-assignment-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/295-strict-mode-infix-assignment-boundary.t) locks default compatibility, strict pair-form acceptance, direct-root rejection, CLI no-output behavior, and external child-source rejection.
 Left:
 - Widen strict-mode enforcement beyond the current canonical-root-family and current section-level compatibility cuts into more of the fully supported-vs-compatibility split.
 - Decide the next high-signal support-tier cuts after the current legacy root-family slices.

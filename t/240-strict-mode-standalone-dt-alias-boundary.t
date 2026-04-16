@@ -35,7 +35,7 @@ write_file(
     (DATA_OUT 8)
   )
   (-route
-    (DATA_OUT = DATA_IN)
+    (= (DATA_OUT DATA_IN))
   )
 )
 FSM
@@ -50,7 +50,7 @@ write_file(
     (DATA_OUT 8)
   )
   (-route
-    (DATA_OUT = DATA_IN)
+    (= (DATA_OUT DATA_IN))
   )
 )
 FSM

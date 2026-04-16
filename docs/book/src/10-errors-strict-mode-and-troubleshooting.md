@@ -71,6 +71,8 @@ Examples of what strict mode is already used for:
 - narrowing legacy root aliases
 - rejecting some compatibility residue
 - preventing accidental dependence on older looser spellings
+- preferring canonical assignment pairs such as `(= (OUT IN))` over infix
+  compatibility spellings such as `(OUT = IN)`
 
 Use strict mode when you want the tool to tell you whether a source already
 fits the cleaner forward contract.

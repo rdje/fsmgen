@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-16: strict mode rejects infix assignment compatibility
+- Continued the canonical assignment-pair work by widening strict mode:
+  - default mode still accepts infix assignments such as `(OUT = IN)` and
+    `(Q <- D)` as compatibility spellings,
+  - strict mode now rejects those infix spellings and points to canonical
+    pairs such as `(= (OUT IN))`,
+  - canonical pair assignments remain accepted in strict mode,
+  - the check lives in [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm)
+    so direct roots and generated child sources share the same support-tier
+    boundary,
+  - and [t/295-strict-mode-infix-assignment-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/295-strict-mode-infix-assignment-boundary.t)
+    locks default compatibility, strict pair acceptance, direct strict
+    rejection, CLI no-output behavior, and external child-source rejection.
+
 ## 2026-04-16: canonical assignment pair form is active syntax
 - Implemented the canonical assignment surface:
   `(assign-op (lhs rhs))` plus optional guard form

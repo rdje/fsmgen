@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-16: strict mode treats infix assignments as compatibility residue
+- Continued the canonical assignment-pair slice by making strict mode enforce
+  the cleaner surface:
+  - default mode keeps infix assignments like `(OUT = IN)` and `(Q <- D)` as
+    compatibility spellings,
+  - strict mode accepts canonical pairs like `(= (OUT IN))` and `(<- (Q D))`,
+  - strict mode rejects infix assignment forms before semantic generation, with
+    source-local diagnostics and no HDL output,
+  - the shared `SourceFrontend` owner applies the same boundary to direct roots
+    and generated child sources,
+  - and the focused regression in
+    [t/295-strict-mode-infix-assignment-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/295-strict-mode-infix-assignment-boundary.t)
+    proves default compatibility, strict acceptance of pair syntax, direct
+    rejection, CLI behavior, and child-source context.
+- Rationale:
+  - canonical pair syntax is now the forward assignment surface,
+  - strict mode should help users discover forward-contract drift early,
+  - and keeping default-mode compatibility avoids breaking existing fixtures
+    while still giving users a precise migration path.
+
 ## 2026-04-16: canonical assignment pair form is the preferred assignment surface
 - Captured and implemented user steering for a canonical assignment surface:
   `(assign-op (lhs rhs))` and `(assign-op (lhs rhs) <cond)`.

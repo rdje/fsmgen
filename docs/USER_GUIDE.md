@@ -160,13 +160,12 @@ Combinational DT note:
   - plain `?SIG` test nodes require an HDL-identifier-compatible signal name
   - malformed plain test-node signal names such as `?bad-name` or `?0` are rejected explicitly
   - computed selectors `?(expr)` must start with a real selector expression and include at least one branch
-- Register assignment `(A <- B)`
-- D-input style sequential assignment `(A <= B)`
-- Combinational assignment `(A = B)`
-- Explicit output exposure on the LHS, for example `(G> = H)` and `(output_data> <= 8'1)`
-- Dual-output register form `(I <-= J)` producing `next_I`
-- Dual-output D-input form `(K <=+ L)` producing `K_r`
-- Delayed pulse form `(P <N 0)` and `(P <N 1)`, including `N=0`
+- Canonical assignment pair forms such as `(<- (A B))`, `(<= (A B))`, `(= (A B))`, `(<-= (I J))`, `(<=+ (K L))`, and `(<N (P 1))`
+- Default-mode infix assignment compatibility forms such as `(A <- B)`, `(A <= B)`, `(A = B)`, `(I <-= J)`, `(K <=+ L)`, and `(P <N 1)`
+- Explicit output exposure on the LHS, for example `(= (G> H))`, `(<= (output_data> 8'1))`, `(G> = H)`, and `(output_data> <= 8'1)`
+- Dual-output register form `(<-= (I J))` or `(I <-= J)` producing `next_I`
+- Dual-output D-input form `(<=+ (K L))` or `(K <=+ L)` producing `K_r`
+- Delayed pulse form `(<N (P 0))`, `(<N (P 1))`, `(P <N 0)`, and `(P <N 1)`, including `N=0`
   - malformed delayed-pulse RHS values such as `(P <1 B)` or `(P <1 2'0)` are rejected explicitly
   - unsupported assignment operators such as `(A ?= B)` or `(A => B)` are rejected explicitly
 - Literal forms `1`, `8'3`, `8'b1010`, `8'hFF`, and `const_8b0`
@@ -1042,6 +1041,7 @@ Boundary note:
 - Malformed `:=` payload shapes and malformed compact directives are now regression-backed across parser, pipeline, and CLI too.
 - Default mode still accepts the compact `:=` form as compatibility residue.
 - Strict mode now rejects the compact `:=` form on the current `?fsm:` / `?dt:` direct-root path and points to canonical `(:= (signal value))`.
+- Strict mode now also rejects infix assignment compatibility forms such as `(OUT = IN)` and points to canonical assignment pairs such as `(= (OUT IN))`.
 - The bare infix alternative `(lhs := value)` remains unsupported.
 
 ## 3) Basic usage

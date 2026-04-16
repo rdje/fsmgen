@@ -32,7 +32,7 @@ write_file(
     (IN 1)
   )
   (idle
-    (OUT = IN)
+    (= (OUT IN))
   )
 )
 FSM
