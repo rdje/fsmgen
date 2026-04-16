@@ -41,6 +41,10 @@ more than one contract for it, for example:
   compatibility residue asset and must still compile through both the pipeline
   API and the CLI in default mode even though it is not part of the preferred
   authored surface.
+- `legacy_assignment_default_pipeline_cli`: the entry is retained as an
+  assignment-surface compatibility residue asset and must still compile through
+  both the pipeline API and the CLI in default mode even though the canonical
+  assignment pair form is the preferred authored surface.
 - `legacy_child_root_default_pipeline_cli`: the entry is retained as a child-
   realization compatibility residue asset and must still compile through both
   the pipeline API and the CLI in default mode, including any extra source
@@ -52,6 +56,10 @@ more than one contract for it, for example:
   in strict mode through both the pipeline API and the CLI because it relies on
   compatibility residue at the section level, and that rejection is part of the
   supported contract.
+- `strict_assignment_rejection_pipeline_cli`: the entry is intentionally
+  rejected in strict mode through both the pipeline API and the CLI because it
+  relies on assignment-surface compatibility residue, and that rejection is part
+  of the supported contract.
 - `strict_child_root_rejection_pipeline_cli`: the entry is intentionally
   rejected in strict mode through both the pipeline API and the CLI because it
   relies on compatibility residue at the generated-child source-root boundary,
@@ -105,6 +113,8 @@ more than one contract for it, for example:
 | `legacy.sreset_rstn.strict_rejection` | [t/corpus/legacy_sreset_rstn.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_sreset_rstn.fsm) | `expected_failure` | `strict_section_rejection_pipeline_cli` |
 | `legacy.compact_init_directive.default_compat` | [t/corpus/legacy_compact_init_directive.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_compact_init_directive.fsm) | `legacy_out_of_scope` | `legacy_section_default_pipeline_cli` |
 | `legacy.compact_init_directive.strict_rejection` | [t/corpus/legacy_compact_init_directive.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_compact_init_directive.fsm) | `expected_failure` | `strict_section_rejection_pipeline_cli` |
+| `legacy.infix_assignment.default_compat` | [t/corpus/legacy_infix_assignment.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_infix_assignment.fsm) | `legacy_out_of_scope` | `legacy_assignment_default_pipeline_cli` |
+| `legacy.infix_assignment.strict_rejection` | [t/corpus/legacy_infix_assignment.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_infix_assignment.fsm) | `expected_failure` | `strict_assignment_rejection_pipeline_cli` |
 | `legacy.fsm_child_root.default_compat` | [t/corpus/legacy_fsm_child_root_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_fsm_child_root_top.fsm) | `legacy_out_of_scope` | `legacy_child_root_default_pipeline_cli` |
 | `legacy.fsm_child_root.strict_rejection` | [t/corpus/legacy_fsm_child_root_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_fsm_child_root_top.fsm) | `expected_failure` | `strict_child_root_rejection_pipeline_cli` |
 | `legacy.dt_child_root.default_compat` | [t/corpus/legacy_dt_child_root_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_dt_child_root_top.fsm) | `legacy_out_of_scope` | `legacy_child_root_default_pipeline_cli` |
@@ -158,8 +168,8 @@ more than one contract for it, for example:
 - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
   checks that the current `legacy_out_of_scope` entries and the current
   `expected_failure` entries actually behave according to their recorded
-  contract, including child-root compatibility residue that depends on explicit
-  search-path realization.
+  contract, including assignment-surface strict rejections and child-root
+  compatibility residue that depends on explicit search-path realization.
 
 ## Working rule
 

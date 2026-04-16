@@ -29,9 +29,11 @@ my %allowed_coverages = map { $_ => 1 } qw(
     composition_top_pipeline_cli
     legacy_root_default_pipeline_cli
     legacy_section_default_pipeline_cli
+    legacy_assignment_default_pipeline_cli
     legacy_child_root_default_pipeline_cli
     strict_root_rejection_pipeline_cli
     strict_section_rejection_pipeline_cli
+    strict_assignment_rejection_pipeline_cli
     strict_child_root_rejection_pipeline_cli
     language_contract_rejection_pipeline_cli
     direct_generation_contract_rejection_pipeline_cli
@@ -67,6 +69,8 @@ for my $required_id (qw(
     legacy.sreset_rstn.strict_rejection
     legacy.compact_init_directive.default_compat
     legacy.compact_init_directive.strict_rejection
+    legacy.infix_assignment.default_compat
+    legacy.infix_assignment.strict_rejection
     legacy.fsm_child_root.default_compat
     legacy.fsm_child_root.strict_rejection
     legacy.dt_child_root.default_compat
@@ -142,13 +146,13 @@ is(
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
-    7,
-    'catalog now records seven explicit legacy-out-of-scope compatibility entries',
+    8,
+    'catalog now records eight explicit legacy-out-of-scope compatibility entries',
 );
 is(
     scalar(grep { $_->{classification} eq 'expected_failure' } @entries),
-    30,
-    'catalog now records thirty explicit expected-failure entries',
+    31,
+    'catalog now records thirty-one explicit expected-failure entries',
 );
 
 done_testing();

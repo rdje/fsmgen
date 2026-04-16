@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-16: infix assignment compatibility is now support-accounted
+- Continued the strict assignment-surface work by adding a named regression
+  corpus pair for infix assignment residue:
+  - default mode must still compile
+    [t/corpus/legacy_infix_assignment.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_infix_assignment.fsm),
+  - strict mode must reject that same source before HDL emission,
+  - the strict diagnostic must point to the canonical pair form such as
+    `(= (OUT SRC))`,
+  - and the corpus uses dedicated assignment-surface coverage buckets instead
+    of overloading the section-level compatibility buckets.
+- Rationale:
+  - the previous focused strict-mode test proved the implementation boundary,
+    but the support-accounting story should also name the retained default-mode
+    compatibility asset and the deliberate strict rejection,
+  - assignment syntax is a user-facing language surface, so it belongs in the
+    maintained corpus beside compact `:=`, reset spelling residue, and child
+    root residue,
+  - and the separate coverage buckets make future reports more honest: this is
+    action-level compatibility residue, not a malformed section.
+
 ## 2026-04-16: strict mode treats infix assignments as compatibility residue
 - Continued the canonical assignment-pair slice by making strict mode enforce
   the cleaner surface:

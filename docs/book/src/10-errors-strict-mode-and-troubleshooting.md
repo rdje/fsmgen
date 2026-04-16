@@ -77,6 +77,10 @@ Examples of what strict mode is already used for:
 Use strict mode when you want the tool to tell you whether a source already
 fits the cleaner forward contract.
 
+The regression corpus deliberately keeps paired default-compatible and
+strict-rejected assets for compatibility residue such as infix assignments, so
+the supported boundary is machine-checked instead of living only in examples.
+
 ## Backend Expectations
 
 Current backend truth:

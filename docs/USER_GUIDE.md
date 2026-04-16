@@ -780,6 +780,7 @@ Boundary note:
   - strict mode also rejects the legacy empty `(+size)` no-op section and requires either explicit width entries or no `+size` section at all,
   - strict mode also rejects legacy or misleading reset spellings such as `(+system (clock clk) (asreset rstn))` and `(+system (clock clk) (sreset rstn))`; use `(+system (clock clk) (sreset reset))` for synchronous active-high reset or `(+system (clock clk) (areset rst_n))` for asynchronous active-low reset,
   - strict mode also rejects the legacy compact top-level `(:= signal=value)` directive on the current `?fsm:` / `?dt:` direct-root path and under generated-child realization; use canonical `(:= (signal value))` instead,
+  - strict mode also rejects infix assignment compatibility forms such as `(OUT = IN)` and `(Q <- D)`; use canonical assignment pairs such as `(= (OUT IN))` and `(<- (Q D))` instead,
   - requires the modern explicit `?fsm:module_name` root form for FSM sources,
   - and otherwise leaves the currently accepted `?dt:`, `?mod:`, and `?top:` roots unchanged while their broader contracts continue to settle.
 - In practice:
@@ -787,7 +788,7 @@ Boundary note:
   - strict mode currently accepts `?fsm:name`, `?dt:name`, `?mod:name`, and `?top:name`,
   - strict mode currently accepts only canonical `?fsm:name` roots under `?fsmc`,
   - strict mode currently accepts only canonical `?dt:name` roots under `?dtc`,
-  - and strict mode currently rejects legacy `+fsm` under `?fsmc`, `?mod:` / `?module:` under `?dtc`, direct-root `?module:`, empty `(+size)` no-op sections, legacy/misleading explicit reset spellings such as `(+system ... (asreset rstn))` and `(+system ... (sreset rstn))`, and compact top-level `(:= signal=value)` directives on the current `?fsm:` / `?dt:` direct-root path.
+  - and strict mode currently rejects legacy `+fsm` under `?fsmc`, `?mod:` / `?module:` under `?dtc`, direct-root `?module:`, empty `(+size)` no-op sections, legacy/misleading explicit reset spellings such as `(+system ... (asreset rstn))` and `(+system ... (sreset rstn))`, compact top-level `(:= signal=value)` directives on the current `?fsm:` / `?dt:` direct-root path, and infix assignment compatibility forms.
 - Strict-mode failures now also keep the same `Source file: '...'` context line as other top-level pipeline failures.
 - This is the first support-tier enforcement slice, not the final full strict-mode surface.
 

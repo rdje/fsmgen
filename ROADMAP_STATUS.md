@@ -1680,6 +1680,12 @@ Done:
   - default mode must still compile the compact `(:= signal=value)` compatibility fixture through pipeline and CLI,
   - strict mode must reject it with the canonical `(:= (signal value))` migration hint for the compact `:=` surface, and
   - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now records `42` catalog entries, `7` legacy-out-of-scope entries, `23` expected-failure entries, and `12` supported-smoke entries.
+- The assignment-surface compatibility-residue family is now support-accounted too:
+  - [t/corpus/legacy_infix_assignment.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_infix_assignment.fsm) now appears twice in the catalog as `legacy.infix_assignment.default_compat` and `legacy.infix_assignment.strict_rejection`,
+  - default mode must still compile infix assignments such as `(OUT = SRC)` and `(Q <- D)` through pipeline and CLI,
+  - strict mode must reject the same fixture with the canonical assignment-pair migration hint such as `(= (OUT SRC))`,
+  - the catalog now has explicit `legacy_assignment_default_pipeline_cli` and `strict_assignment_rejection_pipeline_cli` buckets instead of pretending action-level residue is section-level residue,
+  - and [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now records `53` catalog entries, `8` legacy-out-of-scope entries, `31` expected-failure entries, and `14` supported-smoke entries.
 - The supported-smoke language-feature family now also covers canonical init/default and expression-backed widths:
   - [t/corpus/direct_canonical_init_directive.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_canonical_init_directive.fsm) records the canonical `(:= (signal value))` reset/default surface as a supported direct-root feature through pipeline and CLI,
   - [t/corpus/direct_size_expression_widths.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_size_expression_widths.fsm) records positive integer `+size` constant expressions over constants, enums, params, aggregate scalar leaves, unsized hex literals, `0d` decimal terms, signed based negative terms, unsized based literals, and Lisp-ish bitwise aliases as a supported direct-root feature through pipeline and CLI,
@@ -1771,7 +1777,7 @@ Done:
   - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now records `32` catalog entries and `20` explicit expected-failure entries.
 Left:
 - Curate and classify a wider corpus beyond the first protocol seeds.
-- Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair, first section-level compatibility pair, first child-root compatibility pair, current malformed-language/`+size` scalar/operator/arity/arithmetic-contract entries, current direct-generation contract entries, and the current composition-contract rejection families.
+- Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair, first section-level compatibility pairs, first assignment-surface compatibility pair, first child-root compatibility pair, current malformed-language/`+size` scalar/operator/arity/arithmetic-contract entries, current direct-generation contract entries, and the current composition-contract rejection families.
 - Widen golden-output or semantic-check coverage beyond the current supported language-feature entries and the first protocol slice where simple compile smoke is not enough.
 Exit criteria:
 - Support claims can be backed by a maintained corpus and explicit classification, not only by ad hoc focused tests.

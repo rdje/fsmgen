@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-16: corpus now accounts for infix assignment compatibility residue
+- Continued the strict assignment-pair lane by moving infix assignment residue
+  into the maintained regression corpus:
+  - [t/corpus/legacy_infix_assignment.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_infix_assignment.fsm)
+    is the paired default-compatible / strict-rejected fixture,
+  - `legacy.infix_assignment.default_compat` must compile in default mode
+    through both pipeline and CLI,
+  - `legacy.infix_assignment.strict_rejection` must fail in strict mode with
+    the canonical assignment-pair migration hint,
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+    now expects `53` catalog entries, `8` legacy-out-of-scope entries, and
+    `31` expected-failure entries,
+  - and [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
+    now drives the new strict assignment-rejection bucket through pipeline and
+    CLI.
+
 ## 2026-04-16: strict mode rejects infix assignment compatibility
 - Continued the canonical assignment-pair work by widening strict mode:
   - default mode still accepts infix assignments such as `(OUT = IN)` and

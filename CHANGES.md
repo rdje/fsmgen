@@ -1,6 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-16
+### regression corpus now locks infix assignment strict cut
+- Added [t/corpus/legacy_infix_assignment.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_infix_assignment.fsm) as a paired default-compatible / strict-rejected corpus asset for infix assignment compatibility forms such as `(OUT = SRC)` and `(Q <- D)`.
+- Updated [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm), [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t), [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t), [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/book/src/10-errors-strict-mode-and-troubleshooting.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/10-errors-strict-mode-and-troubleshooting.md), and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so default mode keeps infix assignments as compatibility residue while strict mode rejects them with the canonical pair-form migration hint.
+
 ### planned canonical assignment pair form documented
 - Documented the future canonical assignment pair form `(assign-op (lhs rhs))` and guarded form `(assign-op (lhs rhs) <cond)` in [docs/book/src/02-language-basics.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/02-language-basics.md), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), while marking it clearly as planned syntax rather than active parser support.
 

@@ -1,0 +1,18 @@
+(?fsm:legacy_infix_assignment
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+
+  (+size
+    (SRC 8)
+    (D 8)
+    (OUT 8)
+    (Q 8)
+  )
+
+  (idle
+    (OUT = SRC)
+    (Q <- D)
+  )
+)
