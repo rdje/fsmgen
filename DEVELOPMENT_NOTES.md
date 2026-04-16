@@ -1,5 +1,28 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-16: strict-supported corpus markers prove positive strict acceptance
+- Continued the `R12` support-accounting lane after the infix-assignment
+  strict rejection work.
+- The corpus now has a small explicit positive marker, `strict_supported`, for
+  supported fixtures that must compile under strict mode as well as default
+  mode.
+- The first marked fixture is
+  [t/corpus/direct_assignment_pair_form.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_assignment_pair_form.fsm)
+  because it is the canonical assignment surface that strict diagnostics point
+  users toward when rejecting infix compatibility spellings.
+- [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t)
+  now runs marked supported fixtures through both `strict_mode => 1` and
+  `bin/fsmgen --strict`, preserving the same expected HDL-shape checks.
+- [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+  locks the marker as a direct-root supported FSM contract, so future markers
+  cannot drift onto legacy or expected-failure entries by accident.
+- Rationale:
+  - strict mode should not be documented only through rejection tests,
+  - every rejected compatibility spelling should ideally have a nearby
+    regression-backed canonical spelling that passes,
+  - and this keeps support accounting symmetric: “bad legacy form fails” and
+    “good forward form passes” are both machine-checked.
+
 ## 2026-04-16: post-flattening assembly makes stage-before-declaration ordering explicit
 - Hardened the direct SystemVerilog post-flattening assembly contract.
 - The consolidated intermediate stage is intentionally prepared before internal

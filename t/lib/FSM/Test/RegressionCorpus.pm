@@ -192,6 +192,7 @@ my @REGRESSION_CORPUS = (
         classification => 'supported_smoke',
         coverage => 'direct_root_pipeline_cli',
         source_kind => 'fsm',
+        strict_supported => 1,
         expected_module_name => 'direct_assignment_pair_form',
         expected_hdl_patterns => [
             qr/\bCOMB\s*=\s*SRC;/s,

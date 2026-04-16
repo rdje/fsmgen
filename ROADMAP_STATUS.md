@@ -64,8 +64,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- `R11` Composition contract strengthening.
+- `R12` Regression corpus and support accounting.
 - Current next decision point:
+  - Strict mode now has a positive support-accounting marker in addition to rejection buckets: [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) marks [t/corpus/direct_assignment_pair_form.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_assignment_pair_form.fsm) as `strict_supported`, [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t) runs marked supported fixtures through both `strict_mode => 1` and `bin/fsmgen --strict`, and [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) locks the marker as a supported direct-root FSM contract.
   - The recent `R11` alias slice shipped explicit external-RTL instance aliases: `(?rtl:module_name)` remains the shorthand where the instance and module/interface contract share one name, while `(?rtl:instance_name module_name)` realizes a distinct instance from the shared `(?rtlif:module_name ...)` contract and lets one `.rtlif` root back several instances.
   - The external-RTL parameter/generic override contract is now shipped: `.rtlif` may declare scalar or bounded aggregate `(params (NAME default_value) ...)` entries, `?rtl` instances may override those declared names through semantic `(params (NAME value) ...)` blocks, aggregate overrides are checked against the `.rtlif` default's inferred aggregate shape, and validated values now flow through `Instance`, `RealizedInstance`, structural RTL IR, and SystemVerilog `#(...)` instance-parameter emission. VHDL generic-map lowering remains follow-up work.
   - External-RTL parameter override values now also reuse composition-top and imported-package semantic symbols before planning: local constants, enum members, whole aggregate roots, and package-qualified roots such as `param_pkg.RESET_A5` are resolved after package imports populate `TopSymbols`, while unresolved override value symbols still abort before realization or HDL emission.
@@ -680,6 +681,10 @@ Done:
   - strict mode accepts canonical assignment pairs such as `(= (OUT IN))`, `(<- (Q D))`, and the rest of the active pair-form assignment family,
   - generated child sources run through the same shared direct-root strict owner, so external `?fsmc` / `?dtc` children receive the same boundary with child-source context,
   - and [t/295-strict-mode-infix-assignment-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/295-strict-mode-infix-assignment-boundary.t) locks default compatibility, strict pair-form acceptance, direct-root rejection, CLI no-output behavior, and external child-source rejection.
+- The maintained regression corpus now also has a positive strict-mode acceptance marker for that same canonical assignment-pair surface:
+  - [t/corpus/direct_assignment_pair_form.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_assignment_pair_form.fsm) is tagged `strict_supported`,
+  - [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t) runs the marked fixture through both strict pipeline and strict CLI paths,
+  - and [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) locks `strict_supported` as a supported direct-root FSM support-accounting marker.
 Left:
 - Widen strict-mode enforcement beyond the current canonical-root-family and current section-level compatibility cuts into more of the fully supported-vs-compatibility split.
 - Decide the next high-signal support-tier cuts after the current legacy root-family slices.
@@ -1687,6 +1692,11 @@ Done:
   - strict mode must reject the same fixture with the canonical assignment-pair migration hint such as `(= (OUT SRC))`,
   - the catalog now has explicit `legacy_assignment_default_pipeline_cli` and `strict_assignment_rejection_pipeline_cli` buckets instead of pretending action-level residue is section-level residue,
   - and [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now records `53` catalog entries, `8` legacy-out-of-scope entries, `31` expected-failure entries, and `14` supported-smoke entries.
+- The first positive strict-mode acceptance marker is now support-accounted too:
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) tags `feature.direct_assignment_pair_form` as `strict_supported`,
+  - [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t) runs strict-supported entries through `strict_mode => 1` and `bin/fsmgen --strict`, preserving the same expected HDL-shape checks as default mode,
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) checks that strict-supported markers stay attached only to supported direct-root FSM corpus assets and now records one such marker,
+  - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) explains that strict-supported is a positive acceptance marker, not a replacement coverage bucket.
 - The supported-smoke language-feature family now also covers canonical init/default and expression-backed widths:
   - [t/corpus/direct_canonical_init_directive.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_canonical_init_directive.fsm) records the canonical `(:= (signal value))` reset/default surface as a supported direct-root feature through pipeline and CLI,
   - [t/corpus/direct_size_expression_widths.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_size_expression_widths.fsm) records positive integer `+size` constant expressions over constants, enums, params, aggregate scalar leaves, unsized hex literals, `0d` decimal terms, signed based negative terms, unsized based literals, and Lisp-ish bitwise aliases as a supported direct-root feature through pipeline and CLI,

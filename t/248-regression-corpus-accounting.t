@@ -137,6 +137,12 @@ for my $entry (@entries) {
     else {
         fail("catalog entry '$entry->{id}' uses an unsupported source kind '$entry->{source_kind}'");
     }
+
+    if ($entry->{strict_supported}) {
+        is($entry->{classification}, 'supported_smoke', "strict-supported entry '$entry->{id}' is a supported-smoke asset");
+        is($entry->{source_kind}, 'fsm', "strict-supported entry '$entry->{id}' is currently a direct-root FSM asset");
+        is($entry->{coverage}, 'direct_root_pipeline_cli', "strict-supported entry '$entry->{id}' keeps direct pipeline/CLI coverage");
+    }
 }
 
 is(
@@ -153,6 +159,15 @@ is(
     scalar(grep { $_->{classification} eq 'expected_failure' } @entries),
     31,
     'catalog now records thirty-one explicit expected-failure entries',
+);
+is(
+    scalar(grep { $_->{strict_supported} } @entries),
+    1,
+    'catalog now records one positive strict-mode supported-smoke acceptance entry',
+);
+ok(
+    $by_id{'feature.direct_assignment_pair_form'}->{strict_supported},
+    'canonical assignment-pair corpus fixture is the first strict-supported positive acceptance asset',
 );
 
 done_testing();

@@ -85,6 +85,18 @@ more than one contract for it, for example:
   `.rtlif` roots, empty `.rtlif` roots, unsupported nested `.rtlif` structures, and
   duplicate embedded `.rtlif` roots.
 
+## Strict-supported marker
+
+Some `supported_smoke` entries also carry a `strict_supported` marker in the
+machine-readable catalog. That marker is not a replacement coverage bucket. It
+means the same supported fixture must compile through both the strict pipeline
+API and `bin/fsmgen --strict`, preserving the same semantic HDL shape.
+
+The first positive strict-supported corpus fixture is
+`feature.direct_assignment_pair_form`, which proves that canonical assignment
+pair syntax is not merely the migration hint for rejected infix compatibility
+forms. It is also a strict-mode accepted supported surface.
+
 ## Current named entries
 
 | ID | File | Classification | Coverage |
@@ -161,10 +173,13 @@ more than one contract for it, for example:
   `(assign-op (lhs rhs))` syntax reaches the same pipeline and CLI HDL shapes
   as infix compatibility assignments, including guarded nested RHS
   expressions, dual-output assignment families, delayed pulse, and LHS
-  deconstruct.
+  deconstruct. That same fixture is also the first `strict_supported` positive
+  acceptance asset, so [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t)
+  now runs it through both `strict_mode => 1` and `bin/fsmgen --strict`.
 - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
   checks that the catalog stays named, classified, unique, and pointed at real
-  repo assets.
+  repo assets, and also checks that strict-supported markers are only attached
+  to supported direct-root FSM corpus entries.
 - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
   checks that the current `legacy_out_of_scope` entries and the current
   `expected_failure` entries actually behave according to their recorded

@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-16
+### strict-supported corpus acceptance marker added
+- Marked [t/corpus/direct_assignment_pair_form.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_assignment_pair_form.fsm) as the first positive `strict_supported` corpus fixture in [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm).
+- Extended [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t) so strict-supported language-feature fixtures must compile through both `strict_mode => 1` and `bin/fsmgen --strict` while preserving the same HDL-shape expectations.
+- Extended [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t), [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/book/src/10-errors-strict-mode-and-troubleshooting.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/10-errors-strict-mode-and-troubleshooting.md), and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so positive strict-mode acceptance is support-accounted beside strict rejection buckets.
+
 ### post-flattening assembly stage preparation order is explicit
 - Updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm) so the consolidated intermediate stage-preparation handoff is named explicitly as `prepare_consolidated_intermediate_stage(...)`.
 - Extended [t/293-systemverilog-post-flattening-assembly-support.t](/Users/richarddje/Documents/github/fsmgen/t/293-systemverilog-post-flattening-assembly-support.t) with a fake-owner ordering contract proving stage preparation runs before internal declaration emission while the rendered stage text is still emitted later in the HDL.

@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-16: strict-supported corpus marker proves canonical pair acceptance
+- Continued `R12` with a positive strict-mode support-accounting marker:
+  - [t/corpus/direct_assignment_pair_form.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_assignment_pair_form.fsm)
+    is now tagged `strict_supported` in the regression corpus,
+  - [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t)
+    now reruns marked supported fixtures through both `strict_mode => 1` and
+    `bin/fsmgen --strict`,
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+    now checks that strict-supported markers stay on supported direct-root FSM
+    assets and currently records one marker,
+  - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md)
+    documents that `strict_supported` is a positive acceptance marker rather
+    than a replacement coverage bucket.
+- Continuity note:
+  - strict mode now has corpus-backed symmetry for the assignment surface:
+    infix compatibility forms are rejected, while canonical pair forms are
+    explicitly accepted through strict pipeline and CLI paths.
+
 ## 2026-04-16: direct SV assembly now locks stage preparation before declarations
 - Continued the lower-level direct-backend coordination lane:
   - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm)
