@@ -13,6 +13,79 @@ use FSM::HDL::FlattenedDT;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::PostFlatteningAssemblySupport;
 use FSM::Pipeline::SourceFrontend;
 
+{
+    package Local::SequenceStageSupport;
+    use v5.20;
+    use feature qw(signatures);
+    no warnings 'experimental::signatures';
+    sub new ($class, $events) { bless { events => $events }, $class }
+    sub generate_consolidated_intermediate_block ($self, $fsm_module) {
+        push @{$self->{events}}, 'stage';
+        return "STAGE\n";
+    }
+}
+
+{
+    package Local::SequenceScaffold;
+    use v5.20;
+    use feature qw(signatures);
+    no warnings 'experimental::signatures';
+    sub new ($class, $events) { bless { events => $events }, $class }
+    sub generate_header ($self, $fsm_module) {
+        push @{$self->{events}}, 'header';
+        return "HEADER\n";
+    }
+    sub generate_module_declaration ($self, $fsm_module) {
+        push @{$self->{events}}, 'module_declaration';
+        return "MODULE_DECLARATION\n";
+    }
+    sub generate_state_encoding ($self, $fsm_module) {
+        push @{$self->{events}}, 'state_encoding';
+        return "STATE_ENCODING\n";
+    }
+    sub generate_state_register ($self, $fsm_module) {
+        push @{$self->{events}}, 'state_register';
+        return "STATE_REGISTER\n";
+    }
+}
+
+{
+    package Local::SequenceInternalDecl;
+    use v5.20;
+    use feature qw(signatures);
+    no warnings 'experimental::signatures';
+    sub new ($class, $events) { bless { events => $events }, $class }
+    sub generate_internal_signal_declarations ($self, $fsm_module) {
+        my $stage_seen = grep { $_ eq 'stage' } @{$self->{events}};
+        push @{$self->{events}}, 'internal_declarations';
+        return $stage_seen ? "DECLARATIONS_STAGE_READY\n" : "DECLARATIONS_STAGE_MISSING\n";
+    }
+}
+
+{
+    package Local::SequenceEnableSupport;
+    use v5.20;
+    use feature qw(signatures);
+    no warnings 'experimental::signatures';
+    sub new ($class, $events) { bless { events => $events }, $class }
+    sub generate_enable_conditions ($self, $fsm_module) {
+        push @{$self->{events}}, 'enable_conditions';
+        return "ENABLES\n";
+    }
+}
+
+{
+    package Local::SequenceTailSupport;
+    use v5.20;
+    use feature qw(signatures);
+    no warnings 'experimental::signatures';
+    sub new ($class, $events) { bless { events => $events }, $class }
+    sub generate_systemverilog_tail ($self, $fsm_module) {
+        push @{$self->{events}}, 'tail';
+        return "TAIL\n";
+    }
+}
+
 subtest 'post-flattening assembly support owns the live scaffold/declaration/enable/stage/tail sequence' => sub {
     my $fsm_module = parse_fsm_module(
         'sv_post_flattening_assembly_support_contract',
@@ -97,6 +170,42 @@ FSM
         $generated_hdl,
         $expected_hdl,
         'orchestrator output matches the post-flattening assembly owner after reset/module attachment/flattening',
+    );
+};
+
+subtest 'post-flattening assembly prepares consolidated stage before declarations' => sub {
+    my @events;
+    my $ctx = {
+        backend_sv_consolidated_intermediate_stage_support => Local::SequenceStageSupport->new(\@events),
+        backend_sv_scaffold                              => Local::SequenceScaffold->new(\@events),
+        backend_sv_internal_decl                         => Local::SequenceInternalDecl->new(\@events),
+        enable_graph_enable_support                      => Local::SequenceEnableSupport->new(\@events),
+        backend_sv_generation_tail_support               => Local::SequenceTailSupport->new(\@events),
+    };
+    my $assembly_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::PostFlatteningAssemblySupport->new(
+        flattened_dt => $ctx,
+    );
+
+    my $hdl = $assembly_support->generate_systemverilog_module(bless({}, 'Local::FakeFSMModule'));
+
+    is_deeply(
+        \@events,
+        [
+            'stage',
+            'header',
+            'module_declaration',
+            'state_encoding',
+            'state_register',
+            'internal_declarations',
+            'enable_conditions',
+            'tail',
+        ],
+        'stage preparation runs before declaration emission even though the stage text is emitted later',
+    );
+    like(
+        $hdl,
+        qr/DECLARATIONS_STAGE_READY.*ENABLES\nSTAGE\nTAIL/s,
+        'assembly emits declarations before stage HDL while still making stage-discovered helpers visible to declarations',
     );
 };
 

@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-16: post-flattening assembly makes stage-before-declaration ordering explicit
+- Hardened the direct SystemVerilog post-flattening assembly contract.
+- The consolidated intermediate stage is intentionally prepared before internal
+  declarations because that stage owner runs prescan/factorization side effects
+  that discover helper/intermediate signals.
+- The rendered stage text is still emitted later, after enable conditions, so
+  the final HDL layout remains unchanged.
+- [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm)
+  now names that pre-declaration preparation step explicitly as
+  `prepare_consolidated_intermediate_stage(...)`.
+- [t/293-systemverilog-post-flattening-assembly-support.t](/Users/richarddje/Documents/github/fsmgen/t/293-systemverilog-post-flattening-assembly-support.t)
+  locks the ordering with fake owners, so a future “more natural looking”
+  reordering that emits declarations before stage preparation will fail locally
+  instead of silently dropping helper declarations.
+
 ## 2026-04-16: README bootstrap import-tree snapshot refreshed
 - Re-ran the README/session-bootstrap architecture pass after the latest
   language-contract and support-accounting slices.

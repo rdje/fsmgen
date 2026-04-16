@@ -21,6 +21,12 @@ composition of scaffold emission, internal declaration emission,
 enable-condition emission, the prescan-aware consolidated intermediate stage,
 and post-stage tail closeout
 
+=item *
+
+the deliberate pre-declaration preparation of the consolidated intermediate
+stage, so helper/intermediate signals discovered by prescan and factorization
+are known before internal declarations are emitted
+
 =back
 
 The paired C<FSM::HDL::FlattenedDT::Orchestrator> now owns per-run reset,
@@ -64,8 +70,7 @@ Generate the full direct SystemVerilog module after decision-tree flattening.
 
 sub generate_systemverilog_module ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
-    my $consolidated_intermediate_hdl = $ctx->{backend_sv_consolidated_intermediate_stage_support}
-        ->generate_consolidated_intermediate_block($fsm_module);
+    my $consolidated_intermediate_hdl = $self->prepare_consolidated_intermediate_stage($fsm_module);
 
     my $hdl = $ctx->{backend_sv_scaffold}->generate_header($fsm_module);
     $hdl .= $ctx->{backend_sv_scaffold}->generate_module_declaration($fsm_module);
@@ -85,6 +90,22 @@ sub generate_systemverilog_module ($self, $fsm_module) {
     return $hdl;
 }
 
+=head2 prepare_consolidated_intermediate_stage
+
+Prepare and render the consolidated intermediate stage before declarations are
+emitted. This ordering is intentional: the stage owner runs the direct backend
+prescan/factorization side effects that discover helper wires, and the internal
+declaration owner must see those helpers before it emits the declaration block.
+
+=cut
+
+sub prepare_consolidated_intermediate_stage ($self, $fsm_module) {
+    my $ctx = $self->{flattened_dt};
+
+    return $ctx->{backend_sv_consolidated_intermediate_stage_support}
+        ->generate_consolidated_intermediate_block($fsm_module);
+}
+
 1;
 
 __END__
@@ -99,5 +120,10 @@ C<FSM::HDL::FlattenedDT> backend context.
 =head2 generate_systemverilog_module
 
 Generates the full direct SystemVerilog module after decision-tree flattening.
+
+=head2 prepare_consolidated_intermediate_stage
+
+Runs the prescan-aware consolidated intermediate stage before declaration
+emission so declaration planning sees stage-discovered helpers.
 
 =cut

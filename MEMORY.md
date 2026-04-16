@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-16: direct SV assembly now locks stage preparation before declarations
+- Continued the lower-level direct-backend coordination lane:
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm)
+    now has an explicit `prepare_consolidated_intermediate_stage(...)` method,
+  - that method documents why the consolidated intermediate stage must be
+    prepared before internal declarations are emitted,
+  - final HDL text order is unchanged because the prepared stage text is still
+    appended after enable conditions,
+  - and [t/293-systemverilog-post-flattening-assembly-support.t](/Users/richarddje/Documents/github/fsmgen/t/293-systemverilog-post-flattening-assembly-support.t)
+    now has fake-owner coverage that proves stage preparation precedes
+    declaration emission.
+- This protects the declaration-before-use contract for helper wires discovered
+  by prescan/factorization and keeps the direct backend’s odd-looking ordering
+  intentional rather than accidental.
+
 ## 2026-04-16: README bootstrap refreshed the bin/fsmgen import-tree snapshot
 - Re-executed the README/session-bootstrap ramp-up:
   - read the README-linked steering docs at heading/active-section level,

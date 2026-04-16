@@ -1,6 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-16
+### post-flattening assembly stage preparation order is explicit
+- Updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm) so the consolidated intermediate stage-preparation handoff is named explicitly as `prepare_consolidated_intermediate_stage(...)`.
+- Extended [t/293-systemverilog-post-flattening-assembly-support.t](/Users/richarddje/Documents/github/fsmgen/t/293-systemverilog-post-flattening-assembly-support.t) with a fake-owner ordering contract proving stage preparation runs before internal declaration emission while the rendered stage text is still emitted later in the HDL.
+
 ### README bootstrap import-tree snapshot refreshed
 - Re-executed the [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) / [SESSION_BOOTSTRAP.md](/Users/richarddje/Documents/github/fsmgen/SESSION_BOOTSTRAP.md) ramp-up instructions and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the current `122` reachable project files / `121` reachable `.pm` packages snapshot.
 - Updated the measured package-family count so the `FSM::Package::*` family now records `14` reachable packages, including [perl/FSM/Package/IntegerLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/IntegerLiteralSupport.pm) as the shared integer-literal owner for scalar widths and direct `+size` expression terms.
