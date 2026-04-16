@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-16: modulo-by-zero is the sibling width arithmetic contract
+- Continued `R12` by making direct `+size` modulo-by-zero arithmetic a named
+  expected-failure corpus contract.
+- Rationale:
+  - division and modulo have separate evaluator branches, so documenting both
+    while testing only division would leave a quiet regression gap,
+  - `%`/`mod` are valid width-expression operators only when their operands
+    produce defined integer arithmetic,
+  - rejecting modulo-by-zero before generation preserves the invariant that HDL
+    emission only sees resolved positive widths, and
+  - this completes the divide/modulo-by-zero arithmetic pair already described
+    in the user docs.
+
 ## 2026-04-16: supported width operators still need valid arity
 - Continued `R12` by making malformed direct `+size` width-expression arity a
   named expected-failure corpus contract.

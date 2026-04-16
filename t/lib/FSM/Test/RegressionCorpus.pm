@@ -357,6 +357,15 @@ my @REGRESSION_CORPUS = (
         expected_error_pattern => qr/Malformed '\+size' entry for signal 'OUT'.*divides by zero in a width expression/s,
     },
     {
+        id => 'contract.direct_size_expression_modulo_by_zero',
+        relpath => 't/corpus/direct_size_expression_modulo_by_zero.fsm',
+        family => 'language_contract_fixture',
+        classification => 'expected_failure',
+        coverage => 'language_contract_rejection_pipeline_cli',
+        source_kind => 'fsm',
+        expected_error_pattern => qr/Malformed '\+size' entry for signal 'OUT'.*takes modulo by zero in a width expression/s,
+    },
+    {
         id => 'contract.direct_size_expression_unsupported_operator',
         relpath => 't/corpus/direct_size_expression_unsupported_operator.fsm',
         family => 'language_contract_fixture',

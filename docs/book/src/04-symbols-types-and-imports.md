@@ -166,6 +166,8 @@ For example, `(pow 2 3)` is intentionally rejected today because `pow` is not
 part of the bounded width-expression operator set.
 Likewise, `(+ 8)` is rejected because the supported infix-style width
 operators require at least two operands.
+Expressions such as `(/ 8 0)` or `(% 8 0)` are rejected before HDL generation
+because width declarations must fold to one well-defined positive integer.
 
 ## Constants
 

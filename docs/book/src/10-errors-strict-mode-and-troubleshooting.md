@@ -15,7 +15,7 @@ Typical causes:
 - `+size` expressions that reference unknown symbols or whole aggregate values
   where one scalar integer width is required
 - `+size` arithmetic that cannot produce a valid positive integer width, such
-  as division by zero
+  as division or modulo by zero
 - `+size` operators outside the bounded supported set, such as `pow`
 - `+size` operator forms with malformed arity, such as `(+ 8)`
 

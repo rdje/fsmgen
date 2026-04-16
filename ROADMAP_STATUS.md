@@ -1638,6 +1638,11 @@ Done:
   - `contract.direct_size_expression_divide_by_zero` is classified as `expected_failure` under `language_contract_rejection_pipeline_cli`,
   - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now checks that both pipeline and CLI reject it before HDL emission, and
   - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now records `46` catalog entries and `27` explicit expected-failure entries.
+- That same language-contract expected-failure family now also covers the modulo half of invalid `+size` width arithmetic:
+  - [t/corpus/direct_size_expression_modulo_by_zero.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_size_expression_modulo_by_zero.fsm) is now a named expected-failure fixture for a direct `+size` expression that takes modulo by zero while folding the requested width,
+  - `contract.direct_size_expression_modulo_by_zero` is classified as `expected_failure` under `language_contract_rejection_pipeline_cli`,
+  - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now checks that both pipeline and CLI reject it before HDL emission, and
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now records `49` catalog entries and `30` explicit expected-failure entries.
 - That same language-contract expected-failure family now also covers unsupported `+size` width-expression operators:
   - [t/corpus/direct_size_expression_unsupported_operator.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_size_expression_unsupported_operator.fsm) is now a named expected-failure fixture for a direct `+size` expression that attempts to use unsupported operator `pow`,
   - `contract.direct_size_expression_unsupported_operator` is classified as `expected_failure` under `language_contract_rejection_pipeline_cli`,
