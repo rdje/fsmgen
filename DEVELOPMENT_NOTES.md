@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-16: README bootstrap import-tree snapshot refreshed
+- Re-ran the README/session-bootstrap architecture pass after the latest
+  language-contract and support-accounting slices.
+- The static `bin/fsmgen` import walk now reaches `122` project files and
+  `121` `.pm` packages.
+- The only material package-family count change from the saved snapshot is that
+  `FSM::Package::*` is now `14` reachable packages because
+  [perl/FSM/Package/IntegerLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/IntegerLiteralSupport.pm)
+  is on the live scalar-width / direct `+size` expression path.
+- The runtime spine assessment remains stable:
+  [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) is still a
+  CLI/reporting shell, [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  remains the thin facade, and the next architectural pressure is still in the
+  direct backend and large parser/CoreAST/expression surfaces rather than in
+  the top-level pipeline facade.
+
 ## 2026-04-16: infix assignment compatibility is now support-accounted
 - Continued the strict assignment-surface work by adding a named regression
   corpus pair for infix assignment residue:

@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-16: README bootstrap refreshed the bin/fsmgen import-tree snapshot
+- Re-executed the README/session-bootstrap ramp-up:
+  - read the README-linked steering docs at heading/active-section level,
+  - inspected [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen),
+  - reran the static project-owned `FSM::...` import walk,
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md).
+- Current measured closure:
+  - `122` reachable project files,
+  - `121` reachable `.pm` packages,
+  - `FSM::Package::*` now counts `14` reachable packages because
+    [perl/FSM/Package/IntegerLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/IntegerLiteralSupport.pm)
+    is live on the scalar-width / direct `+size` expression path.
+- Runtime-spine conclusion stayed stable:
+  - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) is still
+    presentation/reporting glue around [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm),
+  - the orchestrator family remains the real dispatch spine,
+  - and the next honest seam remains lower-level direct-backend coordination
+    plus large parser/CoreAST/expression-surface hardening, not top-level
+    facade work.
+
 ## 2026-04-16: corpus now accounts for infix assignment compatibility residue
 - Continued the strict assignment-pair lane by moving infix assignment residue
   into the maintained regression corpus:
