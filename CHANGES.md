@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-17
+### protocol fixtures are strict-supported
+- Migrated the imported protocol fixtures [fsm/apb_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_requester.fsm), [fsm/apb_completer.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_completer.fsm), and [fsm/amba_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/amba_requester.fsm) to strict-clean authored syntax: canonical `(areset rst_n)`, canonical `(:= (signal value))`, and canonical assignment-pair body forms.
+- Updated [fsm/apb_tb.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_tb.fsm) to expose `rst_n` so the APB composition top stays aligned with the generated protocol-child reset contract.
+- Marked all four protocol fixtures as `strict_supported` in [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) and extended [t/247-protocol-fixture-regression-smoke.t](/Users/richarddje/Documents/github/fsmgen/t/247-protocol-fixture-regression-smoke.t) so both direct protocol actors and the APB composition top compile through strict pipeline and strict CLI.
+- Updated [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t), [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/book/src/10-errors-strict-mode-and-troubleshooting.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/10-errors-strict-mode-and-troubleshooting.md), and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so protocol smoke support is now positive strict-mode support-accounted.
+
 ### all direct language-feature fixtures are strict-supported
 - Migrated the remaining supported direct language-feature corpus fixtures to strict-clean authored syntax: partial indexed/sliced LHS writes, RHS concat/cat packing, LHS concat/cat deconstruction, expression-backed width assignments, and runtime div/mod assignments now use canonical pair-form assignments, and the partial-LHS fixtures now use canonical `(sreset reset)`.
 - Marked all ten current supported direct language-feature fixtures as `strict_supported` in [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm).

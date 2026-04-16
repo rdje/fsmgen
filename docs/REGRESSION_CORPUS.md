@@ -92,12 +92,15 @@ machine-readable catalog. That marker is not a replacement coverage bucket. It
 means the same supported fixture must compile through both the strict pipeline
 API and `bin/fsmgen --strict`, preserving the same semantic HDL shape.
 
-All current supported direct language-feature fixtures are now
-`strict_supported`. That means strict mode positively accepts the maintained
-fixtures for partial LHS writes, RHS concat/cat packing, LHS concat/cat
-deconstruction, canonical reset spellings, canonical init/default metadata,
-expression-backed widths, runtime div/mod expressions, and canonical assignment
-pairs.
+All current supported protocol fixtures are now `strict_supported`: the APB
+requester, APB completer, AMBA requester, and APB composition top use the
+canonical `areset rst_n`, `(:= (signal value))`, and assignment-pair surfaces
+and must pass both default and strict pipeline/CLI smoke. All current supported
+direct language-feature fixtures are also `strict_supported`. That means
+strict mode positively accepts the maintained fixtures for partial LHS writes,
+RHS concat/cat packing, LHS concat/cat deconstruction, canonical reset
+spellings, canonical init/default metadata, expression-backed widths, runtime
+div/mod expressions, and canonical assignment pairs.
 
 ## Current named entries
 
@@ -181,8 +184,9 @@ pairs.
 - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
   checks that the catalog stays named, classified, unique, and pointed at real
   repo assets, and also checks that strict-supported markers are only attached
-  to supported direct-root FSM corpus entries and that every supported direct
-  language-feature fixture is marked strict-supported.
+  to supported pipeline/CLI corpus entries, that every supported protocol
+  fixture is strict-supported, and that every supported direct language-feature
+  fixture is strict-supported.
 - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
   checks that the current `legacy_out_of_scope` entries and the current
   `expected_failure` entries actually behave according to their recorded

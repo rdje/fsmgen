@@ -10,14 +10,14 @@
 
   (+system
     (clock clk)
-    (asreset rstn)
+    (areset rst_n)
   )
 
-  (:= addr_q=32'h00000000)
-  (:= write_q=0)
-  (:= wdata_q=32'h00000000)
-  (:= wait_ctr=4'h0)
-  (:= reg_data_q=32'h00000000)
+  (:= (addr_q 32'h00000000))
+  (:= (write_q 0))
+  (:= (wdata_q 32'h00000000))
+  (:= (wait_ctr 4'h0))
+  (:= (reg_data_q 32'h00000000))
 
   (+size
     (PSEL 1)
@@ -37,15 +37,15 @@
   )
 
   (idle
-    (PREADY> = 1)
-    (PRDATA> = 32'h00000000)
-    (PSLVERR> = 0)
+    (= (PREADY> 1))
+    (= (PRDATA> 32'h00000000))
+    (= (PSLVERR> 0))
     (<PSEL
       (<!PENABLE
-        (addr_q <= PADDR)
-        (write_q <= PWRITE)
-        (wdata_q <= PWDATA)
-        (wait_ctr <= wait_cycles)
+        (<= (addr_q PADDR))
+        (<= (write_q PWRITE))
+        (<= (wdata_q PWDATA))
+        (<= (wait_ctr wait_cycles))
         (-> access)
       )
       (-> access)
@@ -53,27 +53,27 @@
   )
 
   (access
-    (PREADY> = 0)
-    (PRDATA> = 32'h00000000)
-    (PSLVERR> = 0)
+    (= (PREADY> 0))
+    (= (PRDATA> 32'h00000000))
+    (= (PSLVERR> 0))
 
     (<wait_ctr!=0
       (-- wait_ctr)
     )
 
     (<wait_ctr=0
-      (PREADY> = 1)
+      (= (PREADY> 1))
       (<!write_q
         (<addr_q=32'h00000000
-          (PRDATA> = reg_data_q)
+          (= (PRDATA> reg_data_q))
         )
       )
       (<addr_q!=32'h00000000
-        (PSLVERR> = 1)
+        (= (PSLVERR> 1))
       )
       (<write_q
         (<addr_q=32'h00000000
-          (reg_data_q <= wdata_q)
+          (<= (reg_data_q wdata_q))
         )
       )
       (-> idle)

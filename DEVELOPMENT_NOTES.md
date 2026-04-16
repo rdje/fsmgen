@@ -1,5 +1,31 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-17: protocol fixtures are strict-supported
+- Continued `R12` by promoting the imported protocol smoke fixtures from
+  default-compatible examples to strict-supported examples.
+- [fsm/apb_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_requester.fsm),
+  [fsm/apb_completer.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_completer.fsm),
+  and [fsm/amba_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/amba_requester.fsm)
+  now use canonical `(areset rst_n)`, canonical `(:= (signal value))`, and
+  canonical assignment-pair body forms.
+- [fsm/apb_tb.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_tb.fsm)
+  now exposes `rst_n` so the APB composition top stays aligned with the
+  generated protocol children.
+- [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm)
+  now marks all four protocol fixtures as `strict_supported`.
+- [t/247-protocol-fixture-regression-smoke.t](/Users/richarddje/Documents/github/fsmgen/t/247-protocol-fixture-regression-smoke.t)
+  runs the protocol direct actors and APB composition top through strict
+  pipeline and strict CLI in addition to default smoke.
+- Rationale:
+  - protocol fixtures are user-visible examples, so they should teach the
+    forward reset/init/assignment surface instead of compatibility residue,
+  - `strict_supported` should be useful beyond tiny language-feature fixtures
+    whenever a maintained corpus asset is intended to be forward-contract
+    clean,
+  - and proving the APB composition top in strict mode gives the corpus an
+    early positive strict check for generated-child composition, not only
+    direct roots.
+
 ## 2026-04-17: direct language-feature fixtures are all strict-supported
 - Completed the next positive strict-mode support-accounting step for the
   maintained direct language-feature corpus.

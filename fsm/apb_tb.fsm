@@ -7,7 +7,7 @@
 (?top:apb_tb
   (?ports:public_io
     clk
-    rstn
+    rst_n
     =start
     =req_write
     =req_addr<32

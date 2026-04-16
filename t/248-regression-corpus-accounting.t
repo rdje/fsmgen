@@ -140,8 +140,13 @@ for my $entry (@entries) {
 
     if ($entry->{strict_supported}) {
         is($entry->{classification}, 'supported_smoke', "strict-supported entry '$entry->{id}' is a supported-smoke asset");
-        is($entry->{source_kind}, 'fsm', "strict-supported entry '$entry->{id}' is currently a direct-root FSM asset");
-        is($entry->{coverage}, 'direct_root_pipeline_cli', "strict-supported entry '$entry->{id}' keeps direct pipeline/CLI coverage");
+        is($entry->{source_kind}, 'fsm', "strict-supported direct entry '$entry->{id}' is an FSM-root corpus asset")
+            if $entry->{coverage} eq 'direct_root_pipeline_cli';
+        ok(
+            $entry->{coverage} eq 'direct_root_pipeline_cli'
+                || $entry->{coverage} eq 'composition_top_pipeline_cli',
+            "strict-supported entry '$entry->{id}' keeps pipeline/CLI coverage",
+        );
     }
 }
 
@@ -162,10 +167,14 @@ is(
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
-    10,
-    'catalog now records ten positive strict-mode supported-smoke acceptance entries',
+    14,
+    'catalog now records fourteen positive strict-mode supported-smoke acceptance entries',
 );
 for my $strict_supported_id (qw(
+    protocol.apb_requester
+    protocol.apb_completer
+    protocol.amba_requester
+    protocol.apb_tb
     feature.partial_lhs_with_size
     feature.partial_lhs_inferred_width
     feature.direct_rhs_concat_pack
@@ -188,6 +197,15 @@ for my $entry (
     } @entries
 ) {
     ok($entry->{strict_supported}, "supported direct language-feature fixture '$entry->{id}' is strict-supported");
+}
+
+for my $entry (
+    grep {
+        $_->{family} eq 'protocol_fixture'
+            && $_->{classification} eq 'supported_smoke'
+    } @entries
+) {
+    ok($entry->{strict_supported}, "supported protocol fixture '$entry->{id}' is strict-supported");
 }
 
 done_testing();

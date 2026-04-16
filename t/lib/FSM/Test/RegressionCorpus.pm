@@ -15,6 +15,7 @@ my @REGRESSION_CORPUS = (
         classification => 'supported_smoke',
         coverage => 'direct_root_pipeline_cli',
         source_kind => 'fsm',
+        strict_supported => 1,
         expected_module_name => 'apb_requester',
     },
     {
@@ -24,6 +25,7 @@ my @REGRESSION_CORPUS = (
         classification => 'supported_smoke',
         coverage => 'direct_root_pipeline_cli',
         source_kind => 'fsm',
+        strict_supported => 1,
         expected_module_name => 'apb_completer',
     },
     {
@@ -33,6 +35,7 @@ my @REGRESSION_CORPUS = (
         classification => 'supported_smoke',
         coverage => 'direct_root_pipeline_cli',
         source_kind => 'fsm',
+        strict_supported => 1,
         expected_module_name => 'amba_requester',
     },
     {
@@ -42,6 +45,7 @@ my @REGRESSION_CORPUS = (
         classification => 'supported_smoke',
         coverage => 'composition_top_pipeline_cli',
         source_kind => 'composition',
+        strict_supported => 1,
         expected_top_name => 'apb_tb',
         expected_lane => 'C4',
         expected_instance_count => 2,

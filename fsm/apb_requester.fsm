@@ -9,14 +9,14 @@
 
   (+system
     (clock clk)
-    (asreset rstn)
+    (areset rst_n)
   )
 
-  (:= addr_q=32'h00000000)
-  (:= write_q=0)
-  (:= wdata_q=32'h00000000)
-  (:= last_error=0)
-  (:= last_read_data=32'h00000000)
+  (:= (addr_q 32'h00000000))
+  (:= (write_q 0))
+  (:= (wdata_q 32'h00000000))
+  (:= (last_error 0))
+  (:= (last_read_data 32'h00000000))
 
   (+size
     (start 1)
@@ -41,49 +41,49 @@
   )
 
   (idle
-    (PSEL> = 0)
-    (PENABLE> = 0)
-    (PWRITE> = 0)
-    (PADDR> = 32'h00000000)
-    (PWDATA> = 32'h00000000)
-    (busy> = 0)
-    (done> = 0)
+    (= (PSEL> 0))
+    (= (PENABLE> 0))
+    (= (PWRITE> 0))
+    (= (PADDR> 32'h00000000))
+    (= (PWDATA> 32'h00000000))
+    (= (busy> 0))
+    (= (done> 0))
 
     (<start
-      (addr_q <= req_addr)
-      (write_q <= req_write)
-      (wdata_q <= req_wdata)
-      (last_error> <= 0)
+      (<= (addr_q req_addr))
+      (<= (write_q req_write))
+      (<= (wdata_q req_wdata))
+      (<= (last_error> 0))
       (-> setup)
     )
   )
 
   (setup
-    (PSEL> = 1)
-    (PENABLE> = 0)
-    (PWRITE> = write_q)
-    (PADDR> = addr_q)
-    (PWDATA> = wdata_q)
-    (busy> = 1)
-    (done> = 0)
+    (= (PSEL> 1))
+    (= (PENABLE> 0))
+    (= (PWRITE> write_q))
+    (= (PADDR> addr_q))
+    (= (PWDATA> wdata_q))
+    (= (busy> 1))
+    (= (done> 0))
 
     (-> access)
   )
 
   (access
-    (PSEL> = 1)
-    (PENABLE> = 1)
-    (PWRITE> = write_q)
-    (PADDR> = addr_q)
-    (PWDATA> = wdata_q)
-    (busy> = 1)
-    (done> = 0)
+    (= (PSEL> 1))
+    (= (PENABLE> 1))
+    (= (PWRITE> write_q))
+    (= (PADDR> addr_q))
+    (= (PWDATA> wdata_q))
+    (= (busy> 1))
+    (= (done> 0))
 
     (<PREADY
-      (done> = 1)
-      (last_error> <= PSLVERR)
+      (= (done> 1))
+      (<= (last_error> PSLVERR))
       (<!write_q
-        (last_read_data> <= PRDATA)
+        (<= (last_read_data> PRDATA))
       )
       (-> idle)
     )

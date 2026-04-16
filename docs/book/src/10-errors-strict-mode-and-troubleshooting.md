@@ -81,8 +81,9 @@ The regression corpus deliberately keeps paired default-compatible and
 strict-rejected assets for compatibility residue such as infix assignments, so
 the supported boundary is machine-checked instead of living only in examples.
 It also keeps positive strict-acceptance markers for canonical supported
-surfaces. The current supported direct language-feature fixtures must pass
-through both the strict pipeline API and `bin/fsmgen --strict`.
+surfaces. The current supported protocol fixtures and supported direct
+language-feature fixtures must pass through both the strict pipeline API and
+`bin/fsmgen --strict`.
 
 ## Backend Expectations
 

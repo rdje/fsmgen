@@ -1,5 +1,28 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-17: protocol fixtures are strict-supported
+- Continued `R12` positive support accounting on the protocol smoke slice:
+  - [fsm/apb_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_requester.fsm),
+    [fsm/apb_completer.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_completer.fsm),
+    and [fsm/amba_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/amba_requester.fsm)
+    now use canonical `(areset rst_n)`, canonical `(:= (signal value))`, and
+    canonical assignment-pair body forms,
+  - [fsm/apb_tb.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_tb.fsm)
+    now exposes `rst_n` so the APB top auto-wires the generated protocol
+    children without reset-name residue,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm)
+    tags all four protocol fixtures as `strict_supported`,
+  - [t/247-protocol-fixture-regression-smoke.t](/Users/richarddje/Documents/github/fsmgen/t/247-protocol-fixture-regression-smoke.t)
+    now verifies both direct protocol actors and the APB composition top
+    through strict pipeline and strict CLI,
+  - and [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+    now records fourteen strict-supported entries total.
+- Continuity note:
+  - `strict_supported` is no longer limited to tiny direct language-feature
+    examples. It may also tag maintained protocol/composition smoke fixtures
+    when the complete fixture is forward-contract clean and has a strict
+    pipeline/CLI owner test.
+
 ## 2026-04-17: all supported direct language-feature fixtures are strict-supported
 - Continued `R12` by making the whole supported direct language-feature corpus
   strict-clean:
