@@ -366,6 +366,15 @@ my @REGRESSION_CORPUS = (
         expected_error_pattern => qr/Malformed '\+size' entry for signal 'OUT'.*uses unsupported width expression operator 'pow'/s,
     },
     {
+        id => 'contract.direct_size_expression_bad_arity',
+        relpath => 't/corpus/direct_size_expression_bad_arity.fsm',
+        family => 'language_contract_fixture',
+        classification => 'expected_failure',
+        coverage => 'language_contract_rejection_pipeline_cli',
+        source_kind => 'fsm',
+        expected_error_pattern => qr/Malformed '\+size' entry for signal 'OUT'.*operator '\+' requires at least two operands/s,
+    },
+    {
         id => 'contract.direct_lhs_deconstruct_width_mismatch',
         relpath => 't/corpus/direct_lhs_deconstruct_width_mismatch.fsm',
         family => 'language_contract_fixture',

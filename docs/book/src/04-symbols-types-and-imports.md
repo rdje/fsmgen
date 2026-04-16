@@ -164,6 +164,8 @@ being delegated to the backend.
 
 For example, `(pow 2 3)` is intentionally rejected today because `pow` is not
 part of the bounded width-expression operator set.
+Likewise, `(+ 8)` is rejected because the supported infix-style width
+operators require at least two operands.
 
 ## Constants
 

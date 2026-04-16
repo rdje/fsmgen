@@ -1,0 +1,14 @@
+(?fsm:direct_size_expression_bad_arity
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+
+  (+size
+    (OUT (+ 8))
+  )
+
+  (idle
+    (OUT = 1)
+  )
+)

@@ -62,7 +62,7 @@ more than one contract for it, for example:
   bucket now includes malformed `+size` entries and non-positive resolved
   `+size` expression widths, plus unresolved or non-scalar symbols inside
   `+size` expressions, divide-by-zero width arithmetic, and unsupported width
-  operators.
+  operators or malformed operator arity.
 - `direct_generation_contract_rejection_pipeline_cli`: the entry is
   intentionally rejected by the normal direct-generation contract through both
   the pipeline API and the CLI after parsing succeeds but before HDL is emitted,
@@ -113,6 +113,7 @@ more than one contract for it, for example:
 | `contract.direct_size_expression_aggregate_symbol` | [t/corpus/direct_size_expression_aggregate_symbol.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_size_expression_aggregate_symbol.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.direct_size_expression_divide_by_zero` | [t/corpus/direct_size_expression_divide_by_zero.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_size_expression_divide_by_zero.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.direct_size_expression_unsupported_operator` | [t/corpus/direct_size_expression_unsupported_operator.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_size_expression_unsupported_operator.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.direct_size_expression_bad_arity` | [t/corpus/direct_size_expression_bad_arity.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_size_expression_bad_arity.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.direct_lhs_deconstruct_width_mismatch` | [t/corpus/direct_lhs_deconstruct_width_mismatch.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_lhs_deconstruct_width_mismatch.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.direct_rhs_concat_width_mismatch` | [t/corpus/direct_rhs_concat_width_mismatch.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_rhs_concat_width_mismatch.fsm) | `expected_failure` | `direct_generation_contract_rejection_pipeline_cli` |
 | `contract.direct_aggregate_contract_mismatch` | [t/corpus/direct_aggregate_contract_mismatch.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_aggregate_contract_mismatch.fsm) | `expected_failure` | `direct_generation_contract_rejection_pipeline_cli` |

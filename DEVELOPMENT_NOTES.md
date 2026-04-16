@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-16: supported width operators still need valid arity
+- Continued `R12` by making malformed direct `+size` width-expression arity a
+  named expected-failure corpus contract.
+- Rationale:
+  - a recognized operator is not enough to make a width expression meaningful,
+  - `(+ 8)` is ambiguous at the intent level and cannot safely determine a
+    hardware width,
+  - keeping arity rejection beside unsupported-operator and divide-by-zero
+    fixtures documents the full semantic boundary for the bounded
+    width-expression language, and
+  - generation remains a pure AST/metadata emitter because malformed expression
+    shape is rejected before any backend lowering.
+
 ## 2026-04-16: width operators stay intentionally bounded
 - Continued `R12` by making unsupported direct `+size` width-expression
   operators a named expected-failure corpus contract.

@@ -17,6 +17,7 @@ Typical causes:
 - `+size` arithmetic that cannot produce a valid positive integer width, such
   as division by zero
 - `+size` operators outside the bounded supported set, such as `pow`
+- `+size` operator forms with malformed arity, such as `(+ 8)`
 
 These should now fail explicitly instead of falling through to vague behavior.
 
