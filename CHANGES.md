@@ -1,6 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-16
+### regression corpus now rejects non-positive +size expressions
+- Added [t/corpus/direct_size_expression_non_positive.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_size_expression_non_positive.fsm) as a named `expected_failure` direct-root corpus asset for a direct `+size` constant expression that folds to zero.
+- Updated [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm), [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t), [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md), and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so non-positive expression-backed widths are support-accounted as ordinary language-contract failures through both pipeline and CLI.
+
 ### supported corpus now covers shared literal width expressions
 - Widened [t/corpus/direct_size_expression_widths.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_size_expression_widths.fsm) so the named supported-smoke `+size` expression asset now covers `0d` decimal terms, signed SystemVerilog based negative terms, and unsized based literals in addition to constants, enums, params, aggregate scalar leaves, and bitwise aliases.
 - Updated [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) so [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t) checks the widened generated widths through both pipeline and CLI.

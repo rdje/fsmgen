@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-16: width-expression support needs a named rejection twin
+- Continued `R12` by adding the expected-failure side of the expression-backed
+  `+size` corpus story.
+- Rationale:
+  - positive expression-backed widths are now user-facing supported behavior,
+    so the corresponding failure mode must also be support-accounted,
+  - non-positive widths are rejected before HDL generation because a backend
+    should never be asked to guess whether width `0`, negative widths, or
+    implicit widening are acceptable,
+  - making the fixture fold through constants and `0d` syntax proves the
+    rejection happens after semantic expression evaluation, not only for a raw
+    literal `0`,
+  - and keeping it in `language_contract_rejection_pipeline_cli` is deliberate:
+    this is a frontend/direct-root contract violation, not a parsed
+    direct-generation backend contract failure.
+
 ## 2026-04-16: focused width hardening should graduate into corpus evidence
 - Continued `R12` immediately after the shared integer-literal parser slice.
 - Rationale:

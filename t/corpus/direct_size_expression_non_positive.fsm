@@ -1,0 +1,19 @@
+(?fsm:direct_size_expression_non_positive
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+
+  (+constants
+    (BASE_W 2)
+    (DEC_W 0d2)
+  )
+
+  (+size
+    (OUT (- BASE_W DEC_W))
+  )
+
+  (idle
+    (OUT = 1)
+  )
+)
