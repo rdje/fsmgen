@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-16: corpus now rejects aggregate +size expression roots
+- Continued `R12` by adding the named non-scalar sibling for direct `+size`
+  expressions: aggregate scalar leaves may drive widths, but whole aggregate
+  roots cannot stand in for one scalar integer width.
+- Important continuity note:
+  - [t/corpus/direct_size_expression_aggregate_symbol.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_size_expression_aggregate_symbol.fsm)
+    uses `WIDTHS` as a whole list aggregate root in `(+size (OUT WIDTHS))`,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm)
+    records it as `contract.direct_size_expression_aggregate_symbol` under
+    `language_contract_rejection_pipeline_cli`,
+  - [docs/book/src/04-symbols-types-and-imports.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/04-symbols-types-and-imports.md)
+    and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+    now state that scalar aggregate leaves are valid width ingredients while
+    whole aggregate roots are not raw scalar widths, and
+  - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
+    proves both pipeline and CLI reject the source without emitting HDL.
+
 ## 2026-04-16: corpus now rejects unresolved +size expression symbols
 - Continued `R12` by adding the missing named expected-failure side for a
   direct `+size` expression that references an undeclared scalar symbol.

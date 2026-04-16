@@ -500,6 +500,7 @@ This is the current `R8` draft normative contract for the symbol-definition and 
   - a named scalar or aggregate type such as `bit`, `byte_t`, `frame_t`, or `pkg_name.byte_t`
   - a positive integer constant expression using literals, same-root/imported constants, enum members, params/generics, aggregate scalar leaves, and the bounded Lisp-ish arithmetic/bitwise operators `+`, `-`, `*`, `/`, `%`, `&`, `|`, `^` plus aliases `add`, `sub`, `mul`, `div`, `mod`, `and`, `or`, `xor`
 - Direct `+size` expression literals and positive scalar width symbols use the same integer-literal interpretation for decimal, `0d`, `0b`, `0o`, `0x`, and SystemVerilog-style based spellings; signed literal terms may participate inside an expression when the final resolved width is still positive, for example `(+ 8'sd9 8'sd-1)`.
+- Width expressions may use aggregate scalar leaves such as `LANES[1]` or `FRAME.meta.mode`, but a whole aggregate root such as `LANES` is not itself a scalar width. Use a scalar leaf or a named aggregate type alias when the intent is typed aggregate storage.
 - The legacy empty form `(+size)` remains supported as a no-op in default mode because it still exists in compatibility coverage.
 - Strict mode rejects the empty no-op form and requires either explicit width entries or no `+size` section at all.
 - Current active use:
@@ -507,7 +508,7 @@ This is the current `R8` draft normative contract for the symbol-definition and 
   - `(+size (DATA (+ BYTE_W 1)) (MODE mode.WIDTH) (LANE LANES[0]))`
   - `(+size (SIGNED_TERM_W (+ 8'sd9 8'sd-1)) (DEC_TERM_W (+ 0d10 -2)))`
   - `(+size)`
-- Malformed payloads like `(+size BROKEN)`, malformed entries like `(+size (A))`, and non-positive widths like `(+size (A 0))` are rejected explicitly.
+- Malformed payloads like `(+size BROKEN)`, malformed entries like `(+size (A))`, unresolved width symbols, whole aggregate width-expression roots, and non-positive widths like `(+size (A 0))` are rejected explicitly.
 
 `(+constants ...)`:
 - Defines named literal constants.

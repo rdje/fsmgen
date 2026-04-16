@@ -12,6 +12,8 @@ Typical causes:
 - malformed child entries
 - malformed `?ports` or `?toplink` tokens
 - malformed `+system` or `:=` payloads
+- `+size` expressions that reference unknown symbols or whole aggregate values
+  where one scalar integer width is required
 
 These should now fail explicitly instead of falling through to vague behavior.
 

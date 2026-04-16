@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-16: whole aggregates are not raw scalar widths
+- Continued `R12` by giving the non-scalar side of direct `+size` expressions
+  its own named corpus contract.
+- Rationale:
+  - aggregate scalar leaves such as `LANES[1]` are valid width ingredients
+    because they resolve to one integer,
+  - whole aggregate roots such as `LANES` carry structure and therefore cannot
+    be silently collapsed into one scalar width without losing intent,
+  - if the author wants typed aggregate storage, the proper surface is a named
+    aggregate `+types` alias in the `+size` slot, not a whole aggregate value
+    used as a raw width expression,
+  - and this remains a frontend language-contract error because generation
+    should only see widths and typed declarations that have already been
+    semantically resolved.
+
 ## 2026-04-16: unknown width-expression symbols are contract failures
 - Continued `R12` by making unresolved direct `+size` expression symbols a named
   expected-failure corpus case.

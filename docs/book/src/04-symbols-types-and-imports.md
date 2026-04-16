@@ -138,6 +138,10 @@ attach a declared aggregate/scalar type rather than computing a raw width.
 Positive integer scalar symbols used as direct `+size` widths or composition
 `?ports` widths accept the same common scalar literal spellings, so a shared
 `(BYTE_W 0x8)` or `(BYTE_W 'h8)` can safely drive a width contract.
+Aggregate scalar leaves may participate too, for example `LANES[1]` or
+`FRAME.meta.mode`, but a whole aggregate root such as `LANES` is not itself a
+scalar width. Use a scalar leaf when computing a raw width, or use a declared
+aggregate type alias when the intent is typed aggregate storage.
 The direct `+size` expression path and the scalar-width-symbol path share the
 same integer literal interpreter for decimal, `0d`, `0b`, `0o`, `0x`, and
 SystemVerilog-style based spellings. Signed literal terms are valid ingredients

@@ -1,0 +1,18 @@
+(?fsm:direct_size_expression_aggregate_symbol
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+
+  (+constants
+    (WIDTHS (2 4))
+  )
+
+  (+size
+    (OUT WIDTHS)
+  )
+
+  (idle
+    (OUT = 1)
+  )
+)
