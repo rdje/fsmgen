@@ -573,6 +573,7 @@ package FSM::CoreAST::Literal;
         if (defined $self->{width}) {
             return $self->{radix} eq 'hex' ? "$self->{width}'h$v" :
                    $self->{radix} eq 'binary' ? "$self->{width}'b$v" :
+                   $self->{radix} eq 'octal' ? "$self->{width}'o$v" :
                    "$self->{width}'d$v";
         }
         return $v;
@@ -583,6 +584,7 @@ package FSM::CoreAST::Literal;
         if (defined $self->{width}) {
             return $self->{radix} eq 'hex' ? "x\"$v\"" :
                    $self->{radix} eq 'binary' ? "\"$v\"" :
+                   $self->{radix} eq 'octal' ? $v :
                    $v;
         }
         return $v;
@@ -593,6 +595,7 @@ package FSM::CoreAST::Literal;
         if (defined $self->{width}) {
             return $self->{radix} eq 'hex' ? "$self->{width}'h$v" :
                    $self->{radix} eq 'binary' ? "$self->{width}'b$v" :
+                   $self->{radix} eq 'octal' ? "$self->{width}'o$v" :
                    "$self->{width}'d$v";
         }
         return $v;

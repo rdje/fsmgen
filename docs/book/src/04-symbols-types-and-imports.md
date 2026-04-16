@@ -135,6 +135,9 @@ magic numbers:
 The resolved value must be one positive integer before generation. Named types
 still work in this same slot, so `(+size (frame frame_t))` remains the way to
 attach a declared aggregate/scalar type rather than computing a raw width.
+Positive integer scalar symbols used as direct `+size` widths or composition
+`?ports` widths accept the same common scalar literal spellings, so a shared
+`(BYTE_W 0x8)` or `(BYTE_W 'h8)` can safely drive a width contract.
 
 ## Constants
 
@@ -145,9 +148,17 @@ Simple scalar example:
 ```lisp
 (+constants
   (RESET_BYTE 8'hA5)
+  (RESET_ALIAS 0xA5)
+  (LANE_MASK 0b1010)
+  (OCT_W 0o10)
   (IDLE_MASK 8'h03)
 )
 ```
+
+Scalar constants accept the common integer spellings used elsewhere in the
+language: plain decimal, sized SystemVerilog literals, unsized
+SystemVerilog-style based literals such as `'hA5`, prefixed forms such as
+`0xA5`, `0b1010`, and `0o77`, plus underscore-separated digits.
 
 Those names can then be used in direct expressions:
 

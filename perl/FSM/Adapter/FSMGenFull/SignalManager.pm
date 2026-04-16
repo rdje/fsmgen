@@ -400,6 +400,7 @@ sub _literal_to_parameter_payload($literal_expr) {
 
     my $prefix = $radix eq 'binary' ? 'b'
         : $radix eq 'hex' ? 'h'
+        : $radix eq 'octal' ? 'o'
         : 'd';
 
     return {

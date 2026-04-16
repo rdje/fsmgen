@@ -409,18 +409,13 @@ sub parse_scalar_expression($self, $scalar) {
     my $typed_aggregate_ref = $self->parse_typed_aggregate_signal_reference($scalar);
     return $typed_aggregate_ref if $typed_aggregate_ref;
     
-    if ($scalar =~ /^(\d+)'([bdhxBDHX])([0-9a-fA-F_]+)$/) {
-        my ($width, $radix_char, $value) = ($1, lc($2), $3);
-        $value =~ s/_//g;
-        my %radix_map = ('b' => 'binary', 'd' => 'decimal', 'h' => 'hex', 'x' => 'hex');
-        my $radix = $radix_map{$radix_char} // 'decimal';
-        return FSM::CoreAST::Literal->new($value, width => $width, radix => $radix);
-    } elsif ($scalar =~ /^(\d+)'([0-9a-fA-F_]+)$/) {
+    my $integer_literal = $self->parse_common_integer_literal($scalar);
+    return $integer_literal if $integer_literal;
+
+    if ($scalar =~ /^(\d+)'([0-9a-fA-F_]+)$/) {
         my ($width, $value) = ($1, $2);
         $value =~ s/_//g;
         return FSM::CoreAST::Literal->new($value, width => $width, radix => 'decimal');
-    } elsif ($scalar =~ /^(\d+)$/) {
-        return FSM::CoreAST::Literal->new($scalar);
     } elsif ($scalar =~ /^const_(\d+)b([01xXzZ_]+)$/) {
         # Common FSMGen constant encoding, e.g. const_8b0 / const_16b0000_1111
         my ($width, $value) = ($1, $2);
@@ -484,6 +479,84 @@ sub parse_scalar_expression($self, $scalar) {
             "Guard-prefixed tokens belong in condition position, not inside ordinary expressions. ".
             "See docs/USER_GUIDE.md for the current supported boundary.\n";
     }
+}
+
+sub parse_common_integer_literal($self, $scalar) {
+    return undef unless defined($scalar) && !ref($scalar);
+
+    my $text = $scalar;
+    $text =~ s/_//g;
+
+    return FSM::CoreAST::Literal->new($1)
+        if $text =~ /^(\d+)$/;
+
+    return FSM::CoreAST::Literal->new($1)
+        if $text =~ /^0d(\d+)$/i;
+
+    if ($text =~ /^0b([01]+)$/i) {
+        return FSM::CoreAST::Literal->new(
+            $1,
+            width => length($1),
+            radix => 'binary',
+        );
+    }
+
+    if ($text =~ /^0o([0-7]+)$/i) {
+        return FSM::CoreAST::Literal->new(
+            $1,
+            width => length($1) * 3,
+            radix => 'octal',
+        );
+    }
+
+    if ($text =~ /^0x([0-9a-fA-F]+)$/i) {
+        return FSM::CoreAST::Literal->new(
+            uc($1),
+            width => length($1) * 4,
+            radix => 'hex',
+        );
+    }
+
+    if ($text =~ /^(\d+)'(s?)([bBoOdDhHxX])([0-9a-fA-F]+)$/) {
+        my ($width, $radix_char, $value) = ($1, lc($3), $4);
+        return FSM::CoreAST::Literal->new(
+            uc($value),
+            width => $width,
+            radix => $self->literal_radix_name($radix_char),
+        );
+    }
+
+    if ($text =~ /^'(s?)([bBoOdDhHxX])([0-9a-fA-F]+)$/) {
+        my ($radix_char, $value) = (lc($2), $3);
+        my $width = $self->intrinsic_based_literal_width($radix_char, $value);
+        return FSM::CoreAST::Literal->new(
+            uc($value),
+            width => $width,
+            radix => $self->literal_radix_name($radix_char),
+        );
+    }
+
+    return undef;
+}
+
+sub literal_radix_name($self, $radix_char) {
+    my %radix_map = (
+        b => 'binary',
+        d => 'decimal',
+        o => 'octal',
+        h => 'hex',
+        x => 'hex',
+    );
+
+    return $radix_map{lc($radix_char // 'd')} // 'decimal';
+}
+
+sub intrinsic_based_literal_width($self, $radix_char, $digits) {
+    my $digit_count = length($digits // '');
+    return $digit_count if lc($radix_char // '') eq 'b';
+    return $digit_count * 3 if lc($radix_char // '') eq 'o';
+    return $digit_count * 4 if lc($radix_char // '') eq 'h' || lc($radix_char // '') eq 'x';
+    return undef;
 }
 
 sub parse_typed_aggregate_signal_reference($self, $scalar) {

@@ -1222,6 +1222,7 @@ sub canonicalize_top_symbol_literal_payload ($self, %args) {
     return $value unless defined $width;
     return $width."'b".$value if $radix eq 'binary';
     return $width."'h".$value if $radix eq 'hex';
+    return $width."'o".$value if $radix eq 'octal';
     return $width."'d".$value;
 }
 

@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-16
+### scalar width symbols now share common integer literal support
+- Widened the shared scalar literal path so direct, composition, and package constants can parse common integer spellings such as `0xA5`, `0b1010`, `0o10`, unsized SystemVerilog based literals like `'hA5`, and underscore-separated digits.
+- Hardened positive integer scalar-width resolution so direct `+size` and composition `?ports` width symbols resolve those same literal families consistently instead of accepting only decimal or sized literals.
+- Added [t/294-scalar-width-support.t](/Users/richarddje/Documents/github/fsmgen/t/294-scalar-width-support.t) and extended [t/279-declarative-scalar-types.t](/Users/richarddje/Documents/github/fsmgen/t/279-declarative-scalar-types.t) so both the helper and composition pipeline/CLI paths are regression-backed.
+
 ### canonical init/default and expression-backed +size slots shipped
 - Added the canonical strict-safe `(:= (signal value))` init/reset directive form, including multi-entry directives and nested Lisp-ish expression values that may reference constants, enum members, params/generics, and aggregate scalar leaves.
 - Kept legacy compact `(:= signal=value)` as default-mode compatibility residue while updating strict-mode diagnostics to point to the canonical pair form.

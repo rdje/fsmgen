@@ -226,7 +226,7 @@ subtest 'direct-root +size widths may use local and imported positive integer sc
         <<'FSM'
 (?pkg:shared_cfg
   (+constants
-    (BYTE_W 8)
+    (BYTE_W 0x8)
   )
 )
 FSM
@@ -564,20 +564,24 @@ FSM
   (?ports:public_io
     out_data>shared_cfg.BYTE_W
     out_flag>FLAG_W
+    out_oct>OCT_W
   )
   (+constants
-    (FLAG_W 1)
+    (FLAG_W 0b1)
+    (OCT_W 0o10)
   )
   (?rtl:uart_tx)
   (?toplink:wiring
     /uart_tx.data_out/out_data/
     /uart_tx.flag_out/out_flag/
+    /uart_tx.oct_out/out_oct/
   )
 )
 
 (?rtlif:uart_tx
   data_out>8:data
   flag_out>:data
+  oct_out>8:data
 )
 FSM
     );
@@ -595,8 +599,10 @@ FSM
 
     is($ports_by_name{out_data}->width, 8, 'composition ?ports imported positive integer scalar symbol resolves to width 8');
     is($ports_by_name{out_flag}->width, 1, 'composition ?ports local positive integer scalar symbol resolves to width 1');
+    is($ports_by_name{out_oct}->width, 8, 'composition ?ports local octal positive integer scalar symbol resolves to width 8');
     like($hdl, qr/output\s+\[7:0\]\s+out_data\b/s, 'generated top HDL uses imported positive integer scalar symbol width on out_data');
     like($hdl, qr/output\s+out_flag\b/s, 'generated top HDL uses local positive integer scalar symbol width on out_flag');
+    like($hdl, qr/output\s+\[7:0\]\s+out_oct\b/s, 'generated top HDL uses local octal positive integer scalar symbol width on out_oct');
 
     my @cmd = ('./bin/fsmgen', '--quiet', '--path', $libdir, '--output', $output_path, $composition_path);
     my ($success, $error_code, $full_buf, $stdout_buf, $stderr_buf) = run(command => \@cmd, verbose => 0);

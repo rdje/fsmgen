@@ -512,7 +512,8 @@ This is the current `R8` draft normative contract for the symbol-definition and 
 - Shape:
   - non-empty list of `(NAME value)` entries
 - Current active use:
-  - `(+constants (C0 8'3) (ZERO const_8b0))`
+  - `(+constants (C0 8'3) (RESET_BYTE 0xA5) (LANE_MASK 0b1010) (OCT_W 0o10) (ZERO const_8b0))`
+- Scalar constants may use plain decimal, sized SystemVerilog literals, unsized SystemVerilog-style based literals such as `'hA5`, prefixed forms such as `0xA5`, `0b1010`, `0o77`, and underscore-separated digits.
 - References to those names resolve as literals in assignment RHS expressions and guard equality conditions.
 - Direct-root note:
   - inside `?fsm:name` and `?dt:name`, `(+constants ...)` also has a bounded aggregate extension where values may be non-empty lists or nested hash-like `(member value)` aggregates.
@@ -591,7 +592,7 @@ This is the current `R8` draft normative contract for the symbol-definition and 
   - partial direct-root aggregate LHS writes such as `(OUT_FRAME.tag = IN_FRAME.tag)` and `(OUT_FRAME.payload[1] = IN_NIBBLE)` are mapped through the typed AST to the correct packed base-signal ranges before final mux generation.
   - when one of those width entries resolves to a signed scalar type alias, the generated SystemVerilog boundary/internal declarations now preserve that signedness, for example `input wire signed [7:0] IN` or `reg signed [7:0] OUT`.
   - when one of those width entries resolves to an explicit `(two_state ...)` or `(four_state ...)` scalar type alias, the generated SystemVerilog boundary/internal declarations now also preserve that state-model intent as `bit` or `logic`, for example `input bit [7:0] IN`, `logic signed [7:0] OUT`, or `input logic signed [7:0] IN`.
-  - those same direct-root `(+size ...)` width entries may now also use local or imported positive integer scalar symbols such as `(OUT BYTE_W)` or `(FLAG shared.FLAG_W)` when the resolved symbol is one positive integer literal value.
+  - those same direct-root `(+size ...)` width entries may now also use local or imported positive integer scalar symbols such as `(OUT BYTE_W)` or `(FLAG shared.FLAG_W)` when the resolved symbol is one positive integer literal value; those width symbols accept common scalar literal spellings such as `8`, `8'h8`, `'h8`, `0x8`, `0b1000`, and `0o10`.
   - local and imported types resolve through one declarative-scope pass, so normal non-cyclic references do not depend on declaration order.
   - when one of those width entries resolves through a named type alias, the forward `structural_rtl_ir` boundary and mirrored `module_info` now also preserve `declared_type_name` plus the resolved canonical `declared_type_spec` on those module ports, so embedders can still see the authored type contract instead of only the flattened width/signed/state-model result.
 - Composition-top note:
@@ -601,7 +602,7 @@ This is the current `R8` draft normative contract for the symbol-definition and 
   - when those local or imported `?ports` width aliases resolve to signed scalar types, emitted Verilog-family top ports now preserve that signedness, for example `input signed [7:0] in_data` or `output signed [7:0] out_data`.
   - when those local or imported `?ports` width aliases resolve to explicit `(two_state ...)` or `(four_state ...)` scalar types, emitted Verilog-family top ports now also preserve that state-model intent as `bit` or `logic`, for example `input bit [7:0] in_data`, `output bit [7:0] out_data`, or `input logic signed [7:0] in_data`.
   - when those local or imported `?ports` width aliases resolve to aggregate aliases, emitted composition-top SystemVerilog now synthesizes backend-owned local packed typedefs such as `frame_t__fsmgen_t` or `shared__frame_t__fsmgen_t`; record fields keep authored names, list fields become deterministic `item_0`, `item_1`, ... members, and typed top ports plus typed structural nets then reuse those typedefs instead of flattening back to raw packed-vector declarations.
-  - composition `?ports` width tokens may now also use local or imported positive integer scalar symbols such as `out_data>BYTE_W` or `out_data>shared.BYTE_W` when the resolved symbol is one positive integer literal value.
+  - composition `?ports` width tokens may now also use local or imported positive integer scalar symbols such as `out_data>BYTE_W` or `out_data>shared.BYTE_W` when the resolved symbol is one positive integer literal value; those width symbols accept common scalar literal spellings such as `8`, `8'h8`, `'h8`, `0x8`, `0b1000`, and `0o10`.
 - when a declared `?ports` width token resolves through a named type alias, composition-top `structural_rtl_ir` now preserves `declared_type_name` plus the resolved canonical `declared_type_spec` on those top ports, and realized generated-child interface ports preserve the same metadata when the child source declared those ports through named `+types`.
 - when an internal composition carrier net is inferred from one typed child-output family, composition-top `structural_rtl_ir` now preserves that carrier net's `declared_type_name` plus canonical `declared_type_spec` too, instead of flattening the net back to width-only metadata.
 - Malformed shapes like `(+types)`, `(+types BROKEN)`, malformed entries like `(+types (type only_name))`, and explicit type dependency cycles are rejected explicitly.

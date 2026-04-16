@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-16: scalar integer literal spellings should not fork by lane
+- Continued `R8` with a small consistency hardening slice after the
+  expression-backed `+size` work exposed a narrower scalar-width path.
+- Rationale:
+  - users should not have to remember that `0x8` is valid in one scalar slot
+    but invalid or misinterpreted in another,
+  - direct-root constants, composition-top constants, package constants,
+    expression parsing, and positive integer width-symbol resolution should
+    share one interpretation of common integer literal spellings whenever the
+    meaning is unambiguous,
+  - octal literals need to stay octal through canonicalization and rendering;
+    silently turning `0o10` into decimal text `10` is a semantic bug, not a
+    formatting choice,
+  - and helper-level coverage matters here because this path is reused by
+    direct `+size`, composition `?ports`, package imports, and future width
+    inference seams.
+
 ## 2026-04-16: init/default and width slots are constant-expression surfaces
 - Continued `R8` by realigning two user-facing scalar-looking slots with the
   broader intent-level language model:

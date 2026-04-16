@@ -3,6 +3,7 @@ package FSM::Package::ScalarWidthSupport;
 use v5.20;
 use strict;
 use warnings;
+use Math::BigInt;
 use Scalar::Util qw(blessed);
 use feature qw(signatures);
 no warnings 'experimental::signatures';
@@ -31,10 +32,25 @@ sub positive_integer_from_literal_like ($class, $literal_like) {
 sub _positive_integer_from_scalar_payload ($class, $payload) {
     return undef unless defined($payload) && !ref($payload);
 
-    return 0 + $payload
-        if $payload =~ /\A[1-9]\d*\z/;
+    my $text = $payload;
+    $text =~ s/_//g;
 
-    if ($payload =~ /\A\d+'(s?)([bodh])([0-9A-Fa-f_+-]+)\z/i) {
+    return $class->_positive_integer_from_parts($1, 'decimal')
+        if $text =~ /\A([1-9]\d*)\z/;
+
+    return $class->_positive_integer_from_parts($1, 'decimal')
+        if $text =~ /\A0d([1-9]\d*)\z/i;
+
+    return $class->_positive_integer_from_parts($1, 'binary')
+        if $text =~ /\A0b([01]+)\z/i;
+
+    return $class->_positive_integer_from_parts($1, 'octal')
+        if $text =~ /\A0o([0-7]+)\z/i;
+
+    return $class->_positive_integer_from_parts($1, 'hex')
+        if $text =~ /\A0x([0-9A-Fa-f]+)\z/i;
+
+    if ($text =~ /\A(?:\d+)?'(s?)([bodh])([0-9A-Fa-f+-]+)\z/i) {
         my ($is_signed, $radix, $digits) = ($1, lc($2), $3);
         return undef if $is_signed && $digits =~ /\A-/;
         return $class->_positive_integer_from_parts($digits, $radix);
@@ -50,39 +66,37 @@ sub _positive_integer_from_parts ($class, $digits, $radix) {
     $digits =~ s/_//g;
     return undef unless length $digits;
 
-    if ($radix eq 'decimal') {
-        return undef unless $digits =~ /\A[1-9]\d*\z/;
-        return 0 + $digits;
+    my %normalized = (
+        b => 'binary',
+        d => 'decimal',
+        o => 'octal',
+        h => 'hex',
+    );
+    $radix = $normalized{$radix} // $radix;
+
+    my %base_for = (
+        decimal => 10,
+        binary => 2,
+        octal => 8,
+        hex => 16,
+    );
+    my $base = $base_for{$radix} or return undef;
+
+    my %value_for = (
+        0 => 0, 1 => 1, 2 => 2, 3 => 3, 4 => 4,
+        5 => 5, 6 => 6, 7 => 7, 8 => 8, 9 => 9,
+        a => 10, b => 11, c => 12, d => 13, e => 14, f => 15,
+    );
+
+    my $value = Math::BigInt->new(0);
+    for my $char (split //, lc($digits)) {
+        return undef unless exists $value_for{$char} && $value_for{$char} < $base;
+        $value->bmul($base);
+        $value->badd($value_for{$char});
     }
 
-    if ($radix eq 'binary') {
-        return undef unless $digits =~ /\A[01]+\z/;
-        my $value = oct("0b$digits");
-        return ($value && $value > 0) ? $value : undef;
-    }
-
-    if ($radix eq 'octal' || $radix eq 'o') {
-        return undef unless $digits =~ /\A[0-7]+\z/;
-        my $value = oct("0$digits");
-        return ($value && $value > 0) ? $value : undef;
-    }
-
-    if ($radix eq 'hex') {
-        return undef unless $digits =~ /\A[0-9A-Fa-f]+\z/;
-        my $value = hex($digits);
-        return ($value && $value > 0) ? $value : undef;
-    }
-
-    if ($radix eq 'b' || $radix eq 'd' || $radix eq 'h') {
-        my %normalized = (
-            b => 'binary',
-            d => 'decimal',
-            h => 'hex',
-        );
-        return $class->_positive_integer_from_parts($digits, $normalized{$radix});
-    }
-
-    return undef;
+    return undef unless $value->bcmp(0) > 0;
+    return 0 + $value->bstr;
 }
 
 1;

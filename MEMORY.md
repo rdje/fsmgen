@@ -1,5 +1,26 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-16: scalar width symbols share common integer literal support
+- Continued the `R8` language-contract hardening lane by removing a literal
+  dialect split between scalar constants, scalar width symbols, and expression
+  parsing.
+- Important continuity note:
+  - [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm)
+    now parses common integer spellings such as `0xA5`, `0b1010`, `0o10`,
+    unsized SystemVerilog-style based literals like `'hA5`, and
+    underscore-separated digits,
+  - direct, composition, and package symbol canonicalization now preserve octal
+    literals as octal instead of falling back to decimal text,
+  - [perl/FSM/Package/ScalarWidthSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/ScalarWidthSupport.pm)
+    resolves those same scalar spellings when they are used as positive integer
+    width symbols for direct `+size` or composition `?ports`,
+  - [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+    now renders octal literals as Verilog-family `'o` literals, and
+  - [t/294-scalar-width-support.t](/Users/richarddje/Documents/github/fsmgen/t/294-scalar-width-support.t)
+    plus the composition scalar-width subtest in
+    [t/279-declarative-scalar-types.t](/Users/richarddje/Documents/github/fsmgen/t/279-declarative-scalar-types.t)
+    lock the helper and pipeline/CLI behavior.
+
 ## 2026-04-16: canonical init and expression-backed +size slots shipped
 - Continued `R8`/`R12` by making canonical top-level init/reset metadata use
   the strict-safe Lisp-ish pair form `(:= (signal value))` while keeping legacy
