@@ -348,6 +348,15 @@ my @REGRESSION_CORPUS = (
         expected_error_pattern => qr/Malformed '\+size' entry for signal 'OUT'.*symbol 'WIDTHS' resolved to aggregate payload kind 'list', not a scalar integer/s,
     },
     {
+        id => 'contract.direct_size_expression_divide_by_zero',
+        relpath => 't/corpus/direct_size_expression_divide_by_zero.fsm',
+        family => 'language_contract_fixture',
+        classification => 'expected_failure',
+        coverage => 'language_contract_rejection_pipeline_cli',
+        source_kind => 'fsm',
+        expected_error_pattern => qr/Malformed '\+size' entry for signal 'OUT'.*divides by zero in a width expression/s,
+    },
+    {
         id => 'contract.direct_lhs_deconstruct_width_mismatch',
         relpath => 't/corpus/direct_lhs_deconstruct_width_mismatch.fsm',
         family => 'language_contract_fixture',

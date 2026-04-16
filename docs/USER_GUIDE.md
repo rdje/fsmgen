@@ -508,7 +508,7 @@ This is the current `R8` draft normative contract for the symbol-definition and 
   - `(+size (DATA (+ BYTE_W 1)) (MODE mode.WIDTH) (LANE LANES[0]))`
   - `(+size (SIGNED_TERM_W (+ 8'sd9 8'sd-1)) (DEC_TERM_W (+ 0d10 -2)))`
   - `(+size)`
-- Malformed payloads like `(+size BROKEN)`, malformed entries like `(+size (A))`, unresolved width symbols, whole aggregate width-expression roots, and non-positive widths like `(+size (A 0))` are rejected explicitly.
+- Malformed payloads like `(+size BROKEN)`, malformed entries like `(+size (A))`, unresolved width symbols, whole aggregate width-expression roots, invalid width arithmetic such as `(/ 8 0)`, and non-positive widths like `(+size (A 0))` are rejected explicitly.
 
 `(+constants ...)`:
 - Defines named literal constants.

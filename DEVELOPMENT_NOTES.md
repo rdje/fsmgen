@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-16: width arithmetic failures belong before generation
+- Continued `R12` by giving direct `+size` divide-by-zero arithmetic a named
+  expected-failure corpus contract.
+- Rationale:
+  - `+size` expressions are semantic width declarations, not backend HDL text,
+  - a supported operator can still produce an invalid expression when its
+    operands make the arithmetic undefined,
+  - rejecting divide/modulo by zero in the language-contract phase keeps
+    generation as a pure walk over already-resolved widths and typed
+    declarations,
+  - and this complements the existing non-positive, unknown-symbol, and
+    non-scalar-symbol fixtures by covering the “all tokens are known, but the
+    arithmetic itself is invalid” class.
+
 ## 2026-04-16: whole aggregates are not raw scalar widths
 - Continued `R12` by giving the non-scalar side of direct `+size` expressions
   its own named corpus contract.

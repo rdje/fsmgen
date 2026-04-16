@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-16: corpus now rejects divide-by-zero +size arithmetic
+- Continued `R12` by adding the named arithmetic-failure sibling for direct
+  `+size` expressions: supported width operators still have to fold to one
+  valid positive integer before generation.
+- Important continuity note:
+  - [t/corpus/direct_size_expression_divide_by_zero.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_size_expression_divide_by_zero.fsm)
+    uses `(/ 8 0)` as the authored `+size` width expression,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm)
+    records it as `contract.direct_size_expression_divide_by_zero` under
+    `language_contract_rejection_pipeline_cli`,
+  - [docs/book/src/04-symbols-types-and-imports.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/04-symbols-types-and-imports.md)
+    and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+    now state that invalid width arithmetic is rejected before HDL generation,
+    and
+  - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
+    proves both pipeline and CLI reject the source without emitting HDL.
+
 ## 2026-04-16: corpus now rejects aggregate +size expression roots
 - Continued `R12` by adding the named non-scalar sibling for direct `+size`
   expressions: aggregate scalar leaves may drive widths, but whole aggregate

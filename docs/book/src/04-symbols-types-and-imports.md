@@ -157,6 +157,11 @@ when the final width remains positive, for example:
 )
 ```
 
+Width arithmetic must still be fully valid before HDL generation. Division or
+modulo by zero, unsupported operators, malformed arity, unresolved symbols, and
+non-positive final widths are rejected as language-contract errors instead of
+being delegated to the backend.
+
 ## Constants
 
 Use `+constants` for named scalar values and bounded aggregate values.

@@ -1,0 +1,14 @@
+(?fsm:direct_size_expression_divide_by_zero
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+
+  (+size
+    (OUT (/ 8 0))
+  )
+
+  (idle
+    (OUT = 1)
+  )
+)

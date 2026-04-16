@@ -14,6 +14,8 @@ Typical causes:
 - malformed `+system` or `:=` payloads
 - `+size` expressions that reference unknown symbols or whole aggregate values
   where one scalar integer width is required
+- `+size` arithmetic that cannot produce a valid positive integer width, such
+  as division by zero
 
 These should now fail explicitly instead of falling through to vague behavior.
 
