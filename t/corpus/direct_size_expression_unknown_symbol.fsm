@@ -1,0 +1,18 @@
+(?fsm:direct_size_expression_unknown_symbol
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+
+  (+constants
+    (BASE_W 2)
+  )
+
+  (+size
+    (OUT (+ BASE_W MISSING_W))
+  )
+
+  (idle
+    (OUT = 1)
+  )
+)

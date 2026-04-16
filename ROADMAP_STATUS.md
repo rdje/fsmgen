@@ -1623,6 +1623,11 @@ Done:
   - `contract.direct_size_expression_non_positive` is classified as `expected_failure` under `language_contract_rejection_pipeline_cli`,
   - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now checks that both pipeline and CLI reject it before HDL emission, and
   - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now records `43` catalog entries and `24` explicit expected-failure entries.
+- That same language-contract expected-failure family now also covers unresolved `+size` expression symbols:
+  - [t/corpus/direct_size_expression_unknown_symbol.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_size_expression_unknown_symbol.fsm) is now a named expected-failure fixture for a direct `+size` expression that references an undeclared `MISSING_W` symbol,
+  - `contract.direct_size_expression_unknown_symbol` is classified as `expected_failure` under `language_contract_rejection_pipeline_cli`,
+  - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now checks that both pipeline and CLI reject it before HDL emission, and
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now records `44` catalog entries and `25` explicit expected-failure entries.
 - The first slice now also accounts for section-level compatibility residue instead of only root-level legacy behavior:
   - [t/corpus/legacy_empty_size_noop.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_empty_size_noop.fsm) now appears twice in the catalog under two explicit contracts,
   - `legacy.empty_size_noop.default_compat` is classified as `legacy_out_of_scope` and must still compile through pipeline and CLI in default mode,
@@ -1726,7 +1731,7 @@ Done:
   - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now records `32` catalog entries and `20` explicit expected-failure entries.
 Left:
 - Curate and classify a wider corpus beyond the first protocol seeds.
-- Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair, first section-level compatibility pair, first child-root compatibility pair, current malformed-language contract entries, current direct-generation contract entries, and the current composition-contract rejection families.
+- Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair, first section-level compatibility pair, first child-root compatibility pair, current malformed-language/`+size` contract entries, current direct-generation contract entries, and the current composition-contract rejection families.
 - Widen golden-output or semantic-check coverage beyond the current supported language-feature entries and the first protocol slice where simple compile smoke is not enough.
 Exit criteria:
 - Support claims can be backed by a maintained corpus and explicit classification, not only by ad hoc focused tests.

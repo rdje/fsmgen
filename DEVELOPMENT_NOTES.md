@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-16: unknown width-expression symbols are contract failures
+- Continued `R12` by making unresolved direct `+size` expression symbols a named
+  expected-failure corpus case.
+- Rationale:
+  - expression-backed width declarations are user-facing intent slots, not
+    backend hints,
+  - every scalar leaf in a width expression must resolve before generation, or
+    the backend would be forced to guess a hardware width,
+  - treating unknown and non-scalar symbols as the same width-expression
+    contract family matches the authored surface: only positive scalar integer
+    values may determine signal width,
+  - and support-accounting this as `language_contract_rejection_pipeline_cli`
+    keeps the failure in the frontend contract where it belongs, before any HDL
+    emission can happen.
+
 ## 2026-04-16: width-expression support needs a named rejection twin
 - Continued `R12` by adding the expected-failure side of the expression-backed
   `+size` corpus story.

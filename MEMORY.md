@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-16: corpus now rejects unresolved +size expression symbols
+- Continued `R12` by adding the missing named expected-failure side for a
+  direct `+size` expression that references an undeclared scalar symbol.
+- Important continuity note:
+  - [t/corpus/direct_size_expression_unknown_symbol.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_size_expression_unknown_symbol.fsm)
+    uses `(+ BASE_W MISSING_W)` so one leaf resolves and one leaf stays
+    undeclared,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm)
+    records it as `contract.direct_size_expression_unknown_symbol` under
+    `language_contract_rejection_pipeline_cli`,
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+    now expects `25` expected-failure entries, and
+  - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
+    proves both pipeline and CLI reject the source without emitting HDL.
+
 ## 2026-04-16: corpus now rejects non-positive +size expressions
 - Continued `R12` by adding a named language-contract expected-failure corpus
   entry for direct `+size` expressions that resolve to a non-positive width.
