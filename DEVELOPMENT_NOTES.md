@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-16: mdBook is the canonical user-facing FSMGen surface
+- Reinforced the documentation contract after user steering: the mdBook is not
+  just a nicer rendering of selected notes; it is the public product surface.
+- Implication:
+  - every user-visible `.fsm` syntax feature, composition form,
+    package/type/import construct, CLI/debug behavior, diagnostic boundary,
+    generated-HDL expectation, and support limitation needs a chapter home in
+    the book,
+  - book coverage should include rationale, current support boundaries,
+    recommended authoring patterns, representative rejected forms when helpful,
+    and enough realistic examples that users can learn without reading tests or
+    maintainer notes,
+  - continuity files such as this one, `MEMORY.md`, `ROADMAP_STATUS.md`, and
+    `CHANGES.md` remain important for maintainers, but they are not substitutes
+    for public-facing book coverage.
+- Follow-up clarification:
+  - both surfaces are essential, with distinct jobs: the book is the public
+    learning/reference surface, while live continuity docs preserve engineering
+    memory across session loss, crashes, handoffs, and long implementation arcs.
+
 ## 2026-04-16: modulo-by-zero is the sibling width arithmetic contract
 - Continued `R12` by making direct `+size` modulo-by-zero arithmetic a named
   expected-failure corpus contract.

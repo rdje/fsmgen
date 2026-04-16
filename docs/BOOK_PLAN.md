@@ -16,37 +16,51 @@ The mdBook scaffold now exists under
 The migration is still incomplete:
 
 - [USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
-  remains the broad live reference during the split,
+  remains the broad reference during the split,
 - focused reference docs such as
   [COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md)
   still carry the narrow normative boundary for their lanes,
 - and the book should keep absorbing user-facing material until it becomes the
   default learning surface.
 
-The book must be treated as a live project artifact:
+The book must be treated as an evolving public product artifact:
 
 - it evolves alongside the shipped user-facing surface,
 - new user-visible features should update the relevant chapter material as part
   of shipping,
 - and stale examples or stale support wording in the book are product bugs, not
   optional cleanup.
+- the book is the canonical user-facing surface for FSMGen: every visible
+  `.fsm` authoring feature, composition construct, package/type/import form,
+  CLI/debug behavior, diagnostic boundary, generated-HDL expectation, and
+  support limitation needs a clear chapter home rather than living only in
+  maintainer notes.
 
 The book and the continuity notes have different jobs:
 
 - the mdBook under `docs/book/` is the public-facing product documentation that
   users and the outside world should read to understand what FSMGen does, how
   to use it, and the rationale behind the user-facing design,
-- continuity artifacts such as `DEVELOPMENT_NOTES.md`, `MEMORY.md`,
+- live continuity artifacts such as `DEVELOPMENT_NOTES.md`, `MEMORY.md`,
   `ROADMAP_STATUS.md`, `ROADMAP_V2.md`, and `CHANGES.md` exist to preserve
   implementation continuity, rationale breadcrumbs, and session recovery
   context across crashes or handoffs,
+- both surfaces are essential: the book makes FSMGen approachable and
+  transparent to users, while the live continuity docs keep implementation
+  direction coherent across long-running work and interrupted sessions,
 - and those continuity docs are not substitutes for chaptered public
   documentation in the book.
 
 Practical rule:
 
-- every user-facing feature should eventually land in the book with a clear
-  chapter/section and realistic examples,
+- every user-facing feature should land in the book with a clear
+  chapter/section, practical rationale, current support boundary, and realistic
+  examples,
+- when a feature has multiple authoring styles or non-obvious failure modes,
+  the book should show both the recommended path and representative rejected
+  forms so users understand the shape of the contract,
+- examples should be plentiful enough that users can learn by adapting real
+  patterns instead of reverse-engineering tests or generated HDL,
 - while the continuity docs may still record engineering rationale and rollout
   sequencing for maintainers.
 

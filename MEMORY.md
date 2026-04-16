@@ -1,5 +1,32 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-16: book is the user-facing FSMGen surface
+- User reinforced that all aspects of `.fsm` files, composition, and every
+  other user-facing surface should be extensively documented in the mdBook with
+  many examples because the book is what users see first.
+- Captured the principle in [docs/BOOK_PLAN.md](/Users/richarddje/Documents/github/fsmgen/docs/BOOK_PLAN.md),
+  [docs/book/src/00-introduction.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/00-introduction.md),
+  and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md):
+  live continuity docs are for session-loss/crash recovery, while maintainer
+  continuity files more broadly are not substitutes for
+  public chapter coverage. Each visible syntax/composition/type/package/CLI/
+  diagnostic/generated-HDL/support-boundary behavior needs a clear book home
+  with rationale, boundaries, and realistic examples.
+- Follow-up clarification: both surfaces are important. The book is the public
+  user-facing learning/reference surface; live continuity docs preserve the
+  engineering thread across crashes, handoffs, and long implementation arcs.
+
+## 2026-04-16: book quick expressions now name div/mod semantics
+- User asked whether the `/` and `%` support details are already part of the
+  mdBook. They mostly were: chapters 4, 6, and 10 already covered
+  constant-expression and aggregate divide/modulo-by-zero behavior.
+- Tightened [docs/book/src/02-language-basics.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/02-language-basics.md)
+  so the quick expression overview also names `div` / `mod`, documents the
+  left-associative n-ary behavior of `/` and `%`, and states the current
+  boundary: folded constant-expression domains reject divide/modulo by zero
+  before HDL generation, while runtime dynamic divisors are not yet proven
+  nonzero by compile-time analysis.
+
 ## 2026-04-16: corpus now rejects modulo-by-zero +size arithmetic
 - Continued `R12` by adding the modulo sibling for direct `+size` arithmetic:
   divide-by-zero was already accounted, and `%`/`mod` has its own evaluator

@@ -11,7 +11,7 @@ This book is the progressive front door for FSMGen:
 - learn the mental model before the full reference,
 - then move into composition, packages, types, debugging, and embedding.
 
-It should also be treated as a live book, not a static manual snapshot.
+It should also be treated as an evolving product manual, not a static snapshot.
 When FSMGen's user-facing surface changes, this book is expected to change with
 it.
 
@@ -23,11 +23,19 @@ That means:
 - how to use it,
 - why the user-facing model works the way it does,
 - and what the current shipped boundaries really are.
+- every user-visible `.fsm` feature, composition form, package/type/import
+  surface, CLI/debug behavior, diagnostic boundary, generated-HDL expectation,
+  and support limitation should have a chapter home here.
+- examples are part of the contract: users should be able to learn FSMGen by
+  adapting realistic patterns from the book, not by reading implementation
+  notes or reverse-engineering tests.
 
 Internal continuity files still exist in the repo, but they have a different
 job: they help maintainers preserve implementation continuity across crashes,
 handoffs, and long-running feature work. They are not a substitute for putting
-user-facing behavior into the book.
+user-facing behavior into the book. Both surfaces matter: the book helps users
+learn and trust FSMGen, while the continuity docs preserve the engineering
+thread that lets the project keep moving safely.
 
 ## What FSMGen Is Good At
 
@@ -55,7 +63,7 @@ This book is now the progressive learning surface.
 
 The repository still keeps a few focused technical references:
 
-- `docs/USER_GUIDE.md`: broad live reference during the migration
+- `docs/USER_GUIDE.md`: broad reference during the migration
 - `docs/COMPOSITION_SCOPE.md`: precise composition support boundary
 - `docs/EXTENSION_MODEL.md`: typed extension boundary
 - `ROADMAP_STATUS.md`: live roadmap and current implementation lane for the
@@ -70,7 +78,10 @@ That means this book should keep evolving alongside the project:
 
 - new shipped features should appear here,
 - examples should stay current and realistic,
-- and stale user-facing guidance should be treated as a real quality gap.
+- every user-facing surface should be documented with enough examples to make
+  the feature approachable,
+- and stale or missing user-facing guidance should be treated as a real quality
+  gap.
 
 ## Building The Book
 

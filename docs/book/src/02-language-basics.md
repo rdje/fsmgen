@@ -122,8 +122,20 @@ The current live expression surface includes:
 - unary `!`
 - comparison operators such as `==`, `!=`, `<`, `<=`, `>`, `>=`
 - arithmetic and bitwise operators such as `+`, `-`, `*`, `/`, `%`, `&`, `|`, `^`
-- word aliases such as `add`, `sub`, `and`, `or`, `xor`
+- word aliases such as `not`, `eq`, `ne`, `lt`, `le`, `gt`, `ge`, `add`,
+  `sub`, `mul`, `div`, `mod`, `and`, `or`, and `xor`
 - RHS pack expressions with `(concat ...)` or the shorter `(cat ...)` alias
+
+The arithmetic/bitwise expression families are n-ary. Operators such as `+`,
+`*`, `&`, `|`, and `^` combine all operands; `-`, `/`, and `%` are
+left-associative, so `(/ a b c)` means `((a / b) / c)` and `(% a b c)` means
+`((a % b) % c)`.
+
+Constant-expression slots such as `+size`, `+params`, init/default metadata,
+and parameter/generic overrides fold before HDL generation. In those domains,
+division or modulo by zero is rejected before emission. Runtime RHS
+expressions with dynamic divisors are still emitted as AST/HDL expressions; the
+tool does not yet prove that every dynamic divisor is nonzero.
 
 ## Guards, Tests, and Updates
 
