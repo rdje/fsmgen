@@ -162,12 +162,16 @@ is(
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
-    1,
-    'catalog now records one positive strict-mode supported-smoke acceptance entry',
+    4,
+    'catalog now records four positive strict-mode supported-smoke acceptance entries',
 );
-ok(
-    $by_id{'feature.direct_assignment_pair_form'}->{strict_supported},
-    'canonical assignment-pair corpus fixture is the first strict-supported positive acceptance asset',
-);
+for my $strict_supported_id (qw(
+    feature.direct_sreset_active_high
+    feature.direct_areset_active_low
+    feature.direct_canonical_init_directive
+    feature.direct_assignment_pair_form
+)) {
+    ok($by_id{$strict_supported_id}->{strict_supported}, "canonical strict-supported fixture $strict_supported_id stays marked");
+}
 
 done_testing();

@@ -117,6 +117,7 @@ my @REGRESSION_CORPUS = (
         classification => 'supported_smoke',
         coverage => 'direct_root_pipeline_cli',
         source_kind => 'fsm',
+        strict_supported => 1,
         expected_module_name => 'direct_sreset_active_high',
         expected_hdl_patterns => [
             qr/\binput\s+wire\s+reset\b/s,
@@ -130,6 +131,7 @@ my @REGRESSION_CORPUS = (
         classification => 'supported_smoke',
         coverage => 'direct_root_pipeline_cli',
         source_kind => 'fsm',
+        strict_supported => 1,
         expected_module_name => 'direct_areset_active_low',
         expected_hdl_patterns => [
             qr/\binput\s+wire\s+rst_n\b/s,
@@ -143,6 +145,7 @@ my @REGRESSION_CORPUS = (
         classification => 'supported_smoke',
         coverage => 'direct_root_pipeline_cli',
         source_kind => 'fsm',
+        strict_supported => 1,
         expected_module_name => 'direct_canonical_init_directive',
         expected_hdl_patterns => [
             qr/always_ff\s*@\(posedge\s+clk\)\s*begin\s+if\s*\(reset\)\s*begin\s+A_q\s*<=\s*1'b1;/s,

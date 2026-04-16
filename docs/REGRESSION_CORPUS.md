@@ -92,10 +92,17 @@ machine-readable catalog. That marker is not a replacement coverage bucket. It
 means the same supported fixture must compile through both the strict pipeline
 API and `bin/fsmgen --strict`, preserving the same semantic HDL shape.
 
-The first positive strict-supported corpus fixture is
-`feature.direct_assignment_pair_form`, which proves that canonical assignment
-pair syntax is not merely the migration hint for rejected infix compatibility
-forms. It is also a strict-mode accepted supported surface.
+Current positive strict-supported fixtures include:
+
+- `feature.direct_sreset_active_high`, which proves the canonical synchronous
+  active-high reset spelling is accepted in strict mode.
+- `feature.direct_areset_active_low`, which proves the canonical asynchronous
+  active-low reset spelling is accepted in strict mode.
+- `feature.direct_canonical_init_directive`, which proves the canonical
+  `(:= (signal value))` reset/default metadata form is accepted in strict mode.
+- `feature.direct_assignment_pair_form`, which proves canonical assignment
+  pair syntax is not merely the migration hint for rejected infix compatibility
+  forms. It is also a strict-mode accepted supported surface.
 
 ## Current named entries
 
@@ -173,9 +180,10 @@ forms. It is also a strict-mode accepted supported surface.
   `(assign-op (lhs rhs))` syntax reaches the same pipeline and CLI HDL shapes
   as infix compatibility assignments, including guarded nested RHS
   expressions, dual-output assignment families, delayed pulse, and LHS
-  deconstruct. That same fixture is also the first `strict_supported` positive
-  acceptance asset, so [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t)
-  now runs it through both `strict_mode => 1` and `bin/fsmgen --strict`.
+  deconstruct. The canonical reset, canonical init/default, and canonical
+  assignment-pair fixtures are also `strict_supported` positive acceptance
+  assets, so this same test now runs them through both `strict_mode => 1` and
+  `bin/fsmgen --strict`.
 - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
   checks that the catalog stays named, classified, unique, and pointed at real
   repo assets, and also checks that strict-supported markers are only attached

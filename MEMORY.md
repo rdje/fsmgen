@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-17: strict-supported markers now cover canonical reset and init
+- Continued `R12` positive strict-mode support accounting:
+  - [t/corpus/direct_sreset_active_high.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_sreset_active_high.fsm),
+    [t/corpus/direct_areset_active_low.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_areset_active_low.fsm),
+    and [t/corpus/direct_canonical_init_directive.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_canonical_init_directive.fsm)
+    are now tagged `strict_supported`,
+  - those fixtures' body assignments were migrated from infix compatibility
+    syntax to canonical pair syntax after the strict-supported test exposed the
+    residue,
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+    now records four strict-supported direct-root FSM fixtures,
+  - and [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t)
+    verifies canonical reset, canonical init/default, and canonical assignment
+    surfaces through strict pipeline and strict CLI.
+- Continuity note:
+  - `strict_supported` should continue to mean the complete fixture is
+    forward-contract clean. If a future fixture has one canonical feature but
+    still carries compatibility syntax elsewhere, migrate the residue or do not
+    tag it yet.
+
 ## 2026-04-16: strict-supported corpus marker proves canonical pair acceptance
 - Continued `R12` with a positive strict-mode support-accounting marker:
   - [t/corpus/direct_assignment_pair_form.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_assignment_pair_form.fsm)

@@ -11,7 +11,7 @@
 
   (idle
     (<START
-      (DONE <= 1'b1)
+      (<= (DONE 1'b1))
     )
   )
 )

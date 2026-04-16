@@ -1,5 +1,28 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-17: strict-supported markers now cover reset and init fixtures
+- Widened the positive strict-mode support-accounting marker from the first
+  canonical assignment-pair fixture to the nearby canonical reset and
+  init/default fixtures.
+- [t/corpus/direct_sreset_active_high.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_sreset_active_high.fsm),
+  [t/corpus/direct_areset_active_low.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_areset_active_low.fsm),
+  and [t/corpus/direct_canonical_init_directive.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_canonical_init_directive.fsm)
+  are now tagged `strict_supported` in the maintained regression catalog.
+- While adding those markers, the focused strict-supported gate exposed that
+  the reset/init fixtures still used infix body assignments. Those assignments
+  were migrated to canonical pair forms, so the fixtures are now fully
+  strict-clean.
+- Rationale:
+  - strict mode rejects misleading reset spellings and compact init syntax, so
+    the canonical reset and init siblings should also have positive acceptance
+    proof,
+  - a strict-supported marker should mean the entire fixture is inside the
+    forward contract, not only the one line the fixture was originally created
+    to demonstrate,
+  - and this gives users a clearer migration story: the regression corpus now
+    proves both “legacy spelling fails” and “canonical authored replacement
+    passes”.
+
 ## 2026-04-16: strict-supported corpus markers prove positive strict acceptance
 - Continued the `R12` support-accounting lane after the infix-assignment
   strict rejection work.

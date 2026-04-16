@@ -788,7 +788,7 @@ Boundary note:
   - strict mode currently accepts `?fsm:name`, `?dt:name`, `?mod:name`, and `?top:name`,
   - strict mode currently accepts only canonical `?fsm:name` roots under `?fsmc`,
   - strict mode currently accepts only canonical `?dt:name` roots under `?dtc`,
-  - the maintained regression corpus now marks the canonical assignment-pair fixture as `strict_supported`, so `(= (OUT IN))`, `(<- (Q D))`, guarded pair assignments, delayed pulse pairs, and LHS deconstruct pairs are checked through both `strict_mode => 1` and `bin/fsmgen --strict`,
+  - the maintained regression corpus now marks canonical reset, canonical init/default, and canonical assignment-pair fixtures as `strict_supported`, so `(+system (clock clk) (sreset reset))`, `(+system (clock clk) (areset rst_n))`, `(:= (signal value))`, `(= (OUT IN))`, `(<- (Q D))`, guarded pair assignments, delayed pulse pairs, and LHS deconstruct pairs are checked through both `strict_mode => 1` and `bin/fsmgen --strict`,
   - and strict mode currently rejects legacy `+fsm` under `?fsmc`, `?mod:` / `?module:` under `?dtc`, direct-root `?module:`, empty `(+size)` no-op sections, legacy/misleading explicit reset spellings such as `(+system ... (asreset rstn))` and `(+system ... (sreset rstn))`, compact top-level `(:= signal=value)` directives on the current `?fsm:` / `?dt:` direct-root path, and infix assignment compatibility forms.
 - Strict-mode failures now also keep the same `Source file: '...'` context line as other top-level pipeline failures.
 - This is the first support-tier enforcement slice, not the final full strict-mode surface.
