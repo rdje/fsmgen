@@ -162,16 +162,32 @@ is(
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
-    4,
-    'catalog now records four positive strict-mode supported-smoke acceptance entries',
+    10,
+    'catalog now records ten positive strict-mode supported-smoke acceptance entries',
 );
 for my $strict_supported_id (qw(
+    feature.partial_lhs_with_size
+    feature.partial_lhs_inferred_width
+    feature.direct_rhs_concat_pack
+    feature.direct_lhs_deconstruct_pack
     feature.direct_sreset_active_high
     feature.direct_areset_active_low
     feature.direct_canonical_init_directive
+    feature.direct_size_expression_widths
+    feature.direct_runtime_div_mod
     feature.direct_assignment_pair_form
 )) {
     ok($by_id{$strict_supported_id}->{strict_supported}, "canonical strict-supported fixture $strict_supported_id stays marked");
+}
+
+for my $entry (
+    grep {
+        $_->{family} eq 'language_feature_fixture'
+            && $_->{classification} eq 'supported_smoke'
+            && $_->{coverage} eq 'direct_root_pipeline_cli'
+    } @entries
+) {
+    ok($entry->{strict_supported}, "supported direct language-feature fixture '$entry->{id}' is strict-supported");
 }
 
 done_testing();

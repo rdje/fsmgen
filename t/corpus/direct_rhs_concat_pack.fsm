@@ -14,9 +14,9 @@
   )
   (idle
     (<COND
-      (OUT = (concat HI MID LO))
-      (OUT_CAT = (cat HI MID LO))
-      (OUT_NESTED = (concat HI (concat MID LO)))
+      (= (OUT (concat HI MID LO)))
+      (= (OUT_CAT (cat HI MID LO)))
+      (= (OUT_NESTED (concat HI (concat MID LO))))
     )
   )
 )

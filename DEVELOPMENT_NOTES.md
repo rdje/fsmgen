@@ -1,5 +1,34 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-17: direct language-feature fixtures are all strict-supported
+- Completed the next positive strict-mode support-accounting step for the
+  maintained direct language-feature corpus.
+- The remaining supported direct language-feature fixtures were still
+  default-mode clean but not strict-clean because they used infix assignment
+  compatibility syntax, and the partial-LHS fixtures also used the misleading
+  `(sreset rstn)` reset spelling.
+- Those fixtures now use canonical pair-form assignments and canonical reset
+  spelling where needed:
+  - partial indexed/sliced LHS writes,
+  - RHS concat/cat packing,
+  - LHS concat/cat deconstruction,
+  - expression-backed width assignment examples,
+  - and runtime div/mod assignment examples.
+- [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm)
+  now marks all ten current supported direct language-feature fixtures as
+  `strict_supported`.
+- [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+  now records ten strict-supported entries and enforces that every supported
+  direct language-feature fixture carries the marker.
+- Rationale:
+  - a supported direct language feature should be demonstrably usable in the
+    forward strict surface unless the fixture deliberately tests compatibility
+    residue,
+  - the corpus should avoid teaching old infix assignment syntax through the
+    supported-smoke examples when canonical pair syntax is available,
+  - and this turns strict mode into a positive confidence gate for supported
+    direct examples rather than only a rejection lane for legacy examples.
+
 ## 2026-04-17: strict-supported markers now cover reset and init fixtures
 - Widened the positive strict-mode support-accounting marker from the first
   canonical assignment-pair fixture to the nearby canonical reset and

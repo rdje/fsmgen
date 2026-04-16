@@ -19,12 +19,12 @@
 
   (idle
     (<COND
-      (QUO = (/ A B))
-      (REM = (% A B))
-      (QUO_ALIAS = (div A B))
-      (REM_ALIAS = (mod A B))
-      (QUO_CHAIN = (/ A B C))
-      (REM_CHAIN = (% A B C))
+      (= (QUO (/ A B)))
+      (= (REM (% A B)))
+      (= (QUO_ALIAS (div A B)))
+      (= (REM_ALIAS (mod A B)))
+      (= (QUO_CHAIN (/ A B C)))
+      (= (REM_CHAIN (% A B C)))
     )
   )
 )

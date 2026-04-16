@@ -15,9 +15,9 @@
   )
   (idle
     (<COND
-      ((concat HI LO) = DATA)
-      ((cat CAT_HI CAT_LO) = DATA2)
-      ((concat OUT[7:4] OUT[3:0]) = DATA)
+      (= ((concat HI LO) DATA))
+      (= ((cat CAT_HI CAT_LO) DATA2))
+      (= ((concat OUT[7:4] OUT[3:0]) DATA))
     )
   )
 )

@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-17
+### all direct language-feature fixtures are strict-supported
+- Migrated the remaining supported direct language-feature corpus fixtures to strict-clean authored syntax: partial indexed/sliced LHS writes, RHS concat/cat packing, LHS concat/cat deconstruction, expression-backed width assignments, and runtime div/mod assignments now use canonical pair-form assignments, and the partial-LHS fixtures now use canonical `(sreset reset)`.
+- Marked all ten current supported direct language-feature fixtures as `strict_supported` in [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm).
+- Updated [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t), [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/book/src/10-errors-strict-mode-and-troubleshooting.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/10-errors-strict-mode-and-troubleshooting.md), and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so support accounting now requires every supported direct language-feature fixture to pass strict pipeline and strict CLI coverage.
+
 ### strict-supported corpus markers cover reset and init
 - Marked [t/corpus/direct_sreset_active_high.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_sreset_active_high.fsm), [t/corpus/direct_areset_active_low.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_areset_active_low.fsm), and [t/corpus/direct_canonical_init_directive.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_canonical_init_directive.fsm) as `strict_supported` alongside the existing canonical assignment-pair fixture in [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm).
 - Migrated those reset/init fixtures' body assignments to canonical pair syntax so their strict-supported markers prove the complete fixture is strict-clean, not only the reset or init declaration.

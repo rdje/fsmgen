@@ -1,7 +1,7 @@
 (?fsm:partial_lhs_with_size
   (+system
     (clock clk)
-    (sreset rstn)
+    (sreset reset)
   )
   (+size
     (COND 1)
@@ -14,15 +14,15 @@
   )
   (idle
     (<COND
-      (OUT[3:2] = HI)
-      (OUT[1] = MID)
-      (OUT[0] = LO)
-      (ROD[3:2] <-= HI)
-      (ROD[1] <-= MID)
-      (ROD[0] <-= LO)
-      (RID[3:2] <=+ HI)
-      (RID[1] <=+ MID)
-      (RID[0] <=+ LO)
+      (= (OUT[3:2] HI))
+      (= (OUT[1] MID))
+      (= (OUT[0] LO))
+      (<-= (ROD[3:2] HI))
+      (<-= (ROD[1] MID))
+      (<-= (ROD[0] LO))
+      (<=+ (RID[3:2] HI))
+      (<=+ (RID[1] MID))
+      (<=+ (RID[0] LO))
     )
   )
 )

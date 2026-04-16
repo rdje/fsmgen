@@ -1,5 +1,27 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-17: all supported direct language-feature fixtures are strict-supported
+- Continued `R12` by making the whole supported direct language-feature corpus
+  strict-clean:
+  - partial indexed/sliced LHS fixtures now use canonical `(sreset reset)` and
+    canonical assignment-pair syntax,
+  - direct RHS concat/cat, direct LHS concat/cat deconstruct, expression-backed
+    width, and runtime div/mod fixtures now use canonical assignment-pair
+    syntax,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm)
+    now tags all ten current supported direct language-feature fixtures as
+    `strict_supported`,
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+    now records ten strict-supported entries and requires every supported
+    direct language-feature fixture to carry the marker,
+  - and [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t)
+    verifies the whole family through strict pipeline and strict CLI.
+- Continuity note:
+  - new `language_feature_fixture` / `supported_smoke` / `direct_root_pipeline_cli`
+    corpus entries are now expected to be strict-supported too unless the
+    author intentionally records why that fixture must remain compatibility
+    residue instead of forward-contract syntax.
+
 ## 2026-04-17: strict-supported markers now cover canonical reset and init
 - Continued `R12` positive strict-mode support accounting:
   - [t/corpus/direct_sreset_active_high.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_sreset_active_high.fsm),

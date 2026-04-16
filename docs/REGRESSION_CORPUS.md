@@ -92,17 +92,12 @@ machine-readable catalog. That marker is not a replacement coverage bucket. It
 means the same supported fixture must compile through both the strict pipeline
 API and `bin/fsmgen --strict`, preserving the same semantic HDL shape.
 
-Current positive strict-supported fixtures include:
-
-- `feature.direct_sreset_active_high`, which proves the canonical synchronous
-  active-high reset spelling is accepted in strict mode.
-- `feature.direct_areset_active_low`, which proves the canonical asynchronous
-  active-low reset spelling is accepted in strict mode.
-- `feature.direct_canonical_init_directive`, which proves the canonical
-  `(:= (signal value))` reset/default metadata form is accepted in strict mode.
-- `feature.direct_assignment_pair_form`, which proves canonical assignment
-  pair syntax is not merely the migration hint for rejected infix compatibility
-  forms. It is also a strict-mode accepted supported surface.
+All current supported direct language-feature fixtures are now
+`strict_supported`. That means strict mode positively accepts the maintained
+fixtures for partial LHS writes, RHS concat/cat packing, LHS concat/cat
+deconstruction, canonical reset spellings, canonical init/default metadata,
+expression-backed widths, runtime div/mod expressions, and canonical assignment
+pairs.
 
 ## Current named entries
 
@@ -180,14 +175,14 @@ Current positive strict-supported fixtures include:
   `(assign-op (lhs rhs))` syntax reaches the same pipeline and CLI HDL shapes
   as infix compatibility assignments, including guarded nested RHS
   expressions, dual-output assignment families, delayed pulse, and LHS
-  deconstruct. The canonical reset, canonical init/default, and canonical
-  assignment-pair fixtures are also `strict_supported` positive acceptance
-  assets, so this same test now runs them through both `strict_mode => 1` and
-  `bin/fsmgen --strict`.
+  deconstruct. Every supported direct language-feature fixture is also now a
+  `strict_supported` positive acceptance asset, so this same test runs the
+  whole family through both `strict_mode => 1` and `bin/fsmgen --strict`.
 - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
   checks that the catalog stays named, classified, unique, and pointed at real
   repo assets, and also checks that strict-supported markers are only attached
-  to supported direct-root FSM corpus entries.
+  to supported direct-root FSM corpus entries and that every supported direct
+  language-feature fixture is marked strict-supported.
 - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
   checks that the current `legacy_out_of_scope` entries and the current
   `expected_failure` entries actually behave according to their recorded
