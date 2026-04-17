@@ -61,12 +61,14 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `perl/FSM/Support/DiagnosticCodes.pm` — stable diagnostic-code registry consumed by support accounting and the capability manifest.
 - `perl/FSM/Support/ExtensionContract.pm` — bounded typed-extension/context contract advertised to embedders through the capability manifest.
 - `perl/FSM/Support/HDLGeneratorResultContract.pm` — bounded top-level result contract for in-process `HDLGenerator` embedders.
+- `perl/FSM/Support/HDLExternalValidation.pm` — optional Verilator/Yosys validation lane for generated SystemVerilog.
 - `perl/FSM/Support/NormalizedSemanticReport.pm` — bounded normalized semantic JSON report builder for downstream tool integration.
 - `perl/FSM/Support/RegressionCorpus.pm` — production support-accounting catalog owner consumed by the manifest and regression tests.
 - `perl/FSM/SourceClassifier.pm` — top-level source-kind classification for FSM vs composition inputs.
 - `perl/FSM/Adapter/FSMGenFull.pm` — FSM adapter/parsing entry.
 - `perl/FSM/HDL/FlattenedDT.pm` — Flattened decision-tree facade.
-- `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` — SystemVerilog backend implementation.
+- `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm` — live direct SystemVerilog post-flattening assembly owner.
+- `perl/FSM/Package/IntegerLiteralSupport.pm` — shared `.fsm` integer-literal interpreter and target-HDL normalizer for decimal, based, prefixed, and intent-level sized spellings such as `5'23`, `8'-10`, and `20'x1`.
 - `perl/FSM/Synthesis/EnableGraph.pm` — enable synthesis/helper ownership.
 
 ### Input, tests, and support
@@ -82,6 +84,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 ./bin/fsmgen fsm/trial_0.fsm
 ./bin/fsmgen --output /tmp/trial_0.sv fsm/trial_0.fsm
 ./bin/fsmgen --debug=3 fsm/lte_dif_pmaster.fsm
+./bin/fsmgen --verify-hdl --output /tmp/lte_dif_pmaster.sv fsm/lte_dif_pmaster.fsm
 ```
 
 ## Documentation quick preview
@@ -99,6 +102,7 @@ cd docs/book && mdbook serve
 - `bin/ci-regression` is the local entrypoint for the same checks used by `.github/workflows/regression.yml`.
 - The script resolves the repository root itself, so you can invoke it without depending on your current working directory.
 - It runs the full Perl regression suite with `prove -I perl t`.
+- When `verilator` and `yosys` are installed, the external SystemVerilog validation smoke runs too; otherwise that test is skipped.
 
 ## CLI quick reference
 ```bash
@@ -115,6 +119,7 @@ cd docs/book && mdbook serve
 - `--capability-manifest`: print the versioned JSON FSMGen capability manifest and exit.
 - `--check --json`: run the full pipeline as a check, emit JSON diagnostics, and do not write HDL.
 - `--emit-semantic-json`: run the full pipeline, emit bounded normalized semantic JSON, and do not write HDL.
+- `--verify-hdl`: after writing generated SystemVerilog, run Verilator lint and Yosys synthesis lowering.
 - `-q, --quiet`: suppress informational output.
 
 The bounded machine-readable surfaces are backed by support accounting:

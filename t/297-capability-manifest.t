@@ -168,6 +168,26 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest keeps full normalized semantic export stabilization separate from the bounded slice',
     );
     is(
+        $manifest->{backend_validation}{systemverilog_external}{schema_version},
+        1,
+        'manifest records external SystemVerilog validation schema version',
+    );
+    is(
+        $manifest->{backend_validation}{systemverilog_external}{status},
+        'optional_when_tools_installed',
+        'manifest marks external SystemVerilog validation as optional when tools are installed',
+    );
+    is_deeply(
+        $manifest->{backend_validation}{systemverilog_external}{tools},
+        [qw(verilator yosys)],
+        'manifest records Verilator and Yosys as the external validation tools',
+    );
+    is(
+        $manifest->{backend_validation}{systemverilog_external}{report_source},
+        'FSM::Support::HDLExternalValidation',
+        'manifest records the external HDL validation owner',
+    );
+    is(
         $manifest->{embedding}{hdl_generator_result}{schema_version},
         1,
         'manifest records HDLGenerator result contract schema version',
@@ -254,6 +274,12 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     my %direct_roots = map { $_ => 1 } @{$manifest->{language_surface}{strict_mode}{canonical_direct_roots}};
     ok($direct_roots{'?fsm'}, 'manifest names ?fsm as a canonical direct root');
     ok($direct_roots{'?dt'}, 'manifest names ?dt as a canonical direct root');
+
+    my %literal_families = map { $_ => 1 } @{$manifest->{language_surface}{expressions}{literal_families}};
+    ok(
+        $literal_families{q{FSMGen intent-sized literals like 5'23, 8'-10, 8'-0xA, 8'-0b1010, and 20'x1}},
+        'manifest advertises intent-level sized literal normalization',
+    );
 
     my %blocked = map { $_ => 1 } @{$manifest->{language_surface}{intentionally_blocked_or_not_yet_public}};
     ok($blocked{'full check-only JSON diagnostic schema stabilization'}, 'manifest keeps full JSON diagnostic API stabilization blocked');

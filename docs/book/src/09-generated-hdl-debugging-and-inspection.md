@@ -18,6 +18,7 @@ Common commands:
 ./bin/fsmgen --output /tmp/trial_0.sv fsm/trial_0.fsm
 ./bin/fsmgen --language verilog --output /tmp/trial_0.v fsm/trial_0.fsm
 ./bin/fsmgen --debug=3 fsm/lte_dif_pmaster.fsm
+./bin/fsmgen --verify-hdl --output /tmp/lte_dif_pmaster.sv fsm/lte_dif_pmaster.fsm
 ```
 
 ## Output Shape
@@ -45,6 +46,30 @@ When inspecting emitted SystemVerilog, look for:
 - unified mux/default logic
 - sequential blocks
 - any generated assertions or helper nets
+
+## External SystemVerilog Validation
+
+When Verilator and Yosys are installed, FSMGen can validate generated
+SystemVerilog after emission:
+
+```bash
+./bin/fsmgen --verify-hdl --output /tmp/lte_dif_pmaster.sv fsm/lte_dif_pmaster.fsm
+```
+
+`--validate-hdl` is the same mode. The command first runs FSMGen's own parser,
+semantic checks, pre-generation operand/type/width checks, and emitter. After
+the `.sv` file is written, it runs:
+
+- Verilator with `--lint-only --sv`
+- Yosys with `read_verilog -sv -noautowire`, `hierarchy -check`, `proc`,
+  `opt`, and `stat`
+
+This split is intentional. Verilator and Yosys are independent backend
+validation gates for the emitted HDL; they do not replace FSMGen's internal AST
+and semantic contracts. VHDL validation with GHDL is intentionally deferred
+until FSMGen has an active VHDL backend. The current regression gate is a
+focused SystemVerilog smoke, not yet a claim that every historical sample in
+`fsm/` is externally warning-clean.
 
 For composition tops, also inspect:
 
@@ -82,6 +107,7 @@ Trace behavior:
 - `--extension-config <file>`
 - `--capability-manifest`
 - `--check --json`
+- `--verify-hdl`
 - `-q, --quiet`
 
 `--capability-manifest` is different from the HDL-generation options: it emits

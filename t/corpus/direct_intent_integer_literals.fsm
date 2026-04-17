@@ -1,0 +1,32 @@
+(?fsm:direct_intent_integer_literals
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+
+  (+constants
+    (PKT_CODE 5'23)
+    (NEG_CODE 8'-0xA)
+  )
+
+  (+size
+    (COND 1)
+    (DEC_CODE 5)
+    (NEG_DEC 8)
+    (NEG_HEX 8)
+    (NEG_BIN 8)
+    (HEX_ALIAS 20)
+    (FROM_CONST 8)
+  )
+
+  (idle
+    (<COND
+      (= (DEC_CODE 5'23))
+      (= (NEG_DEC 8'-10))
+      (= (NEG_HEX 8'-0xA))
+      (= (NEG_BIN 8'-0b1010))
+      (= (HEX_ALIAS 20'x1))
+      (= (FROM_CONST NEG_CODE))
+    )
+  )
+)

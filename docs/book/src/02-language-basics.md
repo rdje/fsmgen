@@ -64,6 +64,13 @@ Lisp-ish arithmetic/bitwise expressions:
 The expression must resolve to one positive integer before generation. Unknown
 or aggregate-valued leaves are rejected instead of becoming accidental signals.
 
+`.fsm` integer literals are intentionally a little friendlier than target HDL.
+Alongside SystemVerilog-style forms such as `8'hA5`, you can write
+intent-level sized values as `<width>'<integer-value>`: `5'23`, `8'-10`,
+`8'-0xA`, `8'-0b1010`, or `20'x1`. Those are normalized before HDL emission,
+so generated SV sees legal literals such as `5'd23`, `8'd246`, `8'hF6`,
+`8'b11110110`, and `20'h1` instead of raw `.fsm` shorthand.
+
 ## Init/Reset Defaults
 
 Use canonical `:=` pairs for explicit reset/default metadata:

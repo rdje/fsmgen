@@ -7,6 +7,7 @@ use warnings;
 use Carp qw(confess);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
+use FSM::Package::IntegerLiteralSupport;
 
 =head1 NAME
 
@@ -94,6 +95,8 @@ sub to_systemverilog ($self) {
         return "1'b0";
     } elsif ($value eq '1') {
         return "1'b1";
+    } elsif (defined(my $normalized = FSM::Package::IntegerLiteralSupport->systemverilog_literal_from_literal_like($self))) {
+        return $normalized;
     } elsif ($value =~ /^\d+$/) {
         return $value;
     } else {

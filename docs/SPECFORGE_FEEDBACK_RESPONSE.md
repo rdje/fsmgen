@@ -180,7 +180,23 @@ semantic payload.
 The implementation deliberately strips private live Perl objects and generated
 HDL text from the public report.
 
-### 5. Reset And Clock Contract Metadata
+### 5. External HDL Validation
+
+FSMGen now has a bounded generated-SystemVerilog validation lane:
+
+```bash
+fsmgen --verify-hdl path/to/file.fsm
+```
+
+`--validate-hdl` is the same mode. The command writes generated `.sv`, then
+runs Verilator `--lint-only --sv` and Yosys `read_verilog -sv -noautowire`,
+`hierarchy -check`, `proc`, `opt`, and `stat` through
+`FSM::Support::HDLExternalValidation`. This should be understood as a backend
+quality gate for emitted HDL, not as a replacement for FSMGen's semantic,
+strict-mode, and pre-generation checks. The lane is SystemVerilog-only for now;
+VHDL/GHDL validation waits until FSMGen has a real VHDL backend.
+
+### 6. Reset And Clock Contract Metadata
 
 FSMGen agrees that clock/reset truth deserves first-class treatment.
 
@@ -271,10 +287,12 @@ The current FSMGen-side priority order is:
 3. Stabilize and widen check-only JSON diagnostics from the bounded surface now
    shipped.
 4. Widen normalized semantic JSON only from regression-backed public facts.
-5. Keep the typed extension/context contract, sanitized composition-report
+5. Keep generated-SystemVerilog external validation available as a backend
+   gate without letting Verilator/Yosys replace internal semantic validation.
+6. Keep the typed extension/context contract, sanitized composition-report
    contract, and in-process `HDLGenerator` result contract explicit and bounded
    while raw nested compatibility payloads still contain live Perl objects.
-6. Use those surfaces to guide later language additions such as actor roles,
+7. Use those surfaces to guide later language additions such as actor roles,
    channel grouping, semantic signal roles, temporal/stability contracts, and
    provenance/residual metadata.
 
@@ -311,6 +329,9 @@ project policies:
   through the capability manifest and exported under
   `semantic.composition.provenance_report`, while raw `composition_report` and
   `composition_plan` remain in-process payloads rather than JSON APIs;
+- `fsmgen --verify-hdl path/to/file.fsm` / `--validate-hdl` is the optional
+  generated-SystemVerilog backend validation lane using Verilator and Yosys
+  when those tools are installed;
 - `docs/REGRESSION_CORPUS.md` and `FSM::Support::RegressionCorpus` are the
   current support-accounting source of truth behind that manifest;
 - `FSM::Support::DiagnosticCodes` is the current stable diagnostic-code owner

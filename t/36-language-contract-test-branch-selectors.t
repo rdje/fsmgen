@@ -56,7 +56,7 @@ my ($nz_assignment) = grep { $_->{dt} eq 's0' && $_->{rhs} eq '1' } @{$phase1_ge
 ok($nz_assignment, 'captured assignments include the != selector branch');
 is(
     $nz_assignment->{conditions_ast}->to_systemverilog,
-    "COUNT != 8'0",
+    "COUNT != 8'd0",
     '!= selector lowers to != comparison AST'
 );
 
@@ -64,7 +64,7 @@ my ($gt_assignment) = grep { $_->{dt} eq 's0' && $_->{rhs} eq '1' } @{$phase1_ge
 ok($gt_assignment, 'captured assignments include the > selector branch');
 is(
     $gt_assignment->{conditions_ast}->to_systemverilog,
-    "COUNT > 8'3",
+    "COUNT > 8'd3",
     '> selector lowers to > comparison AST'
 );
 
@@ -72,15 +72,15 @@ my ($le_assignment) = grep { $_->{dt} eq 's0' && $_->{rhs} eq '1' } @{$phase1_ge
 ok($le_assignment, 'captured assignments include the <= selector branch');
 is(
     $le_assignment->{conditions_ast}->to_systemverilog,
-    "COUNT <= 8'3",
+    "COUNT <= 8'd3",
     '<= selector lowers to <= comparison AST'
 );
 
 my $hdl = FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($fsm_module);
 
-like($hdl, qr/\bCOUNT\s*!=\s*8'0\b/, 'generated HDL contains != selector comparison');
-like($hdl, qr/\bCOUNT\s*>\s*8'3\b/, 'generated HDL contains > selector comparison');
-like($hdl, qr/\bCOUNT\s*<=\s*8'3\b/, 'generated HDL contains <= selector comparison');
+like($hdl, qr/\bs0_nz_1_en\s*=\s*s0_en\s*&\s*COUNT\s*;/, 'generated HDL lowers != zero selector through direct truthiness');
+like($hdl, qr/\bCOUNT\s*>\s*8'd3\b/, 'generated HDL contains > selector comparison');
+like($hdl, qr/\bCOUNT\s*<=\s*8'd3\b/, 'generated HDL contains <= selector comparison');
 
 done_testing();
 

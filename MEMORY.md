@@ -1,5 +1,50 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-18: intent-level sized integer literals normalize before SV emission
+- [perl/FSM/Package/IntegerLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/IntegerLiteralSupport.pm)
+  now accepts `.fsm` intent-level sized values such as `5'23`, `8'-10`,
+  `8'-0xA`, `8'-0b1010`, and `20'x1`.
+- Those forms are not emitted verbatim. They normalize to legal target-HDL
+  literals before SystemVerilog generation, for example `5'd23`, `8'd246`,
+  `8'hF6`, `8'b11110110`, and `20'h1`.
+- The negative spelling decision is `8'-10` rather than `-8'10`, because the
+  width is part of the value in `.fsm`; the backend lowers negative sized values
+  as checked two's-complement bit patterns.
+- [t/309-intent-integer-literal-normalization.t](/Users/richarddje/Documents/github/fsmgen/t/309-intent-integer-literal-normalization.t)
+  and [t/corpus/direct_intent_integer_literals.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_intent_integer_literals.fsm)
+  lock parser/helper/expression/generation coverage.
+- Continuity note:
+  - keep the invariant crisp: `.fsm` may be intent-level and friendlier than
+    SV/VHDL, but generated HDL must be valid target language text or generation
+    must fail before acceptance.
+
+## 2026-04-18: Verilator/Yosys SystemVerilog validation lane landed
+- Added [perl/FSM/Support/HDLExternalValidation.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLExternalValidation.pm)
+  and wired `bin/fsmgen --verify-hdl` / `--validate-hdl` for generated
+  SystemVerilog.
+- The CLI writes the `.sv` file first, then runs Verilator
+  `--lint-only --sv` and Yosys `read_verilog -sv -noautowire; hierarchy -check;
+  proc; opt; stat` through the support module.
+- The first external probe on `fsm/lte_dif_pmaster.fsm` caught implicit enable
+  wires and multi-bit reset assignments using `1'b0`; the backend now declares
+  generated enable nets explicitly and sizes common reset literals to the LHS
+  width before emitting flop resets.
+- [t/308-systemverilog-external-validation.t](/Users/richarddje/Documents/github/fsmgen/t/308-systemverilog-external-validation.t)
+  validates `lte_dif_pmaster` with both external tools when installed and skips
+  otherwise.
+- Broader local reconnaissance over active `fsm/*.fsm` samples found additional
+  follow-up backend issues in some legacy/sample generated files. The malformed
+  sized-literal syntax family (`2'3` / `20'x1`) is now normalized before
+  emission, but missing/inferred widths in old fixtures, multibit truthiness
+  through `!vector`, and width-losing intermediate arithmetic remain follow-up
+  hardening. Keep the current external gate documented as a focused smoke until
+  those families are fixed.
+- Continuity note:
+  - keep Verilator/Yosys as post-emission backend gates; do not weaken or
+    replace FSMGen's internal semantic/pre-generation validation with external
+    lint/synthesis checks.
+  - VHDL/GHDL validation should wait until the VHDL backend exists.
+
 ## 2026-04-18: composition report contract is serializable through semantic JSON
 - Continued `R13` public embedding/API stabilization by adding
   [perl/FSM/Support/CompositionReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CompositionReportContract.pm).

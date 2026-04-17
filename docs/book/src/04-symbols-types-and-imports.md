@@ -33,10 +33,11 @@ as external RTL interface metadata.
 ```
 
 Scalar values may use decimal, sized SystemVerilog-style literals, unsized
-SystemVerilog-style based literals, or `0x` / `0b` / `0o` prefixes. Bounded
-literal list/record payloads are also accepted when they can lower to one packed
-literal. That keeps the authoring surface convenient while preserving a concrete
-semantic value before generation.
+SystemVerilog-style based literals, `0x` / `0b` / `0o` prefixes, or FSMGen
+intent-level sized literals such as `5'23`, `8'-10`, `8'-0xA`, `8'-0b1010`,
+and `20'x1`. Bounded literal list/record payloads are also accepted when they
+can lower to one packed literal. That keeps the authoring surface convenient
+while preserving a concrete semantic value before generation.
 
 Parameter values may also use bounded operator expressions:
 
@@ -143,9 +144,10 @@ Aggregate scalar leaves may participate too, for example `LANES[1]` or
 scalar width. Use a scalar leaf when computing a raw width, or use a declared
 aggregate type alias when the intent is typed aggregate storage.
 The direct `+size` expression path and the scalar-width-symbol path share the
-same integer literal interpreter for decimal, `0d`, `0b`, `0o`, `0x`, and
-SystemVerilog-style based spellings. Signed literal terms are valid ingredients
-when the final width remains positive, for example:
+same integer literal interpreter for decimal, `0d`, `0b`, `0o`, `0x`,
+SystemVerilog-style based spellings, and FSMGen intent-level sized values.
+Signed literal terms are valid ingredients when the final width remains
+positive, for example:
 
 ```lisp
 (+params
@@ -188,7 +190,15 @@ Simple scalar example:
 Scalar constants accept the common integer spellings used elsewhere in the
 language: plain decimal, sized SystemVerilog literals, unsized
 SystemVerilog-style based literals such as `'hA5`, prefixed forms such as
-`0xA5`, `0b1010`, and `0o77`, plus underscore-separated digits.
+`0xA5`, `0b1010`, and `0o77`, FSMGen intent-level sized values such as
+`5'23` or `8'-0xA`, plus underscore-separated digits.
+
+FSMGen intent-level sized literals use `<width>'<integer-value>` in `.fsm`.
+They are source-language values, not target-HDL text escapes. The backend must
+normalize them before emission, so `5'23` lowers to legal SV like `5'd23`,
+`20'x1` lowers to `20'h1`, and negative sized values lower as two's-complement
+bit patterns such as `8'-10` -> `8'd246`, `8'-0xA` -> `8'hF6`, and
+`8'-0b1010` -> `8'b11110110`.
 
 Those names can then be used in direct expressions:
 
@@ -341,10 +351,10 @@ Direct-root `+size` and composition `?ports` widths may now come from:
 - imported positive integer scalar symbols
 
 Those scalar width symbols use the same literal interpretation as direct
-`+size` expression terms, including decimal, `0d`, `0b`, `0o`, `0x`, and
-SystemVerilog-style based spellings. This keeps a package constant such as
-`(BYTE_W 0d8)` or `(BYTE_W 'h8)` usable anywhere a positive width scalar is
-allowed.
+`+size` expression terms, including decimal, `0d`, `0b`, `0o`, `0x`,
+SystemVerilog-style based spellings, and intent-level sized values. This keeps
+a package constant such as `(BYTE_W 0d8)` or `(BYTE_W 'h8)` usable anywhere a
+positive width scalar is allowed.
 
 Example:
 

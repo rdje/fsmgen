@@ -965,8 +965,8 @@ sub tokenize_infix_constant_integer_expression($self, $expr_text, $context) {
             next;
         }
         my $literal_pattern = $expect_operand
-            ? qr/(?:\d+)?'s?[bodh][+-]?[0-9A-Fa-f_]+|0d[+-]?\d[\d_]*|0x[0-9A-Fa-f_]+|0b[01_]+|0o[0-7_]+|[+-]?\d[\d_]*/i
-            : qr/(?:\d+)?'s?[bodh][+-]?[0-9A-Fa-f_]+|0d[+-]?\d[\d_]*|0x[0-9A-Fa-f_]+|0b[01_]+|0o[0-7_]+|\d[\d_]*/i;
+            ? qr/\d+'(?:s?[bodhx][+-]?[0-9A-Fa-f_]+|[+-]?(?:0[dbohx][+-]?[0-9A-Fa-f_]+|\d[\d_]*))|(?:\d+)?'s?[bodhx][+-]?[0-9A-Fa-f_]+|[+-]?0d[+-]?\d[\d_]*|[+-]?0x[+-]?[0-9A-Fa-f_]+|[+-]?0b[+-]?[01_]+|[+-]?0o[+-]?[0-7_]+|[+-]?\d[\d_]*/i
+            : qr/\d+'(?:s?[bodhx][+-]?[0-9A-Fa-f_]+|(?:0[dbohx][+-]?[0-9A-Fa-f_]+|\d[\d_]*))|(?:\d+)?'s?[bodhx][+-]?[0-9A-Fa-f_]+|0d[+-]?\d[\d_]*|0x[+-]?[0-9A-Fa-f_]+|0b[+-]?[01_]+|0o[+-]?[0-7_]+|\d[\d_]*/i;
         if ($expr_text =~ /\G($literal_pattern)\s*/gc) {
             push @tokens, $1;
             $expect_operand = 0;
@@ -1067,15 +1067,7 @@ sub canonicalize_constant_literal_payload($self, %args) {
         "See docs/USER_GUIDE.md for the current supported boundary.\n"
         if $parse_error || ref($literal_expr) ne 'FSM::CoreAST::Literal';
 
-    my $value = $literal_expr->value;
-    my $width = $literal_expr->width;
-    my $radix = $literal_expr->radix // 'decimal';
-
-    return $value unless defined $width;
-    return $width."'b".$value if $radix eq 'binary';
-    return $width."'h".$value if $radix eq 'hex';
-    return $width."'o".$value if $radix eq 'octal';
-    return $width."'d".$value;
+    return $literal_expr->to_systemverilog;
 }
 
 sub canonicalize_constant_payload($self, %args) {

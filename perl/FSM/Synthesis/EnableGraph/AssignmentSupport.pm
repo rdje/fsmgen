@@ -417,6 +417,25 @@ sub zero_literal_for_width ($self, $signal_width) {
     return "${signal_width}'b" . ('0' x $signal_width);
 }
 
+=head2 normalize_reset_literal_for_width
+
+Render common scalar reset literals with the target width so generated flops
+do not rely on implicit widening.
+
+=cut
+
+sub normalize_reset_literal_for_width ($self, $reset_value, $signal_width) {
+    return $reset_value unless defined($reset_value);
+    return $reset_value unless defined($signal_width) && $signal_width > 1;
+
+    return $self->zero_literal_for_width($signal_width)
+        if $reset_value =~ /^(?:0|1'b0|1'd0|1'h0)\z/i;
+    return "${signal_width}'d1"
+        if $reset_value =~ /^(?:1|1'b1|1'd1|1'h1)\z/i;
+
+    return $reset_value;
+}
+
 =head2 replace_segment_range
 
 Replace one destination range inside a descending segment map with a new source
@@ -944,7 +963,10 @@ sub generate_unified_flop_mux ($self, $lhs, $lhs_analysis) {
 
         $hdl .= "  end\n";
 
-        my $reset_value = $signal_support->get_reset_value_from_ast($lhs_ast);
+        my $reset_value = $self->normalize_reset_literal_for_width(
+            $signal_support->get_reset_value_from_ast($lhs_ast),
+            $self->get_lhs_width_from_analysis($lhs_analysis),
+        );
 
         $hdl .= "  always_ff @($event_control) begin\n";
         $hdl .= "    if ($reset_condition) begin\n";
@@ -977,7 +999,10 @@ sub generate_unified_flop_mux ($self, $lhs, $lhs_analysis) {
 
         $hdl .= "  end\n";
 
-        my $reset_value = $signal_support->get_reset_value_from_ast($lhs_ast);
+        my $reset_value = $self->normalize_reset_literal_for_width(
+            $signal_support->get_reset_value_from_ast($lhs_ast),
+            $self->get_lhs_width_from_analysis($lhs_analysis),
+        );
 
         $hdl .= "  always_ff @($event_control) begin\n";
         $hdl .= "    if ($reset_condition) begin\n";

@@ -98,6 +98,22 @@ sub build_capability_manifest {
                 full_export_stable => JSON::PP::false,
             },
         },
+        backend_validation => {
+            systemverilog_external => {
+                schema_version => 1,
+                status => 'optional_when_tools_installed',
+                command_shape => './bin/fsmgen --verify-hdl path/to/file.fsm',
+                alias => './bin/fsmgen --validate-hdl path/to/file.fsm',
+                target_languages => [qw(systemverilog sv)],
+                tools => [qw(verilator yosys)],
+                verilator_stage => 'lint_only_sv',
+                yosys_stage => 'read_verilog_sv_noautowire_hierarchy_proc_opt_stat',
+                emits_hdl => JSON::PP::true,
+                vhdl_validation_deferred_until_vhdl_backend => JSON::PP::true,
+                report_source => 'FSM::Support::HDLExternalValidation',
+                regression_smoke => 't/308-systemverilog-external-validation.t',
+            },
+        },
         embedding => {
             composition_report => build_composition_report_contract(),
             hdl_generator_result => build_hdl_generator_result_contract(),
@@ -148,6 +164,7 @@ sub build_capability_manifest {
                     '0o octal',
                     '0x hex',
                     'SystemVerilog based literals',
+                    q{FSMGen intent-sized literals like 5'23, 8'-10, 8'-0xA, 8'-0b1010, and 20'x1},
                 ],
             },
             declarations => {

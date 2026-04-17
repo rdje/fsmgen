@@ -21,6 +21,7 @@ use FSM::Pipeline::HDLGenerator;
 use FSM::SourcePathResolver;
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::Support::CheckDiagnostics qw(build_check_failure_report build_check_success_report);
+use FSM::Support::HDLExternalValidation qw(validate_systemverilog_file);
 use FSM::Support::NormalizedSemanticReport qw(
     build_normalized_semantic_failure_report
     build_normalized_semantic_success_report
@@ -197,6 +198,7 @@ my $emit_capability_manifest = 0;
 my $check_mode = 0;
 my $json_output = 0;
 my $emit_semantic_json = 0;
+my $verify_hdl = 0;
 
 # Store original ARGV to check for bare flags before GetOptions processes them
 my $has_bare_debug_flag = grep { /^--?d(ebug)?$/ } @ARGV;
@@ -223,6 +225,7 @@ GetOptions(
         $json_output = 1;
     },
     'emit-semantic-json|semantic-json|emit-normalized-json|normalized-json' => \$emit_semantic_json,
+    'verify-hdl|validate-hdl' => \$verify_hdl,
 ) or die "Error in command line arguments\n";
 
 # Handle legacy --debug flag behavior: if no value specified, default to level 4
@@ -304,6 +307,9 @@ Options:
   --emit-semantic-json
                   Run the full pipeline, emit normalized semantic JSON, and do not write HDL
                   Alias: --semantic-json
+  --verify-hdl    After writing generated SystemVerilog, run Verilator lint and
+                  Yosys synthesis lowering as external validation gates
+                  Alias: --validate-hdl
   -q, --quiet     Suppress informational messages
   --strict        Enable strict support-tier enforcement
                   Current first strict slice rejects legacy '+fsm' roots and
@@ -405,6 +411,9 @@ Other Examples:
   # Emit normalized machine-readable semantics without writing HDL
   ./bin/fsmgen --strict --emit-semantic-json my_fsm
 
+  # Generate SystemVerilog and validate it with Verilator plus Yosys
+  ./bin/fsmgen --verify-hdl my_fsm
+
   # Load an explicit typed extension module from @INC
   PERL5LIB=./my_extensions ./bin/fsmgen \
     --extension-module My::Extension \
@@ -435,6 +444,12 @@ if ($check_mode && !$json_output) {
 }
 if ($json_output && !$check_mode) {
     die "Error: --json is currently only supported together with --check\n";
+}
+if ($verify_hdl && ($check_mode || $emit_semantic_json)) {
+    die "Error: --verify-hdl cannot be combined with --check, --json, --check-json, or --emit-semantic-json because no HDL file is written\n";
+}
+if ($verify_hdl && $target_language !~ /^(?:systemverilog|sv)$/) {
+    die "Error: --verify-hdl currently supports generated SystemVerilog only\n";
 }
 
 # Check for required positional argument
@@ -664,6 +679,25 @@ open my $fh, '>', $output_file or die format_cli_artifact_error(
 );
 print $fh $hdl_code;
 close $fh;
+
+if ($verify_hdl) {
+    my $validation_report = eval {
+        validate_systemverilog_file(
+            source_file => $output_file,
+            top_module => $module_info->{module_name},
+        );
+    };
+    if ($@) {
+        print STDERR normalize_cli_error_text($@);
+        exit 1;
+    }
+    unless ($quiet) {
+        print "\n=== External HDL Validation ===\n";
+        for my $step (@{$validation_report->{steps} || []}) {
+            print "  - $step->{name}: PASS\n";
+        }
+    }
+}
 
 unless ($quiet) {
     print "\n=== Code Generation Summary ===\n";

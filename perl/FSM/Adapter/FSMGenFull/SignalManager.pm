@@ -389,23 +389,9 @@ sub _literal_to_parameter_payload($literal_expr) {
     return undef unless defined $literal_expr;
     return undef unless blessed($literal_expr) && $literal_expr->isa('FSM::CoreAST::Literal');
 
-    my $value = $literal_expr->value;
-    my $width = $literal_expr->width;
-    my $radix = $literal_expr->radix // 'decimal';
-
     return {
         kind => 'scalar',
-        payload => $value,
-    } unless defined $width;
-
-    my $prefix = $radix eq 'binary' ? 'b'
-        : $radix eq 'hex' ? 'h'
-        : $radix eq 'octal' ? 'o'
-        : 'd';
-
-    return {
-        kind => 'scalar',
-        payload => $width."'".$prefix.$value,
+        payload => $literal_expr->to_systemverilog,
     };
 }
 

@@ -9,7 +9,7 @@
   end
   always_ff @(posedge clk) begin
     if (rstn) begin
-      I <= 1'b0;
+      I <= 8'b00000000;
     end else begin
       I <= I_next;
     end

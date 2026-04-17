@@ -42,6 +42,7 @@ use List::Util qw(min);
 use Scalar::Util qw(blessed);
 
 use FSM::Debug;
+use FSM::Package::IntegerLiteralSupport;
 
 =head2 new
 
@@ -199,6 +200,8 @@ sub _ast_to_systemverilog_internal ($self, $ast, $parent_precedence) {
         return $ast->to_systemverilog();
 
     } elsif ($ast->isa('FSM::AST::Literal') || $ast->isa('FSM::CoreAST::Literal')) {
+        my $normalized = FSM::Package::IntegerLiteralSupport->systemverilog_literal_from_literal_like($ast);
+        return $normalized if defined $normalized;
         return $ast->value || "0";
 
     } elsif ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp') || $ast->isa('FSM::HDL::SubstitutedBinaryOp')) {
@@ -234,6 +237,8 @@ sub _ast_to_systemverilog_internal ($self, $ast, $parent_precedence) {
             return $name || "unknown_signal";
         } elsif ($node_type =~ /Literal$/) {
             my $value = eval { $ast->value } || "0";
+            my $normalized = FSM::Package::IntegerLiteralSupport->systemverilog_literal_from_literal_like($ast);
+            return $normalized if defined $normalized;
             return $value;
         }
 
@@ -340,6 +345,9 @@ sub _literal_numeric_value ($self, $literal) {
 
     $text =~ s/\s+//g;
     $text =~ s/_//g;
+
+    my $integer_value = FSM::Package::IntegerLiteralSupport->integer_from_scalar($text);
+    return 0 + $integer_value->bstr if defined $integer_value;
 
     if ($text =~ /\A(\d+)'([bdhxBDHX])([0-9a-fA-FxXzZ]+)\z/) {
         my ($width, $radix_char, $digits) = ($1, lc($2), $3);

@@ -240,7 +240,11 @@ coverage for the bounded normalized semantic JSON surface. It also advertises
 the bounded typed-extension/context contract, the bounded sanitized composition
 report contract, and the bounded `HDLGenerator` result contract for in-process
 embedders, while making clear that the raw result hash is not JSON-safe as a
-whole.
+whole. It also advertises the optional external SystemVerilog validation lane:
+`--verify-hdl` / `--validate-hdl` writes generated `.sv` and then runs
+Verilator lint plus Yosys synthesis lowering when those tools are installed.
+That lane is currently SystemVerilog-only; VHDL/GHDL validation waits for an
+active VHDL backend.
 
 The first bounded check/diagnostic surface is now:
 

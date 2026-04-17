@@ -9,7 +9,7 @@
   end
   always_ff @(posedge clk) begin
     if (rstn) begin
-      K_q <= 1'b0;
+      K_q <= 8'b00000000;
     end else begin
       K_q <= K;
     end

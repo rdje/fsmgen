@@ -1,5 +1,62 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-18: .fsm intent literals must lower to target-HDL literals before emission
+- Added intent-level sized integer literal normalization to
+  [perl/FSM/Package/IntegerLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/IntegerLiteralSupport.pm).
+- The `.fsm` source surface may now accept friendly forms that are not legal
+  SystemVerilog by themselves:
+  - `5'23` means value `23` represented on 5 bits and lowers to `5'd23`,
+  - `20'x1` uses `x` as an intent-level hex-radix alias and lowers to `20'h1`,
+  - `8'-10`, `8'-0xA`, and `8'-0b1010` lower to two's-complement bit patterns
+    such as `8'd246`, `8'hF6`, and `8'b11110110`.
+- The chosen negative syntax is `8'-10`, not `-8'10`, because the width belongs
+  to the literal value in `.fsm`; a leading unary minus outside the width reads
+  like an operator applied after literal construction.
+- The backend rule remains strict: friendly `.fsm` tokens are source-language
+  intent only. Generated HDL must contain valid target-language tokens or the
+  flow must abort before writing/accepting HDL.
+- The normalizer is now used by scalar expression parsing, direct/package
+  constant canonicalization, legacy pure-AST literal rendering, CoreAST literal
+  rendering, and enable-graph AST rendering so syntax-only shorthands such as
+  `2'3` and `20'x1` cannot leak into generated SystemVerilog.
+- Rationale:
+  - the authoring surface should feel intent-level and ergonomic,
+  - target backends must stay legal by construction,
+  - and negative sized values should be explicit bit-pattern values with
+    overflow/range checks rather than silent target-HDL parser accidents.
+
+## 2026-04-18: external HDL tools are backend gates, not semantic substitutes
+- Added
+  [perl/FSM/Support/HDLExternalValidation.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLExternalValidation.pm)
+  as the owner for optional generated-SystemVerilog validation with Verilator
+  and Yosys.
+- The intended validation stack is layered:
+  - FSMGen parser/semantic/pre-generation checks prove AST and intent
+    correctness before emission,
+  - Verilator lint proves the emitted SystemVerilog is accepted by an
+    independent frontend without implicit nets or width warnings,
+  - Yosys synthesis lowering proves the emitted RTL can pass through a
+    synthesizer frontend and basic process/optimization lowering,
+  - and VHDL/GHDL validation remains deferred until a real VHDL backend exists.
+- The first probe exposed real backend quality issues: generated enable nets
+  were not explicitly declared, and multi-bit reset paths still emitted
+  one-bit `1'b0` literals in some flop resets. The fix declares generated
+  enable wires before assignment emission and normalizes common reset literals
+  to the LHS width before rendering sequential blocks.
+- A broader local reconnaissance over `fsm/*.fsm` is not yet clean. The
+  malformed legacy sized-literal family (`2'3` / `20'x1`) is now normalized
+  before emission, but several legacy/sample sources still expose follow-up
+  backend hardening work such as missing/inferred widths in old fixtures,
+  multibit truthiness rendered as `!vector`, and width-losing intermediate
+  math. Do not claim corpus-wide external HDL cleanliness until those are fixed
+  and regression-backed deliberately.
+- Rationale:
+  - external tools catch final-text issues that internal AST checks should make
+    rare but should not be asked to replace,
+  - `--verify-hdl` gives users a direct local quality gate,
+  - and the regression test skips cleanly when the EDA tools are not installed
+    so baseline development remains portable.
+
 ## 2026-04-18: composition report contract separates raw plan data from JSON interchange
 - Added
   [perl/FSM/Support/CompositionReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CompositionReportContract.pm)

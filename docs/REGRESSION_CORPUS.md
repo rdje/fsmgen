@@ -195,6 +195,16 @@ failure JSON, keeping stderr clean, writing no HDL, omitting partial semantic
 payloads, and preserving the exact stable diagnostic code plus matched
 support-accounting identity promised by the corpus.
 
+The optional external SystemVerilog validation lane is covered by
+[t/308-systemverilog-external-validation.t](/Users/richarddje/Documents/github/fsmgen/t/308-systemverilog-external-validation.t).
+When `verilator` and `yosys` are installed, that smoke generates
+`fsm/lte_dif_pmaster.fsm`, validates the emitted `.sv` with Verilator
+`--lint-only --sv`, validates Yosys lowering with
+`read_verilog -sv -noautowire`, `hierarchy -check`, `proc`, `opt`, and `stat`,
+and proves the CLI `--verify-hdl` lane invokes the same external gates. When
+the tools are absent, the test skips rather than making the baseline Perl
+regression suite depend on local EDA installs.
+
 All current supported protocol fixtures are now `strict_supported`: the APB
 requester, APB completer, AMBA requester, and APB composition top use the
 canonical `areset rst_n`, `(:= (signal value))`, and assignment-pair surfaces
@@ -223,6 +233,8 @@ the stable diagnostic-code registry, the bounded check-JSON command contract,
 the check-JSON support-accounting object contracts for matched failures and
 matched accepted corpus entries,
 the bounded normalized semantic JSON command contract,
+the optional external SystemVerilog Verilator/Yosys validation command
+contract,
 the supported-smoke / strict-supported / expected-failure check-JSON coverage
 flags,
 the supported-smoke / strict-supported / expected-failure normalized semantic
@@ -318,6 +330,12 @@ bounded slice.
   deconstruct. Every supported direct language-feature fixture is also now a
   `strict_supported` positive acceptance asset, so this same test runs the
   whole family through both `strict_mode => 1` and `bin/fsmgen --strict`.
+- [t/309-intent-integer-literal-normalization.t](/Users/richarddje/Documents/github/fsmgen/t/309-intent-integer-literal-normalization.t)
+  locks the shared `.fsm` intent-level integer literal normalizer. It proves
+  helper parsing, expression-builder parsing, package/direct constant
+  canonicalization, and generated-SystemVerilog emission for source spellings
+  such as `5'23`, `8'-10`, `8'-0xA`, `8'-0b1010`, and `20'x1`, using
+  [t/corpus/direct_intent_integer_literals.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_intent_integer_literals.fsm).
 - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
   checks that the catalog stays named, classified, unique, and pointed at real
   repo assets, that each coverage bucket belongs to its expected classification,

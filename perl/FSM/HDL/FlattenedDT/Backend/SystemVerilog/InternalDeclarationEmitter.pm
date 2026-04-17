@@ -47,8 +47,9 @@ sub generate_internal_signal_declarations ($self, $fsm_module) {
     my %aux_declared_type_name = %{$declaration_plan->{aux_declared_type_name} || {}};
     my %signal_declared_type_spec = %{$declaration_plan->{signal_declared_type_spec} || {}};
     my %aux_declared_type_spec = %{$declaration_plan->{aux_declared_type_spec} || {}};
+    my %enable_decls = _enable_wire_declarations($ctx, \%signal_decls, \%aux_decls);
 
-    return "" unless (%signal_decls || %aux_decls);
+    return "" unless (%signal_decls || %aux_decls || %enable_decls);
     $ctx->{verilog_family_typedef_state} //= FSM::Backend::VerilogFamily::TypeDeclarationSupport->typedef_state;
 
     my @typed_declaration_entries = (
@@ -85,9 +86,54 @@ sub generate_internal_signal_declarations ($self, $fsm_module) {
             $aggregate_typedef_lookup,
         );
     }
+    if (%enable_decls) {
+        $hdl .= "  // Generated enable wires\n";
+        $hdl .= _render_wire_declarations(\%enable_decls);
+    }
     $hdl .= "\n";
 
     return $hdl;
+}
+
+sub _enable_wire_declarations ($ctx, $signal_decls, $aux_decls) {
+    my %declared = map { $_ => 1 } (
+        keys %{$signal_decls || {}},
+        keys %{$aux_decls || {}},
+        keys %{$ctx->{declared_port_signals} || {}},
+    );
+    my %enable_decls;
+
+    for my $state_name (keys %{$ctx->{state_enables} || {}}) {
+        _add_enable_wire(\%enable_decls, \%declared, "${state_name}_en");
+    }
+
+    for my $dt_name (keys %{$ctx->{dt_enables} || {}}) {
+        my $clean_name = $dt_name;
+        $clean_name =~ s/^-//;
+        _add_enable_wire(\%enable_decls, \%declared, "${clean_name}_en");
+    }
+
+    for my $lhs (keys %{$ctx->{assignment_analysis} || {}}) {
+        my $lhs_analysis = $ctx->{assignment_analysis}{$lhs} || {};
+        for my $rhs (keys %{$lhs_analysis->{rhs_groups} || {}}) {
+            my $rhs_group = $lhs_analysis->{rhs_groups}{$rhs} || {};
+
+            for my $dt_enable_info (@{$rhs_group->{dt_specific_enables} || []}) {
+                _add_enable_wire(\%enable_decls, \%declared, $dt_enable_info->{enable_name});
+            }
+
+            my $lhs_enable = $rhs_group->{lhs_level_enable} || {};
+            _add_enable_wire(\%enable_decls, \%declared, $lhs_enable->{name});
+        }
+    }
+
+    return %enable_decls;
+}
+
+sub _add_enable_wire ($enable_decls, $declared, $name) {
+    return unless defined($name) && $name =~ /^[A-Za-z_]\w*\z/;
+    return if $declared->{$name};
+    $enable_decls->{$name} = 1;
 }
 
 sub _typed_declaration_entries ($decls, $signed_map, $state_model_map, $declared_type_name_map, $declared_type_spec_map) {
@@ -128,6 +174,14 @@ sub _render_reg_declarations ($decls, $signed_map = undef, $state_model_map = un
             next;
         }
         $hdl .= "  reg ${signed_str}${width_str}${signal_name};\n";
+    }
+    return $hdl;
+}
+
+sub _render_wire_declarations ($decls) {
+    my $hdl = "";
+    for my $signal_name (sort keys %{$decls || {}}) {
+        $hdl .= "  wire ${signal_name};\n";
     }
     return $hdl;
 }

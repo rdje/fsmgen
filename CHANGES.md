@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-18
+### intent-level integer literals normalize before HDL emission
+- Extended [perl/FSM/Package/IntegerLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/IntegerLiteralSupport.pm) so `.fsm` source can use intent-level sized integer values such as `5'23`, `8'-10`, `8'-0xA`, `8'-0b1010`, and `20'x1` while generated SystemVerilog always receives legal target literals like `5'd23`, `8'd246`, `8'hF6`, `8'b11110110`, and `20'h1`.
+- Routed [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm), [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm), [perl/FSM/AST/Node.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/AST/Node.pm), package/direct constant canonicalization, and the enable-graph AST renderer through the same normalizer so raw `.fsm` shorthand cannot leak into backend text.
+- Added [t/corpus/direct_intent_integer_literals.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_intent_integer_literals.fsm) and [t/309-intent-integer-literal-normalization.t](/Users/richarddje/Documents/github/fsmgen/t/309-intent-integer-literal-normalization.t) to lock parser, expression-builder, package-constant, and generated-SystemVerilog coverage for those spellings.
+
+### external SystemVerilog validation lane shipped
+- Added [perl/FSM/Support/HDLExternalValidation.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLExternalValidation.pm) as the optional Verilator/Yosys validation owner for generated SystemVerilog.
+- Added `bin/fsmgen --verify-hdl` / `--validate-hdl`, which writes the generated `.sv` file, then runs Verilator `--lint-only --sv` and Yosys `read_verilog -sv -noautowire; hierarchy -check; proc; opt; stat`.
+- Hardened direct SystemVerilog emission so generated enable nets are explicitly declared and multi-bit reset literals are width-sized before Verilator/Yosys see the file.
+- Added [t/308-systemverilog-external-validation.t](/Users/richarddje/Documents/github/fsmgen/t/308-systemverilog-external-validation.t) plus [t/268-lte-dif-pmaster-consolidated-intermediate-regression.t](/Users/richarddje/Documents/github/fsmgen/t/268-lte-dif-pmaster-consolidated-intermediate-regression.t) coverage for explicit enable declarations, sized reset literals, and external validation of `fsm/lte_dif_pmaster.fsm`.
+
 ### composition report contract is serializable through semantic JSON
 - Added [perl/FSM/Support/CompositionReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CompositionReportContract.pm) as the production owner for the bounded composition provenance/report contract.
 - Extended [perl/FSM/Support/NormalizedSemanticReport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReport.pm) so composition semantic JSON now exposes a sanitized `semantic.composition.provenance_report` fragment while still keeping raw `composition_report` and `composition_plan` as in-process compatibility payloads.

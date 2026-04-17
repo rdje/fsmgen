@@ -11,6 +11,7 @@ use Scalar::Util qw(blessed);
 use FSM::CoreAST;
 use FSM::Debug;
 use FSM::Package::AggregatePathSupport;
+use FSM::Package::IntegerLiteralSupport;
 use FSM::Package::PayloadLiteralSupport;
 use FSM::Package::PayloadTypeSupport;
 
@@ -484,56 +485,39 @@ sub parse_scalar_expression($self, $scalar) {
 sub parse_common_integer_literal($self, $scalar) {
     return undef unless defined($scalar) && !ref($scalar);
 
+    my $parts = FSM::Package::IntegerLiteralSupport->literal_parts_from_scalar($scalar);
+    return undef unless $parts;
+
+    my $width = $parts->{width};
+    if (!defined $width && $parts->{value}->bcmp(0) >= 0) {
+        $width = $self->intrinsic_width_for_integer_literal_token($scalar, $parts);
+    }
+    $parts->{width} = $width if defined $width;
+
+    my $literal_payload = FSM::Package::IntegerLiteralSupport->core_literal_payload_from_parts(%$parts);
+    return undef unless $literal_payload;
+
+    my %args = (
+        radix => $literal_payload->{radix} // 'decimal',
+    );
+    $args{width} = $literal_payload->{width} if defined $literal_payload->{width};
+
+    return FSM::CoreAST::Literal->new($literal_payload->{value}, %args);
+
+    return undef;
+}
+
+sub intrinsic_width_for_integer_literal_token($self, $scalar, $parts) {
     my $text = $scalar;
     $text =~ s/_//g;
+    $text =~ s/\A[+]//;
 
-    return FSM::CoreAST::Literal->new($1)
-        if $text =~ /^(\d+)$/;
+    return length($1) if $text =~ /\A0b([01]+)\z/i;
+    return length($1) * 3 if $text =~ /\A0o([0-7]+)\z/i;
+    return length($1) * 4 if $text =~ /\A0x([0-9a-fA-F]+)\z/i;
 
-    return FSM::CoreAST::Literal->new($1)
-        if $text =~ /^0d(\d+)$/i;
-
-    if ($text =~ /^0b([01]+)$/i) {
-        return FSM::CoreAST::Literal->new(
-            $1,
-            width => length($1),
-            radix => 'binary',
-        );
-    }
-
-    if ($text =~ /^0o([0-7]+)$/i) {
-        return FSM::CoreAST::Literal->new(
-            $1,
-            width => length($1) * 3,
-            radix => 'octal',
-        );
-    }
-
-    if ($text =~ /^0x([0-9a-fA-F]+)$/i) {
-        return FSM::CoreAST::Literal->new(
-            uc($1),
-            width => length($1) * 4,
-            radix => 'hex',
-        );
-    }
-
-    if ($text =~ /^(\d+)'(s?)([bBoOdDhHxX])([0-9a-fA-F]+)$/) {
-        my ($width, $radix_char, $value) = ($1, lc($3), $4);
-        return FSM::CoreAST::Literal->new(
-            uc($value),
-            width => $width,
-            radix => $self->literal_radix_name($radix_char),
-        );
-    }
-
-    if ($text =~ /^'(s?)([bBoOdDhHxX])([0-9a-fA-F]+)$/) {
-        my ($radix_char, $value) = (lc($2), $3);
-        my $width = $self->intrinsic_based_literal_width($radix_char, $value);
-        return FSM::CoreAST::Literal->new(
-            uc($value),
-            width => $width,
-            radix => $self->literal_radix_name($radix_char),
-        );
+    if ($text =~ /\A'(?:s?)([bBoOhHxX])([0-9a-fA-F]+)\z/) {
+        return $self->intrinsic_based_literal_width($1, $2);
     }
 
     return undef;

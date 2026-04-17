@@ -32,6 +32,31 @@ subtest 'lte_dif_pmaster consolidated intermediate block keeps referenced helper
         qr/always_comb begin\s+next_state = current_state;\s+\/\/ Default value/s,
         'generated next_state mux keeps typed hold-state default instead of a 1-bit literal',
     );
+    like(
+        $hdl,
+        qr/\/\/ Generated enable wires.*\bwire\s+end_read_en\s*;.*\bwire\s+next_state_setup_en\s*;/s,
+        'generated enable nets are explicitly declared before assignment emission',
+    );
+    like(
+        $hdl,
+        qr/\bapb_rdata\s+<=\s+16'b0000000000000000\s*;/,
+        'multi-bit apb_rdata reset emits a sized zero literal',
+    );
+    like(
+        $hdl,
+        qr/\bpaddr\s+<=\s+8'b00000000\s*;/,
+        'multi-bit paddr reset emits a sized zero literal',
+    );
+    like(
+        $hdl,
+        qr/\bpwdata\s+<=\s+16'b0000000000000000\s*;/,
+        'multi-bit pwdata reset emits a sized zero literal',
+    );
+    unlike(
+        $hdl,
+        qr/\b(?:apb_rdata|paddr|pwdata)\s+<=\s+1'b0\s*;/,
+        'multi-bit reset emission no longer relies on implicit one-bit widening',
+    );
 
     my ($block) = $hdl =~ /(^\s*\/\/ Consolidated intermediate signals .*?)(?=^\s*\/\/ Unified WEN\/EN Signal Generation)/ms;
     ok(defined $block && $block ne '', 'generated HDL includes a consolidated intermediate block');

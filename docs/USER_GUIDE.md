@@ -507,7 +507,8 @@ This is the current `R8` draft normative contract for the symbol-definition and 
   - a positive integer literal such as `1`, `8`, `0d8`, `0x10`, `0b1000`, `'h8`, or `8'h10`
   - a named scalar or aggregate type such as `bit`, `byte_t`, `frame_t`, or `pkg_name.byte_t`
   - a positive integer constant expression using literals, same-root/imported constants, enum members, params/generics, aggregate scalar leaves, and the bounded Lisp-ish arithmetic/bitwise operators `+`, `-`, `*`, `/`, `%`, `&`, `|`, `^` plus aliases `add`, `sub`, `mul`, `div`, `mod`, `and`, `or`, `xor`
-- Direct `+size` expression literals and positive scalar width symbols use the same integer-literal interpretation for decimal, `0d`, `0b`, `0o`, `0x`, and SystemVerilog-style based spellings; signed literal terms may participate inside an expression when the final resolved width is still positive, for example `(+ 8'sd9 8'sd-1)`.
+- Direct `+size` expression literals and positive scalar width symbols use the same integer-literal interpretation for decimal, `0d`, `0b`, `0o`, `0x`, SystemVerilog-style based spellings, and FSMGen intent-level sized values such as `5'23`, `8'-10`, `8'-0xA`, `8'-0b1010`, or `20'x1`; signed literal terms may participate inside an expression when the final resolved width is still positive, for example `(+ 8'sd9 8'sd-1)`.
+- FSMGen intent-level sized literals use `<width>'<integer-value>` in `.fsm`, with the width attached to the value rather than written as a target-HDL token. The backend must normalize them before HDL emission: `5'23` becomes legal SV like `5'd23`, `20'x1` becomes `20'h1`, and negative sized values lower through a two's-complement bit pattern such as `8'-10` -> `8'd246`, `8'-0xA` -> `8'hF6`, and `8'-0b1010` -> `8'b11110110`.
 - Width expressions may use aggregate scalar leaves such as `LANES[1]` or `FRAME.meta.mode`, but a whole aggregate root such as `LANES` is not itself a scalar width. Use a scalar leaf or a named aggregate type alias when the intent is typed aggregate storage.
 - The legacy empty form `(+size)` remains supported as a no-op in default mode because it still exists in compatibility coverage.
 - Strict mode rejects the empty no-op form and requires either explicit width entries or no `+size` section at all.
@@ -524,7 +525,7 @@ This is the current `R8` draft normative contract for the symbol-definition and 
   - non-empty list of `(NAME value)` entries
 - Current active use:
   - `(+constants (C0 8'3) (RESET_BYTE 0xA5) (LANE_MASK 0b1010) (OCT_W 0o10) (ZERO const_8b0))`
-- Scalar constants may use plain decimal, sized SystemVerilog literals, unsized SystemVerilog-style based literals such as `'hA5`, prefixed forms such as `0xA5`, `0b1010`, `0o77`, and underscore-separated digits.
+- Scalar constants may use plain decimal, sized SystemVerilog literals, unsized SystemVerilog-style based literals such as `'hA5`, prefixed forms such as `0xA5`, `0b1010`, `0o77`, FSMGen intent-level sized values such as `5'23` or `8'-0xA`, and underscore-separated digits.
 - References to those names resolve as literals in assignment RHS expressions and guard equality conditions.
 - Direct-root note:
   - inside `?fsm:name` and `?dt:name`, `(+constants ...)` also has a bounded aggregate extension where values may be non-empty lists or nested hash-like `(member value)` aggregates.
@@ -1613,6 +1614,7 @@ Example parameterized generated child:
 - `--capability-manifest` : print schema-versioned JSON describing the current support/capability surface and exit without requiring an input `.fsm`
 - `--check --json` : run the full pipeline as a check, emit schema-versioned JSON diagnostics, and do not write HDL
 - `--emit-semantic-json` : run the full pipeline, emit bounded normalized semantic JSON, and do not write HDL
+- `--verify-hdl` : after writing generated SystemVerilog, run Verilator lint and Yosys synthesis lowering
 - `-q, --quiet` : suppress informational messages
 - `-h, --help` : full CLI help
 
@@ -1628,6 +1630,15 @@ expected-failure diagnostic codes, documentation pointers, and intentionally
 blocked/not-yet-public surfaces share one source with the regression catalog.
 It also advertises which bounded machine-readable surfaces have current
 supported-corpus coverage, including check JSON and normalized semantic JSON.
+It also advertises the optional external SystemVerilog validation lane:
+`--verify-hdl` / `--validate-hdl` writes the generated `.sv`, then runs
+Verilator in lint-only SystemVerilog mode and Yosys with
+`read_verilog -sv -noautowire`, `hierarchy -check`, `proc`, `opt`, and `stat`.
+This is a backend validation gate, not a replacement for FSMGen's own semantic
+and pre-generation checks. The lane is SystemVerilog-only for now; VHDL/GHDL
+validation intentionally waits until FSMGen has an active VHDL backend. The
+current regression coverage is a focused generated-SystemVerilog smoke, not yet
+a claim that every historical sample under `fsm/` is externally warning-clean.
 For in-process embedders, it also exposes the bounded
 `HDLGenerator->generate_hdl_from_file(...)` result contract. That contract
 stabilizes top-level key presence for fields such as `hdl_code`, `module_info`,

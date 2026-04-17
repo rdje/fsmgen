@@ -492,15 +492,7 @@ sub canonicalize_package_symbol_literal_payload ($self, %args) {
         "but package symbol literal support is blocked because package symbol values currently must resolve to literal scalar values such as '0', '8'3', '8'hA5', or 'const_8b0'."
         if $parse_error || ref($literal_expr) ne 'FSM::CoreAST::Literal';
 
-    my $value = $literal_expr->value;
-    my $width = $literal_expr->width;
-    my $radix = $literal_expr->radix // 'decimal';
-
-    return $value unless defined $width;
-    return $width."'b".$value if $radix eq 'binary';
-    return $width."'h".$value if $radix eq 'hex';
-    return $width."'o".$value if $radix eq 'octal';
-    return $width."'d".$value;
+    return $literal_expr->to_systemverilog;
 }
 
 sub canonicalize_package_constant_payload ($self, %args) {

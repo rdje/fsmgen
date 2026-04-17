@@ -325,7 +325,7 @@ sub get_reset_value_from_ast($self, $lhs_ast) {
         my $reset_val = $lhs_ast->reset_value();
         if (defined $reset_val) {
             fsm_debug("  AST reset_value: '$reset_val'", 3);
-            return $reset_val;
+            return $self->_normalize_reset_value_for_lhs($lhs_name, $lhs_ast, $reset_val);
         }
     }
 
@@ -335,20 +335,49 @@ sub get_reset_value_from_ast($self, $lhs_ast) {
             my $reset_val = $signal->get_attribute('reset_value');
             if (defined $reset_val) {
                 fsm_debug("  LHS signal reset_value: '$reset_val'", 3);
-                return $reset_val;
+                return $self->_normalize_reset_value_for_lhs($lhs_name, $lhs_ast, $reset_val);
             }
         }
         if ($signal && $signal->can('attributes') && $signal->attributes) {
             my $reset_val = $signal->attributes->{reset_value};
             if (defined $reset_val) {
                 fsm_debug("  LHS signal attribute reset_value: '$reset_val'", 3);
-                return $reset_val;
+                return $self->_normalize_reset_value_for_lhs($lhs_name, $lhs_ast, $reset_val);
             }
         }
     }
 
     fsm_debug("  No AST reset value, using fallback", 3);
     return $ctx->{enable_graph_assignment_support}->get_reset_value($lhs_name);
+}
+
+sub _normalize_reset_value_for_lhs ($self, $lhs_name, $lhs_ast, $reset_val) {
+    my $width = $self->_reset_target_width($lhs_name, $lhs_ast);
+    return $reset_val unless defined($width) && $width > 1;
+
+    return "${width}'b" . ('0' x $width)
+        if $reset_val =~ /^(?:0|1'b0|1'd0|1'h0)\z/i;
+    return "${width}'d1"
+        if $reset_val =~ /^(?:1|1'b1|1'd1|1'h1)\z/i;
+
+    return $reset_val;
+}
+
+sub _reset_target_width ($self, $lhs_name, $lhs_ast) {
+    if ($lhs_ast && blessed($lhs_ast) && $lhs_ast->can('signal') && $lhs_ast->signal && $lhs_ast->signal->can('width')) {
+        my $width = $lhs_ast->signal->width;
+        return $width if defined($width) && $width > 0;
+    }
+
+    if ($lhs_ast && blessed($lhs_ast) && $lhs_ast->can('width')) {
+        my $width = $lhs_ast->width;
+        return $width if defined($width) && $width > 0;
+    }
+
+    my $ctx = $self->{flattened_dt};
+    my $signal_info = $ctx->{enable_graph_assignment_support}->get_signal_info($lhs_name);
+    return $signal_info->{width} if $signal_info && $signal_info->{width};
+    return 1;
 }
 
 =head2 get_default_value_from_ast

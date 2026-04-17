@@ -7,6 +7,7 @@ use Carp qw(confess);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 use Scalar::Util qw(blessed);
+use FSM::Package::IntegerLiteralSupport;
 
 # FSM Core AST - Semantic Foundation for Decision Tree FSMs
 # Format-agnostic, semantically complete representation
@@ -569,6 +570,9 @@ package FSM::CoreAST::Literal;
     sub radix($self) { $self->{radix} }
     
     sub to_verilog($self) {
+        my $normalized = FSM::Package::IntegerLiteralSupport->systemverilog_literal_from_literal_like($self);
+        return $normalized if defined $normalized;
+
         my $v = $self->{value};
         if (defined $self->{width}) {
             return $self->{radix} eq 'hex' ? "$self->{width}'h$v" :
@@ -591,6 +595,9 @@ package FSM::CoreAST::Literal;
     }
     
     sub to_systemverilog($self) {
+        my $normalized = FSM::Package::IntegerLiteralSupport->systemverilog_literal_from_literal_like($self);
+        return $normalized if defined $normalized;
+
         my $v = $self->{value};
         if (defined $self->{width}) {
             return $self->{radix} eq 'hex' ? "$self->{width}'h$v" :
