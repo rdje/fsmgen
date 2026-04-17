@@ -1626,6 +1626,8 @@ and
 so support-accounting counts, strict-supported entries, compatibility residue,
 expected-failure diagnostic codes, documentation pointers, and intentionally
 blocked/not-yet-public surfaces share one source with the regression catalog.
+It also advertises which bounded machine-readable surfaces have current
+supported-corpus coverage, including check JSON and normalized semantic JSON.
 
 The first bounded check-only JSON surface is:
 
@@ -1682,7 +1684,12 @@ This is intentionally not a promise that every private pipeline object is now
 public API. It is the first sanitized downstream-tool projection over the
 forward semantic layers that already exist. Failed semantic exports reuse the
 same stable diagnostic-code classifier as `--check-json` and do not expose
-partial semantics.
+partial semantics. The support-accounting corpus now verifies that every
+current `supported_smoke` entry succeeds through `--emit-semantic-json`, and
+every current `strict_supported` entry succeeds through
+`--strict --emit-semantic-json`, with matched support-accounting identity,
+expected module/top identity, sanitized forward-IR projections, and no HDL
+emission.
 
 ## 5) Input resolution and FSMLIB
 `fsmgen` resolves `<fsm_file>` as:

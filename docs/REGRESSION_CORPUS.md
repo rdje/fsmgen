@@ -177,6 +177,16 @@ semantic reports expose sanitized module/system/signal and forward-IR metadata,
 while matched corpus sources report the same entry id, family, coverage bucket,
 classification, source kind, and `strict_supported` support-accounting bridge.
 
+[t/303-normalized-semantic-json-supported-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/303-normalized-semantic-json-supported-corpus.t)
+locks the accepted side across the whole current supported corpus. Every current
+`supported_smoke` entry must succeed through `--emit-semantic-json`, and every
+current `strict_supported` entry must succeed through
+`--strict --emit-semantic-json`, while emitting decodable semantic JSON, keeping
+diagnostics empty, writing no HDL, preserving matched support-accounting
+identity, omitting generated HDL text/raw ASTs, and exposing the expected
+module/top identity through `semantic.module`, `intent_hir`, and
+`structural_rtl_ir`.
+
 All current supported protocol fixtures are now `strict_supported`: the APB
 requester, APB completer, AMBA requester, and APB composition top use the
 canonical `areset rst_n`, `(:= (signal value))`, and assignment-pair surfaces
@@ -207,6 +217,7 @@ matched accepted corpus entries,
 the bounded normalized semantic JSON command contract,
 the supported-smoke / strict-supported / expected-failure check-JSON coverage
 flags,
+the supported-smoke / strict-supported normalized semantic JSON coverage flags,
 strict-versus-compatibility language surface families, current
 assignment/system/expression/declaration/composition families, producer
 version/commit identity, documentation pointers, and intentionally blocked or

@@ -173,7 +173,9 @@ export. It can already tell downstream tools which expected-failure corpus
 entries carry stable diagnostic codes, which stable codes exist, and which
 bounded check-JSON command shape is public. It also advertises that check JSON
 emits support-accounting objects and that supported-smoke, strict-supported,
-and expected-failure coverage are locked across the current corpus.
+and expected-failure coverage are locked across the current corpus. The same
+manifest now advertises supported-smoke and strict-supported coverage for the
+bounded normalized semantic JSON surface.
 
 The first bounded check/diagnostic surface is now:
 
@@ -222,6 +224,12 @@ downstream tools can consume without depending on private runtime object
 identity. Failed semantic exports reuse the same stable diagnostic-code and
 support-accounting bridge as `--check-json`, return non-zero, and do not expose
 partial semantics.
+
+Accepted corpus entries are covered too. Every current supported-smoke entry
+must succeed through `--emit-semantic-json`, and every current strict-supported
+entry must succeed through `--strict --emit-semantic-json`, while preserving
+matched support-accounting identity, expected module/top identity, sanitized
+forward-IR projections, and no HDL emission.
 
 This is still a bounded public slice, not the final full semantic export. Wider
 expression, state/DT control-shape, assignment/guard, package/type, and

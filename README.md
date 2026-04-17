@@ -114,6 +114,11 @@ cd docs/book && mdbook serve
 - `--emit-semantic-json`: run the full pipeline, emit bounded normalized semantic JSON, and do not write HDL.
 - `-q, --quiet`: suppress informational output.
 
+The bounded machine-readable surfaces are backed by support accounting:
+`--check --json` is corpus-covered across supported, strict-supported, and
+expected-failure entries, while `--emit-semantic-json` is corpus-covered across
+current supported and strict-supported accepted entries.
+
 ## Assignment semantics (quick reference)
 - `A <- expr`: synchronous/flopped assignment.
 - `A <= expr`: synchronous/flopped variant.

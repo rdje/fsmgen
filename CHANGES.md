@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-17
+### normalized semantic JSON success is corpus-covered
+- Added [t/303-normalized-semantic-json-supported-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/303-normalized-semantic-json-supported-corpus.t) so every current `supported_smoke` entry must succeed through `bin/fsmgen --emit-semantic-json`, emit decodable success JSON, keep stderr clean, write no HDL, preserve matched support-accounting identity, and expose the expected module/top identity through sanitized semantic projections.
+- The same test runs every current `strict_supported` entry through `bin/fsmgen --strict --emit-semantic-json`, proving the bounded semantic export covers both default supported acceptance and strict supported acceptance without relying on HDL file emission.
+- Extended [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so downstream tools can discover that supported-smoke and strict-supported corpus sides are covered by the bounded normalized semantic JSON surface.
+
 ### bounded normalized semantic JSON export shipped
 - Added [perl/FSM/Support/NormalizedSemanticReport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReport.pm) as the production owner for the first sanitized semantic export surface.
 - Updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) to accept `--emit-semantic-json` plus `--semantic-json`, run the full pipeline without writing HDL, emit `normalized_semantic_schema_version: 1` JSON to stdout, and reuse stable check diagnostics for rejected sources.

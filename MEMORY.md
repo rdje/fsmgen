@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-17: normalized semantic JSON supported corpus coverage landed
+- Continued `R13` semantic export stabilization by adding
+  [t/303-normalized-semantic-json-supported-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/303-normalized-semantic-json-supported-corpus.t).
+- Every current `supported_smoke` entry in
+  [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm)
+  now has default `--emit-semantic-json` CLI coverage: the command must
+  succeed, emit decodable semantic JSON, keep stderr clean, write no HDL even
+  with `-o`, preserve matched support-accounting identity, and expose the
+  expected module/top identity through `semantic.module`, `intent_hir`, and
+  `structural_rtl_ir`.
+- Every current `strict_supported` entry now has matching
+  `--strict --emit-semantic-json` coverage.
+- [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+  now advertises supported-smoke and strict-supported corpus coverage for the
+  bounded normalized semantic JSON surface.
+- Continuity note:
+  - the semantic export remains bounded; future widening should add explicit,
+    sanitized, support-accounted fields rather than dumping private runtime
+    structures.
+
 ## 2026-04-17: bounded normalized semantic JSON export landed
 - Continued the `R13` public embedding/API lane by adding
   [perl/FSM/Support/NormalizedSemanticReport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReport.pm).

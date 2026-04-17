@@ -143,6 +143,14 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest says normalized semantic JSON reuses stable diagnostic codes on failures',
     );
     ok(
+        $manifest->{semantic_exports}{normalized_semantic_json}{supported_smoke_corpus_covered},
+        'manifest says normalized semantic JSON is covered across supported-smoke corpus entries',
+    );
+    ok(
+        $manifest->{semantic_exports}{normalized_semantic_json}{strict_supported_corpus_covered},
+        'manifest says normalized semantic JSON is covered across strict-supported corpus entries',
+    );
+    ok(
         $manifest->{semantic_exports}{normalized_semantic_json}{sanitizes_private_perl_objects},
         'manifest says normalized semantic JSON sanitizes private Perl objects',
     );

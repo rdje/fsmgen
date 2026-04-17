@@ -168,6 +168,11 @@ three forward layers `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir`.
 They also include the same report-level support-accounting bridge used by
 successful `--check-json`. Rejected semantic exports reuse the stable
 diagnostic-code classifier from check JSON and do not expose partial semantics.
+The accepted side is now corpus-covered too: every current supported-smoke
+entry must succeed through `--emit-semantic-json`, and every current
+strict-supported entry must succeed through `--strict --emit-semantic-json`,
+with matched support-accounting identity, expected module/top identity,
+sanitized forward-IR projections, and no HDL emission.
 The implementation deliberately strips private live Perl objects and generated
 HDL text from the public report.
 
@@ -284,7 +289,8 @@ project policies:
   normalized semantic export surface, including sanitized module/system/signal
   metadata, sanitized forward IR projections, no HDL emission, failure-side
   stable diagnostics, and report-level support accounting where the accepted
-  source matches the corpus;
+  source matches the corpus, with accepted-side corpus coverage for current
+  supported-smoke and strict-supported entries;
 - `docs/REGRESSION_CORPUS.md` and `FSM::Support::RegressionCorpus` are the
   current support-accounting source of truth behind that manifest;
 - `FSM::Support::DiagnosticCodes` is the current stable diagnostic-code owner

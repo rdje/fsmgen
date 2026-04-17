@@ -1,5 +1,31 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-17: semantic JSON accepted-side coverage follows support accounting
+- Added [t/303-normalized-semantic-json-supported-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/303-normalized-semantic-json-supported-corpus.t)
+  so every current `supported_smoke` support-accounting entry must succeed
+  through `bin/fsmgen --emit-semantic-json`.
+- The same test also runs every `strict_supported` entry through
+  `bin/fsmgen --strict --emit-semantic-json`.
+- The accepted-side semantic JSON contract now proves:
+  - the CLI exits successfully,
+  - stderr stays clean,
+  - no HDL file is written even when `-o` is present,
+  - stdout is decodable JSON,
+  - `success` is true,
+  - diagnostics are empty,
+  - the resolved source path is recorded,
+  - report-level support accounting matches the corpus entry,
+  - generated HDL text and raw ASTs are not exposed,
+  - and the expected module/top identity appears consistently in the module
+    summary plus public forward-IR projections.
+- Rationale:
+  - `t/302` proved the bounded semantic export shape on ad-hoc and a few
+    corpus-backed examples,
+  - embedders need confidence that the whole supported corpus can use the same
+    public semantic surface,
+  - and the capability manifest should advertise only coverage that is actually
+    regression-locked.
+
 ## 2026-04-17: bounded normalized semantic JSON is live
 - Added
   [perl/FSM/Support/NormalizedSemanticReport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReport.pm)
