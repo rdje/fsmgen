@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-17: bounded capability manifest shipped
+- Continued the SPECFORGE-aligned `R12` / `R13` bridge by implementing
+  `bin/fsmgen --capability-manifest`.
+- Added
+  [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+  to build schema-versioned JSON for downstream tools.
+- Moved the catalog owner to
+  [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm)
+  so both the manifest and regression tests consume production support
+  accounting; [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm)
+  remains as a compatibility wrapper only.
+- Added [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+  to lock manifest shape and CLI JSON emission.
+- Continuity note:
+  - the next SPECFORGE-facing implementation seam is stable diagnostic-code
+    ownership before check-only JSON diagnostics,
+  - do not treat the manifest as normalized semantic export; it is currently a
+    conservative support/capability surface.
+
 ## 2026-04-17: SPECFORGE feedback response is now tracked
 - Paused FSMGen implementation to read
   `/Users/richarddje/Documents/github/specforge/docs/FSMGEN_FEEDBACK.md`.

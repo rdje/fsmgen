@@ -13,7 +13,7 @@ use lib File::Spec->catdir($FindBin::Bin, 'lib');
 
 use FSM::Pipeline::HDLGenerator;
 use FSM::Composition::Plan;
-use FSM::Test::RegressionCorpus qw(regression_corpus_entries);
+use FSM::Support::RegressionCorpus qw(regression_corpus_entries);
 
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
 my $tempdir = tempdir(CLEANUP => 1);

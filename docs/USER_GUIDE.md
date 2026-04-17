@@ -1057,6 +1057,7 @@ Examples:
 ./bin/fsmgen fsm/trial_0.fsm
 ./bin/fsmgen --output /tmp/trial_0.sv fsm/trial_0.fsm
 ./bin/fsmgen --language verilog --output /tmp/trial_0.v fsm/trial_0.fsm
+./bin/fsmgen --capability-manifest
 ```
 
 Current narrow composition example:
@@ -1609,8 +1610,18 @@ Example parameterized generated child:
 - `--path <dir>` : add an explicit search root for bare `.fsm` names and related lookup (may be repeated)
 - `--extension-module <Module::Name>` : load an explicit typed extension module from `@INC` (may be repeated)
 - `--extension-config <file>` : load typed extension modules from an explicit config file (may be repeated)
+- `--capability-manifest` : print schema-versioned JSON describing the current support/capability surface and exit without requiring an input `.fsm`
 - `-q, --quiet` : suppress informational messages
 - `-h, --help` : full CLI help
+
+The capability manifest is the first machine-readable downstream-tool support
+surface. It is generated from
+[perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+and backed by
+[perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm),
+so support-accounting counts, strict-supported entries, compatibility residue,
+documentation pointers, and intentionally blocked/not-yet-public surfaces share
+one source with the regression catalog.
 
 ## 5) Input resolution and FSMLIB
 `fsmgen` resolves `<fsm_file>` as:

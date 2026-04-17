@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-17
+### bounded capability manifest shipped
+- Added [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm) and `bin/fsmgen --capability-manifest`, emitting schema-versioned JSON for downstream tools without requiring an input `.fsm`.
+- Moved the regression corpus catalog to [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm) so the manifest and tests share one production support-accounting owner; [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) remains as a thin compatibility wrapper.
+- Added [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) to lock manifest shape, corpus-derived counts, strict-versus-compatibility metadata, and CLI JSON emission.
+- Updated README, the regression-corpus docs, the mdBook embedding chapter, SPECFORGE alignment notes, roadmap/status, development notes, memory, and the import-tree note so the first machine-readable downstream support surface is documented.
+
 ### SPECFORGE feedback response is tracked
 - Added [docs/SPECFORGE_FEEDBACK_RESPONSE.md](/Users/richarddje/Documents/github/fsmgen/docs/SPECFORGE_FEEDBACK_RESPONSE.md) as FSMGen's tracked response to SPECFORGE's `.fsm` adapter feedback.
 - The response accepts the broad tool-integration direction: strict mode as the preferred generated-`.fsm` target, a future capability manifest sourced from support accounting, stable diagnostic codes, check-only JSON diagnostics, normalized semantic JSON export, stronger reset/clock metadata, and later checked actor/channel/role/temporal/provenance metadata.

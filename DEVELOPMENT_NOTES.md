@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-17: bounded capability manifest is live
+- Implemented the first downstream-tool capability manifest behind
+  `bin/fsmgen --capability-manifest`.
+- The manifest owner is
+  [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm).
+- The support-accounting catalog owner moved from the test tree to
+  [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm),
+  with [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm)
+  left as a compatibility wrapper.
+- Rationale:
+  - a public manifest should not depend on `t/lib` as its real owner,
+  - downstream tools such as SPECFORGE need a machine-readable contract surface
+    before check-only JSON and normalized semantic export exist,
+  - and the manifest should be conservative enough to stay honest while still
+    exposing strict/generated-target policy, compatibility residue, supported
+    language families, corpus counts, sanitized catalog entries, docs pointers,
+    and blocked/not-yet-public surfaces.
+
 ## 2026-04-17: SPECFORGE feedback response is tracked
 - Added
   [docs/SPECFORGE_FEEDBACK_RESPONSE.md](/Users/richarddje/Documents/github/fsmgen/docs/SPECFORGE_FEEDBACK_RESPONSE.md)

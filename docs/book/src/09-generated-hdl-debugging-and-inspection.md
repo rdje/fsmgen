@@ -80,7 +80,12 @@ Trace behavior:
 - `--path <dir>`
 - `--extension-module <Module::Name>`
 - `--extension-config <file>`
+- `--capability-manifest`
 - `-q, --quiet`
+
+`--capability-manifest` is different from the HDL-generation options: it emits
+schema-versioned JSON describing the current support/capability surface and
+exits without requiring an input `.fsm`.
 
 ## Input Resolution
 

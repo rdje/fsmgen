@@ -147,7 +147,7 @@ That response accepts the broad direction that FSMGen should become a precise
 `.fsm` contract authority for downstream tools:
 
 - strict mode as the preferred generated-`.fsm` target,
-- a future capability manifest generated from support-accounting truth,
+- a capability manifest generated from support-accounting truth,
 - future check-only JSON diagnostics with stable diagnostic codes,
 - future normalized semantic JSON export,
 - stronger clock/reset contract metadata,
@@ -158,6 +158,16 @@ Those surfaces are not all implemented yet. They are intentionally staged
 behind support accounting, diagnostics, and the future `R13` public embedding
 lane so adapter-facing contracts can be regression-backed instead of merely
 documented.
+
+The first bounded machine-readable surface is now:
+
+```bash
+./bin/fsmgen --capability-manifest
+```
+
+It emits schema-versioned JSON from `FSM::Support::CapabilityManifest`, backed
+by `FSM::Support::RegressionCorpus`. Treat this as a conservative support
+manifest, not yet as a full normalized semantic export.
 
 ## Legacy External Flow
 

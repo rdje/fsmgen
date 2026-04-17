@@ -55,6 +55,8 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `perl/FSM/Extension/Loader.pm` — explicit typed extension-module loader for the active `R7` replacement seam.
 - `perl/FSM/Extension/Registry.pm` — typed extension registry for the active `R7` replacement seam.
 - `perl/FSM/Extension/Context.pm` — typed hook context object passed to active extensions.
+- `perl/FSM/Support/CapabilityManifest.pm` — machine-readable capability manifest builder for downstream tool integration.
+- `perl/FSM/Support/RegressionCorpus.pm` — production support-accounting catalog owner consumed by the manifest and regression tests.
 - `perl/FSM/SourceClassifier.pm` — top-level source-kind classification for FSM vs composition inputs.
 - `perl/FSM/Adapter/FSMGenFull.pm` — FSM adapter/parsing entry.
 - `perl/FSM/HDL/FlattenedDT.pm` — Flattened decision-tree facade.
@@ -104,6 +106,7 @@ cd docs/book && mdbook serve
 - `--trace-emojis` / `--notrace-emojis`: emoji marker toggle.
 - `--extension-module <Module::Name>`: load an explicit typed extension module from `@INC` (may be repeated).
 - `--extension-config <file>`: load typed extension modules from an explicit config file (may be repeated).
+- `--capability-manifest`: print the versioned JSON FSMGen capability manifest and exit.
 - `-q, --quiet`: suppress informational output.
 
 ## Assignment semantics (quick reference)

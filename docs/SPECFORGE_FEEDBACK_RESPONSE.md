@@ -49,8 +49,18 @@ The first manifest should expose at least:
 - intentionally blocked forms
 - links or identifiers for corpus fixtures and mdBook chapters
 
-This belongs primarily to `R12` support accounting and `R13` public
-embedding/API stabilization.
+The first bounded implementation now exists as:
+
+```bash
+fsmgen --capability-manifest
+```
+
+It is schema-versioned JSON built from
+`FSM::Support::RegressionCorpus` through `FSM::Support::CapabilityManifest`.
+It includes a producer version string and best-effort git commit identity. This
+is still the first slice, not the final public API. It belongs to `R12` support
+accounting now and should be widened/stabilized under `R13` as the rest of the
+public embedding surface matures.
 
 ### 2. JSON Check Diagnostics
 
@@ -200,15 +210,13 @@ consumer/adapter without creating circular ownership.
 
 The current FSMGen-side priority order is:
 
-1. Finish enough `R12` support-accounting structure that capability metadata
-   can be generated from one trustworthy source.
-2. Start `R13` with a bounded capability manifest design and fixture-backed
-   prototype.
-3. Add stable diagnostic code ownership before committing to JSON diagnostic
+1. Keep the first `--capability-manifest` schema conservative while widening
+   only from regression-backed support-accounting truth.
+2. Add stable diagnostic code ownership before committing to JSON diagnostic
    output.
-4. Add check-only JSON output.
-5. Add normalized semantic JSON export.
-6. Use those surfaces to guide later language additions such as actor roles,
+3. Add check-only JSON output.
+4. Add normalized semantic JSON export.
+5. Use those surfaces to guide later language additions such as actor roles,
    channel grouping, semantic signal roles, temporal/stability contracts, and
    provenance/residual metadata.
 
@@ -220,7 +228,8 @@ project policies:
 - strict mode is the preferred target for generated `.fsm`;
 - compatibility syntax should not be treated as canonical adapter output;
 - mdBook chapters are the public human-facing contract;
-- `docs/REGRESSION_CORPUS.md` and `t/lib/FSM/Test/RegressionCorpus.pm` are the
-  current support-accounting source of truth;
+- `fsmgen --capability-manifest` is the first machine-readable support surface;
+- `docs/REGRESSION_CORPUS.md` and `FSM::Support::RegressionCorpus` are the
+  current support-accounting source of truth behind that manifest;
 - future accepted adapter-facing behavior should be backed by tests before it
   is treated as stable.

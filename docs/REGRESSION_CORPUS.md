@@ -1,7 +1,10 @@
 # Regression Corpus
 
 This note is the human-readable companion to the machine-checked regression
-catalog in [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm).
+catalog in [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm).
+The older [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm)
+path is now only a thin compatibility wrapper for tests or local scripts that
+still import the former test package name.
 
 The point of `R12` is not just to collect examples. It is to make support
 claims auditable:
@@ -124,6 +127,25 @@ strict mode positively accepts the maintained fixtures for partial LHS writes,
 RHS concat/cat packing, LHS concat/cat deconstruction, canonical reset
 spellings, canonical init/default metadata, expression-backed widths, runtime
 div/mod expressions, and canonical assignment pairs.
+
+## Capability manifest
+
+Downstream tools can ask FSMGen for the first bounded machine-readable support
+surface without providing an input `.fsm` file:
+
+```bash
+./bin/fsmgen --capability-manifest
+```
+
+That command emits schema-versioned JSON built by
+[perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+from the same production corpus owner used by the regression tests. The first
+manifest is intentionally bounded: it exposes support-accounting counts,
+sanitized corpus entry metadata, strict-versus-compatibility language-surface
+families, current assignment/system/expression/declaration/composition families,
+producer version/commit identity, documentation pointers, and intentionally
+blocked or not-yet-public integration surfaces such as check-only JSON
+diagnostics and normalized semantic JSON export.
 
 ## Current named entries
 

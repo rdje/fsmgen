@@ -6,9 +6,9 @@ use Test::More;
 use File::Spec;
 use FindBin;
 
-use lib File::Spec->catdir($FindBin::Bin, 'lib');
+use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
-use FSM::Test::RegressionCorpus qw(regression_corpus_entries protocol_fixture_entries);
+use FSM::Support::RegressionCorpus qw(regression_corpus_entries protocol_fixture_entries);
 
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
 my @entries = regression_corpus_entries();

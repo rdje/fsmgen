@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use feature qw(signatures postderef);
 use Getopt::Long;
+use JSON::PP ();
 use File::Basename;
 use File::Spec;
 
@@ -18,6 +19,7 @@ use FSM::Debug;  # Global debug system
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(binding_signal_summary_text);
 use FSM::Pipeline::HDLGenerator;
 use FSM::SourcePathResolver;
+use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 
 # FSM file resolution function using FSMLIB environment variable
 sub resolve_fsm_file {
@@ -186,6 +188,7 @@ my $trace_emojis = 1;
 my @extension_modules = ();
 my @extension_config_files = ();
 my @source_search_paths = ();
+my $emit_capability_manifest = 0;
 
 # Store original ARGV to check for bare flags before GetOptions processes them
 my $has_bare_debug_flag = grep { /^--?d(ebug)?$/ } @ARGV;
@@ -204,6 +207,7 @@ GetOptions(
     'path=s@' => \@source_search_paths,
     'extension-module=s@' => \@extension_modules,
     'extension-config=s@' => \@extension_config_files,
+    'capability-manifest|emit-capability-manifest' => \$emit_capability_manifest,
 ) or die "Error in command line arguments\n";
 
 # Handle legacy --debug flag behavior: if no value specified, default to level 4
@@ -277,6 +281,9 @@ Options:
   --extension-config <file>
                   Load extension modules from an explicit config file
                   May be repeated
+  --capability-manifest
+                  Print the versioned JSON FSMGen capability manifest and exit
+                  Alias: --emit-capability-manifest
   -q, --quiet     Suppress informational messages
   --strict        Enable strict support-tier enforcement
                   Current first strict slice rejects legacy '+fsm' roots and
@@ -369,6 +376,9 @@ Other Examples:
   # Enforce the current strict-mode boundary
   ./bin/fsmgen --strict my_fsm
 
+  # Emit the machine-readable capability manifest
+  ./bin/fsmgen --capability-manifest
+
   # Load an explicit typed extension module from @INC
   PERL5LIB=./my_extensions ./bin/fsmgen \
     --extension-module My::Extension \
@@ -380,6 +390,12 @@ Other Examples:
     my_fsm
 
 EOF
+    exit 0;
+}
+
+if ($emit_capability_manifest) {
+    my $json = JSON::PP->new->ascii->canonical->pretty->encode(build_capability_manifest());
+    print $json;
     exit 0;
 }
 
