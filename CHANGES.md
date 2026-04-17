@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-17
+### expected-failure entries require typed diagnostic metadata
+- Extended [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) so every `expected_failure` entry must record its `expected_error_pattern` as a compiled regular expression.
+- The same accounting gate now requires every strict-rejection coverage bucket to carry a compiled `expected_hint_pattern`, keeping compatibility-cut failures tied to actionable migration hints.
+- Updated [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/book/src/10-errors-strict-mode-and-troubleshooting.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/10-errors-strict-mode-and-troubleshooting.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so future expected-failure additions keep precise, typed diagnostic contracts.
+
 ### supported language-feature entries require HDL-shape evidence
 - Extended [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) so every catalog `expected_hdl_patterns` field must be an array of compiled regular expressions.
 - The same accounting gate now requires every `language_feature_fixture` / `supported_smoke` / `direct_root_pipeline_cli` entry to carry at least one HDL-shape pattern, preventing future supported language-feature additions from becoming compile-only claims by accident.

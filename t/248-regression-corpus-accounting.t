@@ -40,6 +40,13 @@ my %allowed_coverages = map { $_ => 1 } qw(
     composition_contract_rejection_pipeline_cli
 );
 
+my %strict_rejection_coverages = map { $_ => 1 } qw(
+    strict_root_rejection_pipeline_cli
+    strict_section_rejection_pipeline_cli
+    strict_assignment_rejection_pipeline_cli
+    strict_child_root_rejection_pipeline_cli
+);
+
 my %seen_ids;
 my %seen_contracts;
 my %by_id = map { $_->{id} => $_ } @entries;
@@ -120,8 +127,18 @@ for my $entry (@entries) {
 
     if ($entry->{classification} eq 'expected_failure') {
         ok($entry->{expected_error_pattern}, "expected-failure entry '$entry->{id}' records a boundary pattern");
-        if ($entry->{expected_hint_pattern}) {
+        ok(ref($entry->{expected_error_pattern}) eq 'Regexp',
+            "expected-failure entry '$entry->{id}' records its boundary pattern as a compiled regex");
+        if (exists $entry->{expected_hint_pattern}) {
             ok($entry->{expected_hint_pattern}, "expected-failure entry '$entry->{id}' records a migration-hint pattern");
+            ok(ref($entry->{expected_hint_pattern}) eq 'Regexp',
+                "expected-failure entry '$entry->{id}' records its migration-hint pattern as a compiled regex");
+        }
+        if ($strict_rejection_coverages{$entry->{coverage}}) {
+            ok(
+                ref($entry->{expected_hint_pattern}) eq 'Regexp',
+                "strict-rejection entry '$entry->{id}' records a compiled migration-hint pattern",
+            );
         }
     }
     elsif ($entry->{source_kind} eq 'fsm') {

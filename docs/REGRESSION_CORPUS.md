@@ -23,7 +23,10 @@ more than one contract for it, for example:
 - `supported_smoke`: the asset is counted as supported for the bounded coverage
   actually exercised by the regression suite.
 - `expected_failure`: the asset is intentionally rejected, and the rejection is
-  part of the supported contract.
+  part of the supported contract. Each expected-failure entry must record a
+  compiled `expected_error_pattern`, and strict-rejection expected failures must
+  also record a compiled `expected_hint_pattern` so compatibility cuts keep an
+  actionable migration path.
 - `legacy_out_of_scope`: the asset is retained as a known historical or
   exploratory input, but it does not count toward current support claims.
 
@@ -201,8 +204,9 @@ div/mod expressions, and canonical assignment pairs.
   repo assets, and also checks that strict-supported markers are only attached
   to supported pipeline/CLI corpus entries, that every supported protocol
   fixture is strict-supported, that every supported direct language-feature
-  fixture is strict-supported, and that supported direct language-feature
-  entries carry non-empty, compiled HDL-shape pattern metadata.
+  fixture is strict-supported, that supported direct language-feature entries
+  carry non-empty compiled HDL-shape pattern metadata, and that expected-failure
+  diagnostic/hint metadata is compiled-regex metadata rather than loose strings.
 - [t/296-regression-corpus-supported-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/296-regression-corpus-supported-behavior.t)
   treats `supported_smoke` and `strict_supported` as executable catalog-level
   contracts. It runs every supported entry through default pipeline/CLI, then

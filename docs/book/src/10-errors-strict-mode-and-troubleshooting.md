@@ -80,6 +80,10 @@ fits the cleaner forward contract.
 The regression corpus deliberately keeps paired default-compatible and
 strict-rejected assets for compatibility residue such as infix assignments, so
 the supported boundary is machine-checked instead of living only in examples.
+Expected-failure entries record compiled diagnostic patterns, and strict
+rejection entries must also record compiled migration-hint patterns, so the
+failure side of the corpus checks both "this fails" and "the user is guided
+toward the canonical form."
 It also keeps positive acceptance markers for canonical supported surfaces.
 Every `supported_smoke` entry must pass default pipeline and CLI generation.
 The current supported protocol fixtures and supported direct language-feature

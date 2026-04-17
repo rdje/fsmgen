@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-17: expected failures have typed diagnostic metadata
+- Continued `R12` by hardening the failure side of the catalog metadata.
+- [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+  now requires:
+  - every `expected_failure` entry to carry a compiled
+    `expected_error_pattern`,
+  - every strict-rejection coverage entry to carry a compiled
+    `expected_hint_pattern`.
+- Continuity note:
+  - when adding future `expected_failure` entries, use compiled regex metadata,
+    not strings. If the failure is a strict-mode compatibility cut, include a
+    migration-hint pattern too so the regression locks an actionable user path,
+    not only the fact that strict mode rejected the input.
+
 ## 2026-04-17: supported language-feature evidence is mandatory
 - Continued `R12` by tightening the catalog-accounting test rather than adding
   another ad hoc fixture-family gate.

@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-17: expected-failure entries require typed diagnostic metadata
+- Tightened the failure side of the `R12` support-accounting catalog.
+- [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+  now validates two expected-failure metadata rules:
+  - every `expected_failure` entry must carry `expected_error_pattern` as a
+    compiled regular expression,
+  - every strict-rejection coverage entry must also carry
+    `expected_hint_pattern` as a compiled regular expression.
+- Rationale:
+  - expected-failure entries are support contracts, not just "some failure
+    happened" examples,
+  - strict-mode compatibility cuts should prove both the rejection text and the
+    migration path toward the canonical supported surface,
+  - and catalog mistakes should fail at accounting time before the classified
+    behavior test consumes malformed diagnostic metadata.
+
 ## 2026-04-17: supported language-feature entries require HDL-shape evidence
 - Tightened the `R12` support-accounting contract for positive direct
   language-feature entries.
