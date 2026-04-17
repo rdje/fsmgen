@@ -137,6 +137,19 @@ in-process tooling. If you need sanitized machine interchange, use
 `--emit-semantic-json` or the `FSM::Support::NormalizedSemanticReport` surface
 instead.
 
+Composition provenance has one more important split:
+
+- raw `composition_report` is useful for in-process Perl tooling, but it can
+  still contain private live objects in nested endpoint contexts
+- raw `composition_plan` is a live planning object and is not a public JSON API
+- normalized semantic JSON exposes the sanitized
+  `semantic.composition.provenance_report` fragment for downstream tools
+
+That fragment preserves bounded public report facts such as the composition
+lane, top-port and resolved-link counts, provenance origin counts, ordered
+origin/kind lists, ports, resolved links, override events, and block events,
+while stripping private Perl objects before JSON emission.
+
 On the current live path, `structural_rtl_ir` instance bindings are not just
 flat signal names anymore. They can preserve:
 
@@ -224,9 +237,10 @@ emits support-accounting objects and that supported-smoke, strict-supported,
 and expected-failure coverage are locked across the current corpus. The same
 manifest now advertises supported-smoke, strict-supported, and expected-failure
 coverage for the bounded normalized semantic JSON surface. It also advertises
-the bounded typed-extension/context contract plus the bounded `HDLGenerator`
-result contract for in-process embedders, while making clear that the raw
-result hash is not JSON-safe as a whole.
+the bounded typed-extension/context contract, the bounded sanitized composition
+report contract, and the bounded `HDLGenerator` result contract for in-process
+embedders, while making clear that the raw result hash is not JSON-safe as a
+whole.
 
 The first bounded check/diagnostic surface is now:
 
@@ -267,6 +281,7 @@ when `-o` is present. Successful reports expose:
 - `semantic.forward_ir.intent_hir`
 - `semantic.forward_ir.lowered_rtl_ir`
 - `semantic.forward_ir.structural_rtl_ir`
+- `semantic.composition.provenance_report` for composition sources
 
 The important word is "sanitized". This surface does not dump private Perl
 objects such as live AST nodes or `FSM::CoreAST::Signal` instances, and it does

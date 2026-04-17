@@ -14,10 +14,10 @@ Current baseline:
 - Reviewed on `2026-04-17`.
 - Scope is the project-owned transitive `FSM::...` tree reachable from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen).
 - Perl core and non-project helper modules are treated as support dependencies, not as part of the architectural map.
-- Static trace from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) currently reaches `129` project files total, `128` `.pm` packages.
+- Static trace from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) currently reaches `130` project files total, `129` `.pm` packages.
 - The former composition-local parameter/generic helper is now a compatibility shim; the active neutral owner is [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm), including bounded scalar expressions and matching-shape leafwise aggregate expression folding.
 - Shared integer literal parsing is now reachable through [perl/FSM/Package/IntegerLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/IntegerLiteralSupport.pm), keeping common decimal, `0d`, based SystemVerilog, `0x`, `0b`, and `0o` scalar spellings consistent across scalar widths and direct `+size` expression terms.
-- The machine-readable support/API surface is now reachable through [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm), which builds `bin/fsmgen --capability-manifest` JSON from [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm), the stable diagnostic-code registry in [perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm), the bounded check-JSON report contract in [perl/FSM/Support/CheckDiagnostics.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnostics.pm), the bounded normalized semantic report contract in [perl/FSM/Support/NormalizedSemanticReport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReport.pm), the bounded typed-extension/context contract in [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm), and the bounded in-process `HDLGenerator` result contract in [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm).
+- The machine-readable support/API surface is now reachable through [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm), which builds `bin/fsmgen --capability-manifest` JSON from [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm), the stable diagnostic-code registry in [perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm), the bounded check-JSON report contract in [perl/FSM/Support/CheckDiagnostics.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnostics.pm), the bounded normalized semantic report contract in [perl/FSM/Support/NormalizedSemanticReport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReport.pm), the bounded sanitized composition-report contract in [perl/FSM/Support/CompositionReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CompositionReportContract.pm), the bounded typed-extension/context contract in [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm), and the bounded in-process `HDLGenerator` result contract in [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm).
 
 ## Executive read
 [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) is a thin CLI/reporting shell.
@@ -89,15 +89,17 @@ conditions in the final HDL.
 The newest downstream-tool support slice adds
 [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
 plus [perl/FSM/Support/CheckDiagnostics.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnostics.pm)
+plus [perl/FSM/Support/CompositionReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CompositionReportContract.pm)
 plus [perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm)
 plus [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
 plus [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm)
 plus [perl/FSM/Support/NormalizedSemanticReport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReport.pm)
 and [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm)
 as the live owners for schema-versioned capability JSON, bounded check-JSON
-reports, stable diagnostic-code metadata, bounded typed-extension/context
-contracts, bounded `HDLGenerator` result contracts, bounded normalized semantic
-JSON, and production support-accounting data. The check-JSON support surface is now corpus-covered on both sides:
+reports, bounded sanitized composition-report contracts, stable diagnostic-code
+metadata, bounded typed-extension/context contracts, bounded `HDLGenerator`
+result contracts, bounded normalized semantic JSON, and production
+support-accounting data. The check-JSON support surface is now corpus-covered on both sides:
 supported-smoke / strict-supported entries must produce clean success JSON with
 matched success support-accounting data, ad-hoc successes must report unmatched
 support accounting, and expected-failure entries must produce the exact stable
@@ -111,10 +113,11 @@ exact stable code/support-accounting contract, no HDL emission, and no partial
 semantic payload. This deliberately keeps the public manifest, diagnostic
 reports, and semantic reports out of the test-only `t/lib` tree while leaving a
 thin test compatibility wrapper behind. The raw in-process `HDLGenerator`
-result is now covered as a bounded top-level presence contract, and typed
-extensions now have a bounded hook/context contract, but the raw result is
-explicitly not advertised as a JSON-safe document because nested compatibility
-payloads can still carry live CoreAST/AST objects.
+result is now covered as a bounded top-level presence contract, typed
+extensions now have a bounded hook/context contract, and composition
+provenance now has a sanitized semantic-JSON report fragment, but the raw
+result is explicitly not advertised as a JSON-safe document because nested
+compatibility payloads can still carry live CoreAST/AST objects.
 
 The heaviest remaining complexity is still the direct single-module HDL backend path centered on:
 - [perl/FSM/Backend/GeneratedModuleEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/GeneratedModuleEmitter.pm)
@@ -166,7 +169,7 @@ Reachable package-family counts from [bin/fsmgen](/Users/richarddje/Documents/gi
 - `Composition`: `35`
 - `HDL`: `32`
 - `Package`: `14`
-- `Support`: `7`
+- `Support`: `8`
 - `Synthesis`: `10`
 - `IR`: `7`
 - `Adapter`: `5`
@@ -182,12 +185,13 @@ Current thin-coordinator line counts:
 - [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm): `108`
 - [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm): `164`
 - [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm): `172`
-- [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm): `267`
+- [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm): `269`
 - [perl/FSM/Support/CheckDiagnostics.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnostics.pm): `253`
+- [perl/FSM/Support/CompositionReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CompositionReportContract.pm): `116`
 - [perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm): `232`
 - [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm): `108`
 - [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm): `77`
-- [perl/FSM/Support/NormalizedSemanticReport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReport.pm): `354`
+- [perl/FSM/Support/NormalizedSemanticReport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReport.pm): `362`
 - [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm): `646`
 - [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm): `75`
 - [perl/FSM/HDL/FlattenedDT/DecisionTreeFlatteningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/DecisionTreeFlatteningSupport.pm): `242`
@@ -356,6 +360,7 @@ Important distinction:
 ### Support accounting, capability manifest, and semantic reports
 - [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
 - [perl/FSM/Support/CheckDiagnostics.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnostics.pm)
+- [perl/FSM/Support/CompositionReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CompositionReportContract.pm)
 - [perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm)
 - [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
 - [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm)
@@ -368,10 +373,11 @@ production corpus owner instead of keeping the catalog in test-only code, and
 expected-failure machine identities now come from the production diagnostic-code
 registry instead of human CLI wording. The same layer now owns the bounded
 `--check --json` report shape, the bounded `--emit-semantic-json` report
-shape, the bounded typed-extension/context contract, and the bounded
-`HDLGenerator` result contract, so downstream tools get machine-readable
-success/failure diagnostics, a sanitized semantic projection, and explicit
-embedding boundaries without depending on private pipeline objects.
+shape, the bounded sanitized composition-report contract, the bounded
+typed-extension/context contract, and the bounded `HDLGenerator` result
+contract, so downstream tools get machine-readable success/failure diagnostics,
+a sanitized semantic projection, and explicit embedding boundaries without
+depending on private pipeline objects.
 
 ### Main orchestration hub
 - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)

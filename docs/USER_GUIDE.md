@@ -1641,6 +1641,11 @@ explicit object/module/config loading, the current hook names
 `after_parse_source` and `after_generate_result`, the stable context accessor
 names, and the deliberate absence of legacy `.plg` discovery or `AUTOLOAD`
 hook dispatch.
+For composition embedders, the manifest also advertises the bounded
+composition-report split: raw `composition_report` is an in-process
+compatibility report and is not promised JSON-safe, while the sanitized
+`semantic.composition.provenance_report` fragment in normalized semantic JSON
+is the serializable downstream surface.
 
 The first bounded check-only JSON surface is:
 
@@ -1691,7 +1696,9 @@ bounded public projections of:
 - signal analysis with private live Perl objects removed,
 - `intent_hir`,
 - `lowered_rtl_ir`,
-- and `structural_rtl_ir`.
+- `structural_rtl_ir`,
+- and, for composition sources, a sanitized
+  `semantic.composition.provenance_report` fragment.
 
 This is intentionally not a promise that every private pipeline object is now
 public API. It is the first sanitized downstream-tool projection over the
@@ -1705,6 +1712,11 @@ expected module/top identity, sanitized forward-IR projections, and no HDL
 emission. Every current `expected_failure` entry is covered as well: it must
 reject through `--emit-semantic-json`, emit a stable diagnostic/support-accounting
 failure report, write no HDL, and expose no partial semantic payload.
+For composition sources, the provenance report fragment is sanitized from the
+same raw composition report that in-process callers see, but private Perl
+objects and undeclared report branches are removed before JSON emission. This
+keeps the report useful for downstream tools without exposing the live
+`composition_plan` object as public API.
 
 ## 5) Input resolution and FSMLIB
 `fsmgen` resolves `<fsm_file>` as:

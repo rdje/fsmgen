@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-18: composition report contract separates raw plan data from JSON interchange
+- Added
+  [perl/FSM/Support/CompositionReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CompositionReportContract.pm)
+  as the production owner for a bounded serializable composition provenance
+  report.
+- The important distinction is now explicit:
+  - `composition_plan` remains a live in-process planning object,
+  - raw `composition_report` remains an in-process compatibility/reporting
+    branch and may contain private Perl objects in nested endpoint contexts,
+  - `semantic.composition.provenance_report` is the sanitized JSON-safe
+    downstream fragment,
+  - and the manifest advertises that split under `embedding.composition_report`.
+- Rationale:
+  - downstream tools need composition provenance without depending on private
+    plan objects,
+  - but dumping the raw report would leak implementation objects and make an
+    accidental API promise,
+  - so the stable direction is to promote explicit scalar/list/hash facts into
+    normalized semantic JSON while keeping plan internals private.
+
 ## 2026-04-17: typed extension contract is explicit public embedding surface
 - Added
   [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)

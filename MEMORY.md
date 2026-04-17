@@ -1,5 +1,26 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-18: composition report contract is serializable through semantic JSON
+- Continued `R13` public embedding/API stabilization by adding
+  [perl/FSM/Support/CompositionReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CompositionReportContract.pm).
+- The new contract is intentionally bounded:
+  - raw `HDLGenerator` composition results may still contain live
+    `composition_plan` objects and raw `composition_report` branches,
+  - raw `composition_report` is not promised JSON-safe,
+  - the sanitized public fragment is exported as
+    `semantic.composition.provenance_report` through normalized semantic JSON,
+  - and nested report content remains deliberately narrower than a frozen full
+    plan API.
+- [t/307-composition-report-contract.t](/Users/richarddje/Documents/github/fsmgen/t/307-composition-report-contract.t)
+  now proves the raw APB composition report fails normal JSON encoding, the
+  sanitized report has only declared top-level report keys, and
+  `--emit-semantic-json` exposes the sanitized report fragment.
+- [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+  now exposes this contract under `embedding.composition_report`.
+- Continuity note:
+  - future composition plan/report widening should promote explicit
+    scalar/list/hash report facts instead of exposing live plan objects.
+
 ## 2026-04-17: typed extension contract is manifest-backed
 - Continued `R13` public embedding/API stabilization by adding
   [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm).

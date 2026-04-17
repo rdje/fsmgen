@@ -7,6 +7,7 @@ use Exporter 'import';
 use JSON::PP ();
 
 use FSM::Support::CheckDiagnostics qw(build_check_failure_report build_check_success_report);
+use FSM::Support::CompositionReportContract qw(sanitize_composition_report);
 
 our @EXPORT_OK = qw(
     build_normalized_semantic_failure_report
@@ -130,6 +131,7 @@ sub _semantic_contract {
         target_language => $args{target_language},
     );
     my $composition = _composition_contract(
+        composition_report => $result->{composition_report} || $module_info->{composition_provenance},
         module_info => $module_info,
         intent_hir => $intent_hir,
         lowered_rtl_ir => $lowered_rtl_ir,
@@ -235,6 +237,7 @@ sub _composition_contract {
     my $intent_hir = $args{intent_hir} || {};
     my $lowered_rtl_ir = $args{lowered_rtl_ir} || {};
     my $structural_rtl_ir = $args{structural_rtl_ir} || {};
+    my $composition_report = sanitize_composition_report($args{composition_report});
     my $is_composition = (
         exists $module_info->{composition_child_count}
         || exists $intent_hir->{composition_child_count}
@@ -290,6 +293,11 @@ sub _composition_contract {
             $module_info->{composition_shared_datapath_candidates}
                 || $lowered_rtl_ir->{composition_shared_datapath_candidates}
                 || []
+        ),
+        (
+            $composition_report
+                ? (provenance_report => $composition_report)
+                : ()
         ),
     };
 }

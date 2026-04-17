@@ -1,5 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-04-18
+### composition report contract is serializable through semantic JSON
+- Added [perl/FSM/Support/CompositionReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CompositionReportContract.pm) as the production owner for the bounded composition provenance/report contract.
+- Extended [perl/FSM/Support/NormalizedSemanticReport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReport.pm) so composition semantic JSON now exposes a sanitized `semantic.composition.provenance_report` fragment while still keeping raw `composition_report` and `composition_plan` as in-process compatibility payloads.
+- Extended [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm), [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t), and new [t/307-composition-report-contract.t](/Users/richarddje/Documents/github/fsmgen/t/307-composition-report-contract.t) so downstream tools can discover and verify that the raw report is not JSON-safe, the sanitized report is JSON-safe, and the normalized semantic JSON fragment contains only the bounded public report keys.
+
 ## 2026-04-17
 ### typed extension contract is manifest-backed
 - Added [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm) as the production owner for the bounded typed-extension/context contract.

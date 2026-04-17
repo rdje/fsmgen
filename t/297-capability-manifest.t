@@ -173,6 +173,34 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest records HDLGenerator result contract schema version',
     );
     is(
+        $manifest->{embedding}{composition_report}{schema_version},
+        1,
+        'manifest records composition report contract schema version',
+    );
+    is(
+        $manifest->{embedding}{composition_report}{status},
+        'bounded_public_json_fragment',
+        'manifest marks composition report as a bounded JSON fragment',
+    );
+    ok(
+        !$manifest->{embedding}{composition_report}{raw_report_json_safe},
+        'manifest says raw composition_report is not JSON-safe',
+    );
+    ok(
+        $manifest->{embedding}{composition_report}{sanitized_report_json_safe},
+        'manifest says sanitized composition report is JSON-safe',
+    );
+    is(
+        $manifest->{embedding}{composition_report}{contract_source},
+        'FSM::Support::CompositionReportContract',
+        'manifest records the composition report contract owner',
+    );
+    is(
+        $manifest->{embedding}{composition_report}{json_fragment_path},
+        'semantic_exports.normalized_semantic_json.semantic.composition.provenance_report',
+        'manifest records where the sanitized composition report is exported',
+    );
+    is(
         $manifest->{embedding}{hdl_generator_result}{status},
         'bounded_top_level_presence',
         'manifest marks HDLGenerator result contract as bounded top-level presence',

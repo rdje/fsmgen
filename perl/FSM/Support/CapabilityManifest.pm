@@ -7,6 +7,7 @@ use Exporter 'import';
 use File::Basename qw(dirname);
 use File::Spec;
 use JSON::PP ();
+use FSM::Support::CompositionReportContract qw(build_composition_report_contract);
 use FSM::Support::DiagnosticCodes qw(diagnostic_code_registry);
 use FSM::Support::ExtensionContract qw(build_extension_contract);
 use FSM::Support::HDLGeneratorResultContract qw(build_hdl_generator_result_contract);
@@ -98,6 +99,7 @@ sub build_capability_manifest {
             },
         },
         embedding => {
+            composition_report => build_composition_report_contract(),
             hdl_generator_result => build_hdl_generator_result_contract(),
             typed_extensions => build_extension_contract(),
         },
