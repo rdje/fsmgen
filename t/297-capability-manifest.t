@@ -11,9 +11,11 @@ use JSON::PP qw(decode_json);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
+use FSM::Support::DiagnosticCodes qw(diagnostic_code_ids);
 use FSM::Support::RegressionCorpus qw(regression_corpus_entries);
 
 my @entries = regression_corpus_entries();
+my @diagnostic_codes = diagnostic_code_ids();
 my $manifest = build_capability_manifest();
 
 subtest 'module manifest is generated from support accounting' => sub {
@@ -45,6 +47,45 @@ subtest 'module manifest is generated from support accounting' => sub {
         scalar(grep { $_->{strict_supported} } @entries),
         'manifest strict-supported ids follow the corpus',
     );
+
+    my ($strict_infix_entry) = grep { $_->{id} eq 'legacy.infix_assignment.strict_rejection' }
+        @{$manifest->{support_accounting}{catalog_entries}};
+    is(
+        $strict_infix_entry->{diagnostic_code},
+        'FSMGEN_STRICT_INFIX_ASSIGNMENT',
+        'manifest exposes stable diagnostic codes on expected-failure catalog entries',
+    );
+};
+
+subtest 'manifest exposes the stable diagnostic-code registry' => sub {
+    is(
+        $manifest->{diagnostics}{registry_source},
+        'FSM::Support::DiagnosticCodes',
+        'manifest records the production diagnostic-code owner',
+    );
+    is(
+        scalar(@{$manifest->{diagnostics}{stable_codes}}),
+        scalar(@diagnostic_codes),
+        'manifest stable diagnostic-code count follows the registry',
+    );
+
+    my %stable_codes = map { $_->{code} => $_ } @{$manifest->{diagnostics}{stable_codes}};
+    ok($stable_codes{FSMGEN_STRICT_INFIX_ASSIGNMENT}, 'manifest includes the strict infix-assignment diagnostic code');
+    is(
+        $stable_codes{FSMGEN_STRICT_INFIX_ASSIGNMENT}{severity},
+        'error',
+        'manifest diagnostic-code entries carry severity metadata',
+    );
+    is(
+        $stable_codes{FSMGEN_STRICT_INFIX_ASSIGNMENT}{stability},
+        'stable',
+        'manifest diagnostic-code entries carry stability metadata',
+    );
+    like(
+        $manifest->{diagnostics}{emission_status},
+        qr/check_only_json_diagnostics_not_yet_public/,
+        'manifest says code emission in check-only JSON diagnostics is not public yet',
+    );
 };
 
 subtest 'manifest captures the first downstream tool contract surface' => sub {
@@ -57,6 +98,7 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
 
     my %blocked = map { $_ => 1 } @{$manifest->{language_surface}{intentionally_blocked_or_not_yet_public}};
     ok($blocked{'check-only JSON diagnostics'}, 'manifest tells downstream tools that JSON diagnostics are not stable yet');
+    ok($blocked{'diagnostic-code emission in check-only JSON diagnostics'}, 'manifest separates code ownership from JSON diagnostic emission');
     ok($blocked{'full normalized semantic JSON export'}, 'manifest tells downstream tools that normalized JSON export is not stable yet');
 };
 

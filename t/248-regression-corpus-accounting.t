@@ -8,6 +8,11 @@ use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
+use FSM::Support::DiagnosticCodes qw(
+    diagnostic_code_ids
+    diagnostic_code_metadata
+    known_diagnostic_code
+);
 use FSM::Support::RegressionCorpus qw(regression_corpus_entries protocol_fixture_entries);
 
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
@@ -65,6 +70,7 @@ my %coverage_classification = (
 
 my %seen_ids;
 my %seen_contracts;
+my %seen_diagnostic_codes;
 my %by_id = map { $_->{id} => $_ } @entries;
 
 for my $required_id (qw(
@@ -147,6 +153,27 @@ for my $entry (@entries) {
     }
 
     if ($entry->{classification} eq 'expected_failure') {
+        like(
+            $entry->{diagnostic_code} || '',
+            qr/\AFSMGEN_[A-Z0-9_]+\z/,
+            "expected-failure entry '$entry->{id}' records a stable diagnostic code",
+        );
+        ok(
+            known_diagnostic_code($entry->{diagnostic_code}),
+            "expected-failure entry '$entry->{id}' uses a known diagnostic code",
+        );
+        my $diagnostic_metadata = diagnostic_code_metadata($entry->{diagnostic_code});
+        is(
+            $diagnostic_metadata->{severity},
+            'error',
+            "expected-failure entry '$entry->{id}' maps to an error diagnostic",
+        ) if $diagnostic_metadata;
+        is(
+            $diagnostic_metadata->{stability},
+            'stable',
+            "expected-failure entry '$entry->{id}' maps to a stable diagnostic",
+        ) if $diagnostic_metadata;
+        $seen_diagnostic_codes{$entry->{diagnostic_code}}++ if $entry->{diagnostic_code};
         ok($entry->{expected_error_pattern}, "expected-failure entry '$entry->{id}' records a boundary pattern");
         ok(ref($entry->{expected_error_pattern}) eq 'Regexp',
             "expected-failure entry '$entry->{id}' records its boundary pattern as a compiled regex");
@@ -161,6 +188,9 @@ for my $entry (@entries) {
                 "strict-rejection entry '$entry->{id}' records a compiled migration-hint pattern",
             );
         }
+    }
+    elsif (exists $entry->{diagnostic_code}) {
+        fail("non-failure catalog entry '$entry->{id}' must not reserve a diagnostic code");
     }
     elsif ($entry->{source_kind} eq 'fsm') {
         ok($entry->{expected_module_name}, "direct-root entry '$entry->{id}' records an expected module name");
@@ -250,6 +280,10 @@ for my $strict_supported_id (qw(
     feature.direct_assignment_pair_form
 )) {
     ok($by_id{$strict_supported_id}->{strict_supported}, "canonical strict-supported fixture $strict_supported_id stays marked");
+}
+
+for my $diagnostic_code (diagnostic_code_ids()) {
+    ok($seen_diagnostic_codes{$diagnostic_code}, "stable diagnostic code $diagnostic_code is exercised by the corpus");
 }
 
 for my $entry (

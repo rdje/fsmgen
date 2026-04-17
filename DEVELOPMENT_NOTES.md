@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-17: stable diagnostic-code ownership is live
+- Added
+  [perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm)
+  as the production owner for stable `FSMGEN_*` diagnostic identities.
+- Every current `expected_failure` entry in
+  [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm)
+  now carries a known `diagnostic_code`.
+- The capability manifest now exposes both entry-level diagnostic codes and the
+  registry metadata, while still marking check-only JSON diagnostic emission as
+  not public yet.
+- Rationale:
+  - downstream tools need machine identities that survive error-wording
+    improvements,
+  - the code registry should be production-owned before `--check --json`
+    stabilizes,
+  - and expected-failure support claims should prove both human-facing patterns
+    and machine-facing diagnostic identities before generation/integration code
+    consumes them.
+
 ## 2026-04-17: bounded capability manifest is live
 - Implemented the first downstream-tool capability manifest behind
   `bin/fsmgen --capability-manifest`.

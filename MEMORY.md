@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-17: stable diagnostic-code registry shipped
+- Continued the SPECFORGE-facing `R13` bridge by adding
+  [perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm).
+- Every current `expected_failure` support-accounting entry now carries a
+  stable `FSMGEN_*` code, and
+  [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+  verifies that each code is known and has stable error-severity metadata.
+- [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+  now exposes the registry plus entry-level diagnostic codes; the manifest
+  still marks check-only JSON diagnostic emission as not public yet.
+- Added [t/298-diagnostic-code-registry.t](/Users/richarddje/Documents/github/fsmgen/t/298-diagnostic-code-registry.t)
+  to lock registry shape and defensive-copy behavior.
+- Continuity note:
+  - the next SPECFORGE-facing diagnostic seam is a bounded check-only JSON
+    diagnostic output path that emits these stable codes,
+  - do not make downstream tools scrape human CLI wording when the code registry
+    already provides the stable identity layer.
+
 ## 2026-04-17: bounded capability manifest shipped
 - Continued the SPECFORGE-aligned `R12` / `R13` bridge by implementing
   `bin/fsmgen --capability-manifest`.
@@ -14,8 +32,9 @@ This is the live continuity document for fast session recovery after crashes, re
 - Added [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
   to lock manifest shape and CLI JSON emission.
 - Continuity note:
-  - the next SPECFORGE-facing implementation seam is stable diagnostic-code
-    ownership before check-only JSON diagnostics,
+  - stable diagnostic-code ownership has since shipped; the next
+    SPECFORGE-facing implementation seam is bounded check-only JSON diagnostics
+    that emit those codes,
   - do not treat the manifest as normalized semantic export; it is currently a
     conservative support/capability surface.
 
@@ -37,9 +56,9 @@ This is the live continuity document for fast session recovery after crashes, re
     parsed, validated, normalized, documented, and support-accounted.
 - Continuity note:
   - when resuming implementation, do not jump straight into broad new syntax.
-    The safest first bridge toward SPECFORGE is still a bounded capability
-    manifest design/prototype from the existing regression corpus, followed by
-    stable diagnostic-code ownership.
+    The capability manifest and stable diagnostic-code registry have since
+    shipped; the next safest bridge toward SPECFORGE is check-only JSON
+    diagnostics backed by those codes.
 
 ## 2026-04-17: corpus coverage buckets match classifications
 - Continued `R12` by making the catalog's coverage/classification relationship

@@ -27,9 +27,11 @@ more than one contract for it, for example:
   actually exercised by the regression suite.
 - `expected_failure`: the asset is intentionally rejected, and the rejection is
   part of the supported contract. Each expected-failure entry must record a
-  compiled `expected_error_pattern`, and strict-rejection expected failures must
-  also record a compiled `expected_hint_pattern` so compatibility cuts keep an
-  actionable migration path.
+  stable `diagnostic_code` from
+  [perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm)
+  plus a compiled `expected_error_pattern`. Strict-rejection expected failures
+  must also record a compiled `expected_hint_pattern` so compatibility cuts keep
+  an actionable migration path.
 - `legacy_out_of_scope`: the asset is retained as a known historical or
   exploratory input, but it does not count toward current support claims.
 
@@ -118,6 +120,23 @@ that shape metadata exists and is well formed, and the behavior tests execute
 those patterns against generated HDL. This keeps feature support claims tied to
 observable emitted semantics rather than only "the tool did not crash."
 
+## Diagnostic code ownership
+
+Stable diagnostic identities now have a production owner:
+[perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm).
+Every current `expected_failure` corpus entry carries one `FSMGEN_*`
+diagnostic code, and
+[t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+checks that the code is known and maps to stable error-severity metadata. The
+same test also rejects unused registry entries so the public code list stays
+exercised by the corpus.
+
+This is intentionally not the same thing as check-only JSON diagnostics. The
+codes are cataloged and exposed through the capability manifest now; emitting
+them from a dedicated `--check --json` style flow remains a later public API
+slice. That staging gives downstream tools a stable naming contract without
+forcing them to parse today's human CLI wording as if it were JSON.
+
 All current supported protocol fixtures are now `strict_supported`: the APB
 requester, APB completer, AMBA requester, and APB composition top use the
 canonical `areset rst_n`, `(:= (signal value))`, and assignment-pair surfaces
@@ -141,11 +160,12 @@ That command emits schema-versioned JSON built by
 [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
 from the same production corpus owner used by the regression tests. The first
 manifest is intentionally bounded: it exposes support-accounting counts,
-sanitized corpus entry metadata, strict-versus-compatibility language-surface
-families, current assignment/system/expression/declaration/composition families,
-producer version/commit identity, documentation pointers, and intentionally
-blocked or not-yet-public integration surfaces such as check-only JSON
-diagnostics and normalized semantic JSON export.
+sanitized corpus entry metadata including expected-failure diagnostic codes,
+the stable diagnostic-code registry, strict-versus-compatibility language
+surface families, current assignment/system/expression/declaration/composition
+families, producer version/commit identity, documentation pointers, and
+intentionally blocked or not-yet-public integration surfaces such as check-only
+JSON diagnostics and normalized semantic JSON export.
 
 ## Current named entries
 

@@ -87,6 +87,10 @@ Expected-failure entries record compiled diagnostic patterns, and strict
 rejection entries must also record compiled migration-hint patterns, so the
 failure side of the corpus checks both "this fails" and "the user is guided
 toward the canonical form."
+Expected-failure entries also carry stable `FSMGEN_*` diagnostic codes from
+`FSM::Support::DiagnosticCodes`. Those codes are meant for downstream tools and
+long-lived docs: wording can improve, but the code is the machine identity for
+the failure family.
 It also keeps positive acceptance markers for canonical supported surfaces.
 Every `supported_smoke` entry must pass default pipeline and CLI generation.
 The current supported protocol fixtures and supported direct language-feature
@@ -96,6 +100,25 @@ checked at the catalog level even if a future entry belongs to a new fixture
 family. Supported direct language-feature entries must also carry explicit
 HDL-shape pattern metadata, so the corpus checks emitted semantics instead of
 only proving that generation completed.
+
+## Diagnostic Codes
+
+Diagnostic codes are the bridge between human-friendly error messages and
+machine-friendly integration. Today they are cataloged for the regression
+corpus and the capability manifest:
+
+```text
+FSMGEN_STRICT_INFIX_ASSIGNMENT
+FSMGEN_STRICT_LEGACY_FSM_ROOT
+FSMGEN_LANGUAGE_BAD_SIZE_ENTRY
+FSMGEN_COMPOSITION_MISSING_RTLIF
+```
+
+Each code has severity, stability, family, and summary metadata. The registry
+is intentionally separate from the eventual check-only JSON diagnostic command:
+`./bin/fsmgen --capability-manifest` can already expose which stable codes
+exist, while a future `--check --json` style flow will be responsible for
+emitting those codes on individual failed runs.
 
 ## Backend Expectations
 

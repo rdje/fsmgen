@@ -7,6 +7,7 @@ use Exporter 'import';
 use File::Basename qw(dirname);
 use File::Spec;
 use JSON::PP ();
+use FSM::Support::DiagnosticCodes qw(diagnostic_code_registry);
 use FSM::Support::RegressionCorpus qw(regression_corpus_entries);
 
 our @EXPORT_OK = qw(build_capability_manifest);
@@ -22,6 +23,7 @@ sub build_capability_manifest {
     my @strict_supported_ids = map { $_->{id} } grep { $_->{strict_supported} } @entries;
     my @supported_ids = map { $_->{id} } grep { $_->{classification} eq 'supported_smoke' } @entries;
     my @expected_failure_ids = map { $_->{id} } grep { $_->{classification} eq 'expected_failure' } @entries;
+    my $diagnostic_registry = diagnostic_code_registry();
 
     return {
         manifest_schema_version => 1,
@@ -45,6 +47,18 @@ sub build_capability_manifest {
             catalog_entries => [
                 map { _manifest_entry($_) } @entries,
             ],
+        },
+        diagnostics => {
+            registry_source => 'FSM::Support::DiagnosticCodes',
+            stable_codes => [
+                map {
+                    +{
+                        code => $_,
+                        %{$diagnostic_registry->{$_}},
+                    }
+                } sort keys %{$diagnostic_registry}
+            ],
+            emission_status => 'cataloged_for_manifest_and_corpus; check_only_json_diagnostics_not_yet_public',
         },
         language_surface => {
             strict_mode => {
@@ -110,7 +124,7 @@ sub build_capability_manifest {
                 'unchecked annotations treated as enforced metadata',
                 'full normalized semantic JSON export',
                 'check-only JSON diagnostics',
-                'stable public diagnostic-code catalog',
+                'diagnostic-code emission in check-only JSON diagnostics',
                 'unbounded aggregate expression domains',
                 'SPECFORGE PDF/prose IntentIR extraction',
             ],
@@ -143,6 +157,7 @@ sub _manifest_entry {
         expected_top_name
         expected_lane
         expected_instance_count
+        diagnostic_code
     );
 
     $manifest{strict_supported} = $entry->{strict_supported} ? JSON::PP::true : JSON::PP::false;

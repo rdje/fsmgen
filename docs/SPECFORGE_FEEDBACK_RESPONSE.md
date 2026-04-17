@@ -89,16 +89,25 @@ stabilization.
 FSMGen should introduce stable diagnostic identities before exposing JSON
 diagnostics as a public integration surface.
 
-The exact code names are FSMGen's choice, but the requirement is stable machine
-identity across wording improvements. Examples of the intended shape:
+This first ownership slice now exists. The production registry lives in
+[perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm),
+every current `expected_failure` support-accounting entry carries a known
+`FSMGEN_*` code, and the capability manifest exposes the registry plus those
+entry-level codes. The requirement is stable machine identity across wording
+improvements. Examples of the public shape:
 
 - `FSMGEN_STRICT_INFIX_ASSIGNMENT`
 - `FSMGEN_STRICT_LEGACY_FSM_ROOT`
 - `FSMGEN_LANGUAGE_BAD_SIZE_ENTRY`
 - `FSMGEN_COMPOSITION_MISSING_RTLIF`
 
-Codes should be regression-backed and documented in the book/reference
-material before SPECFORGE treats them as stable.
+Codes are regression-backed by
+[t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t),
+[t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t),
+and
+[t/298-diagnostic-code-registry.t](/Users/richarddje/Documents/github/fsmgen/t/298-diagnostic-code-registry.t).
+They are cataloged for manifest/corpus integration now; emitting them from
+check-only JSON diagnostics remains the next public diagnostic-output step.
 
 ### 4. Normalized Semantic Export
 
@@ -212,9 +221,9 @@ The current FSMGen-side priority order is:
 
 1. Keep the first `--capability-manifest` schema conservative while widening
    only from regression-backed support-accounting truth.
-2. Add stable diagnostic code ownership before committing to JSON diagnostic
-   output.
-3. Add check-only JSON output.
+2. Continue widening stable diagnostic-code ownership only from
+   regression-backed failures.
+3. Add check-only JSON output that emits those stable codes.
 4. Add normalized semantic JSON export.
 5. Use those surfaces to guide later language additions such as actor roles,
    channel grouping, semantic signal roles, temporal/stability contracts, and
@@ -231,5 +240,7 @@ project policies:
 - `fsmgen --capability-manifest` is the first machine-readable support surface;
 - `docs/REGRESSION_CORPUS.md` and `FSM::Support::RegressionCorpus` are the
   current support-accounting source of truth behind that manifest;
+- `FSM::Support::DiagnosticCodes` is the current stable diagnostic-code owner
+  behind expected-failure corpus entries and the manifest registry;
 - future accepted adapter-facing behavior should be backed by tests before it
   is treated as stable.

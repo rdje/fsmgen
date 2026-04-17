@@ -56,6 +56,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `perl/FSM/Extension/Registry.pm` — typed extension registry for the active `R7` replacement seam.
 - `perl/FSM/Extension/Context.pm` — typed hook context object passed to active extensions.
 - `perl/FSM/Support/CapabilityManifest.pm` — machine-readable capability manifest builder for downstream tool integration.
+- `perl/FSM/Support/DiagnosticCodes.pm` — stable diagnostic-code registry consumed by support accounting and the capability manifest.
 - `perl/FSM/Support/RegressionCorpus.pm` — production support-accounting catalog owner consumed by the manifest and regression tests.
 - `perl/FSM/SourceClassifier.pm` — top-level source-kind classification for FSM vs composition inputs.
 - `perl/FSM/Adapter/FSMGenFull.pm` — FSM adapter/parsing entry.

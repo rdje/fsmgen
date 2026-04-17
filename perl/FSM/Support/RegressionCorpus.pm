@@ -232,6 +232,7 @@ my @REGRESSION_CORPUS = (
         classification => 'expected_failure',
         coverage => 'strict_root_rejection_pipeline_cli',
         source_kind => 'fsm',
+        diagnostic_code => 'FSMGEN_STRICT_LEGACY_FSM_ROOT',
         expected_error_pattern => qr/Strict mode rejects the legacy '\+fsm' root family/,
         expected_hint_pattern => qr/\?fsm:module_name/,
     },
@@ -251,6 +252,7 @@ my @REGRESSION_CORPUS = (
         classification => 'expected_failure',
         coverage => 'strict_section_rejection_pipeline_cli',
         source_kind => 'fsm',
+        diagnostic_code => 'FSMGEN_STRICT_EMPTY_SIZE_SECTION',
         expected_error_pattern => qr/Strict mode rejects the legacy empty '\(\+size\)' section/,
         expected_hint_pattern => qr/replace it with explicit '\(\+size \(signal width\) \.\.\.\)' entries/,
     },
@@ -270,6 +272,7 @@ my @REGRESSION_CORPUS = (
         classification => 'expected_failure',
         coverage => 'strict_section_rejection_pipeline_cli',
         source_kind => 'fsm',
+        diagnostic_code => 'FSMGEN_STRICT_MISLEADING_ARESET_RSTN',
         expected_error_pattern => qr/Strict mode rejects the legacy or misleading '\(asreset rstn\)' \+system spelling.*Use '\(sreset reset\)' for synchronous active-high reset or '\(areset rst_n\)' for asynchronous active-low reset/s,
         expected_hint_pattern => qr/\(sreset reset\).*\(areset rst_n\)/s,
     },
@@ -289,6 +292,7 @@ my @REGRESSION_CORPUS = (
         classification => 'expected_failure',
         coverage => 'strict_section_rejection_pipeline_cli',
         source_kind => 'fsm',
+        diagnostic_code => 'FSMGEN_STRICT_MISLEADING_SRESET_RSTN',
         expected_error_pattern => qr/Strict mode rejects the legacy or misleading '\(sreset rstn\)' \+system spelling.*Use '\(sreset reset\)' for synchronous active-high reset or '\(areset rst_n\)' for asynchronous active-low reset/s,
         expected_hint_pattern => qr/\(sreset reset\).*\(areset rst_n\)/s,
     },
@@ -308,6 +312,7 @@ my @REGRESSION_CORPUS = (
         classification => 'expected_failure',
         coverage => 'strict_section_rejection_pipeline_cli',
         source_kind => 'fsm',
+        diagnostic_code => 'FSMGEN_STRICT_COMPACT_INIT_DIRECTIVE',
         expected_error_pattern => qr/Strict mode rejects the legacy compact '\(:= signal=value\)' top-level directive.*Use the canonical '\(:= \(signal value\)\)' form.*compact ':=' surface/s,
         expected_hint_pattern => qr/Use the canonical '\(:= \(signal value\)\)' form/s,
     },
@@ -327,6 +332,7 @@ my @REGRESSION_CORPUS = (
         classification => 'expected_failure',
         coverage => 'strict_assignment_rejection_pipeline_cli',
         source_kind => 'fsm',
+        diagnostic_code => 'FSMGEN_STRICT_INFIX_ASSIGNMENT',
         expected_error_pattern => qr/Strict mode rejects infix assignment '\(OUT = SRC\)'.*Use the canonical pair form '\(= \(OUT SRC\)\)'.*infix assignment compatibility/s,
         expected_hint_pattern => qr/Use the canonical pair form '\(= \(OUT SRC\)\)'/s,
     },
@@ -351,6 +357,7 @@ my @REGRESSION_CORPUS = (
         coverage => 'strict_child_root_rejection_pipeline_cli',
         source_kind => 'composition',
         search_path_relpaths => ['t/corpus'],
+        diagnostic_code => 'FSMGEN_STRICT_FSMC_LEGACY_ROOT',
         expected_error_pattern => qr/Generated child source:\s+'\?fsmc' 'legacy_fsm_child_root_src'.*Strict mode rejects the legacy '\+fsm' root family as the root of '\?fsmc' source 'legacy_fsm_child_root_src'/s,
         expected_hint_pattern => qr/\?fsm:source_name/,
     },
@@ -375,6 +382,7 @@ my @REGRESSION_CORPUS = (
         coverage => 'strict_child_root_rejection_pipeline_cli',
         source_kind => 'composition',
         search_path_relpaths => ['t/corpus'],
+        diagnostic_code => 'FSMGEN_STRICT_DTC_CHILD_ROOT',
         expected_error_pattern => qr/Generated child source:\s+'\?dtc' 'legacy_dt_child_root_src'.*Strict mode rejects '\?module:legacy_dt_child_root_src' as the root of '\?dtc' source 'legacy_dt_child_root_src'/s,
         expected_hint_pattern => qr/\?dt:source_name/,
     },
@@ -385,6 +393,7 @@ my @REGRESSION_CORPUS = (
         classification => 'expected_failure',
         coverage => 'language_contract_rejection_pipeline_cli',
         source_kind => 'fsm',
+        diagnostic_code => 'FSMGEN_LANGUAGE_BAD_SIZE_ENTRY',
         expected_error_pattern => qr/Malformed '\+size' entry/,
     },
     {
@@ -394,6 +403,7 @@ my @REGRESSION_CORPUS = (
         classification => 'expected_failure',
         coverage => 'language_contract_rejection_pipeline_cli',
         source_kind => 'fsm',
+        diagnostic_code => 'FSMGEN_LANGUAGE_NON_POSITIVE_SIZE',
         expected_error_pattern => qr/Malformed '\+size' entry for signal 'OUT'.*must resolve to a positive integer width/s,
     },
     {
@@ -403,6 +413,7 @@ my @REGRESSION_CORPUS = (
         classification => 'expected_failure',
         coverage => 'language_contract_rejection_pipeline_cli',
         source_kind => 'fsm',
+        diagnostic_code => 'FSMGEN_LANGUAGE_UNKNOWN_SIZE_SYMBOL',
         expected_error_pattern => qr/Malformed '\+size' entry for signal 'OUT'.*references unknown or non-scalar constant symbol 'MISSING_W'/s,
     },
     {
@@ -412,6 +423,7 @@ my @REGRESSION_CORPUS = (
         classification => 'expected_failure',
         coverage => 'language_contract_rejection_pipeline_cli',
         source_kind => 'fsm',
+        diagnostic_code => 'FSMGEN_LANGUAGE_AGGREGATE_SIZE_SYMBOL',
         expected_error_pattern => qr/Malformed '\+size' entry for signal 'OUT'.*symbol 'WIDTHS' resolved to aggregate payload kind 'list', not a scalar integer/s,
     },
     {
@@ -421,6 +433,7 @@ my @REGRESSION_CORPUS = (
         classification => 'expected_failure',
         coverage => 'language_contract_rejection_pipeline_cli',
         source_kind => 'fsm',
+        diagnostic_code => 'FSMGEN_LANGUAGE_SIZE_DIVIDE_BY_ZERO',
         expected_error_pattern => qr/Malformed '\+size' entry for signal 'OUT'.*divides by zero in a width expression/s,
     },
     {
@@ -430,6 +443,7 @@ my @REGRESSION_CORPUS = (
         classification => 'expected_failure',
         coverage => 'language_contract_rejection_pipeline_cli',
         source_kind => 'fsm',
+        diagnostic_code => 'FSMGEN_LANGUAGE_SIZE_MODULO_BY_ZERO',
         expected_error_pattern => qr/Malformed '\+size' entry for signal 'OUT'.*takes modulo by zero in a width expression/s,
     },
     {
@@ -439,6 +453,7 @@ my @REGRESSION_CORPUS = (
         classification => 'expected_failure',
         coverage => 'language_contract_rejection_pipeline_cli',
         source_kind => 'fsm',
+        diagnostic_code => 'FSMGEN_LANGUAGE_UNSUPPORTED_SIZE_OPERATOR',
         expected_error_pattern => qr/Malformed '\+size' entry for signal 'OUT'.*uses unsupported width expression operator 'pow'/s,
     },
     {
@@ -448,6 +463,7 @@ my @REGRESSION_CORPUS = (
         classification => 'expected_failure',
         coverage => 'language_contract_rejection_pipeline_cli',
         source_kind => 'fsm',
+        diagnostic_code => 'FSMGEN_LANGUAGE_SIZE_OPERATOR_ARITY',
         expected_error_pattern => qr/Malformed '\+size' entry for signal 'OUT'.*operator '\+' requires at least two operands/s,
     },
     {
@@ -457,6 +473,7 @@ my @REGRESSION_CORPUS = (
         classification => 'expected_failure',
         coverage => 'language_contract_rejection_pipeline_cli',
         source_kind => 'fsm',
+        diagnostic_code => 'FSMGEN_LANGUAGE_LHS_DECONSTRUCT_WIDTH',
         expected_error_pattern => qr/LHS deconstruct total width 8 does not match RHS width 7/s,
     },
     {
@@ -466,6 +483,7 @@ my @REGRESSION_CORPUS = (
         classification => 'expected_failure',
         coverage => 'direct_generation_contract_rejection_pipeline_cli',
         source_kind => 'fsm',
+        diagnostic_code => 'FSMGEN_DIRECT_RHS_WIDTH_MISMATCH',
         expected_error_pattern => qr/assignment to 'BUS' uses RHS '\{HI, LO\}' with incompatible width 7 for LHS width 8; .*implicit widening/s,
     },
     {
@@ -475,6 +493,7 @@ my @REGRESSION_CORPUS = (
         classification => 'expected_failure',
         coverage => 'direct_generation_contract_rejection_pipeline_cli',
         source_kind => 'fsm',
+        diagnostic_code => 'FSMGEN_DIRECT_AGGREGATE_CONTRACT_MISMATCH',
         expected_error_pattern => qr/assignment to 'OUT' uses whole aggregate RHS 'FRAME' with contract 'record\{mode:bits\[2\], flag:bit\}' that does not match declared type 'list<bit, bits\[2\]>'/s,
     },
     {
@@ -484,6 +503,7 @@ my @REGRESSION_CORPUS = (
         classification => 'expected_failure',
         coverage => 'composition_contract_rejection_pipeline_cli',
         source_kind => 'composition',
+        diagnostic_code => 'FSMGEN_COMPOSITION_MISSING_RTLIF',
         expected_error_pattern => qr/Expected RTL metadata file:\s+'uart_tx\.rtlif'.*RTL child module:\s+'\?rtl' 'uart_tx'.*no declared interface metadata file 'uart_tx\.rtlif' was found/s,
     },
     {
@@ -493,6 +513,7 @@ my @REGRESSION_CORPUS = (
         classification => 'expected_failure',
         coverage => 'composition_contract_rejection_pipeline_cli',
         source_kind => 'composition',
+        diagnostic_code => 'FSMGEN_COMPOSITION_MISSING_FSM_CHILD',
         expected_error_pattern => qr/Expected child source file:\s+'missing_src\.fsm'.*Generated child source:\s+'\?fsmc' 'missing_src'.*child-source resolution is blocked because no active child FSM source was found either embedded in the same file or in an external '\.fsm' file/s,
     },
     {
@@ -502,6 +523,7 @@ my @REGRESSION_CORPUS = (
         classification => 'expected_failure',
         coverage => 'composition_contract_rejection_pipeline_cli',
         source_kind => 'composition',
+        diagnostic_code => 'FSMGEN_COMPOSITION_MISSING_DT_CHILD',
         expected_error_pattern => qr/Expected child source file:\s+'missing_dt_src\.fsm'.*Generated child source:\s+'\?dtc' 'missing_dt_src'.*child-source resolution is blocked because no active standalone-DT child source was found either embedded in the same file or in an external '\.fsm' file/s,
     },
     {
@@ -511,6 +533,7 @@ my @REGRESSION_CORPUS = (
         classification => 'expected_failure',
         coverage => 'composition_contract_rejection_pipeline_cli',
         source_kind => 'composition',
+        diagnostic_code => 'FSMGEN_RTLIF_SYSTEM_PORT_DIRECTION',
         expected_error_pattern => qr/RTL metadata file:\s+'.*invalid_sysdir_uart_tx\.rtlif'.*RTL child module:\s+'\?rtl' 'invalid_sysdir_uart_tx'.*RTL interface metadata system-port direction is blocked because token 'core_clk>:clock' in declared interface metadata '.*invalid_sysdir_uart_tx\.rtlif' resolves to 'clock' while declaring an output direction/s,
     },
     {
@@ -520,6 +543,7 @@ my @REGRESSION_CORPUS = (
         classification => 'expected_failure',
         coverage => 'composition_contract_rejection_pipeline_cli',
         source_kind => 'composition',
+        diagnostic_code => 'FSMGEN_RTLIF_DUPLICATE_PORT',
         expected_error_pattern => qr/RTL metadata file:\s+'.*duplicate_port_uart_tx\.rtlif'.*RTL child module:\s+'\?rtl' 'duplicate_port_uart_tx'.*RTL interface metadata port declaration uniqueness is blocked because declared interface metadata '.*duplicate_port_uart_tx\.rtlif' repeats port 'txd'/s,
     },
     {
@@ -529,6 +553,7 @@ my @REGRESSION_CORPUS = (
         classification => 'expected_failure',
         coverage => 'composition_contract_rejection_pipeline_cli',
         source_kind => 'composition',
+        diagnostic_code => 'FSMGEN_RTLIF_UNSUPPORTED_PORT_TYPE',
         expected_error_pattern => qr/RTL metadata file:\s+'.*invalid_type_uart_tx\.rtlif'.*RTL child module:\s+'\?rtl' 'invalid_type_uart_tx'.*RTL interface metadata port typing is blocked because token 'data_in<8:status' in declared interface metadata '.*invalid_type_uart_tx\.rtlif' resolves to unsupported port type 'status'/s,
     },
     {
@@ -538,6 +563,7 @@ my @REGRESSION_CORPUS = (
         classification => 'expected_failure',
         coverage => 'composition_contract_rejection_pipeline_cli',
         source_kind => 'composition',
+        diagnostic_code => 'FSMGEN_RTLIF_INVALID_PORT_TOKEN',
         expected_error_pattern => qr/RTL metadata file:\s+'.*invalid_token_uart_tx\.rtlif'.*RTL child module:\s+'\?rtl' 'invalid_token_uart_tx'.*RTL interface metadata token shape is blocked because token 'data-in<8:data' in declared interface metadata '.*invalid_token_uart_tx\.rtlif' is an invalid port token/s,
     },
     {
@@ -547,6 +573,7 @@ my @REGRESSION_CORPUS = (
         classification => 'expected_failure',
         coverage => 'composition_contract_rejection_pipeline_cli',
         source_kind => 'composition',
+        diagnostic_code => 'FSMGEN_RTLIF_NON_POSITIVE_PORT_WIDTH',
         expected_error_pattern => qr/RTL metadata file:\s+'.*invalid_width_uart_tx\.rtlif'.*RTL child module:\s+'\?rtl' 'invalid_width_uart_tx'.*RTL interface metadata port sizing is blocked because token 'data_in<0:data' in declared interface metadata '.*invalid_width_uart_tx\.rtlif' declares non-positive port width '0'/s,
     },
     {
@@ -556,6 +583,7 @@ my @REGRESSION_CORPUS = (
         classification => 'expected_failure',
         coverage => 'composition_contract_rejection_pipeline_cli',
         source_kind => 'composition',
+        diagnostic_code => 'FSMGEN_RTLIF_MISSING_ROOT',
         expected_error_pattern => qr/RTL interface metadata structure is blocked because declared interface metadata '.*missing_root_uart_tx\.rtlif' does not contain a '\?rtlif:missing_root_uart_tx' root\./s,
     },
     {
@@ -565,6 +593,7 @@ my @REGRESSION_CORPUS = (
         classification => 'expected_failure',
         coverage => 'composition_contract_rejection_pipeline_cli',
         source_kind => 'composition',
+        diagnostic_code => 'FSMGEN_RTLIF_EMPTY_PORTS',
         expected_error_pattern => qr/RTL interface metadata port presence is blocked because declared interface metadata '.*empty_port_uart_tx\.rtlif' declares no ports under '\?rtlif:empty_port_uart_tx'\./s,
     },
     {
@@ -574,6 +603,7 @@ my @REGRESSION_CORPUS = (
         classification => 'expected_failure',
         coverage => 'composition_contract_rejection_pipeline_cli',
         source_kind => 'composition',
+        diagnostic_code => 'FSMGEN_RTLIF_NESTED_STRUCTURE',
         expected_error_pattern => qr/RTL interface metadata flatness is blocked because declared interface metadata '.*nested_port_uart_tx\.rtlif' contains nested structure under '\?rtlif:nested_port_uart_tx'\./s,
     },
     {
@@ -583,6 +613,7 @@ my @REGRESSION_CORPUS = (
         classification => 'expected_failure',
         coverage => 'composition_contract_rejection_pipeline_cli',
         source_kind => 'composition',
+        diagnostic_code => 'FSMGEN_RTLIF_DUPLICATE_EMBEDDED_ROOT',
         expected_error_pattern => qr/RTL interface metadata embedded-root uniqueness is blocked because the active RTL interface contract allows at most one embedded interface root per external RTL module name in the same source\./s,
     },
 );

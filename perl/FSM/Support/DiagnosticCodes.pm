@@ -1,0 +1,232 @@
+package FSM::Support::DiagnosticCodes;
+
+use strict;
+use warnings;
+
+use Exporter 'import';
+
+our @EXPORT_OK = qw(
+    diagnostic_code_ids
+    diagnostic_code_metadata
+    diagnostic_code_registry
+    known_diagnostic_code
+);
+
+my %DIAGNOSTIC_CODES = (
+    FSMGEN_STRICT_LEGACY_FSM_ROOT => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'strict_mode',
+        summary => 'Strict mode rejected a legacy +fsm root.',
+    },
+    FSMGEN_STRICT_EMPTY_SIZE_SECTION => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'strict_mode',
+        summary => 'Strict mode rejected an empty legacy +size section.',
+    },
+    FSMGEN_STRICT_MISLEADING_ARESET_RSTN => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'strict_mode',
+        summary => 'Strict mode rejected misleading asynchronous reset spelling.',
+    },
+    FSMGEN_STRICT_MISLEADING_SRESET_RSTN => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'strict_mode',
+        summary => 'Strict mode rejected misleading synchronous reset spelling.',
+    },
+    FSMGEN_STRICT_COMPACT_INIT_DIRECTIVE => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'strict_mode',
+        summary => 'Strict mode rejected compact init/default assignment syntax.',
+    },
+    FSMGEN_STRICT_INFIX_ASSIGNMENT => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'strict_mode',
+        summary => 'Strict mode rejected legacy infix assignment syntax.',
+    },
+    FSMGEN_STRICT_FSMC_LEGACY_ROOT => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'strict_mode',
+        summary => 'Strict mode rejected a legacy +fsm child source under ?fsmc.',
+    },
+    FSMGEN_STRICT_DTC_CHILD_ROOT => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'strict_mode',
+        summary => 'Strict mode rejected an incompatible child source under ?dtc.',
+    },
+    FSMGEN_LANGUAGE_BAD_SIZE_ENTRY => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A +size entry did not match the supported shape.',
+    },
+    FSMGEN_LANGUAGE_NON_POSITIVE_SIZE => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A width expression resolved to a non-positive integer.',
+    },
+    FSMGEN_LANGUAGE_UNKNOWN_SIZE_SYMBOL => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A width expression referenced an unknown scalar symbol.',
+    },
+    FSMGEN_LANGUAGE_AGGREGATE_SIZE_SYMBOL => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A width expression referenced an aggregate where a scalar was required.',
+    },
+    FSMGEN_LANGUAGE_SIZE_DIVIDE_BY_ZERO => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A width expression attempted integer division by zero.',
+    },
+    FSMGEN_LANGUAGE_SIZE_MODULO_BY_ZERO => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A width expression attempted integer modulo by zero.',
+    },
+    FSMGEN_LANGUAGE_UNSUPPORTED_SIZE_OPERATOR => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A width expression used an unsupported operator.',
+    },
+    FSMGEN_LANGUAGE_SIZE_OPERATOR_ARITY => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A width expression operator received an unsupported operand count.',
+    },
+    FSMGEN_LANGUAGE_LHS_DECONSTRUCT_WIDTH => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A deconstructing LHS did not match the RHS width.',
+    },
+    FSMGEN_DIRECT_RHS_WIDTH_MISMATCH => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'direct_generation_contract',
+        summary => 'A direct assignment RHS width was incompatible with the LHS width.',
+    },
+    FSMGEN_DIRECT_AGGREGATE_CONTRACT_MISMATCH => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'direct_generation_contract',
+        summary => 'A direct aggregate assignment used an incompatible source contract.',
+    },
+    FSMGEN_COMPOSITION_MISSING_RTLIF => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'An external RTL child was missing its interface metadata.',
+    },
+    FSMGEN_COMPOSITION_MISSING_FSM_CHILD => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'A generated FSM child source could not be resolved.',
+    },
+    FSMGEN_COMPOSITION_MISSING_DT_CHILD => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'A generated DT child source could not be resolved.',
+    },
+    FSMGEN_RTLIF_SYSTEM_PORT_DIRECTION => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'RTL interface metadata declared a system port with an invalid direction.',
+    },
+    FSMGEN_RTLIF_DUPLICATE_PORT => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'RTL interface metadata repeated a port declaration.',
+    },
+    FSMGEN_RTLIF_UNSUPPORTED_PORT_TYPE => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'RTL interface metadata used an unsupported port type.',
+    },
+    FSMGEN_RTLIF_INVALID_PORT_TOKEN => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'RTL interface metadata used an invalid port token.',
+    },
+    FSMGEN_RTLIF_NON_POSITIVE_PORT_WIDTH => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'RTL interface metadata declared a non-positive port width.',
+    },
+    FSMGEN_RTLIF_MISSING_ROOT => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'RTL interface metadata did not contain the required ?rtlif root.',
+    },
+    FSMGEN_RTLIF_EMPTY_PORTS => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'RTL interface metadata declared no ports.',
+    },
+    FSMGEN_RTLIF_NESTED_STRUCTURE => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'RTL interface metadata contained nested structure where a flat port list was required.',
+    },
+    FSMGEN_RTLIF_DUPLICATE_EMBEDDED_ROOT => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'A source declared duplicate embedded RTL interface metadata roots.',
+    },
+);
+
+sub diagnostic_code_ids {
+    my @codes = sort keys %DIAGNOSTIC_CODES;
+    return @codes;
+}
+
+sub diagnostic_code_registry {
+    return {
+        map {
+            my %copy = %{ $DIAGNOSTIC_CODES{$_} };
+            $_ => \%copy;
+        } diagnostic_code_ids()
+    };
+}
+
+sub diagnostic_code_metadata {
+    my ($code) = @_;
+
+    return undef unless defined $code && exists $DIAGNOSTIC_CODES{$code};
+
+    my %copy = %{ $DIAGNOSTIC_CODES{$code} };
+    return \%copy;
+}
+
+sub known_diagnostic_code {
+    my ($code) = @_;
+    return defined $code && exists $DIAGNOSTIC_CODES{$code};
+}
+
+1;

@@ -148,7 +148,7 @@ That response accepts the broad direction that FSMGen should become a precise
 
 - strict mode as the preferred generated-`.fsm` target,
 - a capability manifest generated from support-accounting truth,
-- future check-only JSON diagnostics with stable diagnostic codes,
+- stable diagnostic codes before check-only JSON diagnostics,
 - future normalized semantic JSON export,
 - stronger clock/reset contract metadata,
 - and later checked metadata for actor roles, channel grouping, semantic signal
@@ -166,8 +166,11 @@ The first bounded machine-readable surface is now:
 ```
 
 It emits schema-versioned JSON from `FSM::Support::CapabilityManifest`, backed
-by `FSM::Support::RegressionCorpus`. Treat this as a conservative support
-manifest, not yet as a full normalized semantic export.
+by `FSM::Support::RegressionCorpus` and `FSM::Support::DiagnosticCodes`. Treat
+this as a conservative support manifest, not yet as a full normalized semantic
+export. It can already tell downstream tools which expected-failure corpus
+entries carry stable diagnostic codes and which stable codes exist, but those
+codes are not yet emitted through a dedicated check-only JSON diagnostic flow.
 
 ## Legacy External Flow
 

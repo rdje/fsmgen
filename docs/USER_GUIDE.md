@@ -788,7 +788,7 @@ Boundary note:
   - strict mode currently accepts `?fsm:name`, `?dt:name`, `?mod:name`, and `?top:name`,
   - strict mode currently accepts only canonical `?fsm:name` roots under `?fsmc`,
   - strict mode currently accepts only canonical `?dt:name` roots under `?dtc`,
-  - the maintained regression corpus now runs every `supported_smoke` entry through default pipeline/CLI, enforces that each coverage bucket belongs to its intended classification, marks every supported protocol fixture and every supported direct language-feature fixture as `strict_supported`, requires every supported direct language-feature entry to carry explicit HDL-shape pattern metadata, and requires expected-failure entries to carry compiled diagnostic metadata, so the APB/AMBA protocol smoke fixtures plus canonical reset, canonical init/default, partial LHS writes, RHS concat/cat packing, LHS concat/cat deconstruction, expression-backed widths, runtime div/mod expressions, and canonical assignment pairs are checked through both `strict_mode => 1` and `bin/fsmgen --strict`; the catalog-level supported-behavior test runs every supported and strict-supported entry regardless of fixture family,
+  - the maintained regression corpus now runs every `supported_smoke` entry through default pipeline/CLI, enforces that each coverage bucket belongs to its intended classification, marks every supported protocol fixture and every supported direct language-feature fixture as `strict_supported`, requires every supported direct language-feature entry to carry explicit HDL-shape pattern metadata, and requires expected-failure entries to carry stable diagnostic codes plus compiled diagnostic metadata, so the APB/AMBA protocol smoke fixtures plus canonical reset, canonical init/default, partial LHS writes, RHS concat/cat packing, LHS concat/cat deconstruction, expression-backed widths, runtime div/mod expressions, and canonical assignment pairs are checked through both `strict_mode => 1` and `bin/fsmgen --strict`; the catalog-level supported-behavior test runs every supported and strict-supported entry regardless of fixture family,
   - and strict mode currently rejects legacy `+fsm` under `?fsmc`, `?mod:` / `?module:` under `?dtc`, direct-root `?module:`, empty `(+size)` no-op sections, legacy/misleading explicit reset spellings such as `(+system ... (asreset rstn))` and `(+system ... (sreset rstn))`, compact top-level `(:= signal=value)` directives on the current `?fsm:` / `?dt:` direct-root path, and infix assignment compatibility forms.
 - Strict-mode failures now also keep the same `Source file: '...'` context line as other top-level pipeline failures.
 - This is the first support-tier enforcement slice, not the final full strict-mode surface.
@@ -1619,9 +1619,11 @@ surface. It is generated from
 [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
 and backed by
 [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm),
+and
+[perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm),
 so support-accounting counts, strict-supported entries, compatibility residue,
-documentation pointers, and intentionally blocked/not-yet-public surfaces share
-one source with the regression catalog.
+expected-failure diagnostic codes, documentation pointers, and intentionally
+blocked/not-yet-public surfaces share one source with the regression catalog.
 
 ## 5) Input resolution and FSMLIB
 `fsmgen` resolves `<fsm_file>` as:

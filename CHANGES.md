@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-17
+### stable diagnostic-code registry shipped
+- Added [perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm) as the production owner for stable `FSMGEN_*` diagnostic identities.
+- Added `diagnostic_code` metadata to every current `expected_failure` entry in [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm), and extended [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) so expected failures must use known stable error codes while registry codes must be exercised by the corpus.
+- Extended [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so `--capability-manifest` exposes both entry-level diagnostic codes and the stable registry while still marking check-only JSON diagnostic emission as not public yet.
+- Added [t/298-diagnostic-code-registry.t](/Users/richarddje/Documents/github/fsmgen/t/298-diagnostic-code-registry.t) to lock registry shape, metadata, known-code lookup, and defensive-copy behavior.
+- Updated README, the regression-corpus docs, the mdBook errors/embedding chapters, SPECFORGE alignment notes, roadmap/status, development notes, memory, and the import-tree note so the diagnostic-code seam is documented as machine identity before check-only JSON diagnostics.
+
 ### bounded capability manifest shipped
 - Added [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm) and `bin/fsmgen --capability-manifest`, emitting schema-versioned JSON for downstream tools without requiring an input `.fsm`.
 - Moved the regression corpus catalog to [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm) so the manifest and tests share one production support-accounting owner; [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) remains as a thin compatibility wrapper.
