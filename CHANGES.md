@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-17
+### supported language-feature entries require HDL-shape evidence
+- Extended [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) so every catalog `expected_hdl_patterns` field must be an array of compiled regular expressions.
+- The same accounting gate now requires every `language_feature_fixture` / `supported_smoke` / `direct_root_pipeline_cli` entry to carry at least one HDL-shape pattern, preventing future supported language-feature additions from becoming compile-only claims by accident.
+- Updated [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/book/src/10-errors-strict-mode-and-troubleshooting.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/10-errors-strict-mode-and-troubleshooting.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so future support-accounting work treats supported language features as semantic HDL-shape commitments, not only successful generation.
+
 ### supported corpus success now has a catalog-level behavior gate
 - Expanded [t/296-regression-corpus-supported-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/296-regression-corpus-supported-behavior.t) so every `supported_smoke` catalog entry, regardless of fixture family, must compile through default pipeline and CLI, and every `strict_supported` entry must also compile through `strict_mode => 1` and `bin/fsmgen --strict`.
 - The gate checks expected direct modules, composition top/child modules, and any recorded HDL-shape patterns, making supported success and strict-supported success executable support-accounting contracts rather than markers enforced only by protocol or language-feature tests.

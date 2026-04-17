@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-17: supported language-feature evidence is mandatory
+- Continued `R12` by tightening the catalog-accounting test rather than adding
+  another ad hoc fixture-family gate.
+- [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+  now requires:
+  - every `expected_hdl_patterns` value to be an array of compiled regexes,
+  - every supported direct language-feature corpus entry to carry at least one
+    HDL-shape pattern.
+- Continuity note:
+  - when adding a future `language_feature_fixture` / `supported_smoke` /
+    `direct_root_pipeline_cli` entry, do not rely on compile success alone.
+    Record the emitted semantic shape the feature is promising, because
+    [t/296-regression-corpus-supported-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/296-regression-corpus-supported-behavior.t)
+    will execute those patterns through pipeline/CLI and strict paths when
+    applicable.
+
 ## 2026-04-17: supported success now has one behavior owner
 - Continued `R12` by expanding
   [t/296-regression-corpus-supported-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/296-regression-corpus-supported-behavior.t).

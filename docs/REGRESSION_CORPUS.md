@@ -99,6 +99,14 @@ regardless of fixture family, so future protocol, language-feature,
 composition, or other supported entries cannot rely only on family-specific
 tests.
 
+Supported direct language-feature entries have one extra rule: compile success
+alone is not enough. Each `language_feature_fixture` / `supported_smoke` /
+`direct_root_pipeline_cli` entry must record at least one compiled
+`expected_hdl_patterns` regular expression. The catalog-accounting test checks
+that shape metadata exists and is well formed, and the behavior tests execute
+those patterns against generated HDL. This keeps feature support claims tied to
+observable emitted semantics rather than only "the tool did not crash."
+
 All current supported protocol fixtures are now `strict_supported`: the APB
 requester, APB completer, AMBA requester, and APB composition top use the
 canonical `areset rst_n`, `(:= (signal value))`, and assignment-pair surfaces
@@ -192,8 +200,9 @@ div/mod expressions, and canonical assignment pairs.
   checks that the catalog stays named, classified, unique, and pointed at real
   repo assets, and also checks that strict-supported markers are only attached
   to supported pipeline/CLI corpus entries, that every supported protocol
-  fixture is strict-supported, and that every supported direct language-feature
-  fixture is strict-supported.
+  fixture is strict-supported, that every supported direct language-feature
+  fixture is strict-supported, and that supported direct language-feature
+  entries carry non-empty, compiled HDL-shape pattern metadata.
 - [t/296-regression-corpus-supported-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/296-regression-corpus-supported-behavior.t)
   treats `supported_smoke` and `strict_supported` as executable catalog-level
   contracts. It runs every supported entry through default pipeline/CLI, then

@@ -138,6 +138,31 @@ for my $entry (@entries) {
         fail("catalog entry '$entry->{id}' uses an unsupported source kind '$entry->{source_kind}'");
     }
 
+    if (exists $entry->{expected_hdl_patterns}) {
+        ok(ref($entry->{expected_hdl_patterns}) eq 'ARRAY',
+            "catalog entry '$entry->{id}' records HDL-shape patterns as an array");
+        if (ref($entry->{expected_hdl_patterns}) eq 'ARRAY') {
+            my $pattern_index = 0;
+            for my $pattern (@{$entry->{expected_hdl_patterns}}) {
+                ok(ref($pattern) eq 'Regexp',
+                    "catalog entry '$entry->{id}' HDL-shape pattern $pattern_index is a compiled regex");
+                ++$pattern_index;
+            }
+        }
+    }
+
+    if (
+        $entry->{family} eq 'language_feature_fixture'
+            && $entry->{classification} eq 'supported_smoke'
+            && $entry->{coverage} eq 'direct_root_pipeline_cli'
+    ) {
+        ok(
+            ref($entry->{expected_hdl_patterns}) eq 'ARRAY'
+                && @{$entry->{expected_hdl_patterns}},
+            "supported direct language-feature fixture '$entry->{id}' records explicit HDL-shape patterns",
+        );
+    }
+
     if ($entry->{strict_supported}) {
         is($entry->{classification}, 'supported_smoke', "strict-supported entry '$entry->{id}' is a supported-smoke asset");
         is($entry->{source_kind}, 'fsm', "strict-supported direct entry '$entry->{id}' is an FSM-root corpus asset")

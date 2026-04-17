@@ -86,7 +86,9 @@ The current supported protocol fixtures and supported direct language-feature
 fixtures also carry `strict_supported`, so they must pass through both the
 strict pipeline API and `bin/fsmgen --strict`. These success contracts are
 checked at the catalog level even if a future entry belongs to a new fixture
-family.
+family. Supported direct language-feature entries must also carry explicit
+HDL-shape pattern metadata, so the corpus checks emitted semantics instead of
+only proving that generation completed.
 
 ## Backend Expectations
 

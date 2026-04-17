@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-17: supported language-feature entries require HDL-shape evidence
+- Tightened the `R12` support-accounting contract for positive direct
+  language-feature entries.
+- [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+  now validates two metadata rules:
+  - any catalog entry with `expected_hdl_patterns` must store them as an array
+    of compiled regular expressions,
+  - every `language_feature_fixture` / `supported_smoke` /
+    `direct_root_pipeline_cli` entry must carry at least one such pattern.
+- Rationale:
+  - the generic supported-behavior gate can execute only the evidence recorded
+    in the catalog,
+  - a supported language feature should prove some emitted HDL semantics, not
+    merely prove that parsing and generation completed,
+  - and future corpus entries should fail at the catalog-accounting layer if
+    they forget to include semantic shape evidence.
+
 ## 2026-04-17: supported success has a catalog-level behavior gate
 - Expanded
   [t/296-regression-corpus-supported-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/296-regression-corpus-supported-behavior.t)
