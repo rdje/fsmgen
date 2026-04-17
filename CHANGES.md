@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-17
+### bounded check JSON diagnostics shipped
+- Added [perl/FSM/Support/CheckDiagnostics.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnostics.pm) as the production report builder for bounded `--check --json` diagnostics.
+- Updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) to accept `--check --json` plus `--check-json`, run the full pipeline without writing HDL, emit schema-versioned JSON to stdout, and exit non-zero for failed checks.
+- The check report classifies failures by matching production support-accounting expected-failure patterns from [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm), then emits stable code metadata from [perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm); unclassified failures emit JSON with a `null` code rather than inventing a false stable identity.
+- Extended [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm), [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t), and new [t/299-check-json-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/299-check-json-diagnostics.t) so the bounded check-JSON command contract is visible and regression-locked.
+- Updated README, USER_GUIDE, the mdBook debugging/errors/embedding chapters, regression-corpus docs, SPECFORGE alignment notes, roadmap/status, development notes, memory, and import-tree docs so the new machine-readable diagnostic surface is documented without overstating full JSON diagnostic API stabilization.
+
 ### stable diagnostic-code registry shipped
 - Added [perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm) as the production owner for stable `FSMGEN_*` diagnostic identities.
 - Added `diagnostic_code` metadata to every current `expected_failure` entry in [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm), and extended [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) so expected failures must use known stable error codes while registry codes must be exercised by the corpus.

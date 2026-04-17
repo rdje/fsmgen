@@ -1611,6 +1611,7 @@ Example parameterized generated child:
 - `--extension-module <Module::Name>` : load an explicit typed extension module from `@INC` (may be repeated)
 - `--extension-config <file>` : load typed extension modules from an explicit config file (may be repeated)
 - `--capability-manifest` : print schema-versioned JSON describing the current support/capability surface and exit without requiring an input `.fsm`
+- `--check --json` : run the full pipeline as a check, emit schema-versioned JSON diagnostics, and do not write HDL
 - `-q, --quiet` : suppress informational messages
 - `-h, --help` : full CLI help
 
@@ -1624,6 +1625,24 @@ and
 so support-accounting counts, strict-supported entries, compatibility residue,
 expected-failure diagnostic codes, documentation pointers, and intentionally
 blocked/not-yet-public surfaces share one source with the regression catalog.
+
+The first bounded check-only JSON surface is:
+
+```bash
+./bin/fsmgen --strict --check --json path/to/file.fsm
+```
+
+`--check-json` is an alias for the same mode. The command runs the full
+pipeline, emits JSON to stdout, exits non-zero when the check fails, and never
+writes an HDL file even if `-o` is present. Successful checks report
+`success: true`, an empty `diagnostics` array, the resolved source path, and a
+small checked-result summary. Failed checks report `success: false` and a
+diagnostic object. When the failure matches a support-accounting
+`expected_failure` entry, that diagnostic includes the stable `FSMGEN_*` code,
+severity, stability, family, source file, matched corpus entry, and
+migration-hint availability. Failures outside the current classifier still
+return JSON with a `null` code rather than pretending a stable diagnostic
+identity exists.
 
 ## 5) Input resolution and FSMLIB
 `fsmgen` resolves `<fsm_file>` as:

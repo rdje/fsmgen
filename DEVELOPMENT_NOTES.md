@@ -1,5 +1,27 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-17: bounded check JSON diagnostics are live
+- Added
+  [perl/FSM/Support/CheckDiagnostics.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnostics.pm)
+  as the production owner for the first `--check --json` report shape.
+- `bin/fsmgen --check --json path/to/file.fsm` now:
+  - runs the full pipeline,
+  - emits schema-versioned JSON to stdout,
+  - writes no HDL file,
+  - exits non-zero when the check fails,
+  - emits stable `FSMGEN_*` code metadata when the failure matches a
+    support-accounting expected-failure entry,
+  - and emits `null` for unclassified failure codes instead of inventing a fake
+    stable identity.
+- Rationale:
+  - downstream tools need a machine-readable failed-run surface before a full
+    normalized semantic export exists,
+  - the first check surface should be honest and bounded rather than pretending
+    every current diagnostic family is fully classified,
+  - and the implementation should reuse the production corpus/diagnostic-code
+    owners so JSON diagnostics follow the same support-accounting truth as the
+    manifest.
+
 ## 2026-04-17: stable diagnostic-code ownership is live
 - Added
   [perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm)

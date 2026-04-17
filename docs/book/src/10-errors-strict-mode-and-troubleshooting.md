@@ -114,11 +114,17 @@ FSMGEN_LANGUAGE_BAD_SIZE_ENTRY
 FSMGEN_COMPOSITION_MISSING_RTLIF
 ```
 
-Each code has severity, stability, family, and summary metadata. The registry
-is intentionally separate from the eventual check-only JSON diagnostic command:
-`./bin/fsmgen --capability-manifest` can already expose which stable codes
-exist, while a future `--check --json` style flow will be responsible for
-emitting those codes on individual failed runs.
+Each code has severity, stability, family, and summary metadata.
+`./bin/fsmgen --capability-manifest` exposes the registry, and the bounded
+check-only JSON path emits those codes on matched expected failures:
+
+```bash
+./bin/fsmgen --strict --check --json path/to/file.fsm
+```
+
+That command writes no HDL. Unknown failure families still get JSON, but their
+code is `null` until FSMGen deliberately promotes that family into the stable
+diagnostic registry.
 
 ## Backend Expectations
 

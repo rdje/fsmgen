@@ -81,10 +81,14 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'stable',
         'manifest diagnostic-code entries carry stability metadata',
     );
-    like(
-        $manifest->{diagnostics}{emission_status},
-        qr/check_only_json_diagnostics_not_yet_public/,
-        'manifest says code emission in check-only JSON diagnostics is not public yet',
+    is($manifest->{diagnostics}{check_json}{schema_version}, 1, 'manifest records check JSON schema version');
+    is($manifest->{diagnostics}{check_json}{status}, 'bounded_public', 'manifest marks check JSON as bounded public');
+    ok($manifest->{diagnostics}{check_json}{emits_stable_codes}, 'manifest says check JSON emits stable codes');
+    ok(!$manifest->{diagnostics}{check_json}{emits_hdl}, 'manifest says check JSON does not emit HDL');
+    is(
+        $manifest->{diagnostics}{check_json}{report_source},
+        'FSM::Support::CheckDiagnostics',
+        'manifest records the check JSON report owner',
     );
 };
 
@@ -97,8 +101,7 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     ok($direct_roots{'?dt'}, 'manifest names ?dt as a canonical direct root');
 
     my %blocked = map { $_ => 1 } @{$manifest->{language_surface}{intentionally_blocked_or_not_yet_public}};
-    ok($blocked{'check-only JSON diagnostics'}, 'manifest tells downstream tools that JSON diagnostics are not stable yet');
-    ok($blocked{'diagnostic-code emission in check-only JSON diagnostics'}, 'manifest separates code ownership from JSON diagnostic emission');
+    ok($blocked{'full check-only JSON diagnostic schema stabilization'}, 'manifest keeps full JSON diagnostic API stabilization blocked');
     ok($blocked{'full normalized semantic JSON export'}, 'manifest tells downstream tools that normalized JSON export is not stable yet');
 };
 

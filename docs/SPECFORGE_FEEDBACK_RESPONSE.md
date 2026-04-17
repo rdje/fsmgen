@@ -81,8 +81,14 @@ machine-readable success/failure data:
 - strict versus compatibility classification
 - migration hint where available
 
-This belongs primarily to `R10` diagnostics and `R13` public embedding/API
-stabilization.
+This first bounded surface now exists. `bin/fsmgen` accepts `--check --json`
+and the alias `--check-json`; it runs the full pipeline, emits schema-versioned
+JSON to stdout, exits non-zero for failed checks, and does not write HDL files.
+Expected-failure diagnostics that match the support-accounting corpus carry the
+stable `FSMGEN_*` code, severity, stability, family, source file, matched corpus
+entry, and migration-hint availability. Failures outside the current
+support-accounting classifier still emit JSON, but their code is `null` rather
+than inventing a false stable identity.
 
 ### 3. Stable Diagnostic Codes
 
@@ -106,8 +112,9 @@ Codes are regression-backed by
 [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t),
 and
 [t/298-diagnostic-code-registry.t](/Users/richarddje/Documents/github/fsmgen/t/298-diagnostic-code-registry.t).
-They are cataloged for manifest/corpus integration now; emitting them from
-check-only JSON diagnostics remains the next public diagnostic-output step.
+They are cataloged for manifest/corpus integration and emitted by the bounded
+check-only JSON path now. Full diagnostic schema stabilization remains a later
+public API widening step.
 
 ### 4. Normalized Semantic Export
 
@@ -223,7 +230,8 @@ The current FSMGen-side priority order is:
    only from regression-backed support-accounting truth.
 2. Continue widening stable diagnostic-code ownership only from
    regression-backed failures.
-3. Add check-only JSON output that emits those stable codes.
+3. Stabilize and widen check-only JSON diagnostics from the bounded surface now
+   shipped.
 4. Add normalized semantic JSON export.
 5. Use those surfaces to guide later language additions such as actor roles,
    channel grouping, semantic signal roles, temporal/stability contracts, and
@@ -238,9 +246,12 @@ project policies:
 - compatibility syntax should not be treated as canonical adapter output;
 - mdBook chapters are the public human-facing contract;
 - `fsmgen --capability-manifest` is the first machine-readable support surface;
+- `fsmgen --strict --check --json path/to/file.fsm` is the first bounded
+  machine-readable check/diagnostic surface;
 - `docs/REGRESSION_CORPUS.md` and `FSM::Support::RegressionCorpus` are the
   current support-accounting source of truth behind that manifest;
 - `FSM::Support::DiagnosticCodes` is the current stable diagnostic-code owner
-  behind expected-failure corpus entries and the manifest registry;
+  behind expected-failure corpus entries, the manifest registry, and bounded
+  check JSON diagnostics;
 - future accepted adapter-facing behavior should be backed by tests before it
   is treated as stable.

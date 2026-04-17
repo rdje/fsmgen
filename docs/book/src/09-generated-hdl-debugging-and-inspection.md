@@ -81,11 +81,16 @@ Trace behavior:
 - `--extension-module <Module::Name>`
 - `--extension-config <file>`
 - `--capability-manifest`
+- `--check --json`
 - `-q, --quiet`
 
 `--capability-manifest` is different from the HDL-generation options: it emits
 schema-versioned JSON describing the current support/capability surface and
 exits without requiring an input `.fsm`.
+
+`--check --json` is also different from HDL generation: it still runs the full
+pipeline, but it writes no HDL file. It emits a schema-versioned JSON check
+report to stdout and exits non-zero when the check fails.
 
 ## Input Resolution
 

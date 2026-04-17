@@ -20,6 +20,7 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(binding_signal_summary_text);
 use FSM::Pipeline::HDLGenerator;
 use FSM::SourcePathResolver;
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
+use FSM::Support::CheckDiagnostics qw(build_check_failure_report build_check_success_report);
 
 # FSM file resolution function using FSMLIB environment variable
 sub resolve_fsm_file {
@@ -189,6 +190,8 @@ my @extension_modules = ();
 my @extension_config_files = ();
 my @source_search_paths = ();
 my $emit_capability_manifest = 0;
+my $check_mode = 0;
+my $json_output = 0;
 
 # Store original ARGV to check for bare flags before GetOptions processes them
 my $has_bare_debug_flag = grep { /^--?d(ebug)?$/ } @ARGV;
@@ -208,6 +211,12 @@ GetOptions(
     'extension-module=s@' => \@extension_modules,
     'extension-config=s@' => \@extension_config_files,
     'capability-manifest|emit-capability-manifest' => \$emit_capability_manifest,
+    'check' => \$check_mode,
+    'json' => \$json_output,
+    'check-json' => sub {
+        $check_mode = 1;
+        $json_output = 1;
+    },
 ) or die "Error in command line arguments\n";
 
 # Handle legacy --debug flag behavior: if no value specified, default to level 4
@@ -284,6 +293,8 @@ Options:
   --capability-manifest
                   Print the versioned JSON FSMGen capability manifest and exit
                   Alias: --emit-capability-manifest
+  --check --json  Run the full pipeline as a check, emit JSON, and do not write HDL
+                  Alias: --check-json
   -q, --quiet     Suppress informational messages
   --strict        Enable strict support-tier enforcement
                   Current first strict slice rejects legacy '+fsm' roots and
@@ -379,6 +390,9 @@ Other Examples:
   # Emit the machine-readable capability manifest
   ./bin/fsmgen --capability-manifest
 
+  # Check a source and emit machine-readable diagnostics without writing HDL
+  ./bin/fsmgen --strict --check --json my_fsm
+
   # Load an explicit typed extension module from @INC
   PERL5LIB=./my_extensions ./bin/fsmgen \
     --extension-module My::Extension \
@@ -399,6 +413,14 @@ if ($emit_capability_manifest) {
     exit 0;
 }
 
+my $check_json_mode = $check_mode && $json_output;
+if ($check_mode && !$json_output) {
+    die "Error: --check currently requires --json for the bounded public check surface\n";
+}
+if ($json_output && !$check_mode) {
+    die "Error: --json is currently only supported together with --check\n";
+}
+
 # Check for required positional argument
 if (@ARGV != 1) {
     die "Error: Exactly one FSM file must be specified as argument\n" .
@@ -412,13 +434,31 @@ my $path_resolver = FSM::SourcePathResolver->new(
 );
 
 # Resolve FSM file path using FSMLIB-aware logic
-my $fsm_file = resolve_fsm_file($fsm_input, $path_resolver);
+my $fsm_file = eval {
+    resolve_fsm_file($fsm_input, $path_resolver);
+};
+
+if ($@) {
+    my $display_error = normalize_cli_error_text($@);
+    if ($check_json_mode) {
+        my $report = build_check_failure_report(
+            input => $fsm_input,
+            source_file => undef,
+            target_language => $target_language,
+            strict_mode => $strict_mode,
+            message => $display_error,
+        );
+        print JSON::PP->new->ascii->canonical->pretty->encode($report);
+        exit 1;
+    }
+    die $display_error;
+}
 
 # Convert to absolute path for consistency
 $fsm_file = File::Spec->rel2abs($fsm_file);
 
 # Set default output file if not specified
-if (!$output_file) {
+if (!$check_mode && !$output_file) {
     # Extract FSM bare name from the original input
     my $fsm_bare_name;
     if ($fsm_input =~ m{/}) {
@@ -436,23 +476,27 @@ if (!$output_file) {
 }
 
 # Convert output file to absolute path
-$output_file = File::Spec->rel2abs($output_file);
+$output_file = File::Spec->rel2abs($output_file)
+    if defined $output_file && length $output_file;
 # Set up trace routing
 if ($trace_log_enabled) {
     $trace_log_path = File::Spec->rel2abs($trace_log_path);
     set_fsm_trace_output_file($trace_log_path);
-    print "Trace logging enabled - trace output will be saved to: $trace_log_path\n\n";
+    print "Trace logging enabled - trace output will be saved to: $trace_log_path\n\n"
+        unless $check_json_mode;
 }
 
-print "=== FSM HDL Generator ===\n\n";
-print "Processing FSM file: $fsm_file\n" unless $quiet;
+unless ($check_json_mode) {
+    print "=== FSM HDL Generator ===\n\n";
+    print "Processing FSM file: $fsm_file\n" unless $quiet;
+}
 
 # Create and run the HDL generation pipeline
 my $pipeline = eval {
     FSM::Pipeline::HDLGenerator->new(
         debug_level => get_fsm_debug_level(),
         target_language => $target_language,
-        quiet => $quiet,
+        quiet => ($quiet || $check_json_mode),
         strict_mode => $strict_mode,
         source_search_paths => \@source_search_paths,
         extension_modules => \@extension_modules,
@@ -461,7 +505,19 @@ my $pipeline = eval {
 };
 
 if ($@) {
-    print STDERR normalize_cli_error_text($@);
+    my $display_error = normalize_cli_error_text($@);
+    if ($check_json_mode) {
+        my $report = build_check_failure_report(
+            input => $fsm_input,
+            source_file => $fsm_file,
+            target_language => $target_language,
+            strict_mode => $strict_mode,
+            message => $display_error,
+        );
+        print JSON::PP->new->ascii->canonical->pretty->encode($report);
+        exit 1;
+    }
+    print STDERR $display_error;
     exit 1;
 }
 
@@ -473,6 +529,18 @@ if ($@) {
     my $error = $@;
     my $failure_report = FSM::Composition::FailureReportBuilder->build_report($error);
     my $display_error = normalize_cli_error_text($error);
+
+    if ($check_json_mode) {
+        my $report = build_check_failure_report(
+            input => $fsm_input,
+            source_file => $fsm_file,
+            target_language => $target_language,
+            strict_mode => $strict_mode,
+            message => $display_error,
+        );
+        print JSON::PP->new->ascii->canonical->pretty->encode($report);
+        exit 1;
+    }
 
     unless ($quiet || !$failure_report) {
         print "\n=== Composition Failure Summary ===\n";
@@ -500,6 +568,18 @@ if ($@) {
 
     print STDERR $display_error;
     exit 1;
+}
+
+if ($check_json_mode) {
+    my $report = build_check_success_report(
+        input => $fsm_input,
+        source_file => $fsm_file,
+        target_language => $target_language,
+        strict_mode => $strict_mode,
+        module_info => $result->{module_info},
+    );
+    print JSON::PP->new->ascii->canonical->pretty->encode($report);
+    exit 0;
 }
 
 my $hdl_code = $result->{hdl_code};

@@ -58,7 +58,16 @@ sub build_capability_manifest {
                     }
                 } sort keys %{$diagnostic_registry}
             ],
-            emission_status => 'cataloged_for_manifest_and_corpus; check_only_json_diagnostics_not_yet_public',
+            check_json => {
+                schema_version => 1,
+                status => 'bounded_public',
+                command_shape => './bin/fsmgen --strict --check --json path/to/file.fsm',
+                alias => './bin/fsmgen --strict --check-json path/to/file.fsm',
+                emits_stable_codes => JSON::PP::true,
+                emits_hdl => JSON::PP::false,
+                unclassified_failures_use_null_code => JSON::PP::true,
+                report_source => 'FSM::Support::CheckDiagnostics',
+            },
         },
         language_surface => {
             strict_mode => {
@@ -123,8 +132,7 @@ sub build_capability_manifest {
                 'VHDL backend generation',
                 'unchecked annotations treated as enforced metadata',
                 'full normalized semantic JSON export',
-                'check-only JSON diagnostics',
-                'diagnostic-code emission in check-only JSON diagnostics',
+                'full check-only JSON diagnostic schema stabilization',
                 'unbounded aggregate expression domains',
                 'SPECFORGE PDF/prose IntentIR extraction',
             ],

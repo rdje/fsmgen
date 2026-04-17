@@ -14,10 +14,10 @@ Current baseline:
 - Reviewed on `2026-04-17`.
 - Scope is the project-owned transitive `FSM::...` tree reachable from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen).
 - Perl core and non-project helper modules are treated as support dependencies, not as part of the architectural map.
-- Static trace from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) currently reaches `125` project files total, `124` `.pm` packages.
+- Static trace from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) currently reaches `126` project files total, `125` `.pm` packages.
 - The former composition-local parameter/generic helper is now a compatibility shim; the active neutral owner is [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm), including bounded scalar expressions and matching-shape leafwise aggregate expression folding.
 - Shared integer literal parsing is now reachable through [perl/FSM/Package/IntegerLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/IntegerLiteralSupport.pm), keeping common decimal, `0d`, based SystemVerilog, `0x`, `0b`, and `0o` scalar spellings consistent across scalar widths and direct `+size` expression terms.
-- The first machine-readable support/capability surface is now reachable through [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm), which builds `bin/fsmgen --capability-manifest` JSON from [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm) and the stable diagnostic-code registry in [perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm).
+- The first machine-readable support/capability surface is now reachable through [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm), which builds `bin/fsmgen --capability-manifest` JSON from [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm), the stable diagnostic-code registry in [perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm), and the bounded check-JSON report contract in [perl/FSM/Support/CheckDiagnostics.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnostics.pm).
 
 ## Executive read
 [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) is a thin CLI/reporting shell.
@@ -88,12 +88,14 @@ declaration pass, while the rendered stage text is still emitted after enable
 conditions in the final HDL.
 The newest downstream-tool support slice adds
 [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+plus [perl/FSM/Support/CheckDiagnostics.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnostics.pm)
 plus [perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm)
 and [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm)
-as the live owners for schema-versioned capability JSON, stable diagnostic-code
-metadata, and production support-accounting data. This deliberately keeps the
-public manifest out of the test-only `t/lib` tree while leaving a thin test
-compatibility wrapper behind.
+as the live owners for schema-versioned capability JSON, bounded check-JSON
+reports, stable diagnostic-code metadata, and production support-accounting
+data. This deliberately keeps the public manifest and diagnostic reports out of
+the test-only `t/lib` tree while leaving a thin test compatibility wrapper
+behind.
 
 The heaviest remaining complexity is still the direct single-module HDL backend path centered on:
 - [perl/FSM/Backend/GeneratedModuleEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/GeneratedModuleEmitter.pm)
@@ -145,7 +147,7 @@ Reachable package-family counts from [bin/fsmgen](/Users/richarddje/Documents/gi
 - `Composition`: `35`
 - `HDL`: `32`
 - `Package`: `14`
-- `Support`: `3`
+- `Support`: `4`
 - `Synthesis`: `10`
 - `IR`: `7`
 - `Adapter`: `5`
@@ -161,7 +163,8 @@ Current thin-coordinator line counts:
 - [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm): `108`
 - [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm): `164`
 - [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm): `172`
-- [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm): `227`
+- [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm): `235`
+- [perl/FSM/Support/CheckDiagnostics.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnostics.pm): `144`
 - [perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm): `232`
 - [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm): `646`
 - [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm): `75`
@@ -214,6 +217,7 @@ Interpretation:
 - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
 - [perl/FSM/SourcePathResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/SourcePathResolver.pm)
 - [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+- [perl/FSM/Support/CheckDiagnostics.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnostics.pm)
 
 It mainly owns:
 - CLI option parsing
@@ -221,9 +225,10 @@ It mainly owns:
 - debug/trace routing
 - output-file writing
 - capability-manifest JSON emission
+- check-JSON lifecycle routing
 - user-facing summaries for composition provenance, override/block events, failure summaries, generated children, and shared-datapath metadata
 
-[bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) is `836` lines today, so it is not tiny, but most of that weight is presentation/reporting rather than semantic compiler ownership.
+[bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) is `915` lines today, so it is not tiny, but most of that weight is presentation/reporting rather than semantic compiler ownership.
 
 It does not own the compiler architecture.
 Its only non-trivial local logic is presentation/reporting glue.
@@ -326,6 +331,7 @@ Important distinction:
 
 ### Support accounting and capability manifest
 - [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+- [perl/FSM/Support/CheckDiagnostics.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnostics.pm)
 - [perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm)
 - [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm)
 
@@ -333,7 +339,9 @@ This layer owns the first machine-readable downstream-tool support surface.
 The CLI uses it for `--capability-manifest`, the regression tests use the same
 production corpus owner instead of keeping the catalog in test-only code, and
 expected-failure machine identities now come from the production diagnostic-code
-registry instead of human CLI wording.
+registry instead of human CLI wording. The same layer now owns the bounded
+`--check --json` report shape so downstream tools get machine-readable
+success/failure data without a normalized semantic export yet.
 
 ### Main orchestration hub
 - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)

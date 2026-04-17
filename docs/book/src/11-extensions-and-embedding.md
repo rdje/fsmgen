@@ -122,8 +122,8 @@ also now preserves declared type contracts conservatively:
   declaration kind instead of existing only as declaration text in auxiliary
   HDL sections
 
-That is already useful for downstream tooling even though the long-term public
-embedding/API stabilization lane (`R13`) is still not started.
+That is already useful for downstream tooling while the long-term public
+embedding/API stabilization lane (`R13`) is active but not fully frozen yet.
 
 ## Important Boundary
 
@@ -135,7 +135,8 @@ That means:
 - useful now for internal tooling and serious integration work
 - not yet promised as a permanently stable contract forever
 
-The future `R13` lane is where that public stabilization work belongs.
+The active `R13` lane is where that public stabilization work is being
+graduated from useful internal seams into deliberate public contracts.
 
 ## Downstream Tool Alignment
 
@@ -148,14 +149,14 @@ That response accepts the broad direction that FSMGen should become a precise
 
 - strict mode as the preferred generated-`.fsm` target,
 - a capability manifest generated from support-accounting truth,
-- stable diagnostic codes before check-only JSON diagnostics,
+- stable diagnostic codes plus bounded check-only JSON diagnostics,
 - future normalized semantic JSON export,
 - stronger clock/reset contract metadata,
 - and later checked metadata for actor roles, channel grouping, semantic signal
   roles, temporal/stability contracts, and provenance/residuals.
 
 Those surfaces are not all implemented yet. They are intentionally staged
-behind support accounting, diagnostics, and the future `R13` public embedding
+behind support accounting, diagnostics, and the active `R13` public embedding
 lane so adapter-facing contracts can be regression-backed instead of merely
 documented.
 
@@ -169,8 +170,19 @@ It emits schema-versioned JSON from `FSM::Support::CapabilityManifest`, backed
 by `FSM::Support::RegressionCorpus` and `FSM::Support::DiagnosticCodes`. Treat
 this as a conservative support manifest, not yet as a full normalized semantic
 export. It can already tell downstream tools which expected-failure corpus
-entries carry stable diagnostic codes and which stable codes exist, but those
-codes are not yet emitted through a dedicated check-only JSON diagnostic flow.
+entries carry stable diagnostic codes, which stable codes exist, and which
+bounded check-JSON command shape is public.
+
+The first bounded check/diagnostic surface is now:
+
+```bash
+./bin/fsmgen --strict --check --json path/to/file.fsm
+```
+
+It emits schema-versioned JSON to stdout and writes no HDL. Matched
+expected-failure diagnostics include the stable `FSMGEN_*` code and the matched
+support-accounting entry; unclassified failures keep a `null` code until their
+family is deliberately promoted into the stable registry.
 
 ## Legacy External Flow
 

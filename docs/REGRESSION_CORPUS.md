@@ -131,11 +131,18 @@ checks that the code is known and maps to stable error-severity metadata. The
 same test also rejects unused registry entries so the public code list stays
 exercised by the corpus.
 
-This is intentionally not the same thing as check-only JSON diagnostics. The
-codes are cataloged and exposed through the capability manifest now; emitting
-them from a dedicated `--check --json` style flow remains a later public API
-slice. That staging gives downstream tools a stable naming contract without
-forcing them to parse today's human CLI wording as if it were JSON.
+The bounded check-only JSON path now consumes the same registry:
+
+```bash
+./bin/fsmgen --strict --check --json path/to/file.fsm
+```
+
+That command runs the full pipeline as a check, writes no HDL, emits
+schema-versioned JSON to stdout, and exits non-zero on failed checks. When the
+failure matches a support-accounting expected-failure entry, the JSON diagnostic
+includes the stable `FSMGEN_*` code plus severity/stability/family metadata and
+the matched corpus entry. Unclassified failures still emit JSON, but with a
+`null` code rather than inventing a fake stable identity.
 
 All current supported protocol fixtures are now `strict_supported`: the APB
 requester, APB completer, AMBA requester, and APB composition top use the
@@ -161,11 +168,12 @@ That command emits schema-versioned JSON built by
 from the same production corpus owner used by the regression tests. The first
 manifest is intentionally bounded: it exposes support-accounting counts,
 sanitized corpus entry metadata including expected-failure diagnostic codes,
-the stable diagnostic-code registry, strict-versus-compatibility language
-surface families, current assignment/system/expression/declaration/composition
-families, producer version/commit identity, documentation pointers, and
-intentionally blocked or not-yet-public integration surfaces such as check-only
-JSON diagnostics and normalized semantic JSON export.
+the stable diagnostic-code registry, the bounded check-JSON command contract,
+strict-versus-compatibility language surface families, current
+assignment/system/expression/declaration/composition families, producer
+version/commit identity, documentation pointers, and intentionally blocked or
+not-yet-public integration surfaces such as full check-JSON schema
+stabilization and normalized semantic JSON export.
 
 ## Current named entries
 
