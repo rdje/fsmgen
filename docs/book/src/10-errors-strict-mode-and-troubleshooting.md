@@ -80,12 +80,13 @@ fits the cleaner forward contract.
 The regression corpus deliberately keeps paired default-compatible and
 strict-rejected assets for compatibility residue such as infix assignments, so
 the supported boundary is machine-checked instead of living only in examples.
-It also keeps positive strict-acceptance markers for canonical supported
-surfaces. The current supported protocol fixtures and supported direct
-language-feature fixtures must pass through both the strict pipeline API and
-`bin/fsmgen --strict`. The `strict_supported` marker is checked at the catalog
-level, so every marked entry must compile in strict mode even if it belongs to
-a new fixture family later.
+It also keeps positive acceptance markers for canonical supported surfaces.
+Every `supported_smoke` entry must pass default pipeline and CLI generation.
+The current supported protocol fixtures and supported direct language-feature
+fixtures also carry `strict_supported`, so they must pass through both the
+strict pipeline API and `bin/fsmgen --strict`. These success contracts are
+checked at the catalog level even if a future entry belongs to a new fixture
+family.
 
 ## Backend Expectations
 

@@ -1,26 +1,30 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
-## 2026-04-17: strict-supported marker has a catalog-level behavior gate
-- Added
-  [t/296-regression-corpus-strict-supported-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/296-regression-corpus-strict-supported-behavior.t)
-  so `strict_supported` is now executable directly from the maintained
-  regression catalog.
-- The new gate:
-  - selects every `supported_smoke` entry with `strict_supported => 1`,
-  - runs each entry through `FSM::Pipeline::HDLGenerator` with
-    `strict_mode => 1`,
-  - runs each entry through `bin/fsmgen --strict`,
+## 2026-04-17: supported success has a catalog-level behavior gate
+- Expanded
+  [t/296-regression-corpus-supported-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/296-regression-corpus-supported-behavior.t)
+  so both `supported_smoke` and `strict_supported` are now executable directly
+  from the maintained regression catalog.
+- The gate:
+  - selects every `supported_smoke` entry,
+  - runs each supported entry through the default pipeline and CLI,
+  - selects every supported entry with `strict_supported => 1`,
+  - runs each strict-supported entry through `FSM::Pipeline::HDLGenerator` with
+    `strict_mode => 1` and through `bin/fsmgen --strict`,
   - checks expected direct module names,
   - checks expected composition top and child modules,
   - and reuses any recorded `expected_hdl_patterns`.
 - Rationale:
-  - `strict_supported` should not depend on each fixture family remembering to
-    add its own strict-mode subtest,
-  - future protocol, language-feature, composition, or other supported-smoke
-    entries should receive strict acceptance proof automatically when they
-    opt into the marker,
+  - supported success should not depend on each fixture family remembering to
+    add its own default-mode smoke test,
+  - strict-supported success should not depend on each fixture family
+    remembering to add its own strict-mode subtest,
+  - future protocol, language-feature, composition, or other supported entries
+    should receive default acceptance proof automatically, and strict
+    acceptance proof automatically when they opt into the marker,
   - and the family-specific tests can remain useful for extra domain-specific
-    assertions while the marker itself has one catalog-level owner.
+    assertions while the catalog-level behavior test owns the generic success
+    contract.
 
 ## 2026-04-17: protocol fixtures are strict-supported
 - Continued `R12` by promoting the imported protocol smoke fixtures from
