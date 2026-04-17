@@ -85,6 +85,19 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     is($manifest->{diagnostics}{check_json}{status}, 'bounded_public', 'manifest marks check JSON as bounded public');
     ok($manifest->{diagnostics}{check_json}{emits_stable_codes}, 'manifest says check JSON emits stable codes');
     ok(!$manifest->{diagnostics}{check_json}{emits_hdl}, 'manifest says check JSON does not emit HDL');
+    ok(
+        $manifest->{diagnostics}{check_json}{emits_support_accounting_object},
+        'manifest says check JSON emits a support-accounting object',
+    );
+    ok(
+        $manifest->{diagnostics}{check_json}{expected_failure_corpus_covered},
+        'manifest says check JSON is covered across expected-failure corpus entries',
+    );
+    is(
+        $manifest->{diagnostics}{check_json}{classifier_match_policy},
+        'most_specific_expected_error_pattern',
+        'manifest records the check JSON classifier match policy',
+    );
     is(
         $manifest->{diagnostics}{check_json}{report_source},
         'FSM::Support::CheckDiagnostics',

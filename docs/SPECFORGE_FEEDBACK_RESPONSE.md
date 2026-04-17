@@ -86,9 +86,14 @@ and the alias `--check-json`; it runs the full pipeline, emits schema-versioned
 JSON to stdout, exits non-zero for failed checks, and does not write HDL files.
 Expected-failure diagnostics that match the support-accounting corpus carry the
 stable `FSMGEN_*` code, severity, stability, family, source file, matched corpus
-entry, and migration-hint availability. Failures outside the current
-support-accounting classifier still emit JSON, but their code is `null` rather
-than inventing a false stable identity.
+entry, and migration-hint availability. They also include a nested
+`support_accounting` object with the matched entry id, corpus family, coverage,
+classification, diagnostic code, and migration-hint availability. The classifier
+chooses the most specific matching expected-error pattern, and the current
+expected-failure corpus is covered end-to-end by
+[t/300-check-json-regression-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/300-check-json-regression-corpus.t).
+Failures outside the current support-accounting classifier still emit JSON, but
+their code is `null` rather than inventing a false stable identity.
 
 ### 3. Stable Diagnostic Codes
 
@@ -113,8 +118,9 @@ Codes are regression-backed by
 and
 [t/298-diagnostic-code-registry.t](/Users/richarddje/Documents/github/fsmgen/t/298-diagnostic-code-registry.t).
 They are cataloged for manifest/corpus integration and emitted by the bounded
-check-only JSON path now. Full diagnostic schema stabilization remains a later
-public API widening step.
+check-only JSON path now. The bounded path now also regression-locks the exact
+stable code for every current expected-failure corpus entry. Full diagnostic
+schema stabilization remains a later public API widening step.
 
 ### 4. Normalized Semantic Export
 
@@ -247,7 +253,8 @@ project policies:
 - mdBook chapters are the public human-facing contract;
 - `fsmgen --capability-manifest` is the first machine-readable support surface;
 - `fsmgen --strict --check --json path/to/file.fsm` is the first bounded
-  machine-readable check/diagnostic surface;
+  machine-readable check/diagnostic surface, including a nested
+  `support_accounting` object for matched expected failures;
 - `docs/REGRESSION_CORPUS.md` and `FSM::Support::RegressionCorpus` are the
   current support-accounting source of truth behind that manifest;
 - `FSM::Support::DiagnosticCodes` is the current stable diagnostic-code owner

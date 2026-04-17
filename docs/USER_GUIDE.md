@@ -1640,9 +1640,13 @@ small checked-result summary. Failed checks report `success: false` and a
 diagnostic object. When the failure matches a support-accounting
 `expected_failure` entry, that diagnostic includes the stable `FSMGEN_*` code,
 severity, stability, family, source file, matched corpus entry, and
-migration-hint availability. Failures outside the current classifier still
-return JSON with a `null` code rather than pretending a stable diagnostic
-identity exists.
+migration-hint availability. It also includes a nested `support_accounting`
+object that records the matched corpus entry id, corpus family, coverage bucket,
+classification, diagnostic code, and migration-hint availability in one
+machine-friendly place. FSMGen chooses the most specific matching
+support-accounting pattern when more than one expected-failure pattern matches.
+Failures outside the current classifier still return JSON with a `null` code
+rather than pretending a stable diagnostic identity exists.
 
 ## 5) Input resolution and FSMLIB
 `fsmgen` resolves `<fsm_file>` as:

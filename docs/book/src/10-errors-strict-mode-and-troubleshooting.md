@@ -124,7 +124,12 @@ check-only JSON path emits those codes on matched expected failures:
 
 That command writes no HDL. Unknown failure families still get JSON, but their
 code is `null` until FSMGen deliberately promotes that family into the stable
-diagnostic registry.
+diagnostic registry. Matched failures also include a nested
+`support_accounting` object that points back to the matched corpus entry,
+coverage bucket, classification, corpus family, diagnostic code, and
+migration-hint availability. The classifier prefers the most specific matching
+expected-error pattern so broad fallback patterns do not shadow narrower stable
+codes.
 
 ## Backend Expectations
 

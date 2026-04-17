@@ -47,6 +47,8 @@ sub build_check_failure_report {
     my $metadata = $diagnostic_code
         ? diagnostic_code_metadata($diagnostic_code)
         : undef;
+    my $migration_hint_available =
+        ($match && $match->{expected_hint_pattern}) ? JSON::PP::true : JSON::PP::false;
 
     my %diagnostic = (
         code => $diagnostic_code,
@@ -61,15 +63,18 @@ sub build_check_failure_report {
         expected_rtl_metadata_file => _extract_artifact($message, 'Expected RTL metadata file'),
         expected_child_source_file => _extract_artifact($message, 'Expected child source file'),
         rtl_metadata_file => _extract_artifact($message, 'RTL metadata file'),
+        support_accounting => _support_accounting_contract(
+            $match,
+            $diagnostic_code,
+            $migration_hint_available,
+        ),
     );
 
     if ($match) {
         $diagnostic{matched_corpus_entry_id} = $match->{id};
         $diagnostic{coverage} = $match->{coverage};
         $diagnostic{classification} = $match->{classification};
-        $diagnostic{migration_hint_available} = $match->{expected_hint_pattern}
-            ? JSON::PP::true
-            : JSON::PP::false;
+        $diagnostic{migration_hint_available} = $migration_hint_available;
     }
     else {
         $diagnostic{migration_hint_available} = JSON::PP::false;
@@ -114,15 +119,39 @@ sub _source_contract {
 sub _matching_expected_failure {
     my ($message) = @_;
 
-    for my $entry (
-        grep { $_->{classification} eq 'expected_failure' } regression_corpus_entries()
-    ) {
+    my @matches;
+    for my $entry (grep { $_->{classification} eq 'expected_failure' } regression_corpus_entries()) {
         my $pattern = $entry->{expected_error_pattern};
         next unless ref($pattern) eq 'Regexp';
-        return $entry if $message =~ $pattern;
+        push @matches, $entry if $message =~ $pattern;
     }
 
-    return undef;
+    return undef unless @matches;
+
+    @matches = sort {
+        length($b->{expected_error_pattern} . '') <=> length($a->{expected_error_pattern} . '')
+            || $a->{id} cmp $b->{id}
+    } @matches;
+
+    return $matches[0];
+}
+
+sub _support_accounting_contract {
+    my ($match, $diagnostic_code, $migration_hint_available) = @_;
+
+    return {
+        matched => JSON::PP::false,
+    } unless $match;
+
+    return {
+        matched => JSON::PP::true,
+        entry_id => $match->{id},
+        family => $match->{family},
+        coverage => $match->{coverage},
+        classification => $match->{classification},
+        diagnostic_code => $diagnostic_code,
+        migration_hint_available => $migration_hint_available,
+    };
 }
 
 sub _extract_artifact {

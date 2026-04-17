@@ -141,8 +141,17 @@ That command runs the full pipeline as a check, writes no HDL, emits
 schema-versioned JSON to stdout, and exits non-zero on failed checks. When the
 failure matches a support-accounting expected-failure entry, the JSON diagnostic
 includes the stable `FSMGEN_*` code plus severity/stability/family metadata and
-the matched corpus entry. Unclassified failures still emit JSON, but with a
-`null` code rather than inventing a fake stable identity.
+the matched corpus entry. The diagnostic also contains a nested
+`support_accounting` object with the matched entry id, corpus family, coverage
+bucket, classification, diagnostic code, and migration-hint availability.
+Unclassified failures still emit JSON, but with a `null` code rather than
+inventing a fake stable identity.
+
+[t/300-check-json-regression-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/300-check-json-regression-corpus.t)
+locks this bridge across every current `expected_failure` entry. The classifier
+must choose the most specific matching expected-error pattern, so broad boundary
+patterns such as generic malformed `+size` failures cannot shadow narrower
+stable codes such as divide-by-zero or unsupported-operator diagnostics.
 
 All current supported protocol fixtures are now `strict_supported`: the APB
 requester, APB completer, AMBA requester, and APB composition top use the
@@ -169,6 +178,7 @@ from the same production corpus owner used by the regression tests. The first
 manifest is intentionally bounded: it exposes support-accounting counts,
 sanitized corpus entry metadata including expected-failure diagnostic codes,
 the stable diagnostic-code registry, the bounded check-JSON command contract,
+the check-JSON support-accounting object contract,
 strict-versus-compatibility language surface families, current
 assignment/system/expression/declaration/composition families, producer
 version/commit identity, documentation pointers, and intentionally blocked or

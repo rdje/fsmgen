@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-17: check JSON expected-failure corpus coverage landed
+- Continued `R13` check-diagnostic stabilization by adding
+  [t/300-check-json-regression-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/300-check-json-regression-corpus.t).
+- Every current `expected_failure` entry in
+  [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm)
+  now has check-JSON CLI coverage: the command must reject, emit decodable JSON,
+  write no HDL, and report the exact stable code plus matched corpus entry.
+- [perl/FSM/Support/CheckDiagnostics.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnostics.pm)
+  now prefers the most specific matching expected-failure regex, fixing the
+  broad-pattern shadowing issue where generic `+size` or legacy-root patterns
+  could claim a failure that had a narrower stable code.
+- Failed check-JSON diagnostics now include a nested `support_accounting` object
+  for matched failures. This is the preferred machine-readable bridge back to
+  corpus truth; keep future check JSON widening tied to fields that can be
+  support-accounted and regression-locked.
+
 ## 2026-04-17: bounded check JSON diagnostics shipped
 - Continued the SPECFORGE-facing `R13` bridge by adding
   [perl/FSM/Support/CheckDiagnostics.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnostics.pm).
@@ -28,8 +44,9 @@ This is the live continuity document for fast session recovery after crashes, re
   [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
   verifies that each code is known and has stable error-severity metadata.
 - [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
-  now exposes the registry plus entry-level diagnostic codes; the manifest
-  still marks check-only JSON diagnostic emission as not public yet.
+  now exposes the registry plus entry-level diagnostic codes. Bounded
+  check-only JSON diagnostic emission has since shipped and is now
+  corpus-covered.
 - Added [t/298-diagnostic-code-registry.t](/Users/richarddje/Documents/github/fsmgen/t/298-diagnostic-code-registry.t)
   to lock registry shape and defensive-copy behavior.
 - Continuity note:

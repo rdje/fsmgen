@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-17
+### check JSON diagnostics are corpus-covered
+- Extended [perl/FSM/Support/CheckDiagnostics.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnostics.pm) so expected-failure classification considers every matching support-accounting pattern and chooses the most specific match instead of allowing broad fallback patterns to shadow narrower stable codes.
+- Added a nested `support_accounting` object to failed check-JSON diagnostics, preserving the matched corpus entry id, corpus family, coverage bucket, classification, diagnostic code, and migration-hint availability beside the existing flat compatibility fields.
+- Added [t/300-check-json-regression-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/300-check-json-regression-corpus.t) so every current `expected_failure` entry in [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm) must reject through `bin/fsmgen --check-json`, emit decodable JSON, write no HDL, and report the exact stable code/support-accounting entry promised by the corpus.
+- Extended the capability manifest check-JSON metadata so downstream tools can discover the support-accounting object, corpus-wide expected-failure coverage, and `most_specific_expected_error_pattern` classifier policy.
+
 ### bounded check JSON diagnostics shipped
 - Added [perl/FSM/Support/CheckDiagnostics.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnostics.pm) as the production report builder for bounded `--check --json` diagnostics.
 - Updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) to accept `--check --json` plus `--check-json`, run the full pipeline without writing HDL, emit schema-versioned JSON to stdout, and exit non-zero for failed checks.
@@ -11,7 +17,7 @@ This is the persistent technical change history for FSMGen.
 ### stable diagnostic-code registry shipped
 - Added [perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm) as the production owner for stable `FSMGEN_*` diagnostic identities.
 - Added `diagnostic_code` metadata to every current `expected_failure` entry in [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm), and extended [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) so expected failures must use known stable error codes while registry codes must be exercised by the corpus.
-- Extended [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so `--capability-manifest` exposes both entry-level diagnostic codes and the stable registry while still marking check-only JSON diagnostic emission as not public yet.
+- Extended [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so `--capability-manifest` exposes both entry-level diagnostic codes and the stable registry; bounded check-only JSON diagnostic emission has since shipped and is now corpus-covered by the later R13 slices.
 - Added [t/298-diagnostic-code-registry.t](/Users/richarddje/Documents/github/fsmgen/t/298-diagnostic-code-registry.t) to lock registry shape, metadata, known-code lookup, and defensive-copy behavior.
 - Updated README, the regression-corpus docs, the mdBook errors/embedding chapters, SPECFORGE alignment notes, roadmap/status, development notes, memory, and the import-tree note so the diagnostic-code seam is documented as machine identity before check-only JSON diagnostics.
 

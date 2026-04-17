@@ -1,5 +1,27 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-17: check JSON classification is corpus-covered
+- Added [t/300-check-json-regression-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/300-check-json-regression-corpus.t)
+  so every current `expected_failure` support-accounting entry must reject
+  through `bin/fsmgen --check-json`, emit decodable JSON, write no HDL, and
+  report the exact stable diagnostic code and corpus entry promised by
+  [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm).
+- Updated
+  [perl/FSM/Support/CheckDiagnostics.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnostics.pm)
+  so classification ranks all matching expected-failure patterns by specificity
+  instead of taking the first corpus match.
+- Added a nested `support_accounting` diagnostic object for matched failures.
+  It carries the matched entry id, corpus family, coverage, classification,
+  diagnostic code, and migration-hint availability from production support
+  accounting.
+- Rationale:
+  - broad compatibility-boundary patterns are useful, but they must not mask
+    narrower public diagnostic identities,
+  - downstream tools need a stable machine field that points back to support
+    accounting rather than scraping human text,
+  - and public check JSON should widen only where the data is backed by the
+    corpus owner and regression-locked across all current expected failures.
+
 ## 2026-04-17: bounded check JSON diagnostics are live
 - Added
   [perl/FSM/Support/CheckDiagnostics.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnostics.pm)
@@ -30,8 +52,8 @@ This document captures engineering rationale, design constraints, and working de
   [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm)
   now carries a known `diagnostic_code`.
 - The capability manifest now exposes both entry-level diagnostic codes and the
-  registry metadata, while still marking check-only JSON diagnostic emission as
-  not public yet.
+  registry metadata. Bounded check-only JSON diagnostic emission has since
+  shipped and is now corpus-covered by later `R13` slices.
 - Rationale:
   - downstream tools need machine identities that survive error-wording
     improvements,

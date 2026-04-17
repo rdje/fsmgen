@@ -171,7 +171,9 @@ by `FSM::Support::RegressionCorpus` and `FSM::Support::DiagnosticCodes`. Treat
 this as a conservative support manifest, not yet as a full normalized semantic
 export. It can already tell downstream tools which expected-failure corpus
 entries carry stable diagnostic codes, which stable codes exist, and which
-bounded check-JSON command shape is public.
+bounded check-JSON command shape is public. It also advertises that check JSON
+emits a nested support-accounting object and that expected-failure coverage is
+locked across the current corpus.
 
 The first bounded check/diagnostic surface is now:
 
@@ -181,8 +183,10 @@ The first bounded check/diagnostic surface is now:
 
 It emits schema-versioned JSON to stdout and writes no HDL. Matched
 expected-failure diagnostics include the stable `FSMGEN_*` code and the matched
-support-accounting entry; unclassified failures keep a `null` code until their
-family is deliberately promoted into the stable registry.
+support-accounting entry. The nested `support_accounting` object is the
+preferred machine-readable bridge back to corpus truth. Unclassified failures
+keep a `null` code until their family is deliberately promoted into the stable
+registry.
 
 ## Legacy External Flow
 
