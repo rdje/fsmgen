@@ -228,6 +228,8 @@ flags,
 the supported-smoke / strict-supported / expected-failure normalized semantic
 JSON coverage flags,
 the bounded in-process `HDLGenerator` result top-level presence contract,
+the bounded typed-extension/context contract for explicit object/module/config
+loading and the shipped hook/accessor names,
 strict-versus-compatibility language surface families, current
 assignment/system/expression/declaration/composition families, producer
 version/commit identity, documentation pointers, and intentionally blocked or

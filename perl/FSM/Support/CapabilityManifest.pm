@@ -8,6 +8,7 @@ use File::Basename qw(dirname);
 use File::Spec;
 use JSON::PP ();
 use FSM::Support::DiagnosticCodes qw(diagnostic_code_registry);
+use FSM::Support::ExtensionContract qw(build_extension_contract);
 use FSM::Support::HDLGeneratorResultContract qw(build_hdl_generator_result_contract);
 use FSM::Support::RegressionCorpus qw(regression_corpus_entries);
 
@@ -98,6 +99,7 @@ sub build_capability_manifest {
         },
         embedding => {
             hdl_generator_result => build_hdl_generator_result_contract(),
+            typed_extensions => build_extension_contract(),
         },
         language_surface => {
             strict_mode => {

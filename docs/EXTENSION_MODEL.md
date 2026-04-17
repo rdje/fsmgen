@@ -101,6 +101,13 @@ The shipped boundary is regression-locked in
 [t/27-extension-loading.t](/Users/richarddje/Documents/github/fsmgen/t/27-extension-loading.t),
 and [t/28-extension-config-loading.t](/Users/richarddje/Documents/github/fsmgen/t/28-extension-config-loading.t).
 
+For embedders, the same boundary is now machine-readable through
+[perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+and advertised by `bin/fsmgen --capability-manifest` under
+`embedding.typed_extensions`. That manifest entry is intentionally bounded: it
+names the current loading entrypoints, hook names, context accessor names, and
+non-goals, but it does not claim the entire future extension API is frozen.
+
 ## Examples
 ### Example 1: annotate the returned result
 ```perl

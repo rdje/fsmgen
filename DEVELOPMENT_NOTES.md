@@ -1,5 +1,32 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-17: typed extension contract is explicit public embedding surface
+- Added
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  as the production owner for the bounded typed-extension/context contract.
+- The contract records what is intentionally public today:
+  - explicit object injection through `extensions => [ $object, ... ]`,
+  - explicit module loading through `extension_modules => [ ... ]` and
+    repeated `--extension-module`,
+  - explicit config-file loading through `extension_config_files => [ ... ]`
+    and repeated `--extension-config`,
+  - hook names `after_parse_source` and `after_generate_result`,
+  - and context accessors `stage`, `pipeline`, `source_path`,
+    `target_language`, `source_info`, `raw_ast`, and `result`.
+- It also records what is deliberately not public:
+  - legacy `.plg` discovery,
+  - automatic directory discovery,
+  - `AUTOLOAD` hook dispatch,
+  - and broad mid-pipeline mutation hooks.
+- Rationale:
+  - the typed extension mechanism already existed and was tested, but R13 needs
+    embedders to discover the public boundary from one machine-readable
+    contract surface,
+  - so the capability manifest now advertises only the bounded hook/context
+    shape that tests can prove,
+  - while future hook families remain gated on explicit regression-backed
+    contract widening instead of accidental API growth.
+
 ## 2026-04-17: HDLGenerator result contract distinguishes presence from interchange
 - Added
   [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm)

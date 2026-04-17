@@ -191,6 +191,32 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'FSM::Support::HDLGeneratorResultContract',
         'manifest records the HDLGenerator result contract owner',
     );
+    is(
+        $manifest->{embedding}{typed_extensions}{schema_version},
+        1,
+        'manifest records typed extension contract schema version',
+    );
+    is(
+        $manifest->{embedding}{typed_extensions}{status},
+        'bounded_public',
+        'manifest marks typed extension contract as bounded public',
+    );
+    is(
+        $manifest->{embedding}{typed_extensions}{contract_source},
+        'FSM::Support::ExtensionContract',
+        'manifest records the typed extension contract owner',
+    );
+    my %extension_hooks = map { $_ => 1 } @{$manifest->{embedding}{typed_extensions}{hook_names}};
+    ok($extension_hooks{after_parse_source}, 'manifest advertises the parse-source extension hook');
+    ok($extension_hooks{after_generate_result}, 'manifest advertises the result extension hook');
+    ok(
+        $manifest->{embedding}{typed_extensions}{extension_object_contract}{must_be_blessed_object},
+        'manifest records the typed extension object boundary',
+    );
+    ok(
+        !$manifest->{embedding}{typed_extensions}{extension_object_contract}{legacy_plg_discovery},
+        'manifest records that legacy .plg discovery is not part of typed extensions',
+    );
 };
 
 subtest 'manifest captures the first downstream tool contract surface' => sub {

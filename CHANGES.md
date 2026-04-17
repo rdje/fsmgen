@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-17
+### typed extension contract is manifest-backed
+- Added [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm) as the production owner for the bounded typed-extension/context contract.
+- Extended [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so downstream tools can discover the current public extension entrypoints, hook names, context accessors, object-loading rules, and deliberate non-goals such as `.plg` discovery or `AUTOLOAD` hook dispatch.
+- Added [t/306-extension-contract.t](/Users/richarddje/Documents/github/fsmgen/t/306-extension-contract.t) to lock the contract module itself, the implementation-class hook/accessor availability, and the live hook context shape across direct-root and composition-root generation.
+
 ### HDLGenerator result contract is manifest-backed
 - Added [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm) as the production owner for the bounded `FSM::Pipeline::HDLGenerator->generate_hdl_from_file(...)` result contract.
 - Added [t/305-hdl-generator-result-contract.t](/Users/richarddje/Documents/github/fsmgen/t/305-hdl-generator-result-contract.t) to lock direct-root and composition-root result top-level keys, required value shapes, mirrored `module_info` forward-IR fields, and the rule that live/raw/unsanitized result payloads are explicitly classified rather than accidentally public.

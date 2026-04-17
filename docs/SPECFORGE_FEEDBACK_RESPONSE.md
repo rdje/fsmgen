@@ -271,7 +271,8 @@ The current FSMGen-side priority order is:
 3. Stabilize and widen check-only JSON diagnostics from the bounded surface now
    shipped.
 4. Widen normalized semantic JSON only from regression-backed public facts.
-5. Keep the in-process `HDLGenerator` result contract explicit and bounded
+5. Keep the typed extension/context contract and in-process `HDLGenerator`
+   result contract explicit and bounded
    while raw nested compatibility payloads still contain live Perl objects.
 6. Use those surfaces to guide later language additions such as actor roles,
    channel grouping, semantic signal roles, temporal/stability contracts, and
@@ -302,6 +303,10 @@ project policies:
   top-level result-presence contract advertised through the capability
   manifest, while the raw result hash is explicitly not a JSON-safe interchange
   document;
+- typed extensions now have a bounded hook/context contract advertised through
+  the capability manifest, covering explicit object/module/config loading,
+  `after_parse_source`, `after_generate_result`, and the current context
+  accessors without reviving legacy `.plg` discovery;
 - `docs/REGRESSION_CORPUS.md` and `FSM::Support::RegressionCorpus` are the
   current support-accounting source of truth behind that manifest;
 - `FSM::Support::DiagnosticCodes` is the current stable diagnostic-code owner

@@ -1,5 +1,27 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-17: typed extension contract is manifest-backed
+- Continued `R13` public embedding/API stabilization by adding
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm).
+- The new contract is intentionally bounded:
+  - extension loading is explicit through `extensions => [ $object ]`,
+    `extension_modules => [ "Module::Name" ]`, `extension_config_files => [ ... ]`,
+    `--extension-module`, or `--extension-config`,
+  - the current shipped hooks are `after_parse_source($context)` and
+    `after_generate_result($context)`,
+  - the stable context accessor names are `stage`, `pipeline`, `source_path`,
+    `target_language`, `source_info`, `raw_ast`, and `result`,
+  - and legacy `.plg` discovery, automatic directory discovery, and `AUTOLOAD`
+    hook dispatch remain explicitly out of the contract.
+- [t/306-extension-contract.t](/Users/richarddje/Documents/github/fsmgen/t/306-extension-contract.t)
+  now verifies the contract module, implementation-class hook/accessor
+  availability, and live direct/composition hook contexts.
+- [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+  now exposes this contract under `embedding.typed_extensions`.
+- Continuity note:
+  - future hook widening should add a new support-backed contract slice only
+    after the target pipeline seam is stable enough to regression-lock.
+
 ## 2026-04-17: HDLGenerator result contract is manifest-backed
 - Continued `R13` public embedding/API stabilization by adding
   [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm).

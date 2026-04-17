@@ -30,6 +30,32 @@ These run:
 - after parsed-source classification
 - after normal generation result assembly
 
+This hook/context boundary is now advertised in the capability manifest under
+`embedding.typed_extensions`, owned by
+`FSM::Support::ExtensionContract`. That machine-readable contract records:
+
+- explicit object/module/config loading entrypoints
+- the shipped hook names
+- the stable context accessor names
+- the rule that extension modules loaded by name must provide `new()`
+- and the deliberate absence of legacy `.plg` discovery, automatic directory
+  discovery, and `AUTOLOAD` hook dispatch
+
+The current context accessors are:
+
+- `stage`
+- `pipeline`
+- `source_path`
+- `target_language`
+- `source_info`
+- `raw_ast`
+- `result`
+
+`raw_ast` is available on `after_parse_source`. `result` is available on
+`after_generate_result`. Result augmentation is a valid in-process extension
+use, but it is not the same thing as publishing a new sanitized JSON
+interchange field.
+
 ## Programmatic Example
 
 ```perl
@@ -198,8 +224,9 @@ emits support-accounting objects and that supported-smoke, strict-supported,
 and expected-failure coverage are locked across the current corpus. The same
 manifest now advertises supported-smoke, strict-supported, and expected-failure
 coverage for the bounded normalized semantic JSON surface. It also advertises
-the bounded `HDLGenerator` result contract for in-process embedders and makes
-clear that the raw result hash is not JSON-safe as a whole.
+the bounded typed-extension/context contract plus the bounded `HDLGenerator`
+result contract for in-process embedders, while making clear that the raw
+result hash is not JSON-safe as a whole.
 
 The first bounded check/diagnostic surface is now:
 

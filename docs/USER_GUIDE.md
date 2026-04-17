@@ -1636,6 +1636,11 @@ stabilizes top-level key presence for fields such as `hdl_code`, `module_info`,
 result hash is JSON-safe. Nested compatibility fields may still contain live
 CoreAST/AST objects; use `--emit-semantic-json` when the integration needs a
 sanitized machine interchange document.
+The same manifest also advertises the bounded typed-extension/context contract:
+explicit object/module/config loading, the current hook names
+`after_parse_source` and `after_generate_result`, the stable context accessor
+names, and the deliberate absence of legacy `.plg` discovery or `AUTOLOAD`
+hook dispatch.
 
 The first bounded check-only JSON surface is:
 
@@ -1752,9 +1757,25 @@ Current shipped hook:
 - `after_parse_source($context)`
 - `after_generate_result($context)`
 
+This hook/context boundary is also advertised in the capability manifest under
+`embedding.typed_extensions`, backed by
+[perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm).
+That manifest entry is the machine-readable contract for embedders that need to
+discover the current hook names, context accessor names, loading entrypoints,
+and deliberate non-goals.
+
 What they do:
 - `after_parse_source($context)` runs after parsing/classification and lets an extension inspect the source frontier before semantic lowering.
 - `after_generate_result($context)` runs after generation has produced the normal result hash and before that result is returned to the caller.
+
+Current context accessors are:
+- `stage`: the active hook name.
+- `pipeline`: the current `FSM::Pipeline::HDLGenerator` instance.
+- `source_path`: the source file path used for this generation call.
+- `target_language`: the current HDL target.
+- `source_info`: the classified source metadata.
+- `raw_ast`: available on `after_parse_source`.
+- `result`: available on `after_generate_result`.
 
 Minimal example: add metadata to the returned result
 ```perl
