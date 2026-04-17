@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-17
+### check JSON success is corpus-covered
+- Added [t/301-check-json-supported-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/301-check-json-supported-corpus.t) so every current `supported_smoke` entry must succeed through `bin/fsmgen --check-json`, emit decodable success JSON, keep stderr clean, write no HDL, and report the expected module/top identity.
+- The same test runs every `strict_supported` entry through `bin/fsmgen --strict --check-json`, proving the check-only JSON surface covers both default supported acceptance and strict supported acceptance without relying on HDL file emission.
+- Extended [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so downstream tools can discover that supported-smoke, strict-supported, and expected-failure corpus sides are all covered by the bounded check-JSON surface.
+
 ### check JSON diagnostics are corpus-covered
 - Extended [perl/FSM/Support/CheckDiagnostics.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnostics.pm) so expected-failure classification considers every matching support-accounting pattern and chooses the most specific match instead of allowing broad fallback patterns to shadow narrower stable codes.
 - Added a nested `support_accounting` object to failed check-JSON diagnostics, preserving the matched corpus entry id, corpus family, coverage bucket, classification, diagnostic code, and migration-hint availability beside the existing flat compatibility fields.

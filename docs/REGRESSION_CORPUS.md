@@ -153,6 +153,13 @@ must choose the most specific matching expected-error pattern, so broad boundary
 patterns such as generic malformed `+size` failures cannot shadow narrower
 stable codes such as divide-by-zero or unsupported-operator diagnostics.
 
+[t/301-check-json-supported-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/301-check-json-supported-corpus.t)
+locks the accepted side of the same command surface. Every current
+`supported_smoke` entry must succeed through `--check-json`, and every current
+`strict_supported` entry must succeed through `--strict --check-json`, while
+emitting decodable success JSON, keeping diagnostics empty, writing no HDL, and
+preserving the expected checked module/top identity.
+
 All current supported protocol fixtures are now `strict_supported`: the APB
 requester, APB completer, AMBA requester, and APB composition top use the
 canonical `areset rst_n`, `(:= (signal value))`, and assignment-pair surfaces
@@ -179,6 +186,8 @@ manifest is intentionally bounded: it exposes support-accounting counts,
 sanitized corpus entry metadata including expected-failure diagnostic codes,
 the stable diagnostic-code registry, the bounded check-JSON command contract,
 the check-JSON support-accounting object contract,
+the supported-smoke / strict-supported / expected-failure check-JSON coverage
+flags,
 strict-versus-compatibility language surface families, current
 assignment/system/expression/declaration/composition families, producer
 version/commit identity, documentation pointers, and intentionally blocked or

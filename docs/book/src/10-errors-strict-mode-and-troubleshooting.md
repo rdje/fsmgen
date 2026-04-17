@@ -131,6 +131,11 @@ migration-hint availability. The classifier prefers the most specific matching
 expected-error pattern so broad fallback patterns do not shadow narrower stable
 codes.
 
+The same check-only path is also regression-locked on the success side. Every
+current `supported_smoke` corpus entry must succeed through `--check-json`, and
+every current `strict_supported` entry must succeed through
+`--strict --check-json`, while emitting success JSON and no HDL file.
+
 ## Backend Expectations
 
 Current backend truth:

@@ -1,5 +1,28 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-17: check JSON success is corpus-covered
+- Added [t/301-check-json-supported-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/301-check-json-supported-corpus.t)
+  so every current `supported_smoke` support-accounting entry must succeed
+  through `bin/fsmgen --check-json`.
+- The same test also runs every `strict_supported` entry through
+  `bin/fsmgen --strict --check-json`.
+- The success-side check-JSON contract now proves:
+  - the CLI exits successfully,
+  - stderr stays clean,
+  - no HDL file is written even when `-o` is present,
+  - stdout is decodable JSON,
+  - `success` is true,
+  - the diagnostic array is empty,
+  - the resolved source path is recorded,
+  - and the checked module/top identity matches the corpus entry.
+- Rationale:
+  - the previous check-JSON corpus gate covered the rejected side of support
+    accounting,
+  - embedders also need confidence that check mode accepts supported sources
+    cleanly without treating success as a side effect of HDL emission,
+  - and the capability manifest should advertise this coverage rather than
+    forcing downstream tools to reverse-engineer it from the test suite.
+
 ## 2026-04-17: check JSON classification is corpus-covered
 - Added [t/300-check-json-regression-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/300-check-json-regression-corpus.t)
   so every current `expected_failure` support-accounting entry must reject

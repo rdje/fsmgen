@@ -67,6 +67,8 @@ sub build_capability_manifest {
                 emits_hdl => JSON::PP::false,
                 unclassified_failures_use_null_code => JSON::PP::true,
                 emits_support_accounting_object => JSON::PP::true,
+                supported_smoke_corpus_covered => JSON::PP::true,
+                strict_supported_corpus_covered => JSON::PP::true,
                 expected_failure_corpus_covered => JSON::PP::true,
                 classifier_match_policy => 'most_specific_expected_error_pattern',
                 report_source => 'FSM::Support::CheckDiagnostics',

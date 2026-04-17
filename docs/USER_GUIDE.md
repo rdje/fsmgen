@@ -1636,7 +1636,10 @@ The first bounded check-only JSON surface is:
 pipeline, emits JSON to stdout, exits non-zero when the check fails, and never
 writes an HDL file even if `-o` is present. Successful checks report
 `success: true`, an empty `diagnostics` array, the resolved source path, and a
-small checked-result summary. Failed checks report `success: false` and a
+small checked-result summary. The support-accounting corpus now verifies that
+every current `supported_smoke` entry succeeds through `--check-json`, and every
+current `strict_supported` entry succeeds through `--strict --check-json`.
+Failed checks report `success: false` and a
 diagnostic object. When the failure matches a support-accounting
 `expected_failure` entry, that diagnostic includes the stable `FSMGEN_*` code,
 severity, stability, family, source file, matched corpus entry, and

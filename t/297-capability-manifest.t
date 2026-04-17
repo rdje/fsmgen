@@ -90,6 +90,14 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest says check JSON emits a support-accounting object',
     );
     ok(
+        $manifest->{diagnostics}{check_json}{supported_smoke_corpus_covered},
+        'manifest says check JSON is covered across supported-smoke corpus entries',
+    );
+    ok(
+        $manifest->{diagnostics}{check_json}{strict_supported_corpus_covered},
+        'manifest says check JSON is covered across strict-supported corpus entries',
+    );
+    ok(
         $manifest->{diagnostics}{check_json}{expected_failure_corpus_covered},
         'manifest says check JSON is covered across expected-failure corpus entries',
     );

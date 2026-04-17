@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-17: check JSON supported corpus coverage landed
+- Continued `R13` check-diagnostic stabilization by adding
+  [t/301-check-json-supported-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/301-check-json-supported-corpus.t).
+- Every current `supported_smoke` entry in
+  [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm)
+  now has default `--check-json` CLI coverage: the command must succeed, emit
+  decodable success JSON, keep stderr clean, write no HDL even with `-o`, and
+  report the expected module/top identity.
+- Every current `strict_supported` entry now has matching
+  `--strict --check-json` coverage.
+- [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+  now advertises supported-smoke, strict-supported, and expected-failure
+  check-JSON corpus coverage in the bounded `diagnostics.check_json` contract.
+
 ## 2026-04-17: check JSON expected-failure corpus coverage landed
 - Continued `R13` check-diagnostic stabilization by adding
   [t/300-check-json-regression-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/300-check-json-regression-corpus.t).
