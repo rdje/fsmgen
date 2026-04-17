@@ -58,6 +58,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `perl/FSM/Support/CapabilityManifest.pm` — machine-readable capability manifest builder for downstream tool integration.
 - `perl/FSM/Support/CheckDiagnostics.pm` — bounded `--check --json` report builder and stable-code classifier.
 - `perl/FSM/Support/DiagnosticCodes.pm` — stable diagnostic-code registry consumed by support accounting and the capability manifest.
+- `perl/FSM/Support/NormalizedSemanticReport.pm` — bounded normalized semantic JSON report builder for downstream tool integration.
 - `perl/FSM/Support/RegressionCorpus.pm` — production support-accounting catalog owner consumed by the manifest and regression tests.
 - `perl/FSM/SourceClassifier.pm` — top-level source-kind classification for FSM vs composition inputs.
 - `perl/FSM/Adapter/FSMGenFull.pm` — FSM adapter/parsing entry.
@@ -110,6 +111,7 @@ cd docs/book && mdbook serve
 - `--extension-config <file>`: load typed extension modules from an explicit config file (may be repeated).
 - `--capability-manifest`: print the versioned JSON FSMGen capability manifest and exit.
 - `--check --json`: run the full pipeline as a check, emit JSON diagnostics, and do not write HDL.
+- `--emit-semantic-json`: run the full pipeline, emit bounded normalized semantic JSON, and do not write HDL.
 - `-q, --quiet`: suppress informational output.
 
 ## Assignment semantics (quick reference)

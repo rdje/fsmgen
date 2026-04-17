@@ -150,7 +150,7 @@ That response accepts the broad direction that FSMGen should become a precise
 - strict mode as the preferred generated-`.fsm` target,
 - a capability manifest generated from support-accounting truth,
 - stable diagnostic codes plus bounded check-only JSON diagnostics,
-- future normalized semantic JSON export,
+- bounded normalized semantic JSON export,
 - stronger clock/reset contract metadata,
 - and later checked metadata for actor roles, channel grouping, semantic signal
   roles, temporal/stability contracts, and provenance/residuals.
@@ -194,6 +194,39 @@ object gives embedders the matched entry id, family, coverage, classification,
 source kind, and `strict_supported` marker. Successful user sources outside the
 corpus report `matched: false` instead of claiming catalog support they do not
 yet have.
+
+The first bounded normalized semantic surface is now:
+
+```bash
+./bin/fsmgen --strict --emit-semantic-json path/to/file.fsm
+```
+
+`--semantic-json` is the short alias. The command runs the full generation
+pipeline, emits schema-versioned JSON to stdout, and writes no HDL file even
+when `-o` is present. Successful reports expose:
+
+- `normalized_semantic_schema_version: 1`
+- `command.mode: semantic_export`
+- a report-level `support_accounting` object
+- a `semantic.module` summary
+- `semantic.system_contract`
+- sanitized `semantic.signal_analysis`
+- `semantic.forward_ir.intent_hir`
+- `semantic.forward_ir.lowered_rtl_ir`
+- `semantic.forward_ir.structural_rtl_ir`
+
+The important word is "sanitized". This surface does not dump private Perl
+objects such as live AST nodes or `FSM::CoreAST::Signal` instances, and it does
+not include generated HDL text. It projects scalar/list/hash metadata that
+downstream tools can consume without depending on private runtime object
+identity. Failed semantic exports reuse the same stable diagnostic-code and
+support-accounting bridge as `--check-json`, return non-zero, and do not expose
+partial semantics.
+
+This is still a bounded public slice, not the final full semantic export. Wider
+expression, state/DT control-shape, assignment/guard, package/type, and
+provenance fields should graduate only when they are backed by regression
+coverage and support-accounting truth.
 
 ## Legacy External Flow
 

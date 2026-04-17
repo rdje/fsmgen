@@ -163,6 +163,20 @@ reports must also include a report-level `support_accounting` object with the
 matched entry id, family, coverage bucket, classification, source kind, and
 `strict_supported` marker.
 
+The first bounded normalized semantic JSON path reuses the same
+support-accounting bridge for accepted corpus sources:
+
+```bash
+./bin/fsmgen --strict --emit-semantic-json path/to/file.fsm
+```
+
+[t/302-normalized-semantic-json.t](/Users/richarddje/Documents/github/fsmgen/t/302-normalized-semantic-json.t)
+locks direct and composition corpus-backed success examples, no-HDL emission,
+and strict rejected-source diagnostics for that semantic export. Successful
+semantic reports expose sanitized module/system/signal and forward-IR metadata,
+while matched corpus sources report the same entry id, family, coverage bucket,
+classification, source kind, and `strict_supported` support-accounting bridge.
+
 All current supported protocol fixtures are now `strict_supported`: the APB
 requester, APB completer, AMBA requester, and APB composition top use the
 canonical `areset rst_n`, `(:= (signal value))`, and assignment-pair surfaces
@@ -190,13 +204,15 @@ sanitized corpus entry metadata including expected-failure diagnostic codes,
 the stable diagnostic-code registry, the bounded check-JSON command contract,
 the check-JSON support-accounting object contracts for matched failures and
 matched accepted corpus entries,
+the bounded normalized semantic JSON command contract,
 the supported-smoke / strict-supported / expected-failure check-JSON coverage
 flags,
 strict-versus-compatibility language surface families, current
 assignment/system/expression/declaration/composition families, producer
 version/commit identity, documentation pointers, and intentionally blocked or
 not-yet-public integration surfaces such as full check-JSON schema
-stabilization and normalized semantic JSON export.
+stabilization and broader normalized semantic JSON export beyond the current
+bounded slice.
 
 ## Current named entries
 

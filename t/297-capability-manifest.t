@@ -120,6 +120,41 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'FSM::Support::CheckDiagnostics',
         'manifest records the check JSON report owner',
     );
+    is(
+        $manifest->{semantic_exports}{normalized_semantic_json}{schema_version},
+        1,
+        'manifest records normalized semantic JSON schema version',
+    );
+    is(
+        $manifest->{semantic_exports}{normalized_semantic_json}{status},
+        'bounded_public',
+        'manifest marks normalized semantic JSON as bounded public',
+    );
+    ok(
+        !$manifest->{semantic_exports}{normalized_semantic_json}{emits_hdl},
+        'manifest says normalized semantic JSON does not emit HDL',
+    );
+    ok(
+        $manifest->{semantic_exports}{normalized_semantic_json}{emits_support_accounting_object},
+        'manifest says normalized semantic JSON emits support accounting',
+    );
+    ok(
+        $manifest->{semantic_exports}{normalized_semantic_json}{failure_diagnostics_reuse_stable_codes},
+        'manifest says normalized semantic JSON reuses stable diagnostic codes on failures',
+    );
+    ok(
+        $manifest->{semantic_exports}{normalized_semantic_json}{sanitizes_private_perl_objects},
+        'manifest says normalized semantic JSON sanitizes private Perl objects',
+    );
+    is(
+        $manifest->{semantic_exports}{normalized_semantic_json}{report_source},
+        'FSM::Support::NormalizedSemanticReport',
+        'manifest records the normalized semantic report owner',
+    );
+    ok(
+        !$manifest->{semantic_exports}{normalized_semantic_json}{full_export_stable},
+        'manifest keeps full normalized semantic export stabilization separate from the bounded slice',
+    );
 };
 
 subtest 'manifest captures the first downstream tool contract surface' => sub {
@@ -132,7 +167,10 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
 
     my %blocked = map { $_ => 1 } @{$manifest->{language_surface}{intentionally_blocked_or_not_yet_public}};
     ok($blocked{'full check-only JSON diagnostic schema stabilization'}, 'manifest keeps full JSON diagnostic API stabilization blocked');
-    ok($blocked{'full normalized semantic JSON export'}, 'manifest tells downstream tools that normalized JSON export is not stable yet');
+    ok(
+        $blocked{'full normalized semantic JSON export beyond the bounded public semantic JSON slice'},
+        'manifest tells downstream tools that broader normalized JSON export is not stable yet',
+    );
 };
 
 subtest 'CLI emits the same valid JSON manifest without an input file' => sub {

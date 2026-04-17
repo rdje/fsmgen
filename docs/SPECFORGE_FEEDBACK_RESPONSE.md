@@ -133,11 +133,11 @@ public API widening step.
 
 ### 4. Normalized Semantic Export
 
-FSMGen should eventually expose a normalized JSON projection of accepted `.fsm`
-semantics, for example:
+FSMGen should expose a normalized JSON projection of accepted `.fsm` semantics,
+for example:
 
 ```bash
-fsmgen --strict --emit-normalized-json path/to/file.fsm
+fsmgen --strict --emit-semantic-json path/to/file.fsm
 ```
 
 The first stable export should be intentionally bounded. It should not expose
@@ -156,6 +156,20 @@ compare emitted `.fsm` text against FSMGen's recovered semantics:
 This belongs to `R13`. It should build on existing `Intent HIR`,
 `Lowered RTL IR`, and `Structural RTL IR` surfaces rather than inventing a
 separate unrelated public model.
+
+The first bounded implementation now exists. `bin/fsmgen` accepts
+`--emit-semantic-json` plus the alias `--semantic-json`; compatibility aliases
+`--emit-normalized-json` and `--normalized-json` are also accepted. The command
+runs the full pipeline, emits `normalized_semantic_schema_version: 1` JSON to
+stdout, writes no HDL files even when `-o` is present, and returns non-zero on
+rejected sources. Successful reports expose a sanitized `semantic` payload with
+module/root metadata, system/reset contract metadata, signal analysis, and the
+three forward layers `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir`.
+They also include the same report-level support-accounting bridge used by
+successful `--check-json`. Rejected semantic exports reuse the stable
+diagnostic-code classifier from check JSON and do not expose partial semantics.
+The implementation deliberately strips private live Perl objects and generated
+HDL text from the public report.
 
 ### 5. Reset And Clock Contract Metadata
 
@@ -247,7 +261,7 @@ The current FSMGen-side priority order is:
    regression-backed failures.
 3. Stabilize and widen check-only JSON diagnostics from the bounded surface now
    shipped.
-4. Add normalized semantic JSON export.
+4. Widen normalized semantic JSON only from regression-backed public facts.
 5. Use those surfaces to guide later language additions such as actor roles,
    channel grouping, semantic signal roles, temporal/stability contracts, and
    provenance/residual metadata.
@@ -266,6 +280,11 @@ project policies:
   `support_accounting` object for matched expected failures, a report-level
   `support_accounting` object for successful checks, and corpus-backed success
   coverage for supported entries;
+- `fsmgen --strict --emit-semantic-json path/to/file.fsm` is the first bounded
+  normalized semantic export surface, including sanitized module/system/signal
+  metadata, sanitized forward IR projections, no HDL emission, failure-side
+  stable diagnostics, and report-level support accounting where the accepted
+  source matches the corpus;
 - `docs/REGRESSION_CORPUS.md` and `FSM::Support::RegressionCorpus` are the
   current support-accounting source of truth behind that manifest;
 - `FSM::Support::DiagnosticCodes` is the current stable diagnostic-code owner

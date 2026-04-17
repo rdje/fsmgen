@@ -1,5 +1,31 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-17: bounded normalized semantic JSON is live
+- Added
+  [perl/FSM/Support/NormalizedSemanticReport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReport.pm)
+  as the production owner for the first `--emit-semantic-json` report shape.
+- `bin/fsmgen --strict --emit-semantic-json path/to/file.fsm` now:
+  - runs the full pipeline,
+  - emits schema-versioned JSON to stdout,
+  - writes no HDL file,
+  - exits non-zero when the source is rejected,
+  - exposes module/root, system/reset, signal-analysis, `intent_hir`,
+    `lowered_rtl_ir`, and `structural_rtl_ir` projections for accepted sources,
+  - strips private live Perl objects from those projections,
+  - and reuses the stable check-diagnostic classifier for rejected sources.
+- The export deliberately omits raw ASTs, live `fsm_module` objects, generated
+  HDL text, and compatibility object references. If downstream tools need a
+  field, promote that field as explicit public scalar/list/hash metadata rather
+  than by leaking the private runtime object that currently carries it.
+- Rationale:
+  - SPECFORGE and similar tools need a semantic comparison surface before the
+    final full public API is frozen,
+  - the current pipeline already produces useful forward IR summaries,
+  - but direct-root `signal_analysis` still contains live Signal objects on the
+    compatibility path, so a sanitizer boundary is mandatory before JSON output,
+  - and semantic JSON should reuse the existing support-accounting and stable
+    diagnostic-code owners instead of creating a second classifier.
+
 ## 2026-04-17: check JSON success reports match support accounting
 - Successful check-JSON reports now include a report-level
   `support_accounting` object.

@@ -1612,6 +1612,7 @@ Example parameterized generated child:
 - `--extension-config <file>` : load typed extension modules from an explicit config file (may be repeated)
 - `--capability-manifest` : print schema-versioned JSON describing the current support/capability surface and exit without requiring an input `.fsm`
 - `--check --json` : run the full pipeline as a check, emit schema-versioned JSON diagnostics, and do not write HDL
+- `--emit-semantic-json` : run the full pipeline, emit bounded normalized semantic JSON, and do not write HDL
 - `-q, --quiet` : suppress informational messages
 - `-h, --help` : full CLI help
 
@@ -1654,6 +1655,34 @@ machine-friendly place. FSMGen chooses the most specific matching
 support-accounting pattern when more than one expected-failure pattern matches.
 Failures outside the current classifier still return JSON with a `null` code
 rather than pretending a stable diagnostic identity exists.
+
+The first bounded normalized semantic JSON surface is:
+
+```bash
+./bin/fsmgen --strict --emit-semantic-json path/to/file.fsm
+```
+
+`--semantic-json` is an alias for the same mode. Compatibility aliases
+`--emit-normalized-json` and `--normalized-json` are accepted too while the
+public wording settles. The command runs the same full pipeline as generation,
+emits JSON to stdout, exits non-zero when the source is rejected, and never
+writes an HDL file even if `-o` is present. Successful reports use
+`normalized_semantic_schema_version: 1`, `command.mode: semantic_export`, a
+report-level `support_accounting` object, and a `semantic` payload containing
+bounded public projections of:
+
+- the module/root summary,
+- system/reset contract metadata,
+- signal analysis with private live Perl objects removed,
+- `intent_hir`,
+- `lowered_rtl_ir`,
+- and `structural_rtl_ir`.
+
+This is intentionally not a promise that every private pipeline object is now
+public API. It is the first sanitized downstream-tool projection over the
+forward semantic layers that already exist. Failed semantic exports reuse the
+same stable diagnostic-code classifier as `--check-json` and do not expose
+partial semantics.
 
 ## 5) Input resolution and FSMLIB
 `fsmgen` resolves `<fsm_file>` as:

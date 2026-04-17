@@ -1,5 +1,28 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-17: bounded normalized semantic JSON export landed
+- Continued the `R13` public embedding/API lane by adding
+  [perl/FSM/Support/NormalizedSemanticReport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReport.pm).
+- [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now accepts
+  `--emit-semantic-json` / `--semantic-json` and emits
+  `normalized_semantic_schema_version: 1` JSON without writing HDL, even when
+  `-o` is present.
+- Successful reports expose a bounded `semantic` payload with module/root
+  metadata, system/reset contract metadata, sanitized signal analysis,
+  `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir`. The sanitizer strips
+  private live Perl objects such as `FSM::CoreAST::Signal`, and the report does
+  not expose raw ASTs or generated HDL text.
+- Failed semantic exports reuse the stable diagnostic/support-accounting bridge
+  from check JSON and do not expose partial semantics.
+- [t/302-normalized-semantic-json.t](/Users/richarddje/Documents/github/fsmgen/t/302-normalized-semantic-json.t)
+  locks ad-hoc success, alias success, strict rejected-source diagnostics,
+  no-HDL emission, direct corpus support accounting, and composition corpus
+  support accounting.
+- Continuity note:
+  - keep future semantic JSON widening tied to fields that are sanitized,
+    regression-backed, and support-accounted; do not dump private Perl runtime
+    structures as a shortcut.
+
 ## 2026-04-17: check JSON success support-accounting bridge landed
 - Continued `R13` check-JSON stabilization by adding a report-level
   `support_accounting` object to successful check reports.
@@ -61,10 +84,9 @@ This is the live continuity document for fast session recovery after crashes, re
   and widened [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
   so the command contract is locked and advertised in the capability manifest.
 - Continuity note:
-  - the next SPECFORGE-facing API seam is not "invent more JSON fields"; it is
-    to stabilize/widen the check JSON schema only when fields are backed by
-    support-accounting truth,
-  - normalized semantic JSON export remains separate from check diagnostics.
+  - future check JSON widening still must be backed by support-accounting truth,
+  - normalized semantic JSON is a separate surface; the first bounded slice has
+    since shipped and should widen only through sanitized public projections.
 
 ## 2026-04-17: stable diagnostic-code registry shipped
 - Continued the SPECFORGE-facing `R13` bridge by adding

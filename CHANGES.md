@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-17
+### bounded normalized semantic JSON export shipped
+- Added [perl/FSM/Support/NormalizedSemanticReport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReport.pm) as the production owner for the first sanitized semantic export surface.
+- Updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) to accept `--emit-semantic-json` plus `--semantic-json`, run the full pipeline without writing HDL, emit `normalized_semantic_schema_version: 1` JSON to stdout, and reuse stable check diagnostics for rejected sources.
+- The report exposes bounded public projections of module/root metadata, system/reset metadata, sanitized signal analysis, `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` without leaking live Perl objects, raw ASTs, or generated HDL text.
+- Added [t/302-normalized-semantic-json.t](/Users/richarddje/Documents/github/fsmgen/t/302-normalized-semantic-json.t) to lock ad-hoc success, alias success, strict rejected-source diagnostics, no-HDL emission, direct corpus support accounting, and composition corpus support accounting.
+- Extended [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so downstream tools can discover the bounded semantic export contract while the broader/full normalized export remains explicitly not yet stable.
+
 ### check JSON success reports match support accounting
 - Extended [perl/FSM/Support/CheckDiagnostics.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnostics.pm) so successful `--check-json` reports now include a report-level `support_accounting` object.
 - Corpus-backed successes match the checked source path against non-failure entries from [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm) and report the matched entry id, family, coverage bucket, classification, source kind, and `strict_supported` marker; ad-hoc successful sources explicitly report `matched: false`.

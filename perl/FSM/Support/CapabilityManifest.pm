@@ -76,6 +76,22 @@ sub build_capability_manifest {
                 report_source => 'FSM::Support::CheckDiagnostics',
             },
         },
+        semantic_exports => {
+            normalized_semantic_json => {
+                schema_version => 1,
+                status => 'bounded_public',
+                command_shape => './bin/fsmgen --strict --emit-semantic-json path/to/file.fsm',
+                alias => './bin/fsmgen --strict --semantic-json path/to/file.fsm',
+                emits_hdl => JSON::PP::false,
+                emits_support_accounting_object => JSON::PP::true,
+                success_match_policy => 'resolved_source_path_to_non_failure_corpus_entry',
+                failure_diagnostics_reuse_stable_codes => JSON::PP::true,
+                sanitizes_private_perl_objects => JSON::PP::true,
+                public_layers => [qw(intent_hir lowered_rtl_ir structural_rtl_ir)],
+                report_source => 'FSM::Support::NormalizedSemanticReport',
+                full_export_stable => JSON::PP::false,
+            },
+        },
         language_surface => {
             strict_mode => {
                 intended_for_generated_fsm => JSON::PP::true,
@@ -138,7 +154,7 @@ sub build_capability_manifest {
             intentionally_blocked_or_not_yet_public => [
                 'VHDL backend generation',
                 'unchecked annotations treated as enforced metadata',
-                'full normalized semantic JSON export',
+                'full normalized semantic JSON export beyond the bounded public semantic JSON slice',
                 'full check-only JSON diagnostic schema stabilization',
                 'unbounded aggregate expression domains',
                 'SPECFORGE PDF/prose IntentIR extraction',
