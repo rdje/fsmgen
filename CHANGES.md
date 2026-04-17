@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-17
+### check JSON success reports match support accounting
+- Extended [perl/FSM/Support/CheckDiagnostics.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnostics.pm) so successful `--check-json` reports now include a report-level `support_accounting` object.
+- Corpus-backed successes match the checked source path against non-failure entries from [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm) and report the matched entry id, family, coverage bucket, classification, source kind, and `strict_supported` marker; ad-hoc successful sources explicitly report `matched: false`.
+- Extended [t/299-check-json-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/299-check-json-diagnostics.t), [t/301-check-json-supported-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/301-check-json-supported-corpus.t), [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm), and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the success-side support-accounting bridge is regression-locked and advertised to downstream tools.
+
 ### check JSON success is corpus-covered
 - Added [t/301-check-json-supported-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/301-check-json-supported-corpus.t) so every current `supported_smoke` entry must succeed through `bin/fsmgen --check-json`, emit decodable success JSON, keep stderr clean, write no HDL, and report the expected module/top identity.
 - The same test runs every `strict_supported` entry through `bin/fsmgen --strict --check-json`, proving the check-only JSON surface covers both default supported acceptance and strict supported acceptance without relying on HDL file emission.

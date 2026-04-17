@@ -90,6 +90,10 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest says check JSON emits a support-accounting object',
     );
     ok(
+        $manifest->{diagnostics}{check_json}{emits_success_support_accounting_object},
+        'manifest says check JSON emits a success support-accounting object',
+    );
+    ok(
         $manifest->{diagnostics}{check_json}{supported_smoke_corpus_covered},
         'manifest says check JSON is covered across supported-smoke corpus entries',
     );
@@ -105,6 +109,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         $manifest->{diagnostics}{check_json}{classifier_match_policy},
         'most_specific_expected_error_pattern',
         'manifest records the check JSON classifier match policy',
+    );
+    is(
+        $manifest->{diagnostics}{check_json}{success_match_policy},
+        'resolved_source_path_to_non_failure_corpus_entry',
+        'manifest records the check JSON success match policy',
     );
     is(
         $manifest->{diagnostics}{check_json}{report_source},

@@ -78,6 +78,7 @@ subtest 'check json reports success without emitting HDL' => sub {
     ok($decoded->{command}{strict_mode}, 'success report records strict mode');
     is($decoded->{source}{resolved_path}, File::Spec->rel2abs($ok_path), 'success report records resolved source path');
     is(scalar(@{$decoded->{diagnostics}}), 0, 'success report has no diagnostics');
+    ok(!$decoded->{support_accounting}{matched}, 'ad-hoc success report records unmatched support accounting');
     ok(!$decoded->{generated_output}{emitted}, 'success report says no generated output was emitted');
     is($decoded->{result}{module_name}, 'check_json_ok', 'success report keeps the checked module name');
 };
@@ -92,6 +93,7 @@ subtest 'check json success stays clean without an explicit output path' => sub 
 
     my $decoded = decode_json(join('', @{$stdout_buf || []}));
     ok($decoded->{success}, 'check JSON without -o still reports success');
+    ok(!$decoded->{support_accounting}{matched}, 'check JSON without -o still records unmatched support accounting');
     ok(!$decoded->{generated_output}{emitted}, 'check JSON without -o still emits no HDL');
 };
 

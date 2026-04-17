@@ -134,7 +134,11 @@ codes.
 The same check-only path is also regression-locked on the success side. Every
 current `supported_smoke` corpus entry must succeed through `--check-json`, and
 every current `strict_supported` entry must succeed through
-`--strict --check-json`, while emitting success JSON and no HDL file.
+`--strict --check-json`, while emitting success JSON and no HDL file. Those
+corpus-backed successes also expose a report-level `support_accounting` object
+with the matched catalog entry id, family, coverage bucket, classification,
+source kind, and `strict_supported` marker. Successful files outside the corpus
+keep the same object shape but report `matched: false`.
 
 ## Backend Expectations
 

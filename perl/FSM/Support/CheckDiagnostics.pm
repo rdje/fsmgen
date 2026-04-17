@@ -3,7 +3,10 @@ package FSM::Support::CheckDiagnostics;
 use strict;
 use warnings;
 
+use Cwd qw(abs_path);
 use Exporter 'import';
+use File::Basename qw(dirname);
+use File::Spec;
 use JSON::PP ();
 
 use FSM::Support::DiagnosticCodes qw(diagnostic_code_metadata);
@@ -15,6 +18,7 @@ sub build_check_success_report {
     my (%args) = @_;
 
     my $module_info = $args{module_info} || {};
+    my $match = _matching_success_entry($args{source_file}, $args{strict_mode});
 
     return {
         check_schema_version => 1,
@@ -26,6 +30,7 @@ sub build_check_success_report {
         source => _source_contract(%args),
         success => JSON::PP::true,
         diagnostics => [],
+        support_accounting => _success_support_accounting_contract($match),
         result => {
             module_name => $module_info->{module_name},
             state_count => $module_info->{state_count},
@@ -136,6 +141,60 @@ sub _matching_expected_failure {
     return $matches[0];
 }
 
+sub _matching_success_entry {
+    my ($source_file, $strict_mode) = @_;
+    my $source_path = _canonical_path($source_file);
+    return undef unless defined $source_path;
+
+    my @matches;
+    for my $entry (grep { $_->{classification} ne 'expected_failure' } regression_corpus_entries()) {
+        my $entry_path = _corpus_entry_path($entry);
+        next unless defined $entry_path && $entry_path eq $source_path;
+        push @matches, $entry;
+    }
+
+    return undef unless @matches;
+
+    if ($strict_mode) {
+        my @strict_matches = grep { $_->{strict_supported} } @matches;
+        @matches = @strict_matches if @strict_matches;
+    }
+
+    @matches = sort {
+        _success_entry_rank($b) <=> _success_entry_rank($a)
+            || $a->{id} cmp $b->{id}
+    } @matches;
+
+    return $matches[0];
+}
+
+sub _success_entry_rank {
+    my ($entry) = @_;
+
+    my $rank = 0;
+    $rank += 100 if ($entry->{classification} || '') eq 'supported_smoke';
+    $rank += 50 if $entry->{strict_supported};
+    return $rank;
+}
+
+sub _success_support_accounting_contract {
+    my ($match) = @_;
+
+    return {
+        matched => JSON::PP::false,
+    } unless $match;
+
+    return {
+        matched => JSON::PP::true,
+        entry_id => $match->{id},
+        family => $match->{family},
+        coverage => $match->{coverage},
+        classification => $match->{classification},
+        source_kind => $match->{source_kind},
+        strict_supported => $match->{strict_supported} ? JSON::PP::true : JSON::PP::false,
+    };
+}
+
 sub _support_accounting_contract {
     my ($match, $diagnostic_code, $migration_hint_available) = @_;
 
@@ -168,6 +227,27 @@ sub _clean_message {
     $message = '' unless defined $message;
     $message =~ s/\s+\z//s;
     return $message;
+}
+
+sub _corpus_entry_path {
+    my ($entry) = @_;
+    return undef unless ref($entry) eq 'HASH' && defined $entry->{relpath};
+
+    return _canonical_path(
+        File::Spec->catfile(_repo_root(), split m{/}, $entry->{relpath}),
+    );
+}
+
+sub _repo_root {
+    return _canonical_path(
+        File::Spec->catdir(dirname(__FILE__), '..', '..', '..'),
+    );
+}
+
+sub _canonical_path {
+    my ($path) = @_;
+    return undef unless defined $path && length $path;
+    return abs_path($path) || File::Spec->rel2abs($path);
 }
 
 1;

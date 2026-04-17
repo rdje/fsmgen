@@ -172,9 +172,8 @@ this as a conservative support manifest, not yet as a full normalized semantic
 export. It can already tell downstream tools which expected-failure corpus
 entries carry stable diagnostic codes, which stable codes exist, and which
 bounded check-JSON command shape is public. It also advertises that check JSON
-emits a nested support-accounting object and that supported-smoke,
-strict-supported, and expected-failure coverage are locked across the current
-corpus.
+emits support-accounting objects and that supported-smoke, strict-supported,
+and expected-failure coverage are locked across the current corpus.
 
 The first bounded check/diagnostic surface is now:
 
@@ -189,7 +188,12 @@ preferred machine-readable bridge back to corpus truth. Unclassified failures
 keep a `null` code until their family is deliberately promoted into the stable
 registry. Accepted corpus entries are covered too: supported-smoke entries must
 succeed through `--check-json`, and strict-supported entries must succeed
-through `--strict --check-json`.
+through `--strict --check-json`. When a successful check matches a non-failure
+corpus entry by resolved source path, the report-level `support_accounting`
+object gives embedders the matched entry id, family, coverage, classification,
+source kind, and `strict_supported` marker. Successful user sources outside the
+corpus report `matched: false` instead of claiming catalog support they do not
+yet have.
 
 ## Legacy External Flow
 

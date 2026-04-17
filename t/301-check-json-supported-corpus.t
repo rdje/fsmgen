@@ -116,6 +116,19 @@ sub assert_check_json_acceptance {
     is($decoded->{source}{resolved_path}, File::Spec->rel2abs($path),
         "$entry->{id} records resolved source path through $args{owner}");
     is(scalar(@{$decoded->{diagnostics}}), 0, "$entry->{id} has no diagnostics through $args{owner}");
+    ok($decoded->{support_accounting}{matched}, "$entry->{id} records matched support accounting");
+    is($decoded->{support_accounting}{entry_id}, $entry->{id},
+        "$entry->{id} records support-accounting entry id");
+    is($decoded->{support_accounting}{family}, $entry->{family},
+        "$entry->{id} records support-accounting family");
+    is($decoded->{support_accounting}{coverage}, $entry->{coverage},
+        "$entry->{id} records support-accounting coverage");
+    is($decoded->{support_accounting}{classification}, $entry->{classification},
+        "$entry->{id} records support-accounting classification");
+    is($decoded->{support_accounting}{source_kind}, $entry->{source_kind},
+        "$entry->{id} records support-accounting source kind");
+    is($decoded->{support_accounting}{strict_supported} ? 1 : 0, $entry->{strict_supported} ? 1 : 0,
+        "$entry->{id} records strict-supported support-accounting marker");
     ok(!$decoded->{generated_output}{emitted}, "$entry->{id} records no HDL emission");
 
     my $expected_module = $entry->{source_kind} eq 'composition'

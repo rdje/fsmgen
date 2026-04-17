@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-17: check JSON success support-accounting bridge landed
+- Continued `R13` check-JSON stabilization by adding a report-level
+  `support_accounting` object to successful check reports.
+- [perl/FSM/Support/CheckDiagnostics.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnostics.pm)
+  now matches successful sources by resolved path against non-failure entries
+  from [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm).
+- [t/301-check-json-supported-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/301-check-json-supported-corpus.t)
+  now proves every current supported-smoke / strict-supported success reports
+  the exact matched entry id, family, coverage, classification, source kind,
+  and `strict_supported` marker.
+- [t/299-check-json-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/299-check-json-diagnostics.t)
+  keeps the ad-hoc success contract honest by requiring `matched: false`.
+- [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+  now advertises the success support-accounting object and path-based success
+  match policy.
+
 ## 2026-04-17: check JSON supported corpus coverage landed
 - Continued `R13` check-diagnostic stabilization by adding
   [t/301-check-json-supported-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/301-check-json-supported-corpus.t).

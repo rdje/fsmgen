@@ -94,11 +94,12 @@ and [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fs
 as the live owners for schema-versioned capability JSON, bounded check-JSON
 reports, stable diagnostic-code metadata, and production support-accounting
 data. The check-JSON support surface is now corpus-covered on both sides:
-supported-smoke / strict-supported entries must produce clean success JSON, and
-expected-failure entries must produce the exact stable code/support-accounting
-contract. This deliberately keeps the public manifest and diagnostic reports
-out of the test-only `t/lib` tree while leaving a thin test compatibility
-wrapper behind.
+supported-smoke / strict-supported entries must produce clean success JSON with
+matched success support-accounting data, ad-hoc successes must report unmatched
+support accounting, and expected-failure entries must produce the exact stable
+code/support-accounting contract. This deliberately keeps the public manifest
+and diagnostic reports out of the test-only `t/lib` tree while leaving a thin
+test compatibility wrapper behind.
 
 The heaviest remaining complexity is still the direct single-module HDL backend path centered on:
 - [perl/FSM/Backend/GeneratedModuleEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/GeneratedModuleEmitter.pm)
@@ -166,8 +167,8 @@ Current thin-coordinator line counts:
 - [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm): `108`
 - [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm): `164`
 - [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm): `172`
-- [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm): `240`
-- [perl/FSM/Support/CheckDiagnostics.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnostics.pm): `173`
+- [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm): `242`
+- [perl/FSM/Support/CheckDiagnostics.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnostics.pm): `253`
 - [perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm): `232`
 - [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm): `646`
 - [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm): `75`

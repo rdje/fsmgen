@@ -158,7 +158,10 @@ locks the accepted side of the same command surface. Every current
 `supported_smoke` entry must succeed through `--check-json`, and every current
 `strict_supported` entry must succeed through `--strict --check-json`, while
 emitting decodable success JSON, keeping diagnostics empty, writing no HDL, and
-preserving the expected checked module/top identity.
+preserving the expected checked module/top identity. Corpus-backed successful
+reports must also include a report-level `support_accounting` object with the
+matched entry id, family, coverage bucket, classification, source kind, and
+`strict_supported` marker.
 
 All current supported protocol fixtures are now `strict_supported`: the APB
 requester, APB completer, AMBA requester, and APB composition top use the
@@ -185,7 +188,8 @@ from the same production corpus owner used by the regression tests. The first
 manifest is intentionally bounded: it exposes support-accounting counts,
 sanitized corpus entry metadata including expected-failure diagnostic codes,
 the stable diagnostic-code registry, the bounded check-JSON command contract,
-the check-JSON support-accounting object contract,
+the check-JSON support-accounting object contracts for matched failures and
+matched accepted corpus entries,
 the supported-smoke / strict-supported / expected-failure check-JSON coverage
 flags,
 strict-versus-compatibility language surface families, current

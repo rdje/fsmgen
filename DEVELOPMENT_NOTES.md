@@ -1,5 +1,28 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-17: check JSON success reports match support accounting
+- Successful check-JSON reports now include a report-level
+  `support_accounting` object.
+- For corpus-backed accepted sources, the report builder matches the resolved
+  source path against non-failure entries in
+  [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm)
+  and emits:
+  - the matched entry id,
+  - corpus family,
+  - coverage bucket,
+  - classification,
+  - source kind,
+  - and the `strict_supported` marker.
+- Successful ad-hoc sources still return `matched: false`; success does not
+  pretend a user file is part of the support corpus unless it actually is.
+- Rationale:
+  - failed check-JSON reports already pointed back to support accounting,
+  - accepted corpus entries were regression-covered but did not expose that
+    catalog identity to embedders,
+  - and this is a safe `R13` widening because the field is derived from the
+    production corpus owner and locked by corpus-level tests rather than
+    invented from unstructured CLI text.
+
 ## 2026-04-17: check JSON success is corpus-covered
 - Added [t/301-check-json-supported-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/301-check-json-supported-corpus.t)
   so every current `supported_smoke` support-accounting entry must succeed

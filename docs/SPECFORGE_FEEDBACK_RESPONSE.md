@@ -124,8 +124,12 @@ and
 They are cataloged for manifest/corpus integration and emitted by the bounded
 check-only JSON path now. The bounded path now also regression-locks the exact
 stable code for every current expected-failure corpus entry and clean success
-JSON for every current supported-smoke / strict-supported entry. Full diagnostic
-schema stabilization remains a later public API widening step.
+JSON for every current supported-smoke / strict-supported entry. Successful
+corpus-backed check reports now also include a report-level
+`support_accounting` object with the matched entry id, family, coverage,
+classification, source kind, and `strict_supported` marker; ad-hoc successes
+report `matched: false`. Full diagnostic schema stabilization remains a later
+public API widening step.
 
 ### 4. Normalized Semantic Export
 
@@ -259,8 +263,9 @@ project policies:
 - `fsmgen --capability-manifest` is the first machine-readable support surface;
 - `fsmgen --strict --check --json path/to/file.fsm` is the first bounded
   machine-readable check/diagnostic surface, including a nested
-  `support_accounting` object for matched expected failures and corpus-backed
-  success coverage for supported entries;
+  `support_accounting` object for matched expected failures, a report-level
+  `support_accounting` object for successful checks, and corpus-backed success
+  coverage for supported entries;
 - `docs/REGRESSION_CORPUS.md` and `FSM::Support::RegressionCorpus` are the
   current support-accounting source of truth behind that manifest;
 - `FSM::Support::DiagnosticCodes` is the current stable diagnostic-code owner
