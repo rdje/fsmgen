@@ -4987,7 +4987,7 @@ After each completed task, always do this in order:
 9. Run commit workflow:
    - write `git_message_brief.txt`
    - commit with `git commit -F git_message_brief.txt`
-   - do not include `Co-Authored-By` or other attribution trailers unless the user explicitly asks for them
+   - do not include attribution trailers unless the user explicitly asks for them
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
 ## 2026-03-15: plain `?SIG` test-node names now fail early if malformed
 - Current worktree is the next `R8` implementation slice:

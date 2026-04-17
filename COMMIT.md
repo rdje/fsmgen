@@ -44,7 +44,7 @@ Its purpose is to let any new AI resume work safely and follow the same commit h
 4. Write `git_message_brief.txt` with:
    - concise subject line,
    - key bullet points.
-   - Do not add `Co-Authored-By` or other attribution trailers unless the user explicitly asks for them.
+   - Do not add attribution trailers unless the user explicitly asks for them.
 5. Stage intended tracked files (`git add ...`).
 6. Commit using:
    - `git --no-pager commit -F git_message_brief.txt`
