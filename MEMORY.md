@@ -1,5 +1,27 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-17: SPECFORGE feedback response is now tracked
+- Paused FSMGen implementation to read
+  `/Users/richarddje/Documents/github/specforge/docs/FSMGEN_FEEDBACK.md`.
+- Added
+  [docs/SPECFORGE_FEEDBACK_RESPONSE.md](/Users/richarddje/Documents/github/fsmgen/docs/SPECFORGE_FEEDBACK_RESPONSE.md)
+  as the FSMGen-side response and alignment record.
+- Accepted direction:
+  - strict mode should be the generated-`.fsm` target,
+  - compatibility syntax remains residue,
+  - capability manifest should come first and should be generated from
+    support-accounting truth,
+  - stable diagnostic codes should precede JSON diagnostics,
+  - check-only JSON and normalized semantic JSON export belong to `R13`,
+  - stronger reset/clock metadata is a high-value language/tooling seam,
+  - actor/channel/role/temporal/provenance metadata should wait until it can be
+    parsed, validated, normalized, documented, and support-accounted.
+- Continuity note:
+  - when resuming implementation, do not jump straight into broad new syntax.
+    The safest first bridge toward SPECFORGE is still a bounded capability
+    manifest design/prototype from the existing regression corpus, followed by
+    stable diagnostic-code ownership.
+
 ## 2026-04-17: corpus coverage buckets match classifications
 - Continued `R12` by making the catalog's coverage/classification relationship
   explicit.

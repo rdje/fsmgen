@@ -35,6 +35,11 @@ The book must be treated as an evolving public product artifact:
   CLI/debug behavior, diagnostic boundary, generated-HDL expectation, and
   support limitation needs a clear chapter home rather than living only in
   maintainer notes.
+- downstream tool-facing contracts should also have a book home. The current
+  SPECFORGE alignment response lives in
+  [SPECFORGE_FEEDBACK_RESPONSE.md](/Users/richarddje/Documents/github/fsmgen/docs/SPECFORGE_FEEDBACK_RESPONSE.md)
+  and is linked from the embedding chapter until those surfaces mature into
+  dedicated capability/check/normalized-export reference chapters.
 
 The book and the continuity notes have different jobs:
 

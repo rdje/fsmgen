@@ -1,0 +1,226 @@
+# FSMGen Response To SPECFORGE Feedback
+
+This document is FSMGen's tracked response to SPECFORGE's feedback in:
+
+- `/Users/richarddje/Documents/github/specforge/docs/FSMGEN_FEEDBACK.md`
+
+It exists so SPECFORGE can align its `.fsm` adapter planning with FSMGen's
+accepted direction without relying on transient chat context.
+
+## High-Level Response
+
+FSMGen agrees with the core SPECFORGE framing:
+
+- `.fsm` should remain precise rather than permissive.
+- Strict mode should define the canonical future-facing authoring surface.
+- Compatibility syntax may remain useful, but it must stay labeled as
+  compatibility residue.
+- The mdBook should remain the public human-facing language contract.
+- Tool-to-tool consumers need machine-readable contracts in addition to prose.
+- FSMGen should not become SPECFORGE's PDF/spec extraction engine or canonical
+  `IntentIR`.
+
+The most important shared direction is that FSMGen should become a reliable
+`.fsm` contract authority: parser, validator, normalizer, support-accounting
+source, and HDL generator.
+
+## Accepted Near-Term Direction
+
+FSMGen accepts the following as the highest-leverage integration direction for
+SPECFORGE and similar downstream tools.
+
+### 1. Capability Manifest
+
+FSMGen should provide a versioned machine-readable capability manifest.
+
+The intended first owner should be the same support-accounting source used by
+the regression corpus and docs, so the manifest does not drift away from tests.
+
+The first manifest should expose at least:
+
+- FSMGen version or commit identity
+- supported root kinds
+- strict-mode canonical syntax families
+- compatibility-only syntax families
+- supported assignment forms
+- supported reset/system forms
+- supported expression families
+- supported aggregate/type/package/composition families
+- intentionally blocked forms
+- links or identifiers for corpus fixtures and mdBook chapters
+
+This belongs primarily to `R12` support accounting and `R13` public
+embedding/API stabilization.
+
+### 2. JSON Check Diagnostics
+
+FSMGen should grow a check-only command shape such as:
+
+```bash
+fsmgen --strict --check --json path/to/file.fsm
+```
+
+The first useful contract is not full elaboration perfection. It is stable
+machine-readable success/failure data:
+
+- success/failure
+- diagnostic code
+- severity
+- source/context path
+- root or composition context
+- strict versus compatibility classification
+- migration hint where available
+
+This belongs primarily to `R10` diagnostics and `R13` public embedding/API
+stabilization.
+
+### 3. Stable Diagnostic Codes
+
+FSMGen should introduce stable diagnostic identities before exposing JSON
+diagnostics as a public integration surface.
+
+The exact code names are FSMGen's choice, but the requirement is stable machine
+identity across wording improvements. Examples of the intended shape:
+
+- `FSMGEN_STRICT_INFIX_ASSIGNMENT`
+- `FSMGEN_STRICT_LEGACY_FSM_ROOT`
+- `FSMGEN_LANGUAGE_BAD_SIZE_ENTRY`
+- `FSMGEN_COMPOSITION_MISSING_RTLIF`
+
+Codes should be regression-backed and documented in the book/reference
+material before SPECFORGE treats them as stable.
+
+### 4. Normalized Semantic Export
+
+FSMGen should eventually expose a normalized JSON projection of accepted `.fsm`
+semantics, for example:
+
+```bash
+fsmgen --strict --emit-normalized-json path/to/file.fsm
+```
+
+The first stable export should be intentionally bounded. It should not expose
+every private Perl structure. It should expose enough for downstream tools to
+compare emitted `.fsm` text against FSMGen's recovered semantics:
+
+- root kind and name
+- system/reset contract
+- ports/signals/types/packages
+- state/decision-tree control shape
+- assignments and guards
+- composition children and links
+- normalized expressions
+- compatibility residue, if any
+
+This belongs to `R13`. It should build on existing `Intent HIR`,
+`Lowered RTL IR`, and `Structural RTL IR` surfaces rather than inventing a
+separate unrelated public model.
+
+### 5. Reset And Clock Contract Metadata
+
+FSMGen agrees that clock/reset truth deserves first-class treatment.
+
+The already-shipped `sreset reset` and `areset rst_n` strict-mode direction is
+only the first slice. Future work should clarify and, where feasible, preserve:
+
+- clock identity
+- reset identity
+- reset polarity
+- synchronous versus asynchronous reset behavior
+- asynchronous assertion / synchronous release intent
+- reset target information where FSMGen can prove it
+- documented limits where `.fsm` cannot yet express a recovered source fact
+
+This spans `R8`, `R9`, `R10`, and `R13`, with implementation staged carefully.
+
+## Accepted Longer-Term Language Direction
+
+FSMGen agrees that these language features are directionally valuable:
+
+- actor-relative port semantics
+- interface/channel grouping
+- semantic signal roles
+- temporal and stability contracts
+- assumptions/residual/provenance metadata
+- contract-aware composition across child boundaries
+- a better-defined canonical direct-module root shape, if `?mod` graduates
+  from compatibility-oriented surface to stable language surface
+
+FSMGen should not rush these as decorative syntax. They should land only when
+they can be:
+
+- parsed
+- validated
+- represented in normalized semantics
+- documented in the mdBook
+- covered by support-accounting fixtures
+- either lowered honestly to HDL or preserved honestly as checked metadata
+
+This is important: unchecked annotations would be worse than no annotations,
+because downstream tools could mistake them for enforced intent.
+
+## Explicit Non-Goals Confirmed
+
+FSMGen confirms that this response does not make FSMGen responsible for:
+
+- PDF parsing
+- prose-to-intent recovery
+- SPECFORGE's canonical `IntentIR`
+- arbitrary target-text generation for incomplete facts
+- permissive acceptance of unsafe compatibility syntax
+- hiding backend or language limitations behind loose parsing
+
+SPECFORGE remains responsible for deciding whether its canonical facts justify
+emitting `.fsm`. FSMGen remains responsible for making the `.fsm` contract
+precise, documented, testable, and machine-checkable.
+
+## Proposed Sync Contract Between The Projects
+
+The preferred collaboration shape is:
+
+- SPECFORGE records downstream needs and adapter blockers in its tracked
+  feedback document.
+- FSMGen records accepted, deferred, or rejected responses in this document and
+  the relevant roadmap/docs.
+- FSMGen publishes machine-readable capability/check/normalized surfaces only
+  after they are regression-backed.
+- SPECFORGE should target strict-mode canonical `.fsm` by default.
+- SPECFORGE should treat compatibility syntax as adapter-blocked unless FSMGen
+  explicitly marks a compatibility lane as safe for generated output.
+
+This dependency direction can be asymmetric. It is reasonable for SPECFORGE to
+keep FSMGen as a submodule or otherwise pinned dependency when SPECFORGE needs
+local access to the `.fsm` syntax, semantic contract, examples, or future
+machine-readable manifests. FSMGen should not need SPECFORGE as a reciprocal
+submodule unless a concrete cross-project conformance workflow requires it. That
+keeps FSMGen the upstream contract authority and SPECFORGE the downstream
+consumer/adapter without creating circular ownership.
+
+## Current Priority Order From FSMGen
+
+The current FSMGen-side priority order is:
+
+1. Finish enough `R12` support-accounting structure that capability metadata
+   can be generated from one trustworthy source.
+2. Start `R13` with a bounded capability manifest design and fixture-backed
+   prototype.
+3. Add stable diagnostic code ownership before committing to JSON diagnostic
+   output.
+4. Add check-only JSON output.
+5. Add normalized semantic JSON export.
+6. Use those surfaces to guide later language additions such as actor roles,
+   channel grouping, semantic signal roles, temporal/stability contracts, and
+   provenance/residual metadata.
+
+## What SPECFORGE Can Plan Around Now
+
+Until the machine surfaces exist, SPECFORGE can already rely on these FSMGen
+project policies:
+
+- strict mode is the preferred target for generated `.fsm`;
+- compatibility syntax should not be treated as canonical adapter output;
+- mdBook chapters are the public human-facing contract;
+- `docs/REGRESSION_CORPUS.md` and `t/lib/FSM/Test/RegressionCorpus.pm` are the
+  current support-accounting source of truth;
+- future accepted adapter-facing behavior should be backed by tests before it
+  is treated as stable.

@@ -1,5 +1,31 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-17: SPECFORGE feedback response is tracked
+- Added
+  [docs/SPECFORGE_FEEDBACK_RESPONSE.md](/Users/richarddje/Documents/github/fsmgen/docs/SPECFORGE_FEEDBACK_RESPONSE.md)
+  as FSMGen's durable response to SPECFORGE's `.fsm` adapter feedback.
+- FSMGen agrees with the main cross-project framing:
+  - SPECFORGE should keep canonical `IntentIR` ownership,
+  - FSMGen should become a precise `.fsm` contract authority for parsing,
+    validation, normalization, support accounting, and HDL generation,
+  - strict mode is the preferred target for generated `.fsm`,
+  - compatibility syntax should stay labeled as residue,
+  - the mdBook remains the public human-facing language contract,
+  - and machine-readable support/check/normalization surfaces are needed for
+    tool-to-tool integration.
+- Accepted priority order:
+  - capability manifest from support-accounting truth,
+  - stable diagnostic codes,
+  - check-only JSON diagnostics,
+  - normalized semantic JSON export,
+  - stronger reset/clock metadata,
+  - later checked actor/channel/role/temporal/provenance metadata.
+- Rationale:
+  - this gives SPECFORGE a tracked response it can plan against,
+  - it keeps cross-project alignment out of transient chat,
+  - and it points future FSMGen implementation toward `R12`, `R10`, and `R13`
+    without pretending all requested surfaces are already implemented.
+
 ## 2026-04-17: corpus coverage buckets are tied to classifications
 - Tightened the `R12` support-accounting catalog by adding an explicit
   coverage-to-classification matrix to

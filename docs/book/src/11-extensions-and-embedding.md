@@ -137,6 +137,28 @@ That means:
 
 The future `R13` lane is where that public stabilization work belongs.
 
+## Downstream Tool Alignment
+
+FSMGen now keeps a tracked response to SPECFORGE's `.fsm` adapter feedback:
+
+- [SPECFORGE_FEEDBACK_RESPONSE.md](../../SPECFORGE_FEEDBACK_RESPONSE.md)
+
+That response accepts the broad direction that FSMGen should become a precise
+`.fsm` contract authority for downstream tools:
+
+- strict mode as the preferred generated-`.fsm` target,
+- a future capability manifest generated from support-accounting truth,
+- future check-only JSON diagnostics with stable diagnostic codes,
+- future normalized semantic JSON export,
+- stronger clock/reset contract metadata,
+- and later checked metadata for actor roles, channel grouping, semantic signal
+  roles, temporal/stability contracts, and provenance/residuals.
+
+Those surfaces are not all implemented yet. They are intentionally staged
+behind support accounting, diagnostics, and the future `R13` public embedding
+lane so adapter-facing contracts can be regression-backed instead of merely
+documented.
+
 ## Legacy External Flow
 
 Some environments may still use the external compatibility script flow:

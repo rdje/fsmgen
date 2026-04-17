@@ -15,6 +15,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - The current saved reusable-library guidance is that any future standard-library lane should start as ordinary reusable `.fsm` assets flowing through the normal parser/IR/emitter path, with a small curated gold set before any broader primitive zoo or privileged builtins.
 - The current saved semantic-parameter guidance is that any future parameterization lane should use explicit semantic parameters plus explicit override binding that survives into IR, not a text/template preprocessor hidden behind clever syntax.
 - The current saved execution-cadence guidance is that implementation should alternate more deliberately between consolidation/debt-reduction slices and visibly user-facing capability slices; long uninterrupted cleanup streaks should not be the default, and after a cleanup slice the next honest move should usually be a feature/contract/diagnostic slice unless more cleanup is still the clear blocker.
+- The current saved SPECFORGE alignment guidance is tracked in [docs/SPECFORGE_FEEDBACK_RESPONSE.md](/Users/richarddje/Documents/github/fsmgen/docs/SPECFORGE_FEEDBACK_RESPONSE.md): FSMGen accepts the direction of becoming a precise `.fsm` contract authority for downstream tools, with strict mode as the generated-`.fsm` target, capability manifest first, stable diagnostic codes before JSON diagnostics, check-only JSON diagnostics, normalized semantic JSON export, stronger clock/reset metadata, and later checked actor/channel/role/temporal/provenance metadata staged behind support accounting and `R13`.
 
 ## Update rule
 - Update this file before every commit if the completed task changes:
@@ -67,6 +68,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - `R12` Regression corpus and support accounting.
 - Current next decision point:
   - Supported and expected-failure corpus metadata now have catalog-level shape gates in addition to behavior execution: [t/296-regression-corpus-supported-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/296-regression-corpus-supported-behavior.t) runs every `supported_smoke` entry through default pipeline/CLI, then runs every `strict_supported` entry through strict pipeline/CLI regardless of fixture family; [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now locks coverage-to-classification alignment, strict-supported marker counts, the rule that every supported protocol and direct language-feature fixture is strict-supported, the rule that every supported direct language-feature entry carries non-empty compiled HDL-shape pattern metadata, the rule that every `expected_failure` entry carries a compiled diagnostic regex, and the rule that every strict-rejection bucket carries a compiled migration-hint regex.
+  - SPECFORGE feedback has now been accepted as a tracked FSMGen-side integration alignment record in [docs/SPECFORGE_FEEDBACK_RESPONSE.md](/Users/richarddje/Documents/github/fsmgen/docs/SPECFORGE_FEEDBACK_RESPONSE.md); it does not make FSMGen responsible for SPECFORGE's PDF/IntentIR recovery, but it does steer `R12`/`R10`/`R13` toward a capability manifest, stable diagnostic codes, check-only JSON diagnostics, normalized semantic JSON export, stronger reset/clock metadata, and later checked actor/channel/temporal/provenance metadata.
   - The recent `R11` alias slice shipped explicit external-RTL instance aliases: `(?rtl:module_name)` remains the shorthand where the instance and module/interface contract share one name, while `(?rtl:instance_name module_name)` realizes a distinct instance from the shared `(?rtlif:module_name ...)` contract and lets one `.rtlif` root back several instances.
   - The external-RTL parameter/generic override contract is now shipped: `.rtlif` may declare scalar or bounded aggregate `(params (NAME default_value) ...)` entries, `?rtl` instances may override those declared names through semantic `(params (NAME value) ...)` blocks, aggregate overrides are checked against the `.rtlif` default's inferred aggregate shape, and validated values now flow through `Instance`, `RealizedInstance`, structural RTL IR, and SystemVerilog `#(...)` instance-parameter emission. VHDL generic-map lowering remains follow-up work.
   - External-RTL parameter override values now also reuse composition-top and imported-package semantic symbols before planning: local constants, enum members, whole aggregate roots, and package-qualified roots such as `param_pkg.RESET_A5` are resolved after package imports populate `TopSymbols`, while unresolved override value symbols still abort before realization or HDL emission.
@@ -1832,9 +1834,13 @@ Deliverables:
 Status: `not started`
 Done:
 - The active pipeline and typed extension system already provide the raw ingredients for a real embedding contract.
+- [docs/SPECFORGE_FEEDBACK_RESPONSE.md](/Users/richarddje/Documents/github/fsmgen/docs/SPECFORGE_FEEDBACK_RESPONSE.md) now records the first explicit downstream-tool alignment response and priority order for the future public embedding/API lane.
 Left:
 - Decide which parts of the current pipeline result/plan surface become stable API.
 - Document and regression-lock those surfaces.
+- Design the first capability manifest from support-accounting truth before adding broader adapter-facing syntax.
+- Add stable diagnostic-code ownership before exposing JSON diagnostic output as an integration contract.
+- Define bounded check-only JSON and normalized semantic JSON export surfaces.
 Exit criteria:
 - Downstream tooling can embed FSMGen against a documented, intentionally stable contract.
 

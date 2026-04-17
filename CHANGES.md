@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-17
+### SPECFORGE feedback response is tracked
+- Added [docs/SPECFORGE_FEEDBACK_RESPONSE.md](/Users/richarddje/Documents/github/fsmgen/docs/SPECFORGE_FEEDBACK_RESPONSE.md) as FSMGen's tracked response to SPECFORGE's `.fsm` adapter feedback.
+- The response accepts the broad tool-integration direction: strict mode as the preferred generated-`.fsm` target, a future capability manifest sourced from support accounting, stable diagnostic codes, check-only JSON diagnostics, normalized semantic JSON export, stronger reset/clock metadata, and later checked actor/channel/role/temporal/provenance metadata.
+- Updated [README.md](/Users/richarddje/Documents/github/fsmgen/README.md), [docs/BOOK_PLAN.md](/Users/richarddje/Documents/github/fsmgen/docs/BOOK_PLAN.md), [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the cross-project sync point is discoverable and versioned in FSMGen.
+
 ### corpus coverage buckets are tied to classifications
 - Extended [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) with an explicit coverage-to-classification matrix.
 - The accounting gate now rejects catalog entries whose coverage bucket does not belong to their classification, preventing supported, legacy-compatible, and expected-failure contracts from accidentally borrowing one another's execution semantics.
