@@ -1,5 +1,27 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-17: HDLGenerator result contract is manifest-backed
+- Continued `R13` public embedding/API stabilization by adding
+  [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm).
+- The new contract is intentionally bounded:
+  - `FSM::Pipeline::HDLGenerator->generate_hdl_from_file(...)` has a stable
+    top-level result-key presence contract,
+  - the whole result hash is not promised JSON-safe,
+  - nested content is not fully frozen,
+  - and live/raw/unsanitized keys such as `fsm_module`, `raw_ast`,
+    `composition_plan`, `composition_spec`, `composition_report`,
+    `statistics`, `module_info`, `intent_hir`, and `source_info` are explicitly
+    classified.
+- [t/305-hdl-generator-result-contract.t](/Users/richarddje/Documents/github/fsmgen/t/305-hdl-generator-result-contract.t)
+  now verifies direct-root and composition-root result shapes, fails on
+  undeclared top-level keys, and checks the expected public projection mirrors.
+- [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+  now exposes this result contract under `embedding.hdl_generator_result`.
+- Continuity note:
+  - embedders can use `HDLGenerator` for in-process integration, but JSON
+    consumers should use bounded normalized semantic JSON rather than
+    serializing raw pipeline results.
+
 ## 2026-04-17: normalized semantic JSON expected-failure coverage landed
 - Continued `R13` semantic export stabilization by adding
   [t/304-normalized-semantic-json-regression-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/304-normalized-semantic-json-regression-corpus.t).

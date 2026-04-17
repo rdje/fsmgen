@@ -8,6 +8,7 @@ use File::Basename qw(dirname);
 use File::Spec;
 use JSON::PP ();
 use FSM::Support::DiagnosticCodes qw(diagnostic_code_registry);
+use FSM::Support::HDLGeneratorResultContract qw(build_hdl_generator_result_contract);
 use FSM::Support::RegressionCorpus qw(regression_corpus_entries);
 
 our @EXPORT_OK = qw(build_capability_manifest);
@@ -94,6 +95,9 @@ sub build_capability_manifest {
                 report_source => 'FSM::Support::NormalizedSemanticReport',
                 full_export_stable => JSON::PP::false,
             },
+        },
+        embedding => {
+            hdl_generator_result => build_hdl_generator_result_contract(),
         },
         language_surface => {
             strict_mode => {

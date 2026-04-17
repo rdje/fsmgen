@@ -1628,6 +1628,14 @@ expected-failure diagnostic codes, documentation pointers, and intentionally
 blocked/not-yet-public surfaces share one source with the regression catalog.
 It also advertises which bounded machine-readable surfaces have current
 supported-corpus coverage, including check JSON and normalized semantic JSON.
+For in-process embedders, it also exposes the bounded
+`HDLGenerator->generate_hdl_from_file(...)` result contract. That contract
+stabilizes top-level key presence for fields such as `hdl_code`, `module_info`,
+`intent_hir`, `lowered_rtl_ir`, `structural_rtl_ir`, `source_info`, and
+`resolved_package_imports`, but it deliberately does not claim the whole raw
+result hash is JSON-safe. Nested compatibility fields may still contain live
+CoreAST/AST objects; use `--emit-semantic-json` when the integration needs a
+sanitized machine interchange document.
 
 The first bounded check-only JSON surface is:
 

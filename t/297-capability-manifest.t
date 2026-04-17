@@ -167,6 +167,30 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         !$manifest->{semantic_exports}{normalized_semantic_json}{full_export_stable},
         'manifest keeps full normalized semantic export stabilization separate from the bounded slice',
     );
+    is(
+        $manifest->{embedding}{hdl_generator_result}{schema_version},
+        1,
+        'manifest records HDLGenerator result contract schema version',
+    );
+    is(
+        $manifest->{embedding}{hdl_generator_result}{status},
+        'bounded_top_level_presence',
+        'manifest marks HDLGenerator result contract as bounded top-level presence',
+    );
+    ok(
+        !$manifest->{embedding}{hdl_generator_result}{full_result_json_safe},
+        'manifest says the raw HDLGenerator result is not JSON-safe as a whole',
+    );
+    is(
+        $manifest->{embedding}{hdl_generator_result}{json_safe_export_surface},
+        'semantic_exports.normalized_semantic_json',
+        'manifest points JSON consumers at normalized semantic JSON',
+    );
+    is(
+        $manifest->{embedding}{hdl_generator_result}{contract_source},
+        'FSM::Support::HDLGeneratorResultContract',
+        'manifest records the HDLGenerator result contract owner',
+    );
 };
 
 subtest 'manifest captures the first downstream tool contract surface' => sub {

@@ -1,5 +1,28 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-17: HDLGenerator result contract distinguishes presence from interchange
+- Added
+  [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm)
+  as the production owner for the first bounded
+  `FSM::Pipeline::HDLGenerator->generate_hdl_from_file(...)` result contract.
+- The contract deliberately stabilizes top-level key presence, not every nested
+  value:
+  - common public presence keys include `hdl_code`, `module_info`,
+    `intent_hir`, `lowered_rtl_ir`, `structural_rtl_ir`, `source_info`, and
+    `resolved_package_imports`,
+  - direct roots also carry compatibility payloads such as `fsm_module`,
+    `raw_ast`, and `statistics`,
+  - composition roots also carry compatibility payloads such as
+    `composition_spec`, `composition_plan`, `composition_report`, `raw_ast`,
+    and `statistics`,
+  - and several nested result branches still contain live CoreAST/AST objects.
+- Rationale:
+  - in-process embedders need a documented result boundary,
+  - but pretending the raw result hash is a stable JSON document would be false,
+  - so the manifest now points JSON consumers to bounded normalized semantic
+    JSON while still giving Perl embedders a regression-locked top-level result
+    contract.
+
 ## 2026-04-17: semantic JSON rejected-side coverage follows support accounting
 - Added [t/304-normalized-semantic-json-regression-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/304-normalized-semantic-json-regression-corpus.t)
   so every current `expected_failure` support-accounting entry must reject

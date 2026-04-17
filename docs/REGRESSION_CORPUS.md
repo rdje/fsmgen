@@ -227,6 +227,7 @@ the supported-smoke / strict-supported / expected-failure check-JSON coverage
 flags,
 the supported-smoke / strict-supported / expected-failure normalized semantic
 JSON coverage flags,
+the bounded in-process `HDLGenerator` result top-level presence contract,
 strict-versus-compatibility language surface families, current
 assignment/system/expression/declaration/composition families, producer
 version/commit identity, documentation pointers, and intentionally blocked or

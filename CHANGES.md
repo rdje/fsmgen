@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-17
+### HDLGenerator result contract is manifest-backed
+- Added [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm) as the production owner for the bounded `FSM::Pipeline::HDLGenerator->generate_hdl_from_file(...)` result contract.
+- Added [t/305-hdl-generator-result-contract.t](/Users/richarddje/Documents/github/fsmgen/t/305-hdl-generator-result-contract.t) to lock direct-root and composition-root result top-level keys, required value shapes, mirrored `module_info` forward-IR fields, and the rule that live/raw/unsanitized result payloads are explicitly classified rather than accidentally public.
+- Extended [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so downstream tools can discover that the raw `HDLGenerator` result is a bounded top-level presence contract, not a JSON-safe interchange document; sanitized machine interchange remains the bounded normalized semantic JSON surface.
+
 ### normalized semantic JSON failures are corpus-covered
 - Added [t/304-normalized-semantic-json-regression-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/304-normalized-semantic-json-regression-corpus.t) so every current `expected_failure` entry must reject through `bin/fsmgen --emit-semantic-json`, emit decodable failure JSON, keep stderr clean, write no HDL, omit partial semantic payloads, and report the exact stable diagnostic/support-accounting identity promised by the corpus.
 - The new gate mirrors the check-JSON strict/default routing rules, proving that semantic export failures reuse the same stable `FSMGEN_*` diagnostic-code bridge on both strict-rejection and non-strict expected-failure coverage buckets.

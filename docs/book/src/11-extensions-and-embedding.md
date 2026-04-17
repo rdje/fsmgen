@@ -89,6 +89,28 @@ Embedders can already consume structured result data such as:
 - `structural_rtl_ir`
 - composition reports
 
+The first bounded `HDLGenerator` result contract is now manifest-backed too.
+The in-process entrypoint is:
+
+```perl
+my $result = FSM::Pipeline::HDLGenerator->new(
+    target_language => 'systemverilog',
+)->generate_hdl_from_file('path/to/file.fsm');
+```
+
+The bounded contract stabilizes top-level key presence for fields such as
+`hdl_code`, `module_info`, `intent_hir`, `lowered_rtl_ir`,
+`structural_rtl_ir`, `source_info`, and `resolved_package_imports`. It also
+explicitly classifies live/raw/unsanitized compatibility payloads such as
+`fsm_module`, `raw_ast`, `statistics`, `composition_spec`,
+`composition_plan`, and `composition_report`.
+
+Do not treat the raw `HDLGenerator` result hash as a stable JSON document. Some
+nested branches still contain live CoreAST/AST objects for compatibility and
+in-process tooling. If you need sanitized machine interchange, use
+`--emit-semantic-json` or the `FSM::Support::NormalizedSemanticReport` surface
+instead.
+
 On the current live path, `structural_rtl_ir` instance bindings are not just
 flat signal names anymore. They can preserve:
 
@@ -175,7 +197,9 @@ bounded check-JSON command shape is public. It also advertises that check JSON
 emits support-accounting objects and that supported-smoke, strict-supported,
 and expected-failure coverage are locked across the current corpus. The same
 manifest now advertises supported-smoke, strict-supported, and expected-failure
-coverage for the bounded normalized semantic JSON surface.
+coverage for the bounded normalized semantic JSON surface. It also advertises
+the bounded `HDLGenerator` result contract for in-process embedders and makes
+clear that the raw result hash is not JSON-safe as a whole.
 
 The first bounded check/diagnostic surface is now:
 
