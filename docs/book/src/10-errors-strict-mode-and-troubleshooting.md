@@ -80,6 +80,9 @@ fits the cleaner forward contract.
 The regression corpus deliberately keeps paired default-compatible and
 strict-rejected assets for compatibility residue such as infix assignments, so
 the supported boundary is machine-checked instead of living only in examples.
+Coverage buckets are also tied to their intended classifications, so supported
+smoke, legacy compatibility, and expected-failure entries cannot accidentally
+borrow one another's execution contracts.
 Expected-failure entries record compiled diagnostic patterns, and strict
 rejection entries must also record compiled migration-hint patterns, so the
 failure side of the corpus checks both "this fails" and "the user is guided

@@ -32,6 +32,11 @@ more than one contract for it, for example:
 
 ## Coverage buckets
 
+Each coverage bucket belongs to exactly one classification. The
+catalog-accounting test checks this matrix directly, so a future entry cannot
+claim `supported_smoke` while using a legacy or expected-failure coverage bucket,
+or claim `expected_failure` while using a default-compatible coverage bucket.
+
 - `direct_root_pipeline_cli`: the entry must compile through both the pipeline
   API and the CLI as a direct root.
 - `composition_top_pipeline_cli`: the entry must compile through both the
@@ -201,11 +206,12 @@ div/mod expressions, and canonical assignment pairs.
   whole family through both `strict_mode => 1` and `bin/fsmgen --strict`.
 - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
   checks that the catalog stays named, classified, unique, and pointed at real
-  repo assets, and also checks that strict-supported markers are only attached
-  to supported pipeline/CLI corpus entries, that every supported protocol
-  fixture is strict-supported, that every supported direct language-feature
-  fixture is strict-supported, that supported direct language-feature entries
-  carry non-empty compiled HDL-shape pattern metadata, and that expected-failure
+  repo assets, that each coverage bucket belongs to its expected classification,
+  and also checks that strict-supported markers are only attached to supported
+  pipeline/CLI corpus entries, that every supported protocol fixture is
+  strict-supported, that every supported direct language-feature fixture is
+  strict-supported, that supported direct language-feature entries carry
+  non-empty compiled HDL-shape pattern metadata, and that expected-failure
   diagnostic/hint metadata is compiled-regex metadata rather than loose strings.
 - [t/296-regression-corpus-supported-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/296-regression-corpus-supported-behavior.t)
   treats `supported_smoke` and `strict_supported` as executable catalog-level

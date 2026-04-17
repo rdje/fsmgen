@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-17
+### corpus coverage buckets are tied to classifications
+- Extended [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) with an explicit coverage-to-classification matrix.
+- The accounting gate now rejects catalog entries whose coverage bucket does not belong to their classification, preventing supported, legacy-compatible, and expected-failure contracts from accidentally borrowing one another's execution semantics.
+- Updated [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/book/src/10-errors-strict-mode-and-troubleshooting.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/10-errors-strict-mode-and-troubleshooting.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so future corpus work treats classification and coverage as one coherent support-accounting contract.
+
 ### expected-failure entries require typed diagnostic metadata
 - Extended [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) so every `expected_failure` entry must record its `expected_error_pattern` as a compiled regular expression.
 - The same accounting gate now requires every strict-rejection coverage bucket to carry a compiled `expected_hint_pattern`, keeping compatibility-cut failures tied to actionable migration hints.

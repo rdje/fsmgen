@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-17: corpus coverage buckets match classifications
+- Continued `R12` by making the catalog's coverage/classification relationship
+  explicit.
+- [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+  now maps each coverage bucket to exactly one intended classification:
+  - direct/composition pipeline+CLI success buckets map to `supported_smoke`,
+  - default-compatible legacy buckets map to `legacy_out_of_scope`,
+  - strict, language-contract, direct-generation, and composition rejection
+    buckets map to `expected_failure`.
+- Continuity note:
+  - when adding a future catalog entry, pick the coverage bucket from the same
+    classification family as the entry. The accounting test now rejects mixed
+    contracts before behavior tests consume them.
+
 ## 2026-04-17: expected failures have typed diagnostic metadata
 - Continued `R12` by hardening the failure side of the catalog metadata.
 - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)

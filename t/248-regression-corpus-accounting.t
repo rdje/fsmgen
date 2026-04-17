@@ -47,6 +47,22 @@ my %strict_rejection_coverages = map { $_ => 1 } qw(
     strict_child_root_rejection_pipeline_cli
 );
 
+my %coverage_classification = (
+    direct_root_pipeline_cli => 'supported_smoke',
+    composition_top_pipeline_cli => 'supported_smoke',
+    legacy_root_default_pipeline_cli => 'legacy_out_of_scope',
+    legacy_section_default_pipeline_cli => 'legacy_out_of_scope',
+    legacy_assignment_default_pipeline_cli => 'legacy_out_of_scope',
+    legacy_child_root_default_pipeline_cli => 'legacy_out_of_scope',
+    strict_root_rejection_pipeline_cli => 'expected_failure',
+    strict_section_rejection_pipeline_cli => 'expected_failure',
+    strict_assignment_rejection_pipeline_cli => 'expected_failure',
+    strict_child_root_rejection_pipeline_cli => 'expected_failure',
+    language_contract_rejection_pipeline_cli => 'expected_failure',
+    direct_generation_contract_rejection_pipeline_cli => 'expected_failure',
+    composition_contract_rejection_pipeline_cli => 'expected_failure',
+);
+
 my %seen_ids;
 my %seen_contracts;
 my %by_id = map { $_->{id} => $_ } @entries;
@@ -115,6 +131,11 @@ for my $entry (@entries) {
     ok(!$seen_contracts{$contract_key}++, "catalog contract for '$entry->{id}' is unique");
     ok($allowed_classifications{$entry->{classification}}, "catalog entry '$entry->{id}' uses a known classification");
     ok($allowed_coverages{$entry->{coverage}}, "catalog entry '$entry->{id}' uses a known coverage bucket");
+    is(
+        $coverage_classification{$entry->{coverage}},
+        $entry->{classification},
+        "catalog entry '$entry->{id}' keeps classification and coverage aligned",
+    );
 
     my $path = File::Spec->catfile($repo_root, split m{/}, $entry->{relpath});
     ok(-e $path, "catalog entry '$entry->{id}' points at an existing repo file");

@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-17: corpus coverage buckets are tied to classifications
+- Tightened the `R12` support-accounting catalog by adding an explicit
+  coverage-to-classification matrix to
+  [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t).
+- The matrix records that:
+  - `direct_root_pipeline_cli` and `composition_top_pipeline_cli` belong to
+    `supported_smoke`,
+  - `legacy_*_default_pipeline_cli` buckets belong to `legacy_out_of_scope`,
+  - strict rejection, language-contract rejection, direct-generation rejection,
+    and composition-contract rejection buckets belong to `expected_failure`.
+- Rationale:
+  - classification and coverage are two halves of the same support claim,
+  - future catalog entries should not be able to combine a supported
+    classification with a legacy or rejection execution contract by accident,
+  - and the accounting test should fail that mistake before any behavior test
+    tries to interpret the malformed contract.
+
 ## 2026-04-17: expected-failure entries require typed diagnostic metadata
 - Tightened the failure side of the `R12` support-accounting catalog.
 - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
