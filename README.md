@@ -117,7 +117,7 @@ cd docs/book && mdbook serve
 The bounded machine-readable surfaces are backed by support accounting:
 `--check --json` is corpus-covered across supported, strict-supported, and
 expected-failure entries, while `--emit-semantic-json` is corpus-covered across
-current supported and strict-supported accepted entries.
+current supported, strict-supported, and expected-failure entries.
 
 ## Assignment semantics (quick reference)
 - `A <- expr`: synchronous/flopped assignment.

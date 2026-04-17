@@ -187,6 +187,14 @@ identity, omitting generated HDL text/raw ASTs, and exposing the expected
 module/top identity through `semantic.module`, `intent_hir`, and
 `structural_rtl_ir`.
 
+[t/304-normalized-semantic-json-regression-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/304-normalized-semantic-json-regression-corpus.t)
+locks the rejected side across the whole current expected-failure corpus. Every
+current `expected_failure` entry must reject through `--emit-semantic-json`,
+using the same strict/default routing as check JSON, while emitting decodable
+failure JSON, keeping stderr clean, writing no HDL, omitting partial semantic
+payloads, and preserving the exact stable diagnostic code plus matched
+support-accounting identity promised by the corpus.
+
 All current supported protocol fixtures are now `strict_supported`: the APB
 requester, APB completer, AMBA requester, and APB composition top use the
 canonical `areset rst_n`, `(:= (signal value))`, and assignment-pair surfaces
@@ -217,7 +225,8 @@ matched accepted corpus entries,
 the bounded normalized semantic JSON command contract,
 the supported-smoke / strict-supported / expected-failure check-JSON coverage
 flags,
-the supported-smoke / strict-supported normalized semantic JSON coverage flags,
+the supported-smoke / strict-supported / expected-failure normalized semantic
+JSON coverage flags,
 strict-versus-compatibility language surface families, current
 assignment/system/expression/declaration/composition families, producer
 version/commit identity, documentation pointers, and intentionally blocked or

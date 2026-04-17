@@ -1689,7 +1689,9 @@ current `supported_smoke` entry succeeds through `--emit-semantic-json`, and
 every current `strict_supported` entry succeeds through
 `--strict --emit-semantic-json`, with matched support-accounting identity,
 expected module/top identity, sanitized forward-IR projections, and no HDL
-emission.
+emission. Every current `expected_failure` entry is covered as well: it must
+reject through `--emit-semantic-json`, emit a stable diagnostic/support-accounting
+failure report, write no HDL, and expose no partial semantic payload.
 
 ## 5) Input resolution and FSMLIB
 `fsmgen` resolves `<fsm_file>` as:

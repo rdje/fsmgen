@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-17: normalized semantic JSON expected-failure coverage landed
+- Continued `R13` semantic export stabilization by adding
+  [t/304-normalized-semantic-json-regression-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/304-normalized-semantic-json-regression-corpus.t).
+- Every current `expected_failure` entry in
+  [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm)
+  now has `--emit-semantic-json` failure coverage: the command must reject,
+  emit decodable failure JSON, keep stderr clean, write no HDL even with `-o`,
+  omit partial `semantic`, `hdl_code`, and `raw_ast` payloads, and report the
+  exact stable diagnostic code plus matched support-accounting entry promised
+  by the corpus.
+- The semantic failure test mirrors the check-JSON strict/default routing rules
+  from [t/300-check-json-regression-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/300-check-json-regression-corpus.t),
+  so strict-rejection buckets run with `--strict` and non-strict language /
+  composition expected-failure buckets run in default mode.
+- [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+  now advertises supported-smoke, strict-supported, and expected-failure corpus
+  coverage for the bounded normalized semantic JSON surface.
+
 ## 2026-04-17: normalized semantic JSON supported corpus coverage landed
 - Continued `R13` semantic export stabilization by adding
   [t/303-normalized-semantic-json-supported-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/303-normalized-semantic-json-supported-corpus.t).

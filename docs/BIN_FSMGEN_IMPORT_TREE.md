@@ -102,9 +102,12 @@ code/support-accounting contract. The semantic JSON surface now projects
 module/root, system/reset, sanitized signal-analysis, and forward-IR metadata
 without leaking private Perl objects or HDL text, and every current
 supported-smoke / strict-supported entry must now produce clean semantic JSON
-with matched support-accounting data and no HDL emission. This deliberately
-keeps the public manifest, diagnostic reports, and semantic reports out of the
-test-only `t/lib` tree while leaving a thin test compatibility wrapper behind.
+with matched support-accounting data and no HDL emission. Every current
+expected-failure entry must now produce clean semantic failure JSON with the
+exact stable code/support-accounting contract, no HDL emission, and no partial
+semantic payload. This deliberately keeps the public manifest, diagnostic
+reports, and semantic reports out of the test-only `t/lib` tree while leaving a
+thin test compatibility wrapper behind.
 
 The heaviest remaining complexity is still the direct single-module HDL backend path centered on:
 - [perl/FSM/Backend/GeneratedModuleEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/GeneratedModuleEmitter.pm)
@@ -172,7 +175,7 @@ Current thin-coordinator line counts:
 - [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm): `108`
 - [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm): `164`
 - [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm): `172`
-- [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm): `260`
+- [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm): `261`
 - [perl/FSM/Support/CheckDiagnostics.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnostics.pm): `253`
 - [perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm): `232`
 - [perl/FSM/Support/NormalizedSemanticReport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReport.pm): `354`

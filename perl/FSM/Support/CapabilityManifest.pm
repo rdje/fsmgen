@@ -88,6 +88,7 @@ sub build_capability_manifest {
                 failure_diagnostics_reuse_stable_codes => JSON::PP::true,
                 supported_smoke_corpus_covered => JSON::PP::true,
                 strict_supported_corpus_covered => JSON::PP::true,
+                expected_failure_corpus_covered => JSON::PP::true,
                 sanitizes_private_perl_objects => JSON::PP::true,
                 public_layers => [qw(intent_hir lowered_rtl_ir structural_rtl_ir)],
                 report_source => 'FSM::Support::NormalizedSemanticReport',

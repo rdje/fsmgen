@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-17: semantic JSON rejected-side coverage follows support accounting
+- Added [t/304-normalized-semantic-json-regression-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/304-normalized-semantic-json-regression-corpus.t)
+  so every current `expected_failure` support-accounting entry must reject
+  through `bin/fsmgen --emit-semantic-json`.
+- The rejected-side semantic JSON contract now proves:
+  - the CLI exits non-zero,
+  - stderr stays clean,
+  - no HDL file is written even when `-o` is present,
+  - stdout is decodable JSON,
+  - `success` is false,
+  - no partial `semantic`, generated HDL, or raw AST payload is exposed,
+  - the stable diagnostic code and metadata match the corpus entry,
+  - the diagnostic message still matches the corpus boundary and migration hint,
+  - and both report-level and diagnostic-level support accounting point back to
+    the same matched expected-failure catalog entry.
+- Rationale:
+  - semantic JSON failures intentionally reuse the check-JSON classifier,
+  - but reusing an implementation is not enough for a public embedding claim,
+  - so the semantic export now has its own expected-failure corpus gate and the
+    capability manifest can advertise rejected-side coverage honestly.
+
 ## 2026-04-17: semantic JSON accepted-side coverage follows support accounting
 - Added [t/303-normalized-semantic-json-supported-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/303-normalized-semantic-json-supported-corpus.t)
   so every current `supported_smoke` support-accounting entry must succeed

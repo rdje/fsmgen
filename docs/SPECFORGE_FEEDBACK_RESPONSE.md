@@ -173,6 +173,10 @@ entry must succeed through `--emit-semantic-json`, and every current
 strict-supported entry must succeed through `--strict --emit-semantic-json`,
 with matched support-accounting identity, expected module/top identity,
 sanitized forward-IR projections, and no HDL emission.
+The rejected side is now corpus-covered too: every current expected-failure
+entry must reject through `--emit-semantic-json`, with stable diagnostic code
+metadata, matched support-accounting identity, no HDL emission, and no partial
+semantic payload.
 The implementation deliberately strips private live Perl objects and generated
 HDL text from the public report.
 
@@ -290,7 +294,8 @@ project policies:
   metadata, sanitized forward IR projections, no HDL emission, failure-side
   stable diagnostics, and report-level support accounting where the accepted
   source matches the corpus, with accepted-side corpus coverage for current
-  supported-smoke and strict-supported entries;
+  supported-smoke and strict-supported entries plus rejected-side coverage for
+  current expected-failure entries;
 - `docs/REGRESSION_CORPUS.md` and `FSM::Support::RegressionCorpus` are the
   current support-accounting source of truth behind that manifest;
 - `FSM::Support::DiagnosticCodes` is the current stable diagnostic-code owner

@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-17
+### normalized semantic JSON failures are corpus-covered
+- Added [t/304-normalized-semantic-json-regression-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/304-normalized-semantic-json-regression-corpus.t) so every current `expected_failure` entry must reject through `bin/fsmgen --emit-semantic-json`, emit decodable failure JSON, keep stderr clean, write no HDL, omit partial semantic payloads, and report the exact stable diagnostic/support-accounting identity promised by the corpus.
+- The new gate mirrors the check-JSON strict/default routing rules, proving that semantic export failures reuse the same stable `FSMGEN_*` diagnostic-code bridge on both strict-rejection and non-strict expected-failure coverage buckets.
+- Extended [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so downstream tools can discover that supported-smoke, strict-supported, and expected-failure corpus sides are all covered by the bounded normalized semantic JSON surface.
+
 ### normalized semantic JSON success is corpus-covered
 - Added [t/303-normalized-semantic-json-supported-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/303-normalized-semantic-json-supported-corpus.t) so every current `supported_smoke` entry must succeed through `bin/fsmgen --emit-semantic-json`, emit decodable success JSON, keep stderr clean, write no HDL, preserve matched support-accounting identity, and expose the expected module/top identity through sanitized semantic projections.
 - The same test runs every current `strict_supported` entry through `bin/fsmgen --strict --emit-semantic-json`, proving the bounded semantic export covers both default supported acceptance and strict supported acceptance without relying on HDL file emission.
