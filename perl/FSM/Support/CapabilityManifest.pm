@@ -13,6 +13,7 @@ use FSM::Support::CompositionReportContract qw(build_composition_report_contract
 use FSM::Support::DiagnosticCodes qw(diagnostic_code_registry);
 use FSM::Support::DiagnosticCodeRegistryContract qw(build_diagnostic_code_registry_contract);
 use FSM::Support::DiagnosticsContract qw(build_diagnostics_contract);
+use FSM::Support::EmbeddingContract qw(build_embedding_contract);
 use FSM::Support::DocumentationContract qw(build_documentation_contract);
 use FSM::Support::ExtensionContract qw(build_extension_contract);
 use FSM::Support::HDLExternalValidationContract qw(build_hdl_external_validation_contract);
@@ -103,6 +104,7 @@ sub build_capability_manifest {
             composition_report => build_composition_report_contract(),
             hdl_generator_result => build_hdl_generator_result_contract(),
             typed_extensions => build_extension_contract(),
+            section_contract => build_embedding_contract(),
         },
         language_surface => {
             strict_mode => {

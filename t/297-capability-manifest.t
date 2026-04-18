@@ -349,6 +349,29 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest records HDLGenerator result contract schema version',
     );
     is(
+        $manifest->{embedding}{section_contract}{schema_version},
+        1,
+        'manifest records embedding section contract schema version',
+    );
+    is(
+        $manifest->{embedding}{section_contract}{status},
+        'bounded_public',
+        'manifest marks embedding section contract as bounded public',
+    );
+    is(
+        $manifest->{embedding}{section_contract}{contract_source},
+        'FSM::Support::EmbeddingContract',
+        'manifest records the embedding section contract owner',
+    );
+    ok(
+        scalar(@{$manifest->{embedding}{section_contract}{public_top_level_presence_keys} || []}) >= 4,
+        'manifest advertises bounded embedding top-level key presence',
+    );
+    ok(
+        scalar(@{$manifest->{embedding}{section_contract}{nested_contract_keys} || []}) >= 3,
+        'manifest advertises bounded embedding nested-contract key presence',
+    );
+    is(
         $manifest->{embedding}{composition_report}{schema_version},
         1,
         'manifest records composition report contract schema version',

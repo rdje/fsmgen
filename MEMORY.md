@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-19: embedding now has an explicit bounded contract owner too
+- Added
+  [perl/FSM/Support/EmbeddingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingContract.pm)
+  as the explicit owner for the bounded public contract over the manifest's
+  `embedding` section: public top-level keys plus the nested contract-owner map
+  for composition reports, in-process results, and typed extensions.
+- [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+  now advertises that contract under `embedding.section_contract`, and
+  [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+  now also locks the manifest-facing owner plus the advertised bounded
+  embedding-section keys.
+- [t/321-embedding-contract.t](/Users/richarddje/Documents/github/fsmgen/t/321-embedding-contract.t)
+  now regression-locks the public embedding promise directly for both
+  in-process manifest construction and CLI `--capability-manifest` JSON while
+  keeping narrower result/report/typed-extension details behind their own
+  contracts.
+- The reachable `bin/fsmgen` support surface now includes that contract owner
+  too, moving the measured import-tree totals to `142` project files /
+  `141` `.pm` packages with `Support => 20`.
+
 ## 2026-04-19: diagnostics now has an explicit bounded contract owner too
 - Added
   [perl/FSM/Support/DiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsContract.pm)

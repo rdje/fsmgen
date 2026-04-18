@@ -309,6 +309,13 @@ The manifest shell itself now has that same explicit public contract owner:
 [t/316-capability-manifest-contract.t](/Users/richarddje/Documents/github/fsmgen/t/316-capability-manifest-contract.t)
 locks the bounded top-level and first nested section key presence for both
 in-process and CLI manifest output.
+The manifest's `embedding` section now has the same bounded contract split
+through
+[perl/FSM/Support/EmbeddingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingContract.pm).
+[t/321-embedding-contract.t](/Users/richarddje/Documents/github/fsmgen/t/321-embedding-contract.t)
+locks the published top-level plus nested contract-owner map for both
+in-process and CLI manifest output while leaving narrower result/report/typed
+extension details with their dedicated contracts.
 The manifest's `diagnostics` section now has the same bounded contract split
 through
 [perl/FSM/Support/DiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsContract.pm).

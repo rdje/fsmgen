@@ -1721,6 +1721,12 @@ builds the JSON document, while
 [perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm)
 owns the bounded top-level plus first nested section key lists advertised
 through top-level `manifest_contract`.
+The manifest's `embedding` section now follows the same pattern:
+[perl/FSM/Support/EmbeddingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingContract.pm)
+names the published top-level and nested contract-owner map advertised through
+`embedding.section_contract`, while the narrower result, composition-report,
+and typed-extension details continue to live behind their own dedicated
+contracts.
 The manifest's `diagnostics` section now follows the same pattern:
 [perl/FSM/Support/DiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsContract.pm)
 names the published top-level, scalar-string, and stable-code entry families

@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-19: the manifest's embedding section should have its own bounded contract owner
+- `embedding` is already a public directory for several narrower contracts:
+  - `HDLGenerator` results,
+  - sanitized composition reports,
+  - and typed extensions.
+- But leaving the section itself as a plain inline hash would blur two
+  different promises:
+  - the section-level shape downstream tools may rely on,
+  - versus the deeper details already owned by narrower dedicated contracts.
+- The safer split mirrors the other `R13` surfaces:
+  - `FSM::Support::CapabilityManifest` keeps publishing the current embedding
+    payload,
+  - `FSM::Support::EmbeddingContract` owns the bounded section-level top-level
+    and nested contract-owner map,
+  - while `HDLGeneratorResultContract`, `CompositionReportContract`, and
+    `ExtensionContract` continue to own the deeper public promises.
+- This keeps the promise honest:
+  - embedders can rely on the section shape and discover child owners,
+  - but they are not being told that every nested in-process field is now one
+    flat frozen API.
+
 ## 2026-04-19: the manifest's diagnostics section should have its own bounded contract owner
 - `diagnostics` is already public enough that downstream tools inspect it
   directly through the capability manifest.
