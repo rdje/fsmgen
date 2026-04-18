@@ -218,3 +218,109 @@ When the discussion moves from brainstorming into implementation planning, add:
 - the generated schedule report shape,
 - ambiguity/failure examples,
 - and a support-accounting plan for when the first slice becomes real.
+
+## Verbatim Exchange: 2026-04-18 SPECFORGE Target Shape
+
+### User
+
+````text
+SPECFORGE's goal right is to goes from PDF to IntentIR to .fsm, so why not replace .fsm by this now format (lisp-ish) then from the new format to .fsm and from .fsm down to .sv or .svh.
+````
+
+### Assistant
+
+````text
+Yes. I think that is actually a very strong architecture.
+
+I would not say “replace `.fsm`” completely, though. I would say:
+
+```text
+PDF/spec
+  -> SPECFORGE IntentIR
+  -> new higher-level hardware-intent format
+  -> explicit cycle-scheduled .fsm
+  -> SystemVerilog / VHDL
+```
+
+The key is that `.fsm` should remain the cycle-accurate lowered middle layer, not necessarily the first authoring target for every workflow.
+
+So SPECFORGE would not need to jump directly from prose/spec IntentIR into explicit states and cycle-by-cycle DTs. It could instead emit the new Lisp-ish “intent scheduling” format, where things are still hardware-native but not manually cycle-scheduled yet.
+
+Something like:
+
+```lisp
+(?actor:ahb_requester
+  (transaction read_burst
+    (accept cmd_valid cmd_ready)
+    (request bus)
+    (drive address_phase
+      HADDR = cmd_addr
+      HWRITE = 0
+      HTRANS = NONSEQ)
+    (repeat beats
+      (await HREADY)
+      (capture HRDATA -> read_data))
+    (complete done))
+)
+```
+
+Then FSMGen’s new scheduler lowers that to explicit `.fsm`:
+
+```text
+idle
+decode
+request
+transfer_nseq
+transfer_seq
+complete
+```
+
+with the generated schedule report explaining exactly what cycles/states were inferred.
+
+Why keep `.fsm` in the chain?
+
+Because `.fsm` is already the precise, debuggable, cycle-accurate contract. It is the point where we can say: “Here is exactly what hardware will do every clock.” That makes it a great intermediate representation and escape hatch. Users can inspect it, patch it, test it, and compare it to generated SV/VHDL.
+
+So the new format should probably become the preferred high-level authoring / SPECFORGE target, while `.fsm` remains the explicit scheduled IR.
+
+That gives us three clean abstraction levels:
+
+```text
+SPECFORGE IntentIR
+  Meaning recovered from spec/prose/PDF.
+  May contain ambiguity, confidence, source citations, actors, transactions.
+
+Intent Scheduling Format
+  Hardware-native, Lisp-ish, not manually cycle-by-cycle.
+  Describes actors, handshakes, rules, transactions, latency constraints.
+
+.fsm
+  Explicit cycle-accurate scheduled form.
+  States, DTs, assignments, transitions, enables.
+
+SV/VHDL
+  Concrete HDL backend output.
+```
+
+This also avoids asking SPECFORGE to know too much too early. SPECFORGE can say “this transaction waits for HREADY and then captures HRDATA” without deciding the exact state layout. FSMGen then owns scheduling, cycle inference, conflict analysis, and lowering.
+
+My take: this is probably the right long-term split. SPECFORGE should target the new hardware-intent format when the source spec is behavioral/transactional, and target `.fsm` directly only when the cycle schedule is already explicit or intentionally hand-authored.
+````
+
+### Captured Direction
+
+- Do not replace `.fsm` as the explicit scheduled/cycle-accurate middle layer.
+- Do introduce a higher Lisp-ish hardware-intent format as a preferred target
+  for SPECFORGE when SPECFORGE recovers behavioral/transactional intent from
+  PDF/spec prose.
+- Keep the split:
+  - `PDF/spec -> SPECFORGE IntentIR`
+  - `SPECFORGE IntentIR -> Intent Scheduling Format`
+  - `Intent Scheduling Format -> explicit scheduled .fsm`
+  - `.fsm -> SV/VHDL`
+- Let SPECFORGE preserve source evidence, ambiguity, confidence, citations,
+  actors, and transactions.
+- Let FSMGen own scheduling, cycle inference, conflict analysis, lowering to
+  `.fsm`, schedule reports, and backend emission.
+- Allow SPECFORGE to target `.fsm` directly only when a cycle schedule is
+  already explicit or intentionally hand-authored.
