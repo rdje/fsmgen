@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-18: composition actuals should reuse semantic literal truth, not invent a second parser
+- Composition direct actuals and concat operands should not drift into a
+  separate ad hoc literal world. The same friendly `.fsm` spellings that are
+  accepted elsewhere, such as `5'23`, `8'-10`, or `20'x1`, should lower
+  through one checked literal frontend and reach composition as already
+  validated semantic values.
+- The consequence is architectural, not cosmetic:
+  - generation stays a walk of typed structural expressions,
+  - composition actual parsing inherits the same ambiguity policy as other
+    value-bearing lanes,
+  - and backend correctness improves because direct actuals and concat
+    operands no longer need special late-stage guessing about width or radix.
+- The same policy explains the corpus promotion: a feature is not really part
+  of FSMGen's public support story until it is named in the maintained corpus
+  and exercised through default/strict acceptance plus the machine-readable
+  surfaces that downstream tools consume.
+
 ## 2026-04-18: value-bearing lanes must not guess between decimal and binary
 - The generated HDL is only the visible rendering of a checked AST/IR. That
   means ambiguity like bare `00001110` or `10000000` in value-bearing lanes is

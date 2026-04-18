@@ -62,6 +62,9 @@ Examples:
 - `='hA5`
 - `=8'hA5`
 - `=8'sd-1`
+- `=5'23`
+- `=8'-0xA`
+- `=20'x1`
 - `=FRAME`
 - `=shared.RESET_BYTE`
 
@@ -70,6 +73,48 @@ Current rule of thumb:
 - direct bindings may widen unsized numeric actuals to the direct target width
 - concat operands do not borrow width from the target
 - exact-width literals stay exact-width contracts
+- FSMGen intent-sized exact-width literals such as `=5'23`, `=8'-10`, `=8'-0xA`, `=8'-0b1010`, or `=20'x1` are accepted on both direct-actual and concat-operand lanes
+- obviously bitstring-like bare `0/1` actuals such as `=00001110` or `=10000000` are rejected instead of guessed; use `=0b...`, `=N'b...`, or `=0d...`
+
+Concrete example:
+
+```lisp
+(?top:composition_intent_integer_literals
+  (?ports:public_io
+    decimal_out>5
+    negative_out>8
+    packed_out>33
+  )
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /=5'23/decimal_out/
+    /=8'-0xA/negative_out/
+    /=5'23,=8'-10,=20'x1/packed_out/
+    /=5'23/uart_tx.decimal_in/
+    /=8'-0b1010/uart_tx.negative_in/
+    /=5'23,=8'-0xA,=20'x1/uart_tx.packed_in/
+  )
+)
+
+(?rtlif:uart_tx
+  decimal_in<5:data
+  negative_in<8:data
+  packed_in<33:data
+)
+```
+
+That example shows both direct actual and concat actual lowering:
+
+- `=5'23` stays one 5-bit exact-width operand
+- `=8'-0xA`, `=8'-10`, and `=8'-0b1010` all normalize through the same checked two's-complement path
+- `=20'x1` stays one 20-bit exact-width operand
+- direct top-output and child-input bindings emit those literals directly
+- concat bindings keep the operand widths `5 + 8 + 20` instead of borrowing width from `packed_out`
+
+Maintained repo examples:
+
+- [direct_intent_integer_literals.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_intent_integer_literals.fsm)
+- [composition_intent_integer_literals.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/composition_intent_integer_literals.fsm)
 
 ## Concat Sources
 
@@ -101,6 +146,9 @@ Concat operands may currently include:
 - exact-width signed and unsigned literals
 - named literal actuals
 - repeat groups
+
+The same ambiguity hardening applies here too: bare `=00001110`-style
+payloads are not guessed as decimal or binary.
 
 ## Repeat Groups
 

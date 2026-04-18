@@ -242,6 +242,8 @@ Combinational DT note:
 - Source-side top-port bit/slice `?toplink` expressions such as `payload_bus[15:8]` and `status_bus[0]` when the target is a realized child input or declared top output
 - Source-side child-output bit/slice `?toplink` expressions such as `producer.payload[7:4]` and `producer.payload[0]` when the target is a realized child input or declared top output
 - Source-side bounded concat `?toplink` expressions such as `/header_bus,status_bus[0],=1,payload_bus[3:0]/uart_tx.data_in/`, including nested brace-group forms such as `/header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}/uart_tx.data_in/`, when the target is a realized child input or declared top output, now also including intrinsic-width unsized binary/decimal/octal/hex actual operands such as `=0b10`, `='b10`, `=170`, `=0d170`, `='d170`, `=0o7`, `='o7`, `=0xA5`, `='hA5`, or `=A5`, exact-width signed and unsigned based/decimal literal operands such as `=4'sb1010`, `=3'so7`, `=4'shA`, or `=8'sd-1`, named literal actual operands such as `=HEADER_NIBBLE`, `=BYTES[1]`, `=FRAME.flag`, `=mode.BUSY`, `=shared.RESET_BYTE`, or `=shared.mode.BUSY` resolved from top-root `+constants` / `+enums` and imported `?pkg:name` packages, and child-output operands such as `producer.payload`, `producer.payload[7:4]`, or `producer.payload[0]`
+- Those same composition actual lanes now also accept FSMGen intent-sized exact-width literals such as `=5'23`, `=8'-10`, `=8'-0xA`, `=8'-0b1010`, or `=20'x1`; they normalize through the same checked literal frontend before structural lowering.
+- In those composition actual lanes, obviously bitstring-like bare `0/1` payloads such as `=00001110` or `=10000000` are rejected instead of being guessed. Use `=0b...` for intrinsic-width binary, `=N'b...` for exact-width binary, or `=0d...` if decimal was intended.
 - Source-side bounded repeat-group `?toplink` expressions such as `/{3{status_bus[0]}}/uart_tx.data_in/` or `/{2{producer.serial_lo}}/packed_out/`, which lower through the same typed structural path and reuse the same deterministic child-output carrier family when the repeated operand comes from a child output
 - Explicit `?toplink` source actuals `=open`, scalar `=0` / `=1`, unsized binary/decimal/signed-decimal/octal/hex direct actuals such as `=0b10100101`, `='b10100101`, `=0d170`, `='d170`, `=-1`, `=0d-1`, `='sd-1`, `='sb1010`, `='so645`, `='shA5`, `=0o245`, `='o245`, `=0xA5`, `='hA5`, `=170`, or `=A5`, underscore-separated spellings such as `=0b1010_0101`, `='b1010_0101`, `=0d1_70`, `='d1_70`, `=0o2_45`, `='o2_45`, `='so6_45`, `=0xA_5`, `='hA_5`, `=1_70`, or `=A_5`, exact-width binary/decimal/signed-decimal/octal/hex literals in unsigned or signed form such as `=8'b10100101`, `=8'sb10100101`, `=8'd165`, `=8'sd-1`, `=8'o245`, `=8'so245`, `=8'hA5`, or `=8'shA5`, whole aggregate roots such as `=HEADER`, `=TAIL`, `=FRAME`, `=shared.HEADER`, or `=shared.FRAME`, and named literal actuals resolved from top-root `+constants` / `+enums` and imported `?pkg:name` packages such as `=RESET_BYTE`, `=BYTES[1]`, `=FRAME.flag`, `=mode.BUSY`, `=shared.RESET_BYTE`, or `=shared.mode.BUSY`, with `=open` still targeting realized child inputs only while direct scalar `=0` / `=1` plus unsized binary/decimal/octal/hex direct actuals widen to the realized child-input or declared top-output target width, unsized signed decimal direct actuals plus unsized signed binary/octal/hex direct actuals widen when the signed value fits the signed range of that direct target width, exact-width literal actuals may now also target declared top outputs, whole aggregate roots staying bounded to aggregates whose leaves all lower to scalar literals, hash-like whole roots packing authored members left to right in declaration order, and named literal actuals staying bounded to the same direct actual and concat-operand positions on the existing structural literal path
   - when one such whole aggregate root binds directly to a declared top output or realized child input that preserved an aggregate declared type alias, the inferred whole-aggregate shape must also match that target aggregate contract instead of passing on packed width alone
@@ -1232,8 +1234,47 @@ This currently works because:
 - binary/octal/hex literal actuals, whether unsigned or signed, must still match the target child-input or top-output width exactly, decimal literal actuals must still match the target child-input or top-output width exactly as numeric values, and signed decimal literals must also fit the signed range of their declared width,
 - unsized binary/decimal/octal/hex direct actuals fail explicitly if the numeric value does not fit that direct binding target width, and unsized signed decimal direct actuals plus unsized signed binary/octal/hex direct actuals fail explicitly if the signed value does not fit the signed range of that direct binding target width,
 - whole aggregate direct actuals such as `=FRAME` still lower through one packed literal, but when the direct target preserved an aggregate type alias such as `frame_t` or `header_t`, that whole-aggregate shape must now also match the target aggregate contract instead of relying only on packed width,
+- obviously bitstring-like bare `0/1` actuals such as `=00001110` or `=10000000` are rejected on both direct-actual and concat-operand lanes instead of being guessed,
 - and `=0` / `=1` stay one-bit operands inside bounded concat source expressions, intrinsic-width unsized binary/octal/hex operands such as `=0b10`, `='b10`, `=0o7`, `='o7`, `=0xA5`, `='hA5`, or `=A5` keep the width implied by their digits there, unsized decimal forms such as `=170`, `=0d170`, or `='d170` now also keep the minimum width implied by their numeric value there, and negative decimal concat uses currently require an exact-width signed decimal literal such as `=8'sd-1`,
 - and those actuals bind directly on the realized child port or the declared top output assignment instead of inventing a top port or synthetic carrier net.
+
+Current narrow intent-sized composition actual example:
+```lisp
+(?top:composition_intent_integer_literals
+  (?ports:public_io
+    decimal_out>5
+    negative_out>8
+    packed_out>33
+  )
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /=5'23/decimal_out/
+    /=8'-0xA/negative_out/
+    /=5'23,=8'-10,=20'x1/packed_out/
+    /=5'23/uart_tx.decimal_in/
+    /=8'-0b1010/uart_tx.negative_in/
+    /=5'23,=8'-0xA,=20'x1/uart_tx.packed_in/
+  )
+)
+
+(?rtlif:uart_tx
+  decimal_in<5:data
+  negative_in<8:data
+  packed_in<33:data
+)
+```
+
+This currently works because:
+- `=5'23` lowers to one exact-width 5-bit literal payload,
+- `=8'-0xA`, `=8'-10`, and `=8'-0b1010` lower through the same checked two's-complement path and reach emitted SV as `8'hF6`, `8'd246`, or `8'b11110110`,
+- `=20'x1` is accepted as an intent-level radix alias and lowers to one legal exact-width hex payload,
+- direct actuals such as `/=5'23/decimal_out/` and `/=8'-0xA/negative_out/` drive the declared top outputs directly instead of inventing helper nets,
+- concat actuals such as `/=5'23,=8'-10,=20'x1/packed_out/` preserve each operand's declared width instead of borrowing from the 33-bit target,
+- and the same spellings can drive realized child inputs through `/=.../uart_tx.port/` on that same typed structural path.
+
+Maintained regression examples:
+- [t/corpus/direct_intent_integer_literals.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_intent_integer_literals.fsm)
+- [t/corpus/composition_intent_integer_literals.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/composition_intent_integer_literals.fsm)
 
 Current narrow typed whole-aggregate actual example:
 ```lisp
@@ -1291,6 +1332,7 @@ This currently works because:
 - the `/source/target/` token still stays flat, but the source side may now be one bounded comma-separated concat expression,
 - concat operands may currently be declared whole top-port refs, top-port bit/slice refs, declared aggregate top-port member/item refs such as `in_frame.tag` or `in_frame.payload[1]`, child-output operands, one-bit scalar actuals `=0` / `=1`, intrinsic-width unsized binary/decimal/octal/hex actuals such as `=0b10`, `='b10`, `=170`, `=0d170`, `='d170`, `=0o7`, `='o7`, `=0xA5`, `='hA5`, or `=A5`, intrinsic-width unsized signed decimal actuals such as `=-1`, `=0d-1`, or `='sd-1`, intrinsic-width unsized signed binary/octal/hex actuals such as `='sb1010`, `='so7`, or `='shA`, exact-width binary/decimal/signed-decimal/octal/hex literal actuals in unsigned or signed form, or bounded repeat groups such as `{3{status_bus[0]}}` or `{2{producer.serial_lo}}`,
 - underscore-separated digit spellings are also accepted on those intrinsic-width unsized binary/decimal/octal/hex and exact-width concat literals, for example `=0b1_0`, `=1_70`, `=0d1_70`, `=0xA_5`, `=A_5`, `=2'b1_0`, or `=8'hA_5`,
+- but obviously bitstring-like bare `0/1` literals such as `=00001110` or `=10000000` are rejected there as ambiguous; use `=0b...`, `=N'b...`, or `=0d...` explicitly,
 - unsized decimal actuals such as `=170` or `=0d170` now also work inside bounded concat by taking the minimum width required by their numeric value instead of borrowing width from the child-input target,
 - unsized signed decimal actuals such as `=-1`, `=0d-1`, or `='sd-1` now also work inside bounded concat by taking the minimum signed width required by their numeric value instead of borrowing width from the child-input target,
 - repeat groups now lower through typed structural `repeat` expressions instead of raw renderer text, and repeated child-output operands reuse the same deterministic base carrier as their non-repeated siblings,

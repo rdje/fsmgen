@@ -305,6 +305,75 @@ FSM
     ok(-e $output_path, 'CLI writes HDL for composition-root named actual concat toplinks');
 };
 
+subtest 'pipeline and CLI emit intent-sized exact-width concat operands' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'intent_sized_concat_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'intent_sized_concat_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:intent_sized_concat_top
+  (?ports:public_io
+    packed_out>33
+  )
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /=5'23,=8'-0xA,=20'x1/packed_out/
+    /=5'23,=8'-10,=20'x1/uart_tx.data_in/
+  )
+)
+
+(?rtlif:uart_tx
+  data_in<33:data
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $result = $pipeline->generate_hdl_from_file($composition_path);
+
+    isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
+    is($result->{composition_plan}->lane, 'C3', 'intent-sized exact-width concat toplinks stay on the C3 lane');
+    is(scalar(@{$result->{composition_plan}->nets}), 0, 'intent-sized exact-width concat toplinks do not force synthetic carrier nets');
+
+    my %bindings = map { $_->{port_name} => $_ } @{$result->{composition_plan}->instances->[0]->port_bindings};
+    is_deeply(
+        $bindings{data_in}{connection_expr},
+        concat_expr(
+            bit_vector_literal_expr('10111'),
+            bit_vector_literal_expr('11110110'),
+            bit_vector_literal_expr('00000000000000000001'),
+        ),
+        'pipeline preserves the declared widths and normalized bits for intent-sized concat operands',
+    );
+
+    my $hdl = $result->{hdl_code};
+    like(
+        $hdl,
+        qr/assign\s+packed_out\s*=\s*\{5'b10111,\s*8'b11110110,\s*20'b00000000000000000001\}\s*;/,
+        'generated HDL emits intent-sized exact-width concat operands directly on the top output',
+    );
+    like(
+        $hdl,
+        qr/\.data_in\(\{5'b10111,\s*8'b11110110,\s*20'b00000000000000000001\}\)/,
+        'generated HDL emits intent-sized exact-width concat operands directly on the child port',
+    );
+    unlike($hdl, qr/\bwire\s+comp_link_/s, 'generated HDL does not invent synthetic carrier nets for pure intent-sized concat bindings');
+
+    my ($success) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
+    );
+
+    ok($success, 'CLI succeeds for intent-sized exact-width concat toplinks');
+    ok(-e $output_path, 'CLI writes HDL for intent-sized exact-width concat toplinks');
+};
+
 subtest 'linked plan builder preserves intrinsic-width SV-style unsized numeric concat operands' => sub {
     my @ports = (
         port('header_bus', 'input', 2, undef),
@@ -1222,6 +1291,49 @@ subtest 'linked plan builder rejects unsupported concat operands' => sub {
         $exception,
         qr/uses top expression 'payload_bus\[3:0\],=open', .*concat operands currently accept only top-port names, top-port bit\/slice forms, child endpoints like 'producer\.payload', child-output bit\/slice forms like 'producer\.payload\[3\]' or 'producer\.payload\[7:4\]', repeat groups like '\{4\{status_bus\[0\]\}\}', scalar '=0'\/'=1' actuals, named literal actuals from composition-root '\+constants' \/ '\+enums' or imported packages like '=RESET_BYTE', '=mode\.BUSY', '=shared\.RESET_BYTE', or '=shared\.mode\.BUSY', intrinsic-width unsized binary\/decimal\/octal\/hex actuals like '=0b1010', '='b1010', '=170', '=0d170', '='d170', '=0o7', '='o7', '=0xA5', '='hA5', or '=A5', intrinsic-width unsized signed decimal actuals like '=-1', '=0d-1', or '='sd-1', intrinsic-width unsized signed binary\/octal\/hex actuals like '='sb1010', '='so7', or '='shA5', and exact-width literal actuals like '=4'b1010', '=4'sb1010', '=4'd10', '=8'sd-1', '=3'o7', '=3'so7', '=4'hA', or '=4'shA'/s,
         'builder blocks unsupported concat operands through the top-expression boundary',
+    );
+};
+
+subtest 'linked plan builder rejects ambiguous bare bitstring-like concat actuals explicitly' => sub {
+    my $exception = eval {
+        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+            lane => 'C3',
+            composition_spec => composition_spec('blocked_ambiguous_concat_actual_top'),
+            top => FSM::Composition::Top->new(name => 'blocked_ambiguous_concat_actual_top'),
+            ports_block => FSM::Composition::PortsBlock->new(
+                name => 'public_io',
+                ports => [port('payload_bus', 'input', 4, undef)],
+            ),
+            ports => [port('payload_bus', 'input', 4, undef)],
+            toplinks => [
+                FSM::Composition::TopLink->new(
+                    name => 'wiring',
+                    links => [
+                        FSM::Composition::Link->new(
+                            source => 'payload_bus[3:0],=00001110',
+                            target => 'uart_tx.data_in',
+                        ),
+                    ],
+                ),
+            ],
+            realized_instances => [
+                realized_instance(
+                    'rtl',
+                    'uart_tx',
+                    port('data_in', 'input', 12, undef),
+                ),
+            ],
+            fsm_file => 'blocked_ambiguous_concat_actual_top.fsm',
+            header => 'blocked_ambiguous_concat_actual_top',
+        );
+        undef;
+    };
+    $exception = $@;
+
+    like(
+        $exception,
+        qr/uses literal actual '=00001110' inside a top expression.*ambiguous bare integer literal.*=0b00001110.*=N'b00001110.*=0d00001110/s,
+        'builder rejects ambiguous bare concat actuals with an explicit remediation hint',
     );
 };
 

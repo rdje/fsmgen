@@ -1009,6 +1009,8 @@ sub _resolve_top_expression_endpoint ($class, $endpoint, $top_ports_by_name, $in
         allow_plain_top_ref => 0,
         allow_literal_actual => 0,
         top_symbols => $opts{top_symbols},
+        fsm_file => $fsm_file,
+        header => $header,
     );
     if (!$spec && defined($endpoint) && ($endpoint =~ /\A\{.*\}\z/s || index($endpoint, ',') >= 0)) {
         confess

@@ -232,11 +232,12 @@ All current supported protocol fixtures are now `strict_supported`: the APB
 requester, APB completer, AMBA requester, and APB composition top use the
 canonical `areset rst_n`, `(:= (signal value))`, and assignment-pair surfaces
 and must pass both default and strict pipeline/CLI smoke. All current supported
-direct language-feature fixtures are also `strict_supported`. That means
-strict mode positively accepts the maintained fixtures for partial LHS writes,
-RHS concat/cat packing, LHS concat/cat deconstruction, canonical reset
-spellings, canonical init/default metadata, expression-backed widths, runtime
-div/mod expressions, and canonical assignment pairs.
+language-feature fixtures are also `strict_supported`. That means strict mode
+positively accepts the maintained fixtures for partial LHS writes, RHS
+concat/cat packing, LHS concat/cat deconstruction, canonical reset spellings,
+canonical init/default metadata, expression-backed widths, runtime div/mod
+expressions, canonical assignment pairs, and intent-level integer literal
+normalization on both direct and composition paths.
 
 ## Capability manifest
 
@@ -292,6 +293,8 @@ bounded slice.
 | `feature.direct_size_expression_widths` | [t/corpus/direct_size_expression_widths.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_size_expression_widths.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_runtime_div_mod` | [t/corpus/direct_runtime_div_mod.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_runtime_div_mod.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_assignment_pair_form` | [t/corpus/direct_assignment_pair_form.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_assignment_pair_form.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
+| `feature.direct_intent_integer_literals` | [t/corpus/direct_intent_integer_literals.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_intent_integer_literals.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
+| `feature.composition_intent_integer_literals` | [t/corpus/composition_intent_integer_literals.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/composition_intent_integer_literals.fsm) | `supported_smoke` | `composition_top_pipeline_cli` |
 | `legacy.mipicsi2_txccore_ulp.default_compat` | [fsm/mipicsi2_txccore_ulp.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/mipicsi2_txccore_ulp.fsm) | `legacy_out_of_scope` | `legacy_root_default_pipeline_cli` |
 | `legacy.mipicsi2_txccore_ulp.strict_rejection` | [fsm/mipicsi2_txccore_ulp.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/mipicsi2_txccore_ulp.fsm) | `expected_failure` | `strict_root_rejection_pipeline_cli` |
 | `legacy.empty_size_noop.default_compat` | [t/corpus/legacy_empty_size_noop.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_empty_size_noop.fsm) | `legacy_out_of_scope` | `legacy_section_default_pipeline_cli` |
@@ -333,6 +336,17 @@ bounded slice.
 | `contract.duplicate_embedded_rtlif_root` | [t/corpus/duplicate_embedded_rtlif_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/duplicate_embedded_rtlif_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 
 ## Current locking tests
+- [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t)
+  executes explicit structural direct-actual composition through linked-plan,
+  pipeline, and CLI coverage, including unsized numeric actuals, typed literal
+  actuals, named composition-root actuals, and FSMGen intent-sized exact-width
+  direct actuals such as `=5'23`, `=8'-10`, `=8'-0xA`, and `=20'x1`.
+- [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t)
+  executes explicit structural concat composition through linked-plan,
+  pipeline, and CLI coverage, including nested/repeat groups, named literal
+  actual operands, intrinsic-width numeric operands, and FSMGen intent-sized
+  exact-width concat operands such as `=5'23`, `=8'-10`, `=8'-0xA`, and
+  `=20'x1`.
 - [t/247-protocol-fixture-regression-smoke.t](/Users/richarddje/Documents/github/fsmgen/t/247-protocol-fixture-regression-smoke.t)
   executes the first named protocol slice through pipeline and CLI.
 - [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t)
@@ -349,9 +363,13 @@ bounded slice.
   `(assign-op (lhs rhs))` syntax reaches the same pipeline and CLI HDL shapes
   as infix compatibility assignments, including guarded nested RHS
   expressions, dual-output assignment families, delayed pulse, and LHS
-  deconstruct. Every supported direct language-feature fixture is also now a
-  `strict_supported` positive acceptance asset, so this same test runs the
-  whole family through both `strict_mode => 1` and `bin/fsmgen --strict`.
+  deconstruct. The `feature.direct_intent_integer_literals` and
+  `feature.composition_intent_integer_literals` entries prove that FSMGen
+  intent-level sized spellings such as `5'23`, `8'-10`, `8'-0xA`, `8'-0b1010`,
+  and `20'x1` now belong to the maintained support contract on both direct and
+  composition actual paths. Every supported language-feature fixture is also
+  now a `strict_supported` positive acceptance asset, so this same test runs
+  the whole family through both `strict_mode => 1` and `bin/fsmgen --strict`.
 - [t/309-intent-integer-literal-normalization.t](/Users/richarddje/Documents/github/fsmgen/t/309-intent-integer-literal-normalization.t)
   locks the shared `.fsm` intent-level integer literal normalizer. It proves
   helper parsing, expression-builder parsing, package/direct constant
@@ -363,7 +381,7 @@ bounded slice.
   repo assets, that each coverage bucket belongs to its expected classification,
   and also checks that strict-supported markers are only attached to supported
   pipeline/CLI corpus entries, that every supported protocol fixture is
-  strict-supported, that every supported direct language-feature fixture is
+  strict-supported, that every supported language-feature fixture is
   strict-supported, that supported direct language-feature entries carry
   non-empty compiled HDL-shape pattern metadata, and that expected-failure
   diagnostic/hint metadata is compiled-regex metadata rather than loose strings.

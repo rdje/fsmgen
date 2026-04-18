@@ -69,6 +69,40 @@ subtest 'actual literal support parses direct actual payload families' => sub {
         bit_vector_literal_expr('11111111'),
         'exact-width signed decimal actual lowers through two-complement bits',
     );
+
+    my $intent_sized = FSM::Composition::ActualLiteralSupport->resolve_actual_payload(
+        q{8'-0xA},
+        raw => q{=8'-0xA},
+        key => q{actual:=8'-0xA},
+        fsm_file => 'actual_literals.fsm',
+        header => 'actual_literals',
+    );
+    is($intent_sized->{kind}, 'actual_literal', 'intent-sized exact-width actual preserves literal kind');
+    is($intent_sized->{port}{width}, 8, 'intent-sized exact-width actual preserves declared width');
+    is_deeply(
+        $intent_sized->{connection_expr},
+        bit_vector_literal_expr('11110110'),
+        'intent-sized exact-width actual lowers through normalized two-complement bits',
+    );
+
+    my $ambiguous_direct_error = do {
+        local $@;
+        eval {
+            FSM::Composition::ActualLiteralSupport->resolve_actual_payload(
+                '00001110',
+                raw => '=00001110',
+                key => 'actual:=00001110',
+                fsm_file => 'actual_literals.fsm',
+                header => 'actual_literals',
+            );
+        };
+        $@;
+    };
+    like(
+        $ambiguous_direct_error,
+        qr/uses actual endpoint '=00001110'.*ambiguous bare integer literal.*=0b00001110.*=N'b00001110.*=0d00001110/s,
+        'direct actual support rejects ambiguous bare bitstring-looking payloads',
+    );
 };
 
 subtest 'actual literal support keeps concat operands intrinsic width' => sub {
@@ -91,6 +125,34 @@ subtest 'actual literal support keeps concat operands intrinsic width' => sub {
         [FSM::Composition::ActualLiteralSupport->expression_literal_bits_and_width(q{8'sd-1})],
         ['11111111', 8],
         'exact-width signed decimal concat operand keeps declared width',
+    );
+    is_deeply(
+        [FSM::Composition::ActualLiteralSupport->expression_literal_bits_and_width(q{5'23})],
+        ['10111', 5],
+        'intent-sized decimal concat operand keeps declared width',
+    );
+    is_deeply(
+        [FSM::Composition::ActualLiteralSupport->expression_literal_bits_and_width(q{20'x1})],
+        ['00000000000000000001', 20],
+        'intent-sized x-radix concat operand lowers through legal binary bits',
+    );
+
+    my $ambiguous_concat_error = do {
+        local $@;
+        eval {
+            FSM::Composition::ActualLiteralSupport->expression_literal_bits_and_width(
+                '00001110',
+                raw => '=00001110',
+                fsm_file => 'actual_literals.fsm',
+                header => 'actual_literals',
+            );
+        };
+        $@;
+    };
+    like(
+        $ambiguous_concat_error,
+        qr/uses literal actual '=00001110' inside a top expression.*ambiguous bare integer literal.*=0b00001110.*=N'b00001110.*=0d00001110/s,
+        'concat literal support rejects ambiguous bare bitstring-looking payloads',
     );
 };
 

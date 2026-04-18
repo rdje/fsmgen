@@ -1,5 +1,77 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-18: user docs now show concrete composition intent-literal actuals
+- [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+  now includes one explicit `?toplink` example showing intent-sized literal
+  direct actuals and concat actuals together, including `/=5'23/.../`,
+  `/=8'-0xA/.../`, and `/=5'23,=8'-10,=20'x1/.../`, plus pointers to the
+  maintained corpus fixtures that lock those spellings.
+- [docs/book/src/06-composition-advanced.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/06-composition-advanced.md)
+  now mirrors that example in the book so composition users can discover the
+  feature from the narrative docs instead of only from tests or release notes.
+
+## 2026-04-18: intent-sized literals are now part of the maintained support corpus
+- [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm)
+  now promotes intent-level integer literal support into the named supported
+  corpus on both direct and composition paths:
+  `feature.direct_intent_integer_literals` points at
+  [t/corpus/direct_intent_integer_literals.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_intent_integer_literals.fsm),
+  and `feature.composition_intent_integer_literals` points at
+  [t/corpus/composition_intent_integer_literals.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/composition_intent_integer_literals.fsm).
+- [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t)
+  now runs both direct and composition `language_feature_fixture`
+  `supported_smoke` entries through pipeline and CLI, including composition
+  plan assertions where applicable, and also re-runs the same maintained
+  feature family through strict pipeline and strict CLI when the entry is
+  `strict_supported`.
+- [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+  now expects sixteen supported-smoke entries and sixteen strict-supported
+  entries, while allowing self-contained composition fixtures to record an
+  empty `expected_child_modules` array when the supported surface is a wrapper
+  over embedded `?rtlif` rather than a generated child module.
+
+## 2026-04-18: composition intent-sized actuals now have pipeline/CLI coverage too
+- [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t)
+  now drives intent-sized exact-width direct actuals such as `=5'23`,
+  `=8'-10`, `=8'-0b1010`, `=8'-0xA`, and `=20'x1` through the real
+  composition pipeline and CLI, locking both top-output assignments and child
+  input bindings.
+- [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t)
+  now drives those same intent-sized exact-width literal families through the
+  concat-operand lane end to end, proving declared-width preservation,
+  two-complement lowering, and zero synthetic-carrier emission on the C3 path.
+
+## 2026-04-18: composition actuals now accept intent-sized exact-width literals
+- [perl/FSM/Composition/ActualLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ActualLiteralSupport.pm)
+  now accepts FSMGen intent-sized exact-width literal spellings on both direct
+  actual and concat-operand lanes, reusing the shared integer-literal frontend
+  for forms such as `=5'23`, `=8'-10`, `=8'-0xA`, `=8'-0b1010`, and `=20'x1`.
+- This is intentionally implemented as a fallback after the existing
+  composition-only exact-width SV forms, so current `=8'b...` / `=8'sd...`
+  validation behavior stays intact while the intent-level spellings gain the
+  same checked structural lowering.
+- [t/286-composition-actual-literal-support.t](/Users/richarddje/Documents/github/fsmgen/t/286-composition-actual-literal-support.t)
+  now locks direct and concat coverage for those intent-sized exact-width
+  composition actuals.
+
+## 2026-04-18: composition actual literals now share the ambiguous-bitstring guard
+- [perl/FSM/Composition/ActualLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ActualLiteralSupport.pm)
+  now reuses the shared literal frontend detector from
+  [perl/FSM/Package/IntegerLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/IntegerLiteralSupport.pm)
+  so composition direct actuals and concat literal operands reject obviously
+  bitstring-like bare `0/1` payloads such as `=00001110` or `=10000000`
+  instead of silently classifying them as decimal.
+- [perl/FSM/Composition/SourceExpressionSpecSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SourceExpressionSpecSupport.pm)
+  and [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+  now thread composition source context through those literal parses so the
+  diagnostics stay precise on both direct actual and concat-operand paths.
+- Regression coverage:
+  [t/286-composition-actual-literal-support.t](/Users/richarddje/Documents/github/fsmgen/t/286-composition-actual-literal-support.t),
+  [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t),
+  and
+  [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t)
+  now lock the targeted remediation messages.
+
 ## 2026-04-18: trial_1 is explicit again and now sits in the external SV smoke
 - [fsm/trial_1.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/trial_1.fsm)
   no longer uses ambiguous bare bitstring-looking value literals for `ob`.

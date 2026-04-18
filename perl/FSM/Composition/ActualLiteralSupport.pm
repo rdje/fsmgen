@@ -25,6 +25,7 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     bit_vector_literal_expr
     open_expr
 );
+use FSM::Package::IntegerLiteralSupport;
 use FSM::Package::PayloadTypeSupport;
 
 sub resolve_actual_payload ($class, $payload, %opts) {
@@ -260,6 +261,13 @@ sub resolve_actual_payload ($class, $payload, %opts) {
         } if defined $hex_digits;
     }
 
+    $class->_confess_on_ambiguous_bare_actual_literal(
+        $payload,
+        %opts,
+        lane => 'direct_actual',
+        raw => $raw,
+    );
+
     my $bare_decimal_digits = $class->_normalized_separated_digits($payload, '[0-9]');
     if (defined $bare_decimal_digits) {
         return {
@@ -433,13 +441,25 @@ sub literal_bits_and_width ($class, $payload, %opts) {
         return ($bits, $width) if defined $bits;
     }
 
+    my $intent_parts = FSM::Package::IntegerLiteralSupport->literal_parts_from_scalar($payload);
+    if ($intent_parts && defined($intent_parts->{width})) {
+        my $binary_payload = FSM::Package::IntegerLiteralSupport->core_literal_payload_from_parts(
+            %$intent_parts,
+            radix => 'binary',
+        );
+        if (ref($binary_payload) eq 'HASH' && defined($binary_payload->{width}) && defined($binary_payload->{value})) {
+            my $bits = $class->_pad_binary_bits_to_width($binary_payload->{value}, $binary_payload->{width});
+            return ($bits, 0 + $binary_payload->{width});
+        }
+    }
+
     confess
         "Composition source '$header' in '$fsm_file' uses actual endpoint '=$payload', ".
         "but explicit actual binding is blocked because the first structural-actual slice currently accepts only '=open', scalar '=0'/'=1', named literal actuals from composition-root '+constants' / '+enums' or imported packages like '=RESET_BYTE', '=mode.BUSY', '=shared.RESET_BYTE', or '=shared.mode.BUSY', unsized binary/decimal/octal/hex direct actual forms like '=0b10', '='b10', '=0d10', '='d10', '=0o7', '='o7', '=0xA', '='hA', '=170', or '=A5', unsized signed decimal direct actual forms like '=-1', '=0d-1', or '='sd-1', unsized signed binary/octal/hex direct actual forms like '='sb1010', '='so7', or '='shA', or exact-width binary/decimal/octal/hex literal forms in unsigned or signed form like '=8'b10100101', '=8'sb10100101', '=8'd165', '=8'sd-1', '=8'o245', '=8'so245', '=8'hA5', or '=8'shA5'. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
 }
 
-sub expression_literal_bits_and_width ($class, $payload) {
+sub expression_literal_bits_and_width ($class, $payload, %opts) {
     return ($1, 1)
         if defined($payload) && $payload =~ /\A([01])\z/;
 
@@ -530,6 +550,13 @@ sub expression_literal_bits_and_width ($class, $payload) {
         return $class->_hex_literal_bits_and_width(length($bare_hex_digits) * 4, $bare_hex_digits);
     }
 
+    $class->_confess_on_ambiguous_bare_actual_literal(
+        $payload,
+        %opts,
+        lane => 'concat_operand',
+        raw => ($opts{raw} // "=$payload"),
+    );
+
     my $bare_decimal_digits = $class->_normalized_separated_digits($payload, '[0-9]');
     if (defined $bare_decimal_digits) {
         return $class->_intrinsic_decimal_literal_bits_and_width($bare_decimal_digits);
@@ -583,6 +610,18 @@ sub expression_literal_bits_and_width ($class, $payload) {
         my $hex_digits = $class->_normalized_separated_digits($2, '[0-9A-Fa-f]');
         return undef unless defined $hex_digits;
         return $class->_hex_literal_bits_and_width($1, $hex_digits);
+    }
+
+    my $intent_parts = FSM::Package::IntegerLiteralSupport->literal_parts_from_scalar($payload);
+    if ($intent_parts && defined($intent_parts->{width})) {
+        my $binary_payload = FSM::Package::IntegerLiteralSupport->core_literal_payload_from_parts(
+            %$intent_parts,
+            radix => 'binary',
+        );
+        if (ref($binary_payload) eq 'HASH' && defined($binary_payload->{width}) && defined($binary_payload->{value})) {
+            my $bits = $class->_pad_binary_bits_to_width($binary_payload->{value}, $binary_payload->{width});
+            return ($bits, 0 + $binary_payload->{width});
+        }
     }
 
     return;
@@ -811,6 +850,39 @@ sub _decimal_literal_bits_and_width ($class, $declared_width, $decimal_digits, %
     }
 
     return ($bits, 0 + $declared_width);
+}
+
+sub _confess_on_ambiguous_bare_actual_literal ($class, $payload, %opts) {
+    return unless FSM::Package::IntegerLiteralSupport->obviously_binary_like_bare_value_literal($payload);
+
+    my ($binary_example, $decimal_example, $exact_width_example) =
+        FSM::Package::IntegerLiteralSupport->explicit_examples_for_obviously_binary_like_bare_value_literal($payload);
+    $binary_example = '='.$binary_example;
+    $decimal_example = '='.$decimal_example;
+    $exact_width_example = '='.$exact_width_example;
+
+    my $raw = $opts{raw} // "=$payload";
+    my $fsm_file = $opts{fsm_file};
+    my $header = $opts{header};
+    my $lane = $opts{lane} // 'direct_actual';
+
+    my $prefix = (defined($fsm_file) && defined($header))
+        ? "Composition source '$header' in '$fsm_file' "
+        : "Composition actual-literal parsing ";
+
+    my $context = $lane eq 'concat_operand'
+        ? "uses literal actual '$raw' inside a top expression"
+        : "uses actual endpoint '$raw'";
+    my $blocking_clause = $lane eq 'concat_operand'
+        ? "but explicit link endpoint resolution is blocked because"
+        : "but explicit actual binding is blocked because";
+
+    confess
+        $prefix.$context.", ".
+        $blocking_clause." '$payload' is an ambiguous bare integer literal. ".
+        "FSMGen does not guess obviously bitstring-like bare 0/1 tokens on composition actual lanes. ".
+        "Use '$binary_example' for intrinsic-width binary, '$exact_width_example' for exact-width binary, or '$decimal_example' if decimal was intended. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
 }
 
 sub _intrinsic_decimal_literal_bits_and_width ($class, $decimal_digits) {
@@ -1045,6 +1117,12 @@ sub _endpoint_width ($class, $endpoint) {
     return $port->{width} if ref($port) eq 'HASH';
     return $port->width if ref($port) && $port->can('width');
     return 0;
+}
+
+sub _pad_binary_bits_to_width ($class, $bits, $width) {
+    return $bits unless defined($bits) && defined($width) && $width =~ /\A\d+\z/ && $width > 0;
+    return $bits if length($bits) >= $width;
+    return ('0' x ($width - length($bits))).$bits;
 }
 
 sub _clone_structured_value ($class, $value) {

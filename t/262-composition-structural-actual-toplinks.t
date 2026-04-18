@@ -611,6 +611,86 @@ FSM
     ok(-e $output_path, 'CLI writes HDL for explicit structural-actual toplinks');
 };
 
+subtest 'pipeline and CLI emit intent-sized exact-width direct actuals for explicit toplinks' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'intent_sized_actual_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'intent_sized_actual_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:intent_sized_actual_top
+  (?ports:public_io
+    decimal_out>5
+    negative_decimal_out>8
+    negative_binary_out>8
+    x_alias_out>20
+  )
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /=5'23/decimal_out/
+    /=8'-10/negative_decimal_out/
+    /=8'-0b1010/negative_binary_out/
+    /=20'x1/x_alias_out/
+    /=5'23/uart_tx.decimal_in/
+    /=8'-0xA/uart_tx.negative_hex_in/
+    /=20'x1/uart_tx.x_alias_in/
+  )
+)
+
+(?rtlif:uart_tx
+  decimal_in<5:data
+  negative_hex_in<8:data
+  x_alias_in<20:data
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $result = $pipeline->generate_hdl_from_file($composition_path);
+
+    isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
+    is($result->{composition_plan}->lane, 'C3', 'single rtl intent-sized direct-actual toplinks stay on the C3 lane');
+
+    my %bindings = map { $_->{port_name} => $_ } @{$result->{composition_plan}->instances->[0]->port_bindings};
+    is_deeply(
+        $bindings{decimal_in}{connection_expr},
+        bit_vector_literal_expr('10111'),
+        'pipeline preserves the declared width for intent-sized decimal direct actual child bindings',
+    );
+    is_deeply(
+        $bindings{negative_hex_in}{connection_expr},
+        bit_vector_literal_expr('11110110'),
+        'pipeline preserves normalized two-complement bits for intent-sized negative hex direct actual child bindings',
+    );
+    is_deeply(
+        $bindings{x_alias_in}{connection_expr},
+        bit_vector_literal_expr('00000000000000000001'),
+        'pipeline preserves declared width for intent-sized radix-alias direct actual child bindings',
+    );
+
+    my $hdl = $result->{hdl_code};
+    like($hdl, qr/assign\s+decimal_out\s*=\s*5'b10111\s*;/, 'generated HDL emits the intent-sized decimal direct actual on the top output');
+    like($hdl, qr/assign\s+negative_decimal_out\s*=\s*8'b11110110\s*;/, 'generated HDL emits the intent-sized negative decimal direct actual on the top output');
+    like($hdl, qr/assign\s+negative_binary_out\s*=\s*8'b11110110\s*;/, 'generated HDL emits the intent-sized negative binary direct actual on the top output');
+    like($hdl, qr/assign\s+x_alias_out\s*=\s*20'b00000000000000000001\s*;/, 'generated HDL emits the intent-sized radix-alias direct actual on the top output');
+    like($hdl, qr/\.decimal_in\(5'b10111\)/, 'generated HDL emits the intent-sized decimal direct actual on the child port');
+    like($hdl, qr/\.negative_hex_in\(8'b11110110\)/, 'generated HDL emits the intent-sized negative hex direct actual on the child port');
+    like($hdl, qr/\.x_alias_in\(20'b00000000000000000001\)/, 'generated HDL emits the intent-sized radix-alias direct actual on the child port');
+
+    my ($success) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
+    );
+
+    ok($success, 'CLI succeeds for intent-sized direct-actual toplinks');
+    ok(-e $output_path, 'CLI writes HDL for intent-sized direct-actual toplinks');
+};
+
 subtest 'linked plan builder preserves named actuals from composition-root symbols' => sub {
     my @ports = (
         port('symbol_flag', 'output', 1, undef),
@@ -1154,6 +1234,43 @@ subtest 'linked plan builder rejects unsupported actual literal forms' => sub {
         $exception,
         qr/uses actual endpoint '=0q7', .*currently accepts only '=open', scalar '=0'\/'=1', named literal actuals from composition-root '\+constants' \/ '\+enums' or imported packages like '=RESET_BYTE', '=mode\.BUSY', '=shared\.RESET_BYTE', or '=shared\.mode\.BUSY', unsized binary\/decimal\/octal\/hex direct actual forms like '=0b10', '='b10', '=0d10', '='d10', '=0o7', '='o7', '=0xA', '='hA', '=170', or '=A5', unsized signed decimal direct actual forms like '=-1', '=0d-1', or '='sd-1', unsized signed binary\/octal\/hex direct actual forms like '='sb1010', '='so7', or '='shA', or exact-width binary\/decimal\/octal\/hex literal forms in unsigned or signed form like '=8'b10100101', '=8'sb10100101', '=8'd165', '=8'sd-1', '=8'o245', '=8'so245', '=8'hA5', or '=8'shA5'/s,
         'builder still blocks unsupported unsized literal spellings outside the widened direct unsized-numeric slice',
+    );
+};
+
+subtest 'linked plan builder rejects ambiguous bare bitstring-like direct actuals explicitly' => sub {
+    my $exception = eval {
+        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+            lane => 'C3',
+            composition_spec => composition_spec('blocked_ambiguous_actual_top'),
+            top => FSM::Composition::Top->new(name => 'blocked_ambiguous_actual_top'),
+            ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => []),
+            ports => [],
+            toplinks => [
+                FSM::Composition::TopLink->new(
+                    name => 'wiring',
+                    links => [
+                        FSM::Composition::Link->new(source => '=00001110', target => 'uart_tx.data_in'),
+                    ],
+                ),
+            ],
+            realized_instances => [
+                realized_instance(
+                    'rtl',
+                    'uart_tx',
+                    port('data_in', 'input', 8, undef),
+                ),
+            ],
+            fsm_file => 'blocked_ambiguous_actual_top.fsm',
+            header => 'blocked_ambiguous_actual_top',
+        );
+        undef;
+    };
+    $exception = $@;
+
+    like(
+        $exception,
+        qr/uses actual endpoint '=00001110'.*ambiguous bare integer literal.*=0b00001110.*=N'b00001110.*=0d00001110/s,
+        'builder rejects ambiguous bare direct actuals with an explicit remediation hint',
     );
 };
 

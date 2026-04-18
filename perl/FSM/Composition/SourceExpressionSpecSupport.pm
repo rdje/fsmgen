@@ -174,6 +174,8 @@ sub parse_top_expression_spec ($class, $endpoint, %opts) {
                 allow_literal_actual => 1,
                 allow_child_ref => 1,
                 top_symbols => $opts{top_symbols},
+                fsm_file => $opts{fsm_file},
+                header => $opts{header},
             ) or return undef;
             push @operand_specs, $operand_spec;
         }
@@ -262,10 +264,20 @@ sub parse_top_expression_spec ($class, $endpoint, %opts) {
 
     if ($opts{allow_literal_actual} && $endpoint =~ /\A=(.+)\z/) {
         return undef if lc($1) eq 'open';
-        my ($bits, $width) = FSM::Composition::ActualLiteralSupport->expression_literal_bits_and_width($1);
+        my ($bits, $width) = FSM::Composition::ActualLiteralSupport->expression_literal_bits_and_width(
+            $1,
+            raw => "=$1",
+            fsm_file => $opts{fsm_file},
+            header => $opts{header},
+        );
         if (!defined($bits) && $opts{top_symbols}) {
             my $resolved_payload = $class->resolve_top_symbol_actual_payload($1, $opts{top_symbols});
-            ($bits, $width) = FSM::Composition::ActualLiteralSupport->expression_literal_bits_and_width($resolved_payload)
+            ($bits, $width) = FSM::Composition::ActualLiteralSupport->expression_literal_bits_and_width(
+                $resolved_payload,
+                raw => "=$1",
+                fsm_file => $opts{fsm_file},
+                header => $opts{header},
+            )
                 if defined $resolved_payload;
 
             if (!defined($bits)) {
@@ -306,6 +318,8 @@ sub parse_repeat_group_spec ($class, $endpoint, %opts) {
         allow_literal_actual => 1,
         allow_child_ref => 1,
         top_symbols => $opts{top_symbols},
+        fsm_file => $opts{fsm_file},
+        header => $opts{header},
     ) or return undef;
 
     return {

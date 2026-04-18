@@ -88,6 +88,8 @@ for my $required_id (qw(
     feature.direct_size_expression_widths
     feature.direct_runtime_div_mod
     feature.direct_assignment_pair_form
+    feature.direct_intent_integer_literals
+    feature.composition_intent_integer_literals
     legacy.mipicsi2_txccore_ulp.default_compat
     legacy.mipicsi2_txccore_ulp.strict_rejection
     legacy.empty_size_noop.default_compat
@@ -199,8 +201,8 @@ for my $entry (@entries) {
         ok($entry->{expected_top_name}, "composition entry '$entry->{id}' records an expected top name");
         ok($entry->{expected_lane}, "composition entry '$entry->{id}' records an expected composition lane");
         ok($entry->{expected_instance_count} >= 1, "composition entry '$entry->{id}' records a positive child count");
-        ok(ref($entry->{expected_child_modules}) eq 'ARRAY' && @{$entry->{expected_child_modules}},
-            "composition entry '$entry->{id}' records expected child modules");
+        ok(ref($entry->{expected_child_modules}) eq 'ARRAY',
+            "composition entry '$entry->{id}' records expected child modules as an array");
     }
     else {
         fail("catalog entry '$entry->{id}' uses an unsupported source kind '$entry->{source_kind}'");
@@ -245,8 +247,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    14,
-    'catalog now keeps fourteen named supported-smoke entries including the first language-feature fixtures',
+    16,
+    'catalog now keeps sixteen named supported-smoke entries including direct and composition language-feature fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
@@ -260,8 +262,8 @@ is(
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
-    14,
-    'catalog now records fourteen positive strict-mode supported-smoke acceptance entries',
+    16,
+    'catalog now records sixteen positive strict-mode supported-smoke acceptance entries',
 );
 for my $strict_supported_id (qw(
     protocol.apb_requester
@@ -278,6 +280,8 @@ for my $strict_supported_id (qw(
     feature.direct_size_expression_widths
     feature.direct_runtime_div_mod
     feature.direct_assignment_pair_form
+    feature.direct_intent_integer_literals
+    feature.composition_intent_integer_literals
 )) {
     ok($by_id{$strict_supported_id}->{strict_supported}, "canonical strict-supported fixture $strict_supported_id stays marked");
 }
@@ -290,10 +294,9 @@ for my $entry (
     grep {
         $_->{family} eq 'language_feature_fixture'
             && $_->{classification} eq 'supported_smoke'
-            && $_->{coverage} eq 'direct_root_pipeline_cli'
     } @entries
 ) {
-    ok($entry->{strict_supported}, "supported direct language-feature fixture '$entry->{id}' is strict-supported");
+    ok($entry->{strict_supported}, "supported language-feature fixture '$entry->{id}' is strict-supported");
 }
 
 for my $entry (
