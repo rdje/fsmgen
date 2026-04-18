@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-18: external HDL validation now has an explicit bounded contract owner too
+- Added
+  [perl/FSM/Support/HDLExternalValidationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLExternalValidationContract.pm)
+  as the explicit owner for the bounded external validation promise: command
+  shape, tool identities, stage names, bounded success top-level keys, and
+  bounded step keys/order.
+- [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+  now advertises that contract directly instead of describing the external
+  validation lane inline, and
+  [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+  now locks that manifest-facing owner plus the advertised bounded key lists.
+- [t/313-hdl-external-validation-contract.t](/Users/richarddje/Documents/github/fsmgen/t/313-hdl-external-validation-contract.t)
+  now regression-locks the public external validation promise directly for the
+  in-process success result on a minimal temporary SystemVerilog module when
+  Verilator and Yosys are installed.
+- The reachable `bin/fsmgen` support surface now includes that contract owner
+  too, moving the measured import-tree totals to `134` project files /
+  `133` `.pm` packages with `Support => 12`.
+
 ## 2026-04-18: check JSON now has an explicit bounded contract owner too
 - Added
   [perl/FSM/Support/CheckDiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnosticsContract.pm)

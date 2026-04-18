@@ -227,6 +227,19 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest records the external HDL validation owner',
     );
     is(
+        $manifest->{backend_validation}{systemverilog_external}{contract_source},
+        'FSM::Support::HDLExternalValidationContract',
+        'manifest records the external HDL validation contract owner',
+    );
+    ok(
+        scalar(@{$manifest->{backend_validation}{systemverilog_external}{success_top_level_presence_keys} || []}) >= 4,
+        'manifest advertises bounded external validation success top-level key presence',
+    );
+    ok(
+        scalar(@{$manifest->{backend_validation}{systemverilog_external}{success_step_presence_keys} || []}) >= 4,
+        'manifest advertises bounded external validation step key presence',
+    );
+    is(
         $manifest->{embedding}{hdl_generator_result}{schema_version},
         1,
         'manifest records HDLGenerator result contract schema version',

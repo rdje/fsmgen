@@ -1719,6 +1719,11 @@ warning-clean. That focused smoke currently includes `fsm/lte_dif_pmaster.fsm`,
 the MIPI byte-serial, packet-FIFO, tester-control, and timer examples, the
 cleaned historical direct sample `fsm/trial_1.fsm`, plus the supported APB
 requester/completer and AMBA requester protocol fixtures.
+The bounded contract for this lane now has its own explicit owner in
+[perl/FSM/Support/HDLExternalValidationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLExternalValidationContract.pm).
+The capability manifest advertises that contract so downstream tools can
+discover the command shape, tool identities, stage names, and bounded success
+result/step keys without scraping prose.
 For in-process embedders, it also exposes the bounded
 `HDLGenerator->generate_hdl_from_file(...)` result contract. That contract
 stabilizes top-level key presence for fields such as `hdl_code`, `module_info`,

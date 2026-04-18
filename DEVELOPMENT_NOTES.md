@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-18: external validation should have an explicit contract owner too
+- The optional Verilator/Yosys lane is machine-readable enough that leaving it
+  only as an inline manifest stanza was already drifting behind the pattern
+  used for check JSON, normalized semantic JSON, typed extensions, sanitized
+  composition reports, and `HDLGenerator` results.
+- The safer split is the same one used elsewhere:
+  - `FSM::Support::HDLExternalValidation` owns tool discovery and execution,
+  - `FSM::Support::HDLExternalValidationContract` owns the bounded public
+    promise over that lane,
+  - and the capability manifest advertises the contract rather than becoming
+    the only source of truth.
+- The contract deliberately stays bounded:
+  - it promises the command shape,
+  - the required tool identities,
+  - the current stage names,
+  - and the success result/step key presence and order,
+  - but it does not pretend that every byte of tool stdout/stderr is a frozen
+    API or that VHDL/ABC behavior is already part of the same promise.
+
 ## 2026-04-18: check JSON should separate builder ownership from public contract ownership too
 - The same reasoning that justified
   `FSM::Support::NormalizedSemanticReportContract` also applies to

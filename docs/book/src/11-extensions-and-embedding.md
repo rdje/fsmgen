@@ -246,6 +246,11 @@ Verilator lint plus ABC-free Yosys structural synthesis when those tools are
 installed.
 That lane is currently SystemVerilog-only; VHDL/GHDL validation waits for an
 active VHDL backend.
+The bounded contract for that lane now has its own owner too:
+[perl/FSM/Support/HDLExternalValidationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLExternalValidationContract.pm).
+The capability manifest advertises the command shape, tool identities, stage
+names, and bounded success result/step keys for embedders that want the same
+post-emission gate without reverse-engineering sample output.
 
 The first bounded check/diagnostic surface is now:
 

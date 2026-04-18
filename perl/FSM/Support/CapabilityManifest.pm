@@ -11,6 +11,7 @@ use FSM::Support::CheckDiagnosticsContract qw(build_check_diagnostics_contract);
 use FSM::Support::CompositionReportContract qw(build_composition_report_contract);
 use FSM::Support::DiagnosticCodes qw(diagnostic_code_registry);
 use FSM::Support::ExtensionContract qw(build_extension_contract);
+use FSM::Support::HDLExternalValidationContract qw(build_hdl_external_validation_contract);
 use FSM::Support::HDLGeneratorResultContract qw(build_hdl_generator_result_contract);
 use FSM::Support::NormalizedSemanticReportContract qw(build_normalized_semantic_report_contract);
 use FSM::Support::RegressionCorpus qw(regression_corpus_entries);
@@ -83,19 +84,7 @@ sub build_capability_manifest {
         },
         backend_validation => {
             systemverilog_external => {
-                schema_version => 1,
-                status => 'optional_when_tools_installed',
-                command_shape => './bin/fsmgen --verify-hdl path/to/file.fsm',
-                alias => './bin/fsmgen --validate-hdl path/to/file.fsm',
-                target_languages => [qw(systemverilog sv)],
-                tools => [qw(verilator yosys)],
-                verilator_stage => 'lint_only_sv',
-                yosys_stage => 'read_verilog_sv_noautowire_synth_noabc_stat',
-                yosys_abc_enabled => JSON::PP::false,
-                yosys_purpose => 'abc_free_structural_netlist_sanity',
-                emits_hdl => JSON::PP::true,
-                vhdl_validation_deferred_until_vhdl_backend => JSON::PP::true,
-                report_source => 'FSM::Support::HDLExternalValidation',
+                %{build_hdl_external_validation_contract()},
                 regression_smoke => 't/308-systemverilog-external-validation.t',
             },
         },
