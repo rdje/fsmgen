@@ -163,6 +163,10 @@ That shell contract now explicitly includes the first nested
 `support_accounting` key list too, so machine consumers do not have to
 special-case the corpus-backed section while discovering the current bounded
 manifest shape.
+The manifest's `support_accounting` section now also advertises that same
+bounded owner through `support_accounting.section_contract`, while keeping the
+existing inline support-accounting payload and catalog metadata in place for
+compatibility.
 The manifest's `embedding` section now follows that split too:
 [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
 still publishes the current in-process embedding surfaces, while

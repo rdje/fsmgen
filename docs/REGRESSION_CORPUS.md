@@ -191,6 +191,10 @@ section.
 is now the explicit owner for the bounded top-level support-accounting keys,
 bucket/id-list keys, and sanitized catalog-entry required/optional key lists
 advertised through `--capability-manifest`.
+That same owner is now also advertised through
+`support_accounting.section_contract`, so the manifest keeps one regular
+section-contract discovery path without removing the existing inline
+support-accounting payload fields.
 
 [t/303-normalized-semantic-json-supported-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/303-normalized-semantic-json-supported-corpus.t)
 locks the accepted side across the whole current supported corpus. Every current

@@ -47,7 +47,7 @@ sub build_capability_manifest_contract {
         nested_section_contracts_advertised => JSON::PP::true,
         guidance => [
             'Treat the published top-level and first nested section key lists as the bounded public capability-manifest shell contract for schema version 1.',
-            'Deeper nested payload meaning stays with the dedicated section contract owners instead of becoming implicitly frozen just because it appears in sample manifest output; support_accounting is the embedded special case where the section itself carries the dedicated contract owner.',
+            'Deeper nested payload meaning stays with the dedicated section contract owners instead of becoming implicitly frozen just because it appears in sample manifest output.',
             'Widen the manifest deliberately from regression-backed support-accounting truth rather than turning the whole builder payload into an accidental API.',
         ],
     };
@@ -109,6 +109,7 @@ sub capability_manifest_support_accounting_keys {
             strict_supported_ids
             expected_failure_ids
             catalog_entries
+            section_contract
         ),
     ];
 }

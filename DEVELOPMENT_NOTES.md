@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-19: regularize support_accounting with a nested section contract without breaking callers
+- `support_accounting` already had a bounded owner, but it was the one public
+  manifest section that still exposed that owner only through merged inline
+  fields rather than through the now-standard nested `section_contract` seam.
+- The safer move is additive rather than disruptive:
+  - keep the existing inline support-accounting contract fields and corpus
+    metadata in place for compatibility,
+  - add `support_accounting.section_contract`,
+  - and make both the support-accounting contract owner and the top-level
+    manifest shell contract advertise that nested key explicitly.
+- That regularizes section discovery for embedders without forcing a broader
+  payload cleanup into the same slice.
+- If we later want to trim duplicated inline contract metadata, that should be
+  a separate deliberate compatibility decision with its own migration story.
+
 ## 2026-04-19: the capability-manifest shell should explicitly advertise support_accounting keys too
 - `support_accounting` is already one of the most important public manifest
   sections because it is where downstream tools discover the maintained corpus,

@@ -59,6 +59,7 @@ sub support_accounting_public_top_level_keys {
             strict_supported_ids
             expected_failure_ids
             catalog_entries
+            section_contract
         ),
     ];
 }

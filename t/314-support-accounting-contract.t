@@ -85,6 +85,17 @@ subtest 'in-process capability manifest support-accounting payload conforms to t
         support_accounting_id_list_keys(),
         'support-accounting section keeps bounded id-list keys',
     );
+    is($support->{section_contract}{schema_version}, 1, 'support-accounting section exposes nested section-contract schema version');
+    is($support->{section_contract}{status}, 'bounded_public', 'support-accounting section marks nested section contract as bounded public');
+    is(
+        $support->{section_contract}{contract_source},
+        'FSM::Support::SupportAccountingContract',
+        'support-accounting section exposes the nested section-contract owner',
+    );
+    ok(
+        scalar(@{$support->{section_contract}{public_top_level_presence_keys} || []}) >= 11,
+        'support-accounting section advertises bounded nested top-level key presence',
+    );
 
     ok(@{$support->{catalog_entries} || []}, 'support-accounting section exposes catalog entries');
     for my $entry (@{$support->{catalog_entries} || []}) {
@@ -120,6 +131,11 @@ subtest 'CLI capability manifest keeps the bounded support-accounting contract' 
         $support,
         support_accounting_public_top_level_keys(),
         'CLI support-accounting section keeps bounded top-level keys',
+    );
+    is(
+        $support->{section_contract}{contract_source},
+        'FSM::Support::SupportAccountingContract',
+        'CLI support-accounting section exposes the nested section-contract owner',
     );
     ok(@{$support->{catalog_entries} || []}, 'CLI support-accounting section exposes catalog entries');
     assert_keys_present(

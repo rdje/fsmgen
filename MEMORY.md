@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-19: support_accounting now exposes a nested section_contract too
+- [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+  now advertises the bounded support-accounting owner through
+  `support_accounting.section_contract`, giving the corpus-backed section the
+  same nested contract-discovery seam as the other public manifest sections.
+- [perl/FSM/Support/SupportAccountingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingContract.pm)
+  and [perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm)
+  now both treat `section_contract` as part of the bounded public
+  support-accounting section shape.
+- This is an additive compatibility-safe regularization slice only:
+  the existing inline support-accounting payload/contract fields remain in
+  place, and the reachable import-tree file/package counts stay unchanged.
+
 ## 2026-04-19: capability-manifest shell now explicitly advertises support_accounting keys
 - [perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm)
   now explicitly includes the first nested `support_accounting` key list,

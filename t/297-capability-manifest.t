@@ -36,7 +36,7 @@ subtest 'module manifest is generated from support accounting' => sub {
         'manifest advertises bounded producer key presence',
     );
     ok(
-        scalar(@{$manifest->{manifest_contract}{support_accounting_presence_keys} || []}) >= 23,
+        scalar(@{$manifest->{manifest_contract}{support_accounting_presence_keys} || []}) >= 24,
         'manifest advertises bounded support-accounting section key presence',
     );
     is($manifest->{producer}{name}, 'FSMGen', 'manifest identifies FSMGen as producer');
@@ -77,11 +77,30 @@ subtest 'module manifest is generated from support accounting' => sub {
         'FSM::Support::SupportAccountingContract',
         'manifest records the support-accounting contract owner',
     );
+    is(
+        $manifest->{support_accounting}{section_contract}{schema_version},
+        1,
+        'manifest records support-accounting section contract schema version',
+    );
+    is(
+        $manifest->{support_accounting}{section_contract}{status},
+        'bounded_public',
+        'manifest marks support-accounting section contract as bounded public',
+    );
+    is(
+        $manifest->{support_accounting}{section_contract}{contract_source},
+        'FSM::Support::SupportAccountingContract',
+        'manifest records the support-accounting section contract owner',
+    );
     is($manifest->{support_accounting}{source}, 'FSM::Support::RegressionCorpus', 'manifest records the corpus owner');
     is($manifest->{support_accounting}{entry_count}, scalar(@entries), 'manifest entry count follows the corpus');
     ok(
-        scalar(@{$manifest->{support_accounting}{public_top_level_presence_keys} || []}) >= 10,
+        scalar(@{$manifest->{support_accounting}{public_top_level_presence_keys} || []}) >= 11,
         'manifest advertises bounded support-accounting top-level key presence',
+    );
+    ok(
+        scalar(@{$manifest->{support_accounting}{section_contract}{public_top_level_presence_keys} || []}) >= 11,
+        'manifest advertises bounded nested support-accounting top-level key presence',
     );
     ok(
         scalar(@{$manifest->{support_accounting}{catalog_entry_required_keys} || []}) >= 9,

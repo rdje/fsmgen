@@ -273,6 +273,10 @@ top-level `manifest_contract`.
 That shell contract now also explicitly lists the first nested
 `support_accounting` keys, so embedders can discover the corpus-backed section
 shape without a manifest-specific exception.
+The `support_accounting` section now also exposes that same bounded owner
+through `support_accounting.section_contract`, while deliberately keeping the
+existing inline support-accounting contract fields and corpus metadata for
+compatibility.
 The `embedding` section now follows the same split too:
 [perl/FSM/Support/EmbeddingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingContract.pm)
 owns the published top-level and nested contract-owner map advertised through

@@ -65,6 +65,7 @@ sub build_capability_manifest {
             catalog_entries => [
                 map { _manifest_entry($_) } @entries,
             ],
+            section_contract => build_support_accounting_contract(),
         },
         diagnostics => {
             registry_source => 'FSM::Support::DiagnosticCodes',
