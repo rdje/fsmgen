@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-18: the manifest's language_surface section should have its own bounded contract owner
+- `language_surface` is already public enough that downstream tools can inspect
+  it, but that does not mean the entire authored-language story should become
+  frozen as one giant payload.
+- The safer split mirrors the other `R13` surfaces:
+  - `FSM::Support::CapabilityManifest` keeps building the current summary,
+  - `FSM::Support::LanguageSurfaceContract` owns the bounded manifest-facing
+    top-level and first nested section-key promise,
+  - and deeper language meaning stays with narrower contracts or future
+    deliberate widening instead of becoming stable accidentally.
+- This keeps the claim honest:
+  - embedders can discover the current section/key families machine-readably,
+  - but they are not being told that every authored syntax detail or future
+    language extension is already frozen.
+
 ## 2026-04-18: the capability-manifest shell deserves its own contract owner too
 - The manifest had already grown into the public directory for multiple bounded
   downstream surfaces, but its own shell was still implicit.

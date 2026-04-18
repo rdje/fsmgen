@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-18: language_surface now has an explicit bounded contract owner too
+- Added
+  [perl/FSM/Support/LanguageSurfaceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/LanguageSurfaceContract.pm)
+  as the explicit owner for the bounded public contract over the manifest's
+  `language_surface` section: public top-level keys plus the first nested
+  strict/default/assignments/system/expression/declaration/composition key
+  lists.
+- [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+  now advertises that contract under `language_surface.surface_contract`, and
+  [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+  now also locks the manifest-facing owner plus the advertised bounded
+  top-level and strict-mode key lists.
+- [t/317-language-surface-contract.t](/Users/richarddje/Documents/github/fsmgen/t/317-language-surface-contract.t)
+  now regression-locks the public language-surface promise directly for both
+  in-process manifest construction and CLI `--capability-manifest` JSON.
+- The reachable `bin/fsmgen` support surface now includes that contract owner
+  too, moving the measured import-tree totals to `138` project files /
+  `137` `.pm` packages with `Support => 16`.
+
 ## 2026-04-18: capability-manifest shell now has an explicit bounded contract owner too
 - Added
   [perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm)

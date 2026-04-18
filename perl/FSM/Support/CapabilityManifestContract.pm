@@ -128,6 +128,7 @@ sub capability_manifest_language_surface_keys {
             declarations
             composition
             intentionally_blocked_or_not_yet_public
+            surface_contract
         ),
     ];
 }

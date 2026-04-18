@@ -260,6 +260,11 @@ builds the JSON, while
 [perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm)
 owns the bounded top-level and first nested section key lists advertised under
 top-level `manifest_contract`.
+The `language_surface` section now has its own bounded owner as well:
+[perl/FSM/Support/LanguageSurfaceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/LanguageSurfaceContract.pm)
+advertises the public top-level and first nested section-key lists through
+`language_surface.surface_contract`, while the broader authored-language
+surface still widens only when new claims are regression-backed deliberately.
 That lane is currently SystemVerilog-only; VHDL/GHDL validation waits for an
 active VHDL backend.
 The bounded contract for that lane now has its own owner too:

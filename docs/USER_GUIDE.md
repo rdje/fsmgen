@@ -1721,6 +1721,11 @@ builds the JSON document, while
 [perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm)
 owns the bounded top-level plus first nested section key lists advertised
 through top-level `manifest_contract`.
+The manifest's `language_surface` section now also has its own bounded owner:
+[perl/FSM/Support/LanguageSurfaceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/LanguageSurfaceContract.pm)
+names the published top-level and first nested section-key lists advertised
+through `language_surface.surface_contract`, while deeper authored-language
+meaning stays with narrower contracts or future deliberate widening.
 It also advertises the optional external SystemVerilog validation lane:
 `--verify-hdl` / `--validate-hdl` writes the generated `.sv`, then runs
 Verilator in lint-only SystemVerilog mode and Yosys with

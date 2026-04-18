@@ -387,6 +387,29 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     my %direct_roots = map { $_ => 1 } @{$manifest->{language_surface}{strict_mode}{canonical_direct_roots}};
     ok($direct_roots{'?fsm'}, 'manifest names ?fsm as a canonical direct root');
     ok($direct_roots{'?dt'}, 'manifest names ?dt as a canonical direct root');
+    ok(
+        scalar(@{$manifest->{language_surface}{surface_contract}{public_top_level_presence_keys} || []}) >= 9,
+        'manifest advertises bounded language-surface top-level key presence',
+    );
+    ok(
+        scalar(@{$manifest->{language_surface}{surface_contract}{strict_mode_presence_keys} || []}) >= 5,
+        'manifest advertises bounded strict-mode language-surface key presence',
+    );
+    is(
+        $manifest->{language_surface}{surface_contract}{schema_version},
+        1,
+        'manifest records language-surface contract schema version',
+    );
+    is(
+        $manifest->{language_surface}{surface_contract}{status},
+        'bounded_public',
+        'manifest marks the language-surface section as bounded public',
+    );
+    is(
+        $manifest->{language_surface}{surface_contract}{contract_source},
+        'FSM::Support::LanguageSurfaceContract',
+        'manifest records the language-surface contract owner',
+    );
 
     my %literal_families = map { $_ => 1 } @{$manifest->{language_surface}{expressions}{literal_families}};
     ok(

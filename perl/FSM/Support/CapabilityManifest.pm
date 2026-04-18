@@ -15,6 +15,7 @@ use FSM::Support::DiagnosticCodeRegistryContract qw(build_diagnostic_code_regist
 use FSM::Support::ExtensionContract qw(build_extension_contract);
 use FSM::Support::HDLExternalValidationContract qw(build_hdl_external_validation_contract);
 use FSM::Support::HDLGeneratorResultContract qw(build_hdl_generator_result_contract);
+use FSM::Support::LanguageSurfaceContract qw(build_language_surface_contract);
 use FSM::Support::NormalizedSemanticReportContract qw(build_normalized_semantic_report_contract);
 use FSM::Support::RegressionCorpus qw(regression_corpus_entries);
 use FSM::Support::SupportAccountingContract qw(build_support_accounting_contract);
@@ -166,6 +167,7 @@ sub build_capability_manifest {
                 'unbounded aggregate expression domains',
                 'SPECFORGE PDF/prose IntentIR extraction',
             ],
+            surface_contract => build_language_surface_contract(),
         },
         documentation => {
             human_contract => [
