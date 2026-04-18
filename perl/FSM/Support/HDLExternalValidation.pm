@@ -8,8 +8,10 @@ FSM::Support::HDLExternalValidation - Optional external SystemVerilog lint and s
 
 Owns the bounded external-tool validation lane for generated SystemVerilog.
 FSMGen still performs semantic and pre-generation checks internally; this
-support package runs Verilator and Yosys after emission to prove the rendered
-HDL can be linted and lowered by independent tools when they are installed.
+support package runs Verilator and Yosys after emission. Verilator checks that
+the rendered text is valid lint-clean SystemVerilog. Yosys checks that the
+same text can be turned into a structural netlist-like design, deliberately
+without running the ABC mapping/optimization algorithm.
 
 =cut
 
@@ -68,9 +70,7 @@ sub validate_systemverilog_file (%args) {
 
     my $yosys_script = join '; ',
         'read_verilog -sv -noautowire ' . _yosys_quote($source_file),
-        'hierarchy -check -top ' . _yosys_identifier($top_module),
-        'proc',
-        'opt',
+        'synth -noabc -top ' . _yosys_identifier($top_module),
         'stat';
     push @steps, _run_step(
         name => 'yosys_synthesis',
@@ -167,9 +167,12 @@ not currently available.
 
 =head2 validate_systemverilog_file(%args)
 
-Runs Verilator lint and Yosys synthesis lowering over one generated
+Runs Verilator lint and ABC-free Yosys structural synthesis over one generated
 SystemVerilog file. Required arguments are C<source_file> and C<top_module>.
-The Yosys pass uses C<read_verilog -sv -noautowire>, C<hierarchy -check>,
-C<proc>, C<opt>, and C<stat>.
+The Yosys pass uses C<read_verilog -sv -noautowire>, C<synth -noabc -top>,
+and C<stat>. The C<-noabc> guard is intentional: this lane proves FSMGen did
+not emit garbage HDL and that Yosys can lower it into structural logic, while
+leaving ABC timeout/optimization edge cases for a later dedicated hardening
+lane.
 
 =cut

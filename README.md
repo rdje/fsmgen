@@ -121,7 +121,7 @@ cd docs/book && mdbook serve
 - `--capability-manifest`: print the versioned JSON FSMGen capability manifest and exit.
 - `--check --json`: run the full pipeline as a check, emit JSON diagnostics, and do not write HDL.
 - `--emit-semantic-json`: run the full pipeline, emit bounded normalized semantic JSON, and do not write HDL.
-- `--verify-hdl`: after writing generated SystemVerilog, run Verilator lint and Yosys synthesis lowering.
+- `--verify-hdl`: after writing generated SystemVerilog, run Verilator lint and ABC-free Yosys structural synthesis.
 - `-q, --quiet`: suppress informational output.
 
 The bounded machine-readable surfaces are backed by support accounting:

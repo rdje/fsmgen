@@ -242,7 +242,8 @@ report contract, and the bounded `HDLGenerator` result contract for in-process
 embedders, while making clear that the raw result hash is not JSON-safe as a
 whole. It also advertises the optional external SystemVerilog validation lane:
 `--verify-hdl` / `--validate-hdl` writes generated `.sv` and then runs
-Verilator lint plus Yosys synthesis lowering when those tools are installed.
+Verilator lint plus ABC-free Yosys structural synthesis when those tools are
+installed.
 That lane is currently SystemVerilog-only; VHDL/GHDL validation waits for an
 active VHDL backend.
 

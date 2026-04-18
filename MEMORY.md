@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-18: Yosys external validation stays ABC-free
+- [perl/FSM/Support/HDLExternalValidation.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLExternalValidation.pm)
+  now treats Verilator and Yosys as two distinct post-emission gates:
+  Verilator checks generated SystemVerilog validity/lint cleanliness, while
+  Yosys checks that the same SV can be lowered into structural logic.
+- The Yosys script is deliberately `read_verilog -sv -noautowire; synth
+  -noabc -top <top>; stat`. Do not add ABC/ABC9 to this lane until a future
+  dedicated hardening pass explicitly tackles ABC-specific timeout and mapping
+  edge cases.
+- [t/308-systemverilog-external-validation.t](/Users/richarddje/Documents/github/fsmgen/t/308-systemverilog-external-validation.t)
+  now asserts that the Yosys command includes `synth -noabc` and does not run
+  a standalone `abc` / `abc9` pass. The capability manifest also advertises
+  `yosys_abc_enabled => false`.
+
 ## 2026-04-18: direct protocol external validation is corpus-backed
 - [t/308-systemverilog-external-validation.t](/Users/richarddje/Documents/github/fsmgen/t/308-systemverilog-external-validation.t)
   now derives supported direct protocol actors from
@@ -116,8 +130,8 @@ This is the live continuity document for fast session recovery after crashes, re
   and wired `bin/fsmgen --verify-hdl` / `--validate-hdl` for generated
   SystemVerilog.
 - The CLI writes the `.sv` file first, then runs Verilator
-  `--lint-only --sv` and Yosys `read_verilog -sv -noautowire; hierarchy -check;
-  proc; opt; stat` through the support module.
+  `--lint-only --sv` and ABC-free Yosys structural synthesis through the
+  support module.
 - The first external probe on `fsm/lte_dif_pmaster.fsm` caught implicit enable
   wires and multi-bit reset assignments using `1'b0`; the backend now declares
   generated enable nets explicitly and sizes common reset literals to the LHS

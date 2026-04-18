@@ -22,14 +22,26 @@ if (@missing_tools) {
     plan skip_all => 'External SystemVerilog validation tools are not installed: ' . join(', ', @missing_tools);
 }
 
-subtest 'generated lte_dif_pmaster SystemVerilog passes Verilator lint and Yosys synthesis lowering' => sub {
+subtest 'generated lte_dif_pmaster SystemVerilog passes Verilator lint and ABC-free Yosys synthesis' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $report = generate_and_validate($tempdir, 'fsm/lte_dif_pmaster.fsm');
     ok($report->{ok}, 'external validation report succeeds for lte_dif_pmaster');
     is_deeply(
         [map { $_->{name} } @{$report->{steps}}],
         [qw(verilator_lint yosys_synthesis)],
-        'external validation runs Verilator lint before Yosys synthesis lowering',
+        'external validation runs Verilator lint before Yosys synthesis',
+    );
+    my ($yosys_step) = grep { $_->{name} eq 'yosys_synthesis' } @{$report->{steps}};
+    my $yosys_script = $yosys_step->{command}[2];
+    like(
+        $yosys_script,
+        qr/\bsynth\s+-noabc\s+-top\s+lte_dif_pmaster\b/,
+        'Yosys validation explicitly synthesizes without ABC',
+    );
+    unlike(
+        $yosys_script,
+        qr/(?:^|[;\s])abc[0-9]?(?:\s|;|\z)/i,
+        'Yosys validation does not run a standalone ABC pass',
     );
 };
 
@@ -41,7 +53,7 @@ subtest 'generated MIPI examples with inferred widths pass external validation' 
         fsm/mipicsi2_txtimer.fsm
     )) {
         my $report = generate_and_validate($tempdir, $sample);
-        ok($report->{ok}, "$sample passes Verilator lint and Yosys synthesis lowering");
+        ok($report->{ok}, "$sample passes Verilator lint and ABC-free Yosys synthesis");
     }
 };
 
@@ -58,7 +70,7 @@ subtest 'supported direct protocol fixtures pass external validation' => sub {
         my $report = generate_and_validate($tempdir, $entry->{relpath});
         ok(
             $report->{ok},
-            "$entry->{id} passes Verilator lint and Yosys synthesis lowering",
+            "$entry->{id} passes Verilator lint and ABC-free Yosys synthesis",
         ) or diag(explain($report));
     }
 };

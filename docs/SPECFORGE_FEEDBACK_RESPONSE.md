@@ -189,12 +189,15 @@ fsmgen --verify-hdl path/to/file.fsm
 ```
 
 `--validate-hdl` is the same mode. The command writes generated `.sv`, then
-runs Verilator `--lint-only --sv` and Yosys `read_verilog -sv -noautowire`,
-`hierarchy -check`, `proc`, `opt`, and `stat` through
-`FSM::Support::HDLExternalValidation`. This should be understood as a backend
-quality gate for emitted HDL, not as a replacement for FSMGen's semantic,
-strict-mode, and pre-generation checks. The lane is SystemVerilog-only for now;
-VHDL/GHDL validation waits until FSMGen has a real VHDL backend.
+runs Verilator `--lint-only --sv` and ABC-free Yosys structural synthesis
+through `read_verilog -sv -noautowire`, `synth -noabc -top`, and `stat` in
+`FSM::Support::HDLExternalValidation`. Verilator is the generated-SV validity
+gate; Yosys is the “can this become structural logic?” gate. ABC is
+deliberately disabled until a later dedicated lane handles ABC-specific
+timeout and mapping edge cases. This should be understood as a backend quality
+gate for emitted HDL, not as a replacement for FSMGen's semantic, strict-mode,
+and pre-generation checks. The lane is SystemVerilog-only for now; VHDL/GHDL
+validation waits until FSMGen has a real VHDL backend.
 
 ### 6. Reset And Clock Contract Metadata
 

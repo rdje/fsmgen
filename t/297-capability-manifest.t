@@ -183,6 +183,15 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest records Verilator and Yosys as the external validation tools',
     );
     is(
+        $manifest->{backend_validation}{systemverilog_external}{yosys_stage},
+        'read_verilog_sv_noautowire_synth_noabc_stat',
+        'manifest records the ABC-free Yosys structural synthesis stage',
+    );
+    ok(
+        !$manifest->{backend_validation}{systemverilog_external}{yosys_abc_enabled},
+        'manifest records that the Yosys ABC algorithm is disabled',
+    );
+    is(
         $manifest->{backend_validation}{systemverilog_external}{report_source},
         'FSM::Support::HDLExternalValidation',
         'manifest records the external HDL validation owner',

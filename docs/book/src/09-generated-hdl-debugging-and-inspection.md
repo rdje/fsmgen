@@ -61,15 +61,19 @@ semantic checks, pre-generation operand/type/width checks, and emitter. After
 the `.sv` file is written, it runs:
 
 - Verilator with `--lint-only --sv`
-- Yosys with `read_verilog -sv -noautowire`, `hierarchy -check`, `proc`,
-  `opt`, and `stat`
+- Yosys with `read_verilog -sv -noautowire`, `synth -noabc -top`, and `stat`
 
 This split is intentional. Verilator and Yosys are independent backend
 validation gates for the emitted HDL; they do not replace FSMGen's internal AST
-and semantic contracts. VHDL validation with GHDL is intentionally deferred
-until FSMGen has an active VHDL backend. The current regression gate is a
-focused SystemVerilog smoke, not yet a claim that every historical sample in
-`fsm/` is externally warning-clean.
+and semantic contracts. More specifically, Verilator answers “did FSMGen emit
+valid lint-clean SystemVerilog?” while Yosys answers “can that SystemVerilog be
+lowered into structural logic?” The Yosys lane uses `synth -noabc` on purpose:
+ABC optimization/mapping can have timeout-sensitive edge cases, and those
+belong to a later dedicated hardening lane rather than this garbage-code gate.
+VHDL validation with GHDL is intentionally deferred until FSMGen has an active
+VHDL backend. The current regression gate is a focused SystemVerilog smoke,
+not yet a claim that every historical sample in `fsm/` is externally
+warning-clean.
 
 The focused smoke currently includes `fsm/lte_dif_pmaster.fsm`, the MIPI
 byte-serial/timer examples that rely on inferred widths from slices,

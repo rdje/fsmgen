@@ -1636,7 +1636,7 @@ Example parameterized generated child:
 - `--capability-manifest` : print schema-versioned JSON describing the current support/capability surface and exit without requiring an input `.fsm`
 - `--check --json` : run the full pipeline as a check, emit schema-versioned JSON diagnostics, and do not write HDL
 - `--emit-semantic-json` : run the full pipeline, emit bounded normalized semantic JSON, and do not write HDL
-- `--verify-hdl` : after writing generated SystemVerilog, run Verilator lint and Yosys synthesis lowering
+- `--verify-hdl` : after writing generated SystemVerilog, run Verilator lint and ABC-free Yosys structural synthesis
 - `-q, --quiet` : suppress informational messages
 - `-h, --help` : full CLI help
 
@@ -1655,12 +1655,16 @@ supported-corpus coverage, including check JSON and normalized semantic JSON.
 It also advertises the optional external SystemVerilog validation lane:
 `--verify-hdl` / `--validate-hdl` writes the generated `.sv`, then runs
 Verilator in lint-only SystemVerilog mode and Yosys with
-`read_verilog -sv -noautowire`, `hierarchy -check`, `proc`, `opt`, and `stat`.
-This is a backend validation gate, not a replacement for FSMGen's own semantic
-and pre-generation checks. The lane is SystemVerilog-only for now; VHDL/GHDL
-validation intentionally waits until FSMGen has an active VHDL backend. The
-current regression coverage is a focused generated-SystemVerilog smoke, not yet
-a claim that every historical sample under `fsm/` is externally warning-clean.
+`read_verilog -sv -noautowire`, `synth -noabc -top`, and `stat`. Verilator is
+the “is this valid lint-clean SystemVerilog?” gate; Yosys is the “can this be
+turned into structural logic?” gate. The Yosys ABC algorithm is deliberately
+disabled until a later dedicated lane handles ABC-specific timeout and mapping
+edge cases. This is a backend validation gate, not a replacement for FSMGen's
+own semantic and pre-generation checks. The lane is SystemVerilog-only for now;
+VHDL/GHDL validation intentionally waits until FSMGen has an active VHDL
+backend. The current regression coverage is a focused generated-SystemVerilog
+smoke, not yet a claim that every historical sample under `fsm/` is externally
+warning-clean.
 For in-process embedders, it also exposes the bounded
 `HDLGenerator->generate_hdl_from_file(...)` result contract. That contract
 stabilizes top-level key presence for fields such as `hdl_code`, `module_info`,

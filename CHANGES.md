@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-18
+### Yosys external validation is ABC-free netlist sanity
+- Updated [perl/FSM/Support/HDLExternalValidation.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLExternalValidation.pm) so the Yosys side of `--verify-hdl` now runs `read_verilog -sv -noautowire`, `synth -noabc -top`, and `stat`: Verilator remains the generated-SystemVerilog validity gate, while Yosys proves the emitted HDL can become structural logic without entering ABC.
+- Extended [t/308-systemverilog-external-validation.t](/Users/richarddje/Documents/github/fsmgen/t/308-systemverilog-external-validation.t) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the ABC-free Yosys policy is regression-backed and advertised in the capability manifest.
+- Updated README, USER_GUIDE, the mdBook generated-HDL and embedding chapters, regression-corpus docs, SPECFORGE alignment notes, import-tree notes, roadmap, and live memory so the policy is explicit: ABC-specific timeout and mapping edge cases are deferred to a later hardening lane, not part of the current garbage-code gate.
+
 ### intent scheduling brainstorm log started
 - Added [docs/INTENT_SCHEDULING_BRAINSTORM.md](/Users/richarddje/Documents/github/fsmgen/docs/INTENT_SCHEDULING_BRAINSTORM.md) as the git-tracked living note for brainstorming a hardware-native intent layer above explicit cycle-authored `.fsm`, preserving the initial Q/A exchange about inferring/scheduling cycles, keeping `.fsm` as an inspectable middle layer, and leaving the eventual 3-letter extension open.
 - Linked the new brainstorm note from [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) so future sessions can find and append to it deliberately.
@@ -33,7 +38,7 @@ This is the persistent technical change history for FSMGen.
 
 ### external SystemVerilog validation lane shipped
 - Added [perl/FSM/Support/HDLExternalValidation.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLExternalValidation.pm) as the optional Verilator/Yosys validation owner for generated SystemVerilog.
-- Added `bin/fsmgen --verify-hdl` / `--validate-hdl`, which writes the generated `.sv` file, then runs Verilator `--lint-only --sv` and Yosys `read_verilog -sv -noautowire; hierarchy -check; proc; opt; stat`.
+- Added `bin/fsmgen --verify-hdl` / `--validate-hdl`, which writes the generated `.sv` file, then runs Verilator `--lint-only --sv` and an ABC-free Yosys structural-synthesis script.
 - Hardened direct SystemVerilog emission so generated enable nets are explicitly declared and multi-bit reset literals are width-sized before Verilator/Yosys see the file.
 - Added [t/308-systemverilog-external-validation.t](/Users/richarddje/Documents/github/fsmgen/t/308-systemverilog-external-validation.t) plus [t/268-lte-dif-pmaster-consolidated-intermediate-regression.t](/Users/richarddje/Documents/github/fsmgen/t/268-lte-dif-pmaster-consolidated-intermediate-regression.t) coverage for explicit enable declarations, sized reset literals, and external validation of `fsm/lte_dif_pmaster.fsm`.
 

@@ -202,11 +202,14 @@ When `verilator` and `yosys` are installed, that smoke generates
 `fsm/mipicsi2_txtimer.fsm`, plus every supported direct protocol actor from
 the corpus (`fsm/apb_requester.fsm`, `fsm/apb_completer.fsm`, and
 `fsm/amba_requester.fsm` today), validates the emitted `.sv` files with
-Verilator `--lint-only --sv`, validates Yosys lowering with
-`read_verilog -sv -noautowire`, `hierarchy -check`, `proc`, `opt`, and `stat`,
-and proves the CLI `--verify-hdl` lane invokes the same external gates. When
-the tools are absent, the test skips rather than making the baseline Perl
-regression suite depend on local EDA installs.
+Verilator `--lint-only --sv`, validates ABC-free Yosys structural synthesis
+with `read_verilog -sv -noautowire`, `synth -noabc -top`, and `stat`, and
+proves the CLI `--verify-hdl` lane invokes the same external gates. Verilator
+is the generated-SystemVerilog validity gate; Yosys is the structural-netlist
+sanity gate. ABC is intentionally disabled until a future lane handles
+ABC-specific timeout and mapping edge cases. When the tools are absent, the
+test skips rather than making the baseline Perl regression suite depend on
+local EDA installs.
 
 [t/310-systemverilog-implicit-width-and-truthiness-hardening.t](/Users/richarddje/Documents/github/fsmgen/t/310-systemverilog-implicit-width-and-truthiness-hardening.t)
 locks the non-tool-specific side of that hardening: static RHS slices infer
