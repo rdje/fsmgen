@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-18: late selector evidence now widens earlier whole-signal assignments
+- [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm)
+  now runs a bounded post-parse fixpoint over simple whole-signal assignment
+  edges before interface generation. This lets later exact width evidence from
+  selectors/guards flow back to earlier authored assignments.
+- Concrete fixed case:
+  [fsm/mipicsi2_tester_ctrl.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/mipicsi2_tester_ctrl.fsm)
+  used `cnt <- cnt_wait` in `s0`, then later refined `cnt` to 8 bits through
+  `?cnt` selectors in `s1`. Previously `cnt_wait` stayed a 1-bit top-level
+  input; it now widens to 8 bits before SignalAnalyzer emits the interface.
+- [t/310-systemverilog-implicit-width-and-truthiness-hardening.t](/Users/richarddje/Documents/github/fsmgen/t/310-systemverilog-implicit-width-and-truthiness-hardening.t)
+  locks the generated HDL shape, and
+  [t/308-systemverilog-external-validation.t](/Users/richarddje/Documents/github/fsmgen/t/308-systemverilog-external-validation.t)
+  now includes `mipicsi2_tester_ctrl` in the focused Verilator/Yosys smoke.
+- Remaining known all-`fsm/` external-validation blockers are now the APB
+  composition top, unsupported historical `?define`, malformed/legacy
+  composition samples, and `trial_1`'s unsupported `!&` operator.
+
 ## 2026-04-18: enable-graph CoreAST slices stay intact through SV rendering
 - [perl/FSM/Synthesis/EnableGraph/ASTSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/ASTSupport.pm)
   now renders `FSM::CoreAST::SignalRef` through its own SystemVerilog method
@@ -46,8 +64,7 @@ This is the live continuity document for fast session recovery after crashes, re
   blockers include `apb_tb` missing generated instance pins,
   `generic_fifo`'s unsupported historical `?define` root,
   malformed/legacy composition samples in `lte_digital_rf` and `trial_2`,
-  `trial_1`'s unsupported `!&` operator, and width-cleanup cases in
-  `mipicsi2_pkt_nx4B_fifo` and `mipicsi2_tester_ctrl`.
+  and `trial_1`'s unsupported `!&` operator.
 
 ## 2026-04-18: intent scheduling brainstorm log started
 - Created [docs/INTENT_SCHEDULING_BRAINSTORM.md](/Users/richarddje/Documents/github/fsmgen/docs/INTENT_SCHEDULING_BRAINSTORM.md)
@@ -119,7 +136,8 @@ This is the live continuity document for fast session recovery after crashes, re
 - [t/310-systemverilog-implicit-width-and-truthiness-hardening.t](/Users/richarddje/Documents/github/fsmgen/t/310-systemverilog-implicit-width-and-truthiness-hardening.t)
   locks the direct HDL text contract, and
   [t/308-systemverilog-external-validation.t](/Users/richarddje/Documents/github/fsmgen/t/308-systemverilog-external-validation.t)
-  now validates `lte_dif_pmaster`, `mipicsi2_byteserial`, and `mipicsi2_txtimer`
+  now validates `lte_dif_pmaster`, `mipicsi2_byteserial`,
+  `mipicsi2_pkt_nx4B_fifo`, `mipicsi2_tester_ctrl`, and `mipicsi2_txtimer`
   with Verilator/Yosys when installed.
 - Remaining known hardening:
   - Broader all-`fsm/` external validation is still not claimed, but
@@ -156,7 +174,8 @@ This is the live continuity document for fast session recovery after crashes, re
   generated enable nets explicitly and sizes common reset literals to the LHS
   width before emitting flop resets.
 - [t/308-systemverilog-external-validation.t](/Users/richarddje/Documents/github/fsmgen/t/308-systemverilog-external-validation.t)
-  validates `lte_dif_pmaster`, `mipicsi2_byteserial`, and `mipicsi2_txtimer`
+  validates `lte_dif_pmaster`, `mipicsi2_byteserial`,
+  `mipicsi2_pkt_nx4B_fifo`, `mipicsi2_tester_ctrl`, and `mipicsi2_txtimer`
   with both external tools when installed and skips otherwise.
 - Broader local reconnaissance over active `fsm/*.fsm` samples found additional
   follow-up backend issues in some legacy/sample generated files. The malformed

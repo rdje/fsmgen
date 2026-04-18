@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-18
+### direct whole-signal assignments now reconcile late width evidence
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so, after all states/tests are parsed, a bounded parser-side fixpoint pushes known widths across simple whole-signal assignment edges before interface generation. This lets later selector/guard evidence refine earlier authored assignments such as `cnt <- cnt_wait`.
+- Added regression coverage in [t/310-systemverilog-implicit-width-and-truthiness-hardening.t](/Users/richarddje/Documents/github/fsmgen/t/310-systemverilog-implicit-width-and-truthiness-hardening.t), where `fsm/mipicsi2_tester_ctrl.fsm` now infers `cnt_wait` as an 8-bit input from the later `?cnt` selector family instead of leaving it as a 1-bit top-level signal.
+- Promoted [fsm/mipicsi2_tester_ctrl.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/mipicsi2_tester_ctrl.fsm) into the optional Verilator/Yosys smoke in [t/308-systemverilog-external-validation.t](/Users/richarddje/Documents/github/fsmgen/t/308-systemverilog-external-validation.t).
+
 ### Enable-graph CoreAST slices preserve authored ranges
 - Updated [perl/FSM/Synthesis/EnableGraph/ASTSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/ASTSupport.pm) so CoreAST signal references render through their own SystemVerilog method before falling back to base-name extraction; sliced references such as `cnt[2:1]` no longer collapse to the full `cnt` signal in flattened enable expressions.
 - Extended the same owner so one-bit versus multibit classification respects explicit CoreAST slice width, keeping logical-operator selection and truthiness lowering width-aware for sliced operands.

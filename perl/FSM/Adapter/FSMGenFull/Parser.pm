@@ -296,10 +296,127 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
         }
     }
 
+    $self->reconcile_simple_assignment_signal_widths($module);
     $self->validate_transition_targets($module);
     $self->validate_no_combinational_self_dependency();
     fsm_trace_exit("Parser parse_fsm_module() completed for '$module_name'", 2);
     return $module;
+}
+
+sub reconcile_simple_assignment_signal_widths($self, $fsm_module) {
+    return unless $fsm_module && $fsm_module->can('states');
+
+    my $registry = $self->{signal_manager}{signal_registry} || {};
+    my $iteration_limit = scalar(keys %$registry) + 1;
+    $iteration_limit = 2 if $iteration_limit < 2;
+
+    my $changed = 1;
+    my $iteration = 0;
+    while ($changed && $iteration < $iteration_limit) {
+        $changed = 0;
+        $iteration++;
+
+        for my $state (@{$fsm_module->states || []}) {
+            next unless blessed($state) && $state->can('decision_trees');
+            for my $dt (@{$state->decision_trees || []}) {
+                next unless blessed($dt) && $dt->can('elements');
+                for my $element (@{$dt->elements || []}) {
+                    $self->_reconcile_simple_assignment_signal_widths_in_element($element, \$changed);
+                }
+            }
+        }
+    }
+}
+
+sub _reconcile_simple_assignment_signal_widths_in_element($self, $element, $changed_ref) {
+    return unless $element && blessed($element);
+
+    if ($element->isa('FSM::CoreAST::Assignment') || $element->isa('FSM::CoreAST::RegisterAssignment')) {
+        $self->_reconcile_simple_assignment_signal_widths_for_assignment($element, $changed_ref);
+        return;
+    }
+
+    if ($element->isa('FSM::CoreAST::ConditionalBranch')) {
+        for my $branch ($element->branches->@*) {
+            for my $action ($branch->{actions}->@*) {
+                $self->_reconcile_simple_assignment_signal_widths_in_element($action, $changed_ref);
+            }
+        }
+        return;
+    }
+
+    if ($element->isa('FSM::CoreAST::TestNode')) {
+        for my $branch ($element->test_branches->@*) {
+            for my $action ($branch->{actions}->@*) {
+                $self->_reconcile_simple_assignment_signal_widths_in_element($action, $changed_ref);
+            }
+        }
+        return;
+    }
+}
+
+sub _reconcile_simple_assignment_signal_widths_for_assignment($self, $assignment, $changed_ref) {
+    my ($target_signal, $source_signal) = $self->_simple_assignment_signal_pair($assignment);
+    return unless $target_signal && $source_signal;
+    return if $target_signal->name eq $source_signal->name;
+
+    my $target_width = $target_signal->width;
+    my $source_width = $source_signal->width;
+
+    if (defined($target_width) && $target_width > 1 && $self->_signal_width_accepts_inference($source_signal)) {
+        $$changed_ref = 1 if $self->_update_signal_width_from_inference($source_signal, $target_width);
+    }
+
+    if (defined($source_width) && $source_width > 1 && $self->_signal_width_accepts_inference($target_signal)) {
+        $$changed_ref = 1 if $self->_update_signal_width_from_inference($target_signal, $source_width);
+    }
+}
+
+sub _simple_assignment_signal_pair($self, $assignment) {
+    return unless $assignment && blessed($assignment);
+    return unless $assignment->can('target') && $assignment->can('source');
+
+    my $target = $assignment->target;
+    my $source = $assignment->source;
+    return unless $target && $source;
+    return unless $target->isa('FSM::CoreAST::SignalRef');
+    return unless $source->isa('FSM::CoreAST::SignalRef');
+    return if $target->slice;
+    return if $source->slice;
+
+    my $target_signal = $target->signal;
+    my $source_signal = $source->signal;
+    return unless $target_signal && $source_signal;
+
+    return ($target_signal, $source_signal);
+}
+
+sub _signal_width_accepts_inference($self, $signal) {
+    return 0 unless $signal && $signal->can('width');
+    return 0 if $signal->can('get_attribute') && $signal->get_attribute('width_declared');
+
+    my $width = $signal->width;
+    return 1 unless defined $width;
+    return $width <= 1 ? 1 : 0;
+}
+
+sub _update_signal_width_from_inference($self, $signal, $required_width) {
+    return 0 unless $signal && $signal->can('name');
+    return 0 unless defined($required_width) && $required_width > 1;
+
+    my $before_width = $signal->width;
+    my $updated_signal = $self->{signal_manager}->register_signal(
+        $signal->name,
+        width => $required_width,
+        type => $signal->type,
+        is_output => ($signal->can('get_attribute') && $signal->get_attribute('is_output')) ? 1 : 0,
+    );
+
+    my $after_width = $updated_signal && $updated_signal->can('width')
+        ? $updated_signal->width
+        : undef;
+
+    return (defined($after_width) && (!defined($before_width) || $after_width != $before_width)) ? 1 : 0;
 }
 
 sub validate_module_root_body($self, $module_name, $fsm_contents, $is_flat_ast = 0, $root_kind = 'fsm') {

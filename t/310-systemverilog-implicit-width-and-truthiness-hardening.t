@@ -61,6 +61,21 @@ subtest 'enable-graph rendering preserves sliced CoreAST relational guards' => s
     );
 };
 
+subtest 'whole-signal assignment widths reconcile after later selector inference' => sub {
+    my $hdl = generate_sv('fsm/mipicsi2_tester_ctrl.fsm');
+
+    like(
+        $hdl,
+        qr/\binput\s+wire\s+\[7:0\]\s+cnt_wait\b/,
+        'later selector inference widens cnt_wait to match the 8-bit counter assignment edge',
+    );
+    like(
+        $hdl,
+        qr/\bcnt_next\s*=\s*cnt_wait\s*;/,
+        'counter mux still uses the simple authored whole-signal assignment once widths reconcile',
+    );
+};
+
 subtest 'intermediate arithmetic width follows assignment-analysis signal widths' => sub {
     my $hdl = generate_sv('fsm/amba_requester.fsm');
 
