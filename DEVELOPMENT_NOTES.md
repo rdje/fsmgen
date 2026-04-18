@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-18: check JSON should separate builder ownership from public contract ownership too
+- The same reasoning that justified
+  `FSM::Support::NormalizedSemanticReportContract` also applies to
+  `--check --json`: the code that assembles a report is not automatically the
+  best place to define what embedders may rely on.
+- `FSM::Support::CheckDiagnostics` should keep owning report construction and
+  classification behavior, while a separate contract owner names the bounded
+  public promise over that payload.
+- The subtle but important contract split is now explicit:
+  - common top-level keys are public on both success and failure,
+  - report-level `support_accounting` is success-only,
+  - failure-side support accounting is promised only inside each diagnostic,
+  - and the whole failure-diagnostic schema is still not declared frozen.
+- This is the safer `R13` pattern for machine-readable surfaces:
+  advertise exactly the bounded keys that are regression-backed today, and
+  widen from there deliberately instead of letting a builder module or a few
+  sample payloads accidentally become the public API.
+
 ## 2026-04-18: bounded public JSON surfaces should have dedicated contract owners
 - `FSM::Support::NormalizedSemanticReport` already owned how semantic JSON is
   assembled, but that is not quite the same thing as owning the public contract

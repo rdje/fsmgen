@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-18: check JSON now has an explicit bounded contract owner too
+- Added
+  [perl/FSM/Support/CheckDiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnosticsContract.pm)
+  as the explicit owner for the bounded `--check --json` public promise:
+  common top-level keys, success-only top-level keys, bounded success-result
+  keys, bounded success support-accounting keys, and bounded failure-diagnostic
+  keys.
+- [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+  now advertises that contract directly instead of describing the check-JSON
+  surface inline, and
+  [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+  now locks that manifest-facing owner plus the advertised bounded key lists.
+- [t/312-check-diagnostics-contract.t](/Users/richarddje/Documents/github/fsmgen/t/312-check-diagnostics-contract.t)
+  now regression-locks the public check-JSON promise directly for ad-hoc
+  success, corpus-backed composition success, and matched failure diagnostics.
+- The reachable `bin/fsmgen` support surface now includes that contract owner
+  too, moving the measured import-tree totals to `133` project files /
+  `132` `.pm` packages with `Support => 11`.
+
 ## 2026-04-18: normalized semantic JSON now has an explicit bounded contract owner
 - Added
   [perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm)

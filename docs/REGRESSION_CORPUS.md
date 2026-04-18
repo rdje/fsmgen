@@ -163,6 +163,13 @@ reports must also include a report-level `support_accounting` object with the
 matched entry id, family, coverage bucket, classification, source kind, and
 `strict_supported` marker.
 
+[t/312-check-diagnostics-contract.t](/Users/richarddje/Documents/github/fsmgen/t/312-check-diagnostics-contract.t)
+locks the bounded public key-presence promise for that same command surface.
+[perl/FSM/Support/CheckDiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnosticsContract.pm)
+is now the explicit owner for the common top-level keys plus the bounded
+success-result, success support-accounting, and failure-diagnostic key lists
+advertised through `--capability-manifest`.
+
 The first bounded normalized semantic JSON path reuses the same
 support-accounting bridge for accepted corpus sources:
 

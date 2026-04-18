@@ -7,6 +7,7 @@ use Exporter 'import';
 use File::Basename qw(dirname);
 use File::Spec;
 use JSON::PP ();
+use FSM::Support::CheckDiagnosticsContract qw(build_check_diagnostics_contract);
 use FSM::Support::CompositionReportContract qw(build_composition_report_contract);
 use FSM::Support::DiagnosticCodes qw(diagnostic_code_registry);
 use FSM::Support::ExtensionContract qw(build_extension_contract);
@@ -63,21 +64,12 @@ sub build_capability_manifest {
                 } sort keys %{$diagnostic_registry}
             ],
             check_json => {
-                schema_version => 1,
-                status => 'bounded_public',
-                command_shape => './bin/fsmgen --strict --check --json path/to/file.fsm',
-                alias => './bin/fsmgen --strict --check-json path/to/file.fsm',
-                emits_stable_codes => JSON::PP::true,
-                emits_hdl => JSON::PP::false,
-                unclassified_failures_use_null_code => JSON::PP::true,
-                emits_support_accounting_object => JSON::PP::true,
-                emits_success_support_accounting_object => JSON::PP::true,
+                %{build_check_diagnostics_contract()},
                 supported_smoke_corpus_covered => JSON::PP::true,
                 strict_supported_corpus_covered => JSON::PP::true,
                 expected_failure_corpus_covered => JSON::PP::true,
                 classifier_match_policy => 'most_specific_expected_error_pattern',
                 success_match_policy => 'resolved_source_path_to_non_failure_corpus_entry',
-                report_source => 'FSM::Support::CheckDiagnostics',
             },
         },
         semantic_exports => {

@@ -121,6 +121,23 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest records the check JSON report owner',
     );
     is(
+        $manifest->{diagnostics}{check_json}{contract_source},
+        'FSM::Support::CheckDiagnosticsContract',
+        'manifest records the check JSON contract owner',
+    );
+    ok(
+        scalar(@{$manifest->{diagnostics}{check_json}{public_top_level_presence_keys} || []}) >= 7,
+        'manifest advertises bounded check JSON top-level key presence',
+    );
+    ok(
+        scalar(@{$manifest->{diagnostics}{check_json}{success_result_presence_keys} || []}) >= 4,
+        'manifest advertises bounded check JSON success-result key presence',
+    );
+    ok(
+        scalar(@{$manifest->{diagnostics}{check_json}{failure_diagnostic_presence_keys} || []}) >= 9,
+        'manifest advertises bounded check JSON failure-diagnostic key presence',
+    );
+    is(
         $manifest->{semantic_exports}{normalized_semantic_json}{schema_version},
         1,
         'manifest records normalized semantic JSON schema version',

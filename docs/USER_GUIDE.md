@@ -1766,6 +1766,13 @@ machine-friendly place. FSMGen chooses the most specific matching
 support-accounting pattern when more than one expected-failure pattern matches.
 Failures outside the current classifier still return JSON with a `null` code
 rather than pretending a stable diagnostic identity exists.
+The bounded key-presence contract for this surface now has its own explicit
+owner in
+[perl/FSM/Support/CheckDiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnosticsContract.pm).
+That contract is also advertised through `--capability-manifest`, so
+downstream tools can discover the common top-level keys plus the current
+bounded success-result and failure-diagnostic keys without scraping prose or
+guessing from sample payloads.
 
 The first bounded normalized semantic JSON surface is:
 

@@ -266,6 +266,12 @@ object gives embedders the matched entry id, family, coverage, classification,
 source kind, and `strict_supported` marker. Successful user sources outside the
 corpus report `matched: false` instead of claiming catalog support they do not
 yet have.
+The bounded key-presence contract for this surface now has its own owner:
+[perl/FSM/Support/CheckDiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnosticsContract.pm).
+The capability manifest advertises that contract so downstream tools can
+discover the common top-level keys plus the current bounded success-result and
+failure-diagnostic keys without relying only on narrative docs or reverse-
+engineering sample payloads.
 
 The first bounded normalized semantic surface is now:
 
