@@ -78,6 +78,22 @@ FSM
         qr/internal operand 'ghost_helper' that is declared but not backed by any internal assignment/,
         'validator rejects declared-but-unassigned internal operands referenced by prepared consolidated intermediates',
     );
+
+    delete $prepared_block->{filtered_signals}{A_or_B};
+    $prepared_backend->{lhs_assignments}{OUT1}[0]{rhs} = '!(ghost_helper)';
+    $prepared_block->{all_intermediate_signals}{ghost_helper} = {
+        source => 'fsmgen_parsing',
+    };
+
+    $error = capture_error(sub {
+        $prepared_backend->{backend_sv_operand_contract_validation_support}
+            ->validate_pre_generation_operand_contract($fsm_module, $prepared_block);
+    });
+    like(
+        $error,
+        qr/assignment RHS for 'OUT1' references internal operand 'ghost_helper' that is declared but not backed by any internal assignment/,
+        'validator rejects declared-but-unassigned internal operands referenced only from assignment RHS expressions',
+    );
 };
 
 subtest 'post-flattening assembly support runs operand-contract validation before final HDL emission' => sub {

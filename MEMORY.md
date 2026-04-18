@@ -1,5 +1,37 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-18: negated n-ary expression operators now land as valid internal AST/helpers
+- [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm)
+  now accepts `!&`, `!|`, and `!^` in direct RHS expressions, with word aliases
+  `nand`, `nor`, and `xnor`. The frontend lowers them as ordinary AST
+  composition: unary `!` over the existing `&`, `|`, or `^` family, rather
+  than relying on a late renderer special case.
+- The direct backend now treats assignment RHS expressions as first-class
+  live-usage and pre-generation-validation inputs:
+  [perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm),
+  [perl/FSM/Synthesis/EnableGraph/FactorizationPolicySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/FactorizationPolicySupport.pm),
+  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalFilterPolicySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalFilterPolicySupport.pm),
+  and
+  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/OperandContractValidationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/OperandContractValidationSupport.pm)
+  now keep parser-created helpers when a final RHS still references them and
+  fail pre-generation validation if a RHS references an internal helper that is
+  declared but never assigned.
+- [perl/FSM/IR/IntentHIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIRBuilder.pm)
+  now skips intermediate carriers when building generated-child port analysis,
+  so parser-created helpers no longer leak into composition wrapper interfaces.
+- Regression coverage:
+  [t/40-language-contract-expression-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/40-language-contract-expression-boundary.t)
+  locks the new operator surface and emitted helper declarations,
+  and
+  [t/269-systemverilog-operand-contract-validation-support.t](/Users/richarddje/Documents/github/fsmgen/t/269-systemverilog-operand-contract-validation-support.t)
+  now proves RHS-only internal-helper holes are rejected before emission.
+- `fsm/trial_1.fsm` is no longer blocked on unsupported `!&`; it now generates
+  through that expression path. It is not yet ready for
+  [t/308-systemverilog-external-validation.t](/Users/richarddje/Documents/github/fsmgen/t/308-systemverilog-external-validation.t),
+  because Verilator still reports historical width-truncation warnings on that
+  fixture's bare binary-looking literals such as `10000000` / `00001110`
+  driving undeclared `ob`.
+
 ## 2026-04-18: late selector evidence now widens earlier whole-signal assignments
 - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm)
   now runs a bounded post-parse fixpoint over simple whole-signal assignment
@@ -16,7 +48,8 @@ This is the live continuity document for fast session recovery after crashes, re
   now includes `mipicsi2_tester_ctrl` in the focused Verilator/Yosys smoke.
 - Remaining known all-`fsm/` external-validation blockers are now the APB
   composition top, unsupported historical `?define`, malformed/legacy
-  composition samples, and `trial_1`'s unsupported `!&` operator.
+  composition samples, and `trial_1`'s historical bare binary-looking literal
+  width warnings.
 
 ## 2026-04-18: enable-graph CoreAST slices stay intact through SV rendering
 - [perl/FSM/Synthesis/EnableGraph/ASTSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/ASTSupport.pm)
@@ -34,7 +67,8 @@ This is the live continuity document for fast session recovery after crashes, re
   now includes that MIPI packet FIFO in the focused Verilator/Yosys smoke.
 - Remaining all-`fsm/` external-validation blockers still include the APB
   composition top, unsupported historical `?define`, malformed/legacy
-  composition samples, `trial_1`'s unsupported `!&` operator, and the remaining
+  composition samples, `trial_1`'s historical bare binary-looking literal
+  width warnings, and the remaining
   MIPI tester-control width cleanup.
 
 ## 2026-04-18: Yosys external validation stays ABC-free
@@ -64,7 +98,7 @@ This is the live continuity document for fast session recovery after crashes, re
   blockers include `apb_tb` missing generated instance pins,
   `generic_fifo`'s unsupported historical `?define` root,
   malformed/legacy composition samples in `lte_digital_rf` and `trial_2`,
-  and `trial_1`'s unsupported `!&` operator.
+  and `trial_1`'s historical bare binary-looking literal width warnings.
 
 ## 2026-04-18: intent scheduling brainstorm log started
 - Created [docs/INTENT_SCHEDULING_BRAINSTORM.md](/Users/richarddje/Documents/github/fsmgen/docs/INTENT_SCHEDULING_BRAINSTORM.md)

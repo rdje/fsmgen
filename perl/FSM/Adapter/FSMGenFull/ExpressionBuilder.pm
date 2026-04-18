@@ -152,8 +152,11 @@ sub normalize_expression_operator($self, $operator) {
 
     my %operator_aliases = (
         and => '&',
+        nand => '!&',
         or  => '|',
+        nor => '!|',
         xor => '^',
+        xnor => '!^',
         add => '+',
         sub => '-',
         mul => '*',
@@ -170,18 +173,29 @@ sub normalize_expression_operator($self, $operator) {
     );
 
     my $normalized = $operator_aliases{$operator} // $operator;
-    my %supported = map { $_ => 1 } qw(! == != < <= > >= & | ^ + - * / % concat);
+    my %supported = map { $_ => 1 } qw(! !& !| !^ == != < <= > >= & | ^ + - * / % concat);
     return $supported{$normalized} ? $normalized : undef;
 }
 
 sub operator_family_for($self, $normalized_operator) {
     return 'unary' if defined $normalized_operator && $normalized_operator eq '!';
+    return 'negated_nary'
+        if defined $normalized_operator && $normalized_operator =~ /^(?:!&|!\||!\^)$/;
     return 'comparison'
         if defined $normalized_operator && $normalized_operator =~ /^(?:==|!=|<|<=|>|>=)$/;
     return 'concat' if defined $normalized_operator && $normalized_operator eq 'concat';
     return 'nary'
         if defined $normalized_operator && $normalized_operator =~ /^(?:&|\||\^|\+|-|\*|\/|%)$/;
     return undef;
+}
+
+sub base_operator_for_negated_nary($self, $normalized_operator) {
+    my %base_operator = (
+        '!&' => '&',
+        '!|' => '|',
+        '!^' => '^',
+    );
+    return $base_operator{$normalized_operator};
 }
 
 sub finalize_nary_expression($self, $operator, $parsed_operands) {
@@ -237,7 +251,7 @@ sub parse_recursive_expression($self, $expr) {
 
     Carp::confess
         "Unsupported expression operator '$operator'. ".
-        "Active expression operators currently include '!', '==', '!=', '<', '<=', '>', '>=', '+', '-', '*', '/', '%', '&', '|', '^', 'concat' and their documented aliases. ".
+        "Active expression operators currently include '!', '!&', '!|', '!^', '==', '!=', '<', '<=', '>', '>=', '+', '-', '*', '/', '%', '&', '|', '^', 'concat' and their documented aliases. ".
         "See docs/USER_GUIDE.md for the current supported boundary.\n"
         unless $operator_family;
 
@@ -282,6 +296,16 @@ sub parse_recursive_expression($self, $expr) {
             unless defined($concat_width) && $concat_width > 0;
 
         return $concat;
+    }
+
+    if ($operator_family eq 'negated_nary') {
+        my $base_operator = $self->base_operator_for_negated_nary($normalized_operator);
+        my $base_expr = $self->finalize_nary_expression($base_operator, \@parsed_operands);
+
+        return FSM::CoreAST::UnaryOp->new(
+            operator => '!',
+            operand  => $base_expr,
+        );
     }
 
     return $self->finalize_nary_expression($normalized_operator, \@parsed_operands);

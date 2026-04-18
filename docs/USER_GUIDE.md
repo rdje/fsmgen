@@ -433,11 +433,13 @@ Operator expressions:
 - Unsupported assignment operators such as `?=` or `=>` are rejected explicitly instead of falling through to internal parser errors.
 - Current regression-backed operator surface:
   - unary: `!`
+  - negated n-ary bitwise/logical-style families: `!&`, `!|`, `!^`
   - n-ary comparison: `==`, `!=`, `<`, `<=`, `>`, `>=`
   - n-ary arithmetic/logic: `+`, `-`, `*`, `/`, `%`, `&`, `|`, `^`
-  - aliases: `not`, `eq`, `ne`, `lt`, `le`, `gt`, `ge`, `add`, `sub`, `mul`, `div`, `mod`, `and`, `or`, `xor`
+  - aliases: `not`, `eq`, `ne`, `lt`, `le`, `gt`, `ge`, `add`, `sub`, `mul`, `div`, `mod`, `and`, `nand`, `or`, `nor`, `xor`, `xnor`
 - Current lowering model:
   - `+`, `*`, `&`, `|`, `^` are treated as n-ary expression families
+  - `!&`, `!|`, and `!^` lower as unary `!` over the corresponding factored `&`, `|`, or `^` family
   - `-`, `/`, `%` are treated as left-associative n-ary expression families
   - `==`, `!=`, `<`, `<=`, `>`, `>=` are treated as chained adjacent-pair comparison families
     - `(< a b c)` means `((a < b) && (b < c))`
@@ -459,6 +461,9 @@ Operator expressions:
   - `(mask = (^ x y z))`
   - `(alias_sum = (add a b c d))`
   - `(alias_xor = (xor x y z))`
+  - `(mask_nand = (!& a b !c (| d e)))`
+  - `(mask_nor = (nor a b c))`
+  - `(mask_xnor = (xnor a b c))`
   - `(packed = (concat header payload))`
   - `(alias_packed = (cat header payload))`
   - `((concat high_half low_half) = packed)`
@@ -497,6 +502,7 @@ Boundary note:
 - Inline scalar comparison tokens such as `cnt[2:1]!=2'2` are part of the active expression surface.
 - Malformed inline comparison tokens such as `cnt[2:1]!=` or `=3` are now rejected explicitly instead of falling through to generic expression-token errors.
 - Parser-generated intermediate expression signals now keep the source signals from their driving AST live in the generated interface instead of hiding those dependencies behind the intermediate name alone.
+- Parser-generated intermediate expression signals referenced only from assignment RHS expressions now stay internal to the generated module instead of being filtered away or leaking into generated-child composition interfaces.
 - Unsupported expression operators, malformed operator arity, and guard-only tokens in ordinary RHS expression position are now rejected explicitly instead of drifting through parser fallthrough.
 
 Test nodes:

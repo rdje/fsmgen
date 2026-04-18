@@ -195,16 +195,21 @@ The current live expression surface includes:
 - signal references
 - indexed and sliced references
 - unary `!`
+- negated n-ary bitwise/logical-style forms `!&`, `!|`, and `!^`
 - comparison operators such as `==`, `!=`, `<`, `<=`, `>`, `>=`
 - arithmetic and bitwise operators such as `+`, `-`, `*`, `/`, `%`, `&`, `|`, `^`
 - word aliases such as `not`, `eq`, `ne`, `lt`, `le`, `gt`, `ge`, `add`,
-  `sub`, `mul`, `div`, `mod`, `and`, `or`, and `xor`
+  `sub`, `mul`, `div`, `mod`, `and`, `nand`, `or`, `nor`, `xor`, and `xnor`
 - RHS pack expressions with `(concat ...)` or the shorter `(cat ...)` alias
 
 The arithmetic/bitwise expression families are n-ary. Operators such as `+`,
 `*`, `&`, `|`, and `^` combine all operands; `-`, `/`, and `%` are
 left-associative, so `(/ a b c)` means `((a / b) / c)` and `(% a b c)` means
 `((a % b) % c)`.
+
+The negated n-ary forms lower as ordinary AST composition, not as a special
+late renderer trick. `(!& A B C)` becomes `!(A & B & C)`, `(!| A B)` becomes
+`!(A | B)`, and `(xnor A B C)` is the word alias for `(!^ A B C)`.
 
 Constant-expression slots such as `+size`, `+params`, init/default metadata,
 and parameter/generic overrides fold before HDL generation. In those domains,
@@ -225,6 +230,11 @@ FSMGen emits a reduction such as `(|COUNT)` for true/non-zero or `(~|bytept)`
 for false/zero. That is why the generated HDL may not literally show the bare
 multibit signal in every enable expression; the reduction preserves the intent
 and keeps Verilator/Yosys width checks clean.
+
+Parser-created intermediate helpers that support these expression trees remain
+internal implementation detail. They are now kept declared/assigned whenever a
+final RHS expression still references them, and they do not become inferred
+composition ports.
 
 Examples:
 

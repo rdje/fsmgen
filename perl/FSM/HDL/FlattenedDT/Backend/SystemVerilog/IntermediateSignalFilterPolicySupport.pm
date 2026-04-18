@@ -72,9 +72,15 @@ sub should_filter_ast_based ($self, $ast, $signal_name, $signal_info) {
     my $live_usage = $ctx->{enable_graph_factorization_support}->resolve_intermediate_signal_live_usage($signal_name, $signal_info);
     my $actually_used = $live_usage->{used_in_final_expressions} ? 1 : 0;
     my $referenced_in_substitutions = $live_usage->{referenced_in_substitutions} ? 1 : 0;
+    my $source = ref($signal_info) eq 'HASH' ? ($signal_info->{source} || '') : '';
 
     if ($referenced_in_substitutions) {
         fsm_debug("  AST_FILTER: Signal '$signal_name' is referenced in AST substitutions - KEEPING", 3);
+        return 0;
+    }
+
+    if ($source eq 'fsmgen_parsing' && $actually_used) {
+        fsm_debug("  AST_FILTER: Parser-created intermediate '$signal_name' is still referenced by a final AST - KEEPING", 3);
         return 0;
     }
 
@@ -167,6 +173,7 @@ sub should_filter_runtime_ast_miss ($self, $signal_name, $signal_info) {
     my $referenced_in_substitutions = $live_usage->{referenced_in_substitutions} ? 1 : 0;
     my $used_in_final_expressions = $live_usage->{used_in_final_expressions} ? 1 : 0;
     my $evidence_state = $live_usage->{evidence_state} || 'none';
+    my $source = ($signal_info && ref($signal_info) eq 'HASH') ? ($signal_info->{source} || '') : '';
 
     if ($signal_info && ref($signal_info) eq 'HASH') {
         $signal_info->{filter_fallback_source} = 'runtime_ast_miss_live_usage';
@@ -177,6 +184,11 @@ sub should_filter_runtime_ast_miss ($self, $signal_name, $signal_info) {
 
     if ($referenced_in_substitutions) {
         fsm_debug("  RUNTIME_AST_MISS_FILTER: Signal '$signal_name' is referenced in AST substitutions - KEEPING", 3);
+        return 0;
+    }
+
+    if ($source eq 'fsmgen_parsing' && $used_in_final_expressions) {
+        fsm_debug("  RUNTIME_AST_MISS_FILTER: Parser-created intermediate '$signal_name' is still referenced by a final AST - KEEPING", 3);
         return 0;
     }
 

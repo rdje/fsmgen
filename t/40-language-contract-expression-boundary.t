@@ -63,6 +63,41 @@ FSM
     like($hdl, qr/\bcnt\[2:1\]\s*!=\s*2(?:'d)?2\b/, 'generated HDL preserves the inline scalar comparison semantics');
 };
 
+subtest 'negated n-ary bitwise expression families lower through ordinary AST operators' => sub {
+    my $fsm_path = write_fsm('negated_nary_rhs_ops.fsm', <<'FSM');
+(?fsm:negated_nary_rhs_ops
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+size
+    (A 1)
+    (B 1)
+    (C 1)
+    (D 1)
+    (E 1)
+  )
+  (-dt
+    (A = (!& B C))
+    (D = (!| B C))
+    (E = (xnor B C))
+  )
+)
+FSM
+
+    my $raw_ast = Lispish::multi($fsm_path);
+    my $adapter = FSM::Adapter::FSMGenFull->new(debug => 0);
+    my $fsm_module = $adapter->parse_fsm($raw_ast);
+    ok($fsm_module, 'negated n-ary RHS fixture parses successfully');
+
+    my $hdl = FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($fsm_module);
+    like($hdl, qr/\bwire intermediate_and_B_C_1;/, 'negated and declares the parser-created intermediate carrier');
+    like($hdl, qr/\bassign intermediate_and_B_C_1 = B & C; \/\/ Source: fsmgen_parsing\b/, 'negated and lowers through an ordinary bitwise-and AST');
+    like($hdl, qr/\bassign intermediate_or_B_C_2 = B \| C; \/\/ Source: fsmgen_parsing\b/, 'negated or lowers through an ordinary bitwise-or AST');
+    like($hdl, qr/\bassign intermediate_xor_B_C_3 = B \^ C; \/\/ Source: fsmgen_parsing\b/, 'xnor alias lowers through an ordinary bitwise-xor AST');
+    like($hdl, qr/A = !\(intermediate_and_B_C_1\);/, 'negated n-ary operators lower through unary not over the factored intermediate');
+};
+
 subtest 'malformed active RHS operator arity is rejected explicitly' => sub {
     my $fsm_path = write_fsm('bad_rhs_arity.fsm', <<'FSM');
 (?fsm:bad_rhs_arity

@@ -360,7 +360,31 @@ Return true when one AST references the given signal name anywhere in the tree.
 
 sub ast_contains_signal ($self, $ast, $signal_name) {
     my $ctx = $self->{flattened_dt};
-    return 0 unless $ast && blessed($ast);
+    return 0 unless $ast && (blessed($ast) || ref($ast) eq 'HASH');
+
+    if (ref($ast) eq 'HASH' && !blessed($ast)) {
+        if (($ast->{type} || '') eq 'signal') {
+            my $ast_signal_name = $ast->{name};
+            return 1 if $ast_signal_name && $ast_signal_name eq $signal_name;
+        }
+
+        for my $key (qw(left right operand condition true_expr false_expr index expression)) {
+            my $child = $ast->{$key};
+            next unless $child && (blessed($child) || ref($child) eq 'HASH');
+            return 1 if $self->ast_contains_signal($child, $signal_name);
+        }
+
+        for my $key (qw(operands children arguments expressions parts)) {
+            my $children = $ast->{$key};
+            next unless ref($children) eq 'ARRAY';
+            for my $child (@$children) {
+                next unless $child && (blessed($child) || ref($child) eq 'HASH');
+                return 1 if $self->ast_contains_signal($child, $signal_name);
+            }
+        }
+
+        return 0;
+    }
 
     if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef') || $ast->isa('FSM::CoreAST::AggregateRef')) {
         my $ast_signal_name = $ctx->{enable_graph_capture_support}->extract_signal_name_from_ast($ast);
@@ -502,6 +526,20 @@ sub is_signal_actually_used_in_final_expressions ($self, $signal_name) {
 
     for my $lhs (keys %{$ctx->{lhs_assignments} || {}}) {
         for my $assignment (@{$ctx->{lhs_assignments}->{$lhs}}) {
+            my $rhs_ast = undef;
+            if ($assignment->{rhs} && blessed($assignment->{rhs})) {
+                $rhs_ast = $assignment->{rhs};
+            } elsif (defined($assignment->{rhs}) && $assignment->{rhs} ne '' && $ctx->{expr_namer} && $ctx->{expr_namer}->can('parse_expression')) {
+                $rhs_ast = eval { $ctx->{expr_namer}->parse_expression($assignment->{rhs}) };
+            }
+
+            if ($rhs_ast && (blessed($rhs_ast) || ref($rhs_ast) eq 'HASH')) {
+                if ($self->ast_contains_signal($rhs_ast, $signal_name)) {
+                    fsm_debug("    FOUND: Signal used in assignment RHS for $lhs", 3);
+                    return 1;
+                }
+            }
+
             if ($assignment->{conditions_ast} && blessed($assignment->{conditions_ast})) {
                 if ($self->ast_contains_signal($assignment->{conditions_ast}, $signal_name)) {
                     fsm_debug("    FOUND: Signal used in assignment condition for $lhs", 3);

@@ -123,6 +123,28 @@ sub validate_pre_generation_operand_contract ($self, $fsm_module, $prepared_bloc
         }
     }
 
+    for my $lhs (sort keys %{$ctx->{lhs_assignments} || {}}) {
+        for my $assignment (@{$ctx->{lhs_assignments}{$lhs} || []}) {
+            next unless ref($assignment) eq 'HASH';
+
+            if ($assignment->{rhs} && (blessed($assignment->{rhs}) || ref($assignment->{rhs}) eq 'HASH')) {
+                $self->_validate_named_ast(
+                    "assignment RHS for '$lhs'",
+                    $assignment->{rhs},
+                    $inventory,
+                    \@violations,
+                );
+            } elsif (defined($assignment->{rhs}) && $assignment->{rhs} ne '') {
+                $self->_validate_named_expression(
+                    "assignment RHS for '$lhs'",
+                    $assignment->{rhs},
+                    $inventory,
+                    \@violations,
+                );
+            }
+        }
+    }
+
     for my $signal_name (sort keys %{ $prepared_block->{filtered_signals} || {} }) {
         my $signal_info = $prepared_block->{filtered_signals}{$signal_name} || {};
         my $runtime_ast = $signal_info->{runtime_ast};

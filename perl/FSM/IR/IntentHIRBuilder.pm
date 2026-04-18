@@ -273,6 +273,24 @@ sub analyze_signals ($class, $signals) {
 
     for my $sig_name (sort keys %{$signals || {}}) {
         my $signal = $signals->{$sig_name};
+        my $signal_role = $signal && $signal->can('get_attribute')
+            ? ($signal->get_attribute('signal_role') // '')
+            : '';
+        my $is_intermediate = (
+            ($signal_role && $signal_role eq 'INTERNAL_INTERMEDIATE')
+            || (
+                $signal
+                && $signal->can('attributes')
+                && $signal->attributes
+                && ($signal->attributes->{is_intermediate} // 0)
+            )
+        ) ? 1 : 0;
+
+        if ($is_intermediate) {
+            fsm_debug("Skipping intermediate signal '$sig_name' from Intent HIR port analysis", 2);
+            next;
+        }
+
         my $width = $signal->width || 1;
         my $dir = $class->determine_signal_direction($signal, $sig_name);
 

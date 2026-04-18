@@ -455,6 +455,27 @@ sub feed_current_asts_to_second_pass ($self, $second_pass_factorizer) {
 
     for my $lhs (keys %{$ctx->{lhs_assignments} || {}}) {
         for my $assignment (@{$ctx->{lhs_assignments}{$lhs}}) {
+            my $rhs_ast = undef;
+            if ($assignment->{rhs} && blessed($assignment->{rhs})) {
+                $rhs_ast = $assignment->{rhs};
+            } elsif (defined($assignment->{rhs}) && $assignment->{rhs} ne '' && $ctx->{expr_namer} && $ctx->{expr_namer}->can('parse_expression')) {
+                $rhs_ast = eval { $ctx->{expr_namer}->parse_expression($assignment->{rhs}) };
+            }
+
+            if ($rhs_ast && (blessed($rhs_ast) || ref($rhs_ast) eq 'HASH')) {
+                my $sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($rhs_ast) } || "[NO SV REPRESENTATION]";
+
+                if ($self->ast_contains_intermediate_signals($rhs_ast)) {
+                    $second_pass_factorizer->add_ast_expression(
+                        $rhs_ast,
+                        "second_pass_assignment_rhs:$lhs:$assignment->{dt}"
+                    );
+                    $total_fed++;
+                    fsm_debug("  Fed second-pass assignment RHS: $lhs from $assignment->{dt}", 3);
+                    fsm_debug("    Expression: $sv", 3);
+                }
+            }
+
             if ($assignment->{conditions_ast} && blessed($assignment->{conditions_ast})) {
                 my $sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($assignment->{conditions_ast}) } || "[NO SV REPRESENTATION]";
 
@@ -484,7 +505,42 @@ therefore eligible for second-pass factorization.
 
 sub ast_contains_intermediate_signals ($self, $ast) {
     my $ctx = $self->{flattened_dt};
-    return 0 unless $ast && blessed($ast);
+    return 0 unless $ast && (blessed($ast) || ref($ast) eq 'HASH');
+
+    if (ref($ast) eq 'HASH' && !blessed($ast)) {
+        if (($ast->{type} || '') eq 'signal') {
+            my $signal_name = $ast->{name} || 'unknown';
+            my $ast_sv = $signal_name;
+            fsm_debug("  SECOND_PASS_FILTER: Bare signal reference '$signal_name' (AST: $ast_sv) - NOT factorizable", 3);
+            return 0;
+        }
+
+        my $is_compound_with_intermediates = 0;
+        if (($ast->{type} || '') eq 'binary_op') {
+            my $left_has_intermediate = $ast->{left} && $self->ast_has_intermediate_signals_recursive($ast->{left});
+            my $right_has_intermediate = $ast->{right} && $self->ast_has_intermediate_signals_recursive($ast->{right});
+
+            if ($left_has_intermediate || $right_has_intermediate) {
+                fsm_debug("  SECOND_PASS_FILTER: Compound binary expression contains intermediate signals - factorizable", 3);
+                $is_compound_with_intermediates = 1;
+            } else {
+                fsm_debug("  SECOND_PASS_FILTER: Compound binary expression has no intermediate signals - not factorizable", 3);
+            }
+        } elsif (($ast->{type} || '') eq 'unary_op') {
+            my $operand_has_intermediate = $ast->{operand} && $self->ast_has_intermediate_signals_recursive($ast->{operand});
+
+            if ($operand_has_intermediate) {
+                fsm_debug("  SECOND_PASS_FILTER: Compound unary expression contains intermediate signals - factorizable", 3);
+                $is_compound_with_intermediates = 1;
+            } else {
+                fsm_debug("  SECOND_PASS_FILTER: Compound unary expression has no intermediate signals - not factorizable", 3);
+            }
+        } else {
+            fsm_debug("  SECOND_PASS_FILTER: Not a compound expression - NOT factorizable", 3);
+        }
+
+        return $is_compound_with_intermediates;
+    }
 
     if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef') || $ast->isa('FSM::CoreAST::AggregateRef') || $ast->isa('FSM::CoreAST::ParameterRef')) {
         my $signal_name = $ctx->{enable_graph_capture_support}->extract_signal_name_from_ast($ast) || 'unknown';
@@ -537,7 +593,33 @@ reference.
 
 sub ast_has_intermediate_signals_recursive ($self, $ast) {
     my $ctx = $self->{flattened_dt};
-    return 0 unless $ast && blessed($ast);
+    return 0 unless $ast && (blessed($ast) || ref($ast) eq 'HASH');
+
+    if (ref($ast) eq 'HASH' && !blessed($ast)) {
+        if (($ast->{type} || '') eq 'signal') {
+            my $signal_name = $ast->{name};
+            if ($signal_name && $ctx->{enable_graph_signal_support}->is_intermediate_signal($signal_name)) {
+                return 1;
+            }
+        }
+
+        for my $key (qw(left right operand condition true_expr false_expr index expression)) {
+            my $child = $ast->{$key};
+            next unless $child && (blessed($child) || ref($child) eq 'HASH');
+            return 1 if $self->ast_has_intermediate_signals_recursive($child);
+        }
+
+        for my $key (qw(operands children arguments expressions parts)) {
+            my $children = $ast->{$key};
+            next unless ref($children) eq 'ARRAY';
+            for my $child (@$children) {
+                next unless $child && (blessed($child) || ref($child) eq 'HASH');
+                return 1 if $self->ast_has_intermediate_signals_recursive($child);
+            }
+        }
+
+        return 0;
+    }
 
     if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef') || $ast->isa('FSM::CoreAST::AggregateRef')) {
         my $signal_name = $ctx->{enable_graph_capture_support}->extract_signal_name_from_ast($ast);
