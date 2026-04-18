@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-18
+### Enable-graph CoreAST slices preserve authored ranges
+- Updated [perl/FSM/Synthesis/EnableGraph/ASTSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/ASTSupport.pm) so CoreAST signal references render through their own SystemVerilog method before falling back to base-name extraction; sliced references such as `cnt[2:1]` no longer collapse to the full `cnt` signal in flattened enable expressions.
+- Extended the same owner so one-bit versus multibit classification respects explicit CoreAST slice width, keeping logical-operator selection and truthiness lowering width-aware for sliced operands.
+- Added regression coverage in [t/208-enable-graph-ast-support.t](/Users/richarddje/Documents/github/fsmgen/t/208-enable-graph-ast-support.t) and [t/310-systemverilog-implicit-width-and-truthiness-hardening.t](/Users/richarddje/Documents/github/fsmgen/t/310-systemverilog-implicit-width-and-truthiness-hardening.t), then promoted [fsm/mipicsi2_pkt_nx4B_fifo.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/mipicsi2_pkt_nx4B_fifo.fsm) into the optional Verilator/Yosys smoke in [t/308-systemverilog-external-validation.t](/Users/richarddje/Documents/github/fsmgen/t/308-systemverilog-external-validation.t).
+
 ### Yosys external validation is ABC-free netlist sanity
 - Updated [perl/FSM/Support/HDLExternalValidation.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLExternalValidation.pm) so the Yosys side of `--verify-hdl` now runs `read_verilog -sv -noautowire`, `synth -noabc -top`, and `stat`: Verilator remains the generated-SystemVerilog validity gate, while Yosys proves the emitted HDL can become structural logic without entering ABC.
 - Extended [t/308-systemverilog-external-validation.t](/Users/richarddje/Documents/github/fsmgen/t/308-systemverilog-external-validation.t) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the ABC-free Yosys policy is regression-backed and advertised in the capability manifest.

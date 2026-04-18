@@ -50,6 +50,7 @@ subtest 'generated MIPI examples with inferred widths pass external validation' 
 
     for my $sample (qw(
         fsm/mipicsi2_byteserial.fsm
+        fsm/mipicsi2_pkt_nx4B_fifo.fsm
         fsm/mipicsi2_txtimer.fsm
     )) {
         my $report = generate_and_validate($tempdir, $sample);

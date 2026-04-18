@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-18: enable-graph CoreAST slices stay intact through SV rendering
+- [perl/FSM/Synthesis/EnableGraph/ASTSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/ASTSupport.pm)
+  now renders `FSM::CoreAST::SignalRef` through its own SystemVerilog method
+  before falling back to base-name extraction. This fixes the packet FIFO case
+  where `cnt[2:1] != 2'd2` was emitted as `cnt != 2'd2`, creating a false
+  Verilator width warning.
+- The same owner now classifies explicit CoreAST slice widths for one-bit
+  logical operator selection and multibit truthiness lowering, so sliced
+  operands stay width-aware before the final HDL text stage.
+- [t/208-enable-graph-ast-support.t](/Users/richarddje/Documents/github/fsmgen/t/208-enable-graph-ast-support.t)
+  locks direct slice rendering, [t/310-systemverilog-implicit-width-and-truthiness-hardening.t](/Users/richarddje/Documents/github/fsmgen/t/310-systemverilog-implicit-width-and-truthiness-hardening.t)
+  locks the generated `fsm/mipicsi2_pkt_nx4B_fifo.fsm` guard, and
+  [t/308-systemverilog-external-validation.t](/Users/richarddje/Documents/github/fsmgen/t/308-systemverilog-external-validation.t)
+  now includes that MIPI packet FIFO in the focused Verilator/Yosys smoke.
+- Remaining all-`fsm/` external-validation blockers still include the APB
+  composition top, unsupported historical `?define`, malformed/legacy
+  composition samples, `trial_1`'s unsupported `!&` operator, and the remaining
+  MIPI tester-control width cleanup.
+
 ## 2026-04-18: Yosys external validation stays ABC-free
 - [perl/FSM/Support/HDLExternalValidation.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLExternalValidation.pm)
   now treats Verilator and Yosys as two distinct post-emission gates:

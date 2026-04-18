@@ -1664,7 +1664,9 @@ own semantic and pre-generation checks. The lane is SystemVerilog-only for now;
 VHDL/GHDL validation intentionally waits until FSMGen has an active VHDL
 backend. The current regression coverage is a focused generated-SystemVerilog
 smoke, not yet a claim that every historical sample under `fsm/` is externally
-warning-clean.
+warning-clean. That focused smoke currently includes `fsm/lte_dif_pmaster.fsm`,
+the MIPI byte-serial, packet-FIFO, and timer examples, plus the supported APB
+requester/completer and AMBA requester protocol fixtures.
 For in-process embedders, it also exposes the bounded
 `HDLGenerator->generate_hdl_from_file(...)` result contract. That contract
 stabilizes top-level key presence for fields such as `hdl_code`, `module_info`,

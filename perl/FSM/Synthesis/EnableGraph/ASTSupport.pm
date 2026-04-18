@@ -190,8 +190,7 @@ sub _ast_to_systemverilog_internal ($self, $ast, $parent_precedence) {
     return "0" unless $ast && blessed($ast);
 
     if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
-        my $name = $ctx->{enable_graph_capture_support}->extract_signal_name_from_ast($ast);
-        return $name || "unknown_signal";
+        return $self->_render_signal_ref($ast);
 
     } elsif ($ast->isa('FSM::CoreAST::ParameterRef')) {
         return $ast->to_systemverilog();
@@ -233,8 +232,7 @@ sub _ast_to_systemverilog_internal ($self, $ast, $parent_precedence) {
         } elsif ($node_type =~ /UnaryOp$/) {
             return $self->_render_unary_op($ast);
         } elsif ($node_type =~ /SignalRef$/) {
-            my $name = $ctx->{enable_graph_capture_support}->extract_signal_name_from_ast($ast);
-            return $name || "unknown_signal";
+            return $self->_render_signal_ref($ast);
         } elsif ($node_type =~ /Literal$/) {
             my $value = eval { $ast->value } || "0";
             my $normalized = FSM::Package::IntegerLiteralSupport->systemverilog_literal_from_literal_like($ast);
@@ -245,6 +243,18 @@ sub _ast_to_systemverilog_internal ($self, $ast, $parent_precedence) {
         fsm_debug("AST_TO_CLEAN_SV: Unknown AST node type '$node_type' - using safe fallback", 3);
         return "unknown_expr_" . lc($node_type =~ s/.*:://r);
     }
+}
+
+sub _render_signal_ref ($self, $ast) {
+    my $ctx = $self->{flattened_dt};
+
+    if ($ast->isa('FSM::CoreAST::SignalRef') && $ast->can('to_systemverilog')) {
+        my $sv_result = eval { $ast->to_systemverilog() };
+        return $sv_result if defined($sv_result) && $sv_result ne '';
+    }
+
+    my $name = $ctx->{enable_graph_capture_support}->extract_signal_name_from_ast($ast);
+    return $name || "unknown_signal";
 }
 
 =head2 _render_binary_op
@@ -604,6 +614,22 @@ sub _signal_is_single_bit ($self, $name) {
     return 0;
 }
 
+sub _core_signal_ref_slice_width ($self, $ast) {
+    return undef unless $ast && blessed($ast);
+    return undef unless $ast->isa('FSM::CoreAST::SignalRef');
+    return undef unless $ast->can('slice');
+
+    my $slice = eval { $ast->slice };
+    return undef unless ref($slice) eq 'ARRAY' && @$slice == 2;
+
+    my ($high, $low) = @$slice;
+    return undef unless defined($high) && defined($low);
+    return undef if ref($high) || ref($low);
+    return undef unless $high =~ /\A-?\d+\z/ && $low =~ /\A-?\d+\z/;
+
+    return abs($high - $low) + 1;
+}
+
 =head2 _operand_is_single_bit
 
 Internal single-bit AST classifier for emitted operator selection.
@@ -624,7 +650,23 @@ sub _operand_is_single_bit ($self, $ast) {
 
     fsm_debug("      AST type: " . ref($ast), 3);
 
-    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
+    if ($ast->isa('FSM::CoreAST::SignalRef')) {
+        my $slice_width = $self->_core_signal_ref_slice_width($ast);
+        if (defined $slice_width) {
+            my $result = $slice_width == 1 ? 1 : 0;
+            fsm_debug("      PATH: CoreAST SignalRef slice width $slice_width", 3);
+            fsm_debug("      RESULT: " . ($result ? 'single-bit' : 'multi-bit') . " (from slice width)", 3);
+            return $result;
+        }
+
+        fsm_debug("      PATH: Regular SignalRef", 3);
+        my $name = $ctx->{enable_graph_capture_support}->extract_signal_name_from_ast($ast);
+        fsm_debug("      Signal name: '" . ($name || 'UNDEFINED') . "'", 3);
+        my $result = $self->_signal_is_single_bit($name);
+        fsm_debug("      RESULT: " . ($result ? 'single-bit' : 'multi-bit') . " (via _signal_is_single_bit)", 3);
+        return $result;
+
+    } elsif ($ast->isa('FSM::AST::SignalRef')) {
         fsm_debug("      PATH: Regular SignalRef", 3);
         my $name = $ctx->{enable_graph_capture_support}->extract_signal_name_from_ast($ast);
         fsm_debug("      Signal name: '" . ($name || 'UNDEFINED') . "'", 3);

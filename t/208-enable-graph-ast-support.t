@@ -28,6 +28,7 @@ subtest 'enable-graph AST support rebuilds AST rendering and operator classifica
     (B 1)
     (BUS1 8)
     (BUS2 8)
+    (CNT 3)
     (OUT1 1)
     (OUT2 1)
   )
@@ -159,6 +160,39 @@ FSM
         $support->ast_to_systemverilog($truthy_one),
         'A',
         'AST support collapses 1-bit equals-one comparisons to the bare signal',
+    );
+
+    my $cnt_signal = FSM::CoreAST::Signal->new(name => 'CNT', width => 3);
+    my $cnt_slice_ne_two = FSM::CoreAST::BinaryOp->new(
+        '!=',
+        FSM::CoreAST::SignalRef->new($cnt_signal, slice => [2, 1]),
+        FSM::CoreAST::Literal->new('2', width => 2, radix => 'decimal'),
+    );
+    my $cnt_slice_nonzero = FSM::CoreAST::BinaryOp->new(
+        '!=',
+        FSM::CoreAST::SignalRef->new($cnt_signal, slice => [2, 1]),
+        FSM::CoreAST::Literal->new('0', width => 2, radix => 'decimal'),
+    );
+    my $cnt_single_bit_slice_and = FSM::CoreAST::BinaryOp->new(
+        '&&',
+        FSM::CoreAST::SignalRef->new($cnt_signal, slice => [0, 0]),
+        FSM::AST::SignalRef->new('A'),
+    );
+
+    is(
+        $support->ast_to_systemverilog($cnt_slice_ne_two),
+        "CNT[2:1] != 2'd2",
+        'AST support preserves CoreAST signal slices in non-truthiness comparisons',
+    );
+    is(
+        $support->ast_to_systemverilog($cnt_slice_nonzero),
+        '(|CNT[2:1])',
+        'AST support preserves CoreAST signal slices in multibit truthiness lowering',
+    );
+    is(
+        $support->ast_to_systemverilog($cnt_single_bit_slice_and),
+        'CNT[0:0] & A',
+        'AST support treats one-bit CoreAST slices as bitwise logical operands',
     );
 
     ok(

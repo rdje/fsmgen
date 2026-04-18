@@ -46,6 +46,21 @@ subtest 'explicit-width relational guards infer missing counter widths' => sub {
     like($hdl, qr/\btxtimer\s*==\s*20'h1\b/, 'generated comparison preserves the explicit guard width');
 };
 
+subtest 'enable-graph rendering preserves sliced CoreAST relational guards' => sub {
+    my $hdl = generate_sv('fsm/mipicsi2_pkt_nx4B_fifo.fsm');
+
+    like(
+        $hdl,
+        qr/\bcnt\[2:1\]\s*!=\s*2'd2\s*&\s*!cnt\[0\]\s*;/,
+        'packet FIFO guard keeps the authored 2-bit counter slice before bitwise conjunction',
+    );
+    unlike(
+        $hdl,
+        qr/\bcnt\s*!=\s*2'd2\s*&\s*!cnt\[0\]\s*;/,
+        'packet FIFO guard does not widen the sliced compare back to the full counter',
+    );
+};
+
 subtest 'intermediate arithmetic width follows assignment-analysis signal widths' => sub {
     my $hdl = generate_sv('fsm/amba_requester.fsm');
 

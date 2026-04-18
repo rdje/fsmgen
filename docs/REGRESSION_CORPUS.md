@@ -198,10 +198,11 @@ support-accounting identity promised by the corpus.
 The optional external SystemVerilog validation lane is covered by
 [t/308-systemverilog-external-validation.t](/Users/richarddje/Documents/github/fsmgen/t/308-systemverilog-external-validation.t).
 When `verilator` and `yosys` are installed, that smoke generates
-`fsm/lte_dif_pmaster.fsm`, `fsm/mipicsi2_byteserial.fsm`, and
-`fsm/mipicsi2_txtimer.fsm`, plus every supported direct protocol actor from
-the corpus (`fsm/apb_requester.fsm`, `fsm/apb_completer.fsm`, and
-`fsm/amba_requester.fsm` today), validates the emitted `.sv` files with
+`fsm/lte_dif_pmaster.fsm`, `fsm/mipicsi2_byteserial.fsm`,
+`fsm/mipicsi2_pkt_nx4B_fifo.fsm`, and `fsm/mipicsi2_txtimer.fsm`, plus every
+supported direct protocol actor from the corpus (`fsm/apb_requester.fsm`,
+`fsm/apb_completer.fsm`, and `fsm/amba_requester.fsm` today), validates the
+emitted `.sv` files with
 Verilator `--lint-only --sv`, validates ABC-free Yosys structural synthesis
 with `read_verilog -sv -noautowire`, `synth -noabc -top`, and `stat`, and
 proves the CLI `--verify-hdl` lane invokes the same external gates. Verilator
