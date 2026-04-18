@@ -1703,6 +1703,12 @@ expected-failure diagnostic codes, documentation pointers, and intentionally
 blocked/not-yet-public surfaces share one source with the regression catalog.
 It also advertises which bounded machine-readable surfaces have current
 supported-corpus coverage, including check JSON and normalized semantic JSON.
+The bounded contract for the manifest's `support_accounting` section now has
+its own explicit owner in
+[perl/FSM/Support/SupportAccountingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingContract.pm).
+That contract is also advertised through the manifest itself, so downstream
+tools can discover the bounded top-level section keys plus the current
+sanitized catalog-entry keys without scraping prose.
 It also advertises the optional external SystemVerilog validation lane:
 `--verify-hdl` / `--validate-hdl` writes the generated `.sv`, then runs
 Verilator in lint-only SystemVerilog mode and Yosys with

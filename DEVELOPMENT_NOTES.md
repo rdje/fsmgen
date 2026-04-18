@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-18: support accounting deserves an explicit contract owner too
+- The manifest's `support_accounting` section is the bridge from "what the
+  maintained regression corpus says" to "what downstream tools may rely on".
+  Leaving that whole payload as a purely inline manifest stanza was weaker
+  than the newer pattern used for diagnostics, semantic JSON, external
+  validation, typed extensions, sanitized composition reports, and raw
+  `HDLGenerator` results.
+- The safer split is:
+  - `FSM::Support::RegressionCorpus` owns the production truth,
+  - `FSM::Support::SupportAccountingContract` owns the bounded exported shape
+    of that truth,
+  - and `FSM::Support::CapabilityManifest` advertises the contract rather than
+    silently becoming the only source of public structure.
+- This keeps the promise honest:
+  - top-level counts and id lists are public,
+  - sanitized catalog-entry keys are public,
+  - but raw corpus-only fields stay non-public unless they are widened
+    deliberately and regression-backed.
+
 ## 2026-04-18: external validation should have an explicit contract owner too
 - The optional Verilator/Yosys lane is machine-readable enough that leaving it
   only as an inline manifest stanza was already drifting behind the pattern

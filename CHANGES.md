@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-18
+### support accounting now has an explicit bounded contract owner
+- Added [perl/FSM/Support/SupportAccountingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingContract.pm) as the owner for the bounded public contract over the manifest's `support_accounting` section, covering the top-level keys, bucket/id-list keys, and sanitized catalog-entry required/optional keys.
+- Updated [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm) so `support_accounting` is now built from that contract owner instead of remaining a purely inline manifest payload.
+- Added [t/314-support-accounting-contract.t](/Users/richarddje/Documents/github/fsmgen/t/314-support-accounting-contract.t) and extended [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the contract owner, manifest wiring, and emitted support-accounting key presence are all regression-locked.
+- Updated [README.md](/Users/richarddje/Documents/github/fsmgen/README.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md), [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md), and [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) so the new owner is visible to embedders, users, and future sessions.
+
 ### external HDL validation now has an explicit bounded contract owner
 - Added [perl/FSM/Support/HDLExternalValidationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLExternalValidationContract.pm) as the owner for the bounded external validation contract, covering the public command shape, tool identities, stage names, and bounded success top-level/step key presence plus step order.
 - Updated [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm) so `backend_validation.systemverilog_external` is now built from that contract owner instead of carrying the external-validation lane description inline.

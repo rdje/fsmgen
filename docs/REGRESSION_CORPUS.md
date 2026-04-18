@@ -184,6 +184,14 @@ semantic reports expose sanitized module/system/signal and forward-IR metadata,
 while matched corpus sources report the same entry id, family, coverage bucket,
 classification, source kind, and `strict_supported` support-accounting bridge.
 
+[t/314-support-accounting-contract.t](/Users/richarddje/Documents/github/fsmgen/t/314-support-accounting-contract.t)
+locks the bounded public contract for the manifest's `support_accounting`
+section.
+[perl/FSM/Support/SupportAccountingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingContract.pm)
+is now the explicit owner for the bounded top-level support-accounting keys,
+bucket/id-list keys, and sanitized catalog-entry required/optional key lists
+advertised through `--capability-manifest`.
+
 [t/303-normalized-semantic-json-supported-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/303-normalized-semantic-json-supported-corpus.t)
 locks the accepted side across the whole current supported corpus. Every current
 `supported_smoke` entry must succeed through `--emit-semantic-json`, and every

@@ -244,6 +244,11 @@ whole. It also advertises the optional external SystemVerilog validation lane:
 `--verify-hdl` / `--validate-hdl` writes generated `.sv` and then runs
 Verilator lint plus ABC-free Yosys structural synthesis when those tools are
 installed.
+The manifest's `support_accounting` section now has its own bounded contract
+owner too:
+[perl/FSM/Support/SupportAccountingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingContract.pm).
+That keeps the top-level support counts, id lists, and sanitized catalog-entry
+key set discoverable as an explicit contract instead of only as sample output.
 That lane is currently SystemVerilog-only; VHDL/GHDL validation waits for an
 active VHDL backend.
 The bounded contract for that lane now has its own owner too:

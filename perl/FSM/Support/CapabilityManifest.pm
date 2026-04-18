@@ -15,6 +15,7 @@ use FSM::Support::HDLExternalValidationContract qw(build_hdl_external_validation
 use FSM::Support::HDLGeneratorResultContract qw(build_hdl_generator_result_contract);
 use FSM::Support::NormalizedSemanticReportContract qw(build_normalized_semantic_report_contract);
 use FSM::Support::RegressionCorpus qw(regression_corpus_entries);
+use FSM::Support::SupportAccountingContract qw(build_support_accounting_contract);
 
 our @EXPORT_OK = qw(build_capability_manifest);
 
@@ -41,6 +42,7 @@ sub build_capability_manifest {
             source => 'FSM::Support::CapabilityManifest',
         },
         support_accounting => {
+            %{build_support_accounting_contract()},
             source => 'FSM::Support::RegressionCorpus',
             entry_count => scalar(@entries),
             classifications => \%classifications,

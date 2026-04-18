@@ -23,8 +23,23 @@ subtest 'module manifest is generated from support accounting' => sub {
     is($manifest->{producer}{name}, 'FSMGen', 'manifest identifies FSMGen as producer');
     like($manifest->{producer}{version}, qr/\A\d+\.\d+-dev\z/, 'manifest exposes a producer version string');
     like($manifest->{producer}{git_commit}, qr/\A(?:unknown|[0-9a-f]{7,12})\z/, 'manifest exposes a bounded producer commit identity');
+    is($manifest->{support_accounting}{schema_version}, 1, 'manifest records support-accounting schema version');
+    is($manifest->{support_accounting}{status}, 'bounded_public', 'manifest marks support accounting as bounded public');
+    is(
+        $manifest->{support_accounting}{contract_source},
+        'FSM::Support::SupportAccountingContract',
+        'manifest records the support-accounting contract owner',
+    );
     is($manifest->{support_accounting}{source}, 'FSM::Support::RegressionCorpus', 'manifest records the corpus owner');
     is($manifest->{support_accounting}{entry_count}, scalar(@entries), 'manifest entry count follows the corpus');
+    ok(
+        scalar(@{$manifest->{support_accounting}{public_top_level_presence_keys} || []}) >= 10,
+        'manifest advertises bounded support-accounting top-level key presence',
+    );
+    ok(
+        scalar(@{$manifest->{support_accounting}{catalog_entry_required_keys} || []}) >= 9,
+        'manifest advertises bounded support-accounting catalog-entry required keys',
+    );
 
     is(
         scalar(@{$manifest->{support_accounting}{catalog_entries}}),

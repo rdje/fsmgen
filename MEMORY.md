@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-18: support accounting now has an explicit bounded contract owner too
+- Added
+  [perl/FSM/Support/SupportAccountingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingContract.pm)
+  as the explicit owner for the bounded public contract over the manifest's
+  `support_accounting` section: top-level keys, bucket keys, id-list keys, and
+  sanitized catalog-entry keys.
+- [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+  now advertises that contract directly instead of leaving the
+  `support_accounting` section as an inline public payload, and
+  [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+  now locks that manifest-facing owner plus the advertised bounded key lists.
+- [t/314-support-accounting-contract.t](/Users/richarddje/Documents/github/fsmgen/t/314-support-accounting-contract.t)
+  now regression-locks the public support-accounting promise directly for both
+  in-process manifest construction and CLI `--capability-manifest` JSON.
+- The reachable `bin/fsmgen` support surface now includes that contract owner
+  too, moving the measured import-tree totals to `135` project files /
+  `134` `.pm` packages with `Support => 13`.
+
 ## 2026-04-18: external HDL validation now has an explicit bounded contract owner too
 - Added
   [perl/FSM/Support/HDLExternalValidationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLExternalValidationContract.pm)
