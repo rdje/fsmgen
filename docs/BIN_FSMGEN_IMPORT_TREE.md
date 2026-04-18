@@ -184,7 +184,7 @@ Reachable package-family counts from [bin/fsmgen](/Users/richarddje/Documents/gi
 - `Composition`: `35`
 - `HDL`: `32`
 - `Package`: `14`
-- `Support`: `15`
+- `Support`: `16`
 - `Synthesis`: `10`
 - `IR`: `7`
 - `Adapter`: `5`

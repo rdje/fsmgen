@@ -1,6 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-18
+### README bootstrap rerun corrected the import-tree support-family count
+- Re-ran the README / SESSION_BOOTSTRAP ritual and checked the live `bin/fsmgen` runtime spine against [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md).
+- Corrected the measured reachable support-family count in that note from `15` to `16` now that [perl/FSM/Support/LanguageSurfaceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/LanguageSurfaceContract.pm) is part of the live reachable support surface.
+
 ### capability-manifest language_surface now has an explicit bounded contract owner
 - Added [perl/FSM/Support/LanguageSurfaceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/LanguageSurfaceContract.pm) as the owner for the bounded public contract over the manifest's `language_surface` section, covering the public top-level keys plus the first nested strict/default/assignments/system/expression/declaration/composition key lists.
 - Updated [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm), [perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm), and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the manifest advertises that contract under `language_surface.surface_contract` and locks the owner plus the bounded top-level/strict-mode presence lists explicitly.

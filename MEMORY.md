@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-18: README bootstrap rerun corrected the saved support-family count
+- Re-executed the [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) /
+  [SESSION_BOOTSTRAP.md](/Users/richarddje/Documents/github/fsmgen/SESSION_BOOTSTRAP.md)
+  startup ritual and re-checked [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen)
+  against [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md).
+- The saved qualitative picture still holds, but one measured fact had drifted:
+  the reachable `Support` family count in the import-tree note still said `15`
+  even though the live reachable support surface is now `16` after
+  [perl/FSM/Support/LanguageSurfaceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/LanguageSurfaceContract.pm).
+- [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+  now records that corrected `Support: 16` measurement.
+
 ## 2026-04-18: language_surface now has an explicit bounded contract owner too
 - Added
   [perl/FSM/Support/LanguageSurfaceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/LanguageSurfaceContract.pm)

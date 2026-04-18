@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-18: bootstrap measurement notes should be corrected when a new owner becomes reachable
+- The import-tree note is meant to be a live measured picture, not just a
+  narrative description.
+- When a new package becomes part of the reachable `bin/fsmgen` support
+  surface, the family counts in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+  must be corrected even if the broader architecture story is unchanged.
+- This rerun confirmed that the new
+  [perl/FSM/Support/LanguageSurfaceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/LanguageSurfaceContract.pm)
+  slice did exactly that: it widened the live reachable `Support` family count
+  from `15` to `16`, so leaving the old number behind would make the bootstrap
+  note technically stale.
+
 ## 2026-04-18: the manifest's language_surface section should have its own bounded contract owner
 - `language_surface` is already public enough that downstream tools can inspect
   it, but that does not mean the entire authored-language story should become
