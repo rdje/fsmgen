@@ -330,6 +330,13 @@ through
 locks the published top-level, scalar-string, and boolean identity/build keys
 for both in-process and CLI manifest output without pretending the section is
 already a broader release API.
+The manifest's `semantic_exports` section now has the same bounded contract
+split through
+[perl/FSM/Support/SemanticExportsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SemanticExportsContract.pm).
+[t/322-semantic-exports-contract.t](/Users/richarddje/Documents/github/fsmgen/t/322-semantic-exports-contract.t)
+locks the published top-level and nested contract-owner map for both
+in-process and CLI manifest output while leaving deeper semantic payload
+meaning with narrower export/report contracts.
 The manifest's `language_surface` section now has the same bounded contract
 split through
 [perl/FSM/Support/LanguageSurfaceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/LanguageSurfaceContract.pm).

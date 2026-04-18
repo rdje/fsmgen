@@ -97,6 +97,7 @@ sub capability_manifest_semantic_exports_keys {
     return [
         qw(
             normalized_semantic_json
+            section_contract
         ),
     ];
 }

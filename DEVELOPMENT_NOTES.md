@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-19: the manifest's semantic_exports section should have its own bounded contract owner
+- `semantic_exports` is already part of the public downstream-tool story
+  because it is where embedders discover current sanitized semantic interchange
+  surfaces such as `normalized_semantic_json`.
+- But leaving the section itself as a plain inline hash would blur two
+  different promises:
+  - the section-level shape downstream tools may rely on,
+  - versus the deeper payload details already owned by narrower export/report
+    contracts.
+- The safer split mirrors the other `R13` surfaces:
+  - `FSM::Support::CapabilityManifest` keeps publishing the current
+    semantic-exports payload,
+  - `FSM::Support::SemanticExportsContract` owns the bounded section-level
+    top-level and nested contract-owner map,
+  - while `NormalizedSemanticReportContract` continues to own the deeper
+    normalized semantic JSON promise.
+- This keeps the promise honest:
+  - embedders can rely on the section shape and discover child owners,
+  - but they are not being told that every future semantic export format is
+    already frozen into one flat API.
+
 ## 2026-04-19: the manifest's embedding section should have its own bounded contract owner
 - `embedding` is already a public directory for several narrower contracts:
   - `HDLGenerator` results,

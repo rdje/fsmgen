@@ -1739,6 +1739,12 @@ names the published top-level, scalar-string, and boolean field families
 advertised through `producer.section_contract`, while the broader producer
 story stays deliberately narrow: current tool/build identity, not a fully
 stabilized package-release surface.
+The manifest's `semantic_exports` section now follows the same pattern:
+[perl/FSM/Support/SemanticExportsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SemanticExportsContract.pm)
+names the published top-level and nested contract-owner map advertised through
+`semantic_exports.section_contract`, while the broader semantic export story
+stays deliberately narrow: current bounded interchange surfaces, not every
+future semantic report format FSMGen may publish later.
 The manifest's `language_surface` section now also has its own bounded owner:
 [perl/FSM/Support/LanguageSurfaceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/LanguageSurfaceContract.pm)
 names the published top-level and first nested section-key lists advertised

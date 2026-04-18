@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-19: semantic_exports now has an explicit bounded contract owner too
+- Added
+  [perl/FSM/Support/SemanticExportsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SemanticExportsContract.pm)
+  as the explicit owner for the bounded public contract over the manifest's
+  `semantic_exports` section: public top-level keys plus the nested
+  contract-owner map for current semantic export surfaces.
+- [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+  now advertises that contract under `semantic_exports.section_contract`, and
+  [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+  now also locks the manifest-facing owner plus the advertised bounded
+  semantic-exports-section keys.
+- [t/322-semantic-exports-contract.t](/Users/richarddje/Documents/github/fsmgen/t/322-semantic-exports-contract.t)
+  now regression-locks the public semantic-exports promise directly for both
+  in-process manifest construction and CLI `--capability-manifest` JSON while
+  keeping narrower semantic payload meaning behind dedicated report/export
+  contracts.
+- The reachable `bin/fsmgen` support surface now includes that contract owner
+  too, moving the measured import-tree totals to `143` project files /
+  `142` `.pm` packages with `Support => 21`.
+
 ## 2026-04-19: embedding now has an explicit bounded contract owner too
 - Added
   [perl/FSM/Support/EmbeddingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingContract.pm)

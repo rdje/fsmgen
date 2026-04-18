@@ -302,6 +302,29 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest keeps full normalized semantic export stabilization separate from the bounded slice',
     );
     is(
+        $manifest->{semantic_exports}{section_contract}{schema_version},
+        1,
+        'manifest records semantic-exports section contract schema version',
+    );
+    is(
+        $manifest->{semantic_exports}{section_contract}{status},
+        'bounded_public',
+        'manifest marks semantic-exports section contract as bounded public',
+    );
+    is(
+        $manifest->{semantic_exports}{section_contract}{contract_source},
+        'FSM::Support::SemanticExportsContract',
+        'manifest records the semantic-exports section contract owner',
+    );
+    ok(
+        scalar(@{$manifest->{semantic_exports}{section_contract}{public_top_level_presence_keys} || []}) >= 2,
+        'manifest advertises bounded semantic-exports top-level key presence',
+    );
+    ok(
+        scalar(@{$manifest->{semantic_exports}{section_contract}{nested_contract_keys} || []}) >= 1,
+        'manifest advertises bounded semantic-exports nested-contract key presence',
+    );
+    is(
         $manifest->{backend_validation}{systemverilog_external}{schema_version},
         1,
         'manifest records external SystemVerilog validation schema version',

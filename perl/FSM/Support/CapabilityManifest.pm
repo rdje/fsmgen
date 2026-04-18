@@ -22,6 +22,7 @@ use FSM::Support::LanguageSurfaceContract qw(build_language_surface_contract);
 use FSM::Support::NormalizedSemanticReportContract qw(build_normalized_semantic_report_contract);
 use FSM::Support::ProducerContract qw(build_producer_contract);
 use FSM::Support::RegressionCorpus qw(regression_corpus_entries);
+use FSM::Support::SemanticExportsContract qw(build_semantic_exports_contract);
 use FSM::Support::SupportAccountingContract qw(build_support_accounting_contract);
 
 our @EXPORT_OK = qw(build_capability_manifest);
@@ -93,6 +94,7 @@ sub build_capability_manifest {
                 strict_supported_corpus_covered => JSON::PP::true,
                 expected_failure_corpus_covered => JSON::PP::true,
             },
+            section_contract => build_semantic_exports_contract(),
         },
         backend_validation => {
             systemverilog_external => {

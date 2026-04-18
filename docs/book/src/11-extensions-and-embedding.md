@@ -199,6 +199,16 @@ That means:
 The active `R13` lane is where that public stabilization work is being
 graduated from useful internal seams into deliberate public contracts.
 
+The capability manifest's `semantic_exports` section now has that same
+bounded split too:
+
+- `FSM::Support::CapabilityManifest` still publishes the current semantic
+  export surfaces
+- `FSM::Support::SemanticExportsContract` owns the bounded top-level plus
+  nested contract-owner map advertised through `semantic_exports.section_contract`
+- deeper semantic payload meaning stays with narrower dedicated contracts such
+  as `FSM::Support::NormalizedSemanticReportContract`
+
 ## Downstream Tool Alignment
 
 FSMGen now keeps a tracked response to SPECFORGE's `.fsm` adapter feedback:
