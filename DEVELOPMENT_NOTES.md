@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-18: bootstrap/import-tree notes should refresh measured facts, not churn narrative needlessly
+- The saved [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+  note is meant to stay high-signal and honest. When the runtime spine and
+  ownership story are still correct, the right maintenance move is to refresh
+  the measured facts that drifted, not to rewrite the whole narrative.
+- This pass confirmed that the static reachable totals and qualitative spine are
+  still stable, while a few line-count measurements had drifted enough to make
+  the note technically stale.
+- That is the intended maintenance pattern for this file:
+  - keep the architectural interpretation durable,
+  - refresh the quantified measurements when they move,
+  - and avoid churn when the real runtime picture has not changed.
+
 ## 2026-04-18: subordinate workflow copies should point, not restate
 - If a helper file exists only because some tooling looks in a specific
   directory, it should not carry a second full copy of repository policy.

@@ -1,5 +1,29 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-18: README bootstrap pass refreshed the saved import-tree measurements
+- Re-executed the [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) /
+  [SESSION_BOOTSTRAP.md](/Users/richarddje/Documents/github/fsmgen/SESSION_BOOTSTRAP.md)
+  startup ritual and re-checked the current [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen)
+  runtime spine against [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md).
+- The qualitative architecture picture and the static reachable totals remain
+  unchanged at `131` project files / `130` reachable `.pm` packages, with the
+  same unique family counts recorded in the note (`Composition 35`, `HDL 32`,
+  `Package 14`, `Support 9`, `Synthesis 10`, `IR 7`, `Adapter 5`, `Pipeline 5`,
+  `Extension 3`, `Backend 3`, `AST 1` plus the singleton surfaces).
+- The saved measured line counts for a few high-traffic files had drifted, so
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+  now reflects the current `288`-line
+  [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm),
+  `178`-line
+  [perl/FSM/Support/HDLExternalValidation.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLExternalValidation.pm),
+  `685`-line
+  [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm),
+  `3455`-line
+  [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm),
+  `2208`-line [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm),
+  and `1827`-line
+  [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm).
+
 ## 2026-04-18: agent workflow copy is now a thin pointer, not a second policy copy
 - [.agents/workflows/commit.md](/Users/richarddje/Documents/github/fsmgen/.agents/workflows/commit.md)
   no longer repeats the full commit workflow. It now explicitly says that
