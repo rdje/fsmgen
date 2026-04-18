@@ -1542,6 +1542,32 @@ sub validate_no_combinational_self_dependency($self) {
         );
     }
 }
+
+sub validate_no_register_input_self_dependency($self, $operator, $target_base_specs, $expr, $expr_role, $target_display) {
+    return unless $operator eq '<=' || $operator eq '<=+';
+    return unless $target_base_specs && ref($target_base_specs) eq 'ARRAY' && @$target_base_specs;
+    return unless $expr && ref($expr);
+
+    my %target_names = map {
+        my $name = $self->normalize_signal_name($_->{name});
+        $name ne '' ? ($name => 1) : ()
+    } @$target_base_specs;
+    return unless keys %target_names;
+
+    my $source_names = $self->extract_expression_signal_names($expr);
+    for my $source_name (@$source_names) {
+        next unless defined($source_name) && $source_name ne '';
+        next unless $target_names{$source_name};
+
+        Carp::confess(
+            "[Parser.pm][validate_no_register_input_self_dependency()] Illegal D-input self-dependency for '$target_display' using '$operator'. "
+            . "The $expr_role references '$source_name', which is the same D-input-named LHS. "
+            . "This creates combinational feedback before HDL generation; use '<-' for Q/output-named synchronous feedback, "
+            . "or use '<=+' and read the generated '<signal>_r' Q mirror when same-cycle D visibility is required. "
+            . "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        );
+    }
+}
 sub get_target_base_signal_name($self, $raw_signal_name, $target_expr) {
     if ($target_expr) {
         if ($target_expr->can('signal') && $target_expr->signal && $target_expr->signal->can('name')) {
@@ -2907,6 +2933,14 @@ sub parse_signal_action($self, $action) {
         for my $target_base_spec (@target_base_specs) {
             $self->record_combinational_dependencies($target_base_spec->{name}, $source_expr);
         }
+    } elsif ($operator eq '<=' || $operator eq '<=+') {
+        $self->validate_no_register_input_self_dependency(
+            $operator,
+            \@target_base_specs,
+            $source_expr,
+            'RHS expression',
+            $signal_name_display,
+        );
     }
 
     my ($lhs_width, $rhs_width, $final_width);
@@ -3182,6 +3216,15 @@ sub parse_signal_action($self, $action) {
     if (defined $full_condition) {
         my $condition_expr = $self->{expression_builder}->parse_condition($full_condition);
         if ($condition_expr) {
+            if ($operator eq '<=' || $operator eq '<=+') {
+                $self->validate_no_register_input_self_dependency(
+                    $operator,
+                    \@target_base_specs,
+                    $condition_expr,
+                    'guard condition',
+                    $signal_name_display,
+                );
+            }
             return FSM::CoreAST::ConditionalBranch->new(
                 condition => $condition_expr,
                 branches => [{

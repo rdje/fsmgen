@@ -94,8 +94,8 @@ residue; strict mode points users to the pair form.
 Current quick reference:
 
 - `A = expr`: combinational assignment
-- `A <- expr`: synchronous/flopped assignment
-- `A <= expr`: synchronous/flopped variant
+- `A <- expr`: synchronous/flopped assignment where `A` names the flop output/Q value
+- `A <= expr`: synchronous/flopped variant where `A` names the D-input/next-value side
 - `A <-= expr`: synchronous with auxiliary `next_*` surface
 - `A <=+ expr`: synchronous with auxiliary `*_r` surface
 - `A <N 0` or `A <N 1`: delayed pulse form
@@ -130,9 +130,9 @@ where `assign-op` is one of the same assignment families:
 ```lisp
 (=   (OUT VALUE))
 (<-  (Q D))
-(<=  (Q D))
+(<=  (D_IN NEXT_VALUE))
 (<-= (Q D))
-(<=+ (Q D))
+(<=+ (D_IN NEXT_VALUE))
 (<1  (PULSE 1))
 ```
 
@@ -147,6 +147,15 @@ The optional third form is assignment-level condition metadata:
 That condition is not part of the RHS expression. It means “perform this
 assignment when the guard is true,” exactly like today’s assignment suffix
 guards.
+
+The distinction between `<-` and `<=` matters. Use `<-` when the signal name is
+the registered Q/output value, which is the common style for names such as
+`addr_q` or `count_q`. Use `<=` only when the authored LHS is intentionally the
+D-input/next-value carrier. Because of that D-input binding, `A <= (+ A 1)` is
+not a safe counter spelling: it reads the same D-input carrier it is building
+and FSMGen rejects it before HDL generation. Write `A <- (+ A 1)` for normal
+registered feedback. If you really need same-cycle D visibility and a separate
+registered Q mirror, use `<=+` and read the generated `A_r` mirror.
 
 The same pair form covers the active LHS/RHS surface, including nested
 expressions, RHS concat, aggregate leaves, and LHS deconstruct:
@@ -171,6 +180,12 @@ Combinational `=` is not allowed to create direct or indirect RHS feedback to
 the same LHS.
 
 If you want retained state, use one of the sequential families instead.
+
+There is a second, related sequential safety rule: D-input-named `<=` and
+`<=+` assignments must not read the same LHS name from the RHS or assignment
+guard. That form creates combinational feedback in the generated next-value
+logic. Q/output-named `<-` feedback remains valid and is the preferred spelling
+for ordinary registers.
 
 ## Expressions
 

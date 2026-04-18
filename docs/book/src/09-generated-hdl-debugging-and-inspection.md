@@ -71,12 +71,18 @@ until FSMGen has an active VHDL backend. The current regression gate is a
 focused SystemVerilog smoke, not yet a claim that every historical sample in
 `fsm/` is externally warning-clean.
 
-The focused smoke currently includes `fsm/lte_dif_pmaster.fsm` plus the MIPI
+The focused smoke currently includes `fsm/lte_dif_pmaster.fsm`, the MIPI
 byte-serial/timer examples that rely on inferred widths from slices,
-selectors, and guards. Larger legacy examples such as `fsm/amba_requester.fsm`
-still expose known follow-up work around real combinational feedback loops, so
-they are not yet part of the external warning-clean gate. The AMBA
-modulo/product expression is nevertheless a useful debugging example:
+selectors, and guards, and `fsm/amba_requester.fsm`.
+
+The AMBA requester is a useful example of why source intent and backend
+validation both matter. Its Q-named state registers must use `<-`, not `<=`,
+because `<=` names the D-input/next-value carrier. When a D-input assignment
+reads the same LHS name on its RHS or guard, FSMGen now rejects that feedback
+before generation rather than relying on Verilator to discover an `UNOPTFLAT`
+loop after the fact.
+
+AMBA also gives a good arithmetic rendering example:
 `(% addr_q (* beats_total_q addr_step_q))` must render as
 `addr_q % (beats_total_q * addr_step_q)`. If generated HDL flattens that to
 `addr_q % beats_total_q * addr_step_q`, the target language's left-associative

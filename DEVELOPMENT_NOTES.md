@@ -1,5 +1,36 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-18: AMBA feedback loops were source-intent bugs, not backend lint noise
+- The remaining AMBA Verilator `UNOPTFLAT` failures were traced to Q-named
+  state/storage signals being authored with D-input-named `<=` assignments.
+  The generated HDL was honestly reflecting the AST intent: `<=` exposes the
+  next-value/D-input carrier as the authored LHS, so reading that same LHS from
+  the RHS builds combinational feedback.
+- The fix is intentionally semantic:
+  - [fsm/amba_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/amba_requester.fsm)
+    now uses `<-` for Q-named registers such as `addr_q`, `beats_remaining_q`,
+    `wrap_base_q`, and related protocol state,
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm)
+    now rejects `<=` / `<=+` when the RHS expression or guard reads the same
+    D-input-named LHS,
+  - and [t/02-combinational-self-dependency.t](/Users/richarddje/Documents/github/fsmgen/t/02-combinational-self-dependency.t)
+    locks that pre-generation diagnostic while keeping `A <- A` valid.
+- The authoring rule is:
+  - use `<-` when the signal name is the registered Q/output value,
+  - use `<=` only when the signal name intentionally denotes the D-input side,
+  - and use `<=+` plus the generated `_r` mirror when a design needs both
+    same-cycle D visibility and registered Q visibility.
+- [t/308-systemverilog-external-validation.t](/Users/richarddje/Documents/github/fsmgen/t/308-systemverilog-external-validation.t)
+  now includes `fsm/amba_requester.fsm` in the optional Verilator/Yosys smoke,
+  and direct `./bin/fsmgen --quiet --verify-hdl ... fsm/amba_requester.fsm`
+  passes locally with Verilator/Yosys installed.
+- Rationale:
+  - generation should remain a faithful walk/render of checked AST/IR,
+  - illegal feedback should be caught before generation instead of discovered
+    visually or by external lint,
+  - and source fixtures should express their intended register style rather
+    than relying on the backend to guess around ambiguous naming.
+
 ## 2026-04-18: generated SV arithmetic must preserve AST grouping
 - The AMBA requester exposed a subtle backend correctness issue: the authored
   expression `(% addr_q (* beats_total_q addr_step_q))` was emitted as
@@ -18,17 +49,16 @@ This document captures engineering rationale, design constraints, and working de
     same-precedence binary children when flattening would change grouping.
 - Regression coverage now checks the renderer directly and the generated AMBA
   HDL text. `fsm/amba_requester.fsm` no longer reports the earlier Verilator
-  `WIDTHEXPAND` modulo/division warnings, but it still reports real
-  `UNOPTFLAT` combinational feedback warnings. That fixture should remain out
-  of `t/308` until the feedback path is understood semantically instead of
-  hidden by lint pragmas.
+  `WIDTHEXPAND` modulo/division warnings. The follow-up Q-named register-source
+  fix above also removes the remaining `UNOPTFLAT` feedback warnings and puts
+  AMBA into `t/308`.
 - Rationale:
   - generated HDL is the visual representation of the AST, so the renderer must
     preserve grouping even when target operators have equal precedence,
   - warning-clean arithmetic should come from correct target text, not from
     suppressing Verilator,
-  - and the remaining AMBA feedback warnings deserve a semantic fix or an
-    intentional fixture classification, not a cosmetic backend workaround.
+  - and the remaining AMBA feedback warnings were correctly treated as a source
+    intent issue, not hidden by a cosmetic backend workaround.
 
 ## 2026-04-18: generated SV width inference and truthiness must be lint-clean
 - Static authored evidence now participates in direct width inference even when
@@ -54,8 +84,9 @@ This document captures engineering rationale, design constraints, and working de
     optional Verilator/Yosys `--verify-hdl` lane,
   - `fsm/amba_requester.fsm` no longer loses the 32-bit arithmetic
     intermediate width. The later grouping fix also removed the modulo/division
-    `WIDTHEXPAND` warnings, but real combinational feedback loops remain. Do
-    not claim AMBA is externally lint-clean yet.
+    `WIDTHEXPAND` warnings, and the Q-named register-source fix above removed
+    the remaining AMBA feedback loop, so AMBA is now externally lint-clean in
+    the focused smoke.
 
 ## 2026-04-18: .fsm intent literals must lower to target-HDL literals before emission
 - Added intent-level sized integer literal normalization to

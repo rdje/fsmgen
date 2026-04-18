@@ -44,6 +44,14 @@ subtest 'generated MIPI examples with inferred widths pass external validation' 
     }
 };
 
+subtest 'generated AMBA requester with Q-named registers passes external validation' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $report = generate_and_validate($tempdir, 'fsm/amba_requester.fsm');
+
+    ok($report->{ok}, 'amba_requester passes Verilator lint and Yosys synthesis lowering')
+        or diag(explain($report));
+};
+
 subtest 'CLI --verify-hdl runs the external validation lane after writing SystemVerilog' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $sv_file = File::Spec->catfile($tempdir, 'lte_dif_pmaster_cli.sv');

@@ -70,8 +70,8 @@ Notes:
 - A classic single-initial-state, one-active-state FSM should be understood as the conservative subset of that broader activation-region model. Because externally activated/deactivated regions can create pathological machines, future support must surface drive conflicts, merge/priority policy, assertion hooks, and debug reports rather than silently resolving them in a backend.
 
 ### Assignment operators
-- `A <- expr` : synchronous/flopped assignment
-- `A <= expr` : synchronous/flopped assignment variant
+- `A <- expr` : synchronous/flopped assignment where the authored LHS names the flop output/Q value
+- `A <= expr` : synchronous/flopped assignment variant where the authored LHS names the D-input/next-value side
 - `A = expr`  : combinational assignment
 - `(= (A expr))`, `(<- (A expr))`, `(<= (A expr))` : canonical Lisp-ish pair forms for the same assignment families
 - `(<-= (A expr))`, `(<=+ (A expr))`, `(<N (A 1))` : canonical pair forms for dual-output and delayed-pulse families
@@ -82,8 +82,10 @@ Examples rejected by parser:
 - direct: `A = A`
 - indirect: `A = B` and `B = A`
 
-Synchronous loopback remains valid:
+Synchronous Q/output-named loopback remains valid:
 - `A <- A`
+
+For D-input-named `<=` and `<=+`, the RHS expression and assignment guard must not read the same LHS name. For example, `A <= (+ A 1)` is rejected because `A` is the D-input carrier in that assignment family and reading it on the RHS creates combinational feedback before HDL generation. Use `A <- (+ A 1)` when the source should read the existing Q/output value, or use `A <=+ expr` and read the generated `A_r` Q mirror when the design intentionally needs both same-cycle D visibility and registered Q visibility.
 
 ## 2.1) Currently supported `.fsm` constructs (live reference)
 This section is the current live support boundary.
@@ -160,8 +162,8 @@ Combinational DT note:
   - plain `?SIG` test nodes require an HDL-identifier-compatible signal name
   - malformed plain test-node signal names such as `?bad-name` or `?0` are rejected explicitly
   - computed selectors `?(expr)` must start with a real selector expression and include at least one branch
-- Canonical assignment pair forms such as `(<- (A B))`, `(<= (A B))`, `(= (A B))`, `(<-= (I J))`, `(<=+ (K L))`, and `(<N (P 1))`
-- Default-mode infix assignment compatibility forms such as `(A <- B)`, `(A <= B)`, `(A = B)`, `(I <-= J)`, `(K <=+ L)`, and `(P <N 1)`
+- Canonical assignment pair forms such as `(<- (Q D))`, `(<= (D_IN NEXT_VALUE))`, `(= (A B))`, `(<-= (I J))`, `(<=+ (D_IN NEXT_VALUE))`, and `(<N (P 1))`
+- Default-mode infix assignment compatibility forms such as `(Q <- D)`, `(D_IN <= NEXT_VALUE)`, `(A = B)`, `(I <-= J)`, `(K <=+ L)`, and `(P <N 1)`
 - Explicit output exposure on the LHS, for example `(= (G> H))`, `(<= (output_data> 8'1))`, `(G> = H)`, and `(output_data> <= 8'1)`
 - Dual-output register form `(<-= (I J))` or `(I <-= J)` producing `next_I`
 - Dual-output D-input form `(<=+ (K L))` or `(K <=+ L)` producing `K_r`
@@ -190,6 +192,7 @@ Combinational DT note:
   - n-ary `+`, `-`, `*`, `/`, `%`, `&`, `|`, `^`
   - word aliases `not`, `eq`, `ne`, `lt`, `le`, `gt`, `ge`, `add`, `sub`, `mul`, `div`, `mod`, `and`, `or`, `xor`
 - Enforced diagnostics for illegal combinational self-dependency with `=`
+- Enforced diagnostics for illegal D-input self-dependency with `<=` / `<=+`
 - Enforced diagnostics for mixing `=` with sequential operators on the same LHS
 - Enforced diagnostics for mixing pulse-delayed and non-pulse sequential operators on the same LHS
 - Enforced diagnostics for multiple different `<N` delays on the same LHS
@@ -485,7 +488,7 @@ Boundary note:
 - When a deconstruct RHS is itself a `(concat ...)` / `(cat ...)`, any deconstruct fragment that exactly matches whole RHS concat operand boundaries keeps those operands instead of becoming a part-select of the whole concat expression. Nested RHS concat fragments are handled the same way: aligned nested operands keep ordered list shape, and typed record targets can map exact aligned operands onto record member order before the pre-generation assignment validator runs.
 - Canonical assignment pair form:
   - the preferred Lisp-ish spelling is `(assign-op (lhs rhs))`, with an optional assignment-level guard as `(assign-op (lhs rhs) <cond)`,
-  - examples include `(= (OUT VALUE))`, `(<- (Q D))`, `(<= (Q D))`, `(<-= (Q D))`, `(<=+ (Q D))`, `(<1 (PULSE 1))`, `(= (OUT (+ A B)) <valid)`, and `(<- ((cat REG_HI REG_LO) NEXT_DATA) <load)`,
+  - examples include `(= (OUT VALUE))`, `(<- (Q D))`, `(<= (D_IN NEXT_VALUE))`, `(<-= (Q D))`, `(<=+ (D_IN NEXT_VALUE))`, `(<1 (PULSE 1))`, `(= (OUT (+ A B)) <valid)`, and `(<- ((cat REG_HI REG_LO) NEXT_DATA) <load)`,
   - this is active parser syntax and is support-accounted by the maintained regression corpus,
   - existing infix forms such as `(OUT = VALUE)` and `(Q <- D)` remain compatibility spellings and normalize into the same assignment AST/IR,
   - the optional `<cond>` is assignment metadata equivalent to today’s guard suffixes, not part of the RHS expression.
@@ -1946,6 +1949,9 @@ Use this only in environments where that script is part of the active toolchain.
 ### Parser rejects combinational self-dependency
 If you see `Illegal combinational self-dependency`, rewrite the logic so combinational `=` assignments do not create feedback loops.
 
+### Parser rejects D-input self-dependency
+If you see `Illegal D-input self-dependency`, the RHS or guard of a `<=` / `<=+` assignment is reading the same D-input-named LHS. Use `<-` for normal Q/output feedback such as `A <- (+ A 1)`, or use the `<=+` auxiliary Q mirror (`A_r`) when the source must intentionally see the registered value separately from the same-cycle D-input name.
+
 ### Verilog/VHDL behavior
 - Verilog: supported through conversion path
 - VHDL: explicit not-implemented backend error is expected currently
@@ -1958,6 +1964,7 @@ prove -v t/01-regression.t
 
 ## 10) Practical authoring guidelines
 - Use `=` only for true combinational outputs.
-- Use `<-`/`<=` for flopped behavior and register loopback.
+- Use `<-` for ordinary flopped state and register loopback, especially for Q-named signals such as `addr_q`.
+- Use `<=` only when you intentionally want the authored LHS to mean the D-input/next-value side, and do not read that same LHS name on the RHS or guard.
 - Prefer simple, explicit conditions; when conditions grow, expect intermediate signals in output RTL.
 - Run with `--debug=3` when bringing up new FSM files.

@@ -39,12 +39,18 @@ Typical causes:
 Typical causes:
 
 - illegal combinational self-dependency
+- illegal D-input self-dependency in `<=` / `<=+`
 - incompatible assignment widths
 - undeclared internal operands
 - unassigned internal operands
 
 The pre-generation validation path exists specifically to catch these before
 emission.
+
+If a normal register update reads its previous value, prefer the Q/output-named
+form, for example `(<- (COUNT (+ COUNT 1)))`. The D-input-named forms `<=` and
+`<=+` are stricter: their RHS and assignment guard may not read the same LHS
+name, because that would build a combinational loop on the next-value carrier.
 
 ## Failure Summaries
 

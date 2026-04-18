@@ -128,10 +128,11 @@ expected-failure entries, while `--emit-semantic-json` is corpus-covered across
 current supported, strict-supported, and expected-failure entries.
 
 ## Assignment semantics (quick reference)
-- `A <- expr`: synchronous/flopped assignment.
-- `A <= expr`: synchronous/flopped variant.
+- `A <- expr`: synchronous/flopped assignment where `A` names the flop output/Q value.
+- `A <= expr`: synchronous/flopped variant where `A` names the D-input/next-value side.
 - `A = expr`: combinational assignment.
 - Safety rule: combinational `=` cannot create direct/indirect RHS feedback to same LHS.
+- Safety rule: D-input-named `<=` / `<=+` cannot read the same LHS name from the RHS or guard; use `<-` for ordinary register feedback.
 
 ## README maintenance policy
 - Keep `README.md` as the canonical onboarding hub.

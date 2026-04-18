@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-18: AMBA requester now passes external SV validation
+- The AMBA `UNOPTFLAT` issue was not a backend rendering quirk. The source was
+  using D-input-named `<=` assignments for Q-named state/storage signals, so the
+  generated AST/HDL legitimately built next-value feedback loops.
+- [fsm/amba_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/amba_requester.fsm)
+  now uses `<-` for those Q-named registers. `./bin/fsmgen --quiet
+  --verify-hdl -o /tmp/fsmgen_amba_requester_fixed.sv fsm/amba_requester.fsm`
+  passes locally with Verilator/Yosys installed.
+- [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm)
+  now rejects D-input self-dependency for `<=` / `<=+` when the RHS or guard
+  reads the same LHS name. Use `<-` for ordinary Q/output feedback, or `<=+`
+  with the generated `_r` mirror when dual D/Q visibility is intentional.
+- [t/02-combinational-self-dependency.t](/Users/richarddje/Documents/github/fsmgen/t/02-combinational-self-dependency.t)
+  locks the pre-generation guard, [t/308-systemverilog-external-validation.t](/Users/richarddje/Documents/github/fsmgen/t/308-systemverilog-external-validation.t)
+  now includes AMBA in the optional Verilator/Yosys smoke, and
+  [t/310-systemverilog-implicit-width-and-truthiness-hardening.t](/Users/richarddje/Documents/github/fsmgen/t/310-systemverilog-implicit-width-and-truthiness-hardening.t)
+  now checks the Q-style `_next` helper text for AMBA arithmetic grouping.
+
 ## 2026-04-18: CoreAST/SV arithmetic grouping is preserved
 - Fixed a generated-SystemVerilog arithmetic rendering bug where right-nested
   same-precedence expressions could be flattened into different target
@@ -18,9 +36,10 @@ This is the live continuity document for fast session recovery after crashes, re
   [t/310-systemverilog-implicit-width-and-truthiness-hardening.t](/Users/richarddje/Documents/github/fsmgen/t/310-systemverilog-implicit-width-and-truthiness-hardening.t)
   locks the generated AMBA text.
 - `./bin/fsmgen --quiet --verify-hdl -o /tmp/fsmgen_amba_requester_pnt_coreassoc4.sv fsm/amba_requester.fsm`
-  no longer reports the previous `WIDTHEXPAND` modulo/division warnings. It
-  still reports real `UNOPTFLAT` combinational feedback warnings, so AMBA is
-  not yet in the warning-clean external validation smoke set.
+  no longer reports the previous `WIDTHEXPAND` modulo/division warnings. The
+  later Q-named register-source fix above also removes the remaining
+  `UNOPTFLAT` feedback warnings and adds AMBA to the warning-clean external
+  validation smoke set.
 
 ## 2026-04-18: generated SV width/truthiness hardening widened external validation
 - Direct parsing now infers missing widths from exact authored evidence:
@@ -40,8 +59,9 @@ This is the live continuity document for fast session recovery after crashes, re
   now validates `lte_dif_pmaster`, `mipicsi2_byteserial`, and `mipicsi2_txtimer`
   with Verilator/Yosys when installed.
 - Remaining known hardening:
-  - `fsm/amba_requester.fsm` still needs a semantic look at combinational
-    feedback paths before it can be added to the external validation smoke.
+  - Broader all-`fsm/` external validation is still not claimed, but
+    `fsm/amba_requester.fsm` itself is now covered by the focused external
+    validation smoke.
 
 ## 2026-04-18: intent-level sized integer literals normalize before SV emission
 - [perl/FSM/Package/IntegerLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/IntegerLiteralSupport.pm)
@@ -80,9 +100,9 @@ This is the live continuity document for fast session recovery after crashes, re
   sized-literal syntax family (`2'3` / `20'x1`) is now normalized before
   emission, MIPI missing-width/truthiness issues are fixed, and one AMBA
   arithmetic intermediate width-loss issue is fixed. The AMBA modulo/product
-  grouping issue is fixed too, so remaining hardening is now mostly real
-  combinational-loop cleanup in larger legacy/sample outputs. Keep the current
-  external gate documented as a focused smoke until those families are fixed.
+  grouping issue and Q-named register feedback issue are fixed too, so AMBA is
+  now in the focused external gate. Keep the current external gate documented as
+  a focused smoke until the remaining historical/sample families are audited.
 - Continuity note:
   - keep Verilator/Yosys as post-emission backend gates; do not weaken or
     replace FSMGen's internal semantic/pre-generation validation with external

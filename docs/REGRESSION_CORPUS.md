@@ -199,7 +199,8 @@ The optional external SystemVerilog validation lane is covered by
 [t/308-systemverilog-external-validation.t](/Users/richarddje/Documents/github/fsmgen/t/308-systemverilog-external-validation.t).
 When `verilator` and `yosys` are installed, that smoke generates
 `fsm/lte_dif_pmaster.fsm`, `fsm/mipicsi2_byteserial.fsm`, and
-`fsm/mipicsi2_txtimer.fsm`, validates the emitted `.sv` files with Verilator
+`fsm/mipicsi2_txtimer.fsm`, plus the Q-named AMBA requester
+`fsm/amba_requester.fsm`, validates the emitted `.sv` files with Verilator
 `--lint-only --sv`, validates Yosys lowering with
 `read_verilog -sv -noautowire`, `hierarchy -check`, `proc`, `opt`, and `stat`,
 and proves the CLI `--verify-hdl` lane invokes the same external gates. When
@@ -213,6 +214,13 @@ multibit truthiness emits width-safe reductions in one-bit enable expressions,
 AST-backed arithmetic intermediates keep recovered result widths instead of
 falling back to one bit, and runtime arithmetic rendering preserves
 right-nested same-precedence grouping such as modulo over a product.
+
+[t/02-combinational-self-dependency.t](/Users/richarddje/Documents/github/fsmgen/t/02-combinational-self-dependency.t)
+now also locks the parser-side safety rail for D-input-named sequential
+assignments: `<=` and `<=+` may not read the same LHS name from the RHS or
+assignment guard, because that creates combinational feedback before HDL
+emission. Q/output-named `<-` loopback remains supported for ordinary register
+feedback.
 
 All current supported protocol fixtures are now `strict_supported`: the APB
 requester, APB completer, AMBA requester, and APB composition top use the
