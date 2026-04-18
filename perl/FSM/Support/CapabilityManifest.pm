@@ -7,6 +7,7 @@ use Exporter 'import';
 use File::Basename qw(dirname);
 use File::Spec;
 use JSON::PP ();
+use FSM::Support::CapabilityManifestContract qw(build_capability_manifest_contract);
 use FSM::Support::CheckDiagnosticsContract qw(build_check_diagnostics_contract);
 use FSM::Support::CompositionReportContract qw(build_composition_report_contract);
 use FSM::Support::DiagnosticCodes qw(diagnostic_code_registry);
@@ -176,6 +177,7 @@ sub build_capability_manifest {
                 'docs/SPECFORGE_FEEDBACK_RESPONSE.md',
             ],
         },
+        manifest_contract => build_capability_manifest_contract(),
     };
 }
 

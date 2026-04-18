@@ -304,6 +304,11 @@ explicit public contract owner too:
 [t/315-diagnostic-code-registry-contract.t](/Users/richarddje/Documents/github/fsmgen/t/315-diagnostic-code-registry-contract.t)
 locks that sibling-key and stable-entry-key promise for both in-process and
 CLI manifest output.
+The manifest shell itself now has that same explicit public contract owner:
+[perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm).
+[t/316-capability-manifest-contract.t](/Users/richarddje/Documents/github/fsmgen/t/316-capability-manifest-contract.t)
+locks the bounded top-level and first nested section key presence for both
+in-process and CLI manifest output.
 
 ## Current named entries
 

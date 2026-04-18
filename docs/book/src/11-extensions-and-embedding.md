@@ -254,6 +254,12 @@ The stable diagnostic-code registry now follows the same pattern:
 owns the production registry, while
 [perl/FSM/Support/DiagnosticCodeRegistryContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodeRegistryContract.pm)
 owns the bounded manifest-facing sibling-key and stable-entry-key promise.
+The manifest shell now follows the same split too:
+[perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+builds the JSON, while
+[perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm)
+owns the bounded top-level and first nested section key lists advertised under
+top-level `manifest_contract`.
 That lane is currently SystemVerilog-only; VHDL/GHDL validation waits for an
 active VHDL backend.
 The bounded contract for that lane now has its own owner too:

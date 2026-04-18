@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-18: the capability-manifest shell deserves its own contract owner too
+- The manifest had already grown into the public directory for multiple bounded
+  downstream surfaces, but its own shell was still implicit.
+- The safer split is the same one now used elsewhere:
+  - `FSM::Support::CapabilityManifest` builds the JSON document,
+  - `FSM::Support::CapabilityManifestContract` owns the bounded shell promise,
+  - and nested section meaning continues to belong to the dedicated section
+    contracts rather than becoming frozen accidentally through one large sample.
+- That keeps the promise narrow and honest:
+  - top-level manifest keys are public,
+  - the first nested section-key lists are public,
+  - but deeper leaf meaning still belongs to the narrower section contracts or
+    remains non-public until widened deliberately.
+
 ## 2026-04-18: stable diagnostic-code data ownership and public contract ownership should stay separate
 - `FSM::Support::DiagnosticCodes` is the production truth owner for the stable
   `FSMGEN_*` registry.

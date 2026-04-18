@@ -65,6 +65,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `perl/FSM/Extension/Registry.pm` — typed extension registry for the active `R7` replacement seam.
 - `perl/FSM/Extension/Context.pm` — typed hook context object passed to active extensions.
 - `perl/FSM/Support/CapabilityManifest.pm` — machine-readable capability manifest builder for downstream tool integration.
+- `perl/FSM/Support/CapabilityManifestContract.pm` — bounded top-level capability-manifest shell contract advertised through the manifest itself.
 - `perl/FSM/Support/CheckDiagnostics.pm` — bounded `--check --json` report builder and stable-code classifier.
 - `perl/FSM/Support/CheckDiagnosticsContract.pm` — bounded `--check --json` key-presence contract advertised through the capability manifest.
 - `perl/FSM/Support/CompositionReportContract.pm` — bounded sanitized composition provenance/report contract for semantic JSON.
@@ -145,6 +146,12 @@ bounded contract owner in
 [perl/FSM/Support/DiagnosticCodeRegistryContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodeRegistryContract.pm),
 so downstream tools can discover the public diagnostics sibling keys and stable
 entry keys without treating the whole diagnostics tree as frozen.
+The capability manifest shell now has that same explicit split too:
+[perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+builds the JSON, while
+[perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm)
+owns the bounded top-level and first nested section key lists advertised under
+`manifest_contract`.
 
 ## Assignment semantics (quick reference)
 - `A <- expr`: synchronous/flopped assignment where `A` names the flop output/Q value.

@@ -1715,6 +1715,12 @@ still owns the production `FSMGEN_*` data, while
 [perl/FSM/Support/DiagnosticCodeRegistryContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodeRegistryContract.pm)
 owns the bounded public sibling-key and stable-entry-key promise advertised
 through `diagnostics.stable_code_registry`.
+The manifest shell itself now has its own explicit bounded owner too:
+[perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+builds the JSON document, while
+[perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm)
+owns the bounded top-level plus first nested section key lists advertised
+through top-level `manifest_contract`.
 It also advertises the optional external SystemVerilog validation lane:
 `--verify-hdl` / `--validate-hdl` writes the generated `.sv`, then runs
 Verilator in lint-only SystemVerilog mode and Yosys with

@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-18: capability-manifest shell now has an explicit bounded contract owner too
+- Added
+  [perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm)
+  as the explicit owner for the bounded public contract over the top-level
+  capability-manifest shell: top-level manifest keys plus the first nested
+  producer/diagnostics/semantic-export/backend-validation/embedding/language-surface/documentation keys.
+- [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+  now advertises that contract under top-level `manifest_contract`, and
+  [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+  now also locks the manifest-shell contract owner plus the advertised
+  top-level/producer/section key lists.
+- [t/316-capability-manifest-contract.t](/Users/richarddje/Documents/github/fsmgen/t/316-capability-manifest-contract.t)
+  now regression-locks the public capability-manifest shell promise directly
+  for both in-process manifest construction and CLI `--capability-manifest`
+  JSON.
+- The reachable `bin/fsmgen` support surface now includes that contract owner
+  too, moving the measured import-tree totals to `137` project files /
+  `136` `.pm` packages with `Support => 15`.
+
 ## 2026-04-18: stable diagnostic-code registry now has an explicit bounded contract owner too
 - Added
   [perl/FSM/Support/DiagnosticCodeRegistryContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodeRegistryContract.pm)

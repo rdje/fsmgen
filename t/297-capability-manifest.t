@@ -20,6 +20,21 @@ my $manifest = build_capability_manifest();
 
 subtest 'module manifest is generated from support accounting' => sub {
     is($manifest->{manifest_schema_version}, 1, 'manifest exposes its schema version');
+    is($manifest->{manifest_contract}{schema_version}, 1, 'manifest exposes top-level manifest contract schema version');
+    is($manifest->{manifest_contract}{status}, 'bounded_public', 'manifest marks the top-level manifest shell as bounded public');
+    is(
+        $manifest->{manifest_contract}{contract_source},
+        'FSM::Support::CapabilityManifestContract',
+        'manifest records the top-level manifest contract owner',
+    );
+    ok(
+        scalar(@{$manifest->{manifest_contract}{public_top_level_presence_keys} || []}) >= 10,
+        'manifest advertises bounded top-level manifest key presence',
+    );
+    ok(
+        scalar(@{$manifest->{manifest_contract}{producer_presence_keys} || []}) >= 5,
+        'manifest advertises bounded producer key presence',
+    );
     is($manifest->{producer}{name}, 'FSMGen', 'manifest identifies FSMGen as producer');
     like($manifest->{producer}{version}, qr/\A\d+\.\d+-dev\z/, 'manifest exposes a producer version string');
     like($manifest->{producer}{git_commit}, qr/\A(?:unknown|[0-9a-f]{7,12})\z/, 'manifest exposes a bounded producer commit identity');
@@ -354,6 +369,14 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     ok(
         !$manifest->{embedding}{typed_extensions}{extension_object_contract}{legacy_plg_discovery},
         'manifest records that legacy .plg discovery is not part of typed extensions',
+    );
+    ok(
+        scalar(@{$manifest->{manifest_contract}{diagnostics_presence_keys} || []}) >= 4,
+        'manifest advertises bounded diagnostics section key presence',
+    );
+    ok(
+        scalar(@{$manifest->{manifest_contract}{language_surface_presence_keys} || []}) >= 8,
+        'manifest advertises bounded language-surface section key presence',
     );
 };
 
