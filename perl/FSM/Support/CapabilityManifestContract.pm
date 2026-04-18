@@ -106,6 +106,7 @@ sub capability_manifest_backend_validation_keys {
     return [
         qw(
             systemverilog_external
+            section_contract
         ),
     ];
 }

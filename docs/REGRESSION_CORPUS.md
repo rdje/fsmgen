@@ -234,6 +234,13 @@ locks the bounded public contract for that lane.
 is now the explicit owner for the command shape, tool identities, stage names,
 and bounded success top-level/step key lists advertised through
 `--capability-manifest`.
+The manifest's `backend_validation` section now has the same bounded contract
+split through
+[perl/FSM/Support/BackendValidationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/BackendValidationContract.pm).
+[t/323-backend-validation-contract.t](/Users/richarddje/Documents/github/fsmgen/t/323-backend-validation-contract.t)
+locks the published top-level and nested contract-owner map for both
+in-process and CLI manifest output while leaving deeper validation-lane
+semantics with the narrower external validation contract.
 
 [t/310-systemverilog-implicit-width-and-truthiness-hardening.t](/Users/richarddje/Documents/github/fsmgen/t/310-systemverilog-implicit-width-and-truthiness-hardening.t)
 locks the non-tool-specific side of that hardening: static RHS slices infer

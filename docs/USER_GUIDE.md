@@ -1745,6 +1745,12 @@ names the published top-level and nested contract-owner map advertised through
 `semantic_exports.section_contract`, while the broader semantic export story
 stays deliberately narrow: current bounded interchange surfaces, not every
 future semantic report format FSMGen may publish later.
+The manifest's `backend_validation` section now follows the same pattern:
+[perl/FSM/Support/BackendValidationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/BackendValidationContract.pm)
+names the published top-level and nested contract-owner map advertised through
+`backend_validation.section_contract`, while the broader backend validation
+story stays deliberately narrow: current bounded validation lanes, not every
+future backend/toolchain validation report FSMGen may publish later.
 The manifest's `language_surface` section now also has its own bounded owner:
 [perl/FSM/Support/LanguageSurfaceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/LanguageSurfaceContract.pm)
 names the published top-level and first nested section-key lists advertised

@@ -7,6 +7,7 @@ use Exporter 'import';
 use File::Basename qw(dirname);
 use File::Spec;
 use JSON::PP ();
+use FSM::Support::BackendValidationContract qw(build_backend_validation_contract);
 use FSM::Support::CapabilityManifestContract qw(build_capability_manifest_contract);
 use FSM::Support::CheckDiagnosticsContract qw(build_check_diagnostics_contract);
 use FSM::Support::CompositionReportContract qw(build_composition_report_contract);
@@ -101,6 +102,7 @@ sub build_capability_manifest {
                 %{build_hdl_external_validation_contract()},
                 regression_smoke => 't/308-systemverilog-external-validation.t',
             },
+            section_contract => build_backend_validation_contract(),
         },
         embedding => {
             composition_report => build_composition_report_contract(),

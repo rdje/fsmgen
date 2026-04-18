@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-19: backend_validation now has an explicit bounded contract owner too
+- Added
+  [perl/FSM/Support/BackendValidationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/BackendValidationContract.pm)
+  as the explicit owner for the bounded public contract over the manifest's
+  `backend_validation` section: public top-level keys plus the nested
+  contract-owner map for current backend validation surfaces.
+- [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+  now advertises that contract under `backend_validation.section_contract`, and
+  [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+  now also locks the manifest-facing owner plus the advertised bounded
+  backend-validation-section keys.
+- [t/323-backend-validation-contract.t](/Users/richarddje/Documents/github/fsmgen/t/323-backend-validation-contract.t)
+  now regression-locks the public backend-validation promise directly for both
+  in-process manifest construction and CLI `--capability-manifest` JSON while
+  keeping narrower validation-lane meaning behind dedicated contracts.
+- The reachable `bin/fsmgen` support surface now includes that contract owner
+  too, moving the measured import-tree totals to `144` project files /
+  `143` `.pm` packages with `Support => 22`.
+
 ## 2026-04-19: semantic_exports now has an explicit bounded contract owner too
 - Added
   [perl/FSM/Support/SemanticExportsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SemanticExportsContract.pm)

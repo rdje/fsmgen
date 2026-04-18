@@ -367,6 +367,29 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest advertises bounded external validation step key presence',
     );
     is(
+        $manifest->{backend_validation}{section_contract}{schema_version},
+        1,
+        'manifest records backend-validation section contract schema version',
+    );
+    is(
+        $manifest->{backend_validation}{section_contract}{status},
+        'bounded_public',
+        'manifest marks backend-validation section contract as bounded public',
+    );
+    is(
+        $manifest->{backend_validation}{section_contract}{contract_source},
+        'FSM::Support::BackendValidationContract',
+        'manifest records the backend-validation section contract owner',
+    );
+    ok(
+        scalar(@{$manifest->{backend_validation}{section_contract}{public_top_level_presence_keys} || []}) >= 2,
+        'manifest advertises bounded backend-validation top-level key presence',
+    );
+    ok(
+        scalar(@{$manifest->{backend_validation}{section_contract}{nested_contract_keys} || []}) >= 1,
+        'manifest advertises bounded backend-validation nested-contract key presence',
+    );
+    is(
         $manifest->{embedding}{hdl_generator_result}{schema_version},
         1,
         'manifest records HDLGenerator result contract schema version',

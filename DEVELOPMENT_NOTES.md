@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-19: the manifest's backend_validation section should have its own bounded contract owner
+- `backend_validation` is already part of the public downstream-tool story
+  because it is where embedders discover current post-emission validation lanes
+  such as `systemverilog_external`.
+- But leaving the section itself as a plain inline hash would blur two
+  different promises:
+  - the section-level shape downstream tools may rely on,
+  - versus the deeper payload details already owned by narrower validation
+    contracts.
+- The safer split mirrors the other `R13` surfaces:
+  - `FSM::Support::CapabilityManifest` keeps publishing the current
+    backend-validation payload,
+  - `FSM::Support::BackendValidationContract` owns the bounded section-level
+    top-level and nested contract-owner map,
+  - while `HDLExternalValidationContract` continues to own the deeper external
+    validation promise.
+- This keeps the promise honest:
+  - embedders can rely on the section shape and discover child owners,
+  - but they are not being told that every future backend validation lane is
+    already frozen into one flat API.
+
 ## 2026-04-19: the manifest's semantic_exports section should have its own bounded contract owner
 - `semantic_exports` is already part of the public downstream-tool story
   because it is where embedders discover current sanitized semantic interchange
