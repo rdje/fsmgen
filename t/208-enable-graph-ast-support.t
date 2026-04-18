@@ -10,6 +10,7 @@ use FindBin;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::AST::Node;
+use FSM::CoreAST;
 use FSM::HDL::FlattenedDT;
 use FSM::Pipeline::SourceFrontend;
 
@@ -65,6 +66,24 @@ FSM
         FSM::AST::SignalRef->new('BUS1'),
         FSM::AST::SignalRef->new('BUS2'),
     );
+    my $modulo_over_product = FSM::AST::BinaryOp->new(
+        '%',
+        FSM::AST::SignalRef->new('BUS1'),
+        FSM::AST::BinaryOp->new(
+            '*',
+            FSM::AST::SignalRef->new('BUS2'),
+            FSM::AST::SignalRef->new('BUS1'),
+        ),
+    );
+    my $subtract_nested_subtract = FSM::AST::BinaryOp->new(
+        '-',
+        FSM::AST::SignalRef->new('BUS1'),
+        FSM::AST::BinaryOp->new(
+            '-',
+            FSM::AST::SignalRef->new('BUS2'),
+            FSM::AST::SignalRef->new('BUS1'),
+        ),
+    );
     my $negated = FSM::AST::UnaryOp->new(
         '!',
         FSM::AST::BinaryOp->new(
@@ -93,6 +112,16 @@ FSM
         $support->ast_to_systemverilog($arithmetic),
         'BUS1 + BUS2',
         'AST support renders arithmetic expressions with direct binary operator emission',
+    );
+    is(
+        $support->ast_to_systemverilog($modulo_over_product),
+        'BUS1 % (BUS2 * BUS1)',
+        'AST support preserves right-nested same-precedence arithmetic grouping',
+    );
+    is(
+        $support->ast_to_systemverilog($subtract_nested_subtract),
+        'BUS1 - (BUS2 - BUS1)',
+        'AST support preserves non-associative right-nested arithmetic grouping',
     );
     is(
         $support->ast_to_systemverilog($negated),
@@ -152,6 +181,46 @@ FSM
         $support->should_factor_logical_operation($one_bit_logical) ? 1 : 0,
         (($prepared_backend->{binary_logical_op_counts}{$one_bit_logical->to_systemverilog} || 0) > 1) ? 1 : 0,
         'AST support delegates logical factorization policy to the live frequency table',
+    );
+};
+
+subtest 'CoreAST direct SystemVerilog rendering preserves same-precedence right grouping' => sub {
+    my %signals = map {
+        $_ => FSM::CoreAST::Signal->new(name => $_, width => 8)
+    } qw(BUS1 BUS2);
+    my $ref = sub {
+        my ($name) = @_;
+        return FSM::CoreAST::SignalRef->new($signals{$name});
+    };
+
+    my $modulo_over_product = FSM::CoreAST::BinaryOp->new(
+        '%',
+        $ref->('BUS1'),
+        FSM::CoreAST::BinaryOp->new(
+            '*',
+            $ref->('BUS2'),
+            $ref->('BUS1'),
+        ),
+    );
+    my $subtract_nested_subtract = FSM::CoreAST::BinaryOp->new(
+        '-',
+        $ref->('BUS1'),
+        FSM::CoreAST::BinaryOp->new(
+            '-',
+            $ref->('BUS2'),
+            $ref->('BUS1'),
+        ),
+    );
+
+    is(
+        $modulo_over_product->to_systemverilog,
+        'BUS1 % (BUS2 * BUS1)',
+        'CoreAST SV rendering preserves right-nested modulo/product grouping',
+    );
+    is(
+        $subtract_nested_subtract->to_systemverilog,
+        'BUS1 - (BUS2 - BUS1)',
+        'CoreAST SV rendering preserves right-nested non-associative grouping',
     );
 };
 

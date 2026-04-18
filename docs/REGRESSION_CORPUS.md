@@ -210,8 +210,9 @@ regression suite depend on local EDA installs.
 locks the non-tool-specific side of that hardening: static RHS slices infer
 base widths, explicit selectors and guards infer tested/counter widths,
 multibit truthiness emits width-safe reductions in one-bit enable expressions,
-and AST-backed arithmetic intermediates keep recovered result widths instead of
-falling back to one bit.
+AST-backed arithmetic intermediates keep recovered result widths instead of
+falling back to one bit, and runtime arithmetic rendering preserves
+right-nested same-precedence grouping such as modulo over a product.
 
 All current supported protocol fixtures are now `strict_supported`: the APB
 requester, APB completer, AMBA requester, and APB composition top use the

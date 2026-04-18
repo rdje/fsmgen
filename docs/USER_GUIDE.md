@@ -439,6 +439,11 @@ Operator expressions:
   - `==`, `!=`, `<`, `<=`, `>`, `>=` are treated as chained adjacent-pair comparison families
     - `(< a b c)` means `((a < b) && (b < c))`
     - `(eq a b c d)` means `((a == b) && (b == c) && (c == d))`
+  - generated HDL preserves nested AST grouping when target-language
+    left-associativity would otherwise change meaning; for example
+    `(% addr_q (* beats_total_q addr_step_q))` lowers to
+    `addr_q % (beats_total_q * addr_step_q)`, not
+    `addr_q % beats_total_q * addr_step_q`
 - Examples:
   - `(match = cnt[2:1]!=2'2)`
   - `(sum = (+ a b c d))`

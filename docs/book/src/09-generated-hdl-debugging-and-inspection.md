@@ -74,9 +74,13 @@ focused SystemVerilog smoke, not yet a claim that every historical sample in
 The focused smoke currently includes `fsm/lte_dif_pmaster.fsm` plus the MIPI
 byte-serial/timer examples that rely on inferred widths from slices,
 selectors, and guards. Larger legacy examples such as `fsm/amba_requester.fsm`
-still expose known follow-up work around arithmetic operand extension and real
-combinational feedback loops, so they are not yet part of the external
-warning-clean gate.
+still expose known follow-up work around real combinational feedback loops, so
+they are not yet part of the external warning-clean gate. The AMBA
+modulo/product expression is nevertheless a useful debugging example:
+`(% addr_q (* beats_total_q addr_step_q))` must render as
+`addr_q % (beats_total_q * addr_step_q)`. If generated HDL flattens that to
+`addr_q % beats_total_q * addr_step_q`, the target language's left-associative
+operator rules have changed the AST meaning.
 
 When reading flattened enable logic, remember that `.fsm` truthiness is
 intent-level. A multibit signal used as a predicate means “non-zero,” so the

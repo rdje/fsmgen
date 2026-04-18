@@ -1,5 +1,27 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-18: CoreAST/SV arithmetic grouping is preserved
+- Fixed a generated-SystemVerilog arithmetic rendering bug where right-nested
+  same-precedence expressions could be flattened into different target
+  semantics. The concrete AMBA case was `(% addr_q (* beats_total_q
+  addr_step_q))`, which must emit as `addr_q % (beats_total_q * addr_step_q)`,
+  not `addr_q % beats_total_q * addr_step_q`.
+- [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  now registers symbolic arithmetic operators with precedence/associativity
+  metadata, treats BinaryOp precedence as optional for public calls, and only
+  forwards precedence to nested BinaryOp children.
+- [perl/FSM/Synthesis/EnableGraph/ASTSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/ASTSupport.pm)
+  now applies the same right-child grouping rule on the enable-graph rendering
+  path.
+- [t/208-enable-graph-ast-support.t](/Users/richarddje/Documents/github/fsmgen/t/208-enable-graph-ast-support.t)
+  locks direct renderer behavior, and
+  [t/310-systemverilog-implicit-width-and-truthiness-hardening.t](/Users/richarddje/Documents/github/fsmgen/t/310-systemverilog-implicit-width-and-truthiness-hardening.t)
+  locks the generated AMBA text.
+- `./bin/fsmgen --quiet --verify-hdl -o /tmp/fsmgen_amba_requester_pnt_coreassoc4.sv fsm/amba_requester.fsm`
+  no longer reports the previous `WIDTHEXPAND` modulo/division warnings. It
+  still reports real `UNOPTFLAT` combinational feedback warnings, so AMBA is
+  not yet in the warning-clean external validation smoke set.
+
 ## 2026-04-18: generated SV width/truthiness hardening widened external validation
 - Direct parsing now infers missing widths from exact authored evidence:
   static slices/indexes, explicit-width guard comparisons, and explicit test
@@ -18,9 +40,8 @@ This is the live continuity document for fast session recovery after crashes, re
   now validates `lte_dif_pmaster`, `mipicsi2_byteserial`, and `mipicsi2_txtimer`
   with Verilator/Yosys when installed.
 - Remaining known hardening:
-  - `fsm/amba_requester.fsm` still needs arithmetic operand extension around
-    modulo/division and a semantic look at combinational feedback paths before
-    it can be added to the external validation smoke.
+  - `fsm/amba_requester.fsm` still needs a semantic look at combinational
+    feedback paths before it can be added to the external validation smoke.
 
 ## 2026-04-18: intent-level sized integer literals normalize before SV emission
 - [perl/FSM/Package/IntegerLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/IntegerLiteralSupport.pm)
@@ -58,10 +79,10 @@ This is the live continuity document for fast session recovery after crashes, re
   follow-up backend issues in some legacy/sample generated files. The malformed
   sized-literal syntax family (`2'3` / `20'x1`) is now normalized before
   emission, MIPI missing-width/truthiness issues are fixed, and one AMBA
-  arithmetic intermediate width-loss issue is fixed. Remaining hardening is
-  mostly arithmetic operand extension and real combinational-loop cleanup in
-  larger legacy/sample outputs. Keep the current external gate documented as a
-  focused smoke until those families are fixed.
+  arithmetic intermediate width-loss issue is fixed. The AMBA modulo/product
+  grouping issue is fixed too, so remaining hardening is now mostly real
+  combinational-loop cleanup in larger legacy/sample outputs. Keep the current
+  external gate documented as a focused smoke until those families are fixed.
 - Continuity note:
   - keep Verilator/Yosys as post-emission backend gates; do not weaken or
     replace FSMGen's internal semantic/pre-generation validation with external

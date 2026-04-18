@@ -267,6 +267,10 @@ sub _render_binary_op ($self, $ast, $parent_precedence) {
     my $right_sv = $self->_ast_to_systemverilog_internal($right, $my_precedence);
     my $op_symbol = $self->_choose_operator_symbol($operator, $left, $right);
 
+    if ($self->_right_child_needs_same_precedence_parentheses($operator, $right)) {
+        $right_sv = "($right_sv)";
+    }
+
     fsm_debug("*** OPERATOR_CHOICE_DEBUG: ***", 3);
     fsm_debug("  Original operator: '$operator'", 3);
     fsm_debug("  Chosen symbol: '$op_symbol'", 3);
@@ -494,6 +498,27 @@ Internal precedence helper for binary rendering.
 sub _needs_parentheses ($self, $my_precedence, $parent_precedence) {
     return 0 unless defined $parent_precedence;
     return $my_precedence < $parent_precedence;
+}
+
+sub _right_child_needs_same_precedence_parentheses ($self, $parent_operator, $right_child) {
+    return 0 unless $right_child && blessed($right_child);
+    return 0 unless $right_child->isa('FSM::AST::BinaryOp')
+        || $right_child->isa('FSM::CoreAST::BinaryOp')
+        || $right_child->isa('FSM::HDL::SubstitutedBinaryOp');
+
+    my $child_operator = eval { $right_child->operator } || '';
+    return 0 unless $child_operator ne '';
+
+    my $parent_precedence = $self->_get_operator_precedence($parent_operator);
+    my $child_precedence = $self->_get_operator_precedence($child_operator);
+    return 0 unless $parent_precedence == $child_precedence;
+
+    my $parent_symbol = $self->_map_binary_operator($parent_operator);
+    my $child_symbol = $self->_map_binary_operator($child_operator);
+    return 0 if $parent_symbol eq $child_symbol
+        && $parent_symbol =~ /^(?:\+|\*|&|\||\^|&&|\|\|)$/;
+
+    return 1;
 }
 
 =head2 _map_binary_operator

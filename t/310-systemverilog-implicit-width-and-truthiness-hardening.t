@@ -51,6 +51,9 @@ subtest 'intermediate arithmetic width follows assignment-analysis signal widths
 
     like($hdl, qr/\bwire\s+\[31:0\]\s+addr_q_plus_addr_step_q\b/, 'arithmetic intermediate keeps 32-bit result width');
     unlike($hdl, qr/\bwire\s+addr_q_plus_addr_step_q\s*;/, 'arithmetic intermediate is not silently collapsed to 1 bit');
+    like($hdl, qr/\bwrap_base_q\s*=\s*addr_q\s*-\s*addr_q\s*%\s*\(beats_total_q\s*\*\s*addr_step_q\)\s*;/, 'runtime modulo RHS product keeps authored grouping');
+    like($hdl, qr/\bwrap_high_q\s*=\s*addr_q\s*-\s*addr_q\s*%\s*\(beats_total_q\s*\*\s*addr_step_q\)\s*\+\s*beats_total_q\s*\*\s*addr_step_q\s*;/, 'runtime modulo grouping is preserved inside wider arithmetic expressions');
+    unlike($hdl, qr/addr_q\s*%\s*beats_total_q\s*\*\s*addr_step_q/, 'runtime modulo is not flattened into left-associative MOD/MUL text');
 };
 
 done_testing();

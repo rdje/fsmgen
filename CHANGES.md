@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-18
+### SystemVerilog arithmetic rendering preserves authored grouping
+- Hardened [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm) so symbolic arithmetic operators (`+`, `-`, `*`, `/`, `%`) carry the same precedence/associativity metadata as their word aliases and right-nested same-precedence expressions such as `(% addr_q (* beats_total_q addr_step_q))` emit as `addr_q % (beats_total_q * addr_step_q)` instead of changing grouping through left-associative target text.
+- Updated [perl/FSM/Synthesis/EnableGraph/ASTSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/ASTSupport.pm), [t/208-enable-graph-ast-support.t](/Users/richarddje/Documents/github/fsmgen/t/208-enable-graph-ast-support.t), and [t/310-systemverilog-implicit-width-and-truthiness-hardening.t](/Users/richarddje/Documents/github/fsmgen/t/310-systemverilog-implicit-width-and-truthiness-hardening.t) to lock the same grouping rule for both enable-graph and direct CoreAST renderers.
+- Rechecked `fsm/amba_requester.fsm` with `--verify-hdl`; the previous Verilator `WIDTHEXPAND` modulo/division warnings are gone, while the fixture still reports genuine `UNOPTFLAT` combinational feedback warnings and therefore remains outside the warning-clean external smoke set.
+
 ### implicit width and truthiness hardening for generated SystemVerilog
 - Extended [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) and [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so static RHS slices, indexed references, explicit-width guard comparisons, and explicit test selectors can infer missing direct signal widths before backend emission.
 - Updated [perl/FSM/Synthesis/EnableGraph/ASTSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/ASTSupport.pm) so multibit truthiness in generated one-bit enable expressions emits width-safe reduction forms such as `(|COUNT)` and `(~|bytept)` rather than Verilator-warning-prone `COUNT` / `!bytept` contexts.

@@ -737,25 +737,50 @@ package FSM::CoreAST::BinaryOp;
             verilog_precedence => 6, vhdl_precedence => 6, systemverilog_precedence => 6,
             associative => 1, commutative => 1 
         },
+        '+' => {
+            verilog => '+', vhdl => '+',
+            verilog_precedence => 6, vhdl_precedence => 6, systemverilog_precedence => 6,
+            associative => 1, commutative => 1
+        },
         'sub' => { 
             verilog => '-', vhdl => '-', 
             verilog_precedence => 6, vhdl_precedence => 6, systemverilog_precedence => 6,
             associative => 0, commutative => 0 
+        },
+        '-' => {
+            verilog => '-', vhdl => '-',
+            verilog_precedence => 6, vhdl_precedence => 6, systemverilog_precedence => 6,
+            associative => 0, commutative => 0
         },
         'mul' => { 
             verilog => '*', vhdl => '*', 
             verilog_precedence => 7, vhdl_precedence => 7, systemverilog_precedence => 7,
             associative => 1, commutative => 1 
         },
+        '*' => {
+            verilog => '*', vhdl => '*',
+            verilog_precedence => 7, vhdl_precedence => 7, systemverilog_precedence => 7,
+            associative => 1, commutative => 1
+        },
         'div' => { 
             verilog => '/', vhdl => '/', 
             verilog_precedence => 7, vhdl_precedence => 7, systemverilog_precedence => 7,
             associative => 0, commutative => 0 
         },
+        '/' => {
+            verilog => '/', vhdl => '/',
+            verilog_precedence => 7, vhdl_precedence => 7, systemverilog_precedence => 7,
+            associative => 0, commutative => 0
+        },
         'mod' => { 
             verilog => '%', vhdl => 'mod', 
             verilog_precedence => 7, vhdl_precedence => 7, systemverilog_precedence => 7,
             associative => 0, commutative => 0 
+        },
+        '%' => {
+            verilog => '%', vhdl => 'mod',
+            verilog_precedence => 7, vhdl_precedence => 7, systemverilog_precedence => 7,
+            associative => 0, commutative => 0
         },
         
         # Shift operators
@@ -819,19 +844,21 @@ package FSM::CoreAST::BinaryOp;
         return \@signals;
     }
     
-    sub to_verilog($self, $parent_precedence) {
+    sub to_verilog($self, $parent_precedence = undef) {
         my $op_info = $OPERATOR_REGISTRY{$self->{operator}};
         my $op_symbol = $op_info ? $op_info->{verilog} : $self->{operator};
         my $my_precedence = $op_info ? $op_info->{verilog_precedence} : undef;
         
-        my $left_verilog = $self->left && $self->left->can('to_verilog') ? 
-                          $self->left->to_verilog($my_precedence) : '0';
-        my $right_verilog = $self->right && $self->right->can('to_verilog') ? 
-                           $self->right->to_verilog($my_precedence) : '0';
+        my $left_verilog = $self->_render_child_with_precedence($self->left, 'to_verilog', $my_precedence);
+        my $right_verilog = $self->_render_child_with_precedence($self->right, 'to_verilog', $my_precedence);
         
         # Special handling for concatenation
         if ($self->{operator} eq 'concat') {
             return "{$left_verilog, $right_verilog}";
+        }
+
+        if ($self->_right_child_needs_same_precedence_parentheses('verilog')) {
+            $right_verilog = "($right_verilog)";
         }
         
         # Generate the expression
@@ -852,19 +879,21 @@ package FSM::CoreAST::BinaryOp;
         }
     }
     
-    sub to_vhdl($self, $parent_precedence) {
+    sub to_vhdl($self, $parent_precedence = undef) {
         my $op_info = $OPERATOR_REGISTRY{$self->{operator}};
         my $op_symbol = $op_info ? $op_info->{vhdl} : $self->{operator};
         my $my_precedence = $op_info ? $op_info->{vhdl_precedence} : undef;
         
-        my $left_vhdl = $self->left && $self->left->can('to_vhdl') ? 
-                       $self->left->to_vhdl($my_precedence) : '0';
-        my $right_vhdl = $self->right && $self->right->can('to_vhdl') ? 
-                        $self->right->to_vhdl($my_precedence) : '0';
+        my $left_vhdl = $self->_render_child_with_precedence($self->left, 'to_vhdl', $my_precedence);
+        my $right_vhdl = $self->_render_child_with_precedence($self->right, 'to_vhdl', $my_precedence);
         
         # Special handling for concatenation (VHDL uses & operator)
         if ($self->{operator} eq 'concat') {
             return "($left_vhdl & $right_vhdl)";
+        }
+
+        if ($self->_right_child_needs_same_precedence_parentheses('vhdl')) {
+            $right_vhdl = "($right_vhdl)";
         }
         
         # Generate the expression
@@ -885,19 +914,21 @@ package FSM::CoreAST::BinaryOp;
         }
     }
     
-    sub to_systemverilog($self, $parent_precedence) {
+    sub to_systemverilog($self, $parent_precedence = undef) {
         my $op_info = $OPERATOR_REGISTRY{$self->{operator}};
         my $op_symbol = $op_info ? $op_info->{verilog} : $self->{operator};
         my $my_precedence = $op_info ? $op_info->{systemverilog_precedence} : undef;
         
-        my $left_sv = $self->left && $self->left->can('to_systemverilog') ? 
-                      $self->left->to_systemverilog($my_precedence) : '0';
-        my $right_sv = $self->right && $self->right->can('to_systemverilog') ? 
-                       $self->right->to_systemverilog($my_precedence) : '0';
+        my $left_sv = $self->_render_child_with_precedence($self->left, 'to_systemverilog', $my_precedence);
+        my $right_sv = $self->_render_child_with_precedence($self->right, 'to_systemverilog', $my_precedence);
         
         # Special handling for concatenation
         if ($self->{operator} eq 'concat') {
             return "{$left_sv, $right_sv}";
+        }
+
+        if ($self->_right_child_needs_same_precedence_parentheses('systemverilog')) {
+            $right_sv = "($right_sv)";
         }
         
         # Generate the expression
@@ -916,6 +947,38 @@ package FSM::CoreAST::BinaryOp;
             # This operation has lower precedence - needs parentheses
             return "($expr)";
         }
+    }
+
+    sub _right_child_needs_same_precedence_parentheses($self, $language) {
+        my $right = $self->right;
+        return 0 unless Scalar::Util::blessed($right) && $right->isa('FSM::CoreAST::BinaryOp');
+
+        my $parent_info = $OPERATOR_REGISTRY{$self->{operator}};
+        my $child_info = $OPERATOR_REGISTRY{$right->operator};
+        return 0 unless $parent_info && $child_info;
+
+        my $precedence_key = $language . '_precedence';
+        my $parent_precedence = $parent_info->{$precedence_key};
+        my $child_precedence = $child_info->{$precedence_key};
+        return 0 unless defined($parent_precedence) && defined($child_precedence);
+        return 0 unless $parent_precedence == $child_precedence;
+
+        my $symbol_key = $language eq 'vhdl' ? 'vhdl' : 'verilog';
+        my $parent_symbol = $parent_info->{$symbol_key} // $self->{operator};
+        my $child_symbol = $child_info->{$symbol_key} // $right->operator;
+
+        return 0 if $parent_symbol eq $child_symbol
+            && $parent_info->{associative}
+            && $child_info->{associative};
+
+        return 1;
+    }
+
+    sub _render_child_with_precedence($self, $child, $method, $parent_precedence) {
+        return '0' unless $child && $child->can($method);
+        return $child->$method($parent_precedence)
+            if Scalar::Util::blessed($child) && $child->isa('FSM::CoreAST::BinaryOp');
+        return $child->$method();
     }
 
 package FSM::CoreAST::UnaryOp;

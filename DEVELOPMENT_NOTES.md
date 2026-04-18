@@ -1,5 +1,35 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-18: generated SV arithmetic must preserve AST grouping
+- The AMBA requester exposed a subtle backend correctness issue: the authored
+  expression `(% addr_q (* beats_total_q addr_step_q))` was emitted as
+  `addr_q % beats_total_q * addr_step_q`. In SystemVerilog, `%` and `*` share
+  precedence and associate left-to-right, so that target text means
+  `(addr_q % beats_total_q) * addr_step_q`, not the AST's intended
+  `addr_q % (beats_total_q * addr_step_q)`.
+- The fix lives in both render paths:
+  - `FSM::CoreAST::BinaryOp` now gives symbolic arithmetic operators the same
+    precedence/associativity metadata as word aliases such as `add`, `mul`,
+    and `mod`,
+  - direct CoreAST rendering now treats the internal precedence argument as an
+    optional implementation detail and only passes it into nested binary
+    children, because leaf nodes do not accept precedence parameters,
+  - and the enable-graph AST renderer now preserves right-nested
+    same-precedence binary children when flattening would change grouping.
+- Regression coverage now checks the renderer directly and the generated AMBA
+  HDL text. `fsm/amba_requester.fsm` no longer reports the earlier Verilator
+  `WIDTHEXPAND` modulo/division warnings, but it still reports real
+  `UNOPTFLAT` combinational feedback warnings. That fixture should remain out
+  of `t/308` until the feedback path is understood semantically instead of
+  hidden by lint pragmas.
+- Rationale:
+  - generated HDL is the visual representation of the AST, so the renderer must
+    preserve grouping even when target operators have equal precedence,
+  - warning-clean arithmetic should come from correct target text, not from
+    suppressing Verilator,
+  - and the remaining AMBA feedback warnings deserve a semantic fix or an
+    intentional fixture classification, not a cosmetic backend workaround.
+
 ## 2026-04-18: generated SV width inference and truthiness must be lint-clean
 - Static authored evidence now participates in direct width inference even when
   the user omits `+size`:
@@ -23,9 +53,9 @@ This document captures engineering rationale, design constraints, and working de
   - `fsm/mipicsi2_byteserial.fsm` and `fsm/mipicsi2_txtimer.fsm` now pass the
     optional Verilator/Yosys `--verify-hdl` lane,
   - `fsm/amba_requester.fsm` no longer loses the 32-bit arithmetic
-    intermediate width, but still has explicit follow-up warnings around
-    arithmetic operand extension for modulo/division and real combinational
-    feedback loops. Do not claim AMBA is externally lint-clean yet.
+    intermediate width. The later grouping fix also removed the modulo/division
+    `WIDTHEXPAND` warnings, but real combinational feedback loops remain. Do
+    not claim AMBA is externally lint-clean yet.
 
 ## 2026-04-18: .fsm intent literals must lower to target-HDL literals before emission
 - Added intent-level sized integer literal normalization to
@@ -75,11 +105,12 @@ This document captures engineering rationale, design constraints, and working de
   before emission, missing widths in the MIPI byte-serial/timer fixtures now
   infer from slices/selectors/guards, multibit truthiness in flattened enable
   expressions now uses reduction predicates, and the AMBA `addr_q +
-  addr_step_q` intermediate no longer collapses to one bit. Remaining follow-up
-  work includes arithmetic operand extension for modulo/division and real
-  combinational feedback loops in larger legacy/sample outputs. Do not claim
-  corpus-wide external HDL cleanliness until those are fixed and
-  regression-backed deliberately.
+  addr_step_q` intermediate no longer collapses to one bit. The AMBA
+  modulo/product expression now also preserves authored grouping and no longer
+  raises the previous modulo/division width-extension warning. Remaining
+  follow-up work includes real combinational feedback loops in larger
+  legacy/sample outputs. Do not claim corpus-wide external HDL cleanliness
+  until those are fixed and regression-backed deliberately.
 - Rationale:
   - external tools catch final-text issues that internal AST checks should make
     rare but should not be asked to replace,
