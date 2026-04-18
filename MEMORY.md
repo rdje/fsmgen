@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-19: producer now has an explicit bounded contract owner too
+- Added
+  [perl/FSM/Support/ProducerContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ProducerContract.pm)
+  as the explicit owner for the bounded public contract over the manifest's
+  `producer` section: public top-level identity/build keys plus the scalar-string
+  and boolean field families.
+- [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+  now advertises that contract under `producer.section_contract`, and
+  [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+  now also locks the manifest-facing owner plus the advertised bounded
+  top-level/scalar/boolean keys.
+- [t/319-producer-contract.t](/Users/richarddje/Documents/github/fsmgen/t/319-producer-contract.t)
+  now regression-locks the public producer promise directly for both
+  in-process manifest construction and CLI `--capability-manifest` JSON,
+  including the rule that `git_commit` stays a bounded best-effort short hash
+  or `unknown`.
+- The reachable `bin/fsmgen` support surface now includes that contract owner
+  too, moving the measured import-tree totals to `140` project files /
+  `139` `.pm` packages with `Support => 18`.
+
 ## 2026-04-18: documentation now has an explicit bounded contract owner too
 - Added
   [perl/FSM/Support/DocumentationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DocumentationContract.pm)

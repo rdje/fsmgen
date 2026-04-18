@@ -18,6 +18,7 @@ use FSM::Support::HDLExternalValidationContract qw(build_hdl_external_validation
 use FSM::Support::HDLGeneratorResultContract qw(build_hdl_generator_result_contract);
 use FSM::Support::LanguageSurfaceContract qw(build_language_surface_contract);
 use FSM::Support::NormalizedSemanticReportContract qw(build_normalized_semantic_report_contract);
+use FSM::Support::ProducerContract qw(build_producer_contract);
 use FSM::Support::RegressionCorpus qw(regression_corpus_entries);
 use FSM::Support::SupportAccountingContract qw(build_support_accounting_contract);
 
@@ -44,6 +45,7 @@ sub build_capability_manifest {
             git_commit => _git_head_short() || 'unknown',
             contract_authority => JSON::PP::true,
             source => 'FSM::Support::CapabilityManifest',
+            section_contract => build_producer_contract(),
         },
         support_accounting => {
             %{build_support_accounting_contract()},

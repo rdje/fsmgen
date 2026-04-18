@@ -1,5 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-04-19
+### capability-manifest producer now has an explicit bounded contract owner
+- Added [perl/FSM/Support/ProducerContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ProducerContract.pm) as the owner for the bounded public contract over the manifest's `producer` section, covering the public top-level identity/build keys plus the scalar-string and boolean field families.
+- Updated [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm), [perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm), and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the manifest advertises that contract under `producer.section_contract` and locks the owner plus the bounded producer key families explicitly.
+- Added [t/319-producer-contract.t](/Users/richarddje/Documents/github/fsmgen/t/319-producer-contract.t) so the contract owner, manifest wiring, and emitted producer identity/build contract are regression-locked for both in-process and CLI manifest output.
+- Updated [README.md](/Users/richarddje/Documents/github/fsmgen/README.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md), [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md), [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so the new owner is visible to embedders, users, and future sessions.
+
 ## 2026-04-18
 ### capability-manifest documentation now has an explicit bounded contract owner
 - Added [perl/FSM/Support/DocumentationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DocumentationContract.pm) as the owner for the bounded public contract over the manifest's `documentation` section, covering the public top-level keys plus the path-list fields for human-facing docs and downstream-alignment docs.

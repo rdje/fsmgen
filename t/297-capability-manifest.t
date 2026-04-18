@@ -32,12 +32,40 @@ subtest 'module manifest is generated from support accounting' => sub {
         'manifest advertises bounded top-level manifest key presence',
     );
     ok(
-        scalar(@{$manifest->{manifest_contract}{producer_presence_keys} || []}) >= 5,
+        scalar(@{$manifest->{manifest_contract}{producer_presence_keys} || []}) >= 6,
         'manifest advertises bounded producer key presence',
     );
     is($manifest->{producer}{name}, 'FSMGen', 'manifest identifies FSMGen as producer');
     like($manifest->{producer}{version}, qr/\A\d+\.\d+-dev\z/, 'manifest exposes a producer version string');
     like($manifest->{producer}{git_commit}, qr/\A(?:unknown|[0-9a-f]{7,12})\z/, 'manifest exposes a bounded producer commit identity');
+    ok($manifest->{producer}{contract_authority}, 'manifest marks producer identity as authoritative');
+    is(
+        $manifest->{producer}{section_contract}{schema_version},
+        1,
+        'manifest records producer contract schema version',
+    );
+    is(
+        $manifest->{producer}{section_contract}{status},
+        'bounded_public',
+        'manifest marks producer contract as bounded public',
+    );
+    is(
+        $manifest->{producer}{section_contract}{contract_source},
+        'FSM::Support::ProducerContract',
+        'manifest records the producer contract owner',
+    );
+    ok(
+        scalar(@{$manifest->{producer}{section_contract}{public_top_level_presence_keys} || []}) >= 6,
+        'manifest advertises bounded producer top-level key presence',
+    );
+    ok(
+        scalar(@{$manifest->{producer}{section_contract}{scalar_string_keys} || []}) >= 4,
+        'manifest advertises bounded producer scalar-string key presence',
+    );
+    ok(
+        scalar(@{$manifest->{producer}{section_contract}{boolean_keys} || []}) >= 1,
+        'manifest advertises bounded producer boolean key presence',
+    );
     is($manifest->{support_accounting}{schema_version}, 1, 'manifest records support-accounting schema version');
     is($manifest->{support_accounting}{status}, 'bounded_public', 'manifest marks support accounting as bounded public');
     is(

@@ -260,6 +260,12 @@ builds the JSON, while
 [perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm)
 owns the bounded top-level and first nested section key lists advertised under
 top-level `manifest_contract`.
+The `producer` section now follows the same split too:
+[perl/FSM/Support/ProducerContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ProducerContract.pm)
+owns the published top-level, scalar-string, and boolean field families
+advertised through `producer.section_contract`, while the broader producer
+story stays limited to current tool/build identity rather than becoming an
+accidental release-management API.
 The `language_surface` section now has its own bounded owner as well:
 [perl/FSM/Support/LanguageSurfaceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/LanguageSurfaceContract.pm)
 advertises the public top-level and first nested section-key lists through

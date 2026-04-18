@@ -76,6 +76,7 @@ sub capability_manifest_producer_keys {
             git_commit
             contract_authority
             source
+            section_contract
         ),
     ];
 }

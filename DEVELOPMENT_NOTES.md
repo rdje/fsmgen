@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-19: the manifest's producer section should have its own bounded contract owner
+- `producer` is already part of the public capability-manifest story because it
+  is where embedders discover the current FSMGen identity/build metadata.
+- But leaving it as a plain inline hash would blur two different questions:
+  - what fields downstream tools may rely on,
+  - versus what broader release/build metadata might be added later.
+- The safer split mirrors the other `R13` surfaces:
+  - `FSM::Support::CapabilityManifest` keeps publishing the current producer
+    payload,
+  - `FSM::Support::ProducerContract` owns the bounded manifest-facing
+    top-level, scalar-string, and boolean key families,
+  - and the broader release-management story stays intentionally separate.
+- This keeps the promise honest:
+  - embedders can rely on current tool/build identity fields,
+  - but they are not being told that FSMGen has already committed to a richer
+    package-manager or release-distribution API.
+
 ## 2026-04-18: the manifest's documentation section should have its own bounded contract owner
 - `documentation` is already part of the public capability-manifest story, but
   leaving it as a plain inline array payload would make the doc-pointer surface
