@@ -12,6 +12,7 @@ use FSM::Support::CheckDiagnosticsContract qw(build_check_diagnostics_contract);
 use FSM::Support::CompositionReportContract qw(build_composition_report_contract);
 use FSM::Support::DiagnosticCodes qw(diagnostic_code_registry);
 use FSM::Support::DiagnosticCodeRegistryContract qw(build_diagnostic_code_registry_contract);
+use FSM::Support::DiagnosticsContract qw(build_diagnostics_contract);
 use FSM::Support::DocumentationContract qw(build_documentation_contract);
 use FSM::Support::ExtensionContract qw(build_extension_contract);
 use FSM::Support::HDLExternalValidationContract qw(build_hdl_external_validation_contract);
@@ -81,6 +82,7 @@ sub build_capability_manifest {
                 classifier_match_policy => 'most_specific_expected_error_pattern',
                 success_match_policy => 'resolved_source_path_to_non_failure_corpus_entry',
             },
+            section_contract => build_diagnostics_contract(),
         },
         semantic_exports => {
             normalized_semantic_json => {

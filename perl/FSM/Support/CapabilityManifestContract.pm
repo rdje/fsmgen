@@ -88,6 +88,7 @@ sub capability_manifest_diagnostics_keys {
             stable_codes
             stable_code_registry
             check_json
+            section_contract
         ),
     ];
 }

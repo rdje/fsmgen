@@ -1721,6 +1721,12 @@ builds the JSON document, while
 [perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm)
 owns the bounded top-level plus first nested section key lists advertised
 through top-level `manifest_contract`.
+The manifest's `diagnostics` section now follows the same pattern:
+[perl/FSM/Support/DiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsContract.pm)
+names the published top-level, scalar-string, and stable-code entry families
+advertised through `diagnostics.section_contract`, while the narrower stable
+registry and check-JSON details continue to live behind their own dedicated
+contracts.
 The manifest's `producer` section now follows the same pattern:
 [perl/FSM/Support/ProducerContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ProducerContract.pm)
 names the published top-level, scalar-string, and boolean field families

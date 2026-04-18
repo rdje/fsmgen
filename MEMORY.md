@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-19: diagnostics now has an explicit bounded contract owner too
+- Added
+  [perl/FSM/Support/DiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsContract.pm)
+  as the explicit owner for the bounded public contract over the manifest's
+  `diagnostics` section: public top-level keys plus the stable-code entry
+  family reused from the stable registry contract.
+- [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+  now advertises that contract under `diagnostics.section_contract`, and
+  [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+  now also locks the manifest-facing owner plus the advertised bounded
+  diagnostics/stable-code families.
+- [t/320-diagnostics-contract.t](/Users/richarddje/Documents/github/fsmgen/t/320-diagnostics-contract.t)
+  now regression-locks the public diagnostics promise directly for both
+  in-process manifest construction and CLI `--capability-manifest` JSON while
+  keeping narrower stable-registry and check-JSON details behind their own
+  contracts.
+- The reachable `bin/fsmgen` support surface now includes that contract owner
+  too, moving the measured import-tree totals to `141` project files /
+  `140` `.pm` packages with `Support => 19`.
+
 ## 2026-04-19: producer now has an explicit bounded contract owner too
 - Added
   [perl/FSM/Support/ProducerContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ProducerContract.pm)

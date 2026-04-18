@@ -154,6 +154,29 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'FSM::Support::DiagnosticCodeRegistryContract',
         'manifest records the stable-code registry contract owner',
     );
+    is(
+        $manifest->{diagnostics}{section_contract}{schema_version},
+        1,
+        'manifest records diagnostics section contract schema version',
+    );
+    is(
+        $manifest->{diagnostics}{section_contract}{status},
+        'bounded_public',
+        'manifest marks diagnostics section contract as bounded public',
+    );
+    is(
+        $manifest->{diagnostics}{section_contract}{contract_source},
+        'FSM::Support::DiagnosticsContract',
+        'manifest records the diagnostics section contract owner',
+    );
+    ok(
+        scalar(@{$manifest->{diagnostics}{section_contract}{public_top_level_presence_keys} || []}) >= 5,
+        'manifest advertises bounded diagnostics section top-level key presence',
+    );
+    ok(
+        scalar(@{$manifest->{diagnostics}{section_contract}{stable_code_entry_presence_keys} || []}) >= 5,
+        'manifest advertises bounded diagnostics stable-code entry key presence',
+    );
     ok(
         scalar(@{$manifest->{diagnostics}{stable_code_registry}{public_sibling_keys} || []}) >= 3,
         'manifest advertises bounded stable-code registry sibling keys',

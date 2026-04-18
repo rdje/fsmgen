@@ -309,6 +309,13 @@ The manifest shell itself now has that same explicit public contract owner:
 [t/316-capability-manifest-contract.t](/Users/richarddje/Documents/github/fsmgen/t/316-capability-manifest-contract.t)
 locks the bounded top-level and first nested section key presence for both
 in-process and CLI manifest output.
+The manifest's `diagnostics` section now has the same bounded contract split
+through
+[perl/FSM/Support/DiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsContract.pm).
+[t/320-diagnostics-contract.t](/Users/richarddje/Documents/github/fsmgen/t/320-diagnostics-contract.t)
+locks the published top-level plus stable-code entry families for both
+in-process and CLI manifest output while leaving narrower registry/check JSON
+details with their dedicated contracts.
 The manifest's `producer` section now has the same bounded contract split
 through
 [perl/FSM/Support/ProducerContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ProducerContract.pm).

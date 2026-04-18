@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-19: the manifest's diagnostics section should have its own bounded contract owner
+- `diagnostics` is already public enough that downstream tools inspect it
+  directly through the capability manifest.
+- But the section currently mixes three different scopes:
+  - top-level diagnostics-section structure,
+  - stable-code registry exposure,
+  - and check-JSON contract advertisement.
+- The safer split mirrors the other `R13` surfaces:
+  - `FSM::Support::CapabilityManifest` keeps publishing the current diagnostics
+    payload,
+  - `FSM::Support::DiagnosticsContract` owns the bounded section-level
+    top-level and stable-code entry promise,
+  - while `DiagnosticCodeRegistryContract` and `CheckDiagnosticsContract`
+    continue to own their narrower deeper contracts.
+- This keeps the promise honest:
+  - embedders can rely on the public section shape and stable-code entry family,
+  - but they are not being told that every nested diagnostics artifact is now
+    one flat frozen API.
+
 ## 2026-04-19: the manifest's producer section should have its own bounded contract owner
 - `producer` is already part of the public capability-manifest story because it
   is where embedders discover the current FSMGen identity/build metadata.
