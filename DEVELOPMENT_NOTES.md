@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-18: commit hygiene must win over agent momentum
+- This session exposed a workflow weakness, not a product feature problem: the
+  repository's commit workflow explicitly requires one task/activity per commit
+  cycle, but a long `pnt` streak made it too easy to keep shipping adjacent
+  slices without closing them.
+- The local rule must stay simple and unambiguous:
+  - finish one slice,
+  - update `MEMORY.md`, `CHANGES.md`, and any other required workflow files,
+  - validate that slice,
+  - commit it,
+  - then start the next slice.
+- The workflow text must not contain contradictory policy either. A stale
+  mandatory co-author-trailer sentence in [COMMIT.md](/Users/richarddje/Documents/github/fsmgen/COMMIT.md)
+  conflicted with the live repository instruction to avoid attribution
+  trailers unless explicitly requested, so the workflow now matches that
+  no-trailer default.
+
 ## 2026-04-18: composition actuals should reuse semantic literal truth, not invent a second parser
 - Composition direct actuals and concat operands should not drift into a
   separate ad hoc literal world. The same friendly `.fsm` spellings that are

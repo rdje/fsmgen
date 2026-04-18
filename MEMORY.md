@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-18: commit workflow no longer conflicts with the no-trailer policy
+- [COMMIT.md](/Users/richarddje/Documents/github/fsmgen/COMMIT.md)
+  no longer carries the stale contradictory rule that AI-created commits must
+  include a co-author trailer. The workflow now explicitly matches the live
+  repository policy: no `Co-Authored-By` or similar attribution trailer unless
+  the user explicitly asks for one.
+
 ## 2026-04-18: user docs now show concrete composition intent-literal actuals
 - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
   now includes one explicit `?toplink` example showing intent-sized literal

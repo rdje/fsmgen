@@ -62,4 +62,4 @@ Its purpose is to let any new AI resume work safely and follow the same commit h
 - Keep commits task-scoped (only files relevant to the completed task).
 - Do not stage unrelated untracked directories (for example local sandboxes).
 - Keep behavior-preserving refactor slices small and verifiable.
-- Ensure the co-author trailer is present in every commit message created by AI.
+- Do not add `Co-Authored-By` or any other attribution trailer unless the user explicitly asks for it.

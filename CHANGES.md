@@ -1,6 +1,9 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-18
+### commit workflow now matches the repository no-trailer rule
+- Updated [COMMIT.md](/Users/richarddje/Documents/github/fsmgen/COMMIT.md) so the safety rules no longer contradict the repository policy on attribution trailers: commits must not add `Co-Authored-By` or similar trailers unless the user explicitly asks for them.
+
 ### composition actuals now reuse the checked intent-literal frontend
 - Extended [perl/FSM/Composition/ActualLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ActualLiteralSupport.pm) so direct actuals and concat operands accept FSMGen intent-sized exact-width literal spellings such as `=5'23`, `=8'-10`, `=8'-0xA`, `=8'-0b1010`, and `=20'x1`, while preserving exact width and lowering negative values through checked two's-complement bits.
 - Routed composition source-expression parsing through the same ambiguity guard for obviously bitstring-like bare `0/1` payloads, threading source context from [perl/FSM/Composition/SourceExpressionSpecSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SourceExpressionSpecSupport.pm) and [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so blocked direct-actual and concat-operand diagnostics stay precise.
