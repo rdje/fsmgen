@@ -71,6 +71,15 @@ intent-level sized values as `<width>'<integer-value>`: `5'23`, `8'-10`,
 so generated SV sees legal literals such as `5'd23`, `8'd246`, `8'hF6`,
 `8'b11110110`, and `20'h1` instead of raw `.fsm` shorthand.
 
+Value lanes are stricter than width lanes. In direct RHS expressions,
+`+constants`, `+params`, and `.rtlif` parameter/generic scalar defaults,
+FSMGen now rejects obviously bitstring-like bare `0/1` tokens such as
+`00001110` or `10000000` instead of guessing whether they were meant as
+decimal or binary. Write `0b00001110` for intrinsic-width binary,
+`8'b00001110` for exact-width binary, or `0d1110` if decimal was intended.
+Positive-width slots keep the existing decimal compatibility, so
+`(+size (DATA 10))` still means decimal ten.
+
 ## Init/Reset Defaults
 
 Use canonical `:=` pairs for explicit reset/default metadata:

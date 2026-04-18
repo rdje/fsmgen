@@ -142,6 +142,27 @@ FSM
     like($error, qr/Unsupported expression token '<start'/, 'guard-like RHS scalar gets a targeted diagnostic');
 };
 
+subtest 'obviously bitstring-like bare RHS literals are rejected explicitly' => sub {
+    my $fsm_path = write_fsm('ambiguous_bare_bitstring_rhs.fsm', <<'FSM');
+(?fsm:ambiguous_bare_bitstring_rhs
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+size
+    (OUT 8)
+  )
+  (-dt
+    (OUT = 00001110)
+  )
+)
+FSM
+
+    my $error = parse_error_for($fsm_path);
+    like($error, qr/Ambiguous bare integer literal '00001110'/, 'obviously bitstring-like bare RHS literal gets a targeted diagnostic');
+    like($error, qr/Use '0b00001110' .* 'N'b00001110' .* '0d00001110'/s, 'diagnostic points to explicit binary and decimal spellings');
+};
+
 done_testing();
 
 sub write_fsm {

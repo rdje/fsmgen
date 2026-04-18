@@ -1,5 +1,27 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-18: value-bearing lanes must not guess between decimal and binary
+- The generated HDL is only the visible rendering of a checked AST/IR. That
+  means ambiguity like bare `00001110` or `10000000` in value-bearing lanes is
+  not a renderer concern; it is a frontend contract problem and should be
+  rejected before generation.
+- The chosen policy is intentionally narrower than width parsing:
+  - positive-width slots such as `(+size (DATA 10))` keep decimal
+    compatibility because users reasonably read those as ordinary integers,
+  - but value-bearing lanes such as direct RHS expressions, `+constants`,
+    `+params`, and `.rtlif` scalar defaults must not guess whether dense
+    all-`0/1` tokens meant decimal or binary.
+- The result is a convention-over-configuration rule with an honesty bias:
+  - explicit `0b...` means intrinsic-width binary,
+  - explicit `N'b...` means exact-width binary,
+  - explicit `0d...` means decimal,
+  - and ambiguous bare value tokens are rejected instead of silently
+    reinterpreted after the fact.
+- This same reasoning is why `fsm/trial_1.fsm` was fixed at the source level
+  and then added to the external Verilator/Yosys smoke: if a sample only
+  passes because humans visually infer the intended radix, the frontend is not
+  doing enough work yet.
+
 ## 2026-04-18: AMBA feedback loops were source-intent bugs, not backend lint noise
 - The remaining AMBA Verilator `UNOPTFLAT` failures were traced to Q-named
   state/storage signals being authored with D-input-named `<=` assignments.

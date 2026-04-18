@@ -1173,6 +1173,17 @@ sub canonicalize_constant_literal_payload($self, %args) {
     my $symbol_name = $args{symbol_name} // 'unknown';
     my $value_token = $args{value_token};
 
+    if (FSM::Package::IntegerLiteralSupport->obviously_binary_like_bare_value_literal($value_token)) {
+        my ($binary_example, $decimal_example, $exact_width_example) =
+            FSM::Package::IntegerLiteralSupport->explicit_examples_for_obviously_binary_like_bare_value_literal($value_token);
+
+        Carp::confess
+            "Malformed '$section_header' entry for $symbol_kind '$symbol_name' in source '$module_name' with value token '$value_token'. ".
+            "Ambiguous bare integer literals are blocked because FSMGen does not guess obviously bitstring-like bare 0/1 tokens in symbol-value position. ".
+            "Use '$binary_example' for intrinsic-width binary, '$exact_width_example' for exact-width binary, or '$decimal_example' if decimal was intended. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n";
+    }
+
     my $literal_expr = eval {
         $self->{expression_builder}->parse_scalar_expression($value_token);
     };

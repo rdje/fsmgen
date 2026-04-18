@@ -59,6 +59,12 @@ subtest 'generated MIPI examples with inferred widths pass external validation' 
     }
 };
 
+subtest 'historical trial_1 sample passes external validation after explicit literal cleanup' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $report = generate_and_validate($tempdir, 'fsm/trial_1.fsm');
+    ok($report->{ok}, 'trial_1 passes Verilator lint and ABC-free Yosys synthesis');
+};
+
 subtest 'supported direct protocol fixtures pass external validation' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my @direct_protocols = grep {

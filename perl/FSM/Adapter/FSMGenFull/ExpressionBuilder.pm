@@ -90,6 +90,17 @@ sub malformed_inline_comparison_error($self, $scalar) {
         "See docs/USER_GUIDE.md for the current supported boundary.\n";
 }
 
+sub ambiguous_bare_integer_literal_error($self, $scalar) {
+    my ($binary_example, $decimal_example, $exact_width_example) =
+        FSM::Package::IntegerLiteralSupport->explicit_examples_for_obviously_binary_like_bare_value_literal($scalar);
+
+    Carp::confess
+        "Ambiguous bare integer literal '$scalar'. ".
+        "FSMGen does not guess obviously bitstring-like bare 0/1 tokens in value or expression position. ".
+        "Use '$binary_example' for intrinsic-width binary, '$exact_width_example' for exact-width binary, or '$decimal_example' if decimal was intended. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n";
+}
+
 sub parse_legacy_condition_spec($self, $condition_spec, %options) {
     # Parse legacy condition payload found after < or <! prefixes.
     # Supports:
@@ -436,6 +447,9 @@ sub parse_scalar_expression($self, $scalar) {
 
     my $typed_aggregate_ref = $self->parse_typed_aggregate_signal_reference($scalar);
     return $typed_aggregate_ref if $typed_aggregate_ref;
+
+    $self->ambiguous_bare_integer_literal_error($scalar)
+        if FSM::Package::IntegerLiteralSupport->obviously_binary_like_bare_value_literal($scalar);
     
     my $integer_literal = $self->parse_common_integer_literal($scalar);
     return $integer_literal if $integer_literal;

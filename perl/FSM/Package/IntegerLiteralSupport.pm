@@ -28,6 +28,39 @@ sub integer_from_scalar ($class, $payload) {
     return $parts->{value}->copy;
 }
 
+sub obviously_binary_like_bare_value_literal ($class, $payload, %opts) {
+    return 0 unless defined($payload) && !ref($payload);
+
+    my $text = $payload;
+    $text =~ s/_//g;
+    return 0 unless $text =~ /\A([+-]?)(\d+)\z/;
+
+    my $digits = $2;
+    return 0 unless $digits =~ /\A[01]+\z/;
+    return 0 if length($digits) <= 1;
+
+    my $minimum_dense_digits = $opts{minimum_dense_digits} // 4;
+    return 1 if $digits =~ /\A0/;
+    return 1 if length($digits) >= $minimum_dense_digits;
+    return 0;
+}
+
+sub explicit_examples_for_obviously_binary_like_bare_value_literal ($class, $payload) {
+    my $text = $payload // '';
+    $text =~ s/_//g;
+
+    my ($sign, $digits) = ('', $text);
+    if ($text =~ /\A([+-]?)(\d+)\z/) {
+        ($sign, $digits) = ($1, $2);
+    }
+
+    return (
+        ($sign // '').'0b'.$digits,
+        ($sign // '').'0d'.$digits,
+        "N'b".$digits,
+    );
+}
+
 sub literal_parts_from_literal_like ($class, $literal_like) {
     return undef unless defined $literal_like;
 

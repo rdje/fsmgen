@@ -36,6 +36,33 @@ subtest 'integer literal support accepts intent-level sized values' => sub {
     }
 };
 
+subtest 'obviously bitstring-like bare value literals are identified before generation' => sub {
+    ok(
+        FSM::Package::IntegerLiteralSupport->obviously_binary_like_bare_value_literal('00001110'),
+        'leading-zero bare bitstring-looking literal is flagged',
+    );
+    ok(
+        FSM::Package::IntegerLiteralSupport->obviously_binary_like_bare_value_literal('10000000'),
+        'long dense bare bitstring-looking literal is flagged',
+    );
+    ok(
+        FSM::Package::IntegerLiteralSupport->obviously_binary_like_bare_value_literal('0_001'),
+        'underscored bare bitstring-looking literal is flagged',
+    );
+    ok(
+        !FSM::Package::IntegerLiteralSupport->obviously_binary_like_bare_value_literal('10'),
+        'short decimal-looking value keeps compatibility',
+    );
+    ok(
+        !FSM::Package::IntegerLiteralSupport->obviously_binary_like_bare_value_literal('101'),
+        'three-digit bare value keeps compatibility',
+    );
+    ok(
+        !FSM::Package::IntegerLiteralSupport->obviously_binary_like_bare_value_literal('0b1010'),
+        'explicit binary literal is not treated as ambiguous',
+    );
+};
+
 subtest 'expression builder preserves target-HDL-safe literal payloads' => sub {
     my $signal_manager = FSM::Adapter::FSMGenFull::SignalManager->new(debug => 0);
     my $builder = FSM::Adapter::FSMGenFull::ExpressionBuilder->new(

@@ -200,7 +200,8 @@ The optional external SystemVerilog validation lane is covered by
 When `verilator` and `yosys` are installed, that smoke generates
 `fsm/lte_dif_pmaster.fsm`, `fsm/mipicsi2_byteserial.fsm`,
 `fsm/mipicsi2_pkt_nx4B_fifo.fsm`, `fsm/mipicsi2_tester_ctrl.fsm`, and
-`fsm/mipicsi2_txtimer.fsm`, plus every supported direct protocol actor from
+`fsm/mipicsi2_txtimer.fsm`, the cleaned historical direct sample
+`fsm/trial_1.fsm`, plus every supported direct protocol actor from
 the corpus (`fsm/apb_requester.fsm`, `fsm/apb_completer.fsm`, and
 `fsm/amba_requester.fsm` today), validates the emitted `.sv` files with
 Verilator `--lint-only --sv`, validates ABC-free Yosys structural synthesis
@@ -332,7 +333,6 @@ bounded slice.
 | `contract.duplicate_embedded_rtlif_root` | [t/corpus/duplicate_embedded_rtlif_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/duplicate_embedded_rtlif_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 
 ## Current locking tests
-
 - [t/247-protocol-fixture-regression-smoke.t](/Users/richarddje/Documents/github/fsmgen/t/247-protocol-fixture-regression-smoke.t)
   executes the first named protocol slice through pipeline and CLI.
 - [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t)

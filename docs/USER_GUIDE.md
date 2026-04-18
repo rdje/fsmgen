@@ -537,6 +537,7 @@ This is the current `R8` draft normative contract for the symbol-definition and 
   - a positive integer constant expression using literals, same-root/imported constants, enum members, params/generics, aggregate scalar leaves, and the bounded Lisp-ish arithmetic/bitwise operators `+`, `-`, `*`, `/`, `%`, `&`, `|`, `^` plus aliases `add`, `sub`, `mul`, `div`, `mod`, `and`, `or`, `xor`
 - Direct `+size` expression literals and positive scalar width symbols use the same integer-literal interpretation for decimal, `0d`, `0b`, `0o`, `0x`, SystemVerilog-style based spellings, and FSMGen intent-level sized values such as `5'23`, `8'-10`, `8'-0xA`, `8'-0b1010`, or `20'x1`; signed literal terms may participate inside an expression when the final resolved width is still positive, for example `(+ 8'sd9 8'sd-1)`.
 - FSMGen intent-level sized literals use `<width>'<integer-value>` in `.fsm`, with the width attached to the value rather than written as a target-HDL token. The backend must normalize them before HDL emission: `5'23` becomes legal SV like `5'd23`, `20'x1` becomes `20'h1`, and negative sized values lower through a two's-complement bit pattern such as `8'-10` -> `8'd246`, `8'-0xA` -> `8'hF6`, and `8'-0b1010` -> `8'b11110110`.
+- Value-bearing literal lanes are stricter than positive-width lanes: direct RHS expressions, `+constants`, `+params`, and `.rtlif` parameter/generic scalar defaults reject obviously bitstring-like bare `0/1` tokens such as `00001110` or `10000000` instead of guessing decimal versus binary. Use `0b00001110` for intrinsic-width binary, `8'b00001110` for exact-width binary, or `0d1110` if decimal was intended. Positive-width slots still keep decimal compatibility, so `(+size (DATA 10))` remains decimal ten.
 - Width expressions may use aggregate scalar leaves such as `LANES[1]` or `FRAME.meta.mode`, but a whole aggregate root such as `LANES` is not itself a scalar width. Use a scalar leaf or a named aggregate type alias when the intent is typed aggregate storage.
 - The legacy empty form `(+size)` remains supported as a no-op in default mode because it still exists in compatibility coverage.
 - Strict mode rejects the empty no-op form and requires either explicit width entries or no `+size` section at all.
@@ -554,6 +555,7 @@ This is the current `R8` draft normative contract for the symbol-definition and 
 - Current active use:
   - `(+constants (C0 8'3) (RESET_BYTE 0xA5) (LANE_MASK 0b1010) (OCT_W 0o10) (ZERO const_8b0))`
 - Scalar constants may use plain decimal, sized SystemVerilog literals, unsized SystemVerilog-style based literals such as `'hA5`, prefixed forms such as `0xA5`, `0b1010`, `0o77`, FSMGen intent-level sized values such as `5'23` or `8'-0xA`, and underscore-separated digits.
+- In those value-bearing constant lanes, obviously bitstring-like bare `0/1` tokens such as `00001110` or `10000000` are rejected before generation instead of being guessed. Spell them explicitly as `0b...`, `N'b...`, or `0d...`.
 - References to those names resolve as literals in assignment RHS expressions and guard equality conditions.
 - Direct-root note:
   - inside `?fsm:name` and `?dt:name`, `(+constants ...)` also has a bounded aggregate extension where values may be non-empty lists or nested hash-like `(member value)` aggregates.
@@ -587,6 +589,7 @@ This is the current `R8` draft normative contract for the symbol-definition and 
   - `(+params (ALIAS_WIDTH WIDTH) (WIDTH 16) (LANE_ALIAS LANES))`
 - Values use the same bounded parameter/generic value normalizer as external RTL metadata:
   - scalar integer literals such as `8`, `8'hA5`, `'hA5`, `0xA5`, `0b1010`, and `0o77`
+  - obviously bitstring-like bare `0/1` tokens such as `00001110` or `10000000` are rejected here; use `0b...`, `N'b...`, or `0d...` explicitly instead
   - bounded literal aggregate payloads such as `(8'hA5 8'h3C)` or `((mode 2'b10) (flag 1))`, which lower to one packed literal when used as whole values
   - bounded scalar operator expressions such as `(+ WIDTH 1)`, `(* COUNT 2)`, `(+ BYTES[1] 1)`, `(+ FRAME.meta.mode 1)`, or `(and MASK 8'hF0)` using `+`, `-`, `*`, `/`, `%`, `&`, `|`, `^`, or word aliases `add`, `sub`, `mul`, `div`, `mod`, `and`, `or`, `xor`
   - bounded aggregate expressions such as `(+ BYTES BYTE_INC)`, `(- BYTES BYTE_DEC)`, `(* BYTES BYTE_SCALE)`, `(/ BYTES BYTE_DIV)`, `(% BYTES BYTE_MOD)`, `(and BYTES BYTE_MASK)`, `(or FRAME FRAME_MASK)`, or `(xor LANE_A LANE_B)`, using leafwise `+`, `-`, `*`, `/`, `%`, `&`, `|`, `^` or aliases `add`, `sub`, `mul`, `div`, `mod`, `and`, `or`, `xor` between matching list/record aggregate shapes
@@ -1671,8 +1674,9 @@ VHDL/GHDL validation intentionally waits until FSMGen has an active VHDL
 backend. The current regression coverage is a focused generated-SystemVerilog
 smoke, not yet a claim that every historical sample under `fsm/` is externally
 warning-clean. That focused smoke currently includes `fsm/lte_dif_pmaster.fsm`,
-the MIPI byte-serial, packet-FIFO, tester-control, and timer examples, plus
-the supported APB requester/completer and AMBA requester protocol fixtures.
+the MIPI byte-serial, packet-FIFO, tester-control, and timer examples, the
+cleaned historical direct sample `fsm/trial_1.fsm`, plus the supported APB
+requester/completer and AMBA requester protocol fixtures.
 For in-process embedders, it also exposes the bounded
 `HDLGenerator->generate_hdl_from_file(...)` result contract. That contract
 stabilizes top-level key presence for fields such as `hdl_code`, `module_info`,

@@ -163,6 +163,48 @@ FSM
     );
 };
 
+subtest 'obviously bitstring-like bare symbol values are rejected explicitly' => sub {
+    my $constants_error = parse_failure(<<'FSM');
+(?fsm:bad_constant_bitstring_contract
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+constants
+    (BAD 00001110)
+  )
+  (-dt
+    (OUT = 1)
+  )
+)
+FSM
+    like(
+        $constants_error,
+        qr/Malformed '\+constants' entry .* value token '00001110'.*Ambiguous bare integer literals are blocked.*0b00001110.*N'b00001110.*0d00001110/s,
+        'obviously bitstring-like +constants values must be made explicit'
+    );
+
+    my $params_error = parse_failure(<<'FSM');
+(?fsm:bad_param_bitstring_contract
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+params
+    (P_BAD 00001110)
+  )
+  (-dt
+    (OUT = 1)
+  )
+)
+FSM
+    like(
+        $params_error,
+        qr/Direct source parameter 'P_BAD'.*00001110.*ambiguous bare integer literal.*0b00001110.*N'b00001110.*0d00001110/s,
+        'obviously bitstring-like +params values must be made explicit'
+    );
+};
+
 subtest 'aggregate parameter expressions reject invalid operands and arithmetic results before generation' => sub {
     my $mixed_arithmetic_operand_error = parse_failure(<<'FSM');
 (?fsm:bad_param_expression_operator_contract

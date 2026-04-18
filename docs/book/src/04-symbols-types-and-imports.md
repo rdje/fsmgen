@@ -39,6 +39,10 @@ and `20'x1`. Bounded literal list/record payloads are also accepted when they
 can lower to one packed literal. That keeps the authoring surface convenient
 while preserving a concrete semantic value before generation.
 
+One new hardening rule applies in these value lanes: obviously bitstring-like
+bare `0/1` tokens such as `00001110` or `10000000` are rejected instead of
+being guessed. Use `0b00001110`, `8'b00001110`, or `0d1110` explicitly.
+
 Parameter values may also use bounded operator expressions:
 
 ```lisp
@@ -192,6 +196,11 @@ language: plain decimal, sized SystemVerilog literals, unsized
 SystemVerilog-style based literals such as `'hA5`, prefixed forms such as
 `0xA5`, `0b1010`, and `0o77`, FSMGen intent-level sized values such as
 `5'23` or `8'-0xA`, plus underscore-separated digits.
+
+For value-bearing constants, FSMGen also rejects obviously bitstring-like bare
+`0/1` tokens such as `00001110` or `10000000`. Use `0b...`, `N'b...`, or an
+explicit decimal `0d...` spelling so the source stays unambiguous before HDL
+generation.
 
 FSMGen intent-level sized literals use `<width>'<integer-value>` in `.fsm`.
 They are source-language values, not target-HDL text escapes. The backend must

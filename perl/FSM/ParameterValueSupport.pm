@@ -19,6 +19,7 @@ use Math::BigInt;
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
+use FSM::Package::IntegerLiteralSupport;
 use FSM::Package::PayloadLiteralSupport;
 use FSM::Package::PayloadTypeSupport;
 
@@ -296,6 +297,18 @@ sub _canonical_scalar_value_text ($class, $value, $context, $docs_hint) {
         unless defined($value) && !ref($value) && length($value);
 
     my $text = $value;
+
+    if (FSM::Package::IntegerLiteralSupport->obviously_binary_like_bare_value_literal($text)) {
+        my ($binary_example, $decimal_example, $exact_width_example) =
+            FSM::Package::IntegerLiteralSupport->explicit_examples_for_obviously_binary_like_bare_value_literal($text);
+
+        confess
+            "$context is blocked because parameter/generic scalar value '$text' is an ambiguous bare integer literal. ".
+            "FSMGen does not guess obviously bitstring-like bare 0/1 tokens in parameter/generic value position. ".
+            "Use '$binary_example' for intrinsic-width binary, '$exact_width_example' for exact-width binary, or '$decimal_example' if decimal was intended.".
+            $docs_hint."\n";
+    }
+
     return _canonical_decimal($text) if $text =~ /\A-?[0-9](?:_?[0-9])*\z/;
 
     if ($text =~ /\A(-?)([0-9](?:_?[0-9])*)'(s?)([bBoOdDhH])([A-Fa-f0-9](?:_?[A-Fa-f0-9])*)\z/) {

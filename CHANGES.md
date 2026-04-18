@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-18
+### value-lane literal frontend now rejects ambiguous bare bitstrings
+- Extended [perl/FSM/Package/IntegerLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/IntegerLiteralSupport.pm) with one shared detector for obviously bitstring-like bare value literals such as `00001110` and `10000000`, and applied that guard to direct value-bearing lanes in [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm), [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm), and [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm).
+- The hardening covers direct RHS expressions plus symbol-definition/value lanes such as `+constants`, `+enums`, `+params`, and `.rtlif` parameter/generic scalar defaults, while positive-width slots like `(+size (DATA 10))` deliberately keep decimal compatibility.
+- Added regression coverage in [t/40-language-contract-expression-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/40-language-contract-expression-boundary.t), [t/51-language-contract-symbol-definition-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/51-language-contract-symbol-definition-boundary.t), and [t/309-intent-integer-literal-normalization.t](/Users/richarddje/Documents/github/fsmgen/t/309-intent-integer-literal-normalization.t), and updated the guide/book language-basics and symbols/types docs to make the stricter value-lane rule explicit.
+
+### trial_1 now uses explicit binary literals and sits in external SV smoke
+- Updated [fsm/trial_1.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/trial_1.fsm) so the historical `ob` values use explicit `0b...` spellings instead of ambiguous bare `0/1` digit strings.
+- Extended [t/308-systemverilog-external-validation.t](/Users/richarddje/Documents/github/fsmgen/t/308-systemverilog-external-validation.t) and the generated-HDL debugging docs so `fsm/trial_1.fsm` is part of the focused Verilator/Yosys smoke rather than remaining a visual-only manual catch.
+
 ### direct whole-signal assignments now reconcile late width evidence
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so, after all states/tests are parsed, a bounded parser-side fixpoint pushes known widths across simple whole-signal assignment edges before interface generation. This lets later selector/guard evidence refine earlier authored assignments such as `cnt <- cnt_wait`.
 - Added regression coverage in [t/310-systemverilog-implicit-width-and-truthiness-hardening.t](/Users/richarddje/Documents/github/fsmgen/t/310-systemverilog-implicit-width-and-truthiness-hardening.t), where `fsm/mipicsi2_tester_ctrl.fsm` now infers `cnt_wait` as an 8-bit input from the later `?cnt` selector family instead of leaving it as a 1-bit top-level signal.

@@ -1,5 +1,44 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-18: trial_1 is explicit again and now sits in the external SV smoke
+- [fsm/trial_1.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/trial_1.fsm)
+  no longer uses ambiguous bare bitstring-looking value literals for `ob`.
+  The four historical values now use explicit `0b...` spellings, which matches
+  the new frontend contract that refuses to guess bare `00001110` / `10000000`
+  style tokens in value lanes.
+- `./bin/fsmgen --quiet --verify-hdl -o /tmp/fsmgen_trial_1_verified.sv fsm/trial_1.fsm`
+  now succeeds locally with Verilator and ABC-free Yosys installed.
+- [t/308-systemverilog-external-validation.t](/Users/richarddje/Documents/github/fsmgen/t/308-systemverilog-external-validation.t)
+  now includes `fsm/trial_1.fsm` in the focused external validation smoke so
+  regressions in this historical direct sample stop being catchable only by
+  visual inspection or ad hoc manual runs.
+
+## 2026-04-18: value-lane literal frontend now rejects obvious bare bitstrings
+- [perl/FSM/Package/IntegerLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/IntegerLiteralSupport.pm)
+  now exposes one shared detector for obviously bitstring-like bare value
+  literals: multi-digit all-`0/1` tokens with leading zeroes such as
+  `00001110`, or dense all-`0/1` tokens of four or more digits such as
+  `10000000`.
+- That hardening is now enforced before AST/codegen in direct RHS/value lanes:
+  [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm)
+  rejects ambiguous direct expression literals,
+  [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm)
+  rejects ambiguous `+constants` / `+enums` scalar values, and
+  [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm)
+  rejects the same ambiguous forms in `+params`, `.rtlif` parameter/generic
+  defaults, and instance override scalar values.
+- The rule is intentionally narrower than positive-width parsing: width slots
+  such as `(+size (DATA 10))` still keep existing decimal compatibility, but
+  value-bearing lanes no longer guess whether `00001110` or `10000000` meant
+  decimal or binary. Authors must now spell those explicitly as `0b...`,
+  `N'b...`, or `0d...`.
+- Regression coverage:
+  [t/40-language-contract-expression-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/40-language-contract-expression-boundary.t),
+  [t/51-language-contract-symbol-definition-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/51-language-contract-symbol-definition-boundary.t),
+  and
+  [t/309-intent-integer-literal-normalization.t](/Users/richarddje/Documents/github/fsmgen/t/309-intent-integer-literal-normalization.t)
+  now lock the detector plus the direct-RHS / symbol-value diagnostics.
+
 ## 2026-04-18: negated n-ary expression operators now land as valid internal AST/helpers
 - [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm)
   now accepts `!&`, `!|`, and `!^` in direct RHS expressions, with word aliases
