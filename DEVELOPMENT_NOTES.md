@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-18: bounded public JSON surfaces should have dedicated contract owners
+- `FSM::Support::NormalizedSemanticReport` already owned how semantic JSON is
+  assembled, but that is not quite the same thing as owning the public contract
+  for what embedders may rely on.
+- The safer pattern is now explicit:
+  - one builder/report owner for the emitted payload,
+  - one contract owner for the bounded public promise over that payload,
+  - and one manifest entry that advertises the contract instead of duplicating
+    ad hoc prose inline.
+- This mirrors the earlier `HDLGenerator` result contract and composition
+  report contract work: stabilizing a surface should mean naming the exact
+  owner and regression-locking the promise, not just mentioning the surface in
+  docs.
+- The same pattern should guide future `R13` widening too. When a semantic
+  subtree becomes public enough that downstream tools may lean on it, promote a
+  dedicated contract owner or extend an existing one deliberately rather than
+  letting the manifest or narrative docs become the only contract shape.
+
 ## 2026-04-18: bootstrap/import-tree notes should refresh measured facts, not churn narrative needlessly
 - The saved [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
   note is meant to stay high-signal and honest. When the runtime spine and

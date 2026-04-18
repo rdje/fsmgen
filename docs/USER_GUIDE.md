@@ -1803,6 +1803,12 @@ expected module/top identity, sanitized forward-IR projections, and no HDL
 emission. Every current `expected_failure` entry is covered as well: it must
 reject through `--emit-semantic-json`, emit a stable diagnostic/support-accounting
 failure report, write no HDL, and expose no partial semantic payload.
+The bounded key-presence contract for this surface now has its own explicit
+owner in
+[perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm).
+That contract is also advertised through `--capability-manifest`, so downstream
+tools can discover the current top-level and bounded nested success/composition
+keys without scraping prose or inferring them from ad hoc samples.
 For composition sources, the provenance report fragment is sanitized from the
 same raw composition report that in-process callers see, but private Perl
 objects and undeclared report branches are removed before JSON emission. This

@@ -11,6 +11,7 @@ use FSM::Support::CompositionReportContract qw(build_composition_report_contract
 use FSM::Support::DiagnosticCodes qw(diagnostic_code_registry);
 use FSM::Support::ExtensionContract qw(build_extension_contract);
 use FSM::Support::HDLGeneratorResultContract qw(build_hdl_generator_result_contract);
+use FSM::Support::NormalizedSemanticReportContract qw(build_normalized_semantic_report_contract);
 use FSM::Support::RegressionCorpus qw(regression_corpus_entries);
 
 our @EXPORT_OK = qw(build_capability_manifest);
@@ -81,21 +82,11 @@ sub build_capability_manifest {
         },
         semantic_exports => {
             normalized_semantic_json => {
-                schema_version => 1,
-                status => 'bounded_public',
-                command_shape => './bin/fsmgen --strict --emit-semantic-json path/to/file.fsm',
-                alias => './bin/fsmgen --strict --semantic-json path/to/file.fsm',
-                emits_hdl => JSON::PP::false,
-                emits_support_accounting_object => JSON::PP::true,
+                %{build_normalized_semantic_report_contract()},
                 success_match_policy => 'resolved_source_path_to_non_failure_corpus_entry',
-                failure_diagnostics_reuse_stable_codes => JSON::PP::true,
                 supported_smoke_corpus_covered => JSON::PP::true,
                 strict_supported_corpus_covered => JSON::PP::true,
                 expected_failure_corpus_covered => JSON::PP::true,
-                sanitizes_private_perl_objects => JSON::PP::true,
-                public_layers => [qw(intent_hir lowered_rtl_ir structural_rtl_ir)],
-                report_source => 'FSM::Support::NormalizedSemanticReport',
-                full_export_stable => JSON::PP::false,
             },
         },
         backend_validation => {

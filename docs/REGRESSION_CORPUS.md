@@ -263,6 +263,8 @@ the supported-smoke / strict-supported / expected-failure check-JSON coverage
 flags,
 the supported-smoke / strict-supported / expected-failure normalized semantic
 JSON coverage flags,
+the bounded normalized semantic key-presence contract advertised through
+[perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm),
 the bounded in-process `HDLGenerator` result top-level presence contract,
 the bounded sanitized composition provenance/report fragment exported through
 normalized semantic JSON,

@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-18: normalized semantic JSON now has an explicit bounded contract owner
+- Added
+  [perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm)
+  as the explicit owner for the bounded normalized semantic JSON key-presence
+  contract.
+- [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+  now advertises that contract directly instead of only describing the semantic
+  export surface inline, and
+  [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+  now locks that manifest-facing owner plus the advertised bounded key lists.
+- [t/311-normalized-semantic-report-contract.t](/Users/richarddje/Documents/github/fsmgen/t/311-normalized-semantic-report-contract.t)
+  now regression-locks the public normalized semantic JSON promise directly:
+  top-level key presence, bounded nested success key presence, bounded
+  composition key presence, and the rule that rejected reports expose no
+  partial `semantic` payload.
+- The reachable `bin/fsmgen` support surface now includes that contract owner
+  too, moving the measured import-tree totals to `132` project files /
+  `131` `.pm` packages with `Support => 10`.
+
 ## 2026-04-18: README bootstrap pass refreshed the saved import-tree measurements
 - Re-executed the [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) /
   [SESSION_BOOTSTRAP.md](/Users/richarddje/Documents/github/fsmgen/SESSION_BOOTSTRAP.md)

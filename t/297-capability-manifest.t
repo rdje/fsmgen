@@ -163,6 +163,19 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'FSM::Support::NormalizedSemanticReport',
         'manifest records the normalized semantic report owner',
     );
+    is(
+        $manifest->{semantic_exports}{normalized_semantic_json}{contract_source},
+        'FSM::Support::NormalizedSemanticReportContract',
+        'manifest records the normalized semantic report contract owner',
+    );
+    ok(
+        scalar(@{$manifest->{semantic_exports}{normalized_semantic_json}{public_top_level_presence_keys} || []}) >= 8,
+        'manifest advertises bounded normalized semantic top-level key presence',
+    );
+    ok(
+        scalar(@{$manifest->{semantic_exports}{normalized_semantic_json}{success_semantic_presence_keys} || []}) >= 5,
+        'manifest advertises bounded normalized semantic success payload key presence',
+    );
     ok(
         !$manifest->{semantic_exports}{normalized_semantic_json}{full_export_stable},
         'manifest keeps full normalized semantic export stabilization separate from the bounded slice',

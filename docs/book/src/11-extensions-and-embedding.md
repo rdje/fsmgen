@@ -308,6 +308,12 @@ routing as check JSON, while preserving the stable diagnostic code and matched
 support-accounting identity, omitting partial semantic payloads, and writing no
 HDL.
 
+The bounded key-presence contract for this public surface now has its own owner:
+[perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm).
+The capability manifest advertises that contract so downstream tools can
+discover the current top-level and bounded nested success/composition keys
+without relying only on narrative docs or reverse-engineering sample payloads.
+
 This is still a bounded public slice, not the final full semantic export. Wider
 expression, state/DT control-shape, assignment/guard, package/type, and
 provenance fields should graduate only when they are backed by regression
