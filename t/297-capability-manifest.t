@@ -35,6 +35,10 @@ subtest 'module manifest is generated from support accounting' => sub {
         scalar(@{$manifest->{manifest_contract}{producer_presence_keys} || []}) >= 6,
         'manifest advertises bounded producer key presence',
     );
+    ok(
+        scalar(@{$manifest->{manifest_contract}{support_accounting_presence_keys} || []}) >= 23,
+        'manifest advertises bounded support-accounting section key presence',
+    );
     is($manifest->{producer}{name}, 'FSMGen', 'manifest identifies FSMGen as producer');
     like($manifest->{producer}{version}, qr/\A\d+\.\d+-dev\z/, 'manifest exposes a producer version string');
     like($manifest->{producer}{git_commit}, qr/\A(?:unknown|[0-9a-f]{7,12})\z/, 'manifest exposes a bounded producer commit identity');

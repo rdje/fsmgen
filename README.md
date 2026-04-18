@@ -159,6 +159,10 @@ builds the JSON, while
 [perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm)
 owns the bounded top-level and first nested section key lists advertised under
 `manifest_contract`.
+That shell contract now explicitly includes the first nested
+`support_accounting` key list too, so machine consumers do not have to
+special-case the corpus-backed section while discovering the current bounded
+manifest shape.
 The manifest's `embedding` section now follows that split too:
 [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
 still publishes the current in-process embedding surfaces, while

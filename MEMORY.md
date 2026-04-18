@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-19: capability-manifest shell now explicitly advertises support_accounting keys
+- [perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm)
+  now explicitly includes the first nested `support_accounting` key list,
+  instead of leaving the corpus-backed section as a shell-contract omission.
+- [t/316-capability-manifest-contract.t](/Users/richarddje/Documents/github/fsmgen/t/316-capability-manifest-contract.t)
+  and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+  now lock that `support_accounting` shell-discovery promise for both
+  in-process and CLI manifest output.
+- This is a shell-contract honesty/regularization slice only:
+  it does not reshape the `support_accounting` payload itself, and it does not
+  change the reachable import-tree file counts.
+
 ## 2026-04-19: backend_validation now has an explicit bounded contract owner too
 - Added
   [perl/FSM/Support/BackendValidationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/BackendValidationContract.pm)

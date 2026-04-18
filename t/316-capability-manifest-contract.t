@@ -21,6 +21,7 @@ use FSM::Support::CapabilityManifestContract qw(
     capability_manifest_producer_keys
     capability_manifest_public_top_level_keys
     capability_manifest_semantic_exports_keys
+    capability_manifest_support_accounting_keys
 );
 
 my $manifest = build_capability_manifest();
@@ -52,6 +53,11 @@ subtest 'contract exposes the bounded capability-manifest shell' => sub {
         $contract->{producer_presence_keys},
         capability_manifest_producer_keys(),
         'contract publishes the bounded producer keys',
+    );
+    is_deeply(
+        $contract->{support_accounting_presence_keys},
+        capability_manifest_support_accounting_keys(),
+        'contract publishes the bounded support-accounting section keys',
     );
     is_deeply(
         $contract->{diagnostics_presence_keys},
@@ -100,6 +106,11 @@ subtest 'in-process capability manifest conforms to the bounded shell contract' 
         $manifest->{producer},
         capability_manifest_producer_keys(),
         'producer section keeps bounded keys',
+    );
+    assert_keys_present(
+        $manifest->{support_accounting},
+        capability_manifest_support_accounting_keys(),
+        'support-accounting section keeps bounded keys',
     );
     assert_keys_present(
         $manifest->{diagnostics},
@@ -158,6 +169,11 @@ subtest 'CLI capability manifest keeps the bounded shell contract' => sub {
         $decoded->{producer},
         capability_manifest_producer_keys(),
         'CLI producer section keeps bounded keys',
+    );
+    assert_keys_present(
+        $decoded->{support_accounting},
+        capability_manifest_support_accounting_keys(),
+        'CLI support-accounting section keeps bounded keys',
     );
     assert_keys_present(
         $decoded->{documentation},

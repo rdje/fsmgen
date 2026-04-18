@@ -316,6 +316,9 @@ The manifest shell itself now has that same explicit public contract owner:
 [t/316-capability-manifest-contract.t](/Users/richarddje/Documents/github/fsmgen/t/316-capability-manifest-contract.t)
 locks the bounded top-level and first nested section key presence for both
 in-process and CLI manifest output.
+That shell contract now also explicitly includes the first nested
+`support_accounting` key list, so the corpus-backed section is covered by the
+same manifest-shell discovery promise as the other bounded public sections.
 The manifest's `embedding` section now has the same bounded contract split
 through
 [perl/FSM/Support/EmbeddingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingContract.pm).

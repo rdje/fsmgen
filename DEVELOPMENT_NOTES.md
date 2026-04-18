@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-19: the capability-manifest shell should explicitly advertise support_accounting keys too
+- `support_accounting` is already one of the most important public manifest
+  sections because it is where downstream tools discover the maintained corpus,
+  support tiers, and stable catalog identity.
+- The manifest shell contract already advertised first nested key lists for the
+  other public sections, so omitting `support_accounting` left one honest but
+  awkward gap:
+  - the section itself was bounded and public,
+  - but the shell-level discovery contract still made consumers special-case it.
+- The safer regularization is to widen only the shell contract:
+  - keep the `support_accounting` payload exactly as it already is,
+  - advertise its first nested key list through `CapabilityManifestContract`,
+  - and leave any future payload reshaping for a separate deliberate slice.
+- This keeps the promise honest:
+  - embedders can discover the section shape through the same shell contract as
+    the other public manifest sections,
+  - without forcing a riskier payload restructure into what should be a
+    contract-completeness cleanup.
+
 ## 2026-04-19: the manifest's backend_validation section should have its own bounded contract owner
 - `backend_validation` is already part of the public downstream-tool story
   because it is where embedders discover current post-emission validation lanes
