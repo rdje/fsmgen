@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-18: direct protocol external validation is corpus-backed
+- [t/308-systemverilog-external-validation.t](/Users/richarddje/Documents/github/fsmgen/t/308-systemverilog-external-validation.t)
+  now derives supported direct protocol actors from
+  [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm)
+  and validates APB requester, APB completer, and AMBA requester with
+  Verilator/Yosys when those tools are installed.
+- Local all-`fsm/` reconnaissance on 2026-04-18 found these direct passes:
+  `amba_requester`, `apb_completer`, `apb_requester`, `lte_dif_pmaster`, most
+  MIPI direct samples, and `trial_0`.
+- Do not claim the whole `fsm/` tree is external-warning-clean yet. Current
+  blockers include `apb_tb` missing generated instance pins,
+  `generic_fifo`'s unsupported historical `?define` root,
+  malformed/legacy composition samples in `lte_digital_rf` and `trial_2`,
+  `trial_1`'s unsupported `!&` operator, and width-cleanup cases in
+  `mipicsi2_pkt_nx4B_fifo` and `mipicsi2_tester_ctrl`.
+
 ## 2026-04-18: intent scheduling brainstorm log started
 - Created [docs/INTENT_SCHEDULING_BRAINSTORM.md](/Users/richarddje/Documents/github/fsmgen/docs/INTENT_SCHEDULING_BRAINSTORM.md)
   as the living git-tracked discussion log for a possible layer above

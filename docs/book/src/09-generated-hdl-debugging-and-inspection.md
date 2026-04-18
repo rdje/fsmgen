@@ -73,7 +73,9 @@ focused SystemVerilog smoke, not yet a claim that every historical sample in
 
 The focused smoke currently includes `fsm/lte_dif_pmaster.fsm`, the MIPI
 byte-serial/timer examples that rely on inferred widths from slices,
-selectors, and guards, and `fsm/amba_requester.fsm`.
+selectors, and guards, and every supported direct protocol actor in the
+regression corpus: `fsm/apb_requester.fsm`, `fsm/apb_completer.fsm`, and
+`fsm/amba_requester.fsm` today.
 
 The AMBA requester is a useful example of why source intent and backend
 validation both matter. Its Q-named state registers must use `<-`, not `<=`,

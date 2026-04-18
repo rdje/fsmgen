@@ -11,6 +11,7 @@ use IPC::Cmd qw(run);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Pipeline::HDLGenerator;
+use FSM::Support::RegressionCorpus qw(protocol_fixture_entries);
 use FSM::Support::HDLExternalValidation qw(
     missing_systemverilog_validation_tools
     validate_systemverilog_file
@@ -44,12 +45,22 @@ subtest 'generated MIPI examples with inferred widths pass external validation' 
     }
 };
 
-subtest 'generated AMBA requester with Q-named registers passes external validation' => sub {
+subtest 'supported direct protocol fixtures pass external validation' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
-    my $report = generate_and_validate($tempdir, 'fsm/amba_requester.fsm');
+    my @direct_protocols = grep {
+        ($_->{classification} || '') eq 'supported_smoke'
+            && ($_->{coverage} || '') eq 'direct_root_pipeline_cli'
+            && ($_->{source_kind} || '') eq 'fsm'
+    } protocol_fixture_entries();
 
-    ok($report->{ok}, 'amba_requester passes Verilator lint and Yosys synthesis lowering')
-        or diag(explain($report));
+    ok(@direct_protocols, 'regression corpus exposes supported direct protocol fixtures');
+    for my $entry (@direct_protocols) {
+        my $report = generate_and_validate($tempdir, $entry->{relpath});
+        ok(
+            $report->{ok},
+            "$entry->{id} passes Verilator lint and Yosys synthesis lowering",
+        ) or diag(explain($report));
+    }
 };
 
 subtest 'CLI --verify-hdl runs the external validation lane after writing SystemVerilog' => sub {
