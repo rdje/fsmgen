@@ -138,6 +138,7 @@ sub capability_manifest_documentation_keys {
         qw(
             human_contract
             downstream_alignment
+            section_contract
         ),
     ];
 }

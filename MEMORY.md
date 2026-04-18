@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-18: documentation now has an explicit bounded contract owner too
+- Added
+  [perl/FSM/Support/DocumentationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DocumentationContract.pm)
+  as the explicit owner for the bounded public contract over the manifest's
+  `documentation` section: public top-level keys plus the path-list fields for
+  human-facing docs and downstream-alignment docs.
+- [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+  now advertises that contract under `documentation.section_contract`, and
+  [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+  now also locks the manifest-facing owner plus the advertised bounded
+  top-level/path-list keys.
+- [t/318-documentation-contract.t](/Users/richarddje/Documents/github/fsmgen/t/318-documentation-contract.t)
+  now regression-locks the public documentation promise directly for both
+  in-process manifest construction and CLI `--capability-manifest` JSON,
+  including the rule that the pointed-to files are repo-relative Markdown
+  documents.
+- The reachable `bin/fsmgen` support surface now includes that contract owner
+  too, moving the measured import-tree totals to `139` project files /
+  `138` `.pm` packages with `Support => 17`.
+
 ## 2026-04-18: README bootstrap rerun corrected the saved support-family count
 - Re-executed the [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) /
   [SESSION_BOOTSTRAP.md](/Users/richarddje/Documents/github/fsmgen/SESSION_BOOTSTRAP.md)

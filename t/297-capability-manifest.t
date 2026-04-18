@@ -378,6 +378,10 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         scalar(@{$manifest->{manifest_contract}{language_surface_presence_keys} || []}) >= 8,
         'manifest advertises bounded language-surface section key presence',
     );
+    ok(
+        scalar(@{$manifest->{manifest_contract}{documentation_presence_keys} || []}) >= 3,
+        'manifest advertises bounded documentation section key presence',
+    );
 };
 
 subtest 'manifest captures the first downstream tool contract surface' => sub {
@@ -410,12 +414,39 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
         'FSM::Support::LanguageSurfaceContract',
         'manifest records the language-surface contract owner',
     );
+    ok(
+        scalar(@{$manifest->{documentation}{section_contract}{public_top_level_presence_keys} || []}) >= 3,
+        'manifest advertises bounded documentation top-level key presence',
+    );
+    ok(
+        scalar(@{$manifest->{documentation}{section_contract}{path_list_keys} || []}) >= 2,
+        'manifest advertises bounded documentation path-list keys',
+    );
+    is(
+        $manifest->{documentation}{section_contract}{schema_version},
+        1,
+        'manifest records documentation contract schema version',
+    );
+    is(
+        $manifest->{documentation}{section_contract}{status},
+        'bounded_public',
+        'manifest marks the documentation section as bounded public',
+    );
+    is(
+        $manifest->{documentation}{section_contract}{contract_source},
+        'FSM::Support::DocumentationContract',
+        'manifest records the documentation contract owner',
+    );
 
     my %literal_families = map { $_ => 1 } @{$manifest->{language_surface}{expressions}{literal_families}};
     ok(
         $literal_families{q{FSMGen intent-sized literals like 5'23, 8'-10, 8'-0xA, 8'-0b1010, and 20'x1}},
         'manifest advertises intent-level sized literal normalization',
     );
+
+    my %human_contract_docs = map { $_ => 1 } @{$manifest->{documentation}{human_contract} || []};
+    ok($human_contract_docs{'docs/book/src/SUMMARY.md'}, 'manifest points human readers at the book summary');
+    ok($human_contract_docs{'docs/USER_GUIDE.md'}, 'manifest points human readers at the live user guide');
 
     my %blocked = map { $_ => 1 } @{$manifest->{language_surface}{intentionally_blocked_or_not_yet_public}};
     ok($blocked{'full check-only JSON diagnostic schema stabilization'}, 'manifest keeps full JSON diagnostic API stabilization blocked');

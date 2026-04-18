@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-18
+### capability-manifest documentation now has an explicit bounded contract owner
+- Added [perl/FSM/Support/DocumentationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DocumentationContract.pm) as the owner for the bounded public contract over the manifest's `documentation` section, covering the public top-level keys plus the path-list fields for human-facing docs and downstream-alignment docs.
+- Updated [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm), [perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm), and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the manifest advertises that contract under `documentation.section_contract` and locks the owner plus the bounded top-level/path-list presence rules explicitly.
+- Added [t/318-documentation-contract.t](/Users/richarddje/Documents/github/fsmgen/t/318-documentation-contract.t) so the contract owner, manifest wiring, and emitted documentation path-list contract are regression-locked for both in-process and CLI manifest output.
+- Updated [README.md](/Users/richarddje/Documents/github/fsmgen/README.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md), [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md), and [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) so the new owner is visible to embedders, users, and future sessions.
+
 ### README bootstrap rerun corrected the import-tree support-family count
 - Re-ran the README / SESSION_BOOTSTRAP ritual and checked the live `bin/fsmgen` runtime spine against [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md).
 - Corrected the measured reachable support-family count in that note from `15` to `16` now that [perl/FSM/Support/LanguageSurfaceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/LanguageSurfaceContract.pm) is part of the live reachable support surface.

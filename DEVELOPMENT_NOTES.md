@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-18: the manifest's documentation section should have its own bounded contract owner
+- `documentation` is already part of the public capability-manifest story, but
+  leaving it as a plain inline array payload would make the doc-pointer surface
+  harder to reason about for embedders.
+- The safer split mirrors the other `R13` surfaces:
+  - `FSM::Support::CapabilityManifest` keeps publishing the current doc lists,
+  - `FSM::Support::DocumentationContract` owns the bounded manifest-facing
+    top-level and path-list promise,
+  - and the exact file lists remain widenable instead of becoming frozen by
+    accident.
+- This keeps the contract honest:
+  - embedders can rely on repo-relative Markdown pointer lists,
+  - but they are not being told that the exact set of tracked files can never
+    change.
+
 ## 2026-04-18: bootstrap measurement notes should be corrected when a new owner becomes reachable
 - The import-tree note is meant to be a live measured picture, not just a
   narrative description.

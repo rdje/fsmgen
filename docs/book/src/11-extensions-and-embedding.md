@@ -265,6 +265,11 @@ The `language_surface` section now has its own bounded owner as well:
 advertises the public top-level and first nested section-key lists through
 `language_surface.surface_contract`, while the broader authored-language
 surface still widens only when new claims are regression-backed deliberately.
+The `documentation` section now has its own bounded owner too:
+[perl/FSM/Support/DocumentationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DocumentationContract.pm)
+advertises the public top-level and path-list keys through
+`documentation.section_contract`, while the exact documentation file lists stay
+deliberately widenable.
 That lane is currently SystemVerilog-only; VHDL/GHDL validation waits for an
 active VHDL backend.
 The bounded contract for that lane now has its own owner too:

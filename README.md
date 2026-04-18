@@ -66,6 +66,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `perl/FSM/Extension/Context.pm` — typed hook context object passed to active extensions.
 - `perl/FSM/Support/CapabilityManifest.pm` — machine-readable capability manifest builder for downstream tool integration.
 - `perl/FSM/Support/CapabilityManifestContract.pm` — bounded top-level capability-manifest shell contract advertised through the manifest itself.
+- `perl/FSM/Support/DocumentationContract.pm` — bounded manifest-facing contract for the `documentation` section's public path-list keys.
 - `perl/FSM/Support/LanguageSurfaceContract.pm` — bounded manifest-facing contract for the `language_surface` section's public top-level and first nested key lists.
 - `perl/FSM/Support/CheckDiagnostics.pm` — bounded `--check --json` report builder and stable-code classifier.
 - `perl/FSM/Support/CheckDiagnosticsContract.pm` — bounded `--check --json` key-presence contract advertised through the capability manifest.
@@ -160,6 +161,12 @@ still publishes the authored-surface summary, while
 owns the bounded top-level and first nested section-key lists advertised
 through `language_surface.surface_contract` without pretending the whole
 authored language is frozen.
+The manifest's `documentation` section now has the same split too:
+[perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+still publishes the current doc pointers, while
+[perl/FSM/Support/DocumentationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DocumentationContract.pm)
+owns the bounded top-level and path-list contract advertised through
+`documentation.section_contract` without freezing the exact file lists forever.
 
 ## Assignment semantics (quick reference)
 - `A <- expr`: synchronous/flopped assignment where `A` names the flop output/Q value.

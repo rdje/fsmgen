@@ -12,6 +12,7 @@ use FSM::Support::CheckDiagnosticsContract qw(build_check_diagnostics_contract);
 use FSM::Support::CompositionReportContract qw(build_composition_report_contract);
 use FSM::Support::DiagnosticCodes qw(diagnostic_code_registry);
 use FSM::Support::DiagnosticCodeRegistryContract qw(build_diagnostic_code_registry_contract);
+use FSM::Support::DocumentationContract qw(build_documentation_contract);
 use FSM::Support::ExtensionContract qw(build_extension_contract);
 use FSM::Support::HDLExternalValidationContract qw(build_hdl_external_validation_contract);
 use FSM::Support::HDLGeneratorResultContract qw(build_hdl_generator_result_contract);
@@ -178,6 +179,7 @@ sub build_capability_manifest {
             downstream_alignment => [
                 'docs/SPECFORGE_FEEDBACK_RESPONSE.md',
             ],
+            section_contract => build_documentation_contract(),
         },
         manifest_contract => build_capability_manifest_contract(),
     };

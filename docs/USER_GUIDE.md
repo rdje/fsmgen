@@ -1726,6 +1726,12 @@ The manifest's `language_surface` section now also has its own bounded owner:
 names the published top-level and first nested section-key lists advertised
 through `language_surface.surface_contract`, while deeper authored-language
 meaning stays with narrower contracts or future deliberate widening.
+The manifest's `documentation` section now follows the same pattern:
+[perl/FSM/Support/DocumentationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DocumentationContract.pm)
+names the published top-level and path-list keys advertised through
+`documentation.section_contract`, while the exact set of doc paths remains
+widenable as long as the manifest keeps pointing at repo-relative Markdown
+files.
 It also advertises the optional external SystemVerilog validation lane:
 `--verify-hdl` / `--validate-hdl` writes the generated `.sv`, then runs
 Verilator in lint-only SystemVerilog mode and Yosys with

@@ -316,6 +316,12 @@ split through
 locks the published top-level and first nested section-key presence for both
 in-process and CLI manifest output without claiming the whole authored
 language is frozen.
+The manifest's `documentation` section now has the same bounded contract split
+through
+[perl/FSM/Support/DocumentationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DocumentationContract.pm).
+[t/318-documentation-contract.t](/Users/richarddje/Documents/github/fsmgen/t/318-documentation-contract.t)
+locks the published top-level and path-list fields for both in-process and CLI
+manifest output while keeping the exact file lists widenable.
 
 ## Current named entries
 
