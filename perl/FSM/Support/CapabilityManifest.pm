@@ -10,6 +10,7 @@ use JSON::PP ();
 use FSM::Support::CheckDiagnosticsContract qw(build_check_diagnostics_contract);
 use FSM::Support::CompositionReportContract qw(build_composition_report_contract);
 use FSM::Support::DiagnosticCodes qw(diagnostic_code_registry);
+use FSM::Support::DiagnosticCodeRegistryContract qw(build_diagnostic_code_registry_contract);
 use FSM::Support::ExtensionContract qw(build_extension_contract);
 use FSM::Support::HDLExternalValidationContract qw(build_hdl_external_validation_contract);
 use FSM::Support::HDLGeneratorResultContract qw(build_hdl_generator_result_contract);
@@ -66,6 +67,7 @@ sub build_capability_manifest {
                     }
                 } sort keys %{$diagnostic_registry}
             ],
+            stable_code_registry => build_diagnostic_code_registry_contract(),
             check_json => {
                 %{build_check_diagnostics_contract()},
                 supported_smoke_corpus_covered => JSON::PP::true,

@@ -249,6 +249,11 @@ owner too:
 [perl/FSM/Support/SupportAccountingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingContract.pm).
 That keeps the top-level support counts, id lists, and sanitized catalog-entry
 key set discoverable as an explicit contract instead of only as sample output.
+The stable diagnostic-code registry now follows the same pattern:
+[perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm)
+owns the production registry, while
+[perl/FSM/Support/DiagnosticCodeRegistryContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodeRegistryContract.pm)
+owns the bounded manifest-facing sibling-key and stable-entry-key promise.
 That lane is currently SystemVerilog-only; VHDL/GHDL validation waits for an
 active VHDL backend.
 The bounded contract for that lane now has its own owner too:

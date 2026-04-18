@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-18: stable diagnostic-code registry now has an explicit bounded contract owner too
+- Added
+  [perl/FSM/Support/DiagnosticCodeRegistryContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodeRegistryContract.pm)
+  as the explicit owner for the bounded public contract over the manifest-facing
+  stable diagnostic-code registry: public diagnostics sibling keys, stable-code
+  entry keys, bounded diagnostic families, and defensive-copy expectations.
+- [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+  already exposed the stable registry through `diagnostics`, and
+  [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+  now also locks the manifest-facing registry contract owner plus the advertised
+  bounded sibling and entry key lists.
+- [t/315-diagnostic-code-registry-contract.t](/Users/richarddje/Documents/github/fsmgen/t/315-diagnostic-code-registry-contract.t)
+  now regression-locks the public stable-registry promise directly for both
+  in-process manifest construction and CLI `--capability-manifest` JSON.
+- The reachable `bin/fsmgen` support surface now includes that contract owner
+  too, moving the measured import-tree totals to `136` project files /
+  `135` `.pm` packages with `Support => 14`.
+
 ## 2026-04-18: support accounting now has an explicit bounded contract owner too
 - Added
   [perl/FSM/Support/SupportAccountingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingContract.pm)

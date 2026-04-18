@@ -96,6 +96,29 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'stable',
         'manifest diagnostic-code entries carry stability metadata',
     );
+    is(
+        $manifest->{diagnostics}{stable_code_registry}{schema_version},
+        1,
+        'manifest records stable-code registry schema version',
+    );
+    is(
+        $manifest->{diagnostics}{stable_code_registry}{status},
+        'bounded_public',
+        'manifest marks stable-code registry as bounded public',
+    );
+    is(
+        $manifest->{diagnostics}{stable_code_registry}{contract_source},
+        'FSM::Support::DiagnosticCodeRegistryContract',
+        'manifest records the stable-code registry contract owner',
+    );
+    ok(
+        scalar(@{$manifest->{diagnostics}{stable_code_registry}{public_sibling_keys} || []}) >= 3,
+        'manifest advertises bounded stable-code registry sibling keys',
+    );
+    ok(
+        scalar(@{$manifest->{diagnostics}{stable_code_registry}{entry_presence_keys} || []}) >= 5,
+        'manifest advertises bounded stable-code registry entry keys',
+    );
     is($manifest->{diagnostics}{check_json}{schema_version}, 1, 'manifest records check JSON schema version');
     is($manifest->{diagnostics}{check_json}{status}, 'bounded_public', 'manifest marks check JSON as bounded public');
     ok($manifest->{diagnostics}{check_json}{emits_stable_codes}, 'manifest says check JSON emits stable codes');

@@ -298,6 +298,12 @@ version/commit identity, documentation pointers, and intentionally blocked or
 not-yet-public integration surfaces such as full check-JSON schema
 stabilization and broader normalized semantic JSON export beyond the current
 bounded slice.
+The stable diagnostic-code registry portion of that manifest now has an
+explicit public contract owner too:
+[perl/FSM/Support/DiagnosticCodeRegistryContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodeRegistryContract.pm).
+[t/315-diagnostic-code-registry-contract.t](/Users/richarddje/Documents/github/fsmgen/t/315-diagnostic-code-registry-contract.t)
+locks that sibling-key and stable-entry-key promise for both in-process and
+CLI manifest output.
 
 ## Current named entries
 

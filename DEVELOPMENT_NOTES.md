@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-18: stable diagnostic-code data ownership and public contract ownership should stay separate
+- `FSM::Support::DiagnosticCodes` is the production truth owner for the stable
+  `FSMGEN_*` registry.
+- But the manifest-facing public promise is narrower than "everything the data
+  owner happens to return today". The public boundary is:
+  - which `diagnostics` sibling keys are part of the stable-registry slice,
+  - which keys each stable registry entry must expose,
+  - which family names are currently part of that bounded public surface,
+  - and the rule that callers receive defensive copies rather than live mutable
+    references.
+- So the safer split is:
+  - `FSM::Support::DiagnosticCodes` owns the data,
+  - `FSM::Support::DiagnosticCodeRegistryContract` owns the public manifest-side
+    promise,
+  - and `FSM::Support::CapabilityManifest` advertises that contract instead of
+    silently becoming the only public shape authority.
+
 ## 2026-04-18: support accounting deserves an explicit contract owner too
 - The manifest's `support_accounting` section is the bridge from "what the
   maintained regression corpus says" to "what downstream tools may rely on".

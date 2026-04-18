@@ -69,6 +69,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `perl/FSM/Support/CheckDiagnosticsContract.pm` — bounded `--check --json` key-presence contract advertised through the capability manifest.
 - `perl/FSM/Support/CompositionReportContract.pm` — bounded sanitized composition provenance/report contract for semantic JSON.
 - `perl/FSM/Support/DiagnosticCodes.pm` — stable diagnostic-code registry consumed by support accounting and the capability manifest.
+- `perl/FSM/Support/DiagnosticCodeRegistryContract.pm` — bounded stable-code registry contract advertised through the capability manifest.
 - `perl/FSM/Support/ExtensionContract.pm` — bounded typed-extension/context contract advertised to embedders through the capability manifest.
 - `perl/FSM/Support/HDLGeneratorResultContract.pm` — bounded top-level result contract for in-process `HDLGenerator` embedders.
 - `perl/FSM/Support/HDLExternalValidation.pm` — optional Verilator/Yosys validation lane for generated SystemVerilog.
@@ -139,6 +140,11 @@ The bounded machine-readable surfaces are backed by support accounting:
 `--check --json` is corpus-covered across supported, strict-supported, and
 expected-failure entries, while `--emit-semantic-json` is corpus-covered across
 current supported, strict-supported, and expected-failure entries.
+The manifest-facing stable diagnostic-code registry now has its own explicit
+bounded contract owner in
+[perl/FSM/Support/DiagnosticCodeRegistryContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodeRegistryContract.pm),
+so downstream tools can discover the public diagnostics sibling keys and stable
+entry keys without treating the whole diagnostics tree as frozen.
 
 ## Assignment semantics (quick reference)
 - `A <- expr`: synchronous/flopped assignment where `A` names the flop output/Q value.

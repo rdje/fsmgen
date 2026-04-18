@@ -1709,6 +1709,12 @@ its own explicit owner in
 That contract is also advertised through the manifest itself, so downstream
 tools can discover the bounded top-level section keys plus the current
 sanitized catalog-entry keys without scraping prose.
+The manifest-facing stable diagnostic-code registry now has the same split:
+[perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm)
+still owns the production `FSMGEN_*` data, while
+[perl/FSM/Support/DiagnosticCodeRegistryContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodeRegistryContract.pm)
+owns the bounded public sibling-key and stable-entry-key promise advertised
+through `diagnostics.stable_code_registry`.
 It also advertises the optional external SystemVerilog validation lane:
 `--verify-hdl` / `--validate-hdl` writes the generated `.sv`, then runs
 Verilator in lint-only SystemVerilog mode and Yosys with
