@@ -1,6 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-18
+### agent commit workflow file is now a thin wrapper over the official policy
+- Reduced [.agents/workflows/commit.md](/Users/richarddje/Documents/github/fsmgen/.agents/workflows/commit.md) to a small pointer that tells automation-oriented flows to open and follow [COMMIT.md](/Users/richarddje/Documents/github/fsmgen/COMMIT.md) instead of carrying a second full copy of the workflow.
+- Updated [COMMIT.md](/Users/richarddje/Documents/github/fsmgen/COMMIT.md) so the official document explicitly marks `.agents/workflows/commit.md` as a subordinate helper that must never define or extend commit policy independently.
+
 ### commit workflow is now documented as a strict crash-recovery invariant
 - Updated [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) so the repository entry point now states the non-negotiable rule: every completed task/activity must be closed with the commit workflow before the next slice starts, because task-scoped commits are the project's crash-recovery mechanism.
 - Strengthened [COMMIT.md](/Users/richarddje/Documents/github/fsmgen/COMMIT.md) with an explicit non-negotiable invariant, recovery rationale, stop conditions, and recovery instructions for the case where multiple completed slices have already been mixed together.

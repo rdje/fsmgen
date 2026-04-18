@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-18: subordinate workflow copies should point, not restate
+- If a helper file exists only because some tooling looks in a specific
+  directory, it should not carry a second full copy of repository policy.
+- For commit workflow specifically, duplicate full-text copies create drift
+  risk exactly where the project most needs consistency.
+- The safer pattern is:
+  - one normative document,
+  - thin helper wrappers for tool-specific discovery,
+  - and an explicit "official doc wins" rule in the normative file itself.
+
 ## 2026-04-18: commit workflow must be treated as a recovery boundary, not a suggestion
 - The repository needs one unambiguous rule: a completed slice must be either
   committed or still considered unfinished. There is no safe middle state.

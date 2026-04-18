@@ -23,6 +23,11 @@ Ignoring it is not a style issue; it is a project-safety failure.
 ## Files involved and precise role
 - `COMMIT.md`
   - This workflow specification (tracked in git).
+  - This is the only normative source of commit-workflow policy.
+- `.agents/workflows/commit.md`
+  - Agent-tooling helper only.
+  - Must stay a thin wrapper that points back to `COMMIT.md`.
+  - Must never define, extend, or contradict commit policy independently.
 - `MEMORY.md`
   - Live continuity state for crash recovery/handoff.
   - Must be updated first when recording completed work.

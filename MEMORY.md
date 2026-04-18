@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-18: agent workflow copy is now a thin pointer, not a second policy copy
+- [.agents/workflows/commit.md](/Users/richarddje/Documents/github/fsmgen/.agents/workflows/commit.md)
+  no longer repeats the full commit workflow. It now explicitly says that
+  [COMMIT.md](/Users/richarddje/Documents/github/fsmgen/COMMIT.md) is the only
+  authoritative source and that the agent-side file is just a thin wrapper.
+- [COMMIT.md](/Users/richarddje/Documents/github/fsmgen/COMMIT.md) now also
+  names that relationship directly so future sessions do not accidentally let
+  the helper copy drift into an independent policy source.
+
 ## 2026-04-18: commit workflow is now reinforced as a hard recovery invariant
 - [README.md](/Users/richarddje/Documents/github/fsmgen/README.md),
   [COMMIT.md](/Users/richarddje/Documents/github/fsmgen/COMMIT.md),
