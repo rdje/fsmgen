@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-18: commit workflow is now reinforced as a hard recovery invariant
+- [README.md](/Users/richarddje/Documents/github/fsmgen/README.md),
+  [COMMIT.md](/Users/richarddje/Documents/github/fsmgen/COMMIT.md),
+  [SESSION_BOOTSTRAP.md](/Users/richarddje/Documents/github/fsmgen/SESSION_BOOTSTRAP.md),
+  and [.agents/workflows/commit.md](/Users/richarddje/Documents/github/fsmgen/.agents/workflows/commit.md)
+  now all say the same thing explicitly: one completed task/activity must be
+  closed with the full commit workflow before any new slice starts.
+- The rationale is now stated in the docs, not left implicit: task-scoped
+  commits are the repository's crash-recovery and handoff mechanism, so
+  skipping the workflow is a project-safety failure rather than a minor
+  process lapse.
+- The docs also now tell future sessions what to do if the rule is violated:
+  stop new work, recover the mixed state into the smallest honest validated
+  commits, and only then resume implementation.
+
 ## 2026-04-18: commit workflow no longer conflicts with the no-trailer policy
 - [COMMIT.md](/Users/richarddje/Documents/github/fsmgen/COMMIT.md)
   no longer carries the stale contradictory rule that AI-created commits must

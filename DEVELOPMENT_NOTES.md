@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-18: commit workflow must be treated as a recovery boundary, not a suggestion
+- The repository needs one unambiguous rule: a completed slice must be either
+  committed or still considered unfinished. There is no safe middle state.
+- The reason is practical and architectural:
+  - task-scoped commits are how FSMGen recovers from chat/session loss,
+  - they preserve the ability to reconstruct intent slice by slice,
+  - and they prevent adjacent `pnt` work from collapsing into one blob that is
+    harder to reason about, revert, or continue after a crash.
+- Because of that, the startup and workflow docs now repeat the same rule at
+  the entry point, the bootstrap ritual, and the commit automation copy.
+- The workflow must also define the failure mode explicitly:
+  if several completed slices are already mixed together, stop feature work and
+  recover them into the smallest honest validated commits before doing
+  anything else.
+
 ## 2026-04-18: commit hygiene must win over agent momentum
 - This session exposed a workflow weakness, not a product feature problem: the
   repository's commit workflow explicitly requires one task/activity per commit

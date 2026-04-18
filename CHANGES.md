@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-18
+### commit workflow is now documented as a strict crash-recovery invariant
+- Updated [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) so the repository entry point now states the non-negotiable rule: every completed task/activity must be closed with the commit workflow before the next slice starts, because task-scoped commits are the project's crash-recovery mechanism.
+- Strengthened [COMMIT.md](/Users/richarddje/Documents/github/fsmgen/COMMIT.md) with an explicit non-negotiable invariant, recovery rationale, stop conditions, and recovery instructions for the case where multiple completed slices have already been mixed together.
+- Updated [SESSION_BOOTSTRAP.md](/Users/richarddje/Documents/github/fsmgen/SESSION_BOOTSTRAP.md) and [.agents/workflows/commit.md](/Users/richarddje/Documents/github/fsmgen/.agents/workflows/commit.md) so new sessions and automation-oriented flows adopt the same strict rule at startup rather than discovering it only at commit time.
+
 ### commit workflow now matches the repository no-trailer rule
 - Updated [COMMIT.md](/Users/richarddje/Documents/github/fsmgen/COMMIT.md) so the safety rules no longer contradict the repository policy on attribution trailers: commits must not add `Co-Authored-By` or similar trailers unless the user explicitly asks for them.
 

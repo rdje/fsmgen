@@ -2,9 +2,22 @@
 This file is the authoritative commit workflow for this repository.
 Its purpose is to let any new AI resume work safely and follow the same commit hygiene.
 
+This workflow is strict and non-negotiable.
+It exists so the project can recover swiftly, seamlessly, and accurately after session loss, application crashes, machine crashes, or agent handoff.
+Ignoring it is not a style issue; it is a project-safety failure.
+
+## Non-negotiable invariant
+- If a task/activity is complete but not committed, that task is not finished.
+- Run this workflow after every completed task/activity without exception.
+- Do not let a long `pnt` streak, apparent momentum, or "just one more small thing" override this rule.
+- Do not expect the user to remind you. The workflow must be followed automatically.
+- Do not accumulate several completed slices in the worktree for a later cleanup commit.
+- If you discover that multiple tasks have been mixed together, stop new work and recover them into the smallest honest task-scoped commits before continuing.
+
 ## When to run this workflow
 - Run after each completed task/activity.
 - Run when the user explicitly says `commit workflow`.
+- Run before starting the next task/activity, before replying as if a slice is done, and before any context switch that could blur task boundaries.
 - Do not wait for approval for commit-workflow steps.
 
 ## Files involved and precise role
@@ -58,8 +71,14 @@ Its purpose is to let any new AI resume work safely and follow the same commit h
    - For every `Rj`, show at least `Status` + brief `Description`.
    - When useful, also show brief sub-bullets for the active lane, the changed lane, or any phase whose next step matters for understanding current progress.
 
+## Required stop conditions
+- If `git status --short` shows older unfinished work from another slice, do not start a fresh implementation task until that state is understood and resolved.
+- If you accidentally completed work without committing it, the immediate next task is recovery: document it, validate it, split it into honest task-scoped commits, and only then resume feature work.
+- If the worktree contains unrelated untracked material, leave it alone unless the user explicitly asked for it.
+
 ## Safety and consistency rules
 - Keep commits task-scoped (only files relevant to the completed task).
 - Do not stage unrelated untracked directories (for example local sandboxes).
 - Keep behavior-preserving refactor slices small and verifiable.
 - Do not add `Co-Authored-By` or any other attribution trailer unless the user explicitly asks for it.
+- Prefer one completed slice per commit cycle. If a task naturally fans out into multiple independently valid slices, close each slice with this workflow before moving on.

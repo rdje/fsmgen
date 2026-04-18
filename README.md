@@ -2,6 +2,13 @@
 This file is the **single entry point** for the project.
 Use it first for objective, navigation, and where to find code/docs quickly.
 
+## Session safety invariant
+- The commit workflow in `COMMIT.md` is mandatory and non-negotiable.
+- After every completed task/activity, run that workflow before starting the next slice.
+- Do not batch several finished tasks into one later cleanup commit.
+- The reason is operational, not stylistic: task-scoped commits are the project's crash-recovery mechanism for session loss, app crashes, and machine crashes.
+- If a task is complete but not committed, that task is not safely finished yet.
+
 ## Project objective
 FSMGen compiles Lisp-like `.fsm` state machine specifications into synthesizable HDL.
 Current primary target is SystemVerilog, with Verilog conversion support and explicit VHDL not-implemented signaling.
@@ -9,20 +16,20 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 
 ## Fast ramp-up order
 1. `README.md` (this file): project objective + navigation.
-2. `SESSION_BOOTSTRAP.md`: default first task for a new engineering session.
-3. `ROADMAP_STATUS.md`: canonical live roadmap/workstream status.
-4. `ROADMAP_V2.md`: detailed post-`R0`..`R7` roadmap intent and sequencing.
-5. `docs/book/src/SUMMARY.md`: progressive mdBook table of contents.
-6. `docs/USER_GUIDE.md`: broad live reference during the book split.
-7. `docs/COMPOSITION_SCOPE.md`: concrete `R6` composition scope and acceptance boundary.
-8. `docs/COMPOSITION_LEGACY_MAPPING.md`: historical `fx/bin/fsmgen` composition behavior mapped onto the active `R6` plan.
-9. `docs/EXTENSION_MODEL.md`: active `R7` typed extension boundary replacing legacy `.plg` / `PPlugin` as architecture direction.
-10. `docs/SPECFORGE_FEEDBACK_RESPONSE.md`: FSMGen's tracked response and alignment plan for SPECFORGE adapter feedback.
-11. `docs/INTENT_SCHEDULING_BRAINSTORM.md`: living brainstorm log for an intent-scheduling layer above explicit cycle-authored `.fsm`.
-12. `CHANGES.md`: chronological technical changes.
-13. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
-14. `MEMORY.md`: continuity/handoff state.
-15. `COMMIT.md`: commit workflow requirements.
+2. `COMMIT.md`: mandatory commit workflow and safety invariant for crash recovery.
+3. `SESSION_BOOTSTRAP.md`: default first task for a new engineering session.
+4. `ROADMAP_STATUS.md`: canonical live roadmap/workstream status.
+5. `ROADMAP_V2.md`: detailed post-`R0`..`R7` roadmap intent and sequencing.
+6. `docs/book/src/SUMMARY.md`: progressive mdBook table of contents.
+7. `docs/USER_GUIDE.md`: broad live reference during the book split.
+8. `docs/COMPOSITION_SCOPE.md`: concrete `R6` composition scope and acceptance boundary.
+9. `docs/COMPOSITION_LEGACY_MAPPING.md`: historical `fx/bin/fsmgen` composition behavior mapped onto the active `R6` plan.
+10. `docs/EXTENSION_MODEL.md`: active `R7` typed extension boundary replacing legacy `.plg` / `PPlugin` as architecture direction.
+11. `docs/SPECFORGE_FEEDBACK_RESPONSE.md`: FSMGen's tracked response and alignment plan for SPECFORGE adapter feedback.
+12. `docs/INTENT_SCHEDULING_BRAINSTORM.md`: living brainstorm log for an intent-scheduling layer above explicit cycle-authored `.fsm`.
+13. `CHANGES.md`: chronological technical changes.
+14. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
+15. `MEMORY.md`: continuity/handoff state.
 16. `WARP.md`: repository-specific agent/development guidance.
 17. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
 
@@ -151,3 +158,6 @@ For a new engineering session, the preferred one-line instruction is:
 ```text
 Read SESSION_BOOTSTRAP.md and start from there.
 ```
+
+That startup ritual must still honor the session safety invariant above:
+`COMMIT.md` is mandatory, and every completed slice must be committed before the next one starts.
