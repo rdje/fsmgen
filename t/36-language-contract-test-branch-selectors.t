@@ -78,7 +78,7 @@ is(
 
 my $hdl = FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($fsm_module);
 
-like($hdl, qr/\bs0_nz_1_en\s*=\s*s0_en\s*&\s*COUNT\s*;/, 'generated HDL lowers != zero selector through direct truthiness');
+like($hdl, qr/\bs0_nz_1_en\s*=\s*s0_en\s*&\s*\(\|COUNT\)\s*;/, 'generated HDL lowers != zero selector through width-safe reduction truthiness');
 like($hdl, qr/\bCOUNT\s*>\s*8'd3\b/, 'generated HDL contains > selector comparison');
 like($hdl, qr/\bCOUNT\s*<=\s*8'd3\b/, 'generated HDL contains <= selector comparison');
 

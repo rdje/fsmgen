@@ -297,7 +297,7 @@ sub _render_truthiness_comparison ($self, $operator, $left, $right) {
 
     if ($literal_value == 0) {
         return $operator eq '!='
-            ? $operand_sv
+            ? $self->_render_truthiness_value($signalish_operand, $operand_sv)
             : $self->_render_truthiness_negation($signalish_operand, $operand_sv);
     }
 
@@ -308,6 +308,11 @@ sub _render_truthiness_comparison ($self, $operator, $left, $right) {
     }
 
     return undef;
+}
+
+sub _render_truthiness_value ($self, $operand, $operand_sv) {
+    return $operand_sv if $self->_operand_is_single_bit($operand);
+    return "(|$operand_sv)";
 }
 
 sub _extract_truthiness_operands ($self, $left, $right) {
@@ -362,6 +367,8 @@ sub _literal_numeric_value ($self, $literal) {
 }
 
 sub _render_truthiness_negation ($self, $operand, $operand_sv) {
+    return "(~|$operand_sv)" unless $self->_operand_is_single_bit($operand);
+
     return $self->_operand_needs_parens_for_negation($operand)
         ? "!($operand_sv)"
         : "!$operand_sv";
@@ -691,6 +698,8 @@ sub _render_unary_op ($self, $ast) {
     my $op_symbol = $self->_map_unary_operator($operator);
 
     if ($operator eq 'not' || $operator eq '!') {
+        return "(~|$operand_sv)" unless $self->_operand_is_single_bit($operand);
+
         if ($self->_operand_needs_parens_for_negation($operand)) {
             return "!($operand_sv)";
         } else {

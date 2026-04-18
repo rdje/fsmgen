@@ -115,6 +115,8 @@ sub parse_legacy_condition_spec($self, $condition_spec, %options) {
         $self->malformed_guard_condition_error($condition_spec)
             if $lhs_error || $rhs_error || !$lhs || !$rhs;
 
+        $self->align_comparison_operand_widths($lhs, $rhs);
+
         fsm_debug("          Legacy condition parsed as comparison: $lhs_spec $operator $rhs_expr", 3);
         return FSM::CoreAST::BinaryOp->new($operator, $lhs, $rhs);
     }
@@ -208,6 +210,7 @@ sub finalize_nary_expression($self, $operator, $parsed_operands) {
 sub build_chained_relational_expression($self, $operator, $parsed_operands) {
     my @comparisons;
     for my $i (0 .. ($#$parsed_operands - 1)) {
+        $self->align_comparison_operand_widths($parsed_operands->[$i], $parsed_operands->[$i + 1]);
         push @comparisons, FSM::CoreAST::BinaryOp->new(
             $operator,
             $parsed_operands->[$i],
@@ -435,6 +438,8 @@ sub parse_scalar_expression($self, $scalar) {
         $self->malformed_inline_comparison_error($scalar)
             unless $lhs && $rhs;
 
+        $self->align_comparison_operand_widths($lhs, $rhs);
+
         return FSM::CoreAST::BinaryOp->new($operator, $lhs, $rhs);
     } elsif ($scalar =~ /^!([a-zA-Z_]\w*(?:\[[\d:]+\])?)$/) {
         # Legacy compact negation token, e.g. !wren
@@ -460,9 +465,13 @@ sub parse_scalar_expression($self, $scalar) {
         
         if ($slice) {
             if ($slice =~ /\[(\d+):(\d+)\]/) {
-                return FSM::CoreAST::SignalRef->new($signal, slice => [$1, $2]);
+                my ($high, $low) = ($1, $2);
+                $self->refine_signal_width_from_static_access($signal, (($high > $low) ? $high : $low) + 1);
+                return FSM::CoreAST::SignalRef->new($signal, slice => [$high, $low]);
             } elsif ($slice =~ /\[(\d+)\]/) {
-                return FSM::CoreAST::IndexedRef->new($signal, FSM::CoreAST::Literal->new($1));
+                my $index = $1;
+                $self->refine_signal_width_from_static_access($signal, $index + 1);
+                return FSM::CoreAST::IndexedRef->new($signal, FSM::CoreAST::Literal->new($index));
             }
         }
         
@@ -505,6 +514,79 @@ sub parse_common_integer_literal($self, $scalar) {
     return FSM::CoreAST::Literal->new($literal_payload->{value}, %args);
 
     return undef;
+}
+
+sub refine_signal_width_from_static_access($self, $signal, $required_width) {
+    return unless $signal && $signal->can('name');
+    return unless defined($required_width) && $required_width > 0;
+
+    $self->{signal_manager}->register_signal(
+        $signal->name,
+        width => $required_width,
+    );
+}
+
+sub align_comparison_operand_widths($self, $left, $right) {
+    my ($left_width, $left_explicit) = $self->infer_expression_width_contract($left);
+    my ($right_width, $right_explicit) = $self->infer_expression_width_contract($right);
+
+    if ($left_explicit && !$right_explicit && defined($left_width) && $left_width > 0) {
+        $self->propagate_width_to_expression($right, $left_width);
+        return;
+    }
+
+    if ($right_explicit && !$left_explicit && defined($right_width) && $right_width > 0) {
+        $self->propagate_width_to_expression($left, $right_width);
+        return;
+    }
+}
+
+sub infer_expression_width_contract($self, $expr) {
+    return (undef, 0) unless $expr && blessed($expr);
+
+    if ($expr->isa('FSM::CoreAST::Literal')) {
+        my $width = $expr->width;
+        return (defined($width) && $width > 0) ? ($width, 1) : (undef, 0);
+    }
+
+    if ($expr->isa('FSM::CoreAST::ParameterRef')) {
+        my $width = $expr->width;
+        return (defined($width) && $width > 0) ? ($width, 1) : (undef, 0);
+    }
+
+    if ($expr->isa('FSM::CoreAST::SignalRef')) {
+        if ($expr->slice) {
+            my ($high, $low) = @{$expr->slice};
+            return (abs($high - $low) + 1, 1);
+        }
+
+        my $signal = $expr->signal;
+        return (undef, 0) unless $signal && $signal->can('width');
+        my $width = $signal->width;
+        my $explicit = defined($width)
+            && $width > 0
+            && (
+                $width > 1
+                || ($signal->can('get_attribute') && $signal->get_attribute('width_declared'))
+            );
+        return ($width, $explicit ? 1 : 0);
+    }
+
+    if ($expr->isa('FSM::CoreAST::IndexedRef')) {
+        return (1, 1);
+    }
+
+    if ($expr->isa('FSM::CoreAST::AggregateRef')) {
+        my $width = $expr->width;
+        return (defined($width) && $width > 0) ? ($width, 1) : (undef, 0);
+    }
+
+    if ($expr->isa('FSM::CoreAST::Concatenation')) {
+        my $width = $self->infer_exact_expression_width($expr);
+        return (defined($width) && $width > 0) ? ($width, 1) : (undef, 0);
+    }
+
+    return (undef, 0);
 }
 
 sub intrinsic_width_for_integer_literal_token($self, $scalar, $parts) {

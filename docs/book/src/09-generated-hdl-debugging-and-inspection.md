@@ -71,6 +71,19 @@ until FSMGen has an active VHDL backend. The current regression gate is a
 focused SystemVerilog smoke, not yet a claim that every historical sample in
 `fsm/` is externally warning-clean.
 
+The focused smoke currently includes `fsm/lte_dif_pmaster.fsm` plus the MIPI
+byte-serial/timer examples that rely on inferred widths from slices,
+selectors, and guards. Larger legacy examples such as `fsm/amba_requester.fsm`
+still expose known follow-up work around arithmetic operand extension and real
+combinational feedback loops, so they are not yet part of the external
+warning-clean gate.
+
+When reading flattened enable logic, remember that `.fsm` truthiness is
+intent-level. A multibit signal used as a predicate means “non-zero,” so the
+SystemVerilog backend may emit `(|COUNT)` or `(~|bytept)` in one-bit enable
+trees instead of bare `COUNT` or `!bytept`. Those reductions are deliberate:
+they preserve the predicate meaning while keeping independent HDL tools happy.
+
 For composition tops, also inspect:
 
 - top ports

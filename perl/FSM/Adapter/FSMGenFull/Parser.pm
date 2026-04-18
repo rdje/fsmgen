@@ -2723,6 +2723,7 @@ sub parse_test_node_new_format($self, $action) {
 
 	            my ($test_value, @branch_actions) = @$branch;
             $self->validate_test_branch_selector($test_value);
+            $self->propagate_test_selector_width_to_signal($signal, $test_value);
 	            my @parsed_actions;
 
             for my $branch_action (@branch_actions) {
@@ -2770,6 +2771,25 @@ sub validate_test_branch_selector($self, $test_value) {
             && $test_value =~ /^(?:==|!=|<=|>=|=|<|>).+/;
 
     return 1;
+}
+
+sub propagate_test_selector_width_to_signal($self, $signal, $test_value) {
+    return unless $signal && $signal->can('name');
+    return unless defined($test_value) && !ref($test_value);
+
+    my ($raw_value) = $test_value =~ /^(?:==|!=|<=|>=|=|<|>)(.+)$/;
+    return unless defined($raw_value) && length($raw_value);
+
+    my $selector_expr = eval { $self->{expression_builder}->parse_expression($raw_value) };
+    return unless $selector_expr;
+
+    my $selector_width = eval { $self->{expression_builder}->infer_exact_expression_width($selector_expr) };
+    return unless defined($selector_width) && $selector_width > 0;
+
+    $self->{signal_manager}->register_signal(
+        $signal->name,
+        width => $selector_width,
+    );
 }
 
 sub parse_nested_condition_new_format($self, $action) {

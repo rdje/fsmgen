@@ -118,8 +118,8 @@ FSM
 
     is(
         $support->ast_to_systemverilog($truthy_nonzero),
-        'BUS1',
-        'AST support collapses multibit nonzero comparisons to bare signal truthiness',
+        '(|BUS1)',
+        'AST support lowers multibit nonzero comparisons to reduction truthiness',
     );
     is(
         $support->ast_to_systemverilog($truthy_zero),

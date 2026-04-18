@@ -1,5 +1,32 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-18: generated SV width inference and truthiness must be lint-clean
+- Static authored evidence now participates in direct width inference even when
+  the user omits `+size`:
+  - `fifout[31:24]` proves `fifout` is at least 32 bits,
+  - `=2'3` or `<bytept=2'0` proves the selector/test signal is 2 bits unless a
+    stronger explicit declaration already exists,
+  - `<txtimer>20'x1` proves `txtimer` is 20 bits.
+- Generated one-bit enable expressions must not rely on SystemVerilog's
+  context-dependent multibit truthiness when the expression is built from
+  bitwise `&` / `|` trees. A bare multibit signal is fine intent at the `.fsm`
+  level, but in flattened HDL `s0_en & COUNT` is a width-changing bitwise
+  expression, not a one-bit predicate. The backend now renders multibit
+  true/false predicates as reductions such as `(|COUNT)` and `(~|bytept)`.
+- The direct intermediate-width owner now treats a cached width of `1` on an
+  intermediate as a fallback, not authoritative metadata, when a runtime AST is
+  available. For pure `FSM::AST` arithmetic nodes it resolves signal-reference
+  widths from assignment analysis, so intermediates like
+  `addr_q_plus_addr_step_q = addr_q + addr_step_q` are declared 32-bit instead
+  of silently collapsing to one bit.
+- Regression impact:
+  - `fsm/mipicsi2_byteserial.fsm` and `fsm/mipicsi2_txtimer.fsm` now pass the
+    optional Verilator/Yosys `--verify-hdl` lane,
+  - `fsm/amba_requester.fsm` no longer loses the 32-bit arithmetic
+    intermediate width, but still has explicit follow-up warnings around
+    arithmetic operand extension for modulo/division and real combinational
+    feedback loops. Do not claim AMBA is externally lint-clean yet.
+
 ## 2026-04-18: .fsm intent literals must lower to target-HDL literals before emission
 - Added intent-level sized integer literal normalization to
   [perl/FSM/Package/IntegerLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/IntegerLiteralSupport.pm).
@@ -45,11 +72,14 @@ This document captures engineering rationale, design constraints, and working de
   to the LHS width before rendering sequential blocks.
 - A broader local reconnaissance over `fsm/*.fsm` is not yet clean. The
   malformed legacy sized-literal family (`2'3` / `20'x1`) is now normalized
-  before emission, but several legacy/sample sources still expose follow-up
-  backend hardening work such as missing/inferred widths in old fixtures,
-  multibit truthiness rendered as `!vector`, and width-losing intermediate
-  math. Do not claim corpus-wide external HDL cleanliness until those are fixed
-  and regression-backed deliberately.
+  before emission, missing widths in the MIPI byte-serial/timer fixtures now
+  infer from slices/selectors/guards, multibit truthiness in flattened enable
+  expressions now uses reduction predicates, and the AMBA `addr_q +
+  addr_step_q` intermediate no longer collapses to one bit. Remaining follow-up
+  work includes arithmetic operand extension for modulo/division and real
+  combinational feedback loops in larger legacy/sample outputs. Do not claim
+  corpus-wide external HDL cleanliness until those are fixed and
+  regression-backed deliberately.
 - Rationale:
   - external tools catch final-text issues that internal AST checks should make
     rare but should not be asked to replace,

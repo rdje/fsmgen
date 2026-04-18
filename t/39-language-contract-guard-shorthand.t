@@ -79,7 +79,7 @@ like($hdl, qr/\bidle_full_hit_1_en\s*=\s*idle_en\s*&\s*!full\b/, 'generated HDL 
 like($hdl, qr/\bmode\s*==\s*3\b/, 'generated HDL contains equality shorthand lowering');
 like($hdl, qr/\bcount\s*<=\s*3\b/, 'generated HDL contains relational shorthand lowering');
 like($hdl, qr/\bidle_start_hit_1_en\s*=\s*idle_en\s*&\s*start\b/, 'generated HDL renders suffix truthiness shorthand through bare-signal truthiness');
-like($hdl, qr/\bidle_next_state_busy_en\s*=\s*idle_en\s*&\s*mode\b/, 'generated HDL renders multibit nonzero suffix shorthand through bare-signal truthiness');
+like($hdl, qr/\bidle_next_state_busy_en\s*=\s*idle_en\s*&\s*\(\|mode\)\s*;/, 'generated HDL renders multibit nonzero suffix shorthand through reduction truthiness');
 
 done_testing();
 

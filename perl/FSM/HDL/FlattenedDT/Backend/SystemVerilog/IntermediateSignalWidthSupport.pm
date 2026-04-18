@@ -38,6 +38,7 @@ use feature qw(signatures);
 no warnings 'experimental::signatures';
 
 use FSM::Debug;
+use FSM::Package::IntegerLiteralSupport;
 use Scalar::Util qw(blessed);
 
 =head2 new
@@ -81,7 +82,7 @@ sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signa
     my $width_source = 'default_1bit';
 
     my $native_signal_info = $ctx->{enable_graph_assignment_support}->get_signal_info($signal_name);
-    if ($native_signal_info && $native_signal_info->{width} && $native_signal_info->{width} > 0) {
+    if ($native_signal_info && $native_signal_info->{width} && $native_signal_info->{width} > 1) {
         $resolved_width = $native_signal_info->{width};
         $width_source = 'native_signal_metadata';
     }
@@ -143,6 +144,41 @@ sub infer_width_from_intermediate_ast ($self, $ast, $signal_registry = undef, $s
         return 1;
     }
 
+    if ($ast->isa('FSM::AST::SignalRef')) {
+        my $referenced_signal_name = eval { $ast->signal_name } || $ast->{signal_name};
+        return $self->resolve_ast_signal_ref_width($referenced_signal_name, $signal_registry, $seen_signals);
+    }
+
+    if ($ast->isa('FSM::AST::Literal')) {
+        my $value = eval { $ast->value };
+        my $parts = FSM::Package::IntegerLiteralSupport->literal_parts_from_scalar($value);
+        return $parts->{width} if $parts && defined($parts->{width}) && $parts->{width} > 0;
+        return 1 if defined($value) && $value =~ /\A1'b[01]\z/i;
+        return 32;
+    }
+
+    if ($ast->isa('FSM::AST::UnaryOp')) {
+        my $operator = eval { $ast->operator } || $ast->{operator} || '';
+        return 1 if $operator eq '!';
+        my $operand = eval { $ast->operand } || $ast->{operand};
+        my $operand_width = $self->infer_width_from_intermediate_ast($operand, $signal_registry, $seen_signals);
+        return (defined($operand_width) && $operand_width > 0) ? $operand_width : 1;
+    }
+
+    if ($ast->isa('FSM::AST::BinaryOp')) {
+        my $operator = eval { $ast->operator } || $ast->{operator} || '';
+        return 1 if $operator =~ /^(==|!=|<|>|<=|>=|&&|\|\|)$/;
+
+        my $left = eval { $ast->left } || $ast->{left};
+        my $right = eval { $ast->right } || $ast->{right};
+        my $left_width = $self->infer_width_from_intermediate_ast($left, $signal_registry, $seen_signals);
+        my $right_width = $self->infer_width_from_intermediate_ast($right, $signal_registry, $seen_signals);
+
+        $left_width = 1 unless defined($left_width) && $left_width > 0;
+        $right_width = 1 unless defined($right_width) && $right_width > 0;
+        return $left_width > $right_width ? $left_width : $right_width;
+    }
+
     if ($ast->isa('FSM::HDL::SubstitutedUnaryOp')) {
         my $operator = eval { $ast->operator } || $ast->{operator} || '';
         return 1 if $operator eq '!';
@@ -169,6 +205,37 @@ sub infer_width_from_intermediate_ast ($self, $ast, $signal_registry = undef, $s
     return $width if defined($width) && $width > 0;
 
     return undef;
+}
+
+sub resolve_ast_signal_ref_width ($self, $signal_name, $signal_registry = undef, $seen_signals = undef) {
+    my $ctx = $self->{flattened_dt};
+    return 1 unless defined($signal_name) && $signal_name ne '';
+
+    if ($ctx->{fsm_module} && $ctx->{fsm_module}->can('signals') && $ctx->{fsm_module}->signals->{$signal_name}) {
+        my $signal = $ctx->{fsm_module}->signals->{$signal_name};
+        my $width = eval { $signal->width };
+        return $width if defined($width) && $width > 0;
+    }
+
+    if ($ctx->{assignment_analysis} && $ctx->{assignment_analysis}{$signal_name}) {
+        my $width = eval {
+            $ctx->{enable_graph_assignment_support}->get_lhs_width_from_analysis(
+                $ctx->{assignment_analysis}{$signal_name},
+            );
+        };
+        return $width if defined($width) && $width > 0;
+    }
+
+    if ($signal_registry && $signal_registry->{$signal_name}) {
+        return $self->resolve_intermediate_signal_width(
+            $signal_name,
+            $signal_registry->{$signal_name},
+            $signal_registry,
+            $seen_signals,
+        );
+    }
+
+    return 1;
 }
 
 1;

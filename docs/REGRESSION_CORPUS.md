@@ -198,12 +198,20 @@ support-accounting identity promised by the corpus.
 The optional external SystemVerilog validation lane is covered by
 [t/308-systemverilog-external-validation.t](/Users/richarddje/Documents/github/fsmgen/t/308-systemverilog-external-validation.t).
 When `verilator` and `yosys` are installed, that smoke generates
-`fsm/lte_dif_pmaster.fsm`, validates the emitted `.sv` with Verilator
+`fsm/lte_dif_pmaster.fsm`, `fsm/mipicsi2_byteserial.fsm`, and
+`fsm/mipicsi2_txtimer.fsm`, validates the emitted `.sv` files with Verilator
 `--lint-only --sv`, validates Yosys lowering with
 `read_verilog -sv -noautowire`, `hierarchy -check`, `proc`, `opt`, and `stat`,
 and proves the CLI `--verify-hdl` lane invokes the same external gates. When
 the tools are absent, the test skips rather than making the baseline Perl
 regression suite depend on local EDA installs.
+
+[t/310-systemverilog-implicit-width-and-truthiness-hardening.t](/Users/richarddje/Documents/github/fsmgen/t/310-systemverilog-implicit-width-and-truthiness-hardening.t)
+locks the non-tool-specific side of that hardening: static RHS slices infer
+base widths, explicit selectors and guards infer tested/counter widths,
+multibit truthiness emits width-safe reductions in one-bit enable expressions,
+and AST-backed arithmetic intermediates keep recovered result widths instead of
+falling back to one bit.
 
 All current supported protocol fixtures are now `strict_supported`: the APB
 requester, APB completer, AMBA requester, and APB composition top use the

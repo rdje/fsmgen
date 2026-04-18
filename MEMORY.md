@@ -1,5 +1,27 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-18: generated SV width/truthiness hardening widened external validation
+- Direct parsing now infers missing widths from exact authored evidence:
+  static slices/indexes, explicit-width guard comparisons, and explicit test
+  selectors. This fixed `fsm/mipicsi2_byteserial.fsm` (`fifout[31:24]`,
+  `bytept=2'...`) and `fsm/mipicsi2_txtimer.fsm` (`20'x1` timer guards)
+  without requiring manual `+size` clutter in those legacy examples.
+- Flattened one-bit enable expressions now render multibit truthiness as
+  reduction predicates, for example `(|COUNT)` and `(~|bytept)`, instead of
+  relying on warning-prone `COUNT` / `!bytept` inside bitwise enable trees.
+- Pure `FSM::AST` arithmetic intermediate widths now recover operand widths
+  from assignment analysis. The AMBA requester now declares
+  `addr_q_plus_addr_step_q` as `wire [31:0]` instead of `wire`.
+- [t/310-systemverilog-implicit-width-and-truthiness-hardening.t](/Users/richarddje/Documents/github/fsmgen/t/310-systemverilog-implicit-width-and-truthiness-hardening.t)
+  locks the direct HDL text contract, and
+  [t/308-systemverilog-external-validation.t](/Users/richarddje/Documents/github/fsmgen/t/308-systemverilog-external-validation.t)
+  now validates `lte_dif_pmaster`, `mipicsi2_byteserial`, and `mipicsi2_txtimer`
+  with Verilator/Yosys when installed.
+- Remaining known hardening:
+  - `fsm/amba_requester.fsm` still needs arithmetic operand extension around
+    modulo/division and a semantic look at combinational feedback paths before
+    it can be added to the external validation smoke.
+
 ## 2026-04-18: intent-level sized integer literals normalize before SV emission
 - [perl/FSM/Package/IntegerLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/IntegerLiteralSupport.pm)
   now accepts `.fsm` intent-level sized values such as `5'23`, `8'-10`,
@@ -30,15 +52,16 @@ This is the live continuity document for fast session recovery after crashes, re
   generated enable nets explicitly and sizes common reset literals to the LHS
   width before emitting flop resets.
 - [t/308-systemverilog-external-validation.t](/Users/richarddje/Documents/github/fsmgen/t/308-systemverilog-external-validation.t)
-  validates `lte_dif_pmaster` with both external tools when installed and skips
-  otherwise.
+  validates `lte_dif_pmaster`, `mipicsi2_byteserial`, and `mipicsi2_txtimer`
+  with both external tools when installed and skips otherwise.
 - Broader local reconnaissance over active `fsm/*.fsm` samples found additional
   follow-up backend issues in some legacy/sample generated files. The malformed
   sized-literal syntax family (`2'3` / `20'x1`) is now normalized before
-  emission, but missing/inferred widths in old fixtures, multibit truthiness
-  through `!vector`, and width-losing intermediate arithmetic remain follow-up
-  hardening. Keep the current external gate documented as a focused smoke until
-  those families are fixed.
+  emission, MIPI missing-width/truthiness issues are fixed, and one AMBA
+  arithmetic intermediate width-loss issue is fixed. Remaining hardening is
+  mostly arithmetic operand extension and real combinational-loop cleanup in
+  larger legacy/sample outputs. Keep the current external gate documented as a
+  focused smoke until those families are fixed.
 - Continuity note:
   - keep Verilator/Yosys as post-emission backend gates; do not weaken or
     replace FSMGen's internal semantic/pre-generation validation with external

@@ -459,6 +459,18 @@ Operator expressions:
 
 Boundary note:
 - The active contract now includes the systematic shorthand guard family for simple truthiness and inline comparisons.
+- Exact authored width evidence is used before generation whenever it is safe:
+  static references such as `fifout[31:24]` infer the base signal width, explicit
+  guard comparisons such as `<txtimer>20'x1` infer the compared signal width,
+  and explicit test selectors such as `=2'3` infer the tested signal width.
+  This keeps simple `.fsm` files ergonomic without asking users to add `+size`
+  entries for widths that the source already proves.
+- Intent-level truthiness still means “non-zero” for both one-bit and multibit
+  signals. In flattened generated SystemVerilog, multibit truthiness inside a
+  one-bit enable expression is emitted as a reduction predicate such as
+  `(|COUNT)` for true/non-zero or `(~|bytept)` for false/zero. This avoids
+  width-changing bitwise expressions like `en & COUNT` and warning-prone
+  logical negations like `!bytept` while preserving the intent-level meaning.
 - Direct assignment RHS pack expressions now support `(concat ...)` with the shorter `(cat ...)` alias. Operands are authored left to right and emitted high to low as a SystemVerilog concat such as `{header, payload}`.
 - Direct RHS concat operands must have exact widths before generation, currently from declared signal widths, bit/slice or typed aggregate leaf access, or explicitly sized literal constants. Width mismatches against the LHS are rejected by the pre-generation width contract instead of being silently padded or truncated.
 - When a direct RHS concat drives a declared aggregate target, FSMGen now infers an ordered source type-shape contract before generation. Typed list targets compare against the concat operand list, nested concat operands keep nested list shape, and typed record targets can map exact top-level concat operands onto record member order, so width-equal but shape/order-incompatible concat assignments are blocked before HDL emission.
@@ -496,6 +508,8 @@ Test nodes:
   - `=value` means equality
   - `!=value` means inequality
   - `<value`, `<=value`, `>value`, `>=value` mean the corresponding relational comparison against the test signal
+- Selector widths may infer the tested signal when the selector value has an
+  exact width, for example `=2'3` or `!=8'0`.
 - Computed selectors may synthesize an internal intermediate signal so the expression can be reused by the branch comparisons during HDL generation.
 
 ### Draft normative contract for symbol-definition and import sections

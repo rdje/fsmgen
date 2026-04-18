@@ -197,6 +197,20 @@ division or modulo by zero is rejected before emission. Runtime RHS
 expressions with dynamic divisors are still emitted as AST/HDL expressions; the
 tool does not yet prove that every dynamic divisor is nonzero.
 
+Width inference tries to use exact evidence that is already present in the
+source. A slice such as `fifout[31:24]` proves that `fifout` is at least 32
+bits, a guard such as `<txtimer>20'x1` proves a 20-bit comparison, and a test
+selector such as `=2'3` proves a 2-bit selector. If the source does not contain
+enough evidence, FSMGen keeps the width conservative and asks for an explicit
+declaration instead of guessing.
+
+Truthiness is intent-level: a signal used as a predicate means “non-zero.”
+When flattened SystemVerilog needs a one-bit predicate from a multibit signal,
+FSMGen emits a reduction such as `(|COUNT)` for true/non-zero or `(~|bytept)`
+for false/zero. That is why the generated HDL may not literally show the bare
+multibit signal in every enable expression; the reduction preserves the intent
+and keeps Verilator/Yosys width checks clean.
+
 Examples:
 
 ```lisp
@@ -225,6 +239,15 @@ Common authoring shapes:
 (++ counter)
 (+= count 4)
 (-= retries)
+```
+
+Selectors with exact-width values can infer the selector signal:
+
+```lisp
+(?bytept
+  (=2'3  (read = 1))
+  (!=2'3 (-> wait))
+)
 ```
 
 ## Current Boundary

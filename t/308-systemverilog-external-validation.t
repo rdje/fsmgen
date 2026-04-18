@@ -23,33 +23,25 @@ if (@missing_tools) {
 
 subtest 'generated lte_dif_pmaster SystemVerilog passes Verilator lint and Yosys synthesis lowering' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
-    my $sv_file = File::Spec->catfile($tempdir, 'lte_dif_pmaster.sv');
-    my $fsm_file = File::Spec->catfile($FindBin::Bin, '..', 'fsm', 'lte_dif_pmaster.fsm');
-
-    my $pipeline = FSM::Pipeline::HDLGenerator->new(
-        debug_level => 0,
-        target_language => 'systemverilog',
-        quiet => 1,
-    );
-
-    my $result;
-    {
-        local $SIG{__WARN__} = sub { };
-        $result = $pipeline->generate_hdl_from_file($fsm_file);
-    }
-
-    write_file($sv_file, $result->{hdl_code});
-    my $report = validate_systemverilog_file(
-        source_file => $sv_file,
-        top_module => $result->{module_info}{module_name},
-    );
-
-    ok($report->{ok}, 'external validation report succeeds');
+    my $report = generate_and_validate($tempdir, 'fsm/lte_dif_pmaster.fsm');
+    ok($report->{ok}, 'external validation report succeeds for lte_dif_pmaster');
     is_deeply(
         [map { $_->{name} } @{$report->{steps}}],
         [qw(verilator_lint yosys_synthesis)],
         'external validation runs Verilator lint before Yosys synthesis lowering',
     );
+};
+
+subtest 'generated MIPI examples with inferred widths pass external validation' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+
+    for my $sample (qw(
+        fsm/mipicsi2_byteserial.fsm
+        fsm/mipicsi2_txtimer.fsm
+    )) {
+        my $report = generate_and_validate($tempdir, $sample);
+        ok($report->{ok}, "$sample passes Verilator lint and Yosys synthesis lowering");
+    }
 };
 
 subtest 'CLI --verify-hdl runs the external validation lane after writing SystemVerilog' => sub {
@@ -98,6 +90,31 @@ subtest 'CLI --verify-hdl is currently SystemVerilog-only' => sub {
 };
 
 done_testing();
+
+sub generate_and_validate {
+    my ($tempdir, $relative_fsm_file) = @_;
+    my $fsm_file = File::Spec->catfile($FindBin::Bin, '..', split('/', $relative_fsm_file));
+    my ($module_name) = $relative_fsm_file =~ m{([^/]+)\.fsm\z};
+    my $sv_file = File::Spec->catfile($tempdir, "$module_name.sv");
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $result;
+    {
+        local $SIG{__WARN__} = sub { };
+        $result = $pipeline->generate_hdl_from_file($fsm_file);
+    }
+
+    write_file($sv_file, $result->{hdl_code});
+    return validate_systemverilog_file(
+        source_file => $sv_file,
+        top_module => $result->{module_info}{module_name},
+    );
+}
 
 sub write_file {
     my ($path, $content) = @_;
