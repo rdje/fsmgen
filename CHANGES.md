@@ -1,6 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-18
+### intent scheduling brainstorm log started
+- Added [docs/INTENT_SCHEDULING_BRAINSTORM.md](/Users/richarddje/Documents/github/fsmgen/docs/INTENT_SCHEDULING_BRAINSTORM.md) as the git-tracked living note for brainstorming a hardware-native intent layer above explicit cycle-authored `.fsm`, preserving the initial Q/A exchange about inferring/scheduling cycles, keeping `.fsm` as an inspectable middle layer, and leaving the eventual 3-letter extension open.
+- Linked the new brainstorm note from [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) so future sessions can find and append to it deliberately.
+
 ### AMBA requester is external-SV clean with Q-named register semantics
 - Updated [fsm/amba_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/amba_requester.fsm) so Q-named state/storage signals use `<-` instead of D-input-named `<=`; the generated SystemVerilog no longer builds Verilator `UNOPTFLAT` feedback paths for `addr_q`, `wrap_base_q`, and related AMBA state.
 - Added a pre-generation parser guard in [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) that rejects `<=` / `<=+` assignments when the RHS expression or assignment guard reads the same D-input-named LHS, with a diagnostic that points authors toward `<-` for Q/output feedback or the `<=+` `_r` mirror when dual visibility is intended.

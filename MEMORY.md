@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-18: intent scheduling brainstorm log started
+- Created [docs/INTENT_SCHEDULING_BRAINSTORM.md](/Users/richarddje/Documents/github/fsmgen/docs/INTENT_SCHEDULING_BRAINSTORM.md)
+  as the living git-tracked discussion log for a possible layer above
+  cycle-authored `?fsm`.
+- The core idea to preserve is that cycles cannot disappear from generated
+  SV/VHDL semantics, but cycle choice could become an inferred/scheduled and
+  reviewable compiler result rather than the user's primary authoring unit.
+- The note preserves the initial Q/A verbatim and tracks early directions such
+  as transaction-level intent, handshake/channel semantics, guarded rules,
+  latency-insensitive blocks, temporal contracts, explicit schedule reports,
+  and the still-open 3-letter extension question.
+- Future brainstorming on this topic should append dated sections there rather
+  than disappearing into chat history.
+
 ## 2026-04-18: AMBA requester now passes external SV validation
 - The AMBA `UNOPTFLAT` issue was not a backend rendering quirk. The source was
   using D-input-named `<=` assignments for Q-named state/storage signals, so the

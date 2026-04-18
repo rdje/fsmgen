@@ -18,12 +18,13 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 8. `docs/COMPOSITION_LEGACY_MAPPING.md`: historical `fx/bin/fsmgen` composition behavior mapped onto the active `R6` plan.
 9. `docs/EXTENSION_MODEL.md`: active `R7` typed extension boundary replacing legacy `.plg` / `PPlugin` as architecture direction.
 10. `docs/SPECFORGE_FEEDBACK_RESPONSE.md`: FSMGen's tracked response and alignment plan for SPECFORGE adapter feedback.
-11. `CHANGES.md`: chronological technical changes.
-12. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
-13. `MEMORY.md`: continuity/handoff state.
-14. `COMMIT.md`: commit workflow requirements.
-15. `WARP.md`: repository-specific agent/development guidance.
-16. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
+11. `docs/INTENT_SCHEDULING_BRAINSTORM.md`: living brainstorm log for an intent-scheduling layer above explicit cycle-authored `.fsm`.
+12. `CHANGES.md`: chronological technical changes.
+13. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
+14. `MEMORY.md`: continuity/handoff state.
+15. `COMMIT.md`: commit workflow requirements.
+16. `WARP.md`: repository-specific agent/development guidance.
+17. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
 
 ## Documentation index (all `.md` files in this repo)
 - `README.md` — single entry point and navigation hub.
@@ -37,6 +38,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/COMPOSITION_LEGACY_MAPPING.md` — historical legacy-composition behavior mapped onto the active architecture.
 - `docs/EXTENSION_MODEL.md` — typed extension boundary for the active `R7` replacement path.
 - `docs/SPECFORGE_FEEDBACK_RESPONSE.md` — tracked FSMGen response to SPECFORGE adapter/tool-integration feedback.
+- `docs/INTENT_SCHEDULING_BRAINSTORM.md` — living brainstorm log for inferring/scheduling cycles from a hardware-native intent layer above explicit `.fsm`.
 - `CHANGES.md` — persistent technical change history.
 - `DEVELOPMENT_NOTES.md` — architecture notes and engineering rationale.
 - `MEMORY.md` — live continuity context and recovery notes.
