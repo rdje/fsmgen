@@ -22,6 +22,11 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_success_semantic_keys
     normalized_semantic_support_accounting_keys
 );
+use FSM::Support::NormalizedSemanticPayloadContract qw(
+    normalized_semantic_payload_composition_keys
+    normalized_semantic_payload_forward_ir_keys
+    normalized_semantic_payload_presence_keys
+);
 use FSM::Support::ReportCommandContract qw(report_command_presence_keys);
 use FSM::Support::ReportGeneratedOutputContract qw(report_generated_output_presence_keys);
 use FSM::Support::ReportProducerContract qw(
@@ -59,6 +64,11 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         $contract->{generated_output_contract_source},
         'FSM::Support::ReportGeneratedOutputContract',
         'contract records the shared generated_output nested-object owner',
+    );
+    is(
+        $contract->{semantic_contract_source},
+        'FSM::Support::NormalizedSemanticPayloadContract',
+        'contract records the semantic success payload owner',
     );
     is(
         $contract->{producer_contract_source},
@@ -131,17 +141,17 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
     );
     is_deeply(
         $contract->{success_semantic_presence_keys},
-        normalized_semantic_success_semantic_keys(),
+        normalized_semantic_payload_presence_keys(),
         'contract publishes the bounded semantic payload key list',
     );
     is_deeply(
         $contract->{success_forward_ir_presence_keys},
-        normalized_semantic_forward_ir_keys(),
+        normalized_semantic_payload_forward_ir_keys(),
         'contract publishes the bounded forward-IR key list',
     );
     is_deeply(
         $contract->{composition_presence_keys},
-        normalized_semantic_composition_keys(),
+        normalized_semantic_payload_composition_keys(),
         'contract publishes the bounded composition key list',
     );
 };

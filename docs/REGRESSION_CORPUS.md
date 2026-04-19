@@ -184,6 +184,10 @@ check JSON and normalized semantic JSON.
 [perl/FSM/Support/CheckResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckResultContract.pm)
 now owns the success-only nested `result` object shape emitted by public check
 JSON.
+[perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm)
+now owns the success-only nested `semantic` object shape emitted by public
+normalized semantic JSON, including the published nested `forward_ir` and
+optional `composition` key lists.
 [perl/FSM/Support/SupportAccountingMatchContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingMatchContract.pm)
 now owns the shared nested `support_accounting` match-object shape reused by
 both check JSON and normalized semantic JSON.

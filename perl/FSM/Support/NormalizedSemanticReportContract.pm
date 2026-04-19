@@ -5,6 +5,11 @@ use warnings;
 
 use Exporter 'import';
 use JSON::PP ();
+use FSM::Support::NormalizedSemanticPayloadContract qw(
+    normalized_semantic_payload_composition_keys
+    normalized_semantic_payload_forward_ir_keys
+    normalized_semantic_payload_presence_keys
+);
 use FSM::Support::ReportCommandContract qw(report_command_presence_keys);
 use FSM::Support::ReportGeneratedOutputContract qw(report_generated_output_presence_keys);
 use FSM::Support::ReportProducerContract qw(
@@ -55,6 +60,7 @@ sub build_normalized_semantic_report_contract {
         public_layers => [qw(intent_hir lowered_rtl_ir structural_rtl_ir)],
         command_contract_source => 'FSM::Support::ReportCommandContract',
         generated_output_contract_source => 'FSM::Support::ReportGeneratedOutputContract',
+        semantic_contract_source => 'FSM::Support::NormalizedSemanticPayloadContract',
         producer_contract_source => 'FSM::Support::ReportProducerContract',
         source_contract_source => 'FSM::Support::ReportSourceContract',
         support_accounting_contract_source => 'FSM::Support::SupportAccountingMatchContract',
@@ -68,9 +74,9 @@ sub build_normalized_semantic_report_contract {
         support_accounting_presence_keys => normalized_semantic_support_accounting_keys(),
         matched_success_support_accounting_presence_keys => normalized_semantic_matched_success_support_accounting_keys(),
         matched_failure_support_accounting_presence_keys => normalized_semantic_matched_failure_support_accounting_keys(),
-        success_semantic_presence_keys => normalized_semantic_success_semantic_keys(),
-        success_forward_ir_presence_keys => normalized_semantic_forward_ir_keys(),
-        composition_presence_keys => normalized_semantic_composition_keys(),
+        success_semantic_presence_keys => normalized_semantic_payload_presence_keys(),
+        success_forward_ir_presence_keys => normalized_semantic_payload_forward_ir_keys(),
+        composition_presence_keys => normalized_semantic_payload_composition_keys(),
         failure_omits_semantic_payload => JSON::PP::true,
         full_report_json_safe => JSON::PP::true,
         full_export_stable => JSON::PP::false,
@@ -78,6 +84,7 @@ sub build_normalized_semantic_report_contract {
             'Treat the listed top-level and bounded nested key-presence lists as the public normalized semantic JSON contract for schema version 1.',
             'The nested command object is shared with check JSON and stays bounded through FSM::Support::ReportCommandContract.',
             'The nested generated_output object is shared with check JSON and stays bounded through FSM::Support::ReportGeneratedOutputContract.',
+            'The nested semantic success payload stays bounded through FSM::Support::NormalizedSemanticPayloadContract.',
             'The nested producer object is shared with check JSON and stays bounded through FSM::Support::ReportProducerContract.',
             'The nested source object is shared with check JSON and stays bounded through FSM::Support::ReportSourceContract.',
             'Do not treat every nested scalar/list/hash field inside those branches as frozen unless it is separately documented and regression-backed.',
@@ -120,44 +127,15 @@ sub normalized_semantic_matched_failure_support_accounting_keys {
 }
 
 sub normalized_semantic_success_semantic_keys {
-    return [
-        qw(
-            module
-            system_contract
-            explicit_system_contract
-            signal_analysis
-            forward_ir
-        ),
-    ];
+    return normalized_semantic_payload_presence_keys();
 }
 
 sub normalized_semantic_forward_ir_keys {
-    return [
-        qw(
-            intent_hir
-            lowered_rtl_ir
-            structural_rtl_ir
-        ),
-    ];
+    return normalized_semantic_payload_forward_ir_keys();
 }
 
 sub normalized_semantic_composition_keys {
-    return [
-        qw(
-            lane
-            child_count
-            children
-            net_count
-            resolved_link_count
-            generated_child_count
-            generated_children
-            standalone_dt_child_count
-            standalone_dt_children
-            shared_datapath_candidate_count
-            shared_datapath_candidates
-            provenance_report
-        ),
-    ];
+    return normalized_semantic_payload_composition_keys();
 }
 
 1;

@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-19: public normalized semantic payloads should have one explicit owner
+- Successful public normalized semantic JSON already emitted one substantial
+  nested `semantic` object in practice: module/system metadata, signal
+  analysis, and the forward-IR projection.
+- Leaving that shape as helper key lists inside the outer report contract
+  would keep one real public nested object without a named owner, which is the
+  opposite of what `R13` is trying to achieve.
+- The more honest move is to give that success-only nested object one bounded
+  owner:
+  - one `semantic` object contract for successful normalized semantic JSON,
+  - one published top-level semantic key list,
+  - and one place that also owns the nested `forward_ir` and optional
+    `composition` key lists.
+- That keeps widening deliberate:
+  - downstream tools can discover one explicit nested semantic contract,
+  - the outer normalized-semantic report contract stops carrying that success
+    payload implicitly,
+  - and future semantic-payload widening now has to be named and regression-
+    backed instead of piggybacking on sample JSON.
+
 ## 2026-04-19: public check result objects should have one explicit owner
 - Successful public check JSON already emitted one small nested `result`
   object in practice: `module_name`, `state_count`, `signal_count`, and

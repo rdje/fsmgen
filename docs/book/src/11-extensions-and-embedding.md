@@ -164,6 +164,12 @@ contract for the compact success summary:
 [perl/FSM/Support/CheckResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckResultContract.pm)
 owns the `module_name`, `state_count`, `signal_count`, and
 `composition_child_count` keys emitted under the nested `result` object.
+Successful public normalized semantic JSON reports now also have one bounded
+nested-object contract for the success payload itself:
+[perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm)
+owns the `module`, `system_contract`, `explicit_system_contract`,
+`signal_analysis`, and `forward_ir` keys, and the same owner also publishes
+the nested `forward_ir` plus optional `composition` key lists.
 
 Do not treat the raw `HDLGenerator` result hash as a stable JSON document. Some
 nested branches still contain live CoreAST/AST objects for compatibility and
