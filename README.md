@@ -75,6 +75,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `perl/FSM/Support/SemanticExportsContract.pm` — bounded manifest-facing contract for the `semantic_exports` section's public top-level and nested contract-owner map.
 - `perl/FSM/Support/CheckDiagnostics.pm` — bounded `--check --json` report builder and stable-code classifier.
 - `perl/FSM/Support/CheckDiagnosticsContract.pm` — bounded `--check --json` key-presence contract advertised through the capability manifest.
+- `perl/FSM/Support/CheckFailureDiagnosticContract.pm` — bounded nested-object contract for failure `diagnostic` payloads in public check JSON.
 - `perl/FSM/Support/CheckResultContract.pm` — bounded nested-object contract for successful public check JSON `result` payloads.
 - `perl/FSM/Support/CompositionReportContract.pm` — bounded sanitized composition provenance/report contract for semantic JSON.
 - `perl/FSM/Support/NormalizedSemanticPayloadContract.pm` — bounded nested-object contract for successful public normalized semantic JSON `semantic` payloads.
@@ -176,6 +177,10 @@ artifacts:
 Successful public check JSON reports now also have one bounded nested `result`
 object owner for module identity plus basic summary counts:
 [perl/FSM/Support/CheckResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckResultContract.pm).
+Failed public check JSON reports now also have one bounded nested `diagnostic`
+object owner for the core stable diagnostic fields, matched-only corpus keys,
+optional extracted artifact paths, and nested support-accounting metadata:
+[perl/FSM/Support/CheckFailureDiagnosticContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckFailureDiagnosticContract.pm).
 Successful public normalized semantic JSON reports now also have one bounded
 nested `semantic` object owner for module/system metadata, signal analysis,
 and the forward-IR projection:

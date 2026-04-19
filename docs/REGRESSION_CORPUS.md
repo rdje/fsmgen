@@ -184,6 +184,10 @@ check JSON and normalized semantic JSON.
 [perl/FSM/Support/CheckResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckResultContract.pm)
 now owns the success-only nested `result` object shape emitted by public check
 JSON.
+[perl/FSM/Support/CheckFailureDiagnosticContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckFailureDiagnosticContract.pm)
+now owns the nested failure `diagnostic` object shape emitted by public check
+JSON, including the published matched-only, optional-artifact, and nested
+support-accounting key lists.
 [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm)
 now owns the success-only nested `semantic` object shape emitted by public
 normalized semantic JSON, including the published nested `forward_ir` and

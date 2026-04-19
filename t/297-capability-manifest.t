@@ -263,6 +263,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest records the check-JSON result nested-object owner',
     );
     is(
+        $manifest->{diagnostics}{check_json}{failure_diagnostic_contract_source},
+        'FSM::Support::CheckFailureDiagnosticContract',
+        'manifest records the check-JSON failure diagnostic nested-object owner',
+    );
+    is(
         $manifest->{diagnostics}{check_json}{generated_output_contract_source},
         'FSM::Support::ReportGeneratedOutputContract',
         'manifest records the shared check-JSON generated_output nested-object owner',

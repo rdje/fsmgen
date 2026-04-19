@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-19: public check failure diagnostic objects now have an explicit owner
+- Added
+  [perl/FSM/Support/CheckFailureDiagnosticContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckFailureDiagnosticContract.pm)
+  as the bounded owner for the nested failure `diagnostic` object emitted by
+  public check JSON.
+- [perl/FSM/Support/CheckDiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnosticsContract.pm)
+  now advertises that owner plus the bounded core, matched-only,
+  optional-artifact, and nested support-accounting key lists instead of
+  leaving the failure diagnostic shape as duplicated inline knowledge.
+- The reachable `bin/fsmgen` support surface now includes that contract owner
+  too, moving the measured import-tree totals to `152` project files /
+  `151` `.pm` packages with `Support => 30`.
+
 ## 2026-04-19: public normalized semantic payloads now have an explicit owner
 - Added
   [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm)

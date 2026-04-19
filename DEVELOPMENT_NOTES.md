@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-19: public check failure diagnostics should have one explicit owner
+- Public check JSON already emitted one real nested failure `diagnostic`
+  object in practice: stable code/summary metadata, source/artifact hints,
+  matched corpus identity, and nested support accounting.
+- Leaving that shape as helper key lists inside the outer report contract
+  would keep one real public nested object without a named owner, which is the
+  opposite of what `R13` is trying to achieve.
+- The more honest move is to give that failure object one bounded owner:
+  - one `diagnostic` object contract for failed public check JSON reports,
+  - one published core key list,
+  - and one place that also owns the matched-only, optional-artifact, and
+    nested support-accounting key lists.
+- That keeps widening deliberate:
+  - downstream tools can discover one explicit nested failure-diagnostic
+    contract,
+  - the outer check-report contract stops carrying that failure object
+    implicitly,
+  - and future diagnostic-payload widening now has to be named and
+    regression-backed instead of piggybacking on sample JSON.
+
 ## 2026-04-19: public normalized semantic payloads should have one explicit owner
 - Successful public normalized semantic JSON already emitted one substantial
   nested `semantic` object in practice: module/system metadata, signal

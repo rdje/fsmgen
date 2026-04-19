@@ -1,0 +1,77 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Test::More;
+use File::Spec;
+use FindBin;
+
+use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+
+use FSM::Support::CheckFailureDiagnosticContract qw(
+    build_check_failure_diagnostic_contract
+    check_failure_diagnostic_matched_presence_keys
+    check_failure_diagnostic_optional_artifact_keys
+    check_failure_diagnostic_presence_keys
+    check_failure_diagnostic_support_accounting_matched_presence_keys
+    check_failure_diagnostic_support_accounting_presence_keys
+);
+
+subtest 'contract exposes the bounded check failure diagnostic object' => sub {
+    my $contract = build_check_failure_diagnostic_contract();
+
+    is($contract->{schema_version}, 1, 'contract exposes schema version');
+    is($contract->{status}, 'bounded_public', 'contract marks the nested failure diagnostic object as bounded public');
+    is(
+        $contract->{contract_source},
+        'FSM::Support::CheckFailureDiagnosticContract',
+        'contract records its own owner',
+    );
+    is($contract->{object_name}, 'diagnostic', 'contract records the nested object name');
+    is($contract->{parent_object_name}, 'diagnostics[]', 'contract records the parent diagnostics array');
+    is_deeply(
+        $contract->{report_sources},
+        [
+            qw(
+                FSM::Support::CheckDiagnostics
+            ),
+        ],
+        'contract records the public report builder that reuses the nested diagnostic object',
+    );
+    is(
+        $contract->{support_accounting_contract_source},
+        'FSM::Support::SupportAccountingMatchContract',
+        'contract records the nested support-accounting owner',
+    );
+    ok(
+        $contract->{json_safe_when_embedded_in_public_reports},
+        'contract says the nested failure diagnostic object is JSON-safe when embedded in public reports',
+    );
+    is_deeply(
+        $contract->{public_presence_keys},
+        check_failure_diagnostic_presence_keys(),
+        'contract publishes the bounded failure-diagnostic key list',
+    );
+    is_deeply(
+        $contract->{matched_presence_keys},
+        check_failure_diagnostic_matched_presence_keys(),
+        'contract publishes the matched-only failure-diagnostic key list',
+    );
+    is_deeply(
+        $contract->{optional_artifact_keys},
+        check_failure_diagnostic_optional_artifact_keys(),
+        'contract publishes the optional extracted artifact key list',
+    );
+    is_deeply(
+        $contract->{support_accounting_presence_keys},
+        check_failure_diagnostic_support_accounting_presence_keys(),
+        'contract publishes the common nested support-accounting key list',
+    );
+    is_deeply(
+        $contract->{matched_support_accounting_presence_keys},
+        check_failure_diagnostic_support_accounting_matched_presence_keys(),
+        'contract publishes the matched nested support-accounting key list',
+    );
+};
+
+done_testing();

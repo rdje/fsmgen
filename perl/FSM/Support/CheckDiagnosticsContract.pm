@@ -5,6 +5,13 @@ use warnings;
 
 use Exporter 'import';
 use JSON::PP ();
+use FSM::Support::CheckFailureDiagnosticContract qw(
+    check_failure_diagnostic_matched_presence_keys
+    check_failure_diagnostic_optional_artifact_keys
+    check_failure_diagnostic_presence_keys
+    check_failure_diagnostic_support_accounting_matched_presence_keys
+    check_failure_diagnostic_support_accounting_presence_keys
+);
 use FSM::Support::CheckResultContract qw(check_result_presence_keys);
 use FSM::Support::ReportCommandContract qw(report_command_presence_keys);
 use FSM::Support::ReportGeneratedOutputContract qw(report_generated_output_presence_keys);
@@ -55,6 +62,7 @@ sub build_check_diagnostics_contract {
         emits_success_support_accounting_object => JSON::PP::true,
         emits_failure_diagnostic_support_accounting_object => JSON::PP::true,
         command_contract_source => 'FSM::Support::ReportCommandContract',
+        failure_diagnostic_contract_source => 'FSM::Support::CheckFailureDiagnosticContract',
         result_contract_source => 'FSM::Support::CheckResultContract',
         generated_output_contract_source => 'FSM::Support::ReportGeneratedOutputContract',
         producer_contract_source => 'FSM::Support::ReportProducerContract',
@@ -79,6 +87,7 @@ sub build_check_diagnostics_contract {
         guidance => [
             'Treat the published top-level, success-result, and failure-diagnostic key lists as the bounded public check-JSON contract for schema version 1.',
             'The nested command object is shared with normalized semantic JSON and stays bounded through FSM::Support::ReportCommandContract.',
+            'The nested failure diagnostic object stays bounded through FSM::Support::CheckFailureDiagnosticContract.',
             'The nested success result object stays bounded through FSM::Support::CheckResultContract.',
             'The nested generated_output object is shared with normalized semantic JSON and stays bounded through FSM::Support::ReportGeneratedOutputContract.',
             'The nested producer object is shared with normalized semantic JSON and stays bounded through FSM::Support::ReportProducerContract.',
@@ -125,49 +134,23 @@ sub check_json_matched_success_support_accounting_keys {
 }
 
 sub check_json_failure_diagnostic_keys {
-    return [
-        qw(
-            code
-            severity
-            stability
-            family
-            summary
-            message
-            source_file
-            support_accounting
-            migration_hint_available
-        ),
-    ];
+    return check_failure_diagnostic_presence_keys();
 }
 
 sub check_json_matched_failure_diagnostic_keys {
-    return [
-        qw(
-            matched_corpus_entry_id
-            coverage
-            classification
-        ),
-    ];
+    return check_failure_diagnostic_matched_presence_keys();
 }
 
 sub check_json_failure_diagnostic_optional_artifact_keys {
-    return [
-        qw(
-            parent_composition_source
-            generated_child_source
-            expected_rtl_metadata_file
-            expected_child_source_file
-            rtl_metadata_file
-        ),
-    ];
+    return check_failure_diagnostic_optional_artifact_keys();
 }
 
 sub check_json_failure_diagnostic_support_accounting_keys {
-    return support_accounting_match_common_keys();
+    return check_failure_diagnostic_support_accounting_presence_keys();
 }
 
 sub check_json_matched_failure_support_accounting_keys {
-    return support_accounting_match_failure_keys();
+    return check_failure_diagnostic_support_accounting_matched_presence_keys();
 }
 
 1;

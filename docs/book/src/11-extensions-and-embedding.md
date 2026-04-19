@@ -164,6 +164,12 @@ contract for the compact success summary:
 [perl/FSM/Support/CheckResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckResultContract.pm)
 owns the `module_name`, `state_count`, `signal_count`, and
 `composition_child_count` keys emitted under the nested `result` object.
+Failed public check JSON reports now also have one bounded nested-object
+contract for the failure payload itself:
+[perl/FSM/Support/CheckFailureDiagnosticContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckFailureDiagnosticContract.pm)
+owns the core stable diagnostic keys plus the matched-only, optional-artifact,
+and nested support-accounting key lists emitted under each `diagnostic`
+object.
 Successful public normalized semantic JSON reports now also have one bounded
 nested-object contract for the success payload itself:
 [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm)
