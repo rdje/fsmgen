@@ -182,6 +182,12 @@ The nested `semantic.module` summary inside that payload now also has its own
 bounded nested-object contract:
 [perl/FSM/Support/NormalizedSemanticModuleContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticModuleContract.pm)
 owns the core module-summary keys plus the current optional metric-key family.
+The nested `semantic.composition` summary inside that payload now also has its
+own bounded nested-object contract for composition sources:
+[perl/FSM/Support/NormalizedSemanticCompositionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticCompositionContract.pm)
+owns the composition key family while keeping nested provenance-report
+ownership delegated to
+[perl/FSM/Support/CompositionReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CompositionReportContract.pm).
 
 Do not treat the raw `HDLGenerator` result hash as a stable JSON document. Some
 nested branches still contain live CoreAST/AST objects for compatibility and

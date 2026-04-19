@@ -17,6 +17,9 @@ use FSM::Support::CheckFailureDiagnosticContract qw(
     check_failure_diagnostic_support_accounting_matched_presence_keys
     check_failure_diagnostic_support_accounting_presence_keys
 );
+use FSM::Support::NormalizedSemanticCompositionContract qw(
+    normalized_semantic_composition_presence_keys
+);
 use FSM::Support::NormalizedSemanticReportContract qw(
     build_normalized_semantic_report_contract
     normalized_semantic_composition_keys
@@ -81,6 +84,11 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         $contract->{generated_output_contract_source},
         'FSM::Support::ReportGeneratedOutputContract',
         'contract records the shared generated_output nested-object owner',
+    );
+    is(
+        $contract->{composition_contract_source},
+        'FSM::Support::NormalizedSemanticCompositionContract',
+        'contract records the nested composition object owner',
     );
     is(
         $contract->{module_contract_source},
@@ -235,6 +243,11 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         $contract->{composition_presence_keys},
         normalized_semantic_payload_composition_keys(),
         'contract publishes the bounded composition key list',
+    );
+    is_deeply(
+        normalized_semantic_composition_keys(),
+        normalized_semantic_composition_presence_keys(),
+        'normalized semantic composition keys map to the nested composition owner',
     );
 };
 

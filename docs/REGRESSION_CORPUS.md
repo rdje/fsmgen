@@ -196,6 +196,11 @@ optional `composition` key lists.
 now owns the nested `semantic.module` object shape emitted by successful
 public normalized semantic JSON, including the published core module-summary
 keys plus the optional metric-key family.
+[perl/FSM/Support/NormalizedSemanticCompositionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticCompositionContract.pm)
+now owns the nested `semantic.composition` object shape emitted by successful
+public normalized semantic JSON composition sources, including the published
+composition key family while keeping nested provenance-report ownership split
+through [perl/FSM/Support/CompositionReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CompositionReportContract.pm).
 [perl/FSM/Support/SupportAccountingMatchContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingMatchContract.pm)
 now owns the shared nested `support_accounting` match-object shape reused by
 both check JSON and normalized semantic JSON.

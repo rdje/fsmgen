@@ -391,6 +391,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest records the shared normalized-semantic generated_output nested-object owner',
     );
     is(
+        $manifest->{semantic_exports}{normalized_semantic_json}{composition_contract_source},
+        'FSM::Support::NormalizedSemanticCompositionContract',
+        'manifest records the normalized-semantic composition nested-object owner',
+    );
+    is(
         $manifest->{semantic_exports}{normalized_semantic_json}{module_contract_source},
         'FSM::Support::NormalizedSemanticModuleContract',
         'manifest records the normalized-semantic module nested-object owner',

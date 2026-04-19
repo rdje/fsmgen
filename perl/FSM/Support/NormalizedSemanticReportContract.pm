@@ -12,6 +12,9 @@ use FSM::Support::CheckFailureDiagnosticContract qw(
     check_failure_diagnostic_support_accounting_matched_presence_keys
     check_failure_diagnostic_support_accounting_presence_keys
 );
+use FSM::Support::NormalizedSemanticCompositionContract qw(
+    normalized_semantic_composition_presence_keys
+);
 use FSM::Support::NormalizedSemanticModuleContract qw(
     normalized_semantic_module_presence_keys
 );
@@ -78,6 +81,7 @@ sub build_normalized_semantic_report_contract {
         command_contract_source => 'FSM::Support::ReportCommandContract',
         failure_diagnostic_contract_source => 'FSM::Support::CheckFailureDiagnosticContract',
         generated_output_contract_source => 'FSM::Support::ReportGeneratedOutputContract',
+        composition_contract_source => 'FSM::Support::NormalizedSemanticCompositionContract',
         module_contract_source => 'FSM::Support::NormalizedSemanticModuleContract',
         semantic_contract_source => 'FSM::Support::NormalizedSemanticPayloadContract',
         producer_contract_source => 'FSM::Support::ReportProducerContract',
@@ -112,6 +116,7 @@ sub build_normalized_semantic_report_contract {
             'The nested failure diagnostic object is shared with check JSON and stays bounded through FSM::Support::CheckFailureDiagnosticContract.',
             'The nested generated_output object is shared with check JSON and stays bounded through FSM::Support::ReportGeneratedOutputContract.',
             'The nested semantic success payload stays bounded through FSM::Support::NormalizedSemanticPayloadContract.',
+            'The nested semantic composition object stays bounded through FSM::Support::NormalizedSemanticCompositionContract.',
             'The nested semantic module object stays bounded through FSM::Support::NormalizedSemanticModuleContract.',
             'The nested producer object is shared with check JSON and stays bounded through FSM::Support::ReportProducerContract.',
             'The nested source object is shared with check JSON and stays bounded through FSM::Support::ReportSourceContract.',
@@ -191,7 +196,7 @@ sub normalized_semantic_forward_ir_keys {
 }
 
 sub normalized_semantic_composition_keys {
-    return normalized_semantic_payload_composition_keys();
+    return normalized_semantic_composition_presence_keys();
 }
 
 1;
