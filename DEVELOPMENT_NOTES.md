@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-19: public semantic system summaries should have one explicit owner
+- Successful public normalized semantic JSON already emitted one real nested
+  `semantic.system_contract` object in practice: clock/reset identity, reset
+  kind, active level, and current implicit/declare-ports facts.
+- Leaving that nested object as just another helper hash under the broader
+  semantic payload would keep one useful public summary without its own named
+  owner, which is the opposite of what `R13` is trying to achieve.
+- The more honest move is to give that nested system summary one bounded owner:
+  - one `semantic.system_contract` object contract,
+  - one published system-contract key list,
+  - and one explicit reminder that the broader semantic payload only advertises
+    the nested owner instead of silently owning that branch forever.
+- That keeps widening deliberate:
+  - downstream tools can discover one explicit system-contract surface instead
+    of scraping sample semantic JSON,
+  - the broader semantic payload contract stops carrying that nested object
+    implicitly,
+  - and future system-summary widening now has to be named and
+    regression-backed instead of piggybacking on payload examples.
+
 ## 2026-04-19: public semantic symbol summaries should have one explicit owner
 - Successful public normalized semantic JSON already emitted one real optional
   nested `semantic.symbol_contract` object in practice for symbol-rich roots:

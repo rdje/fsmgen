@@ -190,8 +190,12 @@ check JSON and public normalized semantic JSON, including the published
 matched-only, optional-artifact, and nested support-accounting key lists.
 [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm)
 now owns the success-only nested `semantic` object shape emitted by public
-normalized semantic JSON, including the published nested `forward_ir` and
-optional `symbol_contract` and `composition` key lists.
+normalized semantic JSON, including the published nested `system_contract`,
+`forward_ir`, and optional `symbol_contract` plus `composition` key lists.
+[perl/FSM/Support/NormalizedSemanticSystemContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSystemContract.pm)
+now owns the nested `semantic.system_contract` object shape emitted by
+successful public normalized semantic JSON, including the published
+system-contract key family.
 [perl/FSM/Support/NormalizedSemanticForwardIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticForwardIRContract.pm)
 now owns the nested `semantic.forward_ir` object shape emitted by successful
 public normalized semantic JSON, including the published forward-IR key

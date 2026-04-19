@@ -24,7 +24,11 @@ use FSM::Support::NormalizedSemanticModuleContract qw(
 use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_composition_keys
     normalized_semantic_payload_presence_keys
+    normalized_semantic_payload_system_contract_keys
     normalized_semantic_payload_symbol_contract_keys
+);
+use FSM::Support::NormalizedSemanticSystemContract qw(
+    normalized_semantic_system_contract_presence_keys
 );
 use FSM::Support::NormalizedSemanticSymbolContract qw(
     normalized_semantic_symbol_contract_presence_keys
@@ -56,6 +60,7 @@ our @EXPORT_OK = qw(
     normalized_semantic_module_keys
     normalized_semantic_module_optional_metric_keys
     normalized_semantic_public_top_level_keys
+    normalized_semantic_system_contract_keys
     normalized_semantic_symbol_contract_keys
     normalized_semantic_success_only_top_level_keys
     normalized_semantic_success_semantic_keys
@@ -92,6 +97,7 @@ sub build_normalized_semantic_report_contract {
         forward_ir_contract_source => 'FSM::Support::NormalizedSemanticForwardIRContract',
         module_contract_source => 'FSM::Support::NormalizedSemanticModuleContract',
         semantic_contract_source => 'FSM::Support::NormalizedSemanticPayloadContract',
+        system_contract_source => 'FSM::Support::NormalizedSemanticSystemContract',
         symbol_contract_source => 'FSM::Support::NormalizedSemanticSymbolContract',
         producer_contract_source => 'FSM::Support::ReportProducerContract',
         source_contract_source => 'FSM::Support::ReportSourceContract',
@@ -114,6 +120,7 @@ sub build_normalized_semantic_report_contract {
         success_semantic_presence_keys => normalized_semantic_payload_presence_keys(),
         success_module_presence_keys => normalized_semantic_module_keys(),
         success_module_optional_metric_keys => normalized_semantic_module_optional_metric_keys(),
+        success_system_contract_presence_keys => normalized_semantic_system_contract_keys(),
         success_forward_ir_presence_keys => normalized_semantic_forward_ir_keys(),
         success_symbol_contract_presence_keys => normalized_semantic_symbol_contract_keys(),
         composition_presence_keys => normalized_semantic_payload_composition_keys(),
@@ -129,6 +136,7 @@ sub build_normalized_semantic_report_contract {
             'The nested semantic composition object stays bounded through FSM::Support::NormalizedSemanticCompositionContract.',
             'The nested semantic forward_ir object stays bounded through FSM::Support::NormalizedSemanticForwardIRContract.',
             'The nested semantic module object stays bounded through FSM::Support::NormalizedSemanticModuleContract.',
+            'The nested semantic system_contract object stays bounded through FSM::Support::NormalizedSemanticSystemContract.',
             'The nested semantic symbol_contract object stays bounded through FSM::Support::NormalizedSemanticSymbolContract.',
             'The nested producer object is shared with check JSON and stays bounded through FSM::Support::ReportProducerContract.',
             'The nested source object is shared with check JSON and stays bounded through FSM::Support::ReportSourceContract.',
@@ -205,6 +213,10 @@ sub normalized_semantic_module_optional_metric_keys {
 
 sub normalized_semantic_forward_ir_keys {
     return normalized_semantic_forward_ir_presence_keys();
+}
+
+sub normalized_semantic_system_contract_keys {
+    return normalized_semantic_system_contract_presence_keys();
 }
 
 sub normalized_semantic_symbol_contract_keys {
