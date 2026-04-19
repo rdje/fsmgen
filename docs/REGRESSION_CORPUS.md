@@ -210,6 +210,10 @@ system-contract key family.
 now owns the nested `semantic.forward_ir` object shape emitted by successful
 public normalized semantic JSON, including the published forward-IR key
 family.
+[perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm)
+now owns the nested `semantic.forward_ir.intent_hir` object shape emitted by
+successful public normalized semantic JSON, including the published core
+intent-hir keys plus the composition-only extension-key family.
 [perl/FSM/Support/NormalizedSemanticSymbolContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSymbolContract.pm)
 now owns the optional nested `semantic.symbol_contract` object shape emitted
 by successful public normalized semantic JSON for symbol-rich sources,

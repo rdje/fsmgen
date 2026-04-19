@@ -15,6 +15,8 @@ use FSM::Support::NormalizedSemanticExplicitSystemContract qw(
     normalized_semantic_explicit_system_contract_presence_keys
 );
 use FSM::Support::NormalizedSemanticForwardIRContract qw(
+    normalized_semantic_forward_ir_intent_hir_optional_composition_keys
+    normalized_semantic_forward_ir_intent_hir_presence_keys
     normalized_semantic_forward_ir_presence_keys
 );
 use FSM::Support::NormalizedSemanticModuleContract qw(
@@ -36,6 +38,8 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_composition_keys
     normalized_semantic_payload_explicit_system_contract_keys
     normalized_semantic_payload_forward_ir_keys
+    normalized_semantic_payload_forward_ir_intent_hir_keys
+    normalized_semantic_payload_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_payload_presence_keys
     normalized_semantic_payload_signal_analysis_entry_keys
     normalized_semantic_payload_signal_analysis_keys
@@ -162,10 +166,35 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
         normalized_semantic_payload_forward_ir_keys(),
         'contract publishes the bounded forward-IR key list',
     );
+    is(
+        $contract->{forward_ir_intent_hir_contract_source},
+        'FSM::Support::NormalizedSemanticIntentHIRContract',
+        'contract records the nested forward-ir intent-hir object owner',
+    );
+    is_deeply(
+        $contract->{forward_ir_intent_hir_presence_keys},
+        normalized_semantic_payload_forward_ir_intent_hir_keys(),
+        'contract publishes the bounded forward-ir intent-hir key list',
+    );
+    is_deeply(
+        $contract->{forward_ir_intent_hir_optional_composition_keys},
+        normalized_semantic_payload_forward_ir_intent_hir_optional_composition_keys(),
+        'contract publishes the bounded forward-ir intent-hir composition-only key list',
+    );
     is_deeply(
         normalized_semantic_payload_forward_ir_keys(),
         normalized_semantic_forward_ir_presence_keys(),
         'semantic payload forward-IR keys map to the nested forward-IR owner',
+    );
+    is_deeply(
+        normalized_semantic_payload_forward_ir_intent_hir_keys(),
+        normalized_semantic_forward_ir_intent_hir_presence_keys(),
+        'semantic payload forward-ir intent-hir keys map to the nested intent-hir owner',
+    );
+    is_deeply(
+        normalized_semantic_payload_forward_ir_intent_hir_optional_composition_keys(),
+        normalized_semantic_forward_ir_intent_hir_optional_composition_keys(),
+        'semantic payload forward-ir intent-hir composition keys map to the nested intent-hir owner',
     );
     is_deeply(
         $contract->{symbol_contract_presence_keys},

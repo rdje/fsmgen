@@ -10,13 +10,19 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::NormalizedSemanticForwardIRContract qw(
     build_normalized_semantic_forward_ir_contract
+    normalized_semantic_forward_ir_intent_hir_optional_composition_keys
+    normalized_semantic_forward_ir_intent_hir_presence_keys
     normalized_semantic_forward_ir_presence_keys
 );
 use FSM::Support::NormalizedSemanticPayloadContract qw(
+    normalized_semantic_payload_forward_ir_intent_hir_keys
+    normalized_semantic_payload_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_payload_forward_ir_keys
 );
 use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_forward_ir_keys
+    normalized_semantic_forward_ir_intent_hir_keys
+    normalized_semantic_forward_ir_intent_hir_optional_composition_keys
 );
 
 subtest 'contract exposes the bounded normalized semantic forward-IR object' => sub {
@@ -48,15 +54,50 @@ subtest 'contract exposes the bounded normalized semantic forward-IR object' => 
         normalized_semantic_forward_ir_presence_keys(),
         'contract publishes the bounded forward-IR key list',
     );
+    is(
+        $contract->{intent_hir_contract_source},
+        'FSM::Support::NormalizedSemanticIntentHIRContract',
+        'contract records the nested intent-hir object owner',
+    );
+    is_deeply(
+        $contract->{intent_hir_presence_keys},
+        normalized_semantic_forward_ir_intent_hir_presence_keys(),
+        'contract publishes the bounded forward-ir intent-hir key list',
+    );
+    is_deeply(
+        $contract->{intent_hir_optional_composition_keys},
+        normalized_semantic_forward_ir_intent_hir_optional_composition_keys(),
+        'contract publishes the bounded forward-ir intent-hir composition-only key list',
+    );
     is_deeply(
         normalized_semantic_payload_forward_ir_keys(),
         normalized_semantic_forward_ir_presence_keys(),
         'semantic payload forward-IR keys map to the nested forward-IR owner',
     );
     is_deeply(
+        normalized_semantic_payload_forward_ir_intent_hir_keys(),
+        normalized_semantic_forward_ir_intent_hir_presence_keys(),
+        'semantic payload intent-hir keys map to the nested intent-hir owner',
+    );
+    is_deeply(
+        normalized_semantic_payload_forward_ir_intent_hir_optional_composition_keys(),
+        normalized_semantic_forward_ir_intent_hir_optional_composition_keys(),
+        'semantic payload intent-hir composition keys map to the nested intent-hir owner',
+    );
+    is_deeply(
         normalized_semantic_forward_ir_keys(),
         normalized_semantic_forward_ir_presence_keys(),
         'normalized semantic report forward-IR keys map to the nested forward-IR owner',
+    );
+    is_deeply(
+        normalized_semantic_forward_ir_intent_hir_keys(),
+        normalized_semantic_forward_ir_intent_hir_presence_keys(),
+        'normalized semantic report intent-hir keys map to the nested intent-hir owner',
+    );
+    is_deeply(
+        normalized_semantic_forward_ir_intent_hir_optional_composition_keys(),
+        normalized_semantic_forward_ir_intent_hir_optional_composition_keys(),
+        'normalized semantic report intent-hir composition keys map to the nested intent-hir owner',
     );
 };
 

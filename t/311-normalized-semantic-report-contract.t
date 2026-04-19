@@ -24,6 +24,8 @@ use FSM::Support::NormalizedSemanticExplicitSystemContract qw(
     normalized_semantic_explicit_system_contract_presence_keys
 );
 use FSM::Support::NormalizedSemanticForwardIRContract qw(
+    normalized_semantic_forward_ir_intent_hir_optional_composition_keys
+    normalized_semantic_forward_ir_intent_hir_presence_keys
     normalized_semantic_forward_ir_presence_keys
 );
 use FSM::Support::NormalizedSemanticReportContract qw(
@@ -33,6 +35,8 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_failure_diagnostic_keys
     normalized_semantic_failure_diagnostic_support_accounting_keys
     normalized_semantic_forward_ir_keys
+    normalized_semantic_forward_ir_intent_hir_keys
+    normalized_semantic_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_matched_failure_diagnostic_keys
     normalized_semantic_matched_failure_diagnostic_support_accounting_keys
     normalized_semantic_matched_failure_support_accounting_keys
@@ -51,6 +55,8 @@ use FSM::Support::NormalizedSemanticReportContract qw(
 use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_composition_keys
     normalized_semantic_payload_explicit_system_contract_keys
+    normalized_semantic_payload_forward_ir_intent_hir_keys
+    normalized_semantic_payload_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_payload_presence_keys
     normalized_semantic_payload_signal_analysis_keys
     normalized_semantic_payload_system_contract_keys
@@ -343,10 +349,45 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         normalized_semantic_forward_ir_keys(),
         'contract publishes the bounded forward-IR key list',
     );
+    is(
+        $contract->{forward_ir_intent_hir_contract_source},
+        'FSM::Support::NormalizedSemanticIntentHIRContract',
+        'contract records the nested forward-ir intent-hir object owner',
+    );
+    is_deeply(
+        $contract->{success_forward_ir_intent_hir_presence_keys},
+        normalized_semantic_forward_ir_intent_hir_keys(),
+        'contract publishes the bounded forward-ir intent-hir key list',
+    );
+    is_deeply(
+        $contract->{success_forward_ir_intent_hir_optional_composition_keys},
+        normalized_semantic_forward_ir_intent_hir_optional_composition_keys(),
+        'contract publishes the bounded forward-ir intent-hir composition-only key list',
+    );
     is_deeply(
         normalized_semantic_forward_ir_keys(),
         normalized_semantic_forward_ir_presence_keys(),
         'normalized semantic forward-IR keys map to the nested forward-IR owner',
+    );
+    is_deeply(
+        normalized_semantic_forward_ir_intent_hir_keys(),
+        normalized_semantic_forward_ir_intent_hir_presence_keys(),
+        'normalized semantic report forward-ir intent-hir keys map to the nested intent-hir owner',
+    );
+    is_deeply(
+        normalized_semantic_forward_ir_intent_hir_optional_composition_keys(),
+        normalized_semantic_forward_ir_intent_hir_optional_composition_keys(),
+        'normalized semantic report forward-ir intent-hir composition keys map to the nested intent-hir owner',
+    );
+    is_deeply(
+        normalized_semantic_payload_forward_ir_intent_hir_keys(),
+        normalized_semantic_forward_ir_intent_hir_presence_keys(),
+        'semantic payload forward-ir intent-hir keys map to the nested intent-hir owner',
+    );
+    is_deeply(
+        normalized_semantic_payload_forward_ir_intent_hir_optional_composition_keys(),
+        normalized_semantic_forward_ir_intent_hir_optional_composition_keys(),
+        'semantic payload forward-ir intent-hir composition keys map to the nested intent-hir owner',
     );
     is_deeply(
         $contract->{composition_presence_keys},
@@ -509,6 +550,17 @@ subtest 'successful direct semantic JSON conforms to the bounded contract' => su
         normalized_semantic_forward_ir_keys(),
         'direct success semantic payload keeps bounded forward-IR keys',
     );
+    assert_keys_present(
+        $decoded->{semantic}{forward_ir}{intent_hir},
+        normalized_semantic_forward_ir_intent_hir_keys(),
+        'direct success semantic payload keeps bounded forward-ir intent-hir keys',
+    );
+    for my $key (@{normalized_semantic_forward_ir_intent_hir_optional_composition_keys() || []}) {
+        ok(
+            !exists $decoded->{semantic}{forward_ir}{intent_hir}{$key},
+            "direct success semantic payload omits composition-only intent-hir key $key",
+        );
+    }
 
     ok(!exists $decoded->{semantic}{composition}, 'direct success omits optional composition payload');
     ok(!$decoded->{generated_output}{emitted}, 'direct success still records no HDL emission');
@@ -590,6 +642,16 @@ subtest 'successful composition semantic JSON conforms to the bounded contract' 
         $decoded->{semantic}{composition},
         normalized_semantic_composition_keys(),
         'composition success semantic payload keeps bounded composition keys',
+    );
+    assert_keys_present(
+        $decoded->{semantic}{forward_ir}{intent_hir},
+        normalized_semantic_forward_ir_intent_hir_keys(),
+        'composition success semantic payload keeps bounded forward-ir intent-hir keys',
+    );
+    assert_keys_present(
+        $decoded->{semantic}{forward_ir}{intent_hir},
+        normalized_semantic_forward_ir_intent_hir_optional_composition_keys(),
+        'composition success semantic payload keeps bounded forward-ir intent-hir composition-only keys',
     );
     ok(
         exists $decoded->{semantic}{module}{composition_child_count},

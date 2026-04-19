@@ -1748,6 +1748,10 @@ core signal-entry keys emitted across direct and composition roots:
 The nested `semantic.forward_ir` summary inside that payload now also has its
 own bounded owner for the current sanitized forward semantic projections:
 [perl/FSM/Support/NormalizedSemanticForwardIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticForwardIRContract.pm).
+The nested `semantic.forward_ir.intent_hir` summary inside that branch now
+also has its own bounded owner for the current intent-hir shell plus the
+current composition-only extension keys:
+[perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm).
 The optional `semantic.symbol_contract` summary inside that payload now also
 has its own bounded owner for symbol-rich sources:
 [perl/FSM/Support/NormalizedSemanticSymbolContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSymbolContract.pm).
