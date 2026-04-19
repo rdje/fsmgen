@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-19: public report producer objects should have one shared public owner
+- The public check JSON and normalized semantic JSON reports already shared the
+  same producer identity core in practice: `name` plus `report_source`.
+- Normalized semantic JSON also exposed one honest bounded extension there:
+  `semantic_layers`.
+- Leaving that split implicit would keep two separate report contracts aligned
+  only by convention, which is exactly the kind of drift `R13` is supposed to
+  remove.
+- The more honest move is to split out one reusable bounded nested-object
+  owner:
+  - one shared `producer` object contract,
+  - one published common `name` / `report_source` key list,
+  - and one explicitly documented normalized-semantic extra-key list.
+- That keeps widening deliberate:
+  - downstream tools can discover one shared nested producer contract,
+  - both report contracts stay aligned on the same producer identity surface,
+  - and report-specific producer widening now has to be named explicitly
+    instead of piggybacking on sample JSON.
+
 ## 2026-04-19: public report source objects should have one shared public owner
 - The public check JSON and normalized semantic JSON reports already shared the
   same nested `source` shape in practice: `input` plus `resolved_path`.

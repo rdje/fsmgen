@@ -139,6 +139,12 @@ share one bounded nested-object contract:
 owns the common `matched` key plus the matched success/failure identity keys
 used by check JSON and normalized semantic JSON.
 Those same public check JSON and normalized semantic JSON reports now also
+share one bounded nested-object contract for producer identity:
+[perl/FSM/Support/ReportProducerContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportProducerContract.pm)
+owns the shared `name` plus `report_source` keys, while normalized semantic
+JSON adds the bounded `semantic_layers` extension documented by that same
+owner.
+Those same public check JSON and normalized semantic JSON reports now also
 share one bounded nested-object contract for the caller-facing source identity:
 [perl/FSM/Support/ReportSourceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportSourceContract.pm)
 owns the shared `input` plus `resolved_path` keys emitted under the nested

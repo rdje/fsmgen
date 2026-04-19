@@ -169,6 +169,9 @@ locks the bounded public key-presence promise for that same command surface.
 is now the explicit owner for the common top-level keys plus the bounded
 success-result, success support-accounting, and failure-diagnostic key lists
 advertised through `--capability-manifest`.
+[perl/FSM/Support/ReportProducerContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportProducerContract.pm)
+now owns the shared nested `producer` object shape reused by both check JSON
+and normalized semantic JSON.
 [perl/FSM/Support/ReportSourceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportSourceContract.pm)
 now owns the shared nested `source` object shape reused by both check JSON and
 normalized semantic JSON.
@@ -189,6 +192,11 @@ and strict rejected-source diagnostics for that semantic export. Successful
 semantic reports expose sanitized module/system/signal and forward-IR metadata,
 while matched corpus sources report the same entry id, family, coverage bucket,
 classification, source kind, and `strict_supported` support-accounting bridge.
+Those same semantic reports also reuse the shared bounded nested `producer`
+object owner in
+[perl/FSM/Support/ReportProducerContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportProducerContract.pm),
+so the public producer identity and `semantic_layers` shape stays aligned with
+check JSON where the fields overlap.
 Those same semantic reports also reuse the shared bounded nested `source`
 object owner in
 [perl/FSM/Support/ReportSourceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportSourceContract.pm),

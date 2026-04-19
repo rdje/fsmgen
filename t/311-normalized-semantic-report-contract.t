@@ -22,6 +22,10 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_success_semantic_keys
     normalized_semantic_support_accounting_keys
 );
+use FSM::Support::ReportProducerContract qw(
+    normalized_semantic_report_producer_extra_keys
+    report_producer_common_keys
+);
 use FSM::Support::ReportSourceContract qw(report_source_presence_keys);
 
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
@@ -45,6 +49,11 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
     ok(!$contract->{emits_hdl}, 'contract says normalized semantic JSON emits no HDL');
     ok($contract->{emits_support_accounting_object}, 'contract says normalized semantic JSON emits support accounting');
     is(
+        $contract->{producer_contract_source},
+        'FSM::Support::ReportProducerContract',
+        'contract records the shared producer nested-object owner',
+    );
+    is(
         $contract->{source_contract_source},
         'FSM::Support::ReportSourceContract',
         'contract records the shared source nested-object owner',
@@ -67,6 +76,16 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         $contract->{success_only_top_level_keys},
         normalized_semantic_success_only_top_level_keys(),
         'contract publishes the success-only top-level key list',
+    );
+    is_deeply(
+        $contract->{producer_presence_keys},
+        report_producer_common_keys(),
+        'contract publishes the bounded producer-object common key list',
+    );
+    is_deeply(
+        $contract->{producer_extra_presence_keys},
+        normalized_semantic_report_producer_extra_keys(),
+        'contract publishes the bounded normalized-semantic producer extra key list',
     );
     is_deeply(
         $contract->{source_presence_keys},
@@ -167,6 +186,16 @@ subtest 'successful direct semantic JSON conforms to the bounded contract' => su
         'direct success report keeps bounded top-level keys',
     );
     assert_keys_present(
+        $decoded->{producer},
+        report_producer_common_keys(),
+        'direct success report keeps bounded producer-object common keys',
+    );
+    assert_keys_present(
+        $decoded->{producer},
+        normalized_semantic_report_producer_extra_keys(),
+        'direct success report keeps bounded producer-object extra keys',
+    );
+    assert_keys_present(
         $decoded->{source},
         report_source_presence_keys(),
         'direct success report keeps bounded source-object keys',
@@ -211,6 +240,16 @@ subtest 'successful composition semantic JSON conforms to the bounded contract' 
         'composition success report keeps bounded top-level keys',
     );
     assert_keys_present(
+        $decoded->{producer},
+        report_producer_common_keys(),
+        'composition success report keeps bounded producer-object common keys',
+    );
+    assert_keys_present(
+        $decoded->{producer},
+        normalized_semantic_report_producer_extra_keys(),
+        'composition success report keeps bounded producer-object extra keys',
+    );
+    assert_keys_present(
         $decoded->{source},
         report_source_presence_keys(),
         'composition success report keeps bounded source-object keys',
@@ -247,6 +286,16 @@ subtest 'failed semantic JSON conforms to the bounded contract' => sub {
         $decoded,
         normalized_semantic_public_top_level_keys(),
         'failed report keeps bounded top-level keys',
+    );
+    assert_keys_present(
+        $decoded->{producer},
+        report_producer_common_keys(),
+        'failed report keeps bounded producer-object common keys',
+    );
+    assert_keys_present(
+        $decoded->{producer},
+        normalized_semantic_report_producer_extra_keys(),
+        'failed report keeps bounded producer-object extra keys',
     );
     assert_keys_present(
         $decoded->{source},

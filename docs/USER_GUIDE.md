@@ -1707,6 +1707,9 @@ Those two public JSON/report surfaces now also share one bounded nested-object
 owner for their `support_accounting` match payloads:
 [perl/FSM/Support/SupportAccountingMatchContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingMatchContract.pm).
 Those same two public JSON/report surfaces now also share one bounded nested
+`producer` object owner for FSMGen identity plus the report builder owner:
+[perl/FSM/Support/ReportProducerContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportProducerContract.pm).
+Those same two public JSON/report surfaces now also share one bounded nested
 `source` object owner for the caller-facing input string and resolved source
 path:
 [perl/FSM/Support/ReportSourceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportSourceContract.pm).
