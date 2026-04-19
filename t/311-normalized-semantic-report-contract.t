@@ -20,6 +20,9 @@ use FSM::Support::CheckFailureDiagnosticContract qw(
 use FSM::Support::NormalizedSemanticCompositionContract qw(
     normalized_semantic_composition_presence_keys
 );
+use FSM::Support::NormalizedSemanticForwardIRContract qw(
+    normalized_semantic_forward_ir_presence_keys
+);
 use FSM::Support::NormalizedSemanticReportContract qw(
     build_normalized_semantic_report_contract
     normalized_semantic_composition_keys
@@ -39,7 +42,6 @@ use FSM::Support::NormalizedSemanticReportContract qw(
 );
 use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_composition_keys
-    normalized_semantic_payload_forward_ir_keys
     normalized_semantic_payload_presence_keys
 );
 use FSM::Support::ReportCommandContract qw(report_command_presence_keys);
@@ -89,6 +91,11 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         $contract->{composition_contract_source},
         'FSM::Support::NormalizedSemanticCompositionContract',
         'contract records the nested composition object owner',
+    );
+    is(
+        $contract->{forward_ir_contract_source},
+        'FSM::Support::NormalizedSemanticForwardIRContract',
+        'contract records the nested forward-IR object owner',
     );
     is(
         $contract->{module_contract_source},
@@ -236,8 +243,13 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
     );
     is_deeply(
         $contract->{success_forward_ir_presence_keys},
-        normalized_semantic_payload_forward_ir_keys(),
+        normalized_semantic_forward_ir_keys(),
         'contract publishes the bounded forward-IR key list',
+    );
+    is_deeply(
+        normalized_semantic_forward_ir_keys(),
+        normalized_semantic_forward_ir_presence_keys(),
+        'normalized semantic forward-IR keys map to the nested forward-IR owner',
     );
     is_deeply(
         $contract->{composition_presence_keys},

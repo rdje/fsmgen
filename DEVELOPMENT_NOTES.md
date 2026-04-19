@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-19: public semantic forward-IR summaries should have one explicit owner
+- Successful public normalized semantic JSON already emitted one real nested
+  `semantic.forward_ir` object in practice: `intent_hir`, `lowered_rtl_ir`,
+  and `structural_rtl_ir`.
+- Leaving that nested object as just another helper key list under the broader
+  semantic payload would keep one genuinely useful public summary without its
+  own named owner, which is the opposite of what `R13` is trying to achieve.
+- The more honest move is to give that nested forward-IR summary one bounded
+  owner:
+  - one `semantic.forward_ir` object contract,
+  - one published forward-IR key list,
+  - and one explicit reminder that the payload contract advertises this nested
+    owner rather than implicitly owning the deeper branch itself.
+- That keeps widening deliberate:
+  - downstream tools can discover one explicit forward-IR contract instead of
+    scraping sample semantic JSON,
+  - the broader semantic payload contract stops carrying that nested object
+    implicitly,
+  - and future forward-IR widening now has to be named and regression-backed
+    instead of piggybacking on payload examples.
+
 ## 2026-04-19: public semantic composition summaries should have one explicit owner
 - Successful public normalized semantic JSON already emitted one real nested
   `semantic.composition` object for composition sources: lane, child/net/link,

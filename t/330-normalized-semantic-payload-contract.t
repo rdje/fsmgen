@@ -11,6 +11,9 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Support::NormalizedSemanticCompositionContract qw(
     normalized_semantic_composition_presence_keys
 );
+use FSM::Support::NormalizedSemanticForwardIRContract qw(
+    normalized_semantic_forward_ir_presence_keys
+);
 use FSM::Support::NormalizedSemanticModuleContract qw(
     normalized_semantic_module_optional_metric_keys
     normalized_semantic_module_presence_keys
@@ -71,10 +74,20 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
         'FSM::Support::NormalizedSemanticCompositionContract',
         'contract records the nested composition object owner',
     );
+    is(
+        $contract->{forward_ir_contract_source},
+        'FSM::Support::NormalizedSemanticForwardIRContract',
+        'contract records the nested forward-IR object owner',
+    );
     is_deeply(
         $contract->{forward_ir_presence_keys},
         normalized_semantic_payload_forward_ir_keys(),
         'contract publishes the bounded forward-IR key list',
+    );
+    is_deeply(
+        normalized_semantic_payload_forward_ir_keys(),
+        normalized_semantic_forward_ir_presence_keys(),
+        'semantic payload forward-IR keys map to the nested forward-IR owner',
     );
     is_deeply(
         $contract->{composition_presence_keys},

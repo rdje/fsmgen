@@ -1734,6 +1734,9 @@ Successful public normalized semantic JSON reports now also have one bounded
 nested `semantic` object owner for module/system metadata, signal analysis,
 and the forward-IR projection:
 [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm).
+The nested `semantic.forward_ir` summary inside that payload now also has its
+own bounded owner for the current sanitized forward semantic projections:
+[perl/FSM/Support/NormalizedSemanticForwardIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticForwardIRContract.pm).
 The nested `semantic.module` summary inside that payload now also has its own
 bounded owner for the core module keys plus the current optional metric-key
 family:

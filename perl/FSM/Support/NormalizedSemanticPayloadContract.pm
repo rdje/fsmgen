@@ -8,6 +8,9 @@ use JSON::PP ();
 use FSM::Support::NormalizedSemanticCompositionContract qw(
     normalized_semantic_composition_presence_keys
 );
+use FSM::Support::NormalizedSemanticForwardIRContract qw(
+    normalized_semantic_forward_ir_presence_keys
+);
 use FSM::Support::NormalizedSemanticModuleContract qw(
     normalized_semantic_module_optional_metric_keys
     normalized_semantic_module_presence_keys
@@ -43,6 +46,7 @@ sub build_normalized_semantic_payload_contract {
         module_contract_source => 'FSM::Support::NormalizedSemanticModuleContract',
         module_presence_keys => normalized_semantic_module_presence_keys(),
         module_optional_metric_keys => normalized_semantic_module_optional_metric_keys(),
+        forward_ir_contract_source => 'FSM::Support::NormalizedSemanticForwardIRContract',
         composition_contract_source => 'FSM::Support::NormalizedSemanticCompositionContract',
         forward_ir_presence_keys => normalized_semantic_payload_forward_ir_keys(),
         composition_presence_keys => normalized_semantic_payload_composition_keys(),
@@ -51,8 +55,9 @@ sub build_normalized_semantic_payload_contract {
             q{Treat this contract as the bounded nested `semantic` object used by successful public normalized semantic JSON reports.},
             'The nested object records the public semantic payload: module/system metadata, signal analysis, and the forward-IR projection.',
             'The nested `module` object stays bounded through FSM::Support::NormalizedSemanticModuleContract.',
+            'The nested `forward_ir` object stays bounded through FSM::Support::NormalizedSemanticForwardIRContract.',
             'The optional nested `composition` object stays bounded through FSM::Support::NormalizedSemanticCompositionContract.',
-            'The same owner also publishes the nested `forward_ir` and optional `composition` key lists so that widening stays deliberate and regression-backed.',
+            'The same owner still advertises the nested `forward_ir` and optional `composition` key lists so payload widening stays deliberate and regression-backed.',
         ],
     };
 }
@@ -70,13 +75,7 @@ sub normalized_semantic_payload_presence_keys {
 }
 
 sub normalized_semantic_payload_forward_ir_keys {
-    return [
-        qw(
-            intent_hir
-            lowered_rtl_ir
-            structural_rtl_ir
-        ),
-    ];
+    return normalized_semantic_forward_ir_presence_keys();
 }
 
 sub normalized_semantic_payload_composition_keys {

@@ -15,12 +15,14 @@ use FSM::Support::CheckFailureDiagnosticContract qw(
 use FSM::Support::NormalizedSemanticCompositionContract qw(
     normalized_semantic_composition_presence_keys
 );
+use FSM::Support::NormalizedSemanticForwardIRContract qw(
+    normalized_semantic_forward_ir_presence_keys
+);
 use FSM::Support::NormalizedSemanticModuleContract qw(
     normalized_semantic_module_presence_keys
 );
 use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_composition_keys
-    normalized_semantic_payload_forward_ir_keys
     normalized_semantic_payload_presence_keys
 );
 use FSM::Support::ReportCommandContract qw(report_command_presence_keys);
@@ -82,6 +84,7 @@ sub build_normalized_semantic_report_contract {
         failure_diagnostic_contract_source => 'FSM::Support::CheckFailureDiagnosticContract',
         generated_output_contract_source => 'FSM::Support::ReportGeneratedOutputContract',
         composition_contract_source => 'FSM::Support::NormalizedSemanticCompositionContract',
+        forward_ir_contract_source => 'FSM::Support::NormalizedSemanticForwardIRContract',
         module_contract_source => 'FSM::Support::NormalizedSemanticModuleContract',
         semantic_contract_source => 'FSM::Support::NormalizedSemanticPayloadContract',
         producer_contract_source => 'FSM::Support::ReportProducerContract',
@@ -105,7 +108,7 @@ sub build_normalized_semantic_report_contract {
         success_semantic_presence_keys => normalized_semantic_payload_presence_keys(),
         success_module_presence_keys => normalized_semantic_module_keys(),
         success_module_optional_metric_keys => normalized_semantic_module_optional_metric_keys(),
-        success_forward_ir_presence_keys => normalized_semantic_payload_forward_ir_keys(),
+        success_forward_ir_presence_keys => normalized_semantic_forward_ir_keys(),
         composition_presence_keys => normalized_semantic_payload_composition_keys(),
         failure_omits_semantic_payload => JSON::PP::true,
         full_report_json_safe => JSON::PP::true,
@@ -117,6 +120,7 @@ sub build_normalized_semantic_report_contract {
             'The nested generated_output object is shared with check JSON and stays bounded through FSM::Support::ReportGeneratedOutputContract.',
             'The nested semantic success payload stays bounded through FSM::Support::NormalizedSemanticPayloadContract.',
             'The nested semantic composition object stays bounded through FSM::Support::NormalizedSemanticCompositionContract.',
+            'The nested semantic forward_ir object stays bounded through FSM::Support::NormalizedSemanticForwardIRContract.',
             'The nested semantic module object stays bounded through FSM::Support::NormalizedSemanticModuleContract.',
             'The nested producer object is shared with check JSON and stays bounded through FSM::Support::ReportProducerContract.',
             'The nested source object is shared with check JSON and stays bounded through FSM::Support::ReportSourceContract.',
@@ -192,7 +196,7 @@ sub normalized_semantic_module_optional_metric_keys {
 }
 
 sub normalized_semantic_forward_ir_keys {
-    return normalized_semantic_payload_forward_ir_keys();
+    return normalized_semantic_forward_ir_presence_keys();
 }
 
 sub normalized_semantic_composition_keys {
