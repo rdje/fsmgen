@@ -19,6 +19,7 @@ use FSM::Support::NormalizedSemanticModuleContract qw(
     normalized_semantic_module_presence_keys
 );
 use FSM::Support::NormalizedSemanticSignalAnalysisContract qw(
+    normalized_semantic_signal_analysis_entry_presence_keys
     normalized_semantic_signal_analysis_presence_keys
 );
 use FSM::Support::NormalizedSemanticSystemContract qw(
@@ -33,6 +34,7 @@ our @EXPORT_OK = qw(
     normalized_semantic_payload_explicit_system_contract_keys
     normalized_semantic_payload_presence_keys
     normalized_semantic_payload_forward_ir_keys
+    normalized_semantic_payload_signal_analysis_entry_keys
     normalized_semantic_payload_signal_analysis_keys
     normalized_semantic_payload_system_contract_keys
     normalized_semantic_payload_symbol_contract_keys
@@ -70,6 +72,7 @@ sub build_normalized_semantic_payload_contract {
         composition_contract_source => 'FSM::Support::NormalizedSemanticCompositionContract',
         explicit_system_contract_presence_keys => normalized_semantic_payload_explicit_system_contract_keys(),
         signal_analysis_presence_keys => normalized_semantic_payload_signal_analysis_keys(),
+        signal_analysis_entry_presence_keys => normalized_semantic_payload_signal_analysis_entry_keys(),
         system_contract_presence_keys => normalized_semantic_payload_system_contract_keys(),
         forward_ir_presence_keys => normalized_semantic_payload_forward_ir_keys(),
         symbol_contract_presence_keys => normalized_semantic_payload_symbol_contract_keys(),
@@ -85,7 +88,7 @@ sub build_normalized_semantic_payload_contract {
             'The nested `forward_ir` object stays bounded through FSM::Support::NormalizedSemanticForwardIRContract.',
             'The optional nested `symbol_contract` object stays bounded through FSM::Support::NormalizedSemanticSymbolContract.',
             'The optional nested `composition` object stays bounded through FSM::Support::NormalizedSemanticCompositionContract.',
-            'The same owner still advertises the nested `explicit_system_contract`, `signal_analysis`, `system_contract`, `forward_ir`, and optional `symbol_contract` plus `composition` key lists so payload widening stays deliberate and regression-backed.',
+            'The same owner still advertises the nested `explicit_system_contract`, `signal_analysis`, shared signal-analysis entry, `system_contract`, `forward_ir`, and optional `symbol_contract` plus `composition` key lists so payload widening stays deliberate and regression-backed.',
         ],
     };
 }
@@ -112,6 +115,10 @@ sub normalized_semantic_payload_explicit_system_contract_keys {
 
 sub normalized_semantic_payload_signal_analysis_keys {
     return normalized_semantic_signal_analysis_presence_keys();
+}
+
+sub normalized_semantic_payload_signal_analysis_entry_keys {
+    return normalized_semantic_signal_analysis_entry_presence_keys();
 }
 
 sub normalized_semantic_payload_system_contract_keys {

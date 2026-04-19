@@ -25,6 +25,7 @@ use FSM::Support::NormalizedSemanticModuleContract qw(
     normalized_semantic_module_presence_keys
 );
 use FSM::Support::NormalizedSemanticSignalAnalysisContract qw(
+    normalized_semantic_signal_analysis_entry_presence_keys
     normalized_semantic_signal_analysis_presence_keys
 );
 use FSM::Support::NormalizedSemanticPayloadContract qw(
@@ -69,6 +70,7 @@ our @EXPORT_OK = qw(
     normalized_semantic_module_keys
     normalized_semantic_module_optional_metric_keys
     normalized_semantic_public_top_level_keys
+    normalized_semantic_signal_analysis_entry_keys
     normalized_semantic_signal_analysis_keys
     normalized_semantic_system_contract_keys
     normalized_semantic_symbol_contract_keys
@@ -134,6 +136,7 @@ sub build_normalized_semantic_report_contract {
         success_module_optional_metric_keys => normalized_semantic_module_optional_metric_keys(),
         success_explicit_system_contract_presence_keys => normalized_semantic_explicit_system_contract_keys(),
         success_signal_analysis_presence_keys => normalized_semantic_signal_analysis_keys(),
+        success_signal_analysis_entry_presence_keys => normalized_semantic_signal_analysis_entry_keys(),
         success_system_contract_presence_keys => normalized_semantic_system_contract_keys(),
         success_forward_ir_presence_keys => normalized_semantic_forward_ir_keys(),
         success_symbol_contract_presence_keys => normalized_semantic_symbol_contract_keys(),
@@ -156,6 +159,7 @@ sub build_normalized_semantic_report_contract {
             'The nested semantic symbol_contract object stays bounded through FSM::Support::NormalizedSemanticSymbolContract.',
             'The nested producer object is shared with check JSON and stays bounded through FSM::Support::ReportProducerContract.',
             'The nested source object is shared with check JSON and stays bounded through FSM::Support::ReportSourceContract.',
+            'The current signal-analysis bucket entries also share one bounded core entry shape through FSM::Support::NormalizedSemanticSignalAnalysisContract.',
             'Do not treat every nested scalar/list/hash field inside those branches as frozen unless it is separately documented and regression-backed.',
             'Use the contract owner plus regression coverage to widen this surface deliberately instead of dumping raw pipeline state.',
         ],
@@ -237,6 +241,10 @@ sub normalized_semantic_explicit_system_contract_keys {
 
 sub normalized_semantic_signal_analysis_keys {
     return normalized_semantic_signal_analysis_presence_keys();
+}
+
+sub normalized_semantic_signal_analysis_entry_keys {
+    return normalized_semantic_signal_analysis_entry_presence_keys();
 }
 
 sub normalized_semantic_system_contract_keys {

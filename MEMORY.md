@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-19: public normalized semantic signal-analysis entries now share one bounded core shape
+- Hardened
+  [perl/FSM/IR/IntentHIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIRBuilder.pm)
+  so direct-root semantic `signal_analysis` entries now carry the same public
+  core fields already emitted by composition roots:
+  `direction`, `name`, `signed`, and `width`.
+- Expanded
+  [perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm),
+  [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm),
+  and [perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm)
+  so the public normalized semantic surface now advertises the shared
+  signal-analysis entry keys in addition to the bucket keys.
+- Regression coverage now proves both the contract and the emitted reports:
+  [t/338-normalized-semantic-signal-analysis-contract.t](/Users/richarddje/Documents/github/fsmgen/t/338-normalized-semantic-signal-analysis-contract.t),
+  [t/330-normalized-semantic-payload-contract.t](/Users/richarddje/Documents/github/fsmgen/t/330-normalized-semantic-payload-contract.t),
+  [t/311-normalized-semantic-report-contract.t](/Users/richarddje/Documents/github/fsmgen/t/311-normalized-semantic-report-contract.t),
+  and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t).
+
 ## 2026-04-19: public normalized semantic signal-analysis objects now have an explicit owner
 - Added
   [perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm)

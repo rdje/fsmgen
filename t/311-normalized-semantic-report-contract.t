@@ -40,6 +40,7 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_module_keys
     normalized_semantic_module_optional_metric_keys
     normalized_semantic_public_top_level_keys
+    normalized_semantic_signal_analysis_entry_keys
     normalized_semantic_signal_analysis_keys
     normalized_semantic_system_contract_keys
     normalized_semantic_symbol_contract_keys
@@ -56,6 +57,7 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_symbol_contract_keys
 );
 use FSM::Support::NormalizedSemanticSignalAnalysisContract qw(
+    normalized_semantic_signal_analysis_entry_presence_keys
     normalized_semantic_signal_analysis_presence_keys
 );
 use FSM::Support::NormalizedSemanticSystemContract qw(
@@ -302,6 +304,16 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         'contract publishes the bounded signal-analysis key list',
     );
     is_deeply(
+        $contract->{success_signal_analysis_entry_presence_keys},
+        normalized_semantic_signal_analysis_entry_keys(),
+        'contract publishes the bounded signal-analysis entry key list',
+    );
+    is_deeply(
+        normalized_semantic_signal_analysis_entry_keys(),
+        normalized_semantic_signal_analysis_entry_presence_keys(),
+        'normalized semantic signal-analysis entry keys map to the nested signal-analysis owner',
+    );
+    is_deeply(
         normalized_semantic_signal_analysis_keys(),
         normalized_semantic_signal_analysis_presence_keys(),
         'normalized semantic signal-analysis keys map to the nested signal-analysis owner',
@@ -474,6 +486,14 @@ subtest 'successful direct semantic JSON conforms to the bounded contract' => su
         normalized_semantic_signal_analysis_keys(),
         'direct success semantic payload keeps bounded signal-analysis keys',
     );
+    for my $bucket (qw(inputs outputs multi_bit single_bit)) {
+        next unless @{$decoded->{semantic}{signal_analysis}{$bucket} || []};
+        assert_keys_present(
+            $decoded->{semantic}{signal_analysis}{$bucket}[0],
+            normalized_semantic_signal_analysis_entry_keys(),
+            "direct success semantic payload keeps bounded signal-analysis entry keys for $bucket",
+        );
+    }
     assert_keys_present(
         $decoded->{semantic}{explicit_system_contract},
         normalized_semantic_explicit_system_contract_keys(),
@@ -558,6 +578,14 @@ subtest 'successful composition semantic JSON conforms to the bounded contract' 
         normalized_semantic_signal_analysis_keys(),
         'composition success semantic payload keeps bounded signal-analysis keys',
     );
+    for my $bucket (qw(inputs outputs multi_bit single_bit)) {
+        next unless @{$decoded->{semantic}{signal_analysis}{$bucket} || []};
+        assert_keys_present(
+            $decoded->{semantic}{signal_analysis}{$bucket}[0],
+            normalized_semantic_signal_analysis_entry_keys(),
+            "composition success semantic payload keeps bounded signal-analysis entry keys for $bucket",
+        );
+    }
     assert_keys_present(
         $decoded->{semantic}{composition},
         normalized_semantic_composition_keys(),

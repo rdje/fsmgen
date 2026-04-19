@@ -486,6 +486,10 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest advertises bounded normalized semantic matched failure support-accounting key presence',
     );
     ok(
+        scalar(@{$manifest->{semantic_exports}{normalized_semantic_json}{success_signal_analysis_entry_presence_keys} || []}) >= 4,
+        'manifest advertises bounded normalized semantic signal-analysis entry key presence',
+    );
+    ok(
         !$manifest->{semantic_exports}{normalized_semantic_json}{full_export_stable},
         'manifest keeps full normalized semantic export stabilization separate from the bounded slice',
     );

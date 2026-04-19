@@ -293,6 +293,12 @@ sub analyze_signals ($class, $signals) {
 
         my $width = $signal->width || 1;
         my $dir = $class->determine_signal_direction($signal, $sig_name);
+        my $public_entry = $class->_signal_analysis_public_entry(
+            signal => $signal,
+            signal_name => $sig_name,
+            width => $width,
+            direction => $dir,
+        );
 
         fsm_debug("Processing signal '$sig_name'", 2);
         fsm_debug("  Signal object type: " . ref($signal), 3);
@@ -305,40 +311,23 @@ sub analyze_signals ($class, $signals) {
 
         if ($dir eq 'output') {
             my $entry = {
-                name => $sig_name,
-                width => $width,
+                %{$public_entry},
                 signal => $signal,
             };
-            $entry->{declared_type_name} = $signal->declared_type_name
-                if $signal->can('declared_type_name') && defined $signal->declared_type_name;
-            $entry->{declared_type_spec} = $signal->declared_type_spec
-                if $signal->can('declared_type_spec') && defined $signal->declared_type_spec;
             push @{$analysis{outputs}}, $entry;
         } else {
             my $entry = {
-                name => $sig_name,
-                width => $width,
+                %{$public_entry},
                 signal => $signal,
             };
-            $entry->{declared_type_name} = $signal->declared_type_name
-                if $signal->can('declared_type_name') && defined $signal->declared_type_name;
-            $entry->{declared_type_spec} = $signal->declared_type_spec
-                if $signal->can('declared_type_spec') && defined $signal->declared_type_spec;
             push @{$analysis{inputs}}, $entry;
         }
 
         if ($width > 1) {
-            push @{$analysis{multi_bit}}, {
-                name => $sig_name,
-                width => $width,
-                direction => $dir,
-            };
+            push @{$analysis{multi_bit}}, { %{$public_entry} };
             fsm_debug("*** Multi-bit signal detected: $sig_name with width $width ***", 2);
         } else {
-            push @{$analysis{single_bit}}, {
-                name => $sig_name,
-                direction => $dir,
-            };
+            push @{$analysis{single_bit}}, { %{$public_entry} };
             fsm_debug("Single-bit signal: $sig_name", 3);
         }
     }
@@ -351,6 +340,33 @@ sub analyze_signals ($class, $signals) {
 
     fsm_trace_exit('Signal analysis complete', 3);
     return %analysis;
+}
+
+sub _signal_analysis_public_entry ($class, %args) {
+    my $signal = $args{signal};
+    my $entry = {
+        direction => $args{direction},
+        name => $args{signal_name},
+        signed => (ref($signal) && $signal->can('signed') && ($signal->signed // 0)) ? 1 : 0,
+        width => $args{width},
+    };
+
+    my $state_model = (ref($signal) && $signal->can('state_model'))
+        ? $signal->state_model
+        : undef;
+    $entry->{state_model} = $state_model if defined $state_model;
+
+    my $declared_type_name = (ref($signal) && $signal->can('declared_type_name'))
+        ? $signal->declared_type_name
+        : undef;
+    $entry->{declared_type_name} = $declared_type_name if defined $declared_type_name;
+
+    my $declared_type_spec = (ref($signal) && $signal->can('declared_type_spec'))
+        ? $signal->declared_type_spec
+        : undef;
+    $entry->{declared_type_spec} = $declared_type_spec if defined $declared_type_spec;
+
+    return $entry;
 }
 
 sub determine_signal_direction ($class, $signal, $sig_name) {

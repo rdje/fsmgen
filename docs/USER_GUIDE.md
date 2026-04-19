@@ -1742,7 +1742,8 @@ also has its own bounded owner when the authored explicit contract is
 preserved:
 [perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm).
 The nested `semantic.signal_analysis` summary inside that payload now also has
-its own bounded owner for the current sanitized signal families:
+its own bounded owner for the current sanitized signal families plus the shared
+core signal-entry keys emitted across direct and composition roots:
 [perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm).
 The nested `semantic.forward_ir` summary inside that payload now also has its
 own bounded owner for the current sanitized forward semantic projections:

@@ -1,5 +1,28 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-19: public signal-analysis entry shapes should be aligned before we freeze them
+- The nested `semantic.signal_analysis` object already had a bounded owner, but
+  direct-root semantic JSON and composition-top semantic JSON were not yet
+  equally honest about the per-entry shape.
+- Composition tops already emitted one stable core signal entry shape in each
+  bucket: `direction`, `name`, `signed`, and `width`.
+- Direct roots still carried older reduced entry shapes in some buckets, which
+  meant freezing entry fields at the contract layer before aligning emission
+  would have turned documentation into fiction.
+- The healthier move is:
+  - first align direct-root signal analysis with the same core public entry
+    shape,
+  - then publish those shared entry keys through the nested
+    `semantic.signal_analysis` contract,
+  - and keep any richer optional typed fields explicitly outside that frozen
+    core unless we later promote them on purpose.
+- That keeps `R13` honest:
+  - downstream tools can rely on one real cross-root signal-entry core shape,
+  - the capability manifest can advertise those keys without special-casing
+    direct versus composition roots,
+  - and later widening of typed entry metadata remains deliberate instead of
+    being smuggled in by whichever sample happened to be inspected last.
+
 ## 2026-04-19: public signal-analysis summaries should have one explicit owner
 - Successful public normalized semantic JSON already emitted one real nested
   `semantic.signal_analysis` object in practice for both direct roots and
