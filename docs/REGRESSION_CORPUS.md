@@ -214,6 +214,10 @@ family.
 now owns the nested `semantic.forward_ir.lowered_rtl_ir` object shape emitted
 by successful public normalized semantic JSON, including the published core
 lowered-RTL keys plus the composition-only extension-key family.
+[perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm)
+now owns the nested `semantic.forward_ir.structural_rtl_ir` object shape
+emitted by successful public normalized semantic JSON, including the published
+structural-RTL key family shared by direct and composition roots.
 [perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm)
 now owns the nested `semantic.forward_ir.intent_hir` object shape emitted by
 successful public normalized semantic JSON, including the published core

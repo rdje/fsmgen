@@ -23,6 +23,7 @@ use FSM::Support::NormalizedSemanticForwardIRContract qw(
     normalized_semantic_forward_ir_intent_hir_presence_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_optional_composition_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_presence_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_presence_keys
     normalized_semantic_forward_ir_presence_keys
 );
 use FSM::Support::NormalizedSemanticModuleContract qw(
@@ -40,6 +41,7 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_optional_composition_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_keys
     normalized_semantic_payload_system_contract_keys
     normalized_semantic_payload_signal_analysis_keys
     normalized_semantic_payload_symbol_contract_keys
@@ -75,6 +77,7 @@ our @EXPORT_OK = qw(
     normalized_semantic_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_optional_composition_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_keys
     normalized_semantic_matched_failure_diagnostic_keys
     normalized_semantic_matched_failure_diagnostic_support_accounting_keys
     normalized_semantic_matched_failure_support_accounting_keys
@@ -157,6 +160,8 @@ sub build_normalized_semantic_report_contract {
         forward_ir_lowered_rtl_ir_contract_source => 'FSM::Support::NormalizedSemanticLoweredRTLIRContract',
         success_forward_ir_lowered_rtl_ir_presence_keys => normalized_semantic_forward_ir_lowered_rtl_ir_keys(),
         success_forward_ir_lowered_rtl_ir_optional_composition_keys => normalized_semantic_forward_ir_lowered_rtl_ir_optional_composition_keys(),
+        forward_ir_structural_rtl_ir_contract_source => 'FSM::Support::NormalizedSemanticStructuralRTLIRContract',
+        success_forward_ir_structural_rtl_ir_presence_keys => normalized_semantic_forward_ir_structural_rtl_ir_keys(),
         success_symbol_contract_presence_keys => normalized_semantic_symbol_contract_keys(),
         composition_presence_keys => normalized_semantic_payload_composition_keys(),
         failure_omits_semantic_payload => JSON::PP::true,
@@ -173,6 +178,7 @@ sub build_normalized_semantic_report_contract {
             'The nested semantic forward_ir object stays bounded through FSM::Support::NormalizedSemanticForwardIRContract.',
             'The nested semantic forward_ir.intent_hir object shell stays bounded through FSM::Support::NormalizedSemanticIntentHIRContract.',
             'The nested semantic forward_ir.lowered_rtl_ir object shell stays bounded through FSM::Support::NormalizedSemanticLoweredRTLIRContract.',
+            'The nested semantic forward_ir.structural_rtl_ir object shell stays bounded through FSM::Support::NormalizedSemanticStructuralRTLIRContract.',
             'The nested semantic module object stays bounded through FSM::Support::NormalizedSemanticModuleContract.',
             'The nested semantic signal_analysis object stays bounded through FSM::Support::NormalizedSemanticSignalAnalysisContract.',
             'The nested semantic system_contract object stays bounded through FSM::Support::NormalizedSemanticSystemContract.',
@@ -261,6 +267,10 @@ sub normalized_semantic_forward_ir_intent_hir_keys {
 
 sub normalized_semantic_forward_ir_lowered_rtl_ir_keys {
     return normalized_semantic_forward_ir_lowered_rtl_ir_presence_keys();
+}
+
+sub normalized_semantic_forward_ir_structural_rtl_ir_keys {
+    return normalized_semantic_forward_ir_structural_rtl_ir_presence_keys();
 }
 
 sub normalized_semantic_explicit_system_contract_keys {

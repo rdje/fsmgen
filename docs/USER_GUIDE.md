@@ -1752,6 +1752,9 @@ The nested `semantic.forward_ir.lowered_rtl_ir` summary inside that branch now
 also has its own bounded owner for the current lowered-RTL shell plus the
 current composition-only extension keys:
 [perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm).
+The nested `semantic.forward_ir.structural_rtl_ir` summary inside that branch
+now also has its own bounded owner for the current structural-RTL shell:
+[perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm).
 The nested `semantic.forward_ir.intent_hir` summary inside that branch now
 also has its own bounded owner for the current intent-hir shell plus the
 current composition-only extension keys:

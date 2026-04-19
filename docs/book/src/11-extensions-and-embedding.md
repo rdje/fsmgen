@@ -202,6 +202,11 @@ also has its own bounded nested-object contract:
 [perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm)
 owns the current lowered-RTL shell keys plus the composition-only extension
 keys emitted today for top roots.
+The nested `semantic.forward_ir.structural_rtl_ir` summary inside that branch
+now also has its own bounded nested-object contract:
+[perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm)
+owns the current structural-RTL shell keys shared by direct and composition
+roots.
 The nested `semantic.forward_ir.intent_hir` summary inside that branch now
 also has its own bounded nested-object contract:
 [perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm)

@@ -19,6 +19,7 @@ use FSM::Support::NormalizedSemanticForwardIRContract qw(
     normalized_semantic_forward_ir_intent_hir_presence_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_optional_composition_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_presence_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_presence_keys
     normalized_semantic_forward_ir_presence_keys
 );
 use FSM::Support::NormalizedSemanticModuleContract qw(
@@ -44,6 +45,7 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_optional_composition_keys
+    normalized_semantic_payload_forward_ir_structural_rtl_ir_keys
     normalized_semantic_payload_presence_keys
     normalized_semantic_payload_signal_analysis_entry_keys
     normalized_semantic_payload_signal_analysis_keys
@@ -200,6 +202,16 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
         normalized_semantic_payload_forward_ir_lowered_rtl_ir_optional_composition_keys(),
         'contract publishes the bounded forward-ir lowered-rtl-ir composition-only key list',
     );
+    is(
+        $contract->{forward_ir_structural_rtl_ir_contract_source},
+        'FSM::Support::NormalizedSemanticStructuralRTLIRContract',
+        'contract records the nested forward-ir structural-rtl-ir object owner',
+    );
+    is_deeply(
+        $contract->{forward_ir_structural_rtl_ir_presence_keys},
+        normalized_semantic_payload_forward_ir_structural_rtl_ir_keys(),
+        'contract publishes the bounded forward-ir structural-rtl-ir key list',
+    );
     is_deeply(
         normalized_semantic_payload_forward_ir_keys(),
         normalized_semantic_forward_ir_presence_keys(),
@@ -224,6 +236,11 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
         normalized_semantic_payload_forward_ir_lowered_rtl_ir_optional_composition_keys(),
         normalized_semantic_forward_ir_lowered_rtl_ir_optional_composition_keys(),
         'semantic payload forward-ir lowered-rtl-ir composition keys map to the nested lowered-rtl-ir owner',
+    );
+    is_deeply(
+        normalized_semantic_payload_forward_ir_structural_rtl_ir_keys(),
+        normalized_semantic_forward_ir_structural_rtl_ir_presence_keys(),
+        'semantic payload forward-ir structural-rtl-ir keys map to the nested structural-rtl-ir owner',
     );
     is_deeply(
         $contract->{symbol_contract_presence_keys},
