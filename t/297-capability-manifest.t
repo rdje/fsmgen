@@ -703,6 +703,45 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         scalar(@{$manifest->{embedding}{hdl_generator_result}{module_info_identity_presence_keys} || []}) >= 2,
         'manifest advertises bounded HDLGenerator module_info identity key presence',
     );
+    ok(
+        $manifest->{embedding}{hdl_generator_result}{top_level_semantic_layer_contracts_advertised},
+        'manifest says the HDLGenerator result advertises bounded top-level semantic-layer shells',
+    );
+    is(
+        $manifest->{embedding}{hdl_generator_result}{intent_hir_contract_source},
+        'FSM::Support::NormalizedSemanticIntentHIRContract',
+        'manifest records the HDLGenerator top-level intent-hir owner',
+    );
+    is(
+        $manifest->{embedding}{hdl_generator_result}{lowered_rtl_ir_contract_source},
+        'FSM::Support::NormalizedSemanticLoweredRTLIRContract',
+        'manifest records the HDLGenerator top-level lowered-rtl-ir owner',
+    );
+    is(
+        $manifest->{embedding}{hdl_generator_result}{structural_rtl_ir_contract_source},
+        'FSM::Support::NormalizedSemanticStructuralRTLIRContract',
+        'manifest records the HDLGenerator top-level structural-rtl-ir owner',
+    );
+    ok(
+        scalar(@{$manifest->{embedding}{hdl_generator_result}{intent_hir_presence_keys} || []}) >= 18,
+        'manifest advertises bounded HDLGenerator top-level intent-hir key presence',
+    );
+    ok(
+        scalar(@{$manifest->{embedding}{hdl_generator_result}{intent_hir_optional_composition_keys} || []}) >= 11,
+        'manifest advertises bounded HDLGenerator top-level intent-hir composition-only key presence',
+    );
+    ok(
+        scalar(@{$manifest->{embedding}{hdl_generator_result}{lowered_rtl_ir_presence_keys} || []}) >= 7,
+        'manifest advertises bounded HDLGenerator top-level lowered-rtl-ir key presence',
+    );
+    ok(
+        scalar(@{$manifest->{embedding}{hdl_generator_result}{lowered_rtl_ir_optional_composition_keys} || []}) >= 7,
+        'manifest advertises bounded HDLGenerator top-level lowered-rtl-ir composition-only key presence',
+    );
+    ok(
+        scalar(@{$manifest->{embedding}{hdl_generator_result}{structural_rtl_ir_presence_keys} || []}) >= 15,
+        'manifest advertises bounded HDLGenerator top-level structural-rtl-ir key presence',
+    );
     is(
         $manifest->{embedding}{typed_extensions}{schema_version},
         1,

@@ -11,9 +11,25 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Pipeline::HDLGenerator;
 use FSM::Support::HDLGeneratorResultContract qw(
     build_hdl_generator_result_contract
+    hdl_generator_result_intent_hir_keys
+    hdl_generator_result_intent_hir_optional_composition_keys
     hdl_generator_result_known_top_level_keys
+    hdl_generator_result_lowered_rtl_ir_keys
+    hdl_generator_result_lowered_rtl_ir_optional_composition_keys
     hdl_generator_result_module_info_identity_keys
     hdl_generator_result_source_info_identity_keys
+    hdl_generator_result_structural_rtl_ir_keys
+);
+use FSM::Support::NormalizedSemanticIntentHIRContract qw(
+    normalized_semantic_intent_hir_optional_composition_keys
+    normalized_semantic_intent_hir_presence_keys
+);
+use FSM::Support::NormalizedSemanticLoweredRTLIRContract qw(
+    normalized_semantic_lowered_rtl_ir_optional_composition_keys
+    normalized_semantic_lowered_rtl_ir_presence_keys
+);
+use FSM::Support::NormalizedSemanticStructuralRTLIRContract qw(
+    normalized_semantic_structural_rtl_ir_presence_keys
 );
 
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
@@ -41,6 +57,75 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
         hdl_generator_result_module_info_identity_keys(),
         'contract publishes bounded module_info identity keys',
     );
+    ok(
+        $contract->{top_level_semantic_layer_contracts_advertised},
+        'contract advertises bounded semantic-layer shells for top-level result hashes',
+    );
+    is(
+        $contract->{intent_hir_contract_source},
+        'FSM::Support::NormalizedSemanticIntentHIRContract',
+        'contract records the top-level intent-hir owner',
+    );
+    is_deeply(
+        $contract->{intent_hir_presence_keys},
+        hdl_generator_result_intent_hir_keys(),
+        'contract publishes bounded intent-hir shell keys for top-level results',
+    );
+    is_deeply(
+        $contract->{intent_hir_optional_composition_keys},
+        hdl_generator_result_intent_hir_optional_composition_keys(),
+        'contract publishes bounded intent-hir composition-only keys for top-level results',
+    );
+    is(
+        $contract->{lowered_rtl_ir_contract_source},
+        'FSM::Support::NormalizedSemanticLoweredRTLIRContract',
+        'contract records the top-level lowered-rtl-ir owner',
+    );
+    is_deeply(
+        $contract->{lowered_rtl_ir_presence_keys},
+        hdl_generator_result_lowered_rtl_ir_keys(),
+        'contract publishes bounded lowered-rtl-ir shell keys for top-level results',
+    );
+    is_deeply(
+        $contract->{lowered_rtl_ir_optional_composition_keys},
+        hdl_generator_result_lowered_rtl_ir_optional_composition_keys(),
+        'contract publishes bounded lowered-rtl-ir composition-only keys for top-level results',
+    );
+    is(
+        $contract->{structural_rtl_ir_contract_source},
+        'FSM::Support::NormalizedSemanticStructuralRTLIRContract',
+        'contract records the top-level structural-rtl-ir owner',
+    );
+    is_deeply(
+        $contract->{structural_rtl_ir_presence_keys},
+        hdl_generator_result_structural_rtl_ir_keys(),
+        'contract publishes bounded structural-rtl-ir shell keys for top-level results',
+    );
+    is_deeply(
+        hdl_generator_result_intent_hir_keys(),
+        normalized_semantic_intent_hir_presence_keys(),
+        'result intent-hir shell maps to the normalized semantic intent-hir owner',
+    );
+    is_deeply(
+        hdl_generator_result_intent_hir_optional_composition_keys(),
+        normalized_semantic_intent_hir_optional_composition_keys(),
+        'result intent-hir composition-only keys map to the normalized semantic intent-hir owner',
+    );
+    is_deeply(
+        hdl_generator_result_lowered_rtl_ir_keys(),
+        normalized_semantic_lowered_rtl_ir_presence_keys(),
+        'result lowered-rtl-ir shell maps to the normalized semantic lowered-rtl-ir owner',
+    );
+    is_deeply(
+        hdl_generator_result_lowered_rtl_ir_optional_composition_keys(),
+        normalized_semantic_lowered_rtl_ir_optional_composition_keys(),
+        'result lowered-rtl-ir composition-only keys map to the normalized semantic lowered-rtl-ir owner',
+    );
+    is_deeply(
+        hdl_generator_result_structural_rtl_ir_keys(),
+        normalized_semantic_structural_rtl_ir_presence_keys(),
+        'result structural-rtl-ir shell maps to the normalized semantic structural-rtl-ir owner',
+    );
 
     my %public = map { $_ => 1 } @{$contract->{public_top_level_presence_keys}};
     ok($public{hdl_code}, 'contract includes generated HDL text');
@@ -54,6 +139,7 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
     ok($unsanitized{fsm_module}, 'contract marks live fsm_module as unsanitized');
     ok($unsanitized{composition_plan}, 'contract marks composition plan object as unsanitized');
     ok($unsanitized{statistics}, 'contract marks statistics as not wholly sanitized');
+    ok(!$unsanitized{intent_hir}, 'contract no longer classifies top-level intent_hir as an unsanitized compatibility branch');
 };
 
 subtest 'direct-root result uses only declared top-level keys' => sub {
@@ -133,6 +219,41 @@ sub assert_common_result_contract {
         hdl_generator_result_module_info_identity_keys(),
         "$args{module_name} module_info keeps bounded nested identity keys",
     );
+    assert_keys_present(
+        $result->{intent_hir},
+        hdl_generator_result_intent_hir_keys(),
+        "$args{module_name} top-level intent_hir keeps bounded shell keys",
+    );
+    assert_keys_present(
+        $result->{lowered_rtl_ir},
+        hdl_generator_result_lowered_rtl_ir_keys(),
+        "$args{module_name} top-level lowered_rtl_ir keeps bounded shell keys",
+    );
+    assert_keys_present(
+        $result->{structural_rtl_ir},
+        hdl_generator_result_structural_rtl_ir_keys(),
+        "$args{module_name} top-level structural_rtl_ir keeps bounded shell keys",
+    );
+
+    if ($args{source_kind} eq 'composition') {
+        assert_keys_present(
+            $result->{intent_hir},
+            hdl_generator_result_intent_hir_optional_composition_keys(),
+            "$args{module_name} top-level intent_hir keeps bounded composition-only keys",
+        );
+        assert_keys_present(
+            $result->{lowered_rtl_ir},
+            hdl_generator_result_lowered_rtl_ir_optional_composition_keys(),
+            "$args{module_name} top-level lowered_rtl_ir keeps bounded composition-only keys",
+        );
+    } else {
+        for my $key (@{hdl_generator_result_intent_hir_optional_composition_keys() || []}) {
+            ok(!exists $result->{intent_hir}{$key}, "$args{module_name} direct result omits composition-only intent_hir key $key");
+        }
+        for my $key (@{hdl_generator_result_lowered_rtl_ir_optional_composition_keys() || []}) {
+            ok(!exists $result->{lowered_rtl_ir}{$key}, "$args{module_name} direct result omits composition-only lowered_rtl_ir key $key");
+        }
+    }
 
     is($result->{source_info}{kind}, $args{source_kind}, "$args{module_name} records source kind");
     is($result->{module_info}{module_name}, $args{module_name}, "$args{module_name} module_info records name");

@@ -1862,10 +1862,13 @@ stabilizes top-level key presence for fields such as `hdl_code`, `module_info`,
 `intent_hir`, `lowered_rtl_ir`, `structural_rtl_ir`, `source_info`, and
 `resolved_package_imports`, plus the small nested identity slices
 `source_info.header`, `source_info.kind`, `module_info.module_name`, and
-`module_info.source_root_kind`, but it deliberately does not claim the whole
-raw result hash is JSON-safe. Nested compatibility fields may still contain
-live CoreAST/AST objects; use `--emit-semantic-json` when the integration
-needs a sanitized machine interchange document.
+`module_info.source_root_kind`. It also advertises that those top-level
+`intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` hashes reuse the same
+bounded shell owners published for normalized semantic JSON, but it
+deliberately does not claim the whole raw result hash is JSON-safe. Nested
+compatibility fields may still contain live CoreAST/AST objects; use
+`--emit-semantic-json` when the integration needs a sanitized machine
+interchange document.
 The public `support_accounting` match objects emitted by both `--check --json`
 and `--emit-semantic-json` now share one bounded nested-object contract too:
 [perl/FSM/Support/SupportAccountingMatchContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingMatchContract.pm)

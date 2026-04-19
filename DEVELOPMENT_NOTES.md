@@ -418,6 +418,17 @@ This document captures engineering rationale, design constraints, and working de
 - That gives downstream tools a stable nested identity seam without
   pretending the rest of `source_info`, `module_info`, or other result
   branches are now public interchange surfaces.
+- The next honest widening after that is not `module_info` or `source_info`
+  wholesale, but the already-sanitized semantic layer hashes returned at the
+  top level:
+  - `intent_hir`
+  - `lowered_rtl_ir`
+  - `structural_rtl_ir`
+- Those branches are already emitted from explicit normalized semantic owners,
+  so advertising their bounded shell keys through
+  `FSM::Support::HDLGeneratorResultContract` gives embedders a useful public
+  seam without pretending the surrounding raw result tree is a stable JSON
+  document.
 
 ## 2026-04-19: regularize support_accounting with a nested section contract without breaking callers
 - `support_accounting` already had a bounded owner, but it was the one public

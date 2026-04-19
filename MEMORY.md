@@ -310,6 +310,10 @@ This is the live continuity document for fast session recovery after crashes, re
   and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
   now lock those nested identity slices for direct/composition in-process
   results and for the manifest-facing embedding contract.
+- The same bounded contract now also advertises that the top-level
+  `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` hashes reuse the
+  normalized-semantic shell owners already published for sanitized semantic
+  JSON, and the manifest-facing embedding checks now lock those owners too.
 - This is a narrow nested-identity widening only:
   the broader raw result hash is still not JSON-safe as a whole, and deeper
   nested compatibility branches remain intentionally outside the public
