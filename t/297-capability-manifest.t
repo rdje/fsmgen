@@ -416,6 +416,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest records the normalized-semantic forward-ir intent-hir nested-object owner',
     );
     is(
+        $manifest->{semantic_exports}{normalized_semantic_json}{forward_ir_lowered_rtl_ir_contract_source},
+        'FSM::Support::NormalizedSemanticLoweredRTLIRContract',
+        'manifest records the normalized-semantic forward-ir lowered-rtl-ir nested-object owner',
+    );
+    is(
         $manifest->{semantic_exports}{normalized_semantic_json}{module_contract_source},
         'FSM::Support::NormalizedSemanticModuleContract',
         'manifest records the normalized-semantic module nested-object owner',
@@ -501,6 +506,14 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     ok(
         scalar(@{$manifest->{semantic_exports}{normalized_semantic_json}{success_forward_ir_intent_hir_optional_composition_keys} || []}) >= 11,
         'manifest advertises bounded normalized semantic forward-ir intent-hir composition-only key presence',
+    );
+    ok(
+        scalar(@{$manifest->{semantic_exports}{normalized_semantic_json}{success_forward_ir_lowered_rtl_ir_presence_keys} || []}) >= 7,
+        'manifest advertises bounded normalized semantic forward-ir lowered-rtl-ir core key presence',
+    );
+    ok(
+        scalar(@{$manifest->{semantic_exports}{normalized_semantic_json}{success_forward_ir_lowered_rtl_ir_optional_composition_keys} || []}) >= 7,
+        'manifest advertises bounded normalized semantic forward-ir lowered-rtl-ir composition-only key presence',
     );
     ok(
         !$manifest->{semantic_exports}{normalized_semantic_json}{full_export_stable},

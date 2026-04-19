@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-19: public lowered-rtl-ir shells should have one explicit owner
+- The bounded normalized semantic JSON surface already exposed one substantial
+  nested `semantic.forward_ir.lowered_rtl_ir` object in practice for both
+  direct roots and composition tops.
+- Leaving that branch as anonymous payload state under the broader
+  `semantic.forward_ir` contract would keep one real integration surface
+  visible to users but unnamed in the contract story.
+- The healthier move is to give that branch one bounded owner:
+  - one core key list for the lowered-RTL shell shared by direct and
+    composition roots,
+  - one explicit composition-only extension-key list for top roots,
+  - and one explicit reminder that deeper list payload contents are still
+    widened deliberately instead of becoming frozen accidentally.
+- That keeps `R13` honest:
+  - downstream tools can rely on one named lowered-RTL object shape,
+  - the capability manifest can advertise composition-only widening without
+    pretending every root carries those keys,
+  - and later promotion of deeper lowered/structural IR payload details can
+    happen as separate deliberate slices instead of one vague forward-ir blob.
+
 ## 2026-04-19: public intent-hir shells should have one explicit owner
 - The bounded normalized semantic JSON surface already exposed one substantial
   nested `semantic.forward_ir.intent_hir` object in practice for both direct

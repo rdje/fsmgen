@@ -14,6 +14,8 @@ use FSM::Support::NormalizedSemanticExplicitSystemContract qw(
 use FSM::Support::NormalizedSemanticForwardIRContract qw(
     normalized_semantic_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_forward_ir_intent_hir_presence_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_optional_composition_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_presence_keys
     normalized_semantic_forward_ir_presence_keys
 );
 use FSM::Support::NormalizedSemanticModuleContract qw(
@@ -38,6 +40,8 @@ our @EXPORT_OK = qw(
     normalized_semantic_payload_forward_ir_keys
     normalized_semantic_payload_forward_ir_intent_hir_keys
     normalized_semantic_payload_forward_ir_intent_hir_optional_composition_keys
+    normalized_semantic_payload_forward_ir_lowered_rtl_ir_keys
+    normalized_semantic_payload_forward_ir_lowered_rtl_ir_optional_composition_keys
     normalized_semantic_payload_signal_analysis_entry_keys
     normalized_semantic_payload_signal_analysis_keys
     normalized_semantic_payload_system_contract_keys
@@ -82,6 +86,9 @@ sub build_normalized_semantic_payload_contract {
         forward_ir_intent_hir_contract_source => 'FSM::Support::NormalizedSemanticIntentHIRContract',
         forward_ir_intent_hir_presence_keys => normalized_semantic_payload_forward_ir_intent_hir_keys(),
         forward_ir_intent_hir_optional_composition_keys => normalized_semantic_payload_forward_ir_intent_hir_optional_composition_keys(),
+        forward_ir_lowered_rtl_ir_contract_source => 'FSM::Support::NormalizedSemanticLoweredRTLIRContract',
+        forward_ir_lowered_rtl_ir_presence_keys => normalized_semantic_payload_forward_ir_lowered_rtl_ir_keys(),
+        forward_ir_lowered_rtl_ir_optional_composition_keys => normalized_semantic_payload_forward_ir_lowered_rtl_ir_optional_composition_keys(),
         symbol_contract_presence_keys => normalized_semantic_payload_symbol_contract_keys(),
         composition_presence_keys => normalized_semantic_payload_composition_keys(),
         json_safe_when_embedded_in_public_reports => JSON::PP::true,
@@ -94,9 +101,10 @@ sub build_normalized_semantic_payload_contract {
             'The nested `system_contract` object stays bounded through FSM::Support::NormalizedSemanticSystemContract.',
             'The nested `forward_ir` object stays bounded through FSM::Support::NormalizedSemanticForwardIRContract.',
             'The nested `forward_ir.intent_hir` object shell stays bounded through FSM::Support::NormalizedSemanticIntentHIRContract.',
+            'The nested `forward_ir.lowered_rtl_ir` object shell stays bounded through FSM::Support::NormalizedSemanticLoweredRTLIRContract.',
             'The optional nested `symbol_contract` object stays bounded through FSM::Support::NormalizedSemanticSymbolContract.',
             'The optional nested `composition` object stays bounded through FSM::Support::NormalizedSemanticCompositionContract.',
-            'The same owner still advertises the nested `explicit_system_contract`, `signal_analysis`, shared signal-analysis entry, `system_contract`, `forward_ir`, nested `forward_ir.intent_hir`, and optional `symbol_contract` plus `composition` key lists so payload widening stays deliberate and regression-backed.',
+            'The same owner still advertises the nested `explicit_system_contract`, `signal_analysis`, shared signal-analysis entry, `system_contract`, `forward_ir`, nested `forward_ir.intent_hir`, nested `forward_ir.lowered_rtl_ir`, and optional `symbol_contract` plus `composition` key lists so payload widening stays deliberate and regression-backed.',
         ],
     };
 }
@@ -123,6 +131,14 @@ sub normalized_semantic_payload_forward_ir_intent_hir_keys {
 
 sub normalized_semantic_payload_forward_ir_intent_hir_optional_composition_keys {
     return normalized_semantic_forward_ir_intent_hir_optional_composition_keys();
+}
+
+sub normalized_semantic_payload_forward_ir_lowered_rtl_ir_keys {
+    return normalized_semantic_forward_ir_lowered_rtl_ir_presence_keys();
+}
+
+sub normalized_semantic_payload_forward_ir_lowered_rtl_ir_optional_composition_keys {
+    return normalized_semantic_forward_ir_lowered_rtl_ir_optional_composition_keys();
 }
 
 sub normalized_semantic_payload_explicit_system_contract_keys {
