@@ -1717,6 +1717,10 @@ Those same two public JSON/report surfaces now also share one bounded nested
 `command` object owner for invocation metadata such as `mode`, `json`,
 `strict_mode`, and `target_language`:
 [perl/FSM/Support/ReportCommandContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportCommandContract.pm).
+Those same two public JSON/report surfaces now also share one bounded nested
+`generated_output` object owner for whether the report invocation emitted HDL
+artifacts:
+[perl/FSM/Support/ReportGeneratedOutputContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportGeneratedOutputContract.pm).
 The bounded contract for the manifest's `support_accounting` section now has
 its own explicit owner in
 [perl/FSM/Support/SupportAccountingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingContract.pm).

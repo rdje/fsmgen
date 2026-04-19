@@ -154,6 +154,11 @@ share one bounded nested-object contract for invocation metadata:
 [perl/FSM/Support/ReportCommandContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportCommandContract.pm)
 owns the shared `mode`, `json`, `strict_mode`, and `target_language` keys
 emitted under the nested `command` object.
+Those same public check JSON and normalized semantic JSON reports now also
+share one bounded nested-object contract for HDL-emission side effects:
+[perl/FSM/Support/ReportGeneratedOutputContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportGeneratedOutputContract.pm)
+owns the shared `emitted` key emitted under the nested `generated_output`
+object.
 
 Do not treat the raw `HDLGenerator` result hash as a stable JSON document. Some
 nested branches still contain live CoreAST/AST objects for compatibility and

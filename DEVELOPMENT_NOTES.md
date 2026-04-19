@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-19: public report generated_output objects should have one shared public owner
+- The public check JSON and normalized semantic JSON reports already shared the
+  same nested `generated_output` shape in practice: the bounded `emitted` key.
+- Leaving that shape implicit would keep two separate report contracts aligned
+  only by convention, which is exactly the kind of drift `R13` is supposed to
+  remove.
+- The more honest move is to split out one reusable bounded nested-object
+  owner:
+  - one shared `generated_output` object contract,
+  - one published generated-output key list,
+  - and one explicit reminder that this object records HDL-emission side
+    effects rather than semantic content.
+- That keeps widening deliberate:
+  - downstream tools can discover one shared nested generated-output contract,
+  - both report contracts stay aligned on the same “did this report emit HDL”
+    surface,
+  - and future generated-output metadata widening now has to be named
+    explicitly instead of piggybacking on sample JSON.
+
 ## 2026-04-19: public report command objects should have one shared public owner
 - The public check JSON and normalized semantic JSON reports already shared the
   same nested `command` shape in practice: `mode`, `json`, `strict_mode`, and

@@ -84,6 +84,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `perl/FSM/Support/HDLExternalValidationContract.pm` — bounded external validation contract advertised through the capability manifest.
 - `perl/FSM/Support/NormalizedSemanticReport.pm` — bounded normalized semantic JSON report builder for downstream tool integration.
 - `perl/FSM/Support/NormalizedSemanticReportContract.pm` — bounded normalized semantic JSON key-presence contract advertised through the capability manifest.
+- `perl/FSM/Support/ReportGeneratedOutputContract.pm` — shared bounded nested-object contract for public `generated_output` payloads in check JSON and normalized semantic JSON.
 - `perl/FSM/Support/ReportCommandContract.pm` — shared bounded nested-object contract for public `command` payloads in check JSON and normalized semantic JSON.
 - `perl/FSM/Support/ReportProducerContract.pm` — shared bounded nested-object contract for public `producer` payloads in check JSON and normalized semantic JSON.
 - `perl/FSM/Support/ReportSourceContract.pm` — shared bounded nested-object contract for public `source` payloads in check JSON and normalized semantic JSON.
@@ -166,6 +167,10 @@ Those same two public JSON/report surfaces now also share one bounded nested
 `command` object owner for invocation metadata such as `mode`, `json`,
 `strict_mode`, and `target_language`:
 [perl/FSM/Support/ReportCommandContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportCommandContract.pm).
+Those same two public JSON/report surfaces now also share one bounded nested
+`generated_output` object owner for whether the report invocation emitted HDL
+artifacts:
+[perl/FSM/Support/ReportGeneratedOutputContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportGeneratedOutputContract.pm).
 The manifest-facing stable diagnostic-code registry now has its own explicit
 bounded contract owner in
 [perl/FSM/Support/DiagnosticCodeRegistryContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodeRegistryContract.pm),

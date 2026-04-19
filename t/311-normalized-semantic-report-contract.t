@@ -23,6 +23,7 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_support_accounting_keys
 );
 use FSM::Support::ReportCommandContract qw(report_command_presence_keys);
+use FSM::Support::ReportGeneratedOutputContract qw(report_generated_output_presence_keys);
 use FSM::Support::ReportProducerContract qw(
     normalized_semantic_report_producer_extra_keys
     report_producer_common_keys
@@ -53,6 +54,11 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         $contract->{command_contract_source},
         'FSM::Support::ReportCommandContract',
         'contract records the shared command nested-object owner',
+    );
+    is(
+        $contract->{generated_output_contract_source},
+        'FSM::Support::ReportGeneratedOutputContract',
+        'contract records the shared generated_output nested-object owner',
     );
     is(
         $contract->{producer_contract_source},
@@ -87,6 +93,11 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         $contract->{command_presence_keys},
         report_command_presence_keys(),
         'contract publishes the bounded command-object key list',
+    );
+    is_deeply(
+        $contract->{generated_output_presence_keys},
+        report_generated_output_presence_keys(),
+        'contract publishes the bounded generated_output-object key list',
     );
     is_deeply(
         $contract->{producer_presence_keys},
@@ -202,6 +213,11 @@ subtest 'successful direct semantic JSON conforms to the bounded contract' => su
         'direct success report keeps bounded command-object keys',
     );
     assert_keys_present(
+        $decoded->{generated_output},
+        report_generated_output_presence_keys(),
+        'direct success report keeps bounded generated_output-object keys',
+    );
+    assert_keys_present(
         $decoded->{producer},
         report_producer_common_keys(),
         'direct success report keeps bounded producer-object common keys',
@@ -261,6 +277,11 @@ subtest 'successful composition semantic JSON conforms to the bounded contract' 
         'composition success report keeps bounded command-object keys',
     );
     assert_keys_present(
+        $decoded->{generated_output},
+        report_generated_output_presence_keys(),
+        'composition success report keeps bounded generated_output-object keys',
+    );
+    assert_keys_present(
         $decoded->{producer},
         report_producer_common_keys(),
         'composition success report keeps bounded producer-object common keys',
@@ -312,6 +333,11 @@ subtest 'failed semantic JSON conforms to the bounded contract' => sub {
         $decoded->{command},
         report_command_presence_keys(),
         'failed report keeps bounded command-object keys',
+    );
+    assert_keys_present(
+        $decoded->{generated_output},
+        report_generated_output_presence_keys(),
+        'failed report keeps bounded generated_output-object keys',
     );
     assert_keys_present(
         $decoded->{producer},

@@ -178,6 +178,9 @@ normalized semantic JSON.
 [perl/FSM/Support/ReportCommandContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportCommandContract.pm)
 now owns the shared nested `command` object shape reused by both check JSON
 and normalized semantic JSON.
+[perl/FSM/Support/ReportGeneratedOutputContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportGeneratedOutputContract.pm)
+now owns the shared nested `generated_output` object shape reused by both
+check JSON and normalized semantic JSON.
 [perl/FSM/Support/SupportAccountingMatchContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingMatchContract.pm)
 now owns the shared nested `support_accounting` match-object shape reused by
 both check JSON and normalized semantic JSON.
@@ -208,6 +211,11 @@ Those same semantic reports also reuse the shared bounded nested `command`
 object owner in
 [perl/FSM/Support/ReportCommandContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportCommandContract.pm),
 so the public invocation metadata shape stays aligned with check JSON too.
+Those same semantic reports also reuse the shared bounded nested
+`generated_output` object owner in
+[perl/FSM/Support/ReportGeneratedOutputContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportGeneratedOutputContract.pm),
+so the public “did this report emit HDL” shape stays aligned with check JSON
+too.
 
 [t/314-support-accounting-contract.t](/Users/richarddje/Documents/github/fsmgen/t/314-support-accounting-contract.t)
 locks the bounded public contract for the manifest's `support_accounting`

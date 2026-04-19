@@ -24,6 +24,7 @@ use FSM::Support::CheckDiagnosticsContract qw(
     check_json_success_support_accounting_keys
 );
 use FSM::Support::ReportCommandContract qw(report_command_presence_keys);
+use FSM::Support::ReportGeneratedOutputContract qw(report_generated_output_presence_keys);
 use FSM::Support::ReportProducerContract qw(report_producer_common_keys);
 use FSM::Support::ReportSourceContract qw(report_source_presence_keys);
 use FSM::Support::SupportAccountingMatchContract qw(
@@ -61,6 +62,11 @@ subtest 'contract exposes the bounded check JSON surface' => sub {
         $contract->{command_contract_source},
         'FSM::Support::ReportCommandContract',
         'contract records the shared command nested-object owner',
+    );
+    is(
+        $contract->{generated_output_contract_source},
+        'FSM::Support::ReportGeneratedOutputContract',
+        'contract records the shared generated_output nested-object owner',
     );
     is(
         $contract->{producer_contract_source},
@@ -102,6 +108,11 @@ subtest 'contract exposes the bounded check JSON surface' => sub {
         $contract->{command_presence_keys},
         report_command_presence_keys(),
         'contract publishes the bounded command-object key list',
+    );
+    is_deeply(
+        $contract->{generated_output_presence_keys},
+        report_generated_output_presence_keys(),
+        'contract publishes the bounded generated_output-object key list',
     );
     is_deeply(
         $contract->{producer_presence_keys},
@@ -212,6 +223,11 @@ subtest 'successful direct check JSON conforms to the bounded contract' => sub {
         'direct success report keeps bounded command-object keys',
     );
     assert_keys_present(
+        $decoded->{generated_output},
+        report_generated_output_presence_keys(),
+        'direct success report keeps bounded generated_output-object keys',
+    );
+    assert_keys_present(
         $decoded->{producer},
         report_producer_common_keys(),
         'direct success report keeps bounded producer-object keys',
@@ -259,6 +275,11 @@ subtest 'successful corpus-backed composition check JSON conforms to the matched
         $decoded->{command},
         report_command_presence_keys(),
         'composition success report keeps bounded command-object keys',
+    );
+    assert_keys_present(
+        $decoded->{generated_output},
+        report_generated_output_presence_keys(),
+        'composition success report keeps bounded generated_output-object keys',
     );
     assert_keys_present(
         $decoded->{producer},
@@ -309,6 +330,11 @@ subtest 'failed check JSON conforms to the bounded contract' => sub {
         $decoded->{command},
         report_command_presence_keys(),
         'failed report keeps bounded command-object keys',
+    );
+    assert_keys_present(
+        $decoded->{generated_output},
+        report_generated_output_presence_keys(),
+        'failed report keeps bounded generated_output-object keys',
     );
     assert_keys_present(
         $decoded->{producer},
