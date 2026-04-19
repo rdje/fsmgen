@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-19: public check result objects should have one explicit owner
+- Successful public check JSON already emitted one small nested `result`
+  object in practice: `module_name`, `state_count`, `signal_count`, and
+  `composition_child_count`.
+- Leaving that shape as a local helper list inside the outer report contract
+  would keep one real public nested object without a named owner, which is the
+  opposite of what `R13` is trying to achieve.
+- The more honest move is to give that success-only nested object one bounded
+  owner:
+  - one `result` object contract for successful check JSON reports,
+  - one published result key list,
+  - and one explicit reminder that this object is a compact success summary,
+    not a raw pipeline dump.
+- That keeps widening deliberate:
+  - downstream tools can discover one explicit nested result contract,
+  - the outer check-report contract stops carrying that shape implicitly,
+  - and future success-summary widening now has to be named and regression-
+    backed instead of piggybacking on sample JSON.
+
 ## 2026-04-19: public report generated_output objects should have one shared public owner
 - The public check JSON and normalized semantic JSON reports already shared the
   same nested `generated_output` shape in practice: the bounded `emitted` key.

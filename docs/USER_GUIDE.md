@@ -1721,6 +1721,9 @@ Those same two public JSON/report surfaces now also share one bounded nested
 `generated_output` object owner for whether the report invocation emitted HDL
 artifacts:
 [perl/FSM/Support/ReportGeneratedOutputContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportGeneratedOutputContract.pm).
+Successful public check JSON reports now also have one bounded nested `result`
+object owner for module identity plus basic summary counts:
+[perl/FSM/Support/CheckResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckResultContract.pm).
 The bounded contract for the manifest's `support_accounting` section now has
 its own explicit owner in
 [perl/FSM/Support/SupportAccountingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingContract.pm).

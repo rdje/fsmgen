@@ -5,6 +5,7 @@ use warnings;
 
 use Exporter 'import';
 use JSON::PP ();
+use FSM::Support::CheckResultContract qw(check_result_presence_keys);
 use FSM::Support::ReportCommandContract qw(report_command_presence_keys);
 use FSM::Support::ReportGeneratedOutputContract qw(report_generated_output_presence_keys);
 use FSM::Support::ReportProducerContract qw(report_producer_common_keys);
@@ -54,6 +55,7 @@ sub build_check_diagnostics_contract {
         emits_success_support_accounting_object => JSON::PP::true,
         emits_failure_diagnostic_support_accounting_object => JSON::PP::true,
         command_contract_source => 'FSM::Support::ReportCommandContract',
+        result_contract_source => 'FSM::Support::CheckResultContract',
         generated_output_contract_source => 'FSM::Support::ReportGeneratedOutputContract',
         producer_contract_source => 'FSM::Support::ReportProducerContract',
         source_contract_source => 'FSM::Support::ReportSourceContract',
@@ -64,7 +66,7 @@ sub build_check_diagnostics_contract {
         producer_presence_keys => report_producer_common_keys(),
         source_presence_keys => report_source_presence_keys(),
         success_only_top_level_keys => check_json_success_only_top_level_keys(),
-        success_result_presence_keys => check_json_success_result_keys(),
+        success_result_presence_keys => check_result_presence_keys(),
         success_support_accounting_presence_keys => check_json_success_support_accounting_keys(),
         matched_success_support_accounting_presence_keys => check_json_matched_success_support_accounting_keys(),
         failure_diagnostic_presence_keys => check_json_failure_diagnostic_keys(),
@@ -77,6 +79,7 @@ sub build_check_diagnostics_contract {
         guidance => [
             'Treat the published top-level, success-result, and failure-diagnostic key lists as the bounded public check-JSON contract for schema version 1.',
             'The nested command object is shared with normalized semantic JSON and stays bounded through FSM::Support::ReportCommandContract.',
+            'The nested success result object stays bounded through FSM::Support::CheckResultContract.',
             'The nested generated_output object is shared with normalized semantic JSON and stays bounded through FSM::Support::ReportGeneratedOutputContract.',
             'The nested producer object is shared with normalized semantic JSON and stays bounded through FSM::Support::ReportProducerContract.',
             'The nested source object is shared with normalized semantic JSON and stays bounded through FSM::Support::ReportSourceContract.',
@@ -110,14 +113,7 @@ sub check_json_success_only_top_level_keys {
 }
 
 sub check_json_success_result_keys {
-    return [
-        qw(
-            module_name
-            state_count
-            signal_count
-            composition_child_count
-        ),
-    ];
+    return check_result_presence_keys();
 }
 
 sub check_json_success_support_accounting_keys {

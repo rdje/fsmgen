@@ -23,6 +23,7 @@ use FSM::Support::CheckDiagnosticsContract qw(
     check_json_success_result_keys
     check_json_success_support_accounting_keys
 );
+use FSM::Support::CheckResultContract qw(check_result_presence_keys);
 use FSM::Support::ReportCommandContract qw(report_command_presence_keys);
 use FSM::Support::ReportGeneratedOutputContract qw(report_generated_output_presence_keys);
 use FSM::Support::ReportProducerContract qw(report_producer_common_keys);
@@ -64,6 +65,11 @@ subtest 'contract exposes the bounded check JSON surface' => sub {
         'contract records the shared command nested-object owner',
     );
     is(
+        $contract->{result_contract_source},
+        'FSM::Support::CheckResultContract',
+        'contract records the success result nested-object owner',
+    );
+    is(
         $contract->{generated_output_contract_source},
         'FSM::Support::ReportGeneratedOutputContract',
         'contract records the shared generated_output nested-object owner',
@@ -101,7 +107,7 @@ subtest 'contract exposes the bounded check JSON surface' => sub {
     );
     is_deeply(
         $contract->{success_result_presence_keys},
-        check_json_success_result_keys(),
+        check_result_presence_keys(),
         'contract publishes the bounded success-result key list',
     );
     is_deeply(
@@ -244,7 +250,7 @@ subtest 'successful direct check JSON conforms to the bounded contract' => sub {
     );
     assert_keys_present(
         $decoded->{result},
-        check_json_success_result_keys(),
+        check_result_presence_keys(),
         'direct success report keeps bounded success-result keys',
     );
     assert_keys_present(
@@ -298,7 +304,7 @@ subtest 'successful corpus-backed composition check JSON conforms to the matched
     );
     assert_keys_present(
         $decoded->{result},
-        check_json_success_result_keys(),
+        check_result_presence_keys(),
         'composition success report keeps bounded success-result keys',
     );
     assert_keys_present(

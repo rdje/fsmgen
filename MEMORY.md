@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-19: public check result objects now have an explicit owner
+- Added
+  [perl/FSM/Support/CheckResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckResultContract.pm)
+  as the bounded owner for the success-only nested `result` object used by
+  public check JSON.
+- [perl/FSM/Support/CheckDiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnosticsContract.pm)
+  now advertises that owner plus the bounded `module_name` / `state_count` /
+  `signal_count` / `composition_child_count` key list instead of leaving the
+  success result shape as duplicated inline knowledge.
+- The reachable `bin/fsmgen` support surface now includes that contract owner
+  too, moving the measured import-tree totals to `150` project files /
+  `149` `.pm` packages with `Support => 28`.
+
 ## 2026-04-19: public report generated_output objects now have a shared owner
 - Added
   [perl/FSM/Support/ReportGeneratedOutputContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportGeneratedOutputContract.pm)

@@ -159,6 +159,11 @@ share one bounded nested-object contract for HDL-emission side effects:
 [perl/FSM/Support/ReportGeneratedOutputContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportGeneratedOutputContract.pm)
 owns the shared `emitted` key emitted under the nested `generated_output`
 object.
+Successful public check JSON reports now also have one bounded nested-object
+contract for the compact success summary:
+[perl/FSM/Support/CheckResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckResultContract.pm)
+owns the `module_name`, `state_count`, `signal_count`, and
+`composition_child_count` keys emitted under the nested `result` object.
 
 Do not treat the raw `HDLGenerator` result hash as a stable JSON document. Some
 nested branches still contain live CoreAST/AST objects for compatibility and
