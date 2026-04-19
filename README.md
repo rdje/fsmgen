@@ -78,6 +78,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `perl/FSM/Support/CheckFailureDiagnosticContract.pm` — shared bounded nested-object contract for failure `diagnostic` payloads in public check JSON and normalized semantic JSON.
 - `perl/FSM/Support/CheckResultContract.pm` — bounded nested-object contract for successful public check JSON `result` payloads.
 - `perl/FSM/Support/CompositionReportContract.pm` — bounded sanitized composition provenance/report contract for semantic JSON.
+- `perl/FSM/Support/NormalizedSemanticModuleContract.pm` — bounded nested-object contract for the `semantic.module` summary in successful public normalized semantic JSON.
 - `perl/FSM/Support/NormalizedSemanticPayloadContract.pm` — bounded nested-object contract for successful public normalized semantic JSON `semantic` payloads.
 - `perl/FSM/Support/DiagnosticCodes.pm` — stable diagnostic-code registry consumed by support accounting and the capability manifest.
 - `perl/FSM/Support/DiagnosticCodeRegistryContract.pm` — bounded stable-code registry contract advertised through the capability manifest.
@@ -187,6 +188,10 @@ Successful public normalized semantic JSON reports now also have one bounded
 nested `semantic` object owner for module/system metadata, signal analysis,
 and the forward-IR projection:
 [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm).
+The nested `semantic.module` summary inside that payload now also has its own
+bounded owner for the core module keys plus the current optional metric-key
+family:
+[perl/FSM/Support/NormalizedSemanticModuleContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticModuleContract.pm).
 The manifest-facing stable diagnostic-code registry now has its own explicit
 bounded contract owner in
 [perl/FSM/Support/DiagnosticCodeRegistryContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodeRegistryContract.pm),

@@ -27,6 +27,8 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_matched_failure_diagnostic_support_accounting_keys
     normalized_semantic_matched_failure_support_accounting_keys
     normalized_semantic_matched_success_support_accounting_keys
+    normalized_semantic_module_keys
+    normalized_semantic_module_optional_metric_keys
     normalized_semantic_public_top_level_keys
     normalized_semantic_success_only_top_level_keys
     normalized_semantic_success_semantic_keys
@@ -79,6 +81,11 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         $contract->{generated_output_contract_source},
         'FSM::Support::ReportGeneratedOutputContract',
         'contract records the shared generated_output nested-object owner',
+    );
+    is(
+        $contract->{module_contract_source},
+        'FSM::Support::NormalizedSemanticModuleContract',
+        'contract records the nested module object owner',
     );
     is(
         $contract->{semantic_contract_source},
@@ -200,6 +207,26 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         'contract publishes the bounded semantic payload key list',
     );
     is_deeply(
+        $contract->{success_module_presence_keys},
+        normalized_semantic_module_keys(),
+        'contract publishes the bounded module key list',
+    );
+    is_deeply(
+        normalized_semantic_module_keys(),
+        FSM::Support::NormalizedSemanticModuleContract::normalized_semantic_module_presence_keys(),
+        'normalized semantic module keys map to the nested module owner',
+    );
+    is_deeply(
+        $contract->{success_module_optional_metric_keys},
+        normalized_semantic_module_optional_metric_keys(),
+        'contract publishes the bounded optional module metric key list',
+    );
+    is_deeply(
+        normalized_semantic_module_optional_metric_keys(),
+        FSM::Support::NormalizedSemanticModuleContract::normalized_semantic_module_optional_metric_keys(),
+        'normalized semantic optional module metric keys map to the nested module owner',
+    );
+    is_deeply(
         $contract->{success_forward_ir_presence_keys},
         normalized_semantic_payload_forward_ir_keys(),
         'contract publishes the bounded forward-IR key list',
@@ -313,6 +340,11 @@ subtest 'successful direct semantic JSON conforms to the bounded contract' => su
         'direct success semantic payload keeps bounded semantic keys',
     );
     assert_keys_present(
+        $decoded->{semantic}{module},
+        normalized_semantic_module_keys(),
+        'direct success module payload keeps bounded module keys',
+    );
+    assert_keys_present(
         $decoded->{semantic}{forward_ir},
         normalized_semantic_forward_ir_keys(),
         'direct success semantic payload keeps bounded forward-IR keys',
@@ -377,9 +409,18 @@ subtest 'successful composition semantic JSON conforms to the bounded contract' 
         'composition success semantic payload keeps bounded semantic keys',
     );
     assert_keys_present(
+        $decoded->{semantic}{module},
+        normalized_semantic_module_keys(),
+        'composition success module payload keeps bounded module keys',
+    );
+    assert_keys_present(
         $decoded->{semantic}{composition},
         normalized_semantic_composition_keys(),
         'composition success semantic payload keeps bounded composition keys',
+    );
+    ok(
+        exists $decoded->{semantic}{module}{composition_child_count},
+        'composition success module payload exposes composition child count',
     );
 };
 

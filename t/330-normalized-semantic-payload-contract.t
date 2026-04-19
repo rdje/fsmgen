@@ -8,6 +8,10 @@ use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
+use FSM::Support::NormalizedSemanticModuleContract qw(
+    normalized_semantic_module_optional_metric_keys
+    normalized_semantic_module_presence_keys
+);
 use FSM::Support::NormalizedSemanticPayloadContract qw(
     build_normalized_semantic_payload_contract
     normalized_semantic_payload_composition_keys
@@ -39,10 +43,25 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
         $contract->{json_safe_when_embedded_in_public_reports},
         'contract says the nested semantic object is JSON-safe when embedded in public reports',
     );
+    is(
+        $contract->{module_contract_source},
+        'FSM::Support::NormalizedSemanticModuleContract',
+        'contract records the nested module object owner',
+    );
     is_deeply(
         $contract->{public_presence_keys},
         normalized_semantic_payload_presence_keys(),
         'contract publishes the bounded semantic-object key list',
+    );
+    is_deeply(
+        $contract->{module_presence_keys},
+        normalized_semantic_module_presence_keys(),
+        'contract publishes the bounded module-object key list',
+    );
+    is_deeply(
+        $contract->{module_optional_metric_keys},
+        normalized_semantic_module_optional_metric_keys(),
+        'contract publishes the bounded optional module metric key list',
     );
     is_deeply(
         $contract->{forward_ir_presence_keys},

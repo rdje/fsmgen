@@ -178,6 +178,10 @@ nested-object contract for the success payload itself:
 owns the `module`, `system_contract`, `explicit_system_contract`,
 `signal_analysis`, and `forward_ir` keys, and the same owner also publishes
 the nested `forward_ir` plus optional `composition` key lists.
+The nested `semantic.module` summary inside that payload now also has its own
+bounded nested-object contract:
+[perl/FSM/Support/NormalizedSemanticModuleContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticModuleContract.pm)
+owns the core module-summary keys plus the current optional metric-key family.
 
 Do not treat the raw `HDLGenerator` result hash as a stable JSON document. Some
 nested branches still contain live CoreAST/AST objects for compatibility and

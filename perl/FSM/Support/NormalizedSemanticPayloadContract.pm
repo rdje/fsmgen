@@ -5,6 +5,10 @@ use warnings;
 
 use Exporter 'import';
 use JSON::PP ();
+use FSM::Support::NormalizedSemanticModuleContract qw(
+    normalized_semantic_module_optional_metric_keys
+    normalized_semantic_module_presence_keys
+);
 
 our @EXPORT_OK = qw(
     build_normalized_semantic_payload_contract
@@ -33,12 +37,16 @@ sub build_normalized_semantic_payload_contract {
             ],
         },
         public_presence_keys => normalized_semantic_payload_presence_keys(),
+        module_contract_source => 'FSM::Support::NormalizedSemanticModuleContract',
+        module_presence_keys => normalized_semantic_module_presence_keys(),
+        module_optional_metric_keys => normalized_semantic_module_optional_metric_keys(),
         forward_ir_presence_keys => normalized_semantic_payload_forward_ir_keys(),
         composition_presence_keys => normalized_semantic_payload_composition_keys(),
         json_safe_when_embedded_in_public_reports => JSON::PP::true,
         guidance => [
             q{Treat this contract as the bounded nested `semantic` object used by successful public normalized semantic JSON reports.},
             'The nested object records the public semantic payload: module/system metadata, signal analysis, and the forward-IR projection.',
+            'The nested `module` object stays bounded through FSM::Support::NormalizedSemanticModuleContract.',
             'The same owner also publishes the nested `forward_ir` and optional `composition` key lists so that widening stays deliberate and regression-backed.',
         ],
     };

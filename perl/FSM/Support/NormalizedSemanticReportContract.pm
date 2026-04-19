@@ -12,6 +12,9 @@ use FSM::Support::CheckFailureDiagnosticContract qw(
     check_failure_diagnostic_support_accounting_matched_presence_keys
     check_failure_diagnostic_support_accounting_presence_keys
 );
+use FSM::Support::NormalizedSemanticModuleContract qw(
+    normalized_semantic_module_presence_keys
+);
 use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_composition_keys
     normalized_semantic_payload_forward_ir_keys
@@ -41,6 +44,8 @@ our @EXPORT_OK = qw(
     normalized_semantic_matched_failure_diagnostic_support_accounting_keys
     normalized_semantic_matched_failure_support_accounting_keys
     normalized_semantic_matched_success_support_accounting_keys
+    normalized_semantic_module_keys
+    normalized_semantic_module_optional_metric_keys
     normalized_semantic_public_top_level_keys
     normalized_semantic_success_only_top_level_keys
     normalized_semantic_success_semantic_keys
@@ -73,6 +78,7 @@ sub build_normalized_semantic_report_contract {
         command_contract_source => 'FSM::Support::ReportCommandContract',
         failure_diagnostic_contract_source => 'FSM::Support::CheckFailureDiagnosticContract',
         generated_output_contract_source => 'FSM::Support::ReportGeneratedOutputContract',
+        module_contract_source => 'FSM::Support::NormalizedSemanticModuleContract',
         semantic_contract_source => 'FSM::Support::NormalizedSemanticPayloadContract',
         producer_contract_source => 'FSM::Support::ReportProducerContract',
         source_contract_source => 'FSM::Support::ReportSourceContract',
@@ -93,6 +99,8 @@ sub build_normalized_semantic_report_contract {
         matched_success_support_accounting_presence_keys => normalized_semantic_matched_success_support_accounting_keys(),
         matched_failure_support_accounting_presence_keys => normalized_semantic_matched_failure_support_accounting_keys(),
         success_semantic_presence_keys => normalized_semantic_payload_presence_keys(),
+        success_module_presence_keys => normalized_semantic_module_keys(),
+        success_module_optional_metric_keys => normalized_semantic_module_optional_metric_keys(),
         success_forward_ir_presence_keys => normalized_semantic_payload_forward_ir_keys(),
         composition_presence_keys => normalized_semantic_payload_composition_keys(),
         failure_omits_semantic_payload => JSON::PP::true,
@@ -104,6 +112,7 @@ sub build_normalized_semantic_report_contract {
             'The nested failure diagnostic object is shared with check JSON and stays bounded through FSM::Support::CheckFailureDiagnosticContract.',
             'The nested generated_output object is shared with check JSON and stays bounded through FSM::Support::ReportGeneratedOutputContract.',
             'The nested semantic success payload stays bounded through FSM::Support::NormalizedSemanticPayloadContract.',
+            'The nested semantic module object stays bounded through FSM::Support::NormalizedSemanticModuleContract.',
             'The nested producer object is shared with check JSON and stays bounded through FSM::Support::ReportProducerContract.',
             'The nested source object is shared with check JSON and stays bounded through FSM::Support::ReportSourceContract.',
             'Do not treat every nested scalar/list/hash field inside those branches as frozen unless it is separately documented and regression-backed.',
@@ -167,6 +176,14 @@ sub normalized_semantic_matched_failure_support_accounting_keys {
 
 sub normalized_semantic_success_semantic_keys {
     return normalized_semantic_payload_presence_keys();
+}
+
+sub normalized_semantic_module_keys {
+    return normalized_semantic_module_presence_keys();
+}
+
+sub normalized_semantic_module_optional_metric_keys {
+    return FSM::Support::NormalizedSemanticModuleContract::normalized_semantic_module_optional_metric_keys();
 }
 
 sub normalized_semantic_forward_ir_keys {

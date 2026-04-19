@@ -1734,6 +1734,10 @@ Successful public normalized semantic JSON reports now also have one bounded
 nested `semantic` object owner for module/system metadata, signal analysis,
 and the forward-IR projection:
 [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm).
+The nested `semantic.module` summary inside that payload now also has its own
+bounded owner for the core module keys plus the current optional metric-key
+family:
+[perl/FSM/Support/NormalizedSemanticModuleContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticModuleContract.pm).
 The bounded contract for the manifest's `support_accounting` section now has
 its own explicit owner in
 [perl/FSM/Support/SupportAccountingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingContract.pm).

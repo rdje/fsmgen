@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-19: public normalized semantic module objects now have an explicit owner
+- Added
+  [perl/FSM/Support/NormalizedSemanticModuleContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticModuleContract.pm)
+  as the bounded owner for the nested `semantic.module` object emitted by
+  successful public normalized semantic JSON.
+- [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm)
+  and [perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm)
+  now advertise that owner plus the bounded core module keys and optional
+  metric-key family instead of leaving the module summary as inline semantic
+  payload knowledge.
+- The reachable `bin/fsmgen` support surface now includes that contract owner
+  too, moving the measured import-tree totals to `153` project files /
+  `152` `.pm` packages with `Support => 31`.
+
 ## 2026-04-19: public failure diagnostic objects are now explicitly shared across both public JSON report surfaces
 - [perl/FSM/Support/CheckFailureDiagnosticContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckFailureDiagnosticContract.pm)
   now explicitly covers failed public normalized semantic JSON reports too,
