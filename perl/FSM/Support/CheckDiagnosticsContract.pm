@@ -5,6 +5,7 @@ use warnings;
 
 use Exporter 'import';
 use JSON::PP ();
+use FSM::Support::ReportSourceContract qw(report_source_presence_keys);
 use FSM::Support::SupportAccountingMatchContract qw(
     support_accounting_match_common_keys
     support_accounting_match_failure_keys
@@ -49,8 +50,10 @@ sub build_check_diagnostics_contract {
         emits_support_accounting_object => JSON::PP::true,
         emits_success_support_accounting_object => JSON::PP::true,
         emits_failure_diagnostic_support_accounting_object => JSON::PP::true,
+        source_contract_source => 'FSM::Support::ReportSourceContract',
         support_accounting_contract_source => 'FSM::Support::SupportAccountingMatchContract',
         public_top_level_presence_keys => check_json_public_top_level_keys(),
+        source_presence_keys => report_source_presence_keys(),
         success_only_top_level_keys => check_json_success_only_top_level_keys(),
         success_result_presence_keys => check_json_success_result_keys(),
         success_support_accounting_presence_keys => check_json_success_support_accounting_keys(),
@@ -64,6 +67,7 @@ sub build_check_diagnostics_contract {
         full_diagnostic_schema_stable => JSON::PP::false,
         guidance => [
             'Treat the published top-level, success-result, and failure-diagnostic key lists as the bounded public check-JSON contract for schema version 1.',
+            'The nested source object is shared with normalized semantic JSON and stays bounded through FSM::Support::ReportSourceContract.',
             'Success reports carry report-level support accounting, while failure reports carry support accounting inside each diagnostic object.',
             'Do not treat every nested artifact field as frozen unless it appears in the published bounded key lists or is widened deliberately with regression backing.',
         ],

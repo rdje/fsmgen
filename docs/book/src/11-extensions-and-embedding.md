@@ -138,6 +138,11 @@ share one bounded nested-object contract:
 [perl/FSM/Support/SupportAccountingMatchContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingMatchContract.pm)
 owns the common `matched` key plus the matched success/failure identity keys
 used by check JSON and normalized semantic JSON.
+Those same public check JSON and normalized semantic JSON reports now also
+share one bounded nested-object contract for the caller-facing source identity:
+[perl/FSM/Support/ReportSourceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportSourceContract.pm)
+owns the shared `input` plus `resolved_path` keys emitted under the nested
+`source` object.
 
 Do not treat the raw `HDLGenerator` result hash as a stable JSON document. Some
 nested branches still contain live CoreAST/AST objects for compatibility and

@@ -169,6 +169,9 @@ locks the bounded public key-presence promise for that same command surface.
 is now the explicit owner for the common top-level keys plus the bounded
 success-result, success support-accounting, and failure-diagnostic key lists
 advertised through `--capability-manifest`.
+[perl/FSM/Support/ReportSourceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportSourceContract.pm)
+now owns the shared nested `source` object shape reused by both check JSON and
+normalized semantic JSON.
 [perl/FSM/Support/SupportAccountingMatchContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingMatchContract.pm)
 now owns the shared nested `support_accounting` match-object shape reused by
 both check JSON and normalized semantic JSON.
@@ -186,6 +189,10 @@ and strict rejected-source diagnostics for that semantic export. Successful
 semantic reports expose sanitized module/system/signal and forward-IR metadata,
 while matched corpus sources report the same entry id, family, coverage bucket,
 classification, source kind, and `strict_supported` support-accounting bridge.
+Those same semantic reports also reuse the shared bounded nested `source`
+object owner in
+[perl/FSM/Support/ReportSourceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportSourceContract.pm),
+so the public input/resolved-path shape stays aligned with check JSON.
 
 [t/314-support-accounting-contract.t](/Users/richarddje/Documents/github/fsmgen/t/314-support-accounting-contract.t)
 locks the bounded public contract for the manifest's `support_accounting`

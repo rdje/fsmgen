@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-19: public report source objects should have one shared public owner
+- The public check JSON and normalized semantic JSON reports already shared the
+  same nested `source` shape in practice: `input` plus `resolved_path`.
+- Leaving that shape implicit would keep two separate report contracts in sync
+  by convention only, which is exactly the kind of drift `R13` is supposed to
+  remove.
+- The more honest move is to split out one reusable bounded nested-object
+  owner:
+  - one shared `source` object contract,
+  - one published `input` / `resolved_path` key list,
+  - and one manifest-visible owner string that both report contracts reuse.
+- That keeps widening deliberate:
+  - downstream tools can discover one shared nested source contract,
+  - both report contracts stay aligned on the same emitted source identity
+    surface,
+  - and future widening of that nested source object happens once, backed by
+    both report surfaces and their regressions.
+
 ## 2026-04-19: support-accounting match objects should have one shared public owner
 - The public `support_accounting` objects emitted by check JSON and normalized
   semantic JSON were already support-accounted and regression-covered, but

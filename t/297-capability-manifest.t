@@ -253,6 +253,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest records the check JSON report owner',
     );
     is(
+        $manifest->{diagnostics}{check_json}{source_contract_source},
+        'FSM::Support::ReportSourceContract',
+        'manifest records the shared check-JSON source nested-object owner',
+    );
+    is(
         $manifest->{diagnostics}{check_json}{contract_source},
         'FSM::Support::CheckDiagnosticsContract',
         'manifest records the check JSON contract owner',
@@ -260,6 +265,10 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     ok(
         scalar(@{$manifest->{diagnostics}{check_json}{public_top_level_presence_keys} || []}) >= 7,
         'manifest advertises bounded check JSON top-level key presence',
+    );
+    ok(
+        scalar(@{$manifest->{diagnostics}{check_json}{source_presence_keys} || []}) >= 2,
+        'manifest advertises bounded check JSON source-object key presence',
     );
     ok(
         scalar(@{$manifest->{diagnostics}{check_json}{success_result_presence_keys} || []}) >= 4,
@@ -330,6 +339,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest records the normalized semantic report owner',
     );
     is(
+        $manifest->{semantic_exports}{normalized_semantic_json}{source_contract_source},
+        'FSM::Support::ReportSourceContract',
+        'manifest records the shared normalized-semantic source nested-object owner',
+    );
+    is(
         $manifest->{semantic_exports}{normalized_semantic_json}{contract_source},
         'FSM::Support::NormalizedSemanticReportContract',
         'manifest records the normalized semantic report contract owner',
@@ -337,6 +351,10 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     ok(
         scalar(@{$manifest->{semantic_exports}{normalized_semantic_json}{public_top_level_presence_keys} || []}) >= 8,
         'manifest advertises bounded normalized semantic top-level key presence',
+    );
+    ok(
+        scalar(@{$manifest->{semantic_exports}{normalized_semantic_json}{source_presence_keys} || []}) >= 2,
+        'manifest advertises bounded normalized semantic source-object key presence',
     );
     ok(
         scalar(@{$manifest->{semantic_exports}{normalized_semantic_json}{success_semantic_presence_keys} || []}) >= 5,

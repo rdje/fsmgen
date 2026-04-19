@@ -22,6 +22,7 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_success_semantic_keys
     normalized_semantic_support_accounting_keys
 );
+use FSM::Support::ReportSourceContract qw(report_source_presence_keys);
 
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
 my $tempdir = tempdir(CLEANUP => 1);
@@ -44,6 +45,11 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
     ok(!$contract->{emits_hdl}, 'contract says normalized semantic JSON emits no HDL');
     ok($contract->{emits_support_accounting_object}, 'contract says normalized semantic JSON emits support accounting');
     is(
+        $contract->{source_contract_source},
+        'FSM::Support::ReportSourceContract',
+        'contract records the shared source nested-object owner',
+    );
+    is(
         $contract->{support_accounting_contract_source},
         'FSM::Support::SupportAccountingMatchContract',
         'contract records the shared support-accounting nested-object owner',
@@ -61,6 +67,11 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         $contract->{success_only_top_level_keys},
         normalized_semantic_success_only_top_level_keys(),
         'contract publishes the success-only top-level key list',
+    );
+    is_deeply(
+        $contract->{source_presence_keys},
+        report_source_presence_keys(),
+        'contract publishes the bounded source-object key list',
     );
     is_deeply(
         $contract->{support_accounting_presence_keys},
@@ -156,6 +167,11 @@ subtest 'successful direct semantic JSON conforms to the bounded contract' => su
         'direct success report keeps bounded top-level keys',
     );
     assert_keys_present(
+        $decoded->{source},
+        report_source_presence_keys(),
+        'direct success report keeps bounded source-object keys',
+    );
+    assert_keys_present(
         $decoded->{support_accounting},
         normalized_semantic_support_accounting_keys(),
         'direct success report keeps common support-accounting keys',
@@ -195,6 +211,11 @@ subtest 'successful composition semantic JSON conforms to the bounded contract' 
         'composition success report keeps bounded top-level keys',
     );
     assert_keys_present(
+        $decoded->{source},
+        report_source_presence_keys(),
+        'composition success report keeps bounded source-object keys',
+    );
+    assert_keys_present(
         $decoded->{support_accounting},
         normalized_semantic_support_accounting_keys(),
         'composition success report keeps common support-accounting keys',
@@ -226,6 +247,11 @@ subtest 'failed semantic JSON conforms to the bounded contract' => sub {
         $decoded,
         normalized_semantic_public_top_level_keys(),
         'failed report keeps bounded top-level keys',
+    );
+    assert_keys_present(
+        $decoded->{source},
+        report_source_presence_keys(),
+        'failed report keeps bounded source-object keys',
     );
     assert_keys_present(
         $decoded->{support_accounting},

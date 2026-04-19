@@ -5,6 +5,7 @@ use warnings;
 
 use Exporter 'import';
 use JSON::PP ();
+use FSM::Support::ReportSourceContract qw(report_source_presence_keys);
 use FSM::Support::SupportAccountingMatchContract qw(
     support_accounting_match_common_keys
     support_accounting_match_failure_keys
@@ -46,8 +47,10 @@ sub build_normalized_semantic_report_contract {
         failure_diagnostics_reuse_stable_codes => JSON::PP::true,
         sanitizes_private_perl_objects => JSON::PP::true,
         public_layers => [qw(intent_hir lowered_rtl_ir structural_rtl_ir)],
+        source_contract_source => 'FSM::Support::ReportSourceContract',
         support_accounting_contract_source => 'FSM::Support::SupportAccountingMatchContract',
         public_top_level_presence_keys => normalized_semantic_public_top_level_keys(),
+        source_presence_keys => report_source_presence_keys(),
         success_only_top_level_keys => normalized_semantic_success_only_top_level_keys(),
         support_accounting_presence_keys => normalized_semantic_support_accounting_keys(),
         matched_success_support_accounting_presence_keys => normalized_semantic_matched_success_support_accounting_keys(),
@@ -60,6 +63,7 @@ sub build_normalized_semantic_report_contract {
         full_export_stable => JSON::PP::false,
         guidance => [
             'Treat the listed top-level and bounded nested key-presence lists as the public normalized semantic JSON contract for schema version 1.',
+            'The nested source object is shared with check JSON and stays bounded through FSM::Support::ReportSourceContract.',
             'Do not treat every nested scalar/list/hash field inside those branches as frozen unless it is separately documented and regression-backed.',
             'Use the contract owner plus regression coverage to widen this surface deliberately instead of dumping raw pipeline state.',
         ],
