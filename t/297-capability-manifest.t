@@ -477,6 +477,10 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         !$manifest->{embedding}{hdl_generator_result}{full_result_json_safe},
         'manifest says the raw HDLGenerator result is not JSON-safe as a whole',
     );
+    ok(
+        $manifest->{embedding}{hdl_generator_result}{nested_identity_slices_advertised},
+        'manifest says the HDLGenerator result advertises bounded nested identity slices',
+    );
     is(
         $manifest->{embedding}{hdl_generator_result}{json_safe_export_surface},
         'semantic_exports.normalized_semantic_json',
@@ -486,6 +490,14 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         $manifest->{embedding}{hdl_generator_result}{contract_source},
         'FSM::Support::HDLGeneratorResultContract',
         'manifest records the HDLGenerator result contract owner',
+    );
+    ok(
+        scalar(@{$manifest->{embedding}{hdl_generator_result}{source_info_identity_presence_keys} || []}) >= 2,
+        'manifest advertises bounded HDLGenerator source_info identity key presence',
+    );
+    ok(
+        scalar(@{$manifest->{embedding}{hdl_generator_result}{module_info_identity_presence_keys} || []}) >= 2,
+        'manifest advertises bounded HDLGenerator module_info identity key presence',
     );
     is(
         $manifest->{embedding}{typed_extensions}{schema_version},

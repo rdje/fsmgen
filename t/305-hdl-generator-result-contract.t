@@ -12,6 +12,8 @@ use FSM::Pipeline::HDLGenerator;
 use FSM::Support::HDLGeneratorResultContract qw(
     build_hdl_generator_result_contract
     hdl_generator_result_known_top_level_keys
+    hdl_generator_result_module_info_identity_keys
+    hdl_generator_result_source_info_identity_keys
 );
 
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
@@ -21,12 +23,23 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
     is($contract->{schema_version}, 1, 'contract exposes schema version');
     is($contract->{status}, 'bounded_top_level_presence', 'contract declares bounded top-level presence status');
     is($contract->{contract_source}, 'FSM::Support::HDLGeneratorResultContract', 'contract records its owner');
+    ok($contract->{nested_identity_slices_advertised}, 'contract advertises bounded nested identity slices');
     ok(!$contract->{stable_nested_content}, 'contract does not overpromise stable nested content');
     ok(!$contract->{full_result_json_safe}, 'contract does not claim the whole raw result is JSON-safe');
     is(
         $contract->{json_safe_export_surface},
         'semantic_exports.normalized_semantic_json',
         'contract points JSON consumers to normalized semantic JSON',
+    );
+    is_deeply(
+        $contract->{source_info_identity_presence_keys},
+        hdl_generator_result_source_info_identity_keys(),
+        'contract publishes bounded source_info identity keys',
+    );
+    is_deeply(
+        $contract->{module_info_identity_presence_keys},
+        hdl_generator_result_module_info_identity_keys(),
+        'contract publishes bounded module_info identity keys',
     );
 
     my %public = map { $_ => 1 } @{$contract->{public_top_level_presence_keys}};
@@ -110,6 +123,16 @@ sub assert_common_result_contract {
     for my $key (qw(module_info intent_hir lowered_rtl_ir structural_rtl_ir source_info resolved_package_imports statistics)) {
         is(ref($result->{$key}), 'HASH', "$args{module_name} result carries hashref $key");
     }
+    assert_keys_present(
+        $result->{source_info},
+        hdl_generator_result_source_info_identity_keys(),
+        "$args{module_name} source_info keeps bounded nested identity keys",
+    );
+    assert_keys_present(
+        $result->{module_info},
+        hdl_generator_result_module_info_identity_keys(),
+        "$args{module_name} module_info keeps bounded nested identity keys",
+    );
 
     is($result->{source_info}{kind}, $args{source_kind}, "$args{module_name} records source kind");
     is($result->{module_info}{module_name}, $args{module_name}, "$args{module_name} module_info records name");
@@ -129,4 +152,11 @@ sub assert_common_result_contract {
         $result->{structural_rtl_ir},
         "$args{module_name} module_info mirrors structural_rtl_ir",
     );
+}
+
+sub assert_keys_present {
+    my ($payload, $keys, $label) = @_;
+    for my $key (@{$keys || []}) {
+        ok(exists $payload->{$key}, "$label: keeps key $key");
+    }
 }

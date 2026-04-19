@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-19: HDLGenerator result contract now exposes bounded nested identity slices
+- [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm)
+  now advertises the bounded nested identity keys
+  `source_info.header` / `source_info.kind` and
+  `module_info.module_name` / `module_info.source_root_kind` beside the
+  already-bounded top-level result-key presence lists.
+- [t/305-hdl-generator-result-contract.t](/Users/richarddje/Documents/github/fsmgen/t/305-hdl-generator-result-contract.t)
+  and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+  now lock those nested identity slices for direct/composition in-process
+  results and for the manifest-facing embedding contract.
+- This is a narrow nested-identity widening only:
+  the broader raw result hash is still not JSON-safe as a whole, and deeper
+  nested compatibility branches remain intentionally outside the public
+  interchange promise.
+
 ## 2026-04-19: support_accounting now exposes a nested section_contract too
 - [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
   now advertises the bounded support-accounting owner through

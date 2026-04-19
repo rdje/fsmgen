@@ -114,7 +114,7 @@ and [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fs
 as the live owners for schema-versioned capability JSON plus its explicit top-level shell contract and bounded embedding/diagnostics/producer/semantic-exports/backend-validation/documentation/language-surface section contracts, bounded check-JSON
 reports plus their explicit key-presence contract, support accounting plus its explicit contract, optional external validation plus its explicit contract, bounded sanitized composition-report contracts, stable diagnostic-code
 metadata plus its explicit manifest-facing registry contract, bounded typed-extension/context contracts, bounded `HDLGenerator`
-result contracts, optional Verilator/Yosys generated-SystemVerilog validation,
+result contracts plus their nested identity-key slices, optional Verilator/Yosys generated-SystemVerilog validation,
 bounded normalized semantic JSON plus its explicit key-presence contract, and production
 support-accounting data. The manifest now also advertises the bounded
 support-accounting owner through `support_accounting.section_contract`, so that
@@ -224,7 +224,7 @@ Current thin-coordinator line counts:
 - [perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm): `232`
 - [perl/FSM/Support/DiagnosticCodeRegistryContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodeRegistryContract.pm): `80`
 - [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm): `108`
-- [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm): `77`
+- [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm): `91`
 - [perl/FSM/Support/HDLExternalValidation.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLExternalValidation.pm): `178`
 - [perl/FSM/Support/HDLExternalValidationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLExternalValidationContract.pm): `86`
 - [perl/FSM/Support/NormalizedSemanticReport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReport.pm): `362`

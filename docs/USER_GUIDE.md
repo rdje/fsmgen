@@ -1794,10 +1794,12 @@ For in-process embedders, it also exposes the bounded
 `HDLGenerator->generate_hdl_from_file(...)` result contract. That contract
 stabilizes top-level key presence for fields such as `hdl_code`, `module_info`,
 `intent_hir`, `lowered_rtl_ir`, `structural_rtl_ir`, `source_info`, and
-`resolved_package_imports`, but it deliberately does not claim the whole raw
-result hash is JSON-safe. Nested compatibility fields may still contain live
-CoreAST/AST objects; use `--emit-semantic-json` when the integration needs a
-sanitized machine interchange document.
+`resolved_package_imports`, plus the small nested identity slices
+`source_info.header`, `source_info.kind`, `module_info.module_name`, and
+`module_info.source_root_kind`, but it deliberately does not claim the whole
+raw result hash is JSON-safe. Nested compatibility fields may still contain
+live CoreAST/AST objects; use `--emit-semantic-json` when the integration
+needs a sanitized machine interchange document.
 The same manifest also advertises the bounded typed-extension/context contract:
 explicit object/module/config loading, the current hook names
 `after_parse_source` and `after_generate_result`, the stable context accessor

@@ -127,9 +127,12 @@ my $result = FSM::Pipeline::HDLGenerator->new(
 The bounded contract stabilizes top-level key presence for fields such as
 `hdl_code`, `module_info`, `intent_hir`, `lowered_rtl_ir`,
 `structural_rtl_ir`, `source_info`, and `resolved_package_imports`. It also
-explicitly classifies live/raw/unsanitized compatibility payloads such as
-`fsm_module`, `raw_ast`, `statistics`, `composition_spec`,
-`composition_plan`, and `composition_report`.
+stabilizes the small nested identity slices `source_info.header`,
+`source_info.kind`, `module_info.module_name`, and
+`module_info.source_root_kind`, while explicitly classifying live/raw/
+unsanitized compatibility payloads such as `fsm_module`, `raw_ast`,
+`statistics`, `composition_spec`, `composition_plan`, and
+`composition_report`.
 
 Do not treat the raw `HDLGenerator` result hash as a stable JSON document. Some
 nested branches still contain live CoreAST/AST objects for compatibility and

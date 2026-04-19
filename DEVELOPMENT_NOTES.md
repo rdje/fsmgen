@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-19: widen the HDLGenerator result contract only through nested identity slices
+- The raw `HDLGenerator->generate_hdl_from_file(...)` result is still too mixed
+  to freeze as one nested-object API:
+  - `source_info` stays small for direct roots but grows live composition
+    objects for top roots,
+  - `module_info` contains useful identity fields but also much broader live
+    semantic/backend detail,
+  - and `statistics` / package-import branches remain compatibility-heavy.
+- The honest next widening is therefore the smallest shared nested pocket that
+  embedders already rely on:
+  - `source_info.header`
+  - `source_info.kind`
+  - `module_info.module_name`
+  - `module_info.source_root_kind`
+- That gives downstream tools a stable nested identity seam without
+  pretending the rest of `source_info`, `module_info`, or other result
+  branches are now public interchange surfaces.
+
 ## 2026-04-19: regularize support_accounting with a nested section contract without breaking callers
 - `support_accounting` already had a bounded owner, but it was the one public
   manifest section that still exposed that owner only through merged inline
