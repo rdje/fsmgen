@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-19: public normalized semantic signal-analysis objects now have an explicit owner
+- Added
+  [perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm)
+  as the bounded owner for the nested `semantic.signal_analysis` object
+  emitted by successful public normalized semantic JSON.
+- [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm)
+  and [perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm)
+  now advertise that owner plus the bounded signal-analysis key family instead
+  of leaving the sanitized signal summary as anonymous payload knowledge.
+- The reachable `bin/fsmgen` support surface now includes that contract owner
+  too, moving the measured import-tree totals to `159` project files /
+  `158` `.pm` packages with `Support => 37`.
+
 ## 2026-04-19: public normalized semantic explicit-system-contract objects now have an explicit owner
 - Added
   [perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm)

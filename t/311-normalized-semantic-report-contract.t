@@ -40,6 +40,7 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_module_keys
     normalized_semantic_module_optional_metric_keys
     normalized_semantic_public_top_level_keys
+    normalized_semantic_signal_analysis_keys
     normalized_semantic_system_contract_keys
     normalized_semantic_symbol_contract_keys
     normalized_semantic_success_only_top_level_keys
@@ -50,8 +51,12 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_composition_keys
     normalized_semantic_payload_explicit_system_contract_keys
     normalized_semantic_payload_presence_keys
+    normalized_semantic_payload_signal_analysis_keys
     normalized_semantic_payload_system_contract_keys
     normalized_semantic_payload_symbol_contract_keys
+);
+use FSM::Support::NormalizedSemanticSignalAnalysisContract qw(
+    normalized_semantic_signal_analysis_presence_keys
 );
 use FSM::Support::NormalizedSemanticSystemContract qw(
     normalized_semantic_system_contract_presence_keys
@@ -111,6 +116,11 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         $contract->{explicit_system_contract_source},
         'FSM::Support::NormalizedSemanticExplicitSystemContract',
         'contract records the nested explicit-system-contract object owner',
+    );
+    is(
+        $contract->{signal_analysis_contract_source},
+        'FSM::Support::NormalizedSemanticSignalAnalysisContract',
+        'contract records the nested signal-analysis object owner',
     );
     is(
         $contract->{forward_ir_contract_source},
@@ -287,6 +297,21 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         'semantic payload explicit-system-contract keys map to the nested explicit-system-contract owner',
     );
     is_deeply(
+        $contract->{success_signal_analysis_presence_keys},
+        normalized_semantic_signal_analysis_keys(),
+        'contract publishes the bounded signal-analysis key list',
+    );
+    is_deeply(
+        normalized_semantic_signal_analysis_keys(),
+        normalized_semantic_signal_analysis_presence_keys(),
+        'normalized semantic signal-analysis keys map to the nested signal-analysis owner',
+    );
+    is_deeply(
+        normalized_semantic_payload_signal_analysis_keys(),
+        normalized_semantic_signal_analysis_presence_keys(),
+        'semantic payload signal-analysis keys map to the nested signal-analysis owner',
+    );
+    is_deeply(
         $contract->{success_system_contract_presence_keys},
         normalized_semantic_system_contract_keys(),
         'contract publishes the bounded system-contract key list',
@@ -445,6 +470,11 @@ subtest 'successful direct semantic JSON conforms to the bounded contract' => su
         'direct success module payload keeps bounded module keys',
     );
     assert_keys_present(
+        $decoded->{semantic}{signal_analysis},
+        normalized_semantic_signal_analysis_keys(),
+        'direct success semantic payload keeps bounded signal-analysis keys',
+    );
+    assert_keys_present(
         $decoded->{semantic}{explicit_system_contract},
         normalized_semantic_explicit_system_contract_keys(),
         'direct success semantic payload keeps bounded explicit-system-contract keys',
@@ -522,6 +552,11 @@ subtest 'successful composition semantic JSON conforms to the bounded contract' 
         $decoded->{semantic}{module},
         normalized_semantic_module_keys(),
         'composition success module payload keeps bounded module keys',
+    );
+    assert_keys_present(
+        $decoded->{semantic}{signal_analysis},
+        normalized_semantic_signal_analysis_keys(),
+        'composition success semantic payload keeps bounded signal-analysis keys',
     );
     assert_keys_present(
         $decoded->{semantic}{composition},

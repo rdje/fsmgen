@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-19: public signal-analysis summaries should have one explicit owner
+- Successful public normalized semantic JSON already emitted one real nested
+  `semantic.signal_analysis` object in practice for both direct roots and
+  composition tops: `inputs`, `outputs`, `single_bit`, and `multi_bit`.
+- Leaving that sanitized signal summary as just another hash inside the broader
+  semantic payload would keep one useful public branch without its own named
+  owner, which is the opposite of what `R13` is trying to achieve.
+- The more honest move is to give that nested signal-analysis summary one
+  bounded owner:
+  - one `semantic.signal_analysis` object contract,
+  - one published signal-analysis key list,
+  - and one explicit reminder that deeper entry shapes can widen later without
+    pretending the whole branch was accidental output.
+- That keeps widening deliberate:
+  - downstream tools can discover one explicit sanitized signal-analysis
+    surface instead of scraping sample semantic JSON,
+  - the broader semantic payload contract stops carrying that nested object
+    implicitly,
+  - and any later stabilization of per-entry signal fields can be named and
+    regression-backed separately.
+
 ## 2026-04-19: public explicit-system summaries should have one explicit owner
 - Successful public normalized semantic JSON already emitted one real nested
   `semantic.explicit_system_contract` object in practice for direct roots and

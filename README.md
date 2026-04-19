@@ -81,6 +81,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `perl/FSM/Support/NormalizedSemanticCompositionContract.pm` — bounded nested-object contract for the `semantic.composition` summary in successful public normalized semantic JSON composition sources.
 - `perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm` — bounded nested-object contract for the `semantic.explicit_system_contract` summary in successful public normalized semantic JSON when that authored explicit contract is preserved.
 - `perl/FSM/Support/NormalizedSemanticForwardIRContract.pm` — bounded nested-object contract for the `semantic.forward_ir` summary in successful public normalized semantic JSON.
+- `perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm` — bounded nested-object contract for the `semantic.signal_analysis` summary in successful public normalized semantic JSON.
 - `perl/FSM/Support/NormalizedSemanticSystemContract.pm` — bounded nested-object contract for the `semantic.system_contract` summary in successful public normalized semantic JSON.
 - `perl/FSM/Support/NormalizedSemanticSymbolContract.pm` — bounded nested-object contract for the optional `semantic.symbol_contract` summary in successful public normalized semantic JSON symbol-rich sources.
 - `perl/FSM/Support/NormalizedSemanticModuleContract.pm` — bounded nested-object contract for the `semantic.module` summary in successful public normalized semantic JSON.
@@ -200,6 +201,9 @@ The nested `semantic.explicit_system_contract` summary inside that payload now
 also has its own bounded owner when the authored explicit contract is
 preserved:
 [perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm).
+The nested `semantic.signal_analysis` summary inside that payload now also has
+its own bounded owner for the current sanitized signal families:
+[perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm).
 The nested `semantic.forward_ir` summary inside that payload now also has its
 own bounded owner for the current sanitized forward semantic projections:
 [perl/FSM/Support/NormalizedSemanticForwardIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticForwardIRContract.pm).

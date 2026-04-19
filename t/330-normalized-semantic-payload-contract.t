@@ -21,6 +21,9 @@ use FSM::Support::NormalizedSemanticModuleContract qw(
     normalized_semantic_module_optional_metric_keys
     normalized_semantic_module_presence_keys
 );
+use FSM::Support::NormalizedSemanticSignalAnalysisContract qw(
+    normalized_semantic_signal_analysis_presence_keys
+);
 use FSM::Support::NormalizedSemanticSystemContract qw(
     normalized_semantic_system_contract_presence_keys
 );
@@ -33,6 +36,7 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_explicit_system_contract_keys
     normalized_semantic_payload_forward_ir_keys
     normalized_semantic_payload_presence_keys
+    normalized_semantic_payload_signal_analysis_keys
     normalized_semantic_payload_system_contract_keys
     normalized_semantic_payload_symbol_contract_keys
 );
@@ -92,6 +96,11 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
         'contract records the nested forward-IR object owner',
     );
     is(
+        $contract->{signal_analysis_contract_source},
+        'FSM::Support::NormalizedSemanticSignalAnalysisContract',
+        'contract records the nested signal-analysis object owner',
+    );
+    is(
         $contract->{explicit_system_contract_source},
         'FSM::Support::NormalizedSemanticExplicitSystemContract',
         'contract records the nested explicit-system-contract object owner',
@@ -115,6 +124,16 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
         normalized_semantic_payload_explicit_system_contract_keys(),
         normalized_semantic_explicit_system_contract_presence_keys(),
         'semantic payload explicit-system-contract keys map to the nested explicit-system-contract owner',
+    );
+    is_deeply(
+        $contract->{signal_analysis_presence_keys},
+        normalized_semantic_payload_signal_analysis_keys(),
+        'contract publishes the bounded signal-analysis key list',
+    );
+    is_deeply(
+        normalized_semantic_payload_signal_analysis_keys(),
+        normalized_semantic_signal_analysis_presence_keys(),
+        'semantic payload signal-analysis keys map to the nested signal-analysis owner',
     );
     is_deeply(
         $contract->{system_contract_presence_keys},

@@ -177,8 +177,12 @@ nested-object contract for the success payload itself:
 [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm)
 owns the `module`, `system_contract`, `explicit_system_contract`,
 `signal_analysis`, and `forward_ir` keys, and the same owner also publishes
-the nested `explicit_system_contract`, `system_contract`, `forward_ir`, and
-optional `symbol_contract` plus `composition` key lists.
+the nested `explicit_system_contract`, `signal_analysis`, `system_contract`,
+`forward_ir`, and optional `symbol_contract` plus `composition` key lists.
+The nested `semantic.signal_analysis` summary inside that payload now also has
+its own bounded nested-object contract:
+[perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm)
+owns the current sanitized signal-family projection keys.
 The nested `semantic.explicit_system_contract` summary inside that payload now
 also has its own bounded nested-object contract when the authored explicit
 contract is preserved:

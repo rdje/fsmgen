@@ -193,6 +193,10 @@ now owns the success-only nested `semantic` object shape emitted by public
 normalized semantic JSON, including the published nested
 `explicit_system_contract`, `system_contract`, `forward_ir`, and optional
 `symbol_contract` plus `composition` key lists.
+[perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm)
+now owns the nested `semantic.signal_analysis` object shape emitted by
+successful public normalized semantic JSON, including the published
+signal-analysis key family.
 [perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm)
 now owns the nested `semantic.explicit_system_contract` object shape when
 successful public normalized semantic JSON preserves the authored explicit
