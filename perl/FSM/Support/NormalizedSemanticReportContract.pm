@@ -5,6 +5,13 @@ use warnings;
 
 use Exporter 'import';
 use JSON::PP ();
+use FSM::Support::CheckFailureDiagnosticContract qw(
+    check_failure_diagnostic_matched_presence_keys
+    check_failure_diagnostic_optional_artifact_keys
+    check_failure_diagnostic_presence_keys
+    check_failure_diagnostic_support_accounting_matched_presence_keys
+    check_failure_diagnostic_support_accounting_presence_keys
+);
 use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_composition_keys
     normalized_semantic_payload_forward_ir_keys
@@ -26,7 +33,12 @@ use FSM::Support::SupportAccountingMatchContract qw(
 our @EXPORT_OK = qw(
     build_normalized_semantic_report_contract
     normalized_semantic_composition_keys
+    normalized_semantic_failure_diagnostic_keys
+    normalized_semantic_failure_diagnostic_optional_artifact_keys
+    normalized_semantic_failure_diagnostic_support_accounting_keys
     normalized_semantic_forward_ir_keys
+    normalized_semantic_matched_failure_diagnostic_keys
+    normalized_semantic_matched_failure_diagnostic_support_accounting_keys
     normalized_semantic_matched_failure_support_accounting_keys
     normalized_semantic_matched_success_support_accounting_keys
     normalized_semantic_public_top_level_keys
@@ -59,6 +71,7 @@ sub build_normalized_semantic_report_contract {
         sanitizes_private_perl_objects => JSON::PP::true,
         public_layers => [qw(intent_hir lowered_rtl_ir structural_rtl_ir)],
         command_contract_source => 'FSM::Support::ReportCommandContract',
+        failure_diagnostic_contract_source => 'FSM::Support::CheckFailureDiagnosticContract',
         generated_output_contract_source => 'FSM::Support::ReportGeneratedOutputContract',
         semantic_contract_source => 'FSM::Support::NormalizedSemanticPayloadContract',
         producer_contract_source => 'FSM::Support::ReportProducerContract',
@@ -72,6 +85,11 @@ sub build_normalized_semantic_report_contract {
         source_presence_keys => report_source_presence_keys(),
         success_only_top_level_keys => normalized_semantic_success_only_top_level_keys(),
         support_accounting_presence_keys => normalized_semantic_support_accounting_keys(),
+        failure_diagnostic_presence_keys => normalized_semantic_failure_diagnostic_keys(),
+        matched_failure_diagnostic_presence_keys => normalized_semantic_matched_failure_diagnostic_keys(),
+        failure_diagnostic_optional_artifact_keys => normalized_semantic_failure_diagnostic_optional_artifact_keys(),
+        failure_diagnostic_support_accounting_presence_keys => normalized_semantic_failure_diagnostic_support_accounting_keys(),
+        matched_failure_diagnostic_support_accounting_presence_keys => normalized_semantic_matched_failure_diagnostic_support_accounting_keys(),
         matched_success_support_accounting_presence_keys => normalized_semantic_matched_success_support_accounting_keys(),
         matched_failure_support_accounting_presence_keys => normalized_semantic_matched_failure_support_accounting_keys(),
         success_semantic_presence_keys => normalized_semantic_payload_presence_keys(),
@@ -83,6 +101,7 @@ sub build_normalized_semantic_report_contract {
         guidance => [
             'Treat the listed top-level and bounded nested key-presence lists as the public normalized semantic JSON contract for schema version 1.',
             'The nested command object is shared with check JSON and stays bounded through FSM::Support::ReportCommandContract.',
+            'The nested failure diagnostic object is shared with check JSON and stays bounded through FSM::Support::CheckFailureDiagnosticContract.',
             'The nested generated_output object is shared with check JSON and stays bounded through FSM::Support::ReportGeneratedOutputContract.',
             'The nested semantic success payload stays bounded through FSM::Support::NormalizedSemanticPayloadContract.',
             'The nested producer object is shared with check JSON and stays bounded through FSM::Support::ReportProducerContract.',
@@ -116,6 +135,26 @@ sub normalized_semantic_success_only_top_level_keys {
 
 sub normalized_semantic_support_accounting_keys {
     return support_accounting_match_common_keys();
+}
+
+sub normalized_semantic_failure_diagnostic_keys {
+    return check_failure_diagnostic_presence_keys();
+}
+
+sub normalized_semantic_matched_failure_diagnostic_keys {
+    return check_failure_diagnostic_matched_presence_keys();
+}
+
+sub normalized_semantic_failure_diagnostic_optional_artifact_keys {
+    return check_failure_diagnostic_optional_artifact_keys();
+}
+
+sub normalized_semantic_failure_diagnostic_support_accounting_keys {
+    return check_failure_diagnostic_support_accounting_presence_keys();
+}
+
+sub normalized_semantic_matched_failure_diagnostic_support_accounting_keys {
+    return check_failure_diagnostic_support_accounting_matched_presence_keys();
 }
 
 sub normalized_semantic_matched_success_support_accounting_keys {

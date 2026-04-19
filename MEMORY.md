@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-19: public failure diagnostic objects are now explicitly shared across both public JSON report surfaces
+- [perl/FSM/Support/CheckFailureDiagnosticContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckFailureDiagnosticContract.pm)
+  now explicitly covers failed public normalized semantic JSON reports too,
+  not just failed public check JSON reports.
+- [perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm)
+  now advertises that shared owner plus the bounded failure-diagnostic and
+  nested support-accounting key families instead of leaving semantic-export
+  failures as an implicit reuse detail.
+- The reachable `bin/fsmgen` support surface did not gain new packages in this
+  slice; it still stands at `152` project files / `151` `.pm` packages with
+  `Support => 30`.
+
 ## 2026-04-19: public check failure diagnostic objects now have an explicit owner
 - Added
   [perl/FSM/Support/CheckFailureDiagnosticContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckFailureDiagnosticContract.pm)

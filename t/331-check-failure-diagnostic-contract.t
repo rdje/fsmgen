@@ -34,9 +34,14 @@ subtest 'contract exposes the bounded check failure diagnostic object' => sub {
         [
             qw(
                 FSM::Support::CheckDiagnostics
+                FSM::Support::NormalizedSemanticReport
             ),
         ],
-        'contract records the public report builder that reuses the nested diagnostic object',
+        'contract records the public report builders that reuse the nested diagnostic object',
+    );
+    ok(
+        $contract->{reused_across_public_reports},
+        'contract says the nested failure diagnostic object is reused across public reports',
     );
     is(
         $contract->{support_accounting_contract_source},

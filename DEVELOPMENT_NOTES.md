@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-19: public failure diagnostics should be shared explicitly when the payload is literally reused
+- Failed public normalized semantic JSON reports already reused the exact same
+  nested `diagnostic` payload produced for failed public check JSON reports.
+- Leaving that reuse implicit would create a subtle contract gap: one public
+  report surface would advertise the nested owner, while the other would only
+  “happen to” reuse it.
+- The more honest move is to promote that nested object to an explicitly shared
+  public report contract:
+  - one bounded failure-diagnostic owner,
+  - advertised by both public report surfaces,
+  - with the semantic-export contract publishing the same nested diagnostic and
+    nested support-accounting key families directly.
+- That keeps widening deliberate across both surfaces:
+  - downstream tools can trust one failure-diagnostic payload shape regardless
+    of which public JSON report failed,
+  - semantic-export failures stop being an undocumented piggyback on check
+    diagnostics,
+  - and future widening has to stay regression-backed on both report families.
+
 ## 2026-04-19: public check failure diagnostics should have one explicit owner
 - Public check JSON already emitted one real nested failure `diagnostic`
   object in practice: stable code/summary metadata, source/artifact hints,

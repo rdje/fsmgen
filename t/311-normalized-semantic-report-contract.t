@@ -11,10 +11,20 @@ use JSON::PP qw(decode_json);
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
+use FSM::Support::CheckFailureDiagnosticContract qw(
+    check_failure_diagnostic_matched_presence_keys
+    check_failure_diagnostic_presence_keys
+    check_failure_diagnostic_support_accounting_matched_presence_keys
+    check_failure_diagnostic_support_accounting_presence_keys
+);
 use FSM::Support::NormalizedSemanticReportContract qw(
     build_normalized_semantic_report_contract
     normalized_semantic_composition_keys
+    normalized_semantic_failure_diagnostic_keys
+    normalized_semantic_failure_diagnostic_support_accounting_keys
     normalized_semantic_forward_ir_keys
+    normalized_semantic_matched_failure_diagnostic_keys
+    normalized_semantic_matched_failure_diagnostic_support_accounting_keys
     normalized_semantic_matched_failure_support_accounting_keys
     normalized_semantic_matched_success_support_accounting_keys
     normalized_semantic_public_top_level_keys
@@ -59,6 +69,11 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         $contract->{command_contract_source},
         'FSM::Support::ReportCommandContract',
         'contract records the shared command nested-object owner',
+    );
+    is(
+        $contract->{failure_diagnostic_contract_source},
+        'FSM::Support::CheckFailureDiagnosticContract',
+        'contract records the shared failure diagnostic nested-object owner',
     );
     is(
         $contract->{generated_output_contract_source},
@@ -128,6 +143,46 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         $contract->{support_accounting_presence_keys},
         normalized_semantic_support_accounting_keys(),
         'contract publishes the common support-accounting key list',
+    );
+    is_deeply(
+        $contract->{failure_diagnostic_presence_keys},
+        normalized_semantic_failure_diagnostic_keys(),
+        'contract publishes the bounded failure-diagnostic key list',
+    );
+    is_deeply(
+        normalized_semantic_failure_diagnostic_keys(),
+        check_failure_diagnostic_presence_keys(),
+        'normalized semantic failure-diagnostic keys map to the shared failure-diagnostic owner',
+    );
+    is_deeply(
+        $contract->{matched_failure_diagnostic_presence_keys},
+        normalized_semantic_matched_failure_diagnostic_keys(),
+        'contract publishes the matched failure-diagnostic key list',
+    );
+    is_deeply(
+        normalized_semantic_matched_failure_diagnostic_keys(),
+        check_failure_diagnostic_matched_presence_keys(),
+        'normalized semantic matched failure-diagnostic keys map to the shared failure-diagnostic owner',
+    );
+    is_deeply(
+        $contract->{failure_diagnostic_support_accounting_presence_keys},
+        normalized_semantic_failure_diagnostic_support_accounting_keys(),
+        'contract publishes the common failure-diagnostic support-accounting key list',
+    );
+    is_deeply(
+        normalized_semantic_failure_diagnostic_support_accounting_keys(),
+        check_failure_diagnostic_support_accounting_presence_keys(),
+        'normalized semantic failure-diagnostic support-accounting keys map to the shared failure-diagnostic owner',
+    );
+    is_deeply(
+        $contract->{matched_failure_diagnostic_support_accounting_presence_keys},
+        normalized_semantic_matched_failure_diagnostic_support_accounting_keys(),
+        'contract publishes the matched failure-diagnostic support-accounting key list',
+    );
+    is_deeply(
+        normalized_semantic_matched_failure_diagnostic_support_accounting_keys(),
+        check_failure_diagnostic_support_accounting_matched_presence_keys(),
+        'normalized semantic matched failure-diagnostic support-accounting keys map to the shared failure-diagnostic owner',
     );
     is_deeply(
         $contract->{matched_success_support_accounting_presence_keys},
@@ -373,6 +428,27 @@ subtest 'failed semantic JSON conforms to the bounded contract' => sub {
         $decoded->{support_accounting},
         normalized_semantic_matched_failure_support_accounting_keys(),
         'failed report keeps matched failure support-accounting keys',
+    );
+    is(scalar(@{$decoded->{diagnostics}}), 1, 'failed report keeps one diagnostic');
+    assert_keys_present(
+        $decoded->{diagnostics}[0],
+        normalized_semantic_failure_diagnostic_keys(),
+        'failed report diagnostic keeps bounded failure-diagnostic keys',
+    );
+    assert_keys_present(
+        $decoded->{diagnostics}[0],
+        normalized_semantic_matched_failure_diagnostic_keys(),
+        'failed report diagnostic keeps matched failure-diagnostic keys',
+    );
+    assert_keys_present(
+        $decoded->{diagnostics}[0]{support_accounting},
+        normalized_semantic_failure_diagnostic_support_accounting_keys(),
+        'failed report diagnostic keeps common nested support-accounting keys',
+    );
+    assert_keys_present(
+        $decoded->{diagnostics}[0]{support_accounting},
+        normalized_semantic_matched_failure_diagnostic_support_accounting_keys(),
+        'failed report diagnostic keeps matched nested support-accounting keys',
     );
     ok(!exists $decoded->{semantic}, 'failed report omits semantic payload');
     ok(!$decoded->{success}, 'failed report keeps success false');

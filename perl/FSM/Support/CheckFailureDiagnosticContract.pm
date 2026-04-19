@@ -29,14 +29,17 @@ sub build_check_failure_diagnostic_contract {
         report_sources => [
             qw(
                 FSM::Support::CheckDiagnostics
+                FSM::Support::NormalizedSemanticReport
             ),
         ],
         entrypoints => {
             cli => [
                 './bin/fsmgen --strict --check --json path/to/file.fsm',
+                './bin/fsmgen --strict --emit-semantic-json path/to/file.fsm',
             ],
             in_process => [
                 'FSM::Support::CheckDiagnostics::build_check_failure_report(...)',
+                'FSM::Support::NormalizedSemanticReport::build_normalized_semantic_failure_report(...)',
             ],
         },
         support_accounting_contract_source => 'FSM::Support::SupportAccountingMatchContract',
@@ -46,8 +49,9 @@ sub build_check_failure_diagnostic_contract {
         support_accounting_presence_keys => check_failure_diagnostic_support_accounting_presence_keys(),
         matched_support_accounting_presence_keys => check_failure_diagnostic_support_accounting_matched_presence_keys(),
         json_safe_when_embedded_in_public_reports => JSON::PP::true,
+        reused_across_public_reports => JSON::PP::true,
         guidance => [
-            q{Treat this contract as the bounded nested failure `diagnostic` object used inside public check JSON reports.},
+            q{Treat this contract as the bounded nested failure `diagnostic` object shared by the public check JSON and normalized semantic JSON report surfaces.},
             'The bounded public promise covers the core stable diagnostic identity, the matched-only corpus identity keys, the optional extracted artifact file keys, and the nested support-accounting match object.',
             'Widen this nested object only when the public failure-report surface needs more stable metadata and the change is backed by regression coverage.',
         ],

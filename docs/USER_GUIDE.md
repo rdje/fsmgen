@@ -1728,6 +1728,8 @@ Failed public check JSON reports now also have one bounded nested `diagnostic`
 object owner for the core stable diagnostic fields, matched-only corpus keys,
 optional extracted artifact paths, and nested support-accounting metadata:
 [perl/FSM/Support/CheckFailureDiagnosticContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckFailureDiagnosticContract.pm).
+Failed public normalized semantic JSON reports now explicitly reuse that same
+bounded nested `diagnostic` owner too.
 Successful public normalized semantic JSON reports now also have one bounded
 nested `semantic` object owner for module/system metadata, signal analysis,
 and the forward-IR projection:

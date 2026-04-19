@@ -170,6 +170,8 @@ contract for the failure payload itself:
 owns the core stable diagnostic keys plus the matched-only, optional-artifact,
 and nested support-accounting key lists emitted under each `diagnostic`
 object.
+Failed public normalized semantic JSON reports now explicitly reuse that same
+bounded nested failure-diagnostic contract too.
 Successful public normalized semantic JSON reports now also have one bounded
 nested-object contract for the success payload itself:
 [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm)
