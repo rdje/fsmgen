@@ -5,6 +5,11 @@ use warnings;
 
 use Exporter 'import';
 use JSON::PP ();
+use FSM::Support::SupportAccountingMatchContract qw(
+    support_accounting_match_common_keys
+    support_accounting_match_failure_keys
+    support_accounting_match_success_keys
+);
 
 our @EXPORT_OK = qw(
     build_check_diagnostics_contract
@@ -44,6 +49,7 @@ sub build_check_diagnostics_contract {
         emits_support_accounting_object => JSON::PP::true,
         emits_success_support_accounting_object => JSON::PP::true,
         emits_failure_diagnostic_support_accounting_object => JSON::PP::true,
+        support_accounting_contract_source => 'FSM::Support::SupportAccountingMatchContract',
         public_top_level_presence_keys => check_json_public_top_level_keys(),
         success_only_top_level_keys => check_json_success_only_top_level_keys(),
         success_result_presence_keys => check_json_success_result_keys(),
@@ -99,22 +105,11 @@ sub check_json_success_result_keys {
 }
 
 sub check_json_success_support_accounting_keys {
-    return [
-        qw(matched),
-    ];
+    return support_accounting_match_common_keys();
 }
 
 sub check_json_matched_success_support_accounting_keys {
-    return [
-        qw(
-            entry_id
-            family
-            coverage
-            classification
-            source_kind
-            strict_supported
-        ),
-    ];
+    return support_accounting_match_success_keys();
 }
 
 sub check_json_failure_diagnostic_keys {
@@ -156,22 +151,11 @@ sub check_json_failure_diagnostic_optional_artifact_keys {
 }
 
 sub check_json_failure_diagnostic_support_accounting_keys {
-    return [
-        qw(matched),
-    ];
+    return support_accounting_match_common_keys();
 }
 
 sub check_json_matched_failure_support_accounting_keys {
-    return [
-        qw(
-            entry_id
-            family
-            coverage
-            classification
-            diagnostic_code
-            migration_hint_available
-        ),
-    ];
+    return support_accounting_match_failure_keys();
 }
 
 1;

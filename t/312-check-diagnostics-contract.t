@@ -23,6 +23,11 @@ use FSM::Support::CheckDiagnosticsContract qw(
     check_json_success_result_keys
     check_json_success_support_accounting_keys
 );
+use FSM::Support::SupportAccountingMatchContract qw(
+    support_accounting_match_common_keys
+    support_accounting_match_failure_keys
+    support_accounting_match_success_keys
+);
 
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
 my $tempdir = tempdir(CLEANUP => 1);
@@ -49,6 +54,11 @@ subtest 'contract exposes the bounded check JSON surface' => sub {
         $contract->{emits_failure_diagnostic_support_accounting_object},
         'contract says failed diagnostics carry support accounting',
     );
+    is(
+        $contract->{support_accounting_contract_source},
+        'FSM::Support::SupportAccountingMatchContract',
+        'contract records the shared support-accounting nested-object owner',
+    );
     ok($contract->{full_report_json_safe}, 'contract says the emitted report is JSON-safe');
     ok(
         !$contract->{full_diagnostic_schema_stable},
@@ -72,12 +82,12 @@ subtest 'contract exposes the bounded check JSON surface' => sub {
     );
     is_deeply(
         $contract->{success_support_accounting_presence_keys},
-        check_json_success_support_accounting_keys(),
+        support_accounting_match_common_keys(),
         'contract publishes the common success support-accounting keys',
     );
     is_deeply(
         $contract->{matched_success_support_accounting_presence_keys},
-        check_json_matched_success_support_accounting_keys(),
+        support_accounting_match_success_keys(),
         'contract publishes the matched success support-accounting keys',
     );
     is_deeply(
@@ -92,12 +102,12 @@ subtest 'contract exposes the bounded check JSON surface' => sub {
     );
     is_deeply(
         $contract->{failure_diagnostic_support_accounting_presence_keys},
-        check_json_failure_diagnostic_support_accounting_keys(),
+        support_accounting_match_common_keys(),
         'contract publishes the common failure support-accounting keys',
     );
     is_deeply(
         $contract->{matched_failure_diagnostic_support_accounting_presence_keys},
-        check_json_matched_failure_support_accounting_keys(),
+        support_accounting_match_failure_keys(),
         'contract publishes the matched failure support-accounting keys',
     );
 };

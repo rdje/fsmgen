@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-19: support-accounting match objects should have one shared public owner
+- The public `support_accounting` objects emitted by check JSON and normalized
+  semantic JSON were already support-accounted and regression-covered, but
+  their nested shape rules were effectively duplicated across the two report
+  contracts.
+- The more honest `R13` move is to split out one reusable bounded owner for the
+  shared nested object:
+  - one common `matched` key,
+  - one matched-success identity family,
+  - and one matched-failure diagnostic identity family.
+- That keeps widening deliberate:
+  - downstream tools can discover one shared nested-object contract,
+  - both report contracts can reuse that owner instead of drifting separately,
+  - and future widening of the shared `support_accounting` object only happens
+    once, backed by the same regression corpus truth.
+
 ## 2026-04-19: widen the HDLGenerator result contract only through nested identity slices
 - The raw `HDLGenerator->generate_hdl_from_file(...)` result is still too mixed
   to freeze as one nested-object API:

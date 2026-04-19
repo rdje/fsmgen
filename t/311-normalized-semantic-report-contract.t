@@ -15,9 +15,12 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     build_normalized_semantic_report_contract
     normalized_semantic_composition_keys
     normalized_semantic_forward_ir_keys
+    normalized_semantic_matched_failure_support_accounting_keys
+    normalized_semantic_matched_success_support_accounting_keys
     normalized_semantic_public_top_level_keys
     normalized_semantic_success_only_top_level_keys
     normalized_semantic_success_semantic_keys
+    normalized_semantic_support_accounting_keys
 );
 
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
@@ -40,6 +43,11 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
     );
     ok(!$contract->{emits_hdl}, 'contract says normalized semantic JSON emits no HDL');
     ok($contract->{emits_support_accounting_object}, 'contract says normalized semantic JSON emits support accounting');
+    is(
+        $contract->{support_accounting_contract_source},
+        'FSM::Support::SupportAccountingMatchContract',
+        'contract records the shared support-accounting nested-object owner',
+    );
     ok($contract->{failure_omits_semantic_payload}, 'contract says failed reports omit semantic payload');
     ok($contract->{full_report_json_safe}, 'contract says the emitted report is JSON-safe');
     ok(!$contract->{full_export_stable}, 'contract keeps full export stabilization out of the bounded promise');
@@ -53,6 +61,21 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         $contract->{success_only_top_level_keys},
         normalized_semantic_success_only_top_level_keys(),
         'contract publishes the success-only top-level key list',
+    );
+    is_deeply(
+        $contract->{support_accounting_presence_keys},
+        normalized_semantic_support_accounting_keys(),
+        'contract publishes the common support-accounting key list',
+    );
+    is_deeply(
+        $contract->{matched_success_support_accounting_presence_keys},
+        normalized_semantic_matched_success_support_accounting_keys(),
+        'contract publishes the matched success support-accounting key list',
+    );
+    is_deeply(
+        $contract->{matched_failure_support_accounting_presence_keys},
+        normalized_semantic_matched_failure_support_accounting_keys(),
+        'contract publishes the matched failure support-accounting key list',
     );
     is_deeply(
         $contract->{success_semantic_presence_keys},
@@ -133,6 +156,11 @@ subtest 'successful direct semantic JSON conforms to the bounded contract' => su
         'direct success report keeps bounded top-level keys',
     );
     assert_keys_present(
+        $decoded->{support_accounting},
+        normalized_semantic_support_accounting_keys(),
+        'direct success report keeps common support-accounting keys',
+    );
+    assert_keys_present(
         $decoded,
         normalized_semantic_success_only_top_level_keys(),
         'direct success report keeps success-only top-level keys',
@@ -167,6 +195,16 @@ subtest 'successful composition semantic JSON conforms to the bounded contract' 
         'composition success report keeps bounded top-level keys',
     );
     assert_keys_present(
+        $decoded->{support_accounting},
+        normalized_semantic_support_accounting_keys(),
+        'composition success report keeps common support-accounting keys',
+    );
+    assert_keys_present(
+        $decoded->{support_accounting},
+        normalized_semantic_matched_success_support_accounting_keys(),
+        'composition success report keeps matched support-accounting keys',
+    );
+    assert_keys_present(
         $decoded->{semantic},
         normalized_semantic_success_semantic_keys(),
         'composition success semantic payload keeps bounded semantic keys',
@@ -188,6 +226,16 @@ subtest 'failed semantic JSON conforms to the bounded contract' => sub {
         $decoded,
         normalized_semantic_public_top_level_keys(),
         'failed report keeps bounded top-level keys',
+    );
+    assert_keys_present(
+        $decoded->{support_accounting},
+        normalized_semantic_support_accounting_keys(),
+        'failed report keeps common support-accounting keys',
+    );
+    assert_keys_present(
+        $decoded->{support_accounting},
+        normalized_semantic_matched_failure_support_accounting_keys(),
+        'failed report keeps matched failure support-accounting keys',
     );
     ok(!exists $decoded->{semantic}, 'failed report omits semantic payload');
     ok(!$decoded->{success}, 'failed report keeps success false');

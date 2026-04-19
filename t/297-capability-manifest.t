@@ -220,6 +220,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         $manifest->{diagnostics}{check_json}{emits_success_support_accounting_object},
         'manifest says check JSON emits a success support-accounting object',
     );
+    is(
+        $manifest->{diagnostics}{check_json}{support_accounting_contract_source},
+        'FSM::Support::SupportAccountingMatchContract',
+        'manifest records the shared check-JSON support-accounting nested-object owner',
+    );
     ok(
         $manifest->{diagnostics}{check_json}{supported_smoke_corpus_covered},
         'manifest says check JSON is covered across supported-smoke corpus entries',
@@ -264,6 +269,18 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         scalar(@{$manifest->{diagnostics}{check_json}{failure_diagnostic_presence_keys} || []}) >= 9,
         'manifest advertises bounded check JSON failure-diagnostic key presence',
     );
+    ok(
+        scalar(@{$manifest->{diagnostics}{check_json}{success_support_accounting_presence_keys} || []}) >= 1,
+        'manifest advertises bounded check JSON common support-accounting key presence',
+    );
+    ok(
+        scalar(@{$manifest->{diagnostics}{check_json}{matched_success_support_accounting_presence_keys} || []}) >= 6,
+        'manifest advertises bounded check JSON matched success support-accounting key presence',
+    );
+    ok(
+        scalar(@{$manifest->{diagnostics}{check_json}{matched_failure_diagnostic_support_accounting_presence_keys} || []}) >= 6,
+        'manifest advertises bounded check JSON matched failure support-accounting key presence',
+    );
     is(
         $manifest->{semantic_exports}{normalized_semantic_json}{schema_version},
         1,
@@ -281,6 +298,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     ok(
         $manifest->{semantic_exports}{normalized_semantic_json}{emits_support_accounting_object},
         'manifest says normalized semantic JSON emits support accounting',
+    );
+    is(
+        $manifest->{semantic_exports}{normalized_semantic_json}{support_accounting_contract_source},
+        'FSM::Support::SupportAccountingMatchContract',
+        'manifest records the shared normalized-semantic support-accounting nested-object owner',
     );
     ok(
         $manifest->{semantic_exports}{normalized_semantic_json}{failure_diagnostics_reuse_stable_codes},
@@ -319,6 +341,18 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     ok(
         scalar(@{$manifest->{semantic_exports}{normalized_semantic_json}{success_semantic_presence_keys} || []}) >= 5,
         'manifest advertises bounded normalized semantic success payload key presence',
+    );
+    ok(
+        scalar(@{$manifest->{semantic_exports}{normalized_semantic_json}{support_accounting_presence_keys} || []}) >= 1,
+        'manifest advertises bounded normalized semantic common support-accounting key presence',
+    );
+    ok(
+        scalar(@{$manifest->{semantic_exports}{normalized_semantic_json}{matched_success_support_accounting_presence_keys} || []}) >= 6,
+        'manifest advertises bounded normalized semantic matched success support-accounting key presence',
+    );
+    ok(
+        scalar(@{$manifest->{semantic_exports}{normalized_semantic_json}{matched_failure_support_accounting_presence_keys} || []}) >= 6,
+        'manifest advertises bounded normalized semantic matched failure support-accounting key presence',
     );
     ok(
         !$manifest->{semantic_exports}{normalized_semantic_json}{full_export_stable},

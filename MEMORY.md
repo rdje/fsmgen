@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-19: public support-accounting match objects now have a shared owner
+- Added
+  [perl/FSM/Support/SupportAccountingMatchContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingMatchContract.pm)
+  as the shared bounded owner for the nested `support_accounting` match-object
+  shape reused by both check JSON and normalized semantic JSON.
+- [perl/FSM/Support/CheckDiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnosticsContract.pm)
+  and [perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm)
+  now both advertise that shared owner plus the bounded matched
+  success/failure key lists instead of carrying separate duplicated nested
+  shape definitions.
+- The reachable `bin/fsmgen` support surface now includes that contract owner
+  too, moving the measured import-tree totals to `145` project files /
+  `144` `.pm` packages with `Support => 23`.
+
 ## 2026-04-19: HDLGenerator result contract now exposes bounded nested identity slices
 - [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm)
   now advertises the bounded nested identity keys

@@ -169,6 +169,9 @@ locks the bounded public key-presence promise for that same command surface.
 is now the explicit owner for the common top-level keys plus the bounded
 success-result, success support-accounting, and failure-diagnostic key lists
 advertised through `--capability-manifest`.
+[perl/FSM/Support/SupportAccountingMatchContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingMatchContract.pm)
+now owns the shared nested `support_accounting` match-object shape reused by
+both check JSON and normalized semantic JSON.
 
 The first bounded normalized semantic JSON path reuses the same
 support-accounting bridge for accepted corpus sources:

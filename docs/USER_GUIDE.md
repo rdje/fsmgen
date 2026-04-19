@@ -1703,6 +1703,9 @@ expected-failure diagnostic codes, documentation pointers, and intentionally
 blocked/not-yet-public surfaces share one source with the regression catalog.
 It also advertises which bounded machine-readable surfaces have current
 supported-corpus coverage, including check JSON and normalized semantic JSON.
+Those two public JSON/report surfaces now also share one bounded nested-object
+owner for their `support_accounting` match payloads:
+[perl/FSM/Support/SupportAccountingMatchContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingMatchContract.pm).
 The bounded contract for the manifest's `support_accounting` section now has
 its own explicit owner in
 [perl/FSM/Support/SupportAccountingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingContract.pm).
@@ -1800,6 +1803,11 @@ stabilizes top-level key presence for fields such as `hdl_code`, `module_info`,
 raw result hash is JSON-safe. Nested compatibility fields may still contain
 live CoreAST/AST objects; use `--emit-semantic-json` when the integration
 needs a sanitized machine interchange document.
+The public `support_accounting` match objects emitted by both `--check --json`
+and `--emit-semantic-json` now share one bounded nested-object contract too:
+[perl/FSM/Support/SupportAccountingMatchContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingMatchContract.pm)
+owns the common `matched` key plus the success-side and failure-side matched
+identity keys advertised through those two report contracts.
 The same manifest also advertises the bounded typed-extension/context contract:
 explicit object/module/config loading, the current hook names
 `after_parse_source` and `after_generate_result`, the stable context accessor

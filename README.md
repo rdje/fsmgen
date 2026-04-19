@@ -84,6 +84,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `perl/FSM/Support/HDLExternalValidationContract.pm` — bounded external validation contract advertised through the capability manifest.
 - `perl/FSM/Support/NormalizedSemanticReport.pm` — bounded normalized semantic JSON report builder for downstream tool integration.
 - `perl/FSM/Support/NormalizedSemanticReportContract.pm` — bounded normalized semantic JSON key-presence contract advertised through the capability manifest.
+- `perl/FSM/Support/SupportAccountingMatchContract.pm` — shared bounded nested-object contract for public support-accounting match payloads in check JSON and normalized semantic JSON.
 - `perl/FSM/Support/SupportAccountingContract.pm` — bounded support-accounting section contract advertised through the capability manifest.
 - `perl/FSM/Support/RegressionCorpus.pm` — production support-accounting catalog owner consumed by the manifest and regression tests.
 - `perl/FSM/SourceClassifier.pm` — top-level source-kind classification for FSM vs composition inputs.
@@ -148,6 +149,9 @@ The bounded machine-readable surfaces are backed by support accounting:
 `--check --json` is corpus-covered across supported, strict-supported, and
 expected-failure entries, while `--emit-semantic-json` is corpus-covered across
 current supported, strict-supported, and expected-failure entries.
+Those two public JSON/report surfaces now also share one bounded nested-object
+owner for their `support_accounting` match payloads:
+[perl/FSM/Support/SupportAccountingMatchContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingMatchContract.pm).
 The manifest-facing stable diagnostic-code registry now has its own explicit
 bounded contract owner in
 [perl/FSM/Support/DiagnosticCodeRegistryContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodeRegistryContract.pm),

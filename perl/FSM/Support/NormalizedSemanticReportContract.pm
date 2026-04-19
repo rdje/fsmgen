@@ -5,14 +5,22 @@ use warnings;
 
 use Exporter 'import';
 use JSON::PP ();
+use FSM::Support::SupportAccountingMatchContract qw(
+    support_accounting_match_common_keys
+    support_accounting_match_failure_keys
+    support_accounting_match_success_keys
+);
 
 our @EXPORT_OK = qw(
     build_normalized_semantic_report_contract
     normalized_semantic_composition_keys
     normalized_semantic_forward_ir_keys
+    normalized_semantic_matched_failure_support_accounting_keys
+    normalized_semantic_matched_success_support_accounting_keys
     normalized_semantic_public_top_level_keys
     normalized_semantic_success_only_top_level_keys
     normalized_semantic_success_semantic_keys
+    normalized_semantic_support_accounting_keys
 );
 
 sub build_normalized_semantic_report_contract {
@@ -38,8 +46,12 @@ sub build_normalized_semantic_report_contract {
         failure_diagnostics_reuse_stable_codes => JSON::PP::true,
         sanitizes_private_perl_objects => JSON::PP::true,
         public_layers => [qw(intent_hir lowered_rtl_ir structural_rtl_ir)],
+        support_accounting_contract_source => 'FSM::Support::SupportAccountingMatchContract',
         public_top_level_presence_keys => normalized_semantic_public_top_level_keys(),
         success_only_top_level_keys => normalized_semantic_success_only_top_level_keys(),
+        support_accounting_presence_keys => normalized_semantic_support_accounting_keys(),
+        matched_success_support_accounting_presence_keys => normalized_semantic_matched_success_support_accounting_keys(),
+        matched_failure_support_accounting_presence_keys => normalized_semantic_matched_failure_support_accounting_keys(),
         success_semantic_presence_keys => normalized_semantic_success_semantic_keys(),
         success_forward_ir_presence_keys => normalized_semantic_forward_ir_keys(),
         composition_presence_keys => normalized_semantic_composition_keys(),
@@ -73,6 +85,18 @@ sub normalized_semantic_success_only_top_level_keys {
     return [
         qw(semantic),
     ];
+}
+
+sub normalized_semantic_support_accounting_keys {
+    return support_accounting_match_common_keys();
+}
+
+sub normalized_semantic_matched_success_support_accounting_keys {
+    return support_accounting_match_success_keys();
+}
+
+sub normalized_semantic_matched_failure_support_accounting_keys {
+    return support_accounting_match_failure_keys();
 }
 
 sub normalized_semantic_success_semantic_keys {

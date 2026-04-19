@@ -133,6 +133,11 @@ stabilizes the small nested identity slices `source_info.header`,
 unsanitized compatibility payloads such as `fsm_module`, `raw_ast`,
 `statistics`, `composition_spec`, `composition_plan`, and
 `composition_report`.
+The public `support_accounting` match objects emitted beside those reports also
+share one bounded nested-object contract:
+[perl/FSM/Support/SupportAccountingMatchContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingMatchContract.pm)
+owns the common `matched` key plus the matched success/failure identity keys
+used by check JSON and normalized semantic JSON.
 
 Do not treat the raw `HDLGenerator` result hash as a stable JSON document. Some
 nested branches still contain live CoreAST/AST objects for compatibility and
@@ -257,6 +262,9 @@ whole. It also advertises the optional external SystemVerilog validation lane:
 `--verify-hdl` / `--validate-hdl` writes generated `.sv` and then runs
 Verilator lint plus ABC-free Yosys structural synthesis when those tools are
 installed.
+The public `support_accounting` match objects emitted by both `--check --json`
+and `--emit-semantic-json` now share one bounded nested-object owner too:
+[perl/FSM/Support/SupportAccountingMatchContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingMatchContract.pm).
 The manifest's `support_accounting` section now has its own bounded contract
 owner too:
 [perl/FSM/Support/SupportAccountingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingContract.pm).
