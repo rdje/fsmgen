@@ -11,6 +11,9 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Support::NormalizedSemanticCompositionContract qw(
     normalized_semantic_composition_presence_keys
 );
+use FSM::Support::NormalizedSemanticExplicitSystemContract qw(
+    normalized_semantic_explicit_system_contract_presence_keys
+);
 use FSM::Support::NormalizedSemanticForwardIRContract qw(
     normalized_semantic_forward_ir_presence_keys
 );
@@ -27,6 +30,7 @@ use FSM::Support::NormalizedSemanticSymbolContract qw(
 use FSM::Support::NormalizedSemanticPayloadContract qw(
     build_normalized_semantic_payload_contract
     normalized_semantic_payload_composition_keys
+    normalized_semantic_payload_explicit_system_contract_keys
     normalized_semantic_payload_forward_ir_keys
     normalized_semantic_payload_presence_keys
     normalized_semantic_payload_system_contract_keys
@@ -88,6 +92,11 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
         'contract records the nested forward-IR object owner',
     );
     is(
+        $contract->{explicit_system_contract_source},
+        'FSM::Support::NormalizedSemanticExplicitSystemContract',
+        'contract records the nested explicit-system-contract object owner',
+    );
+    is(
         $contract->{system_contract_source},
         'FSM::Support::NormalizedSemanticSystemContract',
         'contract records the nested system-contract object owner',
@@ -96,6 +105,16 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
         $contract->{symbol_contract_source},
         'FSM::Support::NormalizedSemanticSymbolContract',
         'contract records the nested symbol-contract object owner',
+    );
+    is_deeply(
+        $contract->{explicit_system_contract_presence_keys},
+        normalized_semantic_payload_explicit_system_contract_keys(),
+        'contract publishes the bounded explicit-system-contract key list',
+    );
+    is_deeply(
+        normalized_semantic_payload_explicit_system_contract_keys(),
+        normalized_semantic_explicit_system_contract_presence_keys(),
+        'semantic payload explicit-system-contract keys map to the nested explicit-system-contract owner',
     );
     is_deeply(
         $contract->{system_contract_presence_keys},

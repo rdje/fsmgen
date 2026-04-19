@@ -8,6 +8,9 @@ use JSON::PP ();
 use FSM::Support::NormalizedSemanticCompositionContract qw(
     normalized_semantic_composition_presence_keys
 );
+use FSM::Support::NormalizedSemanticExplicitSystemContract qw(
+    normalized_semantic_explicit_system_contract_presence_keys
+);
 use FSM::Support::NormalizedSemanticForwardIRContract qw(
     normalized_semantic_forward_ir_presence_keys
 );
@@ -24,6 +27,7 @@ use FSM::Support::NormalizedSemanticSymbolContract qw(
 
 our @EXPORT_OK = qw(
     build_normalized_semantic_payload_contract
+    normalized_semantic_payload_explicit_system_contract_keys
     normalized_semantic_payload_presence_keys
     normalized_semantic_payload_forward_ir_keys
     normalized_semantic_payload_system_contract_keys
@@ -54,10 +58,12 @@ sub build_normalized_semantic_payload_contract {
         module_contract_source => 'FSM::Support::NormalizedSemanticModuleContract',
         module_presence_keys => normalized_semantic_module_presence_keys(),
         module_optional_metric_keys => normalized_semantic_module_optional_metric_keys(),
+        explicit_system_contract_source => 'FSM::Support::NormalizedSemanticExplicitSystemContract',
         system_contract_source => 'FSM::Support::NormalizedSemanticSystemContract',
         forward_ir_contract_source => 'FSM::Support::NormalizedSemanticForwardIRContract',
         symbol_contract_source => 'FSM::Support::NormalizedSemanticSymbolContract',
         composition_contract_source => 'FSM::Support::NormalizedSemanticCompositionContract',
+        explicit_system_contract_presence_keys => normalized_semantic_payload_explicit_system_contract_keys(),
         system_contract_presence_keys => normalized_semantic_payload_system_contract_keys(),
         forward_ir_presence_keys => normalized_semantic_payload_forward_ir_keys(),
         symbol_contract_presence_keys => normalized_semantic_payload_symbol_contract_keys(),
@@ -67,11 +73,12 @@ sub build_normalized_semantic_payload_contract {
             q{Treat this contract as the bounded nested `semantic` object used by successful public normalized semantic JSON reports.},
             'The nested object records the public semantic payload: module/system metadata, signal analysis, and the forward-IR projection.',
             'The nested `module` object stays bounded through FSM::Support::NormalizedSemanticModuleContract.',
+            'The nested `explicit_system_contract` object, when present, stays bounded through FSM::Support::NormalizedSemanticExplicitSystemContract.',
             'The nested `system_contract` object stays bounded through FSM::Support::NormalizedSemanticSystemContract.',
             'The nested `forward_ir` object stays bounded through FSM::Support::NormalizedSemanticForwardIRContract.',
             'The optional nested `symbol_contract` object stays bounded through FSM::Support::NormalizedSemanticSymbolContract.',
             'The optional nested `composition` object stays bounded through FSM::Support::NormalizedSemanticCompositionContract.',
-            'The same owner still advertises the nested `system_contract`, `forward_ir`, and optional `symbol_contract` plus `composition` key lists so payload widening stays deliberate and regression-backed.',
+            'The same owner still advertises the nested `explicit_system_contract`, `system_contract`, `forward_ir`, and optional `symbol_contract` plus `composition` key lists so payload widening stays deliberate and regression-backed.',
         ],
     };
 }
@@ -90,6 +97,10 @@ sub normalized_semantic_payload_presence_keys {
 
 sub normalized_semantic_payload_forward_ir_keys {
     return normalized_semantic_forward_ir_presence_keys();
+}
+
+sub normalized_semantic_payload_explicit_system_contract_keys {
+    return normalized_semantic_explicit_system_contract_presence_keys();
 }
 
 sub normalized_semantic_payload_system_contract_keys {

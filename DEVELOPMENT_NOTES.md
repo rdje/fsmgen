@@ -1,5 +1,28 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-19: public explicit-system summaries should have one explicit owner
+- Successful public normalized semantic JSON already emitted one real nested
+  `semantic.explicit_system_contract` object in practice for direct roots and
+  nested child summaries, even though some composition-top shells still carry
+  `null` today when no authored explicit top contract survives.
+- Leaving that nested object as just another incidental payload branch would
+  keep one useful authored clock/reset summary without its own named owner,
+  which is the opposite of what `R13` is trying to achieve.
+- The more honest move is to give that nested explicit-system summary one
+  bounded owner:
+  - one `semantic.explicit_system_contract` object contract,
+  - one published explicit-system-contract key list,
+  - and one explicit reminder that the bounded branch is promised when present
+    instead of pretending every successful root already carries a populated
+    top-level object.
+- That keeps widening deliberate:
+  - downstream tools can discover one explicit authored-system surface instead
+    of scraping sample semantic JSON,
+  - the broader semantic payload contract stops carrying that nested object
+    implicitly,
+  - and future top-level composition normalization can widen independently
+    instead of being smuggled in as documentation drift.
+
 ## 2026-04-19: public semantic system summaries should have one explicit owner
 - Successful public normalized semantic JSON already emitted one real nested
   `semantic.system_contract` object in practice: clock/reset identity, reset

@@ -1737,6 +1737,10 @@ and the forward-IR projection:
 The nested `semantic.system_contract` summary inside that payload now also has
 its own bounded owner for the current clock/reset contract keys:
 [perl/FSM/Support/NormalizedSemanticSystemContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSystemContract.pm).
+The nested `semantic.explicit_system_contract` summary inside that payload now
+also has its own bounded owner when the authored explicit contract is
+preserved:
+[perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm).
 The nested `semantic.forward_ir` summary inside that payload now also has its
 own bounded owner for the current sanitized forward semantic projections:
 [perl/FSM/Support/NormalizedSemanticForwardIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticForwardIRContract.pm).
