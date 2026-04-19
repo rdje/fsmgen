@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-19: public report command objects should have one shared public owner
+- The public check JSON and normalized semantic JSON reports already shared the
+  same nested `command` shape in practice: `mode`, `json`, `strict_mode`, and
+  `target_language`.
+- Leaving that shape implicit would keep two separate report contracts aligned
+  only by convention, which is exactly the kind of drift `R13` is supposed to
+  remove.
+- The more honest move is to split out one reusable bounded nested-object
+  owner:
+  - one shared `command` object contract,
+  - one published command key list,
+  - and one explicit report-mode map documenting that check JSON uses `check`
+    while normalized semantic JSON uses `semantic_export`.
+- That keeps widening deliberate:
+  - downstream tools can discover one shared nested command contract,
+  - both report contracts stay aligned on the same invocation-shape surface,
+  - and future command-metadata widening now has to be named explicitly
+    instead of piggybacking on sample JSON.
+
 ## 2026-04-19: public report producer objects should have one shared public owner
 - The public check JSON and normalized semantic JSON reports already shared the
   same producer identity core in practice: `name` plus `report_source`.

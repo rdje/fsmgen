@@ -23,6 +23,7 @@ use FSM::Support::CheckDiagnosticsContract qw(
     check_json_success_result_keys
     check_json_success_support_accounting_keys
 );
+use FSM::Support::ReportCommandContract qw(report_command_presence_keys);
 use FSM::Support::ReportProducerContract qw(report_producer_common_keys);
 use FSM::Support::ReportSourceContract qw(report_source_presence_keys);
 use FSM::Support::SupportAccountingMatchContract qw(
@@ -55,6 +56,11 @@ subtest 'contract exposes the bounded check JSON surface' => sub {
     ok(
         $contract->{emits_failure_diagnostic_support_accounting_object},
         'contract says failed diagnostics carry support accounting',
+    );
+    is(
+        $contract->{command_contract_source},
+        'FSM::Support::ReportCommandContract',
+        'contract records the shared command nested-object owner',
     );
     is(
         $contract->{producer_contract_source},
@@ -91,6 +97,11 @@ subtest 'contract exposes the bounded check JSON surface' => sub {
         $contract->{success_result_presence_keys},
         check_json_success_result_keys(),
         'contract publishes the bounded success-result key list',
+    );
+    is_deeply(
+        $contract->{command_presence_keys},
+        report_command_presence_keys(),
+        'contract publishes the bounded command-object key list',
     );
     is_deeply(
         $contract->{producer_presence_keys},
@@ -196,6 +207,11 @@ subtest 'successful direct check JSON conforms to the bounded contract' => sub {
         'direct success report keeps bounded top-level keys',
     );
     assert_keys_present(
+        $decoded->{command},
+        report_command_presence_keys(),
+        'direct success report keeps bounded command-object keys',
+    );
+    assert_keys_present(
         $decoded->{producer},
         report_producer_common_keys(),
         'direct success report keeps bounded producer-object keys',
@@ -238,6 +254,11 @@ subtest 'successful corpus-backed composition check JSON conforms to the matched
         $decoded,
         check_json_public_top_level_keys(),
         'composition success report keeps bounded top-level keys',
+    );
+    assert_keys_present(
+        $decoded->{command},
+        report_command_presence_keys(),
+        'composition success report keeps bounded command-object keys',
     );
     assert_keys_present(
         $decoded->{producer},
@@ -283,6 +304,11 @@ subtest 'failed check JSON conforms to the bounded contract' => sub {
         $decoded,
         check_json_public_top_level_keys(),
         'failed report keeps bounded top-level keys',
+    );
+    assert_keys_present(
+        $decoded->{command},
+        report_command_presence_keys(),
+        'failed report keeps bounded command-object keys',
     );
     assert_keys_present(
         $decoded->{producer},

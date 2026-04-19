@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-19: public report command objects now have a shared owner
+- Added
+  [perl/FSM/Support/ReportCommandContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportCommandContract.pm)
+  as the shared bounded owner for the nested `command` object reused by both
+  check JSON and normalized semantic JSON.
+- [perl/FSM/Support/CheckDiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnosticsContract.pm)
+  and [perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm)
+  now both advertise that shared owner plus the bounded `mode` / `json` /
+  `strict_mode` / `target_language` key list instead of leaving the nested
+  command shape as duplicated inline knowledge.
+- The reachable `bin/fsmgen` support surface now includes that contract owner
+  too, moving the measured import-tree totals to `148` project files /
+  `147` `.pm` packages with `Support => 26`.
+
 ## 2026-04-19: public report producer objects now have a shared owner
 - Added
   [perl/FSM/Support/ReportProducerContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportProducerContract.pm)

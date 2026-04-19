@@ -5,6 +5,7 @@ use warnings;
 
 use Exporter 'import';
 use JSON::PP ();
+use FSM::Support::ReportCommandContract qw(report_command_presence_keys);
 use FSM::Support::ReportProducerContract qw(
     normalized_semantic_report_producer_extra_keys
     report_producer_common_keys
@@ -51,10 +52,12 @@ sub build_normalized_semantic_report_contract {
         failure_diagnostics_reuse_stable_codes => JSON::PP::true,
         sanitizes_private_perl_objects => JSON::PP::true,
         public_layers => [qw(intent_hir lowered_rtl_ir structural_rtl_ir)],
+        command_contract_source => 'FSM::Support::ReportCommandContract',
         producer_contract_source => 'FSM::Support::ReportProducerContract',
         source_contract_source => 'FSM::Support::ReportSourceContract',
         support_accounting_contract_source => 'FSM::Support::SupportAccountingMatchContract',
         public_top_level_presence_keys => normalized_semantic_public_top_level_keys(),
+        command_presence_keys => report_command_presence_keys(),
         producer_presence_keys => report_producer_common_keys(),
         producer_extra_presence_keys => normalized_semantic_report_producer_extra_keys(),
         source_presence_keys => report_source_presence_keys(),
@@ -70,6 +73,7 @@ sub build_normalized_semantic_report_contract {
         full_export_stable => JSON::PP::false,
         guidance => [
             'Treat the listed top-level and bounded nested key-presence lists as the public normalized semantic JSON contract for schema version 1.',
+            'The nested command object is shared with check JSON and stays bounded through FSM::Support::ReportCommandContract.',
             'The nested producer object is shared with check JSON and stays bounded through FSM::Support::ReportProducerContract.',
             'The nested source object is shared with check JSON and stays bounded through FSM::Support::ReportSourceContract.',
             'Do not treat every nested scalar/list/hash field inside those branches as frozen unless it is separately documented and regression-backed.',

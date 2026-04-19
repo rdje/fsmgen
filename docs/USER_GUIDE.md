@@ -1713,6 +1713,10 @@ Those same two public JSON/report surfaces now also share one bounded nested
 `source` object owner for the caller-facing input string and resolved source
 path:
 [perl/FSM/Support/ReportSourceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportSourceContract.pm).
+Those same two public JSON/report surfaces now also share one bounded nested
+`command` object owner for invocation metadata such as `mode`, `json`,
+`strict_mode`, and `target_language`:
+[perl/FSM/Support/ReportCommandContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportCommandContract.pm).
 The bounded contract for the manifest's `support_accounting` section now has
 its own explicit owner in
 [perl/FSM/Support/SupportAccountingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingContract.pm).
