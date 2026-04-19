@@ -18,11 +18,15 @@ use FSM::Support::NormalizedSemanticModuleContract qw(
     normalized_semantic_module_optional_metric_keys
     normalized_semantic_module_presence_keys
 );
+use FSM::Support::NormalizedSemanticSymbolContract qw(
+    normalized_semantic_symbol_contract_presence_keys
+);
 use FSM::Support::NormalizedSemanticPayloadContract qw(
     build_normalized_semantic_payload_contract
     normalized_semantic_payload_composition_keys
     normalized_semantic_payload_forward_ir_keys
     normalized_semantic_payload_presence_keys
+    normalized_semantic_payload_symbol_contract_keys
 );
 
 subtest 'contract exposes the bounded normalized semantic payload object' => sub {
@@ -79,6 +83,11 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
         'FSM::Support::NormalizedSemanticForwardIRContract',
         'contract records the nested forward-IR object owner',
     );
+    is(
+        $contract->{symbol_contract_source},
+        'FSM::Support::NormalizedSemanticSymbolContract',
+        'contract records the nested symbol-contract object owner',
+    );
     is_deeply(
         $contract->{forward_ir_presence_keys},
         normalized_semantic_payload_forward_ir_keys(),
@@ -88,6 +97,16 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
         normalized_semantic_payload_forward_ir_keys(),
         normalized_semantic_forward_ir_presence_keys(),
         'semantic payload forward-IR keys map to the nested forward-IR owner',
+    );
+    is_deeply(
+        $contract->{symbol_contract_presence_keys},
+        normalized_semantic_payload_symbol_contract_keys(),
+        'contract publishes the bounded symbol-contract key list',
+    );
+    is_deeply(
+        normalized_semantic_payload_symbol_contract_keys(),
+        normalized_semantic_symbol_contract_presence_keys(),
+        'semantic payload symbol-contract keys map to the nested symbol-contract owner',
     );
     is_deeply(
         $contract->{composition_presence_keys},

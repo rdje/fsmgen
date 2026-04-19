@@ -1737,6 +1737,9 @@ and the forward-IR projection:
 The nested `semantic.forward_ir` summary inside that payload now also has its
 own bounded owner for the current sanitized forward semantic projections:
 [perl/FSM/Support/NormalizedSemanticForwardIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticForwardIRContract.pm).
+The optional `semantic.symbol_contract` summary inside that payload now also
+has its own bounded owner for symbol-rich sources:
+[perl/FSM/Support/NormalizedSemanticSymbolContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSymbolContract.pm).
 The nested `semantic.module` summary inside that payload now also has its own
 bounded owner for the core module keys plus the current optional metric-key
 family:

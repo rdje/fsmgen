@@ -191,11 +191,15 @@ matched-only, optional-artifact, and nested support-accounting key lists.
 [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm)
 now owns the success-only nested `semantic` object shape emitted by public
 normalized semantic JSON, including the published nested `forward_ir` and
-optional `composition` key lists.
+optional `symbol_contract` and `composition` key lists.
 [perl/FSM/Support/NormalizedSemanticForwardIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticForwardIRContract.pm)
 now owns the nested `semantic.forward_ir` object shape emitted by successful
 public normalized semantic JSON, including the published forward-IR key
 family.
+[perl/FSM/Support/NormalizedSemanticSymbolContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSymbolContract.pm)
+now owns the optional nested `semantic.symbol_contract` object shape emitted
+by successful public normalized semantic JSON for symbol-rich sources,
+including the published symbol-contract key family.
 [perl/FSM/Support/NormalizedSemanticModuleContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticModuleContract.pm)
 now owns the nested `semantic.module` object shape emitted by successful
 public normalized semantic JSON, including the published core module-summary

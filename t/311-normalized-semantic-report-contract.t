@@ -36,6 +36,7 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_module_keys
     normalized_semantic_module_optional_metric_keys
     normalized_semantic_public_top_level_keys
+    normalized_semantic_symbol_contract_keys
     normalized_semantic_success_only_top_level_keys
     normalized_semantic_success_semantic_keys
     normalized_semantic_support_accounting_keys
@@ -43,6 +44,10 @@ use FSM::Support::NormalizedSemanticReportContract qw(
 use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_composition_keys
     normalized_semantic_payload_presence_keys
+    normalized_semantic_payload_symbol_contract_keys
+);
+use FSM::Support::NormalizedSemanticSymbolContract qw(
+    normalized_semantic_symbol_contract_presence_keys
 );
 use FSM::Support::ReportCommandContract qw(report_command_presence_keys);
 use FSM::Support::ReportGeneratedOutputContract qw(report_generated_output_presence_keys);
@@ -106,6 +111,11 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         $contract->{semantic_contract_source},
         'FSM::Support::NormalizedSemanticPayloadContract',
         'contract records the semantic success payload owner',
+    );
+    is(
+        $contract->{symbol_contract_source},
+        'FSM::Support::NormalizedSemanticSymbolContract',
+        'contract records the nested symbol-contract object owner',
     );
     is(
         $contract->{producer_contract_source},
@@ -255,6 +265,21 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         $contract->{composition_presence_keys},
         normalized_semantic_payload_composition_keys(),
         'contract publishes the bounded composition key list',
+    );
+    is_deeply(
+        $contract->{success_symbol_contract_presence_keys},
+        normalized_semantic_symbol_contract_keys(),
+        'contract publishes the bounded symbol-contract key list',
+    );
+    is_deeply(
+        normalized_semantic_symbol_contract_keys(),
+        normalized_semantic_symbol_contract_presence_keys(),
+        'normalized semantic symbol-contract keys map to the nested symbol-contract owner',
+    );
+    is_deeply(
+        normalized_semantic_payload_symbol_contract_keys(),
+        normalized_semantic_symbol_contract_presence_keys(),
+        'semantic payload symbol-contract keys map to the nested symbol-contract owner',
     );
     is_deeply(
         normalized_semantic_composition_keys(),
@@ -446,6 +471,23 @@ subtest 'successful composition semantic JSON conforms to the bounded contract' 
     ok(
         exists $decoded->{semantic}{module}{composition_child_count},
         'composition success module payload exposes composition child count',
+    );
+};
+
+subtest 'successful symbol-rich semantic JSON conforms to the bounded symbol-contract contract' => sub {
+    my $symbol_path = File::Spec->catfile($repo_root, 't', 'corpus', 'direct_size_expression_widths.fsm');
+    my $symbol_out_path = File::Spec->catfile($tempdir, 'semantic_contract_symbol_rich.sv');
+
+    my $decoded = run_semantic_json(
+        ['./bin/fsmgen', '--strict', '--emit-semantic-json', '-o', $symbol_out_path, $symbol_path],
+        'strict semantic JSON succeeds for symbol-rich sample',
+    );
+
+    ok($decoded->{semantic}{symbol_contract}, 'symbol-rich success report exposes the optional symbol-contract payload');
+    assert_keys_present(
+        $decoded->{semantic}{symbol_contract},
+        normalized_semantic_symbol_contract_keys(),
+        'symbol-rich success report keeps bounded symbol-contract keys',
     );
 };
 

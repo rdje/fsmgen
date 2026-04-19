@@ -177,11 +177,16 @@ nested-object contract for the success payload itself:
 [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm)
 owns the `module`, `system_contract`, `explicit_system_contract`,
 `signal_analysis`, and `forward_ir` keys, and the same owner also publishes
-the nested `forward_ir` plus optional `composition` key lists.
+the nested `forward_ir` plus optional `symbol_contract` and `composition` key
+lists.
 The nested `semantic.forward_ir` summary inside that payload now also has its
 own bounded nested-object contract:
 [perl/FSM/Support/NormalizedSemanticForwardIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticForwardIRContract.pm)
 owns the current sanitized forward semantic projection keys.
+The optional `semantic.symbol_contract` summary inside that payload now also
+has its own bounded nested-object contract for symbol-rich sources:
+[perl/FSM/Support/NormalizedSemanticSymbolContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSymbolContract.pm)
+owns the published symbol-contract key family.
 The nested `semantic.module` summary inside that payload now also has its own
 bounded nested-object contract:
 [perl/FSM/Support/NormalizedSemanticModuleContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticModuleContract.pm)
@@ -423,6 +428,7 @@ when `-o` is present. Successful reports expose:
 - a `semantic.module` summary
 - `semantic.system_contract`
 - sanitized `semantic.signal_analysis`
+- optional `semantic.symbol_contract` for symbol-rich sources
 - `semantic.forward_ir.intent_hir`
 - `semantic.forward_ir.lowered_rtl_ir`
 - `semantic.forward_ir.structural_rtl_ir`

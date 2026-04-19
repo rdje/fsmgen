@@ -411,6 +411,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest records the normalized-semantic success payload owner',
     );
     is(
+        $manifest->{semantic_exports}{normalized_semantic_json}{symbol_contract_source},
+        'FSM::Support::NormalizedSemanticSymbolContract',
+        'manifest records the normalized-semantic symbol-contract nested-object owner',
+    );
+    is(
         $manifest->{semantic_exports}{normalized_semantic_json}{producer_contract_source},
         'FSM::Support::ReportProducerContract',
         'manifest records the shared normalized-semantic producer nested-object owner',

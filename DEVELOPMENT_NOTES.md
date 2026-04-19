@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-19: public semantic symbol summaries should have one explicit owner
+- Successful public normalized semantic JSON already emitted one real optional
+  nested `semantic.symbol_contract` object in practice for symbol-rich roots:
+  counts, stable name lists, nested symbol maps, scalar-leaf convenience
+  lookups, aggregate-root paths, and imported-package summary data.
+- Leaving that nested object undocumented inside the broader semantic payload
+  would turn one useful public export into accidental API residue, which is
+  the opposite of what `R13` is trying to achieve.
+- The more honest move is to give that nested symbol summary one bounded owner:
+  - one `semantic.symbol_contract` object contract,
+  - one published symbol-contract key list,
+  - and one explicit reminder that deeper nested `constants` / `enums` /
+    `types` payloads are not automatically frozen just because the shell is.
+- That keeps widening deliberate:
+  - downstream tools can discover one explicit symbol-contract surface instead
+    of scraping sample semantic JSON,
+  - the broader semantic payload contract stops leaking that nested object
+    implicitly,
+  - and future widening of nested symbol payload details now has to be named
+    and regression-backed instead of piggybacking on sample exports.
+
 ## 2026-04-19: public semantic forward-IR summaries should have one explicit owner
 - Successful public normalized semantic JSON already emitted one real nested
   `semantic.forward_ir` object in practice: `intent_hir`, `lowered_rtl_ir`,
