@@ -443,6 +443,12 @@ This document captures engineering rationale, design constraints, and working de
   structural/provenance builders rather than ad-hoc runtime state.
 - The honest move there is the same: advertise only the bounded scalar summary
   keys inside `module_info`, not the entire nested branch.
+- `source_info` has a smaller but related problem: composition roots attach
+  raw `composition_spec` objects and raw `resolved_package_imports` payloads,
+  so freezing the whole hash would over-promise quickly.
+- The honest widening there is to expose only the source-level package-import
+  summary fields (`package_import_count` and `package_import_names`) while
+  keeping the raw typed objects out of the stabilized promise.
 
 ## 2026-04-19: regularize support_accounting with a nested section contract without breaking callers
 - `support_accounting` already had a bounded owner, but it was the one public

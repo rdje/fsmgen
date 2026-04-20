@@ -131,6 +131,16 @@ FSM
         [qw(shared_external shared_local)],
         'pipeline result preserves imported package names on the composition spec',
     );
+    is(
+        $result->{source_info}{package_import_count},
+        2,
+        'pipeline result source_info reports imported package count on composition roots',
+    );
+    is_deeply(
+        $result->{source_info}{package_import_names},
+        [qw(shared_local shared_external)],
+        'pipeline result source_info preserves imported package names in authored order on composition roots',
+    );
     ok(
         exists $result->{composition_spec}->embedded_package_sources->{shared_local},
         'pipeline result preserves embedded package roots on the composition spec',

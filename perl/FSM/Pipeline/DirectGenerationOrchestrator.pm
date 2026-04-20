@@ -78,6 +78,8 @@ sub generate_from_source ($class, %args) {
         target_language => ($pipeline->{target_language} // 'systemverilog'),
     );
     my $statistics = $backend_result->{statistics};
+    $source_info->{package_import_names} = [ @{$frontend_context{package_imports} || []} ];
+    $source_info->{package_import_count} = scalar(@{$source_info->{package_import_names} || []});
 
     return {
         fsm_module => $fsm_module,

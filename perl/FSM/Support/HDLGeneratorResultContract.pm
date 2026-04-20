@@ -28,6 +28,7 @@ our @EXPORT_OK = qw(
     hdl_generator_result_module_info_optional_composition_summary_keys
     hdl_generator_result_module_info_summary_keys
     hdl_generator_result_source_info_identity_keys
+    hdl_generator_result_source_info_summary_keys
     hdl_generator_result_statistics_optional_composition_keys
     hdl_generator_result_statistics_summary_keys
     hdl_generator_result_structural_rtl_ir_keys
@@ -60,6 +61,7 @@ sub build_hdl_generator_result_contract {
             qw(fsm_module raw_ast statistics composition_spec composition_plan composition_report),
         ],
         source_info_identity_presence_keys => hdl_generator_result_source_info_identity_keys(),
+        source_info_summary_presence_keys => hdl_generator_result_source_info_summary_keys(),
         module_info_identity_presence_keys => hdl_generator_result_module_info_identity_keys(),
         module_info_summary_presence_keys => hdl_generator_result_module_info_summary_keys(),
         module_info_optional_composition_summary_keys => hdl_generator_result_module_info_optional_composition_summary_keys(),
@@ -86,6 +88,7 @@ sub build_hdl_generator_result_contract {
             ),
         ],
         nested_identity_slices_advertised => JSON::PP::true,
+        source_info_summary_slices_advertised => JSON::PP::true,
         module_info_summary_slices_advertised => JSON::PP::true,
         statistics_summary_slices_advertised => JSON::PP::true,
         top_level_semantic_layer_contracts_advertised => JSON::PP::true,
@@ -95,6 +98,7 @@ sub build_hdl_generator_result_contract {
         guidance => [
             'Treat the listed top-level keys as the bounded public presence contract.',
             'The advertised nested identity keys inside source_info and module_info are stabilized beyond that top-level shell.',
+            'The advertised source_info package-import summary keys are stabilized, but the wider source_info hash still includes compatibility-heavy objects on composition roots.',
             'The advertised scalar summary keys inside module_info are stabilized, but the whole module_info hash still includes compatibility-heavy nested payloads.',
             'The advertised statistics summary keys inside statistics are stabilized, but the whole statistics hash still includes compatibility-heavy payloads.',
             'The top-level intent_hir, lowered_rtl_ir, and structural_rtl_ir hashes also reuse the same bounded shell owners advertised through normalized semantic JSON.',
@@ -106,6 +110,13 @@ sub build_hdl_generator_result_contract {
 
 sub hdl_generator_result_source_info_identity_keys {
     return [qw(header kind)];
+}
+
+sub hdl_generator_result_source_info_summary_keys {
+    return [qw(
+        package_import_count
+        package_import_names
+    )];
 }
 
 sub hdl_generator_result_module_info_identity_keys {

@@ -95,6 +95,11 @@ sub generate_from_file ($class, %args) {
                 source_path_resolver => $pipeline->{source_path_resolver},
                 debug_level => ($pipeline->{debug_level} // 0),
             );
+            my $package_imports = $source_info->{composition_spec}->top
+                ? ($source_info->{composition_spec}->top->package_imports || [])
+                : [];
+            $source_info->{package_import_names} = [ @$package_imports ];
+            $source_info->{package_import_count} = scalar(@$package_imports);
         }
 
         return ($raw_ast, $source_info);

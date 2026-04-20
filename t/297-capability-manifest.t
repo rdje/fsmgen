@@ -700,6 +700,14 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest advertises bounded HDLGenerator source_info identity key presence',
     );
     ok(
+        $manifest->{embedding}{hdl_generator_result}{source_info_summary_slices_advertised},
+        'manifest says the HDLGenerator result advertises bounded source_info summary slices',
+    );
+    ok(
+        scalar(@{$manifest->{embedding}{hdl_generator_result}{source_info_summary_presence_keys} || []}) >= 2,
+        'manifest advertises bounded HDLGenerator source_info summary key presence',
+    );
+    ok(
         scalar(@{$manifest->{embedding}{hdl_generator_result}{module_info_identity_presence_keys} || []}) >= 2,
         'manifest advertises bounded HDLGenerator module_info identity key presence',
     );

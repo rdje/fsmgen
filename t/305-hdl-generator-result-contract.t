@@ -5,6 +5,7 @@ use warnings;
 use Test::More;
 use File::Spec;
 use FindBin;
+use File::Temp qw(tempdir);
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
@@ -20,6 +21,7 @@ use FSM::Support::HDLGeneratorResultContract qw(
     hdl_generator_result_module_info_optional_composition_summary_keys
     hdl_generator_result_module_info_summary_keys
     hdl_generator_result_source_info_identity_keys
+    hdl_generator_result_source_info_summary_keys
     hdl_generator_result_statistics_optional_composition_keys
     hdl_generator_result_statistics_summary_keys
     hdl_generator_result_structural_rtl_ir_keys
@@ -55,6 +57,15 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
         $contract->{source_info_identity_presence_keys},
         hdl_generator_result_source_info_identity_keys(),
         'contract publishes bounded source_info identity keys',
+    );
+    ok(
+        $contract->{source_info_summary_slices_advertised},
+        'contract advertises bounded source_info summary slices',
+    );
+    is_deeply(
+        $contract->{source_info_summary_presence_keys},
+        hdl_generator_result_source_info_summary_keys(),
+        'contract publishes bounded source_info summary keys',
     );
     is_deeply(
         $contract->{module_info_identity_presence_keys},
@@ -209,6 +220,98 @@ subtest 'composition result uses only declared top-level keys' => sub {
     is(ref($result->{composition_report}), 'HASH', 'composition result carries composition report hash');
 };
 
+subtest 'source_info reports package import summaries when imports are present' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $libdir = File::Spec->catdir($tempdir, 'pkg_lib');
+    mkdir $libdir or die "Cannot create $libdir: $!";
+
+    my $package_path = File::Spec->catfile($libdir, 'shared_external.fsm');
+    my $direct_path = File::Spec->catfile($tempdir, 'direct_package_import_root.fsm');
+    my $composition_path = File::Spec->catfile($tempdir, 'package_import_top.fsm');
+
+    write_file(
+        $package_path,
+        <<'FSM'
+(?pkg:shared_external
+  (+constants
+    (RESET_BYTE 8'hA5)
+  )
+)
+FSM
+    );
+
+    write_file(
+        $direct_path,
+        <<'FSM'
+(?fsm:direct_package_import_root
+  (+import shared_local shared_external)
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (OUT 8)
+  )
+  (idle
+    (= (OUT shared_external.RESET_BYTE))
+  )
+)
+
+(?pkg:shared_local
+  (+constants
+    (BUSY 1)
+  )
+)
+FSM
+    );
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:package_import_top
+  (+import shared_local shared_external)
+  (?ports:public_io
+    shared_out>8
+  )
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /=shared_external.RESET_BYTE/shared_out/
+    /=shared_local.mode.BUSY/uart_tx.enable/
+  )
+)
+
+(?pkg:shared_local
+  (+enums
+    (mode
+      (IDLE 0)
+      (BUSY 1)
+    )
+  )
+)
+
+(?rtlif:uart_tx
+  enable<1:data
+)
+FSM
+    );
+
+    my $direct = generate_result_from_path($direct_path, source_search_paths => [$libdir]);
+    is($direct->{source_info}{package_import_count}, 2, 'direct result source_info records package import count');
+    is_deeply(
+        $direct->{source_info}{package_import_names},
+        [qw(shared_local shared_external)],
+        'direct result source_info preserves package import names in authored order',
+    );
+
+    my $composition = generate_result_from_path($composition_path, source_search_paths => [$libdir]);
+    is($composition->{source_info}{package_import_count}, 2, 'composition result source_info records package import count');
+    is_deeply(
+        $composition->{source_info}{package_import_names},
+        [qw(shared_local shared_external)],
+        'composition result source_info preserves package import names in authored order',
+    );
+};
+
 done_testing();
 
 sub generate_result {
@@ -221,6 +324,25 @@ sub generate_result {
         quiet => 1,
     );
     return $pipeline->generate_hdl_from_file($path);
+}
+
+sub generate_result_from_path {
+    my ($path, %extra) = @_;
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        strict_mode => 1,
+        quiet => 1,
+        %extra,
+    );
+    return $pipeline->generate_hdl_from_file($path);
+}
+
+sub write_file {
+    my ($path, $contents) = @_;
+    open my $fh, '>', $path or die "Cannot open $path for write: $!";
+    print {$fh} $contents;
+    close $fh or die "Cannot close $path: $!";
 }
 
 sub assert_no_unknown_top_level_keys {
@@ -245,6 +367,11 @@ sub assert_common_result_contract {
         $result->{source_info},
         hdl_generator_result_source_info_identity_keys(),
         "$args{module_name} source_info keeps bounded nested identity keys",
+    );
+    assert_keys_present(
+        $result->{source_info},
+        hdl_generator_result_source_info_summary_keys(),
+        "$args{module_name} source_info keeps bounded summary keys",
     );
     assert_keys_present(
         $result->{module_info},
@@ -314,6 +441,12 @@ sub assert_common_result_contract {
     }
 
     is($result->{source_info}{kind}, $args{source_kind}, "$args{module_name} records source kind");
+    is(ref($result->{source_info}{package_import_names}), 'ARRAY', "$args{module_name} source_info package import names stay array-shaped");
+    is(
+        $result->{source_info}{package_import_count},
+        scalar(@{$result->{source_info}{package_import_names} || []}),
+        "$args{module_name} source_info package import count matches package import names",
+    );
     is($result->{module_info}{module_name}, $args{module_name}, "$args{module_name} module_info records name");
     is($result->{module_info}{source_root_kind}, $args{source_root_kind}, "$args{module_name} module_info records root kind");
     is($result->{intent_hir}{module_name}, $args{module_name}, "$args{module_name} intent_hir records name");

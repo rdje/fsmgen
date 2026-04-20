@@ -88,6 +88,16 @@ FSM
         [qw(shared_external shared_local)],
         'direct pipeline result reports resolved package imports',
     );
+    is(
+        $result->{source_info}{package_import_count},
+        2,
+        'direct pipeline result source_info reports imported package count',
+    );
+    is_deeply(
+        $result->{source_info}{package_import_names},
+        [qw(shared_local shared_external)],
+        'direct pipeline result source_info preserves imported package names in authored order',
+    );
 
     my %assignment_by_target = %{ assignments_by_target($fsm_module, 'idle') };
     is_literal_assignment($assignment_by_target{OUT}, 'A5', 8, 'OUT resolves imported package constant to a literal');

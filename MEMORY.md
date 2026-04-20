@@ -317,6 +317,10 @@ This is the live continuity document for fast session recovery after crashes, re
   normalized-semantic shell owners already published for sanitized semantic
   JSON, and the manifest-facing embedding checks now lock those owners too.
 - The same bounded contract now also advertises the scalar summary keys inside
+  `source_info`, currently `package_import_count` and
+  `package_import_names`, so embedders can inspect imported-package intent
+  without walking raw package-spec objects or composition-spec objects.
+- The same bounded contract now also advertises the scalar summary keys inside
   `module_info`, including direct-root signal/state/parameter/output-drive
   counts plus the composition-only scalar count/lane fields, while
   deliberately leaving compatibility-heavy payloads such as nested child lists,

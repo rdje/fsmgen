@@ -129,10 +129,11 @@ The bounded contract stabilizes top-level key presence for fields such as
 `structural_rtl_ir`, `source_info`, and `resolved_package_imports`. It also
 stabilizes the small nested identity slices `source_info.header`,
 `source_info.kind`, `module_info.module_name`, and
-`module_info.source_root_kind`, plus the bounded scalar summary keys inside
-`module_info` and `statistics`. That includes reusable counts such as
-`signal_count`, `state_count`, `parameter_count`,
-`output_drive_family_count`, `intermediate_signals`,
+`module_info.source_root_kind`, plus the bounded summary keys inside
+`source_info`, `module_info`, and `statistics`. That includes source-level
+facts such as `package_import_count` and `package_import_names`, reusable
+module/stats counts such as `signal_count`, `state_count`,
+`parameter_count`, `output_drive_family_count`, `intermediate_signals`,
 `global_expressions`, `factoring_enabled`, and the composition-only
 count/lane fields when the input root is a composition. The same contract now
 also advertises that the top-level `intent_hir`, `lowered_rtl_ir`, and
