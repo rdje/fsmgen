@@ -1,5 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-04-20
+### HDLGenerator source_info now has an explicit nested-object contract owner
+- Added [perl/FSM/Support/HDLGeneratorSourceInfoContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorSourceInfoContract.pm) as the owner for the bounded nested `source_info` object reused by in-process `HDLGenerator` results.
+- Updated [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm), [t/305-hdl-generator-result-contract.t](/Users/richarddje/Documents/github/fsmgen/t/305-hdl-generator-result-contract.t), and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the embedding-facing result contract now advertises that nested owner through `source_info_contract_source` while continuing to publish the bounded `source_info` identity, summary, and stable-subsurface families.
+- Added [t/342-hdl-generator-source-info-contract.t](/Users/richarddje/Documents/github/fsmgen/t/342-hdl-generator-source-info-contract.t) to lock the dedicated nested `source_info` contract directly.
+- Updated [README.md](/Users/richarddje/Documents/github/fsmgen/README.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md), [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so users, embedders, and future sessions can discover the new nested-object owner.
+
 ## 2026-04-19
 ### HDLGenerator result contract now says the top-level semantic layers are shell contracts only
 - Updated [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm) so the bounded in-process `HDLGenerator` result contract now explicitly records that the top-level `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` hashes are not separately stabilized full trees; they reuse the bounded normalized-semantic shell owners already advertised by the dedicated semantic-layer contracts.

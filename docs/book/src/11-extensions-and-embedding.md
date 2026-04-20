@@ -159,6 +159,10 @@ subsurface” boundary for the nested hashes too: the whole `source_info`,
 `module_info`, and `statistics` hashes are still not stable APIs, but the
 advertised `source_info.*`, `module_info.*`, and `statistics.*` identity/summary
 paths are the bounded public slices embedders should target.
+The nested `source_info` object now also has its own explicit owner through
+[perl/FSM/Support/HDLGeneratorSourceInfoContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorSourceInfoContract.pm),
+which is the contract to follow for `header`, `kind`,
+`package_import_count`, and `package_import_names`.
 The top-level `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` hashes
 follow the same honesty rule: they reuse the dedicated normalized-semantic
 shell owners and their advertised shell keys, but the `HDLGenerator` result

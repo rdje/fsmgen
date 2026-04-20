@@ -454,6 +454,20 @@ This document captures engineering rationale, design constraints, and working de
   ambiguous: callers can rely on the branch being present, but not on walking
   its typed `FSM::Package::Spec` values as a public JSON/API contract.
 
+## 2026-04-20: source_info now deserves its own owner instead of staying folded into the parent contract
+- `source_info` is now narrow enough that leaving it only as a handful of lists
+  inside `HDLGeneratorResultContract` is less honest than giving it a real
+  nested-object owner.
+- The safer widening is still bounded:
+  - add `FSM::Support::HDLGeneratorSourceInfoContract`,
+  - make the parent result contract advertise `source_info_contract_source`,
+  - keep `source_info` explicitly non-stable as a whole,
+  - and keep the public promise limited to `header`, `kind`,
+    `package_import_count`, and `package_import_names`.
+- That gives embedders one contract to depend on for the current source-info
+  seam without pretending `module_info` or `statistics` are ready for the same
+  treatment yet.
+
 ## 2026-04-19: regularize support_accounting with a nested section contract without breaking callers
 - `support_accounting` already had a bounded owner, but it was the one public
   manifest section that still exposed that owner only through merged inline

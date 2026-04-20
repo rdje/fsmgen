@@ -1909,6 +1909,10 @@ It now also machine-advertises that the whole `source_info`, `module_info`, and
 `statistics` hashes are not the stable API either: the bounded public contract
 is the advertised identity/summary subsurfaces inside those hashes, not a
 promise that every nested compatibility-heavy field in the wider hash is frozen.
+The nested `source_info` object now also has its own explicit owner through
+[perl/FSM/Support/HDLGeneratorSourceInfoContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorSourceInfoContract.pm),
+so embedders have one dedicated contract to follow for the current source
+identity and package-import summary fields.
 The same goes for top-level `intent_hir`, `lowered_rtl_ir`, and
 `structural_rtl_ir`: those hashes reuse their dedicated normalized-semantic
 shell contracts, but the `HDLGenerator` result contract does not pretend they

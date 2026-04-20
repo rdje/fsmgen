@@ -339,6 +339,20 @@ This is the live continuity document for fast session recovery after crashes, re
   nested compatibility branches remain intentionally outside the public
   interchange promise.
 
+## 2026-04-20: HDLGenerator source_info now has a dedicated nested-object contract
+- Added [perl/FSM/Support/HDLGeneratorSourceInfoContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorSourceInfoContract.pm)
+  as the explicit owner for the bounded `HDLGenerator` `source_info` object.
+- The new contract is intentionally narrow:
+  - `header` and `kind` remain the identity keys,
+  - `package_import_count` and `package_import_names` remain the summary keys,
+  - the advertised `source_info.*` paths remain the stable subsurfaces,
+  - and the wider `source_info` hash remains explicitly non-stable and
+    non-JSON-safe as a whole.
+- [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm)
+  now advertises that nested owner through `source_info_contract_source`
+  instead of treating `source_info` as an undocumented special case inside the
+  broader result contract.
+
 ## 2026-04-19: support_accounting now exposes a nested section_contract too
 - [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
   now advertises the bounded support-accounting owner through

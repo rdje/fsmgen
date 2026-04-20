@@ -5,6 +5,11 @@ use warnings;
 
 use Exporter 'import';
 use JSON::PP ();
+use FSM::Support::HDLGeneratorSourceInfoContract qw(
+    hdl_generator_source_info_identity_keys
+    hdl_generator_source_info_stable_subsurfaces
+    hdl_generator_source_info_summary_keys
+);
 use FSM::Support::NormalizedSemanticIntentHIRContract qw(
     normalized_semantic_intent_hir_optional_composition_keys
     normalized_semantic_intent_hir_presence_keys
@@ -60,15 +65,11 @@ sub build_hdl_generator_result_contract {
         composition_root_top_level_keys => [
             qw(fsm_module raw_ast statistics composition_spec composition_plan composition_report),
         ],
+        source_info_contract_source => 'FSM::Support::HDLGeneratorSourceInfoContract',
         source_info_identity_presence_keys => hdl_generator_result_source_info_identity_keys(),
         source_info_summary_presence_keys => hdl_generator_result_source_info_summary_keys(),
         source_info_full_hash_stable => JSON::PP::false,
-        source_info_stable_subsurfaces => [
-            'source_info.header',
-            'source_info.kind',
-            'source_info.package_import_count',
-            'source_info.package_import_names',
-        ],
+        source_info_stable_subsurfaces => hdl_generator_source_info_stable_subsurfaces(),
         module_info_identity_presence_keys => hdl_generator_result_module_info_identity_keys(),
         module_info_summary_presence_keys => hdl_generator_result_module_info_summary_keys(),
         module_info_optional_composition_summary_keys => hdl_generator_result_module_info_optional_composition_summary_keys(),
@@ -197,14 +198,11 @@ sub build_hdl_generator_result_contract {
 }
 
 sub hdl_generator_result_source_info_identity_keys {
-    return [qw(header kind)];
+    return hdl_generator_source_info_identity_keys();
 }
 
 sub hdl_generator_result_source_info_summary_keys {
-    return [qw(
-        package_import_count
-        package_import_names
-    )];
+    return hdl_generator_source_info_summary_keys();
 }
 
 sub hdl_generator_result_module_info_identity_keys {

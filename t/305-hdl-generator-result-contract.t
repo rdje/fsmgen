@@ -10,6 +10,11 @@ use File::Temp qw(tempdir);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Pipeline::HDLGenerator;
+use FSM::Support::HDLGeneratorSourceInfoContract qw(
+    hdl_generator_source_info_identity_keys
+    hdl_generator_source_info_stable_subsurfaces
+    hdl_generator_source_info_summary_keys
+);
 use FSM::Support::HDLGeneratorResultContract qw(
     build_hdl_generator_result_contract
     hdl_generator_result_intent_hir_keys
@@ -55,8 +60,13 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
     );
     is_deeply(
         $contract->{source_info_identity_presence_keys},
-        hdl_generator_result_source_info_identity_keys(),
+        hdl_generator_source_info_identity_keys(),
         'contract publishes bounded source_info identity keys',
+    );
+    is(
+        $contract->{source_info_contract_source},
+        'FSM::Support::HDLGeneratorSourceInfoContract',
+        'contract records the nested source_info contract owner',
     );
     ok(
         !$contract->{source_info_full_hash_stable},
@@ -68,17 +78,12 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
     );
     is_deeply(
         $contract->{source_info_summary_presence_keys},
-        hdl_generator_result_source_info_summary_keys(),
+        hdl_generator_source_info_summary_keys(),
         'contract publishes bounded source_info summary keys',
     );
     is_deeply(
         $contract->{source_info_stable_subsurfaces},
-        [
-            'source_info.header',
-            'source_info.kind',
-            'source_info.package_import_count',
-            'source_info.package_import_names',
-        ],
+        hdl_generator_source_info_stable_subsurfaces(),
         'contract publishes the bounded stable source_info subsurfaces',
     );
     ok(

@@ -727,6 +727,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         scalar(@{$manifest->{embedding}{hdl_generator_result}{source_info_identity_presence_keys} || []}) >= 2,
         'manifest advertises bounded HDLGenerator source_info identity key presence',
     );
+    is(
+        $manifest->{embedding}{hdl_generator_result}{source_info_contract_source},
+        'FSM::Support::HDLGeneratorSourceInfoContract',
+        'manifest records the nested HDLGenerator source_info contract owner',
+    );
     ok(
         !$manifest->{embedding}{hdl_generator_result}{source_info_full_hash_stable},
         'manifest does not claim the whole source_info hash is stable',

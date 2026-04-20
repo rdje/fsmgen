@@ -92,6 +92,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `perl/FSM/Support/DiagnosticCodes.pm` — stable diagnostic-code registry consumed by support accounting and the capability manifest.
 - `perl/FSM/Support/DiagnosticCodeRegistryContract.pm` — bounded stable-code registry contract advertised through the capability manifest.
 - `perl/FSM/Support/ExtensionContract.pm` — bounded typed-extension/context contract advertised to embedders through the capability manifest.
+- `perl/FSM/Support/HDLGeneratorSourceInfoContract.pm` — bounded nested-object contract for `HDLGenerator` `source_info` identity and package-import summary subsurfaces.
 - `perl/FSM/Support/HDLGeneratorResultContract.pm` — bounded top-level result contract plus narrow `source_info`/`module_info` identity slices, advertised stable subsurfaces for `source_info`/`module_info`/`statistics` rather than whole-hash promises, explicitly raw `fsm_module`/`raw_ast`/`resolved_package_imports` and composition-spec/plan/report compatibility branches, and reused semantic-layer shell contracts rather than separate whole-hash promises for in-process `HDLGenerator` embedders.
 - `perl/FSM/Support/HDLExternalValidation.pm` — optional Verilator/Yosys validation lane for generated SystemVerilog.
 - `perl/FSM/Support/HDLExternalValidationContract.pm` — bounded external validation contract advertised through the capability manifest.
