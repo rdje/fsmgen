@@ -1918,6 +1918,10 @@ The nested `module_info` object now also has its own explicit owner through
 so embedders have one dedicated contract to follow for the current module
 identity fields plus the direct-root and composition-only scalar summary
 families.
+The nested `statistics` object now also has its own explicit owner through
+[perl/FSM/Support/HDLGeneratorStatisticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorStatisticsContract.pm),
+so embedders have one dedicated contract to follow for the current direct-root
+and composition-only scalar summary families there too.
 The same goes for top-level `intent_hir`, `lowered_rtl_ir`, and
 `structural_rtl_ir`: those hashes reuse their dedicated normalized-semantic
 shell contracts, but the `HDLGenerator` result contract does not pretend they

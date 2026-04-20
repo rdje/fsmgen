@@ -369,6 +369,21 @@ This is the live continuity document for fast session recovery after crashes, re
   instead of treating `module_info` as an undocumented special case inside the
   broader result contract.
 
+## 2026-04-20: HDLGenerator statistics now have a dedicated nested-object contract
+- Added [perl/FSM/Support/HDLGeneratorStatisticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorStatisticsContract.pm)
+  as the explicit owner for the bounded `HDLGenerator` `statistics` object.
+- The new contract is intentionally narrow:
+  - the current direct-root scalar fields remain the summary keys,
+  - the current composition-only scalar counts/lane fields remain optional
+    composition summary keys,
+  - the advertised `statistics.*` paths remain the stable subsurfaces,
+  - and the wider `statistics` hash remains explicitly non-stable and
+    non-JSON-safe as a whole.
+- [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm)
+  now advertises that nested owner through `statistics_contract_source`
+  instead of treating `statistics` as an undocumented special case inside the
+  broader result contract.
+
 ## 2026-04-19: support_accounting now exposes a nested section_contract too
 - [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
   now advertises the bounded support-accounting owner through

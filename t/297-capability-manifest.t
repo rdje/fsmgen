@@ -832,6 +832,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         $manifest->{embedding}{hdl_generator_result}{statistics_summary_slices_advertised},
         'manifest says the HDLGenerator result advertises bounded statistics summary slices',
     );
+    is(
+        $manifest->{embedding}{hdl_generator_result}{statistics_contract_source},
+        'FSM::Support::HDLGeneratorStatisticsContract',
+        'manifest records the nested HDLGenerator statistics contract owner',
+    );
     ok(
         !$manifest->{embedding}{hdl_generator_result}{statistics_full_hash_stable},
         'manifest does not claim the whole statistics hash is stable',

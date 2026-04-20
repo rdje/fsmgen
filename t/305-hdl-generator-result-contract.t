@@ -16,6 +16,11 @@ use FSM::Support::HDLGeneratorModuleInfoContract qw(
     hdl_generator_module_info_stable_subsurfaces
     hdl_generator_module_info_summary_keys
 );
+use FSM::Support::HDLGeneratorStatisticsContract qw(
+    hdl_generator_statistics_optional_composition_keys
+    hdl_generator_statistics_stable_subsurfaces
+    hdl_generator_statistics_summary_keys
+);
 use FSM::Support::HDLGeneratorSourceInfoContract qw(
     hdl_generator_source_info_identity_keys
     hdl_generator_source_info_stable_subsurfaces
@@ -207,35 +212,28 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
         $contract->{statistics_summary_slices_advertised},
         'contract advertises bounded statistics summary slices',
     );
+    is(
+        $contract->{statistics_contract_source},
+        'FSM::Support::HDLGeneratorStatisticsContract',
+        'contract records the nested statistics contract owner',
+    );
     ok(
         !$contract->{statistics_full_hash_stable},
         'contract does not claim the whole statistics hash is stable',
     );
     is_deeply(
         $contract->{statistics_summary_presence_keys},
-        hdl_generator_result_statistics_summary_keys(),
+        hdl_generator_statistics_summary_keys(),
         'contract publishes bounded statistics summary keys',
     );
     is_deeply(
         $contract->{statistics_optional_composition_keys},
-        hdl_generator_result_statistics_optional_composition_keys(),
+        hdl_generator_statistics_optional_composition_keys(),
         'contract publishes bounded composition-only statistics summary keys',
     );
     is_deeply(
         $contract->{statistics_stable_subsurfaces},
-        [
-            'statistics.factoring_enabled',
-            'statistics.global_expressions',
-            'statistics.intermediate_signals',
-            'statistics.composition_block_count',
-            'statistics.composition_child_count',
-            'statistics.composition_lane',
-            'statistics.composition_net_count',
-            'statistics.composition_override_count',
-            'statistics.composition_resolved_link_count',
-            'statistics.composition_shared_datapath_candidate_count',
-            'statistics.composition_top_port_count',
-        ],
+        hdl_generator_statistics_stable_subsurfaces(),
         'contract publishes the bounded stable statistics subsurfaces',
     );
     ok(

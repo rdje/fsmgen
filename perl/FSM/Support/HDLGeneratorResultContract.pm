@@ -11,6 +11,11 @@ use FSM::Support::HDLGeneratorModuleInfoContract qw(
     hdl_generator_module_info_stable_subsurfaces
     hdl_generator_module_info_summary_keys
 );
+use FSM::Support::HDLGeneratorStatisticsContract qw(
+    hdl_generator_statistics_optional_composition_keys
+    hdl_generator_statistics_stable_subsurfaces
+    hdl_generator_statistics_summary_keys
+);
 use FSM::Support::HDLGeneratorSourceInfoContract qw(
     hdl_generator_source_info_identity_keys
     hdl_generator_source_info_stable_subsurfaces
@@ -82,22 +87,11 @@ sub build_hdl_generator_result_contract {
         module_info_optional_composition_summary_keys => hdl_generator_result_module_info_optional_composition_summary_keys(),
         module_info_full_hash_stable => JSON::PP::false,
         module_info_stable_subsurfaces => hdl_generator_module_info_stable_subsurfaces(),
+        statistics_contract_source => 'FSM::Support::HDLGeneratorStatisticsContract',
         statistics_summary_presence_keys => hdl_generator_result_statistics_summary_keys(),
         statistics_optional_composition_keys => hdl_generator_result_statistics_optional_composition_keys(),
         statistics_full_hash_stable => JSON::PP::false,
-        statistics_stable_subsurfaces => [
-            'statistics.factoring_enabled',
-            'statistics.global_expressions',
-            'statistics.intermediate_signals',
-            'statistics.composition_block_count',
-            'statistics.composition_child_count',
-            'statistics.composition_lane',
-            'statistics.composition_net_count',
-            'statistics.composition_override_count',
-            'statistics.composition_resolved_link_count',
-            'statistics.composition_shared_datapath_candidate_count',
-            'statistics.composition_top_port_count',
-        ],
+        statistics_stable_subsurfaces => hdl_generator_statistics_stable_subsurfaces(),
         fsm_module_shell_only => JSON::PP::true,
         fsm_module_raw_value_class_when_defined => 'FSM::CoreAST::FSMModule',
         fsm_module_summary_surfaces => [
@@ -198,24 +192,11 @@ sub hdl_generator_result_module_info_optional_composition_summary_keys {
 }
 
 sub hdl_generator_result_statistics_summary_keys {
-    return [qw(
-        factoring_enabled
-        global_expressions
-        intermediate_signals
-    )];
+    return hdl_generator_statistics_summary_keys();
 }
 
 sub hdl_generator_result_statistics_optional_composition_keys {
-    return [qw(
-        composition_block_count
-        composition_child_count
-        composition_lane
-        composition_net_count
-        composition_override_count
-        composition_resolved_link_count
-        composition_shared_datapath_candidate_count
-        composition_top_port_count
-    )];
+    return hdl_generator_statistics_optional_composition_keys();
 }
 
 sub hdl_generator_result_intent_hir_keys {
