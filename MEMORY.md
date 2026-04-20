@@ -308,13 +308,19 @@ This is the live continuity document for fast session recovery after crashes, re
   already-bounded top-level result-key presence lists.
 - [t/305-hdl-generator-result-contract.t](/Users/richarddje/Documents/github/fsmgen/t/305-hdl-generator-result-contract.t)
   and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
-  now lock those nested identity slices, bounded statistics summary slices,
-  and top-level semantic-shell ownership for direct/composition in-process
-  results and for the manifest-facing embedding contract.
+  now lock those nested identity slices, bounded `module_info`/`statistics`
+  summary slices, and top-level semantic-shell ownership for
+  direct/composition in-process results and for the manifest-facing embedding
+  contract.
 - The same bounded contract now also advertises that the top-level
   `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` hashes reuse the
   normalized-semantic shell owners already published for sanitized semantic
   JSON, and the manifest-facing embedding checks now lock those owners too.
+- The same bounded contract now also advertises the scalar summary keys inside
+  `module_info`, including direct-root signal/state/parameter/output-drive
+  counts plus the composition-only scalar count/lane fields, while
+  deliberately leaving compatibility-heavy payloads such as nested child lists,
+  signal tables, and provenance objects outside the stabilized promise.
 - The same bounded contract now also advertises the scalar summary keys inside
   `statistics`, including direct-root factoring counts plus the
   composition-only count/lane fields, while deliberately leaving

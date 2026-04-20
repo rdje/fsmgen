@@ -436,6 +436,13 @@ This document captures engineering rationale, design constraints, and working de
   hash too compatibility-heavy to freeze wholesale.
 - The honest move is therefore to advertise only the bounded scalar summary
   keys already present inside `statistics`, not the entire nested branch.
+- `module_info` is now in a similar position: the nested arrays and structured
+  payloads (`signals`, `signal_analysis`, child export lists, provenance,
+  nested IR mirrors) are still too compatibility-heavy to freeze wholesale,
+  but many of the scalar counts now come from explicit intent/lowered/
+  structural/provenance builders rather than ad-hoc runtime state.
+- The honest move there is the same: advertise only the bounded scalar summary
+  keys inside `module_info`, not the entire nested branch.
 
 ## 2026-04-19: regularize support_accounting with a nested section contract without breaking callers
 - `support_accounting` already had a bounded owner, but it was the one public
