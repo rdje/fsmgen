@@ -728,12 +728,21 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest advertises bounded HDLGenerator source_info identity key presence',
     );
     ok(
+        !$manifest->{embedding}{hdl_generator_result}{source_info_full_hash_stable},
+        'manifest does not claim the whole source_info hash is stable',
+    );
+    ok(
         $manifest->{embedding}{hdl_generator_result}{source_info_summary_slices_advertised},
         'manifest says the HDLGenerator result advertises bounded source_info summary slices',
     );
     ok(
         scalar(@{$manifest->{embedding}{hdl_generator_result}{source_info_summary_presence_keys} || []}) >= 2,
         'manifest advertises bounded HDLGenerator source_info summary key presence',
+    );
+    is_deeply(
+        $manifest->{embedding}{hdl_generator_result}{source_info_stable_subsurfaces},
+        ['source_info.header', 'source_info.kind', 'source_info.package_import_count', 'source_info.package_import_names'],
+        'manifest publishes the bounded stable source_info subsurfaces',
     );
     ok(
         $manifest->{embedding}{hdl_generator_result}{resolved_package_imports_shell_only},
@@ -790,6 +799,10 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest advertises bounded HDLGenerator module_info identity key presence',
     );
     ok(
+        !$manifest->{embedding}{hdl_generator_result}{module_info_full_hash_stable},
+        'manifest does not claim the whole module_info hash is stable',
+    );
+    ok(
         $manifest->{embedding}{hdl_generator_result}{module_info_summary_slices_advertised},
         'manifest says the HDLGenerator result advertises bounded module_info summary slices',
     );
@@ -802,8 +815,16 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest advertises bounded HDLGenerator composition-only module_info summary key presence',
     );
     ok(
+        scalar(@{$manifest->{embedding}{hdl_generator_result}{module_info_stable_subsurfaces} || []}) >= 10,
+        'manifest advertises bounded HDLGenerator module_info stable subsurfaces',
+    );
+    ok(
         $manifest->{embedding}{hdl_generator_result}{statistics_summary_slices_advertised},
         'manifest says the HDLGenerator result advertises bounded statistics summary slices',
+    );
+    ok(
+        !$manifest->{embedding}{hdl_generator_result}{statistics_full_hash_stable},
+        'manifest does not claim the whole statistics hash is stable',
     );
     ok(
         scalar(@{$manifest->{embedding}{hdl_generator_result}{statistics_summary_presence_keys} || []}) >= 3,
@@ -812,6 +833,10 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     ok(
         scalar(@{$manifest->{embedding}{hdl_generator_result}{statistics_optional_composition_keys} || []}) >= 8,
         'manifest advertises bounded HDLGenerator composition-only statistics summary key presence',
+    );
+    ok(
+        scalar(@{$manifest->{embedding}{hdl_generator_result}{statistics_stable_subsurfaces} || []}) >= 3,
+        'manifest advertises bounded HDLGenerator statistics stable subsurfaces',
     );
     ok(
         $manifest->{embedding}{hdl_generator_result}{top_level_semantic_layer_contracts_advertised},

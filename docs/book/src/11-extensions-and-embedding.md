@@ -154,6 +154,11 @@ structured downstream consumers should prefer `intent_hir`, `lowered_rtl_ir`,
 branch is likewise shell-only and intentionally treated as a frontend/debug
 artifact rather than a public interchange tree, so structured consumers should
 prefer `intent_hir` instead of binding themselves to parser-level arrays.
+The same result contract now machine-advertises the narrower “stable
+subsurface” boundary for the nested hashes too: the whole `source_info`,
+`module_info`, and `statistics` hashes are still not stable APIs, but the
+advertised `source_info.*`, `module_info.*`, and `statistics.*` identity/summary
+paths are the bounded public slices embedders should target.
 The composition-only `composition_spec` and `composition_plan` branches are
 shell-only too: they are raw `FSM::Composition::Spec` and
 `FSM::Composition::Plan` objects kept for in-process compatibility. Raw

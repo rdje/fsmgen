@@ -1905,6 +1905,10 @@ shell-only frontend/debug artifact. In both cases, downstream structured
 consumers should prefer `intent_hir`, the other semantic layers, or normalized
 semantic JSON instead of binding themselves to live CoreAST or parser-array
 payloads.
+It now also machine-advertises that the whole `source_info`, `module_info`, and
+`statistics` hashes are not the stable API either: the bounded public contract
+is the advertised identity/summary subsurfaces inside those hashes, not a
+promise that every nested compatibility-heavy field in the wider hash is frozen.
 
 The first bounded check-only JSON surface is:
 

@@ -1041,6 +1041,12 @@ This is the live continuity document for fast session recovery after crashes, re
   - `raw_ast` is a shell-only frontend/debug artifact with array shape,
   - and structured downstream inspection should stay on `intent_hir`,
     later semantic layers, or normalized semantic JSON.
+- The same contract now also makes the nested-summary boundary explicit:
+  - the whole `source_info`, `module_info`, and `statistics` hashes are not
+    promised stable as wholes,
+  - the advertised `source_info.*`, `module_info.*`, and `statistics.*`
+    identity/summary paths are the stable subsurfaces,
+  - and the rest of those hashes remains compatibility-heavy.
 - [t/307-composition-report-contract.t](/Users/richarddje/Documents/github/fsmgen/t/307-composition-report-contract.t)
   now proves the raw APB composition report fails normal JSON encoding, the
   sanitized report has only declared top-level report keys, and

@@ -59,6 +59,10 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
         'contract publishes bounded source_info identity keys',
     );
     ok(
+        !$contract->{source_info_full_hash_stable},
+        'contract does not claim the whole source_info hash is stable',
+    );
+    ok(
         $contract->{source_info_summary_slices_advertised},
         'contract advertises bounded source_info summary slices',
     );
@@ -66,6 +70,16 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
         $contract->{source_info_summary_presence_keys},
         hdl_generator_result_source_info_summary_keys(),
         'contract publishes bounded source_info summary keys',
+    );
+    is_deeply(
+        $contract->{source_info_stable_subsurfaces},
+        [
+            'source_info.header',
+            'source_info.kind',
+            'source_info.package_import_count',
+            'source_info.package_import_names',
+        ],
+        'contract publishes the bounded stable source_info subsurfaces',
     );
     ok(
         $contract->{fsm_module_shell_only},
@@ -151,6 +165,10 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
         'contract publishes bounded module_info identity keys',
     );
     ok(
+        !$contract->{module_info_full_hash_stable},
+        'contract does not claim the whole module_info hash is stable',
+    );
+    ok(
         $contract->{module_info_summary_slices_advertised},
         'contract advertises bounded module_info summary slices',
     );
@@ -164,9 +182,45 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
         hdl_generator_result_module_info_optional_composition_summary_keys(),
         'contract publishes bounded composition-only module_info summary keys',
     );
+    is_deeply(
+        $contract->{module_info_stable_subsurfaces},
+        [
+            'module_info.module_name',
+            'module_info.source_root_kind',
+            'module_info.output_drive_family_count',
+            'module_info.parameter_count',
+            'module_info.regular_state_count',
+            'module_info.requires_implicit_system_ports',
+            'module_info.signal_count',
+            'module_info.standalone_dt_count',
+            'module_info.standalone_dt_multi_drive_target_count',
+            'module_info.state_count',
+            'module_info.auxiliary_assignment_count',
+            'module_info.composition_block_count',
+            'module_info.composition_child_count',
+            'module_info.composition_generated_child_count',
+            'module_info.composition_generated_dt_child_count',
+            'module_info.composition_generated_fsm_child_count',
+            'module_info.composition_lane',
+            'module_info.composition_net_count',
+            'module_info.composition_override_count',
+            'module_info.composition_resolved_link_count',
+            'module_info.composition_shared_datapath_candidate_count',
+            'module_info.composition_standalone_dt_block_count',
+            'module_info.composition_standalone_dt_child_count',
+            'module_info.composition_standalone_dt_multi_drive_target_count',
+            'module_info.instance_count',
+            'module_info.internal_net_count',
+        ],
+        'contract publishes the bounded stable module_info subsurfaces',
+    );
     ok(
         $contract->{statistics_summary_slices_advertised},
         'contract advertises bounded statistics summary slices',
+    );
+    ok(
+        !$contract->{statistics_full_hash_stable},
+        'contract does not claim the whole statistics hash is stable',
     );
     is_deeply(
         $contract->{statistics_summary_presence_keys},
@@ -177,6 +231,23 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
         $contract->{statistics_optional_composition_keys},
         hdl_generator_result_statistics_optional_composition_keys(),
         'contract publishes bounded composition-only statistics summary keys',
+    );
+    is_deeply(
+        $contract->{statistics_stable_subsurfaces},
+        [
+            'statistics.factoring_enabled',
+            'statistics.global_expressions',
+            'statistics.intermediate_signals',
+            'statistics.composition_block_count',
+            'statistics.composition_child_count',
+            'statistics.composition_lane',
+            'statistics.composition_net_count',
+            'statistics.composition_override_count',
+            'statistics.composition_resolved_link_count',
+            'statistics.composition_shared_datapath_candidate_count',
+            'statistics.composition_top_port_count',
+        ],
+        'contract publishes the bounded stable statistics subsurfaces',
     );
     ok(
         $contract->{top_level_semantic_layer_contracts_advertised},

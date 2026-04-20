@@ -1055,6 +1055,12 @@ This document captures engineering rationale, design constraints, and working de
   - and downstream structured consumers should prefer `intent_hir`,
     later semantic layers, or normalized semantic JSON instead of the live
     CoreAST/parser payloads.
+- The nested summary-hash boundary is now explicit there too:
+  - the whole `source_info`, `module_info`, and `statistics` hashes are not
+    stable APIs,
+  - the advertised identity/summary paths inside those hashes are the bounded
+    stable subsurfaces,
+  - and the wider hashes remain compatibility-heavy outside those paths.
 - Rationale:
   - in-process embedders need a documented result boundary,
   - but pretending the raw result hash is a stable JSON document would be false,
