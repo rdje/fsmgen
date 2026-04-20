@@ -154,7 +154,11 @@ bounded package-import summary surface.
 The top-level `fsm_module` branch is shell-only too when it is defined: it is a
 raw `FSM::CoreAST::FSMModule` object kept for in-process compatibility, so
 structured downstream consumers should prefer `intent_hir`, `lowered_rtl_ir`,
-`structural_rtl_ir`, or normalized semantic JSON. The top-level `raw_ast`
+`structural_rtl_ir`, or normalized semantic JSON. That shell-only branch now
+also has its own explicit owner through
+[perl/FSM/Support/HDLGeneratorFSMModuleContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFSMModuleContract.pm),
+which is the contract to follow for the raw CoreAST-object rule plus the
+semantic-summary fallback surfaces. The top-level `raw_ast`
 branch is likewise shell-only and intentionally treated as a frontend/debug
 artifact rather than a public interchange tree, so structured consumers should
 prefer `intent_hir` instead of binding themselves to parser-level arrays.

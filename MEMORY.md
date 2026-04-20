@@ -402,6 +402,22 @@ This is the live continuity document for fast session recovery after crashes, re
   `resolved_package_imports` as an undocumented special case inside the
   broader result contract.
 
+## 2026-04-20: HDLGenerator fsm_module now has a dedicated shell-only contract
+- Added [perl/FSM/Support/HDLGeneratorFSMModuleContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFSMModuleContract.pm)
+  as the explicit owner for the bounded shell-only `HDLGenerator`
+  `fsm_module` branch.
+- The new contract is intentionally narrow:
+  - the branch remains shell-only,
+  - the raw value remains an `FSM::CoreAST::FSMModule` object when defined,
+  - structured inspection stays on `intent_hir`, `lowered_rtl_ir`,
+    `structural_rtl_ir`, or normalized semantic JSON,
+  - and the wider live CoreAST object remains explicitly non-stable and
+    non-JSON-safe as a whole.
+- [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm)
+  now advertises that nested owner through `fsm_module_contract_source`
+  instead of treating `fsm_module` as an undocumented special case inside the
+  broader result contract.
+
 ## 2026-04-19: support_accounting now exposes a nested section_contract too
 - [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
   now advertises the bounded support-accounting owner through

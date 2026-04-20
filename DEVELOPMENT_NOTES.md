@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-20: fsm_module now deserves its own shell-only owner too
+- The in-process `HDLGenerator` result contract already called out
+  `fsm_module` explicitly as a raw compatibility branch, but that still left
+  one real embedding-facing seam described only as inline metadata on the
+  parent result shell.
+- The safer split mirrors the other `R13` surfaces:
+  - give `fsm_module` one explicit bounded owner,
+  - freeze only the raw-class rule plus the structured semantic-summary
+    fallback surfaces,
+  - and keep the live CoreAST object itself explicitly outside any JSON-safe
+    or whole-hash stability promise.
+- That keeps `R13` honest:
+  - downstream embedders can discover one named contract for the raw
+    `FSM::CoreAST::FSMModule` compatibility branch,
+  - the capability manifest/result shell can advertise that owner directly
+    instead of repeating one undocumented special case,
+  - and any later promotion of deeper CoreAST-derived summaries can happen as
+    deliberate separate slices instead of piggybacking on the parent result
+    contract.
+
 ## 2026-04-19: public structural-rtl-ir shells should have one explicit owner
 - The bounded normalized semantic JSON surface already exposed one substantial
   nested `semantic.forward_ir.structural_rtl_ir` object in practice for both

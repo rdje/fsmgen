@@ -700,6 +700,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest says fsm_module is a shell-only compatibility branch',
     );
     is(
+        $manifest->{embedding}{hdl_generator_result}{fsm_module_contract_source},
+        'FSM::Support::HDLGeneratorFSMModuleContract',
+        'manifest records the nested HDLGenerator fsm_module contract owner',
+    );
+    is(
         $manifest->{embedding}{hdl_generator_result}{fsm_module_raw_value_class_when_defined},
         'FSM::CoreAST::FSMModule',
         'manifest records the raw fsm_module value class when defined',

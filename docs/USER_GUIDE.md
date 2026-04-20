@@ -1908,7 +1908,10 @@ The same contract now also names `fsm_module` as a shell-only raw
 shell-only frontend/debug artifact. In both cases, downstream structured
 consumers should prefer `intent_hir`, the other semantic layers, or normalized
 semantic JSON instead of binding themselves to live CoreAST or parser-array
-payloads.
+payloads. The `fsm_module` branch now also has its own explicit owner through
+[perl/FSM/Support/HDLGeneratorFSMModuleContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFSMModuleContract.pm),
+so embedders have one dedicated contract to follow for that raw CoreAST-object
+rule plus the bounded semantic-summary fallback surfaces.
 It now also machine-advertises that the whole `source_info`, `module_info`, and
 `statistics` hashes are not the stable API either: the bounded public contract
 is the advertised identity/summary subsurfaces inside those hashes, not a

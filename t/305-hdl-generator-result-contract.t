@@ -10,6 +10,10 @@ use File::Temp qw(tempdir);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Pipeline::HDLGenerator;
+use FSM::Support::HDLGeneratorFSMModuleContract qw(
+    hdl_generator_fsm_module_raw_value_class_when_defined
+    hdl_generator_fsm_module_summary_surfaces
+);
 use FSM::Support::HDLGeneratorModuleInfoContract qw(
     hdl_generator_module_info_identity_keys
     hdl_generator_module_info_optional_composition_summary_keys
@@ -106,13 +110,18 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
         'contract advertises fsm_module as a shell-only compatibility branch',
     );
     is(
+        $contract->{fsm_module_contract_source},
+        'FSM::Support::HDLGeneratorFSMModuleContract',
+        'contract records the nested fsm_module contract owner',
+    );
+    is(
         $contract->{fsm_module_raw_value_class_when_defined},
-        'FSM::CoreAST::FSMModule',
+        hdl_generator_fsm_module_raw_value_class_when_defined(),
         'contract records the raw fsm_module value class when defined',
     );
     is_deeply(
         $contract->{fsm_module_summary_surfaces},
-        ['intent_hir', 'lowered_rtl_ir', 'structural_rtl_ir'],
+        hdl_generator_fsm_module_summary_surfaces(),
         'contract points fsm_module embedders at the structured semantic summaries',
     );
     ok(

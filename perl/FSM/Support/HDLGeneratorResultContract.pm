@@ -5,6 +5,10 @@ use warnings;
 
 use Exporter 'import';
 use JSON::PP ();
+use FSM::Support::HDLGeneratorFSMModuleContract qw(
+    hdl_generator_fsm_module_raw_value_class_when_defined
+    hdl_generator_fsm_module_summary_surfaces
+);
 use FSM::Support::HDLGeneratorModuleInfoContract qw(
     hdl_generator_module_info_identity_keys
     hdl_generator_module_info_optional_composition_summary_keys
@@ -96,13 +100,10 @@ sub build_hdl_generator_result_contract {
         statistics_optional_composition_keys => hdl_generator_result_statistics_optional_composition_keys(),
         statistics_full_hash_stable => JSON::PP::false,
         statistics_stable_subsurfaces => hdl_generator_statistics_stable_subsurfaces(),
+        fsm_module_contract_source => 'FSM::Support::HDLGeneratorFSMModuleContract',
         fsm_module_shell_only => JSON::PP::true,
-        fsm_module_raw_value_class_when_defined => 'FSM::CoreAST::FSMModule',
-        fsm_module_summary_surfaces => [
-            'intent_hir',
-            'lowered_rtl_ir',
-            'structural_rtl_ir',
-        ],
+        fsm_module_raw_value_class_when_defined => hdl_generator_fsm_module_raw_value_class_when_defined(),
+        fsm_module_summary_surfaces => hdl_generator_fsm_module_summary_surfaces(),
         raw_ast_shell_only => JSON::PP::true,
         raw_ast_value_shape => 'ARRAY',
         raw_ast_summary_surfaces => [
