@@ -449,6 +449,10 @@ This document captures engineering rationale, design constraints, and working de
 - The honest widening there is to expose only the source-level package-import
   summary fields (`package_import_count` and `package_import_names`) while
   keeping the raw typed objects out of the stabilized promise.
+- The top-level `resolved_package_imports` sibling should therefore be called
+  out explicitly as shell-only compatibility data rather than quietly left
+  ambiguous: callers can rely on the branch being present, but not on walking
+  its typed `FSM::Package::Spec` values as a public JSON/API contract.
 
 ## 2026-04-19: regularize support_accounting with a nested section contract without breaking callers
 - `support_accounting` already had a bounded owner, but it was the one public

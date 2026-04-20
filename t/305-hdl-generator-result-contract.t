@@ -67,6 +67,20 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
         hdl_generator_result_source_info_summary_keys(),
         'contract publishes bounded source_info summary keys',
     );
+    ok(
+        $contract->{resolved_package_imports_shell_only},
+        'contract advertises resolved_package_imports as a shell-only branch',
+    );
+    is(
+        $contract->{resolved_package_imports_raw_value_class},
+        'FSM::Package::Spec',
+        'contract records the raw resolved_package_imports value class',
+    );
+    is_deeply(
+        $contract->{resolved_package_imports_summary_surface},
+        ['source_info.package_import_count', 'source_info.package_import_names'],
+        'contract points package-import embedders at the bounded source_info summary surface',
+    );
     is_deeply(
         $contract->{module_info_identity_presence_keys},
         hdl_generator_result_module_info_identity_keys(),
@@ -181,6 +195,7 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
     ok($unsanitized{raw_ast}, 'contract marks raw AST as unsanitized');
     ok($unsanitized{fsm_module}, 'contract marks live fsm_module as unsanitized');
     ok($unsanitized{composition_plan}, 'contract marks composition plan object as unsanitized');
+    ok($unsanitized{resolved_package_imports}, 'contract marks resolved_package_imports as a raw compatibility branch');
     ok($unsanitized{statistics}, 'contract marks statistics as not wholly sanitized');
     ok(!$unsanitized{intent_hir}, 'contract no longer classifies top-level intent_hir as an unsanitized compatibility branch');
 };
@@ -302,6 +317,11 @@ FSM
         [qw(shared_local shared_external)],
         'direct result source_info preserves package import names in authored order',
     );
+    is(
+        ref($direct->{resolved_package_imports}{shared_external}),
+        'FSM::Package::Spec',
+        'direct result still carries raw package-spec objects under resolved_package_imports',
+    );
 
     my $composition = generate_result_from_path($composition_path, source_search_paths => [$libdir]);
     is($composition->{source_info}{package_import_count}, 2, 'composition result source_info records package import count');
@@ -309,6 +329,11 @@ FSM
         $composition->{source_info}{package_import_names},
         [qw(shared_local shared_external)],
         'composition result source_info preserves package import names in authored order',
+    );
+    is(
+        ref($composition->{resolved_package_imports}{shared_external}),
+        'FSM::Package::Spec',
+        'composition result still carries raw package-spec objects under resolved_package_imports',
     );
 };
 

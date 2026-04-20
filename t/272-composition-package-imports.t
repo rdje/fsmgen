@@ -151,6 +151,11 @@ FSM
         'resolved top symbols expose imported external package constants by namespace',
     );
     is(
+        ref($result->{resolved_package_imports}{shared_external}),
+        'FSM::Package::Spec',
+        'composition pipeline result still carries raw package-spec objects under resolved_package_imports',
+    );
+    is(
         $result->{composition_spec}->top->top_symbols->resolve_actual_payload('shared_local.mode.BUSY'),
         '1',
         'resolved top symbols expose imported embedded package enum members by namespace',

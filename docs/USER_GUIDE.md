@@ -1875,6 +1875,10 @@ JSON, but it deliberately does not claim the whole raw result hash is
 JSON-safe. Nested compatibility fields may still contain live CoreAST/AST
 objects; use `--emit-semantic-json` when the integration needs a sanitized
 machine interchange document.
+That same caution now explicitly includes `resolved_package_imports`: the
+top-level branch remains a raw hash of `FSM::Package::Spec` objects, so the
+stable package-import surface is `source_info.package_import_count` plus
+`source_info.package_import_names`, not the typed package-spec payloads.
 The public `support_accounting` match objects emitted by both `--check --json`
 and `--emit-semantic-json` now share one bounded nested-object contract too:
 [perl/FSM/Support/SupportAccountingMatchContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingMatchContract.pm)

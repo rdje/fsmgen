@@ -320,6 +320,10 @@ This is the live continuity document for fast session recovery after crashes, re
   `source_info`, currently `package_import_count` and
   `package_import_names`, so embedders can inspect imported-package intent
   without walking raw package-spec objects or composition-spec objects.
+- The top-level `resolved_package_imports` branch is now explicitly classified
+  as shell-only raw data whose values are `FSM::Package::Spec` objects, so
+  package-import embedders are steered toward the bounded `source_info`
+  summaries instead of those raw typed values.
 - The same bounded contract now also advertises the scalar summary keys inside
   `module_info`, including direct-root signal/state/parameter/output-drive
   counts plus the composition-only scalar count/lane fields, while

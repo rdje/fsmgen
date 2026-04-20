@@ -708,6 +708,20 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest advertises bounded HDLGenerator source_info summary key presence',
     );
     ok(
+        $manifest->{embedding}{hdl_generator_result}{resolved_package_imports_shell_only},
+        'manifest says resolved_package_imports is a shell-only compatibility branch',
+    );
+    is(
+        $manifest->{embedding}{hdl_generator_result}{resolved_package_imports_raw_value_class},
+        'FSM::Package::Spec',
+        'manifest records the raw resolved_package_imports value class',
+    );
+    is_deeply(
+        $manifest->{embedding}{hdl_generator_result}{resolved_package_imports_summary_surface},
+        ['source_info.package_import_count', 'source_info.package_import_names'],
+        'manifest points package-import embedders at the bounded source_info summary surface',
+    );
+    ok(
         scalar(@{$manifest->{embedding}{hdl_generator_result}{module_info_identity_presence_keys} || []}) >= 2,
         'manifest advertises bounded HDLGenerator module_info identity key presence',
     );

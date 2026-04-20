@@ -140,9 +140,13 @@ also advertises that the top-level `intent_hir`, `lowered_rtl_ir`, and
 `structural_rtl_ir` hashes reuse the bounded shell owners from normalized
 semantic JSON, while explicitly
 classifying live/raw/unsanitized compatibility payloads such as `fsm_module`,
-`raw_ast`,
+`raw_ast`, `resolved_package_imports`,
 `statistics`, `composition_spec`, `composition_plan`, and
 `composition_report`.
+The top-level `resolved_package_imports` branch is therefore shell-only: it is
+still a hash of raw `FSM::Package::Spec` objects, so stable package-import
+inspection should use `source_info.package_import_count` and
+`source_info.package_import_names` instead of traversing those typed values.
 The public `support_accounting` match objects emitted beside those reports also
 share one bounded nested-object contract:
 [perl/FSM/Support/SupportAccountingMatchContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingMatchContract.pm)

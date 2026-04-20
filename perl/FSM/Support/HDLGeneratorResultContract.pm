@@ -67,6 +67,12 @@ sub build_hdl_generator_result_contract {
         module_info_optional_composition_summary_keys => hdl_generator_result_module_info_optional_composition_summary_keys(),
         statistics_summary_presence_keys => hdl_generator_result_statistics_summary_keys(),
         statistics_optional_composition_keys => hdl_generator_result_statistics_optional_composition_keys(),
+        resolved_package_imports_shell_only => JSON::PP::true,
+        resolved_package_imports_raw_value_class => 'FSM::Package::Spec',
+        resolved_package_imports_summary_surface => [
+            'source_info.package_import_count',
+            'source_info.package_import_names',
+        ],
         intent_hir_contract_source => 'FSM::Support::NormalizedSemanticIntentHIRContract',
         intent_hir_presence_keys => hdl_generator_result_intent_hir_keys(),
         intent_hir_optional_composition_keys => hdl_generator_result_intent_hir_optional_composition_keys(),
@@ -82,6 +88,7 @@ sub build_hdl_generator_result_contract {
                 statistics
                 module_info
                 source_info
+                resolved_package_imports
                 composition_spec
                 composition_plan
                 composition_report
@@ -99,6 +106,7 @@ sub build_hdl_generator_result_contract {
             'Treat the listed top-level keys as the bounded public presence contract.',
             'The advertised nested identity keys inside source_info and module_info are stabilized beyond that top-level shell.',
             'The advertised source_info package-import summary keys are stabilized, but the wider source_info hash still includes compatibility-heavy objects on composition roots.',
+            'The resolved_package_imports branch is shell-only: its values are raw FSM::Package::Spec objects, so use source_info.package_import_count and source_info.package_import_names for stable package-import inspection.',
             'The advertised scalar summary keys inside module_info are stabilized, but the whole module_info hash still includes compatibility-heavy nested payloads.',
             'The advertised statistics summary keys inside statistics are stabilized, but the whole statistics hash still includes compatibility-heavy payloads.',
             'The top-level intent_hir, lowered_rtl_ir, and structural_rtl_ir hashes also reuse the same bounded shell owners advertised through normalized semantic JSON.',

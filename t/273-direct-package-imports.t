@@ -93,6 +93,11 @@ FSM
         2,
         'direct pipeline result source_info reports imported package count',
     );
+    is(
+        ref($result->{resolved_package_imports}{shared_external}),
+        'FSM::Package::Spec',
+        'direct pipeline result still carries raw package-spec objects under resolved_package_imports',
+    );
     is_deeply(
         $result->{source_info}{package_import_names},
         [qw(shared_local shared_external)],
