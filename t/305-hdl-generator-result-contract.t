@@ -18,6 +18,8 @@ use FSM::Support::HDLGeneratorResultContract qw(
     hdl_generator_result_lowered_rtl_ir_optional_composition_keys
     hdl_generator_result_module_info_identity_keys
     hdl_generator_result_source_info_identity_keys
+    hdl_generator_result_statistics_optional_composition_keys
+    hdl_generator_result_statistics_summary_keys
     hdl_generator_result_structural_rtl_ir_keys
 );
 use FSM::Support::NormalizedSemanticIntentHIRContract qw(
@@ -56,6 +58,20 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
         $contract->{module_info_identity_presence_keys},
         hdl_generator_result_module_info_identity_keys(),
         'contract publishes bounded module_info identity keys',
+    );
+    ok(
+        $contract->{statistics_summary_slices_advertised},
+        'contract advertises bounded statistics summary slices',
+    );
+    is_deeply(
+        $contract->{statistics_summary_presence_keys},
+        hdl_generator_result_statistics_summary_keys(),
+        'contract publishes bounded statistics summary keys',
+    );
+    is_deeply(
+        $contract->{statistics_optional_composition_keys},
+        hdl_generator_result_statistics_optional_composition_keys(),
+        'contract publishes bounded composition-only statistics summary keys',
     );
     ok(
         $contract->{top_level_semantic_layer_contracts_advertised},
@@ -220,6 +236,11 @@ sub assert_common_result_contract {
         "$args{module_name} module_info keeps bounded nested identity keys",
     );
     assert_keys_present(
+        $result->{statistics},
+        hdl_generator_result_statistics_summary_keys(),
+        "$args{module_name} statistics keeps bounded summary keys",
+    );
+    assert_keys_present(
         $result->{intent_hir},
         hdl_generator_result_intent_hir_keys(),
         "$args{module_name} top-level intent_hir keeps bounded shell keys",
@@ -237,6 +258,11 @@ sub assert_common_result_contract {
 
     if ($args{source_kind} eq 'composition') {
         assert_keys_present(
+            $result->{statistics},
+            hdl_generator_result_statistics_optional_composition_keys(),
+            "$args{module_name} statistics keeps bounded composition-only summary keys",
+        );
+        assert_keys_present(
             $result->{intent_hir},
             hdl_generator_result_intent_hir_optional_composition_keys(),
             "$args{module_name} top-level intent_hir keeps bounded composition-only keys",
@@ -247,6 +273,9 @@ sub assert_common_result_contract {
             "$args{module_name} top-level lowered_rtl_ir keeps bounded composition-only keys",
         );
     } else {
+        for my $key (@{hdl_generator_result_statistics_optional_composition_keys() || []}) {
+            ok(!exists $result->{statistics}{$key}, "$args{module_name} direct result omits composition-only statistics key $key");
+        }
         for my $key (@{hdl_generator_result_intent_hir_optional_composition_keys() || []}) {
             ok(!exists $result->{intent_hir}{$key}, "$args{module_name} direct result omits composition-only intent_hir key $key");
         }

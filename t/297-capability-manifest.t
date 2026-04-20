@@ -704,6 +704,18 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest advertises bounded HDLGenerator module_info identity key presence',
     );
     ok(
+        $manifest->{embedding}{hdl_generator_result}{statistics_summary_slices_advertised},
+        'manifest says the HDLGenerator result advertises bounded statistics summary slices',
+    );
+    ok(
+        scalar(@{$manifest->{embedding}{hdl_generator_result}{statistics_summary_presence_keys} || []}) >= 3,
+        'manifest advertises bounded HDLGenerator statistics summary key presence',
+    );
+    ok(
+        scalar(@{$manifest->{embedding}{hdl_generator_result}{statistics_optional_composition_keys} || []}) >= 8,
+        'manifest advertises bounded HDLGenerator composition-only statistics summary key presence',
+    );
+    ok(
         $manifest->{embedding}{hdl_generator_result}{top_level_semantic_layer_contracts_advertised},
         'manifest says the HDLGenerator result advertises bounded top-level semantic-layer shells',
     );

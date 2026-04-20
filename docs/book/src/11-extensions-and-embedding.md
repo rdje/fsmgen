@@ -129,9 +129,12 @@ The bounded contract stabilizes top-level key presence for fields such as
 `structural_rtl_ir`, `source_info`, and `resolved_package_imports`. It also
 stabilizes the small nested identity slices `source_info.header`,
 `source_info.kind`, `module_info.module_name`, and
-`module_info.source_root_kind`. The same contract now also advertises that the
-top-level `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` hashes reuse
-the bounded shell owners from normalized semantic JSON, while explicitly
+`module_info.source_root_kind`, plus the bounded scalar summary keys inside
+`statistics` such as `intermediate_signals`, `global_expressions`,
+`factoring_enabled`, and the composition-only count/lane fields when the input
+root is a composition. The same contract now also advertises that the top-level
+`intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` hashes reuse the
+bounded shell owners from normalized semantic JSON, while explicitly
 classifying live/raw/unsanitized compatibility payloads such as `fsm_module`,
 `raw_ast`,
 `statistics`, `composition_spec`, `composition_plan`, and

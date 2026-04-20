@@ -300,7 +300,7 @@ This is the live continuity document for fast session recovery after crashes, re
   too, moving the measured import-tree totals to `145` project files /
   `144` `.pm` packages with `Support => 23`.
 
-## 2026-04-19: HDLGenerator result contract now exposes bounded nested identity slices
+## 2026-04-19: HDLGenerator result contract now exposes bounded nested slices
 - [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm)
   now advertises the bounded nested identity keys
   `source_info.header` / `source_info.kind` and
@@ -308,13 +308,19 @@ This is the live continuity document for fast session recovery after crashes, re
   already-bounded top-level result-key presence lists.
 - [t/305-hdl-generator-result-contract.t](/Users/richarddje/Documents/github/fsmgen/t/305-hdl-generator-result-contract.t)
   and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
-  now lock those nested identity slices for direct/composition in-process
+  now lock those nested identity slices, bounded statistics summary slices,
+  and top-level semantic-shell ownership for direct/composition in-process
   results and for the manifest-facing embedding contract.
 - The same bounded contract now also advertises that the top-level
   `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` hashes reuse the
   normalized-semantic shell owners already published for sanitized semantic
   JSON, and the manifest-facing embedding checks now lock those owners too.
-- This is a narrow nested-identity widening only:
+- The same bounded contract now also advertises the scalar summary keys inside
+  `statistics`, including direct-root factoring counts plus the
+  composition-only count/lane fields, while deliberately leaving
+  compatibility-heavy payloads such as raw expression reuse data and
+  composition provenance outside the stabilized promise.
+- This is still a narrow nested-slice widening only:
   the broader raw result hash is still not JSON-safe as a whole, and deeper
   nested compatibility branches remain intentionally outside the public
   interchange promise.

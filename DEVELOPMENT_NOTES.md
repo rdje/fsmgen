@@ -401,7 +401,7 @@ This document captures engineering rationale, design constraints, and working de
   - and future widening of the shared `support_accounting` object only happens
     once, backed by the same regression corpus truth.
 
-## 2026-04-19: widen the HDLGenerator result contract only through nested identity slices
+## 2026-04-19: widen the HDLGenerator result contract only through small nested slices
 - The raw `HDLGenerator->generate_hdl_from_file(...)` result is still too mixed
   to freeze as one nested-object API:
   - `source_info` stays small for direct roots but grows live composition
@@ -429,6 +429,13 @@ This document captures engineering rationale, design constraints, and working de
   `FSM::Support::HDLGeneratorResultContract` gives embedders a useful public
   seam without pretending the surrounding raw result tree is a stable JSON
   document.
+- `statistics` is a better next nested seam than `module_info` because the
+  public scalar counts are now increasingly derived from explicit IR/provenance
+  builders, while the remaining payloads (`reused_expressions`,
+  `raw_*` generator mirrors, `composition_provenance`) still make the whole
+  hash too compatibility-heavy to freeze wholesale.
+- The honest move is therefore to advertise only the bounded scalar summary
+  keys already present inside `statistics`, not the entire nested branch.
 
 ## 2026-04-19: regularize support_accounting with a nested section contract without breaking callers
 - `support_accounting` already had a bounded owner, but it was the one public
