@@ -14,6 +14,10 @@ use FSM::Support::HDLGeneratorFSMModuleContract qw(
     hdl_generator_fsm_module_raw_value_class_when_defined
     hdl_generator_fsm_module_summary_surfaces
 );
+use FSM::Support::HDLGeneratorRawASTContract qw(
+    hdl_generator_raw_ast_summary_surfaces
+    hdl_generator_raw_ast_value_shape
+);
 use FSM::Support::HDLGeneratorModuleInfoContract qw(
     hdl_generator_module_info_identity_keys
     hdl_generator_module_info_optional_composition_summary_keys
@@ -129,13 +133,18 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
         'contract advertises raw_ast as a shell-only compatibility branch',
     );
     is(
+        $contract->{raw_ast_contract_source},
+        'FSM::Support::HDLGeneratorRawASTContract',
+        'contract records the nested raw_ast contract owner',
+    );
+    is(
         $contract->{raw_ast_value_shape},
-        'ARRAY',
+        hdl_generator_raw_ast_value_shape(),
         'contract records the raw_ast value shape',
     );
     is_deeply(
         $contract->{raw_ast_summary_surfaces},
-        ['intent_hir'],
+        hdl_generator_raw_ast_summary_surfaces(),
         'contract points raw_ast consumers at intent_hir for structured semantic inspection',
     );
     ok(

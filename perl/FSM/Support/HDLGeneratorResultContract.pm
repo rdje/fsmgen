@@ -9,6 +9,10 @@ use FSM::Support::HDLGeneratorFSMModuleContract qw(
     hdl_generator_fsm_module_raw_value_class_when_defined
     hdl_generator_fsm_module_summary_surfaces
 );
+use FSM::Support::HDLGeneratorRawASTContract qw(
+    hdl_generator_raw_ast_summary_surfaces
+    hdl_generator_raw_ast_value_shape
+);
 use FSM::Support::HDLGeneratorModuleInfoContract qw(
     hdl_generator_module_info_identity_keys
     hdl_generator_module_info_optional_composition_summary_keys
@@ -104,11 +108,10 @@ sub build_hdl_generator_result_contract {
         fsm_module_shell_only => JSON::PP::true,
         fsm_module_raw_value_class_when_defined => hdl_generator_fsm_module_raw_value_class_when_defined(),
         fsm_module_summary_surfaces => hdl_generator_fsm_module_summary_surfaces(),
+        raw_ast_contract_source => 'FSM::Support::HDLGeneratorRawASTContract',
         raw_ast_shell_only => JSON::PP::true,
-        raw_ast_value_shape => 'ARRAY',
-        raw_ast_summary_surfaces => [
-            'intent_hir',
-        ],
+        raw_ast_value_shape => hdl_generator_raw_ast_value_shape(),
+        raw_ast_summary_surfaces => hdl_generator_raw_ast_summary_surfaces(),
         resolved_package_imports_contract_source => 'FSM::Support::HDLGeneratorResolvedPackageImportsContract',
         resolved_package_imports_shell_only => JSON::PP::true,
         resolved_package_imports_raw_value_class => hdl_generator_resolved_package_imports_raw_value_class(),

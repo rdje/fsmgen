@@ -719,6 +719,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest says raw_ast is a shell-only compatibility branch',
     );
     is(
+        $manifest->{embedding}{hdl_generator_result}{raw_ast_contract_source},
+        'FSM::Support::HDLGeneratorRawASTContract',
+        'manifest records the nested HDLGenerator raw_ast contract owner',
+    );
+    is(
         $manifest->{embedding}{hdl_generator_result}{raw_ast_value_shape},
         'ARRAY',
         'manifest records the raw_ast value shape',
