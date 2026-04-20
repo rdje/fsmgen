@@ -803,6 +803,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         scalar(@{$manifest->{embedding}{hdl_generator_result}{module_info_identity_presence_keys} || []}) >= 2,
         'manifest advertises bounded HDLGenerator module_info identity key presence',
     );
+    is(
+        $manifest->{embedding}{hdl_generator_result}{module_info_contract_source},
+        'FSM::Support::HDLGeneratorModuleInfoContract',
+        'manifest records the nested HDLGenerator module_info contract owner',
+    );
     ok(
         !$manifest->{embedding}{hdl_generator_result}{module_info_full_hash_stable},
         'manifest does not claim the whole module_info hash is stable',

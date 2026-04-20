@@ -163,6 +163,11 @@ The nested `source_info` object now also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorSourceInfoContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorSourceInfoContract.pm),
 which is the contract to follow for `header`, `kind`,
 `package_import_count`, and `package_import_names`.
+The nested `module_info` object now also has its own explicit owner through
+[perl/FSM/Support/HDLGeneratorModuleInfoContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorModuleInfoContract.pm),
+which is the contract to follow for `module_name`,
+`source_root_kind`, the direct-root scalar summary keys, and the
+composition-only scalar summary keys.
 The top-level `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` hashes
 follow the same honesty rule: they reuse the dedicated normalized-semantic
 shell owners and their advertised shell keys, but the `HDLGenerator` result

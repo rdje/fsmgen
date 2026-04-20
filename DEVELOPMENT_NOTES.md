@@ -468,6 +468,21 @@ This document captures engineering rationale, design constraints, and working de
   seam without pretending `module_info` or `statistics` are ready for the same
   treatment yet.
 
+## 2026-04-20: module_info now deserves its own owner too, but still only as a bounded shell
+- `module_info` is now important enough in the in-process embedding story that
+  keeping it as an unnamed bundle of lists inside `HDLGeneratorResultContract`
+  is less honest than giving it a real nested-object owner.
+- The safer widening is still bounded:
+  - add `FSM::Support::HDLGeneratorModuleInfoContract`,
+  - make the parent result contract advertise `module_info_contract_source`,
+  - keep `module_info` explicitly non-stable as a whole,
+  - and keep the public promise limited to `module_name`,
+    `source_root_kind`, the current direct-root scalar summary keys, and the
+    current composition-only scalar summary keys.
+- That gives embedders one contract to depend on for the current module-info
+  seam without pretending the deeper compatibility-heavy payloads inside the
+  wider hash are now frozen.
+
 ## 2026-04-19: regularize support_accounting with a nested section contract without breaking callers
 - `support_accounting` already had a bounded owner, but it was the one public
   manifest section that still exposed that owner only through merged inline

@@ -10,6 +10,12 @@ use File::Temp qw(tempdir);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Pipeline::HDLGenerator;
+use FSM::Support::HDLGeneratorModuleInfoContract qw(
+    hdl_generator_module_info_identity_keys
+    hdl_generator_module_info_optional_composition_summary_keys
+    hdl_generator_module_info_stable_subsurfaces
+    hdl_generator_module_info_summary_keys
+);
 use FSM::Support::HDLGeneratorSourceInfoContract qw(
     hdl_generator_source_info_identity_keys
     hdl_generator_source_info_stable_subsurfaces
@@ -166,8 +172,13 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
     );
     is_deeply(
         $contract->{module_info_identity_presence_keys},
-        hdl_generator_result_module_info_identity_keys(),
+        hdl_generator_module_info_identity_keys(),
         'contract publishes bounded module_info identity keys',
+    );
+    is(
+        $contract->{module_info_contract_source},
+        'FSM::Support::HDLGeneratorModuleInfoContract',
+        'contract records the nested module_info contract owner',
     );
     ok(
         !$contract->{module_info_full_hash_stable},
@@ -179,44 +190,17 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
     );
     is_deeply(
         $contract->{module_info_summary_presence_keys},
-        hdl_generator_result_module_info_summary_keys(),
+        hdl_generator_module_info_summary_keys(),
         'contract publishes bounded module_info summary keys',
     );
     is_deeply(
         $contract->{module_info_optional_composition_summary_keys},
-        hdl_generator_result_module_info_optional_composition_summary_keys(),
+        hdl_generator_module_info_optional_composition_summary_keys(),
         'contract publishes bounded composition-only module_info summary keys',
     );
     is_deeply(
         $contract->{module_info_stable_subsurfaces},
-        [
-            'module_info.module_name',
-            'module_info.source_root_kind',
-            'module_info.output_drive_family_count',
-            'module_info.parameter_count',
-            'module_info.regular_state_count',
-            'module_info.requires_implicit_system_ports',
-            'module_info.signal_count',
-            'module_info.standalone_dt_count',
-            'module_info.standalone_dt_multi_drive_target_count',
-            'module_info.state_count',
-            'module_info.auxiliary_assignment_count',
-            'module_info.composition_block_count',
-            'module_info.composition_child_count',
-            'module_info.composition_generated_child_count',
-            'module_info.composition_generated_dt_child_count',
-            'module_info.composition_generated_fsm_child_count',
-            'module_info.composition_lane',
-            'module_info.composition_net_count',
-            'module_info.composition_override_count',
-            'module_info.composition_resolved_link_count',
-            'module_info.composition_shared_datapath_candidate_count',
-            'module_info.composition_standalone_dt_block_count',
-            'module_info.composition_standalone_dt_child_count',
-            'module_info.composition_standalone_dt_multi_drive_target_count',
-            'module_info.instance_count',
-            'module_info.internal_net_count',
-        ],
+        hdl_generator_module_info_stable_subsurfaces(),
         'contract publishes the bounded stable module_info subsurfaces',
     );
     ok(

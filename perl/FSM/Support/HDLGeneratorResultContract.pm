@@ -5,6 +5,12 @@ use warnings;
 
 use Exporter 'import';
 use JSON::PP ();
+use FSM::Support::HDLGeneratorModuleInfoContract qw(
+    hdl_generator_module_info_identity_keys
+    hdl_generator_module_info_optional_composition_summary_keys
+    hdl_generator_module_info_stable_subsurfaces
+    hdl_generator_module_info_summary_keys
+);
 use FSM::Support::HDLGeneratorSourceInfoContract qw(
     hdl_generator_source_info_identity_keys
     hdl_generator_source_info_stable_subsurfaces
@@ -70,38 +76,12 @@ sub build_hdl_generator_result_contract {
         source_info_summary_presence_keys => hdl_generator_result_source_info_summary_keys(),
         source_info_full_hash_stable => JSON::PP::false,
         source_info_stable_subsurfaces => hdl_generator_source_info_stable_subsurfaces(),
+        module_info_contract_source => 'FSM::Support::HDLGeneratorModuleInfoContract',
         module_info_identity_presence_keys => hdl_generator_result_module_info_identity_keys(),
         module_info_summary_presence_keys => hdl_generator_result_module_info_summary_keys(),
         module_info_optional_composition_summary_keys => hdl_generator_result_module_info_optional_composition_summary_keys(),
         module_info_full_hash_stable => JSON::PP::false,
-        module_info_stable_subsurfaces => [
-            'module_info.module_name',
-            'module_info.source_root_kind',
-            'module_info.output_drive_family_count',
-            'module_info.parameter_count',
-            'module_info.regular_state_count',
-            'module_info.requires_implicit_system_ports',
-            'module_info.signal_count',
-            'module_info.standalone_dt_count',
-            'module_info.standalone_dt_multi_drive_target_count',
-            'module_info.state_count',
-            'module_info.auxiliary_assignment_count',
-            'module_info.composition_block_count',
-            'module_info.composition_child_count',
-            'module_info.composition_generated_child_count',
-            'module_info.composition_generated_dt_child_count',
-            'module_info.composition_generated_fsm_child_count',
-            'module_info.composition_lane',
-            'module_info.composition_net_count',
-            'module_info.composition_override_count',
-            'module_info.composition_resolved_link_count',
-            'module_info.composition_shared_datapath_candidate_count',
-            'module_info.composition_standalone_dt_block_count',
-            'module_info.composition_standalone_dt_child_count',
-            'module_info.composition_standalone_dt_multi_drive_target_count',
-            'module_info.instance_count',
-            'module_info.internal_net_count',
-        ],
+        module_info_stable_subsurfaces => hdl_generator_module_info_stable_subsurfaces(),
         statistics_summary_presence_keys => hdl_generator_result_statistics_summary_keys(),
         statistics_optional_composition_keys => hdl_generator_result_statistics_optional_composition_keys(),
         statistics_full_hash_stable => JSON::PP::false,
@@ -206,41 +186,15 @@ sub hdl_generator_result_source_info_summary_keys {
 }
 
 sub hdl_generator_result_module_info_identity_keys {
-    return [qw(module_name source_root_kind)];
+    return hdl_generator_module_info_identity_keys();
 }
 
 sub hdl_generator_result_module_info_summary_keys {
-    return [qw(
-        output_drive_family_count
-        parameter_count
-        regular_state_count
-        requires_implicit_system_ports
-        signal_count
-        standalone_dt_count
-        standalone_dt_multi_drive_target_count
-        state_count
-    )];
+    return hdl_generator_module_info_summary_keys();
 }
 
 sub hdl_generator_result_module_info_optional_composition_summary_keys {
-    return [qw(
-        auxiliary_assignment_count
-        composition_block_count
-        composition_child_count
-        composition_generated_child_count
-        composition_generated_dt_child_count
-        composition_generated_fsm_child_count
-        composition_lane
-        composition_net_count
-        composition_override_count
-        composition_resolved_link_count
-        composition_shared_datapath_candidate_count
-        composition_standalone_dt_block_count
-        composition_standalone_dt_child_count
-        composition_standalone_dt_multi_drive_target_count
-        instance_count
-        internal_net_count
-    )];
+    return hdl_generator_module_info_optional_composition_summary_keys();
 }
 
 sub hdl_generator_result_statistics_summary_keys {

@@ -1913,6 +1913,11 @@ The nested `source_info` object now also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorSourceInfoContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorSourceInfoContract.pm),
 so embedders have one dedicated contract to follow for the current source
 identity and package-import summary fields.
+The nested `module_info` object now also has its own explicit owner through
+[perl/FSM/Support/HDLGeneratorModuleInfoContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorModuleInfoContract.pm),
+so embedders have one dedicated contract to follow for the current module
+identity fields plus the direct-root and composition-only scalar summary
+families.
 The same goes for top-level `intent_hir`, `lowered_rtl_ir`, and
 `structural_rtl_ir`: those hashes reuse their dedicated normalized-semantic
 shell contracts, but the `HDLGenerator` result contract does not pretend they
