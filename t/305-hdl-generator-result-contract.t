@@ -68,6 +68,34 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
         'contract publishes bounded source_info summary keys',
     );
     ok(
+        $contract->{fsm_module_shell_only},
+        'contract advertises fsm_module as a shell-only compatibility branch',
+    );
+    is(
+        $contract->{fsm_module_raw_value_class_when_defined},
+        'FSM::CoreAST::FSMModule',
+        'contract records the raw fsm_module value class when defined',
+    );
+    is_deeply(
+        $contract->{fsm_module_summary_surfaces},
+        ['intent_hir', 'lowered_rtl_ir', 'structural_rtl_ir'],
+        'contract points fsm_module embedders at the structured semantic summaries',
+    );
+    ok(
+        $contract->{raw_ast_shell_only},
+        'contract advertises raw_ast as a shell-only compatibility branch',
+    );
+    is(
+        $contract->{raw_ast_value_shape},
+        'ARRAY',
+        'contract records the raw_ast value shape',
+    );
+    is_deeply(
+        $contract->{raw_ast_summary_surfaces},
+        ['intent_hir'],
+        'contract points raw_ast consumers at intent_hir for structured semantic inspection',
+    );
+    ok(
         $contract->{resolved_package_imports_shell_only},
         'contract advertises resolved_package_imports as a shell-only branch',
     );
@@ -248,8 +276,8 @@ subtest 'direct-root result uses only declared top-level keys' => sub {
         module_name => 'apb_requester',
         source_root_kind => 'fsm',
     );
-    isa_ok($result->{fsm_module}, 'FSM::CoreAST::FSMModule', 'direct root fsm_module');
-    is(ref($result->{raw_ast}), 'ARRAY', 'direct root carries raw AST compatibility payload');
+    isa_ok($result->{fsm_module}, $contract->{fsm_module_raw_value_class_when_defined}, 'direct root fsm_module');
+    is(ref($result->{raw_ast}), $contract->{raw_ast_value_shape}, 'direct root carries raw AST compatibility payload');
     ok(!exists $result->{composition_spec}, 'direct root omits composition_spec');
     ok(!exists $result->{composition_plan}, 'direct root omits composition_plan');
     ok(!exists $result->{composition_report}, 'direct root omits composition_report');
@@ -267,7 +295,7 @@ subtest 'composition result uses only declared top-level keys' => sub {
     );
     ok(exists $result->{fsm_module}, 'composition result still carries fsm_module compatibility key');
     ok(!defined $result->{fsm_module}, 'composition result fsm_module compatibility key is undef');
-    is(ref($result->{raw_ast}), 'ARRAY', 'composition result carries raw AST compatibility payload');
+    is(ref($result->{raw_ast}), $contract->{raw_ast_value_shape}, 'composition result carries raw AST compatibility payload');
     isa_ok($result->{composition_spec}, $contract->{composition_spec_raw_value_class}, 'composition spec');
     isa_ok($result->{composition_plan}, $contract->{composition_plan_raw_value_class}, 'composition plan');
     is(ref($result->{composition_report}), 'HASH', 'composition result carries raw composition report hash');

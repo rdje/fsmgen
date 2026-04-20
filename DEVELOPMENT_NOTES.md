@@ -1048,6 +1048,13 @@ This document captures engineering rationale, design constraints, and working de
   - and the serializable downstream path is the sanitized
     `semantic.composition.provenance_report` fragment owned by
     `FSM::Support::CompositionReportContract`.
+- The raw frontend/CoreAST boundary is now explicit there too:
+  - `fsm_module` is a shell-only raw `FSM::CoreAST::FSMModule` object when
+    defined,
+  - `raw_ast` is a shell-only frontend/debug artifact with array shape,
+  - and downstream structured consumers should prefer `intent_hir`,
+    later semantic layers, or normalized semantic JSON instead of the live
+    CoreAST/parser payloads.
 - Rationale:
   - in-process embedders need a documented result boundary,
   - but pretending the raw result hash is a stable JSON document would be false,

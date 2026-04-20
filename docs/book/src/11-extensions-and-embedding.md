@@ -147,6 +147,13 @@ The top-level `resolved_package_imports` branch is therefore shell-only: it is
 still a hash of raw `FSM::Package::Spec` objects, so stable package-import
 inspection should use `source_info.package_import_count` and
 `source_info.package_import_names` instead of traversing those typed values.
+The top-level `fsm_module` branch is shell-only too when it is defined: it is a
+raw `FSM::CoreAST::FSMModule` object kept for in-process compatibility, so
+structured downstream consumers should prefer `intent_hir`, `lowered_rtl_ir`,
+`structural_rtl_ir`, or normalized semantic JSON. The top-level `raw_ast`
+branch is likewise shell-only and intentionally treated as a frontend/debug
+artifact rather than a public interchange tree, so structured consumers should
+prefer `intent_hir` instead of binding themselves to parser-level arrays.
 The composition-only `composition_spec` and `composition_plan` branches are
 shell-only too: they are raw `FSM::Composition::Spec` and
 `FSM::Composition::Plan` objects kept for in-process compatibility. Raw
@@ -257,6 +264,8 @@ instead.
 
 Composition provenance has one more important split:
 
+- raw `fsm_module` is a live CoreAST object and is not a public JSON API
+- raw `raw_ast` is a parser/debug artifact and is not a public interchange API
 - raw `composition_spec` is a live parsed composition object and is not a
   public JSON API
 - raw `composition_report` is useful for in-process Perl tooling, but it can

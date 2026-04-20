@@ -1899,6 +1899,12 @@ and `composition_plan` as shell-only raw `FSM::Composition::Spec` and
 `FSM::Composition::Plan` compatibility objects, so composition callers can keep
 using those live Perl objects intentionally while JSON-minded tools stay on the
 sanitized semantic-report path.
+The same contract now also names `fsm_module` as a shell-only raw
+`FSM::CoreAST::FSMModule` object when it is present, and `raw_ast` as a
+shell-only frontend/debug artifact. In both cases, downstream structured
+consumers should prefer `intent_hir`, the other semantic layers, or normalized
+semantic JSON instead of binding themselves to live CoreAST or parser-array
+payloads.
 
 The first bounded check-only JSON surface is:
 
@@ -1982,7 +1988,8 @@ For composition sources, the provenance report fragment is sanitized from the
 same raw composition report that in-process callers see, but private Perl
 objects and undeclared report branches are removed before JSON emission. This
 keeps the report useful for downstream tools without exposing the live
-`composition_plan` or `composition_spec` objects as public API.
+`composition_plan`, `composition_spec`, `fsm_module`, or `raw_ast` payloads as
+public API.
 
 ## 5) Input resolution and FSMLIB
 `fsmgen` resolves `<fsm_file>` as:

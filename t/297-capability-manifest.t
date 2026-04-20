@@ -696,6 +696,34 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest records the HDLGenerator result contract owner',
     );
     ok(
+        $manifest->{embedding}{hdl_generator_result}{fsm_module_shell_only},
+        'manifest says fsm_module is a shell-only compatibility branch',
+    );
+    is(
+        $manifest->{embedding}{hdl_generator_result}{fsm_module_raw_value_class_when_defined},
+        'FSM::CoreAST::FSMModule',
+        'manifest records the raw fsm_module value class when defined',
+    );
+    is_deeply(
+        $manifest->{embedding}{hdl_generator_result}{fsm_module_summary_surfaces},
+        ['intent_hir', 'lowered_rtl_ir', 'structural_rtl_ir'],
+        'manifest points fsm_module embedders at the structured semantic summaries',
+    );
+    ok(
+        $manifest->{embedding}{hdl_generator_result}{raw_ast_shell_only},
+        'manifest says raw_ast is a shell-only compatibility branch',
+    );
+    is(
+        $manifest->{embedding}{hdl_generator_result}{raw_ast_value_shape},
+        'ARRAY',
+        'manifest records the raw_ast value shape',
+    );
+    is_deeply(
+        $manifest->{embedding}{hdl_generator_result}{raw_ast_summary_surfaces},
+        ['intent_hir'],
+        'manifest points raw_ast consumers at intent_hir for structured semantic inspection',
+    );
+    ok(
         scalar(@{$manifest->{embedding}{hdl_generator_result}{source_info_identity_presence_keys} || []}) >= 2,
         'manifest advertises bounded HDLGenerator source_info identity key presence',
     );

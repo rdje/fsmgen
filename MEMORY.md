@@ -1035,6 +1035,12 @@ This is the live continuity document for fast session recovery after crashes, re
   - raw `composition_report` remains a non-JSON-safe compatibility hash,
   - and embedders wanting serializable provenance should stay on
     `semantic.composition.provenance_report`.
+- The same contract now also makes the raw frontend/CoreAST seam explicit:
+  - `fsm_module` is a shell-only raw `FSM::CoreAST::FSMModule` object when
+    defined,
+  - `raw_ast` is a shell-only frontend/debug artifact with array shape,
+  - and structured downstream inspection should stay on `intent_hir`,
+    later semantic layers, or normalized semantic JSON.
 - [t/307-composition-report-contract.t](/Users/richarddje/Documents/github/fsmgen/t/307-composition-report-contract.t)
   now proves the raw APB composition report fails normal JSON encoding, the
   sanitized report has only declared top-level report keys, and
