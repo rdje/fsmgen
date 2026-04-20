@@ -1040,6 +1040,14 @@ This document captures engineering rationale, design constraints, and working de
     `composition_spec`, `composition_plan`, `composition_report`, `raw_ast`,
     and `statistics`,
   - and several nested result branches still contain live CoreAST/AST objects.
+- The raw composition boundary is now explicit inside that same contract:
+  - `composition_spec` is a shell-only raw `FSM::Composition::Spec` object,
+  - `composition_plan` is a shell-only raw `FSM::Composition::Plan` object,
+  - raw `composition_report` is an in-process compatibility hash and is not
+    JSON-safe,
+  - and the serializable downstream path is the sanitized
+    `semantic.composition.provenance_report` fragment owned by
+    `FSM::Support::CompositionReportContract`.
 - Rationale:
   - in-process embedders need a documented result boundary,
   - but pretending the raw result hash is a stable JSON document would be false,

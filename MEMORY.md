@@ -1028,6 +1028,13 @@ This is the live continuity document for fast session recovery after crashes, re
     `semantic.composition.provenance_report` through normalized semantic JSON,
   - and nested report content remains deliberately narrower than a frozen full
     plan API.
+- The companion `HDLGenerator` result contract now makes the broader raw
+  composition seam explicit too:
+  - `composition_spec` is a shell-only raw `FSM::Composition::Spec` object,
+  - `composition_plan` is a shell-only raw `FSM::Composition::Plan` object,
+  - raw `composition_report` remains a non-JSON-safe compatibility hash,
+  - and embedders wanting serializable provenance should stay on
+    `semantic.composition.provenance_report`.
 - [t/307-composition-report-contract.t](/Users/richarddje/Documents/github/fsmgen/t/307-composition-report-contract.t)
   now proves the raw APB composition report fails normal JSON encoding, the
   sanitized report has only declared top-level report keys, and

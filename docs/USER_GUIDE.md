@@ -1894,6 +1894,11 @@ composition-report split: raw `composition_report` is an in-process
 compatibility report and is not promised JSON-safe, while the sanitized
 `semantic.composition.provenance_report` fragment in normalized semantic JSON
 is the serializable downstream surface.
+The same `HDLGenerator` result contract now also calls out `composition_spec`
+and `composition_plan` as shell-only raw `FSM::Composition::Spec` and
+`FSM::Composition::Plan` compatibility objects, so composition callers can keep
+using those live Perl objects intentionally while JSON-minded tools stay on the
+sanitized semantic-report path.
 
 The first bounded check-only JSON surface is:
 
@@ -1977,7 +1982,7 @@ For composition sources, the provenance report fragment is sanitized from the
 same raw composition report that in-process callers see, but private Perl
 objects and undeclared report branches are removed before JSON emission. This
 keeps the report useful for downstream tools without exposing the live
-`composition_plan` object as public API.
+`composition_plan` or `composition_spec` objects as public API.
 
 ## 5) Input resolution and FSMLIB
 `fsmgen` resolves `<fsm_file>` as:

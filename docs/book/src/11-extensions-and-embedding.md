@@ -147,6 +147,14 @@ The top-level `resolved_package_imports` branch is therefore shell-only: it is
 still a hash of raw `FSM::Package::Spec` objects, so stable package-import
 inspection should use `source_info.package_import_count` and
 `source_info.package_import_names` instead of traversing those typed values.
+The composition-only `composition_spec` and `composition_plan` branches are
+shell-only too: they are raw `FSM::Composition::Spec` and
+`FSM::Composition::Plan` objects kept for in-process compatibility. Raw
+`composition_report` is likewise an in-process compatibility hash rather than
+a serializable public JSON surface, so embedders should follow
+[perl/FSM/Support/CompositionReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CompositionReportContract.pm)
+and the sanitized
+`semantic.composition.provenance_report` fragment for downstream interchange.
 The public `support_accounting` match objects emitted beside those reports also
 share one bounded nested-object contract:
 [perl/FSM/Support/SupportAccountingMatchContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingMatchContract.pm)
@@ -249,6 +257,8 @@ instead.
 
 Composition provenance has one more important split:
 
+- raw `composition_spec` is a live parsed composition object and is not a
+  public JSON API
 - raw `composition_report` is useful for in-process Perl tooling, but it can
   still contain private live objects in nested endpoint contexts
 - raw `composition_plan` is a live planning object and is not a public JSON API

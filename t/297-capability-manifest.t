@@ -722,6 +722,42 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest points package-import embedders at the bounded source_info summary surface',
     );
     ok(
+        $manifest->{embedding}{hdl_generator_result}{composition_spec_shell_only},
+        'manifest says composition_spec is a shell-only compatibility branch',
+    );
+    is(
+        $manifest->{embedding}{hdl_generator_result}{composition_spec_raw_value_class},
+        'FSM::Composition::Spec',
+        'manifest records the raw composition_spec value class',
+    );
+    ok(
+        $manifest->{embedding}{hdl_generator_result}{composition_plan_shell_only},
+        'manifest says composition_plan is a shell-only compatibility branch',
+    );
+    is(
+        $manifest->{embedding}{hdl_generator_result}{composition_plan_raw_value_class},
+        'FSM::Composition::Plan',
+        'manifest records the raw composition_plan value class',
+    );
+    ok(
+        $manifest->{embedding}{hdl_generator_result}{composition_report_shell_only},
+        'manifest says composition_report is a shell-only compatibility branch',
+    );
+    ok(
+        !$manifest->{embedding}{hdl_generator_result}{composition_report_raw_hash_json_safe},
+        'manifest says raw composition_report is not JSON-safe',
+    );
+    is(
+        $manifest->{embedding}{hdl_generator_result}{composition_report_contract_source},
+        'FSM::Support::CompositionReportContract',
+        'manifest records the raw composition_report contract owner',
+    );
+    is(
+        $manifest->{embedding}{hdl_generator_result}{composition_report_json_fragment_path},
+        'semantic_exports.normalized_semantic_json.semantic.composition.provenance_report',
+        'manifest points composition-report embedders at the sanitized semantic JSON fragment',
+    );
+    ok(
         scalar(@{$manifest->{embedding}{hdl_generator_result}{module_info_identity_presence_keys} || []}) >= 2,
         'manifest advertises bounded HDLGenerator module_info identity key presence',
     );

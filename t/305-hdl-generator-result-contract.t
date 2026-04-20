@@ -81,6 +81,42 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
         ['source_info.package_import_count', 'source_info.package_import_names'],
         'contract points package-import embedders at the bounded source_info summary surface',
     );
+    ok(
+        $contract->{composition_spec_shell_only},
+        'contract advertises composition_spec as a shell-only compatibility branch',
+    );
+    is(
+        $contract->{composition_spec_raw_value_class},
+        'FSM::Composition::Spec',
+        'contract records the raw composition_spec value class',
+    );
+    ok(
+        $contract->{composition_plan_shell_only},
+        'contract advertises composition_plan as a shell-only compatibility branch',
+    );
+    is(
+        $contract->{composition_plan_raw_value_class},
+        'FSM::Composition::Plan',
+        'contract records the raw composition_plan value class',
+    );
+    ok(
+        $contract->{composition_report_shell_only},
+        'contract advertises composition_report as a shell-only compatibility branch',
+    );
+    ok(
+        !$contract->{composition_report_raw_hash_json_safe},
+        'contract does not claim raw composition_report is JSON-safe',
+    );
+    is(
+        $contract->{composition_report_contract_source},
+        'FSM::Support::CompositionReportContract',
+        'contract records the raw composition_report contract owner',
+    );
+    is(
+        $contract->{composition_report_json_fragment_path},
+        'semantic_exports.normalized_semantic_json.semantic.composition.provenance_report',
+        'contract points composition-report embedders at the sanitized semantic JSON fragment',
+    );
     is_deeply(
         $contract->{module_info_identity_presence_keys},
         hdl_generator_result_module_info_identity_keys(),
@@ -194,7 +230,9 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
     my %unsanitized = map { $_ => 1 } @{$contract->{live_or_unsanitized_keys}};
     ok($unsanitized{raw_ast}, 'contract marks raw AST as unsanitized');
     ok($unsanitized{fsm_module}, 'contract marks live fsm_module as unsanitized');
+    ok($unsanitized{composition_spec}, 'contract marks composition spec object as unsanitized');
     ok($unsanitized{composition_plan}, 'contract marks composition plan object as unsanitized');
+    ok($unsanitized{composition_report}, 'contract marks raw composition report as unsanitized');
     ok($unsanitized{resolved_package_imports}, 'contract marks resolved_package_imports as a raw compatibility branch');
     ok($unsanitized{statistics}, 'contract marks statistics as not wholly sanitized');
     ok(!$unsanitized{intent_hir}, 'contract no longer classifies top-level intent_hir as an unsanitized compatibility branch');
@@ -230,9 +268,9 @@ subtest 'composition result uses only declared top-level keys' => sub {
     ok(exists $result->{fsm_module}, 'composition result still carries fsm_module compatibility key');
     ok(!defined $result->{fsm_module}, 'composition result fsm_module compatibility key is undef');
     is(ref($result->{raw_ast}), 'ARRAY', 'composition result carries raw AST compatibility payload');
-    isa_ok($result->{composition_spec}, 'FSM::Composition::Spec', 'composition spec');
-    isa_ok($result->{composition_plan}, 'FSM::Composition::Plan', 'composition plan');
-    is(ref($result->{composition_report}), 'HASH', 'composition result carries composition report hash');
+    isa_ok($result->{composition_spec}, $contract->{composition_spec_raw_value_class}, 'composition spec');
+    isa_ok($result->{composition_plan}, $contract->{composition_plan_raw_value_class}, 'composition plan');
+    is(ref($result->{composition_report}), 'HASH', 'composition result carries raw composition report hash');
 };
 
 subtest 'source_info reports package import summaries when imports are present' => sub {
