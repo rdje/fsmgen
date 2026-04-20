@@ -847,15 +847,27 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'FSM::Support::NormalizedSemanticIntentHIRContract',
         'manifest records the HDLGenerator top-level intent-hir owner',
     );
+    ok(
+        !$manifest->{embedding}{hdl_generator_result}{intent_hir_full_hash_stable},
+        'manifest does not claim the whole top-level intent_hir hash is stable',
+    );
     is(
         $manifest->{embedding}{hdl_generator_result}{lowered_rtl_ir_contract_source},
         'FSM::Support::NormalizedSemanticLoweredRTLIRContract',
         'manifest records the HDLGenerator top-level lowered-rtl-ir owner',
     );
+    ok(
+        !$manifest->{embedding}{hdl_generator_result}{lowered_rtl_ir_full_hash_stable},
+        'manifest does not claim the whole top-level lowered_rtl_ir hash is stable',
+    );
     is(
         $manifest->{embedding}{hdl_generator_result}{structural_rtl_ir_contract_source},
         'FSM::Support::NormalizedSemanticStructuralRTLIRContract',
         'manifest records the HDLGenerator top-level structural-rtl-ir owner',
+    );
+    ok(
+        !$manifest->{embedding}{hdl_generator_result}{structural_rtl_ir_full_hash_stable},
+        'manifest does not claim the whole top-level structural_rtl_ir hash is stable',
     );
     ok(
         scalar(@{$manifest->{embedding}{hdl_generator_result}{intent_hir_presence_keys} || []}) >= 18,

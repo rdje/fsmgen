@@ -1047,6 +1047,14 @@ This is the live continuity document for fast session recovery after crashes, re
   - the advertised `source_info.*`, `module_info.*`, and `statistics.*`
     identity/summary paths are the stable subsurfaces,
   - and the rest of those hashes remains compatibility-heavy.
+- The same contract now also makes the top-level semantic-layer boundary
+  explicit:
+  - `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` reuse their
+    dedicated normalized-semantic shell owners,
+  - but the `HDLGenerator` result contract does not treat those hashes as
+    separately stabilized full trees,
+  - and embedders should continue to read them through the dedicated shell
+    contracts rather than inferring a broader promise.
 - [t/307-composition-report-contract.t](/Users/richarddje/Documents/github/fsmgen/t/307-composition-report-contract.t)
   now proves the raw APB composition report fails normal JSON encoding, the
   sanitized report has only declared top-level report keys, and

@@ -1061,6 +1061,14 @@ This document captures engineering rationale, design constraints, and working de
   - the advertised identity/summary paths inside those hashes are the bounded
     stable subsurfaces,
   - and the wider hashes remain compatibility-heavy outside those paths.
+- The top-level semantic-layer boundary is now explicit there too:
+  - `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` reuse the bounded
+    normalized-semantic shell owners already advertised through their dedicated
+    contracts,
+  - but the `HDLGenerator` result contract does not separately freeze those
+    full hashes as additional public trees,
+  - so embedders should read them as reused shell contracts, not as a second
+    broader promise.
 - Rationale:
   - in-process embedders need a documented result boundary,
   - but pretending the raw result hash is a stable JSON document would be false,

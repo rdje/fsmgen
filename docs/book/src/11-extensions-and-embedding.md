@@ -159,6 +159,11 @@ subsurface” boundary for the nested hashes too: the whole `source_info`,
 `module_info`, and `statistics` hashes are still not stable APIs, but the
 advertised `source_info.*`, `module_info.*`, and `statistics.*` identity/summary
 paths are the bounded public slices embedders should target.
+The top-level `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` hashes
+follow the same honesty rule: they reuse the dedicated normalized-semantic
+shell owners and their advertised shell keys, but the `HDLGenerator` result
+contract does not treat those top-level hashes as separately stabilized full
+trees beyond those shell boundaries.
 The composition-only `composition_spec` and `composition_plan` branches are
 shell-only too: they are raw `FSM::Composition::Spec` and
 `FSM::Composition::Plan` objects kept for in-process compatibility. Raw

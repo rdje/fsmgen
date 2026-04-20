@@ -258,6 +258,10 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
         'FSM::Support::NormalizedSemanticIntentHIRContract',
         'contract records the top-level intent-hir owner',
     );
+    ok(
+        !$contract->{intent_hir_full_hash_stable},
+        'contract does not claim the whole top-level intent_hir hash is stable',
+    );
     is_deeply(
         $contract->{intent_hir_presence_keys},
         hdl_generator_result_intent_hir_keys(),
@@ -273,6 +277,10 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
         'FSM::Support::NormalizedSemanticLoweredRTLIRContract',
         'contract records the top-level lowered-rtl-ir owner',
     );
+    ok(
+        !$contract->{lowered_rtl_ir_full_hash_stable},
+        'contract does not claim the whole top-level lowered_rtl_ir hash is stable',
+    );
     is_deeply(
         $contract->{lowered_rtl_ir_presence_keys},
         hdl_generator_result_lowered_rtl_ir_keys(),
@@ -287,6 +295,10 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
         $contract->{structural_rtl_ir_contract_source},
         'FSM::Support::NormalizedSemanticStructuralRTLIRContract',
         'contract records the top-level structural-rtl-ir owner',
+    );
+    ok(
+        !$contract->{structural_rtl_ir_full_hash_stable},
+        'contract does not claim the whole top-level structural_rtl_ir hash is stable',
     );
     is_deeply(
         $contract->{structural_rtl_ir_presence_keys},
