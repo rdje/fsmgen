@@ -16,6 +16,10 @@ use FSM::Support::HDLGeneratorModuleInfoContract qw(
     hdl_generator_module_info_stable_subsurfaces
     hdl_generator_module_info_summary_keys
 );
+use FSM::Support::HDLGeneratorResolvedPackageImportsContract qw(
+    hdl_generator_resolved_package_imports_raw_value_class
+    hdl_generator_resolved_package_imports_summary_surface
+);
 use FSM::Support::HDLGeneratorStatisticsContract qw(
     hdl_generator_statistics_optional_composition_keys
     hdl_generator_statistics_stable_subsurfaces
@@ -130,13 +134,18 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
         'contract advertises resolved_package_imports as a shell-only branch',
     );
     is(
+        $contract->{resolved_package_imports_contract_source},
+        'FSM::Support::HDLGeneratorResolvedPackageImportsContract',
+        'contract records the nested resolved_package_imports contract owner',
+    );
+    is(
         $contract->{resolved_package_imports_raw_value_class},
-        'FSM::Package::Spec',
+        hdl_generator_resolved_package_imports_raw_value_class(),
         'contract records the raw resolved_package_imports value class',
     );
     is_deeply(
         $contract->{resolved_package_imports_summary_surface},
-        ['source_info.package_import_count', 'source_info.package_import_names'],
+        hdl_generator_resolved_package_imports_summary_surface(),
         'contract points package-import embedders at the bounded source_info summary surface',
     );
     ok(

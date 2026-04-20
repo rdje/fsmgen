@@ -11,6 +11,10 @@ use FSM::Support::HDLGeneratorModuleInfoContract qw(
     hdl_generator_module_info_stable_subsurfaces
     hdl_generator_module_info_summary_keys
 );
+use FSM::Support::HDLGeneratorResolvedPackageImportsContract qw(
+    hdl_generator_resolved_package_imports_raw_value_class
+    hdl_generator_resolved_package_imports_summary_surface
+);
 use FSM::Support::HDLGeneratorStatisticsContract qw(
     hdl_generator_statistics_optional_composition_keys
     hdl_generator_statistics_stable_subsurfaces
@@ -104,12 +108,10 @@ sub build_hdl_generator_result_contract {
         raw_ast_summary_surfaces => [
             'intent_hir',
         ],
+        resolved_package_imports_contract_source => 'FSM::Support::HDLGeneratorResolvedPackageImportsContract',
         resolved_package_imports_shell_only => JSON::PP::true,
-        resolved_package_imports_raw_value_class => 'FSM::Package::Spec',
-        resolved_package_imports_summary_surface => [
-            'source_info.package_import_count',
-            'source_info.package_import_names',
-        ],
+        resolved_package_imports_raw_value_class => hdl_generator_resolved_package_imports_raw_value_class(),
+        resolved_package_imports_summary_surface => hdl_generator_resolved_package_imports_summary_surface(),
         composition_spec_shell_only => JSON::PP::true,
         composition_spec_raw_value_class => 'FSM::Composition::Spec',
         composition_plan_shell_only => JSON::PP::true,

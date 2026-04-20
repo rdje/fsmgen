@@ -497,6 +497,21 @@ This document captures engineering rationale, design constraints, and working de
   seam without pretending the deeper compatibility-heavy payloads inside the
   wider hash are now frozen.
 
+## 2026-04-20: resolved_package_imports now deserves its own shell-only owner too
+- `resolved_package_imports` is already a real embedding-facing top-level
+  branch, even though it is intentionally a compatibility shell rather than a
+  JSON-safe nested object.
+- Leaving that branch documented only as a few inline fields inside
+  `HDLGeneratorResultContract` is less honest than giving it a dedicated owner
+  that says exactly what the branch is:
+  - a shell-only hash,
+  - whose values are raw `FSM::Package::Spec` objects,
+  - with stable package-import inspection redirected to
+    `source_info.package_import_count` and `source_info.package_import_names`.
+- That gives embedders one contract to depend on for the current
+  resolved-package-imports seam without pretending the raw package-spec values
+  are now a public JSON/object contract.
+
 ## 2026-04-19: regularize support_accounting with a nested section contract without breaking callers
 - `support_accounting` already had a bounded owner, but it was the one public
   manifest section that still exposed that owner only through merged inline

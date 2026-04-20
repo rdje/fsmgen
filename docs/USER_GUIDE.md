@@ -1879,6 +1879,10 @@ That same caution now explicitly includes `resolved_package_imports`: the
 top-level branch remains a raw hash of `FSM::Package::Spec` objects, so the
 stable package-import surface is `source_info.package_import_count` plus
 `source_info.package_import_names`, not the typed package-spec payloads.
+That shell-only branch now also has its own explicit owner through
+[perl/FSM/Support/HDLGeneratorResolvedPackageImportsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResolvedPackageImportsContract.pm),
+so embedders have one dedicated contract to follow for that raw package-spec
+map rule plus the bounded package-import summary surface.
 The public `support_accounting` match objects emitted by both `--check --json`
 and `--emit-semantic-json` now share one bounded nested-object contract too:
 [perl/FSM/Support/SupportAccountingMatchContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingMatchContract.pm)

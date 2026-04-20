@@ -754,6 +754,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest says resolved_package_imports is a shell-only compatibility branch',
     );
     is(
+        $manifest->{embedding}{hdl_generator_result}{resolved_package_imports_contract_source},
+        'FSM::Support::HDLGeneratorResolvedPackageImportsContract',
+        'manifest records the nested HDLGenerator resolved_package_imports contract owner',
+    );
+    is(
         $manifest->{embedding}{hdl_generator_result}{resolved_package_imports_raw_value_class},
         'FSM::Package::Spec',
         'manifest records the raw resolved_package_imports value class',

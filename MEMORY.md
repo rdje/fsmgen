@@ -384,6 +384,24 @@ This is the live continuity document for fast session recovery after crashes, re
   instead of treating `statistics` as an undocumented special case inside the
   broader result contract.
 
+## 2026-04-20: HDLGenerator resolved_package_imports now has a dedicated shell-only contract
+- Added [perl/FSM/Support/HDLGeneratorResolvedPackageImportsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResolvedPackageImportsContract.pm)
+  as the explicit owner for the bounded shell-only `HDLGenerator`
+  `resolved_package_imports` branch.
+- The new contract is intentionally narrow:
+  - the branch remains shell-only,
+  - the raw value shape remains a hash,
+  - the raw values remain `FSM::Package::Spec` objects,
+  - stable package-import inspection stays on
+    `source_info.package_import_count` and `source_info.package_import_names`,
+  - and the wider raw hash remains explicitly non-stable and non-JSON-safe as
+    a whole.
+- [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm)
+  now advertises that nested owner through
+  `resolved_package_imports_contract_source` instead of treating
+  `resolved_package_imports` as an undocumented special case inside the
+  broader result contract.
+
 ## 2026-04-19: support_accounting now exposes a nested section_contract too
 - [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
   now advertises the bounded support-accounting owner through
