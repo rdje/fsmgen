@@ -6,23 +6,30 @@ use warnings;
 use Exporter 'import';
 use JSON::PP ();
 use FSM::Support::NormalizedSemanticIntentHIRContract qw(
+    normalized_semantic_intent_hir_contract_source
     normalized_semantic_intent_hir_optional_composition_keys
     normalized_semantic_intent_hir_presence_keys
 );
 use FSM::Support::NormalizedSemanticLoweredRTLIRContract qw(
+    normalized_semantic_lowered_rtl_ir_contract_source
     normalized_semantic_lowered_rtl_ir_optional_composition_keys
     normalized_semantic_lowered_rtl_ir_presence_keys
 );
 use FSM::Support::NormalizedSemanticStructuralRTLIRContract qw(
+    normalized_semantic_structural_rtl_ir_contract_source
     normalized_semantic_structural_rtl_ir_presence_keys
 );
 
 our @EXPORT_OK = qw(
     build_normalized_semantic_forward_ir_contract
+    normalized_semantic_forward_ir_contract_source
+    normalized_semantic_forward_ir_intent_hir_contract_source
     normalized_semantic_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_forward_ir_intent_hir_presence_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_contract_source
     normalized_semantic_forward_ir_lowered_rtl_ir_optional_composition_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_presence_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_contract_source
     normalized_semantic_forward_ir_structural_rtl_ir_presence_keys
     normalized_semantic_forward_ir_presence_keys
 );
@@ -31,7 +38,7 @@ sub build_normalized_semantic_forward_ir_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::NormalizedSemanticForwardIRContract',
+        contract_source => normalized_semantic_forward_ir_contract_source(),
         object_name => 'semantic.forward_ir',
         report_sources => [
             qw(
@@ -47,13 +54,13 @@ sub build_normalized_semantic_forward_ir_contract {
             ],
         },
         public_presence_keys => normalized_semantic_forward_ir_presence_keys(),
-        intent_hir_contract_source => 'FSM::Support::NormalizedSemanticIntentHIRContract',
+        intent_hir_contract_source => normalized_semantic_forward_ir_intent_hir_contract_source(),
         intent_hir_presence_keys => normalized_semantic_forward_ir_intent_hir_presence_keys(),
         intent_hir_optional_composition_keys => normalized_semantic_forward_ir_intent_hir_optional_composition_keys(),
-        lowered_rtl_ir_contract_source => 'FSM::Support::NormalizedSemanticLoweredRTLIRContract',
+        lowered_rtl_ir_contract_source => normalized_semantic_forward_ir_lowered_rtl_ir_contract_source(),
         lowered_rtl_ir_presence_keys => normalized_semantic_forward_ir_lowered_rtl_ir_presence_keys(),
         lowered_rtl_ir_optional_composition_keys => normalized_semantic_forward_ir_lowered_rtl_ir_optional_composition_keys(),
-        structural_rtl_ir_contract_source => 'FSM::Support::NormalizedSemanticStructuralRTLIRContract',
+        structural_rtl_ir_contract_source => normalized_semantic_forward_ir_structural_rtl_ir_contract_source(),
         structural_rtl_ir_presence_keys => normalized_semantic_forward_ir_structural_rtl_ir_presence_keys(),
         json_safe_when_embedded_in_public_reports => JSON::PP::true,
         guidance => [
@@ -65,6 +72,22 @@ sub build_normalized_semantic_forward_ir_contract {
             'Widen this object deliberately through one named owner plus regression coverage instead of relying on sample JSON.',
         ],
     };
+}
+
+sub normalized_semantic_forward_ir_contract_source {
+    return 'FSM::Support::NormalizedSemanticForwardIRContract';
+}
+
+sub normalized_semantic_forward_ir_intent_hir_contract_source {
+    return normalized_semantic_intent_hir_contract_source();
+}
+
+sub normalized_semantic_forward_ir_lowered_rtl_ir_contract_source {
+    return normalized_semantic_lowered_rtl_ir_contract_source();
+}
+
+sub normalized_semantic_forward_ir_structural_rtl_ir_contract_source {
+    return normalized_semantic_structural_rtl_ir_contract_source();
 }
 
 sub normalized_semantic_forward_ir_presence_keys {

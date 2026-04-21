@@ -16,6 +16,21 @@ use FSM::Support::CompositionReportContract qw(
     composition_report_json_fragment_path
 );
 use FSM::Support::DiagnosticCodes qw(diagnostic_code_ids);
+use FSM::Support::NormalizedSemanticForwardIRContract qw(
+    normalized_semantic_forward_ir_contract_source
+    normalized_semantic_forward_ir_intent_hir_contract_source
+    normalized_semantic_forward_ir_lowered_rtl_ir_contract_source
+    normalized_semantic_forward_ir_structural_rtl_ir_contract_source
+);
+use FSM::Support::NormalizedSemanticIntentHIRContract qw(
+    normalized_semantic_intent_hir_contract_source
+);
+use FSM::Support::NormalizedSemanticLoweredRTLIRContract qw(
+    normalized_semantic_lowered_rtl_ir_contract_source
+);
+use FSM::Support::NormalizedSemanticStructuralRTLIRContract qw(
+    normalized_semantic_structural_rtl_ir_contract_source
+);
 use FSM::Support::RegressionCorpus qw(regression_corpus_entries);
 
 my @entries = regression_corpus_entries();
@@ -411,22 +426,22 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     );
     is(
         $manifest->{semantic_exports}{normalized_semantic_json}{forward_ir_contract_source},
-        'FSM::Support::NormalizedSemanticForwardIRContract',
+        normalized_semantic_forward_ir_contract_source(),
         'manifest records the normalized-semantic forward-IR nested-object owner',
     );
     is(
         $manifest->{semantic_exports}{normalized_semantic_json}{forward_ir_intent_hir_contract_source},
-        'FSM::Support::NormalizedSemanticIntentHIRContract',
+        normalized_semantic_forward_ir_intent_hir_contract_source(),
         'manifest records the normalized-semantic forward-ir intent-hir nested-object owner',
     );
     is(
         $manifest->{semantic_exports}{normalized_semantic_json}{forward_ir_lowered_rtl_ir_contract_source},
-        'FSM::Support::NormalizedSemanticLoweredRTLIRContract',
+        normalized_semantic_forward_ir_lowered_rtl_ir_contract_source(),
         'manifest records the normalized-semantic forward-ir lowered-rtl-ir nested-object owner',
     );
     is(
         $manifest->{semantic_exports}{normalized_semantic_json}{forward_ir_structural_rtl_ir_contract_source},
-        'FSM::Support::NormalizedSemanticStructuralRTLIRContract',
+        normalized_semantic_forward_ir_structural_rtl_ir_contract_source(),
         'manifest records the normalized-semantic forward-ir structural-rtl-ir nested-object owner',
     );
     is(
@@ -904,7 +919,7 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     );
     is(
         $manifest->{embedding}{hdl_generator_result}{intent_hir_contract_source},
-        'FSM::Support::NormalizedSemanticIntentHIRContract',
+        normalized_semantic_intent_hir_contract_source(),
         'manifest records the HDLGenerator top-level intent-hir owner',
     );
     ok(
@@ -913,7 +928,7 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     );
     is(
         $manifest->{embedding}{hdl_generator_result}{lowered_rtl_ir_contract_source},
-        'FSM::Support::NormalizedSemanticLoweredRTLIRContract',
+        normalized_semantic_lowered_rtl_ir_contract_source(),
         'manifest records the HDLGenerator top-level lowered-rtl-ir owner',
     );
     ok(
@@ -922,7 +937,7 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     );
     is(
         $manifest->{embedding}{hdl_generator_result}{structural_rtl_ir_contract_source},
-        'FSM::Support::NormalizedSemanticStructuralRTLIRContract',
+        normalized_semantic_structural_rtl_ir_contract_source(),
         'manifest records the HDLGenerator top-level structural-rtl-ir owner',
     );
     ok(

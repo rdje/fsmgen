@@ -433,6 +433,25 @@ This is the live continuity document for fast session recovery after crashes, re
   of treating `raw_ast` as an undocumented special case inside the broader
   result contract.
 
+## 2026-04-21: forward-ir owner facts now come from the forward-ir family
+- [perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm),
+  [perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm),
+  [perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm),
+  and [perl/FSM/Support/NormalizedSemanticForwardIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticForwardIRContract.pm)
+  now export canonical owner helpers for the forward-IR shell and its nested
+  IR shells.
+- [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm),
+  [perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm),
+  and [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm)
+  now reuse those helper-backed owner facts instead of repeating the same
+  forward-IR owner names inline.
+- This is a regularization slice only:
+  - no public schema changed,
+  - the same owner fields are still emitted in normalized semantic reports,
+    the capability manifest, and `HDLGenerator` result contracts,
+  - but the forward-IR family is now the only place that defines those owner
+    names.
+
 ## 2026-04-21: composition-report identity/path facts now come from one owner
 - [perl/FSM/Support/CompositionReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CompositionReportContract.pm)
   now exports helper accessors for its own contract source, raw result key,

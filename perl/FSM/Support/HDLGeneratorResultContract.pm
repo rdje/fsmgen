@@ -47,14 +47,17 @@ use FSM::Support::HDLGeneratorSourceInfoContract qw(
     hdl_generator_source_info_summary_keys
 );
 use FSM::Support::NormalizedSemanticIntentHIRContract qw(
+    normalized_semantic_intent_hir_contract_source
     normalized_semantic_intent_hir_optional_composition_keys
     normalized_semantic_intent_hir_presence_keys
 );
 use FSM::Support::NormalizedSemanticLoweredRTLIRContract qw(
+    normalized_semantic_lowered_rtl_ir_contract_source
     normalized_semantic_lowered_rtl_ir_optional_composition_keys
     normalized_semantic_lowered_rtl_ir_presence_keys
 );
 use FSM::Support::NormalizedSemanticStructuralRTLIRContract qw(
+    normalized_semantic_structural_rtl_ir_contract_source
     normalized_semantic_structural_rtl_ir_presence_keys
 );
 
@@ -141,15 +144,15 @@ sub build_hdl_generator_result_contract {
         composition_report_contract_source => composition_report_contract_source(),
         composition_report_json_fragment_path => composition_report_json_fragment_path(),
         composition_report_raw_hash_json_safe => composition_report_raw_report_json_safe(),
-        intent_hir_contract_source => 'FSM::Support::NormalizedSemanticIntentHIRContract',
+        intent_hir_contract_source => normalized_semantic_intent_hir_contract_source(),
         intent_hir_full_hash_stable => JSON::PP::false,
         intent_hir_presence_keys => hdl_generator_result_intent_hir_keys(),
         intent_hir_optional_composition_keys => hdl_generator_result_intent_hir_optional_composition_keys(),
-        lowered_rtl_ir_contract_source => 'FSM::Support::NormalizedSemanticLoweredRTLIRContract',
+        lowered_rtl_ir_contract_source => normalized_semantic_lowered_rtl_ir_contract_source(),
         lowered_rtl_ir_full_hash_stable => JSON::PP::false,
         lowered_rtl_ir_presence_keys => hdl_generator_result_lowered_rtl_ir_keys(),
         lowered_rtl_ir_optional_composition_keys => hdl_generator_result_lowered_rtl_ir_optional_composition_keys(),
-        structural_rtl_ir_contract_source => 'FSM::Support::NormalizedSemanticStructuralRTLIRContract',
+        structural_rtl_ir_contract_source => normalized_semantic_structural_rtl_ir_contract_source(),
         structural_rtl_ir_full_hash_stable => JSON::PP::false,
         structural_rtl_ir_presence_keys => hdl_generator_result_structural_rtl_ir_keys(),
         live_or_unsanitized_keys => [

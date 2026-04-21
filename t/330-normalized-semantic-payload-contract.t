@@ -15,10 +15,14 @@ use FSM::Support::NormalizedSemanticExplicitSystemContract qw(
     normalized_semantic_explicit_system_contract_presence_keys
 );
 use FSM::Support::NormalizedSemanticForwardIRContract qw(
+    normalized_semantic_forward_ir_contract_source
+    normalized_semantic_forward_ir_intent_hir_contract_source
     normalized_semantic_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_forward_ir_intent_hir_presence_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_contract_source
     normalized_semantic_forward_ir_lowered_rtl_ir_optional_composition_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_presence_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_contract_source
     normalized_semantic_forward_ir_structural_rtl_ir_presence_keys
     normalized_semantic_forward_ir_presence_keys
 );
@@ -104,7 +108,7 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
     );
     is(
         $contract->{forward_ir_contract_source},
-        'FSM::Support::NormalizedSemanticForwardIRContract',
+        normalized_semantic_forward_ir_contract_source(),
         'contract records the nested forward-IR object owner',
     );
     is(
@@ -174,7 +178,7 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
     );
     is(
         $contract->{forward_ir_intent_hir_contract_source},
-        'FSM::Support::NormalizedSemanticIntentHIRContract',
+        normalized_semantic_forward_ir_intent_hir_contract_source(),
         'contract records the nested forward-ir intent-hir object owner',
     );
     is_deeply(
@@ -189,7 +193,7 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
     );
     is(
         $contract->{forward_ir_lowered_rtl_ir_contract_source},
-        'FSM::Support::NormalizedSemanticLoweredRTLIRContract',
+        normalized_semantic_forward_ir_lowered_rtl_ir_contract_source(),
         'contract records the nested forward-ir lowered-rtl-ir object owner',
     );
     is_deeply(
@@ -204,7 +208,7 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
     );
     is(
         $contract->{forward_ir_structural_rtl_ir_contract_source},
-        'FSM::Support::NormalizedSemanticStructuralRTLIRContract',
+        normalized_semantic_forward_ir_structural_rtl_ir_contract_source(),
         'contract records the nested forward-ir structural-rtl-ir object owner',
     );
     is_deeply(

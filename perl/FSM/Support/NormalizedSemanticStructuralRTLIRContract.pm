@@ -8,6 +8,7 @@ use JSON::PP ();
 
 our @EXPORT_OK = qw(
     build_normalized_semantic_structural_rtl_ir_contract
+    normalized_semantic_structural_rtl_ir_contract_source
     normalized_semantic_structural_rtl_ir_presence_keys
 );
 
@@ -15,7 +16,7 @@ sub build_normalized_semantic_structural_rtl_ir_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::NormalizedSemanticStructuralRTLIRContract',
+        contract_source => normalized_semantic_structural_rtl_ir_contract_source(),
         object_name => 'structural_rtl_ir',
         parent_object_name => 'semantic.forward_ir.structural_rtl_ir',
         report_sources => [
@@ -39,6 +40,10 @@ sub build_normalized_semantic_structural_rtl_ir_contract {
             'The deeper `ports`, `nets`, `instances`, `resolved_links`, `declared_links`, and `auxiliary_assignments` payload contents remain bounded only at the current object-shell level unless later widened deliberately.',
         ],
     };
+}
+
+sub normalized_semantic_structural_rtl_ir_contract_source {
+    return 'FSM::Support::NormalizedSemanticStructuralRTLIRContract';
 }
 
 sub normalized_semantic_structural_rtl_ir_presence_keys {

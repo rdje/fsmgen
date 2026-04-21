@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: forward-ir owner names should come from the forward-ir family too
+- The normalized-semantic forward-IR family already owned the shell/key facts
+  for `forward_ir`, `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir`,
+  but several parent contracts were still repeating those owner names as
+  inline strings.
+- That was the same drift pattern we just removed from the composition-report
+  seam, only one layer higher in the normalized-semantic family:
+  - `NormalizedSemanticForwardIRContract` could name one nested owner,
+  - `NormalizedSemanticPayloadContract` or `NormalizedSemanticReportContract`
+    could repeat another copy,
+  - and `HDLGeneratorResultContract` could independently retype the same leaf
+    owner names for its top-level semantic-shell projection.
+- The safer regularization is to let the forward-IR family export canonical
+  owner helpers and make those parents reuse them.
+- That keeps `R13` tighter:
+  - one contract family now owns the forward-IR identity strings,
+  - parent contracts still publish the same public owner fields,
+  - and future renames or reshaping can be caught from one source-of-truth
+    instead of several duplicated literals.
+
 ## 2026-04-21: composition_report should publish its own helper facts too
 - The bounded composition-report contract already owned the public raw-key,
   fragment-path, and JSON-safety facts in prose and in its built hash, but

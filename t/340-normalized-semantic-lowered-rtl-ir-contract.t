@@ -10,6 +10,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::NormalizedSemanticLoweredRTLIRContract qw(
     build_normalized_semantic_lowered_rtl_ir_contract
+    normalized_semantic_lowered_rtl_ir_contract_source
     normalized_semantic_lowered_rtl_ir_optional_composition_keys
     normalized_semantic_lowered_rtl_ir_presence_keys
 );
@@ -21,7 +22,7 @@ subtest 'contract exposes the bounded normalized semantic lowered-rtl-ir object'
     is($contract->{status}, 'bounded_public', 'contract marks the nested lowered-rtl-ir object as bounded public');
     is(
         $contract->{contract_source},
-        'FSM::Support::NormalizedSemanticLoweredRTLIRContract',
+        normalized_semantic_lowered_rtl_ir_contract_source(),
         'contract records its own owner',
     );
     is($contract->{object_name}, 'lowered_rtl_ir', 'contract records the nested object name');

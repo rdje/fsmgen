@@ -67,14 +67,17 @@ use FSM::Support::HDLGeneratorResultContract qw(
     hdl_generator_result_structural_rtl_ir_keys
 );
 use FSM::Support::NormalizedSemanticIntentHIRContract qw(
+    normalized_semantic_intent_hir_contract_source
     normalized_semantic_intent_hir_optional_composition_keys
     normalized_semantic_intent_hir_presence_keys
 );
 use FSM::Support::NormalizedSemanticLoweredRTLIRContract qw(
+    normalized_semantic_lowered_rtl_ir_contract_source
     normalized_semantic_lowered_rtl_ir_optional_composition_keys
     normalized_semantic_lowered_rtl_ir_presence_keys
 );
 use FSM::Support::NormalizedSemanticStructuralRTLIRContract qw(
+    normalized_semantic_structural_rtl_ir_contract_source
     normalized_semantic_structural_rtl_ir_presence_keys
 );
 
@@ -301,7 +304,7 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
     );
     is(
         $contract->{intent_hir_contract_source},
-        'FSM::Support::NormalizedSemanticIntentHIRContract',
+        normalized_semantic_intent_hir_contract_source(),
         'contract records the top-level intent-hir owner',
     );
     ok(
@@ -320,7 +323,7 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
     );
     is(
         $contract->{lowered_rtl_ir_contract_source},
-        'FSM::Support::NormalizedSemanticLoweredRTLIRContract',
+        normalized_semantic_lowered_rtl_ir_contract_source(),
         'contract records the top-level lowered-rtl-ir owner',
     );
     ok(
@@ -339,7 +342,7 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
     );
     is(
         $contract->{structural_rtl_ir_contract_source},
-        'FSM::Support::NormalizedSemanticStructuralRTLIRContract',
+        normalized_semantic_structural_rtl_ir_contract_source(),
         'contract records the top-level structural-rtl-ir owner',
     );
     ok(

@@ -8,6 +8,7 @@ use JSON::PP ();
 
 our @EXPORT_OK = qw(
     build_normalized_semantic_intent_hir_contract
+    normalized_semantic_intent_hir_contract_source
     normalized_semantic_intent_hir_optional_composition_keys
     normalized_semantic_intent_hir_presence_keys
 );
@@ -16,7 +17,7 @@ sub build_normalized_semantic_intent_hir_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::NormalizedSemanticIntentHIRContract',
+        contract_source => normalized_semantic_intent_hir_contract_source(),
         object_name => 'intent_hir',
         parent_object_name => 'semantic.forward_ir.intent_hir',
         report_sources => [
@@ -42,6 +43,10 @@ sub build_normalized_semantic_intent_hir_contract {
             'The nested `signal_analysis`, `explicit_system_contract`, `system_contract`, and `symbol_contract` branches remain separate public surfaces with their own owners; this contract only freezes the intent-hir object shell itself.',
         ],
     };
+}
+
+sub normalized_semantic_intent_hir_contract_source {
+    return 'FSM::Support::NormalizedSemanticIntentHIRContract';
 }
 
 sub normalized_semantic_intent_hir_presence_keys {

@@ -8,6 +8,7 @@ use JSON::PP ();
 
 our @EXPORT_OK = qw(
     build_normalized_semantic_lowered_rtl_ir_contract
+    normalized_semantic_lowered_rtl_ir_contract_source
     normalized_semantic_lowered_rtl_ir_optional_composition_keys
     normalized_semantic_lowered_rtl_ir_presence_keys
 );
@@ -16,7 +17,7 @@ sub build_normalized_semantic_lowered_rtl_ir_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::NormalizedSemanticLoweredRTLIRContract',
+        contract_source => normalized_semantic_lowered_rtl_ir_contract_source(),
         object_name => 'lowered_rtl_ir',
         parent_object_name => 'semantic.forward_ir.lowered_rtl_ir',
         report_sources => [
@@ -42,6 +43,10 @@ sub build_normalized_semantic_lowered_rtl_ir_contract {
             'The deeper `output_drive_families`, `standalone_dt_multi_drive_targets`, and composition candidate payload contents remain bounded only at the current object-shell level unless later widened deliberately.',
         ],
     };
+}
+
+sub normalized_semantic_lowered_rtl_ir_contract_source {
+    return 'FSM::Support::NormalizedSemanticLoweredRTLIRContract';
 }
 
 sub normalized_semantic_lowered_rtl_ir_presence_keys {

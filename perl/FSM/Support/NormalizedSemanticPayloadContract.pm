@@ -12,10 +12,14 @@ use FSM::Support::NormalizedSemanticExplicitSystemContract qw(
     normalized_semantic_explicit_system_contract_presence_keys
 );
 use FSM::Support::NormalizedSemanticForwardIRContract qw(
+    normalized_semantic_forward_ir_contract_source
+    normalized_semantic_forward_ir_intent_hir_contract_source
     normalized_semantic_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_forward_ir_intent_hir_presence_keys
+    normalized_semantic_forward_ir_lowered_rtl_ir_contract_source
     normalized_semantic_forward_ir_lowered_rtl_ir_optional_composition_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_presence_keys
+    normalized_semantic_forward_ir_structural_rtl_ir_contract_source
     normalized_semantic_forward_ir_structural_rtl_ir_presence_keys
     normalized_semantic_forward_ir_presence_keys
 );
@@ -77,7 +81,7 @@ sub build_normalized_semantic_payload_contract {
         explicit_system_contract_source => 'FSM::Support::NormalizedSemanticExplicitSystemContract',
         signal_analysis_contract_source => 'FSM::Support::NormalizedSemanticSignalAnalysisContract',
         system_contract_source => 'FSM::Support::NormalizedSemanticSystemContract',
-        forward_ir_contract_source => 'FSM::Support::NormalizedSemanticForwardIRContract',
+        forward_ir_contract_source => normalized_semantic_forward_ir_contract_source(),
         symbol_contract_source => 'FSM::Support::NormalizedSemanticSymbolContract',
         composition_contract_source => 'FSM::Support::NormalizedSemanticCompositionContract',
         explicit_system_contract_presence_keys => normalized_semantic_payload_explicit_system_contract_keys(),
@@ -85,13 +89,13 @@ sub build_normalized_semantic_payload_contract {
         signal_analysis_entry_presence_keys => normalized_semantic_payload_signal_analysis_entry_keys(),
         system_contract_presence_keys => normalized_semantic_payload_system_contract_keys(),
         forward_ir_presence_keys => normalized_semantic_payload_forward_ir_keys(),
-        forward_ir_intent_hir_contract_source => 'FSM::Support::NormalizedSemanticIntentHIRContract',
+        forward_ir_intent_hir_contract_source => normalized_semantic_forward_ir_intent_hir_contract_source(),
         forward_ir_intent_hir_presence_keys => normalized_semantic_payload_forward_ir_intent_hir_keys(),
         forward_ir_intent_hir_optional_composition_keys => normalized_semantic_payload_forward_ir_intent_hir_optional_composition_keys(),
-        forward_ir_lowered_rtl_ir_contract_source => 'FSM::Support::NormalizedSemanticLoweredRTLIRContract',
+        forward_ir_lowered_rtl_ir_contract_source => normalized_semantic_forward_ir_lowered_rtl_ir_contract_source(),
         forward_ir_lowered_rtl_ir_presence_keys => normalized_semantic_payload_forward_ir_lowered_rtl_ir_keys(),
         forward_ir_lowered_rtl_ir_optional_composition_keys => normalized_semantic_payload_forward_ir_lowered_rtl_ir_optional_composition_keys(),
-        forward_ir_structural_rtl_ir_contract_source => 'FSM::Support::NormalizedSemanticStructuralRTLIRContract',
+        forward_ir_structural_rtl_ir_contract_source => normalized_semantic_forward_ir_structural_rtl_ir_contract_source(),
         forward_ir_structural_rtl_ir_presence_keys => normalized_semantic_payload_forward_ir_structural_rtl_ir_keys(),
         symbol_contract_presence_keys => normalized_semantic_payload_symbol_contract_keys(),
         composition_presence_keys => normalized_semantic_payload_composition_keys(),
