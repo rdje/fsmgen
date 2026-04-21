@@ -9,7 +9,11 @@ use Scalar::Util qw(blessed);
 
 our @EXPORT_OK = qw(
     build_composition_report_contract
+    composition_report_contract_source
+    composition_report_json_fragment_path
     composition_report_public_top_level_keys
+    composition_report_raw_report_json_safe
+    composition_report_raw_result_key
     sanitize_composition_report
 );
 
@@ -17,15 +21,15 @@ sub build_composition_report_contract {
     return {
         schema_version => 1,
         status => 'bounded_public_json_fragment',
-        contract_source => 'FSM::Support::CompositionReportContract',
+        contract_source => composition_report_contract_source(),
         report_builder => 'FSM::Composition::ProvenanceReportBuilder',
-        raw_result_key => 'composition_report',
-        json_fragment_path => 'semantic_exports.normalized_semantic_json.semantic.composition.provenance_report',
+        raw_result_key => composition_report_raw_result_key(),
+        json_fragment_path => composition_report_json_fragment_path(),
         tested_by => [
             't/307-composition-report-contract.t',
         ],
         public_top_level_keys => composition_report_public_top_level_keys(),
-        raw_report_json_safe => JSON::PP::false,
+        raw_report_json_safe => composition_report_raw_report_json_safe(),
         sanitized_report_json_safe => JSON::PP::true,
         sanitizes_private_perl_objects => JSON::PP::true,
         stable_nested_content => JSON::PP::false,
@@ -35,6 +39,22 @@ sub build_composition_report_contract {
             'Do not expose composition_plan objects as public JSON; promote explicit scalar/list/hash report facts instead.',
         ],
     };
+}
+
+sub composition_report_contract_source {
+    return 'FSM::Support::CompositionReportContract';
+}
+
+sub composition_report_raw_result_key {
+    return 'composition_report';
+}
+
+sub composition_report_json_fragment_path {
+    return 'semantic_exports.normalized_semantic_json.semantic.composition.provenance_report';
+}
+
+sub composition_report_raw_report_json_safe {
+    return JSON::PP::false;
 }
 
 sub composition_report_public_top_level_keys {

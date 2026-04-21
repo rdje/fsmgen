@@ -11,6 +11,10 @@ use JSON::PP qw(decode_json);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
+use FSM::Support::CompositionReportContract qw(
+    composition_report_contract_source
+    composition_report_json_fragment_path
+);
 use FSM::Support::DiagnosticCodes qw(diagnostic_code_ids);
 use FSM::Support::RegressionCorpus qw(regression_corpus_entries);
 
@@ -664,12 +668,12 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     );
     is(
         $manifest->{embedding}{composition_report}{contract_source},
-        'FSM::Support::CompositionReportContract',
+        composition_report_contract_source(),
         'manifest records the composition report contract owner',
     );
     is(
         $manifest->{embedding}{composition_report}{json_fragment_path},
-        'semantic_exports.normalized_semantic_json.semantic.composition.provenance_report',
+        composition_report_json_fragment_path(),
         'manifest records where the sanitized composition report is exported',
     );
     is(
@@ -832,12 +836,12 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     );
     is(
         $manifest->{embedding}{hdl_generator_result}{composition_report_contract_source},
-        'FSM::Support::CompositionReportContract',
+        composition_report_contract_source(),
         'manifest records the raw composition_report contract owner',
     );
     is(
         $manifest->{embedding}{hdl_generator_result}{composition_report_json_fragment_path},
-        'semantic_exports.normalized_semantic_json.semantic.composition.provenance_report',
+        composition_report_json_fragment_path(),
         'manifest points composition-report embedders at the sanitized semantic JSON fragment',
     );
     ok(

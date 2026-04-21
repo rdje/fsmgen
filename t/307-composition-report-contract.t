@@ -14,7 +14,11 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Pipeline::HDLGenerator;
 use FSM::Support::CompositionReportContract qw(
     build_composition_report_contract
+    composition_report_contract_source
+    composition_report_json_fragment_path
     composition_report_public_top_level_keys
+    composition_report_raw_report_json_safe
+    composition_report_raw_result_key
     sanitize_composition_report
 );
 
@@ -24,15 +28,16 @@ my $contract = build_composition_report_contract();
 subtest 'contract declares bounded serializable composition report surface' => sub {
     is($contract->{schema_version}, 1, 'contract exposes schema version');
     is($contract->{status}, 'bounded_public_json_fragment', 'contract marks report as bounded JSON fragment');
-    is($contract->{contract_source}, 'FSM::Support::CompositionReportContract', 'contract records its owner');
+    is($contract->{contract_source}, composition_report_contract_source(), 'contract records its owner');
     is($contract->{report_builder}, 'FSM::Composition::ProvenanceReportBuilder', 'contract records report builder');
-    is($contract->{raw_result_key}, 'composition_report', 'contract records raw result key');
+    is($contract->{raw_result_key}, composition_report_raw_result_key(), 'contract records raw result key');
     is(
         $contract->{json_fragment_path},
-        'semantic_exports.normalized_semantic_json.semantic.composition.provenance_report',
+        composition_report_json_fragment_path(),
         'contract records normalized semantic JSON fragment path',
     );
     ok(!$contract->{raw_report_json_safe}, 'contract does not claim raw composition_report is JSON-safe');
+    ok(!composition_report_raw_report_json_safe(), 'helper says raw composition_report is not JSON-safe');
     ok($contract->{sanitized_report_json_safe}, 'contract says sanitized report is JSON-safe');
     ok($contract->{sanitizes_private_perl_objects}, 'contract says private Perl objects are sanitized');
     ok(!$contract->{stable_nested_content}, 'contract does not overpromise every nested report branch as frozen');

@@ -5,6 +5,11 @@ use warnings;
 
 use Exporter 'import';
 use JSON::PP ();
+use FSM::Support::CompositionReportContract qw(
+    composition_report_contract_source
+    composition_report_json_fragment_path
+    composition_report_raw_report_json_safe
+);
 use FSM::Support::HDLGeneratorCompositionPlanContract qw(
     hdl_generator_composition_plan_raw_value_class_when_defined
     hdl_generator_composition_plan_summary_surfaces
@@ -133,9 +138,9 @@ sub build_hdl_generator_result_contract {
         composition_plan_raw_value_class => hdl_generator_composition_plan_raw_value_class_when_defined(),
         composition_plan_summary_surfaces => hdl_generator_composition_plan_summary_surfaces(),
         composition_report_shell_only => JSON::PP::true,
-        composition_report_contract_source => 'FSM::Support::CompositionReportContract',
-        composition_report_json_fragment_path => 'semantic_exports.normalized_semantic_json.semantic.composition.provenance_report',
-        composition_report_raw_hash_json_safe => JSON::PP::false,
+        composition_report_contract_source => composition_report_contract_source(),
+        composition_report_json_fragment_path => composition_report_json_fragment_path(),
+        composition_report_raw_hash_json_safe => composition_report_raw_report_json_safe(),
         intent_hir_contract_source => 'FSM::Support::NormalizedSemanticIntentHIRContract',
         intent_hir_full_hash_stable => JSON::PP::false,
         intent_hir_presence_keys => hdl_generator_result_intent_hir_keys(),

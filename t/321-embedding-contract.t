@@ -11,6 +11,9 @@ use JSON::PP qw(decode_json);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
+use FSM::Support::CompositionReportContract qw(
+    composition_report_contract_source
+);
 use FSM::Support::EmbeddingContract qw(
     build_embedding_contract
     embedding_nested_contract_keys
@@ -47,7 +50,7 @@ subtest 'contract exposes the bounded embedding section' => sub {
     is_deeply(
         $contract->{nested_contract_source_map},
         {
-            composition_report => 'FSM::Support::CompositionReportContract',
+            composition_report => composition_report_contract_source(),
             hdl_generator_result => 'FSM::Support::HDLGeneratorResultContract',
             typed_extensions => 'FSM::Support::ExtensionContract',
         },

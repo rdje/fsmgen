@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: composition_report should publish its own helper facts too
+- The bounded composition-report contract already owned the public raw-key,
+  fragment-path, and JSON-safety facts in prose and in its built hash, but
+  sibling contracts were still repeating those exact values as inline strings.
+- That duplication was survivable, but it made the `R13` contract story easier
+  to drift accidentally:
+  - the embedding section could advertise one source string,
+  - normalized semantic composition could advertise another,
+  - and the `HDLGenerator` result shell could keep a third copy of the same
+    fragment path.
+- The safer regularization is to let
+  [perl/FSM/Support/CompositionReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CompositionReportContract.pm)
+  export those helper facts directly and make sibling contracts reuse them.
+- That keeps `R13` narrower and more honest:
+  - one owner now defines the composition-report contract identity/path facts,
+  - sibling contracts still expose the same public fields,
+  - and future widening of the composition-report surface only needs one
+    source-of-truth update before the regressions catch drift elsewhere.
+
 ## 2026-04-21: composition_plan now deserves its own shell-only owner too
 - The in-process `HDLGenerator` result contract already called out
   `composition_plan` explicitly as a raw compatibility branch, but that still

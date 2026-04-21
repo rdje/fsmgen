@@ -8,6 +8,9 @@ use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
+use FSM::Support::CompositionReportContract qw(
+    composition_report_contract_source
+);
 use FSM::Support::NormalizedSemanticCompositionContract qw(
     build_normalized_semantic_composition_contract
     normalized_semantic_composition_presence_keys
@@ -36,7 +39,7 @@ subtest 'contract exposes the bounded normalized semantic composition object' =>
     );
     is(
         $contract->{provenance_report_contract_source},
-        'FSM::Support::CompositionReportContract',
+        composition_report_contract_source(),
         'contract records the nested provenance-report owner',
     );
     ok(

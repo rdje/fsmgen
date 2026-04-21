@@ -433,6 +433,22 @@ This is the live continuity document for fast session recovery after crashes, re
   of treating `raw_ast` as an undocumented special case inside the broader
   result contract.
 
+## 2026-04-21: composition-report identity/path facts now come from one owner
+- [perl/FSM/Support/CompositionReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CompositionReportContract.pm)
+  now exports helper accessors for its own contract source, raw result key,
+  JSON fragment path, and raw-report JSON-safety rule.
+- [perl/FSM/Support/EmbeddingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingContract.pm),
+  [perl/FSM/Support/NormalizedSemanticCompositionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticCompositionContract.pm),
+  and [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm)
+  now reuse those helper facts instead of repeating the same
+  composition-report ownership/path literals inline.
+- This is a regularization slice only:
+  - no public schema changed,
+  - the embedding manifest, normalized semantic composition payload, and
+    `HDLGenerator` result contract still expose the same public fields,
+  - but the composition-report owner is now the only place that defines those
+    identity/path facts.
+
 ## 2026-04-21: HDLGenerator composition_plan now has a dedicated shell-only contract
 - Added [perl/FSM/Support/HDLGeneratorCompositionPlanContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorCompositionPlanContract.pm)
   as the explicit owner for the bounded shell-only `HDLGenerator`

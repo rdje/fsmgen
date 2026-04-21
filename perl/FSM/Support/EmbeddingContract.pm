@@ -5,6 +5,9 @@ use warnings;
 
 use Exporter 'import';
 use JSON::PP ();
+use FSM::Support::CompositionReportContract qw(
+    composition_report_contract_source
+);
 
 our @EXPORT_OK = qw(
     build_embedding_contract
@@ -30,7 +33,7 @@ sub build_embedding_contract {
         public_top_level_presence_keys => embedding_public_top_level_keys(),
         nested_contract_keys => embedding_nested_contract_keys(),
         nested_contract_source_map => {
-            composition_report => 'FSM::Support::CompositionReportContract',
+            composition_report => composition_report_contract_source(),
             hdl_generator_result => 'FSM::Support::HDLGeneratorResultContract',
             typed_extensions => 'FSM::Support::ExtensionContract',
         },

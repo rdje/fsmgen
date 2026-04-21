@@ -10,6 +10,10 @@ use File::Temp qw(tempdir);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Pipeline::HDLGenerator;
+use FSM::Support::CompositionReportContract qw(
+    composition_report_contract_source
+    composition_report_json_fragment_path
+);
 use FSM::Support::HDLGeneratorCompositionPlanContract qw(
     hdl_generator_composition_plan_raw_value_class_when_defined
     hdl_generator_composition_plan_summary_surfaces
@@ -222,12 +226,12 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
     );
     is(
         $contract->{composition_report_contract_source},
-        'FSM::Support::CompositionReportContract',
+        composition_report_contract_source(),
         'contract records the raw composition_report contract owner',
     );
     is(
         $contract->{composition_report_json_fragment_path},
-        'semantic_exports.normalized_semantic_json.semantic.composition.provenance_report',
+        composition_report_json_fragment_path(),
         'contract points composition-report embedders at the sanitized semantic JSON fragment',
     );
     is_deeply(
