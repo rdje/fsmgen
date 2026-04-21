@@ -8,15 +8,20 @@ use JSON::PP ();
 
 our @EXPORT_OK = qw(
     build_normalized_semantic_signal_analysis_contract
+    normalized_semantic_signal_analysis_contract_source
     normalized_semantic_signal_analysis_entry_presence_keys
     normalized_semantic_signal_analysis_presence_keys
 );
+
+sub normalized_semantic_signal_analysis_contract_source {
+    return 'FSM::Support::NormalizedSemanticSignalAnalysisContract';
+}
 
 sub build_normalized_semantic_signal_analysis_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::NormalizedSemanticSignalAnalysisContract',
+        contract_source => normalized_semantic_signal_analysis_contract_source(),
         object_name => 'signal_analysis',
         parent_object_name => 'semantic.signal_analysis',
         report_sources => [

@@ -10,6 +10,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::NormalizedSemanticSignalAnalysisContract qw(
     build_normalized_semantic_signal_analysis_contract
+    normalized_semantic_signal_analysis_contract_source
     normalized_semantic_signal_analysis_entry_presence_keys
     normalized_semantic_signal_analysis_presence_keys
 );
@@ -21,7 +22,7 @@ subtest 'contract exposes the bounded normalized semantic signal-analysis object
     is($contract->{status}, 'bounded_public', 'contract marks the nested signal-analysis object as bounded public');
     is(
         $contract->{contract_source},
-        'FSM::Support::NormalizedSemanticSignalAnalysisContract',
+        normalized_semantic_signal_analysis_contract_source(),
         'contract records its own owner',
     );
     is($contract->{object_name}, 'signal_analysis', 'contract records the nested object name');

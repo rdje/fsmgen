@@ -11,14 +11,19 @@ use FSM::Support::CompositionReportContract qw(
 
 our @EXPORT_OK = qw(
     build_normalized_semantic_composition_contract
+    normalized_semantic_composition_contract_source
     normalized_semantic_composition_presence_keys
 );
+
+sub normalized_semantic_composition_contract_source {
+    return 'FSM::Support::NormalizedSemanticCompositionContract';
+}
 
 sub build_normalized_semantic_composition_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::NormalizedSemanticCompositionContract',
+        contract_source => normalized_semantic_composition_contract_source(),
         object_name => 'composition',
         parent_object_name => 'semantic.composition',
         report_sources => [

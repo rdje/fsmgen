@@ -9,9 +9,11 @@ use FindBin;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::NormalizedSemanticCompositionContract qw(
+    normalized_semantic_composition_contract_source
     normalized_semantic_composition_presence_keys
 );
 use FSM::Support::NormalizedSemanticExplicitSystemContract qw(
+    normalized_semantic_explicit_system_contract_source
     normalized_semantic_explicit_system_contract_presence_keys
 );
 use FSM::Support::NormalizedSemanticForwardIRContract qw(
@@ -27,17 +29,21 @@ use FSM::Support::NormalizedSemanticForwardIRContract qw(
     normalized_semantic_forward_ir_presence_keys
 );
 use FSM::Support::NormalizedSemanticModuleContract qw(
+    normalized_semantic_module_contract_source
     normalized_semantic_module_optional_metric_keys
     normalized_semantic_module_presence_keys
 );
 use FSM::Support::NormalizedSemanticSignalAnalysisContract qw(
+    normalized_semantic_signal_analysis_contract_source
     normalized_semantic_signal_analysis_entry_presence_keys
     normalized_semantic_signal_analysis_presence_keys
 );
 use FSM::Support::NormalizedSemanticSystemContract qw(
+    normalized_semantic_system_contract_source
     normalized_semantic_system_contract_presence_keys
 );
 use FSM::Support::NormalizedSemanticSymbolContract qw(
+    normalized_semantic_symbol_contract_source
     normalized_semantic_symbol_contract_presence_keys
 );
 use FSM::Support::NormalizedSemanticPayloadContract qw(
@@ -83,7 +89,7 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
     );
     is(
         $contract->{module_contract_source},
-        'FSM::Support::NormalizedSemanticModuleContract',
+        normalized_semantic_module_contract_source(),
         'contract records the nested module object owner',
     );
     is_deeply(
@@ -103,7 +109,7 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
     );
     is(
         $contract->{composition_contract_source},
-        'FSM::Support::NormalizedSemanticCompositionContract',
+        normalized_semantic_composition_contract_source(),
         'contract records the nested composition object owner',
     );
     is(
@@ -113,22 +119,22 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
     );
     is(
         $contract->{signal_analysis_contract_source},
-        'FSM::Support::NormalizedSemanticSignalAnalysisContract',
+        normalized_semantic_signal_analysis_contract_source(),
         'contract records the nested signal-analysis object owner',
     );
     is(
         $contract->{explicit_system_contract_source},
-        'FSM::Support::NormalizedSemanticExplicitSystemContract',
+        normalized_semantic_explicit_system_contract_source(),
         'contract records the nested explicit-system-contract object owner',
     );
     is(
         $contract->{system_contract_source},
-        'FSM::Support::NormalizedSemanticSystemContract',
+        normalized_semantic_system_contract_source(),
         'contract records the nested system-contract object owner',
     );
     is(
         $contract->{symbol_contract_source},
-        'FSM::Support::NormalizedSemanticSymbolContract',
+        normalized_semantic_symbol_contract_source(),
         'contract records the nested symbol-contract object owner',
     );
     is_deeply(

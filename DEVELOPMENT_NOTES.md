@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: semantic payload/report shells should not own nested owner strings either
+- After the forward-IR and composition-report regularizations, the same drift
+  pattern was still present one layer lower in the normalized-semantic family:
+  payload/report contracts were still retyping owner names for `module`,
+  `composition`, `signal_analysis`, `system_contract`,
+  `explicit_system_contract`, and `symbol_contract`.
+- That left one awkward split-brain risk:
+  - the leaf nested contract could say it owned one public shell,
+  - the semantic payload/report parents could advertise the same shell through
+    unrelated inline strings,
+  - and the capability manifest regressions could keep passing until one side
+    drifted.
+- The safer `R13` regularization is the same pattern we already used
+  successfully elsewhere:
+  - let each nested contract export one canonical `*_contract_source()` helper,
+  - keep parent contracts responsible for key lists and embedding shape,
+  - and make every parent/manifest regression assert against the nested
+    contract helper instead of against a hand-typed string.
+- That keeps the public API story narrower and more honest because owner names
+  now come from the contract that actually owns the nested object.
+
 ## 2026-04-21: forward-ir owner names should come from the forward-ir family too
 - The normalized-semantic forward-IR family already owned the shell/key facts
   for `forward_ir`, `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir`,

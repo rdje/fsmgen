@@ -18,9 +18,11 @@ use FSM::Support::CheckFailureDiagnosticContract qw(
     check_failure_diagnostic_support_accounting_presence_keys
 );
 use FSM::Support::NormalizedSemanticCompositionContract qw(
+    normalized_semantic_composition_contract_source
     normalized_semantic_composition_presence_keys
 );
 use FSM::Support::NormalizedSemanticExplicitSystemContract qw(
+    normalized_semantic_explicit_system_contract_source
     normalized_semantic_explicit_system_contract_presence_keys
 );
 use FSM::Support::NormalizedSemanticForwardIRContract qw(
@@ -76,14 +78,20 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_symbol_contract_keys
 );
 use FSM::Support::NormalizedSemanticSignalAnalysisContract qw(
+    normalized_semantic_signal_analysis_contract_source
     normalized_semantic_signal_analysis_entry_presence_keys
     normalized_semantic_signal_analysis_presence_keys
 );
 use FSM::Support::NormalizedSemanticSystemContract qw(
+    normalized_semantic_system_contract_source
     normalized_semantic_system_contract_presence_keys
 );
 use FSM::Support::NormalizedSemanticSymbolContract qw(
+    normalized_semantic_symbol_contract_source
     normalized_semantic_symbol_contract_presence_keys
+);
+use FSM::Support::NormalizedSemanticModuleContract qw(
+    normalized_semantic_module_contract_source
 );
 use FSM::Support::ReportCommandContract qw(report_command_presence_keys);
 use FSM::Support::ReportGeneratedOutputContract qw(report_generated_output_presence_keys);
@@ -130,17 +138,17 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
     );
     is(
         $contract->{composition_contract_source},
-        'FSM::Support::NormalizedSemanticCompositionContract',
+        normalized_semantic_composition_contract_source(),
         'contract records the nested composition object owner',
     );
     is(
         $contract->{explicit_system_contract_source},
-        'FSM::Support::NormalizedSemanticExplicitSystemContract',
+        normalized_semantic_explicit_system_contract_source(),
         'contract records the nested explicit-system-contract object owner',
     );
     is(
         $contract->{signal_analysis_contract_source},
-        'FSM::Support::NormalizedSemanticSignalAnalysisContract',
+        normalized_semantic_signal_analysis_contract_source(),
         'contract records the nested signal-analysis object owner',
     );
     is(
@@ -150,7 +158,7 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
     );
     is(
         $contract->{module_contract_source},
-        'FSM::Support::NormalizedSemanticModuleContract',
+        normalized_semantic_module_contract_source(),
         'contract records the nested module object owner',
     );
     is(
@@ -160,12 +168,12 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
     );
     is(
         $contract->{system_contract_source},
-        'FSM::Support::NormalizedSemanticSystemContract',
+        normalized_semantic_system_contract_source(),
         'contract records the nested system-contract object owner',
     );
     is(
         $contract->{symbol_contract_source},
-        'FSM::Support::NormalizedSemanticSymbolContract',
+        normalized_semantic_symbol_contract_source(),
         'contract records the nested symbol-contract object owner',
     );
     is(

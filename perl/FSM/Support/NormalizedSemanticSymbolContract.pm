@@ -8,14 +8,19 @@ use JSON::PP ();
 
 our @EXPORT_OK = qw(
     build_normalized_semantic_symbol_contract
+    normalized_semantic_symbol_contract_source
     normalized_semantic_symbol_contract_presence_keys
 );
+
+sub normalized_semantic_symbol_contract_source {
+    return 'FSM::Support::NormalizedSemanticSymbolContract';
+}
 
 sub build_normalized_semantic_symbol_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::NormalizedSemanticSymbolContract',
+        contract_source => normalized_semantic_symbol_contract_source(),
         object_name => 'semantic.symbol_contract',
         report_sources => [
             qw(

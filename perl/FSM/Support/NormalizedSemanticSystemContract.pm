@@ -6,8 +6,13 @@ use warnings;
 use Exporter 'import';
 
 our @EXPORT_OK = qw(
+    normalized_semantic_system_contract_source
     normalized_semantic_system_contract_presence_keys
 );
+
+sub normalized_semantic_system_contract_source {
+    return 'FSM::Support::NormalizedSemanticSystemContract';
+}
 
 sub normalized_semantic_system_contract_presence_keys {
     return [

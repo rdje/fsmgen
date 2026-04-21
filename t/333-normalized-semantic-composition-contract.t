@@ -13,6 +13,7 @@ use FSM::Support::CompositionReportContract qw(
 );
 use FSM::Support::NormalizedSemanticCompositionContract qw(
     build_normalized_semantic_composition_contract
+    normalized_semantic_composition_contract_source
     normalized_semantic_composition_presence_keys
 );
 
@@ -23,7 +24,7 @@ subtest 'contract exposes the bounded normalized semantic composition object' =>
     is($contract->{status}, 'bounded_public', 'contract marks the nested composition object as bounded public');
     is(
         $contract->{contract_source},
-        'FSM::Support::NormalizedSemanticCompositionContract',
+        normalized_semantic_composition_contract_source(),
         'contract records its own owner',
     );
     is($contract->{object_name}, 'composition', 'contract records the nested object name');

@@ -1,5 +1,31 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-21: semantic payload/report owner facts now come from the nested semantic contracts too
+- Hardened
+  [perl/FSM/Support/NormalizedSemanticModuleContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticModuleContract.pm),
+  [perl/FSM/Support/NormalizedSemanticCompositionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticCompositionContract.pm),
+  [perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm),
+  [perl/FSM/Support/NormalizedSemanticSystemContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSystemContract.pm),
+  [perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm),
+  and [perl/FSM/Support/NormalizedSemanticSymbolContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSymbolContract.pm)
+  so those nested normalized-semantic families now export canonical owner
+  helpers directly.
+- Expanded
+  [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm)
+  and [perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm)
+  so the semantic payload/report shells now reuse those nested owner helpers
+  instead of retyping the same owner strings inline.
+- Regression coverage now proves that helper-backed reuse directly:
+  [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t),
+  [t/311-normalized-semantic-report-contract.t](/Users/richarddje/Documents/github/fsmgen/t/311-normalized-semantic-report-contract.t),
+  [t/330-normalized-semantic-payload-contract.t](/Users/richarddje/Documents/github/fsmgen/t/330-normalized-semantic-payload-contract.t),
+  [t/332-normalized-semantic-module-contract.t](/Users/richarddje/Documents/github/fsmgen/t/332-normalized-semantic-module-contract.t),
+  [t/333-normalized-semantic-composition-contract.t](/Users/richarddje/Documents/github/fsmgen/t/333-normalized-semantic-composition-contract.t),
+  [t/335-normalized-semantic-symbol-contract.t](/Users/richarddje/Documents/github/fsmgen/t/335-normalized-semantic-symbol-contract.t),
+  [t/336-normalized-semantic-system-contract.t](/Users/richarddje/Documents/github/fsmgen/t/336-normalized-semantic-system-contract.t),
+  [t/337-normalized-semantic-explicit-system-contract.t](/Users/richarddje/Documents/github/fsmgen/t/337-normalized-semantic-explicit-system-contract.t),
+  and [t/338-normalized-semantic-signal-analysis-contract.t](/Users/richarddje/Documents/github/fsmgen/t/338-normalized-semantic-signal-analysis-contract.t).
+
 ## 2026-04-19: public normalized semantic structural-rtl-ir objects now have an explicit owner
 - Added
   [perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm)

@@ -9,7 +9,14 @@ use FindBin;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::NormalizedSemanticExplicitSystemContract qw(
+    normalized_semantic_explicit_system_contract_source
     normalized_semantic_explicit_system_contract_presence_keys
+);
+
+is(
+    normalized_semantic_explicit_system_contract_source(),
+    'FSM::Support::NormalizedSemanticExplicitSystemContract',
+    'normalized semantic explicit-system-contract owner stays canonical',
 );
 
 is_deeply(

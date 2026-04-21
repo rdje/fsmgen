@@ -10,6 +10,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::NormalizedSemanticModuleContract qw(
     build_normalized_semantic_module_contract
+    normalized_semantic_module_contract_source
     normalized_semantic_module_optional_metric_keys
     normalized_semantic_module_presence_keys
 );
@@ -21,7 +22,7 @@ subtest 'contract exposes the bounded normalized semantic module object' => sub 
     is($contract->{status}, 'bounded_public', 'contract marks the nested module object as bounded public');
     is(
         $contract->{contract_source},
-        'FSM::Support::NormalizedSemanticModuleContract',
+        normalized_semantic_module_contract_source(),
         'contract records its own owner',
     );
     is($contract->{object_name}, 'module', 'contract records the nested object name');

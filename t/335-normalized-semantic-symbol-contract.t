@@ -16,6 +16,7 @@ use FSM::Support::NormalizedSemanticReportContract qw(
 );
 use FSM::Support::NormalizedSemanticSymbolContract qw(
     build_normalized_semantic_symbol_contract
+    normalized_semantic_symbol_contract_source
     normalized_semantic_symbol_contract_presence_keys
 );
 
@@ -26,7 +27,7 @@ subtest 'contract exposes the bounded normalized semantic symbol-contract object
     is($contract->{status}, 'bounded_public', 'contract marks the nested symbol-contract object as bounded public');
     is(
         $contract->{contract_source},
-        'FSM::Support::NormalizedSemanticSymbolContract',
+        normalized_semantic_symbol_contract_source(),
         'contract records its own owner',
     );
     is($contract->{object_name}, 'semantic.symbol_contract', 'contract records the nested object name');

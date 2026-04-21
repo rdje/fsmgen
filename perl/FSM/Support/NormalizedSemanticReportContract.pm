@@ -13,9 +13,11 @@ use FSM::Support::CheckFailureDiagnosticContract qw(
     check_failure_diagnostic_support_accounting_presence_keys
 );
 use FSM::Support::NormalizedSemanticCompositionContract qw(
+    normalized_semantic_composition_contract_source
     normalized_semantic_composition_presence_keys
 );
 use FSM::Support::NormalizedSemanticExplicitSystemContract qw(
+    normalized_semantic_explicit_system_contract_source
     normalized_semantic_explicit_system_contract_presence_keys
 );
 use FSM::Support::NormalizedSemanticForwardIRContract qw(
@@ -31,9 +33,11 @@ use FSM::Support::NormalizedSemanticForwardIRContract qw(
     normalized_semantic_forward_ir_presence_keys
 );
 use FSM::Support::NormalizedSemanticModuleContract qw(
+    normalized_semantic_module_contract_source
     normalized_semantic_module_presence_keys
 );
 use FSM::Support::NormalizedSemanticSignalAnalysisContract qw(
+    normalized_semantic_signal_analysis_contract_source
     normalized_semantic_signal_analysis_entry_presence_keys
     normalized_semantic_signal_analysis_presence_keys
 );
@@ -51,9 +55,11 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_symbol_contract_keys
 );
 use FSM::Support::NormalizedSemanticSystemContract qw(
+    normalized_semantic_system_contract_source
     normalized_semantic_system_contract_presence_keys
 );
 use FSM::Support::NormalizedSemanticSymbolContract qw(
+    normalized_semantic_symbol_contract_source
     normalized_semantic_symbol_contract_presence_keys
 );
 use FSM::Support::ReportCommandContract qw(report_command_presence_keys);
@@ -124,14 +130,14 @@ sub build_normalized_semantic_report_contract {
         command_contract_source => 'FSM::Support::ReportCommandContract',
         failure_diagnostic_contract_source => 'FSM::Support::CheckFailureDiagnosticContract',
         generated_output_contract_source => 'FSM::Support::ReportGeneratedOutputContract',
-        composition_contract_source => 'FSM::Support::NormalizedSemanticCompositionContract',
-        explicit_system_contract_source => 'FSM::Support::NormalizedSemanticExplicitSystemContract',
+        composition_contract_source => normalized_semantic_composition_contract_source(),
+        explicit_system_contract_source => normalized_semantic_explicit_system_contract_source(),
         forward_ir_contract_source => normalized_semantic_forward_ir_contract_source(),
-        module_contract_source => 'FSM::Support::NormalizedSemanticModuleContract',
+        module_contract_source => normalized_semantic_module_contract_source(),
         semantic_contract_source => 'FSM::Support::NormalizedSemanticPayloadContract',
-        signal_analysis_contract_source => 'FSM::Support::NormalizedSemanticSignalAnalysisContract',
-        system_contract_source => 'FSM::Support::NormalizedSemanticSystemContract',
-        symbol_contract_source => 'FSM::Support::NormalizedSemanticSymbolContract',
+        signal_analysis_contract_source => normalized_semantic_signal_analysis_contract_source(),
+        system_contract_source => normalized_semantic_system_contract_source(),
+        symbol_contract_source => normalized_semantic_symbol_contract_source(),
         producer_contract_source => 'FSM::Support::ReportProducerContract',
         source_contract_source => 'FSM::Support::ReportSourceContract',
         support_accounting_contract_source => 'FSM::Support::SupportAccountingMatchContract',

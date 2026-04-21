@@ -8,15 +8,20 @@ use JSON::PP ();
 
 our @EXPORT_OK = qw(
     build_normalized_semantic_module_contract
+    normalized_semantic_module_contract_source
     normalized_semantic_module_optional_metric_keys
     normalized_semantic_module_presence_keys
 );
+
+sub normalized_semantic_module_contract_source {
+    return 'FSM::Support::NormalizedSemanticModuleContract';
+}
 
 sub build_normalized_semantic_module_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::NormalizedSemanticModuleContract',
+        contract_source => normalized_semantic_module_contract_source(),
         object_name => 'module',
         parent_object_name => 'semantic.module',
         report_sources => [

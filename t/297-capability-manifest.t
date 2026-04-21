@@ -22,14 +22,32 @@ use FSM::Support::NormalizedSemanticForwardIRContract qw(
     normalized_semantic_forward_ir_lowered_rtl_ir_contract_source
     normalized_semantic_forward_ir_structural_rtl_ir_contract_source
 );
+use FSM::Support::NormalizedSemanticCompositionContract qw(
+    normalized_semantic_composition_contract_source
+);
+use FSM::Support::NormalizedSemanticExplicitSystemContract qw(
+    normalized_semantic_explicit_system_contract_source
+);
 use FSM::Support::NormalizedSemanticIntentHIRContract qw(
     normalized_semantic_intent_hir_contract_source
 );
 use FSM::Support::NormalizedSemanticLoweredRTLIRContract qw(
     normalized_semantic_lowered_rtl_ir_contract_source
 );
+use FSM::Support::NormalizedSemanticModuleContract qw(
+    normalized_semantic_module_contract_source
+);
+use FSM::Support::NormalizedSemanticSignalAnalysisContract qw(
+    normalized_semantic_signal_analysis_contract_source
+);
 use FSM::Support::NormalizedSemanticStructuralRTLIRContract qw(
     normalized_semantic_structural_rtl_ir_contract_source
+);
+use FSM::Support::NormalizedSemanticSystemContract qw(
+    normalized_semantic_system_contract_source
+);
+use FSM::Support::NormalizedSemanticSymbolContract qw(
+    normalized_semantic_symbol_contract_source
 );
 use FSM::Support::RegressionCorpus qw(regression_corpus_entries);
 
@@ -411,17 +429,17 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     );
     is(
         $manifest->{semantic_exports}{normalized_semantic_json}{composition_contract_source},
-        'FSM::Support::NormalizedSemanticCompositionContract',
+        normalized_semantic_composition_contract_source(),
         'manifest records the normalized-semantic composition nested-object owner',
     );
     is(
         $manifest->{semantic_exports}{normalized_semantic_json}{explicit_system_contract_source},
-        'FSM::Support::NormalizedSemanticExplicitSystemContract',
+        normalized_semantic_explicit_system_contract_source(),
         'manifest records the normalized-semantic explicit-system-contract nested-object owner',
     );
     is(
         $manifest->{semantic_exports}{normalized_semantic_json}{signal_analysis_contract_source},
-        'FSM::Support::NormalizedSemanticSignalAnalysisContract',
+        normalized_semantic_signal_analysis_contract_source(),
         'manifest records the normalized-semantic signal-analysis nested-object owner',
     );
     is(
@@ -446,7 +464,7 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     );
     is(
         $manifest->{semantic_exports}{normalized_semantic_json}{module_contract_source},
-        'FSM::Support::NormalizedSemanticModuleContract',
+        normalized_semantic_module_contract_source(),
         'manifest records the normalized-semantic module nested-object owner',
     );
     is(
@@ -456,12 +474,12 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     );
     is(
         $manifest->{semantic_exports}{normalized_semantic_json}{system_contract_source},
-        'FSM::Support::NormalizedSemanticSystemContract',
+        normalized_semantic_system_contract_source(),
         'manifest records the normalized-semantic system-contract nested-object owner',
     );
     is(
         $manifest->{semantic_exports}{normalized_semantic_json}{symbol_contract_source},
-        'FSM::Support::NormalizedSemanticSymbolContract',
+        normalized_semantic_symbol_contract_source(),
         'manifest records the normalized-semantic symbol-contract nested-object owner',
     );
     is(
