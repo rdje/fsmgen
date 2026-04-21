@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: semantic payloads should publish their immediate child owner map too
+- After the report-shell and embedding-shell grouping slices, the next nearby
+  consistency seam sat one level lower in the bounded `semantic` payload
+  contract itself.
+- `NormalizedSemanticPayloadContract` already exposed its immediate child
+  owners as separate scalar `*_contract_source` fields, but consumers still had
+  to reconstruct the grouped child-owner map themselves.
+- The bounded move is to group only the immediate child branches for now:
+  - add one `nested_contract_source_map` for `module`,
+    `explicit_system_contract`, `signal_analysis`, `system_contract`,
+    `forward_ir`, `symbol_contract`, and `composition`,
+  - keep the existing scalar owner fields for compatibility,
+  - and leave the deeper `forward_ir.*` owner fields alone until there is a
+    reason to introduce a second grouped map or a dotted-key convention.
+- That keeps the nested semantic payload easier to consume without overdesigning
+  a deeper grouping scheme before it is actually needed.
+
 ## 2026-04-21: HDLGenerator results should publish their child owner map too
 - After the normalized-semantic report grouping slice, the same consistency
   seam still remained on the embedding side.

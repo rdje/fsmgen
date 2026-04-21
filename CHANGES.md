@@ -1,6 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-21
+### Normalized semantic payload now publishes a nested owner map too
+- Updated [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm) so the bounded nested `semantic` payload now publishes a `nested_contract_source_map` for `module`, `explicit_system_contract`, `signal_analysis`, `system_contract`, `forward_ir`, `symbol_contract`, and `composition`, reusing the same canonical child-owner helpers already surfaced through the scalar owner fields.
+- Updated [t/330-normalized-semantic-payload-contract.t](/Users/richarddje/Documents/github/fsmgen/t/330-normalized-semantic-payload-contract.t) so the direct payload regression now locks that nested-owner map directly.
+
 ### HDLGenerator result now publishes a nested owner map too
 - Updated [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm) so the bounded `HDLGenerator` result now publishes a `nested_contract_source_map` for `source_info`, `module_info`, `statistics`, `fsm_module`, `raw_ast`, `resolved_package_imports`, `composition_spec`, `composition_plan`, `composition_report`, `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir`, reusing the same canonical child-owner helpers already surfaced through the scalar owner fields.
 - Updated [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) and [t/305-hdl-generator-result-contract.t](/Users/richarddje/Documents/github/fsmgen/t/305-hdl-generator-result-contract.t) so the manifest regression and the direct `HDLGenerator` regression now lock that nested-owner map directly.

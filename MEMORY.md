@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-21: normalized semantic payload now publishes a nested owner map too
+- Hardened
+  [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm)
+  so the bounded nested `semantic` payload now publishes a
+  `nested_contract_source_map` for its immediate child branches instead of
+  exposing those child owners only as separate scalar fields.
+- Regression coverage now proves that bounded semantic-payload nested-owner map
+  directly:
+  [t/330-normalized-semantic-payload-contract.t](/Users/richarddje/Documents/github/fsmgen/t/330-normalized-semantic-payload-contract.t).
+
 ## 2026-04-21: HDLGenerator result now publishes a nested owner map too
 - Hardened
   [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm)
