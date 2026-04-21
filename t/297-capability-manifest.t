@@ -60,6 +60,7 @@ use FSM::Support::HDLGeneratorStatisticsContract qw(
 );
 use FSM::Support::HDLGeneratorResultContract qw(
     hdl_generator_result_contract_source
+    hdl_generator_result_shell_only_fallback_surface_map
     hdl_generator_result_stable_subsurface_map
 );
 use FSM::Support::DiagnosticCodes qw(diagnostic_code_ids);
@@ -930,6 +931,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         $manifest->{embedding}{hdl_generator_result}{stable_subsurface_map},
         hdl_generator_result_stable_subsurface_map(),
         'manifest records the grouped HDLGenerator stable nested-subsurface map',
+    );
+    is_deeply(
+        $manifest->{embedding}{hdl_generator_result}{shell_only_fallback_surface_map},
+        hdl_generator_result_shell_only_fallback_surface_map(),
+        'manifest records the grouped HDLGenerator shell-only fallback surface map',
     );
     ok(
         $manifest->{embedding}{hdl_generator_result}{fsm_module_shell_only},

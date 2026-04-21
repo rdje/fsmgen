@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: HDLGenerator shell-only fallbacks should be discoverable as one grouped map too
+- After grouping the stable nested slices for `source_info`, `module_info`, and
+  `statistics`, the next nearby embedding inconsistency still sat in the same
+  `HDLGenerator` result contract.
+- The contract was already advertising structured fallback surfaces for each
+  shell-only compatibility branch, but consumers still had to gather those
+  fallback paths one field at a time across `fsm_module`, `raw_ast`,
+  `resolved_package_imports`, `composition_spec`, `composition_plan`, and
+  `composition_report`.
+- The bounded move is to group only those already-advertised fallback surfaces:
+  - add one canonical `shell_only_fallback_surface_map`,
+  - keep the existing per-branch fallback fields for compatibility,
+  - and lock both the direct `HDLGenerator` regression and the manifest-facing
+    regression against the grouped map.
+- That keeps the public embedding surface easier to consume without widening
+  the shell-only branches themselves or pretending those raw compatibility
+  payloads are now stable APIs.
+
 ## 2026-04-21: HDLGenerator stable nested slices should be discoverable as one grouped map too
 - After the deeper normalized-semantic owner-map slice, the next nearby
   embedding inconsistency was in the `HDLGenerator` result contract.

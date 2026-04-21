@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-21
+### HDLGenerator results now publish a grouped shell-only fallback map too
+- Updated [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm) so the bounded `HDLGenerator` result contract now publishes a grouped `shell_only_fallback_surface_map` for `fsm_module`, `raw_ast`, `resolved_package_imports`, `composition_spec`, `composition_plan`, and `composition_report`, instead of forcing embedders to collect those structured fallback surfaces one field at a time.
+- Updated [t/305-hdl-generator-result-contract.t](/Users/richarddje/Documents/github/fsmgen/t/305-hdl-generator-result-contract.t) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the direct `HDLGenerator` regression and the manifest-facing regression now lock that grouped shell-only fallback discovery surface directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders can discover the grouped shell-only fallback map from the book too.
+
 ### HDLGenerator results now publish a grouped stable-subsurface map too
 - Updated [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm) so the bounded `HDLGenerator` result contract now publishes a grouped `stable_subsurface_map` for `source_info`, `module_info`, and `statistics`, instead of forcing embedders to reconstruct that stable nested-slice view from three separate arrays.
 - Updated [t/305-hdl-generator-result-contract.t](/Users/richarddje/Documents/github/fsmgen/t/305-hdl-generator-result-contract.t) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the direct `HDLGenerator` regression and the manifest-facing regression now lock that grouped stable-subsurface discovery surface directly.

@@ -10081,3 +10081,10 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   so embedders can discover the bounded stable nested slices for `source_info`,
   `module_info`, and `statistics` from one map instead of reconstructing that
   view from separate stable-subsurface arrays.
+- The `HDLGenerator` embedding surface now also publishes one grouped
+  `shell_only_fallback_surface_map` through
+  `FSM::Support::HDLGeneratorResultContract`, so embedders can discover, from
+  one bounded map, the structured fallback surfaces for shell-only
+  compatibility branches such as `fsm_module`, `raw_ast`,
+  `resolved_package_imports`, `composition_spec`, `composition_plan`, and
+  `composition_report`.

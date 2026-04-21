@@ -68,6 +68,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - `R13` Public embedding/API stabilization, backed by `R12` regression corpus and support accounting.
 - Current next decision point:
   - The `HDLGenerator` embedding surface now also publishes a grouped
+    `shell_only_fallback_surface_map`: [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm)
+    now groups the structured fallback surfaces for the shell-only
+    compatibility branches, while
+    [t/305-hdl-generator-result-contract.t](/Users/richarddje/Documents/github/fsmgen/t/305-hdl-generator-result-contract.t)
+    plus [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+    now lock that grouped shell-only fallback discovery surface directly.
+  - The `HDLGenerator` embedding surface now also publishes a grouped
     `stable_subsurface_map`: [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm)
     now groups the bounded stable nested slices for `source_info`,
     `module_info`, and `statistics`, while
