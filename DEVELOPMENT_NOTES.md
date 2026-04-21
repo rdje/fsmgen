@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: the deeper forward-ir shell owners should be discoverable as one grouped map too
+- After the top-level semantic payload and report shells already had grouped
+  owner maps, the next remaining inconsistency was one level deeper.
+- Both `NormalizedSemanticPayloadContract` and
+  `NormalizedSemanticReportContract` were still exposing the deeper
+  `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` shell owners only as
+  three separate scalar fields.
+- The bounded move is to group just those deeper `forward_ir` shell owners:
+  - make `NormalizedSemanticPayloadContract` own one canonical
+    `forward_ir_nested_contract_source_map`,
+  - reuse that same grouped map from `NormalizedSemanticReportContract`,
+  - keep the scalar owner fields for compatibility,
+  - and lock both the direct contracts and the manifest-facing report
+    regression against the grouped map.
+- That keeps the public semantic embedding surface easier to consume without
+  inventing a broader dotted-path contract scheme or widening the stabilized
+  semantic payload itself.
+
 ## 2026-04-21: the manifest shell should publish its top-level owner map too
 - After grouping the obvious nested child-owner families, the next remaining
   `R13` consistency seam was the manifest shell itself.

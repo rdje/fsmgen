@@ -279,6 +279,11 @@ owns the `module`, `system_contract`, `explicit_system_contract`,
 `signal_analysis`, and `forward_ir` keys, and the same owner also publishes
 the nested `explicit_system_contract`, `signal_analysis`, `system_contract`,
 `forward_ir`, and optional `symbol_contract` plus `composition` key lists.
+That same payload contract, and the public normalized semantic report contract
+that advertises it, now also publish a grouped
+`forward_ir_nested_contract_source_map` so embedders can discover the deeper
+`intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` shell owners without
+reconstructing them from parallel scalar owner fields.
 The nested `semantic.signal_analysis` summary inside that payload now also has
 its own bounded nested-object contract:
 [perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm)

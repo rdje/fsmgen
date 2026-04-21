@@ -46,6 +46,7 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_contract_source
     normalized_semantic_payload_composition_keys
     normalized_semantic_payload_explicit_system_contract_keys
+    normalized_semantic_payload_forward_ir_nested_contract_source_map
     normalized_semantic_payload_presence_keys
     normalized_semantic_payload_forward_ir_intent_hir_keys
     normalized_semantic_payload_forward_ir_intent_hir_optional_composition_keys
@@ -198,6 +199,7 @@ sub build_normalized_semantic_report_contract {
         success_signal_analysis_entry_presence_keys => normalized_semantic_signal_analysis_entry_keys(),
         success_system_contract_presence_keys => normalized_semantic_system_contract_keys(),
         success_forward_ir_presence_keys => normalized_semantic_forward_ir_keys(),
+        forward_ir_nested_contract_source_map => normalized_semantic_payload_forward_ir_nested_contract_source_map(),
         forward_ir_intent_hir_contract_source => normalized_semantic_forward_ir_intent_hir_contract_source(),
         success_forward_ir_intent_hir_presence_keys => normalized_semantic_forward_ir_intent_hir_keys(),
         success_forward_ir_intent_hir_optional_composition_keys => normalized_semantic_forward_ir_intent_hir_optional_composition_keys(),
@@ -220,6 +222,7 @@ sub build_normalized_semantic_report_contract {
             'The nested semantic composition object stays bounded through FSM::Support::NormalizedSemanticCompositionContract.',
             'The nested semantic explicit_system_contract object, when present, stays bounded through FSM::Support::NormalizedSemanticExplicitSystemContract.',
             'The nested semantic forward_ir object stays bounded through FSM::Support::NormalizedSemanticForwardIRContract.',
+            'Use the grouped `forward_ir_nested_contract_source_map` to discover the deeper bounded semantic `forward_ir` shell owners without reconstructing them from parallel scalar fields.',
             'The nested semantic forward_ir.intent_hir object shell stays bounded through FSM::Support::NormalizedSemanticIntentHIRContract.',
             'The nested semantic forward_ir.lowered_rtl_ir object shell stays bounded through FSM::Support::NormalizedSemanticLoweredRTLIRContract.',
             'The nested semantic forward_ir.structural_rtl_ir object shell stays bounded through FSM::Support::NormalizedSemanticStructuralRTLIRContract.',

@@ -10069,3 +10069,10 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   grouped surface also deliberately hides the historical
   `language_surface.surface_contract` versus `section_contract` slot mismatch
   behind one canonical manifest-level discovery rule.
+- The normalized semantic embedding surface now also publishes one grouped
+  `forward_ir_nested_contract_source_map` through both
+  `FSM::Support::NormalizedSemanticPayloadContract` and
+  `FSM::Support::NormalizedSemanticReportContract`, so embedders can discover
+  the deeper `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` shell
+  owners from one bounded map instead of reconstructing them from three
+  parallel scalar owner fields.

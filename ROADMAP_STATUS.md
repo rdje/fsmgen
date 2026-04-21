@@ -67,6 +67,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R13` Public embedding/API stabilization, backed by `R12` regression corpus and support accounting.
 - Current next decision point:
+  - The normalized semantic embedding surface now also publishes a grouped
+    `forward_ir_nested_contract_source_map`: [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm)
+    now owns the canonical grouped map for the deeper `intent_hir`,
+    `lowered_rtl_ir`, and `structural_rtl_ir` shell owners, [perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm)
+    now reuses that same grouped map in the public normalized semantic report
+    contract, and [t/330-normalized-semantic-payload-contract.t](/Users/richarddje/Documents/github/fsmgen/t/330-normalized-semantic-payload-contract.t),
+    [t/311-normalized-semantic-report-contract.t](/Users/richarddje/Documents/github/fsmgen/t/311-normalized-semantic-report-contract.t),
+    plus [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+    now lock that deeper grouped-owner surface directly.
   - The top-level capability manifest shell now also publishes a grouped
     `top_level_contract_source_map`: [perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm)
     now advertises the dedicated owner for each public top-level manifest
