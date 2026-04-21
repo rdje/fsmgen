@@ -8,15 +8,20 @@ use JSON::PP ();
 
 our @EXPORT_OK = qw(
     build_hdl_generator_resolved_package_imports_contract
+    hdl_generator_resolved_package_imports_contract_source
     hdl_generator_resolved_package_imports_raw_value_class
     hdl_generator_resolved_package_imports_summary_surface
 );
+
+sub hdl_generator_resolved_package_imports_contract_source {
+    return 'FSM::Support::HDLGeneratorResolvedPackageImportsContract';
+}
 
 sub build_hdl_generator_resolved_package_imports_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::HDLGeneratorResolvedPackageImportsContract',
+        contract_source => hdl_generator_resolved_package_imports_contract_source(),
         object_name => 'resolved_package_imports',
         parent_object_name => 'HDLGeneratorResult.resolved_package_imports',
         report_sources => [

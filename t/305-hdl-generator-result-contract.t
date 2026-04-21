@@ -15,37 +15,45 @@ use FSM::Support::CompositionReportContract qw(
     composition_report_json_fragment_path
 );
 use FSM::Support::HDLGeneratorCompositionPlanContract qw(
+    hdl_generator_composition_plan_contract_source
     hdl_generator_composition_plan_raw_value_class_when_defined
     hdl_generator_composition_plan_summary_surfaces
 );
 use FSM::Support::HDLGeneratorCompositionSpecContract qw(
+    hdl_generator_composition_spec_contract_source
     hdl_generator_composition_spec_raw_value_class_when_defined
     hdl_generator_composition_spec_summary_surfaces
 );
 use FSM::Support::HDLGeneratorFSMModuleContract qw(
+    hdl_generator_fsm_module_contract_source
     hdl_generator_fsm_module_raw_value_class_when_defined
     hdl_generator_fsm_module_summary_surfaces
 );
 use FSM::Support::HDLGeneratorRawASTContract qw(
+    hdl_generator_raw_ast_contract_source
     hdl_generator_raw_ast_summary_surfaces
     hdl_generator_raw_ast_value_shape
 );
 use FSM::Support::HDLGeneratorModuleInfoContract qw(
+    hdl_generator_module_info_contract_source
     hdl_generator_module_info_identity_keys
     hdl_generator_module_info_optional_composition_summary_keys
     hdl_generator_module_info_stable_subsurfaces
     hdl_generator_module_info_summary_keys
 );
 use FSM::Support::HDLGeneratorResolvedPackageImportsContract qw(
+    hdl_generator_resolved_package_imports_contract_source
     hdl_generator_resolved_package_imports_raw_value_class
     hdl_generator_resolved_package_imports_summary_surface
 );
 use FSM::Support::HDLGeneratorStatisticsContract qw(
+    hdl_generator_statistics_contract_source
     hdl_generator_statistics_optional_composition_keys
     hdl_generator_statistics_stable_subsurfaces
     hdl_generator_statistics_summary_keys
 );
 use FSM::Support::HDLGeneratorSourceInfoContract qw(
+    hdl_generator_source_info_contract_source
     hdl_generator_source_info_identity_keys
     hdl_generator_source_info_stable_subsurfaces
     hdl_generator_source_info_summary_keys
@@ -103,7 +111,7 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
     );
     is(
         $contract->{source_info_contract_source},
-        'FSM::Support::HDLGeneratorSourceInfoContract',
+        hdl_generator_source_info_contract_source(),
         'contract records the nested source_info contract owner',
     );
     ok(
@@ -130,7 +138,7 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
     );
     is(
         $contract->{fsm_module_contract_source},
-        'FSM::Support::HDLGeneratorFSMModuleContract',
+        hdl_generator_fsm_module_contract_source(),
         'contract records the nested fsm_module contract owner',
     );
     is(
@@ -149,7 +157,7 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
     );
     is(
         $contract->{raw_ast_contract_source},
-        'FSM::Support::HDLGeneratorRawASTContract',
+        hdl_generator_raw_ast_contract_source(),
         'contract records the nested raw_ast contract owner',
     );
     is(
@@ -168,7 +176,7 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
     );
     is(
         $contract->{resolved_package_imports_contract_source},
-        'FSM::Support::HDLGeneratorResolvedPackageImportsContract',
+        hdl_generator_resolved_package_imports_contract_source(),
         'contract records the nested resolved_package_imports contract owner',
     );
     is(
@@ -187,7 +195,7 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
     );
     is(
         $contract->{composition_spec_contract_source},
-        'FSM::Support::HDLGeneratorCompositionSpecContract',
+        hdl_generator_composition_spec_contract_source(),
         'contract records the nested composition_spec contract owner',
     );
     is(
@@ -206,7 +214,7 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
     );
     is(
         $contract->{composition_plan_contract_source},
-        'FSM::Support::HDLGeneratorCompositionPlanContract',
+        hdl_generator_composition_plan_contract_source(),
         'contract records the nested composition_plan contract owner',
     );
     is(
@@ -244,7 +252,7 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
     );
     is(
         $contract->{module_info_contract_source},
-        'FSM::Support::HDLGeneratorModuleInfoContract',
+        hdl_generator_module_info_contract_source(),
         'contract records the nested module_info contract owner',
     );
     ok(
@@ -276,7 +284,7 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
     );
     is(
         $contract->{statistics_contract_source},
-        'FSM::Support::HDLGeneratorStatisticsContract',
+        hdl_generator_statistics_contract_source(),
         'contract records the nested statistics contract owner',
     );
     ok(

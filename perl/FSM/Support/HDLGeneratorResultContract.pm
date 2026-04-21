@@ -11,37 +11,45 @@ use FSM::Support::CompositionReportContract qw(
     composition_report_raw_report_json_safe
 );
 use FSM::Support::HDLGeneratorCompositionPlanContract qw(
+    hdl_generator_composition_plan_contract_source
     hdl_generator_composition_plan_raw_value_class_when_defined
     hdl_generator_composition_plan_summary_surfaces
 );
 use FSM::Support::HDLGeneratorCompositionSpecContract qw(
+    hdl_generator_composition_spec_contract_source
     hdl_generator_composition_spec_raw_value_class_when_defined
     hdl_generator_composition_spec_summary_surfaces
 );
 use FSM::Support::HDLGeneratorFSMModuleContract qw(
+    hdl_generator_fsm_module_contract_source
     hdl_generator_fsm_module_raw_value_class_when_defined
     hdl_generator_fsm_module_summary_surfaces
 );
 use FSM::Support::HDLGeneratorRawASTContract qw(
+    hdl_generator_raw_ast_contract_source
     hdl_generator_raw_ast_summary_surfaces
     hdl_generator_raw_ast_value_shape
 );
 use FSM::Support::HDLGeneratorModuleInfoContract qw(
+    hdl_generator_module_info_contract_source
     hdl_generator_module_info_identity_keys
     hdl_generator_module_info_optional_composition_summary_keys
     hdl_generator_module_info_stable_subsurfaces
     hdl_generator_module_info_summary_keys
 );
 use FSM::Support::HDLGeneratorResolvedPackageImportsContract qw(
+    hdl_generator_resolved_package_imports_contract_source
     hdl_generator_resolved_package_imports_raw_value_class
     hdl_generator_resolved_package_imports_summary_surface
 );
 use FSM::Support::HDLGeneratorStatisticsContract qw(
+    hdl_generator_statistics_contract_source
     hdl_generator_statistics_optional_composition_keys
     hdl_generator_statistics_stable_subsurfaces
     hdl_generator_statistics_summary_keys
 );
 use FSM::Support::HDLGeneratorSourceInfoContract qw(
+    hdl_generator_source_info_contract_source
     hdl_generator_source_info_identity_keys
     hdl_generator_source_info_stable_subsurfaces
     hdl_generator_source_info_summary_keys
@@ -104,39 +112,39 @@ sub build_hdl_generator_result_contract {
         composition_root_top_level_keys => [
             qw(fsm_module raw_ast statistics composition_spec composition_plan composition_report),
         ],
-        source_info_contract_source => 'FSM::Support::HDLGeneratorSourceInfoContract',
+        source_info_contract_source => hdl_generator_source_info_contract_source(),
         source_info_identity_presence_keys => hdl_generator_result_source_info_identity_keys(),
         source_info_summary_presence_keys => hdl_generator_result_source_info_summary_keys(),
         source_info_full_hash_stable => JSON::PP::false,
         source_info_stable_subsurfaces => hdl_generator_source_info_stable_subsurfaces(),
-        module_info_contract_source => 'FSM::Support::HDLGeneratorModuleInfoContract',
+        module_info_contract_source => hdl_generator_module_info_contract_source(),
         module_info_identity_presence_keys => hdl_generator_result_module_info_identity_keys(),
         module_info_summary_presence_keys => hdl_generator_result_module_info_summary_keys(),
         module_info_optional_composition_summary_keys => hdl_generator_result_module_info_optional_composition_summary_keys(),
         module_info_full_hash_stable => JSON::PP::false,
         module_info_stable_subsurfaces => hdl_generator_module_info_stable_subsurfaces(),
-        statistics_contract_source => 'FSM::Support::HDLGeneratorStatisticsContract',
+        statistics_contract_source => hdl_generator_statistics_contract_source(),
         statistics_summary_presence_keys => hdl_generator_result_statistics_summary_keys(),
         statistics_optional_composition_keys => hdl_generator_result_statistics_optional_composition_keys(),
         statistics_full_hash_stable => JSON::PP::false,
         statistics_stable_subsurfaces => hdl_generator_statistics_stable_subsurfaces(),
-        fsm_module_contract_source => 'FSM::Support::HDLGeneratorFSMModuleContract',
+        fsm_module_contract_source => hdl_generator_fsm_module_contract_source(),
         fsm_module_shell_only => JSON::PP::true,
         fsm_module_raw_value_class_when_defined => hdl_generator_fsm_module_raw_value_class_when_defined(),
         fsm_module_summary_surfaces => hdl_generator_fsm_module_summary_surfaces(),
-        raw_ast_contract_source => 'FSM::Support::HDLGeneratorRawASTContract',
+        raw_ast_contract_source => hdl_generator_raw_ast_contract_source(),
         raw_ast_shell_only => JSON::PP::true,
         raw_ast_value_shape => hdl_generator_raw_ast_value_shape(),
         raw_ast_summary_surfaces => hdl_generator_raw_ast_summary_surfaces(),
-        resolved_package_imports_contract_source => 'FSM::Support::HDLGeneratorResolvedPackageImportsContract',
+        resolved_package_imports_contract_source => hdl_generator_resolved_package_imports_contract_source(),
         resolved_package_imports_shell_only => JSON::PP::true,
         resolved_package_imports_raw_value_class => hdl_generator_resolved_package_imports_raw_value_class(),
         resolved_package_imports_summary_surface => hdl_generator_resolved_package_imports_summary_surface(),
-        composition_spec_contract_source => 'FSM::Support::HDLGeneratorCompositionSpecContract',
+        composition_spec_contract_source => hdl_generator_composition_spec_contract_source(),
         composition_spec_shell_only => JSON::PP::true,
         composition_spec_raw_value_class => hdl_generator_composition_spec_raw_value_class_when_defined(),
         composition_spec_summary_surfaces => hdl_generator_composition_spec_summary_surfaces(),
-        composition_plan_contract_source => 'FSM::Support::HDLGeneratorCompositionPlanContract',
+        composition_plan_contract_source => hdl_generator_composition_plan_contract_source(),
         composition_plan_shell_only => JSON::PP::true,
         composition_plan_raw_value_class => hdl_generator_composition_plan_raw_value_class_when_defined(),
         composition_plan_summary_surfaces => hdl_generator_composition_plan_summary_surfaces(),

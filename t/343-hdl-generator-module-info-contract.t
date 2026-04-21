@@ -10,6 +10,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::HDLGeneratorModuleInfoContract qw(
     build_hdl_generator_module_info_contract
+    hdl_generator_module_info_contract_source
     hdl_generator_module_info_identity_keys
     hdl_generator_module_info_optional_composition_summary_keys
     hdl_generator_module_info_stable_subsurfaces
@@ -23,7 +24,7 @@ subtest 'contract exposes the bounded HDLGenerator module_info object' => sub {
     is($contract->{status}, 'bounded_public', 'contract marks the nested module_info object as bounded public');
     is(
         $contract->{contract_source},
-        'FSM::Support::HDLGeneratorModuleInfoContract',
+        hdl_generator_module_info_contract_source(),
         'contract records its own owner',
     );
     is($contract->{object_name}, 'module_info', 'contract records the nested object name');

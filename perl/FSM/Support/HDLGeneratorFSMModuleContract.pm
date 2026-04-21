@@ -8,15 +8,20 @@ use JSON::PP ();
 
 our @EXPORT_OK = qw(
     build_hdl_generator_fsm_module_contract
+    hdl_generator_fsm_module_contract_source
     hdl_generator_fsm_module_raw_value_class_when_defined
     hdl_generator_fsm_module_summary_surfaces
 );
+
+sub hdl_generator_fsm_module_contract_source {
+    return 'FSM::Support::HDLGeneratorFSMModuleContract';
+}
 
 sub build_hdl_generator_fsm_module_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::HDLGeneratorFSMModuleContract',
+        contract_source => hdl_generator_fsm_module_contract_source(),
         object_name => 'fsm_module',
         parent_object_name => 'HDLGeneratorResult.fsm_module',
         report_sources => [

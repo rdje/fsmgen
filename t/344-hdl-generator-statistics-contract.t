@@ -10,6 +10,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::HDLGeneratorStatisticsContract qw(
     build_hdl_generator_statistics_contract
+    hdl_generator_statistics_contract_source
     hdl_generator_statistics_optional_composition_keys
     hdl_generator_statistics_stable_subsurfaces
     hdl_generator_statistics_summary_keys
@@ -22,7 +23,7 @@ subtest 'contract exposes the bounded HDLGenerator statistics object' => sub {
     is($contract->{status}, 'bounded_public', 'contract marks the nested statistics object as bounded public');
     is(
         $contract->{contract_source},
-        'FSM::Support::HDLGeneratorStatisticsContract',
+        hdl_generator_statistics_contract_source(),
         'contract records its own owner',
     );
     is($contract->{object_name}, 'statistics', 'contract records the nested object name');

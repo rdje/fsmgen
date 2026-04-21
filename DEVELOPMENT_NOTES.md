@@ -1,5 +1,27 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: HDLGenerator result shells should not own child owner names either
+- After the shared report/check cleanup, the same duplication pattern still
+  remained on the embedding side: `HDLGeneratorResultContract` was still
+  retyping owner names for `source_info`, `module_info`, `statistics`,
+  `resolved_package_imports`, `fsm_module`, `raw_ast`, `composition_spec`,
+  and `composition_plan`.
+- That was exactly the kind of `R13` drift risk we have been systematically
+  shaving down:
+  - the child nested contract could say it owned one branch,
+  - the parent embedding shell could advertise the same branch through its own
+    literal,
+  - and the capability manifest could silently inherit the parent copy.
+- The safer regularization is the same proven pattern:
+  - export one canonical `*_contract_source()` helper from each nested
+    `HDLGenerator` contract,
+  - keep the parent result shell responsible for presence/shape boundaries,
+  - and make the result contract plus manifest/result regressions assert
+    against the child helpers instead of against hand-typed owner strings.
+- That keeps the public embedding story tighter because nested `HDLGenerator`
+  owner names now come from the contract modules that actually own those
+  branches.
+
 ## 2026-04-21: shared report/check nested owner names should come from the shared contracts too
 - After the semantic payload/report cleanup, one more obvious drift family still
   remained in the public report lane: the shared nested `command`,

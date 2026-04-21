@@ -8,15 +8,20 @@ use JSON::PP ();
 
 our @EXPORT_OK = qw(
     build_hdl_generator_composition_spec_contract
+    hdl_generator_composition_spec_contract_source
     hdl_generator_composition_spec_raw_value_class_when_defined
     hdl_generator_composition_spec_summary_surfaces
 );
+
+sub hdl_generator_composition_spec_contract_source {
+    return 'FSM::Support::HDLGeneratorCompositionSpecContract';
+}
 
 sub build_hdl_generator_composition_spec_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::HDLGeneratorCompositionSpecContract',
+        contract_source => hdl_generator_composition_spec_contract_source(),
         object_name => 'composition_spec',
         parent_object_name => 'HDLGeneratorResult.composition_spec',
         report_sources => [

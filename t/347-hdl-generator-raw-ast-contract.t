@@ -10,6 +10,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::HDLGeneratorRawASTContract qw(
     build_hdl_generator_raw_ast_contract
+    hdl_generator_raw_ast_contract_source
     hdl_generator_raw_ast_summary_surfaces
     hdl_generator_raw_ast_value_shape
 );
@@ -21,7 +22,7 @@ subtest 'contract exposes the bounded HDLGenerator raw_ast branch' => sub {
     is($contract->{status}, 'bounded_public', 'contract marks the nested raw_ast branch as bounded public');
     is(
         $contract->{contract_source},
-        'FSM::Support::HDLGeneratorRawASTContract',
+        hdl_generator_raw_ast_contract_source(),
         'contract records its own owner',
     );
     is($contract->{object_name}, 'raw_ast', 'contract records the nested object name');

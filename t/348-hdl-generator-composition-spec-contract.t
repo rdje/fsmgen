@@ -10,6 +10,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::HDLGeneratorCompositionSpecContract qw(
     build_hdl_generator_composition_spec_contract
+    hdl_generator_composition_spec_contract_source
     hdl_generator_composition_spec_raw_value_class_when_defined
     hdl_generator_composition_spec_summary_surfaces
 );
@@ -21,7 +22,7 @@ subtest 'contract exposes the bounded HDLGenerator composition_spec branch' => s
     is($contract->{status}, 'bounded_public', 'contract marks the nested composition_spec branch as bounded public');
     is(
         $contract->{contract_source},
-        'FSM::Support::HDLGeneratorCompositionSpecContract',
+        hdl_generator_composition_spec_contract_source(),
         'contract records its own owner',
     );
     is($contract->{object_name}, 'composition_spec', 'contract records the nested object name');

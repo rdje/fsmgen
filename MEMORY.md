@@ -1,5 +1,33 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-21: HDLGenerator result owner facts now come from the nested HDLGenerator contracts too
+- Hardened
+  [perl/FSM/Support/HDLGeneratorSourceInfoContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorSourceInfoContract.pm),
+  [perl/FSM/Support/HDLGeneratorModuleInfoContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorModuleInfoContract.pm),
+  [perl/FSM/Support/HDLGeneratorStatisticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorStatisticsContract.pm),
+  [perl/FSM/Support/HDLGeneratorResolvedPackageImportsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResolvedPackageImportsContract.pm),
+  [perl/FSM/Support/HDLGeneratorFSMModuleContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFSMModuleContract.pm),
+  [perl/FSM/Support/HDLGeneratorRawASTContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorRawASTContract.pm),
+  [perl/FSM/Support/HDLGeneratorCompositionSpecContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorCompositionSpecContract.pm),
+  and [perl/FSM/Support/HDLGeneratorCompositionPlanContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorCompositionPlanContract.pm)
+  so those nested `HDLGenerator` families now export canonical owner helpers
+  directly.
+- Expanded
+  [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm)
+  so the embedding-facing `HDLGenerator` result shell now reuses those nested
+  owner helpers instead of retyping the same child owner strings inline.
+- Regression coverage now proves that helper-backed reuse directly:
+  [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t),
+  [t/305-hdl-generator-result-contract.t](/Users/richarddje/Documents/github/fsmgen/t/305-hdl-generator-result-contract.t),
+  [t/342-hdl-generator-source-info-contract.t](/Users/richarddje/Documents/github/fsmgen/t/342-hdl-generator-source-info-contract.t),
+  [t/343-hdl-generator-module-info-contract.t](/Users/richarddje/Documents/github/fsmgen/t/343-hdl-generator-module-info-contract.t),
+  [t/344-hdl-generator-statistics-contract.t](/Users/richarddje/Documents/github/fsmgen/t/344-hdl-generator-statistics-contract.t),
+  [t/345-hdl-generator-resolved-package-imports-contract.t](/Users/richarddje/Documents/github/fsmgen/t/345-hdl-generator-resolved-package-imports-contract.t),
+  [t/346-hdl-generator-fsm-module-contract.t](/Users/richarddje/Documents/github/fsmgen/t/346-hdl-generator-fsm-module-contract.t),
+  [t/347-hdl-generator-raw-ast-contract.t](/Users/richarddje/Documents/github/fsmgen/t/347-hdl-generator-raw-ast-contract.t),
+  [t/348-hdl-generator-composition-spec-contract.t](/Users/richarddje/Documents/github/fsmgen/t/348-hdl-generator-composition-spec-contract.t),
+  and [t/349-hdl-generator-composition-plan-contract.t](/Users/richarddje/Documents/github/fsmgen/t/349-hdl-generator-composition-plan-contract.t).
+
 ## 2026-04-21: shared check and semantic nested-owner facts now come from the shared contract modules too
 - Hardened
   [perl/FSM/Support/ReportCommandContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportCommandContract.pm),

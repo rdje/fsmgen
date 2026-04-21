@@ -10,6 +10,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::HDLGeneratorResolvedPackageImportsContract qw(
     build_hdl_generator_resolved_package_imports_contract
+    hdl_generator_resolved_package_imports_contract_source
     hdl_generator_resolved_package_imports_raw_value_class
     hdl_generator_resolved_package_imports_summary_surface
 );
@@ -21,7 +22,7 @@ subtest 'contract exposes the bounded HDLGenerator resolved_package_imports bran
     is($contract->{status}, 'bounded_public', 'contract marks the nested resolved_package_imports branch as bounded public');
     is(
         $contract->{contract_source},
-        'FSM::Support::HDLGeneratorResolvedPackageImportsContract',
+        hdl_generator_resolved_package_imports_contract_source(),
         'contract records its own owner',
     );
     is($contract->{object_name}, 'resolved_package_imports', 'contract records the nested object name');

@@ -8,17 +8,22 @@ use JSON::PP ();
 
 our @EXPORT_OK = qw(
     build_hdl_generator_module_info_contract
+    hdl_generator_module_info_contract_source
     hdl_generator_module_info_identity_keys
     hdl_generator_module_info_optional_composition_summary_keys
     hdl_generator_module_info_stable_subsurfaces
     hdl_generator_module_info_summary_keys
 );
 
+sub hdl_generator_module_info_contract_source {
+    return 'FSM::Support::HDLGeneratorModuleInfoContract';
+}
+
 sub build_hdl_generator_module_info_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::HDLGeneratorModuleInfoContract',
+        contract_source => hdl_generator_module_info_contract_source(),
         object_name => 'module_info',
         parent_object_name => 'HDLGeneratorResult.module_info',
         report_sources => [
