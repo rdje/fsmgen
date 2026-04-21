@@ -310,6 +310,12 @@ owns the `module`, `system_contract`, `explicit_system_contract`,
 `signal_analysis`, and `forward_ir` keys, and the same owner also publishes
 the nested `explicit_system_contract`, `signal_analysis`, `system_contract`,
 `forward_ir`, and optional `symbol_contract` plus `composition` key lists.
+That same payload contract now also publishes a grouped
+`nested_presence_key_map`, and the public normalized semantic report contract
+that advertises it now also publishes the same grouped child families as
+`semantic_nested_presence_key_map`, so embedders can discover the deeper
+semantic child key families from one place instead of reconstructing them
+from separate `success_*` lists.
 That same payload contract, and the public normalized semantic report contract
 that advertises it, now also publish a grouped
 `forward_ir_nested_contract_source_map` so embedders can discover the deeper

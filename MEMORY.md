@@ -10168,3 +10168,10 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   discover the shell-owned shared-report, success, and failure key families
   from one map instead of collecting those normalized-semantic field-family
   lists separately.
+- The bounded nested `semantic` payload contract now also publishes one
+  grouped `nested_presence_key_map` through
+  `FSM::Support::NormalizedSemanticPayloadContract`, and the parent public
+  normalized semantic report now republishes that grouped child-family view
+  as `semantic_nested_presence_key_map`, so downstream tools can discover the
+  deeper semantic child key families from one place instead of reconstructing
+  them from separate `success_*` lists.

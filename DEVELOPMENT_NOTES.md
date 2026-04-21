@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: semantic-payload child key families should be discoverable as one grouped map too
+- After grouping the normalized-semantic shell-owned key families, the next
+  nearby discovery inconsistency sat one level deeper in the bounded nested
+  `semantic` payload contract.
+- `NormalizedSemanticPayloadContract` was already publishing the child-owner
+  map and each child key family individually, but a consumer still had to
+  gather the semantic-child key families one list at a time.
+- The bounded move is deliberately small:
+  - keep the existing payload child-owner map unchanged,
+  - keep the existing per-child key-family helpers unchanged,
+  - add one canonical payload `nested_presence_key_map` for the direct
+    semantic-child families,
+  - re-export that grouped child-family view from the parent normalized
+    semantic report as `semantic_nested_presence_key_map`,
+  - and lock the direct payload, direct normalized-semantic, and
+    manifest-facing regressions against those grouped maps.
+- That keeps the deeper semantic payload easier to consume without widening
+  the payload itself, without flattening the child families into the parent
+  report, and without turning the separate `success_*` fields into the
+  preferred discovery path.
+
 ## 2026-04-21: normalized-semantic shell-owned key families should be discoverable as one grouped map too
 - After grouping the public check-JSON shell-owned key families, the next
   nearby public-contract discovery inconsistency sat in the bounded

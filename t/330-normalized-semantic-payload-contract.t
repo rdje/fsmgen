@@ -51,6 +51,7 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_contract_source
     normalized_semantic_payload_composition_keys
     normalized_semantic_payload_explicit_system_contract_keys
+    normalized_semantic_payload_nested_presence_key_map
     normalized_semantic_payload_forward_ir_keys
     normalized_semantic_payload_forward_ir_nested_contract_source_map
     normalized_semantic_payload_forward_ir_intent_hir_keys
@@ -111,6 +112,11 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
             composition => normalized_semantic_composition_contract_source(),
         },
         'contract publishes the bounded semantic-payload nested-contract ownership map',
+    );
+    is_deeply(
+        $contract->{nested_presence_key_map},
+        normalized_semantic_payload_nested_presence_key_map(),
+        'contract publishes the bounded semantic-payload nested key-family map',
     );
     is_deeply(
         $contract->{module_presence_keys},
