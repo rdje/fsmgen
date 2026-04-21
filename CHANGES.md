@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-21
+### Check JSON now publishes a grouped shell-owned key-family map too
+- Updated [perl/FSM/Support/CheckDiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnosticsContract.pm) so the bounded public check-JSON contract now publishes a grouped `presence_key_family_map` for its shell-owned shared-report, success, and failure key families, instead of forcing downstream tools to collect those check-JSON field-family lists separately.
+- Updated [t/312-check-diagnostics-contract.t](/Users/richarddje/Documents/github/fsmgen/t/312-check-diagnostics-contract.t) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the direct check-JSON regression and the manifest-facing regression now lock that grouped shell-owned key-family discovery surface directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so downstream tools can discover the grouped check-JSON shell-owned key-family map from the book too.
+
 ### Capability-manifest shells now group their legacy per-section key families too
 - Updated [perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm) so the bounded top-level manifest shell now publishes a grouped `presence_key_family_map` for its legacy `*_presence_keys` field families, instead of forcing downstream tools to collect those manifest-owned compatibility field lists separately.
 - Updated [t/316-capability-manifest-contract.t](/Users/richarddje/Documents/github/fsmgen/t/316-capability-manifest-contract.t) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the direct manifest-shell regression and the broader manifest-facing regression now lock that grouped shell-owned key-family discovery surface directly.

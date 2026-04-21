@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: check-JSON shell-owned key families should be discoverable as one grouped map too
+- After grouping the manifest shell's legacy key families, the next nearby
+  public-contract discovery inconsistency sat back in the bounded check-JSON
+  shell.
+- `CheckDiagnosticsContract` was already grouping primary nested-object
+  discovery through `nested_presence_key_map`, but its own shell-owned shared
+  report, success, and failure key families still had to be collected
+  separately.
+- The bounded move is deliberately small:
+  - keep the existing primary nested-object `nested_presence_key_map`
+    unchanged,
+  - keep the existing success/failure/report key-family helpers unchanged,
+  - add one canonical `presence_key_family_map` for the shell-owned check-JSON
+    families,
+  - and lock both the direct check-JSON regression and the manifest-facing
+    regression against that grouped map.
+- That keeps the public check-JSON contract easier to consume without
+  flattening nested-object discovery into the same bucket or widening the
+  shell beyond what is already documented and regression-backed.
+
 ## 2026-04-21: manifest-owned per-section key families should be discoverable as one grouped map too
 - After grouping the diagnostics-owned key families, the next nearby
   manifest-shell discovery inconsistency sat in `CapabilityManifestContract`

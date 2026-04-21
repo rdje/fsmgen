@@ -10157,3 +10157,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `FSM::Support::CapabilityManifestContract`, so downstream tools can discover
   the manifest-owned legacy `*_presence_keys` field families from one map
   instead of collecting those compatibility field lists one by one.
+- The public check-JSON contract now also publishes one grouped
+  `presence_key_family_map` through
+  `FSM::Support::CheckDiagnosticsContract`, so downstream tools can discover
+  the shell-owned shared-report, success, and failure key families from one
+  map instead of collecting those check-JSON field-family lists separately.

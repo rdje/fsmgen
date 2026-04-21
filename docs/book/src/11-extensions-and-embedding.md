@@ -287,6 +287,10 @@ key families for `command`, `result`, `failure_diagnostic`,
 `support_accounting` from one place, while the matched overlays and optional
 failure-diagnostic artifacts remain explicitly advertised as separate bounded
 key families.
+That same shell now also publishes a grouped `presence_key_family_map` so
+embedders can discover the shell-owned success, failure, and shared report key
+families from one place instead of collecting those check-JSON field-family
+lists separately.
 At the manifest-facing diagnostics-section level, FSMGen now also publishes a
 grouped `nested_presence_key_map` so downstream tools can discover the bounded
 key family for `stable_code_registry` and `check_json` from one place before

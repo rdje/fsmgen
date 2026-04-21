@@ -28,6 +28,7 @@ use FSM::Support::CheckDiagnosticsContract qw(
     check_json_matched_failure_support_accounting_keys
     check_json_matched_success_support_accounting_keys
     check_json_nested_presence_key_map
+    check_json_presence_key_family_map
     check_json_public_top_level_keys
     check_json_success_only_top_level_keys
     check_json_success_result_keys
@@ -213,6 +214,11 @@ subtest 'contract exposes the bounded check JSON surface' => sub {
         $contract->{matched_failure_diagnostic_support_accounting_presence_keys},
         check_failure_diagnostic_support_accounting_matched_presence_keys(),
         'contract publishes the matched failure support-accounting keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map},
+        check_json_presence_key_family_map(),
+        'contract publishes the grouped check-json shell-owned key-family map',
     );
 };
 

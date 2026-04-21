@@ -23,6 +23,7 @@ use FSM::Support::CheckFailureDiagnosticContract qw(
 use FSM::Support::CheckDiagnosticsContract qw(
     check_diagnostics_contract_source
     check_json_nested_presence_key_map
+    check_json_presence_key_family_map
     check_json_public_top_level_keys
 );
 use FSM::Support::CheckResultContract qw(
@@ -527,6 +528,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         $manifest->{diagnostics}{check_json}{nested_presence_key_map},
         check_json_nested_presence_key_map(),
         'manifest records the grouped check-json nested key-family map',
+    );
+    is_deeply(
+        $manifest->{diagnostics}{check_json}{presence_key_family_map},
+        check_json_presence_key_family_map(),
+        'manifest records the grouped check-json shell-owned key-family map',
     );
     ok(
         scalar(@{$manifest->{diagnostics}{check_json}{public_top_level_presence_keys} || []}) >= 7,

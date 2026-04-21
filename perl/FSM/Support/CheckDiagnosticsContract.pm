@@ -50,6 +50,7 @@ our @EXPORT_OK = qw(
     check_json_matched_failure_support_accounting_keys
     check_json_matched_success_support_accounting_keys
     check_json_nested_presence_key_map
+    check_json_presence_key_family_map
     check_json_public_top_level_keys
     check_json_success_only_top_level_keys
     check_json_success_result_keys
@@ -115,6 +116,7 @@ sub build_check_diagnostics_contract {
         failure_diagnostic_optional_artifact_keys => check_json_failure_diagnostic_optional_artifact_keys(),
         failure_diagnostic_support_accounting_presence_keys => check_json_failure_diagnostic_support_accounting_keys(),
         matched_failure_diagnostic_support_accounting_presence_keys => check_json_matched_failure_support_accounting_keys(),
+        presence_key_family_map => check_json_presence_key_family_map(),
         full_report_json_safe => JSON::PP::true,
         full_diagnostic_schema_stable => JSON::PP::false,
         guidance => [
@@ -126,6 +128,7 @@ sub build_check_diagnostics_contract {
             'The nested producer object is shared with normalized semantic JSON and stays bounded through FSM::Support::ReportProducerContract.',
             'The nested source object is shared with normalized semantic JSON and stays bounded through FSM::Support::ReportSourceContract.',
             'Use the grouped nested_presence_key_map to discover the primary nested object key families without collecting those key lists one field at a time.',
+            'Use the grouped presence_key_family_map to discover the shell-owned success, failure, and shared report key families without collecting those field-family lists separately.',
             'Success reports carry report-level support accounting, while failure reports carry support accounting inside each diagnostic object.',
             'Do not treat every nested artifact field as frozen unless it appears in the published bounded key lists or is widened deliberately with regression backing.',
         ],
@@ -155,6 +158,24 @@ sub check_json_nested_presence_key_map {
         producer => report_producer_common_keys(),
         source => report_source_presence_keys(),
         support_accounting => check_json_success_support_accounting_keys(),
+    };
+}
+
+sub check_json_presence_key_family_map {
+    return {
+        command_presence_keys => report_command_presence_keys(),
+        generated_output_presence_keys => report_generated_output_presence_keys(),
+        producer_presence_keys => report_producer_common_keys(),
+        source_presence_keys => report_source_presence_keys(),
+        success_only_top_level_keys => check_json_success_only_top_level_keys(),
+        success_result_presence_keys => check_result_presence_keys(),
+        success_support_accounting_presence_keys => check_json_success_support_accounting_keys(),
+        matched_success_support_accounting_presence_keys => check_json_matched_success_support_accounting_keys(),
+        failure_diagnostic_presence_keys => check_json_failure_diagnostic_keys(),
+        matched_failure_diagnostic_presence_keys => check_json_matched_failure_diagnostic_keys(),
+        failure_diagnostic_optional_artifact_keys => check_json_failure_diagnostic_optional_artifact_keys(),
+        failure_diagnostic_support_accounting_presence_keys => check_json_failure_diagnostic_support_accounting_keys(),
+        matched_failure_diagnostic_support_accounting_presence_keys => check_json_matched_failure_support_accounting_keys(),
     };
 }
 

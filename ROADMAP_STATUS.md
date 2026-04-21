@@ -67,6 +67,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R13` Public embedding/API stabilization, backed by `R12` regression corpus and support accounting.
 - Current next decision point:
+  - The public check-JSON contract now also publishes a grouped
+    `presence_key_family_map`:
+    [perl/FSM/Support/CheckDiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnosticsContract.pm)
+    now groups the shell-owned shared-report, success, and failure key
+    families, while [t/312-check-diagnostics-contract.t](/Users/richarddje/Documents/github/fsmgen/t/312-check-diagnostics-contract.t)
+    plus [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+    now lock that grouped check-JSON shell discovery surface directly.
   - The top-level capability-manifest shell now also publishes a grouped
     `presence_key_family_map`:
     [perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm)
