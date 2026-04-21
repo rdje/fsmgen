@@ -67,6 +67,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R13` Public embedding/API stabilization, backed by `R12` regression corpus and support accounting.
 - Current next decision point:
+  - The manifest-facing embedding section now also publishes a grouped
+    `nested_presence_key_map`: [perl/FSM/Support/EmbeddingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingContract.pm)
+    now groups the bounded child key families for `composition_report`,
+    `hdl_generator_result`, and `typed_extensions`, while
+    [t/321-embedding-contract.t](/Users/richarddje/Documents/github/fsmgen/t/321-embedding-contract.t)
+    plus [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+    now lock that grouped embedding discovery surface directly.
   - The manifest-facing backend-validation section now also publishes a grouped
     `nested_presence_key_map`: [perl/FSM/Support/BackendValidationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/BackendValidationContract.pm)
     now groups the bounded child key family for `systemverilog_external`,

@@ -77,6 +77,7 @@ use FSM::Support::BackendValidationContract qw(
 );
 use FSM::Support::EmbeddingContract qw(
     embedding_contract_source
+    embedding_nested_presence_key_map
 );
 use FSM::Support::NormalizedSemanticForwardIRContract qw(
     normalized_semantic_forward_ir_contract_source
@@ -897,6 +898,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     ok(
         scalar(@{$manifest->{embedding}{section_contract}{nested_contract_keys} || []}) >= 3,
         'manifest advertises bounded embedding nested-contract key presence',
+    );
+    is_deeply(
+        $manifest->{embedding}{section_contract}{nested_presence_key_map},
+        embedding_nested_presence_key_map(),
+        'manifest records the grouped embedding child key-family map through the embedding section contract',
     );
     is(
         $manifest->{embedding}{composition_report}{schema_version},

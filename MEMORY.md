@@ -10121,3 +10121,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   so downstream tools can discover the bounded child key family for
   `systemverilog_external` from one map before descending into that child
   contract.
+- The manifest-facing embedding section now also publishes one grouped
+  `nested_presence_key_map` through `FSM::Support::EmbeddingContract`, so
+  downstream tools can discover the bounded child key families for
+  `composition_report`, `hdl_generator_result`, and `typed_extensions` from
+  one map before descending into those child contracts.

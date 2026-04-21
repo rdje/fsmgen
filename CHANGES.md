@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-21
+### Embedding sections now publish a grouped child key-family map too
+- Updated [perl/FSM/Support/EmbeddingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingContract.pm) so the bounded manifest-facing embedding section now publishes a grouped `nested_presence_key_map` for `composition_report`, `hdl_generator_result`, and `typed_extensions`, instead of forcing downstream tools to collect those child key families separately.
+- Updated [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm) so the typed-extension contract now publishes its own canonical bounded top-level key helper, allowing the embedding section shell to reuse that child key family canonically instead of hardcoding it in the parent.
+- Updated [t/321-embedding-contract.t](/Users/richarddje/Documents/github/fsmgen/t/321-embedding-contract.t), [t/306-extension-contract.t](/Users/richarddje/Documents/github/fsmgen/t/306-extension-contract.t), and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the direct embedding-section regression, the extension-contract regression, and the manifest-facing regression now lock that grouped child key-family discovery surface directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so downstream tools can discover the grouped embedding child key-family map from the book too.
+
 ### Backend-validation sections now publish a grouped child key-family map too
 - Updated [perl/FSM/Support/BackendValidationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/BackendValidationContract.pm) so the bounded manifest-facing backend-validation section now publishes a grouped `nested_presence_key_map` for `systemverilog_external`, instead of forcing downstream tools to collect that child key family separately.
 - Updated [t/323-backend-validation-contract.t](/Users/richarddje/Documents/github/fsmgen/t/323-backend-validation-contract.t) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the direct backend-validation-section regression and the manifest-facing regression now lock that grouped child key-family discovery surface directly.

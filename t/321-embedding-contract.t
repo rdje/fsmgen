@@ -13,15 +13,23 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::Support::CompositionReportContract qw(
     composition_report_contract_source
+    composition_report_public_top_level_keys
 );
-use FSM::Support::ExtensionContract qw(extension_contract_source);
+use FSM::Support::ExtensionContract qw(
+    extension_contract_public_top_level_keys
+    extension_contract_source
+);
 use FSM::Support::EmbeddingContract qw(
     build_embedding_contract
     embedding_contract_source
     embedding_nested_contract_keys
+    embedding_nested_presence_key_map
     embedding_public_top_level_keys
 );
-use FSM::Support::HDLGeneratorResultContract qw(hdl_generator_result_contract_source);
+use FSM::Support::HDLGeneratorResultContract qw(
+    hdl_generator_result_contract_source
+    hdl_generator_result_known_top_level_keys
+);
 
 my $manifest = build_capability_manifest();
 
@@ -59,6 +67,11 @@ subtest 'contract exposes the bounded embedding section' => sub {
         },
         'contract publishes the bounded embedding nested-contract ownership map',
     );
+    is_deeply(
+        $contract->{nested_presence_key_map},
+        embedding_nested_presence_key_map(),
+        'contract publishes the bounded embedding nested key-family map',
+    );
     ok($contract->{nested_contracts_advertised}, 'contract says nested embedding contracts are advertised');
     ok(!$contract->{full_embedding_section_stable}, 'contract keeps broader embedding stabilization separate');
 };
@@ -81,6 +94,11 @@ subtest 'in-process capability manifest embedding section conforms to the bounde
         $embedding,
         $contract->{nested_contract_source_map},
         'embedding section keeps bounded nested contract owners',
+    );
+    is_deeply(
+        $embedding->{section_contract}{nested_presence_key_map},
+        $contract->{nested_presence_key_map},
+        'embedding section keeps bounded nested key families',
     );
 };
 
@@ -111,6 +129,11 @@ subtest 'CLI capability manifest keeps the bounded embedding contract' => sub {
         $embedding,
         $contract->{nested_contract_source_map},
         'CLI embedding section keeps bounded nested contract owners',
+    );
+    is_deeply(
+        $embedding->{section_contract}{nested_presence_key_map},
+        $contract->{nested_presence_key_map},
+        'CLI embedding section keeps bounded nested key families',
     );
 };
 

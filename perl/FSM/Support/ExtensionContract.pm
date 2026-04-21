@@ -8,6 +8,7 @@ use JSON::PP ();
 
 our @EXPORT_OK = qw(
     build_extension_contract
+    extension_contract_public_top_level_keys
     extension_contract_source
     extension_contract_context_accessors
     extension_contract_hook_names
@@ -51,6 +52,7 @@ sub build_extension_contract {
             automatic_directory_discovery => JSON::PP::false,
             autoload_hook_dispatch => JSON::PP::false,
         },
+        public_top_level_presence_keys => extension_contract_public_top_level_keys(),
         hook_names => extension_contract_hook_names(),
         context_accessors => extension_contract_context_accessors(),
         hooks => {
@@ -96,6 +98,29 @@ sub build_extension_contract {
             'New hook families should be added only when their pipeline seam is stable enough to regression-lock.',
         ],
     };
+}
+
+sub extension_contract_public_top_level_keys {
+    return [
+        qw(
+            schema_version
+            status
+            contract_source
+            implementation_owners
+            tested_by
+            entrypoints
+            extension_object_contract
+            public_top_level_presence_keys
+            hook_names
+            context_accessors
+            hooks
+            supported_source_kinds
+            stable_context_accessor_names
+            hook_set_closed_for_schema_version
+            full_extension_api_frozen
+            guidance
+        ),
+    ];
 }
 
 sub extension_contract_hook_names {

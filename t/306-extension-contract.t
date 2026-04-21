@@ -15,6 +15,7 @@ use FSM::Support::ExtensionContract qw(
     build_extension_contract
     extension_contract_context_accessors
     extension_contract_hook_names
+    extension_contract_public_top_level_keys
     extension_contract_source
 );
 
@@ -70,6 +71,11 @@ subtest 'contract declares the bounded typed-extension surface' => sub {
     is($contract->{schema_version}, 1, 'contract exposes schema version');
     is($contract->{status}, 'bounded_public', 'contract marks typed extensions as bounded public');
     is($contract->{contract_source}, extension_contract_source(), 'contract records its owner');
+    is_deeply(
+        $contract->{public_top_level_presence_keys},
+        extension_contract_public_top_level_keys(),
+        'contract publishes the bounded typed-extension top-level keys',
+    );
     ok($contract->{extension_object_contract}{must_be_blessed_object}, 'contract requires extension objects');
     is(
         $contract->{extension_object_contract}{constructor_for_module_loading},

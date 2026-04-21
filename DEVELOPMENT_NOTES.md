@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: embedding child key families should be discoverable as one grouped map too
+- After grouping the child key families for the neighboring backend-validation
+  section, the next nearby manifest-facing discovery inconsistency sat in
+  embedding.
+- `EmbeddingContract` was already publishing the child owners and the section
+  shell keys, but a consumer still had to collect the bounded child key
+  families for `composition_report`, `hdl_generator_result`, and
+  `typed_extensions` separately.
+- The bounded move is deliberately small:
+  - add one canonical `nested_presence_key_map` in the embedding section
+    shell,
+  - reuse existing child key helpers for `composition_report` and
+    `hdl_generator_result`,
+  - add a matching canonical top-level key helper to `ExtensionContract` so
+    the parent does not hardcode the typed-extension child surface,
+  - and lock the direct embedding-section, extension-contract, and
+    manifest-facing regressions against that grouped map.
+- That keeps the manifest-facing embedding surface easier to consume without
+  flattening the narrower child contracts or pretending the whole embedding
+  tree is one frozen API.
+
 ## 2026-04-21: backend-validation child key families should be discoverable as one grouped map too
 - After grouping the child key families for the sibling semantic-exports
   section, the next nearby manifest-facing discovery inconsistency sat in

@@ -525,6 +525,10 @@ The `embedding` section now follows the same split too:
 owns the published top-level and nested contract-owner map advertised through
 `embedding.section_contract`, while the narrower result, composition-report,
 and typed-extension contracts still own their deeper public promises.
+That section shell now also publishes a grouped `nested_presence_key_map` so
+downstream tools can discover the bounded child key families for
+`composition_report`, `hdl_generator_result`, and `typed_extensions` from one
+place before descending into those narrower contracts.
 The `diagnostics` section now follows the same split too:
 [perl/FSM/Support/DiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsContract.pm)
 owns the published top-level, scalar-string, and stable-code entry families
