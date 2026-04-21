@@ -132,6 +132,7 @@ use FSM::Support::ProducerContract qw(
 );
 use FSM::Support::SemanticExportsContract qw(
     semantic_exports_contract_source
+    semantic_exports_nested_presence_key_map
 );
 use FSM::Support::ReportCommandContract qw(
     report_command_contract_source
@@ -792,6 +793,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     ok(
         scalar(@{$manifest->{semantic_exports}{section_contract}{nested_contract_keys} || []}) >= 1,
         'manifest advertises bounded semantic-exports nested-contract key presence',
+    );
+    is_deeply(
+        $manifest->{semantic_exports}{section_contract}{nested_presence_key_map},
+        semantic_exports_nested_presence_key_map(),
+        'manifest records the grouped semantic-exports child key-family map through the semantic-exports section contract',
     );
     is(
         $manifest->{backend_validation}{systemverilog_external}{schema_version},

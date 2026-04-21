@@ -315,6 +315,10 @@ key families for `command`, `failure_diagnostic`, `generated_output`,
 semantic branches from one place, while the matched overlays and optional
 failure-diagnostic artifacts remain explicitly advertised as separate bounded
 key families.
+At the manifest-facing semantic-exports-section level, FSMGen now also
+publishes a grouped `nested_presence_key_map` so downstream tools can
+discover the bounded key family for `normalized_semantic_json` from one place
+before descending into that child contract.
 The nested `semantic.signal_analysis` summary inside that payload now also has
 its own bounded nested-object contract:
 [perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm)

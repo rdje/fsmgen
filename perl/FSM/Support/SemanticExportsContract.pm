@@ -7,12 +7,14 @@ use Exporter 'import';
 use JSON::PP ();
 use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_report_contract_source
+    normalized_semantic_public_top_level_keys
 );
 
 our @EXPORT_OK = qw(
     build_semantic_exports_contract
     semantic_exports_contract_source
     semantic_exports_nested_contract_keys
+    semantic_exports_nested_presence_key_map
     semantic_exports_public_top_level_keys
 );
 
@@ -40,10 +42,12 @@ sub build_semantic_exports_contract {
         nested_contract_source_map => {
             normalized_semantic_json => normalized_semantic_report_contract_source(),
         },
+        nested_presence_key_map => semantic_exports_nested_presence_key_map(),
         normalized_semantic_json_contract_advertised => JSON::PP::true,
         full_semantic_exports_section_stable => JSON::PP::false,
         guidance => [
             'Treat the published semantic-exports top-level keys and nested contract ownership map as the bounded public manifest-facing contract for schema version 1.',
+            'Use the grouped nested_presence_key_map to discover the bounded key family for the normalized semantic JSON child surface without collecting that child key list separately.',
             'The semantic_exports section points consumers at bounded semantic interchange surfaces instead of turning every future semantic export into an already-frozen API.',
             'Widen the section deliberately when new semantic export formats are documented, support-accounted, and regression-backed.',
         ],
@@ -65,6 +69,12 @@ sub semantic_exports_nested_contract_keys {
             normalized_semantic_json
         ),
     ];
+}
+
+sub semantic_exports_nested_presence_key_map {
+    return {
+        normalized_semantic_json => normalized_semantic_public_top_level_keys(),
+    };
 }
 
 1;

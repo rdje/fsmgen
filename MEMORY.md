@@ -10111,3 +10111,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   downstream tools can discover the bounded child key family for
   `stable_code_registry` and `check_json` from one map before descending into
   those child contracts.
+- The manifest-facing semantic-exports section now also publishes one grouped
+  `nested_presence_key_map` through `FSM::Support::SemanticExportsContract`,
+  so downstream tools can discover the bounded child key family for
+  `normalized_semantic_json` from one map before descending into that child
+  contract.

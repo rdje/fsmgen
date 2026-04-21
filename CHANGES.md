@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-21
+### Semantic-exports sections now publish a grouped child key-family map too
+- Updated [perl/FSM/Support/SemanticExportsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SemanticExportsContract.pm) so the bounded manifest-facing semantic-exports section now publishes a grouped `nested_presence_key_map` for `normalized_semantic_json`, instead of forcing downstream tools to collect that child key family separately.
+- Updated [t/322-semantic-exports-contract.t](/Users/richarddje/Documents/github/fsmgen/t/322-semantic-exports-contract.t) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the direct semantic-exports-section regression and the manifest-facing regression now lock that grouped child key-family discovery surface directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so downstream tools can discover the grouped semantic-exports child key-family map from the book too.
+
 ### Diagnostics sections now publish a grouped child key-family map too
 - Updated [perl/FSM/Support/DiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsContract.pm) so the bounded manifest-facing diagnostics section now publishes a grouped `nested_presence_key_map` for `stable_code_registry` and `check_json`, instead of forcing downstream tools to collect those child key families one field at a time.
 - Updated [t/320-diagnostics-contract.t](/Users/richarddje/Documents/github/fsmgen/t/320-diagnostics-contract.t) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the direct diagnostics-section regression and the manifest-facing regression now lock that grouped child key-family discovery surface directly.

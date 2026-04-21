@@ -13,11 +13,13 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_report_contract_source
+    normalized_semantic_public_top_level_keys
 );
 use FSM::Support::SemanticExportsContract qw(
     build_semantic_exports_contract
     semantic_exports_contract_source
     semantic_exports_nested_contract_keys
+    semantic_exports_nested_presence_key_map
     semantic_exports_public_top_level_keys
 );
 
@@ -55,6 +57,11 @@ subtest 'contract exposes the bounded semantic-exports section' => sub {
         },
         'contract publishes the bounded semantic-exports nested-contract ownership map',
     );
+    is_deeply(
+        $contract->{nested_presence_key_map},
+        semantic_exports_nested_presence_key_map(),
+        'contract publishes the bounded semantic-exports nested key-family map',
+    );
     ok(
         $contract->{normalized_semantic_json_contract_advertised},
         'contract says the normalized semantic JSON contract is advertised',
@@ -83,6 +90,11 @@ subtest 'in-process capability manifest semantic-exports section conforms to the
         $semantic_exports,
         $contract->{nested_contract_source_map},
         'semantic-exports section keeps bounded nested contract owners',
+    );
+    is_deeply(
+        $semantic_exports->{section_contract}{nested_presence_key_map},
+        $contract->{nested_presence_key_map},
+        'semantic-exports section keeps bounded nested key families',
     );
 };
 
@@ -113,6 +125,11 @@ subtest 'CLI capability manifest keeps the bounded semantic-exports contract' =>
         $semantic_exports,
         $contract->{nested_contract_source_map},
         'CLI semantic-exports section keeps bounded nested contract owners',
+    );
+    is_deeply(
+        $semantic_exports->{section_contract}{nested_presence_key_map},
+        $contract->{nested_presence_key_map},
+        'CLI semantic-exports section keeps bounded nested key families',
     );
 };
 

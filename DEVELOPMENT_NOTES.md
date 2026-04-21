@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: semantic-exports child key families should be discoverable as one grouped map too
+- After grouping the child key families for the diagnostics section, the next
+  nearby manifest-facing discovery inconsistency sat in the sibling
+  semantic-exports section.
+- `SemanticExportsContract` was already publishing the child owner and the
+  section shell keys, but a consumer still had to collect the bounded
+  `normalized_semantic_json` child key family separately.
+- The bounded move is deliberately small:
+  - add one canonical `nested_presence_key_map` for `normalized_semantic_json`,
+  - keep the existing child owner map unchanged,
+  - and lock both the direct semantic-exports-section regression and the
+    manifest-facing regression against the grouped map.
+- That keeps the manifest-facing semantic export surface easier to consume
+  without inventing a broader section schema or widening the normalized
+  semantic child surface itself.
+
 ## 2026-04-21: diagnostics child key families should be discoverable as one grouped map too
 - After grouping the nested key families for the public JSON report shells, the
   next nearby manifest-facing discovery inconsistency sat one level up in the
