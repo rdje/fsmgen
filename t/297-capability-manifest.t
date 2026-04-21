@@ -156,6 +156,7 @@ use FSM::Support::SupportAccountingMatchContract qw(
 );
 use FSM::Support::SupportAccountingContract qw(
     support_accounting_contract_source
+    support_accounting_presence_key_family_map
 );
 
 my @entries = regression_corpus_entries();
@@ -260,6 +261,11 @@ subtest 'module manifest is generated from support accounting' => sub {
     ok(
         scalar(@{$manifest->{support_accounting}{section_contract}{public_top_level_presence_keys} || []}) >= 11,
         'manifest advertises bounded nested support-accounting top-level key presence',
+    );
+    is_deeply(
+        $manifest->{support_accounting}{section_contract}{presence_key_family_map},
+        support_accounting_presence_key_family_map(),
+        'manifest records the grouped support-accounting key-family map through the support-accounting section contract',
     );
     ok(
         scalar(@{$manifest->{support_accounting}{catalog_entry_required_keys} || []}) >= 9,

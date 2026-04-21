@@ -10137,3 +10137,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   downstream tools can discover the bounded path-list families for
   `human_contract` and `downstream_alignment` from one map before consuming
   those documentation path lists.
+- The manifest-facing support-accounting section now also publishes one
+  grouped `presence_key_family_map` through
+  `FSM::Support::SupportAccountingContract`, so downstream tools can discover
+  the bounded bucket, id-list, and catalog-entry key families from one map
+  instead of collecting those support-accounting key families field by field.

@@ -18,6 +18,7 @@ use FSM::Support::SupportAccountingContract qw(
     support_accounting_catalog_entry_required_keys
     support_accounting_contract_source
     support_accounting_id_list_keys
+    support_accounting_presence_key_family_map
     support_accounting_public_top_level_keys
 );
 
@@ -66,6 +67,11 @@ subtest 'contract exposes the bounded support-accounting surface' => sub {
         support_accounting_catalog_entry_optional_keys(),
         'contract publishes the bounded optional catalog-entry keys',
     );
+    is_deeply(
+        $contract->{presence_key_family_map},
+        support_accounting_presence_key_family_map(),
+        'contract publishes the grouped support-accounting key-family map',
+    );
 };
 
 subtest 'in-process capability manifest support-accounting payload conforms to the bounded contract' => sub {
@@ -96,6 +102,11 @@ subtest 'in-process capability manifest support-accounting payload conforms to t
     ok(
         scalar(@{$support->{section_contract}{public_top_level_presence_keys} || []}) >= 11,
         'support-accounting section advertises bounded nested top-level key presence',
+    );
+    is_deeply(
+        $support->{section_contract}{presence_key_family_map},
+        support_accounting_presence_key_family_map(),
+        'support-accounting section keeps the grouped key-family map',
     );
 
     ok(@{$support->{catalog_entries} || []}, 'support-accounting section exposes catalog entries');
@@ -137,6 +148,11 @@ subtest 'CLI capability manifest keeps the bounded support-accounting contract' 
         $support->{section_contract}{contract_source},
         support_accounting_contract_source(),
         'CLI support-accounting section exposes the nested section-contract owner',
+    );
+    is_deeply(
+        $support->{section_contract}{presence_key_family_map},
+        support_accounting_presence_key_family_map(),
+        'CLI support-accounting section keeps the grouped key-family map',
     );
     ok(@{$support->{catalog_entries} || []}, 'CLI support-accounting section exposes catalog entries');
     assert_keys_present(

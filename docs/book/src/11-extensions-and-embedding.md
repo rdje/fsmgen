@@ -520,6 +520,10 @@ The `support_accounting` section now also exposes that same bounded owner
 through `support_accounting.section_contract`, while deliberately keeping the
 existing inline support-accounting contract fields and corpus metadata for
 compatibility.
+That section shell now also publishes a grouped `presence_key_family_map` so
+downstream tools can discover the bounded bucket, id-list, and catalog-entry
+key families from one place instead of collecting those support-accounting key
+families field by field.
 The `embedding` section now follows the same split too:
 [perl/FSM/Support/EmbeddingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingContract.pm)
 owns the published top-level and nested contract-owner map advertised through

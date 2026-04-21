@@ -13,6 +13,7 @@ our @EXPORT_OK = qw(
     support_accounting_catalog_entry_required_keys
     support_accounting_contract_source
     support_accounting_id_list_keys
+    support_accounting_presence_key_family_map
     support_accounting_public_top_level_keys
 );
 
@@ -41,10 +42,12 @@ sub build_support_accounting_contract {
         id_list_presence_keys => support_accounting_id_list_keys(),
         catalog_entry_required_keys => support_accounting_catalog_entry_required_keys(),
         catalog_entry_optional_keys => support_accounting_catalog_entry_optional_keys(),
+        presence_key_family_map => support_accounting_presence_key_family_map(),
         sanitized_catalog_entries => JSON::PP::true,
         derived_from_regression_corpus => JSON::PP::true,
         guidance => [
             'Treat the published support-accounting top-level and catalog-entry key lists as the bounded manifest-facing contract for schema version 1.',
+            'Use the grouped presence_key_family_map to discover the bounded bucket, id-list, and catalog-entry key families without collecting those key-family lists separately.',
             'Catalog entries are sanitized projections of regression-corpus truth, not a promise that every internal corpus field is now public.',
             'Widen this section only when new fields are backed by the maintained corpus and regression-locked deliberately.',
         ],
@@ -119,6 +122,15 @@ sub support_accounting_catalog_entry_optional_keys {
             expected_hdl_pattern_count
         ),
     ];
+}
+
+sub support_accounting_presence_key_family_map {
+    return {
+        bucket_presence_keys => support_accounting_bucket_keys(),
+        id_list_presence_keys => support_accounting_id_list_keys(),
+        catalog_entry_required_keys => support_accounting_catalog_entry_required_keys(),
+        catalog_entry_optional_keys => support_accounting_catalog_entry_optional_keys(),
+    };
 }
 
 1;

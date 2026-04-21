@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: support-accounting key families should be discoverable as one grouped map too
+- After grouping the documentation path-list families, the next nearby
+  manifest-facing discovery inconsistency sat in support-accounting.
+- `SupportAccountingContract` was already publishing the bucket, id-list, and
+  catalog-entry key families individually, but a consumer still had to collect
+  those bounded support-accounting key families one list at a time.
+- The bounded move is deliberately small:
+  - keep the existing top-level, bucket, id-list, and catalog-entry key
+    helpers unchanged,
+  - add one canonical `presence_key_family_map` in the support-accounting
+    section shell,
+  - and lock both the direct support-accounting regression and the
+    manifest-facing regression against that grouped map.
+- That keeps the manifest-facing support-accounting contract easier to consume
+  without inventing a fake nested schema or widening the sanitized corpus
+  projection beyond what is already documented and regression-backed.
+
 ## 2026-04-21: documentation path-list families should be discoverable as one grouped map too
 - After grouping the first nested key families for the neighboring
   language-surface section, the next nearby manifest-facing discovery

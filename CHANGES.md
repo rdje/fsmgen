@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-21
+### Support-accounting sections now publish a grouped key-family map too
+- Updated [perl/FSM/Support/SupportAccountingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingContract.pm) so the bounded manifest-facing support-accounting section now publishes a grouped `presence_key_family_map` for the bucket, id-list, and catalog-entry key families, instead of forcing downstream tools to collect those support-accounting key families separately.
+- Updated [t/314-support-accounting-contract.t](/Users/richarddje/Documents/github/fsmgen/t/314-support-accounting-contract.t) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the direct support-accounting regression and the manifest-facing regression now lock that grouped key-family discovery surface directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so downstream tools can discover the grouped support-accounting key-family map from the book too.
+
 ### Documentation sections now publish a grouped path-list contract map too
 - Updated [perl/FSM/Support/DocumentationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DocumentationContract.pm) so the bounded manifest-facing documentation section now publishes a grouped `path_list_contract_map` for `human_contract` and `downstream_alignment`, instead of forcing downstream tools to collect those documentation path-list families separately.
 - Updated [t/318-documentation-contract.t](/Users/richarddje/Documents/github/fsmgen/t/318-documentation-contract.t) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the direct documentation regression and the manifest-facing regression now lock that grouped path-list contract discovery surface directly.
