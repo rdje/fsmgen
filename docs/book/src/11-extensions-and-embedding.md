@@ -210,6 +210,11 @@ That same contract now also publishes a grouped `stable_subsurface_map` so
 embedders can discover those bounded nested stable slices from one place
 instead of reconstructing the map from the separate `source_info`,
 `module_info`, and `statistics` arrays.
+It now also publishes a grouped `optional_composition_key_family_map` so
+embedders can discover the bounded composition-only key families from one
+place instead of collecting the separate `module_info`,
+`statistics`, `intent_hir`, and `lowered_rtl_ir` optional-composition lists
+individually.
 It now also publishes a grouped `shell_only_fallback_surface_map` so embedders
 can discover, from one place, where to go instead of binding themselves to the
 raw shell-only compatibility branches such as `fsm_module`, `raw_ast`,

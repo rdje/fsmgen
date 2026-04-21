@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: HDLGenerator composition-only key families should be discoverable as one grouped map too
+- After grouping the deeper semantic child-key families, the next nearby
+  discovery inconsistency sat back in the bounded `HDLGenerator` result
+  shell.
+- `HDLGeneratorResultContract` was already grouping stable subsurfaces and
+  shell-only fallback surfaces, but it still exposed its composition-only key
+  families as separate lists across `module_info`, `statistics`,
+  `intent_hir`, and `lowered_rtl_ir`.
+- The bounded move is deliberately small:
+  - keep the existing per-surface optional composition key helpers
+    unchanged,
+  - add one canonical `optional_composition_key_family_map`,
+  - and lock both the direct `HDLGenerator` regression and the
+    manifest-facing regression against that grouped map.
+- That keeps the `HDLGenerator` embedding surface easier to consume without
+  widening the result hash itself, and without pretending those optional
+  composition families belong in the stable-subsurface or shell-only fallback
+  buckets.
+
 ## 2026-04-21: forward-ir child key families should be discoverable as one grouped map too
 - After grouping the direct semantic-payload child key families, the next
   nearby discovery inconsistency sat one level deeper again in the bounded

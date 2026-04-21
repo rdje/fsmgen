@@ -68,6 +68,7 @@ use FSM::Support::HDLGeneratorResultContract qw(
     hdl_generator_result_lowered_rtl_ir_optional_composition_keys
     hdl_generator_result_module_info_identity_keys
     hdl_generator_result_module_info_optional_composition_summary_keys
+    hdl_generator_result_optional_composition_key_family_map
     hdl_generator_result_module_info_summary_keys
     hdl_generator_result_shell_only_fallback_surface_map
     hdl_generator_result_source_info_identity_keys
@@ -157,6 +158,11 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
         $contract->{stable_subsurface_map},
         hdl_generator_result_stable_subsurface_map(),
         'contract publishes the grouped stable nested-subsurface map',
+    );
+    is_deeply(
+        $contract->{optional_composition_key_family_map},
+        hdl_generator_result_optional_composition_key_family_map(),
+        'contract publishes the grouped composition-only key-family map',
     );
     is_deeply(
         $contract->{shell_only_fallback_surface_map},

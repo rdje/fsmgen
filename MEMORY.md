@@ -10184,3 +10184,9 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   deeper `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` key
   families from one place instead of reconstructing them from separate
   `success_forward_ir_*` lists.
+- The bounded `HDLGenerator` result contract now also publishes one grouped
+  `optional_composition_key_family_map` through
+  `FSM::Support::HDLGeneratorResultContract`, so downstream tools can
+  discover the composition-only key families exposed through `module_info`,
+  `statistics`, `intent_hir`, and `lowered_rtl_ir` from one place instead of
+  collecting those optional key lists separately.
