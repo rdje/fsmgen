@@ -389,6 +389,10 @@ The nested `semantic.forward_ir` summary inside that payload now also has its
 own bounded nested-object contract:
 [perl/FSM/Support/NormalizedSemanticForwardIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticForwardIRContract.pm)
 owns the current sanitized forward semantic projection keys.
+That same owner now also publishes a grouped `presence_key_family_map` so
+embedders can discover the shell-owned `forward_ir` and child
+composition-only extension key families from one place instead of collecting
+those field-family lists separately.
 The nested `semantic.forward_ir.lowered_rtl_ir` summary inside that branch now
 also has its own bounded nested-object contract:
 [perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm)

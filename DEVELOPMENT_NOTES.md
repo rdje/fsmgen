@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: forward-ir shell key families should be discoverable as one grouped map too
+- After grouping the bounded nested `lowered_rtl_ir` leaf-owner key families,
+  the next adjacent semantic-side seam sat one level up in the bounded
+  `semantic.forward_ir` shell itself.
+- `NormalizedSemanticForwardIRContract` already published the shell keys plus
+  the child composition-only extension families separately, but a caller still
+  had to gather those bounded forward-IR shell-owned families one list at a
+  time.
+- The bounded move is deliberately small:
+  - keep the existing child-owner and nested key-family helpers unchanged,
+  - add one canonical shell-level `presence_key_family_map`,
+  - and lock the direct forward-IR regression against that grouped map.
+- That keeps the explicit forward-IR shell easier to consume without widening
+  the payload or report shells that already reuse it.
+
 ## 2026-04-22: lowered-rtl-ir leaf key families should be discoverable as one grouped map too
 - After grouping the bounded nested `intent_hir` leaf-owner key families, the
   next adjacent semantic-side leaf-owner seam sat in the nested

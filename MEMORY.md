@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: forward-ir shells now publish grouped key families too
+- Hardened
+  [perl/FSM/Support/NormalizedSemanticForwardIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticForwardIRContract.pm)
+  so the bounded nested `semantic.forward_ir` shell now publishes a grouped
+  `presence_key_family_map` covering its own shell keys plus the child
+  composition-only extension families it already advertises.
+- Regression coverage now proves that grouped forward-IR shell key-family map
+  directly:
+  [t/334-normalized-semantic-forward-ir-contract.t](/Users/richarddje/Documents/github/fsmgen/t/334-normalized-semantic-forward-ir-contract.t).
+
 ## 2026-04-22: lowered-rtl-ir owners now publish grouped key families too
 - Hardened
   [perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm)
