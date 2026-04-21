@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: forward-ir shells should publish their immediate child owner map too
+- After grouping the immediate child owners on the `semantic` payload, the same
+  small consistency seam still remained one level lower in the nested
+  `forward_ir` object.
+- `NormalizedSemanticForwardIRContract` already exposed the child owners for
+  `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` as separate scalar
+  fields, but consumers still had to reconstruct the grouped child-owner map
+  themselves.
+- The bounded move is straightforward here:
+  - add one `nested_contract_source_map` for those three immediate child
+    branches,
+  - keep the existing scalar owner fields for compatibility,
+  - and lock the direct forward-IR regression against that grouped map.
+- That keeps the semantic IR lane easier to consume while staying deliberately
+  conservative about deeper grouping until it is actually needed.
+
 ## 2026-04-21: semantic payloads should publish their immediate child owner map too
 - After the report-shell and embedding-shell grouping slices, the next nearby
   consistency seam sat one level lower in the bounded `semantic` payload

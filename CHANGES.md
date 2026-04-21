@@ -1,6 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-21
+### Normalized semantic forward-ir now publishes a nested owner map too
+- Updated [perl/FSM/Support/NormalizedSemanticForwardIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticForwardIRContract.pm) so the bounded nested `semantic.forward_ir` object now publishes a `nested_contract_source_map` for `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir`, reusing the same canonical child-owner helpers already surfaced through the scalar owner fields.
+- Updated [t/334-normalized-semantic-forward-ir-contract.t](/Users/richarddje/Documents/github/fsmgen/t/334-normalized-semantic-forward-ir-contract.t) so the direct forward-IR regression now locks that nested-owner map directly.
+
 ### Normalized semantic payload now publishes a nested owner map too
 - Updated [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm) so the bounded nested `semantic` payload now publishes a `nested_contract_source_map` for `module`, `explicit_system_contract`, `signal_analysis`, `system_contract`, `forward_ir`, `symbol_contract`, and `composition`, reusing the same canonical child-owner helpers already surfaced through the scalar owner fields.
 - Updated [t/330-normalized-semantic-payload-contract.t](/Users/richarddje/Documents/github/fsmgen/t/330-normalized-semantic-payload-contract.t) so the direct payload regression now locks that nested-owner map directly.

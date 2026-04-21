@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-21: normalized semantic forward-ir now publishes a nested owner map too
+- Hardened
+  [perl/FSM/Support/NormalizedSemanticForwardIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticForwardIRContract.pm)
+  so the bounded nested `semantic.forward_ir` object now publishes a
+  `nested_contract_source_map` for `intent_hir`, `lowered_rtl_ir`, and
+  `structural_rtl_ir` instead of exposing those child owners only as separate
+  scalar fields.
+- Regression coverage now proves that bounded forward-IR nested-owner map
+  directly:
+  [t/334-normalized-semantic-forward-ir-contract.t](/Users/richarddje/Documents/github/fsmgen/t/334-normalized-semantic-forward-ir-contract.t).
+
 ## 2026-04-21: normalized semantic payload now publishes a nested owner map too
 - Hardened
   [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm)

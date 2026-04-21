@@ -54,6 +54,11 @@ sub build_normalized_semantic_forward_ir_contract {
             ],
         },
         public_presence_keys => normalized_semantic_forward_ir_presence_keys(),
+        nested_contract_source_map => {
+            intent_hir => normalized_semantic_forward_ir_intent_hir_contract_source(),
+            lowered_rtl_ir => normalized_semantic_forward_ir_lowered_rtl_ir_contract_source(),
+            structural_rtl_ir => normalized_semantic_forward_ir_structural_rtl_ir_contract_source(),
+        },
         intent_hir_contract_source => normalized_semantic_forward_ir_intent_hir_contract_source(),
         intent_hir_presence_keys => normalized_semantic_forward_ir_intent_hir_presence_keys(),
         intent_hir_optional_composition_keys => normalized_semantic_forward_ir_intent_hir_optional_composition_keys(),

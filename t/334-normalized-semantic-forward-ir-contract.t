@@ -67,6 +67,15 @@ subtest 'contract exposes the bounded normalized semantic forward-IR object' => 
         normalized_semantic_forward_ir_presence_keys(),
         'contract publishes the bounded forward-IR key list',
     );
+    is_deeply(
+        $contract->{nested_contract_source_map},
+        {
+            intent_hir => normalized_semantic_forward_ir_intent_hir_contract_source(),
+            lowered_rtl_ir => normalized_semantic_forward_ir_lowered_rtl_ir_contract_source(),
+            structural_rtl_ir => normalized_semantic_forward_ir_structural_rtl_ir_contract_source(),
+        },
+        'contract publishes the bounded forward-ir nested-contract ownership map',
+    );
     is(
         $contract->{intent_hir_contract_source},
         normalized_semantic_forward_ir_intent_hir_contract_source(),
