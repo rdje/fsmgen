@@ -393,6 +393,41 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest records the check JSON report owner',
     );
     is(
+        $manifest->{diagnostics}{check_json}{nested_contract_source_map}{command},
+        report_command_contract_source(),
+        'manifest records the check-json command nested contract owner',
+    );
+    is(
+        $manifest->{diagnostics}{check_json}{nested_contract_source_map}{result},
+        check_result_contract_source(),
+        'manifest records the check-json result nested contract owner',
+    );
+    is(
+        $manifest->{diagnostics}{check_json}{nested_contract_source_map}{failure_diagnostic},
+        check_failure_diagnostic_contract_source(),
+        'manifest records the check-json failure diagnostic nested contract owner',
+    );
+    is(
+        $manifest->{diagnostics}{check_json}{nested_contract_source_map}{generated_output},
+        report_generated_output_contract_source(),
+        'manifest records the check-json generated_output nested contract owner',
+    );
+    is(
+        $manifest->{diagnostics}{check_json}{nested_contract_source_map}{producer},
+        report_producer_contract_source(),
+        'manifest records the check-json producer nested contract owner',
+    );
+    is(
+        $manifest->{diagnostics}{check_json}{nested_contract_source_map}{source},
+        report_source_contract_source(),
+        'manifest records the check-json source nested contract owner',
+    );
+    is(
+        $manifest->{diagnostics}{check_json}{nested_contract_source_map}{support_accounting},
+        support_accounting_match_contract_source(),
+        'manifest records the check-json support-accounting nested contract owner',
+    );
+    is(
         $manifest->{diagnostics}{check_json}{command_contract_source},
         report_command_contract_source(),
         'manifest records the shared check-JSON command nested-object owner',

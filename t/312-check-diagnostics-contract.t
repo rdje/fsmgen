@@ -84,6 +84,19 @@ subtest 'contract exposes the bounded check JSON surface' => sub {
         $contract->{emits_failure_diagnostic_support_accounting_object},
         'contract says failed diagnostics carry support accounting',
     );
+    is_deeply(
+        $contract->{nested_contract_source_map},
+        {
+            command => report_command_contract_source(),
+            failure_diagnostic => check_failure_diagnostic_contract_source(),
+            generated_output => report_generated_output_contract_source(),
+            producer => report_producer_contract_source(),
+            result => check_result_contract_source(),
+            source => report_source_contract_source(),
+            support_accounting => support_accounting_match_contract_source(),
+        },
+        'contract publishes the bounded check-json nested-contract ownership map',
+    );
     is(
         $contract->{command_contract_source},
         report_command_contract_source(),

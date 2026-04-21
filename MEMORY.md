@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-21: check JSON now publishes a nested owner map too
+- Hardened
+  [perl/FSM/Support/CheckDiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnosticsContract.pm)
+  so the bounded check-JSON shell now publishes a `nested_contract_source_map`
+  for its shared nested objects instead of exposing those child owners only as
+  separate scalar fields.
+- Regression coverage now proves that bounded check-JSON nested-owner map
+  directly:
+  [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+  and [t/312-check-diagnostics-contract.t](/Users/richarddje/Documents/github/fsmgen/t/312-check-diagnostics-contract.t).
+
 ## 2026-04-21: diagnostics section now publishes a nested owner map too
 - Hardened
   [perl/FSM/Support/DiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsContract.pm)

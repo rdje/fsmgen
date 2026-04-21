@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: check JSON should publish its child owner map the same way section shells do
+- After regularizing the diagnostics section itself, the next nearby `R13`
+  inconsistency was one layer lower in the bounded check-JSON shell.
+- `CheckDiagnosticsContract` already exposed every child owner as a scalar
+  `*_contract_source` field, but it did not publish a grouped owner map the
+  way the manifest-facing section shells now do.
+- For embedders, the more uniform bounded contract is to publish that grouped
+  map too:
+  - keep the existing scalar owner fields for compatibility,
+  - add one bounded `nested_contract_source_map` keyed by the existing child
+    object names,
+  - and lock both the direct contract regression and the capability-manifest
+    regression against that grouped map.
+- That keeps the public diagnostics lane easier to consume because consumers no
+  longer have to reconstruct the check-JSON child-owner map themselves from a
+  set of parallel scalar fields.
+
 ## 2026-04-21: diagnostics should advertise nested owner maps the same way other manifest sections do
 - After the last helper cleanup, the remaining diagnostics seam was no longer a
   shell self-owner literal so much as a shape inconsistency.
