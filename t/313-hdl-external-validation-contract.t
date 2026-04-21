@@ -15,6 +15,7 @@ use FSM::Support::HDLExternalValidation qw(
 );
 use FSM::Support::HDLExternalValidationContract qw(
     build_hdl_external_validation_contract
+    hdl_external_validation_contract_source
     hdl_external_validation_success_step_keys
     hdl_external_validation_success_step_names
     hdl_external_validation_success_top_level_keys
@@ -31,7 +32,7 @@ subtest 'contract exposes the bounded external validation surface' => sub {
     );
     is(
         $contract->{contract_source},
-        'FSM::Support::HDLExternalValidationContract',
+        hdl_external_validation_contract_source(),
         'contract records its own owner',
     );
     is(

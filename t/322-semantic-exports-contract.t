@@ -11,6 +11,9 @@ use JSON::PP qw(decode_json);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
+use FSM::Support::NormalizedSemanticReportContract qw(
+    normalized_semantic_report_contract_source
+);
 use FSM::Support::SemanticExportsContract qw(
     build_semantic_exports_contract
     semantic_exports_nested_contract_keys
@@ -47,7 +50,7 @@ subtest 'contract exposes the bounded semantic-exports section' => sub {
     is_deeply(
         $contract->{nested_contract_source_map},
         {
-            normalized_semantic_json => 'FSM::Support::NormalizedSemanticReportContract',
+            normalized_semantic_json => normalized_semantic_report_contract_source(),
         },
         'contract publishes the bounded semantic-exports nested-contract ownership map',
     );

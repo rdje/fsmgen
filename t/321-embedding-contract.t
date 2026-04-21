@@ -14,11 +14,13 @@ use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::Support::CompositionReportContract qw(
     composition_report_contract_source
 );
+use FSM::Support::ExtensionContract qw(extension_contract_source);
 use FSM::Support::EmbeddingContract qw(
     build_embedding_contract
     embedding_nested_contract_keys
     embedding_public_top_level_keys
 );
+use FSM::Support::HDLGeneratorResultContract qw(hdl_generator_result_contract_source);
 
 my $manifest = build_capability_manifest();
 
@@ -51,8 +53,8 @@ subtest 'contract exposes the bounded embedding section' => sub {
         $contract->{nested_contract_source_map},
         {
             composition_report => composition_report_contract_source(),
-            hdl_generator_result => 'FSM::Support::HDLGeneratorResultContract',
-            typed_extensions => 'FSM::Support::ExtensionContract',
+            hdl_generator_result => hdl_generator_result_contract_source(),
+            typed_extensions => extension_contract_source(),
         },
         'contract publishes the bounded embedding nested-contract ownership map',
     );

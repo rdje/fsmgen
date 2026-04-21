@@ -5,6 +5,9 @@ use warnings;
 
 use Exporter 'import';
 use JSON::PP ();
+use FSM::Support::NormalizedSemanticReportContract qw(
+    normalized_semantic_report_contract_source
+);
 
 our @EXPORT_OK = qw(
     build_semantic_exports_contract
@@ -30,7 +33,7 @@ sub build_semantic_exports_contract {
         public_top_level_presence_keys => semantic_exports_public_top_level_keys(),
         nested_contract_keys => semantic_exports_nested_contract_keys(),
         nested_contract_source_map => {
-            normalized_semantic_json => 'FSM::Support::NormalizedSemanticReportContract',
+            normalized_semantic_json => normalized_semantic_report_contract_source(),
         },
         normalized_semantic_json_contract_advertised => JSON::PP::true,
         full_semantic_exports_section_stable => JSON::PP::false,

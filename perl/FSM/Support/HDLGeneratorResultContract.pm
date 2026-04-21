@@ -71,6 +71,7 @@ use FSM::Support::NormalizedSemanticStructuralRTLIRContract qw(
 
 our @EXPORT_OK = qw(
     build_hdl_generator_result_contract
+    hdl_generator_result_contract_source
     hdl_generator_result_intent_hir_keys
     hdl_generator_result_intent_hir_optional_composition_keys
     hdl_generator_result_known_top_level_keys
@@ -86,11 +87,15 @@ our @EXPORT_OK = qw(
     hdl_generator_result_structural_rtl_ir_keys
 );
 
+sub hdl_generator_result_contract_source {
+    return 'FSM::Support::HDLGeneratorResultContract';
+}
+
 sub build_hdl_generator_result_contract {
     return {
         schema_version => 1,
         status => 'bounded_top_level_presence',
-        contract_source => 'FSM::Support::HDLGeneratorResultContract',
+        contract_source => hdl_generator_result_contract_source(),
         entrypoint => 'FSM::Pipeline::HDLGenerator->new(...)->generate_hdl_from_file($path)',
         tested_by => [
             't/305-hdl-generator-result-contract.t',

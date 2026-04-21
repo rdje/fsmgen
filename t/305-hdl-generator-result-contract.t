@@ -60,6 +60,7 @@ use FSM::Support::HDLGeneratorSourceInfoContract qw(
 );
 use FSM::Support::HDLGeneratorResultContract qw(
     build_hdl_generator_result_contract
+    hdl_generator_result_contract_source
     hdl_generator_result_intent_hir_keys
     hdl_generator_result_intent_hir_optional_composition_keys
     hdl_generator_result_known_top_level_keys
@@ -95,7 +96,7 @@ my $contract = build_hdl_generator_result_contract();
 subtest 'contract declares the bounded HDLGenerator result surface' => sub {
     is($contract->{schema_version}, 1, 'contract exposes schema version');
     is($contract->{status}, 'bounded_top_level_presence', 'contract declares bounded top-level presence status');
-    is($contract->{contract_source}, 'FSM::Support::HDLGeneratorResultContract', 'contract records its owner');
+    is($contract->{contract_source}, hdl_generator_result_contract_source(), 'contract records its owner');
     ok($contract->{nested_identity_slices_advertised}, 'contract advertises bounded nested identity slices');
     ok(!$contract->{stable_nested_content}, 'contract does not overpromise stable nested content');
     ok(!$contract->{full_result_json_safe}, 'contract does not claim the whole raw result is JSON-safe');

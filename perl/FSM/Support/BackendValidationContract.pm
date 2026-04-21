@@ -5,6 +5,9 @@ use warnings;
 
 use Exporter 'import';
 use JSON::PP ();
+use FSM::Support::HDLExternalValidationContract qw(
+    hdl_external_validation_contract_source
+);
 
 our @EXPORT_OK = qw(
     backend_validation_nested_contract_keys
@@ -30,7 +33,7 @@ sub build_backend_validation_contract {
         public_top_level_presence_keys => backend_validation_public_top_level_keys(),
         nested_contract_keys => backend_validation_nested_contract_keys(),
         nested_contract_source_map => {
-            systemverilog_external => 'FSM::Support::HDLExternalValidationContract',
+            systemverilog_external => hdl_external_validation_contract_source(),
         },
         systemverilog_external_contract_advertised => JSON::PP::true,
         full_backend_validation_section_stable => JSON::PP::false,

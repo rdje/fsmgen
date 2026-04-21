@@ -90,6 +90,7 @@ use FSM::Support::SupportAccountingMatchContract qw(
 
 our @EXPORT_OK = qw(
     build_normalized_semantic_report_contract
+    normalized_semantic_report_contract_source
     normalized_semantic_composition_keys
     normalized_semantic_explicit_system_contract_keys
     normalized_semantic_failure_diagnostic_keys
@@ -117,11 +118,15 @@ our @EXPORT_OK = qw(
     normalized_semantic_support_accounting_keys
 );
 
+sub normalized_semantic_report_contract_source {
+    return 'FSM::Support::NormalizedSemanticReportContract';
+}
+
 sub build_normalized_semantic_report_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::NormalizedSemanticReportContract',
+        contract_source => normalized_semantic_report_contract_source(),
         report_source => 'FSM::Support::NormalizedSemanticReport',
         entrypoints => {
             cli => './bin/fsmgen --strict --emit-semantic-json path/to/file.fsm',

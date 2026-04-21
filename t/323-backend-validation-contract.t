@@ -16,6 +16,9 @@ use FSM::Support::BackendValidationContract qw(
     build_backend_validation_contract
 );
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
+use FSM::Support::HDLExternalValidationContract qw(
+    hdl_external_validation_contract_source
+);
 
 my $manifest = build_capability_manifest();
 
@@ -47,7 +50,7 @@ subtest 'contract exposes the bounded backend-validation section' => sub {
     is_deeply(
         $contract->{nested_contract_source_map},
         {
-            systemverilog_external => 'FSM::Support::HDLExternalValidationContract',
+            systemverilog_external => hdl_external_validation_contract_source(),
         },
         'contract publishes the bounded backend-validation nested-contract ownership map',
     );

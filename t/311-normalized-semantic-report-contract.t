@@ -55,6 +55,7 @@ use FSM::Support::NormalizedSemanticForwardIRContract qw(
 );
 use FSM::Support::NormalizedSemanticReportContract qw(
     build_normalized_semantic_report_contract
+    normalized_semantic_report_contract_source
     normalized_semantic_composition_keys
     normalized_semantic_explicit_system_contract_keys
     normalized_semantic_failure_diagnostic_keys
@@ -128,7 +129,7 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
     is($contract->{status}, 'bounded_public', 'contract marks normalized semantic JSON as bounded public');
     is(
         $contract->{contract_source},
-        'FSM::Support::NormalizedSemanticReportContract',
+        normalized_semantic_report_contract_source(),
         'contract records its own owner',
     );
     is(

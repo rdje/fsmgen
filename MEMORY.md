@@ -1,5 +1,29 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-21: manifest section nested-owner maps now come from the child contracts too
+- Hardened
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm),
+  [perl/FSM/Support/HDLExternalValidationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLExternalValidationContract.pm),
+  [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm),
+  and [perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm)
+  so those child contracts now export canonical owner helpers directly.
+- Expanded
+  [perl/FSM/Support/EmbeddingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingContract.pm),
+  [perl/FSM/Support/SemanticExportsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SemanticExportsContract.pm),
+  and [perl/FSM/Support/BackendValidationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/BackendValidationContract.pm)
+  so the capability-manifest section contracts now reuse those child owner
+  helpers in their nested ownership maps instead of retyping the same child
+  owner strings inline.
+- Regression coverage now proves that helper-backed reuse directly:
+  [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t),
+  [t/305-hdl-generator-result-contract.t](/Users/richarddje/Documents/github/fsmgen/t/305-hdl-generator-result-contract.t),
+  [t/306-extension-contract.t](/Users/richarddje/Documents/github/fsmgen/t/306-extension-contract.t),
+  [t/311-normalized-semantic-report-contract.t](/Users/richarddje/Documents/github/fsmgen/t/311-normalized-semantic-report-contract.t),
+  [t/313-hdl-external-validation-contract.t](/Users/richarddje/Documents/github/fsmgen/t/313-hdl-external-validation-contract.t),
+  [t/321-embedding-contract.t](/Users/richarddje/Documents/github/fsmgen/t/321-embedding-contract.t),
+  [t/322-semantic-exports-contract.t](/Users/richarddje/Documents/github/fsmgen/t/322-semantic-exports-contract.t),
+  and [t/323-backend-validation-contract.t](/Users/richarddje/Documents/github/fsmgen/t/323-backend-validation-contract.t).
+
 ## 2026-04-21: normalized semantic payload owner facts now come from the payload contract too
 - Hardened
   [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm)

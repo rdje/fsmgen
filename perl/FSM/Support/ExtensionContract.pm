@@ -8,15 +8,20 @@ use JSON::PP ();
 
 our @EXPORT_OK = qw(
     build_extension_contract
+    extension_contract_source
     extension_contract_context_accessors
     extension_contract_hook_names
 );
+
+sub extension_contract_source {
+    return 'FSM::Support::ExtensionContract';
+}
 
 sub build_extension_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::ExtensionContract',
+        contract_source => extension_contract_source(),
         implementation_owners => [
             'FSM::Extension::Context',
             'FSM::Extension::Registry',

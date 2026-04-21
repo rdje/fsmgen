@@ -8,16 +8,21 @@ use JSON::PP ();
 
 our @EXPORT_OK = qw(
     build_hdl_external_validation_contract
+    hdl_external_validation_contract_source
     hdl_external_validation_success_step_keys
     hdl_external_validation_success_step_names
     hdl_external_validation_success_top_level_keys
 );
 
+sub hdl_external_validation_contract_source {
+    return 'FSM::Support::HDLExternalValidationContract';
+}
+
 sub build_hdl_external_validation_contract {
     return {
         schema_version => 1,
         status => 'optional_when_tools_installed',
-        contract_source => 'FSM::Support::HDLExternalValidationContract',
+        contract_source => hdl_external_validation_contract_source(),
         report_source => 'FSM::Support::HDLExternalValidation',
         entrypoints => {
             cli => './bin/fsmgen --verify-hdl path/to/file.fsm',

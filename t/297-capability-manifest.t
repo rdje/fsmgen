@@ -21,6 +21,12 @@ use FSM::Support::CompositionReportContract qw(
     composition_report_contract_source
     composition_report_json_fragment_path
 );
+use FSM::Support::ExtensionContract qw(
+    extension_contract_source
+);
+use FSM::Support::HDLExternalValidationContract qw(
+    hdl_external_validation_contract_source
+);
 use FSM::Support::HDLGeneratorCompositionPlanContract qw(
     hdl_generator_composition_plan_contract_source
 );
@@ -44,6 +50,9 @@ use FSM::Support::HDLGeneratorSourceInfoContract qw(
 );
 use FSM::Support::HDLGeneratorStatisticsContract qw(
     hdl_generator_statistics_contract_source
+);
+use FSM::Support::HDLGeneratorResultContract qw(
+    hdl_generator_result_contract_source
 );
 use FSM::Support::DiagnosticCodes qw(diagnostic_code_ids);
 use FSM::Support::NormalizedSemanticForwardIRContract qw(
@@ -69,6 +78,9 @@ use FSM::Support::NormalizedSemanticModuleContract qw(
 );
 use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_contract_source
+);
+use FSM::Support::NormalizedSemanticReportContract qw(
+    normalized_semantic_report_contract_source
 );
 use FSM::Support::NormalizedSemanticSignalAnalysisContract qw(
     normalized_semantic_signal_analysis_contract_source
@@ -542,7 +554,7 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     );
     is(
         $manifest->{semantic_exports}{normalized_semantic_json}{contract_source},
-        'FSM::Support::NormalizedSemanticReportContract',
+        normalized_semantic_report_contract_source(),
         'manifest records the normalized semantic report contract owner',
     );
     ok(
@@ -667,7 +679,7 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     );
     is(
         $manifest->{backend_validation}{systemverilog_external}{contract_source},
-        'FSM::Support::HDLExternalValidationContract',
+        hdl_external_validation_contract_source(),
         'manifest records the external HDL validation contract owner',
     );
     ok(
@@ -777,7 +789,7 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     );
     is(
         $manifest->{embedding}{hdl_generator_result}{contract_source},
-        'FSM::Support::HDLGeneratorResultContract',
+        hdl_generator_result_contract_source(),
         'manifest records the HDLGenerator result contract owner',
     );
     ok(
@@ -1042,7 +1054,7 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     );
     is(
         $manifest->{embedding}{typed_extensions}{contract_source},
-        'FSM::Support::ExtensionContract',
+        extension_contract_source(),
         'manifest records the typed extension contract owner',
     );
     my %extension_hooks = map { $_ => 1 } @{$manifest->{embedding}{typed_extensions}{hook_names}};

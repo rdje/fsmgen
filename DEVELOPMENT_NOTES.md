@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: manifest section owner maps should not own child owner strings either
+- After the child-owner cleanup inside report, semantic, and `HDLGenerator`
+  families, the next remaining drift seam sat one layer higher in the
+  capability-manifest section contracts themselves.
+- `EmbeddingContract`, `SemanticExportsContract`, and
+  `BackendValidationContract` were still publishing nested owner maps with
+  hand-typed child owner strings even though the child contracts already
+  carried those identities.
+- The same regularization pattern still applies cleanly here:
+  - let the child contract export one canonical `*_contract_source()` helper,
+  - let the section contract keep responsibility for the section shell and
+    nested-key map,
+  - and make the section contract plus manifest regressions assert against the
+    child helpers instead of against duplicated literals.
+- That keeps the public manifest contract story tighter because the section
+  contracts now advertise ownership maps sourced from the child contracts they
+  actually delegate to.
+
 ## 2026-04-21: normalized semantic reports should not own the payload owner string either
 - After the report/check family and `HDLGenerator` family cleanups, one small
   but still real drift seam remained in the normalized-semantic lane:
