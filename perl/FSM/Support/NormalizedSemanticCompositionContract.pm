@@ -40,6 +40,9 @@ sub build_normalized_semantic_composition_contract {
             ],
         },
         public_presence_keys => normalized_semantic_composition_presence_keys(),
+        nested_contract_source_map => {
+            provenance_report => composition_report_contract_source(),
+        },
         provenance_report_contract_source => composition_report_contract_source(),
         optional_for_non_composition_sources => JSON::PP::true,
         json_safe_when_embedded_in_public_reports => JSON::PP::true,

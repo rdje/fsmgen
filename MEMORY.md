@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-21: normalized semantic composition now publishes a nested owner map too
+- Hardened
+  [perl/FSM/Support/NormalizedSemanticCompositionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticCompositionContract.pm)
+  so the bounded nested `semantic.composition` object now publishes a
+  `nested_contract_source_map` for `provenance_report` instead of exposing
+  that child owner only as a separate scalar field.
+- Regression coverage now proves that bounded composition nested-owner map
+  directly:
+  [t/333-normalized-semantic-composition-contract.t](/Users/richarddje/Documents/github/fsmgen/t/333-normalized-semantic-composition-contract.t).
+
 ## 2026-04-21: normalized semantic forward-ir now publishes a nested owner map too
 - Hardened
   [perl/FSM/Support/NormalizedSemanticForwardIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticForwardIRContract.pm)

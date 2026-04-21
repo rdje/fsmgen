@@ -38,6 +38,13 @@ subtest 'contract exposes the bounded normalized semantic composition object' =>
         ],
         'contract records the public report builder that reuses the nested composition object',
     );
+    is_deeply(
+        $contract->{nested_contract_source_map},
+        {
+            provenance_report => composition_report_contract_source(),
+        },
+        'contract publishes the bounded composition nested-contract ownership map',
+    );
     is(
         $contract->{provenance_report_contract_source},
         composition_report_contract_source(),

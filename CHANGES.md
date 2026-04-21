@@ -1,6 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-21
+### Normalized semantic composition now publishes a nested owner map too
+- Updated [perl/FSM/Support/NormalizedSemanticCompositionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticCompositionContract.pm) so the bounded nested `semantic.composition` object now publishes a `nested_contract_source_map` for `provenance_report`, reusing the same canonical child-owner helper already surfaced through the scalar owner field.
+- Updated [t/333-normalized-semantic-composition-contract.t](/Users/richarddje/Documents/github/fsmgen/t/333-normalized-semantic-composition-contract.t) so the direct composition regression now locks that nested-owner map directly.
+
 ### Normalized semantic forward-ir now publishes a nested owner map too
 - Updated [perl/FSM/Support/NormalizedSemanticForwardIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticForwardIRContract.pm) so the bounded nested `semantic.forward_ir` object now publishes a `nested_contract_source_map` for `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir`, reusing the same canonical child-owner helpers already surfaced through the scalar owner fields.
 - Updated [t/334-normalized-semantic-forward-ir-contract.t](/Users/richarddje/Documents/github/fsmgen/t/334-normalized-semantic-forward-ir-contract.t) so the direct forward-IR regression now locks that nested-owner map directly.

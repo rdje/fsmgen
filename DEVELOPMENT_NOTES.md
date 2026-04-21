@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: composition objects should publish their child owner map too
+- After grouping the `semantic` payload and the nested `forward_ir` object, the
+  next remaining consistency seam on the semantic side was the bounded
+  `composition` object.
+- `NormalizedSemanticCompositionContract` already exposed the
+  `provenance_report` owner as a scalar field, but consumers still had to infer
+  that it was the child-owner map for the only nested bounded child branch.
+- The bounded move is deliberately tiny:
+  - add one `nested_contract_source_map` for `provenance_report`,
+  - keep the existing scalar owner field for compatibility,
+  - and lock the direct composition regression against that grouped map.
+- That keeps the composition lane consistent with the other nested semantic
+  contracts without inventing a broader grouping scheme where it is not needed.
+
 ## 2026-04-21: forward-ir shells should publish their immediate child owner map too
 - After grouping the immediate child owners on the `semantic` payload, the same
   small consistency seam still remained one level lower in the nested
