@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### symbol-contract owners now group summary and symbol families too
+- Updated [perl/FSM/Support/NormalizedSemanticSymbolContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSymbolContract.pm) so the bounded nested `semantic.symbol_contract` owner now publishes `summary_presence_keys`, `symbol_name_keys`, `symbol_map_keys`, `constant_detail_keys`, `package_import_keys`, and a grouped `presence_key_family_map`, instead of forcing embedders to collect those symbol-contract families separately.
+- Updated [t/335-normalized-semantic-symbol-contract.t](/Users/richarddje/Documents/github/fsmgen/t/335-normalized-semantic-symbol-contract.t) so the direct symbol-contract regression now locks that grouped leaf-owner discovery surface directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders can discover the grouped symbol-contract key families from the book too.
+
 ### structural-rtl owners now group shell summary and collection keys too
 - Updated [perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm) so the bounded nested `semantic.forward_ir.structural_rtl_ir` owner now publishes `summary_presence_keys`, `collection_presence_keys`, and a grouped `presence_key_family_map`, instead of forcing embedders to collect those structural-RTL shell families separately.
 - Updated [t/341-normalized-semantic-structural-rtl-ir-contract.t](/Users/richarddje/Documents/github/fsmgen/t/341-normalized-semantic-structural-rtl-ir-contract.t) so the direct structural-RTL regression now locks that grouped leaf-owner discovery surface directly.

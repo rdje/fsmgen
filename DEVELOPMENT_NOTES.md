@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: symbol-contract families should be discoverable as one grouped map too
+- After grouping the bounded structural-RTL shell families, the next adjacent
+  semantic-side leaf-owner seam sat in the optional nested
+  `semantic.symbol_contract` object.
+- `NormalizedSemanticSymbolContract` already published the full shell key
+  list, but a caller still had to separate summary counts, name lists,
+  definition maps, constant-specific detail keys, and package-import keys by
+  hand.
+- The bounded move is deliberately small:
+  - keep the existing full shell key list unchanged,
+  - add canonical family helpers for summaries, symbol names, symbol maps,
+    constant details, and package imports,
+  - add one grouped `presence_key_family_map`,
+  - and lock the direct symbol-contract regression against that grouped map.
+- That keeps the explicit symbol-contract owner easier to consume without
+  pretending every nested scalar/list/hash field inside `constants`, `enums`,
+  or `types` is frozen.
+
 ## 2026-04-22: structural-rtl shell families should be discoverable as one grouped map too
 - After grouping the bounded semantic-payload shell families at the report
   level, the next adjacent semantic-side leaf-owner seam sat in the nested

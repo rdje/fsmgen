@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: symbol-contract owners now publish grouped key families too
+- Hardened
+  [perl/FSM/Support/NormalizedSemanticSymbolContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSymbolContract.pm)
+  so the bounded nested `semantic.symbol_contract` object now publishes
+  grouped summary, symbol-name, symbol-map, constant-detail, and
+  package-import key families.
+- Regression coverage now proves that grouped symbol-contract key-family map
+  directly:
+  [t/335-normalized-semantic-symbol-contract.t](/Users/richarddje/Documents/github/fsmgen/t/335-normalized-semantic-symbol-contract.t).
+
 ## 2026-04-22: structural-rtl owners now publish grouped shell key families too
 - Hardened
   [perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm)

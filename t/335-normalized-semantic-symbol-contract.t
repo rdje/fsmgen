@@ -16,8 +16,14 @@ use FSM::Support::NormalizedSemanticReportContract qw(
 );
 use FSM::Support::NormalizedSemanticSymbolContract qw(
     build_normalized_semantic_symbol_contract
+    normalized_semantic_symbol_contract_constant_detail_keys
+    normalized_semantic_symbol_contract_package_import_keys
+    normalized_semantic_symbol_contract_presence_key_family_map
     normalized_semantic_symbol_contract_source
     normalized_semantic_symbol_contract_presence_keys
+    normalized_semantic_symbol_contract_summary_presence_keys
+    normalized_semantic_symbol_contract_symbol_map_keys
+    normalized_semantic_symbol_contract_symbol_name_keys
 );
 
 subtest 'contract exposes the bounded normalized semantic symbol-contract object' => sub {
@@ -52,6 +58,36 @@ subtest 'contract exposes the bounded normalized semantic symbol-contract object
         $contract->{public_presence_keys},
         normalized_semantic_symbol_contract_presence_keys(),
         'contract publishes the bounded symbol-contract key list',
+    );
+    is_deeply(
+        $contract->{summary_presence_keys},
+        normalized_semantic_symbol_contract_summary_presence_keys(),
+        'contract publishes the bounded symbol-contract summary key family',
+    );
+    is_deeply(
+        $contract->{symbol_name_keys},
+        normalized_semantic_symbol_contract_symbol_name_keys(),
+        'contract publishes the bounded symbol-contract symbol-name key family',
+    );
+    is_deeply(
+        $contract->{symbol_map_keys},
+        normalized_semantic_symbol_contract_symbol_map_keys(),
+        'contract publishes the bounded symbol-contract symbol-map key family',
+    );
+    is_deeply(
+        $contract->{constant_detail_keys},
+        normalized_semantic_symbol_contract_constant_detail_keys(),
+        'contract publishes the bounded symbol-contract constant-detail key family',
+    );
+    is_deeply(
+        $contract->{package_import_keys},
+        normalized_semantic_symbol_contract_package_import_keys(),
+        'contract publishes the bounded symbol-contract package-import key family',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map},
+        normalized_semantic_symbol_contract_presence_key_family_map(),
+        'contract publishes the grouped symbol-contract key-family map',
     );
     is_deeply(
         normalized_semantic_payload_symbol_contract_keys(),

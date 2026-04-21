@@ -435,6 +435,10 @@ The optional `semantic.symbol_contract` summary inside that payload now also
 has its own bounded nested-object contract for symbol-rich sources:
 [perl/FSM/Support/NormalizedSemanticSymbolContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSymbolContract.pm)
 owns the published symbol-contract key family.
+That same owner now also publishes a grouped `presence_key_family_map` so
+embedders can discover the bounded symbol-contract summary, name-list,
+nested-map, constant-detail, and package-import key families from one place
+instead of collecting the individual key-family lists separately.
 The nested `semantic.module` summary inside that payload now also has its own
 bounded nested-object contract:
 [perl/FSM/Support/NormalizedSemanticModuleContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticModuleContract.pm)
