@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: semantic-module owners now publish grouped key families too
+- Hardened
+  [perl/FSM/Support/NormalizedSemanticModuleContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticModuleContract.pm)
+  so the bounded nested `semantic.module` object now publishes a grouped
+  `presence_key_family_map` covering its core and optional-metric key
+  families.
+- Regression coverage now proves that grouped semantic-module key-family map
+  directly:
+  [t/332-normalized-semantic-module-contract.t](/Users/richarddje/Documents/github/fsmgen/t/332-normalized-semantic-module-contract.t).
+
 ## 2026-04-22: report-producer owners now publish grouped key families too
 - Hardened
   [perl/FSM/Support/ReportProducerContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportProducerContract.pm)

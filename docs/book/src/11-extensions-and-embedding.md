@@ -412,6 +412,9 @@ The nested `semantic.module` summary inside that payload now also has its own
 bounded nested-object contract:
 [perl/FSM/Support/NormalizedSemanticModuleContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticModuleContract.pm)
 owns the core module-summary keys plus the current optional metric-key family.
+That same owner now also publishes a grouped `presence_key_family_map` so
+embedders can discover those bounded semantic.module key families from one
+place instead of collecting the individual field-family lists separately.
 The nested `semantic.composition` summary inside that payload now also has its
 own bounded nested-object contract for composition sources:
 [perl/FSM/Support/NormalizedSemanticCompositionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticCompositionContract.pm)

@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: semantic-module leaf key families should be discoverable as one grouped map too
+- After grouping the bounded shared `producer` leaf-owner key families, the
+  next adjacent semantic-side leaf-owner seam sat in the nested
+  `semantic.module` object.
+- `NormalizedSemanticModuleContract` already published the core module summary
+  keys and the optional metric-key family separately, but a caller still had
+  to gather those bounded semantic-module families one list at a time.
+- The bounded move is deliberately small:
+  - keep the existing key-family helpers unchanged,
+  - add one canonical leaf-level `presence_key_family_map`,
+  - and lock the direct semantic-module regression against that grouped map.
+- That keeps the explicit nested semantic-module owner easier to consume
+  without widening the normalized semantic payload or report shells.
+
 ## 2026-04-22: report-producer leaf key families should be discoverable as one grouped map too
 - After grouping the bounded shared `support_accounting` leaf-owner key
   families, the next adjacent shared public leaf-owner seam sat in the nested

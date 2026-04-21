@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### normalized-semantic module owners now publish grouped key families too
+- Updated [perl/FSM/Support/NormalizedSemanticModuleContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticModuleContract.pm) so the bounded nested `semantic.module` contract now publishes a grouped `presence_key_family_map` for its core and optional-metric key families, instead of forcing embedders to collect those key lists separately.
+- Updated [t/332-normalized-semantic-module-contract.t](/Users/richarddje/Documents/github/fsmgen/t/332-normalized-semantic-module-contract.t) so the direct semantic-module regression now locks that grouped leaf-owner discovery surface directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders can discover the grouped semantic-module key families from the book too.
+
 ### report-producer owners now publish grouped key families too
 - Updated [perl/FSM/Support/ReportProducerContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportProducerContract.pm) so the bounded shared `producer` contract now publishes a grouped `presence_key_family_map` for its common and normalized-semantic-only key families, instead of forcing embedders to collect those key lists separately.
 - Updated [t/326-report-producer-contract.t](/Users/richarddje/Documents/github/fsmgen/t/326-report-producer-contract.t) so the direct producer regression now locks that grouped leaf-owner discovery surface directly.

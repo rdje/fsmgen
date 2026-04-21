@@ -10,6 +10,7 @@ our @EXPORT_OK = qw(
     build_normalized_semantic_module_contract
     normalized_semantic_module_contract_source
     normalized_semantic_module_optional_metric_keys
+    normalized_semantic_module_presence_key_family_map
     normalized_semantic_module_presence_keys
 );
 
@@ -39,11 +40,13 @@ sub build_normalized_semantic_module_contract {
         },
         public_presence_keys => normalized_semantic_module_presence_keys(),
         optional_metric_keys => normalized_semantic_module_optional_metric_keys(),
+        presence_key_family_map => normalized_semantic_module_presence_key_family_map(),
         json_safe_when_embedded_in_public_reports => JSON::PP::true,
         guidance => [
             q{Treat this contract as the bounded nested `module` object used inside successful public normalized semantic JSON reports.},
             'The bounded public promise covers the core module identity, language, state, signal, parameter, and implicit-system-port summary keys.',
             'The same owner also publishes the currently bounded optional metric key family for output-drive, standalone-DT, and composition-specific counters.',
+            'Use the grouped presence_key_family_map to discover the bounded core and optional-metric semantic.module key families without collecting those key-family lists separately.',
         ],
     };
 }
@@ -85,6 +88,13 @@ sub normalized_semantic_module_optional_metric_keys {
             composition_shared_datapath_candidate_count
         ),
     ];
+}
+
+sub normalized_semantic_module_presence_key_family_map {
+    return {
+        public_presence_keys => normalized_semantic_module_presence_keys(),
+        optional_metric_keys => normalized_semantic_module_optional_metric_keys(),
+    };
 }
 
 1;
