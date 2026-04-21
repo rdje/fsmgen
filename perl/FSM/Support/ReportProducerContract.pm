@@ -9,6 +9,7 @@ use JSON::PP ();
 our @EXPORT_OK = qw(
     build_report_producer_contract
     normalized_semantic_report_producer_extra_keys
+    report_producer_presence_key_family_map
     report_producer_contract_source
     report_producer_common_keys
 );
@@ -43,11 +44,13 @@ sub build_report_producer_contract {
         },
         common_presence_keys => report_producer_common_keys(),
         normalized_semantic_extra_presence_keys => normalized_semantic_report_producer_extra_keys(),
+        presence_key_family_map => report_producer_presence_key_family_map(),
         json_safe_when_embedded_in_public_reports => JSON::PP::true,
         reused_across_public_reports => JSON::PP::true,
         guidance => [
             q{Treat this contract as the bounded nested `producer` object shared by the public check JSON and normalized semantic JSON report surfaces.},
             'The common shared object records FSMGen identity plus the report builder owner, while normalized semantic JSON advertises its public semantic layer list as an additive bounded extension.',
+            'Use the grouped presence_key_family_map to discover the bounded common and normalized-semantic producer key families without collecting those key-family lists separately.',
             'Widen this nested object only when both public report surfaces or one explicitly documented report-specific branch need the same new field family.',
         ],
     };
@@ -68,6 +71,13 @@ sub normalized_semantic_report_producer_extra_keys {
             semantic_layers
         ),
     ];
+}
+
+sub report_producer_presence_key_family_map {
+    return {
+        common_presence_keys => report_producer_common_keys(),
+        normalized_semantic_extra_presence_keys => normalized_semantic_report_producer_extra_keys(),
+    };
 }
 
 1;

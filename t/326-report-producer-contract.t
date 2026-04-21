@@ -11,6 +11,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Support::ReportProducerContract qw(
     build_report_producer_contract
     normalized_semantic_report_producer_extra_keys
+    report_producer_presence_key_family_map
     report_producer_contract_source
     report_producer_common_keys
 );
@@ -53,6 +54,11 @@ subtest 'contract exposes the bounded shared report producer object' => sub {
         $contract->{normalized_semantic_extra_presence_keys},
         normalized_semantic_report_producer_extra_keys(),
         'contract publishes the bounded normalized-semantic producer extra key list',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map},
+        report_producer_presence_key_family_map(),
+        'contract publishes the grouped producer key-family discovery map',
     );
 };
 

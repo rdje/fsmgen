@@ -283,6 +283,9 @@ share one bounded nested-object contract for producer identity:
 owns the shared `name` plus `report_source` keys, while normalized semantic
 JSON adds the bounded `semantic_layers` extension documented by that same
 owner.
+That same owner now also publishes a grouped `presence_key_family_map` so
+embedders can discover those bounded producer key families from one place
+instead of collecting the individual field-family lists separately.
 Those same public check JSON and normalized semantic JSON reports now also
 share one bounded nested-object contract for the caller-facing source identity:
 [perl/FSM/Support/ReportSourceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportSourceContract.pm)
