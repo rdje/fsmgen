@@ -9,14 +9,19 @@ use JSON::PP ();
 our @EXPORT_OK = qw(
     build_report_producer_contract
     normalized_semantic_report_producer_extra_keys
+    report_producer_contract_source
     report_producer_common_keys
 );
+
+sub report_producer_contract_source {
+    return 'FSM::Support::ReportProducerContract';
+}
 
 sub build_report_producer_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::ReportProducerContract',
+        contract_source => report_producer_contract_source(),
         object_name => 'producer',
         report_sources => [
             qw(

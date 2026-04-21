@@ -12,6 +12,7 @@ use JSON::PP qw(decode_json);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::CheckFailureDiagnosticContract qw(
+    check_failure_diagnostic_contract_source
     check_failure_diagnostic_matched_presence_keys
     check_failure_diagnostic_optional_artifact_keys
     check_failure_diagnostic_presence_keys
@@ -30,12 +31,28 @@ use FSM::Support::CheckDiagnosticsContract qw(
     check_json_success_result_keys
     check_json_success_support_accounting_keys
 );
-use FSM::Support::CheckResultContract qw(check_result_presence_keys);
-use FSM::Support::ReportCommandContract qw(report_command_presence_keys);
-use FSM::Support::ReportGeneratedOutputContract qw(report_generated_output_presence_keys);
-use FSM::Support::ReportProducerContract qw(report_producer_common_keys);
-use FSM::Support::ReportSourceContract qw(report_source_presence_keys);
+use FSM::Support::CheckResultContract qw(
+    check_result_contract_source
+    check_result_presence_keys
+);
+use FSM::Support::ReportCommandContract qw(
+    report_command_contract_source
+    report_command_presence_keys
+);
+use FSM::Support::ReportGeneratedOutputContract qw(
+    report_generated_output_contract_source
+    report_generated_output_presence_keys
+);
+use FSM::Support::ReportProducerContract qw(
+    report_producer_common_keys
+    report_producer_contract_source
+);
+use FSM::Support::ReportSourceContract qw(
+    report_source_contract_source
+    report_source_presence_keys
+);
 use FSM::Support::SupportAccountingMatchContract qw(
+    support_accounting_match_contract_source
     support_accounting_match_common_keys
     support_accounting_match_failure_keys
     support_accounting_match_success_keys
@@ -68,37 +85,37 @@ subtest 'contract exposes the bounded check JSON surface' => sub {
     );
     is(
         $contract->{command_contract_source},
-        'FSM::Support::ReportCommandContract',
+        report_command_contract_source(),
         'contract records the shared command nested-object owner',
     );
     is(
         $contract->{result_contract_source},
-        'FSM::Support::CheckResultContract',
+        check_result_contract_source(),
         'contract records the success result nested-object owner',
     );
     is(
         $contract->{failure_diagnostic_contract_source},
-        'FSM::Support::CheckFailureDiagnosticContract',
+        check_failure_diagnostic_contract_source(),
         'contract records the failure diagnostic nested-object owner',
     );
     is(
         $contract->{generated_output_contract_source},
-        'FSM::Support::ReportGeneratedOutputContract',
+        report_generated_output_contract_source(),
         'contract records the shared generated_output nested-object owner',
     );
     is(
         $contract->{producer_contract_source},
-        'FSM::Support::ReportProducerContract',
+        report_producer_contract_source(),
         'contract records the shared producer nested-object owner',
     );
     is(
         $contract->{source_contract_source},
-        'FSM::Support::ReportSourceContract',
+        report_source_contract_source(),
         'contract records the shared source nested-object owner',
     );
     is(
         $contract->{support_accounting_contract_source},
-        'FSM::Support::SupportAccountingMatchContract',
+        support_accounting_match_contract_source(),
         'contract records the shared support-accounting nested-object owner',
     );
     ok($contract->{full_report_json_safe}, 'contract says the emitted report is JSON-safe');

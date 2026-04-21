@@ -12,10 +12,26 @@ use JSON::PP qw(decode_json);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::CheckFailureDiagnosticContract qw(
+    check_failure_diagnostic_contract_source
     check_failure_diagnostic_matched_presence_keys
     check_failure_diagnostic_presence_keys
     check_failure_diagnostic_support_accounting_matched_presence_keys
     check_failure_diagnostic_support_accounting_presence_keys
+);
+use FSM::Support::ReportCommandContract qw(
+    report_command_contract_source
+);
+use FSM::Support::ReportGeneratedOutputContract qw(
+    report_generated_output_contract_source
+);
+use FSM::Support::ReportProducerContract qw(
+    report_producer_contract_source
+);
+use FSM::Support::ReportSourceContract qw(
+    report_source_contract_source
+);
+use FSM::Support::SupportAccountingMatchContract qw(
+    support_accounting_match_contract_source
 );
 use FSM::Support::NormalizedSemanticCompositionContract qw(
     normalized_semantic_composition_contract_source
@@ -123,17 +139,17 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
     ok($contract->{emits_support_accounting_object}, 'contract says normalized semantic JSON emits support accounting');
     is(
         $contract->{command_contract_source},
-        'FSM::Support::ReportCommandContract',
+        report_command_contract_source(),
         'contract records the shared command nested-object owner',
     );
     is(
         $contract->{failure_diagnostic_contract_source},
-        'FSM::Support::CheckFailureDiagnosticContract',
+        check_failure_diagnostic_contract_source(),
         'contract records the shared failure diagnostic nested-object owner',
     );
     is(
         $contract->{generated_output_contract_source},
-        'FSM::Support::ReportGeneratedOutputContract',
+        report_generated_output_contract_source(),
         'contract records the shared generated_output nested-object owner',
     );
     is(
@@ -178,17 +194,17 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
     );
     is(
         $contract->{producer_contract_source},
-        'FSM::Support::ReportProducerContract',
+        report_producer_contract_source(),
         'contract records the shared producer nested-object owner',
     );
     is(
         $contract->{source_contract_source},
-        'FSM::Support::ReportSourceContract',
+        report_source_contract_source(),
         'contract records the shared source nested-object owner',
     );
     is(
         $contract->{support_accounting_contract_source},
-        'FSM::Support::SupportAccountingMatchContract',
+        support_accounting_match_contract_source(),
         'contract records the shared support-accounting nested-object owner',
     );
     ok($contract->{failure_omits_semantic_payload}, 'contract says failed reports omit semantic payload');

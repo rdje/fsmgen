@@ -8,14 +8,19 @@ use JSON::PP ();
 
 our @EXPORT_OK = qw(
     build_report_source_contract
+    report_source_contract_source
     report_source_presence_keys
 );
+
+sub report_source_contract_source {
+    return 'FSM::Support::ReportSourceContract';
+}
 
 sub build_report_source_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::ReportSourceContract',
+        contract_source => report_source_contract_source(),
         object_name => 'source',
         report_sources => [
             qw(

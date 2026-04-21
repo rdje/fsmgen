@@ -8,16 +8,21 @@ use JSON::PP ();
 
 our @EXPORT_OK = qw(
     build_support_accounting_match_contract
+    support_accounting_match_contract_source
     support_accounting_match_common_keys
     support_accounting_match_failure_keys
     support_accounting_match_success_keys
 );
 
+sub support_accounting_match_contract_source {
+    return 'FSM::Support::SupportAccountingMatchContract';
+}
+
 sub build_support_accounting_match_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::SupportAccountingMatchContract',
+        contract_source => support_accounting_match_contract_source(),
         report_sources => [
             'FSM::Support::CheckDiagnostics',
             'FSM::Support::NormalizedSemanticReport',

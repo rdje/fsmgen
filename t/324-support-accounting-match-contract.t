@@ -10,6 +10,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::SupportAccountingMatchContract qw(
     build_support_accounting_match_contract
+    support_accounting_match_contract_source
     support_accounting_match_common_keys
     support_accounting_match_failure_keys
     support_accounting_match_success_keys
@@ -22,7 +23,7 @@ subtest 'contract exposes the bounded shared support-accounting match object' =>
     is($contract->{status}, 'bounded_public', 'contract marks the shared nested object as bounded public');
     is(
         $contract->{contract_source},
-        'FSM::Support::SupportAccountingMatchContract',
+        support_accounting_match_contract_source(),
         'contract records its own owner',
     );
     ok(

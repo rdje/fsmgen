@@ -8,14 +8,19 @@ use JSON::PP ();
 
 our @EXPORT_OK = qw(
     build_report_generated_output_contract
+    report_generated_output_contract_source
     report_generated_output_presence_keys
 );
+
+sub report_generated_output_contract_source {
+    return 'FSM::Support::ReportGeneratedOutputContract';
+}
 
 sub build_report_generated_output_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::ReportGeneratedOutputContract',
+        contract_source => report_generated_output_contract_source(),
         object_name => 'generated_output',
         report_sources => [
             qw(

@@ -10,6 +10,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::ReportCommandContract qw(
     build_report_command_contract
+    report_command_contract_source
     report_command_presence_keys
 );
 
@@ -20,7 +21,7 @@ subtest 'contract exposes the bounded shared report command object' => sub {
     is($contract->{status}, 'bounded_public', 'contract marks the shared nested object as bounded public');
     is(
         $contract->{contract_source},
-        'FSM::Support::ReportCommandContract',
+        report_command_contract_source(),
         'contract records its own owner',
     );
     is($contract->{object_name}, 'command', 'contract records the nested object name');

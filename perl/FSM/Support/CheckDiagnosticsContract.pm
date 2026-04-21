@@ -6,18 +6,35 @@ use warnings;
 use Exporter 'import';
 use JSON::PP ();
 use FSM::Support::CheckFailureDiagnosticContract qw(
+    check_failure_diagnostic_contract_source
     check_failure_diagnostic_matched_presence_keys
     check_failure_diagnostic_optional_artifact_keys
     check_failure_diagnostic_presence_keys
     check_failure_diagnostic_support_accounting_matched_presence_keys
     check_failure_diagnostic_support_accounting_presence_keys
 );
-use FSM::Support::CheckResultContract qw(check_result_presence_keys);
-use FSM::Support::ReportCommandContract qw(report_command_presence_keys);
-use FSM::Support::ReportGeneratedOutputContract qw(report_generated_output_presence_keys);
-use FSM::Support::ReportProducerContract qw(report_producer_common_keys);
-use FSM::Support::ReportSourceContract qw(report_source_presence_keys);
+use FSM::Support::CheckResultContract qw(
+    check_result_contract_source
+    check_result_presence_keys
+);
+use FSM::Support::ReportCommandContract qw(
+    report_command_contract_source
+    report_command_presence_keys
+);
+use FSM::Support::ReportGeneratedOutputContract qw(
+    report_generated_output_contract_source
+    report_generated_output_presence_keys
+);
+use FSM::Support::ReportProducerContract qw(
+    report_producer_common_keys
+    report_producer_contract_source
+);
+use FSM::Support::ReportSourceContract qw(
+    report_source_contract_source
+    report_source_presence_keys
+);
 use FSM::Support::SupportAccountingMatchContract qw(
+    support_accounting_match_contract_source
     support_accounting_match_common_keys
     support_accounting_match_failure_keys
     support_accounting_match_success_keys
@@ -61,13 +78,13 @@ sub build_check_diagnostics_contract {
         emits_support_accounting_object => JSON::PP::true,
         emits_success_support_accounting_object => JSON::PP::true,
         emits_failure_diagnostic_support_accounting_object => JSON::PP::true,
-        command_contract_source => 'FSM::Support::ReportCommandContract',
-        failure_diagnostic_contract_source => 'FSM::Support::CheckFailureDiagnosticContract',
-        result_contract_source => 'FSM::Support::CheckResultContract',
-        generated_output_contract_source => 'FSM::Support::ReportGeneratedOutputContract',
-        producer_contract_source => 'FSM::Support::ReportProducerContract',
-        source_contract_source => 'FSM::Support::ReportSourceContract',
-        support_accounting_contract_source => 'FSM::Support::SupportAccountingMatchContract',
+        command_contract_source => report_command_contract_source(),
+        failure_diagnostic_contract_source => check_failure_diagnostic_contract_source(),
+        result_contract_source => check_result_contract_source(),
+        generated_output_contract_source => report_generated_output_contract_source(),
+        producer_contract_source => report_producer_contract_source(),
+        source_contract_source => report_source_contract_source(),
+        support_accounting_contract_source => support_accounting_match_contract_source(),
         public_top_level_presence_keys => check_json_public_top_level_keys(),
         command_presence_keys => report_command_presence_keys(),
         generated_output_presence_keys => report_generated_output_presence_keys(),

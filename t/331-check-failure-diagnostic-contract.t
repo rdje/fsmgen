@@ -10,11 +10,15 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::CheckFailureDiagnosticContract qw(
     build_check_failure_diagnostic_contract
+    check_failure_diagnostic_contract_source
     check_failure_diagnostic_matched_presence_keys
     check_failure_diagnostic_optional_artifact_keys
     check_failure_diagnostic_presence_keys
     check_failure_diagnostic_support_accounting_matched_presence_keys
     check_failure_diagnostic_support_accounting_presence_keys
+);
+use FSM::Support::SupportAccountingMatchContract qw(
+    support_accounting_match_contract_source
 );
 
 subtest 'contract exposes the bounded check failure diagnostic object' => sub {
@@ -24,7 +28,7 @@ subtest 'contract exposes the bounded check failure diagnostic object' => sub {
     is($contract->{status}, 'bounded_public', 'contract marks the nested failure diagnostic object as bounded public');
     is(
         $contract->{contract_source},
-        'FSM::Support::CheckFailureDiagnosticContract',
+        check_failure_diagnostic_contract_source(),
         'contract records its own owner',
     );
     is($contract->{object_name}, 'diagnostic', 'contract records the nested object name');
@@ -45,7 +49,7 @@ subtest 'contract exposes the bounded check failure diagnostic object' => sub {
     );
     is(
         $contract->{support_accounting_contract_source},
-        'FSM::Support::SupportAccountingMatchContract',
+        support_accounting_match_contract_source(),
         'contract records the nested support-accounting owner',
     );
     ok(

@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: shared report/check nested owner names should come from the shared contracts too
+- After the semantic payload/report cleanup, one more obvious drift family still
+  remained in the public report lane: the shared nested `command`,
+  `generated_output`, `producer`, `source`, `support_accounting`,
+  `diagnostic`, and `result` owners were still being retyped by the report
+  shells that embed them.
+- That was the same category of risk we have been shaving down across `R13`:
+  - a leaf nested contract could think it owned one public shell,
+  - a parent public report contract could advertise the same shell through a
+    separate inline string,
+  - and the capability manifest could silently inherit whichever copy the
+    parent happened to publish today.
+- The safer regularization is to let those shared nested contracts export one
+  canonical `*_contract_source()` helper each and make both public report
+  shells plus the manifest-facing regressions use those helpers.
+- That keeps the public API story tighter because shared nested-object owners
+  now come from the shared contract modules themselves instead of from the
+  parents that merely embed them.
+
 ## 2026-04-21: semantic payload/report shells should not own nested owner strings either
 - After the forward-IR and composition-report regularizations, the same drift
   pattern was still present one layer lower in the normalized-semantic family:

@@ -6,12 +6,14 @@ use warnings;
 use Exporter 'import';
 use JSON::PP ();
 use FSM::Support::SupportAccountingMatchContract qw(
+    support_accounting_match_contract_source
     support_accounting_match_common_keys
     support_accounting_match_failure_keys
 );
 
 our @EXPORT_OK = qw(
     build_check_failure_diagnostic_contract
+    check_failure_diagnostic_contract_source
     check_failure_diagnostic_matched_presence_keys
     check_failure_diagnostic_optional_artifact_keys
     check_failure_diagnostic_presence_keys
@@ -19,11 +21,15 @@ our @EXPORT_OK = qw(
     check_failure_diagnostic_support_accounting_presence_keys
 );
 
+sub check_failure_diagnostic_contract_source {
+    return 'FSM::Support::CheckFailureDiagnosticContract';
+}
+
 sub build_check_failure_diagnostic_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::CheckFailureDiagnosticContract',
+        contract_source => check_failure_diagnostic_contract_source(),
         object_name => 'diagnostic',
         parent_object_name => 'diagnostics[]',
         report_sources => [
@@ -42,7 +48,7 @@ sub build_check_failure_diagnostic_contract {
                 'FSM::Support::NormalizedSemanticReport::build_normalized_semantic_failure_report(...)',
             ],
         },
-        support_accounting_contract_source => 'FSM::Support::SupportAccountingMatchContract',
+        support_accounting_contract_source => support_accounting_match_contract_source(),
         public_presence_keys => check_failure_diagnostic_presence_keys(),
         matched_presence_keys => check_failure_diagnostic_matched_presence_keys(),
         optional_artifact_keys => check_failure_diagnostic_optional_artifact_keys(),

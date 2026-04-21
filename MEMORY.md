@@ -1,5 +1,33 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-21: shared check and semantic nested-owner facts now come from the shared contract modules too
+- Hardened
+  [perl/FSM/Support/ReportCommandContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportCommandContract.pm),
+  [perl/FSM/Support/ReportGeneratedOutputContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportGeneratedOutputContract.pm),
+  [perl/FSM/Support/ReportProducerContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportProducerContract.pm),
+  [perl/FSM/Support/ReportSourceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportSourceContract.pm),
+  [perl/FSM/Support/SupportAccountingMatchContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingMatchContract.pm),
+  [perl/FSM/Support/CheckFailureDiagnosticContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckFailureDiagnosticContract.pm),
+  and [perl/FSM/Support/CheckResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckResultContract.pm)
+  so those shared nested public-report contracts now export canonical owner
+  helpers directly.
+- Expanded
+  [perl/FSM/Support/CheckDiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnosticsContract.pm)
+  and [perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm)
+  so the public check/semantic report shells now reuse those helper-backed
+  owner names instead of retyping shared nested owner strings inline.
+- Regression coverage now proves that helper-backed reuse directly:
+  [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t),
+  [t/311-normalized-semantic-report-contract.t](/Users/richarddje/Documents/github/fsmgen/t/311-normalized-semantic-report-contract.t),
+  [t/312-check-diagnostics-contract.t](/Users/richarddje/Documents/github/fsmgen/t/312-check-diagnostics-contract.t),
+  [t/324-support-accounting-match-contract.t](/Users/richarddje/Documents/github/fsmgen/t/324-support-accounting-match-contract.t),
+  [t/325-report-source-contract.t](/Users/richarddje/Documents/github/fsmgen/t/325-report-source-contract.t),
+  [t/326-report-producer-contract.t](/Users/richarddje/Documents/github/fsmgen/t/326-report-producer-contract.t),
+  [t/327-report-command-contract.t](/Users/richarddje/Documents/github/fsmgen/t/327-report-command-contract.t),
+  [t/328-report-generated-output-contract.t](/Users/richarddje/Documents/github/fsmgen/t/328-report-generated-output-contract.t),
+  [t/329-check-result-contract.t](/Users/richarddje/Documents/github/fsmgen/t/329-check-result-contract.t),
+  and [t/331-check-failure-diagnostic-contract.t](/Users/richarddje/Documents/github/fsmgen/t/331-check-failure-diagnostic-contract.t).
+
 ## 2026-04-21: semantic payload/report owner facts now come from the nested semantic contracts too
 - Hardened
   [perl/FSM/Support/NormalizedSemanticModuleContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticModuleContract.pm),

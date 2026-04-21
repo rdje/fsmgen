@@ -10,6 +10,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::CheckResultContract qw(
     build_check_result_contract
+    check_result_contract_source
     check_result_presence_keys
 );
 
@@ -20,7 +21,7 @@ subtest 'contract exposes the bounded check success result object' => sub {
     is($contract->{status}, 'bounded_public', 'contract marks the nested result object as bounded public');
     is(
         $contract->{contract_source},
-        'FSM::Support::CheckResultContract',
+        check_result_contract_source(),
         'contract records its own owner',
     );
     is($contract->{object_name}, 'result', 'contract records the nested object name');

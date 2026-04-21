@@ -6,6 +6,7 @@ use warnings;
 use Exporter 'import';
 use JSON::PP ();
 use FSM::Support::CheckFailureDiagnosticContract qw(
+    check_failure_diagnostic_contract_source
     check_failure_diagnostic_matched_presence_keys
     check_failure_diagnostic_optional_artifact_keys
     check_failure_diagnostic_presence_keys
@@ -62,14 +63,25 @@ use FSM::Support::NormalizedSemanticSymbolContract qw(
     normalized_semantic_symbol_contract_source
     normalized_semantic_symbol_contract_presence_keys
 );
-use FSM::Support::ReportCommandContract qw(report_command_presence_keys);
-use FSM::Support::ReportGeneratedOutputContract qw(report_generated_output_presence_keys);
+use FSM::Support::ReportCommandContract qw(
+    report_command_contract_source
+    report_command_presence_keys
+);
+use FSM::Support::ReportGeneratedOutputContract qw(
+    report_generated_output_contract_source
+    report_generated_output_presence_keys
+);
 use FSM::Support::ReportProducerContract qw(
     normalized_semantic_report_producer_extra_keys
+    report_producer_contract_source
     report_producer_common_keys
 );
-use FSM::Support::ReportSourceContract qw(report_source_presence_keys);
+use FSM::Support::ReportSourceContract qw(
+    report_source_contract_source
+    report_source_presence_keys
+);
 use FSM::Support::SupportAccountingMatchContract qw(
+    support_accounting_match_contract_source
     support_accounting_match_common_keys
     support_accounting_match_failure_keys
     support_accounting_match_success_keys
@@ -127,9 +139,9 @@ sub build_normalized_semantic_report_contract {
         failure_diagnostics_reuse_stable_codes => JSON::PP::true,
         sanitizes_private_perl_objects => JSON::PP::true,
         public_layers => [qw(intent_hir lowered_rtl_ir structural_rtl_ir)],
-        command_contract_source => 'FSM::Support::ReportCommandContract',
-        failure_diagnostic_contract_source => 'FSM::Support::CheckFailureDiagnosticContract',
-        generated_output_contract_source => 'FSM::Support::ReportGeneratedOutputContract',
+        command_contract_source => report_command_contract_source(),
+        failure_diagnostic_contract_source => check_failure_diagnostic_contract_source(),
+        generated_output_contract_source => report_generated_output_contract_source(),
         composition_contract_source => normalized_semantic_composition_contract_source(),
         explicit_system_contract_source => normalized_semantic_explicit_system_contract_source(),
         forward_ir_contract_source => normalized_semantic_forward_ir_contract_source(),
@@ -138,9 +150,9 @@ sub build_normalized_semantic_report_contract {
         signal_analysis_contract_source => normalized_semantic_signal_analysis_contract_source(),
         system_contract_source => normalized_semantic_system_contract_source(),
         symbol_contract_source => normalized_semantic_symbol_contract_source(),
-        producer_contract_source => 'FSM::Support::ReportProducerContract',
-        source_contract_source => 'FSM::Support::ReportSourceContract',
-        support_accounting_contract_source => 'FSM::Support::SupportAccountingMatchContract',
+        producer_contract_source => report_producer_contract_source(),
+        source_contract_source => report_source_contract_source(),
+        support_accounting_contract_source => support_accounting_match_contract_source(),
         public_top_level_presence_keys => normalized_semantic_public_top_level_keys(),
         command_presence_keys => report_command_presence_keys(),
         generated_output_presence_keys => report_generated_output_presence_keys(),

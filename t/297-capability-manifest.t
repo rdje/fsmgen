@@ -11,6 +11,12 @@ use JSON::PP qw(decode_json);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
+use FSM::Support::CheckFailureDiagnosticContract qw(
+    check_failure_diagnostic_contract_source
+);
+use FSM::Support::CheckResultContract qw(
+    check_result_contract_source
+);
 use FSM::Support::CompositionReportContract qw(
     composition_report_contract_source
     composition_report_json_fragment_path
@@ -49,7 +55,22 @@ use FSM::Support::NormalizedSemanticSystemContract qw(
 use FSM::Support::NormalizedSemanticSymbolContract qw(
     normalized_semantic_symbol_contract_source
 );
+use FSM::Support::ReportCommandContract qw(
+    report_command_contract_source
+);
+use FSM::Support::ReportGeneratedOutputContract qw(
+    report_generated_output_contract_source
+);
+use FSM::Support::ReportProducerContract qw(
+    report_producer_contract_source
+);
+use FSM::Support::ReportSourceContract qw(
+    report_source_contract_source
+);
 use FSM::Support::RegressionCorpus qw(regression_corpus_entries);
+use FSM::Support::SupportAccountingMatchContract qw(
+    support_accounting_match_contract_source
+);
 
 my @entries = regression_corpus_entries();
 my @diagnostic_codes = diagnostic_code_ids();
@@ -259,7 +280,7 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     );
     is(
         $manifest->{diagnostics}{check_json}{support_accounting_contract_source},
-        'FSM::Support::SupportAccountingMatchContract',
+        support_accounting_match_contract_source(),
         'manifest records the shared check-JSON support-accounting nested-object owner',
     );
     ok(
@@ -291,32 +312,32 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     );
     is(
         $manifest->{diagnostics}{check_json}{command_contract_source},
-        'FSM::Support::ReportCommandContract',
+        report_command_contract_source(),
         'manifest records the shared check-JSON command nested-object owner',
     );
     is(
         $manifest->{diagnostics}{check_json}{result_contract_source},
-        'FSM::Support::CheckResultContract',
+        check_result_contract_source(),
         'manifest records the check-JSON result nested-object owner',
     );
     is(
         $manifest->{diagnostics}{check_json}{failure_diagnostic_contract_source},
-        'FSM::Support::CheckFailureDiagnosticContract',
+        check_failure_diagnostic_contract_source(),
         'manifest records the check-JSON failure diagnostic nested-object owner',
     );
     is(
         $manifest->{diagnostics}{check_json}{generated_output_contract_source},
-        'FSM::Support::ReportGeneratedOutputContract',
+        report_generated_output_contract_source(),
         'manifest records the shared check-JSON generated_output nested-object owner',
     );
     is(
         $manifest->{diagnostics}{check_json}{producer_contract_source},
-        'FSM::Support::ReportProducerContract',
+        report_producer_contract_source(),
         'manifest records the shared check-JSON producer nested-object owner',
     );
     is(
         $manifest->{diagnostics}{check_json}{source_contract_source},
-        'FSM::Support::ReportSourceContract',
+        report_source_contract_source(),
         'manifest records the shared check-JSON source nested-object owner',
     );
     is(
@@ -384,7 +405,7 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     );
     is(
         $manifest->{semantic_exports}{normalized_semantic_json}{support_accounting_contract_source},
-        'FSM::Support::SupportAccountingMatchContract',
+        support_accounting_match_contract_source(),
         'manifest records the shared normalized-semantic support-accounting nested-object owner',
     );
     ok(
@@ -414,17 +435,17 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     );
     is(
         $manifest->{semantic_exports}{normalized_semantic_json}{command_contract_source},
-        'FSM::Support::ReportCommandContract',
+        report_command_contract_source(),
         'manifest records the shared normalized-semantic command nested-object owner',
     );
     is(
         $manifest->{semantic_exports}{normalized_semantic_json}{failure_diagnostic_contract_source},
-        'FSM::Support::CheckFailureDiagnosticContract',
+        check_failure_diagnostic_contract_source(),
         'manifest records the shared normalized-semantic failure diagnostic nested-object owner',
     );
     is(
         $manifest->{semantic_exports}{normalized_semantic_json}{generated_output_contract_source},
-        'FSM::Support::ReportGeneratedOutputContract',
+        report_generated_output_contract_source(),
         'manifest records the shared normalized-semantic generated_output nested-object owner',
     );
     is(
@@ -484,12 +505,12 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     );
     is(
         $manifest->{semantic_exports}{normalized_semantic_json}{producer_contract_source},
-        'FSM::Support::ReportProducerContract',
+        report_producer_contract_source(),
         'manifest records the shared normalized-semantic producer nested-object owner',
     );
     is(
         $manifest->{semantic_exports}{normalized_semantic_json}{source_contract_source},
-        'FSM::Support::ReportSourceContract',
+        report_source_contract_source(),
         'manifest records the shared normalized-semantic source nested-object owner',
     );
     is(
