@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### support-accounting match owners now publish grouped key families too
+- Updated [perl/FSM/Support/SupportAccountingMatchContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingMatchContract.pm) so the bounded shared `support_accounting` match-object contract now publishes a grouped `presence_key_family_map` for its common, matched-success, and matched-failure key families, instead of forcing embedders to collect those key lists separately.
+- Updated [t/324-support-accounting-match-contract.t](/Users/richarddje/Documents/github/fsmgen/t/324-support-accounting-match-contract.t) so the direct support-accounting regression now locks that grouped leaf-owner discovery surface directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders can discover the grouped support-accounting key families from the book too.
+
 ### failure-diagnostic owners now publish grouped key families too
 - Updated [perl/FSM/Support/CheckFailureDiagnosticContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckFailureDiagnosticContract.pm) so the bounded shared failure `diagnostic` contract now publishes a grouped `presence_key_family_map` for its core, matched-only, optional-artifact, and nested support-accounting key families, instead of forcing embedders to collect those key lists separately.
 - Updated [t/331-check-failure-diagnostic-contract.t](/Users/richarddje/Documents/github/fsmgen/t/331-check-failure-diagnostic-contract.t) so the direct failure-diagnostic regression now locks that grouped leaf-owner discovery surface directly.

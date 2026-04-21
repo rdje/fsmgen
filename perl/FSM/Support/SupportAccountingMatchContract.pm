@@ -11,6 +11,7 @@ our @EXPORT_OK = qw(
     support_accounting_match_contract_source
     support_accounting_match_common_keys
     support_accounting_match_failure_keys
+    support_accounting_match_presence_key_family_map
     support_accounting_match_success_keys
 );
 
@@ -42,11 +43,13 @@ sub build_support_accounting_match_contract {
         common_presence_keys => support_accounting_match_common_keys(),
         matched_success_presence_keys => support_accounting_match_success_keys(),
         matched_failure_presence_keys => support_accounting_match_failure_keys(),
+        presence_key_family_map => support_accounting_match_presence_key_family_map(),
         json_safe_when_embedded_in_public_reports => JSON::PP::true,
         reused_across_public_reports => JSON::PP::true,
         guidance => [
             'Treat the published common and matched key lists as the bounded public contract for support-accounting match objects embedded in check JSON and normalized semantic JSON.',
             'Success-side objects carry source-kind and support-tier identity, while failure-side objects carry diagnostic-code and migration-hint identity.',
+            'Use the grouped presence_key_family_map to discover the bounded common, matched-success, and matched-failure support-accounting key families without collecting those key-family lists separately.',
             'Widen this nested object only from regression-backed support-accounting truth shared across the public JSON/report surfaces.',
         ],
     };
@@ -80,6 +83,14 @@ sub support_accounting_match_failure_keys {
             migration_hint_available
         ),
     ];
+}
+
+sub support_accounting_match_presence_key_family_map {
+    return {
+        common_presence_keys => support_accounting_match_common_keys(),
+        matched_success_presence_keys => support_accounting_match_success_keys(),
+        matched_failure_presence_keys => support_accounting_match_failure_keys(),
+    };
 }
 
 1;

@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: support-accounting owners now publish grouped key families too
+- Hardened
+  [perl/FSM/Support/SupportAccountingMatchContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingMatchContract.pm)
+  so the bounded shared `support_accounting` match object now publishes a
+  grouped `presence_key_family_map` covering its common, matched-success, and
+  matched-failure key families.
+- Regression coverage now proves that grouped support-accounting key-family
+  map directly:
+  [t/324-support-accounting-match-contract.t](/Users/richarddje/Documents/github/fsmgen/t/324-support-accounting-match-contract.t).
+
 ## 2026-04-22: failure-diagnostic owners now publish grouped key families too
 - Hardened
   [perl/FSM/Support/CheckFailureDiagnosticContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckFailureDiagnosticContract.pm)

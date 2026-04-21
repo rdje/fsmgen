@@ -274,6 +274,9 @@ share one bounded nested-object contract:
 [perl/FSM/Support/SupportAccountingMatchContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingMatchContract.pm)
 owns the common `matched` key plus the matched success/failure identity keys
 used by check JSON and normalized semantic JSON.
+That same owner now also publishes a grouped `presence_key_family_map` so
+embedders can discover those bounded support-accounting key families from one
+place instead of collecting the individual field-family lists separately.
 Those same public check JSON and normalized semantic JSON reports now also
 share one bounded nested-object contract for producer identity:
 [perl/FSM/Support/ReportProducerContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportProducerContract.pm)

@@ -13,6 +13,7 @@ use FSM::Support::SupportAccountingMatchContract qw(
     support_accounting_match_contract_source
     support_accounting_match_common_keys
     support_accounting_match_failure_keys
+    support_accounting_match_presence_key_family_map
     support_accounting_match_success_keys
 );
 
@@ -48,6 +49,11 @@ subtest 'contract exposes the bounded shared support-accounting match object' =>
         $contract->{matched_failure_presence_keys},
         support_accounting_match_failure_keys(),
         'contract publishes the matched failure key list',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map},
+        support_accounting_match_presence_key_family_map(),
+        'contract publishes the grouped support-accounting key-family discovery map',
     );
 };
 
