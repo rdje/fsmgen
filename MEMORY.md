@@ -10147,3 +10147,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   downstream tools can discover the bounded scalar-string and boolean key
   families from one map instead of collecting those producer key families
   field by field.
+- The manifest-facing diagnostics section now also publishes one grouped
+  `presence_key_family_map` through `FSM::Support::DiagnosticsContract`, so
+  downstream tools can discover the bounded diagnostics-owned scalar-string,
+  list, and stable-code entry key families from one map instead of collecting
+  those diagnostics key families separately.

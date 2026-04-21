@@ -126,6 +126,7 @@ use FSM::Support::DocumentationContract qw(
 );
 use FSM::Support::DiagnosticsContract qw(
     diagnostics_contract_source
+    diagnostics_presence_key_family_map
 );
 use FSM::Support::LanguageSurfaceContract qw(
     language_surface_contract_source
@@ -388,6 +389,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
             check_json => check_json_public_top_level_keys(),
         },
         'manifest records the grouped diagnostics child key-family map through the diagnostics section contract',
+    );
+    is_deeply(
+        $manifest->{diagnostics}{section_contract}{presence_key_family_map},
+        diagnostics_presence_key_family_map(),
+        'manifest records the grouped diagnostics-owned key-family map through the diagnostics section contract',
     );
     ok(
         scalar(@{$manifest->{diagnostics}{stable_code_registry}{public_sibling_keys} || []}) >= 3,

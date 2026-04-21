@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: diagnostics-owned key families should be discoverable as one grouped map too
+- After grouping the producer key families, the next nearby manifest-facing
+  discovery inconsistency sat back in diagnostics.
+- `DiagnosticsContract` was already grouping child-object discovery through
+  `nested_presence_key_map`, but its own section-level scalar-string, list,
+  and stable-code entry key families still had to be collected separately.
+- The bounded move is deliberately small:
+  - keep the existing child-object `nested_presence_key_map` unchanged,
+  - keep the existing scalar-string, list, and stable-code entry helpers
+    unchanged,
+  - add one canonical `presence_key_family_map` for the diagnostics-owned
+    families,
+  - and lock both the direct diagnostics regression and the manifest-facing
+    regression against that grouped map.
+- That keeps the manifest-facing diagnostics contract easier to consume
+  without flattening child-object details into the same bucket or widening the
+  diagnostics section beyond what is already documented and regression-backed.
+
 ## 2026-04-21: producer key families should be discoverable as one grouped map too
 - After grouping the support-accounting key families, the next nearby
   manifest-facing discovery inconsistency sat in producer.

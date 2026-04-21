@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-21
+### Diagnostics sections now publish a grouped diagnostics-owned key-family map too
+- Updated [perl/FSM/Support/DiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsContract.pm) so the bounded manifest-facing diagnostics section now publishes a grouped `presence_key_family_map` for its scalar-string, list, and stable-code entry key families, instead of forcing downstream tools to collect those diagnostics-owned key families separately.
+- Updated [t/320-diagnostics-contract.t](/Users/richarddje/Documents/github/fsmgen/t/320-diagnostics-contract.t) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the direct diagnostics regression and the manifest-facing regression now lock that grouped diagnostics-owned key-family discovery surface directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so downstream tools can discover the grouped diagnostics-owned key-family map from the book too.
+
 ### Producer sections now publish a grouped key-family map too
 - Updated [perl/FSM/Support/ProducerContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ProducerContract.pm) so the bounded manifest-facing producer section now publishes a grouped `presence_key_family_map` for the scalar-string and boolean key families, instead of forcing downstream tools to collect those producer key families separately.
 - Updated [t/319-producer-contract.t](/Users/richarddje/Documents/github/fsmgen/t/319-producer-contract.t) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the direct producer regression and the manifest-facing regression now lock that grouped key-family discovery surface directly.

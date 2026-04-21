@@ -538,6 +538,10 @@ The `diagnostics` section now follows the same split too:
 owns the published top-level, scalar-string, and stable-code entry families
 advertised through `diagnostics.section_contract`, while the narrower stable
 registry and check-JSON contracts still own their deeper public promises.
+That section shell now also publishes a grouped `presence_key_family_map` so
+downstream tools can discover the bounded diagnostics-owned scalar-string,
+list, and stable-code entry key families from one place instead of collecting
+those diagnostics key families separately.
 The `producer` section now follows the same split too:
 [perl/FSM/Support/ProducerContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ProducerContract.pm)
 owns the published top-level, scalar-string, and boolean field families

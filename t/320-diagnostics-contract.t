@@ -21,6 +21,7 @@ use FSM::Support::DiagnosticsContract qw(
     diagnostics_list_keys
     diagnostics_nested_contract_keys
     diagnostics_nested_presence_key_map
+    diagnostics_presence_key_family_map
     diagnostics_public_top_level_keys
     diagnostics_scalar_string_keys
 );
@@ -87,6 +88,11 @@ subtest 'contract exposes the bounded diagnostics section' => sub {
         'contract reuses the bounded stable-code entry keys',
     );
     is_deeply(
+        $contract->{presence_key_family_map},
+        diagnostics_presence_key_family_map(),
+        'contract publishes the grouped diagnostics-owned key-family map',
+    );
+    is_deeply(
         $contract->{stable_code_family_values},
         diagnostic_code_registry_family_values(),
         'contract reuses the bounded stable-code family values',
@@ -128,6 +134,11 @@ subtest 'in-process capability manifest diagnostics section conforms to the boun
         $diagnostics->{section_contract}{nested_presence_key_map},
         $contract->{nested_presence_key_map},
         'diagnostics section keeps bounded nested key families',
+    );
+    is_deeply(
+        $diagnostics->{section_contract}{presence_key_family_map},
+        $contract->{presence_key_family_map},
+        'diagnostics section keeps grouped diagnostics-owned key families',
     );
     assert_nested_contract_sources($diagnostics, $contract->{nested_contract_source_map}, 'diagnostics section');
 };
@@ -173,6 +184,11 @@ subtest 'CLI capability manifest keeps the bounded diagnostics contract' => sub 
         $diagnostics->{section_contract}{nested_presence_key_map},
         $contract->{nested_presence_key_map},
         'CLI diagnostics section keeps bounded nested key families',
+    );
+    is_deeply(
+        $diagnostics->{section_contract}{presence_key_family_map},
+        $contract->{presence_key_family_map},
+        'CLI diagnostics section keeps grouped diagnostics-owned key families',
     );
     assert_nested_contract_sources($diagnostics, $contract->{nested_contract_source_map}, 'CLI diagnostics section');
 };
