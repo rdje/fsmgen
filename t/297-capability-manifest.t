@@ -22,6 +22,7 @@ use FSM::Support::CheckFailureDiagnosticContract qw(
 use FSM::Support::CheckDiagnosticsContract qw(
     check_diagnostics_contract_source
     check_json_nested_presence_key_map
+    check_json_public_top_level_keys
 );
 use FSM::Support::CheckResultContract qw(
     check_result_contract_source
@@ -68,6 +69,7 @@ use FSM::Support::HDLGeneratorResultContract qw(
 use FSM::Support::DiagnosticCodes qw(diagnostic_code_ids);
 use FSM::Support::DiagnosticCodeRegistryContract qw(
     diagnostic_code_registry_contract_source
+    diagnostic_code_registry_public_keys
 );
 use FSM::Support::BackendValidationContract qw(
     backend_validation_contract_source
@@ -361,6 +363,14 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         $manifest->{diagnostics}{section_contract}{nested_contract_source_map}{check_json},
         check_diagnostics_contract_source(),
         'manifest records the diagnostics check-json nested contract owner',
+    );
+    is_deeply(
+        $manifest->{diagnostics}{section_contract}{nested_presence_key_map},
+        {
+            stable_code_registry => diagnostic_code_registry_public_keys(),
+            check_json => check_json_public_top_level_keys(),
+        },
+        'manifest records the grouped diagnostics child key-family map through the diagnostics section contract',
     );
     ok(
         scalar(@{$manifest->{diagnostics}{stable_code_registry}{public_sibling_keys} || []}) >= 3,

@@ -284,6 +284,10 @@ key families for `command`, `result`, `failure_diagnostic`,
 `support_accounting` from one place, while the matched overlays and optional
 failure-diagnostic artifacts remain explicitly advertised as separate bounded
 key families.
+At the manifest-facing diagnostics-section level, FSMGen now also publishes a
+grouped `nested_presence_key_map` so downstream tools can discover the bounded
+key family for `stable_code_registry` and `check_json` from one place before
+descending into those child contracts.
 Failed public check JSON reports now also have one bounded nested-object
 contract for the failure payload itself:
 [perl/FSM/Support/CheckFailureDiagnosticContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckFailureDiagnosticContract.pm)

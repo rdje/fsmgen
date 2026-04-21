@@ -13,12 +13,14 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::Support::CheckDiagnosticsContract qw(
     check_diagnostics_contract_source
+    check_json_public_top_level_keys
 );
 use FSM::Support::DiagnosticsContract qw(
     build_diagnostics_contract
     diagnostics_contract_source
     diagnostics_list_keys
     diagnostics_nested_contract_keys
+    diagnostics_nested_presence_key_map
     diagnostics_public_top_level_keys
     diagnostics_scalar_string_keys
 );
@@ -26,6 +28,7 @@ use FSM::Support::DiagnosticCodeRegistryContract qw(
     diagnostic_code_registry_contract_source
     diagnostic_code_registry_entry_keys
     diagnostic_code_registry_family_values
+    diagnostic_code_registry_public_keys
 );
 
 my $manifest = build_capability_manifest();
@@ -74,6 +77,11 @@ subtest 'contract exposes the bounded diagnostics section' => sub {
         'contract publishes the bounded diagnostics nested-contract ownership map',
     );
     is_deeply(
+        $contract->{nested_presence_key_map},
+        diagnostics_nested_presence_key_map(),
+        'contract publishes the bounded diagnostics nested key-family map',
+    );
+    is_deeply(
         $contract->{stable_code_entry_presence_keys},
         diagnostic_code_registry_entry_keys(),
         'contract reuses the bounded stable-code entry keys',
@@ -116,6 +124,11 @@ subtest 'in-process capability manifest diagnostics section conforms to the boun
         $contract->{nested_contract_source_map},
         'diagnostics section keeps bounded nested contract owners',
     );
+    is_deeply(
+        $diagnostics->{section_contract}{nested_presence_key_map},
+        $contract->{nested_presence_key_map},
+        'diagnostics section keeps bounded nested key families',
+    );
     assert_nested_contract_sources($diagnostics, $contract->{nested_contract_source_map}, 'diagnostics section');
 };
 
@@ -155,6 +168,11 @@ subtest 'CLI capability manifest keeps the bounded diagnostics contract' => sub 
         $diagnostics->{section_contract}{nested_contract_source_map},
         $contract->{nested_contract_source_map},
         'CLI diagnostics section keeps bounded nested contract owners',
+    );
+    is_deeply(
+        $diagnostics->{section_contract}{nested_presence_key_map},
+        $contract->{nested_presence_key_map},
+        'CLI diagnostics section keeps bounded nested key families',
     );
     assert_nested_contract_sources($diagnostics, $contract->{nested_contract_source_map}, 'CLI diagnostics section');
 };

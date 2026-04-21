@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: diagnostics child key families should be discoverable as one grouped map too
+- After grouping the nested key families for the public JSON report shells, the
+  next nearby manifest-facing discovery inconsistency sat one level up in the
+  diagnostics section shell.
+- `DiagnosticsContract` was already publishing the bounded child contracts and
+  the stable-code entry keys, but a consumer still had to gather the child key
+  families for `stable_code_registry` and `check_json` one field at a time.
+- The bounded move is to group only those already-public child key families:
+  - add one canonical `nested_presence_key_map`,
+  - keep the existing child owner map and stable-code entry keys unchanged,
+  - and lock both the direct diagnostics-section regression and the
+    manifest-facing regression against the grouped map.
+- That keeps the manifest-facing diagnostics section easier to consume without
+  widening either child contract or flattening their distinct detailed key
+  families into one misleading schema.
+
 ## 2026-04-21: normalized semantic nested key families should be discoverable as one grouped map too
 - After grouping the primary nested key families for public check JSON, the
   matching nearby public-report inconsistency was on normalized semantic JSON.

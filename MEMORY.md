@@ -10106,3 +10106,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `failure_diagnostic`, `generated_output`, `producer`, `source`,
   report-level `support_accounting`, and the success-side semantic branches
   from one map instead of collecting those key families field by field.
+- The manifest-facing diagnostics section now also publishes one grouped
+  `nested_presence_key_map` through `FSM::Support::DiagnosticsContract`, so
+  downstream tools can discover the bounded child key family for
+  `stable_code_registry` and `check_json` from one map before descending into
+  those child contracts.
