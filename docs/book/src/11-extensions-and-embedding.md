@@ -452,6 +452,10 @@ own bounded nested-object contract for composition sources:
 owns the composition key family while keeping nested provenance-report
 ownership delegated to
 [perl/FSM/Support/CompositionReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CompositionReportContract.pm).
+That same owner now also publishes a grouped `presence_key_family_map` so
+embedders can discover the bounded composition summary, collection, and
+nested provenance key families from one place instead of collecting the
+individual key-family lists separately.
 
 Do not treat the raw `HDLGenerator` result hash as a stable JSON document. Some
 nested branches still contain live CoreAST/AST objects for compatibility and

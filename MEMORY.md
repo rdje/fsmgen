@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: composition owners now publish grouped key families too
+- Hardened
+  [perl/FSM/Support/NormalizedSemanticCompositionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticCompositionContract.pm)
+  so the bounded nested `semantic.composition` object now publishes grouped
+  summary, collection, and nested provenance key families.
+- Regression coverage now proves that grouped composition key-family map
+  directly:
+  [t/333-normalized-semantic-composition-contract.t](/Users/richarddje/Documents/github/fsmgen/t/333-normalized-semantic-composition-contract.t).
+
 ## 2026-04-22: symbol-contract owners now publish grouped key families too
 - Hardened
   [perl/FSM/Support/NormalizedSemanticSymbolContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSymbolContract.pm)

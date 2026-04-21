@@ -11,8 +11,12 @@ use FSM::Support::CompositionReportContract qw(
 
 our @EXPORT_OK = qw(
     build_normalized_semantic_composition_contract
+    normalized_semantic_composition_collection_keys
     normalized_semantic_composition_contract_source
+    normalized_semantic_composition_nested_presence_keys
+    normalized_semantic_composition_presence_key_family_map
     normalized_semantic_composition_presence_keys
+    normalized_semantic_composition_summary_presence_keys
 );
 
 sub normalized_semantic_composition_contract_source {
@@ -40,6 +44,10 @@ sub build_normalized_semantic_composition_contract {
             ],
         },
         public_presence_keys => normalized_semantic_composition_presence_keys(),
+        summary_presence_keys => normalized_semantic_composition_summary_presence_keys(),
+        collection_keys => normalized_semantic_composition_collection_keys(),
+        nested_presence_keys => normalized_semantic_composition_nested_presence_keys(),
+        presence_key_family_map => normalized_semantic_composition_presence_key_family_map(),
         nested_contract_source_map => {
             provenance_report => composition_report_contract_source(),
         },
@@ -50,6 +58,7 @@ sub build_normalized_semantic_composition_contract {
             q{Treat this contract as the bounded nested `composition` object used inside successful public normalized semantic JSON reports for composition sources.},
             'The bounded public promise covers the lane, child/net/link, generated-child, standalone-DT-child, shared-datapath, and sanitized provenance-report keys exported for composition roots.',
             'The nested provenance_report fragment stays bounded through FSM::Support::CompositionReportContract.',
+            'Use the grouped presence_key_family_map to discover the bounded composition summary, collection, and nested provenance key families without collecting those key-family lists separately.',
         ],
     };
 }
@@ -71,6 +80,47 @@ sub normalized_semantic_composition_presence_keys {
             provenance_report
         ),
     ];
+}
+
+sub normalized_semantic_composition_summary_presence_keys {
+    return [
+        qw(
+            lane
+            child_count
+            net_count
+            resolved_link_count
+            generated_child_count
+            standalone_dt_child_count
+            shared_datapath_candidate_count
+        ),
+    ];
+}
+
+sub normalized_semantic_composition_collection_keys {
+    return [
+        qw(
+            children
+            generated_children
+            standalone_dt_children
+            shared_datapath_candidates
+        ),
+    ];
+}
+
+sub normalized_semantic_composition_nested_presence_keys {
+    return [
+        qw(
+            provenance_report
+        ),
+    ];
+}
+
+sub normalized_semantic_composition_presence_key_family_map {
+    return {
+        summary_presence_keys => normalized_semantic_composition_summary_presence_keys(),
+        collection_keys => normalized_semantic_composition_collection_keys(),
+        nested_presence_keys => normalized_semantic_composition_nested_presence_keys(),
+    };
 }
 
 1;

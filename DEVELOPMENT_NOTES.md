@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: composition families should be discoverable as one grouped map too
+- After grouping the bounded symbol-contract families, the next adjacent
+  semantic-side leaf-owner seam sat in the nested `semantic.composition`
+  object.
+- `NormalizedSemanticCompositionContract` already published the full shell key
+  list and the nested provenance owner, but a caller still had to separate
+  summary counts, collection keys, and the bounded nested provenance key by
+  hand.
+- The bounded move is deliberately small:
+  - keep the existing full shell key list unchanged,
+  - add canonical family helpers for summaries, collections, and nested
+    provenance,
+  - add one grouped `presence_key_family_map`,
+  - and lock the direct composition regression against that grouped map.
+- That keeps the explicit composition owner easier to consume without widening
+  the nested provenance payload, whose bounded surface still belongs to
+  `FSM::Support::CompositionReportContract`.
+
 ## 2026-04-22: symbol-contract families should be discoverable as one grouped map too
 - After grouping the bounded structural-RTL shell families, the next adjacent
   semantic-side leaf-owner seam sat in the optional nested

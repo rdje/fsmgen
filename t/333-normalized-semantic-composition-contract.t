@@ -13,8 +13,12 @@ use FSM::Support::CompositionReportContract qw(
 );
 use FSM::Support::NormalizedSemanticCompositionContract qw(
     build_normalized_semantic_composition_contract
+    normalized_semantic_composition_collection_keys
     normalized_semantic_composition_contract_source
+    normalized_semantic_composition_nested_presence_keys
+    normalized_semantic_composition_presence_key_family_map
     normalized_semantic_composition_presence_keys
+    normalized_semantic_composition_summary_presence_keys
 );
 
 subtest 'contract exposes the bounded normalized semantic composition object' => sub {
@@ -62,6 +66,26 @@ subtest 'contract exposes the bounded normalized semantic composition object' =>
         $contract->{public_presence_keys},
         normalized_semantic_composition_presence_keys(),
         'contract publishes the bounded composition-object key list',
+    );
+    is_deeply(
+        $contract->{summary_presence_keys},
+        normalized_semantic_composition_summary_presence_keys(),
+        'contract publishes the bounded composition summary key family',
+    );
+    is_deeply(
+        $contract->{collection_keys},
+        normalized_semantic_composition_collection_keys(),
+        'contract publishes the bounded composition collection key family',
+    );
+    is_deeply(
+        $contract->{nested_presence_keys},
+        normalized_semantic_composition_nested_presence_keys(),
+        'contract publishes the bounded composition nested key family',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map},
+        normalized_semantic_composition_presence_key_family_map(),
+        'contract publishes the grouped composition key-family map',
     );
 };
 

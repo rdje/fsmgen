@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### composition owners now group summary and provenance families too
+- Updated [perl/FSM/Support/NormalizedSemanticCompositionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticCompositionContract.pm) so the bounded nested `semantic.composition` owner now publishes `summary_presence_keys`, `collection_keys`, `nested_presence_keys`, and a grouped `presence_key_family_map`, instead of forcing embedders to collect those composition families separately.
+- Updated [t/333-normalized-semantic-composition-contract.t](/Users/richarddje/Documents/github/fsmgen/t/333-normalized-semantic-composition-contract.t) so the direct composition regression now locks that grouped leaf-owner discovery surface directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders can discover the grouped composition key families from the book too.
+
 ### symbol-contract owners now group summary and symbol families too
 - Updated [perl/FSM/Support/NormalizedSemanticSymbolContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSymbolContract.pm) so the bounded nested `semantic.symbol_contract` owner now publishes `summary_presence_keys`, `symbol_name_keys`, `symbol_map_keys`, `constant_detail_keys`, `package_import_keys`, and a grouped `presence_key_family_map`, instead of forcing embedders to collect those symbol-contract families separately.
 - Updated [t/335-normalized-semantic-symbol-contract.t](/Users/richarddje/Documents/github/fsmgen/t/335-normalized-semantic-symbol-contract.t) so the direct symbol-contract regression now locks that grouped leaf-owner discovery surface directly.
