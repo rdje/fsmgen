@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: producer key families should be discoverable as one grouped map too
+- After grouping the support-accounting key families, the next nearby
+  manifest-facing discovery inconsistency sat in producer.
+- `ProducerContract` was already publishing the scalar-string and boolean key
+  families individually, but a consumer still had to collect those bounded
+  producer key families one list at a time.
+- The bounded move is deliberately small:
+  - keep the existing top-level, scalar-string, and boolean key helpers
+    unchanged,
+  - add one canonical `presence_key_family_map` in the producer section
+    shell,
+  - and lock both the direct producer regression and the manifest-facing
+    regression against that grouped map.
+- That keeps the manifest-facing producer contract easier to consume without
+  inventing a fake nested schema or widening the producer/build identity story
+  beyond what is already documented and regression-backed.
+
 ## 2026-04-21: support-accounting key families should be discoverable as one grouped map too
 - After grouping the documentation path-list families, the next nearby
   manifest-facing discovery inconsistency sat in support-accounting.

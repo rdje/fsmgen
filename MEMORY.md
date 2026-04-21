@@ -10142,3 +10142,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `FSM::Support::SupportAccountingContract`, so downstream tools can discover
   the bounded bucket, id-list, and catalog-entry key families from one map
   instead of collecting those support-accounting key families field by field.
+- The manifest-facing producer section now also publishes one grouped
+  `presence_key_family_map` through `FSM::Support::ProducerContract`, so
+  downstream tools can discover the bounded scalar-string and boolean key
+  families from one map instead of collecting those producer key families
+  field by field.

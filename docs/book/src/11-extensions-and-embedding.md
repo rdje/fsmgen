@@ -544,6 +544,10 @@ owns the published top-level, scalar-string, and boolean field families
 advertised through `producer.section_contract`, while the broader producer
 story stays limited to current tool/build identity rather than becoming an
 accidental release-management API.
+That section shell now also publishes a grouped `presence_key_family_map` so
+downstream tools can discover the bounded scalar-string and boolean key
+families from one place instead of collecting those producer key families
+field by field.
 The `backend_validation` section now follows the same split too:
 [perl/FSM/Support/BackendValidationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/BackendValidationContract.pm)
 owns the published top-level and nested contract-owner map advertised through

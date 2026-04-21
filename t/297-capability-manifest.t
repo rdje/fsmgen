@@ -133,6 +133,7 @@ use FSM::Support::LanguageSurfaceContract qw(
 );
 use FSM::Support::ProducerContract qw(
     producer_contract_source
+    producer_presence_key_family_map
 );
 use FSM::Support::SemanticExportsContract qw(
     semantic_exports_contract_source
@@ -229,6 +230,11 @@ subtest 'module manifest is generated from support accounting' => sub {
     ok(
         scalar(@{$manifest->{producer}{section_contract}{boolean_keys} || []}) >= 1,
         'manifest advertises bounded producer boolean key presence',
+    );
+    is_deeply(
+        $manifest->{producer}{section_contract}{presence_key_family_map},
+        producer_presence_key_family_map(),
+        'manifest records the grouped producer key-family map through the producer section contract',
     );
     is($manifest->{support_accounting}{schema_version}, 1, 'manifest records support-accounting schema version');
     is($manifest->{support_accounting}{status}, 'bounded_public', 'manifest marks support accounting as bounded public');

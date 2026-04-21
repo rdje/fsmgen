@@ -10,6 +10,7 @@ our @EXPORT_OK = qw(
     build_producer_contract
     producer_boolean_keys
     producer_contract_source
+    producer_presence_key_family_map
     producer_public_top_level_keys
     producer_scalar_string_keys
 );
@@ -36,6 +37,7 @@ sub build_producer_contract {
         public_top_level_presence_keys => producer_public_top_level_keys(),
         scalar_string_keys => producer_scalar_string_keys(),
         boolean_keys => producer_boolean_keys(),
+        presence_key_family_map => producer_presence_key_family_map(),
         identity_contract => {
             name_is_tool_identity => JSON::PP::true,
             git_commit_is_best_effort_short_hash_or_unknown => JSON::PP::true,
@@ -43,6 +45,7 @@ sub build_producer_contract {
         },
         guidance => [
             'Treat the published producer-section top-level keys and scalar/boolean field families as the bounded public manifest-facing contract for schema version 1.',
+            'Use the grouped presence_key_family_map to discover the bounded scalar-string and boolean key families without collecting those field-family lists separately.',
             'The producer section identifies the current FSMGen build/tool source for downstream consumers, but it is not a package-manager release contract.',
             'Widen the section deliberately when new producer/build metadata is documented and regression-backed.',
         ],
@@ -79,6 +82,13 @@ sub producer_boolean_keys {
             contract_authority
         ),
     ];
+}
+
+sub producer_presence_key_family_map {
+    return {
+        scalar_string_keys => producer_scalar_string_keys(),
+        boolean_keys => producer_boolean_keys(),
+    };
 }
 
 1;

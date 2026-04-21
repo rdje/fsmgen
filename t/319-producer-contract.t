@@ -15,6 +15,7 @@ use FSM::Support::ProducerContract qw(
     build_producer_contract
     producer_boolean_keys
     producer_contract_source
+    producer_presence_key_family_map
     producer_public_top_level_keys
     producer_scalar_string_keys
 );
@@ -51,6 +52,11 @@ subtest 'contract exposes the bounded producer section' => sub {
         producer_boolean_keys(),
         'contract publishes the bounded producer boolean keys',
     );
+    is_deeply(
+        $contract->{presence_key_family_map},
+        producer_presence_key_family_map(),
+        'contract publishes the grouped producer key-family map',
+    );
     ok($contract->{identity_contract}{name_is_tool_identity}, 'contract keeps tool-identity name semantics');
     ok(
         $contract->{identity_contract}{git_commit_is_best_effort_short_hash_or_unknown},
@@ -74,6 +80,11 @@ subtest 'in-process capability manifest producer section conforms to the bounded
         $producer->{section_contract}{contract_source},
         producer_contract_source(),
         'producer section advertises the section contract owner',
+    );
+    is_deeply(
+        $producer->{section_contract}{presence_key_family_map},
+        producer_presence_key_family_map(),
+        'producer section keeps the grouped key-family map',
     );
     assert_scalar_string_keys(
         $producer,
@@ -112,6 +123,11 @@ subtest 'CLI capability manifest keeps the bounded producer contract' => sub {
         $producer->{section_contract}{contract_source},
         producer_contract_source(),
         'CLI producer section advertises the section contract owner',
+    );
+    is_deeply(
+        $producer->{section_contract}{presence_key_family_map},
+        producer_presence_key_family_map(),
+        'CLI producer section keeps the grouped key-family map',
     );
     assert_scalar_string_keys(
         $producer,
