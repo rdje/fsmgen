@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: intent-hir leaf key families should be discoverable as one grouped map too
+- After grouping the bounded nested `semantic.module` leaf-owner key
+  families, the next adjacent semantic-side leaf-owner seam sat in the nested
+  `semantic.forward_ir.intent_hir` object.
+- `NormalizedSemanticIntentHIRContract` already published the core summary
+  keys and the composition-only key family separately, but a caller still had
+  to gather those bounded intent-hir families one list at a time.
+- The bounded move is deliberately small:
+  - keep the existing key-family helpers unchanged,
+  - add one canonical leaf-level `presence_key_family_map`,
+  - and lock the direct intent-hir regression against that grouped map.
+- That keeps the explicit nested intent-hir owner easier to consume without
+  widening the forward-IR shell, payload shell, or report shell.
+
 ## 2026-04-22: semantic-module leaf key families should be discoverable as one grouped map too
 - After grouping the bounded shared `producer` leaf-owner key families, the
   next adjacent semantic-side leaf-owner seam sat in the nested

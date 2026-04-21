@@ -404,6 +404,9 @@ also has its own bounded nested-object contract:
 [perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm)
 owns the current intent-hir shell keys plus the composition-only extension
 keys emitted today for top roots.
+That same owner now also publishes a grouped `presence_key_family_map` so
+embedders can discover those bounded `intent_hir` key families from one place
+instead of collecting the individual field-family lists separately.
 The optional `semantic.symbol_contract` summary inside that payload now also
 has its own bounded nested-object contract for symbol-rich sources:
 [perl/FSM/Support/NormalizedSemanticSymbolContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSymbolContract.pm)

@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### normalized-semantic intent-hir owners now publish grouped key families too
+- Updated [perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm) so the bounded nested `semantic.forward_ir.intent_hir` contract now publishes a grouped `presence_key_family_map` for its core and composition-only key families, instead of forcing embedders to collect those key lists separately.
+- Updated [t/339-normalized-semantic-intent-hir-contract.t](/Users/richarddje/Documents/github/fsmgen/t/339-normalized-semantic-intent-hir-contract.t) so the direct intent-hir regression now locks that grouped leaf-owner discovery surface directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders can discover the grouped intent-hir key families from the book too.
+
 ### normalized-semantic module owners now publish grouped key families too
 - Updated [perl/FSM/Support/NormalizedSemanticModuleContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticModuleContract.pm) so the bounded nested `semantic.module` contract now publishes a grouped `presence_key_family_map` for its core and optional-metric key families, instead of forcing embedders to collect those key lists separately.
 - Updated [t/332-normalized-semantic-module-contract.t](/Users/richarddje/Documents/github/fsmgen/t/332-normalized-semantic-module-contract.t) so the direct semantic-module regression now locks that grouped leaf-owner discovery surface directly.

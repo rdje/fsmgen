@@ -12,6 +12,7 @@ use FSM::Support::NormalizedSemanticIntentHIRContract qw(
     build_normalized_semantic_intent_hir_contract
     normalized_semantic_intent_hir_contract_source
     normalized_semantic_intent_hir_optional_composition_keys
+    normalized_semantic_intent_hir_presence_key_family_map
     normalized_semantic_intent_hir_presence_keys
 );
 
@@ -44,6 +45,11 @@ subtest 'contract exposes the bounded normalized semantic intent-hir object' => 
         $contract->{optional_composition_keys},
         normalized_semantic_intent_hir_optional_composition_keys(),
         'contract publishes the bounded intent-hir composition-only key list',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map},
+        normalized_semantic_intent_hir_presence_key_family_map(),
+        'contract publishes the grouped intent-hir key-family discovery map',
     );
 };
 
