@@ -7,11 +7,13 @@ use Exporter 'import';
 use JSON::PP ();
 use FSM::Support::HDLExternalValidationContract qw(
     hdl_external_validation_contract_source
+    hdl_external_validation_success_top_level_keys
 );
 
 our @EXPORT_OK = qw(
     backend_validation_contract_source
     backend_validation_nested_contract_keys
+    backend_validation_nested_presence_key_map
     backend_validation_public_top_level_keys
     build_backend_validation_contract
 );
@@ -40,10 +42,12 @@ sub build_backend_validation_contract {
         nested_contract_source_map => {
             systemverilog_external => hdl_external_validation_contract_source(),
         },
+        nested_presence_key_map => backend_validation_nested_presence_key_map(),
         systemverilog_external_contract_advertised => JSON::PP::true,
         full_backend_validation_section_stable => JSON::PP::false,
         guidance => [
             'Treat the published backend-validation top-level keys and nested contract ownership map as the bounded public manifest-facing contract for schema version 1.',
+            'Use the grouped nested_presence_key_map to discover the bounded key family for the systemverilog_external child surface without collecting that child key list separately.',
             'The backend_validation section points consumers at bounded validation/report surfaces instead of turning every future backend validation lane into an already-frozen API.',
             'Widen the section deliberately when new backend validation formats or target-language lanes are documented, support-accounted, and regression-backed.',
         ],
@@ -65,6 +69,12 @@ sub backend_validation_nested_contract_keys {
             systemverilog_external
         ),
     ];
+}
+
+sub backend_validation_nested_presence_key_map {
+    return {
+        systemverilog_external => hdl_external_validation_success_top_level_keys(),
+    };
 }
 
 1;

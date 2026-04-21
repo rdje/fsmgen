@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-21
+### Backend-validation sections now publish a grouped child key-family map too
+- Updated [perl/FSM/Support/BackendValidationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/BackendValidationContract.pm) so the bounded manifest-facing backend-validation section now publishes a grouped `nested_presence_key_map` for `systemverilog_external`, instead of forcing downstream tools to collect that child key family separately.
+- Updated [t/323-backend-validation-contract.t](/Users/richarddje/Documents/github/fsmgen/t/323-backend-validation-contract.t) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the direct backend-validation-section regression and the manifest-facing regression now lock that grouped child key-family discovery surface directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so downstream tools can discover the grouped backend-validation child key-family map from the book too.
+
 ### Semantic-exports sections now publish a grouped child key-family map too
 - Updated [perl/FSM/Support/SemanticExportsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SemanticExportsContract.pm) so the bounded manifest-facing semantic-exports section now publishes a grouped `nested_presence_key_map` for `normalized_semantic_json`, instead of forcing downstream tools to collect that child key family separately.
 - Updated [t/322-semantic-exports-contract.t](/Users/richarddje/Documents/github/fsmgen/t/322-semantic-exports-contract.t) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the direct semantic-exports-section regression and the manifest-facing regression now lock that grouped child key-family discovery surface directly.

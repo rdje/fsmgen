@@ -73,6 +73,7 @@ use FSM::Support::DiagnosticCodeRegistryContract qw(
 );
 use FSM::Support::BackendValidationContract qw(
     backend_validation_contract_source
+    backend_validation_nested_presence_key_map
 );
 use FSM::Support::EmbeddingContract qw(
     embedding_contract_source
@@ -863,6 +864,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     ok(
         scalar(@{$manifest->{backend_validation}{section_contract}{nested_contract_keys} || []}) >= 1,
         'manifest advertises bounded backend-validation nested-contract key presence',
+    );
+    is_deeply(
+        $manifest->{backend_validation}{section_contract}{nested_presence_key_map},
+        backend_validation_nested_presence_key_map(),
+        'manifest records the grouped backend-validation child key-family map through the backend-validation section contract',
     );
     is(
         $manifest->{embedding}{hdl_generator_result}{schema_version},

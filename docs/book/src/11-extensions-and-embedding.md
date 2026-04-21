@@ -541,6 +541,10 @@ The `backend_validation` section now follows the same split too:
 owns the published top-level and nested contract-owner map advertised through
 `backend_validation.section_contract`, while the narrower
 `HDLExternalValidationContract` still owns the deeper validation-lane promise.
+That section shell now also publishes a grouped `nested_presence_key_map` so
+downstream tools can discover the bounded child key family for
+`systemverilog_external` from one place before descending into the narrower
+validation contract.
 The `language_surface` section now has its own bounded owner as well:
 [perl/FSM/Support/LanguageSurfaceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/LanguageSurfaceContract.pm)
 advertises the public top-level and first nested section-key lists through

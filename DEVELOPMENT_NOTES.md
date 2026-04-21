@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: backend-validation child key families should be discoverable as one grouped map too
+- After grouping the child key families for the sibling semantic-exports
+  section, the next nearby manifest-facing discovery inconsistency sat in
+  backend-validation.
+- `BackendValidationContract` was already publishing the child owner and the
+  section shell keys, but a consumer still had to collect the bounded
+  `systemverilog_external` child key family separately.
+- The bounded move is deliberately small:
+  - add one canonical `nested_presence_key_map` for
+    `systemverilog_external`,
+  - keep the existing child owner map unchanged,
+  - and lock both the direct backend-validation-section regression and the
+    manifest-facing regression against the grouped map.
+- That keeps the manifest-facing backend-validation surface easier to consume
+  without inventing a broader validation schema or widening the external HDL
+  validation child surface itself.
+
 ## 2026-04-21: semantic-exports child key families should be discoverable as one grouped map too
 - After grouping the child key families for the diagnostics section, the next
   nearby manifest-facing discovery inconsistency sat in the sibling

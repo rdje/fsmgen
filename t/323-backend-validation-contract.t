@@ -13,6 +13,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Support::BackendValidationContract qw(
     backend_validation_contract_source
     backend_validation_nested_contract_keys
+    backend_validation_nested_presence_key_map
     backend_validation_public_top_level_keys
     build_backend_validation_contract
 );
@@ -55,6 +56,11 @@ subtest 'contract exposes the bounded backend-validation section' => sub {
         },
         'contract publishes the bounded backend-validation nested-contract ownership map',
     );
+    is_deeply(
+        $contract->{nested_presence_key_map},
+        backend_validation_nested_presence_key_map(),
+        'contract publishes the bounded backend-validation nested key-family map',
+    );
     ok(
         $contract->{systemverilog_external_contract_advertised},
         'contract says the external SystemVerilog validation contract is advertised',
@@ -83,6 +89,11 @@ subtest 'in-process capability manifest backend-validation section conforms to t
         $backend_validation,
         $contract->{nested_contract_source_map},
         'backend-validation section keeps bounded nested contract owners',
+    );
+    is_deeply(
+        $backend_validation->{section_contract}{nested_presence_key_map},
+        $contract->{nested_presence_key_map},
+        'backend-validation section keeps bounded nested key families',
     );
 };
 
@@ -113,6 +124,11 @@ subtest 'CLI capability manifest keeps the bounded backend-validation contract' 
         $backend_validation,
         $contract->{nested_contract_source_map},
         'CLI backend-validation section keeps bounded nested contract owners',
+    );
+    is_deeply(
+        $backend_validation->{section_contract}{nested_presence_key_map},
+        $contract->{nested_presence_key_map},
+        'CLI backend-validation section keeps bounded nested key families',
     );
 };
 

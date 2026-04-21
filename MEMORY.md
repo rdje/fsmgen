@@ -10116,3 +10116,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   so downstream tools can discover the bounded child key family for
   `normalized_semantic_json` from one map before descending into that child
   contract.
+- The manifest-facing backend-validation section now also publishes one grouped
+  `nested_presence_key_map` through `FSM::Support::BackendValidationContract`,
+  so downstream tools can discover the bounded child key family for
+  `systemverilog_external` from one map before descending into that child
+  contract.

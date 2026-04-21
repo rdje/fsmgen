@@ -67,6 +67,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R13` Public embedding/API stabilization, backed by `R12` regression corpus and support accounting.
 - Current next decision point:
+  - The manifest-facing backend-validation section now also publishes a grouped
+    `nested_presence_key_map`: [perl/FSM/Support/BackendValidationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/BackendValidationContract.pm)
+    now groups the bounded child key family for `systemverilog_external`,
+    while [t/323-backend-validation-contract.t](/Users/richarddje/Documents/github/fsmgen/t/323-backend-validation-contract.t)
+    plus [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+    now lock that grouped backend-validation discovery surface directly.
   - The manifest-facing semantic-exports section now also publishes a grouped
     `nested_presence_key_map`: [perl/FSM/Support/SemanticExportsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SemanticExportsContract.pm)
     now groups the bounded child key family for `normalized_semantic_json`,
