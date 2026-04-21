@@ -19,6 +19,7 @@ use FSM::Support::CapabilityManifestContract qw(
     capability_manifest_documentation_keys
     capability_manifest_embedding_keys
     capability_manifest_language_surface_keys
+    capability_manifest_presence_key_family_map
     capability_manifest_producer_keys
     capability_manifest_public_top_level_keys
     capability_manifest_top_level_contract_source_map
@@ -61,6 +62,11 @@ subtest 'contract exposes the bounded capability-manifest shell' => sub {
         $contract->{top_level_section_presence_key_map},
         capability_manifest_top_level_section_presence_key_map(),
         'contract publishes the bounded top-level section key-family map',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map},
+        capability_manifest_presence_key_family_map(),
+        'contract publishes the grouped manifest-owned presence-key family map',
     );
     is_deeply(
         $contract->{producer_presence_keys},
@@ -124,6 +130,11 @@ subtest 'in-process capability manifest conforms to the bounded shell contract' 
         $manifest->{manifest_contract}{top_level_section_presence_key_map},
         capability_manifest_top_level_section_presence_key_map(),
         'capability manifest advertises the grouped top-level section key-family map',
+    );
+    is_deeply(
+        $manifest->{manifest_contract}{presence_key_family_map},
+        capability_manifest_presence_key_family_map(),
+        'capability manifest advertises the grouped manifest-owned presence-key family map',
     );
     assert_section_contract_sources(
         $manifest,
@@ -202,6 +213,11 @@ subtest 'CLI capability manifest keeps the bounded shell contract' => sub {
         $decoded->{manifest_contract}{top_level_section_presence_key_map},
         capability_manifest_top_level_section_presence_key_map(),
         'CLI capability manifest advertises the grouped top-level section key-family map',
+    );
+    is_deeply(
+        $decoded->{manifest_contract}{presence_key_family_map},
+        capability_manifest_presence_key_family_map(),
+        'CLI capability manifest advertises the grouped manifest-owned presence-key family map',
     );
     assert_section_contract_sources(
         $decoded,

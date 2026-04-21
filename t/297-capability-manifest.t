@@ -13,6 +13,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::Support::CapabilityManifestContract qw(
     capability_manifest_contract_source
+    capability_manifest_presence_key_family_map
     capability_manifest_top_level_contract_source_map
     capability_manifest_top_level_section_presence_key_map
 );
@@ -187,6 +188,11 @@ subtest 'module manifest is generated from support accounting' => sub {
         $manifest->{manifest_contract}{top_level_section_presence_key_map},
         capability_manifest_top_level_section_presence_key_map(),
         'manifest advertises the grouped top-level section key-family map',
+    );
+    is_deeply(
+        $manifest->{manifest_contract}{presence_key_family_map},
+        capability_manifest_presence_key_family_map(),
+        'manifest advertises the grouped manifest-owned presence-key family map',
     );
     assert_manifest_section_contract_sources(
         $manifest,

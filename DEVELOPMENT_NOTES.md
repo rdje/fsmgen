@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: manifest-owned per-section key families should be discoverable as one grouped map too
+- After grouping the diagnostics-owned key families, the next nearby
+  manifest-shell discovery inconsistency sat in `CapabilityManifestContract`
+  itself.
+- The manifest shell was already publishing the grouped
+  `top_level_section_presence_key_map`, but it still exposed the legacy
+  `producer_presence_keys`, `support_accounting_presence_keys`, and sibling
+  compatibility families as separate top-level fields that a consumer had to
+  gather one by one.
+- The bounded move is deliberately small:
+  - keep the existing section-name keyed `top_level_section_presence_key_map`
+    unchanged,
+  - keep the existing legacy `*_presence_keys` fields unchanged,
+  - add one canonical `presence_key_family_map` for those manifest-owned
+    legacy field families,
+  - and lock both the direct manifest-shell regression and the broader
+    manifest-facing regression against that grouped map.
+- That keeps the manifest shell easier to consume without replacing the
+  section-name keyed map, without widening the public surface, and without
+  pretending the legacy compatibility fields are the preferred discovery path.
+
 ## 2026-04-21: diagnostics-owned key families should be discoverable as one grouped map too
 - After grouping the producer key families, the next nearby manifest-facing
   discovery inconsistency sat back in diagnostics.

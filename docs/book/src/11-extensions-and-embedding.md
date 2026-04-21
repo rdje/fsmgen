@@ -33,6 +33,9 @@ The same manifest shell now also publishes a grouped
 `top_level_section_presence_key_map` so a downstream tool can discover the
 bounded key family for each public top-level section from one place instead of
 collecting those section-key lists field by field.
+It now also publishes a grouped `presence_key_family_map` so a downstream tool
+can discover the manifest-owned legacy `*_presence_keys` field families from
+one place instead of collecting those compatibility field lists one by one.
 
 ## Current Philosophy
 
