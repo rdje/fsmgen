@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: signal-analysis leaf key families should be discoverable as one grouped map too
+- After grouping the bounded nested `semantic.forward_ir` shell key families,
+  the next adjacent semantic-side leaf-owner seam sat in the nested
+  `semantic.signal_analysis` object.
+- `NormalizedSemanticSignalAnalysisContract` already published the bucket keys
+  and the shared entry-key family separately, but a caller still had to
+  gather those bounded signal-analysis families one list at a time.
+- The bounded move is deliberately small:
+  - keep the existing key-family helpers unchanged,
+  - add one canonical leaf-level `presence_key_family_map`,
+  - and lock the direct signal-analysis regression against that grouped map.
+- That keeps the explicit nested signal-analysis owner easier to consume
+  without widening the payload or report shells that already reuse it.
+
 ## 2026-04-22: forward-ir shell key families should be discoverable as one grouped map too
 - After grouping the bounded nested `lowered_rtl_ir` leaf-owner key families,
   the next adjacent semantic-side seam sat one level up in the bounded

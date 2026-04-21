@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: signal-analysis owners now publish grouped key families too
+- Hardened
+  [perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm)
+  so the bounded nested `semantic.signal_analysis` object now publishes a
+  grouped `presence_key_family_map` covering its bucket and shared-entry key
+  families.
+- Regression coverage now proves that grouped signal-analysis key-family map
+  directly:
+  [t/338-normalized-semantic-signal-analysis-contract.t](/Users/richarddje/Documents/github/fsmgen/t/338-normalized-semantic-signal-analysis-contract.t).
+
 ## 2026-04-22: forward-ir shells now publish grouped key families too
 - Hardened
   [perl/FSM/Support/NormalizedSemanticForwardIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticForwardIRContract.pm)

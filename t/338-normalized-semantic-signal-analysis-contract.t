@@ -12,6 +12,7 @@ use FSM::Support::NormalizedSemanticSignalAnalysisContract qw(
     build_normalized_semantic_signal_analysis_contract
     normalized_semantic_signal_analysis_contract_source
     normalized_semantic_signal_analysis_entry_presence_keys
+    normalized_semantic_signal_analysis_presence_key_family_map
     normalized_semantic_signal_analysis_presence_keys
 );
 
@@ -44,6 +45,11 @@ subtest 'contract exposes the bounded normalized semantic signal-analysis object
         $contract->{entry_presence_keys},
         normalized_semantic_signal_analysis_entry_presence_keys(),
         'contract publishes the bounded signal-analysis entry keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map},
+        normalized_semantic_signal_analysis_presence_key_family_map(),
+        'contract publishes the grouped signal-analysis key-family discovery map',
     );
 };
 

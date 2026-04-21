@@ -376,6 +376,10 @@ its own bounded nested-object contract:
 [perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm)
 owns the current sanitized signal-family projection keys plus the shared core
 signal-entry keys emitted across direct and composition roots.
+That same owner now also publishes a grouped `presence_key_family_map` so
+embedders can discover those bounded signal-analysis bucket and entry key
+families from one place instead of collecting the individual field-family
+lists separately.
 The nested `semantic.explicit_system_contract` summary inside that payload now
 also has its own bounded nested-object contract when the authored explicit
 contract is preserved:

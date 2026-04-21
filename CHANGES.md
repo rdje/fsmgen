@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### normalized-semantic signal-analysis owners now publish grouped key families too
+- Updated [perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm) so the bounded nested `semantic.signal_analysis` contract now publishes a grouped `presence_key_family_map` for its bucket and shared-entry key families, instead of forcing embedders to collect those key lists separately.
+- Updated [t/338-normalized-semantic-signal-analysis-contract.t](/Users/richarddje/Documents/github/fsmgen/t/338-normalized-semantic-signal-analysis-contract.t) so the direct signal-analysis regression now locks that grouped leaf-owner discovery surface directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders can discover the grouped signal-analysis key families from the book too.
+
 ### normalized-semantic forward-ir shells now publish grouped key families too
 - Updated [perl/FSM/Support/NormalizedSemanticForwardIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticForwardIRContract.pm) so the bounded nested `semantic.forward_ir` contract now publishes a grouped `presence_key_family_map` for its shell keys plus the child composition-only extension families it already advertises, instead of forcing embedders to collect those field-family lists separately.
 - Updated [t/334-normalized-semantic-forward-ir-contract.t](/Users/richarddje/Documents/github/fsmgen/t/334-normalized-semantic-forward-ir-contract.t) so the direct forward-IR regression now locks that grouped shell-owner discovery surface directly.
