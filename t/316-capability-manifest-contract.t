@@ -21,6 +21,7 @@ use FSM::Support::CapabilityManifestContract qw(
     capability_manifest_language_surface_keys
     capability_manifest_producer_keys
     capability_manifest_public_top_level_keys
+    capability_manifest_top_level_contract_source_map
     capability_manifest_semantic_exports_keys
     capability_manifest_support_accounting_keys
 );
@@ -49,6 +50,11 @@ subtest 'contract exposes the bounded capability-manifest shell' => sub {
         $contract->{public_top_level_presence_keys},
         capability_manifest_public_top_level_keys(),
         'contract publishes the bounded top-level manifest keys',
+    );
+    is_deeply(
+        $contract->{top_level_contract_source_map},
+        capability_manifest_top_level_contract_source_map(),
+        'contract publishes the bounded top-level section ownership map',
     );
     is_deeply(
         $contract->{producer_presence_keys},
@@ -102,6 +108,16 @@ subtest 'in-process capability manifest conforms to the bounded shell contract' 
         $manifest->{manifest_contract}{contract_source},
         capability_manifest_contract_source(),
         'capability manifest advertises the top-level manifest contract owner',
+    );
+    is_deeply(
+        $manifest->{manifest_contract}{top_level_contract_source_map},
+        capability_manifest_top_level_contract_source_map(),
+        'capability manifest advertises the grouped top-level section ownership map',
+    );
+    assert_section_contract_sources(
+        $manifest,
+        capability_manifest_top_level_contract_source_map(),
+        'capability manifest',
     );
     assert_keys_present(
         $manifest->{producer},
@@ -166,6 +182,16 @@ subtest 'CLI capability manifest keeps the bounded shell contract' => sub {
         capability_manifest_contract_source(),
         'CLI capability manifest advertises the top-level manifest contract owner',
     );
+    is_deeply(
+        $decoded->{manifest_contract}{top_level_contract_source_map},
+        capability_manifest_top_level_contract_source_map(),
+        'CLI capability manifest advertises the grouped top-level section ownership map',
+    );
+    assert_section_contract_sources(
+        $decoded,
+        capability_manifest_top_level_contract_source_map(),
+        'CLI capability manifest',
+    );
     assert_keys_present(
         $decoded->{producer},
         capability_manifest_producer_keys(),
@@ -189,5 +215,17 @@ sub assert_keys_present {
     my ($payload, $keys, $label) = @_;
     for my $key (@{$keys || []}) {
         ok(exists $payload->{$key}, "$label: keeps key $key");
+    }
+}
+
+sub assert_section_contract_sources {
+    my ($manifest, $expected_map, $label) = @_;
+    for my $key (sort keys %{$expected_map || {}}) {
+        my $slot = $key eq 'language_surface' ? 'surface_contract' : 'section_contract';
+        is(
+            $manifest->{$key}{$slot}{contract_source},
+            $expected_map->{$key},
+            "$label: $key section keeps advertised contract owner",
+        );
     }
 }

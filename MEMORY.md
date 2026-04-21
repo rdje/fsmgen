@@ -10061,3 +10061,11 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Local mdBook output lives under `docs/book/book/` and should stay ignored;
   doc validation should build the book but must not leave generated HTML as a
   tracked repo change.
+- The top-level capability manifest shell now also publishes a grouped
+  `top_level_contract_source_map` through
+  `FSM::Support::CapabilityManifestContract`, so embedders can discover the
+  dedicated owner for each public top-level manifest object from one bounded
+  map instead of reconstructing it from per-section contract slots; that
+  grouped surface also deliberately hides the historical
+  `language_surface.surface_contract` versus `section_contract` slot mismatch
+  behind one canonical manifest-level discovery rule.

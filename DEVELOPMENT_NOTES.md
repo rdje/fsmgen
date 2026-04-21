@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: the manifest shell should publish its top-level owner map too
+- After grouping the obvious nested child-owner families, the next remaining
+  `R13` consistency seam was the manifest shell itself.
+- `CapabilityManifestContract` already exposed the key families for each public
+  top-level section, but a downstream tool still had to know where each
+  section-specific owner lived and still had to special-case the historical
+  `language_surface.surface_contract` slot instead of the more common
+  `section_contract` slot.
+- The bounded move is to publish one grouped
+  `top_level_contract_source_map` at the manifest-shell level:
+  - keep the per-section owner contracts and key families exactly as they are,
+  - reuse the canonical owner helpers from the dedicated section contracts,
+  - and let embedders dispatch from one manifest-level map instead of
+    reconstructing the top-level owner map themselves.
+- That keeps the public manifest easier to consume without widening the
+  stabilized payload beyond owner discovery and existing bounded section
+  contracts.
+
 ## 2026-04-21: failure diagnostics should publish their child owner map too
 - After the composition-object slice, the same one-child consistency pattern
   still remained in the bounded shared failure `diagnostic` object.

@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-21
+### Capability manifest shells now publish a grouped top-level owner map too
+- Updated [perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm) so the bounded top-level manifest shell now publishes a `top_level_contract_source_map` for `producer`, `support_accounting`, `diagnostics`, `semantic_exports`, `backend_validation`, `embedding`, `language_surface`, and `documentation`, reusing the canonical owner helpers from those dedicated section contracts.
+- Updated [t/316-capability-manifest-contract.t](/Users/richarddje/Documents/github/fsmgen/t/316-capability-manifest-contract.t) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the direct manifest-contract regression and the full capability-manifest regression now lock that grouped top-level owner map directly, including the historical `language_surface.surface_contract` compatibility slot.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders can discover that manifest-level owner map from the book too.
+
 ### Failure diagnostics now publish a nested owner map too
 - Updated [perl/FSM/Support/CheckFailureDiagnosticContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckFailureDiagnosticContract.pm) so the bounded nested failure `diagnostic` object now publishes a `nested_contract_source_map` for `support_accounting`, reusing the same canonical child-owner helper already surfaced through the scalar owner field.
 - Updated [t/331-check-failure-diagnostic-contract.t](/Users/richarddje/Documents/github/fsmgen/t/331-check-failure-diagnostic-contract.t) so the direct failure-diagnostic regression now locks that nested-owner map directly.

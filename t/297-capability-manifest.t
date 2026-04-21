@@ -13,6 +13,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::Support::CapabilityManifestContract qw(
     capability_manifest_contract_source
+    capability_manifest_top_level_contract_source_map
 );
 use FSM::Support::CheckFailureDiagnosticContract qw(
     check_failure_diagnostic_contract_source
@@ -160,6 +161,16 @@ subtest 'module manifest is generated from support accounting' => sub {
     ok(
         scalar(@{$manifest->{manifest_contract}{public_top_level_presence_keys} || []}) >= 10,
         'manifest advertises bounded top-level manifest key presence',
+    );
+    is_deeply(
+        $manifest->{manifest_contract}{top_level_contract_source_map},
+        capability_manifest_top_level_contract_source_map(),
+        'manifest advertises the grouped top-level section ownership map',
+    );
+    assert_manifest_section_contract_sources(
+        $manifest,
+        capability_manifest_top_level_contract_source_map(),
+        'manifest',
     );
     ok(
         scalar(@{$manifest->{manifest_contract}{producer_presence_keys} || []}) >= 6,
@@ -1292,3 +1303,15 @@ subtest 'CLI emits the same valid JSON manifest without an input file' => sub {
 };
 
 done_testing();
+
+sub assert_manifest_section_contract_sources {
+    my ($manifest, $expected_map, $label) = @_;
+    for my $key (sort keys %{$expected_map || {}}) {
+        my $slot = $key eq 'language_surface' ? 'surface_contract' : 'section_contract';
+        is(
+            $manifest->{$key}{$slot}{contract_source},
+            $expected_map->{$key},
+            "$label: $key keeps advertised section contract owner",
+        );
+    }
+}

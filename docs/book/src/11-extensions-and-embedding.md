@@ -2,6 +2,34 @@
 
 This chapter covers the current supported integration seam for tool builders.
 
+## Capability Manifest Discovery
+
+The machine-readable entrypoint for downstream tools is:
+
+```bash
+./bin/fsmgen --capability-manifest
+```
+
+The top-level `manifest_contract` object owns the bounded shell for that JSON.
+It now also publishes a grouped `top_level_contract_source_map` for the public
+top-level sections:
+
+- `producer`
+- `support_accounting`
+- `diagnostics`
+- `semantic_exports`
+- `backend_validation`
+- `embedding`
+- `language_surface`
+- `documentation`
+
+That grouped map is the intended discovery surface for embedders. It lets a
+tool start from one manifest object, then hand each public top-level section to
+its dedicated contract owner without reconstructing the owner map from scattered
+section payloads, hard-coding owner strings, or remembering that
+`language_surface` still advertises its nested owner under `surface_contract`
+for compatibility.
+
 ## Current Philosophy
 
 The active extension model is typed and explicit.
