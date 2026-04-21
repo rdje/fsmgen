@@ -10201,3 +10201,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `FSM::Support::HDLExternalValidationContract`, so downstream tools can
   discover the success top-level and step key families from one place
   instead of collecting those success key lists separately.
+- The bounded nested `module_info` owner now also publishes one grouped
+  `presence_key_family_map` through
+  `FSM::Support::HDLGeneratorModuleInfoContract`, so embedders can discover
+  the identity, summary, and composition-only module-info key families from
+  one place instead of collecting those key lists separately.

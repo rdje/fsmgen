@@ -13,6 +13,7 @@ use FSM::Support::HDLGeneratorModuleInfoContract qw(
     hdl_generator_module_info_contract_source
     hdl_generator_module_info_identity_keys
     hdl_generator_module_info_optional_composition_summary_keys
+    hdl_generator_module_info_presence_key_family_map
     hdl_generator_module_info_stable_subsurfaces
     hdl_generator_module_info_summary_keys
 );
@@ -64,6 +65,11 @@ subtest 'contract exposes the bounded HDLGenerator module_info object' => sub {
         $contract->{optional_composition_summary_keys},
         hdl_generator_module_info_optional_composition_summary_keys(),
         'contract publishes the bounded composition-only module_info summary keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map},
+        hdl_generator_module_info_presence_key_family_map(),
+        'contract publishes the bounded grouped module_info key-family map',
     );
     is_deeply(
         $contract->{stable_subsurfaces},

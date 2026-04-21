@@ -11,6 +11,7 @@ our @EXPORT_OK = qw(
     hdl_generator_module_info_contract_source
     hdl_generator_module_info_identity_keys
     hdl_generator_module_info_optional_composition_summary_keys
+    hdl_generator_module_info_presence_key_family_map
     hdl_generator_module_info_stable_subsurfaces
     hdl_generator_module_info_summary_keys
 );
@@ -39,12 +40,14 @@ sub build_hdl_generator_module_info_contract {
         identity_presence_keys => hdl_generator_module_info_identity_keys(),
         summary_presence_keys => hdl_generator_module_info_summary_keys(),
         optional_composition_summary_keys => hdl_generator_module_info_optional_composition_summary_keys(),
+        presence_key_family_map => hdl_generator_module_info_presence_key_family_map(),
         stable_subsurfaces => hdl_generator_module_info_stable_subsurfaces(),
         full_hash_stable => JSON::PP::false,
         json_safe_as_whole => JSON::PP::false,
         guidance => [
             q{Treat this contract as the bounded nested `module_info` object reused by in-process `HDLGenerator` results.},
             'The bounded public promise covers the current module identity keys, the current scalar summary keys, and the current composition-only scalar summary keys.',
+            'Use the grouped presence_key_family_map to discover the bounded module_info identity, summary, and composition-only key families without collecting those key-family lists separately.',
             'The wider module_info hash remains compatibility-heavy, so callers should target the advertised stable subsurfaces instead of treating the whole hash as public API.',
         ],
     };
@@ -89,6 +92,14 @@ sub hdl_generator_module_info_optional_composition_summary_keys {
         instance_count
         internal_net_count
     )];
+}
+
+sub hdl_generator_module_info_presence_key_family_map {
+    return {
+        identity_presence_keys => hdl_generator_module_info_identity_keys(),
+        summary_presence_keys => hdl_generator_module_info_summary_keys(),
+        optional_composition_summary_keys => hdl_generator_module_info_optional_composition_summary_keys(),
+    };
 }
 
 sub hdl_generator_module_info_stable_subsurfaces {

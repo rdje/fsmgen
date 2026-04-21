@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: module-info leaf key families should be discoverable as one grouped map too
+- After the manifest-facing grouped discovery seams started getting thin, the
+  next honest cleanup sat at the bounded `HDLGenerator` leaf-owner level.
+- `HDLGeneratorModuleInfoContract` already published the identity, direct-root
+  summary, and composition-only summary key families separately, but a caller
+  still had to gather those bounded `module_info` key families one list at a
+  time.
+- The bounded move is deliberately small:
+  - keep the existing identity, summary, and optional-composition helpers
+    unchanged,
+  - add one canonical leaf-level `presence_key_family_map`,
+  - and lock the direct `module_info` regression against that grouped map.
+- That keeps the explicit `module_info` owner easier to consume without
+  widening the parent `HDLGenerator` result shell again, and without mixing
+  this leaf-owner cleanup into the already-grouped manifest-facing maps.
+
 ## 2026-04-21: external HDL validation success key families should be discoverable as one grouped map too
 - After grouping the `HDLGenerator` semantic-layer key families, the next
   nearby discovery inconsistency sat in the bounded external validation
