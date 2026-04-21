@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: semantic-payload shells now publish grouped key families too
+- Hardened
+  [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm)
+  so the bounded nested `semantic` shell now publishes a grouped
+  `presence_key_family_map` covering its own payload keys plus the
+  shell-advertised child-extension families it already carried separately.
+- Regression coverage now proves that grouped semantic-payload shell
+  key-family map directly:
+  [t/330-normalized-semantic-payload-contract.t](/Users/richarddje/Documents/github/fsmgen/t/330-normalized-semantic-payload-contract.t).
+
 ## 2026-04-22: signal-analysis owners now publish grouped key families too
 - Hardened
   [perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm)

@@ -49,6 +49,7 @@ our @EXPORT_OK = qw(
     build_normalized_semantic_payload_contract
     normalized_semantic_payload_contract_source
     normalized_semantic_payload_explicit_system_contract_keys
+    normalized_semantic_payload_presence_key_family_map
     normalized_semantic_payload_nested_presence_key_map
     normalized_semantic_payload_forward_ir_nested_contract_source_map
     normalized_semantic_payload_forward_ir_nested_presence_key_map
@@ -100,6 +101,7 @@ sub build_normalized_semantic_payload_contract {
             composition => normalized_semantic_composition_contract_source(),
         },
         nested_presence_key_map => normalized_semantic_payload_nested_presence_key_map(),
+        presence_key_family_map => normalized_semantic_payload_presence_key_family_map(),
         module_contract_source => normalized_semantic_module_contract_source(),
         module_presence_keys => normalized_semantic_module_presence_keys(),
         module_optional_metric_keys => normalized_semantic_module_optional_metric_keys(),
@@ -136,6 +138,7 @@ sub build_normalized_semantic_payload_contract {
             'The nested `system_contract` object stays bounded through FSM::Support::NormalizedSemanticSystemContract.',
             'The nested `forward_ir` object stays bounded through FSM::Support::NormalizedSemanticForwardIRContract.',
             'Use the grouped `nested_presence_key_map` to discover the bounded key families for module, explicit_system_contract, signal_analysis, system_contract, forward_ir, symbol_contract, and composition without collecting those child key lists separately.',
+            'Use the grouped `presence_key_family_map` to discover the shell-owned semantic payload and child extension key families without collecting those field-family lists separately.',
             'Use the grouped `forward_ir_nested_presence_key_map` to discover the deeper bounded `forward_ir` child key families without collecting those nested child key lists separately.',
             'Use the grouped `forward_ir_nested_contract_source_map` to discover the deeper bounded `forward_ir` shell owners without reconstructing them from parallel scalar fields.',
             'The nested `forward_ir.intent_hir` object shell stays bounded through FSM::Support::NormalizedSemanticIntentHIRContract.',
@@ -169,6 +172,16 @@ sub normalized_semantic_payload_nested_presence_key_map {
         forward_ir => normalized_semantic_payload_forward_ir_keys(),
         symbol_contract => normalized_semantic_payload_symbol_contract_keys(),
         composition => normalized_semantic_payload_composition_keys(),
+    };
+}
+
+sub normalized_semantic_payload_presence_key_family_map {
+    return {
+        public_presence_keys => normalized_semantic_payload_presence_keys(),
+        module_optional_metric_keys => normalized_semantic_module_optional_metric_keys(),
+        signal_analysis_entry_presence_keys => normalized_semantic_payload_signal_analysis_entry_keys(),
+        forward_ir_intent_hir_optional_composition_keys => normalized_semantic_payload_forward_ir_intent_hir_optional_composition_keys(),
+        forward_ir_lowered_rtl_ir_optional_composition_keys => normalized_semantic_payload_forward_ir_lowered_rtl_ir_optional_composition_keys(),
     };
 }
 

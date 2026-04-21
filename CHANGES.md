@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### normalized-semantic payload shells now publish grouped key families too
+- Updated [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm) so the bounded nested `semantic` contract now publishes a grouped `presence_key_family_map` for its shell-owned payload and child-extension key families, instead of forcing embedders to collect those field-family lists separately.
+- Updated [t/330-normalized-semantic-payload-contract.t](/Users/richarddje/Documents/github/fsmgen/t/330-normalized-semantic-payload-contract.t) so the direct semantic-payload regression now locks that grouped shell-owner discovery surface directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders can discover the grouped semantic-payload shell key families from the book too.
+
 ### normalized-semantic signal-analysis owners now publish grouped key families too
 - Updated [perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm) so the bounded nested `semantic.signal_analysis` contract now publishes a grouped `presence_key_family_map` for its bucket and shared-entry key families, instead of forcing embedders to collect those key lists separately.
 - Updated [t/338-normalized-semantic-signal-analysis-contract.t](/Users/richarddje/Documents/github/fsmgen/t/338-normalized-semantic-signal-analysis-contract.t) so the direct signal-analysis regression now locks that grouped leaf-owner discovery surface directly.

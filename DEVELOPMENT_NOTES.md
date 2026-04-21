@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: semantic-payload shell key families should be discoverable as one grouped map too
+- After grouping the bounded nested `semantic.signal_analysis` leaf-owner key
+  families, the next adjacent semantic-side seam sat back on the bounded
+  `semantic` payload shell itself.
+- `NormalizedSemanticPayloadContract` already published the primary nested
+  child map plus the deeper `forward_ir` grouped views, but its own
+  shell-advertised extension families still had to be gathered from separate
+  fields.
+- The bounded move is deliberately small:
+  - keep the existing child-owner and nested grouped maps unchanged,
+  - add one canonical shell-level `presence_key_family_map`,
+  - and lock the direct semantic-payload regression against that grouped map.
+- That keeps the explicit semantic payload shell easier to consume without
+  widening the report shell that already reuses it.
+
 ## 2026-04-22: signal-analysis leaf key families should be discoverable as one grouped map too
 - After grouping the bounded nested `semantic.forward_ir` shell key families,
   the next adjacent semantic-side leaf-owner seam sat in the nested
