@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: the check-JSON shell should not retype its own owner name either
+- After the manifest-shell and section-shell helper cleanup, the next adjacent
+  `R13` seam was the bounded check-JSON shell itself.
+- `CheckDiagnosticsContract` already owned that public shell, but its own
+  `contract_source` fact still lived only as an inline literal in the built
+  hash and in the manifest/direct regressions.
+- The same regularization pattern is the right fit here:
+  - let the shell export one canonical `check_diagnostics_contract_source()`
+    helper,
+  - keep the published hash shape unchanged,
+  - and make the direct check-JSON regression plus the capability-manifest
+    regression assert against the helper instead of against one more
+    hand-typed owner string.
+- That keeps the public diagnostics lane a little tighter because the shell's
+  own owner fact now comes from the contract module that actually owns it.
+
 ## 2026-04-21: manifest section shells should not retype their own owner names either
 - After regularizing the manifest shell and the first-layer section/self-owner
   contracts, one adjacent `R13` seam still remained in the section shells that

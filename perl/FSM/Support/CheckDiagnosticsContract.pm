@@ -42,6 +42,7 @@ use FSM::Support::SupportAccountingMatchContract qw(
 
 our @EXPORT_OK = qw(
     build_check_diagnostics_contract
+    check_diagnostics_contract_source
     check_json_failure_diagnostic_keys
     check_json_failure_diagnostic_optional_artifact_keys
     check_json_failure_diagnostic_support_accounting_keys
@@ -54,11 +55,15 @@ our @EXPORT_OK = qw(
     check_json_success_support_accounting_keys
 );
 
+sub check_diagnostics_contract_source {
+    return 'FSM::Support::CheckDiagnosticsContract';
+}
+
 sub build_check_diagnostics_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::CheckDiagnosticsContract',
+        contract_source => check_diagnostics_contract_source(),
         report_source => 'FSM::Support::CheckDiagnostics',
         entrypoints => {
             cli => './bin/fsmgen --strict --check --json path/to/file.fsm',

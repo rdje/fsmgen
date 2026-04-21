@@ -21,6 +21,7 @@ use FSM::Support::CheckFailureDiagnosticContract qw(
 );
 use FSM::Support::CheckDiagnosticsContract qw(
     build_check_diagnostics_contract
+    check_diagnostics_contract_source
     check_json_failure_diagnostic_keys
     check_json_failure_diagnostic_support_accounting_keys
     check_json_matched_failure_diagnostic_keys
@@ -68,7 +69,7 @@ subtest 'contract exposes the bounded check JSON surface' => sub {
     is($contract->{status}, 'bounded_public', 'contract marks check JSON as bounded public');
     is(
         $contract->{contract_source},
-        'FSM::Support::CheckDiagnosticsContract',
+        check_diagnostics_contract_source(),
         'contract records its own owner',
     );
     is(

@@ -17,6 +17,9 @@ use FSM::Support::CapabilityManifestContract qw(
 use FSM::Support::CheckFailureDiagnosticContract qw(
     check_failure_diagnostic_contract_source
 );
+use FSM::Support::CheckDiagnosticsContract qw(
+    check_diagnostics_contract_source
+);
 use FSM::Support::CheckResultContract qw(
     check_result_contract_source
 );
@@ -411,7 +414,7 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     );
     is(
         $manifest->{diagnostics}{check_json}{contract_source},
-        'FSM::Support::CheckDiagnosticsContract',
+        check_diagnostics_contract_source(),
         'manifest records the check JSON contract owner',
     );
     ok(

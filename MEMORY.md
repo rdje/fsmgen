@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-21: check JSON shell self-owner facts now come from a canonical helper too
+- Hardened
+  [perl/FSM/Support/CheckDiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnosticsContract.pm)
+  so the bounded check-JSON shell now exports a canonical self-owner helper
+  directly instead of carrying its own owner name only as an inline literal.
+- Regression coverage now proves that helper-backed self-owner reuse directly:
+  [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+  and [t/312-check-diagnostics-contract.t](/Users/richarddje/Documents/github/fsmgen/t/312-check-diagnostics-contract.t).
+
 ## 2026-04-21: manifest section shell self-owner facts now come from canonical helpers too
 - Hardened
   [perl/FSM/Support/EmbeddingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingContract.pm),

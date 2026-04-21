@@ -1,6 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-21
+### Check JSON shell self-owner facts now come from a canonical helper too
+- Updated [perl/FSM/Support/CheckDiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnosticsContract.pm) so the bounded check-JSON shell now exports its own canonical `check_diagnostics_contract_source()` helper instead of leaving that self-owner name reachable only through an inline literal.
+- Updated [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) and [t/312-check-diagnostics-contract.t](/Users/richarddje/Documents/github/fsmgen/t/312-check-diagnostics-contract.t) so the manifest regression and the direct check-JSON regression now assert against that helper-backed self-owner fact.
+
 ### Manifest section shell self-owner facts now come from canonical helpers too
 - Updated [perl/FSM/Support/EmbeddingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingContract.pm), [perl/FSM/Support/SemanticExportsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SemanticExportsContract.pm), and [perl/FSM/Support/BackendValidationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/BackendValidationContract.pm) so those manifest-facing section shells now export their own canonical `*_contract_source()` helpers instead of leaving their self-owner names reachable only through repeated literals.
 - Updated [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t), [t/321-embedding-contract.t](/Users/richarddje/Documents/github/fsmgen/t/321-embedding-contract.t), [t/322-semantic-exports-contract.t](/Users/richarddje/Documents/github/fsmgen/t/322-semantic-exports-contract.t), and [t/323-backend-validation-contract.t](/Users/richarddje/Documents/github/fsmgen/t/323-backend-validation-contract.t) so the direct section regressions and the capability-manifest regression now assert against those helper-backed self-owner facts instead of hand-typed section-owner strings.
