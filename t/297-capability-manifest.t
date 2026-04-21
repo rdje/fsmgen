@@ -38,6 +38,7 @@ use FSM::Support::ExtensionContract qw(
 );
 use FSM::Support::HDLExternalValidationContract qw(
     hdl_external_validation_contract_source
+    hdl_external_validation_success_presence_key_family_map
 );
 use FSM::Support::HDLGeneratorCompositionPlanContract qw(
     hdl_generator_composition_plan_contract_source
@@ -886,6 +887,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         $manifest->{backend_validation}{systemverilog_external}{contract_source},
         hdl_external_validation_contract_source(),
         'manifest records the external HDL validation contract owner',
+    );
+    is_deeply(
+        $manifest->{backend_validation}{systemverilog_external}{success_presence_key_family_map},
+        hdl_external_validation_success_presence_key_family_map(),
+        'manifest records the grouped external validation success key-family map',
     );
     ok(
         scalar(@{$manifest->{backend_validation}{systemverilog_external}{success_top_level_presence_keys} || []}) >= 4,

@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: external HDL validation success key families should be discoverable as one grouped map too
+- After grouping the `HDLGenerator` semantic-layer key families, the next
+  nearby discovery inconsistency sat in the bounded external validation
+  contract.
+- `HDLExternalValidationContract` already published the success top-level keys
+  and success step keys separately, but a consumer still had to gather those
+  success key families one list at a time.
+- The bounded move is deliberately small:
+  - keep the existing success top-level key helper unchanged,
+  - keep the existing success step key helper unchanged,
+  - add one canonical `success_presence_key_family_map`,
+  - and lock both the direct external-validation regression and the
+    manifest-facing regression against that grouped map.
+- That keeps the external-validation discovery story easier to consume
+  without widening the lane promise or mixing success key families with step
+  names or tool metadata.
+
 ## 2026-04-21: HDLGenerator semantic-layer key families should be discoverable as one grouped map too
 - After grouping the `HDLGenerator` composition-only key families, the next
   nearby discovery inconsistency was still in the same bounded result shell.

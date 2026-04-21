@@ -9,6 +9,7 @@ use JSON::PP ();
 our @EXPORT_OK = qw(
     build_hdl_external_validation_contract
     hdl_external_validation_contract_source
+    hdl_external_validation_success_presence_key_family_map
     hdl_external_validation_success_step_keys
     hdl_external_validation_success_step_names
     hdl_external_validation_success_top_level_keys
@@ -48,9 +49,11 @@ sub build_hdl_external_validation_contract {
         cli_failures_exit_nonzero => JSON::PP::true,
         success_top_level_presence_keys => hdl_external_validation_success_top_level_keys(),
         success_step_presence_keys => hdl_external_validation_success_step_keys(),
+        success_presence_key_family_map => hdl_external_validation_success_presence_key_family_map(),
         success_step_names => hdl_external_validation_success_step_names(),
         guidance => [
             'Treat the listed command shape, stage names, tool identities, and success-result key lists as the bounded external validation contract for schema version 1.',
+            'Use the grouped success_presence_key_family_map to discover the bounded success top-level and step key families without collecting those success key lists separately.',
             'This lane is optional and only active when Verilator and Yosys are installed.',
             'The promise is about generated SystemVerilog lint/netlist sanity, not about VHDL validation or ABC-enabled synthesis behavior.',
         ],
@@ -77,6 +80,13 @@ sub hdl_external_validation_success_step_keys {
             stderr
         ),
     ];
+}
+
+sub hdl_external_validation_success_presence_key_family_map {
+    return {
+        success_top_level_presence_keys => hdl_external_validation_success_top_level_keys(),
+        success_step_presence_keys => hdl_external_validation_success_step_keys(),
+    };
 }
 
 sub hdl_external_validation_success_step_names {

@@ -10196,3 +10196,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   discover the top-level `intent_hir`, `lowered_rtl_ir`, and
   `structural_rtl_ir` key families from one place instead of collecting
   those semantic-layer key lists separately.
+- The bounded external validation contract now also publishes one grouped
+  `success_presence_key_family_map` through
+  `FSM::Support::HDLExternalValidationContract`, so downstream tools can
+  discover the success top-level and step key families from one place
+  instead of collecting those success key lists separately.

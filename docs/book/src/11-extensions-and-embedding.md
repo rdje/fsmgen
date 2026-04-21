@@ -619,6 +619,10 @@ The bounded contract for that lane now has its own owner too:
 The capability manifest advertises the command shape, tool identities, stage
 names, and bounded success result/step keys for embedders that want the same
 post-emission gate without reverse-engineering sample output.
+That same contract now also publishes a grouped
+`success_presence_key_family_map` so embedders can discover the bounded
+success top-level and step key families from one place instead of collecting
+those success key lists separately.
 
 The first bounded check/diagnostic surface is now:
 

@@ -16,6 +16,7 @@ use FSM::Support::HDLExternalValidation qw(
 use FSM::Support::HDLExternalValidationContract qw(
     build_hdl_external_validation_contract
     hdl_external_validation_contract_source
+    hdl_external_validation_success_presence_key_family_map
     hdl_external_validation_success_step_keys
     hdl_external_validation_success_step_names
     hdl_external_validation_success_top_level_keys
@@ -54,6 +55,11 @@ subtest 'contract exposes the bounded external validation surface' => sub {
         $contract->{success_step_presence_keys},
         hdl_external_validation_success_step_keys(),
         'contract publishes the bounded success step keys',
+    );
+    is_deeply(
+        $contract->{success_presence_key_family_map},
+        hdl_external_validation_success_presence_key_family_map(),
+        'contract publishes the bounded grouped success key-family map',
     );
     is_deeply(
         $contract->{success_step_names},
