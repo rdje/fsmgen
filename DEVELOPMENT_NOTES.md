@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: structural-rtl shell families should be discoverable as one grouped map too
+- After grouping the bounded semantic-payload shell families at the report
+  level, the next adjacent semantic-side leaf-owner seam sat in the nested
+  `semantic.forward_ir.structural_rtl_ir` object.
+- `NormalizedSemanticStructuralRTLIRContract` already published the full shell
+  key list, but a caller still had to separate the shell summary/count keys
+  from the bounded collection keys by hand.
+- The bounded move is deliberately small:
+  - keep the existing full shell key list unchanged,
+  - add canonical `summary_presence_keys` and `collection_presence_keys`,
+  - add one grouped `presence_key_family_map`,
+  - and lock the direct structural-RTL regression against that grouped map.
+- That keeps the explicit structural-RTL owner easier to consume without
+  pretending the deeper entry payloads under `ports`, `nets`, `instances`,
+  `resolved_links`, `declared_links`, or `auxiliary_assignments` are frozen.
+
 ## 2026-04-22: normalized-semantic reports should republish semantic payload shell families too
 - After grouping the bounded `semantic` payload shell families directly, the
   next adjacent semantic-side seam sat in the parent normalized-semantic

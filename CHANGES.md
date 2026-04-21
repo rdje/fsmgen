@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### structural-rtl owners now group shell summary and collection keys too
+- Updated [perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm) so the bounded nested `semantic.forward_ir.structural_rtl_ir` owner now publishes `summary_presence_keys`, `collection_presence_keys`, and a grouped `presence_key_family_map`, instead of forcing embedders to collect those structural-RTL shell families separately.
+- Updated [t/341-normalized-semantic-structural-rtl-ir-contract.t](/Users/richarddje/Documents/github/fsmgen/t/341-normalized-semantic-structural-rtl-ir-contract.t) so the direct structural-RTL regression now locks that grouped leaf-owner discovery surface directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders can discover the grouped structural-RTL shell key families from the book too.
+
 ### normalized-semantic reports now republish semantic payload shell families too
 - Updated [perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm) so the public normalized semantic report now republishes the payload owner’s grouped shell-family view as `semantic_presence_key_family_map`, instead of forcing embedders to reconstruct those semantic payload shell families from separate `success_*` fields.
 - Updated [t/311-normalized-semantic-report-contract.t](/Users/richarddje/Documents/github/fsmgen/t/311-normalized-semantic-report-contract.t) so the direct normalized-semantic report regression now locks that republished payload-shell grouped map directly.

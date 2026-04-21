@@ -10,8 +10,11 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::NormalizedSemanticStructuralRTLIRContract qw(
     build_normalized_semantic_structural_rtl_ir_contract
+    normalized_semantic_structural_rtl_ir_collection_presence_keys
     normalized_semantic_structural_rtl_ir_contract_source
+    normalized_semantic_structural_rtl_ir_presence_key_family_map
     normalized_semantic_structural_rtl_ir_presence_keys
+    normalized_semantic_structural_rtl_ir_summary_presence_keys
 );
 
 subtest 'contract exposes the bounded normalized semantic structural-rtl-ir object' => sub {
@@ -34,6 +37,21 @@ subtest 'contract exposes the bounded normalized semantic structural-rtl-ir obje
         $contract->{public_presence_keys},
         normalized_semantic_structural_rtl_ir_presence_keys(),
         'contract publishes the bounded structural-rtl-ir key list',
+    );
+    is_deeply(
+        $contract->{summary_presence_keys},
+        normalized_semantic_structural_rtl_ir_summary_presence_keys(),
+        'contract publishes the bounded structural-rtl-ir summary key family',
+    );
+    is_deeply(
+        $contract->{collection_presence_keys},
+        normalized_semantic_structural_rtl_ir_collection_presence_keys(),
+        'contract publishes the bounded structural-rtl-ir collection key family',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map},
+        normalized_semantic_structural_rtl_ir_presence_key_family_map(),
+        'contract publishes the grouped structural-rtl-ir key-family map',
     );
 };
 

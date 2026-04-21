@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: structural-rtl owners now publish grouped shell key families too
+- Hardened
+  [perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm)
+  so the bounded nested `semantic.forward_ir.structural_rtl_ir` object now
+  publishes grouped shell summary and collection key families.
+- Regression coverage now proves that grouped structural-RTL key-family map
+  directly:
+  [t/341-normalized-semantic-structural-rtl-ir-contract.t](/Users/richarddje/Documents/github/fsmgen/t/341-normalized-semantic-structural-rtl-ir-contract.t).
+
 ## 2026-04-22: normalized-semantic reports now republish semantic payload shell families too
 - Hardened
   [perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm)
