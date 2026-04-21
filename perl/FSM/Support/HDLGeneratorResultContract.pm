@@ -5,6 +5,10 @@ use warnings;
 
 use Exporter 'import';
 use JSON::PP ();
+use FSM::Support::HDLGeneratorCompositionSpecContract qw(
+    hdl_generator_composition_spec_raw_value_class_when_defined
+    hdl_generator_composition_spec_summary_surfaces
+);
 use FSM::Support::HDLGeneratorFSMModuleContract qw(
     hdl_generator_fsm_module_raw_value_class_when_defined
     hdl_generator_fsm_module_summary_surfaces
@@ -116,8 +120,10 @@ sub build_hdl_generator_result_contract {
         resolved_package_imports_shell_only => JSON::PP::true,
         resolved_package_imports_raw_value_class => hdl_generator_resolved_package_imports_raw_value_class(),
         resolved_package_imports_summary_surface => hdl_generator_resolved_package_imports_summary_surface(),
+        composition_spec_contract_source => 'FSM::Support::HDLGeneratorCompositionSpecContract',
         composition_spec_shell_only => JSON::PP::true,
-        composition_spec_raw_value_class => 'FSM::Composition::Spec',
+        composition_spec_raw_value_class => hdl_generator_composition_spec_raw_value_class_when_defined(),
+        composition_spec_summary_surfaces => hdl_generator_composition_spec_summary_surfaces(),
         composition_plan_shell_only => JSON::PP::true,
         composition_plan_raw_value_class => 'FSM::Composition::Plan',
         composition_report_shell_only => JSON::PP::true,
@@ -164,7 +170,8 @@ sub build_hdl_generator_result_contract {
             'The fsm_module branch is shell-only when defined: it is a raw FSM::CoreAST::FSMModule object kept for in-process compatibility, so prefer intent_hir, lowered_rtl_ir, structural_rtl_ir, or normalized semantic JSON for structured downstream inspection.',
             'The raw_ast branch is a shell-only frontend/debug artifact, so prefer intent_hir or normalized semantic JSON instead of treating parser-level AST arrays as a public interchange format.',
             'The resolved_package_imports branch is shell-only: its values are raw FSM::Package::Spec objects, so use source_info.package_import_count and source_info.package_import_names for stable package-import inspection.',
-            'The composition_spec and composition_plan branches are shell-only: they are raw FSM::Composition::Spec and FSM::Composition::Plan objects kept for in-process compatibility.',
+            'The composition_spec branch is shell-only when defined: it is a raw FSM::Composition::Spec object kept for in-process compatibility, so prefer semantic_exports.normalized_semantic_json.semantic.composition or semantic_exports.normalized_semantic_json.semantic.composition.provenance_report for structured downstream inspection.',
+            'The composition_plan branch is shell-only: it is a raw FSM::Composition::Plan object kept for in-process compatibility.',
             'The raw composition_report branch is an in-process compatibility hash, not a stable JSON document; use FSM::Support::CompositionReportContract and semantic_exports.normalized_semantic_json.semantic.composition.provenance_report for serializable composition provenance.',
             'The whole module_info hash is not itself stabilized; only the advertised module_info identity and summary subsurfaces are public.',
             'The advertised scalar summary keys inside module_info are stabilized, but the whole module_info hash still includes compatibility-heavy nested payloads.',

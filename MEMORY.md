@@ -433,6 +433,22 @@ This is the live continuity document for fast session recovery after crashes, re
   of treating `raw_ast` as an undocumented special case inside the broader
   result contract.
 
+## 2026-04-21: HDLGenerator composition_spec now has a dedicated shell-only contract
+- Added [perl/FSM/Support/HDLGeneratorCompositionSpecContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorCompositionSpecContract.pm)
+  as the explicit owner for the bounded shell-only `HDLGenerator`
+  `composition_spec` branch.
+- The new contract is intentionally narrow:
+  - the branch remains shell-only,
+  - the raw value remains an `FSM::Composition::Spec` object when defined,
+  - structured inspection stays on normalized semantic composition and
+    provenance-report exports,
+  - and the wider live parsed composition object remains explicitly
+    non-stable and non-JSON-safe as a whole.
+- [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm)
+  now advertises that nested owner through
+  `composition_spec_contract_source` instead of treating `composition_spec` as
+  an undocumented special case inside the broader result contract.
+
 ## 2026-04-19: support_accounting now exposes a nested section_contract too
 - [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
   now advertises the bounded support-accounting owner through

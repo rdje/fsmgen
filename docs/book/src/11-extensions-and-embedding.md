@@ -191,7 +191,11 @@ contract does not treat those top-level hashes as separately stabilized full
 trees beyond those shell boundaries.
 The composition-only `composition_spec` and `composition_plan` branches are
 shell-only too: they are raw `FSM::Composition::Spec` and
-`FSM::Composition::Plan` objects kept for in-process compatibility. Raw
+`FSM::Composition::Plan` objects kept for in-process compatibility. The
+`composition_spec` branch now also has its own explicit owner through
+[perl/FSM/Support/HDLGeneratorCompositionSpecContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorCompositionSpecContract.pm),
+which is the contract to follow for the raw composition-spec rule plus the
+sanitized composition-summary fallback surfaces. Raw
 `composition_report` is likewise an in-process compatibility hash rather than
 a serializable public JSON surface, so embedders should follow
 [perl/FSM/Support/CompositionReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CompositionReportContract.pm)

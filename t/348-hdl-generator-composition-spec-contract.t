@@ -1,0 +1,70 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Test::More;
+use File::Spec;
+use FindBin;
+
+use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+
+use FSM::Support::HDLGeneratorCompositionSpecContract qw(
+    build_hdl_generator_composition_spec_contract
+    hdl_generator_composition_spec_raw_value_class_when_defined
+    hdl_generator_composition_spec_summary_surfaces
+);
+
+subtest 'contract exposes the bounded HDLGenerator composition_spec branch' => sub {
+    my $contract = build_hdl_generator_composition_spec_contract();
+
+    is($contract->{schema_version}, 1, 'contract exposes schema version');
+    is($contract->{status}, 'bounded_public', 'contract marks the nested composition_spec branch as bounded public');
+    is(
+        $contract->{contract_source},
+        'FSM::Support::HDLGeneratorCompositionSpecContract',
+        'contract records its own owner',
+    );
+    is($contract->{object_name}, 'composition_spec', 'contract records the nested object name');
+    is(
+        $contract->{parent_object_name},
+        'HDLGeneratorResult.composition_spec',
+        'contract records the nested parent path',
+    );
+    is_deeply(
+        $contract->{report_sources},
+        [
+            qw(
+                FSM::Pipeline::HDLGenerator
+            ),
+        ],
+        'contract records the in-process producer that reuses the nested composition_spec branch',
+    );
+    ok(
+        $contract->{shell_only},
+        'contract records composition_spec as shell-only',
+    );
+    ok(
+        $contract->{value_may_be_undef},
+        'contract records that composition_spec may be undef',
+    );
+    is(
+        $contract->{raw_value_class_when_defined},
+        hdl_generator_composition_spec_raw_value_class_when_defined(),
+        'contract records the raw composition_spec value class when defined',
+    );
+    ok(
+        !$contract->{full_hash_stable},
+        'contract does not claim the whole composition_spec branch is stable',
+    );
+    ok(
+        !$contract->{json_safe_as_whole},
+        'contract does not claim the whole composition_spec branch is JSON-safe',
+    );
+    is_deeply(
+        $contract->{summary_surfaces},
+        hdl_generator_composition_spec_summary_surfaces(),
+        'contract publishes the bounded semantic fallback surfaces for composition_spec consumers',
+    );
+};
+
+done_testing();

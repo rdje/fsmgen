@@ -1902,7 +1902,12 @@ The same `HDLGenerator` result contract now also calls out `composition_spec`
 and `composition_plan` as shell-only raw `FSM::Composition::Spec` and
 `FSM::Composition::Plan` compatibility objects, so composition callers can keep
 using those live Perl objects intentionally while JSON-minded tools stay on the
-sanitized semantic-report path.
+sanitized semantic-report path. The `composition_spec` branch now also has its
+own explicit owner through
+[perl/FSM/Support/HDLGeneratorCompositionSpecContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorCompositionSpecContract.pm),
+so embedders have one dedicated contract to follow for that raw
+composition-spec rule plus the sanitized composition-summary fallback
+surfaces.
 The same contract now also names `fsm_module` as a shell-only raw
 `FSM::CoreAST::FSMModule` object when it is present, and `raw_ast` as a
 shell-only frontend/debug artifact. In both cases, downstream structured
