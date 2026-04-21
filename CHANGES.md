@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### report-command owners now group mode and flag families too
+- Updated [perl/FSM/Support/ReportCommandContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportCommandContract.pm) so the bounded nested `command` owner now publishes `mode_keys`, `flag_keys`, `target_language_keys`, and a grouped `presence_key_family_map`, instead of forcing embedders to collect those command families separately.
+- Updated [t/327-report-command-contract.t](/Users/richarddje/Documents/github/fsmgen/t/327-report-command-contract.t) so the direct report-command regression now locks that grouped leaf-owner discovery surface directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders can discover the grouped command key families from the book too.
+
 ### check-result owners now group identity and summary families too
 - Updated [perl/FSM/Support/CheckResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckResultContract.pm) so the bounded nested `result` owner now publishes `identity_keys`, `summary_keys`, and a grouped `presence_key_family_map`, instead of forcing embedders to collect those check-result families separately.
 - Updated [t/329-check-result-contract.t](/Users/richarddje/Documents/github/fsmgen/t/329-check-result-contract.t) so the direct check-result regression now locks that grouped leaf-owner discovery surface directly.

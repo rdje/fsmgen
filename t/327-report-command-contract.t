@@ -10,8 +10,12 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::ReportCommandContract qw(
     build_report_command_contract
+    report_command_flag_keys
+    report_command_mode_keys
+    report_command_presence_key_family_map
     report_command_contract_source
     report_command_presence_keys
+    report_command_target_language_keys
 );
 
 subtest 'contract exposes the bounded shared report command object' => sub {
@@ -55,6 +59,26 @@ subtest 'contract exposes the bounded shared report command object' => sub {
         $contract->{public_presence_keys},
         report_command_presence_keys(),
         'contract publishes the bounded command-object key list',
+    );
+    is_deeply(
+        $contract->{mode_keys},
+        report_command_mode_keys(),
+        'contract publishes the bounded command mode key family',
+    );
+    is_deeply(
+        $contract->{flag_keys},
+        report_command_flag_keys(),
+        'contract publishes the bounded command flag key family',
+    );
+    is_deeply(
+        $contract->{target_language_keys},
+        report_command_target_language_keys(),
+        'contract publishes the bounded command target-language key family',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map},
+        report_command_presence_key_family_map(),
+        'contract publishes the grouped command key-family map',
     );
 };
 

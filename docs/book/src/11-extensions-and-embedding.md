@@ -296,6 +296,10 @@ share one bounded nested-object contract for invocation metadata:
 [perl/FSM/Support/ReportCommandContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportCommandContract.pm)
 owns the shared `mode`, `json`, `strict_mode`, and `target_language` keys
 emitted under the nested `command` object.
+That same owner now also publishes a grouped `presence_key_family_map` so
+embedders can discover the bounded command mode, flag, and target-language
+key families from one place instead of collecting the individual
+key-family lists separately.
 Those same public check JSON and normalized semantic JSON reports now also
 share one bounded nested-object contract for HDL-emission side effects:
 [perl/FSM/Support/ReportGeneratedOutputContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportGeneratedOutputContract.pm)
