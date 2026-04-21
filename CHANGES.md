@@ -1,6 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-21
+### Failure diagnostics now publish a nested owner map too
+- Updated [perl/FSM/Support/CheckFailureDiagnosticContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckFailureDiagnosticContract.pm) so the bounded nested failure `diagnostic` object now publishes a `nested_contract_source_map` for `support_accounting`, reusing the same canonical child-owner helper already surfaced through the scalar owner field.
+- Updated [t/331-check-failure-diagnostic-contract.t](/Users/richarddje/Documents/github/fsmgen/t/331-check-failure-diagnostic-contract.t) so the direct failure-diagnostic regression now locks that nested-owner map directly.
+
 ### Normalized semantic composition now publishes a nested owner map too
 - Updated [perl/FSM/Support/NormalizedSemanticCompositionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticCompositionContract.pm) so the bounded nested `semantic.composition` object now publishes a `nested_contract_source_map` for `provenance_report`, reusing the same canonical child-owner helper already surfaced through the scalar owner field.
 - Updated [t/333-normalized-semantic-composition-contract.t](/Users/richarddje/Documents/github/fsmgen/t/333-normalized-semantic-composition-contract.t) so the direct composition regression now locks that nested-owner map directly.

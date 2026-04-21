@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: failure diagnostics should publish their child owner map too
+- After the composition-object slice, the same one-child consistency pattern
+  still remained in the bounded shared failure `diagnostic` object.
+- `CheckFailureDiagnosticContract` already exposed the `support_accounting`
+  owner as a scalar field, but consumers still had to infer that it was the
+  child-owner map for the only nested bounded child branch.
+- The bounded move is deliberately tiny:
+  - add one `nested_contract_source_map` for `support_accounting`,
+  - keep the existing scalar owner field for compatibility,
+  - and lock the direct failure-diagnostic regression against that grouped map.
+- That keeps the nested failure-diagnostic object aligned with the rest of the
+  `R13` contract family without inventing any larger structural change.
+
 ## 2026-04-21: composition objects should publish their child owner map too
 - After grouping the `semantic` payload and the nested `forward_ir` object, the
   next remaining consistency seam on the semantic side was the bounded

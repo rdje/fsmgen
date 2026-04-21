@@ -47,6 +47,13 @@ subtest 'contract exposes the bounded check failure diagnostic object' => sub {
         $contract->{reused_across_public_reports},
         'contract says the nested failure diagnostic object is reused across public reports',
     );
+    is_deeply(
+        $contract->{nested_contract_source_map},
+        {
+            support_accounting => support_accounting_match_contract_source(),
+        },
+        'contract publishes the bounded failure-diagnostic nested-contract ownership map',
+    );
     is(
         $contract->{support_accounting_contract_source},
         support_accounting_match_contract_source(),

@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-21: failure diagnostics now publish a nested owner map too
+- Hardened
+  [perl/FSM/Support/CheckFailureDiagnosticContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckFailureDiagnosticContract.pm)
+  so the bounded nested failure `diagnostic` object now publishes a
+  `nested_contract_source_map` for `support_accounting` instead of exposing
+  that child owner only as a separate scalar field.
+- Regression coverage now proves that bounded failure-diagnostic nested-owner
+  map directly:
+  [t/331-check-failure-diagnostic-contract.t](/Users/richarddje/Documents/github/fsmgen/t/331-check-failure-diagnostic-contract.t).
+
 ## 2026-04-21: normalized semantic composition now publishes a nested owner map too
 - Hardened
   [perl/FSM/Support/NormalizedSemanticCompositionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticCompositionContract.pm)

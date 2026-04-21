@@ -48,6 +48,9 @@ sub build_check_failure_diagnostic_contract {
                 'FSM::Support::NormalizedSemanticReport::build_normalized_semantic_failure_report(...)',
             ],
         },
+        nested_contract_source_map => {
+            support_accounting => support_accounting_match_contract_source(),
+        },
         support_accounting_contract_source => support_accounting_match_contract_source(),
         public_presence_keys => check_failure_diagnostic_presence_keys(),
         matched_presence_keys => check_failure_diagnostic_matched_presence_keys(),
