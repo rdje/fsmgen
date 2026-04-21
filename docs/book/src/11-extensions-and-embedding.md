@@ -398,6 +398,10 @@ The nested `semantic.system_contract` summary inside that payload now also has
 its own bounded nested-object contract:
 [perl/FSM/Support/NormalizedSemanticSystemContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSystemContract.pm)
 owns the current clock/reset/system-contract projection keys.
+That same owner now also publishes a grouped `presence_key_family_map` so
+embedders can discover the bounded clock, reset-identity, reset-metadata,
+and system-behavior key families from one place instead of collecting the
+individual key-family lists separately.
 The nested `semantic.forward_ir` summary inside that payload now also has its
 own bounded nested-object contract:
 [perl/FSM/Support/NormalizedSemanticForwardIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticForwardIRContract.pm)

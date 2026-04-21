@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: system-contract families should be discoverable as one grouped map too
+- After grouping the bounded composition families, the next adjacent
+  semantic-side helper seam sat in the nested `semantic.system_contract`
+  owner.
+- `NormalizedSemanticSystemContract` already published the full ordered shell
+  key list, but a caller still had to separate clock identity, reset
+  identity, reset metadata, and the behavioral toggles by hand.
+- The bounded move is deliberately small:
+  - keep the existing full shell key list unchanged,
+  - add canonical family helpers for clock, reset identity, reset metadata,
+    and behavior,
+  - add one grouped `presence_key_family_map`,
+  - and lock the direct system-contract regression against that grouped map.
+- That keeps the explicit system-contract owner easier to consume while
+  staying aligned with the current clock/reset interpretation already
+  documented elsewhere in the normalized semantic surface.
+
 ## 2026-04-22: composition families should be discoverable as one grouped map too
 - After grouping the bounded symbol-contract families, the next adjacent
   semantic-side leaf-owner seam sat in the nested `semantic.composition`
