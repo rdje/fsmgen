@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-21
+### Documentation sections now publish a grouped path-list contract map too
+- Updated [perl/FSM/Support/DocumentationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DocumentationContract.pm) so the bounded manifest-facing documentation section now publishes a grouped `path_list_contract_map` for `human_contract` and `downstream_alignment`, instead of forcing downstream tools to collect those documentation path-list families separately.
+- Updated [t/318-documentation-contract.t](/Users/richarddje/Documents/github/fsmgen/t/318-documentation-contract.t) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the direct documentation regression and the manifest-facing regression now lock that grouped path-list contract discovery surface directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so downstream tools can discover the grouped documentation path-list contract map from the book too.
+
 ### Language-surface sections now publish a grouped first-nested key-family map too
 - Updated [perl/FSM/Support/LanguageSurfaceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/LanguageSurfaceContract.pm) so the bounded manifest-facing language-surface section now publishes a grouped `nested_presence_key_map` for `strict_mode`, `default_mode_compatibility`, `assignments`, `system_contracts`, `expressions`, `declarations`, and `composition`, instead of forcing downstream tools to collect those first nested key families separately.
 - Updated [t/317-language-surface-contract.t](/Users/richarddje/Documents/github/fsmgen/t/317-language-surface-contract.t) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the direct language-surface regression and the manifest-facing regression now lock that grouped first-nested key-family discovery surface directly.

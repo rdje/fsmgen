@@ -564,6 +564,10 @@ The `documentation` section now has its own bounded owner too:
 advertises the public top-level and path-list keys through
 `documentation.section_contract`, while the exact documentation file lists stay
 deliberately widenable.
+That section shell now also publishes a grouped `path_list_contract_map` so
+downstream tools can discover the bounded path-list families for
+`human_contract` and `downstream_alignment` from one place before consuming
+those documentation path lists.
 That lane is currently SystemVerilog-only; VHDL/GHDL validation waits for an
 active VHDL backend.
 The bounded contract for that lane now has its own owner too:

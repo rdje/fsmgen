@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: documentation path-list families should be discoverable as one grouped map too
+- After grouping the first nested key families for the neighboring
+  language-surface section, the next nearby manifest-facing discovery
+  inconsistency sat in documentation.
+- `DocumentationContract` was already publishing the public path-list field
+  names and the shared path-shape booleans, but a consumer still had to
+  collect the bounded `human_contract` and `downstream_alignment` path-list
+  families separately.
+- The bounded move is deliberately small:
+  - keep the existing shared `path_contract`,
+  - add one canonical `path_list_contract_map` in the documentation section
+    shell,
+  - and lock both the direct documentation regression and the manifest-facing
+    regression against that grouped map.
+- That keeps the manifest-facing documentation contract easier to consume
+  without inventing a fake nested schema or overpromising the exact contents of
+  those documentation file lists.
+
 ## 2026-04-21: language-surface first nested key families should be discoverable as one grouped map too
 - After grouping the child key families for the neighboring embedding section,
   the next nearby manifest-facing discovery inconsistency sat in

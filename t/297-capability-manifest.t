@@ -122,6 +122,7 @@ use FSM::Support::NormalizedSemanticSymbolContract qw(
 );
 use FSM::Support::DocumentationContract qw(
     documentation_contract_source
+    documentation_path_list_contract_map
 );
 use FSM::Support::DiagnosticsContract qw(
     diagnostics_contract_source
@@ -1331,6 +1332,11 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
         $manifest->{documentation}{section_contract}{contract_source},
         documentation_contract_source(),
         'manifest records the documentation contract owner',
+    );
+    is_deeply(
+        $manifest->{documentation}{section_contract}{path_list_contract_map},
+        documentation_path_list_contract_map(),
+        'manifest records the grouped documentation path-list contract map through the documentation section contract',
     );
 
     my %literal_families = map { $_ => 1 } @{$manifest->{language_surface}{expressions}{literal_families}};

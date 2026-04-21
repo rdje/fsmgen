@@ -9,6 +9,8 @@ use JSON::PP ();
 our @EXPORT_OK = qw(
     build_documentation_contract
     documentation_contract_source
+    documentation_path_contract
+    documentation_path_list_contract_map
     documentation_path_list_keys
     documentation_public_top_level_keys
 );
@@ -34,13 +36,11 @@ sub build_documentation_contract {
         },
         public_top_level_presence_keys => documentation_public_top_level_keys(),
         path_list_keys => documentation_path_list_keys(),
-        path_contract => {
-            repo_relative_paths => JSON::PP::true,
-            tracked_markdown_files => JSON::PP::true,
-            exact_path_lists_frozen => JSON::PP::false,
-        },
+        path_contract => documentation_path_contract(),
+        path_list_contract_map => documentation_path_list_contract_map(),
         guidance => [
             'Treat the published documentation-section top-level keys and path-list fields as the bounded public manifest-facing contract for schema version 1.',
+            'Use the grouped path_list_contract_map to discover the bounded path-list families for human_contract and downstream_alignment without collecting those path-list fields separately.',
             'The manifest promises that these fields carry repo-relative Markdown documentation pointers, but it does not freeze the exact list of files forever.',
             'Widen the section deliberately when new machine-readable documentation groupings are documented and regression-backed.',
         ],
@@ -64,6 +64,22 @@ sub documentation_path_list_keys {
             downstream_alignment
         ),
     ];
+}
+
+sub documentation_path_contract {
+    return {
+        repo_relative_paths => JSON::PP::true,
+        tracked_markdown_files => JSON::PP::true,
+        exact_path_lists_frozen => JSON::PP::false,
+    };
+}
+
+sub documentation_path_list_contract_map {
+    my $contract = documentation_path_contract();
+    return {
+        human_contract => $contract,
+        downstream_alignment => $contract,
+    };
 }
 
 1;

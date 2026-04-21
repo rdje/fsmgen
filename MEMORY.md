@@ -10132,3 +10132,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `strict_mode`, `default_mode_compatibility`, `assignments`,
   `system_contracts`, `expressions`, `declarations`, and `composition` from
   one map before descending into those nested language-surface sections.
+- The manifest-facing documentation section now also publishes one grouped
+  `path_list_contract_map` through `FSM::Support::DocumentationContract`, so
+  downstream tools can discover the bounded path-list families for
+  `human_contract` and `downstream_alignment` from one map before consuming
+  those documentation path lists.

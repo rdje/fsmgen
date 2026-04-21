@@ -14,6 +14,8 @@ use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::Support::DocumentationContract qw(
     build_documentation_contract
     documentation_contract_source
+    documentation_path_contract
+    documentation_path_list_contract_map
     documentation_path_list_keys
     documentation_public_top_level_keys
 );
@@ -45,9 +47,16 @@ subtest 'contract exposes the bounded documentation section' => sub {
         documentation_path_list_keys(),
         'contract publishes the bounded documentation path-list keys',
     );
-    ok($contract->{path_contract}{repo_relative_paths}, 'contract says documentation paths are repo-relative');
-    ok($contract->{path_contract}{tracked_markdown_files}, 'contract says documentation paths are markdown files');
-    ok(!$contract->{path_contract}{exact_path_lists_frozen}, 'contract keeps exact documentation path lists widenable');
+    is_deeply(
+        $contract->{path_contract},
+        documentation_path_contract(),
+        'contract publishes the bounded documentation path contract',
+    );
+    is_deeply(
+        $contract->{path_list_contract_map},
+        documentation_path_list_contract_map(),
+        'contract publishes the grouped documentation path-list contract map',
+    );
 };
 
 subtest 'in-process capability manifest documentation section conforms to the bounded contract' => sub {
@@ -62,6 +71,11 @@ subtest 'in-process capability manifest documentation section conforms to the bo
         $documentation->{section_contract}{contract_source},
         documentation_contract_source(),
         'documentation section advertises the section contract owner',
+    );
+    is_deeply(
+        $documentation->{section_contract}{path_list_contract_map},
+        documentation_path_list_contract_map(),
+        'documentation section keeps the grouped path-list contract map',
     );
     assert_documentation_paths(
         $documentation,
@@ -91,6 +105,11 @@ subtest 'CLI capability manifest keeps the bounded documentation contract' => su
         $documentation->{section_contract}{contract_source},
         documentation_contract_source(),
         'CLI documentation section advertises the section contract owner',
+    );
+    is_deeply(
+        $documentation->{section_contract}{path_list_contract_map},
+        documentation_path_list_contract_map(),
+        'CLI documentation section keeps the grouped path-list contract map',
     );
     assert_documentation_paths(
         $documentation,
