@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-21: diagnostics section now publishes a nested owner map too
+- Hardened
+  [perl/FSM/Support/DiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsContract.pm)
+  so the manifest-facing diagnostics section now publishes a bounded
+  `nested_contract_source_map` for `stable_code_registry` and `check_json`,
+  reusing the canonical child-owner helpers instead of only advertising those
+  children through booleans and top-level payload presence.
+- Regression coverage now proves that bounded diagnostics nested-owner map
+  directly:
+  [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+  and [t/320-diagnostics-contract.t](/Users/richarddje/Documents/github/fsmgen/t/320-diagnostics-contract.t).
+
 ## 2026-04-21: check JSON shell self-owner facts now come from a canonical helper too
 - Hardened
   [perl/FSM/Support/CheckDiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnosticsContract.pm)

@@ -11,6 +11,9 @@ use JSON::PP qw(decode_json);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
+use FSM::Support::CheckDiagnosticsContract qw(
+    check_diagnostics_contract_source
+);
 use FSM::Support::DiagnosticsContract qw(
     build_diagnostics_contract
     diagnostics_contract_source
@@ -63,6 +66,14 @@ subtest 'contract exposes the bounded diagnostics section' => sub {
         'contract publishes the bounded diagnostics nested-contract keys',
     );
     is_deeply(
+        $contract->{nested_contract_source_map},
+        {
+            stable_code_registry => diagnostic_code_registry_contract_source(),
+            check_json => check_diagnostics_contract_source(),
+        },
+        'contract publishes the bounded diagnostics nested-contract ownership map',
+    );
+    is_deeply(
         $contract->{stable_code_entry_presence_keys},
         diagnostic_code_registry_entry_keys(),
         'contract reuses the bounded stable-code entry keys',
@@ -79,6 +90,7 @@ subtest 'contract exposes the bounded diagnostics section' => sub {
 
 subtest 'in-process capability manifest diagnostics section conforms to the bounded contract' => sub {
     my $diagnostics = $manifest->{diagnostics};
+    my $contract = build_diagnostics_contract();
 
     assert_keys_present(
         $diagnostics,
@@ -99,16 +111,12 @@ subtest 'in-process capability manifest diagnostics section conforms to the boun
         $diagnostics->{stable_codes},
         'diagnostics section keeps bounded stable-code entries',
     );
-    is(
-        $diagnostics->{stable_code_registry}{contract_source},
-        diagnostic_code_registry_contract_source(),
-        'diagnostics section advertises the stable-code registry contract owner',
+    is_deeply(
+        $diagnostics->{section_contract}{nested_contract_source_map},
+        $contract->{nested_contract_source_map},
+        'diagnostics section keeps bounded nested contract owners',
     );
-    is(
-        $diagnostics->{check_json}{contract_source},
-        'FSM::Support::CheckDiagnosticsContract',
-        'diagnostics section advertises the check-json contract owner',
-    );
+    assert_nested_contract_sources($diagnostics, $contract->{nested_contract_source_map}, 'diagnostics section');
 };
 
 subtest 'CLI capability manifest keeps the bounded diagnostics contract' => sub {
@@ -123,6 +131,7 @@ subtest 'CLI capability manifest keeps the bounded diagnostics contract' => sub 
     ok($decoded, 'capability manifest CLI emits decodable JSON');
 
     my $diagnostics = $decoded->{diagnostics};
+    my $contract = build_diagnostics_contract();
     assert_keys_present(
         $diagnostics,
         diagnostics_public_top_level_keys(),
@@ -142,6 +151,12 @@ subtest 'CLI capability manifest keeps the bounded diagnostics contract' => sub 
         $diagnostics->{stable_codes},
         'CLI diagnostics section keeps bounded stable-code entries',
     );
+    is_deeply(
+        $diagnostics->{section_contract}{nested_contract_source_map},
+        $contract->{nested_contract_source_map},
+        'CLI diagnostics section keeps bounded nested contract owners',
+    );
+    assert_nested_contract_sources($diagnostics, $contract->{nested_contract_source_map}, 'CLI diagnostics section');
 };
 
 done_testing();
@@ -180,6 +195,17 @@ sub assert_stable_code_entries {
             $entry->{family},
             diagnostic_code_registry_family_values(),
             "$label: stable-code entry $entry->{code} keeps bounded family",
+        );
+    }
+}
+
+sub assert_nested_contract_sources {
+    my ($payload, $expected_map, $label) = @_;
+    for my $key (sort keys %{$expected_map || {}}) {
+        is(
+            $payload->{$key}{contract_source},
+            $expected_map->{$key},
+            "$label: $key keeps advertised contract owner",
         );
     }
 }

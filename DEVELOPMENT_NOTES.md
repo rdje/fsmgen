@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: diagnostics should advertise nested owner maps the same way other manifest sections do
+- After the last helper cleanup, the remaining diagnostics seam was no longer a
+  shell self-owner literal so much as a shape inconsistency.
+- `EmbeddingContract`, `SemanticExportsContract`, and
+  `BackendValidationContract` were already publishing explicit
+  `nested_contract_source_map` data, but `DiagnosticsContract` still only
+  exposed booleans saying the child contracts were advertised.
+- For `R13`, the more honest bounded contract is to publish the diagnostics
+  nested owner map directly too:
+  - keep `stable_code_registry` and `check_json` as the only advertised child
+    keys,
+  - source the owner names from the existing child helpers,
+  - and lock the section contract plus manifest regressions against that map.
+- That keeps the public manifest story more uniform because embedders can now
+  discover diagnostics child ownership the same way they already can for the
+  other manifest section shells.
+
 ## 2026-04-21: the check-JSON shell should not retype its own owner name either
 - After the manifest-shell and section-shell helper cleanup, the next adjacent
   `R13` seam was the bounded check-JSON shell itself.

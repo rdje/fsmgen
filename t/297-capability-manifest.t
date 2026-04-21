@@ -330,6 +330,16 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         scalar(@{$manifest->{diagnostics}{section_contract}{stable_code_entry_presence_keys} || []}) >= 5,
         'manifest advertises bounded diagnostics stable-code entry key presence',
     );
+    is(
+        $manifest->{diagnostics}{section_contract}{nested_contract_source_map}{stable_code_registry},
+        diagnostic_code_registry_contract_source(),
+        'manifest records the diagnostics stable-code registry nested contract owner',
+    );
+    is(
+        $manifest->{diagnostics}{section_contract}{nested_contract_source_map}{check_json},
+        check_diagnostics_contract_source(),
+        'manifest records the diagnostics check-json nested contract owner',
+    );
     ok(
         scalar(@{$manifest->{diagnostics}{stable_code_registry}{public_sibling_keys} || []}) >= 3,
         'manifest advertises bounded stable-code registry sibling keys',

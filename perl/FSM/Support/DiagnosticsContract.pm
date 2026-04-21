@@ -6,7 +6,11 @@ use warnings;
 use Exporter 'import';
 use JSON::PP ();
 
+use FSM::Support::CheckDiagnosticsContract qw(
+    check_diagnostics_contract_source
+);
 use FSM::Support::DiagnosticCodeRegistryContract qw(
+    diagnostic_code_registry_contract_source
     diagnostic_code_registry_entry_keys
     diagnostic_code_registry_family_values
 );
@@ -43,6 +47,10 @@ sub build_diagnostics_contract {
         scalar_string_keys => diagnostics_scalar_string_keys(),
         list_keys => diagnostics_list_keys(),
         nested_contract_keys => diagnostics_nested_contract_keys(),
+        nested_contract_source_map => {
+            stable_code_registry => diagnostic_code_registry_contract_source(),
+            check_json => check_diagnostics_contract_source(),
+        },
         stable_code_entry_presence_keys => diagnostic_code_registry_entry_keys(),
         stable_code_family_values => diagnostic_code_registry_family_values(),
         stable_code_registry_contract_advertised => JSON::PP::true,
