@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: check-result owners now publish grouped key families too
+- Hardened
+  [perl/FSM/Support/CheckResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckResultContract.pm)
+  so the bounded nested `result` owner now publishes grouped identity and
+  summary key families.
+- Regression coverage now proves that grouped check-result key-family map
+  directly:
+  [t/329-check-result-contract.t](/Users/richarddje/Documents/github/fsmgen/t/329-check-result-contract.t).
+
 ## 2026-04-22: explicit-system-contract owners now publish grouped key families too
 - Hardened
   [perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm)

@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### check-result owners now group identity and summary families too
+- Updated [perl/FSM/Support/CheckResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckResultContract.pm) so the bounded nested `result` owner now publishes `identity_keys`, `summary_keys`, and a grouped `presence_key_family_map`, instead of forcing embedders to collect those check-result families separately.
+- Updated [t/329-check-result-contract.t](/Users/richarddje/Documents/github/fsmgen/t/329-check-result-contract.t) so the direct check-result regression now locks that grouped leaf-owner discovery surface directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders can discover the grouped check-result key families from the book too.
+
 ### explicit-system-contract owners now group clock and reset families too
 - Updated [perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm) so the bounded nested `semantic.explicit_system_contract` owner now publishes `clock_keys`, `reset_identity_keys`, `reset_metadata_keys`, and a grouped `presence_key_family_map`, instead of forcing embedders to collect those explicit-system-contract families separately.
 - Updated [t/337-normalized-semantic-explicit-system-contract.t](/Users/richarddje/Documents/github/fsmgen/t/337-normalized-semantic-explicit-system-contract.t) so the direct explicit-system-contract regression now locks that grouped helper surface directly.

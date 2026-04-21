@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: check-result families should be discoverable as one grouped map too
+- After grouping the bounded explicit-system-contract families, the next
+  adjacent shared-report leaf seam sat in the nested `result` object used by
+  successful public check JSON.
+- `CheckResultContract` already published the full ordered shell key list, but
+  a caller still had to separate the single identity key from the summary
+  counters by hand.
+- The bounded move is deliberately small:
+  - keep the existing full shell key list unchanged,
+  - add canonical helpers for identity and summary keys,
+  - add one grouped `presence_key_family_map`,
+  - and lock the direct check-result regression against that grouped map.
+- That keeps the shared success-result owner easier to consume without
+  widening the public check JSON shell that already advertises `result`
+  through its nested owner map.
+
 ## 2026-04-22: explicit-system-contract families should be discoverable as one grouped map too
 - After grouping the bounded system-contract families, the next adjacent
   semantic-side helper seam sat in the nested

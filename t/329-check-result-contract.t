@@ -11,7 +11,10 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Support::CheckResultContract qw(
     build_check_result_contract
     check_result_contract_source
+    check_result_identity_keys
+    check_result_presence_key_family_map
     check_result_presence_keys
+    check_result_summary_keys
 );
 
 subtest 'contract exposes the bounded check success result object' => sub {
@@ -42,6 +45,21 @@ subtest 'contract exposes the bounded check success result object' => sub {
         $contract->{public_presence_keys},
         check_result_presence_keys(),
         'contract publishes the bounded result-object key list',
+    );
+    is_deeply(
+        $contract->{identity_keys},
+        check_result_identity_keys(),
+        'contract publishes the bounded result identity key family',
+    );
+    is_deeply(
+        $contract->{summary_keys},
+        check_result_summary_keys(),
+        'contract publishes the bounded result summary key family',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map},
+        check_result_presence_key_family_map(),
+        'contract publishes the grouped result key-family map',
     );
 };
 
