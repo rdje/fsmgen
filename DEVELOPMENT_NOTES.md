@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: language-surface first nested key families should be discoverable as one grouped map too
+- After grouping the child key families for the neighboring embedding section,
+  the next nearby manifest-facing discovery inconsistency sat in
+  language-surface.
+- `LanguageSurfaceContract` was already publishing the first nested key
+  families one field at a time, but a consumer still had to collect the
+  bounded `strict_mode`, `default_mode_compatibility`, `assignments`,
+  `system_contracts`, `expressions`, `declarations`, and `composition` key
+  families separately.
+- The bounded move is deliberately small:
+  - add one canonical `nested_presence_key_map` in the language-surface
+    shell,
+  - keep the existing individual first nested key-family helpers unchanged,
+  - and lock both the direct language-surface regression and the
+    manifest-facing regression against the grouped map.
+- That keeps the manifest-facing language-surface contract easier to consume
+  without flattening the authored-surface details into one overpromised schema
+  or widening the broader language-surface story beyond what is already
+  regression-backed.
+
 ## 2026-04-21: embedding child key families should be discoverable as one grouped map too
 - After grouping the child key families for the neighboring backend-validation
   section, the next nearby manifest-facing discovery inconsistency sat in

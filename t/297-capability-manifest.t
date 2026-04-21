@@ -128,6 +128,7 @@ use FSM::Support::DiagnosticsContract qw(
 );
 use FSM::Support::LanguageSurfaceContract qw(
     language_surface_contract_source
+    language_surface_nested_presence_key_map
 );
 use FSM::Support::ProducerContract qw(
     producer_contract_source
@@ -1302,6 +1303,11 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
         $manifest->{language_surface}{surface_contract}{contract_source},
         language_surface_contract_source(),
         'manifest records the language-surface contract owner',
+    );
+    is_deeply(
+        $manifest->{language_surface}{surface_contract}{nested_presence_key_map},
+        language_surface_nested_presence_key_map(),
+        'manifest records the grouped language-surface first nested key-family map through the language-surface contract',
     );
     ok(
         scalar(@{$manifest->{documentation}{section_contract}{public_top_level_presence_keys} || []}) >= 3,

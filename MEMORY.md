@@ -10126,3 +10126,9 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   downstream tools can discover the bounded child key families for
   `composition_report`, `hdl_generator_result`, and `typed_extensions` from
   one map before descending into those child contracts.
+- The manifest-facing language-surface section now also publishes one grouped
+  `nested_presence_key_map` through `FSM::Support::LanguageSurfaceContract`,
+  so downstream tools can discover the bounded first nested key families for
+  `strict_mode`, `default_mode_compatibility`, `assignments`,
+  `system_contracts`, `expressions`, `declarations`, and `composition` from
+  one map before descending into those nested language-surface sections.

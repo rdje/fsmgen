@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-21
+### Language-surface sections now publish a grouped first-nested key-family map too
+- Updated [perl/FSM/Support/LanguageSurfaceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/LanguageSurfaceContract.pm) so the bounded manifest-facing language-surface section now publishes a grouped `nested_presence_key_map` for `strict_mode`, `default_mode_compatibility`, `assignments`, `system_contracts`, `expressions`, `declarations`, and `composition`, instead of forcing downstream tools to collect those first nested key families separately.
+- Updated [t/317-language-surface-contract.t](/Users/richarddje/Documents/github/fsmgen/t/317-language-surface-contract.t) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the direct language-surface regression and the manifest-facing regression now lock that grouped first-nested key-family discovery surface directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so downstream tools can discover the grouped language-surface first-nested key-family map from the book too.
+
 ### Embedding sections now publish a grouped child key-family map too
 - Updated [perl/FSM/Support/EmbeddingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingContract.pm) so the bounded manifest-facing embedding section now publishes a grouped `nested_presence_key_map` for `composition_report`, `hdl_generator_result`, and `typed_extensions`, instead of forcing downstream tools to collect those child key families separately.
 - Updated [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm) so the typed-extension contract now publishes its own canonical bounded top-level key helper, allowing the embedding section shell to reuse that child key family canonically instead of hardcoding it in the parent.

@@ -14,6 +14,7 @@ our @EXPORT_OK = qw(
     language_surface_declarations_keys
     language_surface_default_mode_compatibility_keys
     language_surface_expressions_keys
+    language_surface_nested_presence_key_map
     language_surface_public_top_level_keys
     language_surface_strict_mode_keys
     language_surface_system_contracts_keys
@@ -46,9 +47,11 @@ sub build_language_surface_contract {
         expressions_presence_keys => language_surface_expressions_keys(),
         declarations_presence_keys => language_surface_declarations_keys(),
         composition_presence_keys => language_surface_composition_keys(),
+        nested_presence_key_map => language_surface_nested_presence_key_map(),
         full_language_surface_stable => JSON::PP::false,
         guidance => [
             'Treat the published language-surface top-level and first nested section key lists as the bounded public manifest-facing contract for schema version 1.',
+            'Use the grouped nested_presence_key_map to discover the bounded key families for strict_mode, default_mode_compatibility, assignments, system_contracts, expressions, declarations, and composition without collecting those first nested key lists separately.',
             'This contract makes the current strict/default language families discoverable without pretending every future syntax, diagnostic, or migration detail is now frozen.',
             'Widen the section deliberately when new authored-surface metadata is ready to be regression-backed and documented as public.',
         ],
@@ -143,6 +146,18 @@ sub language_surface_composition_keys {
             lanes
         ),
     ];
+}
+
+sub language_surface_nested_presence_key_map {
+    return {
+        strict_mode => language_surface_strict_mode_keys(),
+        default_mode_compatibility => language_surface_default_mode_compatibility_keys(),
+        assignments => language_surface_assignments_keys(),
+        system_contracts => language_surface_system_contracts_keys(),
+        expressions => language_surface_expressions_keys(),
+        declarations => language_surface_declarations_keys(),
+        composition => language_surface_composition_keys(),
+    };
 }
 
 1;

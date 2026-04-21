@@ -19,6 +19,7 @@ use FSM::Support::LanguageSurfaceContract qw(
     language_surface_declarations_keys
     language_surface_default_mode_compatibility_keys
     language_surface_expressions_keys
+    language_surface_nested_presence_key_map
     language_surface_public_top_level_keys
     language_surface_strict_mode_keys
     language_surface_system_contracts_keys
@@ -83,6 +84,11 @@ subtest 'contract exposes the bounded language-surface section' => sub {
         language_surface_composition_keys(),
         'contract publishes the bounded composition keys',
     );
+    is_deeply(
+        $contract->{nested_presence_key_map},
+        language_surface_nested_presence_key_map(),
+        'contract publishes the grouped first nested language-surface key families',
+    );
 };
 
 subtest 'in-process capability manifest language surface conforms to the bounded contract' => sub {
@@ -97,6 +103,11 @@ subtest 'in-process capability manifest language surface conforms to the bounded
         $surface->{surface_contract}{contract_source},
         language_surface_contract_source(),
         'language-surface section advertises the section contract owner',
+    );
+    is_deeply(
+        $surface->{surface_contract}{nested_presence_key_map},
+        language_surface_nested_presence_key_map(),
+        'language-surface section keeps the grouped first nested key-family map',
     );
     assert_keys_present(
         $surface->{strict_mode},
@@ -156,6 +167,11 @@ subtest 'CLI capability manifest keeps the bounded language-surface contract' =>
         $surface->{surface_contract}{contract_source},
         language_surface_contract_source(),
         'CLI language-surface section advertises the section contract owner',
+    );
+    is_deeply(
+        $surface->{surface_contract}{nested_presence_key_map},
+        language_surface_nested_presence_key_map(),
+        'CLI language-surface section keeps the grouped first nested key-family map',
     );
     assert_keys_present(
         $surface->{expressions},
