@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: failure-diagnostic owners now publish grouped key families too
+- Hardened
+  [perl/FSM/Support/CheckFailureDiagnosticContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckFailureDiagnosticContract.pm)
+  so the bounded shared failure `diagnostic` object now publishes a grouped
+  `presence_key_family_map` covering its core, matched-only,
+  optional-artifact, and nested support-accounting key families.
+- Regression coverage now proves that grouped failure-diagnostic key-family
+  map directly:
+  [t/331-check-failure-diagnostic-contract.t](/Users/richarddje/Documents/github/fsmgen/t/331-check-failure-diagnostic-contract.t).
+
 ## 2026-04-21: failure diagnostics now publish a nested owner map too
 - Hardened
   [perl/FSM/Support/CheckFailureDiagnosticContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckFailureDiagnosticContract.pm)

@@ -16,6 +16,7 @@ our @EXPORT_OK = qw(
     check_failure_diagnostic_contract_source
     check_failure_diagnostic_matched_presence_keys
     check_failure_diagnostic_optional_artifact_keys
+    check_failure_diagnostic_presence_key_family_map
     check_failure_diagnostic_presence_keys
     check_failure_diagnostic_support_accounting_matched_presence_keys
     check_failure_diagnostic_support_accounting_presence_keys
@@ -57,11 +58,13 @@ sub build_check_failure_diagnostic_contract {
         optional_artifact_keys => check_failure_diagnostic_optional_artifact_keys(),
         support_accounting_presence_keys => check_failure_diagnostic_support_accounting_presence_keys(),
         matched_support_accounting_presence_keys => check_failure_diagnostic_support_accounting_matched_presence_keys(),
+        presence_key_family_map => check_failure_diagnostic_presence_key_family_map(),
         json_safe_when_embedded_in_public_reports => JSON::PP::true,
         reused_across_public_reports => JSON::PP::true,
         guidance => [
             q{Treat this contract as the bounded nested failure `diagnostic` object shared by the public check JSON and normalized semantic JSON report surfaces.},
             'The bounded public promise covers the core stable diagnostic identity, the matched-only corpus identity keys, the optional extracted artifact file keys, and the nested support-accounting match object.',
+            'Use the grouped presence_key_family_map to discover the bounded failure-diagnostic, matched-only, optional-artifact, and nested support-accounting key families without collecting those key-family lists separately.',
             'Widen this nested object only when the public failure-report surface needs more stable metadata and the change is backed by regression coverage.',
         ],
     };
@@ -103,6 +106,16 @@ sub check_failure_diagnostic_optional_artifact_keys {
             rtl_metadata_file
         ),
     ];
+}
+
+sub check_failure_diagnostic_presence_key_family_map {
+    return {
+        public_presence_keys => check_failure_diagnostic_presence_keys(),
+        matched_presence_keys => check_failure_diagnostic_matched_presence_keys(),
+        optional_artifact_keys => check_failure_diagnostic_optional_artifact_keys(),
+        support_accounting_presence_keys => check_failure_diagnostic_support_accounting_presence_keys(),
+        matched_support_accounting_presence_keys => check_failure_diagnostic_support_accounting_matched_presence_keys(),
+    };
 }
 
 sub check_failure_diagnostic_support_accounting_presence_keys {

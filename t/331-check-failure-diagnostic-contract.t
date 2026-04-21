@@ -13,6 +13,7 @@ use FSM::Support::CheckFailureDiagnosticContract qw(
     check_failure_diagnostic_contract_source
     check_failure_diagnostic_matched_presence_keys
     check_failure_diagnostic_optional_artifact_keys
+    check_failure_diagnostic_presence_key_family_map
     check_failure_diagnostic_presence_keys
     check_failure_diagnostic_support_accounting_matched_presence_keys
     check_failure_diagnostic_support_accounting_presence_keys
@@ -87,6 +88,11 @@ subtest 'contract exposes the bounded check failure diagnostic object' => sub {
         $contract->{matched_support_accounting_presence_keys},
         check_failure_diagnostic_support_accounting_matched_presence_keys(),
         'contract publishes the matched nested support-accounting key list',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map},
+        check_failure_diagnostic_presence_key_family_map(),
+        'contract publishes the grouped failure-diagnostic key-family discovery map',
     );
 };
 

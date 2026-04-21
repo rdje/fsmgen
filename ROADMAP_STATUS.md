@@ -2,6 +2,8 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 
+- Next decision point: the bounded shared failure `diagnostic` owner in [perl/FSM/Support/CheckFailureDiagnosticContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckFailureDiagnosticContract.pm) now also publishes a grouped `presence_key_family_map` for its core, matched-only, optional-artifact, and nested support-accounting key families, with direct regression coverage in [t/331-check-failure-diagnostic-contract.t](/Users/richarddje/Documents/github/fsmgen/t/331-check-failure-diagnostic-contract.t), so downstream consumers can discover those bounded shared failure payload families from one place without widening the public diagnostic object itself. The next honest `R13` move is another small drift audit across the remaining compact public leaf owners and helper contracts.
+
 ## Current roadmap generation
 - `v2` is now the active roadmap generation.
 - `R0` through `R7` remain the closed foundation workstreams from the completed first roadmap.

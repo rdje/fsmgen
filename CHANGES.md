@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### failure-diagnostic owners now publish grouped key families too
+- Updated [perl/FSM/Support/CheckFailureDiagnosticContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckFailureDiagnosticContract.pm) so the bounded shared failure `diagnostic` contract now publishes a grouped `presence_key_family_map` for its core, matched-only, optional-artifact, and nested support-accounting key families, instead of forcing embedders to collect those key lists separately.
+- Updated [t/331-check-failure-diagnostic-contract.t](/Users/richarddje/Documents/github/fsmgen/t/331-check-failure-diagnostic-contract.t) so the direct failure-diagnostic regression now locks that grouped leaf-owner discovery surface directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders can discover the grouped failure-diagnostic key families from the book too.
+
 ### HDLGenerator source-info owners now publish a grouped key-family map too
 - Updated [perl/FSM/Support/HDLGeneratorSourceInfoContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorSourceInfoContract.pm) so the bounded nested `source_info` contract now publishes a grouped `presence_key_family_map` for its identity and summary key families, instead of forcing embedders to collect those key lists separately.
 - Updated [t/342-hdl-generator-source-info-contract.t](/Users/richarddje/Documents/github/fsmgen/t/342-hdl-generator-source-info-contract.t) so the direct `source_info` regression now locks that grouped leaf-owner discovery surface directly.

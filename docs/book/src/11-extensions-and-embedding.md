@@ -321,6 +321,9 @@ contract for the failure payload itself:
 owns the core stable diagnostic keys plus the matched-only, optional-artifact,
 and nested support-accounting key lists emitted under each `diagnostic`
 object.
+That same owner now also publishes a grouped `presence_key_family_map` so
+embedders can discover those bounded failure-diagnostic key families from one
+place instead of collecting the individual field-family lists separately.
 Failed public normalized semantic JSON reports now explicitly reuse that same
 bounded nested failure-diagnostic contract too.
 Successful public normalized semantic JSON reports now also have one bounded
