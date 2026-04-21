@@ -17,6 +17,7 @@ use FSM::Support::CompositionReportContract qw(
 use FSM::Support::ExtensionContract qw(extension_contract_source);
 use FSM::Support::EmbeddingContract qw(
     build_embedding_contract
+    embedding_contract_source
     embedding_nested_contract_keys
     embedding_public_top_level_keys
 );
@@ -31,7 +32,7 @@ subtest 'contract exposes the bounded embedding section' => sub {
     is($contract->{status}, 'bounded_public', 'contract marks embedding as bounded public');
     is(
         $contract->{contract_source},
-        'FSM::Support::EmbeddingContract',
+        embedding_contract_source(),
         'contract records its own owner',
     );
     is(
@@ -73,7 +74,7 @@ subtest 'in-process capability manifest embedding section conforms to the bounde
     );
     is(
         $embedding->{section_contract}{contract_source},
-        'FSM::Support::EmbeddingContract',
+        embedding_contract_source(),
         'embedding section advertises the section contract owner',
     );
     assert_nested_contract_sources(
@@ -103,7 +104,7 @@ subtest 'CLI capability manifest keeps the bounded embedding contract' => sub {
     );
     is(
         $embedding->{section_contract}{contract_source},
-        'FSM::Support::EmbeddingContract',
+        embedding_contract_source(),
         'CLI embedding section advertises the section contract owner',
     );
     assert_nested_contract_sources(

@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: manifest section shells should not retype their own owner names either
+- After regularizing the manifest shell and the first-layer section/self-owner
+  contracts, one adjacent `R13` seam still remained in the section shells that
+  publish nested owner maps: `EmbeddingContract`,
+  `SemanticExportsContract`, and `BackendValidationContract`.
+- Those contracts were already acting as stable section-shell owners, but their
+  own `contract_source` facts still lived only as inline literals in the built
+  hash and in the direct section regressions.
+- The same regularization pattern is the right fit here too:
+  - let the section shell export one canonical `*_contract_source()` helper,
+  - keep the published hash shape unchanged,
+  - and make the direct section regressions plus the capability-manifest
+    regression assert against the helper instead of against one more
+    hand-typed owner string.
+- That keeps the public embedding/manifest story tighter because section-shell
+  self-owner facts now come from the section contracts that actually own those
+  bounded surfaces.
+
 ## 2026-04-21: manifest self-owner strings should not be duplicated either
 - After the nested child-owner map cleanup, the next remaining `R13` drift seam
   sat in the manifest shell itself plus the first-layer section contracts.

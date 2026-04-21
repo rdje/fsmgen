@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-21: manifest section shell self-owner facts now come from canonical helpers too
+- Hardened
+  [perl/FSM/Support/EmbeddingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingContract.pm),
+  [perl/FSM/Support/SemanticExportsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SemanticExportsContract.pm),
+  and [perl/FSM/Support/BackendValidationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/BackendValidationContract.pm)
+  so those manifest section shells now export canonical self-owner helpers
+  directly instead of carrying their own owner names only as inline literals.
+- Regression coverage now proves that helper-backed self-owner reuse directly:
+  [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t),
+  [t/321-embedding-contract.t](/Users/richarddje/Documents/github/fsmgen/t/321-embedding-contract.t),
+  [t/322-semantic-exports-contract.t](/Users/richarddje/Documents/github/fsmgen/t/322-semantic-exports-contract.t),
+  and [t/323-backend-validation-contract.t](/Users/richarddje/Documents/github/fsmgen/t/323-backend-validation-contract.t).
+
 ## 2026-04-21: manifest shell and first-layer section self-owner facts now come from canonical helpers too
 - Hardened
   [perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm),

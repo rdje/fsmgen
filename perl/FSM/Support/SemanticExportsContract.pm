@@ -11,15 +11,20 @@ use FSM::Support::NormalizedSemanticReportContract qw(
 
 our @EXPORT_OK = qw(
     build_semantic_exports_contract
+    semantic_exports_contract_source
     semantic_exports_nested_contract_keys
     semantic_exports_public_top_level_keys
 );
+
+sub semantic_exports_contract_source {
+    return 'FSM::Support::SemanticExportsContract';
+}
 
 sub build_semantic_exports_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::SemanticExportsContract',
+        contract_source => semantic_exports_contract_source(),
         report_source => 'FSM::Support::CapabilityManifest',
         entrypoints => {
             cli => './bin/fsmgen --capability-manifest',

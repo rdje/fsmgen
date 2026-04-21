@@ -61,6 +61,12 @@ use FSM::Support::DiagnosticCodes qw(diagnostic_code_ids);
 use FSM::Support::DiagnosticCodeRegistryContract qw(
     diagnostic_code_registry_contract_source
 );
+use FSM::Support::BackendValidationContract qw(
+    backend_validation_contract_source
+);
+use FSM::Support::EmbeddingContract qw(
+    embedding_contract_source
+);
 use FSM::Support::NormalizedSemanticForwardIRContract qw(
     normalized_semantic_forward_ir_contract_source
     normalized_semantic_forward_ir_intent_hir_contract_source
@@ -111,6 +117,9 @@ use FSM::Support::LanguageSurfaceContract qw(
 );
 use FSM::Support::ProducerContract qw(
     producer_contract_source
+);
+use FSM::Support::SemanticExportsContract qw(
+    semantic_exports_contract_source
 );
 use FSM::Support::ReportCommandContract qw(
     report_command_contract_source
@@ -658,7 +667,7 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     );
     is(
         $manifest->{semantic_exports}{section_contract}{contract_source},
-        'FSM::Support::SemanticExportsContract',
+        semantic_exports_contract_source(),
         'manifest records the semantic-exports section contract owner',
     );
     ok(
@@ -723,7 +732,7 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     );
     is(
         $manifest->{backend_validation}{section_contract}{contract_source},
-        'FSM::Support::BackendValidationContract',
+        backend_validation_contract_source(),
         'manifest records the backend-validation section contract owner',
     );
     ok(
@@ -751,7 +760,7 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     );
     is(
         $manifest->{embedding}{section_contract}{contract_source},
-        'FSM::Support::EmbeddingContract',
+        embedding_contract_source(),
         'manifest records the embedding section contract owner',
     );
     ok(

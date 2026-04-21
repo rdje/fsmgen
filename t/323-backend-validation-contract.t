@@ -11,6 +11,7 @@ use JSON::PP qw(decode_json);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::BackendValidationContract qw(
+    backend_validation_contract_source
     backend_validation_nested_contract_keys
     backend_validation_public_top_level_keys
     build_backend_validation_contract
@@ -29,7 +30,7 @@ subtest 'contract exposes the bounded backend-validation section' => sub {
     is($contract->{status}, 'bounded_public', 'contract marks backend_validation as bounded public');
     is(
         $contract->{contract_source},
-        'FSM::Support::BackendValidationContract',
+        backend_validation_contract_source(),
         'contract records its own owner',
     );
     is(
@@ -75,7 +76,7 @@ subtest 'in-process capability manifest backend-validation section conforms to t
     );
     is(
         $backend_validation->{section_contract}{contract_source},
-        'FSM::Support::BackendValidationContract',
+        backend_validation_contract_source(),
         'backend-validation section advertises the section contract owner',
     );
     assert_nested_contract_sources(
@@ -105,7 +106,7 @@ subtest 'CLI capability manifest keeps the bounded backend-validation contract' 
     );
     is(
         $backend_validation->{section_contract}{contract_source},
-        'FSM::Support::BackendValidationContract',
+        backend_validation_contract_source(),
         'CLI backend-validation section advertises the section contract owner',
     );
     assert_nested_contract_sources(

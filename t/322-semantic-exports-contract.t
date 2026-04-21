@@ -16,6 +16,7 @@ use FSM::Support::NormalizedSemanticReportContract qw(
 );
 use FSM::Support::SemanticExportsContract qw(
     build_semantic_exports_contract
+    semantic_exports_contract_source
     semantic_exports_nested_contract_keys
     semantic_exports_public_top_level_keys
 );
@@ -29,7 +30,7 @@ subtest 'contract exposes the bounded semantic-exports section' => sub {
     is($contract->{status}, 'bounded_public', 'contract marks semantic_exports as bounded public');
     is(
         $contract->{contract_source},
-        'FSM::Support::SemanticExportsContract',
+        semantic_exports_contract_source(),
         'contract records its own owner',
     );
     is(
@@ -75,7 +76,7 @@ subtest 'in-process capability manifest semantic-exports section conforms to the
     );
     is(
         $semantic_exports->{section_contract}{contract_source},
-        'FSM::Support::SemanticExportsContract',
+        semantic_exports_contract_source(),
         'semantic-exports section advertises the section contract owner',
     );
     assert_nested_contract_sources(
@@ -105,7 +106,7 @@ subtest 'CLI capability manifest keeps the bounded semantic-exports contract' =>
     );
     is(
         $semantic_exports->{section_contract}{contract_source},
-        'FSM::Support::SemanticExportsContract',
+        semantic_exports_contract_source(),
         'CLI semantic-exports section advertises the section contract owner',
     );
     assert_nested_contract_sources(

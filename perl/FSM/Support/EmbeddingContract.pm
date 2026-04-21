@@ -13,15 +13,20 @@ use FSM::Support::HDLGeneratorResultContract qw(hdl_generator_result_contract_so
 
 our @EXPORT_OK = qw(
     build_embedding_contract
+    embedding_contract_source
     embedding_nested_contract_keys
     embedding_public_top_level_keys
 );
+
+sub embedding_contract_source {
+    return 'FSM::Support::EmbeddingContract';
+}
 
 sub build_embedding_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::EmbeddingContract',
+        contract_source => embedding_contract_source(),
         report_source => 'FSM::Support::CapabilityManifest',
         entrypoints => {
             cli => './bin/fsmgen --capability-manifest',

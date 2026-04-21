@@ -10,16 +10,21 @@ use FSM::Support::HDLExternalValidationContract qw(
 );
 
 our @EXPORT_OK = qw(
+    backend_validation_contract_source
     backend_validation_nested_contract_keys
     backend_validation_public_top_level_keys
     build_backend_validation_contract
 );
 
+sub backend_validation_contract_source {
+    return 'FSM::Support::BackendValidationContract';
+}
+
 sub build_backend_validation_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::BackendValidationContract',
+        contract_source => backend_validation_contract_source(),
         report_source => 'FSM::Support::CapabilityManifest',
         entrypoints => {
             cli => './bin/fsmgen --capability-manifest',
