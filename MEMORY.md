@@ -1,5 +1,26 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-21: manifest shell and first-layer section self-owner facts now come from canonical helpers too
+- Hardened
+  [perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm),
+  [perl/FSM/Support/ProducerContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ProducerContract.pm),
+  [perl/FSM/Support/SupportAccountingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingContract.pm),
+  [perl/FSM/Support/DiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsContract.pm),
+  [perl/FSM/Support/DocumentationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DocumentationContract.pm),
+  [perl/FSM/Support/LanguageSurfaceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/LanguageSurfaceContract.pm),
+  and [perl/FSM/Support/DiagnosticCodeRegistryContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodeRegistryContract.pm)
+  so the manifest shell plus the first-layer manifest-facing section contracts
+  now export canonical owner helpers directly.
+- Regression coverage now proves that helper-backed self-owner reuse directly:
+  [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t),
+  [t/314-support-accounting-contract.t](/Users/richarddje/Documents/github/fsmgen/t/314-support-accounting-contract.t),
+  [t/315-diagnostic-code-registry-contract.t](/Users/richarddje/Documents/github/fsmgen/t/315-diagnostic-code-registry-contract.t),
+  [t/316-capability-manifest-contract.t](/Users/richarddje/Documents/github/fsmgen/t/316-capability-manifest-contract.t),
+  [t/317-language-surface-contract.t](/Users/richarddje/Documents/github/fsmgen/t/317-language-surface-contract.t),
+  [t/318-documentation-contract.t](/Users/richarddje/Documents/github/fsmgen/t/318-documentation-contract.t),
+  [t/319-producer-contract.t](/Users/richarddje/Documents/github/fsmgen/t/319-producer-contract.t),
+  and [t/320-diagnostics-contract.t](/Users/richarddje/Documents/github/fsmgen/t/320-diagnostics-contract.t).
+
 ## 2026-04-21: manifest section nested-owner maps now come from the child contracts too
 - Hardened
   [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm),

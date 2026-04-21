@@ -8,16 +8,21 @@ use JSON::PP ();
 
 our @EXPORT_OK = qw(
     build_diagnostic_code_registry_contract
+    diagnostic_code_registry_contract_source
     diagnostic_code_registry_entry_keys
     diagnostic_code_registry_family_values
     diagnostic_code_registry_public_keys
 );
 
+sub diagnostic_code_registry_contract_source {
+    return 'FSM::Support::DiagnosticCodeRegistryContract';
+}
+
 sub build_diagnostic_code_registry_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::DiagnosticCodeRegistryContract',
+        contract_source => diagnostic_code_registry_contract_source(),
         report_source => 'FSM::Support::DiagnosticCodes',
         entrypoints => {
             cli => './bin/fsmgen --capability-manifest',

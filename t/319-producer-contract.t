@@ -14,6 +14,7 @@ use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::Support::ProducerContract qw(
     build_producer_contract
     producer_boolean_keys
+    producer_contract_source
     producer_public_top_level_keys
     producer_scalar_string_keys
 );
@@ -27,7 +28,7 @@ subtest 'contract exposes the bounded producer section' => sub {
     is($contract->{status}, 'bounded_public', 'contract marks producer as bounded public');
     is(
         $contract->{contract_source},
-        'FSM::Support::ProducerContract',
+        producer_contract_source(),
         'contract records its own owner',
     );
     is(
@@ -71,7 +72,7 @@ subtest 'in-process capability manifest producer section conforms to the bounded
     );
     is(
         $producer->{section_contract}{contract_source},
-        'FSM::Support::ProducerContract',
+        producer_contract_source(),
         'producer section advertises the section contract owner',
     );
     assert_scalar_string_keys(
@@ -109,7 +110,7 @@ subtest 'CLI capability manifest keeps the bounded producer contract' => sub {
     );
     is(
         $producer->{section_contract}{contract_source},
-        'FSM::Support::ProducerContract',
+        producer_contract_source(),
         'CLI producer section advertises the section contract owner',
     );
     assert_scalar_string_keys(

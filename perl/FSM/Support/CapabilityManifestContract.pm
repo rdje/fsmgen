@@ -8,6 +8,7 @@ use JSON::PP ();
 
 our @EXPORT_OK = qw(
     build_capability_manifest_contract
+    capability_manifest_contract_source
     capability_manifest_backend_validation_keys
     capability_manifest_diagnostics_keys
     capability_manifest_documentation_keys
@@ -19,11 +20,15 @@ our @EXPORT_OK = qw(
     capability_manifest_support_accounting_keys
 );
 
+sub capability_manifest_contract_source {
+    return 'FSM::Support::CapabilityManifestContract';
+}
+
 sub build_capability_manifest_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::CapabilityManifestContract',
+        contract_source => capability_manifest_contract_source(),
         report_source => 'FSM::Support::CapabilityManifest',
         entrypoints => {
             cli => './bin/fsmgen --capability-manifest',

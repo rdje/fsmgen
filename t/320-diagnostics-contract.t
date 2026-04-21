@@ -13,12 +13,14 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::Support::DiagnosticsContract qw(
     build_diagnostics_contract
+    diagnostics_contract_source
     diagnostics_list_keys
     diagnostics_nested_contract_keys
     diagnostics_public_top_level_keys
     diagnostics_scalar_string_keys
 );
 use FSM::Support::DiagnosticCodeRegistryContract qw(
+    diagnostic_code_registry_contract_source
     diagnostic_code_registry_entry_keys
     diagnostic_code_registry_family_values
 );
@@ -32,7 +34,7 @@ subtest 'contract exposes the bounded diagnostics section' => sub {
     is($contract->{status}, 'bounded_public', 'contract marks diagnostics as bounded public');
     is(
         $contract->{contract_source},
-        'FSM::Support::DiagnosticsContract',
+        diagnostics_contract_source(),
         'contract records its own owner',
     );
     is(
@@ -85,7 +87,7 @@ subtest 'in-process capability manifest diagnostics section conforms to the boun
     );
     is(
         $diagnostics->{section_contract}{contract_source},
-        'FSM::Support::DiagnosticsContract',
+        diagnostics_contract_source(),
         'diagnostics section advertises the section contract owner',
     );
     assert_scalar_string_keys(
@@ -99,7 +101,7 @@ subtest 'in-process capability manifest diagnostics section conforms to the boun
     );
     is(
         $diagnostics->{stable_code_registry}{contract_source},
-        'FSM::Support::DiagnosticCodeRegistryContract',
+        diagnostic_code_registry_contract_source(),
         'diagnostics section advertises the stable-code registry contract owner',
     );
     is(
@@ -128,7 +130,7 @@ subtest 'CLI capability manifest keeps the bounded diagnostics contract' => sub 
     );
     is(
         $diagnostics->{section_contract}{contract_source},
-        'FSM::Support::DiagnosticsContract',
+        diagnostics_contract_source(),
         'CLI diagnostics section advertises the section contract owner',
     );
     assert_scalar_string_keys(

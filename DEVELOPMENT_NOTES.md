@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: manifest self-owner strings should not be duplicated either
+- After the nested child-owner map cleanup, the next remaining `R13` drift seam
+  sat in the manifest shell itself plus the first-layer section contracts.
+- `CapabilityManifestContract`, `ProducerContract`,
+  `SupportAccountingContract`, `DiagnosticsContract`,
+  `DocumentationContract`, `LanguageSurfaceContract`, and
+  `DiagnosticCodeRegistryContract` were still carrying their own owner names
+  only as inline literals inside the built contract hashes and direct
+  regressions.
+- The same regularization pattern still applies cleanly here:
+  - let each contract export one canonical `*_contract_source()` helper,
+  - keep the contract hash shape exactly as-is,
+  - and make the direct contract tests plus the capability-manifest regression
+    assert against the helper instead of against one more hand-typed string.
+- That keeps the public API story tighter because even the manifest shell's
+  own self-owner facts now come from the contract modules that actually own
+  them.
+
 ## 2026-04-21: manifest section owner maps should not own child owner strings either
 - After the child-owner cleanup inside report, semantic, and `HDLGenerator`
   families, the next remaining drift seam sat one layer higher in the

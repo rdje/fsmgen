@@ -8,6 +8,7 @@ use JSON::PP ();
 
 our @EXPORT_OK = qw(
     build_language_surface_contract
+    language_surface_contract_source
     language_surface_assignments_keys
     language_surface_composition_keys
     language_surface_declarations_keys
@@ -18,11 +19,15 @@ our @EXPORT_OK = qw(
     language_surface_system_contracts_keys
 );
 
+sub language_surface_contract_source {
+    return 'FSM::Support::LanguageSurfaceContract';
+}
+
 sub build_language_surface_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::LanguageSurfaceContract',
+        contract_source => language_surface_contract_source(),
         report_source => 'FSM::Support::CapabilityManifest',
         entrypoints => {
             cli => './bin/fsmgen --capability-manifest',

@@ -13,17 +13,22 @@ use FSM::Support::DiagnosticCodeRegistryContract qw(
 
 our @EXPORT_OK = qw(
     build_diagnostics_contract
+    diagnostics_contract_source
     diagnostics_list_keys
     diagnostics_nested_contract_keys
     diagnostics_public_top_level_keys
     diagnostics_scalar_string_keys
 );
 
+sub diagnostics_contract_source {
+    return 'FSM::Support::DiagnosticsContract';
+}
+
 sub build_diagnostics_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::DiagnosticsContract',
+        contract_source => diagnostics_contract_source(),
         report_source => 'FSM::Support::CapabilityManifest',
         entrypoints => {
             cli => './bin/fsmgen --capability-manifest',

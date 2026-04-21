@@ -13,6 +13,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::Support::LanguageSurfaceContract qw(
     build_language_surface_contract
+    language_surface_contract_source
     language_surface_assignments_keys
     language_surface_composition_keys
     language_surface_declarations_keys
@@ -32,7 +33,7 @@ subtest 'contract exposes the bounded language-surface section' => sub {
     is($contract->{status}, 'bounded_public', 'contract marks language surface as bounded public');
     is(
         $contract->{contract_source},
-        'FSM::Support::LanguageSurfaceContract',
+        language_surface_contract_source(),
         'contract records its own owner',
     );
     is(
@@ -94,7 +95,7 @@ subtest 'in-process capability manifest language surface conforms to the bounded
     );
     is(
         $surface->{surface_contract}{contract_source},
-        'FSM::Support::LanguageSurfaceContract',
+        language_surface_contract_source(),
         'language-surface section advertises the section contract owner',
     );
     assert_keys_present(
@@ -153,7 +154,7 @@ subtest 'CLI capability manifest keeps the bounded language-surface contract' =>
     );
     is(
         $surface->{surface_contract}{contract_source},
-        'FSM::Support::LanguageSurfaceContract',
+        language_surface_contract_source(),
         'CLI language-surface section advertises the section contract owner',
     );
     assert_keys_present(

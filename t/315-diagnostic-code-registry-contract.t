@@ -13,6 +13,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::Support::DiagnosticCodeRegistryContract qw(
     build_diagnostic_code_registry_contract
+    diagnostic_code_registry_contract_source
     diagnostic_code_registry_entry_keys
     diagnostic_code_registry_family_values
     diagnostic_code_registry_public_keys
@@ -29,7 +30,7 @@ subtest 'contract exposes the bounded stable-code registry surface' => sub {
     is($contract->{status}, 'bounded_public', 'contract marks the stable-code registry as bounded public');
     is(
         $contract->{contract_source},
-        'FSM::Support::DiagnosticCodeRegistryContract',
+        diagnostic_code_registry_contract_source(),
         'contract records its own owner',
     );
     is(
@@ -71,7 +72,7 @@ subtest 'in-process manifest stable-code registry conforms to the bounded contra
     );
     is(
         $manifest->{diagnostics}{stable_code_registry}{contract_source},
-        'FSM::Support::DiagnosticCodeRegistryContract',
+        diagnostic_code_registry_contract_source(),
         'manifest advertises the stable-code registry contract owner',
     );
     ok(@{$manifest->{diagnostics}{stable_codes} || []}, 'manifest exposes stable-code entries');
@@ -113,7 +114,7 @@ subtest 'CLI capability manifest keeps the bounded stable-code registry contract
     );
     is(
         $decoded->{diagnostics}{stable_code_registry}{contract_source},
-        'FSM::Support::DiagnosticCodeRegistryContract',
+        diagnostic_code_registry_contract_source(),
         'CLI diagnostics section advertises the stable-code registry contract owner',
     );
     is(

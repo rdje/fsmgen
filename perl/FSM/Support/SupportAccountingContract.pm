@@ -11,15 +11,20 @@ our @EXPORT_OK = qw(
     support_accounting_bucket_keys
     support_accounting_catalog_entry_optional_keys
     support_accounting_catalog_entry_required_keys
+    support_accounting_contract_source
     support_accounting_id_list_keys
     support_accounting_public_top_level_keys
 );
+
+sub support_accounting_contract_source {
+    return 'FSM::Support::SupportAccountingContract';
+}
 
 sub build_support_accounting_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::SupportAccountingContract',
+        contract_source => support_accounting_contract_source(),
         report_source => 'FSM::Support::RegressionCorpus',
         entrypoints => {
             cli => './bin/fsmgen --capability-manifest',

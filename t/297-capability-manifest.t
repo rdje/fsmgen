@@ -11,6 +11,9 @@ use JSON::PP qw(decode_json);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
+use FSM::Support::CapabilityManifestContract qw(
+    capability_manifest_contract_source
+);
 use FSM::Support::CheckFailureDiagnosticContract qw(
     check_failure_diagnostic_contract_source
 );
@@ -55,6 +58,9 @@ use FSM::Support::HDLGeneratorResultContract qw(
     hdl_generator_result_contract_source
 );
 use FSM::Support::DiagnosticCodes qw(diagnostic_code_ids);
+use FSM::Support::DiagnosticCodeRegistryContract qw(
+    diagnostic_code_registry_contract_source
+);
 use FSM::Support::NormalizedSemanticForwardIRContract qw(
     normalized_semantic_forward_ir_contract_source
     normalized_semantic_forward_ir_intent_hir_contract_source
@@ -94,6 +100,18 @@ use FSM::Support::NormalizedSemanticSystemContract qw(
 use FSM::Support::NormalizedSemanticSymbolContract qw(
     normalized_semantic_symbol_contract_source
 );
+use FSM::Support::DocumentationContract qw(
+    documentation_contract_source
+);
+use FSM::Support::DiagnosticsContract qw(
+    diagnostics_contract_source
+);
+use FSM::Support::LanguageSurfaceContract qw(
+    language_surface_contract_source
+);
+use FSM::Support::ProducerContract qw(
+    producer_contract_source
+);
 use FSM::Support::ReportCommandContract qw(
     report_command_contract_source
 );
@@ -110,6 +128,9 @@ use FSM::Support::RegressionCorpus qw(regression_corpus_entries);
 use FSM::Support::SupportAccountingMatchContract qw(
     support_accounting_match_contract_source
 );
+use FSM::Support::SupportAccountingContract qw(
+    support_accounting_contract_source
+);
 
 my @entries = regression_corpus_entries();
 my @diagnostic_codes = diagnostic_code_ids();
@@ -121,7 +142,7 @@ subtest 'module manifest is generated from support accounting' => sub {
     is($manifest->{manifest_contract}{status}, 'bounded_public', 'manifest marks the top-level manifest shell as bounded public');
     is(
         $manifest->{manifest_contract}{contract_source},
-        'FSM::Support::CapabilityManifestContract',
+        capability_manifest_contract_source(),
         'manifest records the top-level manifest contract owner',
     );
     ok(
@@ -152,7 +173,7 @@ subtest 'module manifest is generated from support accounting' => sub {
     );
     is(
         $manifest->{producer}{section_contract}{contract_source},
-        'FSM::Support::ProducerContract',
+        producer_contract_source(),
         'manifest records the producer contract owner',
     );
     ok(
@@ -171,7 +192,7 @@ subtest 'module manifest is generated from support accounting' => sub {
     is($manifest->{support_accounting}{status}, 'bounded_public', 'manifest marks support accounting as bounded public');
     is(
         $manifest->{support_accounting}{contract_source},
-        'FSM::Support::SupportAccountingContract',
+        support_accounting_contract_source(),
         'manifest records the support-accounting contract owner',
     );
     is(
@@ -186,7 +207,7 @@ subtest 'module manifest is generated from support accounting' => sub {
     );
     is(
         $manifest->{support_accounting}{section_contract}{contract_source},
-        'FSM::Support::SupportAccountingContract',
+        support_accounting_contract_source(),
         'manifest records the support-accounting section contract owner',
     );
     is($manifest->{support_accounting}{source}, 'FSM::Support::RegressionCorpus', 'manifest records the corpus owner');
@@ -271,7 +292,7 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     );
     is(
         $manifest->{diagnostics}{stable_code_registry}{contract_source},
-        'FSM::Support::DiagnosticCodeRegistryContract',
+        diagnostic_code_registry_contract_source(),
         'manifest records the stable-code registry contract owner',
     );
     is(
@@ -286,7 +307,7 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     );
     is(
         $manifest->{diagnostics}{section_contract}{contract_source},
-        'FSM::Support::DiagnosticsContract',
+        diagnostics_contract_source(),
         'manifest records the diagnostics section contract owner',
     );
     ok(
@@ -1109,7 +1130,7 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     is(
         $manifest->{language_surface}{surface_contract}{contract_source},
-        'FSM::Support::LanguageSurfaceContract',
+        language_surface_contract_source(),
         'manifest records the language-surface contract owner',
     );
     ok(
@@ -1132,7 +1153,7 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     is(
         $manifest->{documentation}{section_contract}{contract_source},
-        'FSM::Support::DocumentationContract',
+        documentation_contract_source(),
         'manifest records the documentation contract owner',
     );
 

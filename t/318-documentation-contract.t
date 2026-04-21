@@ -13,6 +13,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::Support::DocumentationContract qw(
     build_documentation_contract
+    documentation_contract_source
     documentation_path_list_keys
     documentation_public_top_level_keys
 );
@@ -26,7 +27,7 @@ subtest 'contract exposes the bounded documentation section' => sub {
     is($contract->{status}, 'bounded_public', 'contract marks documentation as bounded public');
     is(
         $contract->{contract_source},
-        'FSM::Support::DocumentationContract',
+        documentation_contract_source(),
         'contract records its own owner',
     );
     is(
@@ -59,7 +60,7 @@ subtest 'in-process capability manifest documentation section conforms to the bo
     );
     is(
         $documentation->{section_contract}{contract_source},
-        'FSM::Support::DocumentationContract',
+        documentation_contract_source(),
         'documentation section advertises the section contract owner',
     );
     assert_documentation_paths(
@@ -88,7 +89,7 @@ subtest 'CLI capability manifest keeps the bounded documentation contract' => su
     );
     is(
         $documentation->{section_contract}{contract_source},
-        'FSM::Support::DocumentationContract',
+        documentation_contract_source(),
         'CLI documentation section advertises the section contract owner',
     );
     assert_documentation_paths(

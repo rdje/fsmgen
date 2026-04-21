@@ -16,6 +16,7 @@ use FSM::Support::SupportAccountingContract qw(
     support_accounting_bucket_keys
     support_accounting_catalog_entry_optional_keys
     support_accounting_catalog_entry_required_keys
+    support_accounting_contract_source
     support_accounting_id_list_keys
     support_accounting_public_top_level_keys
 );
@@ -29,7 +30,7 @@ subtest 'contract exposes the bounded support-accounting surface' => sub {
     is($contract->{status}, 'bounded_public', 'contract marks support accounting as bounded public');
     is(
         $contract->{contract_source},
-        'FSM::Support::SupportAccountingContract',
+        support_accounting_contract_source(),
         'contract records its own owner',
     );
     is(
@@ -89,7 +90,7 @@ subtest 'in-process capability manifest support-accounting payload conforms to t
     is($support->{section_contract}{status}, 'bounded_public', 'support-accounting section marks nested section contract as bounded public');
     is(
         $support->{section_contract}{contract_source},
-        'FSM::Support::SupportAccountingContract',
+        support_accounting_contract_source(),
         'support-accounting section exposes the nested section-contract owner',
     );
     ok(
@@ -134,7 +135,7 @@ subtest 'CLI capability manifest keeps the bounded support-accounting contract' 
     );
     is(
         $support->{section_contract}{contract_source},
-        'FSM::Support::SupportAccountingContract',
+        support_accounting_contract_source(),
         'CLI support-accounting section exposes the nested section-contract owner',
     );
     ok(@{$support->{catalog_entries} || []}, 'CLI support-accounting section exposes catalog entries');

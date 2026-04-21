@@ -13,6 +13,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::Support::CapabilityManifestContract qw(
     build_capability_manifest_contract
+    capability_manifest_contract_source
     capability_manifest_backend_validation_keys
     capability_manifest_diagnostics_keys
     capability_manifest_documentation_keys
@@ -33,7 +34,7 @@ subtest 'contract exposes the bounded capability-manifest shell' => sub {
     is($contract->{status}, 'bounded_public', 'contract marks the capability-manifest shell as bounded public');
     is(
         $contract->{contract_source},
-        'FSM::Support::CapabilityManifestContract',
+        capability_manifest_contract_source(),
         'contract records its own owner',
     );
     is(
@@ -99,7 +100,7 @@ subtest 'in-process capability manifest conforms to the bounded shell contract' 
     );
     is(
         $manifest->{manifest_contract}{contract_source},
-        'FSM::Support::CapabilityManifestContract',
+        capability_manifest_contract_source(),
         'capability manifest advertises the top-level manifest contract owner',
     );
     assert_keys_present(
@@ -162,7 +163,7 @@ subtest 'CLI capability manifest keeps the bounded shell contract' => sub {
     );
     is(
         $decoded->{manifest_contract}{contract_source},
-        'FSM::Support::CapabilityManifestContract',
+        capability_manifest_contract_source(),
         'CLI capability manifest advertises the top-level manifest contract owner',
     );
     assert_keys_present(

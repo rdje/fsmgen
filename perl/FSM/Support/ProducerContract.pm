@@ -9,15 +9,20 @@ use JSON::PP ();
 our @EXPORT_OK = qw(
     build_producer_contract
     producer_boolean_keys
+    producer_contract_source
     producer_public_top_level_keys
     producer_scalar_string_keys
 );
+
+sub producer_contract_source {
+    return 'FSM::Support::ProducerContract';
+}
 
 sub build_producer_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::ProducerContract',
+        contract_source => producer_contract_source(),
         report_source => 'FSM::Support::CapabilityManifest',
         entrypoints => {
             cli => './bin/fsmgen --capability-manifest',

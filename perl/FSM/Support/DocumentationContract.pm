@@ -8,15 +8,20 @@ use JSON::PP ();
 
 our @EXPORT_OK = qw(
     build_documentation_contract
+    documentation_contract_source
     documentation_path_list_keys
     documentation_public_top_level_keys
 );
+
+sub documentation_contract_source {
+    return 'FSM::Support::DocumentationContract';
+}
 
 sub build_documentation_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::DocumentationContract',
+        contract_source => documentation_contract_source(),
         report_source => 'FSM::Support::CapabilityManifest',
         entrypoints => {
             cli => './bin/fsmgen --capability-manifest',
