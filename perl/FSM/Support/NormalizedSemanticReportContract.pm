@@ -109,6 +109,7 @@ our @EXPORT_OK = qw(
     normalized_semantic_matched_success_support_accounting_keys
     normalized_semantic_module_keys
     normalized_semantic_module_optional_metric_keys
+    normalized_semantic_nested_presence_key_map
     normalized_semantic_public_top_level_keys
     normalized_semantic_signal_analysis_entry_keys
     normalized_semantic_signal_analysis_keys
@@ -177,6 +178,7 @@ sub build_normalized_semantic_report_contract {
         source_contract_source => report_source_contract_source(),
         support_accounting_contract_source => support_accounting_match_contract_source(),
         public_top_level_presence_keys => normalized_semantic_public_top_level_keys(),
+        nested_presence_key_map => normalized_semantic_nested_presence_key_map(),
         command_presence_keys => report_command_presence_keys(),
         generated_output_presence_keys => report_generated_output_presence_keys(),
         producer_presence_keys => report_producer_common_keys(),
@@ -222,6 +224,7 @@ sub build_normalized_semantic_report_contract {
             'The nested semantic composition object stays bounded through FSM::Support::NormalizedSemanticCompositionContract.',
             'The nested semantic explicit_system_contract object, when present, stays bounded through FSM::Support::NormalizedSemanticExplicitSystemContract.',
             'The nested semantic forward_ir object stays bounded through FSM::Support::NormalizedSemanticForwardIRContract.',
+            'Use the grouped nested_presence_key_map to discover the primary nested object key families without collecting those key lists one field at a time.',
             'Use the grouped `forward_ir_nested_contract_source_map` to discover the deeper bounded semantic `forward_ir` shell owners without reconstructing them from parallel scalar fields.',
             'The nested semantic forward_ir.intent_hir object shell stays bounded through FSM::Support::NormalizedSemanticIntentHIRContract.',
             'The nested semantic forward_ir.lowered_rtl_ir object shell stays bounded through FSM::Support::NormalizedSemanticLoweredRTLIRContract.',
@@ -252,6 +255,25 @@ sub normalized_semantic_public_top_level_keys {
             generated_output
         ),
     ];
+}
+
+sub normalized_semantic_nested_presence_key_map {
+    return {
+        command => report_command_presence_keys(),
+        failure_diagnostic => normalized_semantic_failure_diagnostic_keys(),
+        generated_output => report_generated_output_presence_keys(),
+        producer => report_producer_common_keys(),
+        source => report_source_presence_keys(),
+        support_accounting => normalized_semantic_support_accounting_keys(),
+        semantic => normalized_semantic_success_semantic_keys(),
+        module => normalized_semantic_module_keys(),
+        explicit_system_contract => normalized_semantic_explicit_system_contract_keys(),
+        signal_analysis => normalized_semantic_signal_analysis_keys(),
+        system_contract => normalized_semantic_system_contract_keys(),
+        forward_ir => normalized_semantic_forward_ir_keys(),
+        symbol_contract => normalized_semantic_symbol_contract_keys(),
+        composition => normalized_semantic_composition_keys(),
+    };
 }
 
 sub normalized_semantic_success_only_top_level_keys {

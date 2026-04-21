@@ -10099,3 +10099,10 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `command`, `result`, `failure_diagnostic`, `generated_output`, `producer`,
   `source`, and report-level `support_accounting` from one map instead of
   collecting those key families field by field.
+- The public normalized semantic JSON contract now also publishes one grouped
+  `nested_presence_key_map` through
+  `FSM::Support::NormalizedSemanticReportContract`, so downstream tools can
+  discover the primary nested object key families for `command`,
+  `failure_diagnostic`, `generated_output`, `producer`, `source`,
+  report-level `support_accounting`, and the success-side semantic branches
+  from one map instead of collecting those key families field by field.

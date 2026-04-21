@@ -304,6 +304,13 @@ that advertises it, now also publish a grouped
 `forward_ir_nested_contract_source_map` so embedders can discover the deeper
 `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` shell owners without
 reconstructing them from parallel scalar owner fields.
+The public normalized semantic report contract now also publishes a grouped
+`nested_presence_key_map` so embedders can discover the primary nested object
+key families for `command`, `failure_diagnostic`, `generated_output`,
+`producer`, `source`, report-level `support_accounting`, and the success-side
+semantic branches from one place, while the matched overlays and optional
+failure-diagnostic artifacts remain explicitly advertised as separate bounded
+key families.
 The nested `semantic.signal_analysis` summary inside that payload now also has
 its own bounded nested-object contract:
 [perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm)

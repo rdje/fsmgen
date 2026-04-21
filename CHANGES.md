@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-21
+### Normalized semantic JSON now publishes a grouped nested key-family map too
+- Updated [perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm) so the bounded public normalized semantic JSON contract now publishes a grouped `nested_presence_key_map` for `command`, `failure_diagnostic`, `generated_output`, `producer`, `source`, report-level `support_accounting`, and the success-side semantic branches, instead of forcing downstream tools to collect those primary nested key families one field at a time.
+- Updated [t/311-normalized-semantic-report-contract.t](/Users/richarddje/Documents/github/fsmgen/t/311-normalized-semantic-report-contract.t) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the direct normalized-semantic regression and the manifest-facing regression now lock that grouped nested key-family discovery surface directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so downstream tools can discover the grouped normalized-semantic nested key-family map from the book too.
+
 ### Check JSON now publishes a grouped nested key-family map too
 - Updated [perl/FSM/Support/CheckDiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnosticsContract.pm) so the bounded public check-JSON contract now publishes a grouped `nested_presence_key_map` for `command`, `result`, `failure_diagnostic`, `generated_output`, `producer`, `source`, and report-level `support_accounting`, instead of forcing downstream tools to collect those primary nested key families one field at a time.
 - Updated [t/312-check-diagnostics-contract.t](/Users/richarddje/Documents/github/fsmgen/t/312-check-diagnostics-contract.t) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the direct check-JSON regression and the manifest-facing regression now lock that grouped nested key-family discovery surface directly.

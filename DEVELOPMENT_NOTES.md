@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: normalized semantic nested key families should be discoverable as one grouped map too
+- After grouping the primary nested key families for public check JSON, the
+  matching nearby public-report inconsistency was on normalized semantic JSON.
+- `NormalizedSemanticReportContract` was already publishing the bounded key
+  family for each primary nested object, but a consumer still had to gather
+  those nested key families one field at a time.
+- The bounded move is to group only the primary nested object key families:
+  - add one canonical `nested_presence_key_map` for `command`,
+    `failure_diagnostic`, `generated_output`, `producer`, `source`,
+    report-level `support_accounting`, and the success-side semantic branches,
+  - keep the matched overlays and optional artifact key families separate,
+  - and lock both the direct normalized-semantic regression and the
+    manifest-facing regression against the grouped map.
+- That keeps the public normalized semantic JSON contract easier to consume
+  without flattening the distinct matched/optional key families into one
+  misleadingly uniform schema.
+
 ## 2026-04-21: check JSON nested key families should be discoverable as one grouped map too
 - After the manifest-shell grouping slices, the next nearby public-contract
   discovery inconsistency was on the smaller public check-JSON surface.

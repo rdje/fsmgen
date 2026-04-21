@@ -67,6 +67,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R13` Public embedding/API stabilization, backed by `R12` regression corpus and support accounting.
 - Current next decision point:
+  - The public normalized semantic JSON contract now also publishes a grouped
+    `nested_presence_key_map`: [perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm)
+    now groups the primary nested object key families for public normalized
+    semantic JSON, while
+    [t/311-normalized-semantic-report-contract.t](/Users/richarddje/Documents/github/fsmgen/t/311-normalized-semantic-report-contract.t)
+    plus [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+    now lock that grouped nested key-family discovery surface directly.
   - The public check-JSON contract now also publishes a grouped
     `nested_presence_key_map`: [perl/FSM/Support/CheckDiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnosticsContract.pm)
     now groups the primary nested object key families for public check JSON,
