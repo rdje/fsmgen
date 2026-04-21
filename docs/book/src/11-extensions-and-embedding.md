@@ -322,6 +322,10 @@ key families for `command`, `failure_diagnostic`, `generated_output`,
 semantic branches from one place, while the matched overlays and optional
 failure-diagnostic artifacts remain explicitly advertised as separate bounded
 key families.
+That same shell now also publishes a grouped `presence_key_family_map` so
+embedders can discover the shell-owned shared-report, success, and failure
+key families from one place instead of collecting those normalized semantic
+field-family lists separately.
 At the manifest-facing semantic-exports-section level, FSMGen now also
 publishes a grouped `nested_presence_key_map` so downstream tools can
 discover the bounded key family for `normalized_semantic_json` from one place

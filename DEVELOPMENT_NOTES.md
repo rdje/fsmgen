@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: normalized-semantic shell-owned key families should be discoverable as one grouped map too
+- After grouping the public check-JSON shell-owned key families, the next
+  nearby public-contract discovery inconsistency sat in the bounded
+  normalized semantic JSON shell.
+- `NormalizedSemanticReportContract` was already grouping primary
+  nested-object discovery through `nested_presence_key_map`, but its own
+  shared-report, success, and failure key families still had to be collected
+  separately.
+- The bounded move is deliberately small:
+  - keep the existing primary nested-object `nested_presence_key_map`
+    unchanged,
+  - keep the existing shell-owned success/failure/report key-family helpers
+    unchanged,
+  - add one canonical `presence_key_family_map` for the shell-owned
+    normalized-semantic families,
+  - and lock both the direct normalized-semantic regression and the
+    manifest-facing regression against that grouped map.
+- That keeps the public normalized semantic contract easier to consume
+  without flattening nested-object discovery into the same bucket or widening
+  the shell beyond what is already documented and regression-backed.
+
 ## 2026-04-21: check-JSON shell-owned key families should be discoverable as one grouped map too
 - After grouping the manifest shell's legacy key families, the next nearby
   public-contract discovery inconsistency sat back in the bounded check-JSON

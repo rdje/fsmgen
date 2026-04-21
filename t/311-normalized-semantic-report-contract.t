@@ -73,6 +73,7 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_module_keys
     normalized_semantic_module_optional_metric_keys
     normalized_semantic_nested_presence_key_map
+    normalized_semantic_presence_key_family_map
     normalized_semantic_public_top_level_keys
     normalized_semantic_signal_analysis_entry_keys
     normalized_semantic_signal_analysis_keys
@@ -170,6 +171,11 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         $contract->{nested_presence_key_map},
         normalized_semantic_nested_presence_key_map(),
         'contract publishes the bounded normalized-semantic nested key-family map',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map},
+        normalized_semantic_presence_key_family_map(),
+        'contract publishes the bounded normalized-semantic shell-owned key-family map',
     );
     is(
         $contract->{command_contract_source},
