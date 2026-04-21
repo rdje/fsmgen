@@ -277,6 +277,13 @@ contract for the compact success summary:
 [perl/FSM/Support/CheckResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckResultContract.pm)
 owns the `module_name`, `state_count`, `signal_count`, and
 `composition_child_count` keys emitted under the nested `result` object.
+The public check JSON contract now also publishes a grouped
+`nested_presence_key_map` so embedders can discover the primary nested object
+key families for `command`, `result`, `failure_diagnostic`,
+`generated_output`, `producer`, `source`, and report-level
+`support_accounting` from one place, while the matched overlays and optional
+failure-diagnostic artifacts remain explicitly advertised as separate bounded
+key families.
 Failed public check JSON reports now also have one bounded nested-object
 contract for the failure payload itself:
 [perl/FSM/Support/CheckFailureDiagnosticContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckFailureDiagnosticContract.pm)

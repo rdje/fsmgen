@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: check JSON nested key families should be discoverable as one grouped map too
+- After the manifest-shell grouping slices, the next nearby public-contract
+  discovery inconsistency was on the smaller public check-JSON surface.
+- `CheckDiagnosticsContract` was already publishing the bounded key family for
+  each primary nested object, but a consumer still had to gather those nested
+  key families one field at a time.
+- The bounded move is to group only the primary nested object key families:
+  - add one canonical `nested_presence_key_map` for `command`, `result`,
+    `failure_diagnostic`, `generated_output`, `producer`, `source`, and
+    report-level `support_accounting`,
+  - keep the matched overlays and optional artifact key families separate,
+  - and lock both the direct check-JSON regression and the manifest-facing
+    regression against the grouped map.
+- That keeps the public check-JSON contract easier to consume without
+  flattening the distinct matched/optional key families into one misleadingly
+  uniform schema.
+
 ## 2026-04-21: manifest section key families should be discoverable as one grouped map too
 - After grouping the manifest-level owner map, the next nearby outer-shell
   discovery inconsistency was still in the same capability-manifest contract.

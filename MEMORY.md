@@ -10093,3 +10093,9 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `FSM::Support::CapabilityManifestContract`, so downstream tools can discover
   the bounded key family for each public top-level manifest section from one
   map instead of collecting the section-key lists field by field.
+- The public check-JSON contract now also publishes one grouped
+  `nested_presence_key_map` through `FSM::Support::CheckDiagnosticsContract`,
+  so downstream tools can discover the primary nested object key families for
+  `command`, `result`, `failure_diagnostic`, `generated_output`, `producer`,
+  `source`, and report-level `support_accounting` from one map instead of
+  collecting those key families field by field.

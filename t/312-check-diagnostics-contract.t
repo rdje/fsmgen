@@ -27,6 +27,7 @@ use FSM::Support::CheckDiagnosticsContract qw(
     check_json_matched_failure_diagnostic_keys
     check_json_matched_failure_support_accounting_keys
     check_json_matched_success_support_accounting_keys
+    check_json_nested_presence_key_map
     check_json_public_top_level_keys
     check_json_success_only_top_level_keys
     check_json_success_result_keys
@@ -96,6 +97,11 @@ subtest 'contract exposes the bounded check JSON surface' => sub {
             support_accounting => support_accounting_match_contract_source(),
         },
         'contract publishes the bounded check-json nested-contract ownership map',
+    );
+    is_deeply(
+        $contract->{nested_presence_key_map},
+        check_json_nested_presence_key_map(),
+        'contract publishes the bounded check-json nested key-family map',
     );
     is(
         $contract->{command_contract_source},

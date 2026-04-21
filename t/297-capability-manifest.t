@@ -21,6 +21,7 @@ use FSM::Support::CheckFailureDiagnosticContract qw(
 );
 use FSM::Support::CheckDiagnosticsContract qw(
     check_diagnostics_contract_source
+    check_json_nested_presence_key_map
 );
 use FSM::Support::CheckResultContract qw(
     check_result_contract_source
@@ -481,6 +482,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         $manifest->{diagnostics}{check_json}{contract_source},
         check_diagnostics_contract_source(),
         'manifest records the check JSON contract owner',
+    );
+    is_deeply(
+        $manifest->{diagnostics}{check_json}{nested_presence_key_map},
+        check_json_nested_presence_key_map(),
+        'manifest records the grouped check-json nested key-family map',
     );
     ok(
         scalar(@{$manifest->{diagnostics}{check_json}{public_top_level_presence_keys} || []}) >= 7,
