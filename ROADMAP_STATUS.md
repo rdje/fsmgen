@@ -67,6 +67,20 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R13` Public embedding/API stabilization, backed by `R12` regression corpus and support accounting.
 - Current next decision point:
+  - The bounded nested `semantic.forward_ir` shell now also publishes a
+    grouped `nested_presence_key_map`, and the nested payload plus parent
+    normalized semantic report now both republish that grouped child-family
+    view as `forward_ir_nested_presence_key_map`:
+    [perl/FSM/Support/NormalizedSemanticForwardIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticForwardIRContract.pm)
+    now groups the direct `forward_ir` child key families, while
+    [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm)
+    plus [perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm)
+    now expose the same grouped view higher up, and
+    [t/334-normalized-semantic-forward-ir-contract.t](/Users/richarddje/Documents/github/fsmgen/t/334-normalized-semantic-forward-ir-contract.t),
+    [t/330-normalized-semantic-payload-contract.t](/Users/richarddje/Documents/github/fsmgen/t/330-normalized-semantic-payload-contract.t),
+    [t/311-normalized-semantic-report-contract.t](/Users/richarddje/Documents/github/fsmgen/t/311-normalized-semantic-report-contract.t),
+    plus [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+    now lock that grouped forward-IR child discovery surface directly.
   - The bounded nested `semantic` payload contract now also publishes a
     grouped `nested_presence_key_map`, and the parent normalized semantic
     report now republishes that grouped child-family view as

@@ -47,6 +47,7 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_composition_keys
     normalized_semantic_payload_explicit_system_contract_keys
     normalized_semantic_payload_forward_ir_nested_contract_source_map
+    normalized_semantic_payload_forward_ir_nested_presence_key_map
     normalized_semantic_payload_nested_presence_key_map
     normalized_semantic_payload_presence_keys
     normalized_semantic_payload_forward_ir_intent_hir_keys
@@ -206,6 +207,7 @@ sub build_normalized_semantic_report_contract {
         success_forward_ir_presence_keys => normalized_semantic_forward_ir_keys(),
         semantic_nested_presence_key_map => normalized_semantic_payload_nested_presence_key_map(),
         forward_ir_nested_contract_source_map => normalized_semantic_payload_forward_ir_nested_contract_source_map(),
+        forward_ir_nested_presence_key_map => normalized_semantic_payload_forward_ir_nested_presence_key_map(),
         forward_ir_intent_hir_contract_source => normalized_semantic_forward_ir_intent_hir_contract_source(),
         success_forward_ir_intent_hir_presence_keys => normalized_semantic_forward_ir_intent_hir_keys(),
         success_forward_ir_intent_hir_optional_composition_keys => normalized_semantic_forward_ir_intent_hir_optional_composition_keys(),
@@ -231,6 +233,7 @@ sub build_normalized_semantic_report_contract {
             'Use the grouped nested_presence_key_map to discover the primary nested object key families without collecting those key lists one field at a time.',
             'Use the grouped presence_key_family_map to discover the shell-owned shared-report, success, and failure key families without collecting those normalized semantic field-family lists separately.',
             'Use the grouped semantic_nested_presence_key_map to discover the deeper semantic child key families without reconstructing them from separate success_* lists.',
+            'Use the grouped forward_ir_nested_presence_key_map to discover the deeper semantic `forward_ir` child key families without reconstructing them from separate success_forward_ir_* lists.',
             'Use the grouped `forward_ir_nested_contract_source_map` to discover the deeper bounded semantic `forward_ir` shell owners without reconstructing them from parallel scalar fields.',
             'The nested semantic forward_ir.intent_hir object shell stays bounded through FSM::Support::NormalizedSemanticIntentHIRContract.',
             'The nested semantic forward_ir.lowered_rtl_ir object shell stays bounded through FSM::Support::NormalizedSemanticLoweredRTLIRContract.',

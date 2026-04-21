@@ -105,6 +105,7 @@ use FSM::Support::NormalizedSemanticModuleContract qw(
 use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_contract_source
     normalized_semantic_payload_forward_ir_nested_contract_source_map
+    normalized_semantic_payload_forward_ir_nested_presence_key_map
     normalized_semantic_payload_nested_presence_key_map
 );
 use FSM::Support::NormalizedSemanticReportContract qw(
@@ -683,6 +684,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         $manifest->{semantic_exports}{normalized_semantic_json}{forward_ir_nested_contract_source_map},
         normalized_semantic_payload_forward_ir_nested_contract_source_map(),
         'manifest records the grouped normalized-semantic forward-ir child-owner map',
+    );
+    is_deeply(
+        $manifest->{semantic_exports}{normalized_semantic_json}{forward_ir_nested_presence_key_map},
+        normalized_semantic_payload_forward_ir_nested_presence_key_map(),
+        'manifest records the grouped normalized-semantic forward-ir child key-family map',
     );
     is_deeply(
         $manifest->{semantic_exports}{normalized_semantic_json}{semantic_nested_presence_key_map},

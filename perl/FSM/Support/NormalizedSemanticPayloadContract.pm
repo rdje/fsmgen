@@ -16,6 +16,7 @@ use FSM::Support::NormalizedSemanticExplicitSystemContract qw(
 use FSM::Support::NormalizedSemanticForwardIRContract qw(
     normalized_semantic_forward_ir_contract_source
     normalized_semantic_forward_ir_intent_hir_contract_source
+    normalized_semantic_forward_ir_nested_presence_key_map
     normalized_semantic_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_forward_ir_intent_hir_presence_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_contract_source
@@ -50,6 +51,7 @@ our @EXPORT_OK = qw(
     normalized_semantic_payload_explicit_system_contract_keys
     normalized_semantic_payload_nested_presence_key_map
     normalized_semantic_payload_forward_ir_nested_contract_source_map
+    normalized_semantic_payload_forward_ir_nested_presence_key_map
     normalized_semantic_payload_presence_keys
     normalized_semantic_payload_forward_ir_keys
     normalized_semantic_payload_forward_ir_intent_hir_keys
@@ -113,6 +115,7 @@ sub build_normalized_semantic_payload_contract {
         system_contract_presence_keys => normalized_semantic_payload_system_contract_keys(),
         forward_ir_presence_keys => normalized_semantic_payload_forward_ir_keys(),
         forward_ir_nested_contract_source_map => normalized_semantic_payload_forward_ir_nested_contract_source_map(),
+        forward_ir_nested_presence_key_map => normalized_semantic_payload_forward_ir_nested_presence_key_map(),
         forward_ir_intent_hir_contract_source => normalized_semantic_forward_ir_intent_hir_contract_source(),
         forward_ir_intent_hir_presence_keys => normalized_semantic_payload_forward_ir_intent_hir_keys(),
         forward_ir_intent_hir_optional_composition_keys => normalized_semantic_payload_forward_ir_intent_hir_optional_composition_keys(),
@@ -133,6 +136,7 @@ sub build_normalized_semantic_payload_contract {
             'The nested `system_contract` object stays bounded through FSM::Support::NormalizedSemanticSystemContract.',
             'The nested `forward_ir` object stays bounded through FSM::Support::NormalizedSemanticForwardIRContract.',
             'Use the grouped `nested_presence_key_map` to discover the bounded key families for module, explicit_system_contract, signal_analysis, system_contract, forward_ir, symbol_contract, and composition without collecting those child key lists separately.',
+            'Use the grouped `forward_ir_nested_presence_key_map` to discover the deeper bounded `forward_ir` child key families without collecting those nested child key lists separately.',
             'Use the grouped `forward_ir_nested_contract_source_map` to discover the deeper bounded `forward_ir` shell owners without reconstructing them from parallel scalar fields.',
             'The nested `forward_ir.intent_hir` object shell stays bounded through FSM::Support::NormalizedSemanticIntentHIRContract.',
             'The nested `forward_ir.lowered_rtl_ir` object shell stays bounded through FSM::Support::NormalizedSemanticLoweredRTLIRContract.',
@@ -178,6 +182,10 @@ sub normalized_semantic_payload_forward_ir_nested_contract_source_map {
         lowered_rtl_ir => normalized_semantic_forward_ir_lowered_rtl_ir_contract_source(),
         structural_rtl_ir => normalized_semantic_forward_ir_structural_rtl_ir_contract_source(),
     };
+}
+
+sub normalized_semantic_payload_forward_ir_nested_presence_key_map {
+    return normalized_semantic_forward_ir_nested_presence_key_map();
 }
 
 sub normalized_semantic_payload_forward_ir_intent_hir_keys {

@@ -1,5 +1,27 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: forward-ir child key families should be discoverable as one grouped map too
+- After grouping the direct semantic-payload child key families, the next
+  nearby discovery inconsistency sat one level deeper again in the bounded
+  `semantic.forward_ir` shell.
+- `NormalizedSemanticForwardIRContract` was already publishing the child-owner
+  map and each child key family individually, but a consumer still had to
+  gather the `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` key
+  families one list at a time.
+- The bounded move is deliberately small:
+  - keep the existing forward-IR child-owner map unchanged,
+  - keep the existing per-child key-family helpers unchanged,
+  - add one canonical forward-IR `nested_presence_key_map` for the direct
+    child families,
+  - re-export that grouped child-family view from the payload and parent
+    normalized semantic report as `forward_ir_nested_presence_key_map`,
+  - and lock the direct forward-IR, payload, normalized-semantic, and
+    manifest-facing regressions against those grouped maps.
+- That keeps the deeper forward-IR shell easier to consume without widening
+  the shell itself, without flattening the child families into the parent
+  objects, and without turning the separate `success_forward_ir_*` fields
+  into the preferred discovery path.
+
 ## 2026-04-21: semantic-payload child key families should be discoverable as one grouped map too
 - After grouping the normalized-semantic shell-owned key families, the next
   nearby discovery inconsistency sat one level deeper in the bounded nested

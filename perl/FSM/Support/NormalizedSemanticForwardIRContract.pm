@@ -27,6 +27,7 @@ our @EXPORT_OK = qw(
     normalized_semantic_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_forward_ir_intent_hir_presence_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_contract_source
+    normalized_semantic_forward_ir_nested_presence_key_map
     normalized_semantic_forward_ir_lowered_rtl_ir_optional_composition_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_presence_keys
     normalized_semantic_forward_ir_structural_rtl_ir_contract_source
@@ -59,6 +60,7 @@ sub build_normalized_semantic_forward_ir_contract {
             lowered_rtl_ir => normalized_semantic_forward_ir_lowered_rtl_ir_contract_source(),
             structural_rtl_ir => normalized_semantic_forward_ir_structural_rtl_ir_contract_source(),
         },
+        nested_presence_key_map => normalized_semantic_forward_ir_nested_presence_key_map(),
         intent_hir_contract_source => normalized_semantic_forward_ir_intent_hir_contract_source(),
         intent_hir_presence_keys => normalized_semantic_forward_ir_intent_hir_presence_keys(),
         intent_hir_optional_composition_keys => normalized_semantic_forward_ir_intent_hir_optional_composition_keys(),
@@ -74,6 +76,7 @@ sub build_normalized_semantic_forward_ir_contract {
             'The nested `intent_hir` branch now also has one bounded owner for its current object shell and composition-only extension keys.',
             'The nested `lowered_rtl_ir` branch now also has one bounded owner for its current direct-root shell and composition-only extension keys.',
             'The nested `structural_rtl_ir` branch now also has one bounded owner for its current direct-root and composition-top object shell.',
+            'Use the grouped `nested_presence_key_map` to discover the bounded key families for intent_hir, lowered_rtl_ir, and structural_rtl_ir without collecting those child key lists separately.',
             'Widen this object deliberately through one named owner plus regression coverage instead of relying on sample JSON.',
         ],
     };
@@ -103,6 +106,14 @@ sub normalized_semantic_forward_ir_presence_keys {
             structural_rtl_ir
         ),
     ];
+}
+
+sub normalized_semantic_forward_ir_nested_presence_key_map {
+    return {
+        intent_hir => normalized_semantic_forward_ir_intent_hir_presence_keys(),
+        lowered_rtl_ir => normalized_semantic_forward_ir_lowered_rtl_ir_presence_keys(),
+        structural_rtl_ir => normalized_semantic_forward_ir_structural_rtl_ir_presence_keys(),
+    };
 }
 
 sub normalized_semantic_forward_ir_intent_hir_presence_keys {

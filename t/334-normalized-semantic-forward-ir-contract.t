@@ -12,6 +12,7 @@ use FSM::Support::NormalizedSemanticForwardIRContract qw(
     build_normalized_semantic_forward_ir_contract
     normalized_semantic_forward_ir_contract_source
     normalized_semantic_forward_ir_intent_hir_contract_source
+    normalized_semantic_forward_ir_nested_presence_key_map
     normalized_semantic_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_forward_ir_intent_hir_presence_keys
     normalized_semantic_forward_ir_lowered_rtl_ir_contract_source
@@ -75,6 +76,11 @@ subtest 'contract exposes the bounded normalized semantic forward-IR object' => 
             structural_rtl_ir => normalized_semantic_forward_ir_structural_rtl_ir_contract_source(),
         },
         'contract publishes the bounded forward-ir nested-contract ownership map',
+    );
+    is_deeply(
+        $contract->{nested_presence_key_map},
+        normalized_semantic_forward_ir_nested_presence_key_map(),
+        'contract publishes the bounded forward-ir nested key-family map',
     );
     is(
         $contract->{intent_hir_contract_source},

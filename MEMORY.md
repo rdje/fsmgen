@@ -10175,3 +10175,12 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   as `semantic_nested_presence_key_map`, so downstream tools can discover the
   deeper semantic child key families from one place instead of reconstructing
   them from separate `success_*` lists.
+- The bounded nested `semantic.forward_ir` shell now also publishes one
+  grouped `nested_presence_key_map` through
+  `FSM::Support::NormalizedSemanticForwardIRContract`, and both the nested
+  payload contract plus the parent public normalized semantic report now
+  republish that grouped child-family view as
+  `forward_ir_nested_presence_key_map`, so downstream tools can discover the
+  deeper `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` key
+  families from one place instead of reconstructing them from separate
+  `success_forward_ir_*` lists.
