@@ -139,6 +139,26 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
     );
     ok(!$contract->{emits_hdl}, 'contract says normalized semantic JSON emits no HDL');
     ok($contract->{emits_support_accounting_object}, 'contract says normalized semantic JSON emits support accounting');
+    is_deeply(
+        $contract->{nested_contract_source_map},
+        {
+            command => report_command_contract_source(),
+            failure_diagnostic => check_failure_diagnostic_contract_source(),
+            generated_output => report_generated_output_contract_source(),
+            composition => normalized_semantic_composition_contract_source(),
+            explicit_system_contract => normalized_semantic_explicit_system_contract_source(),
+            forward_ir => normalized_semantic_forward_ir_contract_source(),
+            module => normalized_semantic_module_contract_source(),
+            semantic => normalized_semantic_payload_contract_source(),
+            signal_analysis => normalized_semantic_signal_analysis_contract_source(),
+            system_contract => normalized_semantic_system_contract_source(),
+            symbol_contract => normalized_semantic_symbol_contract_source(),
+            producer => report_producer_contract_source(),
+            source => report_source_contract_source(),
+            support_accounting => support_accounting_match_contract_source(),
+        },
+        'contract publishes the bounded normalized-semantic nested-contract ownership map',
+    );
     is(
         $contract->{command_contract_source},
         report_command_contract_source(),

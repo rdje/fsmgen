@@ -1,6 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-21
+### Normalized semantic report now publishes a nested owner map too
+- Updated [perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm) so the bounded normalized semantic report now publishes a `nested_contract_source_map` for `command`, `failure_diagnostic`, `generated_output`, `composition`, `explicit_system_contract`, `forward_ir`, `module`, `semantic`, `signal_analysis`, `system_contract`, `symbol_contract`, `producer`, `source`, and `support_accounting`, reusing the same canonical child-owner helpers already surfaced through the scalar owner fields.
+- Updated [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) and [t/311-normalized-semantic-report-contract.t](/Users/richarddje/Documents/github/fsmgen/t/311-normalized-semantic-report-contract.t) so the manifest regression and the direct normalized-semantic regression now lock that nested-owner map directly.
+
 ### Check JSON now publishes a nested owner map too
 - Updated [perl/FSM/Support/CheckDiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnosticsContract.pm) so the bounded check-JSON shell now publishes a `nested_contract_source_map` for `command`, `result`, `failure_diagnostic`, `generated_output`, `producer`, `source`, and `support_accounting`, reusing the same canonical child-owner helpers already surfaced through the scalar owner fields.
 - Updated [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) and [t/312-check-diagnostics-contract.t](/Users/richarddje/Documents/github/fsmgen/t/312-check-diagnostics-contract.t) so the manifest regression and the direct check-JSON regression now lock that nested-owner map directly.

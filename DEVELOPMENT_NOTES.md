@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: normalized semantic report should publish its child owner map too
+- After the check-JSON grouping slice, the next nearby `R13` inconsistency sat
+  in the other public report shell.
+- `NormalizedSemanticReportContract` was already exposing all of its child
+  owners as separate scalar `*_contract_source` fields, but consumers still had
+  to reconstruct the grouped child-owner map themselves.
+- The bounded consistency move is the same one we just used successfully for
+  check JSON:
+  - keep the existing scalar owner fields for compatibility,
+  - add one bounded `nested_contract_source_map` keyed by the report's public
+    child object names,
+  - and lock both the direct normalized-semantic regression and the
+    capability-manifest regression against that grouped map.
+- That keeps the public semantic-export lane easier to consume because the
+  normalized semantic report now advertises its child-owner map in one place
+  instead of requiring embedders to infer it from parallel scalar fields.
+
 ## 2026-04-21: check JSON should publish its child owner map the same way section shells do
 - After regularizing the diagnostics section itself, the next nearby `R13`
   inconsistency was one layer lower in the bounded check-JSON shell.
