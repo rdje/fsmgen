@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### explicit-system-contract owners now group clock and reset families too
+- Updated [perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm) so the bounded nested `semantic.explicit_system_contract` owner now publishes `clock_keys`, `reset_identity_keys`, `reset_metadata_keys`, and a grouped `presence_key_family_map`, instead of forcing embedders to collect those explicit-system-contract families separately.
+- Updated [t/337-normalized-semantic-explicit-system-contract.t](/Users/richarddje/Documents/github/fsmgen/t/337-normalized-semantic-explicit-system-contract.t) so the direct explicit-system-contract regression now locks that grouped helper surface directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders can discover the grouped explicit-system-contract key families from the book too.
+
 ### system-contract owners now group clock and reset families too
 - Updated [perl/FSM/Support/NormalizedSemanticSystemContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSystemContract.pm) so the bounded nested `semantic.system_contract` owner now publishes `clock_keys`, `reset_identity_keys`, `reset_metadata_keys`, `behavior_keys`, and a grouped `presence_key_family_map`, instead of forcing embedders to collect those system-contract families separately.
 - Updated [t/336-normalized-semantic-system-contract.t](/Users/richarddje/Documents/github/fsmgen/t/336-normalized-semantic-system-contract.t) so the direct system-contract regression now locks that grouped helper surface directly.

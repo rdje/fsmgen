@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: explicit-system-contract owners now publish grouped key families too
+- Hardened
+  [perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm)
+  so the bounded nested `semantic.explicit_system_contract` owner now
+  publishes grouped clock, reset-identity, and reset-metadata key families.
+- Regression coverage now proves that grouped explicit-system-contract
+  key-family map directly:
+  [t/337-normalized-semantic-explicit-system-contract.t](/Users/richarddje/Documents/github/fsmgen/t/337-normalized-semantic-explicit-system-contract.t).
+
 ## 2026-04-22: system-contract owners now publish grouped key families too
 - Hardened
   [perl/FSM/Support/NormalizedSemanticSystemContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSystemContract.pm)

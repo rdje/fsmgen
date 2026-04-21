@@ -9,6 +9,10 @@ use FindBin;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::NormalizedSemanticExplicitSystemContract qw(
+    normalized_semantic_explicit_system_contract_clock_keys
+    normalized_semantic_explicit_system_contract_presence_key_family_map
+    normalized_semantic_explicit_system_contract_reset_identity_keys
+    normalized_semantic_explicit_system_contract_reset_metadata_keys
     normalized_semantic_explicit_system_contract_source
     normalized_semantic_explicit_system_contract_presence_keys
 );
@@ -31,6 +35,34 @@ is_deeply(
         )
     ],
     'normalized semantic explicit-system-contract keys stay bounded and ordered',
+);
+
+is_deeply(
+    normalized_semantic_explicit_system_contract_clock_keys(),
+    [qw(clock)],
+    'normalized semantic explicit-system-contract clock key family stays bounded',
+);
+
+is_deeply(
+    normalized_semantic_explicit_system_contract_reset_identity_keys(),
+    [qw(reset)],
+    'normalized semantic explicit-system-contract reset identity key family stays bounded',
+);
+
+is_deeply(
+    normalized_semantic_explicit_system_contract_reset_metadata_keys(),
+    [qw(reset_active_level reset_keyword reset_kind)],
+    'normalized semantic explicit-system-contract reset metadata key family stays bounded',
+);
+
+is_deeply(
+    normalized_semantic_explicit_system_contract_presence_key_family_map(),
+    {
+        clock_keys => [qw(clock)],
+        reset_identity_keys => [qw(reset)],
+        reset_metadata_keys => [qw(reset_active_level reset_keyword reset_kind)],
+    },
+    'normalized semantic explicit-system-contract grouped key-family map stays bounded',
 );
 
 done_testing();
