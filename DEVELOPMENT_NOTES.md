@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: normalized semantic reports should not own the payload owner string either
+- After the report/check family and `HDLGenerator` family cleanups, one small
+  but still real drift seam remained in the normalized-semantic lane:
+  `NormalizedSemanticReportContract` still advertised
+  `semantic_contract_source` through its own inline literal even though the
+  payload contract was the real owner of that nested shell.
+- The safest move is the same one we already validated elsewhere:
+  - let the payload contract export one canonical owner helper,
+  - keep the report contract responsible for the parent shell and bounded key
+    families,
+  - and make the report/manifest regressions assert against the payload helper
+    instead of against one hand-typed string.
+- That closes one more `R13` drift seam and makes the normalized-semantic
+  parent report shell a little more honest about who owns the nested payload.
+
 ## 2026-04-21: HDLGenerator result shells should not own child owner names either
 - After the shared report/check cleanup, the same duplication pattern still
   remained on the embedding side: `HDLGeneratorResultContract` was still

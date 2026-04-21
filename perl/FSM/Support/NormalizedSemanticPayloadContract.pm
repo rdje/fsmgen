@@ -46,6 +46,7 @@ use FSM::Support::NormalizedSemanticSymbolContract qw(
 
 our @EXPORT_OK = qw(
     build_normalized_semantic_payload_contract
+    normalized_semantic_payload_contract_source
     normalized_semantic_payload_explicit_system_contract_keys
     normalized_semantic_payload_presence_keys
     normalized_semantic_payload_forward_ir_keys
@@ -61,11 +62,15 @@ our @EXPORT_OK = qw(
     normalized_semantic_payload_composition_keys
 );
 
+sub normalized_semantic_payload_contract_source {
+    return 'FSM::Support::NormalizedSemanticPayloadContract';
+}
+
 sub build_normalized_semantic_payload_contract {
     return {
         schema_version => 1,
         status => 'bounded_public',
-        contract_source => 'FSM::Support::NormalizedSemanticPayloadContract',
+        contract_source => normalized_semantic_payload_contract_source(),
         object_name => 'semantic',
         report_sources => [
             qw(

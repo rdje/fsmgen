@@ -43,6 +43,7 @@ use FSM::Support::NormalizedSemanticSignalAnalysisContract qw(
     normalized_semantic_signal_analysis_presence_keys
 );
 use FSM::Support::NormalizedSemanticPayloadContract qw(
+    normalized_semantic_payload_contract_source
     normalized_semantic_payload_composition_keys
     normalized_semantic_payload_explicit_system_contract_keys
     normalized_semantic_payload_presence_keys
@@ -146,7 +147,7 @@ sub build_normalized_semantic_report_contract {
         explicit_system_contract_source => normalized_semantic_explicit_system_contract_source(),
         forward_ir_contract_source => normalized_semantic_forward_ir_contract_source(),
         module_contract_source => normalized_semantic_module_contract_source(),
-        semantic_contract_source => 'FSM::Support::NormalizedSemanticPayloadContract',
+        semantic_contract_source => normalized_semantic_payload_contract_source(),
         signal_analysis_contract_source => normalized_semantic_signal_analysis_contract_source(),
         system_contract_source => normalized_semantic_system_contract_source(),
         symbol_contract_source => normalized_semantic_symbol_contract_source(),

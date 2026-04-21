@@ -81,6 +81,7 @@ use FSM::Support::NormalizedSemanticReportContract qw(
     normalized_semantic_support_accounting_keys
 );
 use FSM::Support::NormalizedSemanticPayloadContract qw(
+    normalized_semantic_payload_contract_source
     normalized_semantic_payload_composition_keys
     normalized_semantic_payload_explicit_system_contract_keys
     normalized_semantic_payload_forward_ir_intent_hir_keys
@@ -179,7 +180,7 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
     );
     is(
         $contract->{semantic_contract_source},
-        'FSM::Support::NormalizedSemanticPayloadContract',
+        normalized_semantic_payload_contract_source(),
         'contract records the semantic success payload owner',
     );
     is(

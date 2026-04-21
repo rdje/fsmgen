@@ -48,6 +48,7 @@ use FSM::Support::NormalizedSemanticSymbolContract qw(
 );
 use FSM::Support::NormalizedSemanticPayloadContract qw(
     build_normalized_semantic_payload_contract
+    normalized_semantic_payload_contract_source
     normalized_semantic_payload_composition_keys
     normalized_semantic_payload_explicit_system_contract_keys
     normalized_semantic_payload_forward_ir_keys
@@ -70,7 +71,7 @@ subtest 'contract exposes the bounded normalized semantic payload object' => sub
     is($contract->{status}, 'bounded_public', 'contract marks the nested semantic object as bounded public');
     is(
         $contract->{contract_source},
-        'FSM::Support::NormalizedSemanticPayloadContract',
+        normalized_semantic_payload_contract_source(),
         'contract records its own owner',
     );
     is($contract->{object_name}, 'semantic', 'contract records the nested object name');

@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-21: normalized semantic payload owner facts now come from the payload contract too
+- Hardened
+  [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm)
+  so the nested normalized-semantic payload contract now exports a canonical
+  owner helper directly.
+- Expanded
+  [perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm)
+  so the normalized-semantic report shell now reuses that payload owner helper
+  instead of retyping the same owner string inline.
+- Regression coverage now proves that helper-backed reuse directly:
+  [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t),
+  [t/311-normalized-semantic-report-contract.t](/Users/richarddje/Documents/github/fsmgen/t/311-normalized-semantic-report-contract.t),
+  and [t/330-normalized-semantic-payload-contract.t](/Users/richarddje/Documents/github/fsmgen/t/330-normalized-semantic-payload-contract.t).
+
 ## 2026-04-21: HDLGenerator result owner facts now come from the nested HDLGenerator contracts too
 - Hardened
   [perl/FSM/Support/HDLGeneratorSourceInfoContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorSourceInfoContract.pm),

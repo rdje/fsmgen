@@ -67,6 +67,9 @@ use FSM::Support::NormalizedSemanticLoweredRTLIRContract qw(
 use FSM::Support::NormalizedSemanticModuleContract qw(
     normalized_semantic_module_contract_source
 );
+use FSM::Support::NormalizedSemanticPayloadContract qw(
+    normalized_semantic_payload_contract_source
+);
 use FSM::Support::NormalizedSemanticSignalAnalysisContract qw(
     normalized_semantic_signal_analysis_contract_source
 );
@@ -514,7 +517,7 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     );
     is(
         $manifest->{semantic_exports}{normalized_semantic_json}{semantic_contract_source},
-        'FSM::Support::NormalizedSemanticPayloadContract',
+        normalized_semantic_payload_contract_source(),
         'manifest records the normalized-semantic success payload owner',
     );
     is(
