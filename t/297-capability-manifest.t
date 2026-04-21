@@ -805,9 +805,22 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest says composition_plan is a shell-only compatibility branch',
     );
     is(
+        $manifest->{embedding}{hdl_generator_result}{composition_plan_contract_source},
+        'FSM::Support::HDLGeneratorCompositionPlanContract',
+        'manifest records the nested HDLGenerator composition_plan contract owner',
+    );
+    is(
         $manifest->{embedding}{hdl_generator_result}{composition_plan_raw_value_class},
         'FSM::Composition::Plan',
         'manifest records the raw composition_plan value class',
+    );
+    is_deeply(
+        $manifest->{embedding}{hdl_generator_result}{composition_plan_summary_surfaces},
+        [
+            'semantic_exports.normalized_semantic_json.semantic.composition',
+            'semantic_exports.normalized_semantic_json.semantic.composition.provenance_report',
+        ],
+        'manifest points composition_plan embedders at the structured semantic fallback surfaces',
     );
     ok(
         $manifest->{embedding}{hdl_generator_result}{composition_report_shell_only},

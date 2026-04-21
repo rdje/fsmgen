@@ -10,6 +10,10 @@ use File::Temp qw(tempdir);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Pipeline::HDLGenerator;
+use FSM::Support::HDLGeneratorCompositionPlanContract qw(
+    hdl_generator_composition_plan_raw_value_class_when_defined
+    hdl_generator_composition_plan_summary_surfaces
+);
 use FSM::Support::HDLGeneratorCompositionSpecContract qw(
     hdl_generator_composition_spec_raw_value_class_when_defined
     hdl_generator_composition_spec_summary_surfaces
@@ -194,9 +198,19 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
         'contract advertises composition_plan as a shell-only compatibility branch',
     );
     is(
+        $contract->{composition_plan_contract_source},
+        'FSM::Support::HDLGeneratorCompositionPlanContract',
+        'contract records the nested composition_plan contract owner',
+    );
+    is(
         $contract->{composition_plan_raw_value_class},
-        'FSM::Composition::Plan',
+        hdl_generator_composition_plan_raw_value_class_when_defined(),
         'contract records the raw composition_plan value class',
+    );
+    is_deeply(
+        $contract->{composition_plan_summary_surfaces},
+        hdl_generator_composition_plan_summary_surfaces(),
+        'contract points composition_plan embedders at the structured semantic fallback surfaces',
     );
     ok(
         $contract->{composition_report_shell_only},

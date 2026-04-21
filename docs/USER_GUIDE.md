@@ -1907,6 +1907,11 @@ own explicit owner through
 [perl/FSM/Support/HDLGeneratorCompositionSpecContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorCompositionSpecContract.pm),
 so embedders have one dedicated contract to follow for that raw
 composition-spec rule plus the sanitized composition-summary fallback
+surfaces. The `composition_plan` branch now also has its own explicit owner
+through
+[perl/FSM/Support/HDLGeneratorCompositionPlanContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorCompositionPlanContract.pm),
+so embedders have one dedicated contract to follow for that raw
+composition-plan rule plus the same sanitized composition-summary fallback
 surfaces.
 The same contract now also names `fsm_module` as a shell-only raw
 `FSM::CoreAST::FSMModule` object when it is present, and `raw_ast` as a

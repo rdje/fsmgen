@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: composition_plan now deserves its own shell-only owner too
+- The in-process `HDLGenerator` result contract already called out
+  `composition_plan` explicitly as a raw compatibility branch, but that still
+  left one real embedding-facing seam described only as inline metadata on the
+  parent result shell.
+- The safer split mirrors the other `R13` compatibility branches:
+  - give `composition_plan` one explicit bounded owner,
+  - freeze only the raw-class rule plus the sanitized composition-summary
+    fallback surfaces,
+  - and keep the live realized composition plan explicitly outside any
+    JSON-safe or whole-hash stability promise.
+- That keeps `R13` honest:
+  - downstream embedders can discover one named contract for the raw realized
+    composition-plan branch,
+  - the capability manifest/result shell can advertise that owner directly
+    instead of repeating one undocumented special case,
+  - and any later promotion of richer composition-plan-derived summaries can
+    happen as a deliberate separate slice instead of piggybacking on the
+    parent result contract.
+
 ## 2026-04-21: composition_spec now deserves its own shell-only owner too
 - The in-process `HDLGenerator` result contract already called out
   `composition_spec` explicitly as a raw compatibility branch, but that still
