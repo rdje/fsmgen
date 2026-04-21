@@ -10211,3 +10211,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `FSM::Support::HDLGeneratorStatisticsContract`, so embedders can discover
   the summary and composition-only statistics key families from one place
   instead of collecting those key lists separately.
+- The bounded nested `source_info` owner now also publishes one grouped
+  `presence_key_family_map` through
+  `FSM::Support::HDLGeneratorSourceInfoContract`, so embedders can discover
+  the identity and summary source-info key families from one place instead of
+  collecting those key lists separately.

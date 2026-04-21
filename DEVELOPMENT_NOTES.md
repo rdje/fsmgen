@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: source-info leaf key families should be discoverable as one grouped map too
+- After grouping the bounded `statistics` leaf-owner key families, the next
+  adjacent cleanup sat in the sibling `source_info` leaf owner.
+- `HDLGeneratorSourceInfoContract` already published the identity and summary
+  key families separately, but a caller still had to gather those bounded
+  `source_info` key families one list at a time.
+- The bounded move is deliberately small:
+  - keep the existing identity and summary helpers unchanged,
+  - add one canonical leaf-level `presence_key_family_map`,
+  - and lock the direct `source_info` regression against that grouped map.
+- That keeps the explicit `source_info` owner easier to consume without
+  widening the parent `HDLGenerator` result shell again, and without mixing
+  this leaf-owner cleanup into the already-grouped manifest-facing maps.
+
 ## 2026-04-22: statistics leaf key families should be discoverable as one grouped map too
 - After grouping the bounded `module_info` leaf-owner key families, the next
   adjacent cleanup sat in the sibling `statistics` leaf owner.

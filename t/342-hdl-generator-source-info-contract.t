@@ -12,6 +12,7 @@ use FSM::Support::HDLGeneratorSourceInfoContract qw(
     build_hdl_generator_source_info_contract
     hdl_generator_source_info_contract_source
     hdl_generator_source_info_identity_keys
+    hdl_generator_source_info_presence_key_family_map
     hdl_generator_source_info_stable_subsurfaces
     hdl_generator_source_info_summary_keys
 );
@@ -58,6 +59,11 @@ subtest 'contract exposes the bounded HDLGenerator source_info object' => sub {
         $contract->{summary_presence_keys},
         hdl_generator_source_info_summary_keys(),
         'contract publishes the bounded source_info summary keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map},
+        hdl_generator_source_info_presence_key_family_map(),
+        'contract publishes the bounded grouped source_info key-family map',
     );
     is_deeply(
         $contract->{stable_subsurfaces},
