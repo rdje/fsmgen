@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: lowered-rtl-ir owners now publish grouped key families too
+- Hardened
+  [perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm)
+  so the bounded nested `semantic.forward_ir.lowered_rtl_ir` object now
+  publishes a grouped `presence_key_family_map` covering its core and
+  composition-only key families.
+- Regression coverage now proves that grouped lowered-RTL key-family map
+  directly:
+  [t/340-normalized-semantic-lowered-rtl-ir-contract.t](/Users/richarddje/Documents/github/fsmgen/t/340-normalized-semantic-lowered-rtl-ir-contract.t).
+
 ## 2026-04-22: intent-hir owners now publish grouped key families too
 - Hardened
   [perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm)

@@ -394,6 +394,9 @@ also has its own bounded nested-object contract:
 [perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm)
 owns the current lowered-RTL shell keys plus the composition-only extension
 keys emitted today for top roots.
+That same owner now also publishes a grouped `presence_key_family_map` so
+embedders can discover those bounded `lowered_rtl_ir` key families from one
+place instead of collecting the individual field-family lists separately.
 The nested `semantic.forward_ir.structural_rtl_ir` summary inside that branch
 now also has its own bounded nested-object contract:
 [perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm)

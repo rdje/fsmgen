@@ -10,6 +10,7 @@ our @EXPORT_OK = qw(
     build_normalized_semantic_lowered_rtl_ir_contract
     normalized_semantic_lowered_rtl_ir_contract_source
     normalized_semantic_lowered_rtl_ir_optional_composition_keys
+    normalized_semantic_lowered_rtl_ir_presence_key_family_map
     normalized_semantic_lowered_rtl_ir_presence_keys
 );
 
@@ -35,11 +36,13 @@ sub build_normalized_semantic_lowered_rtl_ir_contract {
         },
         public_presence_keys => normalized_semantic_lowered_rtl_ir_presence_keys(),
         optional_composition_keys => normalized_semantic_lowered_rtl_ir_optional_composition_keys(),
+        presence_key_family_map => normalized_semantic_lowered_rtl_ir_presence_key_family_map(),
         optional_for_non_composition_sources => JSON::PP::true,
         json_safe_when_embedded_in_public_reports => JSON::PP::true,
         guidance => [
             q{Treat this contract as the bounded nested `semantic.forward_ir.lowered_rtl_ir` object used by successful public normalized semantic JSON reports.},
             'The bounded public promise covers the current lowered-RTL summary shared by direct roots plus the current composition-only extension keys.',
+            'Use the grouped presence_key_family_map to discover the bounded core and composition-only lowered_rtl_ir key families without collecting those key-family lists separately.',
             'The deeper `output_drive_families`, `standalone_dt_multi_drive_targets`, and composition candidate payload contents remain bounded only at the current object-shell level unless later widened deliberately.',
         ],
     };
@@ -75,6 +78,13 @@ sub normalized_semantic_lowered_rtl_ir_optional_composition_keys {
             internal_net_names
         ),
     ];
+}
+
+sub normalized_semantic_lowered_rtl_ir_presence_key_family_map {
+    return {
+        public_presence_keys => normalized_semantic_lowered_rtl_ir_presence_keys(),
+        optional_composition_keys => normalized_semantic_lowered_rtl_ir_optional_composition_keys(),
+    };
 }
 
 1;

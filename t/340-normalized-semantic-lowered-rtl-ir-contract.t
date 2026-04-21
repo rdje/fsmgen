@@ -12,6 +12,7 @@ use FSM::Support::NormalizedSemanticLoweredRTLIRContract qw(
     build_normalized_semantic_lowered_rtl_ir_contract
     normalized_semantic_lowered_rtl_ir_contract_source
     normalized_semantic_lowered_rtl_ir_optional_composition_keys
+    normalized_semantic_lowered_rtl_ir_presence_key_family_map
     normalized_semantic_lowered_rtl_ir_presence_keys
 );
 
@@ -44,6 +45,11 @@ subtest 'contract exposes the bounded normalized semantic lowered-rtl-ir object'
         $contract->{optional_composition_keys},
         normalized_semantic_lowered_rtl_ir_optional_composition_keys(),
         'contract publishes the bounded lowered-rtl-ir composition-only key list',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map},
+        normalized_semantic_lowered_rtl_ir_presence_key_family_map(),
+        'contract publishes the grouped lowered-rtl-ir key-family discovery map',
     );
 };
 
