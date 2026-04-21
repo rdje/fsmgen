@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: HDLGenerator stable nested slices should be discoverable as one grouped map too
+- After the deeper normalized-semantic owner-map slice, the next nearby
+  embedding inconsistency was in the `HDLGenerator` result contract.
+- `HDLGeneratorResultContract` was already publishing the bounded stable nested
+  slices for `source_info`, `module_info`, and `statistics`, but consumers
+  still had to reconstruct that stable-subsurface view from three separate
+  arrays.
+- The bounded move is to group only those already-public stable nested slices:
+  - add one canonical `stable_subsurface_map`,
+  - keep the existing per-object stable-subsurface arrays for compatibility,
+  - and lock both the direct `HDLGenerator` regression and the manifest-facing
+    regression against the grouped map.
+- That keeps the public embedding surface easier to consume without widening
+  the stabilized nested content beyond the stable slices we were already
+  advertising one array at a time.
+
 ## 2026-04-21: the deeper forward-ir shell owners should be discoverable as one grouped map too
 - After the top-level semantic payload and report shells already had grouped
   owner maps, the next remaining inconsistency was one level deeper.

@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-21
+### HDLGenerator results now publish a grouped stable-subsurface map too
+- Updated [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm) so the bounded `HDLGenerator` result contract now publishes a grouped `stable_subsurface_map` for `source_info`, `module_info`, and `statistics`, instead of forcing embedders to reconstruct that stable nested-slice view from three separate arrays.
+- Updated [t/305-hdl-generator-result-contract.t](/Users/richarddje/Documents/github/fsmgen/t/305-hdl-generator-result-contract.t) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the direct `HDLGenerator` regression and the manifest-facing regression now lock that grouped stable-subsurface discovery surface directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders can discover the grouped stable-subsurface map from the book too.
+
 ### Normalized semantic forward-ir shells now publish a grouped deeper owner map too
 - Updated [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm) so the bounded nested `semantic` payload now publishes a grouped `forward_ir_nested_contract_source_map` for `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir`, instead of forcing embedders to reconstruct those deeper owners from three parallel scalar fields.
 - Updated [perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm) so the public normalized semantic report contract now reuses that same canonical grouped map for its deeper `forward_ir` shell-owner discovery surface.

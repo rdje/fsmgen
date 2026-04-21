@@ -199,6 +199,10 @@ subsurface” boundary for the nested hashes too: the whole `source_info`,
 `module_info`, and `statistics` hashes are still not stable APIs, but the
 advertised `source_info.*`, `module_info.*`, and `statistics.*` identity/summary
 paths are the bounded public slices embedders should target.
+That same contract now also publishes a grouped `stable_subsurface_map` so
+embedders can discover those bounded nested stable slices from one place
+instead of reconstructing the map from the separate `source_info`,
+`module_info`, and `statistics` arrays.
 The nested `source_info` object now also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorSourceInfoContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorSourceInfoContract.pm),
 which is the contract to follow for `header`, `kind`,

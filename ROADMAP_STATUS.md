@@ -67,6 +67,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R13` Public embedding/API stabilization, backed by `R12` regression corpus and support accounting.
 - Current next decision point:
+  - The `HDLGenerator` embedding surface now also publishes a grouped
+    `stable_subsurface_map`: [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm)
+    now groups the bounded stable nested slices for `source_info`,
+    `module_info`, and `statistics`, while
+    [t/305-hdl-generator-result-contract.t](/Users/richarddje/Documents/github/fsmgen/t/305-hdl-generator-result-contract.t)
+    plus [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+    now lock that grouped stable-subsurface discovery surface directly.
   - The normalized semantic embedding surface now also publishes a grouped
     `forward_ir_nested_contract_source_map`: [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm)
     now owns the canonical grouped map for the deeper `intent_hir`,

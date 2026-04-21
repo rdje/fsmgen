@@ -81,6 +81,7 @@ our @EXPORT_OK = qw(
     hdl_generator_result_module_info_optional_composition_summary_keys
     hdl_generator_result_module_info_summary_keys
     hdl_generator_result_source_info_identity_keys
+    hdl_generator_result_stable_subsurface_map
     hdl_generator_result_source_info_summary_keys
     hdl_generator_result_statistics_optional_composition_keys
     hdl_generator_result_statistics_summary_keys
@@ -147,6 +148,7 @@ sub build_hdl_generator_result_contract {
         statistics_optional_composition_keys => hdl_generator_result_statistics_optional_composition_keys(),
         statistics_full_hash_stable => JSON::PP::false,
         statistics_stable_subsurfaces => hdl_generator_statistics_stable_subsurfaces(),
+        stable_subsurface_map => hdl_generator_result_stable_subsurface_map(),
         fsm_module_contract_source => hdl_generator_fsm_module_contract_source(),
         fsm_module_shell_only => JSON::PP::true,
         fsm_module_raw_value_class_when_defined => hdl_generator_fsm_module_raw_value_class_when_defined(),
@@ -208,6 +210,7 @@ sub build_hdl_generator_result_contract {
             'The advertised nested identity keys inside source_info and module_info are stabilized beyond that top-level shell.',
             'The whole source_info hash is not itself stabilized; only the advertised source_info identity and package-import summary subsurfaces are public.',
             'The advertised source_info package-import summary keys are stabilized, but the wider source_info hash still includes compatibility-heavy objects on composition roots.',
+            'Use the grouped stable_subsurface_map to discover the bounded stable nested slices for source_info, module_info, and statistics without reconstructing that map from separate arrays.',
             'The fsm_module branch is shell-only when defined: it is a raw FSM::CoreAST::FSMModule object kept for in-process compatibility, so prefer intent_hir, lowered_rtl_ir, structural_rtl_ir, or normalized semantic JSON for structured downstream inspection.',
             'The raw_ast branch is a shell-only frontend/debug artifact, so prefer intent_hir or normalized semantic JSON instead of treating parser-level AST arrays as a public interchange format.',
             'The resolved_package_imports branch is shell-only: its values are raw FSM::Package::Spec objects, so use source_info.package_import_count and source_info.package_import_names for stable package-import inspection.',
@@ -231,6 +234,14 @@ sub hdl_generator_result_source_info_identity_keys {
 
 sub hdl_generator_result_source_info_summary_keys {
     return hdl_generator_source_info_summary_keys();
+}
+
+sub hdl_generator_result_stable_subsurface_map {
+    return {
+        source_info => hdl_generator_source_info_stable_subsurfaces(),
+        module_info => hdl_generator_module_info_stable_subsurfaces(),
+        statistics => hdl_generator_statistics_stable_subsurfaces(),
+    };
 }
 
 sub hdl_generator_result_module_info_identity_keys {

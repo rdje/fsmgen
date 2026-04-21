@@ -70,6 +70,7 @@ use FSM::Support::HDLGeneratorResultContract qw(
     hdl_generator_result_module_info_optional_composition_summary_keys
     hdl_generator_result_module_info_summary_keys
     hdl_generator_result_source_info_identity_keys
+    hdl_generator_result_stable_subsurface_map
     hdl_generator_result_source_info_summary_keys
     hdl_generator_result_statistics_optional_composition_keys
     hdl_generator_result_statistics_summary_keys
@@ -150,6 +151,11 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
         $contract->{source_info_stable_subsurfaces},
         hdl_generator_source_info_stable_subsurfaces(),
         'contract publishes the bounded stable source_info subsurfaces',
+    );
+    is_deeply(
+        $contract->{stable_subsurface_map},
+        hdl_generator_result_stable_subsurface_map(),
+        'contract publishes the grouped stable nested-subsurface map',
     );
     ok(
         $contract->{fsm_module_shell_only},

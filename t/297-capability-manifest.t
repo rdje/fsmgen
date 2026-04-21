@@ -60,6 +60,7 @@ use FSM::Support::HDLGeneratorStatisticsContract qw(
 );
 use FSM::Support::HDLGeneratorResultContract qw(
     hdl_generator_result_contract_source
+    hdl_generator_result_stable_subsurface_map
 );
 use FSM::Support::DiagnosticCodes qw(diagnostic_code_ids);
 use FSM::Support::DiagnosticCodeRegistryContract qw(
@@ -924,6 +925,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
             structural_rtl_ir => normalized_semantic_structural_rtl_ir_contract_source(),
         },
         'manifest records the HDLGenerator nested-contract ownership map',
+    );
+    is_deeply(
+        $manifest->{embedding}{hdl_generator_result}{stable_subsurface_map},
+        hdl_generator_result_stable_subsurface_map(),
+        'manifest records the grouped HDLGenerator stable nested-subsurface map',
     );
     ok(
         $manifest->{embedding}{hdl_generator_result}{fsm_module_shell_only},

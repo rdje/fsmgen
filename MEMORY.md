@@ -10076,3 +10076,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   the deeper `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` shell
   owners from one bounded map instead of reconstructing them from three
   parallel scalar owner fields.
+- The `HDLGenerator` embedding surface now also publishes one grouped
+  `stable_subsurface_map` through `FSM::Support::HDLGeneratorResultContract`,
+  so embedders can discover the bounded stable nested slices for `source_info`,
+  `module_info`, and `statistics` from one map instead of reconstructing that
+  view from separate stable-subsurface arrays.
