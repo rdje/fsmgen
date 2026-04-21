@@ -80,6 +80,7 @@ our @EXPORT_OK = qw(
     hdl_generator_result_module_info_identity_keys
     hdl_generator_result_module_info_optional_composition_summary_keys
     hdl_generator_result_optional_composition_key_family_map
+    hdl_generator_result_semantic_layer_presence_key_family_map
     hdl_generator_result_module_info_summary_keys
     hdl_generator_result_shell_only_fallback_surface_map
     hdl_generator_result_source_info_identity_keys
@@ -188,6 +189,7 @@ sub build_hdl_generator_result_contract {
         structural_rtl_ir_contract_source => normalized_semantic_structural_rtl_ir_contract_source(),
         structural_rtl_ir_full_hash_stable => JSON::PP::false,
         structural_rtl_ir_presence_keys => hdl_generator_result_structural_rtl_ir_keys(),
+        semantic_layer_presence_key_family_map => hdl_generator_result_semantic_layer_presence_key_family_map(),
         live_or_unsanitized_keys => [
             qw(
                 fsm_module
@@ -227,6 +229,7 @@ sub build_hdl_generator_result_contract {
             'The advertised scalar summary keys inside module_info are stabilized, but the whole module_info hash still includes compatibility-heavy nested payloads.',
             'The whole statistics hash is not itself stabilized; only the advertised statistics summary subsurfaces are public.',
             'The advertised statistics summary keys inside statistics are stabilized, but the whole statistics hash still includes compatibility-heavy payloads.',
+            'Use the grouped semantic_layer_presence_key_family_map to discover the bounded top-level semantic-layer key families without collecting those semantic-layer key lists separately.',
             'The top-level intent_hir, lowered_rtl_ir, and structural_rtl_ir hashes also reuse the same bounded shell owners advertised through normalized semantic JSON; they are not separately stabilized as full top-level trees beyond those advertised shell keys.',
             'Do not treat the entire HDLGenerator result hash as a stable JSON document.',
             'Use --emit-semantic-json or FSM::Support::NormalizedSemanticReport for sanitized machine interchange.',
@@ -256,6 +259,14 @@ sub hdl_generator_result_optional_composition_key_family_map {
         statistics_optional_composition_keys => hdl_generator_result_statistics_optional_composition_keys(),
         intent_hir_optional_composition_keys => hdl_generator_result_intent_hir_optional_composition_keys(),
         lowered_rtl_ir_optional_composition_keys => hdl_generator_result_lowered_rtl_ir_optional_composition_keys(),
+    };
+}
+
+sub hdl_generator_result_semantic_layer_presence_key_family_map {
+    return {
+        intent_hir_presence_keys => hdl_generator_result_intent_hir_keys(),
+        lowered_rtl_ir_presence_keys => hdl_generator_result_lowered_rtl_ir_keys(),
+        structural_rtl_ir_presence_keys => hdl_generator_result_structural_rtl_ir_keys(),
     };
 }
 

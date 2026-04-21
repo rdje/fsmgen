@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: HDLGenerator semantic-layer key families should be discoverable as one grouped map too
+- After grouping the `HDLGenerator` composition-only key families, the next
+  nearby discovery inconsistency was still in the same bounded result shell.
+- `HDLGeneratorResultContract` already advertised the top-level semantic-layer
+  owners and each semantic-layer key family individually, but a consumer
+  still had to gather the `intent_hir`, `lowered_rtl_ir`, and
+  `structural_rtl_ir` key families one list at a time.
+- The bounded move is deliberately small:
+  - keep the existing per-layer key helpers unchanged,
+  - add one canonical `semantic_layer_presence_key_family_map`,
+  - and lock both the direct `HDLGenerator` regression and the
+    manifest-facing regression against that grouped map.
+- That keeps the top-level semantic-layer discovery story coherent beside the
+  new grouped optional-composition map, without widening the result hash or
+  pretending those semantic-layer trees are fully stabilized.
+
 ## 2026-04-21: HDLGenerator composition-only key families should be discoverable as one grouped map too
 - After grouping the deeper semantic child-key families, the next nearby
   discovery inconsistency sat back in the bounded `HDLGenerator` result

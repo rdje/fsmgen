@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-21
+### HDLGenerator results now publish a grouped semantic-layer key-family map too
+- Updated [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm) so the bounded `HDLGenerator` result contract now publishes a `semantic_layer_presence_key_family_map` for the top-level `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` key families, instead of forcing downstream tools to collect those semantic-layer key lists separately.
+- Updated [t/305-hdl-generator-result-contract.t](/Users/richarddje/Documents/github/fsmgen/t/305-hdl-generator-result-contract.t) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the direct `HDLGenerator` regression and the manifest-facing regression now lock that grouped semantic-layer discovery surface directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders can discover the grouped `HDLGenerator` semantic-layer key families from the book too.
+
 ### HDLGenerator results now publish a grouped composition-only key-family map too
 - Updated [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm) so the bounded `HDLGenerator` result contract now publishes an `optional_composition_key_family_map` for the composition-only key families exposed through `module_info`, `statistics`, `intent_hir`, and `lowered_rtl_ir`, instead of forcing downstream tools to collect those optional key lists separately.
 - Updated [t/305-hdl-generator-result-contract.t](/Users/richarddje/Documents/github/fsmgen/t/305-hdl-generator-result-contract.t) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the direct `HDLGenerator` regression and the manifest-facing regression now lock that grouped composition-only discovery surface directly.

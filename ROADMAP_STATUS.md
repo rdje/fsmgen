@@ -68,6 +68,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - `R13` Public embedding/API stabilization, backed by `R12` regression corpus and support accounting.
 - Current next decision point:
   - The bounded `HDLGenerator` result contract now also publishes a grouped
+    `semantic_layer_presence_key_family_map`:
+    [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm)
+    now groups the top-level `intent_hir`, `lowered_rtl_ir`, and
+    `structural_rtl_ir` key families, while
+    [t/305-hdl-generator-result-contract.t](/Users/richarddje/Documents/github/fsmgen/t/305-hdl-generator-result-contract.t)
+    plus [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+    now lock that grouped semantic-layer discovery surface directly.
+  - The bounded `HDLGenerator` result contract now also publishes a grouped
     `optional_composition_key_family_map`:
     [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm)
     now groups the composition-only key families exposed through

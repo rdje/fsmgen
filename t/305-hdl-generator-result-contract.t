@@ -69,6 +69,7 @@ use FSM::Support::HDLGeneratorResultContract qw(
     hdl_generator_result_module_info_identity_keys
     hdl_generator_result_module_info_optional_composition_summary_keys
     hdl_generator_result_optional_composition_key_family_map
+    hdl_generator_result_semantic_layer_presence_key_family_map
     hdl_generator_result_module_info_summary_keys
     hdl_generator_result_shell_only_fallback_surface_map
     hdl_generator_result_source_info_identity_keys
@@ -163,6 +164,11 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
         $contract->{optional_composition_key_family_map},
         hdl_generator_result_optional_composition_key_family_map(),
         'contract publishes the grouped composition-only key-family map',
+    );
+    is_deeply(
+        $contract->{semantic_layer_presence_key_family_map},
+        hdl_generator_result_semantic_layer_presence_key_family_map(),
+        'contract publishes the grouped semantic-layer key-family map',
     );
     is_deeply(
         $contract->{shell_only_fallback_surface_map},
