@@ -890,6 +890,24 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         hdl_generator_result_contract_source(),
         'manifest records the HDLGenerator result contract owner',
     );
+    is_deeply(
+        $manifest->{embedding}{hdl_generator_result}{nested_contract_source_map},
+        {
+            source_info => hdl_generator_source_info_contract_source(),
+            module_info => hdl_generator_module_info_contract_source(),
+            statistics => hdl_generator_statistics_contract_source(),
+            fsm_module => hdl_generator_fsm_module_contract_source(),
+            raw_ast => hdl_generator_raw_ast_contract_source(),
+            resolved_package_imports => hdl_generator_resolved_package_imports_contract_source(),
+            composition_spec => hdl_generator_composition_spec_contract_source(),
+            composition_plan => hdl_generator_composition_plan_contract_source(),
+            composition_report => composition_report_contract_source(),
+            intent_hir => normalized_semantic_intent_hir_contract_source(),
+            lowered_rtl_ir => normalized_semantic_lowered_rtl_ir_contract_source(),
+            structural_rtl_ir => normalized_semantic_structural_rtl_ir_contract_source(),
+        },
+        'manifest records the HDLGenerator nested-contract ownership map',
+    );
     ok(
         $manifest->{embedding}{hdl_generator_result}{fsm_module_shell_only},
         'manifest says fsm_module is a shell-only compatibility branch',

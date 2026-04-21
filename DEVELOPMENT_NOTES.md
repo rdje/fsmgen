@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: HDLGenerator results should publish their child owner map too
+- After the normalized-semantic report grouping slice, the same consistency
+  seam still remained on the embedding side.
+- `HDLGeneratorResultContract` already exposed a long list of child owners as
+  separate scalar `*_contract_source` fields, but consumers still had to
+  reconstruct the grouped child-owner map themselves.
+- The bounded consistency move is the same pattern we already validated for
+  check JSON and normalized semantic JSON:
+  - keep the existing scalar owner fields for compatibility,
+  - add one bounded `nested_contract_source_map` keyed by the result hash's
+    public child branches,
+  - and lock both the direct `HDLGenerator` regression and the
+    capability-manifest regression against that grouped map.
+- That keeps the public embedding lane easier to consume because the
+  `HDLGenerator` result now advertises its child-owner map in one place
+  instead of requiring embedders to infer it from parallel scalar fields.
+
 ## 2026-04-21: normalized semantic report should publish its child owner map too
 - After the check-JSON grouping slice, the next nearby `R13` inconsistency sat
   in the other public report shell.

@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-21: HDLGenerator result now publishes a nested owner map too
+- Hardened
+  [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm)
+  so the bounded `HDLGenerator` result now publishes a
+  `nested_contract_source_map` for its compatibility-heavy child branches and
+  top-level semantic shells instead of exposing those child owners only as
+  separate scalar fields.
+- Regression coverage now proves that bounded `HDLGenerator` nested-owner map
+  directly:
+  [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+  and [t/305-hdl-generator-result-contract.t](/Users/richarddje/Documents/github/fsmgen/t/305-hdl-generator-result-contract.t).
+
 ## 2026-04-21: normalized semantic report now publishes a nested owner map too
 - Hardened
   [perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm)
