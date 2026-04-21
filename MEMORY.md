@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: normalized-semantic reports now republish semantic payload shell families too
+- Hardened
+  [perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm)
+  so the public normalized semantic report now republishes the payload
+  owner's grouped shell-family view as `semantic_presence_key_family_map`.
+- Regression coverage now proves that republished semantic payload shell
+  grouped map directly:
+  [t/311-normalized-semantic-report-contract.t](/Users/richarddje/Documents/github/fsmgen/t/311-normalized-semantic-report-contract.t).
+
 ## 2026-04-22: semantic-payload shells now publish grouped key families too
 - Hardened
   [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm)

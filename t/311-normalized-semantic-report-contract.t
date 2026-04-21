@@ -90,6 +90,7 @@ use FSM::Support::NormalizedSemanticPayloadContract qw(
     normalized_semantic_payload_forward_ir_nested_contract_source_map
     normalized_semantic_payload_forward_ir_nested_presence_key_map
     normalized_semantic_payload_nested_presence_key_map
+    normalized_semantic_payload_presence_key_family_map
     normalized_semantic_payload_forward_ir_intent_hir_keys
     normalized_semantic_payload_forward_ir_intent_hir_optional_composition_keys
     normalized_semantic_payload_forward_ir_lowered_rtl_ir_keys
@@ -178,6 +179,11 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         $contract->{semantic_nested_presence_key_map},
         normalized_semantic_payload_nested_presence_key_map(),
         'contract publishes the bounded grouped semantic child key-family map',
+    );
+    is_deeply(
+        $contract->{semantic_presence_key_family_map},
+        normalized_semantic_payload_presence_key_family_map(),
+        'contract republishes the grouped semantic payload shell key-family map',
     );
     is_deeply(
         $contract->{nested_presence_key_map},

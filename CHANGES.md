@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### normalized-semantic reports now republish semantic payload shell families too
+- Updated [perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm) so the public normalized semantic report now republishes the payload owner’s grouped shell-family view as `semantic_presence_key_family_map`, instead of forcing embedders to reconstruct those semantic payload shell families from separate `success_*` fields.
+- Updated [t/311-normalized-semantic-report-contract.t](/Users/richarddje/Documents/github/fsmgen/t/311-normalized-semantic-report-contract.t) so the direct normalized-semantic report regression now locks that republished payload-shell grouped map directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders can discover the republished semantic payload shell families from the book too.
+
 ### normalized-semantic payload shells now publish grouped key families too
 - Updated [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm) so the bounded nested `semantic` contract now publishes a grouped `presence_key_family_map` for its shell-owned payload and child-extension key families, instead of forcing embedders to collect those field-family lists separately.
 - Updated [t/330-normalized-semantic-payload-contract.t](/Users/richarddje/Documents/github/fsmgen/t/330-normalized-semantic-payload-contract.t) so the direct semantic-payload regression now locks that grouped shell-owner discovery surface directly.

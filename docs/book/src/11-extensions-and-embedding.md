@@ -349,6 +349,11 @@ that advertises it now also publishes the same grouped child families as
 `semantic_nested_presence_key_map`, so embedders can discover the deeper
 semantic child key families from one place instead of reconstructing them
 from separate `success_*` lists.
+The public normalized semantic report now also republishes the payload
+owner's grouped shell-family view as `semantic_presence_key_family_map`, so
+embedders can discover the shell-owned semantic payload and child-extension
+families from one place instead of reconstructing them from separate
+`success_*` fields.
 The bounded `semantic.forward_ir` shell now also publishes its own grouped
 `nested_presence_key_map`, and both the nested payload contract and the
 public normalized semantic report now republish that grouped view as

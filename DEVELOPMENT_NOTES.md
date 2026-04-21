@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: normalized-semantic reports should republish semantic payload shell families too
+- After grouping the bounded `semantic` payload shell families directly, the
+  next adjacent semantic-side seam sat in the parent normalized-semantic
+  report shell.
+- `NormalizedSemanticReportContract` was already republishing the deeper
+  `semantic_nested_presence_key_map` view, but callers still had to
+  reconstruct the payload shell-family view from separate `success_*` fields.
+- The bounded move is deliberately small:
+  - keep the existing payload owner and grouped child maps unchanged,
+  - republish the payload shell grouped view as
+    `semantic_presence_key_family_map`,
+  - and lock the direct normalized-semantic report regression against that
+    republished map.
+- That keeps the public normalized semantic report easier to consume without
+  widening the report itself beyond grouped discovery.
+
 ## 2026-04-22: semantic-payload shell key families should be discoverable as one grouped map too
 - After grouping the bounded nested `semantic.signal_analysis` leaf-owner key
   families, the next adjacent semantic-side seam sat back on the bounded
