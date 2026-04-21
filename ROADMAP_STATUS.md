@@ -67,6 +67,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R13` Public embedding/API stabilization, backed by `R12` regression corpus and support accounting.
 - Current next decision point:
+  - The bounded nested `statistics` owner now also publishes a grouped
+    `presence_key_family_map`:
+    [perl/FSM/Support/HDLGeneratorStatisticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorStatisticsContract.pm)
+    now groups the summary and composition-only key families, while
+    [t/344-hdl-generator-statistics-contract.t](/Users/richarddje/Documents/github/fsmgen/t/344-hdl-generator-statistics-contract.t)
+    now locks that grouped leaf-owner discovery surface directly.
   - The bounded nested `module_info` owner now also publishes a grouped
     `presence_key_family_map`:
     [perl/FSM/Support/HDLGeneratorModuleInfoContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorModuleInfoContract.pm)

@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### HDLGenerator statistics owners now publish a grouped key-family map too
+- Updated [perl/FSM/Support/HDLGeneratorStatisticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorStatisticsContract.pm) so the bounded nested `statistics` contract now publishes a grouped `presence_key_family_map` for its summary and composition-only key families, instead of forcing embedders to collect those key lists separately.
+- Updated [t/344-hdl-generator-statistics-contract.t](/Users/richarddje/Documents/github/fsmgen/t/344-hdl-generator-statistics-contract.t) so the direct `statistics` regression now locks that grouped leaf-owner discovery surface directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders can discover the grouped `statistics` key families from the book too.
+
 ### HDLGenerator module-info owners now publish a grouped key-family map too
 - Updated [perl/FSM/Support/HDLGeneratorModuleInfoContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorModuleInfoContract.pm) so the bounded nested `module_info` contract now publishes a grouped `presence_key_family_map` for its identity, summary, and composition-only key families, instead of forcing embedders to collect those key lists separately.
 - Updated [t/343-hdl-generator-module-info-contract.t](/Users/richarddje/Documents/github/fsmgen/t/343-hdl-generator-module-info-contract.t) so the direct `module_info` regression now locks that grouped leaf-owner discovery surface directly.

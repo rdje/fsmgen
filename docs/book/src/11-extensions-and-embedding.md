@@ -241,6 +241,10 @@ The nested `statistics` object now also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorStatisticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorStatisticsContract.pm),
 which is the contract to follow for the direct-root scalar summary keys and
 the composition-only scalar summary keys.
+That same owner now also publishes a grouped `presence_key_family_map` so
+embedders can discover the bounded summary and composition-only statistics
+key families from one place instead of collecting those key lists
+separately.
 The top-level `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` hashes
 follow the same honesty rule: they reuse the dedicated normalized-semantic
 shell owners and their advertised shell keys, but the `HDLGenerator` result

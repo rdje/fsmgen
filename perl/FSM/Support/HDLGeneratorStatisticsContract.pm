@@ -10,6 +10,7 @@ our @EXPORT_OK = qw(
     build_hdl_generator_statistics_contract
     hdl_generator_statistics_contract_source
     hdl_generator_statistics_optional_composition_keys
+    hdl_generator_statistics_presence_key_family_map
     hdl_generator_statistics_stable_subsurfaces
     hdl_generator_statistics_summary_keys
 );
@@ -37,12 +38,14 @@ sub build_hdl_generator_statistics_contract {
         },
         summary_presence_keys => hdl_generator_statistics_summary_keys(),
         optional_composition_summary_keys => hdl_generator_statistics_optional_composition_keys(),
+        presence_key_family_map => hdl_generator_statistics_presence_key_family_map(),
         stable_subsurfaces => hdl_generator_statistics_stable_subsurfaces(),
         full_hash_stable => JSON::PP::false,
         json_safe_as_whole => JSON::PP::false,
         guidance => [
             q{Treat this contract as the bounded nested `statistics` object reused by in-process `HDLGenerator` results.},
             'The bounded public promise covers the current scalar summary keys plus the current composition-only scalar summary keys.',
+            'Use the grouped presence_key_family_map to discover the bounded statistics summary and composition-only key families without collecting those key-family lists separately.',
             'The wider statistics hash remains compatibility-heavy, so callers should target the advertised stable subsurfaces instead of treating the whole hash as public API.',
         ],
     };
@@ -67,6 +70,13 @@ sub hdl_generator_statistics_optional_composition_keys {
         composition_shared_datapath_candidate_count
         composition_top_port_count
     )];
+}
+
+sub hdl_generator_statistics_presence_key_family_map {
+    return {
+        summary_presence_keys => hdl_generator_statistics_summary_keys(),
+        optional_composition_summary_keys => hdl_generator_statistics_optional_composition_keys(),
+    };
 }
 
 sub hdl_generator_statistics_stable_subsurfaces {

@@ -12,6 +12,7 @@ use FSM::Support::HDLGeneratorStatisticsContract qw(
     build_hdl_generator_statistics_contract
     hdl_generator_statistics_contract_source
     hdl_generator_statistics_optional_composition_keys
+    hdl_generator_statistics_presence_key_family_map
     hdl_generator_statistics_stable_subsurfaces
     hdl_generator_statistics_summary_keys
 );
@@ -58,6 +59,11 @@ subtest 'contract exposes the bounded HDLGenerator statistics object' => sub {
         $contract->{optional_composition_summary_keys},
         hdl_generator_statistics_optional_composition_keys(),
         'contract publishes the bounded composition-only statistics summary keys',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map},
+        hdl_generator_statistics_presence_key_family_map(),
+        'contract publishes the bounded grouped statistics key-family map',
     );
     is_deeply(
         $contract->{stable_subsurfaces},
