@@ -34,6 +34,7 @@ use FSM::Support::SupportAccountingContract qw(
 our @EXPORT_OK = qw(
     build_capability_manifest_contract
     capability_manifest_top_level_contract_source_map
+    capability_manifest_top_level_section_presence_key_map
     capability_manifest_contract_source
     capability_manifest_backend_validation_keys
     capability_manifest_diagnostics_keys
@@ -67,6 +68,7 @@ sub build_capability_manifest_contract {
         },
         public_top_level_presence_keys => capability_manifest_public_top_level_keys(),
         top_level_contract_source_map => capability_manifest_top_level_contract_source_map(),
+        top_level_section_presence_key_map => capability_manifest_top_level_section_presence_key_map(),
         producer_presence_keys => capability_manifest_producer_keys(),
         support_accounting_presence_keys => capability_manifest_support_accounting_keys(),
         diagnostics_presence_keys => capability_manifest_diagnostics_keys(),
@@ -80,6 +82,7 @@ sub build_capability_manifest_contract {
         guidance => [
             'Treat the published top-level and first nested section key lists as the bounded public capability-manifest shell contract for schema version 1.',
             'Use the grouped top_level_contract_source_map to discover which dedicated contract owns each public top-level manifest object without depending on per-section contract slot names.',
+            'Use the grouped top_level_section_presence_key_map to discover the bounded key family for each public top-level manifest section without collecting those section lists one field at a time.',
             'Deeper nested payload meaning stays with the dedicated section contract owners instead of becoming implicitly frozen just because it appears in sample manifest output.',
             'Widen the manifest deliberately from regression-backed support-accounting truth rather than turning the whole builder payload into an accidental API.',
         ],
@@ -96,6 +99,19 @@ sub capability_manifest_top_level_contract_source_map {
         embedding => embedding_contract_source(),
         language_surface => language_surface_contract_source(),
         documentation => documentation_contract_source(),
+    };
+}
+
+sub capability_manifest_top_level_section_presence_key_map {
+    return {
+        producer => capability_manifest_producer_keys(),
+        support_accounting => capability_manifest_support_accounting_keys(),
+        diagnostics => capability_manifest_diagnostics_keys(),
+        semantic_exports => capability_manifest_semantic_exports_keys(),
+        backend_validation => capability_manifest_backend_validation_keys(),
+        embedding => capability_manifest_embedding_keys(),
+        language_surface => capability_manifest_language_surface_keys(),
+        documentation => capability_manifest_documentation_keys(),
     };
 }
 

@@ -29,6 +29,10 @@ its dedicated contract owner without reconstructing the owner map from scattered
 section payloads, hard-coding owner strings, or remembering that
 `language_surface` still advertises its nested owner under `surface_contract`
 for compatibility.
+The same manifest shell now also publishes a grouped
+`top_level_section_presence_key_map` so a downstream tool can discover the
+bounded key family for each public top-level section from one place instead of
+collecting those section-key lists field by field.
 
 ## Current Philosophy
 

@@ -67,6 +67,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R13` Public embedding/API stabilization, backed by `R12` regression corpus and support accounting.
 - Current next decision point:
+  - The top-level capability manifest shell now also publishes a grouped
+    `top_level_section_presence_key_map`: [perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm)
+    now groups the bounded key family for each public top-level manifest
+    section, while
+    [t/316-capability-manifest-contract.t](/Users/richarddje/Documents/github/fsmgen/t/316-capability-manifest-contract.t)
+    plus [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+    now lock that grouped manifest section-key discovery surface directly.
   - The `HDLGenerator` embedding surface now also publishes a grouped
     `shell_only_fallback_surface_map`: [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm)
     now groups the structured fallback surfaces for the shell-only

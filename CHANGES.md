@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-21
+### Capability manifest shells now publish a grouped section key-family map too
+- Updated [perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm) so the bounded top-level manifest shell now publishes a grouped `top_level_section_presence_key_map` for `producer`, `support_accounting`, `diagnostics`, `semantic_exports`, `backend_validation`, `embedding`, `language_surface`, and `documentation`, instead of forcing downstream tools to collect those bounded section-key lists one field at a time.
+- Updated [t/316-capability-manifest-contract.t](/Users/richarddje/Documents/github/fsmgen/t/316-capability-manifest-contract.t) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the direct manifest-contract regression and the full capability-manifest regression now lock that grouped section key-family discovery surface directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so downstream tools can discover the grouped manifest section key-family map from the book too.
+
 ### HDLGenerator results now publish a grouped shell-only fallback map too
 - Updated [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm) so the bounded `HDLGenerator` result contract now publishes a grouped `shell_only_fallback_surface_map` for `fsm_module`, `raw_ast`, `resolved_package_imports`, `composition_spec`, `composition_plan`, and `composition_report`, instead of forcing embedders to collect those structured fallback surfaces one field at a time.
 - Updated [t/305-hdl-generator-result-contract.t](/Users/richarddje/Documents/github/fsmgen/t/305-hdl-generator-result-contract.t) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the direct `HDLGenerator` regression and the manifest-facing regression now lock that grouped shell-only fallback discovery surface directly.

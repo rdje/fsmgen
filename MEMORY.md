@@ -10088,3 +10088,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   compatibility branches such as `fsm_module`, `raw_ast`,
   `resolved_package_imports`, `composition_spec`, `composition_plan`, and
   `composition_report`.
+- The top-level capability manifest shell now also publishes one grouped
+  `top_level_section_presence_key_map` through
+  `FSM::Support::CapabilityManifestContract`, so downstream tools can discover
+  the bounded key family for each public top-level manifest section from one
+  map instead of collecting the section-key lists field by field.

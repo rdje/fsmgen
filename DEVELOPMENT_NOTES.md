@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-21: manifest section key families should be discoverable as one grouped map too
+- After grouping the manifest-level owner map, the next nearby outer-shell
+  discovery inconsistency was still in the same capability-manifest contract.
+- `CapabilityManifestContract` was already publishing the bounded key list for
+  each public top-level section, but a consumer still had to gather those
+  section-key families one field at a time.
+- The bounded move is to group only those already-public section key families:
+  - add one canonical `top_level_section_presence_key_map`,
+  - keep the existing per-section `*_presence_keys` arrays for compatibility,
+  - and lock both the direct manifest-contract regression and the full
+    capability-manifest regression against the grouped map.
+- That keeps the outermost machine-readable contract easier to consume without
+  widening the manifest or changing the meaning of any existing bounded key
+  family.
+
 ## 2026-04-21: HDLGenerator shell-only fallbacks should be discoverable as one grouped map too
 - After grouping the stable nested slices for `source_info`, `module_info`, and
   `statistics`, the next nearby embedding inconsistency still sat in the same

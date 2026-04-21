@@ -14,6 +14,7 @@ use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::Support::CapabilityManifestContract qw(
     capability_manifest_contract_source
     capability_manifest_top_level_contract_source_map
+    capability_manifest_top_level_section_presence_key_map
 );
 use FSM::Support::CheckFailureDiagnosticContract qw(
     check_failure_diagnostic_contract_source
@@ -169,6 +170,11 @@ subtest 'module manifest is generated from support accounting' => sub {
         $manifest->{manifest_contract}{top_level_contract_source_map},
         capability_manifest_top_level_contract_source_map(),
         'manifest advertises the grouped top-level section ownership map',
+    );
+    is_deeply(
+        $manifest->{manifest_contract}{top_level_section_presence_key_map},
+        capability_manifest_top_level_section_presence_key_map(),
+        'manifest advertises the grouped top-level section key-family map',
     );
     assert_manifest_section_contract_sources(
         $manifest,
