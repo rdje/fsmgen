@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: support-accounting catalog entries should be checked against the filesystem too
+- After the documentation path audit landed, the matching remaining filesystem
+  boundary was the public support-accounting catalog.
+- Builder parity and corpus parity were already good, but neither one directly
+  guaranteed that the published `relpath` and `search_path_relpaths` values in
+  the public manifest still pointed at real repo content.
+- The right hardening step was a runtime audit over the public section itself
+  that checks:
+  - catalog file paths remain relative and present,
+  - search-path directory entries remain relative and present,
+  - and the derived public id lists remain unique and backed by the published
+    catalog.
+
 ## 2026-04-22: documentation path lists should be checked against the filesystem, not only against builders
 - After the manifest-shell discovery work, one remaining external boundary was
   the `documentation` section.

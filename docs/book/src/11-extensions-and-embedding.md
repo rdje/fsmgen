@@ -714,6 +714,13 @@ including the derived bucket counts, ordered id lists, sanitized catalog
 entries, and the embedded exact `section_contract` copy. In other words, this
 section is not just “shape compatible”; it is deliberately tied to maintained
 regression-corpus truth.
+Those published catalog paths are now checked against the real repository too:
+[t/372-support-accounting-catalog-path-audit.t](/Users/richarddje/Documents/github/fsmgen/t/372-support-accounting-catalog-path-audit.t)
+proves that every public `catalog_entries[*].relpath` stays relative and
+present on disk as a file, every published `search_path_relpaths` entry stays
+relative and present as a directory, and the public derived id lists stay
+unique and catalog-backed across the in-process manifest plus both CLI
+spellings.
 The `embedding` section now follows the same split too:
 [perl/FSM/Support/EmbeddingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingContract.pm)
 owns the published top-level and nested contract-owner map advertised through

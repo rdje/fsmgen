@@ -1,6 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### support-accounting catalog paths now have a real filesystem audit
+- Added [t/372-support-accounting-catalog-path-audit.t](/Users/richarddje/Documents/github/fsmgen/t/372-support-accounting-catalog-path-audit.t), which proves the public `support_accounting` section stays an exact dedicated-builder projection across the in-process manifest and both capability-manifest CLI spellings, and also proves that every published catalog `relpath` stays relative and present on disk as a file, every published `search_path_relpaths` entry stays relative and present as a directory, and the public derived id lists stay unique and catalog-backed.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so the recovery story now says the public support-accounting catalog paths and id lists are checked against actual repo state, not only against the regression-corpus builder projection.
+
 ### documentation manifest paths now have a real filesystem audit
 - Added [t/371-documentation-path-existence-audit.t](/Users/richarddje/Documents/github/fsmgen/t/371-documentation-path-existence-audit.t), which proves the public `documentation` section stays an exact dedicated-builder projection across the in-process manifest and both capability-manifest CLI spellings, and also proves that every published documentation path remains relative, unique, and present on disk under the repo root.
 - Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so the public recovery story now says the documentation path lists are checked against the actual repository, not only against builder parity.

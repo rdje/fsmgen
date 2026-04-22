@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: support-accounting catalog paths now have one filesystem-backed audit
+- Added
+  [t/372-support-accounting-catalog-path-audit.t](/Users/richarddje/Documents/github/fsmgen/t/372-support-accounting-catalog-path-audit.t)
+  to prove that the public `support_accounting` section stays an exact
+  dedicated-builder projection across the in-process manifest and both
+  capability-manifest CLI spellings, and that every published catalog file
+  path stays relative and present, every published search-path directory stays
+  relative and present, and the public derived id lists stay unique and
+  catalog-backed.
+- This is the new guard that the public support-accounting catalog still
+  points at real repo content, not just at corpus-derived strings.
+
 ## 2026-04-22: documentation section paths now have one filesystem-backed audit
 - Added
   [t/371-documentation-path-existence-audit.t](/Users/richarddje/Documents/github/fsmgen/t/371-documentation-path-existence-audit.t)
