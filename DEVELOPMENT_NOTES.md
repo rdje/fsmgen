@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: semantic system-side helper bundles should become real contract builders too
+- The normalized-semantic family had one awkward inconsistency left: the nested
+  `semantic.system_contract` and `semantic.explicit_system_contract` owners had
+  canonical owner helpers and bounded key-family helpers, but unlike their
+  sibling semantic child owners they still did not expose one real
+  `build_*_contract` object.
+- That made those two owners second-class in the public API lane even though the
+  roadmap and docs already described them as explicit nested-object owners.
+- The right fix is to regularize both files to match the rest of the family:
+  - add one real built contract object per owner,
+  - keep the same bounded key families,
+  - advertise JSON-safety and entrypoints explicitly,
+  - and lock the full contract object in the direct regressions.
+
 ## 2026-04-22: the repo-owned local regression gate should cover the book too
 - The mdBook is now a first-class user-facing surface, not a side document.
 - That made the old `bin/ci-regression` shape too narrow: it only ran the Perl

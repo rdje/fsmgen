@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: semantic system-side owners now build real nested contracts
+- Hardened
+  [perl/FSM/Support/NormalizedSemanticSystemContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSystemContract.pm)
+  so the bounded nested `semantic.system_contract` owner now exposes one real
+  built contract object with schema, owner, entrypoint, grouped key-family,
+  and JSON-safety metadata instead of only helper lists.
+- Hardened
+  [perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm)
+  so the bounded nested `semantic.explicit_system_contract` owner now does the
+  same when the authored explicit system contract is preserved.
+- Updated
+  [t/336-normalized-semantic-system-contract.t](/Users/richarddje/Documents/github/fsmgen/t/336-normalized-semantic-system-contract.t)
+  and
+  [t/337-normalized-semantic-explicit-system-contract.t](/Users/richarddje/Documents/github/fsmgen/t/337-normalized-semantic-explicit-system-contract.t)
+  so both owners are now regression-locked as real built contracts, not just
+  helper-family bundles.
+
 ## 2026-04-22: local regression gate now builds the mdBook too
 - Hardened [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
   so the repo-owned local regression gate now:
