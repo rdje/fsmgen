@@ -291,6 +291,10 @@ share one bounded nested-object contract for the caller-facing source identity:
 [perl/FSM/Support/ReportSourceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportSourceContract.pm)
 owns the shared `input` plus `resolved_path` keys emitted under the nested
 `source` object.
+That same owner now also publishes a grouped `presence_key_family_map` so
+embedders can discover the bounded source input and resolution key families
+from one place instead of collecting the individual key-family lists
+separately.
 Those same public check JSON and normalized semantic JSON reports now also
 share one bounded nested-object contract for invocation metadata:
 [perl/FSM/Support/ReportCommandContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportCommandContract.pm)

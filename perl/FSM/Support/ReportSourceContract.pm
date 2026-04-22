@@ -8,8 +8,11 @@ use JSON::PP ();
 
 our @EXPORT_OK = qw(
     build_report_source_contract
+    report_source_input_keys
+    report_source_presence_key_family_map
     report_source_contract_source
     report_source_presence_keys
+    report_source_resolution_keys
 );
 
 sub report_source_contract_source {
@@ -41,14 +44,34 @@ sub build_report_source_contract {
             ],
         },
         public_presence_keys => report_source_presence_keys(),
+        input_keys => report_source_input_keys(),
+        resolution_keys => report_source_resolution_keys(),
+        presence_key_family_map => report_source_presence_key_family_map(),
         json_safe_when_embedded_in_public_reports => JSON::PP::true,
         reused_across_public_reports => JSON::PP::true,
         guidance => [
             q{Treat this contract as the bounded nested `source` object shared by the public check JSON and normalized semantic JSON report surfaces.},
             'The current shared object records the caller-facing input string plus the resolved source path used by the pipeline.',
+            'Use the grouped presence_key_family_map to discover the bounded source input and resolution key families without collecting those key-family lists separately.',
             'Widen this nested object only when both public report surfaces and their manifest advertisement need the same additional field.',
         ],
     };
+}
+
+sub report_source_input_keys {
+    return [
+        qw(
+            input
+        ),
+    ];
+}
+
+sub report_source_resolution_keys {
+    return [
+        qw(
+            resolved_path
+        ),
+    ];
 }
 
 sub report_source_presence_keys {
@@ -58,6 +81,13 @@ sub report_source_presence_keys {
             resolved_path
         ),
     ];
+}
+
+sub report_source_presence_key_family_map {
+    return {
+        input_keys => report_source_input_keys(),
+        resolution_keys => report_source_resolution_keys(),
+    };
 }
 
 1;

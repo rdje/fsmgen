@@ -10,8 +10,11 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::ReportSourceContract qw(
     build_report_source_contract
+    report_source_input_keys
+    report_source_presence_key_family_map
     report_source_contract_source
     report_source_presence_keys
+    report_source_resolution_keys
 );
 
 subtest 'contract exposes the bounded shared report source object' => sub {
@@ -47,6 +50,21 @@ subtest 'contract exposes the bounded shared report source object' => sub {
         $contract->{public_presence_keys},
         report_source_presence_keys(),
         'contract publishes the bounded source-object key list',
+    );
+    is_deeply(
+        $contract->{input_keys},
+        report_source_input_keys(),
+        'contract publishes the bounded source input key family',
+    );
+    is_deeply(
+        $contract->{resolution_keys},
+        report_source_resolution_keys(),
+        'contract publishes the bounded source resolution key family',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map},
+        report_source_presence_key_family_map(),
+        'contract publishes the grouped source key-family map',
     );
 };
 

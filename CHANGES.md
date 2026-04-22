@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### report-source owners now group input and resolution families too
+- Updated [perl/FSM/Support/ReportSourceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportSourceContract.pm) so the bounded nested `source` owner now publishes `input_keys`, `resolution_keys`, and a grouped `presence_key_family_map`, instead of forcing embedders to collect those source families separately.
+- Updated [t/325-report-source-contract.t](/Users/richarddje/Documents/github/fsmgen/t/325-report-source-contract.t) so the direct report-source regression now locks that grouped leaf-owner discovery surface directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders can discover the grouped source key families from the book too.
+
 ### report-command owners now group mode and flag families too
 - Updated [perl/FSM/Support/ReportCommandContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportCommandContract.pm) so the bounded nested `command` owner now publishes `mode_keys`, `flag_keys`, `target_language_keys`, and a grouped `presence_key_family_map`, instead of forcing embedders to collect those command families separately.
 - Updated [t/327-report-command-contract.t](/Users/richarddje/Documents/github/fsmgen/t/327-report-command-contract.t) so the direct report-command regression now locks that grouped leaf-owner discovery surface directly.

@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: report-source owners now publish grouped key families too
+- Hardened
+  [perl/FSM/Support/ReportSourceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportSourceContract.pm)
+  so the bounded nested `source` owner now publishes grouped input and
+  resolution key families.
+- Regression coverage now proves that grouped report-source key-family map
+  directly:
+  [t/325-report-source-contract.t](/Users/richarddje/Documents/github/fsmgen/t/325-report-source-contract.t).
+
 ## 2026-04-22: report-command owners now publish grouped key families too
 - Hardened
   [perl/FSM/Support/ReportCommandContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportCommandContract.pm)

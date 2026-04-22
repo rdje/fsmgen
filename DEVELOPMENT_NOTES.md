@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: report-source families should be discoverable as one grouped map too
+- After grouping the bounded report-command families, the next adjacent shared
+  report-leaf seam sat in the nested `source` object reused by public check
+  JSON and normalized semantic JSON.
+- `ReportSourceContract` already published the full ordered shell key list,
+  but a caller still had to separate the caller-facing input token from the
+  resolved filesystem path by hand.
+- The bounded move is deliberately small:
+  - keep the existing full shell key list unchanged,
+  - add canonical helpers for input and resolution,
+  - add one grouped `presence_key_family_map`,
+  - and lock the direct report-source regression against that grouped map.
+- That keeps the shared source owner easier to consume without widening the
+  public report shells that already advertise `source` through their nested
+  owner maps.
+
 ## 2026-04-22: report-command families should be discoverable as one grouped map too
 - After grouping the bounded check-result families, the next adjacent shared
   report-leaf seam sat in the nested `command` object reused by public check
