@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: local regression docs should not imply hosted CI is still active
+- The repository intentionally parked GitHub Actions earlier to avoid burning
+  hosted minutes, but the main README still said `bin/ci-regression` mirrored
+  `.github/workflows/regression.yml`.
+- That wording became stale once `.github/workflows/` was left empty and the
+  parked workflow moved under `.github/workflows-disabled/`.
+- The right fix is small and user-facing:
+  - keep `bin/ci-regression` documented as the repo-owned local regression
+    gate,
+  - stop implying there is an active hosted workflow behind it right now,
+  - and point users at the parked-workflow note when they need to understand
+    why hosted CI is absent.
+- This is documentation-honesty work, but it matters: users should not have to
+  infer whether the GitHub lane is active by cross-checking filesystem state
+  against stale README text.
+
 ## 2026-04-22: shell-only HDLGenerator fallback families should be grouped per branch too
 - After grouping the sanitized `composition_report` owner, the adjacent
   `HDLGenerator` compatibility leaves still exposed their structured fallback

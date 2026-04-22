@@ -148,10 +148,11 @@ cd docs/book && mdbook serve
 ```bash
 ./bin/ci-regression
 ```
-- `bin/ci-regression` is the local entrypoint for the same checks used by `.github/workflows/regression.yml`.
+- `bin/ci-regression` is the repo-owned local regression entrypoint.
 - The script resolves the repository root itself, so you can invoke it without depending on your current working directory.
 - It runs the full Perl regression suite with `prove -I perl t`.
 - When `verilator` and `yosys` are installed, the external SystemVerilog validation smoke runs too; otherwise that test is skipped.
+- GitHub Actions is intentionally parked right now under [.github/workflows-disabled/README.md](/Users/richarddje/Documents/github/fsmgen/.github/workflows-disabled/README.md), so this local gate is currently the canonical actively used regression entrypoint.
 
 ## CLI quick reference
 ```bash

@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: local regression docs now match the parked GitHub workflow state
+- Hardened [README.md](/Users/richarddje/Documents/github/fsmgen/README.md)
+  and [docs/book/src/10-errors-strict-mode-and-troubleshooting.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/10-errors-strict-mode-and-troubleshooting.md)
+  so they no longer claim that `bin/ci-regression` mirrors an active
+  `.github/workflows/regression.yml` workflow.
+- The corrected user-facing story is now:
+  - `bin/ci-regression` remains the repo-owned local regression gate,
+  - GitHub Actions remains intentionally parked under
+    [.github/workflows-disabled/README.md](/Users/richarddje/Documents/github/fsmgen/.github/workflows-disabled/README.md),
+  - and the local gate is therefore the canonical actively used regression
+    entrypoint until the user explicitly re-enables hosted CI.
+
 ## 2026-04-22: shell-only HDLGenerator compatibility owners now publish grouped fallback families too
 - Hardened
   [perl/FSM/Support/HDLGeneratorFSMModuleContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFSMModuleContract.pm),

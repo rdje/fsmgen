@@ -1,6 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### local regression docs now match the parked GitHub workflow state
+- Updated [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) and [docs/book/src/10-errors-strict-mode-and-troubleshooting.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/10-errors-strict-mode-and-troubleshooting.md) so they no longer claim that `bin/ci-regression` mirrors an active `.github/workflows/regression.yml`.
+- The corrected user-facing wording now says that `bin/ci-regression` is the repo-owned local regression gate, while hosted CI remains intentionally parked under [.github/workflows-disabled/README.md](/Users/richarddje/Documents/github/fsmgen/.github/workflows-disabled/README.md).
+
 ### shell-only HDLGenerator compatibility owners now group fallback families too
 - Updated [perl/FSM/Support/HDLGeneratorFSMModuleContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFSMModuleContract.pm), [perl/FSM/Support/HDLGeneratorRawASTContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorRawASTContract.pm), [perl/FSM/Support/HDLGeneratorResolvedPackageImportsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResolvedPackageImportsContract.pm), [perl/FSM/Support/HDLGeneratorCompositionSpecContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorCompositionSpecContract.pm), and [perl/FSM/Support/HDLGeneratorCompositionPlanContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorCompositionPlanContract.pm) so the shell-only `HDLGenerator` compatibility leaves now publish grouped `fallback_surface_map` helpers instead of only flat fallback lists.
 - Updated [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm) so the bounded `HDLGenerator` result now republishes those grouped per-branch maps through `shell_only_fallback_surface_family_map`, alongside the existing flat `shell_only_fallback_surface_map`.
