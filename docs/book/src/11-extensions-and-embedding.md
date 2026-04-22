@@ -851,6 +851,12 @@ their documented fallback surfaces are checked too. In particular, the raw
 composition provenance report is now locked against the normalized semantic
 JSON `semantic.composition.provenance_report` fragment, so the branch/fallback
 story is regression-backed instead of only narrated.
+The public report shells themselves are now runtime-checked too. Real
+`--check-json` success and matched-failure payloads are checked against the
+bounded check-report shell families, and real `--emit-semantic-json` success
+and matched-failure payloads are checked against the bounded normalized
+semantic shell families. That keeps the top-level public report contract
+honest at runtime, not only the nested leaves and child-owner surfaces.
 
 This is still a bounded public slice, not the final full semantic export. Wider
 expression, state/DT control-shape, assignment/guard, package/type, and

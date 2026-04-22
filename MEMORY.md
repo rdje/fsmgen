@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: public report shells now have a runtime audit too
+- Added
+  [t/357-public-report-shell-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/357-public-report-shell-runtime-contract-audit.t)
+  as an `R13` hardening regression over the top-level public `check JSON` and
+  `normalized semantic JSON` shells.
+- The audit now proves that real success and matched-failure payloads keep the
+  bounded public top-level keys, success-only top-level keys, and shell-owned
+  nested key families published by the report-shell contract owners.
+- This gives the public report boundary itself direct runtime coverage,
+  complementing the already-landed audits for shared nested leaves and
+  unmatched failure behavior.
+
 ## 2026-04-22: shell-only `HDLGenerator` compatibility branches now have a runtime audit too
 - Added
   [t/356-hdl-generator-shell-only-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/356-hdl-generator-shell-only-runtime-contract-audit.t)

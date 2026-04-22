@@ -13707,3 +13707,18 @@ It is an exact-delay pulse request:
   `semantic.composition.provenance_report` fallback paths, and the public
   provenance fragment stays exactly equal to
   `sanitize_composition_report($result->{composition_report})`.
+
+## 2026-04-22: public report shells now have a runtime audit too
+- Added
+  [t/357-public-report-shell-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/357-public-report-shell-runtime-contract-audit.t)
+  as an `R13` hardening regression over the public `check JSON` and
+  `normalized semantic JSON` report shells themselves.
+- The audit now proves that real success and matched-failure payloads keep the
+  bounded public top-level keys, success-only top-level keys, and shell-owned
+  nested key families advertised by
+  [perl/FSM/Support/CheckDiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnosticsContract.pm)
+  and
+  [perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm).
+- This complements the earlier shared-leaf and unmatched-failure audits by
+  locking the public report-shell boundary itself instead of only the nested
+  objects under it.

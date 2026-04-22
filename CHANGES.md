@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### public report shells now have a runtime audit too
+- Added [t/357-public-report-shell-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/357-public-report-shell-runtime-contract-audit.t) as an `R13` hardening regression over the top-level public `check JSON` and `normalized semantic JSON` report shells.
+- The new audit now proves that real `--check-json` success and matched-failure payloads keep the bounded public top-level keys, success-only top-level keys, and shell-owned nested key families published by [perl/FSM/Support/CheckDiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnosticsContract.pm).
+- It also proves that real `--emit-semantic-json` success and matched-failure payloads keep the bounded public top-level keys, success-only top-level keys, shell-owned producer/support-accounting families, and failure-diagnostic families published by [perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm).
+- This complements the earlier leaf and unmatched-failure audits by locking the public report-shell boundary itself, instead of only the nested shared leaves.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders are told that the public report shells are now runtime-checked too.
+
 ### HDLGenerator shell-only compatibility branches now have a runtime audit too
 - Added [t/356-hdl-generator-shell-only-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/356-hdl-generator-shell-only-runtime-contract-audit.t) as an `R13` hardening regression over the shell-only `HDLGenerator` compatibility branches and their advertised fallback surfaces.
 - The new audit now proves that real direct and composition generation results keep the published runtime shape for `fsm_module`, `raw_ast`, `resolved_package_imports`, `composition_spec`, `composition_plan`, and raw `composition_report` instead of only matching static contract helper lists.
