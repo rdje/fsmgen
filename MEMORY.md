@@ -1,5 +1,28 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: shell-only HDLGenerator compatibility owners now publish grouped fallback families too
+- Hardened
+  [perl/FSM/Support/HDLGeneratorFSMModuleContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFSMModuleContract.pm),
+  [perl/FSM/Support/HDLGeneratorRawASTContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorRawASTContract.pm),
+  [perl/FSM/Support/HDLGeneratorResolvedPackageImportsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResolvedPackageImportsContract.pm),
+  [perl/FSM/Support/HDLGeneratorCompositionSpecContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorCompositionSpecContract.pm),
+  and [perl/FSM/Support/HDLGeneratorCompositionPlanContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorCompositionPlanContract.pm)
+  so the shell-only compatibility leaves now publish grouped
+  `fallback_surface_map` helpers.
+- Hardened
+  [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm)
+  so the bounded parent result now republishes those grouped per-branch maps
+  through `shell_only_fallback_surface_family_map`.
+- Regression coverage now proves those grouped shell-only fallback families
+  directly and through the manifest-facing embedding surface:
+  [t/305-hdl-generator-result-contract.t](/Users/richarddje/Documents/github/fsmgen/t/305-hdl-generator-result-contract.t),
+  [t/345-hdl-generator-resolved-package-imports-contract.t](/Users/richarddje/Documents/github/fsmgen/t/345-hdl-generator-resolved-package-imports-contract.t),
+  [t/346-hdl-generator-fsm-module-contract.t](/Users/richarddje/Documents/github/fsmgen/t/346-hdl-generator-fsm-module-contract.t),
+  [t/347-hdl-generator-raw-ast-contract.t](/Users/richarddje/Documents/github/fsmgen/t/347-hdl-generator-raw-ast-contract.t),
+  [t/348-hdl-generator-composition-spec-contract.t](/Users/richarddje/Documents/github/fsmgen/t/348-hdl-generator-composition-spec-contract.t),
+  [t/349-hdl-generator-composition-plan-contract.t](/Users/richarddje/Documents/github/fsmgen/t/349-hdl-generator-composition-plan-contract.t),
+  and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t).
+
 ## 2026-04-22: composition-report owners now publish grouped key families too
 - Hardened
   [perl/FSM/Support/CompositionReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CompositionReportContract.pm)

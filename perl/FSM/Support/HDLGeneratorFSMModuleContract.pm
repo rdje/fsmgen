@@ -9,6 +9,7 @@ use JSON::PP ();
 our @EXPORT_OK = qw(
     build_hdl_generator_fsm_module_contract
     hdl_generator_fsm_module_contract_source
+    hdl_generator_fsm_module_fallback_surface_map
     hdl_generator_fsm_module_raw_value_class_when_defined
     hdl_generator_fsm_module_summary_surfaces
 );
@@ -38,12 +39,14 @@ sub build_hdl_generator_fsm_module_contract {
         value_may_be_undef => JSON::PP::true,
         raw_value_class_when_defined => hdl_generator_fsm_module_raw_value_class_when_defined(),
         summary_surfaces => hdl_generator_fsm_module_summary_surfaces(),
+        fallback_surface_map => hdl_generator_fsm_module_fallback_surface_map(),
         full_hash_stable => JSON::PP::false,
         json_safe_as_whole => JSON::PP::false,
         guidance => [
             q{Treat this contract as the bounded shell-only `fsm_module` branch reused by in-process `HDLGenerator` results.},
             'When defined, the branch remains a raw FSM::CoreAST::FSMModule object kept for in-process compatibility rather than a JSON-safe public interchange payload.',
             'Use intent_hir, lowered_rtl_ir, structural_rtl_ir, or normalized semantic JSON for structured downstream inspection instead of binding to the live CoreAST object as public API.',
+            'Use the grouped fallback_surface_map to discover the bounded semantic-layer fallback surfaces for fsm_module without collecting those paths separately.',
         ],
     };
 }
@@ -58,6 +61,12 @@ sub hdl_generator_fsm_module_summary_surfaces {
         'lowered_rtl_ir',
         'structural_rtl_ir',
     ];
+}
+
+sub hdl_generator_fsm_module_fallback_surface_map {
+    return {
+        semantic_layers => hdl_generator_fsm_module_summary_surfaces(),
+    };
 }
 
 1;

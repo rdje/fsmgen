@@ -186,6 +186,9 @@ The top-level `resolved_package_imports` branch is therefore shell-only: it is
 still a hash of raw `FSM::Package::Spec` objects, so stable package-import
 inspection should use `source_info.package_import_count` and
 `source_info.package_import_names` instead of traversing those typed values.
+That same owner now also publishes a grouped `fallback_surface_map` so
+embedders can discover the bounded source-info package-import fallback family
+from one place instead of collecting those fallback paths separately.
 That shell-only branch now also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorResolvedPackageImportsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResolvedPackageImportsContract.pm),
 which is the contract to follow for the raw package-spec-map rule plus that
@@ -228,6 +231,10 @@ can discover, from one place, where to go instead of binding themselves to the
 raw shell-only compatibility branches such as `fsm_module`, `raw_ast`,
 `resolved_package_imports`, `composition_spec`, `composition_plan`, and
 `composition_report`.
+It now also publishes a grouped `shell_only_fallback_surface_family_map` so
+embedders can discover the narrower fallback-surface families those shell-only
+branches publish for themselves without reconstructing the per-branch grouping
+by hand.
 The nested `source_info` object now also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorSourceInfoContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorSourceInfoContract.pm),
 which is the contract to follow for `header`, `kind`,
@@ -263,11 +270,15 @@ shell-only too: they are raw `FSM::Composition::Spec` and
 `composition_spec` branch now also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorCompositionSpecContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorCompositionSpecContract.pm),
 which is the contract to follow for the raw composition-spec rule plus the
-sanitized composition-summary fallback surfaces. The `composition_plan` branch
+sanitized composition-summary fallback surfaces. That same owner now also
+publishes a grouped `fallback_surface_map` so embedders can discover the
+bounded semantic-composition fallback families from one place. The `composition_plan` branch
 now also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorCompositionPlanContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorCompositionPlanContract.pm),
 which is the contract to follow for the raw composition-plan rule plus the
-same sanitized composition-summary fallback surfaces. Raw
+same sanitized composition-summary fallback surfaces. That same owner now also
+publishes a grouped `fallback_surface_map` so embedders can discover the
+bounded semantic-composition fallback families from one place. Raw
 `composition_report` is likewise an in-process compatibility hash rather than
 a serializable public JSON surface, so embedders should follow
 [perl/FSM/Support/CompositionReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CompositionReportContract.pm)

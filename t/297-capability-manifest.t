@@ -49,21 +49,26 @@ use FSM::Support::HDLExternalValidationContract qw(
 );
 use FSM::Support::HDLGeneratorCompositionPlanContract qw(
     hdl_generator_composition_plan_contract_source
+    hdl_generator_composition_plan_fallback_surface_map
 );
 use FSM::Support::HDLGeneratorCompositionSpecContract qw(
     hdl_generator_composition_spec_contract_source
+    hdl_generator_composition_spec_fallback_surface_map
 );
 use FSM::Support::HDLGeneratorFSMModuleContract qw(
     hdl_generator_fsm_module_contract_source
+    hdl_generator_fsm_module_fallback_surface_map
 );
 use FSM::Support::HDLGeneratorModuleInfoContract qw(
     hdl_generator_module_info_contract_source
 );
 use FSM::Support::HDLGeneratorRawASTContract qw(
     hdl_generator_raw_ast_contract_source
+    hdl_generator_raw_ast_fallback_surface_map
 );
 use FSM::Support::HDLGeneratorResolvedPackageImportsContract qw(
     hdl_generator_resolved_package_imports_contract_source
+    hdl_generator_resolved_package_imports_fallback_surface_map
 );
 use FSM::Support::HDLGeneratorSourceInfoContract qw(
     hdl_generator_source_info_contract_source
@@ -73,6 +78,7 @@ use FSM::Support::HDLGeneratorStatisticsContract qw(
 );
 use FSM::Support::HDLGeneratorResultContract qw(
     hdl_generator_result_contract_source
+    hdl_generator_result_shell_only_fallback_surface_family_map
     hdl_generator_result_shell_only_fallback_surface_map
     hdl_generator_result_stable_subsurface_map
     hdl_generator_result_optional_composition_key_family_map
@@ -1088,6 +1094,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         hdl_generator_result_shell_only_fallback_surface_map(),
         'manifest records the grouped HDLGenerator shell-only fallback surface map',
     );
+    is_deeply(
+        $manifest->{embedding}{hdl_generator_result}{shell_only_fallback_surface_family_map},
+        hdl_generator_result_shell_only_fallback_surface_family_map(),
+        'manifest records the grouped HDLGenerator shell-only fallback surface family map',
+    );
     ok(
         $manifest->{embedding}{hdl_generator_result}{fsm_module_shell_only},
         'manifest says fsm_module is a shell-only compatibility branch',
@@ -1107,6 +1118,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         ['intent_hir', 'lowered_rtl_ir', 'structural_rtl_ir'],
         'manifest points fsm_module embedders at the structured semantic summaries',
     );
+    is_deeply(
+        $manifest->{embedding}{hdl_generator_result}{fsm_module_fallback_surface_map},
+        hdl_generator_fsm_module_fallback_surface_map(),
+        'manifest records the grouped fsm_module fallback-surface families',
+    );
     ok(
         $manifest->{embedding}{hdl_generator_result}{raw_ast_shell_only},
         'manifest says raw_ast is a shell-only compatibility branch',
@@ -1125,6 +1141,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         $manifest->{embedding}{hdl_generator_result}{raw_ast_summary_surfaces},
         ['intent_hir'],
         'manifest points raw_ast consumers at intent_hir for structured semantic inspection',
+    );
+    is_deeply(
+        $manifest->{embedding}{hdl_generator_result}{raw_ast_fallback_surface_map},
+        hdl_generator_raw_ast_fallback_surface_map(),
+        'manifest records the grouped raw_ast fallback-surface families',
     );
     ok(
         scalar(@{$manifest->{embedding}{hdl_generator_result}{source_info_identity_presence_keys} || []}) >= 2,
@@ -1171,6 +1192,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         ['source_info.package_import_count', 'source_info.package_import_names'],
         'manifest points package-import embedders at the bounded source_info summary surface',
     );
+    is_deeply(
+        $manifest->{embedding}{hdl_generator_result}{resolved_package_imports_fallback_surface_map},
+        hdl_generator_resolved_package_imports_fallback_surface_map(),
+        'manifest records the grouped resolved_package_imports fallback-surface families',
+    );
     ok(
         $manifest->{embedding}{hdl_generator_result}{composition_spec_shell_only},
         'manifest says composition_spec is a shell-only compatibility branch',
@@ -1193,6 +1219,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         ],
         'manifest points composition_spec embedders at the structured semantic fallback surfaces',
     );
+    is_deeply(
+        $manifest->{embedding}{hdl_generator_result}{composition_spec_fallback_surface_map},
+        hdl_generator_composition_spec_fallback_surface_map(),
+        'manifest records the grouped composition_spec fallback-surface families',
+    );
     ok(
         $manifest->{embedding}{hdl_generator_result}{composition_plan_shell_only},
         'manifest says composition_plan is a shell-only compatibility branch',
@@ -1214,6 +1245,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
             'semantic_exports.normalized_semantic_json.semantic.composition.provenance_report',
         ],
         'manifest points composition_plan embedders at the structured semantic fallback surfaces',
+    );
+    is_deeply(
+        $manifest->{embedding}{hdl_generator_result}{composition_plan_fallback_surface_map},
+        hdl_generator_composition_plan_fallback_surface_map(),
+        'manifest records the grouped composition_plan fallback-surface families',
     );
     ok(
         $manifest->{embedding}{hdl_generator_result}{composition_report_shell_only},

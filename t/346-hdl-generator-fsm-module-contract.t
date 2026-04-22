@@ -11,6 +11,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Support::HDLGeneratorFSMModuleContract qw(
     build_hdl_generator_fsm_module_contract
     hdl_generator_fsm_module_contract_source
+    hdl_generator_fsm_module_fallback_surface_map
     hdl_generator_fsm_module_raw_value_class_when_defined
     hdl_generator_fsm_module_summary_surfaces
 );
@@ -65,6 +66,11 @@ subtest 'contract exposes the bounded HDLGenerator fsm_module branch' => sub {
         $contract->{summary_surfaces},
         hdl_generator_fsm_module_summary_surfaces(),
         'contract publishes the bounded semantic summary surfaces for fsm_module consumers',
+    );
+    is_deeply(
+        $contract->{fallback_surface_map},
+        hdl_generator_fsm_module_fallback_surface_map(),
+        'contract publishes the grouped fallback-surface families for fsm_module consumers',
     );
 };
 

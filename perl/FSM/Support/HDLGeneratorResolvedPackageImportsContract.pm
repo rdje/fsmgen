@@ -9,6 +9,7 @@ use JSON::PP ();
 our @EXPORT_OK = qw(
     build_hdl_generator_resolved_package_imports_contract
     hdl_generator_resolved_package_imports_contract_source
+    hdl_generator_resolved_package_imports_fallback_surface_map
     hdl_generator_resolved_package_imports_raw_value_class
     hdl_generator_resolved_package_imports_summary_surface
 );
@@ -38,12 +39,14 @@ sub build_hdl_generator_resolved_package_imports_contract {
         raw_value_shape => 'HASH',
         raw_value_class => hdl_generator_resolved_package_imports_raw_value_class(),
         summary_surface => hdl_generator_resolved_package_imports_summary_surface(),
+        fallback_surface_map => hdl_generator_resolved_package_imports_fallback_surface_map(),
         full_hash_stable => JSON::PP::false,
         json_safe_as_whole => JSON::PP::false,
         guidance => [
             q{Treat this contract as the bounded shell-only `resolved_package_imports` branch reused by in-process `HDLGenerator` results.},
             'The branch remains a hash of raw FSM::Package::Spec objects kept for in-process compatibility rather than a JSON-safe public interchange payload.',
             'Use source_info.package_import_count and source_info.package_import_names for stable package-import inspection instead of traversing the raw package-spec values as public API.',
+            'Use the grouped fallback_surface_map to discover the bounded source_info package-import fallback surfaces without collecting those paths separately.',
         ],
     };
 }
@@ -57,6 +60,12 @@ sub hdl_generator_resolved_package_imports_summary_surface {
         'source_info.package_import_count',
         'source_info.package_import_names',
     ];
+}
+
+sub hdl_generator_resolved_package_imports_fallback_surface_map {
+    return {
+        source_info_package_import_summary => hdl_generator_resolved_package_imports_summary_surface(),
+    };
 }
 
 1;

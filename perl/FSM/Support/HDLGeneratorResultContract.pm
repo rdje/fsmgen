@@ -12,21 +12,25 @@ use FSM::Support::CompositionReportContract qw(
 );
 use FSM::Support::HDLGeneratorCompositionPlanContract qw(
     hdl_generator_composition_plan_contract_source
+    hdl_generator_composition_plan_fallback_surface_map
     hdl_generator_composition_plan_raw_value_class_when_defined
     hdl_generator_composition_plan_summary_surfaces
 );
 use FSM::Support::HDLGeneratorCompositionSpecContract qw(
     hdl_generator_composition_spec_contract_source
+    hdl_generator_composition_spec_fallback_surface_map
     hdl_generator_composition_spec_raw_value_class_when_defined
     hdl_generator_composition_spec_summary_surfaces
 );
 use FSM::Support::HDLGeneratorFSMModuleContract qw(
     hdl_generator_fsm_module_contract_source
+    hdl_generator_fsm_module_fallback_surface_map
     hdl_generator_fsm_module_raw_value_class_when_defined
     hdl_generator_fsm_module_summary_surfaces
 );
 use FSM::Support::HDLGeneratorRawASTContract qw(
     hdl_generator_raw_ast_contract_source
+    hdl_generator_raw_ast_fallback_surface_map
     hdl_generator_raw_ast_summary_surfaces
     hdl_generator_raw_ast_value_shape
 );
@@ -39,6 +43,7 @@ use FSM::Support::HDLGeneratorModuleInfoContract qw(
 );
 use FSM::Support::HDLGeneratorResolvedPackageImportsContract qw(
     hdl_generator_resolved_package_imports_contract_source
+    hdl_generator_resolved_package_imports_fallback_surface_map
     hdl_generator_resolved_package_imports_raw_value_class
     hdl_generator_resolved_package_imports_summary_surface
 );
@@ -82,6 +87,7 @@ our @EXPORT_OK = qw(
     hdl_generator_result_optional_composition_key_family_map
     hdl_generator_result_semantic_layer_presence_key_family_map
     hdl_generator_result_module_info_summary_keys
+    hdl_generator_result_shell_only_fallback_surface_family_map
     hdl_generator_result_shell_only_fallback_surface_map
     hdl_generator_result_source_info_identity_keys
     hdl_generator_result_stable_subsurface_map
@@ -157,27 +163,33 @@ sub build_hdl_generator_result_contract {
         fsm_module_shell_only => JSON::PP::true,
         fsm_module_raw_value_class_when_defined => hdl_generator_fsm_module_raw_value_class_when_defined(),
         fsm_module_summary_surfaces => hdl_generator_fsm_module_summary_surfaces(),
+        fsm_module_fallback_surface_map => hdl_generator_fsm_module_fallback_surface_map(),
         raw_ast_contract_source => hdl_generator_raw_ast_contract_source(),
         raw_ast_shell_only => JSON::PP::true,
         raw_ast_value_shape => hdl_generator_raw_ast_value_shape(),
         raw_ast_summary_surfaces => hdl_generator_raw_ast_summary_surfaces(),
+        raw_ast_fallback_surface_map => hdl_generator_raw_ast_fallback_surface_map(),
         resolved_package_imports_contract_source => hdl_generator_resolved_package_imports_contract_source(),
         resolved_package_imports_shell_only => JSON::PP::true,
         resolved_package_imports_raw_value_class => hdl_generator_resolved_package_imports_raw_value_class(),
         resolved_package_imports_summary_surface => hdl_generator_resolved_package_imports_summary_surface(),
+        resolved_package_imports_fallback_surface_map => hdl_generator_resolved_package_imports_fallback_surface_map(),
         composition_spec_contract_source => hdl_generator_composition_spec_contract_source(),
         composition_spec_shell_only => JSON::PP::true,
         composition_spec_raw_value_class => hdl_generator_composition_spec_raw_value_class_when_defined(),
         composition_spec_summary_surfaces => hdl_generator_composition_spec_summary_surfaces(),
+        composition_spec_fallback_surface_map => hdl_generator_composition_spec_fallback_surface_map(),
         composition_plan_contract_source => hdl_generator_composition_plan_contract_source(),
         composition_plan_shell_only => JSON::PP::true,
         composition_plan_raw_value_class => hdl_generator_composition_plan_raw_value_class_when_defined(),
         composition_plan_summary_surfaces => hdl_generator_composition_plan_summary_surfaces(),
+        composition_plan_fallback_surface_map => hdl_generator_composition_plan_fallback_surface_map(),
         composition_report_shell_only => JSON::PP::true,
         composition_report_contract_source => composition_report_contract_source(),
         composition_report_json_fragment_path => composition_report_json_fragment_path(),
         composition_report_raw_hash_json_safe => composition_report_raw_report_json_safe(),
         shell_only_fallback_surface_map => hdl_generator_result_shell_only_fallback_surface_map(),
+        shell_only_fallback_surface_family_map => hdl_generator_result_shell_only_fallback_surface_family_map(),
         intent_hir_contract_source => normalized_semantic_intent_hir_contract_source(),
         intent_hir_full_hash_stable => JSON::PP::false,
         intent_hir_presence_keys => hdl_generator_result_intent_hir_keys(),
@@ -219,6 +231,7 @@ sub build_hdl_generator_result_contract {
             'Use the grouped stable_subsurface_map to discover the bounded stable nested slices for source_info, module_info, and statistics without reconstructing that map from separate arrays.',
             'Use the grouped optional_composition_key_family_map to discover the bounded composition-only key families without collecting those optional key lists separately.',
             'Use the grouped shell_only_fallback_surface_map to discover the structured fallback surfaces for the shell-only compatibility branches without collecting those fallback paths one field at a time.',
+            'Use the grouped shell_only_fallback_surface_family_map to discover the narrower fallback-surface families published by those shell-only compatibility branches without reconstructing the per-branch grouping yourself.',
             'The fsm_module branch is shell-only when defined: it is a raw FSM::CoreAST::FSMModule object kept for in-process compatibility, so prefer intent_hir, lowered_rtl_ir, structural_rtl_ir, or normalized semantic JSON for structured downstream inspection.',
             'The raw_ast branch is a shell-only frontend/debug artifact, so prefer intent_hir or normalized semantic JSON instead of treating parser-level AST arrays as a public interchange format.',
             'The resolved_package_imports branch is shell-only: its values are raw FSM::Package::Spec objects, so use source_info.package_import_count and source_info.package_import_names for stable package-import inspection.',
@@ -278,6 +291,19 @@ sub hdl_generator_result_shell_only_fallback_surface_map {
         composition_spec => hdl_generator_composition_spec_summary_surfaces(),
         composition_plan => hdl_generator_composition_plan_summary_surfaces(),
         composition_report => [composition_report_json_fragment_path()],
+    };
+}
+
+sub hdl_generator_result_shell_only_fallback_surface_family_map {
+    return {
+        fsm_module => hdl_generator_fsm_module_fallback_surface_map(),
+        raw_ast => hdl_generator_raw_ast_fallback_surface_map(),
+        resolved_package_imports => hdl_generator_resolved_package_imports_fallback_surface_map(),
+        composition_spec => hdl_generator_composition_spec_fallback_surface_map(),
+        composition_plan => hdl_generator_composition_plan_fallback_surface_map(),
+        composition_report => {
+            sanitized_json_fragment => [composition_report_json_fragment_path()],
+        },
     };
 }
 

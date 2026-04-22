@@ -11,6 +11,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Support::HDLGeneratorResolvedPackageImportsContract qw(
     build_hdl_generator_resolved_package_imports_contract
     hdl_generator_resolved_package_imports_contract_source
+    hdl_generator_resolved_package_imports_fallback_surface_map
     hdl_generator_resolved_package_imports_raw_value_class
     hdl_generator_resolved_package_imports_summary_surface
 );
@@ -62,6 +63,11 @@ subtest 'contract exposes the bounded HDLGenerator resolved_package_imports bran
         $contract->{summary_surface},
         hdl_generator_resolved_package_imports_summary_surface(),
         'contract publishes the bounded summary surface for package-import inspection',
+    );
+    is_deeply(
+        $contract->{fallback_surface_map},
+        hdl_generator_resolved_package_imports_fallback_surface_map(),
+        'contract publishes the grouped fallback-surface families for package-import inspection',
     );
 };
 

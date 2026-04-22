@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: shell-only HDLGenerator fallback families should be grouped per branch too
+- After grouping the sanitized `composition_report` owner, the adjacent
+  `HDLGenerator` compatibility leaves still exposed their structured fallback
+  routes mostly as flat `summary_surfaces` or `summary_surface` lists.
+- That was still usable, but it left embedders reconstructing the meaning of
+  those fallbacks by hand branch by branch:
+  - semantic-layer fallbacks for `fsm_module` and `raw_ast`,
+  - source-info package-import fallbacks for `resolved_package_imports`,
+  - and semantic-composition fallbacks for `composition_spec` and
+    `composition_plan`.
+- The bounded move is deliberately small:
+  - keep the existing flat fallback lists unchanged for compatibility,
+  - add one grouped `fallback_surface_map` to each shell-only leaf owner,
+  - republish those grouped maps through one parent
+    `shell_only_fallback_surface_family_map` on the bounded `HDLGenerator`
+    result contract,
+  - and lock both the direct leaf regressions and the manifest-facing
+    embedding view against that grouped surface.
+- This keeps the shell-only compatibility story easier to consume without
+  widening those raw branches into broader public payload promises.
+
 ## 2026-04-22: composition-report families should be discoverable as one grouped map too
 - After the broader `R13` owner-map work, the bounded sanitized
   `composition_report` fragment still exposed only one flat top-level key list

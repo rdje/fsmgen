@@ -9,6 +9,7 @@ use JSON::PP ();
 our @EXPORT_OK = qw(
     build_hdl_generator_raw_ast_contract
     hdl_generator_raw_ast_contract_source
+    hdl_generator_raw_ast_fallback_surface_map
     hdl_generator_raw_ast_value_shape
     hdl_generator_raw_ast_summary_surfaces
 );
@@ -37,12 +38,14 @@ sub build_hdl_generator_raw_ast_contract {
         shell_only => JSON::PP::true,
         raw_value_shape => hdl_generator_raw_ast_value_shape(),
         summary_surfaces => hdl_generator_raw_ast_summary_surfaces(),
+        fallback_surface_map => hdl_generator_raw_ast_fallback_surface_map(),
         full_hash_stable => JSON::PP::false,
         json_safe_as_whole => JSON::PP::false,
         guidance => [
             q{Treat this contract as the bounded shell-only `raw_ast` branch reused by in-process `HDLGenerator` results.},
             'The branch remains a parser/debug ARRAY artifact kept for in-process compatibility rather than a JSON-safe public interchange payload.',
             'Use intent_hir or normalized semantic JSON for structured downstream inspection instead of binding to parser-level AST arrays as public API.',
+            'Use the grouped fallback_surface_map to discover the bounded semantic-layer fallback surfaces for raw_ast without collecting those paths separately.',
         ],
     };
 }
@@ -55,6 +58,12 @@ sub hdl_generator_raw_ast_summary_surfaces {
     return [
         'intent_hir',
     ];
+}
+
+sub hdl_generator_raw_ast_fallback_surface_map {
+    return {
+        semantic_layers => hdl_generator_raw_ast_summary_surfaces(),
+    };
 }
 
 1;

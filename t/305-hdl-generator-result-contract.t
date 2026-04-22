@@ -16,21 +16,25 @@ use FSM::Support::CompositionReportContract qw(
 );
 use FSM::Support::HDLGeneratorCompositionPlanContract qw(
     hdl_generator_composition_plan_contract_source
+    hdl_generator_composition_plan_fallback_surface_map
     hdl_generator_composition_plan_raw_value_class_when_defined
     hdl_generator_composition_plan_summary_surfaces
 );
 use FSM::Support::HDLGeneratorCompositionSpecContract qw(
     hdl_generator_composition_spec_contract_source
+    hdl_generator_composition_spec_fallback_surface_map
     hdl_generator_composition_spec_raw_value_class_when_defined
     hdl_generator_composition_spec_summary_surfaces
 );
 use FSM::Support::HDLGeneratorFSMModuleContract qw(
     hdl_generator_fsm_module_contract_source
+    hdl_generator_fsm_module_fallback_surface_map
     hdl_generator_fsm_module_raw_value_class_when_defined
     hdl_generator_fsm_module_summary_surfaces
 );
 use FSM::Support::HDLGeneratorRawASTContract qw(
     hdl_generator_raw_ast_contract_source
+    hdl_generator_raw_ast_fallback_surface_map
     hdl_generator_raw_ast_summary_surfaces
     hdl_generator_raw_ast_value_shape
 );
@@ -43,6 +47,7 @@ use FSM::Support::HDLGeneratorModuleInfoContract qw(
 );
 use FSM::Support::HDLGeneratorResolvedPackageImportsContract qw(
     hdl_generator_resolved_package_imports_contract_source
+    hdl_generator_resolved_package_imports_fallback_surface_map
     hdl_generator_resolved_package_imports_raw_value_class
     hdl_generator_resolved_package_imports_summary_surface
 );
@@ -71,6 +76,7 @@ use FSM::Support::HDLGeneratorResultContract qw(
     hdl_generator_result_optional_composition_key_family_map
     hdl_generator_result_semantic_layer_presence_key_family_map
     hdl_generator_result_module_info_summary_keys
+    hdl_generator_result_shell_only_fallback_surface_family_map
     hdl_generator_result_shell_only_fallback_surface_map
     hdl_generator_result_source_info_identity_keys
     hdl_generator_result_stable_subsurface_map
@@ -175,6 +181,11 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
         hdl_generator_result_shell_only_fallback_surface_map(),
         'contract publishes the grouped shell-only fallback surface map',
     );
+    is_deeply(
+        $contract->{shell_only_fallback_surface_family_map},
+        hdl_generator_result_shell_only_fallback_surface_family_map(),
+        'contract publishes the grouped shell-only fallback surface family map',
+    );
     ok(
         $contract->{fsm_module_shell_only},
         'contract advertises fsm_module as a shell-only compatibility branch',
@@ -193,6 +204,11 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
         $contract->{fsm_module_summary_surfaces},
         hdl_generator_fsm_module_summary_surfaces(),
         'contract points fsm_module embedders at the structured semantic summaries',
+    );
+    is_deeply(
+        $contract->{fsm_module_fallback_surface_map},
+        hdl_generator_fsm_module_fallback_surface_map(),
+        'contract republishes the grouped fsm_module fallback-surface families',
     );
     ok(
         $contract->{raw_ast_shell_only},
@@ -213,6 +229,11 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
         hdl_generator_raw_ast_summary_surfaces(),
         'contract points raw_ast consumers at intent_hir for structured semantic inspection',
     );
+    is_deeply(
+        $contract->{raw_ast_fallback_surface_map},
+        hdl_generator_raw_ast_fallback_surface_map(),
+        'contract republishes the grouped raw_ast fallback-surface families',
+    );
     ok(
         $contract->{resolved_package_imports_shell_only},
         'contract advertises resolved_package_imports as a shell-only branch',
@@ -231,6 +252,11 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
         $contract->{resolved_package_imports_summary_surface},
         hdl_generator_resolved_package_imports_summary_surface(),
         'contract points package-import embedders at the bounded source_info summary surface',
+    );
+    is_deeply(
+        $contract->{resolved_package_imports_fallback_surface_map},
+        hdl_generator_resolved_package_imports_fallback_surface_map(),
+        'contract republishes the grouped resolved_package_imports fallback-surface families',
     );
     ok(
         $contract->{composition_spec_shell_only},
@@ -251,6 +277,11 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
         hdl_generator_composition_spec_summary_surfaces(),
         'contract points composition_spec embedders at the structured semantic fallback surfaces',
     );
+    is_deeply(
+        $contract->{composition_spec_fallback_surface_map},
+        hdl_generator_composition_spec_fallback_surface_map(),
+        'contract republishes the grouped composition_spec fallback-surface families',
+    );
     ok(
         $contract->{composition_plan_shell_only},
         'contract advertises composition_plan as a shell-only compatibility branch',
@@ -269,6 +300,11 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
         $contract->{composition_plan_summary_surfaces},
         hdl_generator_composition_plan_summary_surfaces(),
         'contract points composition_plan embedders at the structured semantic fallback surfaces',
+    );
+    is_deeply(
+        $contract->{composition_plan_fallback_surface_map},
+        hdl_generator_composition_plan_fallback_surface_map(),
+        'contract republishes the grouped composition_plan fallback-surface families',
     );
     ok(
         $contract->{composition_report_shell_only},

@@ -11,6 +11,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Support::HDLGeneratorCompositionSpecContract qw(
     build_hdl_generator_composition_spec_contract
     hdl_generator_composition_spec_contract_source
+    hdl_generator_composition_spec_fallback_surface_map
     hdl_generator_composition_spec_raw_value_class_when_defined
     hdl_generator_composition_spec_summary_surfaces
 );
@@ -65,6 +66,11 @@ subtest 'contract exposes the bounded HDLGenerator composition_spec branch' => s
         $contract->{summary_surfaces},
         hdl_generator_composition_spec_summary_surfaces(),
         'contract publishes the bounded semantic fallback surfaces for composition_spec consumers',
+    );
+    is_deeply(
+        $contract->{fallback_surface_map},
+        hdl_generator_composition_spec_fallback_surface_map(),
+        'contract publishes the grouped fallback-surface families for composition_spec consumers',
     );
 };
 

@@ -11,6 +11,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Support::HDLGeneratorRawASTContract qw(
     build_hdl_generator_raw_ast_contract
     hdl_generator_raw_ast_contract_source
+    hdl_generator_raw_ast_fallback_surface_map
     hdl_generator_raw_ast_summary_surfaces
     hdl_generator_raw_ast_value_shape
 );
@@ -61,6 +62,11 @@ subtest 'contract exposes the bounded HDLGenerator raw_ast branch' => sub {
         $contract->{summary_surfaces},
         hdl_generator_raw_ast_summary_surfaces(),
         'contract publishes the bounded semantic summary surfaces for raw_ast consumers',
+    );
+    is_deeply(
+        $contract->{fallback_surface_map},
+        hdl_generator_raw_ast_fallback_surface_map(),
+        'contract publishes the grouped fallback-surface families for raw_ast consumers',
     );
 };
 
