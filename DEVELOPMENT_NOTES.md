@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: support-accounting was the right next manifest extraction because it owned the last private manifest counting helpers
+- After `embedding`, the cleanest remaining inline manifest section was
+  `support_accounting`.
+- Extracting it behind one dedicated builder removed the remaining private
+  support-accounting assembly helpers from
+  [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+  instead of merely wrapping them in another layer.
+- That makes the ownership split cleaner:
+  - [perl/FSM/Support/SupportAccountingSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingSection.pm)
+    now owns the exact manifest projection,
+  - [perl/FSM/Support/SupportAccountingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingContract.pm)
+    continues to own the bounded public key promises,
+  - and
+    [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm)
+    remains the maintained truth for the derived counts and sanitized catalog
+    entries.
+
 ## 2026-04-22: exact-builder manifest sections should keep collapsing toward one owner each
 - After the smaller manifest-context sections moved behind dedicated builders,
   the next clean exact-builder section was `embedding`.

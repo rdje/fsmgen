@@ -41,6 +41,11 @@ subtest 'contract exposes the bounded support-accounting surface' => sub {
     );
     ok($contract->{sanitized_catalog_entries}, 'contract says catalog entries are sanitized');
     ok($contract->{derived_from_regression_corpus}, 'contract says the section is derived from the regression corpus');
+    ok(
+        scalar(grep { $_ eq 'FSM::Support::SupportAccountingSection::build_support_accounting_section()' }
+            @{$contract->{entrypoints}{in_process} || []}),
+        'contract advertises the dedicated support-accounting section builder as an in-process entrypoint',
+    );
 
     is_deeply(
         $contract->{public_top_level_presence_keys},

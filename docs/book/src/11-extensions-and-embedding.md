@@ -679,15 +679,17 @@ That shell contract now also explicitly lists the first nested
 `support_accounting` keys, so embedders can discover the corpus-backed section
 shape without a manifest-specific exception.
 The `support_accounting` section now also exposes that same bounded owner
-through `support_accounting.section_contract`, while deliberately keeping the
-existing inline support-accounting contract fields and corpus metadata for
-compatibility.
+through `support_accounting.section_contract`.
 That section shell now also publishes a grouped `presence_key_family_map` so
 downstream tools can discover the bounded bucket, id-list, and catalog-entry
 key families from one place instead of collecting those support-accounting key
 families field by field.
-That projection is now runtime-locked too: the emitted `support_accounting`
-section must stay an exact bounded projection of
+The emitted `support_accounting` section is now also built through
+[perl/FSM/Support/SupportAccountingSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingSection.pm)
+and runtime-locked as an exact dedicated-builder projection across both
+in-process and CLI manifest surfaces.
+That projection is also runtime-locked against corpus truth: the emitted
+`support_accounting` section must stay an exact bounded projection of
 [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm),
 including the derived bucket counts, ordered id lists, sanitized catalog
 entries, and the embedded exact `section_contract` copy. In other words, this

@@ -34,6 +34,7 @@ sub build_support_accounting_contract {
             ],
             in_process => [
                 'FSM::Support::CapabilityManifest::build_capability_manifest()->{support_accounting}',
+                'FSM::Support::SupportAccountingSection::build_support_accounting_section()',
                 'FSM::Support::RegressionCorpus::regression_corpus_entries()',
             ],
         },
