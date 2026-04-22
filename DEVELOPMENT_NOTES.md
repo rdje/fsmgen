@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: the three intentional manifest-context enrichments should be named builders, not audit-only expectations
+- After the section extractions, the remaining duplication was no longer in
+  [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+  itself, but in the parity audit that still rebuilt the three intentional
+  manifest-context enrichments inline.
+- The root-cause cleanup was to give each enrichment an explicit named builder
+  owned by its section module:
+  - `diagnostics.check_json`,
+  - `semantic_exports.normalized_semantic_json`,
+  - `backend_validation.systemverilog_external`.
+- That keeps the ownership model consistent:
+  - section modules own their emitted manifest-context projections,
+  - the runtime audit proves parity by calling those same builders,
+  - and the audit no longer contains “secret second copies” of those bounded
+    enrichment shapes.
+
 ## 2026-04-22: diagnostics was the last meaningful inline manifest section
 - After `support_accounting`, the last still-inline public manifest section was
   `diagnostics`.

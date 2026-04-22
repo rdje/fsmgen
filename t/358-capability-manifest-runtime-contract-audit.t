@@ -11,21 +11,21 @@ use JSON::PP qw(decode_json);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::BackendValidationContract qw(build_backend_validation_contract);
+use FSM::Support::BackendValidationSection qw(build_manifest_systemverilog_external_surface);
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::Support::CapabilityManifestContract qw(build_capability_manifest_contract);
-use FSM::Support::CheckDiagnosticsContract qw(build_check_diagnostics_contract);
 use FSM::Support::CompositionReportContract qw(build_composition_report_contract);
 use FSM::Support::DiagnosticCodeRegistryContract qw(build_diagnostic_code_registry_contract);
 use FSM::Support::DiagnosticsContract qw(build_diagnostics_contract);
+use FSM::Support::DiagnosticsSection qw(build_manifest_check_json_surface);
 use FSM::Support::DocumentationContract qw(build_documentation_contract);
 use FSM::Support::EmbeddingContract qw(build_embedding_contract);
 use FSM::Support::ExtensionContract qw(build_extension_contract);
-use FSM::Support::HDLExternalValidationContract qw(build_hdl_external_validation_contract);
 use FSM::Support::HDLGeneratorResultContract qw(build_hdl_generator_result_contract);
 use FSM::Support::LanguageSurfaceContract qw(build_language_surface_contract);
-use FSM::Support::NormalizedSemanticReportContract qw(build_normalized_semantic_report_contract);
 use FSM::Support::ProducerContract qw(build_producer_contract);
 use FSM::Support::SemanticExportsContract qw(build_semantic_exports_contract);
+use FSM::Support::SemanticExportsSection qw(build_manifest_normalized_semantic_json_surface);
 use FSM::Support::SupportAccountingContract qw(build_support_accounting_contract);
 
 my $in_process_manifest = build_capability_manifest();
@@ -131,25 +131,9 @@ subtest 'embedded exact-builder contracts stay exact at runtime' => sub {
 };
 
 subtest 'manifest-context enrichments stay bounded and deliberate at runtime' => sub {
-    my $expected_check_json = {
-        %{build_check_diagnostics_contract()},
-        supported_smoke_corpus_covered => JSON::PP::true,
-        strict_supported_corpus_covered => JSON::PP::true,
-        expected_failure_corpus_covered => JSON::PP::true,
-        classifier_match_policy => 'most_specific_expected_error_pattern',
-        success_match_policy => 'resolved_source_path_to_non_failure_corpus_entry',
-    };
-    my $expected_normalized_semantic_json = {
-        %{build_normalized_semantic_report_contract()},
-        success_match_policy => 'resolved_source_path_to_non_failure_corpus_entry',
-        supported_smoke_corpus_covered => JSON::PP::true,
-        strict_supported_corpus_covered => JSON::PP::true,
-        expected_failure_corpus_covered => JSON::PP::true,
-    };
-    my $expected_systemverilog_external = {
-        %{build_hdl_external_validation_contract()},
-        regression_smoke => 't/308-systemverilog-external-validation.t',
-    };
+    my $expected_check_json = build_manifest_check_json_surface();
+    my $expected_normalized_semantic_json = build_manifest_normalized_semantic_json_surface();
+    my $expected_systemverilog_external = build_manifest_systemverilog_external_surface();
 
     for my $view (@manifest_views) {
         my $manifest = $view->{manifest};

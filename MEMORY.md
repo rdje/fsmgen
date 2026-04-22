@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: manifest-context enrichments now have section-owned named builders
+- The three intentional manifest-context enrichments are now exposed as named
+  builders from their owning section modules instead of only being rebuilt
+  inline inside
+  [t/358-capability-manifest-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/358-capability-manifest-runtime-contract-audit.t):
+  - `diagnostics.check_json` from
+    [perl/FSM/Support/DiagnosticsSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsSection.pm)
+  - `semantic_exports.normalized_semantic_json` from
+    [perl/FSM/Support/SemanticExportsSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SemanticExportsSection.pm)
+  - `backend_validation.systemverilog_external` from
+    [perl/FSM/Support/BackendValidationSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/BackendValidationSection.pm)
+- The capability-manifest runtime parity audit now reuses those named builders
+  directly, so the bounded manifest-context enrichment shapes have one owner
+  each.
+
 ## 2026-04-22: diagnostics manifest section now has a dedicated builder
 - Added
   [perl/FSM/Support/DiagnosticsSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsSection.pm)

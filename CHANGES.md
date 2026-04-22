@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### manifest-context enrichments now reuse named section-owned builders
+- Updated [perl/FSM/Support/DiagnosticsSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsSection.pm), [perl/FSM/Support/SemanticExportsSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SemanticExportsSection.pm), and [perl/FSM/Support/BackendValidationSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/BackendValidationSection.pm) so each intentional manifest-context enrichment now has its own exported named builder instead of only living as an inline hash inside the section builder.
+- Updated [t/358-capability-manifest-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/358-capability-manifest-runtime-contract-audit.t) to reuse those named builders when proving the three intentional manifest-context enrichments stay bounded and deliberate at runtime, eliminating duplicated expected payload assembly from the audit itself.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so the recovery story now says those three enrichments are section-owned named builders, not special-case inline expectations embedded only in the runtime audit.
+
 ### diagnostics manifest section now has a dedicated builder and exact-builder parity audit
 - Added [perl/FSM/Support/DiagnosticsSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsSection.pm) so the public `diagnostics` manifest section is no longer assembled inline inside [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm).
 - Updated [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm) to consume that dedicated builder while preserving the existing bounded manifest-context `check_json` enrichment, stable-code registry copy, ordered `stable_codes` list, and embedded exact section contract copy.

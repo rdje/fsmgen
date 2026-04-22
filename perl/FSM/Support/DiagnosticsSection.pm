@@ -12,6 +12,7 @@ use FSM::Support::DiagnosticCodeRegistryContract qw(build_diagnostic_code_regist
 use FSM::Support::DiagnosticsContract qw(build_diagnostics_contract);
 
 our @EXPORT_OK = qw(
+    build_manifest_check_json_surface
     build_diagnostics_section
 );
 
@@ -29,12 +30,12 @@ sub build_diagnostics_section {
             } sort keys %{$diagnostic_registry || {}}
         ],
         stable_code_registry => build_diagnostic_code_registry_contract(),
-        check_json => _build_manifest_check_json_contract(),
+        check_json => build_manifest_check_json_surface(),
         section_contract => build_diagnostics_contract(),
     };
 }
 
-sub _build_manifest_check_json_contract {
+sub build_manifest_check_json_surface {
     return {
         %{build_check_diagnostics_contract()},
         supported_smoke_corpus_covered => JSON::PP::true,

@@ -675,6 +675,13 @@ manifest children are intentionally enriched beyond their dedicated builders:
 `backend_validation.systemverilog_external`, and those enrichments are
 runtime-locked to a small documented set of manifest-context fields rather than
 left as open-ended widening.
+Those three enrichments now also have explicit section-owned builders in
+[perl/FSM/Support/DiagnosticsSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsSection.pm),
+[perl/FSM/Support/SemanticExportsSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SemanticExportsSection.pm),
+and
+[perl/FSM/Support/BackendValidationSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/BackendValidationSection.pm),
+so the runtime parity audit reuses the same named manifest-surface builders
+instead of reconstructing those bounded enrichments inline.
 That shell contract now also explicitly lists the first nested
 `support_accounting` keys, so embedders can discover the corpus-backed section
 shape without a manifest-specific exception.
