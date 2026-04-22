@@ -742,6 +742,13 @@ The `language_surface` section now has its own bounded owner as well:
 advertises the public top-level and first nested section-key lists through
 `language_surface.surface_contract`, while the broader authored-language
 surface still widens only when new claims are regression-backed deliberately.
+The emitted `language_surface` section itself is now built through
+[perl/FSM/Support/LanguageSurfaceSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/LanguageSurfaceSection.pm)
+and runtime-locked as an exact dedicated-builder projection across both
+in-process and CLI manifest surfaces. That keeps the current authored strict
+mode, compatibility, expression, declaration, and composition guidance in one
+place while preserving the contract rule that the broader language surface is
+still widened only by deliberate regression-backed changes.
 That section shell now also publishes a grouped `nested_presence_key_map` so
 downstream tools can discover the bounded first nested key families for
 `strict_mode`, `default_mode_compatibility`, `assignments`,

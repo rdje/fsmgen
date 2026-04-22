@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: the remaining authored manifest leaf should follow the same dedicated-builder pattern
+- After `producer` and `documentation` moved behind dedicated section builders,
+  the remaining obvious inline authored manifest leaf was `language_surface`.
+- This one is denser, but the same root cause still applied:
+  - the public payload was duplicated inline inside `CapabilityManifest.pm`,
+  - it already had its own bounded contract owner,
+  - and the cleanest way to keep parity honest was to give the emitted section
+    one dedicated builder plus one direct runtime parity audit.
+- Extracting the section does not mean the broader authored language surface is
+  now frozen forever. It just means the current emitted manifest payload has a
+  single owner and must only change through deliberate regression-backed edits.
+
 ## 2026-04-22: authored manifest-section extraction should continue from the simplest stable leaves
 - Once the producer section moved behind a dedicated builder, the next honest
   adjacent slice was another small authored manifest leaf rather than jumping

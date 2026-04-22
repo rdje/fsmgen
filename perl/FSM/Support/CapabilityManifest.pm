@@ -17,7 +17,7 @@ use FSM::Support::DocumentationSection qw(build_documentation_section);
 use FSM::Support::ExtensionContract qw(build_extension_contract);
 use FSM::Support::HDLExternalValidationContract qw(build_hdl_external_validation_contract);
 use FSM::Support::HDLGeneratorResultContract qw(build_hdl_generator_result_contract);
-use FSM::Support::LanguageSurfaceContract qw(build_language_surface_contract);
+use FSM::Support::LanguageSurfaceSection qw(build_language_surface_section);
 use FSM::Support::NormalizedSemanticReportContract qw(build_normalized_semantic_report_contract);
 use FSM::Support::ProducerSection qw(build_producer_section);
 use FSM::Support::RegressionCorpus qw(regression_corpus_entries);
@@ -102,76 +102,7 @@ sub build_capability_manifest {
             typed_extensions => build_extension_contract(),
             section_contract => build_embedding_contract(),
         },
-        language_surface => {
-            strict_mode => {
-                intended_for_generated_fsm => JSON::PP::true,
-                compatibility_syntax_is_canonical => JSON::PP::false,
-                canonical_direct_roots => [qw(?fsm ?dt ?mod)],
-                canonical_composition_roots => [qw(?top ?rtlif ?pkg)],
-                canonical_child_roots => [qw(?fsmc ?dtc ?rtl)],
-            },
-            default_mode_compatibility => {
-                accepted_but_not_canonical_for_generated_output => [
-                    '+fsm root family',
-                    '?module direct root alias',
-                    'empty (+size) section',
-                    '(asreset rstn) reset spelling',
-                    '(sreset rstn) reset spelling',
-                    'compact (:= signal=value) init/default directive',
-                    'infix assignment forms such as (OUT = SRC)',
-                    'legacy child roots under ?fsmc / ?dtc',
-                ],
-            },
-            assignments => {
-                canonical_pair_forms => [qw(= <- <=)],
-                canonical_lhs_pack_forms => [qw(concat cat)],
-                canonical_rhs_pack_forms => [qw(concat cat)],
-                compatibility_forms => ['infix assignment forms'],
-            },
-            system_contracts => {
-                canonical_clock => '(clock clk)',
-                canonical_synchronous_reset => '(sreset reset)',
-                canonical_asynchronous_reset => '(areset rst_n)',
-                legacy_or_misleading_reset_forms_rejected_in_strict => [
-                    '(asreset rstn)',
-                    '(sreset rstn)',
-                ],
-            },
-            expressions => {
-                scalar_constant_expression_operators => [qw(+ - * / % & | ^ add sub mul div mod and or xor)],
-                runtime_expression_operators => [qw(+ - * / % & | ^ && || == != < <= > >= !)],
-                literal_families => [
-                    'decimal',
-                    '0d decimal',
-                    '0b binary',
-                    '0o octal',
-                    '0x hex',
-                    'SystemVerilog based literals',
-                    q{FSMGen intent-sized literals like 5'23, 8'-10, 8'-0xA, 8'-0b1010, and 20'x1},
-                ],
-            },
-            declarations => {
-                scalar_and_aggregate_names => [qw(+constants +enums +params +types +define +import)],
-                width_declarations => ['+size with positive integer literal or constant expression terms'],
-                package_roots => ['?pkg reusable scalar/aggregate/type/enum declarations'],
-            },
-            composition => {
-                top_root => '?top',
-                generated_children => [qw(?fsmc ?dtc)],
-                external_rtl_children => ['?rtl with ?rtlif sidecar or embedded metadata'],
-                wiring => ['?ports', '?toplink', '=port connect-by-name'],
-                lanes => [qw(C1 C2 C3 C4)],
-            },
-            intentionally_blocked_or_not_yet_public => [
-                'VHDL backend generation',
-                'unchecked annotations treated as enforced metadata',
-                'full normalized semantic JSON export beyond the bounded public semantic JSON slice',
-                'full check-only JSON diagnostic schema stabilization',
-                'unbounded aggregate expression domains',
-                'SPECFORGE PDF/prose IntentIR extraction',
-            ],
-            surface_contract => build_language_surface_contract(),
-        },
+        language_surface => build_language_surface_section(),
         documentation => build_documentation_section(),
         manifest_contract => build_capability_manifest_contract(),
     };
