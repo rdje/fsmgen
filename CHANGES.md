@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### diagnostic-code registry owners now group key and value families too
+- Updated [perl/FSM/Support/DiagnosticCodeRegistryContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodeRegistryContract.pm) so the bounded stable diagnostic-code registry now publishes `key_family_map` and `bounded_value_family_map`, instead of forcing embedders to collect the sibling-key, entry-key, and allowed-value lists separately.
+- Updated [t/315-diagnostic-code-registry-contract.t](/Users/richarddje/Documents/github/fsmgen/t/315-diagnostic-code-registry-contract.t) so the direct registry regression and its manifest/CLI checks now lock those grouped stable-code discovery surfaces directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders can discover the grouped stable-code registry key/value families from the book too.
+
 ### report-generated-output owners now group emission families too
 - Updated [perl/FSM/Support/ReportGeneratedOutputContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportGeneratedOutputContract.pm) so the bounded nested `generated_output` owner now publishes `emission_keys` and a grouped `presence_key_family_map`, instead of forcing embedders to collect that generated-output key family separately.
 - Updated [t/328-report-generated-output-contract.t](/Users/richarddje/Documents/github/fsmgen/t/328-report-generated-output-contract.t) so the direct report-generated-output regression now locks that grouped leaf-owner discovery surface directly.

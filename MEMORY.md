@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: diagnostic-code registry owners now publish grouped families too
+- Hardened
+  [perl/FSM/Support/DiagnosticCodeRegistryContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodeRegistryContract.pm)
+  so the bounded stable diagnostic-code registry now publishes grouped key
+  and bounded-value families.
+- Regression coverage now proves those grouped diagnostic-code registry
+  families directly in direct, manifest, and CLI views:
+  [t/315-diagnostic-code-registry-contract.t](/Users/richarddje/Documents/github/fsmgen/t/315-diagnostic-code-registry-contract.t).
+
 ## 2026-04-22: report-generated-output owners now publish grouped key families too
 - Hardened
   [perl/FSM/Support/ReportGeneratedOutputContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportGeneratedOutputContract.pm)

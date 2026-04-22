@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: diagnostic-code registry families should be discoverable as grouped maps too
+- After exhausting the obvious shared report-leaf grouping seams, the next
+  honest helper seam sat in the bounded stable diagnostic-code registry.
+- `DiagnosticCodeRegistryContract` already published the sibling-key list, the
+  stable entry-key list, and the allowed severity/stability/family values, but
+  a caller still had to collect those related lists one by one.
+- The bounded move is deliberately small:
+  - keep the existing sibling-key, entry-key, and allowed-value lists
+    unchanged,
+  - add one grouped `key_family_map`,
+  - add one grouped `bounded_value_family_map`,
+  - and lock both direct-contract and manifest/CLI views against those
+    grouped maps.
+- That keeps the manifest-facing stable-code registry easier to consume
+  without widening the diagnostics section or overpromising future diagnostic
+  families.
+
 ## 2026-04-22: report-generated-output families should be discoverable as one grouped map too
 - After grouping the bounded report-source families, the final adjacent shared
   report-leaf seam sat in the nested `generated_output` object reused by

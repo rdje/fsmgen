@@ -13,9 +13,11 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::Support::DiagnosticCodeRegistryContract qw(
     build_diagnostic_code_registry_contract
+    diagnostic_code_registry_bounded_value_family_map
     diagnostic_code_registry_contract_source
     diagnostic_code_registry_entry_keys
     diagnostic_code_registry_family_values
+    diagnostic_code_registry_key_family_map
     diagnostic_code_registry_public_keys
 );
 use FSM::Support::DiagnosticCodes qw(diagnostic_code_ids);
@@ -49,9 +51,19 @@ subtest 'contract exposes the bounded stable-code registry surface' => sub {
         'contract publishes the bounded stable-code entry keys',
     );
     is_deeply(
+        $contract->{key_family_map},
+        diagnostic_code_registry_key_family_map(),
+        'contract publishes the grouped stable-code registry key families',
+    );
+    is_deeply(
         $contract->{bounded_family_values},
         diagnostic_code_registry_family_values(),
         'contract publishes the bounded diagnostic-code families',
+    );
+    is_deeply(
+        $contract->{bounded_value_family_map},
+        diagnostic_code_registry_bounded_value_family_map(),
+        'contract publishes the grouped bounded diagnostic-code value families',
     );
     ok(
         $contract->{registry_returns_defensive_copies},
@@ -74,6 +86,16 @@ subtest 'in-process manifest stable-code registry conforms to the bounded contra
         $manifest->{diagnostics}{stable_code_registry}{contract_source},
         diagnostic_code_registry_contract_source(),
         'manifest advertises the stable-code registry contract owner',
+    );
+    is_deeply(
+        $manifest->{diagnostics}{stable_code_registry}{key_family_map},
+        diagnostic_code_registry_key_family_map(),
+        'manifest advertises the grouped stable-code registry key families',
+    );
+    is_deeply(
+        $manifest->{diagnostics}{stable_code_registry}{bounded_value_family_map},
+        diagnostic_code_registry_bounded_value_family_map(),
+        'manifest advertises the grouped bounded diagnostic-code value families',
     );
     ok(@{$manifest->{diagnostics}{stable_codes} || []}, 'manifest exposes stable-code entries');
 
@@ -116,6 +138,16 @@ subtest 'CLI capability manifest keeps the bounded stable-code registry contract
         $decoded->{diagnostics}{stable_code_registry}{contract_source},
         diagnostic_code_registry_contract_source(),
         'CLI diagnostics section advertises the stable-code registry contract owner',
+    );
+    is_deeply(
+        $decoded->{diagnostics}{stable_code_registry}{key_family_map},
+        diagnostic_code_registry_key_family_map(),
+        'CLI diagnostics section advertises the grouped stable-code registry key families',
+    );
+    is_deeply(
+        $decoded->{diagnostics}{stable_code_registry}{bounded_value_family_map},
+        diagnostic_code_registry_bounded_value_family_map(),
+        'CLI diagnostics section advertises the grouped bounded diagnostic-code value families',
     );
     is(
         scalar(@{$decoded->{diagnostics}{stable_codes} || []}),

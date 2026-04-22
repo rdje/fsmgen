@@ -8,9 +8,11 @@ use JSON::PP ();
 
 our @EXPORT_OK = qw(
     build_diagnostic_code_registry_contract
+    diagnostic_code_registry_bounded_value_family_map
     diagnostic_code_registry_contract_source
     diagnostic_code_registry_entry_keys
     diagnostic_code_registry_family_values
+    diagnostic_code_registry_key_family_map
     diagnostic_code_registry_public_keys
 );
 
@@ -36,13 +38,16 @@ sub build_diagnostic_code_registry_contract {
         },
         public_sibling_keys => diagnostic_code_registry_public_keys(),
         entry_presence_keys => diagnostic_code_registry_entry_keys(),
+        key_family_map => diagnostic_code_registry_key_family_map(),
         code_shape => 'FSMGEN_[A-Z0-9_]+',
         bounded_severity_values => [qw(error)],
         bounded_stability_values => [qw(stable)],
         bounded_family_values => diagnostic_code_registry_family_values(),
+        bounded_value_family_map => diagnostic_code_registry_bounded_value_family_map(),
         registry_returns_defensive_copies => JSON::PP::true,
         guidance => [
             'Treat the listed diagnostics sibling keys and stable-code entry keys as the bounded public diagnostic-code registry contract for schema version 1.',
+            'Use the grouped key_family_map and bounded_value_family_map to discover the bounded registry key and value families without collecting those lists separately.',
             'This contract covers the manifest-facing registry view, not every internal helper or future diagnostic family.',
             'Widen the registry deliberately when new families or entry fields are promoted into the maintained expected-failure corpus and regression-backed.',
         ],
@@ -71,6 +76,13 @@ sub diagnostic_code_registry_entry_keys {
     ];
 }
 
+sub diagnostic_code_registry_key_family_map {
+    return {
+        public_sibling_keys => diagnostic_code_registry_public_keys(),
+        entry_presence_keys => diagnostic_code_registry_entry_keys(),
+    };
+}
+
 sub diagnostic_code_registry_family_values {
     return [
         qw(
@@ -80,6 +92,14 @@ sub diagnostic_code_registry_family_values {
             composition_contract
         ),
     ];
+}
+
+sub diagnostic_code_registry_bounded_value_family_map {
+    return {
+        bounded_severity_values => [qw(error)],
+        bounded_stability_values => [qw(stable)],
+        bounded_family_values => diagnostic_code_registry_family_values(),
+    };
 }
 
 1;
