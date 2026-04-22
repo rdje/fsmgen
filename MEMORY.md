@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: external validation now publishes bounded failure modes too
+- Hardened
+  [perl/FSM/Support/HDLExternalValidationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLExternalValidationContract.pm)
+  so the bounded external SystemVerilog validation contract now publishes
+  `failure_mode_names`, a grouped `failure_mode_family_map`, and a bounded
+  `failure_text_prefix_map` in addition to the existing success-shape
+  contract.
+- Hardened
+  [t/313-hdl-external-validation-contract.t](/Users/richarddje/Documents/github/fsmgen/t/313-hdl-external-validation-contract.t)
+  so the direct regression now proves the published failure prefixes for
+  missing arguments, missing files, missing tools, invalid top-module names,
+  and deterministic tool-step failures without depending on real tool
+  installs.
+- Hardened
+  [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+  so the manifest-facing `backend_validation.systemverilog_external` surface
+  now carries the same bounded failure families and prefix map.
+
 ## 2026-04-22: support contract fleet now has a shared builder audit
 - Added
   [t/350-support-contract-builder-audit.t](/Users/richarddje/Documents/github/fsmgen/t/350-support-contract-builder-audit.t)

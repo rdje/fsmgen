@@ -1,5 +1,27 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: external validation needs a bounded failure contract too
+- The public `systemverilog_external` lane was still slightly asymmetric:
+  the contract owner froze the success shape, but not the categories of
+  public failure behavior that downstream tooling actually sees.
+- That was a real `R13` rough edge because this lane is an optional
+  out-of-process gate:
+  - missing tools is expected and user-visible,
+  - bad input paths and missing required arguments are user-visible,
+  - invalid top-module names are user-visible,
+  - and tool-step failure is user-visible,
+  - but the full thrown stdout/stderr payload is intentionally not a stable
+    schema.
+- The bounded fix is to publish:
+  - one flat list of failure mode names,
+  - one grouped map separating input-side failures from tool-step failures,
+  - and one map of stable text prefixes for those failure categories.
+- The regression should prove those prefixes directly against the in-process
+  API without depending on real tool installs:
+  - override tool discovery to `undef` for missing-tool cases,
+  - override it to `true` for invalid top-module cases,
+  - and override it to `false` for deterministic step-failure coverage.
+
 ## 2026-04-22: the public support-contract fleet now deserves one shared audit
 - After the last helper-only outliers were removed, the next honest `R13`
   seam was no longer another leaf tweak.

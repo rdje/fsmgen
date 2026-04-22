@@ -6,6 +6,7 @@ use Test::More;
 use File::Spec;
 use File::Temp qw(tempdir);
 use FindBin;
+use IPC::Cmd qw(can_run);
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
@@ -16,6 +17,11 @@ use FSM::Support::HDLExternalValidation qw(
 use FSM::Support::HDLExternalValidationContract qw(
     build_hdl_external_validation_contract
     hdl_external_validation_contract_source
+    hdl_external_validation_execution_failure_modes
+    hdl_external_validation_failure_mode_family_map
+    hdl_external_validation_failure_mode_names
+    hdl_external_validation_failure_text_prefix_map
+    hdl_external_validation_input_failure_modes
     hdl_external_validation_success_presence_key_family_map
     hdl_external_validation_success_step_keys
     hdl_external_validation_success_step_names
@@ -66,9 +72,128 @@ subtest 'contract exposes the bounded external validation surface' => sub {
         hdl_external_validation_success_step_names(),
         'contract publishes the bounded success step names',
     );
+    is_deeply(
+        $contract->{failure_mode_names},
+        hdl_external_validation_failure_mode_names(),
+        'contract publishes the bounded external validation failure mode names',
+    );
+    is_deeply(
+        $contract->{failure_mode_family_map},
+        hdl_external_validation_failure_mode_family_map(),
+        'contract publishes the grouped external validation failure mode families',
+    );
+    is_deeply(
+        $contract->{failure_text_prefix_map},
+        hdl_external_validation_failure_text_prefix_map(),
+        'contract publishes the bounded external validation failure text prefixes',
+    );
     ok(!$contract->{yosys_abc_enabled}, 'contract says the ABC algorithm is disabled');
     ok($contract->{in_process_failures_throw}, 'contract says in-process failures throw');
     ok($contract->{cli_failures_exit_nonzero}, 'contract says CLI failures exit non-zero');
+};
+
+subtest 'deterministic in-process failures keep the bounded prefixes' => sub {
+    my $prefixes = hdl_external_validation_failure_text_prefix_map();
+
+    like(
+        capture_error(sub {
+            validate_systemverilog_file(top_module => 'demo_top');
+        }),
+        qr/^\Q$prefixes->{missing_source_file}\E/,
+        'missing source_file keeps the bounded prefix',
+    );
+
+    like(
+        capture_error(sub {
+            validate_systemverilog_file(source_file => __FILE__);
+        }),
+        qr/^\Q$prefixes->{missing_top_module}\E/,
+        'missing top_module keeps the bounded prefix',
+    );
+
+    my $missing_source = File::Spec->catfile(tempdir(CLEANUP => 1), 'missing.sv');
+    like(
+        capture_error(sub {
+            validate_systemverilog_file(
+                source_file => $missing_source,
+                top_module => 'demo_top',
+            );
+        }),
+        qr/^\Q$prefixes->{source_file_not_found}\E/,
+        'missing source path keeps the bounded prefix',
+    );
+
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $sv_path = File::Spec->catfile($tempdir, 'demo_top.sv');
+    write_file(
+        $sv_path,
+        <<'SV'
+module demo_top;
+endmodule
+SV
+    );
+
+    {
+        no warnings 'redefine';
+        local *FSM::Support::HDLExternalValidation::hdl_external_validation_tools = sub {
+            return {
+                verilator => undef,
+                yosys => undef,
+            };
+        };
+        like(
+            capture_error(sub {
+                validate_systemverilog_file(
+                    source_file => $sv_path,
+                    top_module => 'demo_top',
+                );
+            }),
+            qr/^\Q$prefixes->{missing_tools}\E/,
+            'missing tools keeps the bounded prefix',
+        );
+    }
+
+    my $true = can_run('true') || '/usr/bin/true';
+    {
+        no warnings 'redefine';
+        local *FSM::Support::HDLExternalValidation::hdl_external_validation_tools = sub {
+            return {
+                verilator => $true,
+                yosys => $true,
+            };
+        };
+        like(
+            capture_error(sub {
+                validate_systemverilog_file(
+                    source_file => $sv_path,
+                    top_module => 'bad-top-name',
+                );
+            }),
+            qr/^\Q$prefixes->{unsupported_top_module_identifier}\E/,
+            'unsupported top-module identifier keeps the bounded prefix',
+        );
+    }
+
+    my $false = can_run('false') || '/usr/bin/false';
+    {
+        no warnings 'redefine';
+        local *FSM::Support::HDLExternalValidation::hdl_external_validation_tools = sub {
+            return {
+                verilator => $false,
+                yosys => $true,
+            };
+        };
+        like(
+            capture_error(sub {
+                validate_systemverilog_file(
+                    source_file => $sv_path,
+                    top_module => 'demo_top',
+                );
+            }),
+            qr/^\Q$prefixes->{tool_step_failed}\E/,
+            'tool-step failure keeps the bounded prefix',
+        );
+    }
 };
 
 subtest 'successful in-process external validation conforms to the bounded contract' => sub {
@@ -114,6 +239,16 @@ SV
 };
 
 done_testing();
+
+sub capture_error {
+    my ($code) = @_;
+    my $error = eval {
+        $code->();
+        return undef;
+    };
+    return "$@" if $@;
+    return $error;
+}
 
 sub assert_keys_present {
     my ($payload, $keys, $label) = @_;

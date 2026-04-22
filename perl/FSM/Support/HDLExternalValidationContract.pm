@@ -9,6 +9,11 @@ use JSON::PP ();
 our @EXPORT_OK = qw(
     build_hdl_external_validation_contract
     hdl_external_validation_contract_source
+    hdl_external_validation_execution_failure_modes
+    hdl_external_validation_failure_mode_family_map
+    hdl_external_validation_failure_mode_names
+    hdl_external_validation_failure_text_prefix_map
+    hdl_external_validation_input_failure_modes
     hdl_external_validation_success_presence_key_family_map
     hdl_external_validation_success_step_keys
     hdl_external_validation_success_step_names
@@ -51,9 +56,13 @@ sub build_hdl_external_validation_contract {
         success_step_presence_keys => hdl_external_validation_success_step_keys(),
         success_presence_key_family_map => hdl_external_validation_success_presence_key_family_map(),
         success_step_names => hdl_external_validation_success_step_names(),
+        failure_mode_names => hdl_external_validation_failure_mode_names(),
+        failure_mode_family_map => hdl_external_validation_failure_mode_family_map(),
+        failure_text_prefix_map => hdl_external_validation_failure_text_prefix_map(),
         guidance => [
-            'Treat the listed command shape, stage names, tool identities, and success-result key lists as the bounded external validation contract for schema version 1.',
+            'Treat the listed command shape, stage names, tool identities, success-result key lists, failure-mode families, and failure text prefixes as the bounded external validation contract for schema version 1.',
             'Use the grouped success_presence_key_family_map to discover the bounded success top-level and step key families without collecting those success key lists separately.',
+            'Use the grouped failure_mode_family_map plus failure_text_prefix_map to recognize the bounded input-side and step-failure categories without treating the full thrown stderr/stdout payload as frozen.',
             'This lane is optional and only active when Verilator and Yosys are installed.',
             'The promise is about generated SystemVerilog lint/netlist sanity, not about VHDL validation or ABC-enabled synthesis behavior.',
         ],
@@ -96,6 +105,51 @@ sub hdl_external_validation_success_step_names {
             yosys_synthesis
         ),
     ];
+}
+
+sub hdl_external_validation_input_failure_modes {
+    return [
+        qw(
+            missing_source_file
+            missing_top_module
+            source_file_not_found
+            missing_tools
+            unsupported_top_module_identifier
+        ),
+    ];
+}
+
+sub hdl_external_validation_execution_failure_modes {
+    return [
+        qw(
+            tool_step_failed
+        ),
+    ];
+}
+
+sub hdl_external_validation_failure_mode_names {
+    return [
+        @{hdl_external_validation_input_failure_modes()},
+        @{hdl_external_validation_execution_failure_modes()},
+    ];
+}
+
+sub hdl_external_validation_failure_mode_family_map {
+    return {
+        input_failure_modes => hdl_external_validation_input_failure_modes(),
+        execution_failure_modes => hdl_external_validation_execution_failure_modes(),
+    };
+}
+
+sub hdl_external_validation_failure_text_prefix_map {
+    return {
+        missing_source_file => "[HDLExternalValidation.pm][validate_systemverilog_file()] Missing required 'source_file'",
+        missing_top_module => "[HDLExternalValidation.pm][validate_systemverilog_file()] Missing required 'top_module'",
+        source_file_not_found => '[HDLExternalValidation.pm][validate_systemverilog_file()] Source file does not exist: ',
+        missing_tools => '[HDLExternalValidation.pm][validate_systemverilog_file()] Missing external HDL validation tool(s): ',
+        unsupported_top_module_identifier => "[HDLExternalValidation.pm][_yosys_identifier()] Unsupported top-module identifier '",
+        tool_step_failed => "External HDL validation step '",
+    };
 }
 
 1;

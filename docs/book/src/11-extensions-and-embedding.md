@@ -729,6 +729,11 @@ That same contract now also publishes a grouped
 `success_presence_key_family_map` so embedders can discover the bounded
 success top-level and step key families from one place instead of collecting
 those success key lists separately.
+It now also publishes bounded `failure_mode_names`,
+`failure_mode_family_map`, and `failure_text_prefix_map` values so embedders
+can distinguish input-side failures such as missing tools or missing source
+paths from tool-step failures without pretending the full thrown stdout/stderr
+payload is itself a frozen schema.
 
 The first bounded check/diagnostic surface is now:
 

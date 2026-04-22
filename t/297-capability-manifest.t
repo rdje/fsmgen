@@ -45,6 +45,9 @@ use FSM::Support::ExtensionContract qw(
 );
 use FSM::Support::HDLExternalValidationContract qw(
     hdl_external_validation_contract_source
+    hdl_external_validation_failure_mode_family_map
+    hdl_external_validation_failure_mode_names
+    hdl_external_validation_failure_text_prefix_map
     hdl_external_validation_success_presence_key_family_map
 );
 use FSM::Support::HDLGeneratorCompositionPlanContract qw(
@@ -905,6 +908,21 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         $manifest->{backend_validation}{systemverilog_external}{success_presence_key_family_map},
         hdl_external_validation_success_presence_key_family_map(),
         'manifest records the grouped external validation success key-family map',
+    );
+    is_deeply(
+        $manifest->{backend_validation}{systemverilog_external}{failure_mode_names},
+        hdl_external_validation_failure_mode_names(),
+        'manifest records the bounded external validation failure mode names',
+    );
+    is_deeply(
+        $manifest->{backend_validation}{systemverilog_external}{failure_mode_family_map},
+        hdl_external_validation_failure_mode_family_map(),
+        'manifest records the grouped external validation failure mode families',
+    );
+    is_deeply(
+        $manifest->{backend_validation}{systemverilog_external}{failure_text_prefix_map},
+        hdl_external_validation_failure_text_prefix_map(),
+        'manifest records the bounded external validation failure text prefixes',
     );
     ok(
         scalar(@{$manifest->{backend_validation}{systemverilog_external}{success_top_level_presence_keys} || []}) >= 4,

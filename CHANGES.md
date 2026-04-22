@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### external validation now publishes bounded failure modes too
+- Updated [perl/FSM/Support/HDLExternalValidationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLExternalValidationContract.pm) so the bounded external SystemVerilog validation contract now publishes `failure_mode_names`, a grouped `failure_mode_family_map`, and a bounded `failure_text_prefix_map` in addition to its existing success-shape contract.
+- Updated [t/313-hdl-external-validation-contract.t](/Users/richarddje/Documents/github/fsmgen/t/313-hdl-external-validation-contract.t) so the direct external-validation regression now locks those failure families and proves the in-process missing-argument, missing-file, missing-tool, invalid-top-module, and tool-step failures all keep their published prefixes deterministically.
+- Updated [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) and [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so the manifest-facing and book-facing embedding stories now advertise the bounded external-validation failure contract too.
+
 ### local regression gate now builds the mdBook too
 - Updated [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression) so the repo-owned local regression gate now requires `mdbook`, runs the full Perl regression suite, and builds the mdBook in the same pass.
 - Updated [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) and [docs/book/src/10-errors-strict-mode-and-troubleshooting.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/10-errors-strict-mode-and-troubleshooting.md) so the user-facing regression guidance now states that the local gate covers both runtime regressions and the book build.
