@@ -11,8 +11,8 @@ This document captures engineering rationale, design constraints, and working de
     lists unchanged,
   - add one grouped `name_family_map`,
   - reuse the same bounded source-kind list through a dedicated helper,
-  - and lock the direct extension-contract regression against that grouped
-    surface.
+  - and lock both the direct extension-contract regression and the manifest-
+    facing embedding view against that grouped surface.
 - That keeps the typed extension API easier to consume without widening the
   hook surface or pretending the whole future extension API is frozen.
 

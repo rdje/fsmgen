@@ -6,8 +6,9 @@ This is the live continuity document for fast session recovery after crashes, re
   so the bounded typed-extension contract now publishes a grouped
   hook/accessor/source-kind name-family map.
 - Regression coverage now proves that grouped extension-contract name-family
-  map directly:
-  [t/306-extension-contract.t](/Users/richarddje/Documents/github/fsmgen/t/306-extension-contract.t).
+  map directly and through the manifest-facing embedding surface:
+  [t/306-extension-contract.t](/Users/richarddje/Documents/github/fsmgen/t/306-extension-contract.t),
+  [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t).
 
 ## 2026-04-22: diagnostic-code registry owners now publish grouped families too
 - Hardened

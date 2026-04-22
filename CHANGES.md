@@ -3,7 +3,7 @@ This is the persistent technical change history for FSMGen.
 ## 2026-04-22
 ### extension-contract owners now group name families too
 - Updated [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm) so the bounded typed-extension contract now publishes a grouped `name_family_map` for hook names, context accessors, and supported source kinds, instead of forcing embedders to collect those bounded name lists separately.
-- Updated [t/306-extension-contract.t](/Users/richarddje/Documents/github/fsmgen/t/306-extension-contract.t) so the direct extension-contract regression now locks that grouped discovery surface directly.
+- Updated [t/306-extension-contract.t](/Users/richarddje/Documents/github/fsmgen/t/306-extension-contract.t) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the direct extension-contract regression plus the manifest-facing embedding regression now lock that grouped discovery surface directly.
 - Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders can discover the grouped typed-extension name families from the book too.
 
 ### diagnostic-code registry owners now group key and value families too

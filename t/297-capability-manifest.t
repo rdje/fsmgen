@@ -34,6 +34,7 @@ use FSM::Support::CompositionReportContract qw(
     composition_report_json_fragment_path
 );
 use FSM::Support::ExtensionContract qw(
+    extension_contract_name_family_map
     extension_contract_source
 );
 use FSM::Support::HDLExternalValidationContract qw(
@@ -1315,6 +1316,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         $manifest->{embedding}{typed_extensions}{contract_source},
         extension_contract_source(),
         'manifest records the typed extension contract owner',
+    );
+    is_deeply(
+        $manifest->{embedding}{typed_extensions}{name_family_map},
+        extension_contract_name_family_map(),
+        'manifest records the grouped typed-extension name families',
     );
     my %extension_hooks = map { $_ => 1 } @{$manifest->{embedding}{typed_extensions}{hook_names}};
     ok($extension_hooks{after_parse_source}, 'manifest advertises the parse-source extension hook');
