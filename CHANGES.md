@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### semantic-exports manifest section now has a dedicated builder and runtime parity audit
+- Added [perl/FSM/Support/SemanticExportsSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SemanticExportsSection.pm) so the public `semantic_exports` manifest section is no longer assembled inline inside [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm).
+- Updated [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm) to consume that dedicated builder while preserving the current bounded `normalized_semantic_json` export payload and its manifest-context support-accounting coverage claims.
+- Added [t/364-semantic-exports-section-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/364-semantic-exports-section-runtime-contract-audit.t) to prove the in-process manifest plus both capability-manifest CLI spellings keep the exact dedicated-builder projection for the public `semantic_exports` section.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders are told explicitly that the semantic-exports section is now built and runtime-locked through a dedicated section builder rather than left as duplicated inline manifest assembly logic.
+
 ### language-surface manifest section now has a dedicated builder and runtime parity audit
 - Added [perl/FSM/Support/LanguageSurfaceSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/LanguageSurfaceSection.pm) so the public `language_surface` manifest section is no longer assembled inline inside [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm).
 - Updated [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm) to consume that dedicated builder while preserving the current authored language-surface payload.

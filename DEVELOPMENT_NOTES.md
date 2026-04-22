@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: bounded manifest-context export sections should move behind dedicated builders too
+- After the fully authored inline leaves moved behind dedicated builders, the
+  next adjacent cleanup seam was the bounded manifest-context export sections
+  such as `semantic_exports` and `backend_validation`.
+- `semantic_exports` is the cleanest first example because:
+  - it is small,
+  - it already points at one narrower dedicated contract owner,
+  - and its only extra payload beyond that child contract is a short bounded
+    set of support-accounting coverage claims.
+- Extracting it behind a dedicated section builder keeps that bounded
+  enrichment in one place and makes later parity audits or adjacent
+  extractions easier.
+
 ## 2026-04-22: the remaining authored manifest leaf should follow the same dedicated-builder pattern
 - After `producer` and `documentation` moved behind dedicated section builders,
   the remaining obvious inline authored manifest leaf was `language_surface`.

@@ -583,6 +583,14 @@ bounded split too:
 - deeper semantic payload meaning stays with narrower dedicated contracts such
   as `FSM::Support::NormalizedSemanticReportContract`
 
+The emitted `semantic_exports` section itself is now built through
+[perl/FSM/Support/SemanticExportsSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SemanticExportsSection.pm)
+and runtime-locked as an exact dedicated-builder projection across both
+in-process and CLI manifest surfaces. That keeps the current bounded
+`normalized_semantic_json` export plus its manifest-context support-accounting
+coverage promises in one place instead of leaving that public section as
+duplicated inline manifest assembly logic.
+
 ## Downstream Tool Alignment
 
 FSMGen now keeps a tracked response to SPECFORGE's `.fsm` adapter feedback:

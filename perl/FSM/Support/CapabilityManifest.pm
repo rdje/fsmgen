@@ -18,10 +18,9 @@ use FSM::Support::ExtensionContract qw(build_extension_contract);
 use FSM::Support::HDLExternalValidationContract qw(build_hdl_external_validation_contract);
 use FSM::Support::HDLGeneratorResultContract qw(build_hdl_generator_result_contract);
 use FSM::Support::LanguageSurfaceSection qw(build_language_surface_section);
-use FSM::Support::NormalizedSemanticReportContract qw(build_normalized_semantic_report_contract);
 use FSM::Support::ProducerSection qw(build_producer_section);
 use FSM::Support::RegressionCorpus qw(regression_corpus_entries);
-use FSM::Support::SemanticExportsContract qw(build_semantic_exports_contract);
+use FSM::Support::SemanticExportsSection qw(build_semantic_exports_section);
 use FSM::Support::SupportAccountingContract qw(build_support_accounting_contract);
 
 our @EXPORT_OK = qw(build_capability_manifest);
@@ -79,16 +78,7 @@ sub build_capability_manifest {
             },
             section_contract => build_diagnostics_contract(),
         },
-        semantic_exports => {
-            normalized_semantic_json => {
-                %{build_normalized_semantic_report_contract()},
-                success_match_policy => 'resolved_source_path_to_non_failure_corpus_entry',
-                supported_smoke_corpus_covered => JSON::PP::true,
-                strict_supported_corpus_covered => JSON::PP::true,
-                expected_failure_corpus_covered => JSON::PP::true,
-            },
-            section_contract => build_semantic_exports_contract(),
-        },
+        semantic_exports => build_semantic_exports_section(),
         backend_validation => {
             systemverilog_external => {
                 %{build_hdl_external_validation_contract()},
