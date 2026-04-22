@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: shared report-leaf contracts now have a runtime-backed audit
+- Added
+  [t/351-shared-report-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/351-shared-report-runtime-contract-audit.t)
+  as an `R13` hardening regression over the shared nested report leaves used by
+  public check JSON and normalized semantic JSON.
+- The audit now builds real in-process check success/failure and normalized
+  semantic success/failure payloads, then proves the published shared contract
+  families for `producer`, `command`, `source`, `generated_output`, `result`,
+  `support_accounting`, and failure `diagnostic` still match those live
+  payloads.
+- It uses one supported corpus source to force matched success-side support
+  accounting and one deterministic strict expected-failure family to force the
+  matched failure-side diagnostic/support-accounting fields too.
+
 ## 2026-04-22: external validation now publishes bounded failure modes too
 - Hardened
   [perl/FSM/Support/HDLExternalValidationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLExternalValidationContract.pm)

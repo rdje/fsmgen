@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: shared report-leaf contracts should be checked against live builders too
+- The shared nested report-leaf owners were well documented and contract-tested,
+  but the direct regressions still mostly proved helper-family consistency in
+  isolation.
+- That left one practical drift risk in `R13`: the contract owners for
+  `producer`, `command`, `source`, `generated_output`, `result`,
+  `support_accounting`, and failure `diagnostic` could stay internally
+  self-consistent while the live check/semantic report builders widened or
+  shifted around them.
+- The higher-value hardening move is one runtime-backed audit:
+  - build real in-process check success/failure payloads,
+  - build real in-process normalized semantic success/failure payloads,
+  - use a supported corpus source so success-side support accounting is matched,
+  - use a deterministic strict expected-failure family so failure-side
+    diagnostic/support-accounting matched fields are present,
+  - and assert the published shared leaf key families against those real
+    payloads.
+- This keeps the public JSON/report contract lane honest without widening any
+  surface or turning the tests into exact-payload snapshots.
+
 ## 2026-04-22: external validation needs a bounded failure contract too
 - The public `systemverilog_external` lane was still slightly asymmetric:
   the contract owner froze the success shape, but not the categories of
