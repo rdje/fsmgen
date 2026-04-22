@@ -6,17 +6,13 @@ use warnings;
 use Exporter 'import';
 use JSON::PP ();
 use FSM::Support::BackendValidationSection qw(build_backend_validation_section);
-use FSM::Support::BackendValidationContract qw(build_backend_validation_contract);
 use FSM::Support::CapabilityManifestContract qw(build_capability_manifest_contract);
 use FSM::Support::CheckDiagnosticsContract qw(build_check_diagnostics_contract);
-use FSM::Support::CompositionReportContract qw(build_composition_report_contract);
 use FSM::Support::DiagnosticCodes qw(diagnostic_code_registry);
 use FSM::Support::DiagnosticCodeRegistryContract qw(build_diagnostic_code_registry_contract);
 use FSM::Support::DiagnosticsContract qw(build_diagnostics_contract);
-use FSM::Support::EmbeddingContract qw(build_embedding_contract);
 use FSM::Support::DocumentationSection qw(build_documentation_section);
-use FSM::Support::ExtensionContract qw(build_extension_contract);
-use FSM::Support::HDLGeneratorResultContract qw(build_hdl_generator_result_contract);
+use FSM::Support::EmbeddingSection qw(build_embedding_section);
 use FSM::Support::LanguageSurfaceSection qw(build_language_surface_section);
 use FSM::Support::ProducerSection qw(build_producer_section);
 use FSM::Support::RegressionCorpus qw(regression_corpus_entries);
@@ -80,12 +76,7 @@ sub build_capability_manifest {
         },
         semantic_exports => build_semantic_exports_section(),
         backend_validation => build_backend_validation_section(),
-        embedding => {
-            composition_report => build_composition_report_contract(),
-            hdl_generator_result => build_hdl_generator_result_contract(),
-            typed_extensions => build_extension_contract(),
-            section_contract => build_embedding_contract(),
-        },
+        embedding => build_embedding_section(),
         language_surface => build_language_surface_section(),
         documentation => build_documentation_section(),
         manifest_contract => build_capability_manifest_contract(),

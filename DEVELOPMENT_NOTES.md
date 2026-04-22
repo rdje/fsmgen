@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: exact-builder manifest sections should keep collapsing toward one owner each
+- After the smaller manifest-context sections moved behind dedicated builders,
+  the next clean exact-builder section was `embedding`.
+- This one is especially worth extracting because its public meaning is already
+  intentionally “a grouping of narrower contracts,” not a special payload with
+  its own hidden derivation logic.
+- Putting it behind one dedicated section builder keeps the manifest assembly
+  honest:
+  - the section becomes a literal composition of `composition_report`,
+    `hdl_generator_result`, `typed_extensions`, and `section_contract`,
+  - the dedicated child builders remain the real owners of their payloads,
+  - and the manifest parity audit can keep proving that nothing else is being
+    smuggled into the section.
+
 ## 2026-04-22: backend-validation is the next clean manifest-context section extraction
 - After `semantic_exports`, the next adjacent bounded manifest-context section
   is `backend_validation`.

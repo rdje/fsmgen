@@ -698,6 +698,13 @@ The `embedding` section now follows the same split too:
 owns the published top-level and nested contract-owner map advertised through
 `embedding.section_contract`, while the narrower result, composition-report,
 and typed-extension contracts still own their deeper public promises.
+The emitted `embedding` section itself is now built through
+[perl/FSM/Support/EmbeddingSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingSection.pm)
+and runtime-locked as an exact dedicated-builder projection across both
+in-process and CLI manifest surfaces. That keeps the grouped
+`composition_report`, `hdl_generator_result`, and `typed_extensions` child
+contracts in one place instead of leaving that public section as duplicated
+inline manifest assembly logic.
 That section shell now also publishes a grouped `nested_presence_key_map` so
 downstream tools can discover the bounded child key families for
 `composition_report`, `hdl_generator_result`, and `typed_extensions` from one
