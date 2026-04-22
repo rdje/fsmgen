@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: support-accounting corpus derivation is now runtime-locked too
+- Added
+  [t/359-support-accounting-corpus-runtime-audit.t](/Users/richarddje/Documents/github/fsmgen/t/359-support-accounting-corpus-runtime-audit.t)
+  as a hardening regression over the public `support_accounting` manifest
+  section.
+- The audit now rebuilds the expected public section directly from
+  `regression_corpus_entries()` and proves the in-process manifest plus both
+  capability-manifest CLI spellings keep the exact bounded projection.
+- That exact projection includes the derived bucket counts, ordered id lists,
+  sanitized catalog entries, and the embedded exact `section_contract` copy.
+
 ## 2026-04-22: capability-manifest builder parity is now runtime-locked too
 - Added
   [t/358-capability-manifest-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/358-capability-manifest-runtime-contract-audit.t)

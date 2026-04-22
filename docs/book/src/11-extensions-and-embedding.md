@@ -678,6 +678,13 @@ That section shell now also publishes a grouped `presence_key_family_map` so
 downstream tools can discover the bounded bucket, id-list, and catalog-entry
 key families from one place instead of collecting those support-accounting key
 families field by field.
+That projection is now runtime-locked too: the emitted `support_accounting`
+section must stay an exact bounded projection of
+[perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm),
+including the derived bucket counts, ordered id lists, sanitized catalog
+entries, and the embedded exact `section_contract` copy. In other words, this
+section is not just “shape compatible”; it is deliberately tied to maintained
+regression-corpus truth.
 The `embedding` section now follows the same split too:
 [perl/FSM/Support/EmbeddingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingContract.pm)
 owns the published top-level and nested contract-owner map advertised through

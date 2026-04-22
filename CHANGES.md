@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### support-accounting corpus derivation is now runtime-locked too
+- Added [t/359-support-accounting-corpus-runtime-audit.t](/Users/richarddje/Documents/github/fsmgen/t/359-support-accounting-corpus-runtime-audit.t) as an `R13`/`R12` hardening regression over the public `support_accounting` manifest section.
+- The new audit now rebuilds the expected public section directly from [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm) and proves the in-process builder plus both capability-manifest CLI spellings keep the exact bounded projection.
+- That exact projection includes the derived classification/coverage/family/source-kind buckets, the ordered supported/strict/expected-failure id lists, the sanitized catalog entries, and the embedded exact `section_contract` copy from [perl/FSM/Support/SupportAccountingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingContract.pm).
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders are told explicitly that `support_accounting` is tied to maintained regression-corpus truth rather than only a loose manifest shell.
+
 ### capability-manifest builder parity is now runtime-locked too
 - Added [t/358-capability-manifest-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/358-capability-manifest-runtime-contract-audit.t) as an `R13` hardening regression over the real capability-manifest surface.
 - The new audit now proves that `./bin/fsmgen --capability-manifest` and `./bin/fsmgen --emit-capability-manifest` both match the in-process [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm) builder output exactly instead of only matching helper-owned key lists.

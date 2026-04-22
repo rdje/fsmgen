@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: support-accounting should be proven against corpus truth, not just bounded shape
+- The public `support_accounting` section is more than another manifest leaf:
+  it is the maintained corpus-backed truth source that feeds later public
+  matching, coverage, diagnostics, and capability-story claims.
+- The older tests already locked its bounded shell and spot-checked some
+  catalog-entry behavior, but that still left one real drift path:
+  the emitted section could keep the same broad shape while its derived
+  counts, ordered id lists, or sanitized catalog projection silently drifted
+  away from the regression corpus.
+- The right hardening move is to rebuild the expected public section directly
+  from `regression_corpus_entries()` in the test itself and compare against the
+  real manifest output:
+  - classification/coverage/family/source-kind buckets,
+  - supported/strict/expected-failure id lists in corpus order,
+  - sanitized catalog entries,
+  - and the embedded exact `section_contract` copy.
+- That keeps the public support-accounting surface anchored to corpus truth at
+  the real builder boundary instead of only to helper-family intent.
+
 ## 2026-04-22: capability-manifest parity should be runtime-locked at the builder boundary too
 - The section-level manifest regressions already checked a lot of bounded key
   families, but one practical `R13` drift path still remained: the emitted
