@@ -703,6 +703,14 @@ That section shell now also publishes a grouped `presence_key_family_map` so
 downstream tools can discover the bounded diagnostics-owned scalar-string,
 list, and stable-code entry key families from one place instead of collecting
 those diagnostics key families separately.
+That section is now runtime-locked against diagnostic-registry truth too: the
+emitted `stable_codes` list must stay an exact ordered projection of
+[perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm),
+while `diagnostics.stable_code_registry` stays the exact dedicated registry
+contract and `diagnostics.check_json` stays the exact dedicated check-report
+contract plus only its documented bounded manifest-context fields. This keeps
+the diagnostics section machine-trustworthy without pretending the whole
+downstream check-report payload is frozen inside the manifest.
 The `producer` section now follows the same split too:
 [perl/FSM/Support/ProducerContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ProducerContract.pm)
 owns the published top-level, scalar-string, and boolean field families

@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: diagnostics should be proven against canonical registry truth, not just bounded shape
+- The public `diagnostics` section is another truth-bearing manifest surface.
+  It carries the stable-code registry summary that downstream tools are likely
+  to cache or inspect before they ever hit live check failures.
+- The older tests already locked the diagnostics section shell and the narrower
+  stable-code registry contract, but one drift path still remained:
+  the emitted `stable_codes` list or `check_json` enrichment could change while
+  still looking shape-compatible.
+- The right hardening move is to rebuild the expected diagnostics section from
+  canonical inputs in the test:
+  - `diagnostic_code_registry()` for the ordered stable-code list,
+  - `build_diagnostic_code_registry_contract()` for the embedded narrow
+    registry contract,
+  - `build_diagnostics_contract()` for the section contract,
+  - and `build_check_diagnostics_contract()` plus the small documented
+    manifest-context additions for the `check_json` child.
+- That keeps the manifest diagnostics section anchored to canonical registry
+  truth at the real builder boundary instead of only to helper-family intent.
+
 ## 2026-04-22: support-accounting should be proven against corpus truth, not just bounded shape
 - The public `support_accounting` section is more than another manifest leaf:
   it is the maintained corpus-backed truth source that feeds later public

@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### diagnostics registry derivation is now runtime-locked too
+- Added [t/360-diagnostics-registry-runtime-audit.t](/Users/richarddje/Documents/github/fsmgen/t/360-diagnostics-registry-runtime-audit.t) as an `R13` hardening regression over the public `diagnostics` manifest section.
+- The new audit now rebuilds the expected public diagnostics section directly from [perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm) plus the documented bounded child builders and proves the in-process builder plus both capability-manifest CLI spellings keep that exact projection.
+- That exact projection includes the ordered `stable_codes` list, the embedded exact [DiagnosticCodeRegistryContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodeRegistryContract.pm) copy, the embedded exact [DiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsContract.pm) copy, and the bounded manifest-context enrichment of `diagnostics.check_json`.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders are told explicitly that the diagnostics section is tied to canonical diagnostic-registry truth rather than only a loose manifest shell.
+
 ### support-accounting corpus derivation is now runtime-locked too
 - Added [t/359-support-accounting-corpus-runtime-audit.t](/Users/richarddje/Documents/github/fsmgen/t/359-support-accounting-corpus-runtime-audit.t) as an `R13`/`R12` hardening regression over the public `support_accounting` manifest section.
 - The new audit now rebuilds the expected public section directly from [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm) and proves the in-process builder plus both capability-manifest CLI spellings keep the exact bounded projection.

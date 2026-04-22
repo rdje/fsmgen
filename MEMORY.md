@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: diagnostics registry derivation is now runtime-locked too
+- Added
+  [t/360-diagnostics-registry-runtime-audit.t](/Users/richarddje/Documents/github/fsmgen/t/360-diagnostics-registry-runtime-audit.t)
+  as a hardening regression over the public `diagnostics` manifest section.
+- The audit now rebuilds the expected public section directly from
+  `diagnostic_code_registry()` plus the documented bounded child builders and
+  proves the in-process manifest plus both capability-manifest CLI spellings
+  keep that exact projection.
+- That exact projection includes the ordered `stable_codes` list, the embedded
+  exact registry contract copy, the embedded exact diagnostics section
+  contract copy, and the bounded manifest-context enrichment of
+  `diagnostics.check_json`.
+
 ## 2026-04-22: support-accounting corpus derivation is now runtime-locked too
 - Added
   [t/359-support-accounting-corpus-runtime-audit.t](/Users/richarddje/Documents/github/fsmgen/t/359-support-accounting-corpus-runtime-audit.t)
