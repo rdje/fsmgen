@@ -717,6 +717,13 @@ owns the published top-level, scalar-string, and boolean field families
 advertised through `producer.section_contract`, while the broader producer
 story stays limited to current tool/build identity rather than becoming an
 accidental release-management API.
+The emitted `producer` section itself is now built through
+[perl/FSM/Support/ProducerSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ProducerSection.pm)
+and runtime-locked as an exact dedicated-builder projection across both
+in-process and CLI manifest surfaces. That keeps the current tool identity,
+best-effort git hash, and bounded `source`/`section_contract` payload in one
+place instead of leaving that public section as duplicated inline manifest
+assembly logic.
 That section shell now also publishes a grouped `presence_key_family_map` so
 downstream tools can discover the bounded scalar-string and boolean key
 families from one place instead of collecting those producer key families

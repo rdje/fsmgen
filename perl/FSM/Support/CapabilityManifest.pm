@@ -4,8 +4,6 @@ use strict;
 use warnings;
 
 use Exporter 'import';
-use File::Basename qw(dirname);
-use File::Spec;
 use JSON::PP ();
 use FSM::Support::BackendValidationContract qw(build_backend_validation_contract);
 use FSM::Support::CapabilityManifestContract qw(build_capability_manifest_contract);
@@ -21,7 +19,7 @@ use FSM::Support::HDLExternalValidationContract qw(build_hdl_external_validation
 use FSM::Support::HDLGeneratorResultContract qw(build_hdl_generator_result_contract);
 use FSM::Support::LanguageSurfaceContract qw(build_language_surface_contract);
 use FSM::Support::NormalizedSemanticReportContract qw(build_normalized_semantic_report_contract);
-use FSM::Support::ProducerContract qw(build_producer_contract);
+use FSM::Support::ProducerSection qw(build_producer_section);
 use FSM::Support::RegressionCorpus qw(regression_corpus_entries);
 use FSM::Support::SemanticExportsContract qw(build_semantic_exports_contract);
 use FSM::Support::SupportAccountingContract qw(build_support_accounting_contract);
@@ -43,14 +41,7 @@ sub build_capability_manifest {
 
     return {
         manifest_schema_version => 1,
-        producer => {
-            name => 'FSMGen',
-            version => '0.1-dev',
-            git_commit => _git_head_short() || 'unknown',
-            contract_authority => JSON::PP::true,
-            source => 'FSM::Support::CapabilityManifest',
-            section_contract => build_producer_contract(),
-        },
+        producer => build_producer_section(),
         support_accounting => {
             %{build_support_accounting_contract()},
             source => 'FSM::Support::RegressionCorpus',
@@ -242,40 +233,6 @@ sub _count_by {
     }
 
     return %counts;
-}
-
-sub _git_head_short {
-    my $repo_root = File::Spec->rel2abs(
-        File::Spec->catdir(dirname(__FILE__), '..', '..', '..'),
-    );
-    my $git_dir = File::Spec->catdir($repo_root, '.git');
-    my $head_path = File::Spec->catfile($git_dir, 'HEAD');
-    return undef unless -f $head_path;
-
-    open my $head_fh, '<', $head_path or return undef;
-    my $head = <$head_fh>;
-    close $head_fh or return undef;
-    return undef unless defined $head;
-    chomp $head;
-
-    if ($head =~ /^ref:\s*(.+)$/) {
-        my $ref_path = File::Spec->catfile($git_dir, split m{/}, $1);
-        return undef unless -f $ref_path;
-        open my $ref_fh, '<', $ref_path or return undef;
-        my $commit = <$ref_fh>;
-        close $ref_fh or return undef;
-        return _short_commit($commit);
-    }
-
-    return _short_commit($head);
-}
-
-sub _short_commit {
-    my ($commit) = @_;
-    return undef unless defined $commit;
-    chomp $commit;
-    return undef unless $commit =~ /\A([0-9a-fA-F]{7,40})\z/;
-    return substr(lc($1), 0, 12);
 }
 
 1;

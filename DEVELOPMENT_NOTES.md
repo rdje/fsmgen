@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: remaining authored manifest sections should move toward dedicated builders, not stay inline forever
+- After the corpus-backed and registry-backed manifest sections were runtime
+  locked, the next remaining fragility was the fully authored inline sections
+  such as `producer`, `language_surface`, and `documentation`.
+- The root cause there is different from diagnostics/support-accounting drift:
+  the issue is not missing derived truth, but duplicated inline manifest
+  assembly logic living directly inside `CapabilityManifest.pm`.
+- The right first step is the smallest one:
+  - extract the simple public `producer` payload into a dedicated section
+    builder,
+  - reuse that builder from the manifest,
+  - and runtime-lock the emitted `producer` section against that builder
+    through both in-process and CLI manifest paths.
+- That creates a cleaner pattern for the remaining authored manifest sections
+  without forcing a broad refactor in one jump.
+
 ## 2026-04-22: diagnostics should be proven against canonical registry truth, not just bounded shape
 - The public `diagnostics` section is another truth-bearing manifest surface.
   It carries the stable-code registry summary that downstream tools are likely

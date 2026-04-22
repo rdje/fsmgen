@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: producer manifest section now has a dedicated builder
+- Added
+  [perl/FSM/Support/ProducerSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ProducerSection.pm)
+  so the public `producer` manifest section is built in one dedicated place
+  instead of inline inside
+  [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm).
+- Added
+  [t/361-producer-section-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/361-producer-section-runtime-contract-audit.t)
+  to prove the in-process manifest plus both capability-manifest CLI
+  spellings keep the exact dedicated-builder projection for that public
+  section.
+
 ## 2026-04-22: diagnostics registry derivation is now runtime-locked too
 - Added
   [t/360-diagnostics-registry-runtime-audit.t](/Users/richarddje/Documents/github/fsmgen/t/360-diagnostics-registry-runtime-audit.t)

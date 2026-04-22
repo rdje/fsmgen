@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### producer manifest section now has a dedicated builder and runtime parity audit
+- Added [perl/FSM/Support/ProducerSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ProducerSection.pm) so the public `producer` manifest section is no longer assembled inline inside [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm).
+- Updated [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm) to consume that dedicated builder, which now owns the bounded current-tool identity payload including the best-effort git hash lookup.
+- Added [t/361-producer-section-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/361-producer-section-runtime-contract-audit.t) to prove the in-process manifest plus both capability-manifest CLI spellings keep the exact dedicated-builder projection for the public `producer` section.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders are told explicitly that the producer section is now built and runtime-locked through a dedicated section builder rather than left as duplicated inline manifest assembly logic.
+
 ### diagnostics registry derivation is now runtime-locked too
 - Added [t/360-diagnostics-registry-runtime-audit.t](/Users/richarddje/Documents/github/fsmgen/t/360-diagnostics-registry-runtime-audit.t) as an `R13` hardening regression over the public `diagnostics` manifest section.
 - The new audit now rebuilds the expected public diagnostics section directly from [perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm) plus the documented bounded child builders and proves the in-process builder plus both capability-manifest CLI spellings keep that exact projection.
