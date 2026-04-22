@@ -1,5 +1,30 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: normalized semantic child-owner contracts should be checked against live success payloads too
+- After the parent normalized semantic report shell, unmatched failures, and
+  composition `system_contract` drift were hardened, one real `R13` gap still
+  remained: most successful normalized-semantic child owners were still only
+  locked statically against helper families.
+- That left a drift path where the child-owner contracts could stay internally
+  self-consistent while the real success payloads widened or shrank under the
+  public `semantic.module`, `semantic.system_contract`,
+  `semantic.explicit_system_contract`, `semantic.signal_analysis`,
+  `semantic.forward_ir`, optional `semantic.symbol_contract`, or optional
+  `semantic.composition` branches.
+- The right runtime audit is one direct-plus-composition pair rather than a
+  pile of isolated leaf tests:
+  - a symbol-rich direct source exercises the optional `symbol_contract`
+    branch and the non-composition path,
+  - a composition source exercises the composition-only module metrics, the
+    composition-only forward-IR extensions, and the bounded
+    `composition.provenance_report` fragment.
+- One useful outcome from writing that audit is that it flushed out an
+  incorrect assumption in the test itself: `semantic.module` optional metrics
+  are not purely composition-only, because direct roots may still publish
+  output-drive and standalone-DT multi-drive metrics. The real contract
+  boundary is narrower: direct roots should omit the `composition_*` metric
+  subset, not every optional metric key.
+
 ## 2026-04-22: composition semantic payloads should not advertise a bounded system_contract and then emit `{}`
 - A real drift remained in the composition success path: the public normalized
   semantic contracts advertised a bounded `semantic.system_contract` object,

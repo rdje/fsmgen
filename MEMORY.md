@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: successful normalized semantic child owners now have a runtime audit too
+- Added
+  [t/354-normalized-semantic-child-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/354-normalized-semantic-child-runtime-contract-audit.t)
+  as an `R13` hardening regression over real successful normalized semantic
+  payloads, using one symbol-rich direct source and one composition source.
+- The audit now proves that the individual child-owner contracts for
+  `semantic.module`, `semantic.system_contract`,
+  `semantic.explicit_system_contract`, `semantic.signal_analysis`,
+  `semantic.forward_ir`, optional `semantic.symbol_contract`, and optional
+  `semantic.composition` stay aligned with what the runtime actually emits.
+- It also locks the narrower direct-root rule that direct semantic payloads
+  omit the `composition_*` metric subset inside `semantic.module`, rather than
+  incorrectly claiming that every optional metric key is composition-only.
+
 ## 2026-04-22: composition semantic payloads now recover a shared effective system contract
 - Updated
   [perl/FSM/IR/IntentHIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIRBuilder.pm)

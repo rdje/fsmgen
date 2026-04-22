@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### successful normalized semantic child owners now have a runtime audit too
+- Added [t/354-normalized-semantic-child-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/354-normalized-semantic-child-runtime-contract-audit.t) as an `R13` hardening regression that checks real successful normalized semantic payloads against the individual child-owner contracts instead of only the parent report shell.
+- The new audit uses one symbol-rich direct source plus one composition source to prove that `semantic.module`, `semantic.system_contract`, `semantic.explicit_system_contract`, `semantic.signal_analysis`, `semantic.forward_ir`, optional `semantic.symbol_contract`, and optional `semantic.composition` stay aligned with the bounded child-owner key families at runtime.
+- The same audit also proves that direct roots omit the composition-specific `semantic.module` metric subset and the optional `semantic.composition` branch, while composition roots keep the composition-only `semantic.forward_ir` extensions and the bounded `semantic.composition.provenance_report` fragment.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders are told that the shipped normalized-semantic child-owner contracts are now runtime-checked against both symbol-rich direct and composition success payloads.
+
 ### composition semantic reports now recover a shared effective system contract
 - Updated [perl/FSM/IR/IntentHIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIRBuilder.pm) so composition tops no longer hardcode an empty `system_contract` in `intent_hir` when their realized child modules agree on one effective clock/reset contract and the top actually exposes those ports.
 - The recovered composition-top contract now preserves the shared child clock/reset/reset-policy fields, keeps `declare_ports: true`, and marks the contract as `implicit: true` while still leaving `explicit_system_contract` null when the top did not author `+system`.

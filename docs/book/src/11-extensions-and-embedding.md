@@ -827,6 +827,14 @@ The bounded key-presence contract for this public surface now has its own owner:
 The capability manifest advertises that contract so downstream tools can
 discover the current top-level and bounded nested success/composition keys
 without relying only on narrative docs or reverse-engineering sample payloads.
+Those same normalized-semantic child-owner contracts are now also checked
+against real successful runtime payloads on both sides of the surface:
+symbol-rich direct roots and composition roots. That keeps the shipped child
+contracts honest against the actual emitted `semantic.module`,
+`semantic.system_contract`, `semantic.explicit_system_contract`,
+`semantic.signal_analysis`, `semantic.forward_ir`, optional
+`semantic.symbol_contract`, and optional `semantic.composition` branches,
+instead of relying only on static helper-family consistency.
 
 This is still a bounded public slice, not the final full semantic export. Wider
 expression, state/DT control-shape, assignment/guard, package/type, and
