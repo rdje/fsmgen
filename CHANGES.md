@@ -1,6 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### documentation manifest paths now have a real filesystem audit
+- Added [t/371-documentation-path-existence-audit.t](/Users/richarddje/Documents/github/fsmgen/t/371-documentation-path-existence-audit.t), which proves the public `documentation` section stays an exact dedicated-builder projection across the in-process manifest and both capability-manifest CLI spellings, and also proves that every published documentation path remains relative, unique, and present on disk under the repo root.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so the public recovery story now says the documentation path lists are checked against the actual repository, not only against builder parity.
+
 ### manifest-contract discovery maps now have one runtime audit against real section builders
 - Added [t/370-capability-manifest-section-discovery-audit.t](/Users/richarddje/Documents/github/fsmgen/t/370-capability-manifest-section-discovery-audit.t), which proves the grouped `manifest_contract.top_level_contract_source_map` and `manifest_contract.top_level_section_presence_key_map` stay aligned with the real top-level section builders and the live manifest payloads exposed through the in-process capability manifest plus both CLI spellings.
 - Fixed [perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm) so the grouped `support_accounting` section key family now includes the live top-level `presence_key_family_map` field that had been omitted from the contract-side discovery map.

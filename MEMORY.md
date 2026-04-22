@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: documentation section paths now have one filesystem-backed audit
+- Added
+  [t/371-documentation-path-existence-audit.t](/Users/richarddje/Documents/github/fsmgen/t/371-documentation-path-existence-audit.t)
+  to prove that the public `documentation` section stays an exact
+  dedicated-builder projection across the in-process manifest and both
+  capability-manifest CLI spellings, and that every published path stays
+  relative, unique, and present on disk under the repo root.
+- This is the new guard that the documentation path lists still point at real
+  files, not just at paths that happen to match a helper.
+
 ## 2026-04-22: manifest-contract discovery tables now have one runtime reality check
 - Added
   [t/370-capability-manifest-section-discovery-audit.t](/Users/richarddje/Documents/github/fsmgen/t/370-capability-manifest-section-discovery-audit.t)

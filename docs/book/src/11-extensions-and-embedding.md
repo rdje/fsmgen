@@ -815,6 +815,11 @@ and runtime-locked as an exact dedicated-builder projection across both
 in-process and CLI manifest surfaces. That keeps the current grouped path
 lists in one place while preserving the documented rule that those exact lists
 may still widen deliberately over time.
+Those published path lists are now runtime-checked against the real repository
+too: [t/371-documentation-path-existence-audit.t](/Users/richarddje/Documents/github/fsmgen/t/371-documentation-path-existence-audit.t)
+proves that every published documentation path remains relative, unique, and
+present on disk under the repo root across the in-process manifest and both
+CLI spellings.
 That section shell now also publishes a grouped `path_list_contract_map` so
 downstream tools can discover the bounded path-list families for
 `human_contract` and `downstream_alignment` from one place before consuming

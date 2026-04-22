@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: documentation path lists should be checked against the filesystem, not only against builders
+- After the manifest-shell discovery work, one remaining external boundary was
+  the `documentation` section.
+- Its published values are repo paths, so exact builder parity alone was not
+  enough; the lists could still drift toward missing files while every
+  builder-parity test stayed green.
+- The honest hardening step was one runtime audit that checks those published
+  path lists against the real repository filesystem while still keeping the
+  existing dedicated-builder parity guarantee.
+
 ## 2026-04-22: the manifest contract’s grouped discovery tables should be tested against reality, not only compared to helpers
 - After the fleet-level section-builder audit landed, the next honest gap was
   the manifest contract’s grouped discovery tables.
