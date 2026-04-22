@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: support contract fleet now has a shared builder audit
+- Added
+  [t/350-support-contract-builder-audit.t](/Users/richarddje/Documents/github/fsmgen/t/350-support-contract-builder-audit.t)
+  as a fleet-wide `R13` hardening regression across every
+  [perl/FSM/Support/*Contract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support)
+  module.
+- The audit now enforces the common minimum shape:
+  - exactly one `build_*_contract` helper,
+  - a hashref result,
+  - `schema_version => 1`,
+  - an allowed status value,
+  - `contract_source` equal to the owner package,
+  - and non-empty guidance.
+- This gives the public contract fleet one shared floor and catches any future
+  helper-only or malformed contract-owner regressions early.
+
 ## 2026-04-22: semantic system-side owners now build real nested contracts
 - Hardened
   [perl/FSM/Support/NormalizedSemanticSystemContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSystemContract.pm)

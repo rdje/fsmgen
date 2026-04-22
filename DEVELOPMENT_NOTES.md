@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: the public support-contract fleet now deserves one shared audit
+- After the last helper-only outliers were removed, the next honest `R13`
+  seam was no longer another leaf tweak.
+- The higher-value hardening step is one regression that walks the whole
+  support-contract fleet and enforces the common minimum shape every public
+  contract owner is now supposed to maintain:
+  - exactly one `build_*_contract` helper,
+  - a hashref result,
+  - `schema_version => 1`,
+  - an allowed public status value,
+  - `contract_source` equal to the owner package,
+  - and non-empty guidance.
+- That gives the public embedding/API lane a shared floor and helps stop
+  helper-only outliers from reappearing silently later.
+
 ## 2026-04-22: semantic system-side helper bundles should become real contract builders too
 - The normalized-semantic family had one awkward inconsistency left: the nested
   `semantic.system_contract` and `semantic.explicit_system_contract` owners had

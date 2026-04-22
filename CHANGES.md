@@ -13,6 +13,11 @@ This is the persistent technical change history for FSMGen.
 - Updated [perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm) so the bounded nested `semantic.explicit_system_contract` owner now does the same when the authored explicit system contract is preserved.
 - Updated [t/336-normalized-semantic-system-contract.t](/Users/richarddje/Documents/github/fsmgen/t/336-normalized-semantic-system-contract.t) and [t/337-normalized-semantic-explicit-system-contract.t](/Users/richarddje/Documents/github/fsmgen/t/337-normalized-semantic-explicit-system-contract.t) so both nested semantic system-side owners are now locked as real contract objects, not just helper families.
 
+### support contract fleet now has a shared builder audit
+- Added [t/350-support-contract-builder-audit.t](/Users/richarddje/Documents/github/fsmgen/t/350-support-contract-builder-audit.t) as a fleet-wide `R13` hardening regression that walks every [perl/FSM/Support/*Contract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support) module and verifies the common minimum contract shape.
+- The audit now enforces that every support contract module exports exactly one `build_*_contract` helper, returns a hashref, keeps `schema_version => 1`, uses an allowed status value, points `contract_source` back to its canonical owner package, and carries non-empty guidance.
+- This prevents future helper-only public-contract outliers from reappearing quietly after we regularized the remaining semantic system-side child owners.
+
 ### local regression docs now match the parked GitHub workflow state
 - Updated [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) and [docs/book/src/10-errors-strict-mode-and-troubleshooting.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/10-errors-strict-mode-and-troubleshooting.md) so they no longer claim that `bin/ci-regression` mirrors an active `.github/workflows/regression.yml`.
 - The corrected user-facing wording now says that `bin/ci-regression` is the repo-owned local regression gate, while hosted CI remains intentionally parked under [.github/workflows-disabled/README.md](/Users/richarddje/Documents/github/fsmgen/.github/workflows-disabled/README.md).
