@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### diagnostic-code registry defensive copies are now regression-locked too
+- Updated [t/315-diagnostic-code-registry-contract.t](/Users/richarddje/Documents/github/fsmgen/t/315-diagnostic-code-registry-contract.t) so the bounded stable diagnostic-code registry contract now proves its advertised `registry_returns_defensive_copies` behavior directly.
+- The new regression mutates returned `diagnostic_code_registry()` and `diagnostic_code_metadata()` hashes, then proves fresh lookups still preserve the canonical summary, family, and severity values.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so downstream embedders are told explicitly that these in-process registry helpers return defensive copies rather than live mutable registry objects.
+
 ### shared report-leaf contracts now have a runtime audit too
 - Added [t/351-shared-report-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/351-shared-report-runtime-contract-audit.t) as an `R13` hardening regression that compares the shared nested report-leaf contracts against real in-process check JSON and normalized semantic JSON payloads.
 - The new audit now proves that the shared `producer`, `command`, `source`, `generated_output`, `result`, `support_accounting`, and failure `diagnostic` contract families stay aligned with live success and failure builder output instead of only matching static helper lists.

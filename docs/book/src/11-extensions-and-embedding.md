@@ -645,6 +645,10 @@ That same owner now also publishes grouped `key_family_map` and
 `bounded_value_family_map` views so downstream tools can discover the bounded
 registry key families and allowed value families from one place instead of
 collecting those lists separately.
+The in-process registry helpers also deliberately return defensive copies:
+downstream code may inspect and transform those returned hashes locally, but it
+must not expect mutations to feed back into FSMGen’s canonical stable-code
+registry.
 The manifest shell now follows the same split too:
 [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
 builds the JSON, while

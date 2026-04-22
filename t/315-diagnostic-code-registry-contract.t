@@ -11,6 +11,11 @@ use JSON::PP qw(decode_json);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
+use FSM::Support::DiagnosticCodes qw(
+    diagnostic_code_ids
+    diagnostic_code_metadata
+    diagnostic_code_registry
+);
 use FSM::Support::DiagnosticCodeRegistryContract qw(
     build_diagnostic_code_registry_contract
     diagnostic_code_registry_bounded_value_family_map
@@ -20,7 +25,6 @@ use FSM::Support::DiagnosticCodeRegistryContract qw(
     diagnostic_code_registry_key_family_map
     diagnostic_code_registry_public_keys
 );
-use FSM::Support::DiagnosticCodes qw(diagnostic_code_ids);
 
 my $manifest = build_capability_manifest();
 my @diagnostic_codes = diagnostic_code_ids();
@@ -116,6 +120,59 @@ subtest 'in-process manifest stable-code registry conforms to the bounded contra
             "stable-code entry $entry->{code} keeps a bounded family",
         );
     }
+};
+
+subtest 'registry helpers return defensive copies as advertised' => sub {
+    my $first_code = $diagnostic_codes[0];
+
+    ok($first_code, 'stable-code registry exposes at least one diagnostic code');
+
+    my $registry_a = diagnostic_code_registry();
+    my $registry_b = diagnostic_code_registry();
+
+    ok(exists $registry_a->{$first_code}, "first registry lookup keeps $first_code");
+    ok(exists $registry_b->{$first_code}, "second registry lookup keeps $first_code");
+
+    my $original_summary = $registry_a->{$first_code}{summary};
+    my $original_family = $registry_a->{$first_code}{family};
+
+    $registry_a->{$first_code}{summary} = 'mutated summary';
+    $registry_a->{$first_code}{family} = 'mutated_family';
+    delete $registry_a->{$first_code}{severity};
+
+    is(
+        $registry_b->{$first_code}{summary},
+        $original_summary,
+        'a fresh registry lookup is unaffected by mutations to an earlier lookup',
+    );
+    is(
+        $registry_b->{$first_code}{family},
+        $original_family,
+        'a fresh registry lookup preserves the canonical family after earlier mutation',
+    );
+    is(
+        $registry_b->{$first_code}{severity},
+        'error',
+        'a fresh registry lookup preserves the canonical severity after earlier mutation',
+    );
+
+    my $metadata_a = diagnostic_code_metadata($first_code);
+    my $metadata_b = diagnostic_code_metadata($first_code);
+
+    is($metadata_a->{summary}, $original_summary, 'single-entry metadata lookup starts with the canonical summary');
+    $metadata_a->{summary} = 'mutated single-entry summary';
+    delete $metadata_a->{family};
+
+    is(
+        $metadata_b->{summary},
+        $original_summary,
+        'a fresh single-entry metadata lookup is unaffected by mutations to an earlier metadata result',
+    );
+    is(
+        $metadata_b->{family},
+        $original_family,
+        'a fresh single-entry metadata lookup preserves the canonical family after earlier mutation',
+    );
 };
 
 subtest 'CLI capability manifest keeps the bounded stable-code registry contract' => sub {

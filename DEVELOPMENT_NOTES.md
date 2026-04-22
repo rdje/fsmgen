@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: the stable diagnostic-code registry should prove defensive-copy behavior directly
+- The bounded stable-code registry contract already advertised
+  `registry_returns_defensive_copies => true`, but the direct regression only
+  checked the helper lists, manifest shape, and CLI view.
+- That left one real in-process contract guarantee effectively untested:
+  callers are supposed to receive copies they can inspect or transform locally
+  without mutating FSMGen’s canonical diagnostic-code registry.
+- The honest hardening step is small:
+  - mutate one `diagnostic_code_registry()` result,
+  - mutate one `diagnostic_code_metadata()` result,
+  - then prove fresh lookups still preserve the canonical values.
+- This is a good `R13` slice because it locks a real embedding guarantee
+  without widening the registry surface at all.
+
 ## 2026-04-22: shared report-leaf contracts should be checked against live builders too
 - The shared nested report-leaf owners were well documented and contract-tested,
   but the direct regressions still mostly proved helper-family consistency in

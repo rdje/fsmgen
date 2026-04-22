@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: diagnostic-code registry defensive copies are now regression-locked
+- Hardened
+  [t/315-diagnostic-code-registry-contract.t](/Users/richarddje/Documents/github/fsmgen/t/315-diagnostic-code-registry-contract.t)
+  so the bounded stable diagnostic-code registry contract now proves its
+  advertised defensive-copy behavior directly.
+- The new subtest mutates returned `diagnostic_code_registry()` and
+  `diagnostic_code_metadata()` hashes, then proves fresh lookups still keep the
+  canonical summary, family, and severity values.
+- Updated
+  [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  so downstream embedders are told explicitly that the in-process registry
+  helpers return defensive copies rather than live mutable registry objects.
+
 ## 2026-04-22: shared report-leaf contracts now have a runtime-backed audit
 - Added
   [t/351-shared-report-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/351-shared-report-runtime-contract-audit.t)
