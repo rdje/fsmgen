@@ -13691,3 +13691,19 @@ It is an exact-delay pulse request:
   `source_info.package_import_count` and `source_info.package_import_names`
   must stay bounded and preserve authored order on both direct and
   composition roots that use semantic package imports.
+
+## 2026-04-22: shell-only `HDLGenerator` compatibility branches now have a runtime audit too
+- Added
+  [t/356-hdl-generator-shell-only-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/356-hdl-generator-shell-only-runtime-contract-audit.t)
+  as an `R13` hardening regression over the shell-only compatibility branches
+  kept by in-process `HDLGenerator` results.
+- The audit now proves that `fsm_module`, `raw_ast`,
+  `resolved_package_imports`, `composition_spec`, `composition_plan`, and raw
+  `composition_report` keep the runtime shape they still advertise for
+  compatibility, instead of only matching static helper-family lists.
+- It also proves the branch-to-fallback story stays honest:
+  in-process fallback paths are present where promised, composition semantic
+  JSON keeps the promised `semantic.composition` /
+  `semantic.composition.provenance_report` fallback paths, and the public
+  provenance fragment stays exactly equal to
+  `sanitize_composition_report($result->{composition_report})`.

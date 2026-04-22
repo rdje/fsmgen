@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### HDLGenerator shell-only compatibility branches now have a runtime audit too
+- Added [t/356-hdl-generator-shell-only-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/356-hdl-generator-shell-only-runtime-contract-audit.t) as an `R13` hardening regression over the shell-only `HDLGenerator` compatibility branches and their advertised fallback surfaces.
+- The new audit now proves that real direct and composition generation results keep the published runtime shape for `fsm_module`, `raw_ast`, `resolved_package_imports`, `composition_spec`, `composition_plan`, and raw `composition_report` instead of only matching static contract helper lists.
+- It also proves that the advertised fallback surfaces are real: direct and composition results keep the promised in-process `intent_hir` / `lowered_rtl_ir` / `structural_rtl_ir` and `source_info` fallback paths, while composition semantic JSON exports keep the promised `semantic.composition` and `semantic.composition.provenance_report` fallback paths.
+- The same audit now locks that the semantic JSON `semantic.composition.provenance_report` fragment equals `sanitize_composition_report($result->{composition_report})`, so the raw shell-only provenance branch and the public fallback export cannot silently drift apart.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders are told that these shell-only branches and their fallbacks are now runtime-checked too.
+
 ### HDLGenerator leaf owners now have a runtime audit too
 - Added [t/355-hdl-generator-leaf-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/355-hdl-generator-leaf-runtime-contract-audit.t) as an `R13` hardening regression over real in-process `HDLGenerator` results.
 - The new audit now proves that the bounded `source_info`, `module_info`, and `statistics` leaf-owner contracts stay aligned with live direct and composition generation results instead of only matching static helper-family lists.

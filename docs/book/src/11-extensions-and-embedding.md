@@ -842,6 +842,15 @@ leaf-owner key families, and the `source_info` audit also locks authored
 package-import summaries on both direct and composition roots. That keeps the
 leaf contracts tied to what embedders actually receive in-process instead of
 only to static helper lists.
+The same hardening now also covers the shell-only `HDLGenerator`
+compatibility branches. Real direct and composition generation results are now
+checked so `fsm_module`, `raw_ast`, `resolved_package_imports`,
+`composition_spec`, `composition_plan`, and raw `composition_report` keep the
+published runtime shape they still advertise for in-process compatibility, and
+their documented fallback surfaces are checked too. In particular, the raw
+composition provenance report is now locked against the normalized semantic
+JSON `semantic.composition.provenance_report` fragment, so the branch/fallback
+story is regression-backed instead of only narrated.
 
 This is still a bounded public slice, not the final full semantic export. Wider
 expression, state/DT control-shape, assignment/guard, package/type, and

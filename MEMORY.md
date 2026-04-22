@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: shell-only `HDLGenerator` compatibility branches now have a runtime audit too
+- Added
+  [t/356-hdl-generator-shell-only-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/356-hdl-generator-shell-only-runtime-contract-audit.t)
+  as an `R13` hardening regression over the shell-only `HDLGenerator`
+  compatibility branches and the fallback surfaces they advertise.
+- The audit now proves that real direct and composition generation results
+  keep the published runtime shape for `fsm_module`, `raw_ast`,
+  `resolved_package_imports`, `composition_spec`, `composition_plan`, and raw
+  `composition_report`.
+- It also locks the public fallback bridge:
+  `semantic.composition.provenance_report` from normalized semantic JSON must
+  equal `sanitize_composition_report($result->{composition_report})`, so the
+  shell-only raw provenance branch and the public export cannot drift apart
+  silently.
+
 ## 2026-04-22: `HDLGenerator` leaf-owner contracts now have a runtime audit too
 - Added
   [t/355-hdl-generator-leaf-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/355-hdl-generator-leaf-runtime-contract-audit.t)
