@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: documentation manifest section now has a dedicated builder
+- Added
+  [perl/FSM/Support/DocumentationSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DocumentationSection.pm)
+  so the public `documentation` manifest section is built in one dedicated
+  place instead of inline inside
+  [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm).
+- Added
+  [t/362-documentation-section-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/362-documentation-section-runtime-contract-audit.t)
+  to prove the in-process manifest plus both capability-manifest CLI
+  spellings keep the exact dedicated-builder projection for that public
+  section.
+
 ## 2026-04-22: producer manifest section now has a dedicated builder
 - Added
   [perl/FSM/Support/ProducerSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ProducerSection.pm)

@@ -13,7 +13,7 @@ use FSM::Support::DiagnosticCodes qw(diagnostic_code_registry);
 use FSM::Support::DiagnosticCodeRegistryContract qw(build_diagnostic_code_registry_contract);
 use FSM::Support::DiagnosticsContract qw(build_diagnostics_contract);
 use FSM::Support::EmbeddingContract qw(build_embedding_contract);
-use FSM::Support::DocumentationContract qw(build_documentation_contract);
+use FSM::Support::DocumentationSection qw(build_documentation_section);
 use FSM::Support::ExtensionContract qw(build_extension_contract);
 use FSM::Support::HDLExternalValidationContract qw(build_hdl_external_validation_contract);
 use FSM::Support::HDLGeneratorResultContract qw(build_hdl_generator_result_contract);
@@ -172,17 +172,7 @@ sub build_capability_manifest {
             ],
             surface_contract => build_language_surface_contract(),
         },
-        documentation => {
-            human_contract => [
-                'docs/book/src/SUMMARY.md',
-                'docs/USER_GUIDE.md',
-                'docs/REGRESSION_CORPUS.md',
-            ],
-            downstream_alignment => [
-                'docs/SPECFORGE_FEEDBACK_RESPONSE.md',
-            ],
-            section_contract => build_documentation_contract(),
-        },
+        documentation => build_documentation_section(),
         manifest_contract => build_capability_manifest_contract(),
     };
 }

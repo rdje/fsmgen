@@ -752,6 +752,12 @@ The `documentation` section now has its own bounded owner too:
 advertises the public top-level and path-list keys through
 `documentation.section_contract`, while the exact documentation file lists stay
 deliberately widenable.
+The emitted `documentation` section itself is now built through
+[perl/FSM/Support/DocumentationSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DocumentationSection.pm)
+and runtime-locked as an exact dedicated-builder projection across both
+in-process and CLI manifest surfaces. That keeps the current grouped path
+lists in one place while preserving the documented rule that those exact lists
+may still widen deliberately over time.
 That section shell now also publishes a grouped `path_list_contract_map` so
 downstream tools can discover the bounded path-list families for
 `human_contract` and `downstream_alignment` from one place before consuming

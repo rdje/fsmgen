@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: authored manifest-section extraction should continue from the simplest stable leaves
+- Once the producer section moved behind a dedicated builder, the next honest
+  adjacent slice was another small authored manifest leaf rather than jumping
+  straight to the much denser `language_surface` payload.
+- `documentation` is a good next step because:
+  - it is fully public and user-facing,
+  - it was still duplicated inline inside `CapabilityManifest.pm`,
+  - and it already has an explicit contract saying the exact path lists are
+    bounded today but may widen deliberately later.
+- Extracting it behind a dedicated section builder improves ownership and
+  parity testing without changing that widenable-path-list policy.
+
 ## 2026-04-22: remaining authored manifest sections should move toward dedicated builders, not stay inline forever
 - After the corpus-backed and registry-backed manifest sections were runtime
   locked, the next remaining fragility was the fully authored inline sections

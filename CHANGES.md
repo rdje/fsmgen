@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### documentation manifest section now has a dedicated builder and runtime parity audit
+- Added [perl/FSM/Support/DocumentationSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DocumentationSection.pm) so the public `documentation` manifest section is no longer assembled inline inside [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm).
+- Updated [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm) to consume that dedicated builder while preserving the current documentation-path payload.
+- Added [t/362-documentation-section-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/362-documentation-section-runtime-contract-audit.t) to prove the in-process manifest plus both capability-manifest CLI spellings keep the exact dedicated-builder projection for the public `documentation` section.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders are told explicitly that the documentation section is now built and runtime-locked through a dedicated section builder while the exact path lists remain deliberately widenable.
+
 ### producer manifest section now has a dedicated builder and runtime parity audit
 - Added [perl/FSM/Support/ProducerSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ProducerSection.pm) so the public `producer` manifest section is no longer assembled inline inside [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm).
 - Updated [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm) to consume that dedicated builder, which now owns the bounded current-tool identity payload including the best-effort git hash lookup.
