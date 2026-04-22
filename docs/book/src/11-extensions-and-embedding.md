@@ -663,6 +663,12 @@ builds the JSON, while
 [perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm)
 owns the bounded top-level and first nested section key lists advertised under
 top-level `manifest_contract`.
+The whole top-level public section fleet is now regression-locked as dedicated
+`*Section.pm` builders too: [t/369-manifest-section-builder-audit.t](/Users/richarddje/Documents/github/fsmgen/t/369-manifest-section-builder-audit.t)
+discovers the section-builder modules, proves that the discovered set exactly
+matches the manifest’s public top-level sections, and then checks that each
+section stays an exact dedicated-builder projection across the in-process
+manifest and both CLI spellings.
 That runtime boundary is now locked directly too: the emitted
 `--capability-manifest` and `--emit-capability-manifest` JSON must match the
 in-process `build_capability_manifest()` output exactly. The embedded

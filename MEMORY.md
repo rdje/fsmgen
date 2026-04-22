@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: top-level manifest sections now have one fleet-level builder audit
+- Added
+  [t/369-manifest-section-builder-audit.t](/Users/richarddje/Documents/github/fsmgen/t/369-manifest-section-builder-audit.t)
+  to discover every
+  [perl/FSM/Support/*Section.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support)
+  module, prove that the discovered set exactly matches the public top-level
+  manifest sections, and then check that each section stays an exact
+  dedicated-builder projection across the in-process capability manifest plus
+  both CLI spellings.
+- This is the new fleet-level guard against top-level inline manifest assembly
+  drifting back in after the section-extraction work.
+
 ## 2026-04-22: manifest-context enrichments now have section-owned named builders
 - The three intentional manifest-context enrichments are now exposed as named
   builders from their owning section modules instead of only being rebuilt

@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: now that section extraction is done, the right regression is a fleet-level audit
+- Once the top-level manifest sections were all behind dedicated
+  `*Section.pm` builders, the next root-cause hardening step was not another
+  one-off parity tweak.
+- The honest prevention step was one fleet-level regression that says:
+  - the discovered section-builder modules must exactly match the public
+    top-level manifest sections,
+  - those builders must keep returning bounded contract-carrying hashes,
+  - and each manifest surface must keep every top-level section as an exact
+    dedicated-builder projection.
+- That reduces the risk of silently reintroducing inline top-level manifest
+  assembly in future work, even if a single section’s individual test suite is
+  overlooked.
+
 ## 2026-04-22: the three intentional manifest-context enrichments should be named builders, not audit-only expectations
 - After the section extractions, the remaining duplication was no longer in
   [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)

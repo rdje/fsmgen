@@ -1,6 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### top-level manifest sections now have one fleet-level dedicated-builder audit
+- Added [t/369-manifest-section-builder-audit.t](/Users/richarddje/Documents/github/fsmgen/t/369-manifest-section-builder-audit.t), which discovers every [perl/FSM/Support/*Section.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support) module, proves that the discovered set exactly matches the public top-level manifest sections, and then locks each section as an exact dedicated-builder projection across the in-process capability manifest plus both CLI spellings.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so the public recovery story now includes this fleet-level invariant instead of only listing the individual section parity audits.
+
 ### manifest-context enrichments now reuse named section-owned builders
 - Updated [perl/FSM/Support/DiagnosticsSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsSection.pm), [perl/FSM/Support/SemanticExportsSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SemanticExportsSection.pm), and [perl/FSM/Support/BackendValidationSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/BackendValidationSection.pm) so each intentional manifest-context enrichment now has its own exported named builder instead of only living as an inline hash inside the section builder.
 - Updated [t/358-capability-manifest-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/358-capability-manifest-runtime-contract-audit.t) to reuse those named builders when proving the three intentional manifest-context enrichments stay bounded and deliberate at runtime, eliminating duplicated expected payload assembly from the audit itself.
