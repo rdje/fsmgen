@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: report-generated-output families should be discoverable as one grouped map too
+- After grouping the bounded report-source families, the final adjacent shared
+  report-leaf seam sat in the nested `generated_output` object reused by
+  public check JSON and normalized semantic JSON.
+- `ReportGeneratedOutputContract` only published one bounded shell key, but a
+  caller still had to discover that emitted-artifact family through the raw
+  ordered list instead of the grouped-discovery pattern used by the sibling
+  shared report leaves.
+- The bounded move is deliberately small:
+  - keep the existing full shell key list unchanged,
+  - add one canonical helper for emission keys,
+  - add one grouped `presence_key_family_map`,
+  - and lock the direct report-generated-output regression against that
+    grouped map.
+- This is mostly a consistency/hardening slice, but it closes the remaining
+  shared-report leaf that still lacked the grouped discovery shape its
+  sibling owners now publish.
+
 ## 2026-04-22: report-source families should be discoverable as one grouped map too
 - After grouping the bounded report-command families, the next adjacent shared
   report-leaf seam sat in the nested `source` object reused by public check

@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### report-generated-output owners now group emission families too
+- Updated [perl/FSM/Support/ReportGeneratedOutputContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportGeneratedOutputContract.pm) so the bounded nested `generated_output` owner now publishes `emission_keys` and a grouped `presence_key_family_map`, instead of forcing embedders to collect that generated-output key family separately.
+- Updated [t/328-report-generated-output-contract.t](/Users/richarddje/Documents/github/fsmgen/t/328-report-generated-output-contract.t) so the direct report-generated-output regression now locks that grouped leaf-owner discovery surface directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders can discover the grouped generated-output key family from the book too.
+
 ### report-source owners now group input and resolution families too
 - Updated [perl/FSM/Support/ReportSourceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportSourceContract.pm) so the bounded nested `source` owner now publishes `input_keys`, `resolution_keys`, and a grouped `presence_key_family_map`, instead of forcing embedders to collect those source families separately.
 - Updated [t/325-report-source-contract.t](/Users/richarddje/Documents/github/fsmgen/t/325-report-source-contract.t) so the direct report-source regression now locks that grouped leaf-owner discovery surface directly.

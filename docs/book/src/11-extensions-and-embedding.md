@@ -309,6 +309,9 @@ share one bounded nested-object contract for HDL-emission side effects:
 [perl/FSM/Support/ReportGeneratedOutputContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportGeneratedOutputContract.pm)
 owns the shared `emitted` key emitted under the nested `generated_output`
 object.
+That same owner now also publishes a grouped `presence_key_family_map` so
+embedders can discover the bounded generated-output emission key family from
+one place instead of collecting that key-family list separately.
 Successful public check JSON reports now also have one bounded nested-object
 contract for the compact success summary:
 [perl/FSM/Support/CheckResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckResultContract.pm)

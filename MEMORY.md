@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: report-generated-output owners now publish grouped key families too
+- Hardened
+  [perl/FSM/Support/ReportGeneratedOutputContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportGeneratedOutputContract.pm)
+  so the bounded nested `generated_output` owner now publishes a grouped
+  emission-key family.
+- Regression coverage now proves that grouped report-generated-output
+  key-family map directly:
+  [t/328-report-generated-output-contract.t](/Users/richarddje/Documents/github/fsmgen/t/328-report-generated-output-contract.t).
+
 ## 2026-04-22: report-source owners now publish grouped key families too
 - Hardened
   [perl/FSM/Support/ReportSourceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportSourceContract.pm)

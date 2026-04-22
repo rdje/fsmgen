@@ -10,6 +10,8 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::ReportGeneratedOutputContract qw(
     build_report_generated_output_contract
+    report_generated_output_emission_keys
+    report_generated_output_presence_key_family_map
     report_generated_output_contract_source
     report_generated_output_presence_keys
 );
@@ -47,6 +49,16 @@ subtest 'contract exposes the bounded shared report generated_output object' => 
         $contract->{public_presence_keys},
         report_generated_output_presence_keys(),
         'contract publishes the bounded generated_output-object key list',
+    );
+    is_deeply(
+        $contract->{emission_keys},
+        report_generated_output_emission_keys(),
+        'contract publishes the bounded generated_output emission key family',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map},
+        report_generated_output_presence_key_family_map(),
+        'contract publishes the grouped generated_output key-family map',
     );
 };
 
