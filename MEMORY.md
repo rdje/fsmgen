@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: capability-manifest builder parity is now runtime-locked too
+- Added
+  [t/358-capability-manifest-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/358-capability-manifest-runtime-contract-audit.t)
+  as an `R13` hardening regression over the real capability-manifest surface.
+- The audit now proves that `--capability-manifest` and
+  `--emit-capability-manifest` match the in-process
+  `build_capability_manifest()` output exactly.
+- It also locks which embedded manifest subtrees are literal dedicated-builder
+  copies and which three children are intentional bounded manifest-context
+  enrichments only: `diagnostics.check_json`,
+  `semantic_exports.normalized_semantic_json`, and
+  `backend_validation.systemverilog_external`.
+
 ## 2026-04-22: public report shells now have a runtime audit too
 - Added
   [t/357-public-report-shell-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/357-public-report-shell-runtime-contract-audit.t)

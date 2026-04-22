@@ -655,6 +655,18 @@ builds the JSON, while
 [perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm)
 owns the bounded top-level and first nested section key lists advertised under
 top-level `manifest_contract`.
+That runtime boundary is now locked directly too: the emitted
+`--capability-manifest` and `--emit-capability-manifest` JSON must match the
+in-process `build_capability_manifest()` output exactly. The embedded
+`manifest_contract`, every `*.section_contract`, `language_surface.surface_contract`,
+`diagnostics.stable_code_registry`, and the exact embedding children
+`composition_report`, `hdl_generator_result`, and `typed_extensions` are now
+treated as literal dedicated-builder pass-throughs. Only three advertised
+manifest children are intentionally enriched beyond their dedicated builders:
+`diagnostics.check_json`, `semantic_exports.normalized_semantic_json`, and
+`backend_validation.systemverilog_external`, and those enrichments are
+runtime-locked to a small documented set of manifest-context fields rather than
+left as open-ended widening.
 That shell contract now also explicitly lists the first nested
 `support_accounting` keys, so embedders can discover the corpus-backed section
 shape without a manifest-specific exception.

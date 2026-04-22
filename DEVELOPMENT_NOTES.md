@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: capability-manifest parity should be runtime-locked at the builder boundary too
+- The section-level manifest regressions already checked a lot of bounded key
+  families, but one practical `R13` drift path still remained: the emitted
+  manifest could theoretically stop being a clean composition of the dedicated
+  contract builders without immediately breaking those helper-family checks.
+- The root cause is the manifest’s role as an aggregator. It embeds a mix of:
+  - exact dedicated-builder pass-throughs such as `manifest_contract`,
+    section-contract objects, `diagnostics.stable_code_registry`, and the
+    exact embedding children,
+  - plus a small number of deliberately enriched child contracts where the
+    manifest adds bounded context fields like corpus-coverage claims or the
+    regression smoke test identifier.
+- The honest hardening move is therefore not another key-list assertion. It is
+  one runtime audit that proves:
+  - both public CLI spellings emit the same JSON as the in-process builder,
+  - the exact pass-through subtrees remain literal builder copies,
+  - and the intentionally enriched subtrees remain only builder output plus
+    their small documented manifest-context additions.
+- That keeps the manifest’s contract-composition story honest for embedders
+  without widening the public surface.
+
 ## 2026-04-22: normalized semantic child-owner contracts should be checked against live success payloads too
 - After the parent normalized semantic report shell, unmatched failures, and
   composition `system_contract` drift were hardened, one real `R13` gap still

@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### capability-manifest builder parity is now runtime-locked too
+- Added [t/358-capability-manifest-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/358-capability-manifest-runtime-contract-audit.t) as an `R13` hardening regression over the real capability-manifest surface.
+- The new audit now proves that `./bin/fsmgen --capability-manifest` and `./bin/fsmgen --emit-capability-manifest` both match the in-process [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm) builder output exactly instead of only matching helper-owned key lists.
+- It also locks the exact pass-through split for embedded manifest contracts: `manifest_contract`, every section contract, `language_surface.surface_contract`, `diagnostics.stable_code_registry`, and the exact embedding child contracts for `composition_report`, `hdl_generator_result`, and `typed_extensions` must stay literal dedicated-builder copies.
+- Finally, it locks the only currently intentional manifest-context enrichments: `diagnostics.check_json`, `semantic_exports.normalized_semantic_json`, and `backend_validation.systemverilog_external` must remain exact dedicated-builder payloads plus only their documented bounded manifest-context fields.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders are told explicitly which manifest subtrees are exact builder pass-throughs and which ones are bounded enrichments.
+
 ### public report shells now have a runtime audit too
 - Added [t/357-public-report-shell-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/357-public-report-shell-runtime-contract-audit.t) as an `R13` hardening regression over the top-level public `check JSON` and `normalized semantic JSON` report shells.
 - The new audit now proves that real `--check-json` success and matched-failure payloads keep the bounded public top-level keys, success-only top-level keys, and shell-owned nested key families published by [perl/FSM/Support/CheckDiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnosticsContract.pm).
