@@ -15,8 +15,10 @@ use FSM::Support::ExtensionContract qw(
     build_extension_contract
     extension_contract_context_accessors
     extension_contract_hook_names
+    extension_contract_name_family_map
     extension_contract_public_top_level_keys
     extension_contract_source
+    extension_contract_supported_source_kinds
 );
 
 {
@@ -76,6 +78,11 @@ subtest 'contract declares the bounded typed-extension surface' => sub {
         extension_contract_public_top_level_keys(),
         'contract publishes the bounded typed-extension top-level keys',
     );
+    is_deeply(
+        $contract->{name_family_map},
+        extension_contract_name_family_map(),
+        'contract publishes the grouped extension name families',
+    );
     ok($contract->{extension_object_contract}{must_be_blessed_object}, 'contract requires extension objects');
     is(
         $contract->{extension_object_contract}{constructor_for_module_loading},
@@ -94,6 +101,12 @@ subtest 'contract declares the bounded typed-extension surface' => sub {
     for my $accessor (qw(stage pipeline source_path target_language source_info raw_ast result)) {
         ok($accessors{$accessor}, "contract includes context accessor $accessor");
     }
+
+    is_deeply(
+        $contract->{supported_source_kinds},
+        extension_contract_supported_source_kinds(),
+        'contract publishes the bounded supported source kinds',
+    );
 
     ok($contract->{hooks}{after_parse_source}{raw_ast_available}, 'parse hook advertises raw AST availability');
     ok(!$contract->{hooks}{after_parse_source}{result_available}, 'parse hook does not advertise result availability');

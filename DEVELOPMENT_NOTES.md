@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: extension-contract name families should be discoverable as one grouped map too
+- After grouping the bounded stable diagnostic-code registry families, the
+  next honest helper seam sat in the typed extension contract.
+- `ExtensionContract` already published the bounded hook-name list, context
+  accessor list, and supported source kinds, but an embedder still had to
+  collect those related name families one by one.
+- The bounded move is deliberately small:
+  - keep the existing hook-name, context-accessor, and supported-source-kind
+    lists unchanged,
+  - add one grouped `name_family_map`,
+  - reuse the same bounded source-kind list through a dedicated helper,
+  - and lock the direct extension-contract regression against that grouped
+    surface.
+- That keeps the typed extension API easier to consume without widening the
+  hook surface or pretending the whole future extension API is frozen.
+
 ## 2026-04-22: diagnostic-code registry families should be discoverable as grouped maps too
 - After exhausting the obvious shared report-leaf grouping seams, the next
   honest helper seam sat in the bounded stable diagnostic-code registry.

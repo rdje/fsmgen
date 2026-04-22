@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### extension-contract owners now group name families too
+- Updated [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm) so the bounded typed-extension contract now publishes a grouped `name_family_map` for hook names, context accessors, and supported source kinds, instead of forcing embedders to collect those bounded name lists separately.
+- Updated [t/306-extension-contract.t](/Users/richarddje/Documents/github/fsmgen/t/306-extension-contract.t) so the direct extension-contract regression now locks that grouped discovery surface directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders can discover the grouped typed-extension name families from the book too.
+
 ### diagnostic-code registry owners now group key and value families too
 - Updated [perl/FSM/Support/DiagnosticCodeRegistryContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodeRegistryContract.pm) so the bounded stable diagnostic-code registry now publishes `key_family_map` and `bounded_value_family_map`, instead of forcing embedders to collect the sibling-key, entry-key, and allowed-value lists separately.
 - Updated [t/315-diagnostic-code-registry-contract.t](/Users/richarddje/Documents/github/fsmgen/t/315-diagnostic-code-registry-contract.t) so the direct registry regression and its manifest/CLI checks now lock those grouped stable-code discovery surfaces directly.
