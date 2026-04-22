@@ -129,6 +129,10 @@ sub build_from_composition_plan ($class, %args) {
         : ref($structural_rtl_ir)
             ? $structural_rtl_ir->as_hashref
             : {};
+    my $effective_system_contract = $class->build_composition_effective_system_contract(
+        composition_plan => $composition_plan,
+        structural_rtl_ir => $structural_rtl_ir_hash,
+    );
 
     return FSM::IR::IntentHIR->new(
         module_name => ($structural_rtl_ir_hash->{module_name} // $composition_plan->top_name // ''),
@@ -138,7 +142,7 @@ sub build_from_composition_plan ($class, %args) {
         signal_names => $port_metadata->{signal_names},
         signal_analysis => $port_metadata->{signal_analysis},
         explicit_system_contract => undef,
-        system_contract => {},
+        system_contract => $effective_system_contract,
         requires_implicit_system_ports => 0,
         standalone_dt_enable_families => [],
         standalone_dt_module_enable_family => {},
@@ -225,6 +229,78 @@ sub build_composition_top_symbol_contract ($class, $composition_plan) {
 
     return undef unless $has_local_symbols || $has_imports;
     return $symbol_contract;
+}
+
+sub build_composition_effective_system_contract ($class, %args) {
+    my $composition_plan = $args{composition_plan};
+    return {} unless $composition_plan && ref($composition_plan);
+
+    my $structural_rtl_ir = ref($args{structural_rtl_ir}) eq 'HASH'
+        ? $args{structural_rtl_ir}
+        : {};
+    my %top_port_names = map {
+        my $name = $_->{name};
+        defined($name) && length($name) ? ($name => 1) : ()
+    } @{$structural_rtl_ir->{ports} || []};
+
+    my %seen_signature;
+    my @unique_contracts;
+    for my $instance (@{$composition_plan->instances || []}) {
+        next unless $instance && ref($instance) && $instance->can('module_info');
+
+        my $contract = $class->_composition_system_contract_from_payload($instance->module_info);
+        next unless ref($contract) eq 'HASH';
+
+        my $clock = $contract->{clock};
+        my $reset = $contract->{reset};
+        next unless defined($clock) && length($clock);
+        next unless defined($reset) && length($reset);
+
+        my $reset_keyword = $contract->{reset_keyword}
+            // (($contract->{reset_kind} || '') eq 'sync' ? 'sreset' : 'areset');
+        my $reset_kind = $contract->{reset_kind}
+            // ($reset_keyword eq 'sreset' ? 'sync' : 'async');
+        my $reset_active_level = exists($contract->{reset_active_level})
+            ? ($contract->{reset_active_level} ? 1 : 0)
+            : ($reset_kind eq 'sync' ? 1 : 0);
+
+        my $signature = join "\x1E", $clock, $reset, $reset_keyword, $reset_kind, $reset_active_level;
+        next if $seen_signature{$signature}++;
+
+        push @unique_contracts, {
+            clock => $clock,
+            reset => $reset,
+            reset_keyword => $reset_keyword,
+            reset_kind => $reset_kind,
+            reset_active_level => $reset_active_level,
+        };
+    }
+
+    return {} unless @unique_contracts == 1;
+
+    my $contract = $unique_contracts[0];
+    return {} unless $top_port_names{$contract->{clock}};
+    return {} unless $top_port_names{$contract->{reset}};
+
+    return {
+        %$contract,
+        implicit => 1,
+        declare_ports => 1,
+    };
+}
+
+sub _composition_system_contract_from_payload ($class, $payload) {
+    return undef unless ref($payload) eq 'HASH';
+
+    my $system_contract = $payload->{system_contract};
+    return $system_contract if ref($system_contract) eq 'HASH';
+
+    my $intent_hir = $payload->{intent_hir};
+    return undef unless ref($intent_hir) eq 'HASH';
+
+    $system_contract = $intent_hir->{system_contract};
+    return $system_contract if ref($system_contract) eq 'HASH';
+    return undef;
 }
 
 sub build_standalone_dt_enable_metadata ($class, $all_states) {

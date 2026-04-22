@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: composition semantic payloads now recover a shared effective system contract
+- Updated
+  [perl/FSM/IR/IntentHIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIRBuilder.pm)
+  so composition tops no longer hardcode an empty `system_contract` in
+  `intent_hir` when their realized child modules agree on one effective
+  clock/reset contract and the top actually exposes those system-port names.
+- The recovered contract now preserves the shared child clock/reset/reset
+  metadata, keeps `declare_ports: true`, marks the contract as
+  `implicit: true`, and still leaves `explicit_system_contract` null when the
+  composition top did not author `+system`.
+- Added
+  [t/353-composition-system-contract-runtime-audit.t](/Users/richarddje/Documents/github/fsmgen/t/353-composition-system-contract-runtime-audit.t)
+  to lock that behavior through composition `intent_hir`, the in-process
+  normalized semantic success report builder, and the public CLI semantic JSON
+  surface for [fsm/apb_tb.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_tb.fsm).
+
 ## 2026-04-22: unmatched public failure branches are now runtime-locked too
 - Added
   [t/352-unmatched-failure-report-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/352-unmatched-failure-report-contract-audit.t)

@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### composition semantic reports now recover a shared effective system contract
+- Updated [perl/FSM/IR/IntentHIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIRBuilder.pm) so composition tops no longer hardcode an empty `system_contract` in `intent_hir` when their realized child modules agree on one effective clock/reset contract and the top actually exposes those ports.
+- The recovered composition-top contract now preserves the shared child clock/reset/reset-policy fields, keeps `declare_ports: true`, and marks the contract as `implicit: true` while still leaving `explicit_system_contract` null when the top did not author `+system`.
+- Added [t/353-composition-system-contract-runtime-audit.t](/Users/richarddje/Documents/github/fsmgen/t/353-composition-system-contract-runtime-audit.t) to lock that behavior through composition `intent_hir`, the in-process normalized semantic success report builder, and the public `--emit-semantic-json` CLI surface for [fsm/apb_tb.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_tb.fsm).
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so downstream embedders are told that successful composition semantic exports now recover a bounded effective `system_contract` from agreeing child roots even when the top itself did not author one.
+
 ### unmatched public failure reports are now runtime-locked too
 - Added [t/352-unmatched-failure-report-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/352-unmatched-failure-report-contract-audit.t) as an `R13` hardening regression over the in-process unmatched failure builders for check JSON and normalized semantic JSON.
 - The new audit now proves that unmatched failures keep the bounded report shape, preserve `code: null`, use `unclassified` family/stability metadata, keep `migration_hint_available: false`, and omit all matched-only support-accounting and diagnostic fields while still returning `matched: false`.

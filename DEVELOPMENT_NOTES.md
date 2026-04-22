@@ -1,5 +1,28 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: composition semantic payloads should not advertise a bounded system_contract and then emit `{}`
+- A real drift remained in the composition success path: the public normalized
+  semantic contracts advertised a bounded `semantic.system_contract` object,
+  but composition `IntentHIR` still hardcoded `system_contract => {}` and
+  `explicit_system_contract => undef`.
+- That was the effect. The root cause sat one layer earlier: composition
+  `IntentHIRBuilder` was already looking at a realized composition plan whose
+  child module metadata carried real effective system contracts, but it never
+  attempted to lift one shared effective contract back onto the top-level
+  semantic payload.
+- The honest fix is to infer that contract only when the realized child roots
+  agree on one clock/reset/reset-policy family and the top actually exposes
+  those system-port names:
+  - preserve the shared child clock/reset/reset metadata,
+  - keep `declare_ports => 1`,
+  - mark the recovered contract as `implicit => 1`,
+  - and leave `explicit_system_contract` null unless the top really authored
+    `+system`.
+- The right regression is runtime-backed, not helper-only: lock the recovered
+  contract through composition `intent_hir`, the in-process normalized
+  semantic success report builder, and the public `--emit-semantic-json` CLI
+  surface.
+
 ## 2026-04-22: unmatched public failure branches should be runtime-locked too
 - The public check JSON and normalized semantic JSON lanes already had solid
   matched-failure coverage, but the unmatched failure branch was still mostly

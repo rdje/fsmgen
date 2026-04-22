@@ -802,6 +802,13 @@ When a semantic failure does not match a promoted corpus-backed diagnostic
 family, the report still keeps its bounded top-level `support_accounting`
 object with `matched: false`, while the failure diagnostic keeps `code: null`
 and omits matched-only fields.
+Successful composition semantic exports now also recover a bounded effective
+`system_contract` when the realized child roots agree on one clock/reset
+contract and the top actually exposes those system-port names, even if the top
+itself did not author `+system`. In that case `semantic.system_contract`
+preserves the shared child clock/reset/reset-policy fields with
+`implicit: true`, while `semantic.explicit_system_contract` stays `null`
+unless the composition top explicitly authored a system contract.
 
 Accepted corpus entries are covered too. Every current supported-smoke entry
 must succeed through `--emit-semantic-json`, and every current strict-supported
