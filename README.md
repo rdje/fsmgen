@@ -6,6 +6,7 @@ Use it first for objective, navigation, and where to find code/docs quickly.
 - The commit workflow in `COMMIT.md` is mandatory and non-negotiable.
 - After every completed task/activity, run that workflow before starting the next slice.
 - Do not batch several finished tasks into one later cleanup commit.
+- Run git index-mutating steps in that workflow sequentially; never overlap `git add`, `git rm`, `git mv`, or `git commit`.
 - The reason is operational, not stylistic: task-scoped commits are the project's crash-recovery mechanism for session loss, app crashes, and machine crashes.
 - If a task is complete but not committed, that task is not safely finished yet.
 

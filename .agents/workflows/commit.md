@@ -14,3 +14,4 @@ Rules for this helper:
 2. Do not treat this file as an independent policy document.
 3. Use this file only as a pointer to open and obey `COMMIT.md`.
 4. Keep this wrapper intentionally thin so commit policy cannot drift into two copies.
+5. For git-index sequencing and stale-lock recovery rules, read and obey `COMMIT.md`.

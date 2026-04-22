@@ -64,6 +64,7 @@ Ignoring it is not a style issue; it is a project-safety failure.
    - key bullet points.
    - Do not add attribution trailers unless the user explicitly asks for them.
 5. Stage intended tracked files (`git add ...`).
+   - This and every later git write step must run sequentially.
 6. Commit using:
    - `git --no-pager commit -F git_message_brief.txt`
 7. Truncate message file:
@@ -87,3 +88,12 @@ Ignoring it is not a style issue; it is a project-safety failure.
 - Keep behavior-preserving refactor slices small and verifiable.
 - Do not add `Co-Authored-By` or any other attribution trailer unless the user explicitly asks for it.
 - Prefer one completed slice per commit cycle. If a task naturally fans out into multiple independently valid slices, close each slice with this workflow before moving on.
+
+## Git index safety
+- Never parallelize git index-mutating commands.
+- `git add`, `git rm`, `git mv`, `git commit`, and any equivalent git write step must run one after another, never in overlapping tool calls.
+- Do not overlap git write operations against the same repository state, even if they look short or independent.
+- Treat a stale `.git/index.lock` as workflow recovery, not as a normal part of the task.
+- If `.git/index.lock` exists, stop and confirm that no intended git write command is still running.
+- If the lock is stale, remove only `.git/index.lock`, retry the same blocked workflow step, and then continue the normal order.
+- Do not skip ahead to a later workflow step while the index is locked.

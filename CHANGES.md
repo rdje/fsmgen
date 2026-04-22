@@ -1,6 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### commit workflow now explicitly serializes git index writes
+- Updated [COMMIT.md](/Users/richarddje/Documents/github/fsmgen/COMMIT.md) so the authoritative commit workflow now explicitly forbids parallel git index-mutating commands, requires sequential git write steps, and defines the recovery rule for stale `.git/index.lock`.
+- Updated [README.md](/Users/richarddje/Documents/github/fsmgen/README.md), [SESSION_BOOTSTRAP.md](/Users/richarddje/Documents/github/fsmgen/SESSION_BOOTSTRAP.md), and [.agents/workflows/commit.md](/Users/richarddje/Documents/github/fsmgen/.agents/workflows/commit.md) so new sessions and thin workflow wrappers now point back to that stricter sequencing rule instead of silently relying on convention.
+
 ### extension-contract owners now group name families too
 - Updated [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm) so the bounded typed-extension contract now publishes a grouped `name_family_map` for hook names, context accessors, and supported source kinds, instead of forcing embedders to collect those bounded name lists separately.
 - Updated [t/306-extension-contract.t](/Users/richarddje/Documents/github/fsmgen/t/306-extension-contract.t) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the direct extension-contract regression plus the manifest-facing embedding regression now lock that grouped discovery surface directly.

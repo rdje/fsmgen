@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: commit workflow now serializes git index writes explicitly
+- Hardened [COMMIT.md](/Users/richarddje/Documents/github/fsmgen/COMMIT.md)
+  so the authoritative commit workflow now explicitly forbids overlapping git
+  index-mutating commands, requires sequential git write steps, and defines
+  stale `.git/index.lock` handling as workflow recovery.
+- Mirrored that safety rule into
+  [README.md](/Users/richarddje/Documents/github/fsmgen/README.md),
+  [SESSION_BOOTSTRAP.md](/Users/richarddje/Documents/github/fsmgen/SESSION_BOOTSTRAP.md),
+  and [.agents/workflows/commit.md](/Users/richarddje/Documents/github/fsmgen/.agents/workflows/commit.md)
+  so new sessions re-adopt the same sequencing rule before new work starts.
+
 ## 2026-04-22: extension-contract owners now publish grouped name families too
 - Hardened
   [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)

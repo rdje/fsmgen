@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: commit workflow must serialize git index writes explicitly
+- We hit the same stale `.git/index.lock` failure multiple times while the
+  implementation slices themselves were fine.
+- The recurring cause was not product logic; it was workflow drift during the
+  commit cycle, especially overlapping git index-mutating steps such as
+  staging and committing.
+- The right fix is to harden the authoritative workflow rather than rely on
+  memory:
+  - make sequential git write steps explicit in `COMMIT.md`,
+  - treat `.git/index.lock` as a recovery event rather than normal flow,
+  - allow only stale-lock removal, and only after confirming no intended git
+    write is still running,
+  - and propagate that reminder into session-start docs so the rule is seen
+    before momentum builds.
+- This is project-safety work, not housekeeping. Crash recovery depends on
+  honest task-scoped commits, and honest task-scoped commits depend on a git
+  index that is not being mutated from overlapping commands.
+
 ## 2026-04-22: extension-contract name families should be discoverable as one grouped map too
 - After grouping the bounded stable diagnostic-code registry families, the
   next honest helper seam sat in the typed extension contract.
