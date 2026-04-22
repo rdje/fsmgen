@@ -45,6 +45,7 @@ sub build_diagnostics_contract {
             ],
             in_process => [
                 'FSM::Support::CapabilityManifest::build_capability_manifest()->{diagnostics}',
+                'FSM::Support::DiagnosticsSection::build_diagnostics_section()',
             ],
         },
         public_top_level_presence_keys => diagnostics_public_top_level_keys(),

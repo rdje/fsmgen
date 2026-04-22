@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: diagnostics manifest section now has a dedicated builder
+- Added
+  [perl/FSM/Support/DiagnosticsSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsSection.pm)
+  so the public `diagnostics` manifest section is built in one dedicated place
+  instead of inline inside
+  [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm).
+- Added
+  [t/368-diagnostics-section-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/368-diagnostics-section-runtime-contract-audit.t)
+  to prove the in-process manifest plus both capability-manifest CLI
+  spellings keep the exact dedicated-builder projection for that public
+  section.
+- The older diagnostic-registry parity audit remains in place too, so the new
+  builder is pinned both to manifest parity and to maintained stable-code
+  truth.
+
 ## 2026-04-22: support-accounting manifest section now has a dedicated builder
 - Added
   [perl/FSM/Support/SupportAccountingSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingSection.pm)

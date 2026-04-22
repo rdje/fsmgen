@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: diagnostics was the last meaningful inline manifest section
+- After `support_accounting`, the last still-inline public manifest section was
+  `diagnostics`.
+- Extracting it behind one dedicated builder completes the manifest-section
+  ownership pattern for the major public sections:
+  - the section projection now has one owner,
+  - the `diagnostics` contract still owns the bounded section-level promises,
+  - the stable diagnostic-code registry remains the maintained truth,
+  - and the bounded manifest-context `check_json` enrichment stays visible in
+    one deliberate builder instead of hiding inline inside
+    [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm).
+- That is a better root-cause cleanup than adding more parity tests around
+  duplicated assembly logic, because the assembly logic itself is now singular.
+
 ## 2026-04-22: support-accounting was the right next manifest extraction because it owned the last private manifest counting helpers
 - After `embedding`, the cleanest remaining inline manifest section was
   `support_accounting`.

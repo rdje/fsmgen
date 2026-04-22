@@ -49,6 +49,11 @@ subtest 'contract exposes the bounded diagnostics section' => sub {
         'FSM::Support::CapabilityManifest',
         'contract records the manifest builder owner',
     );
+    ok(
+        scalar(grep { $_ eq 'FSM::Support::DiagnosticsSection::build_diagnostics_section()' }
+            @{$contract->{entrypoints}{in_process} || []}),
+        'contract advertises the dedicated diagnostics section builder as an in-process entrypoint',
+    );
     is_deeply(
         $contract->{public_top_level_presence_keys},
         diagnostics_public_top_level_keys(),

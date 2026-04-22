@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### diagnostics manifest section now has a dedicated builder and exact-builder parity audit
+- Added [perl/FSM/Support/DiagnosticsSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsSection.pm) so the public `diagnostics` manifest section is no longer assembled inline inside [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm).
+- Updated [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm) to consume that dedicated builder while preserving the existing bounded manifest-context `check_json` enrichment, stable-code registry copy, ordered `stable_codes` list, and embedded exact section contract copy.
+- Updated [perl/FSM/Support/DiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsContract.pm) so the bounded contract now advertises [perl/FSM/Support/DiagnosticsSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsSection.pm) as an in-process entrypoint beside the manifest section.
+- Added [t/368-diagnostics-section-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/368-diagnostics-section-runtime-contract-audit.t) to prove the in-process manifest plus both capability-manifest CLI spellings keep the exact dedicated-builder projection for the public `diagnostics` section, while the existing diagnostic-registry parity audit continues to lock that builder against maintained stable-code truth.
+
 ### support-accounting manifest section now has a dedicated builder and exact-builder parity audit
 - Added [perl/FSM/Support/SupportAccountingSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingSection.pm) so the public `support_accounting` manifest section is no longer assembled inline inside [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm).
 - Updated [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm) to consume that dedicated builder while preserving the existing corpus-derived counts, id lists, sanitized catalog entries, and embedded exact contract copy.

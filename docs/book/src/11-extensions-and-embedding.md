@@ -716,6 +716,13 @@ The `diagnostics` section now follows the same split too:
 owns the published top-level, scalar-string, and stable-code entry families
 advertised through `diagnostics.section_contract`, while the narrower stable
 registry and check-JSON contracts still own their deeper public promises.
+The emitted `diagnostics` section itself is now built through
+[perl/FSM/Support/DiagnosticsSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsSection.pm)
+and runtime-locked as an exact dedicated-builder projection across both
+in-process and CLI manifest surfaces. That keeps the grouped stable registry,
+bounded manifest-context `check_json`, and section contract in one place
+instead of leaving that public section as duplicated inline manifest assembly
+logic.
 That section shell now also publishes a grouped `presence_key_family_map` so
 downstream tools can discover the bounded diagnostics-owned scalar-string,
 list, and stable-code entry key families from one place instead of collecting
