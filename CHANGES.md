@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### unmatched public failure reports are now runtime-locked too
+- Added [t/352-unmatched-failure-report-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/352-unmatched-failure-report-contract-audit.t) as an `R13` hardening regression over the in-process unmatched failure builders for check JSON and normalized semantic JSON.
+- The new audit now proves that unmatched failures keep the bounded report shape, preserve `code: null`, use `unclassified` family/stability metadata, keep `migration_hint_available: false`, and omit all matched-only support-accounting and diagnostic fields while still returning `matched: false`.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so downstream embedders are told explicitly how unmatched failures behave on both the check JSON and normalized semantic JSON surfaces.
+
 ### diagnostic-code registry defensive copies are now regression-locked too
 - Updated [t/315-diagnostic-code-registry-contract.t](/Users/richarddje/Documents/github/fsmgen/t/315-diagnostic-code-registry-contract.t) so the bounded stable diagnostic-code registry contract now proves its advertised `registry_returns_defensive_copies` behavior directly.
 - The new regression mutates returned `diagnostic_code_registry()` and `diagnostic_code_metadata()` hashes, then proves fresh lookups still preserve the canonical summary, family, and severity values.

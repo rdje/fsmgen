@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: unmatched public failure branches should be runtime-locked too
+- The public check JSON and normalized semantic JSON lanes already had solid
+  matched-failure coverage, but the unmatched failure branch was still mostly
+  implied by builder code and narrative docs.
+- That is a real `R13` concern because downstream tools need deterministic
+  semantics for ad hoc failures that are not yet promoted into the stable
+  corpus-backed registry:
+  - `code` should still be present but null,
+  - `family` and `stability` should fall back to `unclassified`,
+  - `migration_hint_available` should stay false,
+  - support-accounting objects should keep `matched: false`,
+  - and matched-only fields should be absent rather than filled with junk.
+- The right hardening slice is one focused runtime audit over the in-process
+  failure builders, because that gives deterministic coverage without tying the
+  test to noisy CLI text or parser-specific failure wording.
+
 ## 2026-04-22: the stable diagnostic-code registry should prove defensive-copy behavior directly
 - The bounded stable-code registry contract already advertised
   `registry_returns_defensive_copies => true`, but the direct regression only

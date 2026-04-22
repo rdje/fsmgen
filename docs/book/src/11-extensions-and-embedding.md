@@ -758,6 +758,10 @@ object gives embedders the matched entry id, family, coverage, classification,
 source kind, and `strict_supported` marker. Successful user sources outside the
 corpus report `matched: false` instead of claiming catalog support they do not
 yet have.
+Unclassified failures follow the same honesty rule: they still keep the
+bounded failure-diagnostic and nested `support_accounting` object shape, but
+they omit matched-only fields and keep `matched: false` until that failure
+family is deliberately promoted into the stable corpus-backed registry.
 The bounded key-presence contract for this surface now has its own owner:
 [perl/FSM/Support/CheckDiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnosticsContract.pm).
 The capability manifest advertises that contract so downstream tools can
@@ -794,6 +798,10 @@ downstream tools can consume without depending on private runtime object
 identity. Failed semantic exports reuse the same stable diagnostic-code and
 support-accounting bridge as `--check-json`, return non-zero, and do not expose
 partial semantics.
+When a semantic failure does not match a promoted corpus-backed diagnostic
+family, the report still keeps its bounded top-level `support_accounting`
+object with `matched: false`, while the failure diagnostic keeps `code: null`
+and omits matched-only fields.
 
 Accepted corpus entries are covered too. Every current supported-smoke entry
 must succeed through `--emit-semantic-json`, and every current strict-supported

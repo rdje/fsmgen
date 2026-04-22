@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: unmatched public failure branches are now runtime-locked too
+- Added
+  [t/352-unmatched-failure-report-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/352-unmatched-failure-report-contract-audit.t)
+  as an `R13` hardening regression over the unmatched failure builders for
+  public check JSON and normalized semantic JSON.
+- The audit now proves that unmatched failures keep the bounded report shell,
+  preserve `code: null`, use `unclassified` family/stability metadata, keep
+  `migration_hint_available: false`, preserve `matched: false`, and omit all
+  matched-only support-accounting and diagnostic fields.
+- Updated
+  [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  so the book now explains unmatched failure behavior for both public JSON
+  report surfaces.
+
 ## 2026-04-22: diagnostic-code registry defensive copies are now regression-locked
 - Hardened
   [t/315-diagnostic-code-registry-contract.t](/Users/richarddje/Documents/github/fsmgen/t/315-diagnostic-code-registry-contract.t)
