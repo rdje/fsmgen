@@ -6,4 +6,23 @@ REPO_ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
 
 cd "$REPO_ROOT"
 
-prove -I perl t
+require_tool() {
+  local tool="$1"
+  if ! command -v "$tool" >/dev/null 2>&1; then
+    printf 'ci-regression: missing required tool: %s\n' "$tool" >&2
+    exit 1
+  fi
+}
+
+run_step() {
+  local label="$1"
+  shift
+  printf '==> %s\n' "$label"
+  "$@"
+}
+
+require_tool prove
+require_tool mdbook
+
+run_step "Perl regression suite" prove -I perl t
+run_step "mdBook build" mdbook build docs/book

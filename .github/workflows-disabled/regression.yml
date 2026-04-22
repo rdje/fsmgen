@@ -15,5 +15,7 @@ jobs:
       uses: shogo82148/actions-setup-perl@v1
       with:
         perl-version: '5.32'
+    - name: Set up mdBook
+      uses: peaceiris/actions-mdbook@v2
     - name: Run shared regression CI script
       run: ./bin/ci-regression

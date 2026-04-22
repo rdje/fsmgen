@@ -167,7 +167,11 @@ sub _slash_token_right_brace_placeholder ($class) {
 }
 
 sub classify_source_ast ($class, $raw_ast) {
-    return FSM::SourceClassifier::classify_source_ast($raw_ast);
+    my $source_info = FSM::SourceClassifier::classify_source_ast($raw_ast);
+    return $class->_augment_source_info_package_import_summary(
+        raw_ast => $raw_ast,
+        source_info => $source_info,
+    );
 }
 
 sub parse_composition_source ($class, %args) {
@@ -179,6 +183,96 @@ sub parse_composition_source ($class, %args) {
         debug => ($debug_level > 0),
     );
     return $parser->parse_source($raw_ast);
+}
+
+sub _augment_source_info_package_import_summary ($class, %args) {
+    my $source_info = $args{source_info} || {};
+    my $package_imports = $class->_safe_source_package_imports(
+        raw_ast => $args{raw_ast},
+        source_info => $source_info,
+    );
+    return $source_info unless defined $package_imports;
+
+    $source_info->{package_import_names} = [ @$package_imports ];
+    $source_info->{package_import_count} = scalar(@$package_imports);
+    return $source_info;
+}
+
+sub _safe_source_package_imports ($class, %args) {
+    my $source_info = $args{source_info} || {};
+    my $kind = $source_info->{kind} // '';
+
+    if ($kind eq 'fsm' || $kind eq 'dt') {
+        return $class->_safe_direct_root_package_imports(%args);
+    }
+    if ($kind eq 'composition') {
+        return $class->_safe_composition_package_imports(%args);
+    }
+    if ($kind eq 'package') {
+        return [];
+    }
+
+    return undef;
+}
+
+sub _safe_direct_root_package_imports ($class, %args) {
+    my $source_info = $args{source_info}
+        || FSM::SourceClassifier::classify_source_ast($args{raw_ast});
+    my $body_items = $class->_direct_root_body_items(
+        raw_ast => $args{raw_ast},
+        source_info => $source_info,
+    );
+    return undef unless $body_items;
+
+    my @package_imports;
+    my $saw_import_block = 0;
+    for my $item (@$body_items) {
+        next unless ref($item) eq 'ARRAY';
+        next unless defined($item->[0]) && !ref($item->[0]) && $item->[0] eq '+import';
+        $saw_import_block = 1;
+
+        my $imports_list = $item->[1];
+        return undef unless ref($imports_list) eq 'ARRAY' && @$imports_list;
+
+        for my $package_name (@$imports_list) {
+            my $resolved_name = $class->_unwrap_scalar_token($package_name);
+            return undef unless defined($resolved_name) && !ref($resolved_name) && $resolved_name =~ /\A[A-Za-z_]\w*\z/;
+            push @package_imports, $resolved_name;
+        }
+    }
+
+    return [] unless $saw_import_block;
+    return \@package_imports;
+}
+
+sub _safe_composition_package_imports ($class, %args) {
+    my $source_info = $args{source_info}
+        || FSM::SourceClassifier::classify_source_ast($args{raw_ast});
+    my $body_items = $class->_composition_body_items(
+        raw_ast => $args{raw_ast},
+        source_info => $source_info,
+    );
+    return undef unless $body_items;
+
+    my @package_imports;
+    my $saw_import_block = 0;
+    for my $item (@$body_items) {
+        next unless ref($item) eq 'ARRAY';
+        next unless defined($item->[0]) && !ref($item->[0]) && $item->[0] eq '+import';
+        $saw_import_block = 1;
+
+        my $imports_list = $item->[1];
+        return undef unless ref($imports_list) eq 'ARRAY' && @$imports_list;
+
+        for my $package_name (@$imports_list) {
+            my $resolved_name = $class->_unwrap_scalar_token($package_name);
+            return undef unless defined($resolved_name) && !ref($resolved_name) && $resolved_name =~ /\A[A-Za-z_]\w*\z/;
+            push @package_imports, $resolved_name;
+        }
+    }
+
+    return [] unless $saw_import_block;
+    return \@package_imports;
 }
 
 sub enforce_strict_source_boundary ($class, %args) {
@@ -417,6 +511,30 @@ sub _direct_root_body_items ($class, %args) {
             my @body = @$raw_ast > 1 ? @$raw_ast[1 .. $#$raw_ast] : ();
             return \@body;
         }
+    }
+
+    return undef;
+}
+
+sub _composition_body_items ($class, %args) {
+    my $raw_ast = $args{raw_ast};
+    return undef unless ref($raw_ast) eq 'ARRAY';
+
+    my $source_info = $args{source_info}
+        || FSM::SourceClassifier::classify_source_ast($raw_ast);
+    return undef unless ($source_info->{kind} // '') eq 'composition';
+
+    my $header = $source_info->{header} // '';
+
+    if (@$raw_ast > 0 && !ref($raw_ast->[0]) && $raw_ast->[0] eq $header) {
+        return $raw_ast->[1] if @$raw_ast > 1 && ref($raw_ast->[1]) eq 'ARRAY';
+    }
+
+    for my $ast_node (@$raw_ast) {
+        next unless ref($ast_node) eq 'ARRAY' && @$ast_node > 1;
+        next if ref($ast_node->[0]);
+        next unless $ast_node->[0] eq $header;
+        return $ast_node->[1] if ref($ast_node->[1]) eq 'ARRAY';
     }
 
     return undef;

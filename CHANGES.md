@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### local regression gate now builds the mdBook too
+- Updated [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression) so the repo-owned local regression gate now requires `mdbook`, runs the full Perl regression suite, and builds the mdBook in the same pass.
+- Updated [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) and [docs/book/src/10-errors-strict-mode-and-troubleshooting.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/10-errors-strict-mode-and-troubleshooting.md) so the user-facing regression guidance now states that the local gate covers both runtime regressions and the book build.
+- Updated [.github/workflows-disabled/regression.yml](/Users/richarddje/Documents/github/fsmgen/.github/workflows-disabled/regression.yml) so the parked hosted workflow would install `mdbook` too if the user later restores it.
+- While hardening that gate, fixed [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) so valid direct and composition raw-AST classifications now preserve `package_import_names` and `package_import_count` early, matching the bounded `source_info` shape later carried by the pipeline.
+- Added focused regression coverage in [t/197-pipeline-source-frontend.t](/Users/richarddje/Documents/github/fsmgen/t/197-pipeline-source-frontend.t) so the local gate now catches that source-front shape drift automatically.
+
 ### local regression docs now match the parked GitHub workflow state
 - Updated [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) and [docs/book/src/10-errors-strict-mode-and-troubleshooting.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/10-errors-strict-mode-and-troubleshooting.md) so they no longer claim that `bin/ci-regression` mirrors an active `.github/workflows/regression.yml`.
 - The corrected user-facing wording now says that `bin/ci-regression` is the repo-owned local regression gate, while hosted CI remains intentionally parked under [.github/workflows-disabled/README.md](/Users/richarddje/Documents/github/fsmgen/.github/workflows-disabled/README.md).

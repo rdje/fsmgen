@@ -1,5 +1,31 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: local regression gate now builds the mdBook too
+- Hardened [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  so the repo-owned local regression gate now:
+  - checks for `prove` and `mdbook`,
+  - runs the full Perl regression suite,
+  - and builds the mdBook as part of the same quality gate.
+- Updated [README.md](/Users/richarddje/Documents/github/fsmgen/README.md)
+  and [docs/book/src/10-errors-strict-mode-and-troubleshooting.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/10-errors-strict-mode-and-troubleshooting.md)
+  so user-facing docs now say the local gate covers both runtime regressions
+  and the book build.
+- Updated
+  [.github/workflows-disabled/regression.yml](/Users/richarddje/Documents/github/fsmgen/.github/workflows-disabled/regression.yml)
+  so the parked hosted workflow would still provision `mdbook` correctly if
+  the user later chooses to restore GitHub Actions.
+- The strengthened gate immediately exposed a real source-front drift:
+  [t/197-pipeline-source-frontend.t](/Users/richarddje/Documents/github/fsmgen/t/197-pipeline-source-frontend.t)
+  was failing because direct-root `SourceFrontend->classify_source_ast(...)`
+  no longer carried `package_import_count` / `package_import_names` even though
+  the bounded pipeline `source_info` surface did.
+- Fixed
+  [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm)
+  so valid direct and composition raw-AST classification now preserves that
+  package-import summary early, and extended
+  [t/197-pipeline-source-frontend.t](/Users/richarddje/Documents/github/fsmgen/t/197-pipeline-source-frontend.t)
+  to lock both the empty-import and authored-import cases.
+
 ## 2026-04-22: local regression docs now match the parked GitHub workflow state
 - Hardened [README.md](/Users/richarddje/Documents/github/fsmgen/README.md)
   and [docs/book/src/10-errors-strict-mode-and-troubleshooting.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/10-errors-strict-mode-and-troubleshooting.md)

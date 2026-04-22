@@ -176,6 +176,8 @@ Before landing behavior changes, run the local regression suite:
 
 For focused work, run the nearby targeted `prove` suites first, then the full
 regression.
+That gate now also builds the mdBook, so generated docs and runtime behavior
+stay under the same local quality check.
 GitHub Actions is intentionally parked right now under
 [.github/workflows-disabled/README.md](/Users/richarddje/Documents/github/fsmgen/.github/workflows-disabled/README.md),
 so this local repo-owned gate is the currently active regression entrypoint.

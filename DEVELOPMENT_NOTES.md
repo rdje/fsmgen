@@ -1,5 +1,30 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: the repo-owned local regression gate should cover the book too
+- The mdBook is now a first-class user-facing surface, not a side document.
+- That made the old `bin/ci-regression` shape too narrow: it only ran the Perl
+  test suite, while many task close-outs separately remembered to run
+  `mdbook build docs/book`.
+- The right fix is to move that expectation into the repo-owned local gate:
+  - require both `prove` and `mdbook`,
+  - run the full Perl regression suite,
+  - then build the book in the same command path,
+  - and keep the parked hosted workflow ready to do the same if the user ever
+    restores GitHub Actions.
+- This is a quality-gate hardening slice. It does not widen product behavior,
+  but it makes one important user surface stop depending on human memory.
+- The strengthened gate immediately exposed a real source-front consistency bug:
+  [t/197-pipeline-source-frontend.t](/Users/richarddje/Documents/github/fsmgen/t/197-pipeline-source-frontend.t)
+  caught that direct-root `SourceFrontend->classify_source_ast(...)` no longer
+  matched the bounded `source_info` shape later carried by the pipeline because
+  `package_import_count` and `package_import_names` were only being backfilled
+  deeper in generation orchestration.
+- The right fix was to normalize those package-import summary keys directly in
+  [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm)
+  from raw AST when the import list is safely knowable for valid direct or
+  composition roots, then lock that behavior with a focused regression instead
+  of weakening the comparison.
+
 ## 2026-04-22: local regression docs should not imply hosted CI is still active
 - The repository intentionally parked GitHub Actions earlier to avoid burning
   hosted minutes, but the main README still said `bin/ci-regression` mirrored

@@ -11,6 +11,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Pipeline::HDLGenerator;
 use FSM::Pipeline::SourceFrontend;
+use Lispish;
 
 subtest 'source frontend rebuilds the bounded direct-root parsing and semantic-module surface' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
@@ -134,6 +135,75 @@ FSM
         composition_spec_snapshot($frontend_spec),
         composition_spec_snapshot($pipeline_result->{composition_spec}),
         'source frontend builds the same bounded composition spec surface the pipeline later carries',
+    );
+};
+
+subtest 'source frontend classifies package import summaries directly from raw AST' => sub {
+    my $direct_raw_ast = Lispish::multi(\<<'FSM');
+(?fsm:source_frontend_direct_imports
+  (+import shared_local shared_external)
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+size
+    (OUT 8)
+  )
+  (-idle
+    (OUT <= 8'0)
+  )
+)
+
+(?pkg:shared_local
+  (+constants
+    (RESET_BYTE 8'hA5)
+  )
+)
+FSM
+
+    my $composition_raw_ast = Lispish::multi(\<<'FSM');
+(?top:source_frontend_composition_imports
+  (+import shared_local shared_external)
+  (?ports:public_io
+    status_out>
+  )
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /=shared_external.RESET_BYTE/status_out/
+  )
+)
+
+(?pkg:shared_local
+  (+constants
+    (RESET_BYTE 8'hA5)
+  )
+)
+
+(?rtlif:uart_tx
+  data_in<8:data
+)
+FSM
+
+    is_deeply(
+        FSM::Pipeline::SourceFrontend->classify_source_ast($direct_raw_ast),
+        {
+            kind => 'fsm',
+            header => '?fsm:source_frontend_direct_imports',
+            package_import_count => 2,
+            package_import_names => [qw(shared_local shared_external)],
+        },
+        'source frontend direct-root classification preserves authored package import summary',
+    );
+
+    is_deeply(
+        FSM::Pipeline::SourceFrontend->classify_source_ast($composition_raw_ast),
+        {
+            kind => 'composition',
+            header => '?top:source_frontend_composition_imports',
+            package_import_count => 2,
+            package_import_names => [qw(shared_local shared_external)],
+        },
+        'source frontend composition classification preserves authored package import summary',
     );
 };
 
