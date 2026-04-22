@@ -5,6 +5,7 @@ use warnings;
 
 use Exporter 'import';
 use JSON::PP ();
+use FSM::Support::BackendValidationSection qw(build_backend_validation_section);
 use FSM::Support::BackendValidationContract qw(build_backend_validation_contract);
 use FSM::Support::CapabilityManifestContract qw(build_capability_manifest_contract);
 use FSM::Support::CheckDiagnosticsContract qw(build_check_diagnostics_contract);
@@ -15,7 +16,6 @@ use FSM::Support::DiagnosticsContract qw(build_diagnostics_contract);
 use FSM::Support::EmbeddingContract qw(build_embedding_contract);
 use FSM::Support::DocumentationSection qw(build_documentation_section);
 use FSM::Support::ExtensionContract qw(build_extension_contract);
-use FSM::Support::HDLExternalValidationContract qw(build_hdl_external_validation_contract);
 use FSM::Support::HDLGeneratorResultContract qw(build_hdl_generator_result_contract);
 use FSM::Support::LanguageSurfaceSection qw(build_language_surface_section);
 use FSM::Support::ProducerSection qw(build_producer_section);
@@ -79,13 +79,7 @@ sub build_capability_manifest {
             section_contract => build_diagnostics_contract(),
         },
         semantic_exports => build_semantic_exports_section(),
-        backend_validation => {
-            systemverilog_external => {
-                %{build_hdl_external_validation_contract()},
-                regression_smoke => 't/308-systemverilog-external-validation.t',
-            },
-            section_contract => build_backend_validation_contract(),
-        },
+        backend_validation => build_backend_validation_section(),
         embedding => {
             composition_report => build_composition_report_contract(),
             hdl_generator_result => build_hdl_generator_result_contract(),

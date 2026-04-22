@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: backend-validation manifest section now has a dedicated builder
+- Added
+  [perl/FSM/Support/BackendValidationSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/BackendValidationSection.pm)
+  so the public `backend_validation` manifest section is built in one
+  dedicated place instead of inline inside
+  [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm).
+- Added
+  [t/365-backend-validation-section-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/365-backend-validation-section-runtime-contract-audit.t)
+  to prove the in-process manifest plus both capability-manifest CLI
+  spellings keep the exact dedicated-builder projection for that public
+  section.
+
 ## 2026-04-22: semantic-exports manifest section now has a dedicated builder
 - Added
   [perl/FSM/Support/SemanticExportsSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SemanticExportsSection.pm)

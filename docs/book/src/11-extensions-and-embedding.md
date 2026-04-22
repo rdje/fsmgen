@@ -741,6 +741,13 @@ The `backend_validation` section now follows the same split too:
 owns the published top-level and nested contract-owner map advertised through
 `backend_validation.section_contract`, while the narrower
 `HDLExternalValidationContract` still owns the deeper validation-lane promise.
+The emitted `backend_validation` section itself is now built through
+[perl/FSM/Support/BackendValidationSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/BackendValidationSection.pm)
+and runtime-locked as an exact dedicated-builder projection across both
+in-process and CLI manifest surfaces. That keeps the current bounded
+`systemverilog_external` lane plus its manifest-context regression-smoke claim
+in one place instead of leaving that public section as duplicated inline
+manifest assembly logic.
 That section shell now also publishes a grouped `nested_presence_key_map` so
 downstream tools can discover the bounded child key family for
 `systemverilog_external` from one place before descending into the narrower

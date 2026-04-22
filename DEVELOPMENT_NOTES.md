@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: backend-validation is the next clean manifest-context section extraction
+- After `semantic_exports`, the next adjacent bounded manifest-context section
+  is `backend_validation`.
+- It has the same basic shape:
+  - one narrower dedicated child contract,
+  - one small manifest-context enrichment,
+  - and duplicated inline assembly inside `CapabilityManifest.pm`.
+- Extracting it behind a dedicated builder keeps the current
+  `systemverilog_external` lane description plus the regression-smoke claim in
+  one place and lets the broader manifest parity audit stay focused on section
+  composition instead of inline duplication.
+
 ## 2026-04-22: bounded manifest-context export sections should move behind dedicated builders too
 - After the fully authored inline leaves moved behind dedicated builders, the
   next adjacent cleanup seam was the bounded manifest-context export sections
