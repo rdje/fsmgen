@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### HDLGenerator leaf owners now have a runtime audit too
+- Added [t/355-hdl-generator-leaf-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/355-hdl-generator-leaf-runtime-contract-audit.t) as an `R13` hardening regression over real in-process `HDLGenerator` results.
+- The new audit now proves that the bounded `source_info`, `module_info`, and `statistics` leaf-owner contracts stay aligned with live direct and composition generation results instead of only matching static helper-family lists.
+- The same audit also locks the narrower direct-root rule that `module_info` and `statistics` omit composition-only summary keys on direct roots while keeping those grouped families present on composition tops.
+- It also proves that `source_info.package_import_count` and `source_info.package_import_names` stay bounded and preserve authored order on both direct and composition roots that use semantic package imports.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders are told that these shipped `HDLGenerator` leaf-owner contracts are now runtime-checked against live results.
+
 ### successful normalized semantic child owners now have a runtime audit too
 - Added [t/354-normalized-semantic-child-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/354-normalized-semantic-child-runtime-contract-audit.t) as an `R13` hardening regression that checks real successful normalized semantic payloads against the individual child-owner contracts instead of only the parent report shell.
 - The new audit uses one symbol-rich direct source plus one composition source to prove that `semantic.module`, `semantic.system_contract`, `semantic.explicit_system_contract`, `semantic.signal_analysis`, `semantic.forward_ir`, optional `semantic.symbol_contract`, and optional `semantic.composition` stay aligned with the bounded child-owner key families at runtime.

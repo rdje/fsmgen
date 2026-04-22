@@ -13677,3 +13677,17 @@ It is an exact-delay pulse request:
     of landing that feature,
   - and stale support wording or stale examples inside the book should be
     treated as real product-quality bugs.
+
+## 2026-04-22: `HDLGenerator` leaf-owner contracts now have a runtime audit too
+- Added
+  [t/355-hdl-generator-leaf-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/355-hdl-generator-leaf-runtime-contract-audit.t)
+  as an `R13` hardening regression over real in-process `HDLGenerator`
+  results.
+- The audit now proves that the bounded `source_info`, `module_info`, and
+  `statistics` leaf-owner contracts stay aligned with live direct and
+  composition generation results instead of only with static helper-family
+  lists.
+- It also locks the package-import summary story at the leaf-owner level:
+  `source_info.package_import_count` and `source_info.package_import_names`
+  must stay bounded and preserve authored order on both direct and
+  composition roots that use semantic package imports.

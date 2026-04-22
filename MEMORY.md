@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: `HDLGenerator` leaf-owner contracts now have a runtime audit too
+- Added
+  [t/355-hdl-generator-leaf-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/355-hdl-generator-leaf-runtime-contract-audit.t)
+  as an `R13` hardening regression over real in-process `HDLGenerator`
+  results.
+- The audit now proves that the bounded `source_info`, `module_info`, and
+  `statistics` leaf-owner contracts stay aligned with live direct and
+  composition generation results instead of only static helper-family lists.
+- It also locks the narrower direct-root rule that `module_info` and
+  `statistics` omit composition-only summary keys on direct roots, while
+  composition roots keep those grouped families, and it separately locks the
+  authored package-import summary preserved by `source_info` on both root
+  kinds.
+
 ## 2026-04-22: successful normalized semantic child owners now have a runtime audit too
 - Added
   [t/354-normalized-semantic-child-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/354-normalized-semantic-child-runtime-contract-audit.t)

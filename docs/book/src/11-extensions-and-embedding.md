@@ -835,6 +835,13 @@ contracts honest against the actual emitted `semantic.module`,
 `semantic.signal_analysis`, `semantic.forward_ir`, optional
 `semantic.symbol_contract`, and optional `semantic.composition` branches,
 instead of relying only on static helper-family consistency.
+The same runtime-audit stance now also covers the bounded in-process
+`HDLGenerator` leaf owners for `source_info`, `module_info`, and `statistics`.
+Real direct and composition generation results are checked against the shipped
+leaf-owner key families, and the `source_info` audit also locks authored
+package-import summaries on both direct and composition roots. That keeps the
+leaf contracts tied to what embedders actually receive in-process instead of
+only to static helper lists.
 
 This is still a bounded public slice, not the final full semantic export. Wider
 expression, state/DT control-shape, assignment/guard, package/type, and
