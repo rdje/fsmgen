@@ -273,6 +273,10 @@ a serializable public JSON surface, so embedders should follow
 [perl/FSM/Support/CompositionReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CompositionReportContract.pm)
 and the sanitized
 `semantic.composition.provenance_report` fragment for downstream interchange.
+That same owner now also publishes a grouped `presence_key_family_map` so
+embedders can discover the bounded composition-report summary, collection,
+count-map, example-map, and ordered-list families from one place instead of
+collecting those key-family lists separately.
 The public `support_accounting` match objects emitted beside those reports also
 share one bounded nested-object contract:
 [perl/FSM/Support/SupportAccountingMatchContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingMatchContract.pm)

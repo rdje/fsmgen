@@ -30,8 +30,14 @@ use FSM::Support::CheckResultContract qw(
     check_result_contract_source
 );
 use FSM::Support::CompositionReportContract qw(
+    composition_report_collection_keys
     composition_report_contract_source
+    composition_report_count_map_keys
+    composition_report_example_map_keys
     composition_report_json_fragment_path
+    composition_report_ordered_list_keys
+    composition_report_presence_key_family_map
+    composition_report_summary_keys
 );
 use FSM::Support::ExtensionContract qw(
     extension_contract_name_family_map
@@ -990,6 +996,36 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         $manifest->{embedding}{composition_report}{json_fragment_path},
         composition_report_json_fragment_path(),
         'manifest records where the sanitized composition report is exported',
+    );
+    is_deeply(
+        $manifest->{embedding}{composition_report}{summary_keys},
+        composition_report_summary_keys(),
+        'manifest records the grouped composition-report summary key family',
+    );
+    is_deeply(
+        $manifest->{embedding}{composition_report}{collection_keys},
+        composition_report_collection_keys(),
+        'manifest records the grouped composition-report collection key family',
+    );
+    is_deeply(
+        $manifest->{embedding}{composition_report}{count_map_keys},
+        composition_report_count_map_keys(),
+        'manifest records the grouped composition-report count-map key family',
+    );
+    is_deeply(
+        $manifest->{embedding}{composition_report}{example_map_keys},
+        composition_report_example_map_keys(),
+        'manifest records the grouped composition-report example-map key family',
+    );
+    is_deeply(
+        $manifest->{embedding}{composition_report}{ordered_list_keys},
+        composition_report_ordered_list_keys(),
+        'manifest records the grouped composition-report ordered-list key family',
+    );
+    is_deeply(
+        $manifest->{embedding}{composition_report}{presence_key_family_map},
+        composition_report_presence_key_family_map(),
+        'manifest records the grouped composition-report key-family map',
     );
     is(
         $manifest->{embedding}{hdl_generator_result}{status},

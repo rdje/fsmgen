@@ -9,11 +9,17 @@ use Scalar::Util qw(blessed);
 
 our @EXPORT_OK = qw(
     build_composition_report_contract
+    composition_report_collection_keys
     composition_report_contract_source
+    composition_report_count_map_keys
+    composition_report_example_map_keys
     composition_report_json_fragment_path
+    composition_report_ordered_list_keys
+    composition_report_presence_key_family_map
     composition_report_public_top_level_keys
     composition_report_raw_report_json_safe
     composition_report_raw_result_key
+    composition_report_summary_keys
     sanitize_composition_report
 );
 
@@ -29,6 +35,12 @@ sub build_composition_report_contract {
             't/307-composition-report-contract.t',
         ],
         public_top_level_keys => composition_report_public_top_level_keys(),
+        summary_keys => composition_report_summary_keys(),
+        collection_keys => composition_report_collection_keys(),
+        count_map_keys => composition_report_count_map_keys(),
+        example_map_keys => composition_report_example_map_keys(),
+        ordered_list_keys => composition_report_ordered_list_keys(),
+        presence_key_family_map => composition_report_presence_key_family_map(),
         raw_report_json_safe => composition_report_raw_report_json_safe(),
         sanitized_report_json_safe => JSON::PP::true,
         sanitizes_private_perl_objects => JSON::PP::true,
@@ -37,6 +49,7 @@ sub build_composition_report_contract {
             'Treat raw composition_report as an in-process compatibility report, not as a JSON document.',
             'Use the normalized semantic JSON composition provenance_report fragment for serializable downstream interchange.',
             'Do not expose composition_plan objects as public JSON; promote explicit scalar/list/hash report facts instead.',
+            'Use the grouped presence_key_family_map to discover the bounded composition-report summary, collection, count-map, example-map, and ordered-list families without collecting those key-family lists separately.',
         ],
     };
 }
@@ -85,6 +98,74 @@ sub composition_report_public_top_level_keys {
             ordered_block_kinds
         )
     ];
+}
+
+sub composition_report_summary_keys {
+    return [
+        qw(
+            lane
+            top_port_count
+            resolved_link_count
+            override_count
+            block_count
+        ),
+    ];
+}
+
+sub composition_report_collection_keys {
+    return [
+        qw(
+            ports
+            resolved_links
+            override_events
+            block_events
+        ),
+    ];
+}
+
+sub composition_report_count_map_keys {
+    return [
+        qw(
+            port_origin_counts
+            port_category_counts
+            resolved_link_origin_counts
+            resolved_link_category_counts
+            override_kind_counts
+            block_kind_counts
+        ),
+    ];
+}
+
+sub composition_report_example_map_keys {
+    return [
+        qw(
+            port_origin_examples
+            resolved_link_origin_examples
+            override_kind_examples
+            block_kind_examples
+        ),
+    ];
+}
+
+sub composition_report_ordered_list_keys {
+    return [
+        qw(
+            ordered_port_origins
+            ordered_resolved_link_origins
+            ordered_override_kinds
+            ordered_block_kinds
+        ),
+    ];
+}
+
+sub composition_report_presence_key_family_map {
+    return {
+        summary_keys => composition_report_summary_keys(),
+        collection_keys => composition_report_collection_keys(),
+        count_map_keys => composition_report_count_map_keys(),
+        example_map_keys => composition_report_example_map_keys(),
+        ordered_list_keys => composition_report_ordered_list_keys(),
+    };
 }
 
 sub sanitize_composition_report {

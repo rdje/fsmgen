@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-22
+### composition-report owners now group key families too
+- Updated [perl/FSM/Support/CompositionReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CompositionReportContract.pm) so the bounded sanitized `composition_report` owner now publishes grouped summary, collection, count-map, example-map, and ordered-list key families instead of exposing only one flat top-level list.
+- Updated [t/307-composition-report-contract.t](/Users/richarddje/Documents/github/fsmgen/t/307-composition-report-contract.t) and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t) so the direct composition-report regression plus the manifest-facing embedding view now lock that grouped discovery surface directly.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) so embedders can discover the grouped composition-report key families from the book too.
+
 ### commit workflow now explicitly serializes git index writes
 - Updated [COMMIT.md](/Users/richarddje/Documents/github/fsmgen/COMMIT.md) so the authoritative commit workflow now explicitly forbids parallel git index-mutating commands, requires sequential git write steps, and defines the recovery rule for stale `.git/index.lock`.
 - Updated [README.md](/Users/richarddje/Documents/github/fsmgen/README.md), [SESSION_BOOTSTRAP.md](/Users/richarddje/Documents/github/fsmgen/SESSION_BOOTSTRAP.md), and [.agents/workflows/commit.md](/Users/richarddje/Documents/github/fsmgen/.agents/workflows/commit.md) so new sessions and thin workflow wrappers now point back to that stricter sequencing rule instead of silently relying on convention.

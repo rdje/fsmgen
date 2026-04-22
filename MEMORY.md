@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: composition-report owners now publish grouped key families too
+- Hardened
+  [perl/FSM/Support/CompositionReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CompositionReportContract.pm)
+  so the bounded sanitized `composition_report` owner now publishes grouped
+  summary, collection, count-map, example-map, and ordered-list key families.
+- Regression coverage now proves that grouped composition-report key-family
+  map directly and through the manifest-facing embedding surface:
+  [t/307-composition-report-contract.t](/Users/richarddje/Documents/github/fsmgen/t/307-composition-report-contract.t),
+  [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t).
+
 ## 2026-04-22: commit workflow now serializes git index writes explicitly
 - Hardened [COMMIT.md](/Users/richarddje/Documents/github/fsmgen/COMMIT.md)
   so the authoritative commit workflow now explicitly forbids overlapping git

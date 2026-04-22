@@ -14,11 +14,17 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Pipeline::HDLGenerator;
 use FSM::Support::CompositionReportContract qw(
     build_composition_report_contract
+    composition_report_collection_keys
     composition_report_contract_source
+    composition_report_count_map_keys
+    composition_report_example_map_keys
     composition_report_json_fragment_path
+    composition_report_ordered_list_keys
+    composition_report_presence_key_family_map
     composition_report_public_top_level_keys
     composition_report_raw_report_json_safe
     composition_report_raw_result_key
+    composition_report_summary_keys
     sanitize_composition_report
 );
 
@@ -41,6 +47,36 @@ subtest 'contract declares bounded serializable composition report surface' => s
     ok($contract->{sanitized_report_json_safe}, 'contract says sanitized report is JSON-safe');
     ok($contract->{sanitizes_private_perl_objects}, 'contract says private Perl objects are sanitized');
     ok(!$contract->{stable_nested_content}, 'contract does not overpromise every nested report branch as frozen');
+    is_deeply(
+        $contract->{summary_keys},
+        composition_report_summary_keys(),
+        'contract publishes the grouped composition-report summary key family',
+    );
+    is_deeply(
+        $contract->{collection_keys},
+        composition_report_collection_keys(),
+        'contract publishes the grouped composition-report collection key family',
+    );
+    is_deeply(
+        $contract->{count_map_keys},
+        composition_report_count_map_keys(),
+        'contract publishes the grouped composition-report count-map key family',
+    );
+    is_deeply(
+        $contract->{example_map_keys},
+        composition_report_example_map_keys(),
+        'contract publishes the grouped composition-report example-map key family',
+    );
+    is_deeply(
+        $contract->{ordered_list_keys},
+        composition_report_ordered_list_keys(),
+        'contract publishes the grouped composition-report ordered-list key family',
+    );
+    is_deeply(
+        $contract->{presence_key_family_map},
+        composition_report_presence_key_family_map(),
+        'contract publishes the grouped composition-report key-family map',
+    );
 
     my %keys = map { $_ => 1 } @{$contract->{public_top_level_keys}};
     for my $key (qw(lane ports resolved_links override_events block_events ordered_port_origins)) {

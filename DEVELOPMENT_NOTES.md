@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: composition-report families should be discoverable as one grouped map too
+- After the broader `R13` owner-map work, the bounded sanitized
+  `composition_report` fragment still exposed only one flat top-level key list
+  even though it is a real public JSON fragment reused through embedding and
+  normalized semantic JSON.
+- That made it harder for embedders to discover what kind of bounded facts the
+  report currently exports: scalar summary counts, event/link collections,
+  count maps, example maps, and ordered provenance lists.
+- The bounded move is deliberately small:
+  - keep the existing public top-level key list unchanged,
+  - add canonical helpers for the summary, collection, count-map,
+    example-map, and ordered-list families,
+  - add one grouped `presence_key_family_map`,
+  - and lock both the direct composition-report regression and the
+    manifest-facing embedding view against that grouped surface.
+- This keeps the composition provenance fragment easier to consume without
+  widening the report payload or pretending the nested event/link entry shapes
+  are more frozen than they already are.
+
 ## 2026-04-22: commit workflow must serialize git index writes explicitly
 - We hit the same stale `.git/index.lock` failure multiple times while the
   implementation slices themselves were fine.
