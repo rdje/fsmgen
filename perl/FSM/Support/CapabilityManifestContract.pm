@@ -174,6 +174,7 @@ sub capability_manifest_support_accounting_keys {
             id_list_presence_keys
             catalog_entry_required_keys
             catalog_entry_optional_keys
+            presence_key_family_map
             sanitized_catalog_entries
             derived_from_regression_corpus
             guidance

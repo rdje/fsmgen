@@ -669,6 +669,12 @@ discovers the section-builder modules, proves that the discovered set exactly
 matches the manifest’s public top-level sections, and then checks that each
 section stays an exact dedicated-builder projection across the in-process
 manifest and both CLI spellings.
+The grouped top-level discovery tables published by `manifest_contract` are now
+runtime-locked too: [t/370-capability-manifest-section-discovery-audit.t](/Users/richarddje/Documents/github/fsmgen/t/370-capability-manifest-section-discovery-audit.t)
+proves that `top_level_contract_source_map` and
+`top_level_section_presence_key_map` stay aligned with the real section
+builders and with the live manifest payloads exposed through the in-process
+builder plus both CLI spellings.
 That runtime boundary is now locked directly too: the emitted
 `--capability-manifest` and `--emit-capability-manifest` JSON must match the
 in-process `build_capability_manifest()` output exactly. The embedded

@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-22: the manifest contract’s grouped discovery tables should be tested against reality, not only compared to helpers
+- After the fleet-level section-builder audit landed, the next honest gap was
+  the manifest contract’s grouped discovery tables.
+- Those maps are what embedders use to discover:
+  - which contract owner belongs to each public top-level section,
+  - and which top-level keys each section promises.
+- The right hardening step was one runtime audit that checks those discovery
+  tables against:
+  - the real section builders,
+  - and the live manifest payloads from both CLI spellings plus the in-process
+    builder.
+- That is stronger than only comparing helper functions to helper functions,
+  because it ties the published discovery metadata back to the actual emitted
+  surfaces.
+- The first run immediately paid off by surfacing a real omission:
+  `support_accounting` had started exposing top-level
+  `presence_key_family_map`, but the grouped manifest-contract section key map
+  had not been updated to advertise that field.
+
 ## 2026-04-22: now that section extraction is done, the right regression is a fleet-level audit
 - Once the top-level manifest sections were all behind dedicated
   `*Section.pm` builders, the next root-cause hardening step was not another

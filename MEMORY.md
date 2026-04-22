@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-22: manifest-contract discovery tables now have one runtime reality check
+- Added
+  [t/370-capability-manifest-section-discovery-audit.t](/Users/richarddje/Documents/github/fsmgen/t/370-capability-manifest-section-discovery-audit.t)
+  to prove that the grouped
+  `manifest_contract.top_level_contract_source_map` and
+  `manifest_contract.top_level_section_presence_key_map` stay aligned with the
+  real top-level section builders and the live manifest payloads exposed by
+  the in-process capability manifest plus both CLI spellings.
+- This is now the generic guard that the manifest’s grouped discovery metadata
+  still matches the actual emitted top-level public sections.
+- That audit immediately exposed and drove a real fix in
+  [perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm):
+  the grouped `support_accounting` key family now correctly advertises the
+  live top-level `presence_key_family_map` field.
+
 ## 2026-04-22: top-level manifest sections now have one fleet-level builder audit
 - Added
   [t/369-manifest-section-builder-audit.t](/Users/richarddje/Documents/github/fsmgen/t/369-manifest-section-builder-audit.t)
