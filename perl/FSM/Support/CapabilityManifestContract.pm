@@ -229,6 +229,7 @@ sub capability_manifest_embedding_keys {
             composition_report
             hdl_generator_result
             typed_extensions
+            debug_runtime
             section_contract
         ),
     ];

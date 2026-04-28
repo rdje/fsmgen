@@ -1798,8 +1798,8 @@ The manifest's `embedding` section now follows the same pattern:
 [perl/FSM/Support/EmbeddingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingContract.pm)
 names the published top-level and nested contract-owner map advertised through
 `embedding.section_contract`, while the narrower result, composition-report,
-and typed-extension details continue to live behind their own dedicated
-contracts.
+typed-extension, and debug-runtime details continue to live behind their own
+dedicated contracts.
 The manifest's `diagnostics` section now follows the same pattern:
 [perl/FSM/Support/DiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsContract.pm)
 names the published top-level, scalar-string, and stable-code entry families
@@ -2158,6 +2158,13 @@ restore_fsm_debug_state($saved);
 That restore path preserves the caller-facing trace/debug configuration,
 including the original trace sink, instead of forcing embedders to rebuild the
 global debug settings by hand after a temporary trace-file switch.
+That current in-process seam is now also advertised through
+`embedding.debug_runtime`, owned by
+[perl/FSM/Support/DebugRuntimeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DebugRuntimeContract.pm).
+That bounded contract publishes the shipped helper families, the bounded
+snapshot-state keys, the supported named trace-verbosity values, and the
+current limit that `FSM::Debug` is still one process-global singleton rather
+than a thread-local debug context.
 
 This is useful when:
 - you want to attach extra metadata for downstream tooling,

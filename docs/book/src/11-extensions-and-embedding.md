@@ -150,6 +150,13 @@ restore_fsm_debug_state($saved);
 That restore path preserves the caller-facing trace/debug configuration,
 including the original trace sink, instead of forcing embedders to reconstruct
 global debug state by hand after a temporary trace-file switch.
+That current in-process seam is now also advertised through
+`embedding.debug_runtime`, owned by
+[perl/FSM/Support/DebugRuntimeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DebugRuntimeContract.pm).
+That bounded contract publishes the shipped helper families, the bounded
+snapshot-state keys, the supported named trace-verbosity values, and the
+current limit that `FSM::Debug` is still one process-global singleton rather
+than a thread-local debug context.
 
 ## CLI Loading
 
@@ -709,8 +716,9 @@ That runtime boundary is now locked directly too: the emitted
 in-process `build_capability_manifest()` output exactly. The embedded
 `manifest_contract`, every `*.section_contract`, `language_surface.surface_contract`,
 `diagnostics.stable_code_registry`, and the exact embedding children
-`composition_report`, `hdl_generator_result`, and `typed_extensions` are now
-treated as literal dedicated-builder pass-throughs. Only three advertised
+`composition_report`, `hdl_generator_result`, `typed_extensions`, and
+`debug_runtime` are now treated as literal dedicated-builder pass-throughs.
+Only three advertised
 manifest children are intentionally enriched beyond their dedicated builders:
 `diagnostics.check_json`, `semantic_exports.normalized_semantic_json`, and
 `backend_validation.systemverilog_external`, and those enrichments are
@@ -754,18 +762,20 @@ The `embedding` section now follows the same split too:
 [perl/FSM/Support/EmbeddingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingContract.pm)
 owns the published top-level and nested contract-owner map advertised through
 `embedding.section_contract`, while the narrower result, composition-report,
-and typed-extension contracts still own their deeper public promises.
+typed-extension, and debug-runtime contracts still own their deeper public
+promises.
 The emitted `embedding` section itself is now built through
 [perl/FSM/Support/EmbeddingSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingSection.pm)
 and runtime-locked as an exact dedicated-builder projection across both
 in-process and CLI manifest surfaces. That keeps the grouped
-`composition_report`, `hdl_generator_result`, and `typed_extensions` child
-contracts in one place instead of leaving that public section as duplicated
-inline manifest assembly logic.
+`composition_report`, `hdl_generator_result`, `typed_extensions`, and
+`debug_runtime` child contracts in one place instead of leaving that public
+section as duplicated inline manifest assembly logic.
 That section shell now also publishes a grouped `nested_presence_key_map` so
 downstream tools can discover the bounded child key families for
-`composition_report`, `hdl_generator_result`, and `typed_extensions` from one
-place before descending into those narrower contracts.
+`composition_report`, `hdl_generator_result`, `typed_extensions`, and
+`debug_runtime` from one place before descending into those narrower
+contracts.
 The `diagnostics` section now follows the same split too:
 [perl/FSM/Support/DiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsContract.pm)
 owns the published top-level, scalar-string, and stable-code entry families

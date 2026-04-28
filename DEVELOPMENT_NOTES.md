@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-29: once the debug seam became real, the next honest move was to advertise exactly that seam, not a fantasy non-global API
+- After the save/restore helpers and scoped `HDLGenerator` use landed, the
+  next root-cause stabilization step was not another prose note.
+- The real remaining problem was discoverability: embedders could use the new
+  seam, but the bounded public embedding surface still had no explicit child
+  owner for it.
+- The honest fix is therefore one narrow manifest-advertised child contract:
+  `embedding.debug_runtime`.
+- That contract deliberately advertises only:
+  - the explicit save/restore/scoped helper families,
+  - the bounded snapshot-state keys,
+  - the supported named trace-verbosity values,
+  - and the fact that the runtime is still process-global and not thread-safe.
+- It does not pretend that every historical `FSM::Debug` helper is now part of
+  one frozen public API, and it does not pretend the underlying singleton has
+  stopped being global.
+
 ## 2026-04-29: the first honest fix for embedding-facing debug global state is save/restore plus scoped pipeline use
 - `FSM::Debug` is still a process-global singleton, so the right immediate
   `R13` fix was not to pretend the whole trace system was suddenly local or

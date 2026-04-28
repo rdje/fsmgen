@@ -15,6 +15,10 @@ use FSM::Support::CompositionReportContract qw(
     composition_report_contract_source
     composition_report_public_top_level_keys
 );
+use FSM::Support::DebugRuntimeContract qw(
+    debug_runtime_contract_source
+    debug_runtime_public_top_level_keys
+);
 use FSM::Support::ExtensionContract qw(
     extension_contract_public_top_level_keys
     extension_contract_source
@@ -64,6 +68,7 @@ subtest 'contract exposes the bounded embedding section' => sub {
             composition_report => composition_report_contract_source(),
             hdl_generator_result => hdl_generator_result_contract_source(),
             typed_extensions => extension_contract_source(),
+            debug_runtime => debug_runtime_contract_source(),
         },
         'contract publishes the bounded embedding nested-contract ownership map',
     );

@@ -39,6 +39,13 @@ use FSM::Support::CompositionReportContract qw(
     composition_report_presence_key_family_map
     composition_report_summary_keys
 );
+use FSM::Support::DebugRuntimeContract qw(
+    debug_runtime_contract_source
+    debug_runtime_family_map
+    debug_runtime_named_trace_verbosity_values
+    debug_runtime_public_top_level_keys
+    debug_runtime_snapshot_state_keys
+);
 use FSM::Support::ExtensionContract qw(
     extension_contract_name_family_map
     extension_contract_source
@@ -981,11 +988,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest records the embedding section contract owner',
     );
     ok(
-        scalar(@{$manifest->{embedding}{section_contract}{public_top_level_presence_keys} || []}) >= 4,
+        scalar(@{$manifest->{embedding}{section_contract}{public_top_level_presence_keys} || []}) >= 5,
         'manifest advertises bounded embedding top-level key presence',
     );
     ok(
-        scalar(@{$manifest->{embedding}{section_contract}{nested_contract_keys} || []}) >= 3,
+        scalar(@{$manifest->{embedding}{section_contract}{nested_contract_keys} || []}) >= 4,
         'manifest advertises bounded embedding nested-contract key presence',
     );
     is_deeply(
@@ -1422,6 +1429,61 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     ok(
         !$manifest->{embedding}{typed_extensions}{extension_object_contract}{legacy_plg_discovery},
         'manifest records that legacy .plg discovery is not part of typed extensions',
+    );
+    is(
+        $manifest->{embedding}{debug_runtime}{schema_version},
+        1,
+        'manifest records debug-runtime contract schema version',
+    );
+    is(
+        $manifest->{embedding}{debug_runtime}{status},
+        'bounded_public',
+        'manifest marks the embedding debug runtime seam as bounded public',
+    );
+    is(
+        $manifest->{embedding}{debug_runtime}{contract_source},
+        debug_runtime_contract_source(),
+        'manifest records the debug-runtime contract owner',
+    );
+    is_deeply(
+        $manifest->{embedding}{debug_runtime}{public_top_level_presence_keys},
+        debug_runtime_public_top_level_keys(),
+        'manifest records the bounded debug-runtime contract top-level keys',
+    );
+    is_deeply(
+        $manifest->{embedding}{debug_runtime}{family_map},
+        debug_runtime_family_map(),
+        'manifest records the grouped debug-runtime helper and snapshot-state families',
+    );
+    is_deeply(
+        $manifest->{embedding}{debug_runtime}{snapshot_state_keys},
+        debug_runtime_snapshot_state_keys(),
+        'manifest records the bounded debug-runtime snapshot-state keys',
+    );
+    is_deeply(
+        $manifest->{embedding}{debug_runtime}{named_trace_verbosity_values},
+        debug_runtime_named_trace_verbosity_values(),
+        'manifest records the bounded named debug trace verbosity values',
+    );
+    ok(
+        $manifest->{embedding}{debug_runtime}{process_global_singleton},
+        'manifest records that the debug runtime is still process-global',
+    );
+    ok(
+        !$manifest->{embedding}{debug_runtime}{thread_safe},
+        'manifest does not claim the debug runtime seam is thread-safe',
+    );
+    ok(
+        !$manifest->{embedding}{debug_runtime}{snapshot_json_safe},
+        'manifest does not claim saved debug snapshots are JSON-safe',
+    );
+    ok(
+        $manifest->{embedding}{debug_runtime}{pipeline_scopes_debug_state},
+        'manifest records that HDLGenerator scopes the current debug runtime seam',
+    );
+    ok(
+        !$manifest->{embedding}{debug_runtime}{general_debug_calls_auto_scoped},
+        'manifest does not claim all debug calls are automatically scoped',
     );
     ok(
         scalar(@{$manifest->{manifest_contract}{diagnostics_presence_keys} || []}) >= 4,

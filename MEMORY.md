@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-29: the debug save/restore seam is now a discoverable embedding child contract
+- Added
+  [perl/FSM/Support/DebugRuntimeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DebugRuntimeContract.pm)
+  as the single bounded owner for the current in-process debug-runtime seam:
+  explicit save/restore helpers, bounded snapshot-state keys, supported named
+  trace-verbosity values, and the still-honest limit that `FSM::Debug`
+  remains one process-global singleton rather than a thread-local context.
+- Wired that contract through
+  [perl/FSM/Support/EmbeddingSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingSection.pm),
+  [perl/FSM/Support/EmbeddingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingContract.pm),
+  and
+  [perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm)
+  so the bounded seam is now discoverable as `embedding.debug_runtime` rather
+  than living only in prose and ad hoc runtime tests.
+- Added
+  [t/374-debug-runtime-contract.t](/Users/richarddje/Documents/github/fsmgen/t/374-debug-runtime-contract.t)
+  for direct contract coverage, and widened the embedding/manifest regressions
+  so the manifest-facing public surface now locks that child contract as an
+  exact builder copy and bounded discovery entry too.
+
 ## 2026-04-29: embedding calls now have an explicit debug-state save/restore seam
 - Added
   [capture_fsm_debug_state() / restore_fsm_debug_state() in perl/FSM/Debug.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Debug.pm)

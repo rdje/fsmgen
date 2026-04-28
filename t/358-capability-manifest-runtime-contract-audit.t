@@ -15,6 +15,7 @@ use FSM::Support::BackendValidationSection qw(build_manifest_systemverilog_exter
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::Support::CapabilityManifestContract qw(build_capability_manifest_contract);
 use FSM::Support::CompositionReportContract qw(build_composition_report_contract);
+use FSM::Support::DebugRuntimeContract qw(build_debug_runtime_contract);
 use FSM::Support::DiagnosticCodeRegistryContract qw(build_diagnostic_code_registry_contract);
 use FSM::Support::DiagnosticsContract qw(build_diagnostics_contract);
 use FSM::Support::DiagnosticsSection qw(build_manifest_check_json_surface);
@@ -111,6 +112,11 @@ subtest 'embedded exact-builder contracts stay exact at runtime' => sub {
             $manifest->{embedding}{typed_extensions},
             scalar(build_extension_contract()),
             "$label keeps embedding.typed_extensions as an exact builder copy",
+        );
+        assert_exact_builder_copy(
+            $manifest->{embedding}{debug_runtime},
+            scalar(build_debug_runtime_contract()),
+            "$label keeps embedding.debug_runtime as an exact builder copy",
         );
         assert_exact_builder_copy(
             $manifest->{embedding}{section_contract},
