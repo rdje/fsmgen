@@ -1,5 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-04-28
+### `bin/fsmgen` import-tree architecture note is refreshed to the live source closure again
+- Updated
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+  to the current measured `bin/fsmgen` closure: `178` project-owned files and
+  `177` `.pm` packages reachable through the project-owned `FSM::...` tree.
+- Refreshed the measured family counts, thin coordinator/public-surface
+  assembler line counts, and largest reachable files so the saved hotspot
+  picture matches the current source tree rather than an older pre-section
+  extraction snapshot.
+- Updated the support-surface and backend sections so they now include the
+  live manifest `*Section.pm` builder family, the current reachable support
+  owners, and the current reachable direct-backend helpers, while removing
+  stale live links for compatibility-shell modules that are no longer in the
+  measured closure.
+
 ## 2026-04-22
 ### support-accounting catalog paths now have a real filesystem audit
 - Added [t/372-support-accounting-catalog-path-audit.t](/Users/richarddje/Documents/github/fsmgen/t/372-support-accounting-catalog-path-audit.t), which proves the public `support_accounting` section stays an exact dedicated-builder projection across the in-process manifest and both capability-manifest CLI spellings, and also proves that every published catalog `relpath` stays relative and present on disk as a file, every published `search_path_relpaths` entry stays relative and present as a directory, and the public derived id lists stay unique and catalog-backed.

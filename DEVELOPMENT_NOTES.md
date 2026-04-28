@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-28: the import-tree note should be refreshed from measured closure truth, not from memory
+- The startup task in
+  [SESSION_BOOTSTRAP.md](/Users/richarddje/Documents/github/fsmgen/SESSION_BOOTSTRAP.md)
+  is only useful if
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+  is treated as a measured architecture note instead of a slowly fossilizing
+  narrative.
+- This refresh confirmed the right method again:
+  rebuild the project-owned transitive `FSM::...` closure from
+  [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen), compare
+  the saved linked-module set against the live closure, then update the
+  measured counts and responsibility groups only from source-backed evidence.
+- That is how we caught the real drift here:
+  the import-tree note had not absorbed the now-thin manifest top-level owner
+  plus its extracted `*Section.pm` builders, and it still carried live links
+  to older compatibility-shell helpers that are no longer actually reachable.
+- Keeping this note mechanically honest matters because it is the fastest
+  current architecture picture for new sessions, and because it points future
+  decomposition work at the real remaining gravity wells instead of at already
+  regularized surfaces.
+
 ## 2026-04-22: support-accounting catalog entries should be checked against the filesystem too
 - After the documentation path audit landed, the matching remaining filesystem
   boundary was the public support-accounting catalog.

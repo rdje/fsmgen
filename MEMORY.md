@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-28: `bin/fsmgen` import-tree note is refreshed against the live source tree again
+- Re-read the README-driven bootstrap set, rebuilt the project-owned
+  transitive `FSM::...` closure from
+  [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen), and
+  refreshed
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+  to the current `178`-file / `177`-package snapshot.
+- The saved architecture note now explicitly records the extracted manifest
+  section-builder family behind the intentionally thin
+  [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm),
+  the current thin coordinator/public-surface assembler line counts, and the
+  live reachable backend/support/package owners that had drifted since the
+  older snapshot.
+- The refresh also removed stale live links for older compatibility-shell
+  modules that are no longer in the current reachable closure, so the import
+  tree note is now back to being a source-measured architecture picture rather
+  than a partly historical one.
+
 ## 2026-04-22: support-accounting catalog paths now have one filesystem-backed audit
 - Added
   [t/372-support-accounting-catalog-path-audit.t](/Users/richarddje/Documents/github/fsmgen/t/372-support-accounting-catalog-path-audit.t)
