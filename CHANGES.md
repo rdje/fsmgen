@@ -1,5 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-04-29
+### in-process embedding now has an explicit debug-state save/restore seam
+- Updated [perl/FSM/Debug.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Debug.pm) so the global debug singleton now exports `capture_fsm_debug_state()`, `restore_fsm_debug_state()`, and `with_fsm_debug_state(...)` for explicit save/restore of the current trace/debug state.
+- The restore path now preserves the caller-facing trace sink across a temporary trace-file switch instead of forcing embedders to rebuild the original sink by hand or truncating the original file on restore.
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so `new(...)` and `generate_hdl_from_file(...)` scope the requested `debug_level` to that constructor/call and restore the caller's prior `FSM::Debug` state afterward instead of leaking process-global debug mode across embedder calls.
+- Added [t/373-debug-state-embedding-scope.t](/Users/richarddje/Documents/github/fsmgen/t/373-debug-state-embedding-scope.t) to lock both the save/restore contract and the non-leaking `HDLGenerator` behavior, and updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md) plus [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) so embedders can discover the shipped seam directly.
+
 ## 2026-04-28
 ### `bin/fsmgen` import-tree architecture note is refreshed to the live source closure again
 - Updated

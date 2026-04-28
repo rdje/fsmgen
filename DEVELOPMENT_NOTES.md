@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-29: the first honest fix for embedding-facing debug global state is save/restore plus scoped pipeline use
+- `FSM::Debug` is still a process-global singleton, so the right immediate
+  `R13` fix was not to pretend the whole trace system was suddenly local or
+  thread-safe.
+- The root cause that actually hurt embedders was narrower:
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  used to set global debug state during `new(...)` and leave it changed for
+  the rest of the process.
+- The honest first stabilization step is therefore:
+  - make the current global state explicitly snapshot/restorable,
+  - prove that a temporary trace-file switch can be unwound without
+    truncating the original sink,
+  - and scope `HDLGenerator`'s requested `debug_level` to constructor and
+    generation calls instead of leaving it behind in caller process state.
+- That improves the in-process embedding contract now without over-claiming
+  that the whole debug facility is no longer global. It is still global, but
+  it is now deliberately recoverable and no longer accidentally sticky through
+  the main public generation entrypoint.
+
 ## 2026-04-28: the import-tree note should be refreshed from measured closure truth, not from memory
 - The startup task in
   [SESSION_BOOTSTRAP.md](/Users/richarddje/Documents/github/fsmgen/SESSION_BOOTSTRAP.md)

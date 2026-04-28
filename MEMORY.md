@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-29: embedding calls now have an explicit debug-state save/restore seam
+- Added
+  [capture_fsm_debug_state() / restore_fsm_debug_state() in perl/FSM/Debug.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Debug.pm)
+  so in-process callers can explicitly snapshot and restore the global debug
+  singleton, including the active trace sink, after temporary trace/debug
+  changes.
+- Added
+  [t/373-debug-state-embedding-scope.t](/Users/richarddje/Documents/github/fsmgen/t/373-debug-state-embedding-scope.t)
+  to prove two things:
+  - restoring a saved debug state after a temporary trace-file switch keeps
+    the original trace file alive without truncating it,
+  - and
+    [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+    no longer leaks its requested `debug_level` into the caller's global
+    process state after `new(...)` or `generate_hdl_from_file(...)`.
+- This is the first explicit root-cause hardening step against the roadmap's
+  saved concern that deeper embedding/API work should not keep depending on
+  accidental mutable global debug state.
+
 ## 2026-04-28: `bin/fsmgen` import-tree note is refreshed against the live source tree again
 - Re-read the README-driven bootstrap set, rebuilt the project-owned
   transitive `FSM::...` closure from

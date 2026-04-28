@@ -8,6 +8,7 @@ use feature qw(signatures);
 no warnings 'experimental::signatures';
 use Carp qw(confess);
 use IO::Handle;
+use Scalar::Util qw(refaddr);
 
 use Exporter qw(import);
 our @EXPORT = qw(
@@ -25,6 +26,9 @@ our @EXPORT = qw(
     get_fsm_trace_output_file
     set_fsm_trace_emojis
     trace_emojis_enabled
+    capture_fsm_debug_state
+    restore_fsm_debug_state
+    with_fsm_debug_state
     debug_enabled
     debug_level
     trace_enabled
@@ -114,6 +118,30 @@ sub _emit_trace_line($line) {
     print STDOUT $line;
 }
 
+sub _open_trace_output_handle($path, %opts) {
+    my $mode = $opts{append} ? '>>' : '>';
+    open my $fh, $mode, $path
+        or confess "[Debug.pm][_open_trace_output_handle()] Cannot open trace file '$path': $!";
+    $fh->autoflush(1);
+    return $fh;
+}
+
+sub _trace_handle_is_live($fh) {
+    return 0 unless defined $fh;
+    return defined eval { fileno($fh) } ? 1 : 0;
+}
+
+sub _trace_handle_refaddr($fh) {
+    return undef unless defined $fh;
+    return refaddr($fh);
+}
+
+sub _close_trace_handle($fh, $context) {
+    return unless defined $fh;
+    return unless _trace_handle_is_live($fh);
+    close $fh or warn "[Debug.pm][$context] Failed to close trace output file: $!";
+}
+
 sub _format_prefix($level, $kind, $file_short, $func_short, $line) {
     my $verbosity = uc($LEVEL_TO_VERBOSITY{$level} // "L$level");
     my $emoji = $TRACE_EMOJIS_ENABLED ? ($LEVEL_EMOJI{$level} // '•') : '';
@@ -149,19 +177,15 @@ sub get_fsm_trace_verbosity() {
 
 sub set_fsm_trace_output_file($path = 'trace.log') {
     clear_fsm_trace_output_file();
-    
-    open my $fh, '>', $path or confess "[Debug.pm][set_fsm_trace_output_file()] Cannot open trace file '$path': $!";
-    $fh->autoflush(1);
-    
+
+    my $fh = _open_trace_output_handle($path);
     $TRACE_OUTPUT_FH = $fh;
     $TRACE_OUTPUT_FILE = $path;
     return $TRACE_OUTPUT_FILE;
 }
 
 sub clear_fsm_trace_output_file() {
-    if ($TRACE_OUTPUT_FH) {
-        close $TRACE_OUTPUT_FH or warn "[Debug.pm][clear_fsm_trace_output_file()] Failed to close trace output file: $!";
-    }
+    _close_trace_handle($TRACE_OUTPUT_FH, 'clear_fsm_trace_output_file()');
     $TRACE_OUTPUT_FH = undef;
     $TRACE_OUTPUT_FILE = undef;
 }
@@ -176,6 +200,106 @@ sub set_fsm_trace_emojis($enabled) {
 
 sub trace_emojis_enabled() {
     return $TRACE_EMOJIS_ENABLED ? 1 : 0;
+}
+
+sub capture_fsm_debug_state() {
+    return {
+        schema_version => 1,
+        debug_level => $DEBUG_LEVEL,
+        debug_enabled => $DEBUG_ENABLED ? 1 : 0,
+        trace_indent_level => $TRACE_INDENT_LEVEL,
+        trace_output_fh => $TRACE_OUTPUT_FH,
+        trace_output_file => $TRACE_OUTPUT_FILE,
+        trace_emojis_enabled => $TRACE_EMOJIS_ENABLED ? 1 : 0,
+    };
+}
+
+sub restore_fsm_debug_state($state) {
+    confess "[Debug.pm][restore_fsm_debug_state()] Expected a hashref state snapshot"
+        unless ref($state) eq 'HASH';
+    confess "[Debug.pm][restore_fsm_debug_state()] Unsupported debug-state schema version"
+        unless ($state->{schema_version} // 0) == 1;
+
+    my $saved_fh = $state->{trace_output_fh};
+    my $saved_path = $state->{trace_output_file};
+    my $target_fh = undef;
+
+    if (_trace_handle_is_live($saved_fh)) {
+        $target_fh = $saved_fh;
+    } elsif (defined $saved_path) {
+        $target_fh = _open_trace_output_handle($saved_path, append => 1);
+    }
+
+    my $current_fh = $TRACE_OUTPUT_FH;
+    my $current_id = _trace_handle_refaddr($current_fh);
+    my $target_id = _trace_handle_refaddr($target_fh);
+    my $same_handle = defined($current_id) && defined($target_id) && $current_id == $target_id;
+    _close_trace_handle($current_fh, 'restore_fsm_debug_state()')
+        if defined($current_fh) && !$same_handle;
+
+    $DEBUG_LEVEL = $state->{debug_level} // 0;
+    $DEBUG_ENABLED = $state->{debug_enabled}
+        ? 1
+        : (($DEBUG_LEVEL > 0) ? 1 : 0);
+    $TRACE_INDENT_LEVEL = $state->{trace_indent_level} // 0;
+    $TRACE_OUTPUT_FH = $target_fh;
+    $TRACE_OUTPUT_FILE = $saved_path;
+    $TRACE_EMOJIS_ENABLED = $state->{trace_emojis_enabled} ? 1 : 0;
+
+    return $DEBUG_LEVEL;
+}
+
+sub with_fsm_debug_state($overrides, $code) {
+    confess "[Debug.pm][with_fsm_debug_state()] Expected an override hashref"
+        unless ref($overrides) eq 'HASH';
+    confess "[Debug.pm][with_fsm_debug_state()] Expected a CODE reference"
+        unless ref($code) eq 'CODE';
+
+    my $saved_state = capture_fsm_debug_state();
+
+    if (exists $overrides->{debug_level}) {
+        set_fsm_trace_verbosity($overrides->{debug_level});
+    }
+    if (exists $overrides->{trace_emojis_enabled}) {
+        set_fsm_trace_emojis($overrides->{trace_emojis_enabled});
+    }
+
+    my $wantarray = wantarray;
+    my (@result, $result, $ok);
+    my $error;
+
+    if (!defined $wantarray) {
+        $ok = eval {
+            $code->();
+            1;
+        };
+        $error = $@ unless $ok;
+    } elsif ($wantarray) {
+        $ok = eval {
+            @result = $code->();
+            1;
+        };
+        $error = $@ unless $ok;
+    } else {
+        $ok = eval {
+            $result = $code->();
+            1;
+        };
+        $error = $@ unless $ok;
+    }
+
+    my $restore_ok = eval {
+        restore_fsm_debug_state($saved_state);
+        1;
+    };
+    my $restore_error = $@ unless $restore_ok;
+
+    die $error if !$ok;
+    die $restore_error if !$restore_ok;
+
+    return if !defined $wantarray;
+    return @result if $wantarray;
+    return $result;
 }
 
 sub fsm_debug($message, $level = 1) {

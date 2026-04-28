@@ -122,6 +122,35 @@ my $pipeline = FSM::Pipeline::HDLGenerator->new(
 my $result = $pipeline->generate_hdl_from_file('fsm/trial_0.fsm');
 ```
 
+For in-process embedders, `FSM::Pipeline::HDLGenerator` no longer leaves its
+requested `debug_level` behind as process-global state after construction or
+generation. The pipeline now scopes its debug setting to the constructor or
+generation call and restores the caller's prior `FSM::Debug` state afterward.
+
+If an embedder needs to rebind tracing manually, the current shipped
+save/restore seam is:
+
+```perl
+use FSM::Debug qw(
+    capture_fsm_debug_state
+    restore_fsm_debug_state
+    set_fsm_trace_output_file
+    set_fsm_trace_verbosity
+);
+
+my $saved = capture_fsm_debug_state();
+set_fsm_trace_output_file('embedded-trace.log');
+set_fsm_trace_verbosity('debug');
+
+# ... temporary embedded tracing work ...
+
+restore_fsm_debug_state($saved);
+```
+
+That restore path preserves the caller-facing trace/debug configuration,
+including the original trace sink, instead of forcing embedders to reconstruct
+global debug state by hand after a temporary trace-file switch.
+
 ## CLI Loading
 
 ```bash
