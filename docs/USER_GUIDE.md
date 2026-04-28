@@ -2130,6 +2130,17 @@ my $pipeline = FSM::Pipeline::HDLGenerator->new(
 my $result = $pipeline->generate_hdl_from_file('fsm/trial_0.fsm');
 ```
 
+That public constructor-plus-generate seam is now machine-advertised too under
+`embedding.hdl_generator_facade`, backed by
+[perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm).
+The current bounded facade contract covers `new(...)`,
+`generate_hdl_from_file(...)`, the core constructor options `debug_level`,
+`target_language`, `quiet`, `strict_mode`, and `source_search_paths`, plus
+direct blessed-object extension injection through `extensions`.
+It intentionally does not freeze the lower-level owner-injection constructor
+arguments, and it leaves module/config-file extension loading behind
+`embedding.typed_extensions` so the narrower in-process seam stays honest.
+
 For in-process embedders, `FSM::Pipeline::HDLGenerator` no longer leaves its
 requested `debug_level` behind as process-global state after construction or
 generation. The pipeline now scopes that debug setting to the constructor or

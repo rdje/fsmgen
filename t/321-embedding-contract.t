@@ -30,6 +30,10 @@ use FSM::Support::EmbeddingContract qw(
     embedding_nested_presence_key_map
     embedding_public_top_level_keys
 );
+use FSM::Support::HDLGeneratorFacadeContract qw(
+    hdl_generator_facade_contract_source
+    hdl_generator_facade_public_top_level_keys
+);
 use FSM::Support::HDLGeneratorResultContract qw(
     hdl_generator_result_contract_source
     hdl_generator_result_known_top_level_keys
@@ -66,6 +70,7 @@ subtest 'contract exposes the bounded embedding section' => sub {
         $contract->{nested_contract_source_map},
         {
             composition_report => composition_report_contract_source(),
+            hdl_generator_facade => hdl_generator_facade_contract_source(),
             hdl_generator_result => hdl_generator_result_contract_source(),
             typed_extensions => extension_contract_source(),
             debug_runtime => debug_runtime_contract_source(),

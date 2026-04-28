@@ -227,6 +227,7 @@ sub capability_manifest_embedding_keys {
     return [
         qw(
             composition_report
+            hdl_generator_facade
             hdl_generator_result
             typed_extensions
             debug_runtime

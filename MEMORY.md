@@ -1,5 +1,30 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-29: the public HDLGenerator facade is now a discoverable embedding child contract
+- Added
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  as the bounded owner for the current in-process
+  `FSM::Pipeline::HDLGenerator` constructor-plus-generate seam: method names,
+  the core constructor options, direct blessed-object extension injection, the
+  default target-language rule, and links to the result, typed-extension, and
+  debug-runtime child owners.
+- Wired that contract through
+  [perl/FSM/Support/EmbeddingSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingSection.pm),
+  [perl/FSM/Support/EmbeddingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingContract.pm),
+  and
+  [perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm)
+  so the bounded in-process facade is now discoverable as
+  `embedding.hdl_generator_facade` instead of living only in POD and usage
+  examples.
+- Added
+  [t/375-hdl-generator-facade-contract.t](/Users/richarddje/Documents/github/fsmgen/t/375-hdl-generator-facade-contract.t)
+  for direct contract coverage and
+  [t/376-hdl-generator-facade-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/376-hdl-generator-facade-runtime-contract-audit.t)
+  for real repeated-generation, direct-extension, and `source_search_paths`
+  runtime coverage, then widened the embedding/manifest regressions so the new
+  child contract is also locked as an exact builder copy and grouped discovery
+  entry.
+
 ## 2026-04-29: the debug save/restore seam is now a discoverable embedding child contract
 - Added
   [perl/FSM/Support/DebugRuntimeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DebugRuntimeContract.pm)

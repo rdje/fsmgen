@@ -122,6 +122,22 @@ my $pipeline = FSM::Pipeline::HDLGenerator->new(
 my $result = $pipeline->generate_hdl_from_file('fsm/trial_0.fsm');
 ```
 
+That public constructor-plus-generate seam is now machine-advertised too under
+`embedding.hdl_generator_facade`, owned by
+[perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm).
+That bounded facade contract currently covers:
+
+- `new(...)`
+- `generate_hdl_from_file(...)`
+- the core constructor options `debug_level`, `target_language`, `quiet`,
+  `strict_mode`, and `source_search_paths`
+- direct blessed-object extension injection through `extensions`
+
+It intentionally does not freeze the lower-level owner-injection constructor
+arguments. It also leaves module/config-file extension loading behind
+`embedding.typed_extensions`, so the narrower facade contract stays honest
+about what is currently meant to be a stable in-process entry seam.
+
 For in-process embedders, `FSM::Pipeline::HDLGenerator` no longer leaves its
 requested `debug_level` behind as process-global state after construction or
 generation. The pipeline now scopes its debug setting to the constructor or
@@ -716,8 +732,9 @@ That runtime boundary is now locked directly too: the emitted
 in-process `build_capability_manifest()` output exactly. The embedded
 `manifest_contract`, every `*.section_contract`, `language_surface.surface_contract`,
 `diagnostics.stable_code_registry`, and the exact embedding children
-`composition_report`, `hdl_generator_result`, `typed_extensions`, and
-`debug_runtime` are now treated as literal dedicated-builder pass-throughs.
+`composition_report`, `hdl_generator_facade`, `hdl_generator_result`,
+`typed_extensions`, and `debug_runtime` are now treated as literal
+dedicated-builder pass-throughs.
 Only three advertised
 manifest children are intentionally enriched beyond their dedicated builders:
 `diagnostics.check_json`, `semantic_exports.normalized_semantic_json`, and
@@ -762,20 +779,20 @@ The `embedding` section now follows the same split too:
 [perl/FSM/Support/EmbeddingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingContract.pm)
 owns the published top-level and nested contract-owner map advertised through
 `embedding.section_contract`, while the narrower result, composition-report,
-typed-extension, and debug-runtime contracts still own their deeper public
-promises.
+facade, typed-extension, and debug-runtime contracts still own their deeper
+public promises.
 The emitted `embedding` section itself is now built through
 [perl/FSM/Support/EmbeddingSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingSection.pm)
 and runtime-locked as an exact dedicated-builder projection across both
 in-process and CLI manifest surfaces. That keeps the grouped
-`composition_report`, `hdl_generator_result`, `typed_extensions`, and
-`debug_runtime` child contracts in one place instead of leaving that public
-section as duplicated inline manifest assembly logic.
+`composition_report`, `hdl_generator_facade`, `hdl_generator_result`,
+`typed_extensions`, and `debug_runtime` child contracts in one place instead
+of leaving that public section as duplicated inline manifest assembly logic.
 That section shell now also publishes a grouped `nested_presence_key_map` so
 downstream tools can discover the bounded child key families for
-`composition_report`, `hdl_generator_result`, `typed_extensions`, and
-`debug_runtime` from one place before descending into those narrower
-contracts.
+`composition_report`, `hdl_generator_facade`, `hdl_generator_result`,
+`typed_extensions`, and `debug_runtime` from one place before descending into
+those narrower contracts.
 The `diagnostics` section now follows the same split too:
 [perl/FSM/Support/DiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsContract.pm)
 owns the published top-level, scalar-string, and stable-code entry families

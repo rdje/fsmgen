@@ -22,6 +22,7 @@ use FSM::Support::DiagnosticsSection qw(build_manifest_check_json_surface);
 use FSM::Support::DocumentationContract qw(build_documentation_contract);
 use FSM::Support::EmbeddingContract qw(build_embedding_contract);
 use FSM::Support::ExtensionContract qw(build_extension_contract);
+use FSM::Support::HDLGeneratorFacadeContract qw(build_hdl_generator_facade_contract);
 use FSM::Support::HDLGeneratorResultContract qw(build_hdl_generator_result_contract);
 use FSM::Support::LanguageSurfaceContract qw(build_language_surface_contract);
 use FSM::Support::ProducerContract qw(build_producer_contract);
@@ -102,6 +103,11 @@ subtest 'embedded exact-builder contracts stay exact at runtime' => sub {
             $manifest->{embedding}{composition_report},
             scalar(build_composition_report_contract()),
             "$label keeps embedding.composition_report as an exact builder copy",
+        );
+        assert_exact_builder_copy(
+            $manifest->{embedding}{hdl_generator_facade},
+            scalar(build_hdl_generator_facade_contract()),
+            "$label keeps embedding.hdl_generator_facade as an exact builder copy",
         );
         assert_exact_builder_copy(
             $manifest->{embedding}{hdl_generator_result},

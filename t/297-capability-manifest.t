@@ -50,6 +50,13 @@ use FSM::Support::ExtensionContract qw(
     extension_contract_name_family_map
     extension_contract_source
 );
+use FSM::Support::HDLGeneratorFacadeContract qw(
+    hdl_generator_facade_constructor_option_family_map
+    hdl_generator_facade_contract_source
+    hdl_generator_facade_method_names
+    hdl_generator_facade_public_constructor_option_names
+    hdl_generator_facade_public_top_level_keys
+);
 use FSM::Support::HDLExternalValidationContract qw(
     hdl_external_validation_contract_source
     hdl_external_validation_failure_mode_family_map
@@ -988,11 +995,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest records the embedding section contract owner',
     );
     ok(
-        scalar(@{$manifest->{embedding}{section_contract}{public_top_level_presence_keys} || []}) >= 5,
+        scalar(@{$manifest->{embedding}{section_contract}{public_top_level_presence_keys} || []}) >= 6,
         'manifest advertises bounded embedding top-level key presence',
     );
     ok(
-        scalar(@{$manifest->{embedding}{section_contract}{nested_contract_keys} || []}) >= 4,
+        scalar(@{$manifest->{embedding}{section_contract}{nested_contract_keys} || []}) >= 5,
         'manifest advertises bounded embedding nested-contract key presence',
     );
     is_deeply(
@@ -1057,6 +1064,73 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         $manifest->{embedding}{composition_report}{presence_key_family_map},
         composition_report_presence_key_family_map(),
         'manifest records the grouped composition-report key-family map',
+    );
+    is(
+        $manifest->{embedding}{hdl_generator_facade}{schema_version},
+        1,
+        'manifest records HDLGenerator facade contract schema version',
+    );
+    is(
+        $manifest->{embedding}{hdl_generator_facade}{status},
+        'bounded_public',
+        'manifest marks the HDLGenerator facade seam as bounded public',
+    );
+    is(
+        $manifest->{embedding}{hdl_generator_facade}{contract_source},
+        hdl_generator_facade_contract_source(),
+        'manifest records the HDLGenerator facade contract owner',
+    );
+    is_deeply(
+        $manifest->{embedding}{hdl_generator_facade}{public_top_level_presence_keys},
+        hdl_generator_facade_public_top_level_keys(),
+        'manifest records the bounded HDLGenerator facade top-level keys',
+    );
+    is_deeply(
+        $manifest->{embedding}{hdl_generator_facade}{method_names},
+        hdl_generator_facade_method_names(),
+        'manifest records the bounded HDLGenerator facade method family',
+    );
+    is_deeply(
+        $manifest->{embedding}{hdl_generator_facade}{public_constructor_option_names},
+        hdl_generator_facade_public_constructor_option_names(),
+        'manifest records the bounded HDLGenerator facade public constructor options',
+    );
+    is_deeply(
+        $manifest->{embedding}{hdl_generator_facade}{constructor_option_family_map},
+        hdl_generator_facade_constructor_option_family_map(),
+        'manifest records the grouped HDLGenerator facade constructor-option families',
+    );
+    is(
+        $manifest->{embedding}{hdl_generator_facade}{default_target_language},
+        'systemverilog',
+        'manifest records the bounded HDLGenerator facade default target language',
+    );
+    is(
+        $manifest->{embedding}{hdl_generator_facade}{result_contract_source},
+        hdl_generator_result_contract_source(),
+        'manifest records the HDLGenerator facade result contract owner',
+    );
+    is(
+        $manifest->{embedding}{hdl_generator_facade}{direct_extension_contract_source},
+        extension_contract_source(),
+        'manifest records the HDLGenerator facade direct extension contract owner',
+    );
+    is(
+        $manifest->{embedding}{hdl_generator_facade}{debug_runtime_contract_source},
+        debug_runtime_contract_source(),
+        'manifest records the HDLGenerator facade debug runtime contract owner',
+    );
+    ok(
+        $manifest->{embedding}{hdl_generator_facade}{stateful_reuse_supported},
+        'manifest records that the HDLGenerator facade supports stateful reuse',
+    );
+    ok(
+        !$manifest->{embedding}{hdl_generator_facade}{result_surface_json_safe_as_a_whole},
+        'manifest does not claim the whole HDLGenerator result surface is JSON-safe',
+    );
+    ok(
+        !$manifest->{embedding}{hdl_generator_facade}{object_injection_args_public},
+        'manifest does not claim the current owner-injection constructor args are public',
     );
     is(
         $manifest->{embedding}{hdl_generator_result}{status},

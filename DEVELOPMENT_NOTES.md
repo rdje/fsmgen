@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-29: after debug-state hardening, the next honest embedder seam was the facade itself
+- Once `HDLGenerator` stopped leaking debug state and the save/restore seam had
+  an explicit child owner, the next root-cause discoverability gap was no
+  longer inside `FSM::Debug`.
+- The real remaining public in-process seam was the facade object itself:
+  `FSM::Pipeline::HDLGenerator->new(...)` plus
+  `generate_hdl_from_file(...)`.
+- The honest fix is therefore one narrow facade contract:
+  `embedding.hdl_generator_facade`.
+- That contract deliberately advertises only:
+  - the shipped method names,
+  - the public core constructor options,
+  - direct blessed-object extension injection through `extensions`,
+  - and links to the already narrower result, typed-extension, and
+    debug-runtime child contracts.
+- It does not pretend that the lower-level owner-injection constructor
+  arguments are public yet, and it does not collapse module/config-file
+  extension loading into the same bounded seam.
+
 ## 2026-04-29: once the debug seam became real, the next honest move was to advertise exactly that seam, not a fantasy non-global API
 - After the save/restore helpers and scoped `HDLGenerator` use landed, the
   next root-cause stabilization step was not another prose note.
