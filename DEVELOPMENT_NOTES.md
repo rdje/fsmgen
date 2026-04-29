@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-29: public tested_by metadata should be verifiable provenance, not decorative strings
+- Some bounded public contracts now publish `tested_by` lists so embedders and
+  maintainers can see which regression files own a contract claim.
+- Once that metadata is manifest-visible, stale paths are worse than absent
+  paths: they imply coverage that cannot actually be followed.
+- The root-cause guard is therefore repository-local provenance validation:
+  every published `tested_by` entry must stay relative, point at an existing
+  `t/*.t` file, avoid path escapes, and avoid duplicates within the same list.
+- The new audit runs that check over direct contract builders and both
+  manifest emission paths, so the metadata remains machine-followable instead
+  of becoming another manually curated doc island.
+
 ## 2026-04-29: extension loading belongs to typed_extensions, not every nearby public shell
 - `extension_modules`, `extension_config_files`, `--extension-module`, and
   `--extension-config` are real public extension-loading seams, but they are

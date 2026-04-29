@@ -768,6 +768,11 @@ and
 [perl/FSM/Support/BackendValidationSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/BackendValidationSection.pm),
 so the runtime parity audit reuses the same named manifest-surface builders
 instead of reconstructing those bounded enrichments inline.
+Published `tested_by` provenance is now repo-checked too:
+[t/381-contract-tested-by-provenance-audit.t](/Users/richarddje/Documents/github/fsmgen/t/381-contract-tested-by-provenance-audit.t)
+walks the direct support contracts plus the in-process and CLI manifest
+surfaces, finds every public `tested_by` list, and requires each entry to stay
+a relative existing `t/*.t` file under this repository.
 That shell contract now also explicitly lists the first nested
 `support_accounting` keys, so embedders can discover the corpus-backed section
 shape without a manifest-specific exception.

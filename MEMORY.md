@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-29: public tested_by provenance now has a path-existence audit
+- Added
+  [t/381-contract-tested-by-provenance-audit.t](/Users/richarddje/Documents/github/fsmgen/t/381-contract-tested-by-provenance-audit.t)
+  to recursively inspect every public `tested_by` list published by direct
+  support contract builders, the in-process capability manifest, and both CLI
+  manifest spellings.
+- The audit requires each `tested_by` entry to be a scalar repo-relative
+  `t/*.t` file, reject duplicate entries inside a list, reject path escapes,
+  and prove the referenced file exists on disk.
+- This keeps `R13` contract provenance honest now that more manifest-visible
+  contracts publish their owning regression tests as part of the machine-readable
+  public surface.
+
 ## 2026-04-29: extension loading ownership now has a command-boundary audit
 - Added
   [t/380-extension-loading-command-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/380-extension-loading-command-boundary-audit.t)

@@ -1835,6 +1835,11 @@ names the published top-level and path-list keys advertised through
 `documentation.section_contract`, while the exact set of doc paths remains
 widenable as long as the manifest keeps pointing at repo-relative Markdown
 files.
+Public `tested_by` provenance is also audited:
+[t/381-contract-tested-by-provenance-audit.t](/Users/richarddje/Documents/github/fsmgen/t/381-contract-tested-by-provenance-audit.t)
+walks the direct support contracts plus the in-process and CLI manifest
+surfaces, finds every `tested_by` list, and requires each published entry to
+stay a relative existing `t/*.t` file.
 It also advertises the optional external SystemVerilog validation lane:
 `--verify-hdl` / `--validate-hdl` writes the generated `.sv`, then runs
 Verilator in lint-only SystemVerilog mode and Yosys with

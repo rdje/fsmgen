@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-29
+### Public tested_by provenance is now path-audited
+- Added
+  [t/381-contract-tested-by-provenance-audit.t](/Users/richarddje/Documents/github/fsmgen/t/381-contract-tested-by-provenance-audit.t)
+  as an `R13` metadata-integrity guard for manifest-visible `tested_by`
+  provenance.
+- The audit walks all direct support contract builders plus the in-process
+  capability manifest and both CLI manifest spellings, recursively finds every
+  public `tested_by` list, and requires each entry to be a scalar relative
+  `t/*.t` file that exists under the repository.
+- It also rejects duplicate entries within a single `tested_by` list and path
+  escapes, keeping the machine-readable test provenance useful to embedders
+  instead of allowing it to drift into stale prose-shaped metadata.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  plus [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+  so the manifest/contract docs mention the new provenance audit.
+
 ### Extension loading ownership is now audited across manifest, facade, and semantic command surfaces
 - Added
   [t/380-extension-loading-command-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/380-extension-loading-command-boundary-audit.t)
