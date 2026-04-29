@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-29: public machine JSON now has a trace stdout-boundary audit
+- Added
+  [t/384-public-json-trace-stdout-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/384-public-json-trace-stdout-boundary-audit.t)
+  as an `R13` negative-boundary audit for public machine-readable CLI modes
+  when debug/trace options are enabled.
+- The audit runs `--capability-manifest`, successful and failed
+  `--check-json`, and successful and failed `--emit-semantic-json` with
+  trace/debug flags, requiring stdout to remain exactly decodable JSON and
+  stderr to stay clean.
+- For check/semantic report modes, it also proves trace output is routed to
+  the requested trace file and that `-o` still does not create HDL artifacts.
+  This keeps the embedder/tooling channel split explicit without widening any
+  public schema.
+
 ## 2026-04-29: README bootstrap recheck refreshed the direct CLI import note
 - Re-read the README-driven bootstrap path, rechecked the project-owned
   transitive `FSM::...` closure from

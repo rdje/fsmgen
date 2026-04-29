@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-29: machine JSON stdout purity is part of the public embedder boundary
+- The public JSON schemas are only useful to downstream tools if stdout is a
+  clean machine channel even when a caller enables tracing for diagnostics.
+- The root-cause boundary is not just "the payload decodes on a quiet happy
+  path"; it is that report modes must suppress human banners and generated HDL
+  on stdout, keep stderr clean, and route traces to the requested trace sink.
+- The new audit locks that behavior across the manifest, check JSON, and
+  semantic JSON entrypoints, including both success and failure report paths
+  for the source-processing modes.
+- This deliberately hardens channel separation without widening the schema:
+  trace/debug data remains diagnostic side output, while stdout remains the
+  public machine-readable document.
+
 ## 2026-04-29: README bootstrap rechecks should repair small measured-doc drift too
 - The bootstrap ritual is useful only if it treats
   [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)

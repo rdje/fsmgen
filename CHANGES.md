@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-29
+### Public machine JSON stdout purity is now trace-audited
+- Added
+  [t/384-public-json-trace-stdout-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/384-public-json-trace-stdout-boundary-audit.t)
+  as an `R13` runtime audit for public machine-readable CLI channels under
+  debug/trace options.
+- The audit covers `--capability-manifest`, successful and failed
+  `--check-json`, and successful and failed `--emit-semantic-json`, requiring
+  stdout to remain exactly decodable JSON and stderr to stay clean instead of
+  leaking trace banners, human summaries, or HDL text.
+- For the check/semantic report modes, the same audit proves `--trace-log`
+  creates the requested trace file and `-o` still does not emit HDL artifacts.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  plus [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+  so embedders can see the machine-JSON stdout boundary is now runtime-audited.
+
 ### README bootstrap recheck refreshed the direct CLI import-tree note
 - Re-read the README-driven bootstrap path and rebuilt the project-owned
   transitive `FSM::...` closure from

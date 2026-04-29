@@ -37,6 +37,13 @@ It now also publishes a grouped `presence_key_family_map` so a downstream tool
 can discover the manifest-owned legacy `*_presence_keys` field families from
 one place instead of collecting those compatibility field lists one by one.
 
+The public machine-JSON CLI boundary is runtime-audited too:
+[t/384-public-json-trace-stdout-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/384-public-json-trace-stdout-boundary-audit.t)
+runs the capability manifest, check JSON, and normalized semantic JSON paths
+with debug/trace options enabled. It proves stdout remains JSON-only, stderr
+stays clean, trace output is routed to the requested trace file for report
+modes, and check/semantic JSON still do not write HDL artifacts.
+
 ## Current Philosophy
 
 The active extension model is typed and explicit.

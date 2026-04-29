@@ -1852,6 +1852,12 @@ requires public maps such as `presence_key_family_map`,
 `nested_presence_key_map`, `constructor_option_family_map`, `name_family_map`,
 and `family_map` to remain hashes of non-empty unique scalar lists and to match
 same-named sibling lists when present.
+The public machine-JSON stdout boundary is audited too:
+[t/384-public-json-trace-stdout-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/384-public-json-trace-stdout-boundary-audit.t)
+runs the capability manifest, check JSON, and normalized semantic JSON CLI
+paths with debug/trace options enabled, proving stdout remains JSON-only,
+stderr stays clean, trace output is routed to the requested trace file for
+report modes, and check/semantic JSON still do not write HDL artifacts.
 It also advertises the optional external SystemVerilog validation lane:
 `--verify-hdl` / `--validate-hdl` writes the generated `.sv`, then runs
 Verilator in lint-only SystemVerilog mode and Yosys with
