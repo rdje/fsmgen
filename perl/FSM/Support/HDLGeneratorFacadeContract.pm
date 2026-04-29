@@ -20,6 +20,7 @@ our @EXPORT_OK = qw(
     build_hdl_generator_facade_contract
     hdl_generator_facade_constructor_option_family_map
     hdl_generator_facade_contract_source
+    hdl_generator_facade_compatibility_constructor_option_names
     hdl_generator_facade_core_constructor_option_names
     hdl_generator_facade_direct_extension_option_names
     hdl_generator_facade_method_names
@@ -51,6 +52,7 @@ sub build_hdl_generator_facade_contract {
         method_names => hdl_generator_facade_method_names(),
         public_constructor_option_names => hdl_generator_facade_public_constructor_option_names(),
         core_constructor_option_names => hdl_generator_facade_core_constructor_option_names(),
+        compatibility_constructor_option_names => hdl_generator_facade_compatibility_constructor_option_names(),
         direct_extension_option_names => hdl_generator_facade_direct_extension_option_names(),
         constructor_option_family_map => hdl_generator_facade_constructor_option_family_map(),
         default_target_language => 'systemverilog',
@@ -65,7 +67,8 @@ sub build_hdl_generator_facade_contract {
             'Treat this contract as the bounded public in-process facade around FSM::Pipeline::HDLGenerator constructor and generate_hdl_from_file(...) entrypoints.',
             'Use the grouped constructor_option_family_map to discover the bounded public constructor option families without scraping POD or freezing every currently accepted owner-injection argument.',
             'Follow result_contract_source for the returned compatibility-heavy result hash, direct_extension_contract_source for typed extension loading and hook semantics, and debug_runtime_contract_source for the explicit process-global debug save/restore seam.',
-            'The current bounded constructor surface covers the core generation options plus direct extension-object injection and supports stateful pipeline reuse across multiple generation calls.',
+            'The current bounded constructor surface covers the core runtime generation options, compatibility presentation state such as quiet, plus direct extension-object injection and supports stateful pipeline reuse across multiple generation calls.',
+            'The quiet option is accepted by the in-process facade for constructor/API compatibility, but CLI presentation output remains owned by bin/fsmgen rather than by generate_hdl_from_file(...).',
             'Widen this facade contract only when additional constructor or method seams are explicitly documented and regression-backed.',
         ],
     };
@@ -83,6 +86,7 @@ sub hdl_generator_facade_public_top_level_keys {
             method_names
             public_constructor_option_names
             core_constructor_option_names
+            compatibility_constructor_option_names
             direct_extension_option_names
             constructor_option_family_map
             default_target_language
@@ -112,9 +116,16 @@ sub hdl_generator_facade_core_constructor_option_names {
         qw(
             debug_level
             target_language
-            quiet
             strict_mode
             source_search_paths
+        ),
+    ];
+}
+
+sub hdl_generator_facade_compatibility_constructor_option_names {
+    return [
+        qw(
+            quiet
         ),
     ];
 }
@@ -143,6 +154,7 @@ sub hdl_generator_facade_public_constructor_option_names {
 sub hdl_generator_facade_constructor_option_family_map {
     return {
         core_constructor_option_names => hdl_generator_facade_core_constructor_option_names(),
+        compatibility_constructor_option_names => hdl_generator_facade_compatibility_constructor_option_names(),
         direct_extension_option_names => hdl_generator_facade_direct_extension_option_names(),
     };
 }

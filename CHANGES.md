@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-29
+### Facade quiet is now classified as presentation compatibility
+- Added
+  [t/390-hdl-generator-facade-quiet-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/390-hdl-generator-facade-quiet-boundary-audit.t)
+  so the public `embedding.hdl_generator_facade` `quiet` constructor option is
+  checked as accepted compatibility state, not as a runtime-backed core
+  generation control.
+- Updated
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  to publish `compatibility_constructor_option_names`, keep `quiet` public,
+  remove it from the core constructor family, and group it under
+  `constructor_option_family_map`.
+- The audit captures stdout/stderr for `quiet => 0` and `quiet => 1`, proving
+  in-process facade generation remains presentation-silent either way while
+  returning HDL results. Updated
+  [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+  with the compatibility classification.
+
 ### Facade extension-object injection now has dedicated boundary coverage
 - Added
   [t/389-hdl-generator-facade-extensions-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/389-hdl-generator-facade-extensions-boundary-audit.t)

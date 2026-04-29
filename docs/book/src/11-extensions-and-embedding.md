@@ -146,8 +146,9 @@ That bounded facade contract currently covers:
 
 - `new(...)`
 - `generate_hdl_from_file(...)`
-- the core constructor options `debug_level`, `target_language`, `quiet`,
+- the core runtime constructor options `debug_level`, `target_language`,
   `strict_mode`, and `source_search_paths`
+- the accepted compatibility/presentation constructor option `quiet`
 - direct blessed-object extension injection through `extensions`
 
 It intentionally does not freeze the lower-level owner-injection constructor
@@ -184,6 +185,11 @@ also proves the advertised `extensions` constructor option is runtime-backed as
 direct blessed-object injection: non-blessed values are rejected, injected
 objects dispatch in order, result-hook mutation reaches the returned raw
 result, and separate facade objects do not share injected extension state.
+[t/390-hdl-generator-facade-quiet-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/390-hdl-generator-facade-quiet-boundary-audit.t)
+also proves the advertised `quiet` constructor option is accepted compatibility
+state rather than core runtime behavior: it is grouped under
+`compatibility_constructor_option_names`, stays out of the core runtime family,
+and in-process generation captures no stdout/stderr for either quiet value.
 [t/375-hdl-generator-facade-contract.t](/Users/richarddje/Documents/github/fsmgen/t/375-hdl-generator-facade-contract.t)
 also now checks that the facade contract's advertised top-level key list
 exactly covers the emitted facade contract shell, so new facade metadata cannot

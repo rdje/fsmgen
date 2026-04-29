@@ -16,6 +16,7 @@ use FSM::Support::ExtensionContract qw(
 );
 use FSM::Support::HDLGeneratorFacadeContract qw(
     build_hdl_generator_facade_contract
+    hdl_generator_facade_compatibility_constructor_option_names
     hdl_generator_facade_constructor_option_family_map
     hdl_generator_facade_contract_source
     hdl_generator_facade_core_constructor_option_names
@@ -81,6 +82,11 @@ subtest 'contract exposes the bounded HDLGenerator facade seam' => sub {
         $contract->{core_constructor_option_names},
         hdl_generator_facade_core_constructor_option_names(),
         'contract publishes the bounded core constructor-option family',
+    );
+    is_deeply(
+        $contract->{compatibility_constructor_option_names},
+        hdl_generator_facade_compatibility_constructor_option_names(),
+        'contract publishes the bounded compatibility constructor-option family',
     );
     is_deeply(
         $contract->{direct_extension_option_names},

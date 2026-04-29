@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-29: facade quiet is now classified as presentation compatibility
+- Added
+  [t/390-hdl-generator-facade-quiet-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/390-hdl-generator-facade-quiet-boundary-audit.t)
+  to prove the `embedding.hdl_generator_facade` public `quiet` constructor
+  option is accepted as compatibility/presentation state, not as a core
+  runtime-generation option.
+- Updated
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  so `quiet` remains in `public_constructor_option_names`, moves out of
+  `core_constructor_option_names`, and appears in
+  `compatibility_constructor_option_names` plus the grouped
+  `constructor_option_family_map`.
+- The audit also captures in-process `generate_hdl_from_file(...)` stdout and
+  stderr for `quiet => 0` and `quiet => 1`, proving both paths remain
+  presentation-silent while still returning HDL results. This is `R13`
+  facade-contract honesty only; no CLI quiet behavior changed.
+
 ## 2026-04-29: facade extension-object injection now has a dedicated boundary audit
 - Added
   [t/389-hdl-generator-facade-extensions-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/389-hdl-generator-facade-extensions-boundary-audit.t)

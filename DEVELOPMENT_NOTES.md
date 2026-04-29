@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-29: quiet is facade compatibility state, not runtime behavior
+- `quiet` is accepted by `FSM::Pipeline::HDLGenerator->new(...)` because the
+  facade constructor mirrors the CLI-facing generation configuration closely
+  enough that embedders and tests already pass it.
+- Treating it as a core runtime-generation option would be misleading: the
+  in-process facade returns result hashes and does not own CLI presentation
+  output. `bin/fsmgen` owns the user-facing progress/summary suppression that
+  `--quiet` controls.
+- The contract now keeps `quiet` public but moves it into a
+  compatibility/presentation family, and the audit proves both quiet values
+  leave in-process generation stdout/stderr silent while still returning HDL.
+
 ## 2026-04-29: facade extensions are direct object injection, not loading magic
 - `extensions` belongs in the public facade constructor surface because
   embedders can pass already-constructed blessed extension objects and receive

@@ -2187,9 +2187,10 @@ That public constructor-plus-generate seam is now machine-advertised too under
 `embedding.hdl_generator_facade`, backed by
 [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm).
 The current bounded facade contract covers `new(...)`,
-`generate_hdl_from_file(...)`, the core constructor options `debug_level`,
-`target_language`, `quiet`, `strict_mode`, and `source_search_paths`, plus
-direct blessed-object extension injection through `extensions`.
+`generate_hdl_from_file(...)`, the core runtime constructor options
+`debug_level`, `target_language`, `strict_mode`, and `source_search_paths`, the
+accepted compatibility/presentation constructor option `quiet`, plus direct
+blessed-object extension injection through `extensions`.
 It intentionally does not freeze the lower-level owner-injection constructor
 arguments, and it leaves module/config-file extension loading behind
 `embedding.typed_extensions` so the narrower in-process seam stays honest.
@@ -2223,6 +2224,11 @@ also proves the advertised `extensions` constructor option is runtime-backed as
 direct blessed-object injection: non-blessed values are rejected, injected
 objects dispatch in order, result-hook mutation reaches the returned raw
 result, and separate facade objects do not share injected extension state.
+[t/390-hdl-generator-facade-quiet-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/390-hdl-generator-facade-quiet-boundary-audit.t)
+also proves the advertised `quiet` constructor option is accepted compatibility
+state rather than core runtime behavior: it is grouped under
+`compatibility_constructor_option_names`, stays out of the core runtime family,
+and in-process generation captures no stdout/stderr for either quiet value.
 [t/380-extension-loading-command-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/380-extension-loading-command-boundary-audit.t)
 also locks the module/config loading-owner split: those loading entrypoints are
 advertised by `embedding.typed_extensions`, not by
