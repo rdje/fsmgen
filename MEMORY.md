@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-29: README bootstrap recheck refreshed the direct CLI import note
+- Re-read the README-driven bootstrap path, rechecked the project-owned
+  transitive `FSM::...` closure from
+  [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen), and
+  confirmed it still measures `180` project files / `179` `.pm` packages with
+  no missing project modules.
+- Refreshed
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+  for the stale direct CLI details found during the source comparison:
+  [perl/FSM/Support/HDLExternalValidation.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLExternalValidation.pm)
+  is now listed among `bin/fsmgen`'s direct imports, external HDL validation
+  lifecycle routing is called out as CLI-owned presentation/control glue, and
+  the measured entrypoint line count is updated to `1013`.
+- This was documentation-truth maintenance only; the active `R13` lane and the
+  next embedder-boundary hardening direction are unchanged.
+
 ## 2026-04-29: grouped public discovery maps now have an integrity audit
 - Added
   [t/383-contract-family-map-integrity-audit.t](/Users/richarddje/Documents/github/fsmgen/t/383-contract-family-map-integrity-audit.t)

@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-29: README bootstrap rechecks should repair small measured-doc drift too
+- The bootstrap ritual is useful only if it treats
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+  as a measured architecture note, not just as a once-a-session memory jog.
+- This recheck confirmed the important closure facts were still current:
+  [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) still
+  reaches `180` project files / `179` `.pm` packages, with no missing
+  project-owned modules.
+- The stale details were smaller but still worth fixing because they are the
+  source-visible contract of the note:
+  [perl/FSM/Support/HDLExternalValidation.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLExternalValidation.pm)
+  is a direct CLI import, optional external validation is one of the CLI's
+  lifecycle-routing responsibilities, and the entrypoint is now `1013` lines.
+- That distinction matters: the root-cause architecture picture did not move,
+  but a bootstrap pass should still repair exact measured facts when they have
+  drifted.
+
 ## 2026-04-29: grouped discovery maps need structural integrity, not just matching prose
 - The newer public contracts increasingly publish grouped discovery maps so
   embedders can find related key/name families without reconstructing them

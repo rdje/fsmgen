@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-29
+### README bootstrap recheck refreshed the direct CLI import-tree note
+- Re-read the README-driven bootstrap path and rebuilt the project-owned
+  transitive `FSM::...` closure from
+  [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen),
+  confirming the saved closure count remains `180` project files / `179`
+  `.pm` packages with no missing project modules.
+- Updated
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+  so [perl/FSM/Support/HDLExternalValidation.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLExternalValidation.pm)
+  appears in the direct `bin/fsmgen` import list, external HDL validation
+  lifecycle routing is listed among the CLI-owned glue responsibilities, and
+  the measured entrypoint line count is refreshed from `979` to `1013`.
+- This is documentation-truth maintenance only; no roadmap lane status changed.
+
 ### Grouped public discovery maps are now integrity-audited
 - Added
   [t/383-contract-family-map-integrity-audit.t](/Users/richarddje/Documents/github/fsmgen/t/383-contract-family-map-integrity-audit.t)

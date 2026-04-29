@@ -290,6 +290,7 @@ Interpretation:
 - [perl/FSM/SourcePathResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/SourcePathResolver.pm)
 - [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
 - [perl/FSM/Support/CheckDiagnostics.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnostics.pm)
+- [perl/FSM/Support/HDLExternalValidation.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLExternalValidation.pm)
 - [perl/FSM/Support/NormalizedSemanticReport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReport.pm)
 
 It mainly owns:
@@ -300,9 +301,10 @@ It mainly owns:
 - capability-manifest JSON emission
 - check-JSON lifecycle routing
 - semantic-JSON lifecycle routing
+- external HDL validation lifecycle routing
 - user-facing summaries for composition provenance, override/block events, failure summaries, generated children, and shared-datapath metadata
 
-[bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) is `979` lines today, so it is not tiny, but most of that weight is presentation/reporting rather than semantic compiler ownership.
+[bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) is `1013` lines today, so it is not tiny, but most of that weight is presentation/reporting rather than semantic compiler ownership.
 
 It does not own the compiler architecture.
 Its only non-trivial local logic is presentation/reporting glue.
