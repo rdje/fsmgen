@@ -27,8 +27,10 @@ sub extensions ($self) { return $self->{extensions} }
 
 sub dispatch_hook ($self, $hook_name, $context) {
     for my $extension (@{$self->extensions}) {
-        next unless $extension->can($hook_name);
-        my @result = eval { $extension->$hook_name($context) };
+        my $hook_method = UNIVERSAL::can($extension, $hook_name);
+        next unless $hook_method;
+
+        my @result = eval { $hook_method->($extension, $context) };
         if (!$@) {
             next;
         }

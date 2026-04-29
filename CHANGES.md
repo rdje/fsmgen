@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-30
+### Typed-extension hook dispatch now rejects AUTOLOAD-style hook discovery
+- Added
+  [t/392-typed-extension-autoload-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/392-typed-extension-autoload-boundary-audit.t)
+  so the public `embedding.typed_extensions` `autoload_hook_dispatch => false`
+  promise is checked against real registry behavior.
+- Hardened
+  [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)
+  to resolve hook methods through `UNIVERSAL::can(...)` and invoke the returned
+  coderef directly, instead of trusting extension-provided `can(...)` methods.
+- The audit proves AUTOLOAD-only extension objects and `can(...)`-overriding
+  AUTOLOAD objects do not receive hook dispatch, while explicit hook methods
+  and inherited real hook methods still run normally. Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  `tested_by` provenance plus the embedding docs.
+
 ### Typed-extension programmatic loading now has contract-backed runtime coverage
 - Added
   [t/391-typed-extension-programmatic-loading-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/391-typed-extension-programmatic-loading-boundary-audit.t)

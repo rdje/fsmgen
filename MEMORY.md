@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-30: typed-extension hook dispatch now ignores AUTOLOAD and extension-provided can()
+- Added
+  [t/392-typed-extension-autoload-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/392-typed-extension-autoload-boundary-audit.t)
+  to prove the `embedding.typed_extensions` `autoload_hook_dispatch => false`
+  promise is executable runtime behavior, not only manifest prose.
+- Hardened
+  [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)
+  so hook dispatch resolves real methods with `UNIVERSAL::can(...)` and calls
+  that coderef directly instead of trusting an extension object's overridden
+  `can(...)` method.
+- The audit proves AUTOLOAD-only extensions and extensions that lie through
+  `can(...)` do not receive typed hook dispatch, while explicit hook methods
+  and inherited real hook methods still dispatch normally. Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  `tested_by` provenance. This is `R13` negative-boundary hardening only; no
+  hook family or loading path was widened.
+
 ## 2026-04-30: typed-extension programmatic loading now has a contract-backed runtime audit
 - Added
   [t/391-typed-extension-programmatic-loading-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/391-typed-extension-programmatic-loading-boundary-audit.t)

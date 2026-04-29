@@ -105,6 +105,10 @@ The manifest-owned programmatic loading boundary is also audited in
 which proves `extension_modules` and `extension_config_files` dispatch real
 in-process hooks through `FSM::Pipeline::HDLGenerator` while remaining owned by
 `embedding.typed_extensions`.
+[t/392-typed-extension-autoload-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/392-typed-extension-autoload-boundary-audit.t)
+also proves the negative side of the same typed boundary: AUTOLOAD-only
+extensions, including objects that override `can(...)`, do not receive hook
+dispatch, while explicit and inherited real hook methods still run.
 
 For embedders, the same boundary is now machine-readable through
 [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)

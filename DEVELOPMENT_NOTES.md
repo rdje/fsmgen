@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-30: typed-extension hook dispatch must not trust extension-provided can()
+- The typed-extension contract says there is no `AUTOLOAD` hook dispatch or
+  implicit hook discovery. A plain `$extension->can($hook_name)` check was too
+  trusting for that boundary because an extension object can override `can(...)`
+  and claim an AUTOLOAD-backed hook exists.
+- The registry now uses `UNIVERSAL::can($extension, $hook_name)` and invokes
+  that returned coderef directly. That preserves normal explicit methods and
+  inherited real methods while avoiding extension-provided method discovery.
+- The new audit locks the root-cause boundary: AUTOLOAD-only objects and
+  objects that lie through `can(...)` stay inert, while ordinary typed
+  extensions continue to run through the explicit hook names.
+
 ## 2026-04-30: programmatic module/config extension loading belongs to typed_extensions
 - `extension_modules` and `extension_config_files` are real programmatic
   loading entrypoints on `FSM::Pipeline::HDLGenerator->new(...)`, but they are

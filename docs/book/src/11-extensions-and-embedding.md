@@ -205,6 +205,11 @@ runtime-backed in-process: `extension_modules` and `extension_config_files`
 both load a real module from `@INC`, dispatch `after_parse_source` before
 `after_generate_result`, and mutate only the returned raw result for the
 pipeline that requested loading.
+[t/392-typed-extension-autoload-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/392-typed-extension-autoload-boundary-audit.t)
+also proves `AUTOLOAD` remains outside the typed-extension hook boundary:
+AUTOLOAD-only extensions, including objects that override `can(...)`, do not
+receive hook dispatch, while explicit and inherited real hook methods still
+run normally.
 
 For in-process embedders, `FSM::Pipeline::HDLGenerator` no longer leaves its
 requested `debug_level` behind as process-global state after construction or
