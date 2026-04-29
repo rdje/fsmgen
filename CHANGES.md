@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-29
+### Facade source-search paths now have scoped runtime coverage
+- Added
+  [t/388-hdl-generator-facade-source-search-paths-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/388-hdl-generator-facade-source-search-paths-boundary-audit.t)
+  so the public `embedding.hdl_generator_facade` `source_search_paths`
+  constructor option is checked against real external package resolution.
+- The audit proves generation fails without the required search root, succeeds
+  when that root is supplied, and carries the package literal into generated
+  HDL through the in-process facade.
+- It also proves two facade objects resolving the same package name through
+  different search roots do not leak path-resolution state into each other.
+  Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+  with the new boundary audit.
+
 ### Facade debug-level routing now has runtime boundary coverage
 - Added
   [t/387-hdl-generator-facade-debug-level-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/387-hdl-generator-facade-debug-level-boundary-audit.t)

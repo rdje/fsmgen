@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-29: source-search paths should stay facade-local
+- `source_search_paths` is a public facade constructor option because
+  embedders need the same controlled external package/source resolution path
+  that the CLI exposes through repeated `--path` roots.
+- The safe promise is not a process-global library registry. Each
+  `HDLGenerator` object should carry its own resolver state, so one embedder's
+  search roots cannot accidentally satisfy or change another object's
+  generation call.
+- The new audit keeps both sides executable: missing roots fail at the package
+  resolution boundary, supplied roots resolve the external package, and two
+  facade objects with different roots resolve the same package name to
+  different generated HDL without leaking state.
+
 ## 2026-04-29: debug-level facade behavior should be thresholded and scoped
 - `debug_level` is public on the facade, but its safe embedder promise is not
   "turn on global debug forever"; it is scoped trace behavior around

@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-29: facade source-search paths now have a scoped runtime boundary audit
+- Added
+  [t/388-hdl-generator-facade-source-search-paths-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/388-hdl-generator-facade-source-search-paths-boundary-audit.t)
+  to prove the `embedding.hdl_generator_facade` public
+  `source_search_paths` constructor option is both advertised and
+  runtime-backed.
+- The audit builds one direct root importing an external package, proves a
+  facade without `source_search_paths` fails at the package-resolution
+  boundary, then proves a facade with the matching search path succeeds and
+  carries the imported package literal into generated HDL.
+- It also creates two facade objects with different search roots for the same
+  package name and proves each object resolves only through its own path list.
+  This is `R13` facade-boundary hardening only; no resolver API was widened.
+
 ## 2026-04-29: facade debug-level routing now has a runtime boundary audit
 - Added
   [t/387-hdl-generator-facade-debug-level-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/387-hdl-generator-facade-debug-level-boundary-audit.t)

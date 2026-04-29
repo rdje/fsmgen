@@ -174,6 +174,11 @@ also proves the advertised `debug_level` constructor option is runtime-backed
 and scoped: level `0` stays silent, level `2` emits low/medium trace without
 high-detail raw-AST dumps, level `4` emits that high-detail path, and the
 caller debug state is restored afterward.
+[t/388-hdl-generator-facade-source-search-paths-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/388-hdl-generator-facade-source-search-paths-boundary-audit.t)
+also proves the advertised `source_search_paths` constructor option is
+runtime-backed and facade-local: missing roots fail at external package
+resolution, supplied roots generate HDL with the imported package literal, and
+separate facade objects with different roots do not leak resolution state.
 [t/375-hdl-generator-facade-contract.t](/Users/richarddje/Documents/github/fsmgen/t/375-hdl-generator-facade-contract.t)
 also now checks that the facade contract's advertised top-level key list
 exactly covers the emitted facade contract shell, so new facade metadata cannot
