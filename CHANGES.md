@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-29
+### Extension loading ownership is now audited across manifest, facade, and semantic command surfaces
+- Added
+  [t/380-extension-loading-command-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/380-extension-loading-command-boundary-audit.t)
+  as an `R13` cross-surface guard for typed extension module/config loading.
+- The audit proves the direct contract, in-process manifest, and both CLI
+  manifest spellings advertise `extension_modules`, `extension_config_files`,
+  `--extension-module`, and `--extension-config` through
+  `embedding.typed_extensions`, while `embedding.hdl_generator_facade` keeps
+  those loading knobs out of its public constructor-option families.
+- The same audit runs semantic JSON export with a temporary traced extension
+  loaded through both module and config paths, proves the hook executed, and
+  still requires the public `command` object to remain limited to the shared
+  report-command keys.
+- Updated [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm),
+  [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md),
+  and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+  so the new audit is advertised from the contract and user-facing docs.
+
 ### Extension result augmentation is now guarded from semantic JSON leakage
 - Added
   [t/379-extension-result-json-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/379-extension-result-json-boundary-audit.t)

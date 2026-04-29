@@ -147,6 +147,11 @@ That boundary is now audited directly:
 classifies every current `HDLGenerator` constructor argument read from
 `%args` and proves the owner-injection arguments stay out of both the facade
 contract and the live manifest public constructor-option lists.
+[t/380-extension-loading-command-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/380-extension-loading-command-boundary-audit.t)
+locks the matching loading-owner split: module/config extension loading remains
+advertised by `embedding.typed_extensions`, stays out of
+`embedding.hdl_generator_facade`, and does not widen the normalized-semantic
+JSON `command` object when semantic export runs with loaded extensions.
 
 For in-process embedders, `FSM::Pipeline::HDLGenerator` no longer leaves its
 requested `debug_level` behind as process-global state after construction or

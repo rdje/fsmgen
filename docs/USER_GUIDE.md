@@ -2157,6 +2157,11 @@ That boundary is regression-audited by
 every current constructor `%args` key must be classified, and owner-injection
 arguments must stay out of the facade contract and live manifest public
 constructor-option lists.
+[t/380-extension-loading-command-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/380-extension-loading-command-boundary-audit.t)
+also locks the module/config loading-owner split: those loading entrypoints are
+advertised by `embedding.typed_extensions`, not by
+`embedding.hdl_generator_facade`, and semantic JSON `command` objects remain
+limited to report-mode metadata even when extension loading is active.
 
 For in-process embedders, `FSM::Pipeline::HDLGenerator` no longer leaves its
 requested `debug_level` behind as process-global state after construction or

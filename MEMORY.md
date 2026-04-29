@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-29: extension loading ownership now has a command-boundary audit
+- Added
+  [t/380-extension-loading-command-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/380-extension-loading-command-boundary-audit.t)
+  to prove module/config extension loading remains advertised by
+  `embedding.typed_extensions` while staying out of the narrower
+  `embedding.hdl_generator_facade` constructor-option families.
+- The audit creates a temporary extension module, runs
+  `--strict --emit-semantic-json` with both `--extension-module` and
+  `--extension-config`, proves the hook actually ran through a trace file, and
+  still requires the semantic JSON `command` object to contain only the shared
+  report-command keys.
+- This keeps the `R13` seam split explicit: extension loading is public, but
+  it belongs to the typed-extension contract rather than the facade
+  constructor surface or normalized-semantic command telemetry.
+
 ## 2026-04-29: extension result augmentation now has a semantic-JSON leak audit
 - Added
   [t/379-extension-result-json-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/379-extension-result-json-boundary-audit.t)

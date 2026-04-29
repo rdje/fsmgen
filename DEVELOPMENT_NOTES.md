@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-29: extension loading belongs to typed_extensions, not every nearby public shell
+- `extension_modules`, `extension_config_files`, `--extension-module`, and
+  `--extension-config` are real public extension-loading seams, but they are
+  not the same public seam as direct blessed-object injection through the
+  `HDLGenerator` facade.
+- They also should not become normalized-semantic report `command` fields just
+  because semantic export happened to run with an extension loaded.
+- The root-cause split is ownership:
+  - `embedding.typed_extensions` owns loading entrypoints and config shape,
+  - `embedding.hdl_generator_facade` owns the narrow constructor-plus-generate
+    facade and direct object injection,
+  - public report `command` owns report-mode metadata shared by check JSON and
+    semantic JSON.
+- The new audit proves all three surfaces keep that split even when a traced
+  extension really executes during semantic JSON export.
+
 ## 2026-04-29: extension result augmentation should not silently widen normalized semantic JSON
 - Typed extensions deliberately receive the raw `HDLGenerator` result in
   `after_generate_result`, so in-process callers can add local metadata or

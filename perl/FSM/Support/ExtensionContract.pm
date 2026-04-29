@@ -38,6 +38,7 @@ sub build_extension_contract {
             't/252-extension-diagnostic-context.t',
             't/253-extension-loader-diagnostic-context.t',
             't/306-extension-contract.t',
+            't/380-extension-loading-command-boundary-audit.t',
         ],
         entrypoints => {
             programmatic_objects => 'FSM::Pipeline::HDLGenerator->new(extensions => [ $object, ... ])',
