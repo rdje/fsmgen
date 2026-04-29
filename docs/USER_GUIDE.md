@@ -2218,6 +2218,11 @@ also proves the advertised `source_search_paths` constructor option is
 runtime-backed and facade-local: missing roots fail at external package
 resolution, supplied roots generate HDL with the imported package literal, and
 separate facade objects with different roots do not leak resolution state.
+[t/389-hdl-generator-facade-extensions-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/389-hdl-generator-facade-extensions-boundary-audit.t)
+also proves the advertised `extensions` constructor option is runtime-backed as
+direct blessed-object injection: non-blessed values are rejected, injected
+objects dispatch in order, result-hook mutation reaches the returned raw
+result, and separate facade objects do not share injected extension state.
 [t/380-extension-loading-command-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/380-extension-loading-command-boundary-audit.t)
 also locks the module/config loading-owner split: those loading entrypoints are
 advertised by `embedding.typed_extensions`, not by

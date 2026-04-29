@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-29
+### Facade extension-object injection now has dedicated boundary coverage
+- Added
+  [t/389-hdl-generator-facade-extensions-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/389-hdl-generator-facade-extensions-boundary-audit.t)
+  so the public `embedding.hdl_generator_facade` `extensions` constructor
+  option is checked against real direct object injection and hook dispatch.
+- The audit proves non-blessed extension values are rejected, multiple blessed
+  extension objects dispatch in order, result-hook mutations reach the returned
+  raw in-process result, and separate facade objects do not share injected
+  extension state.
+- Added the new audit to
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  `tested_by` provenance, and updated
+  [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  plus [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+  with the blessed-object injection boundary.
+
 ### Facade source-search paths now have scoped runtime coverage
 - Added
   [t/388-hdl-generator-facade-source-search-paths-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/388-hdl-generator-facade-source-search-paths-boundary-audit.t)

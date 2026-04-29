@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-29: facade extension-object injection now has a dedicated boundary audit
+- Added
+  [t/389-hdl-generator-facade-extensions-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/389-hdl-generator-facade-extensions-boundary-audit.t)
+  to prove the `embedding.hdl_generator_facade` public `extensions`
+  constructor option is direct blessed-object injection with real hook dispatch.
+- The audit checks the facade and typed-extension contracts, rejects a
+  non-blessed `extensions` value at construction, proves multiple injected
+  extension objects run in order, and proves extension/result-hook state stays
+  scoped to the facade object that received that extension.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  `tested_by` provenance to include the new audit. This is `R13`
+  facade/extension-boundary hardening only; no hook family or loading path was
+  widened.
+
 ## 2026-04-29: facade source-search paths now have a scoped runtime boundary audit
 - Added
   [t/388-hdl-generator-facade-source-search-paths-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/388-hdl-generator-facade-source-search-paths-boundary-audit.t)

@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-29: facade extensions are direct object injection, not loading magic
+- `extensions` belongs in the public facade constructor surface because
+  embedders can pass already-constructed blessed extension objects and receive
+  typed hook dispatch around generation.
+- That promise is narrower than module/config loading. Programmatic module
+  names, config files, CLI loading, and loading diagnostics stay owned by the
+  typed-extension contract rather than by the narrower facade constructor
+  surface.
+- The new audit keeps the runtime boundary explicit: non-blessed values fail
+  at construction, injected objects dispatch in order, result-hook mutation is
+  observable on the raw in-process result, and separate facade objects do not
+  leak extension state into one another.
+
 ## 2026-04-29: source-search paths should stay facade-local
 - `source_search_paths` is a public facade constructor option because
   embedders need the same controlled external package/source resolution path
