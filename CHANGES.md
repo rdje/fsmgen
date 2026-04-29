@@ -1,6 +1,26 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-29
+### HDLGenerator constructor owner-injection boundary is now runtime-audited
+- Added
+  [t/377-hdl-generator-constructor-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/377-hdl-generator-constructor-boundary-audit.t)
+  as an `R13` guard over the public
+  `embedding.hdl_generator_facade` constructor surface.
+- The audit parses the current `%args` reads in
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  and requires every constructor key to be classified as public facade input,
+  internal owner-injection input, or non-public module/config extension-loading
+  input.
+- It also proves the internal owner-injection and module/config loading keys
+  remain absent from the direct facade contract, the in-process capability
+  manifest, and both CLI manifest spellings, while the public constructor list
+  stays limited to `debug_level`, `target_language`, `quiet`, `strict_mode`,
+  `source_search_paths`, and `extensions`.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  plus [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+  so the public embedding docs mention that this constructor boundary is now
+  regression-audited.
+
 ### README bootstrap and `bin/fsmgen` import-tree truth refreshed after model switch
 - Re-executed the README ramp-up path and rebuilt the live project-owned
   transitive `FSM::...` closure from

@@ -137,6 +137,11 @@ It intentionally does not freeze the lower-level owner-injection constructor
 arguments. It also leaves module/config-file extension loading behind
 `embedding.typed_extensions`, so the narrower facade contract stays honest
 about what is currently meant to be a stable in-process entry seam.
+That boundary is now audited directly:
+[t/377-hdl-generator-constructor-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/377-hdl-generator-constructor-boundary-audit.t)
+classifies every current `HDLGenerator` constructor argument read from
+`%args` and proves the owner-injection arguments stay out of both the facade
+contract and the live manifest public constructor-option lists.
 
 For in-process embedders, `FSM::Pipeline::HDLGenerator` no longer leaves its
 requested `debug_level` behind as process-global state after construction or
@@ -788,6 +793,11 @@ in-process and CLI manifest surfaces. That keeps the grouped
 `composition_report`, `hdl_generator_facade`, `hdl_generator_result`,
 `typed_extensions`, and `debug_runtime` child contracts in one place instead
 of leaving that public section as duplicated inline manifest assembly logic.
+The `hdl_generator_facade` child also has a constructor-boundary audit in
+[t/377-hdl-generator-constructor-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/377-hdl-generator-constructor-boundary-audit.t),
+so new constructor arguments cannot quietly appear without being classified as
+bounded public facade options, internal owner-injection options, or
+non-public extension-loading options.
 That section shell now also publishes a grouped `nested_presence_key_map` so
 downstream tools can discover the bounded child key families for
 `composition_report`, `hdl_generator_facade`, `hdl_generator_result`,

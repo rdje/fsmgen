@@ -2140,6 +2140,11 @@ direct blessed-object extension injection through `extensions`.
 It intentionally does not freeze the lower-level owner-injection constructor
 arguments, and it leaves module/config-file extension loading behind
 `embedding.typed_extensions` so the narrower in-process seam stays honest.
+That boundary is regression-audited by
+[t/377-hdl-generator-constructor-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/377-hdl-generator-constructor-boundary-audit.t):
+every current constructor `%args` key must be classified, and owner-injection
+arguments must stay out of the facade contract and live manifest public
+constructor-option lists.
 
 For in-process embedders, `FSM::Pipeline::HDLGenerator` no longer leaves its
 requested `debug_level` behind as process-global state after construction or

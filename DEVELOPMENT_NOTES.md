@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-29: the facade constructor needed a negative boundary audit, not a wider public list
+- `FSM::Pipeline::HDLGenerator->new(...)` intentionally accepts a few
+  implementation wiring arguments today so tests and owner packages can inject
+  dependencies such as path resolution, extension loading, extension registry,
+  and RTL interface loading.
+- Those knobs are useful implementation seams, but advertising them as public
+  would over-stabilize the current internal object graph and make future
+  owner cleanup harder.
+- The right `R13` hardening step was therefore a negative boundary audit:
+  classify every current `%args` key in the constructor, keep the bounded
+  public facade list narrow, and prove the internal owner-injection keys do
+  not appear in the direct contract or either manifest CLI spelling.
+- Module/config-file extension loading remains outside the facade constructor
+  contract too; that behavior belongs to the typed-extension loading story,
+  while direct blessed-object injection through `extensions` stays the only
+  facade-level extension input advertised today.
+
 ## 2026-04-29: after a model switch, README execution should refresh measured truth before picking another feature slice
 - The README is the repository's single entrypoint, so after changing the AI
   model the correct first move was not to rely on remembered context.

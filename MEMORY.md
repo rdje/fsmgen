@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-29: HDLGenerator constructor owner-injection args now have a boundary audit
+- Added
+  [t/377-hdl-generator-constructor-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/377-hdl-generator-constructor-boundary-audit.t)
+  to classify every current `%args` key read by
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  as either bounded public facade input, internal owner-injection input, or
+  non-public module/config extension-loading input.
+- The audit proves the internal owner-injection keys
+  `source_path_resolver`, `extension_loader`, `extension_registry`, and
+  `rtl_interface_loader` remain absent from
+  `embedding.hdl_generator_facade` public constructor-option lists in the
+  direct contract, the in-process capability manifest, and both CLI manifest
+  spellings.
+- This closes the immediate `R13` follow-up from the previous roadmap note:
+  the facade can still accept internal dependency injection for tests and
+  owner wiring, but those knobs cannot quietly drift into the advertised public
+  embedding contract.
+
 ## 2026-04-29: README bootstrap refreshed the import-tree truth after the model switch
 - Re-executed the README ramp-up path after the session model change, rebuilt
   the project-owned transitive `FSM::...` closure from
