@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-29: facade debug-level routing now has a runtime boundary audit
+- Added
+  [t/387-hdl-generator-facade-debug-level-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/387-hdl-generator-facade-debug-level-boundary-audit.t)
+  to prove the `embedding.hdl_generator_facade` public `debug_level`
+  constructor option drives scoped trace behavior.
+- The audit binds a caller trace sink around
+  [t/corpus/direct_sreset_active_high.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_sreset_active_high.fsm)
+  generation and proves `debug_level => 0` stays silent, `debug_level => 2`
+  emits low/medium trace without high-detail raw-AST dumps, and
+  `debug_level => 4` emits the high-detail raw-AST path.
+- It also checks the facade restores global debug level and clears the audit
+  trace sink after generation. This is `R13` facade-boundary hardening only;
+  no debug API was widened.
+
 ## 2026-04-29: facade target-language routing now has a runtime boundary audit
 - Added
   [t/386-hdl-generator-facade-target-language-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/386-hdl-generator-facade-target-language-boundary-audit.t)

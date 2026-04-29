@@ -169,6 +169,11 @@ also proves the advertised `target_language` constructor option routes real
 direct backend behavior: the default path emits SystemVerilog forms, explicit
 `verilog` emits Verilog forms, and explicit `vhdl` remains a source-contextual
 not-implemented boundary rather than a completed backend promise.
+[t/387-hdl-generator-facade-debug-level-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/387-hdl-generator-facade-debug-level-boundary-audit.t)
+also proves the advertised `debug_level` constructor option is runtime-backed
+and scoped: level `0` stays silent, level `2` emits low/medium trace without
+high-detail raw-AST dumps, level `4` emits that high-detail path, and the
+caller debug state is restored afterward.
 [t/375-hdl-generator-facade-contract.t](/Users/richarddje/Documents/github/fsmgen/t/375-hdl-generator-facade-contract.t)
 also now checks that the facade contract's advertised top-level key list
 exactly covers the emitted facade contract shell, so new facade metadata cannot

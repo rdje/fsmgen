@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-29: debug-level facade behavior should be thresholded and scoped
+- `debug_level` is public on the facade, but its safe embedder promise is not
+  "turn on global debug forever"; it is scoped trace behavior around
+  constructor/generation work while preserving the caller's debug state.
+- The new facade audit exercises three thresholds against a real direct source:
+  level `0` stays silent even when a trace sink exists, level `2` reaches the
+  low/medium runtime trace path but not high-detail raw-AST dumps, and level
+  `4` reaches the high-detail path.
+- This complements the debug-runtime save/restore tests by tying the public
+  facade constructor option to observable generation behavior and cleanup.
+
 ## 2026-04-29: target-language routing is a facade behavior, not a backend promise
 - `target_language` belongs in the public facade constructor surface because
   embedders can choose between the current generated-module Verilog-family

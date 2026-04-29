@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-29
+### Facade debug-level routing now has runtime boundary coverage
+- Added
+  [t/387-hdl-generator-facade-debug-level-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/387-hdl-generator-facade-debug-level-boundary-audit.t)
+  so the public `embedding.hdl_generator_facade` `debug_level` constructor
+  option is checked against real scoped trace behavior.
+- The audit proves `debug_level => 0` emits no trace into a caller-bound trace
+  sink, `debug_level => 2` emits low/medium trace without high-detail raw-AST
+  dumps, and `debug_level => 4` emits the high-detail raw-AST path while
+  still restoring global debug state after generation.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+  so embedders can see `debug_level` is runtime-backed and scoped through the
+  facade rather than a process-global leak.
+
 ### Facade target-language routing now has runtime boundary coverage
 - Added
   [t/386-hdl-generator-facade-target-language-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/386-hdl-generator-facade-target-language-boundary-audit.t)
