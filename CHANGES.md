@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-29
+### Trace-bound debug snapshots now prove the non-JSON contract boundary
+- Strengthened
+  [t/374-debug-runtime-contract.t](/Users/richarddje/Documents/github/fsmgen/t/374-debug-runtime-contract.t)
+  so a trace-bound `FSM::Debug::capture_fsm_debug_state()` snapshot must fail
+  strict `JSON::PP::encode_json(...)` encoding.
+- This directly backs the `snapshot_json_safe => false` claim in
+  [perl/FSM/Support/DebugRuntimeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DebugRuntimeContract.pm)
+  for snapshots that include a live trace filehandle.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+  so embedders can see the snapshot seam is process-local save/restore state,
+  not interchange JSON.
+
 ### Debug-runtime snapshot keys now match captured runtime state
 - Strengthened
   [t/374-debug-runtime-contract.t](/Users/richarddje/Documents/github/fsmgen/t/374-debug-runtime-contract.t)

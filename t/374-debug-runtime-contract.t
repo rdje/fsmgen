@@ -6,6 +6,7 @@ use Test::More;
 use File::Spec;
 use File::Temp qw(tempdir);
 use FindBin;
+use JSON::PP qw(encode_json);
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
@@ -179,6 +180,10 @@ subtest 'advertised snapshot state keys stay backed by captured FSM::Debug snaps
     is($snapshot->{trace_output_file}, $trace_path, 'captured snapshot records trace output path');
     ok(live_filehandle($snapshot->{trace_output_fh}), 'captured snapshot keeps a live trace filehandle');
     ok(!$snapshot->{trace_emojis_enabled}, 'captured snapshot records disabled trace emojis');
+    ok(
+        !json_encode_succeeds($snapshot),
+        'trace-bound debug-state snapshot is not JSON-safe as a whole',
+    );
 
     FSM::Debug::restore_fsm_debug_state($saved);
 };
@@ -216,4 +221,12 @@ sub live_filehandle {
     my ($fh) = @_;
     return 0 unless defined $fh;
     return defined eval { fileno($fh) } ? 1 : 0;
+}
+
+sub json_encode_succeeds {
+    my ($value) = @_;
+    return eval {
+        encode_json($value);
+        1;
+    } ? 1 : 0;
 }

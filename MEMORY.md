@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-29: trace-bound debug snapshots now prove the non-JSON boundary
+- Strengthened
+  [t/374-debug-runtime-contract.t](/Users/richarddje/Documents/github/fsmgen/t/374-debug-runtime-contract.t)
+  so the same trace-bound `FSM::Debug::capture_fsm_debug_state()` snapshot used
+  for key-shape parity must fail strict `JSON::PP::encode_json(...)` encoding.
+- This directly backs the
+  [perl/FSM/Support/DebugRuntimeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DebugRuntimeContract.pm)
+  claim that runtime snapshots are not JSON-safe as a whole when a live trace
+  filehandle is captured.
+- This is `R13` negative-boundary hardening only; embedders should still treat
+  snapshots as process-local save/restore state rather than interchange JSON.
+
 ## 2026-04-29: debug-runtime snapshot keys now have captured-state parity coverage
 - Strengthened
   [t/374-debug-runtime-contract.t](/Users/richarddje/Documents/github/fsmgen/t/374-debug-runtime-contract.t)

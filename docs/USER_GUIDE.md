@@ -1811,6 +1811,8 @@ and control names are real exported `FSM::Debug` functions, and that the named
 trace-verbosity values plus numeric range match the live debug runtime mapping.
 It now also captures a real trace-bound debug-state snapshot and proves
 `snapshot_state_keys` matches the emitted snapshot shape.
+That same trace-bound snapshot is checked as not JSON-safe as a whole, matching
+the advertised debug-runtime contract.
 The manifest's `diagnostics` section now follows the same pattern:
 [perl/FSM/Support/DiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsContract.pm)
 names the published top-level, scalar-string, and stable-code entry families

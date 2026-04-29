@@ -207,6 +207,8 @@ trace-verbosity values plus numeric range match the live debug runtime mapping.
 It also captures a trace-bound debug-state snapshot and proves the advertised
 `snapshot_state_keys` match the real snapshot keys, including the schema,
 debug level, trace path, live filehandle, and emoji state.
+That trace-bound snapshot is also checked as not JSON-safe as a whole, matching
+the contract's `snapshot_json_safe => false` claim.
 That current in-process seam is now also advertised through
 `embedding.debug_runtime`, owned by
 [perl/FSM/Support/DebugRuntimeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DebugRuntimeContract.pm).

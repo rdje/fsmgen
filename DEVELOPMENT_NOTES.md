@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-29: trace-bound debug snapshots are process state, not interchange JSON
+- The debug-runtime contract says snapshots are not JSON-safe because a
+  trace-bound snapshot can carry a live filehandle. That boundary should be
+  executable, not merely descriptive.
+- The direct contract test now feeds a trace-bound snapshot to
+  `JSON::PP::encode_json(...)` and requires encoding to fail, so future changes
+  cannot accidentally make the contract claim drift away from runtime behavior.
+- This does not make unbound snapshots a public JSON schema; the stable
+  embedder contract remains save/restore process state, with sanitized public
+  reporting handled by the report/semantic JSON surfaces instead.
+
 ## 2026-04-29: snapshot key contracts should be checked against real snapshots
 - `snapshot_state_keys` is more than a static family list: embedders may use it
   to understand what `capture_fsm_debug_state()` returns and what can be passed
