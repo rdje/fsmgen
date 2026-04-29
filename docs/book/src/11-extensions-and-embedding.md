@@ -780,6 +780,13 @@ surfaces, finds public module-reference fields such as `contract_source`,
 `*_contract_source_map`, `implementation_owners`, `report_sources`,
 `report_builder`, and `registry_source`, and requires each value to be a
 loadable `FSM::...` module present under `perl/`.
+Grouped discovery maps now have the same generic guard:
+[t/383-contract-family-map-integrity-audit.t](/Users/richarddje/Documents/github/fsmgen/t/383-contract-family-map-integrity-audit.t)
+walks direct contracts plus manifest outputs and requires maps such as
+`presence_key_family_map`, `nested_presence_key_map`,
+`constructor_option_family_map`, `name_family_map`, and `family_map` to stay
+hashes of non-empty unique scalar lists, aligned with same-named sibling lists
+when the sibling exists.
 That shell contract now also explicitly lists the first nested
 `support_accounting` keys, so embedders can discover the corpus-backed section
 shape without a manifest-specific exception.

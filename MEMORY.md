@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-29: grouped public discovery maps now have an integrity audit
+- Added
+  [t/383-contract-family-map-integrity-audit.t](/Users/richarddje/Documents/github/fsmgen/t/383-contract-family-map-integrity-audit.t)
+  to recursively inspect grouped discovery maps published by direct support
+  contract builders, the in-process capability manifest, and both CLI
+  manifest spellings.
+- The audit covers `presence_key_family_map`, `nested_presence_key_map`,
+  `top_level_section_presence_key_map`, `constructor_option_family_map`,
+  `name_family_map`, `family_map`, and the namespaced
+  `*_presence_key_family_map` / `*_nested_presence_key_map` variants.
+- Every discovered map must stay a non-empty hash of non-empty, unique scalar
+  lists, and same-named map entries must match same-named sibling lists when
+  those sibling lists exist.
+
 ## 2026-04-29: public module provenance now has a loadability audit
 - Added
   [t/382-contract-module-provenance-audit.t](/Users/richarddje/Documents/github/fsmgen/t/382-contract-module-provenance-audit.t)

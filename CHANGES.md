@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-29
+### Grouped public discovery maps are now integrity-audited
+- Added
+  [t/383-contract-family-map-integrity-audit.t](/Users/richarddje/Documents/github/fsmgen/t/383-contract-family-map-integrity-audit.t)
+  as an `R13` metadata-integrity guard for grouped public discovery maps.
+- The audit walks direct support contract builders plus the in-process
+  capability manifest and both CLI manifest spellings, recursively finds maps
+  such as `presence_key_family_map`, `nested_presence_key_map`,
+  `top_level_section_presence_key_map`, `constructor_option_family_map`,
+  `name_family_map`, and `family_map`, and requires each to stay a hash of
+  non-empty unique scalar lists.
+- When a grouped map entry has a same-named sibling list, the audit also
+  requires the map entry to match that sibling exactly so grouped discovery
+  stays aligned with the older flat list fields.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  plus [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+  so the manifest/contract docs mention the new grouped-map integrity audit.
+
 ### Public module provenance is now loadability-audited
 - Added
   [t/382-contract-module-provenance-audit.t](/Users/richarddje/Documents/github/fsmgen/t/382-contract-module-provenance-audit.t)

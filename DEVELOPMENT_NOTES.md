@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-29: grouped discovery maps need structural integrity, not just matching prose
+- The newer public contracts increasingly publish grouped discovery maps so
+  embedders can find related key/name families without reconstructing them
+  from many flat fields.
+- Those maps are useful only if they remain mechanically simple: hash values
+  should be arrays of unique scalar strings, and entries that mirror legacy
+  sibling lists should match those siblings exactly.
+- The new audit checks that invariant over both direct contract builders and
+  emitted manifest views, so grouped discovery remains a dependable machine
+  surface rather than a second manually curated representation that can drift
+  away from the flat lists.
+
 ## 2026-04-29: public module provenance should point at loadable project modules
 - Public contract metadata now contains many module-owner breadcrumbs:
   `contract_source`, nested contract source maps, implementation owners,

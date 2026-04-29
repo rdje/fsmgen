@@ -1846,6 +1846,12 @@ walks direct contracts plus manifest outputs, finds fields such as
 `contract_source`, `*_contract_source_map`, `implementation_owners`,
 `report_sources`, `report_builder`, and `registry_source`, and requires each
 value to be a loadable `FSM::...` module under `perl/`.
+Grouped discovery maps are audited too:
+[t/383-contract-family-map-integrity-audit.t](/Users/richarddje/Documents/github/fsmgen/t/383-contract-family-map-integrity-audit.t)
+requires public maps such as `presence_key_family_map`,
+`nested_presence_key_map`, `constructor_option_family_map`, `name_family_map`,
+and `family_map` to remain hashes of non-empty unique scalar lists and to match
+same-named sibling lists when present.
 It also advertises the optional external SystemVerilog validation lane:
 `--verify-hdl` / `--validate-hdl` writes the generated `.sv`, then runs
 Verilator in lint-only SystemVerilog mode and Yosys with
