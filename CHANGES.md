@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-29
+### Debug-runtime contract helpers now have implementation parity coverage
+- Strengthened
+  [t/374-debug-runtime-contract.t](/Users/richarddje/Documents/github/fsmgen/t/374-debug-runtime-contract.t)
+  so every helper/control function name advertised by
+  [perl/FSM/Support/DebugRuntimeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DebugRuntimeContract.pm)
+  must be implemented and exported by
+  [perl/FSM/Debug.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Debug.pm).
+- The same test now checks the advertised named trace-verbosity values and
+  numeric trace-level range against the live debug runtime mapping, and proves
+  each advertised named value is accepted by `set_fsm_trace_verbosity()` /
+  `get_fsm_trace_verbosity()`.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+  so embedders can see the debug-runtime manifest contract is implementation-backed.
+
 ### Facade and debug-runtime contract shells now have exact advertised-key audits
 - Strengthened
   [t/374-debug-runtime-contract.t](/Users/richarddje/Documents/github/fsmgen/t/374-debug-runtime-contract.t)

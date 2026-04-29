@@ -1806,6 +1806,9 @@ self-description guards:
 and [t/374-debug-runtime-contract.t](/Users/richarddje/Documents/github/fsmgen/t/374-debug-runtime-contract.t)
 now require each advertised top-level key list to exactly cover its emitted
 contract shell.
+The debug-runtime contract test also checks that the advertised debug helper
+and control names are real exported `FSM::Debug` functions, and that the named
+trace-verbosity values plus numeric range match the live debug runtime mapping.
 The manifest's `diagnostics` section now follows the same pattern:
 [perl/FSM/Support/DiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsContract.pm)
 names the published top-level, scalar-string, and stable-code entry families

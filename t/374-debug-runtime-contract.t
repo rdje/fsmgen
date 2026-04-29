@@ -8,6 +8,7 @@ use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
+use FSM::Debug ();
 use FSM::Support::DebugRuntimeContract qw(
     build_debug_runtime_contract
     debug_runtime_contract_source
@@ -106,4 +107,70 @@ subtest 'contract exposes the bounded embedding-facing debug runtime seam' => su
     );
 };
 
+subtest 'advertised debug runtime helpers stay backed by exported FSM::Debug functions' => sub {
+    my %exported = map { $_ => 1 } @FSM::Debug::EXPORT;
+
+    for my $name (@{advertised_debug_runtime_function_names()}) {
+        ok(FSM::Debug->can($name), "FSM::Debug implements advertised helper $name");
+        ok($exported{$name}, "FSM::Debug exports advertised helper $name");
+    }
+};
+
+subtest 'advertised trace verbosity values stay backed by FSM::Debug runtime mapping' => sub {
+    my $contract = build_debug_runtime_contract();
+    my @levels = values %FSM::Debug::VERBOSITY_TO_LEVEL;
+
+    is_deeply(
+        [sort @{$contract->{named_trace_verbosity_values}}],
+        [sort keys %FSM::Debug::VERBOSITY_TO_LEVEL],
+        'contract named trace verbosity values match the live debug mapping',
+    );
+    is_deeply(
+        $contract->{numeric_trace_level_range},
+        {
+            min => min_value(@levels),
+            max => max_value(@levels),
+        },
+        'contract numeric trace level range matches the live debug mapping',
+    );
+
+    my $saved = FSM::Debug::capture_fsm_debug_state();
+    for my $name (@{$contract->{named_trace_verbosity_values}}) {
+        FSM::Debug::set_fsm_trace_verbosity($name);
+        is(
+            FSM::Debug::get_fsm_trace_verbosity(),
+            $name,
+            "FSM::Debug accepts advertised trace verbosity $name",
+        );
+    }
+    FSM::Debug::restore_fsm_debug_state($saved);
+};
+
 done_testing();
+
+sub advertised_debug_runtime_function_names {
+    return [
+        @{debug_runtime_snapshot_helper_names()},
+        @{debug_runtime_state_control_names()},
+        @{debug_runtime_trace_output_control_names()},
+        @{debug_runtime_emoji_control_names()},
+    ];
+}
+
+sub min_value {
+    my (@values) = @_;
+    my $min = shift @values;
+    for my $value (@values) {
+        $min = $value if $value < $min;
+    }
+    return $min;
+}
+
+sub max_value {
+    my (@values) = @_;
+    my $max = shift @values;
+    for my $value (@values) {
+        $max = $value if $value > $max;
+    }
+    return $max;
+}

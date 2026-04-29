@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-29: debug-runtime contract names should be implementation-backed
+- The debug-runtime contract is useful to embedders only if advertised helper
+  and control names are not just strings in a manifest payload.
+- The direct debug-runtime contract test now treats each advertised helper
+  family as an implementation-parity promise: every helper/control name must
+  exist as an exported `FSM::Debug` function.
+- The named trace-verbosity list and numeric trace-level range are also tied to
+  the live `FSM::Debug` mapping, so future verbosity changes must update the
+  contract and test together.
+- This keeps the current global debug runtime seam honest while still avoiding
+  a broader API claim about older debug helpers that are intentionally outside
+  `embedding.debug_runtime`.
+
 ## 2026-04-29: embedding child contract shells should fail on stale key lists
 - The typed-extension contract drift showed that an emitted discovery key can
   exist while the advertised public top-level key list forgets to name it.

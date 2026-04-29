@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-29: debug-runtime contract helper names now have implementation parity checks
+- Strengthened
+  [t/374-debug-runtime-contract.t](/Users/richarddje/Documents/github/fsmgen/t/374-debug-runtime-contract.t)
+  so every helper/control name advertised by
+  [perl/FSM/Support/DebugRuntimeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DebugRuntimeContract.pm)
+  must be implemented and exported by
+  [perl/FSM/Debug.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Debug.pm).
+- The same test now checks the advertised named trace-verbosity values and
+  numeric trace-level range against the live `FSM::Debug` runtime mapping, and
+  proves each advertised named value is accepted by the runtime setter/getter.
+- This is `R13` implementation-parity hardening only: no new debug helper,
+  trace level, or embedding surface was added.
+
 ## 2026-04-29: facade and debug-runtime contracts now have exact shell-key audits
 - Strengthened
   [t/374-debug-runtime-contract.t](/Users/richarddje/Documents/github/fsmgen/t/374-debug-runtime-contract.t)
