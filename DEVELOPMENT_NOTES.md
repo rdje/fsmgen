@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-29: the raw HDLGenerator result should stay an in-process payload until it is deliberately sanitized
+- The `HDLGenerator` result hash is useful to in-process Perl callers because
+  it still carries live compatibility branches such as CoreAST objects,
+  parser/debug AST arrays, package specs, and composition plan/spec/report
+  structures.
+- That usefulness is exactly why it should not be treated as a public JSON
+  document by accident.
+- The honest public split is:
+  - raw `HDLGenerator` result for in-process compatibility,
+  - bounded leaf/shell contracts for documented inspection points,
+  - and normalized semantic JSON for sanitized machine interchange.
+- The new JSON-boundary audit encodes that split as runtime behavior: real raw
+  direct and composition results must fail strict JSON encoding, while real
+  normalized semantic JSON outputs must decode and re-encode cleanly.
+
 ## 2026-04-29: the facade constructor needed a negative boundary audit, not a wider public list
 - `FSM::Pipeline::HDLGenerator->new(...)` intentionally accepts a few
   implementation wiring arguments today so tests and owner packages can inject

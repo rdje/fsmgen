@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-29: raw HDLGenerator results now have a JSON-boundary runtime audit
+- Added
+  [t/378-hdl-generator-result-json-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/378-hdl-generator-result-json-boundary-audit.t)
+  to prove with real direct and composition generation results that the raw
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  result hash remains an in-process compatibility payload, not a strict
+  JSON-safe document.
+- The audit locks the negative public claim from
+  [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm)
+  and `embedding.hdl_generator_facade` across the direct contract, in-process
+  manifest, and both CLI manifest spellings.
+- The same audit also decodes and re-encodes `--emit-semantic-json` output for
+  real direct and composition fixtures, proving the normalized semantic report
+  remains the JSON-safe interchange path instead of the raw result hash.
+
 ## 2026-04-29: HDLGenerator constructor owner-injection args now have a boundary audit
 - Added
   [t/377-hdl-generator-constructor-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/377-hdl-generator-constructor-boundary-audit.t)

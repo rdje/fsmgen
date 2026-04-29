@@ -1875,6 +1875,11 @@ JSON, but it deliberately does not claim the whole raw result hash is
 JSON-safe. Nested compatibility fields may still contain live CoreAST/AST
 objects; use `--emit-semantic-json` when the integration needs a sanitized
 machine interchange document.
+That boundary is runtime-audited by
+[t/378-hdl-generator-result-json-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/378-hdl-generator-result-json-boundary-audit.t),
+which checks real direct and composition raw results against strict JSON
+encoding and verifies the normalized semantic JSON path as the JSON-safe
+interchange surface.
 That same caution now explicitly includes `resolved_package_imports`: the
 top-level branch remains a raw hash of `FSM::Package::Spec` objects, so the
 stable package-import surface is `source_info.package_import_count` plus

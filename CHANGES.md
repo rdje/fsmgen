@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-29
+### Raw HDLGenerator result JSON boundary is now runtime-audited
+- Added
+  [t/378-hdl-generator-result-json-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/378-hdl-generator-result-json-boundary-audit.t)
+  as an `R13` guard proving real direct and composition
+  `HDLGenerator->generate_hdl_from_file(...)` raw results are not strict
+  JSON-safe whole documents.
+- The audit locks the negative JSON-safe claim in the direct
+  [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm),
+  the in-process capability manifest, and both CLI manifest spellings, and it
+  also checks `embedding.hdl_generator_facade` does not advertise the result
+  surface as JSON-safe as a whole.
+- The same audit decodes and re-encodes normalized semantic JSON for direct
+  and composition fixtures, proving the public `--emit-semantic-json` path is
+  still the JSON-safe interchange surface while raw result branches remain
+  in-process compatibility payloads.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  plus [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+  so embedders can see that the raw-result JSON boundary is runtime-audited.
+
 ### HDLGenerator constructor owner-injection boundary is now runtime-audited
 - Added
   [t/377-hdl-generator-constructor-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/377-hdl-generator-constructor-boundary-audit.t)

@@ -321,6 +321,11 @@ follow the same honesty rule: they reuse the dedicated normalized-semantic
 shell owners and their advertised shell keys, but the `HDLGenerator` result
 contract does not treat those top-level hashes as separately stabilized full
 trees beyond those shell boundaries.
+The whole raw result hash is now runtime-audited as non-JSON-safe too:
+[t/378-hdl-generator-result-json-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/378-hdl-generator-result-json-boundary-audit.t)
+checks real direct and composition `HDLGenerator` results against strict JSON
+encoding and verifies that normalized semantic JSON remains the public
+JSON-safe interchange path.
 The composition-only `composition_spec` and `composition_plan` branches are
 shell-only too: they are raw `FSM::Composition::Spec` and
 `FSM::Composition::Plan` objects kept for in-process compatibility. The
