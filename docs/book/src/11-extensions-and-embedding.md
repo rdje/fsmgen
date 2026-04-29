@@ -773,6 +773,13 @@ Published `tested_by` provenance is now repo-checked too:
 walks the direct support contracts plus the in-process and CLI manifest
 surfaces, finds every public `tested_by` list, and requires each entry to stay
 a relative existing `t/*.t` file under this repository.
+Published module provenance is repo-checked as well:
+[t/382-contract-module-provenance-audit.t](/Users/richarddje/Documents/github/fsmgen/t/382-contract-module-provenance-audit.t)
+walks the direct support contracts plus the in-process and CLI manifest
+surfaces, finds public module-reference fields such as `contract_source`,
+`*_contract_source_map`, `implementation_owners`, `report_sources`,
+`report_builder`, and `registry_source`, and requires each value to be a
+loadable `FSM::...` module present under `perl/`.
 That shell contract now also explicitly lists the first nested
 `support_accounting` keys, so embedders can discover the corpus-backed section
 shape without a manifest-specific exception.

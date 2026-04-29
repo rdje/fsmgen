@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-29: public module provenance should point at loadable project modules
+- Public contract metadata now contains many module-owner breadcrumbs:
+  `contract_source`, nested contract source maps, implementation owners,
+  report builders, report sources, and registry sources.
+- Those strings are useful only if they remain mechanically followable.
+- The right guard is not more prose; it is a loadability audit over the direct
+  builders and manifest emissions that requires every public module reference
+  to be an `FSM::...` package with a real `perl/` file that can be loaded.
+- This keeps future contract refactors honest: renaming or moving an owner
+  now has to update the machine-readable provenance, not just the code path
+  that happens to use the owner internally.
+
 ## 2026-04-29: public tested_by metadata should be verifiable provenance, not decorative strings
 - Some bounded public contracts now publish `tested_by` lists so embedders and
   maintainers can see which regression files own a contract claim.

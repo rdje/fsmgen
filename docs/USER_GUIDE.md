@@ -1840,6 +1840,12 @@ Public `tested_by` provenance is also audited:
 walks the direct support contracts plus the in-process and CLI manifest
 surfaces, finds every `tested_by` list, and requires each published entry to
 stay a relative existing `t/*.t` file.
+Public module provenance is audited the same way:
+[t/382-contract-module-provenance-audit.t](/Users/richarddje/Documents/github/fsmgen/t/382-contract-module-provenance-audit.t)
+walks direct contracts plus manifest outputs, finds fields such as
+`contract_source`, `*_contract_source_map`, `implementation_owners`,
+`report_sources`, `report_builder`, and `registry_source`, and requires each
+value to be a loadable `FSM::...` module under `perl/`.
 It also advertises the optional external SystemVerilog validation lane:
 `--verify-hdl` / `--validate-hdl` writes the generated `.sv`, then runs
 Verilator in lint-only SystemVerilog mode and Yosys with

@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-29: public module provenance now has a loadability audit
+- Added
+  [t/382-contract-module-provenance-audit.t](/Users/richarddje/Documents/github/fsmgen/t/382-contract-module-provenance-audit.t)
+  to recursively inspect public module-reference fields published by direct
+  support contract builders, the in-process capability manifest, and both CLI
+  manifest spellings.
+- The audit covers `contract_source`, `*_contract_source_map`,
+  `implementation_owners`, `report_source(s)`, `report_builder`, and
+  `registry_source` fields, requiring each value to be an `FSM::...` module
+  with a real file under `perl/` that can be loaded.
+- This keeps manifest-visible module provenance from drifting into stale
+  decorative strings as the public embedding/contract surface grows.
+
 ## 2026-04-29: public tested_by provenance now has a path-existence audit
 - Added
   [t/381-contract-tested-by-provenance-audit.t](/Users/richarddje/Documents/github/fsmgen/t/381-contract-tested-by-provenance-audit.t)

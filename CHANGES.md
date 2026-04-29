@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-29
+### Public module provenance is now loadability-audited
+- Added
+  [t/382-contract-module-provenance-audit.t](/Users/richarddje/Documents/github/fsmgen/t/382-contract-module-provenance-audit.t)
+  as an `R13` metadata-integrity guard for manifest-visible module-owner
+  provenance.
+- The audit walks all direct support contract builders plus the in-process
+  capability manifest and both CLI manifest spellings, recursively finds public
+  module-reference fields, and requires each referenced module to be an
+  `FSM::...` package with a real `perl/` file that loads successfully.
+- Covered fields include `contract_source`, grouped `*_contract_source_map`
+  values, `implementation_owners`, `report_source(s)`, `report_builder`, and
+  `registry_source`.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  plus [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+  so the manifest/contract docs mention the new module-provenance audit.
+
 ### Public tested_by provenance is now path-audited
 - Added
   [t/381-contract-tested-by-provenance-audit.t](/Users/richarddje/Documents/github/fsmgen/t/381-contract-tested-by-provenance-audit.t)
