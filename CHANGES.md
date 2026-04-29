@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-29
+### Debug-runtime snapshot keys now match captured runtime state
+- Strengthened
+  [t/374-debug-runtime-contract.t](/Users/richarddje/Documents/github/fsmgen/t/374-debug-runtime-contract.t)
+  so the advertised `snapshot_state_keys` list must match the keys returned by
+  a real trace-bound `FSM::Debug::capture_fsm_debug_state()` snapshot.
+- The new coverage checks the builder-owned key list and emitted contract key
+  list against the captured snapshot, then verifies schema version, live debug
+  level, trace output path, live trace filehandle, and trace emoji state.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+  so embedders can see the snapshot key family is tied to real runtime state.
+
 ### Debug-runtime contract helpers now have implementation parity coverage
 - Strengthened
   [t/374-debug-runtime-contract.t](/Users/richarddje/Documents/github/fsmgen/t/374-debug-runtime-contract.t)

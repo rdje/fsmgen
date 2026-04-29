@@ -204,6 +204,9 @@ self-description guard used by the sibling facade and typed-extension contracts.
 The same direct contract test also proves the advertised helper/control names
 are implemented and exported by `FSM::Debug`, and that the advertised named
 trace-verbosity values plus numeric range match the live debug runtime mapping.
+It also captures a trace-bound debug-state snapshot and proves the advertised
+`snapshot_state_keys` match the real snapshot keys, including the schema,
+debug level, trace path, live filehandle, and emoji state.
 That current in-process seam is now also advertised through
 `embedding.debug_runtime`, owned by
 [perl/FSM/Support/DebugRuntimeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DebugRuntimeContract.pm).

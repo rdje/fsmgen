@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-29: debug-runtime snapshot keys now have captured-state parity coverage
+- Strengthened
+  [t/374-debug-runtime-contract.t](/Users/richarddje/Documents/github/fsmgen/t/374-debug-runtime-contract.t)
+  so `snapshot_state_keys` must match the keys returned by a real
+  trace-bound `FSM::Debug::capture_fsm_debug_state()` snapshot.
+- The new subtest checks both the builder-owned key list and the emitted
+  contract key list against the captured snapshot, then verifies the snapshot
+  schema, debug level, trace path, live filehandle, and emoji state.
+- This is `R13` debug-runtime contract hardening only; the snapshot shape did
+  not change.
+
 ## 2026-04-29: debug-runtime contract helper names now have implementation parity checks
 - Strengthened
   [t/374-debug-runtime-contract.t](/Users/richarddje/Documents/github/fsmgen/t/374-debug-runtime-contract.t)

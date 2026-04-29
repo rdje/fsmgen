@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-29: snapshot key contracts should be checked against real snapshots
+- `snapshot_state_keys` is more than a static family list: embedders may use it
+  to understand what `capture_fsm_debug_state()` returns and what can be passed
+  back to `restore_fsm_debug_state(...)`.
+- The debug-runtime contract test now captures a trace-bound runtime snapshot
+  and compares both the helper-owned key list and emitted contract key list to
+  that real snapshot shape.
+- The same subtest intentionally verifies values that explain why the contract
+  still says snapshots are process-local and not JSON-safe: a bound snapshot
+  includes a live trace filehandle plus mutable global debug/trace state.
+
 ## 2026-04-29: debug-runtime contract names should be implementation-backed
 - The debug-runtime contract is useful to embedders only if advertised helper
   and control names are not just strings in a manifest payload.

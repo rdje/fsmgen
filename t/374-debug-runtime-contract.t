@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use Test::More;
 use File::Spec;
+use File::Temp qw(tempdir);
 use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
@@ -146,6 +147,42 @@ subtest 'advertised trace verbosity values stay backed by FSM::Debug runtime map
     FSM::Debug::restore_fsm_debug_state($saved);
 };
 
+subtest 'advertised snapshot state keys stay backed by captured FSM::Debug snapshots' => sub {
+    my $contract = build_debug_runtime_contract();
+    my $saved = FSM::Debug::capture_fsm_debug_state();
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $trace_path = File::Spec->catfile($tempdir, 'snapshot-contract.trace');
+
+    FSM::Debug::set_fsm_trace_verbosity('high');
+    FSM::Debug::set_fsm_trace_emojis(0);
+    FSM::Debug::set_fsm_trace_output_file($trace_path);
+
+    my $snapshot = FSM::Debug::capture_fsm_debug_state();
+
+    is_deeply(
+        [sort keys %{$snapshot}],
+        [sort @{debug_runtime_snapshot_state_keys()}],
+        'captured debug-state snapshot keys match the contract snapshot key builder',
+    );
+    is_deeply(
+        [sort keys %{$snapshot}],
+        [sort @{$contract->{snapshot_state_keys}}],
+        'captured debug-state snapshot keys match the emitted contract key list',
+    );
+    is($snapshot->{schema_version}, 1, 'captured snapshot keeps schema version 1');
+    is(
+        $snapshot->{debug_level},
+        $FSM::Debug::VERBOSITY_TO_LEVEL{high},
+        'captured snapshot records the live debug level',
+    );
+    ok($snapshot->{debug_enabled}, 'captured snapshot records debug enabled');
+    is($snapshot->{trace_output_file}, $trace_path, 'captured snapshot records trace output path');
+    ok(live_filehandle($snapshot->{trace_output_fh}), 'captured snapshot keeps a live trace filehandle');
+    ok(!$snapshot->{trace_emojis_enabled}, 'captured snapshot records disabled trace emojis');
+
+    FSM::Debug::restore_fsm_debug_state($saved);
+};
+
 done_testing();
 
 sub advertised_debug_runtime_function_names {
@@ -173,4 +210,10 @@ sub max_value {
         $max = $value if $value > $max;
     }
     return $max;
+}
+
+sub live_filehandle {
+    my ($fh) = @_;
+    return 0 unless defined $fh;
+    return defined eval { fileno($fh) } ? 1 : 0;
 }
