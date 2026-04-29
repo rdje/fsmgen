@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-29: facade strict-mode option now has a runtime boundary audit
+- Added
+  [t/385-hdl-generator-facade-strict-mode-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/385-hdl-generator-facade-strict-mode-boundary-audit.t)
+  to prove the `embedding.hdl_generator_facade` public `strict_mode`
+  constructor option is executable behavior, not only manifest metadata.
+- The audit compiles
+  [t/corpus/legacy_infix_assignment.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_infix_assignment.fsm)
+  through the default in-process facade, rejects the same source through
+  `strict_mode => 1` with the canonical pair-form hint, and then proves the
+  same strict facade object still accepts
+  [t/corpus/direct_assignment_pair_form.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_assignment_pair_form.fsm).
+- This is `R13` facade-boundary hardening only; it does not add a new
+  strict-mode rule or widen the advertised constructor surface.
+
 ## 2026-04-29: trace-bound debug snapshots now prove the non-JSON boundary
 - Strengthened
   [t/374-debug-runtime-contract.t](/Users/richarddje/Documents/github/fsmgen/t/374-debug-runtime-contract.t)

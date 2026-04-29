@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-29: facade constructor options should be executable promises
+- The facade contract listing `strict_mode` as a public constructor option is
+  useful only if embedders can rely on that option driving the same boundary
+  enforcement as the CLI and support-accounting corpus.
+- The new facade audit deliberately uses the legacy infix-assignment fixture
+  because it has a stable default-vs-strict split: default mode remains
+  compatibility-friendly, while `strict_mode => 1` must reject it with the
+  canonical pair-form migration hint.
+- Reusing the same strict facade object afterward against the canonical
+  pair-form fixture keeps this as an embedder-runtime audit: strict failures
+  should be real boundaries, not object-poisoning events.
+
 ## 2026-04-29: trace-bound debug snapshots are process state, not interchange JSON
 - The debug-runtime contract says snapshots are not JSON-safe because a
   trace-bound snapshot can carry a live filehandle. That boundary should be

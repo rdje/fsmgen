@@ -159,6 +159,11 @@ That boundary is now audited directly:
 classifies every current `HDLGenerator` constructor argument read from
 `%args` and proves the owner-injection arguments stay out of both the facade
 contract and the live manifest public constructor-option lists.
+[t/385-hdl-generator-facade-strict-mode-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/385-hdl-generator-facade-strict-mode-boundary-audit.t)
+also proves the advertised `strict_mode` constructor option is runtime-backed:
+the default facade compiles the legacy infix-assignment compatibility fixture,
+the strict facade rejects that same source with the canonical pair-form hint,
+and the same strict facade object still accepts the canonical pair-form fixture.
 [t/375-hdl-generator-facade-contract.t](/Users/richarddje/Documents/github/fsmgen/t/375-hdl-generator-facade-contract.t)
 also now checks that the facade contract's advertised top-level key list
 exactly covers the emitted facade contract shell, so new facade metadata cannot

@@ -2198,6 +2198,11 @@ That boundary is regression-audited by
 every current constructor `%args` key must be classified, and owner-injection
 arguments must stay out of the facade contract and live manifest public
 constructor-option lists.
+[t/385-hdl-generator-facade-strict-mode-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/385-hdl-generator-facade-strict-mode-boundary-audit.t)
+also proves the advertised `strict_mode` constructor option is runtime-backed:
+the default facade compiles the legacy infix-assignment compatibility fixture,
+the strict facade rejects that same source with the canonical pair-form hint,
+and the same strict facade object still accepts the canonical pair-form fixture.
 [t/380-extension-loading-command-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/380-extension-loading-command-boundary-audit.t)
 also locks the module/config loading-owner split: those loading entrypoints are
 advertised by `embedding.typed_extensions`, not by

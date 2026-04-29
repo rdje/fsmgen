@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-29
+### Facade strict-mode option now has runtime boundary coverage
+- Added
+  [t/385-hdl-generator-facade-strict-mode-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/385-hdl-generator-facade-strict-mode-boundary-audit.t)
+  so the public `embedding.hdl_generator_facade` `strict_mode` constructor
+  option is checked against real in-process `HDLGenerator` behavior.
+- The audit proves default mode still compiles
+  [t/corpus/legacy_infix_assignment.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_infix_assignment.fsm),
+  `strict_mode => 1` rejects the same compatibility fixture with the canonical
+  pair-form hint, and the same strict facade object still compiles
+  [t/corpus/direct_assignment_pair_form.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_assignment_pair_form.fsm).
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+  so embedders can see `strict_mode` is a runtime-backed facade boundary, not
+  only a manifest-listed option.
+
 ### Trace-bound debug snapshots now prove the non-JSON contract boundary
 - Strengthened
   [t/374-debug-runtime-contract.t](/Users/richarddje/Documents/github/fsmgen/t/374-debug-runtime-contract.t)
