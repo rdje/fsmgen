@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-29
+### Extension result augmentation is now guarded from semantic JSON leakage
+- Added
+  [t/379-extension-result-json-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/379-extension-result-json-boundary-audit.t)
+  as an `R13` negative-boundary guard over typed extension result mutation.
+- The audit proves direct and composition in-process generation still expose
+  extension-added `extension_marker` data and HDL marker text on the raw
+  result, then proves normalized semantic reports built from those results do
+  not expose those extension-added fields or marker strings.
+- The same audit runs CLI `--emit-semantic-json` with
+  `FSM::TestExtension::Marker` loaded through `--extension-module`, proving
+  module-loaded raw result augmentation also stays out of the sanitized public
+  JSON payload.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  plus [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+  so the extension docs call out the in-process/raw-result vs public-JSON
+  split explicitly.
+
 ### Raw HDLGenerator result JSON boundary is now runtime-audited
 - Added
   [t/378-hdl-generator-result-json-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/378-hdl-generator-result-json-boundary-audit.t)

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-29: extension result augmentation should not silently widen normalized semantic JSON
+- Typed extensions deliberately receive the raw `HDLGenerator` result in
+  `after_generate_result`, so in-process callers can add local metadata or
+  mutate returned HDL text when they own that integration.
+- That is useful, but it is not a public schema negotiation mechanism.
+- The root-cause boundary is the report builder: normalized semantic JSON
+  should enumerate its public fields and intentionally sanitize values instead
+  of pass-through copying arbitrary result keys.
+- The new audit locks that behavior for both direct and composition results,
+  and for CLI module-loaded extensions, so future widening must be explicit
+  schema work rather than accidental raw-result leakage.
+
 ## 2026-04-29: the raw HDLGenerator result should stay an in-process payload until it is deliberately sanitized
 - The `HDLGenerator` result hash is useful to in-process Perl callers because
   it still carries live compatibility branches such as CoreAST objects,

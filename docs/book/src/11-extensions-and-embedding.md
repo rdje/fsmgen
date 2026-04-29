@@ -94,6 +94,11 @@ The current context accessors are:
 `after_generate_result`. Result augmentation is a valid in-process extension
 use, but it is not the same thing as publishing a new sanitized JSON
 interchange field.
+[t/379-extension-result-json-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/379-extension-result-json-boundary-audit.t)
+locks that split: extension-added raw result fields and HDL text remain
+available to in-process callers, while `--emit-semantic-json` and
+`FSM::Support::NormalizedSemanticReport` keep them out of the public JSON
+payload.
 
 ## Programmatic Example
 

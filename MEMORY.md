@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-29: extension result augmentation now has a semantic-JSON leak audit
+- Added
+  [t/379-extension-result-json-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/379-extension-result-json-boundary-audit.t)
+  to prove extension-added raw result fields and HDL text remain available to
+  in-process `HDLGenerator` callers for both direct and composition sources.
+- The same audit builds normalized semantic reports from those augmented raw
+  results and runs CLI `--emit-semantic-json` with the module-loaded marker
+  extension, proving `extension_marker` and marker HDL text do not leak into
+  the sanitized public JSON payload.
+- This keeps the `R13` split explicit: typed extensions can mutate the raw
+  result seam, but normalized semantic JSON only widens through deliberate
+  report/schema work.
+
 ## 2026-04-29: raw HDLGenerator results now have a JSON-boundary runtime audit
 - Added
   [t/378-hdl-generator-result-json-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/378-hdl-generator-result-json-boundary-audit.t)

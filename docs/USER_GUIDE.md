@@ -2100,6 +2100,13 @@ What they do:
 - `after_parse_source($context)` runs after parsing/classification and lets an extension inspect the source frontier before semantic lowering.
 - `after_generate_result($context)` runs after generation has produced the normal result hash and before that result is returned to the caller.
 
+Result augmentation is an in-process extension behavior, not an automatic
+normalized-semantic JSON schema extension.
+[t/379-extension-result-json-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/379-extension-result-json-boundary-audit.t)
+locks that boundary by proving extension-added raw result fields and HDL text
+stay available on the raw result while `--emit-semantic-json` keeps them out of
+the sanitized public JSON payload.
+
 Current context accessors are:
 - `stage`: the active hook name.
 - `pipeline`: the current `FSM::Pipeline::HDLGenerator` instance.
