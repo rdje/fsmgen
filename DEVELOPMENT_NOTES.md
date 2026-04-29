@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-29: after a model switch, README execution should refresh measured truth before picking another feature slice
+- The README is the repository's single entrypoint, so after changing the AI
+  model the correct first move was not to rely on remembered context.
+- Rebuilding the live `bin/fsmgen` project-owned import closure exposed a
+  narrow documentation-truth drift: the source tree already had
+  `embedding.debug_runtime` and `embedding.hdl_generator_facade` child
+  contracts, but the README map and import-tree architecture note still
+  reflected the previous `178` / `177` closure.
+- The root-cause fix was to refresh those source-of-truth docs from measured
+  closure data, not to change the runtime surface again or hand-wave the
+  mismatch as harmless prose drift.
+- This keeps later `R13` decisions anchored to the actual public embedding
+  surface instead of to a stale bootstrap map.
+
 ## 2026-04-29: after debug-state hardening, the next honest embedder seam was the facade itself
 - Once `HDLGenerator` stopped leaking debug state and the save/restore seam had
   an explicit child owner, the next root-cause discoverability gap was no

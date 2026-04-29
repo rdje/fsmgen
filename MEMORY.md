@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-29: README bootstrap refreshed the import-tree truth after the model switch
+- Re-executed the README ramp-up path after the session model change, rebuilt
+  the project-owned transitive `FSM::...` closure from
+  [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen), and
+  confirmed the live closure is now `180` project files / `179` `.pm`
+  packages with no missing project modules.
+- Refreshed
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+  from that measured closure so the new
+  [perl/FSM/Support/DebugRuntimeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DebugRuntimeContract.pm)
+  and
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  surfaces are no longer absent from the saved architecture map.
+- Refreshed the README project map and embedding narrative so the manifest
+  children `embedding.debug_runtime` and `embedding.hdl_generator_facade` are
+  discoverable from the entrypoint context, not only from earlier detailed
+  docs or the implementation.
+
 ## 2026-04-29: the public HDLGenerator facade is now a discoverable embedding child contract
 - Added
   [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)

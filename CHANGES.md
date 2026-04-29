@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-29
+### README bootstrap and `bin/fsmgen` import-tree truth refreshed after model switch
+- Re-executed the README ramp-up path and rebuilt the live project-owned
+  transitive `FSM::...` closure from
+  [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen), which now
+  measures `180` project files and `179` `.pm` packages.
+- Updated
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+  so the measured counts, `Support` family total, thin facade/manifest line
+  counts, and static support map include
+  [perl/FSM/Support/DebugRuntimeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DebugRuntimeContract.pm)
+  plus
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm).
+- Updated [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) so
+  the project file map and embedding narrative advertise
+  `embedding.debug_runtime` and `embedding.hdl_generator_facade` from the
+  single entrypoint.
+
 ### embedding.hdl_generator_facade now advertises the bounded in-process HDLGenerator seam
 - Added [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm) as the bounded owner for the current in-process `FSM::Pipeline::HDLGenerator` constructor-plus-generate seam, covering the shipped method names, the public core constructor options, direct blessed-object extension injection, the default target-language rule, and the links to the result, typed-extension, and debug-runtime child owners.
 - Updated [perl/FSM/Support/EmbeddingSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingSection.pm), [perl/FSM/Support/EmbeddingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingContract.pm), and [perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm) so the seam is now discoverable through `embedding.hdl_generator_facade` and the grouped embedding/manifest discovery tables instead of living only in POD and prose.
