@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-29
+### Facade target-language routing now has runtime boundary coverage
+- Added
+  [t/386-hdl-generator-facade-target-language-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/386-hdl-generator-facade-target-language-boundary-audit.t)
+  so the public `embedding.hdl_generator_facade` `target_language`
+  constructor option is checked against real direct backend behavior.
+- The audit proves the default facade path emits SystemVerilog
+  `always_ff` / `always_comb` blocks, explicit `target_language => 'verilog'`
+  emits Verilog `always @` / `always @*` blocks without leaking
+  SystemVerilog `always_*` forms, and explicit `target_language => 'vhdl'`
+  preserves the direct VHDL-not-implemented boundary with source-file context.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+  so embedders can see `target_language` is runtime-backed but not a promise
+  of completed VHDL generation.
+
 ### Facade strict-mode option now has runtime boundary coverage
 - Added
   [t/385-hdl-generator-facade-strict-mode-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/385-hdl-generator-facade-strict-mode-boundary-audit.t)

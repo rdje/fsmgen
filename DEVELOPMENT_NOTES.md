@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-29: target-language routing is a facade behavior, not a backend promise
+- `target_language` belongs in the public facade constructor surface because
+  embedders can choose between the current generated-module Verilog-family
+  routes, but the option should not be misread as completed multi-backend
+  support.
+- The new facade audit makes that split executable: default direct generation
+  proves the documented SystemVerilog default, explicit Verilog proves the
+  backend route changes observable HDL syntax, and explicit VHDL proves the
+  current not-implemented boundary remains source-contextual and actionable.
+- This keeps `R13` honest without pulling `R14` forward: VHDL stays a future
+  backend lane, while today's embedder contract documents and tests what the
+  target-language option actually does.
+
 ## 2026-04-29: facade constructor options should be executable promises
 - The facade contract listing `strict_mode` as a public constructor option is
   useful only if embedders can rely on that option driving the same boundary

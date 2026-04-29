@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-29: facade target-language routing now has a runtime boundary audit
+- Added
+  [t/386-hdl-generator-facade-target-language-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/386-hdl-generator-facade-target-language-boundary-audit.t)
+  to prove the `embedding.hdl_generator_facade` public `target_language`
+  constructor option drives real direct backend behavior.
+- The audit checks that the default facade path emits SystemVerilog
+  `always_ff` / `always_comb` forms for
+  [t/corpus/direct_sreset_active_high.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_sreset_active_high.fsm),
+  while `target_language => 'verilog'` emits Verilog `always @` / `always @*`
+  forms and does not leak SystemVerilog `always_*` blocks.
+- The same audit proves `target_language => 'vhdl'` on the direct facade path
+  still fails with source-file context plus the existing VHDL-not-implemented
+  hint. This is `R13` facade-boundary hardening only; no backend support was
+  widened.
+
 ## 2026-04-29: facade strict-mode option now has a runtime boundary audit
 - Added
   [t/385-hdl-generator-facade-strict-mode-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/385-hdl-generator-facade-strict-mode-boundary-audit.t)
