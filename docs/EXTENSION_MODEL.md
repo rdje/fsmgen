@@ -100,6 +100,11 @@ The shipped boundary is regression-locked in
 [t/26-extension-mechanism.t](/Users/richarddje/Documents/github/fsmgen/t/26-extension-mechanism.t),
 [t/27-extension-loading.t](/Users/richarddje/Documents/github/fsmgen/t/27-extension-loading.t),
 and [t/28-extension-config-loading.t](/Users/richarddje/Documents/github/fsmgen/t/28-extension-config-loading.t).
+The manifest-owned programmatic loading boundary is also audited in
+[t/391-typed-extension-programmatic-loading-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/391-typed-extension-programmatic-loading-boundary-audit.t),
+which proves `extension_modules` and `extension_config_files` dispatch real
+in-process hooks through `FSM::Pipeline::HDLGenerator` while remaining owned by
+`embedding.typed_extensions`.
 
 For embedders, the same boundary is now machine-readable through
 [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)

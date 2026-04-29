@@ -1,5 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-04-30
+### Typed-extension programmatic loading now has contract-backed runtime coverage
+- Added
+  [t/391-typed-extension-programmatic-loading-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/391-typed-extension-programmatic-loading-boundary-audit.t)
+  so the public `embedding.typed_extensions` programmatic
+  `extension_modules` and `extension_config_files` entrypoints are checked
+  against real in-process `HDLGenerator` behavior.
+- The audit builds a temporary extension module in a temporary `@INC` root,
+  proves module-name loading and config-file loading both dispatch
+  `after_parse_source` before `after_generate_result`, and checks returned raw
+  result mutation for both paths while an unextended facade object remains
+  marker-free.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  `tested_by` provenance plus the embedding docs so module/config loading is
+  clearly owned by `embedding.typed_extensions`, not by the narrower
+  `embedding.hdl_generator_facade`.
+
 ## 2026-04-29
 ### Facade quiet is now classified as presentation compatibility
 - Added

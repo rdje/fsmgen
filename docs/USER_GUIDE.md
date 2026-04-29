@@ -2234,6 +2234,12 @@ also locks the module/config loading-owner split: those loading entrypoints are
 advertised by `embedding.typed_extensions`, not by
 `embedding.hdl_generator_facade`, and semantic JSON `command` objects remain
 limited to report-mode metadata even when extension loading is active.
+[t/391-typed-extension-programmatic-loading-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/391-typed-extension-programmatic-loading-boundary-audit.t)
+also proves that same typed-extension-owned programmatic loading seam is
+runtime-backed in-process: `extension_modules` and `extension_config_files`
+both load a real module from `@INC`, dispatch `after_parse_source` before
+`after_generate_result`, and mutate only the returned raw result for the
+pipeline that requested loading.
 
 For in-process embedders, `FSM::Pipeline::HDLGenerator` no longer leaves its
 requested `debug_level` behind as process-global state after construction or

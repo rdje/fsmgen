@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-30: typed-extension programmatic loading now has a contract-backed runtime audit
+- Added
+  [t/391-typed-extension-programmatic-loading-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/391-typed-extension-programmatic-loading-boundary-audit.t)
+  to prove the `embedding.typed_extensions` programmatic
+  `extension_modules` and `extension_config_files` entrypoints are runtime-backed
+  through real in-process `FSM::Pipeline::HDLGenerator` hook dispatch.
+- The audit creates a temporary extension module under a temporary `@INC` root,
+  proves both module-name loading and config-file loading dispatch
+  `after_parse_source` before `after_generate_result`, and checks the returned
+  raw result carries the expected extension marker while an unextended facade
+  object receives no marker.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  `tested_by` provenance for the new audit. This keeps module/config extension
+  loading owned by `embedding.typed_extensions`, not the narrower
+  `embedding.hdl_generator_facade`; `R13` lane status is unchanged.
+
 ## 2026-04-29: facade quiet is now classified as presentation compatibility
 - Added
   [t/390-hdl-generator-facade-quiet-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/390-hdl-generator-facade-quiet-boundary-audit.t)

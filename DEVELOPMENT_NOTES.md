@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-30: programmatic module/config extension loading belongs to typed_extensions
+- `extension_modules` and `extension_config_files` are real programmatic
+  loading entrypoints on `FSM::Pipeline::HDLGenerator->new(...)`, but they are
+  typed-extension loading promises rather than part of the narrower
+  `embedding.hdl_generator_facade` constructor surface.
+- The new audit keeps that split executable: it loads a temporary extension
+  module by module name and by config file, proves the parse hook runs before
+  the result hook, and proves the returned raw result receives the extension
+  marker only for pipelines that asked for loading.
+- This avoids the tempting but misleading fix of widening the facade contract
+  just because the lower-level constructor accepts these arguments; the
+  root-cause ownership remains the typed-extension loader/registry boundary.
+
 ## 2026-04-29: quiet is facade compatibility state, not runtime behavior
 - `quiet` is accepted by `FSM::Pipeline::HDLGenerator->new(...)` because the
   facade constructor mirrors the CLI-facing generation configuration closely
