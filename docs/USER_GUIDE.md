@@ -1800,6 +1800,12 @@ names the published top-level and nested contract-owner map advertised through
 `embedding.section_contract`, while the narrower result, composition-report,
 typed-extension, and debug-runtime details continue to live behind their own
 dedicated contracts.
+The sibling facade and debug-runtime child contracts also have direct
+self-description guards:
+[t/375-hdl-generator-facade-contract.t](/Users/richarddje/Documents/github/fsmgen/t/375-hdl-generator-facade-contract.t)
+and [t/374-debug-runtime-contract.t](/Users/richarddje/Documents/github/fsmgen/t/374-debug-runtime-contract.t)
+now require each advertised top-level key list to exactly cover its emitted
+contract shell.
 The manifest's `diagnostics` section now follows the same pattern:
 [perl/FSM/Support/DiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsContract.pm)
 names the published top-level, scalar-string, and stable-code entry families

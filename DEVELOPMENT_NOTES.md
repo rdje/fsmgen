@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-29: embedding child contract shells should fail on stale key lists
+- The typed-extension contract drift showed that an emitted discovery key can
+  exist while the advertised public top-level key list forgets to name it.
+- The sibling `debug_runtime` and `hdl_generator_facade` contract shells were
+  already internally complete, but their direct tests did not prove that
+  future emitted keys would require a matching advertised-key update.
+- The new exact-key assertions are deliberately test-only hardening: they keep
+  those child contracts honest without adding hooks, constructor options,
+  debug helpers, or new manifest branches.
+
 ## 2026-04-29: contract shell self-description must cover emitted discovery maps
 - The typed-extension contract already emitted `name_family_map`, but that key
   was not included in its own advertised top-level key list. That is not a new

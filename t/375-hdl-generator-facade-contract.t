@@ -52,6 +52,11 @@ subtest 'contract exposes the bounded HDLGenerator facade seam' => sub {
         'contract publishes the bounded facade top-level keys',
     );
     is_deeply(
+        [sort @{$contract->{public_top_level_presence_keys}}],
+        [sort keys %{$contract}],
+        'contract top-level presence list covers every emitted facade contract key',
+    );
+    is_deeply(
         $contract->{entrypoints},
         {
             manifest => './bin/fsmgen --capability-manifest -> embedding.hdl_generator_facade',

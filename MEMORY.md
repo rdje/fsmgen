@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-29: facade and debug-runtime contracts now have exact shell-key audits
+- Strengthened
+  [t/374-debug-runtime-contract.t](/Users/richarddje/Documents/github/fsmgen/t/374-debug-runtime-contract.t)
+  and
+  [t/375-hdl-generator-facade-contract.t](/Users/richarddje/Documents/github/fsmgen/t/375-hdl-generator-facade-contract.t)
+  to require each advertised `public_top_level_presence_keys` list to exactly
+  cover the keys emitted by its contract builder.
+- This extends the typed-extension self-description guard to the sibling
+  `embedding.debug_runtime` and `embedding.hdl_generator_facade` child
+  contracts without changing their emitted contract payloads.
+- Updated the embedding docs so embedders can see those child contract shells
+  now have direct exact-key coverage.
+
 ## 2026-04-29: typed-extension discovery map is now in its advertised top-level key list
 - Added `name_family_map` to
   [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)

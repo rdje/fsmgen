@@ -159,6 +159,10 @@ That boundary is now audited directly:
 classifies every current `HDLGenerator` constructor argument read from
 `%args` and proves the owner-injection arguments stay out of both the facade
 contract and the live manifest public constructor-option lists.
+[t/375-hdl-generator-facade-contract.t](/Users/richarddje/Documents/github/fsmgen/t/375-hdl-generator-facade-contract.t)
+also now checks that the facade contract's advertised top-level key list
+exactly covers the emitted facade contract shell, so new facade metadata cannot
+silently miss the machine-readable key list.
 [t/380-extension-loading-command-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/380-extension-loading-command-boundary-audit.t)
 locks the matching loading-owner split: module/config extension loading remains
 advertised by `embedding.typed_extensions`, stays out of
@@ -193,6 +197,10 @@ restore_fsm_debug_state($saved);
 That restore path preserves the caller-facing trace/debug configuration,
 including the original trace sink, instead of forcing embedders to reconstruct
 global debug state by hand after a temporary trace-file switch.
+[t/374-debug-runtime-contract.t](/Users/richarddje/Documents/github/fsmgen/t/374-debug-runtime-contract.t)
+now also checks that the debug-runtime contract's advertised top-level key list
+exactly covers the emitted debug-runtime contract shell, matching the same
+self-description guard used by the sibling facade and typed-extension contracts.
 That current in-process seam is now also advertised through
 `embedding.debug_runtime`, owned by
 [perl/FSM/Support/DebugRuntimeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DebugRuntimeContract.pm).

@@ -45,6 +45,11 @@ subtest 'contract exposes the bounded embedding-facing debug runtime seam' => su
         'contract publishes the bounded contract top-level keys',
     );
     is_deeply(
+        [sort @{$contract->{public_top_level_presence_keys}}],
+        [sort keys %{$contract}],
+        'contract top-level presence list covers every emitted debug-runtime contract key',
+    );
+    is_deeply(
         $contract->{snapshot_helper_names},
         debug_runtime_snapshot_helper_names(),
         'contract publishes the bounded save/restore helper family',

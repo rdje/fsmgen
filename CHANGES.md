@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-29
+### Facade and debug-runtime contract shells now have exact advertised-key audits
+- Strengthened
+  [t/374-debug-runtime-contract.t](/Users/richarddje/Documents/github/fsmgen/t/374-debug-runtime-contract.t)
+  and
+  [t/375-hdl-generator-facade-contract.t](/Users/richarddje/Documents/github/fsmgen/t/375-hdl-generator-facade-contract.t)
+  so each child contract's advertised `public_top_level_presence_keys` list
+  must exactly match the keys emitted by its builder.
+- This gives `embedding.debug_runtime` and `embedding.hdl_generator_facade`
+  the same contract-shell self-description guard that the typed-extension
+  child now has, without widening either public surface.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+  to document the exact advertised-key guard for embedders.
+
 ### Typed-extension grouped discovery is now advertised by its own top-level key list
 - Added `name_family_map` to
   [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
