@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-29: typed-extension discovery map is now in its advertised top-level key list
+- Added `name_family_map` to
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  `extension_contract_public_top_level_keys()` so the grouped hook/context/source-kind
+  discovery map is advertised by the same typed-extension contract shell that
+  already emits it.
+- Strengthened
+  [t/306-extension-contract.t](/Users/richarddje/Documents/github/fsmgen/t/306-extension-contract.t)
+  to require the typed-extension contract's advertised top-level key list to
+  exactly cover the keys emitted by `build_extension_contract()`.
+- This is `R13` self-description hardening only: no new extension hook,
+  accessor, source kind, or loading path was added.
+
 ## 2026-04-29: public machine JSON now has a trace stdout-boundary audit
 - Added
   [t/384-public-json-trace-stdout-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/384-public-json-trace-stdout-boundary-audit.t)

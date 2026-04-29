@@ -116,6 +116,7 @@ sub extension_contract_public_top_level_keys {
             public_top_level_presence_keys
             hook_names
             context_accessors
+            name_family_map
             hooks
             supported_source_kinds
             stable_context_accessor_names

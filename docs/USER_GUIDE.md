@@ -2118,6 +2118,11 @@ This hook/context boundary is also advertised in the capability manifest under
 That manifest entry is the machine-readable contract for embedders that need to
 discover the current hook names, context accessor names, loading entrypoints,
 and deliberate non-goals.
+It also advertises the grouped `name_family_map` key as part of that bounded
+top-level contract shell, and
+[t/306-extension-contract.t](/Users/richarddje/Documents/github/fsmgen/t/306-extension-contract.t)
+now checks that the contract's advertised top-level key list exactly covers the
+keys emitted by the typed-extension contract builder.
 
 What they do:
 - `after_parse_source($context)` runs after parsing/classification and lets an extension inspect the source frontier before semantic lowering.

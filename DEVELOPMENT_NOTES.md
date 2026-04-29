@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-29: contract shell self-description must cover emitted discovery maps
+- The typed-extension contract already emitted `name_family_map`, but that key
+  was not included in its own advertised top-level key list. That is not a new
+  feature gap; it is a self-description gap that can make embedders miss a
+  supported discovery surface when they trust the advertised key list.
+- The fix is intentionally narrow: add the existing grouped discovery key to
+  `extension_contract_public_top_level_keys()` and make the direct contract
+  test compare the advertised top-level list against the emitted contract keys.
+- This keeps the extension API stable while tightening the machine-readable
+  truth boundary. Future typed-extension contract keys should fail the direct
+  test unless the public key list is updated at the same time.
+
 ## 2026-04-29: machine JSON stdout purity is part of the public embedder boundary
 - The public JSON schemas are only useful to downstream tools if stdout is a
   clean machine channel even when a caller enables tracing for diagnostics.

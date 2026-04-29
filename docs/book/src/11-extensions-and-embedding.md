@@ -86,6 +86,11 @@ This hook/context boundary is now advertised in the capability manifest under
 That same owner now also publishes a grouped `name_family_map` so embedders
 can discover the bounded hook-name, context-accessor, and supported-source-kind
 families from one place instead of collecting those name lists separately.
+That grouped discovery key is itself now listed in the contract's advertised
+top-level key list, and
+[t/306-extension-contract.t](/Users/richarddje/Documents/github/fsmgen/t/306-extension-contract.t)
+checks that the typed-extension contract's advertised top-level keys cover the
+exact emitted contract shell.
 
 The current context accessors are:
 

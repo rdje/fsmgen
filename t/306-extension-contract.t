@@ -79,6 +79,11 @@ subtest 'contract declares the bounded typed-extension surface' => sub {
         'contract publishes the bounded typed-extension top-level keys',
     );
     is_deeply(
+        [sort @{$contract->{public_top_level_presence_keys}}],
+        [sort keys %{$contract}],
+        'contract top-level presence list covers every emitted typed-extension contract key',
+    );
+    is_deeply(
         $contract->{name_family_map},
         extension_contract_name_family_map(),
         'contract publishes the grouped extension name families',

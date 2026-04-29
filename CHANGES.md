@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-29
+### Typed-extension grouped discovery is now advertised by its own top-level key list
+- Added `name_family_map` to
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  `extension_contract_public_top_level_keys()` so the grouped hook,
+  context-accessor, and supported-source-kind discovery map is part of the
+  public typed-extension contract shell that already emits it.
+- Strengthened
+  [t/306-extension-contract.t](/Users/richarddje/Documents/github/fsmgen/t/306-extension-contract.t)
+  to require the advertised top-level key list to exactly match the keys
+  emitted by `build_extension_contract()`, preventing future self-description
+  drift.
+- Updated [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+  to explain the typed-extension key-list guarantee for embedders.
+
 ### Public machine JSON stdout purity is now trace-audited
 - Added
   [t/384-public-json-trace-stdout-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/384-public-json-trace-stdout-boundary-audit.t)
