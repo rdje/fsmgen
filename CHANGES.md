@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-30
+### Typed-extension context accessors now have exact runtime coverage
+- Added
+  [t/394-typed-extension-context-accessor-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/394-typed-extension-context-accessor-boundary-audit.t)
+  so the public `embedding.typed_extensions`
+  `stable_context_accessor_names` promise is checked against manifest shape,
+  implementation methods, and live in-process generation behavior.
+- The audit proves the direct contract, in-process manifest, and both CLI
+  manifest spellings keep `context_accessors` aligned with the builder-owned
+  list and grouped `name_family_map`, while hook-specific accessor lists stay
+  subsets of that public family.
+- It also compares
+  [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm)
+  explicit accessors to the contract list and records real direct plus
+  composition hook contexts through every advertised accessor. Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  `tested_by` provenance plus the embedding docs.
+
 ### Typed-extension hook set closure now has runtime coverage
 - Added
   [t/393-typed-extension-hook-set-closed-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/393-typed-extension-hook-set-closed-boundary-audit.t)

@@ -2250,6 +2250,11 @@ also proves the hook set is closed for the current schema version: extra
 hook-shaped methods such as `before_parse_source` or `after_emit_hdl` remain
 inert during direct and composition generation until the contract deliberately
 adds a new hook family.
+[t/394-typed-extension-context-accessor-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/394-typed-extension-context-accessor-boundary-audit.t)
+also proves the context accessor names are stable for the current schema
+version by checking manifest discovery, the implemented
+`FSM::Extension::Context` methods, and real direct plus composition hook
+contexts through every advertised accessor.
 
 For in-process embedders, `FSM::Pipeline::HDLGenerator` no longer leaves its
 requested `debug_level` behind as process-global state after construction or

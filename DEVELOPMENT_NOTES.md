@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-30: typed-extension context accessor stability should be exact
+- `stable_context_accessor_names` should mean embedders can trust the named
+  `FSM::Extension::Context` accessors, not just that those names happen to
+  appear in manifest prose.
+- The new audit ties the promise to three roots of truth: manifest/contract
+  `context_accessors`, the explicit methods implemented by
+  `FSM::Extension::Context`, and live direct plus composition hook contexts.
+- This keeps context widening deliberate. Adding a new context accessor should
+  require updating the contract helper, grouped `name_family_map`, docs, and
+  runtime coverage instead of becoming an accidental undocumented method.
+
 ## 2026-04-30: typed-extension hook-set closure should be executable
 - `hook_set_closed_for_schema_version` is useful only if it means the pipeline
   dispatches exactly the hook families named by the typed-extension contract,

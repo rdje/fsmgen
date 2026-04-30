@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-30: typed-extension context accessors now have exact runtime coverage
+- Added
+  [t/394-typed-extension-context-accessor-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/394-typed-extension-context-accessor-boundary-audit.t)
+  to prove the `embedding.typed_extensions`
+  `stable_context_accessor_names` promise is both manifest-visible and
+  runtime-backed.
+- The audit checks the direct contract, in-process manifest, and both CLI
+  manifest spellings keep `context_accessors` aligned with the builder-owned
+  list and the grouped `name_family_map`, and that hook-specific accessor
+  lists stay subsets of the public context accessor family.
+- It also compares the explicit
+  [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm)
+  accessor methods to the contract list, rejects plausible unadvertised
+  accessor names, and records real direct plus composition hook contexts
+  through every advertised accessor. Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  `tested_by` provenance. This is `R13` context-boundary hardening only; no
+  accessor, hook family, or loading path was widened.
+
 ## 2026-04-30: typed-extension hook set closure now has runtime coverage
 - Added
   [t/393-typed-extension-hook-set-closed-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/393-typed-extension-hook-set-closed-boundary-audit.t)
