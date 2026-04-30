@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-30
+### Typed-extension constructor list shapes now fail before dereference
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so `extension_modules`, `extension_config_files`, and direct `extensions`
+  constructor values are rejected unless they are array references.
+- Added
+  [t/402-typed-extension-constructor-list-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/402-typed-extension-constructor-list-shape-boundary-audit.t)
+  to prove scalar and hashref values fail at the public constructor seam with
+  targeted `FSM::Pipeline::HDLGenerator` diagnostics before raw dereference or
+  loader fallout.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  `tested_by` provenance plus the embedding docs.
+
 ### Typed-extension module-name shape now fails before require
 - Hardened
   [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm)

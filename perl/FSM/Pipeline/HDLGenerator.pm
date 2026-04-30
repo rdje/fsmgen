@@ -7,6 +7,7 @@ use warnings;
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
+use Carp qw(confess);
 use FindBin;
 use lib "$FindBin::Bin";
 use FSM::Debug;
@@ -57,18 +58,30 @@ sub new ($class, %args) {
                 // FSM::Extension::Loader->new();
             my $extension_registry = $args{extension_registry};
             unless ($extension_registry) {
+                my $extension_config_files = _array_ref_constructor_arg(
+                    'extension_config_files',
+                    $args{extension_config_files},
+                );
+                my $extension_modules = _array_ref_constructor_arg(
+                    'extension_modules',
+                    $args{extension_modules},
+                );
+                my $direct_extensions = _array_ref_constructor_arg(
+                    'extensions',
+                    $args{extensions},
+                );
                 my $config_module_names = $extension_loader->module_names_from_config_files(
-                    $args{extension_config_files} || [],
+                    $extension_config_files,
                 );
                 my @extension_module_names = (
-                    @{ $args{extension_modules} || [] },
+                    @$extension_modules,
                     @$config_module_names,
                 );
                 my $loaded_extensions = $extension_loader->load_modules(
                     \@extension_module_names,
                 );
                 my @extensions = (
-                    @{ $args{extensions} || [] },
+                    @$direct_extensions,
                     @$loaded_extensions,
                 );
                 $extension_registry = FSM::Extension::Registry->new(
@@ -98,6 +111,13 @@ sub new ($class, %args) {
             return $self;
         },
     );
+}
+
+sub _array_ref_constructor_arg ($arg_name, $value) {
+    return [] unless defined $value;
+    return $value if ref($value) eq 'ARRAY';
+
+    confess "FSM::Pipeline::HDLGenerator expects '$arg_name' to be an array reference";
 }
 
 sub generate_hdl_from_file ($self, $fsm_file) {

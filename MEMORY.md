@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-30: typed-extension constructor list shapes now fail before dereference
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so `extension_modules`, `extension_config_files`, and direct `extensions`
+  constructor values must be array references before loader or registry setup
+  can dereference them.
+- Added
+  [t/402-typed-extension-constructor-list-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/402-typed-extension-constructor-list-shape-boundary-audit.t)
+  to prove the direct contract, in-process manifest, and both CLI manifest
+  spellings keep the list-shaped typed-extension entrypoints visible and list
+  the audit in `tested_by` provenance.
+- The audit also proves scalar and hashref values for `extension_modules`,
+  `extension_config_files`, and `extensions` fail with targeted
+  `FSM::Pipeline::HDLGenerator` array-reference diagnostics before raw Perl
+  dereference or lower-level loader fallout can leak. This is `R13`
+  typed-extension constructor-boundary hardening only; no discovery path, hook
+  family, or constructor option was widened.
+
 ## 2026-04-30: typed-extension module-name shape now fails before require
 - Hardened
   [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm)

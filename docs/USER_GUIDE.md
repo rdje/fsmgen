@@ -2265,6 +2265,12 @@ also proves module-name validation fails closed before loading: every
 such as `FSM::BoundaryAudit::9Bad` are rejected at loader, config parser,
 pipeline, and CLI boundaries before `require` runs or emits missing-module
 fallout.
+[t/402-typed-extension-constructor-list-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/402-typed-extension-constructor-list-shape-boundary-audit.t)
+also proves the constructor list shape for programmatic extension loading
+fails at the facade seam: scalar/hash values for `extension_modules`,
+`extension_config_files`, and direct `extensions` are rejected with targeted
+array-reference diagnostics before raw Perl dereference or lower-level loader
+fallout can leak.
 [t/392-typed-extension-autoload-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/392-typed-extension-autoload-boundary-audit.t)
 also proves `AUTOLOAD` remains outside the typed-extension hook boundary:
 AUTOLOAD-only extensions, including objects that override `can(...)`, do not

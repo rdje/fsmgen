@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-30: typed-extension constructor list args should fail at the facade seam
+- `extension_modules`, `extension_config_files`, and direct `extensions` are
+  public/list-shaped construction inputs, so malformed scalar or hashref values
+  should be rejected before loader or registry internals dereference them.
+- The facade now validates those list-shaped inputs in one place and reports a
+  targeted `FSM::Pipeline::HDLGenerator expects '<arg>' to be an array
+  reference` diagnostic. That keeps embedders pointed at the constructor API
+  contract rather than at Perl's raw array-reference errors or lower-level
+  loader wording.
+- This does not widen the extension API. It only makes the existing explicit
+  object/module/config loading shapes fail closed at the earliest public seam.
+
 ## 2026-04-30: extension module names should fail closed before require
 - The typed-extension contract describes explicit `Module::Name` loading, so
   validation should reject malformed package segments before Perl tries to
