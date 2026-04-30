@@ -210,6 +210,11 @@ also proves `AUTOLOAD` remains outside the typed-extension hook boundary:
 AUTOLOAD-only extensions, including objects that override `can(...)`, do not
 receive hook dispatch, while explicit and inherited real hook methods still
 run normally.
+[t/393-typed-extension-hook-set-closed-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/393-typed-extension-hook-set-closed-boundary-audit.t)
+also proves the hook set is closed for the current schema version: extra
+hook-shaped methods such as `before_parse_source` or `after_emit_hdl` remain
+inert during direct and composition generation until the contract deliberately
+adds a new hook family.
 
 For in-process embedders, `FSM::Pipeline::HDLGenerator` no longer leaves its
 requested `debug_level` behind as process-global state after construction or

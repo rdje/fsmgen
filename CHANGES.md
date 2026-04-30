@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-30
+### Typed-extension hook set closure now has runtime coverage
+- Added
+  [t/393-typed-extension-hook-set-closed-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/393-typed-extension-hook-set-closed-boundary-audit.t)
+  so the public `embedding.typed_extensions`
+  `hook_set_closed_for_schema_version` promise is checked against both manifest
+  shape and live in-process generation behavior.
+- The audit proves the direct contract, in-process manifest, and both CLI
+  manifest spellings keep `hook_names` exactly aligned with the detailed
+  `hooks` map and exclude plausible extra hook names.
+- It also runs direct and composition generation with an extension object that
+  implements extra hook-shaped methods, proving only `after_parse_source` and
+  `after_generate_result` dispatch. Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  `tested_by` provenance plus the embedding docs.
+
 ### Typed-extension hook dispatch now rejects AUTOLOAD-style hook discovery
 - Added
   [t/392-typed-extension-autoload-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/392-typed-extension-autoload-boundary-audit.t)

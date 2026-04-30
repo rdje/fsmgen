@@ -109,6 +109,11 @@ in-process hooks through `FSM::Pipeline::HDLGenerator` while remaining owned by
 also proves the negative side of the same typed boundary: AUTOLOAD-only
 extensions, including objects that override `can(...)`, do not receive hook
 dispatch, while explicit and inherited real hook methods still run.
+[t/393-typed-extension-hook-set-closed-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/393-typed-extension-hook-set-closed-boundary-audit.t)
+also proves the hook set is closed for the current schema version: extra
+hook-shaped methods such as `before_parse_source` or `after_emit_hdl` remain
+inert during direct and composition generation until the contract deliberately
+adds a new hook family.
 
 For embedders, the same boundary is now machine-readable through
 [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)

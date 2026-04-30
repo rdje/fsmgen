@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-30: typed-extension hook set closure now has runtime coverage
+- Added
+  [t/393-typed-extension-hook-set-closed-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/393-typed-extension-hook-set-closed-boundary-audit.t)
+  to prove the `embedding.typed_extensions`
+  `hook_set_closed_for_schema_version` promise is both manifest-visible and
+  runtime-backed.
+- The audit checks the direct contract, in-process manifest, and both CLI
+  manifest spellings keep `hook_names` exactly aligned with the detailed
+  `hooks` map and exclude plausible extra hook names such as
+  `before_parse_source`, `before_generate_result`, and `after_emit_hdl`.
+- It also runs direct and composition generation with an extension object that
+  implements the two supported hooks plus several extra hook-shaped methods,
+  proving only `after_parse_source` and `after_generate_result` dispatch while
+  the extra methods stay inert. Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  `tested_by` provenance. This is `R13` hook-boundary hardening only; no hook
+  family or loading path was widened.
+
 ## 2026-04-30: typed-extension hook dispatch now ignores AUTOLOAD and extension-provided can()
 - Added
   [t/392-typed-extension-autoload-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/392-typed-extension-autoload-boundary-audit.t)

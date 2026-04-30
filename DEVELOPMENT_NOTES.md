@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-30: typed-extension hook-set closure should be executable
+- `hook_set_closed_for_schema_version` is useful only if it means the pipeline
+  dispatches exactly the hook families named by the typed-extension contract,
+  not every method that looks hook-shaped on an extension object.
+- The new audit checks both sides of that promise: the manifest/contract
+  `hook_names` list exactly matches the detailed `hooks` map, and real direct
+  plus composition generation call only `after_parse_source` and
+  `after_generate_result` even when an extension object implements plausible
+  future/legacy hook names.
+- This keeps hook widening deliberate: adding a new hook should require a
+  contract update, manifest update, docs update, and runtime test instead of
+  appearing accidentally because an object happened to define another method.
+
 ## 2026-04-30: typed-extension hook dispatch must not trust extension-provided can()
 - The typed-extension contract says there is no `AUTOLOAD` hook dispatch or
   implicit hook discovery. A plain `$extension->can($hook_name)` check was too
