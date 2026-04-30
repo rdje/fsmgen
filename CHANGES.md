@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-30
+### HDLGenerator facade stateful reuse now has runtime coverage
+- Added
+  [t/399-hdl-generator-facade-stateful-reuse-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/399-hdl-generator-facade-stateful-reuse-boundary-audit.t)
+  so the public `embedding.hdl_generator_facade`
+  `stateful_reuse_supported` promise is checked against manifest shape and
+  live repeated-generation behavior.
+- The audit proves the direct contract, in-process manifest, and both CLI
+  manifest spellings advertise stateful reuse while still keeping lower-level
+  owner-injection constructor args non-public.
+- It also proves one facade object preserves `strict_mode`,
+  `target_language`, and `source_search_paths` across success, strict-mode
+  failure, and later success, while restoring caller debug state after every
+  generation path.
+
 ### Debug-runtime scoped helper behavior now has runtime coverage
 - Added
   [t/398-debug-runtime-scoped-helper-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/398-debug-runtime-scoped-helper-boundary-audit.t)

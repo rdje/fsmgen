@@ -2236,6 +2236,12 @@ also proves the advertised `quiet` constructor option is accepted compatibility
 state rather than core runtime behavior: it is grouped under
 `compatibility_constructor_option_names`, stays out of the core runtime family,
 and in-process generation captures no stdout/stderr for either quiet value.
+[t/399-hdl-generator-facade-stateful-reuse-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/399-hdl-generator-facade-stateful-reuse-boundary-audit.t)
+also proves the advertised `stateful_reuse_supported` promise is
+runtime-backed: one facade object preserves `strict_mode`, `target_language`,
+and `source_search_paths` across success, strict-mode failure, and later
+success, while restoring caller debug state after each path and still keeping
+lower-level owner-injection constructor args outside the public facade surface.
 [t/380-extension-loading-command-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/380-extension-loading-command-boundary-audit.t)
 also locks the module/config loading-owner split: those loading entrypoints are
 advertised by `embedding.typed_extensions`, not by

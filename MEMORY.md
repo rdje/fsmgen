@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-30: HDLGenerator facade stateful reuse now has runtime coverage
+- Added
+  [t/399-hdl-generator-facade-stateful-reuse-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/399-hdl-generator-facade-stateful-reuse-boundary-audit.t)
+  to prove the `embedding.hdl_generator_facade` `stateful_reuse_supported`
+  promise is both manifest-visible and runtime-backed.
+- The audit checks the direct contract, in-process manifest, and both CLI
+  manifest spellings advertise stateful reuse while keeping lower-level
+  owner-injection constructor args out of the public facade surface.
+- It also reuses one facade object across a successful generation, a
+  strict-mode failure, and a later successful generation, proving constructor
+  state for `strict_mode`, `target_language`, and `source_search_paths`
+  survives repeated calls and caller debug state is restored after each path.
+  This is `R13` facade-boundary hardening only; no constructor option or raw
+  result guarantee was widened.
+
 ## 2026-04-30: debug-runtime scoped helper behavior now has runtime coverage
 - Added
   [t/398-debug-runtime-scoped-helper-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/398-debug-runtime-scoped-helper-boundary-audit.t)

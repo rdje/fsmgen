@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-30: facade stateful reuse should mean repeatable configured generation
+- The facade contract already said `stateful_reuse_supported`, but the
+  highest-value runtime meaning is not merely that `new(...)` returns an
+  object. It should mean one configured `HDLGenerator` object can be reused for
+  multiple generation calls without losing its constructor state.
+- The new audit drives the same facade object through success, strict-mode
+  failure, and later success. That ties reuse to real embedder concerns:
+  `strict_mode` still rejects compatibility residue, `target_language =>
+  'verilog'` still routes backend output, and `source_search_paths` still
+  resolves external package sources on later calls.
+- The audit also keeps the negative boundary visible: stateful reuse does not
+  make lower-level owner-injection constructor args public, and the raw result
+  hash is still not promised to be JSON-safe as a whole.
+
 ## 2026-04-30: with_fsm_debug_state is the explicit debug scoping boundary
 - `FSM::Debug` is intentionally still one process-global singleton, so the
   scoped helper is the stable way for embedders to make temporary debug-state
