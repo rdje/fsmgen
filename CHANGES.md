@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-30
+### Typed-extension discovery is now proven explicit-only
+- Added
+  [t/395-typed-extension-explicit-discovery-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/395-typed-extension-explicit-discovery-boundary-audit.t)
+  so the public `embedding.typed_extensions` `legacy_plg_discovery => false`
+  and `automatic_directory_discovery => false` promises are checked against
+  manifest shape and live generation behavior.
+- The audit proves the direct contract, in-process manifest, and both CLI
+  manifest spellings advertise explicit module/config loading while keeping
+  legacy `.plg` discovery and automatic directory discovery disabled.
+- It also creates nearby `extensions.fsmext`, `fsmgen.fsmext`, and
+  `.plg`-shaped files and proves in-process plus CLI generation ignore them
+  unless explicit module or config loading entrypoints are provided. Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  `tested_by` provenance plus the embedding docs.
+
 ### Typed-extension context accessors now have exact runtime coverage
 - Added
   [t/394-typed-extension-context-accessor-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/394-typed-extension-context-accessor-boundary-audit.t)

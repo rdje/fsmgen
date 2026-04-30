@@ -2255,6 +2255,11 @@ also proves the context accessor names are stable for the current schema
 version by checking manifest discovery, the implemented
 `FSM::Extension::Context` methods, and real direct plus composition hook
 contexts through every advertised accessor.
+[t/395-typed-extension-explicit-discovery-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/395-typed-extension-explicit-discovery-boundary-audit.t)
+also proves extension discovery remains explicit: nearby `extensions.fsmext`,
+`fsmgen.fsmext`, and legacy `.plg`-shaped files stay inert for in-process and
+CLI generation unless the caller supplies explicit module or config loading
+entrypoints.
 
 For in-process embedders, `FSM::Pipeline::HDLGenerator` no longer leaves its
 requested `debug_level` behind as process-global state after construction or

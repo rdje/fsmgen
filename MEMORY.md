@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-30: typed-extension discovery is now proven explicit-only
+- Added
+  [t/395-typed-extension-explicit-discovery-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/395-typed-extension-explicit-discovery-boundary-audit.t)
+  to prove the `embedding.typed_extensions` `legacy_plg_discovery => false`
+  and `automatic_directory_discovery => false` promises are runtime-backed.
+- The audit checks the direct contract, in-process manifest, and both CLI
+  manifest spellings advertise explicit module/config loading while keeping
+  legacy `.plg` discovery and automatic directory discovery disabled.
+- It also places `extensions.fsmext`, `fsmgen.fsmext`, and a legacy
+  `.plg`-shaped file beside a real source, then proves in-process and CLI
+  generation ignore them unless the caller explicitly supplies module or
+  config loading entrypoints. Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  `tested_by` provenance. This is `R13` negative-boundary hardening only; no
+  discovery path, hook family, or extension-loading API was widened.
+
 ## 2026-04-30: typed-extension context accessors now have exact runtime coverage
 - Added
   [t/394-typed-extension-context-accessor-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/394-typed-extension-context-accessor-boundary-audit.t)

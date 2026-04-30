@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-30: typed-extension discovery must remain explicit
+- The typed-extension contract says legacy `.plg` discovery and automatic
+  directory discovery are disabled. That is an important embedder safety
+  boundary: extension code should run only because the caller supplied an
+  explicit object, module name, or config file.
+- The new audit locks both sides of that promise. Manifest views must advertise
+  only explicit discovery, and live in-process plus CLI generation must ignore
+  nearby extension-looking files unless explicit module/config loading is used.
+- This keeps extension activation auditable. Future discovery convenience
+  should require a deliberate contract/schema update rather than appearing as
+  an accidental side effect of file placement.
+
 ## 2026-04-30: typed-extension context accessor stability should be exact
 - `stable_context_accessor_names` should mean embedders can trust the named
   `FSM::Extension::Context` accessors, not just that those names happen to
