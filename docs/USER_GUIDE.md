@@ -1813,6 +1813,10 @@ It now also captures a real trace-bound debug-state snapshot and proves
 `snapshot_state_keys` matches the emitted snapshot shape.
 That same trace-bound snapshot is checked as not JSON-safe as a whole, matching
 the advertised debug-runtime contract.
+[t/398-debug-runtime-scoped-helper-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/398-debug-runtime-scoped-helper-boundary-audit.t)
+also proves `with_fsm_debug_state(...)` restores caller debug state across
+scalar, list, void, and error paths, while ordinary debug setters remain
+process-global unless callers explicitly scope or restore them.
 The manifest's `diagnostics` section now follows the same pattern:
 [perl/FSM/Support/DiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsContract.pm)
 names the published top-level, scalar-string, and stable-code entry families
@@ -2302,6 +2306,10 @@ restore_fsm_debug_state($saved);
 That restore path preserves the caller-facing trace/debug configuration,
 including the original trace sink, instead of forcing embedders to rebuild the
 global debug settings by hand after a temporary trace-file switch.
+[t/398-debug-runtime-scoped-helper-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/398-debug-runtime-scoped-helper-boundary-audit.t)
+also proves `with_fsm_debug_state(...)` restores caller debug state across
+scalar, list, void, and error paths, while ordinary debug setters remain
+process-global unless callers explicitly scope or restore them.
 That current in-process seam is now also advertised through
 `embedding.debug_runtime`, owned by
 [perl/FSM/Support/DebugRuntimeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DebugRuntimeContract.pm).

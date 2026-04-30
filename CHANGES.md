@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-30
+### Debug-runtime scoped helper behavior now has runtime coverage
+- Added
+  [t/398-debug-runtime-scoped-helper-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/398-debug-runtime-scoped-helper-boundary-audit.t)
+  so the public `embedding.debug_runtime` `with_fsm_debug_state(...)` seam is
+  checked against both manifest shape and live runtime behavior.
+- The audit proves the direct contract, in-process manifest, and both CLI
+  manifest spellings publish `with_fsm_debug_state(...)` in the snapshot helper
+  family, keep `pipeline_scopes_debug_state => true`, and keep
+  `general_debug_calls_auto_scoped => false`.
+- It also proves scalar, list, void, and exception paths restore caller debug
+  level, trace-verbosity name, and emoji state, while ordinary debug setters
+  remain process-global until callers explicitly scope or restore them.
+
 ### Typed-extension registry direct dispatch now enforces the closed hook set
 - Hardened
   [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)

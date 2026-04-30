@@ -277,6 +277,10 @@ It also captures a trace-bound debug-state snapshot and proves the advertised
 debug level, trace path, live filehandle, and emoji state.
 That trace-bound snapshot is also checked as not JSON-safe as a whole, matching
 the contract's `snapshot_json_safe => false` claim.
+[t/398-debug-runtime-scoped-helper-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/398-debug-runtime-scoped-helper-boundary-audit.t)
+also proves `with_fsm_debug_state(...)` restores caller debug state across
+scalar, list, void, and error paths, while ordinary debug setters remain
+process-global unless callers explicitly scope or restore them.
 That current in-process seam is now also advertised through
 `embedding.debug_runtime`, owned by
 [perl/FSM/Support/DebugRuntimeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DebugRuntimeContract.pm).

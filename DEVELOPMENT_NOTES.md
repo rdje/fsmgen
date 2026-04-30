@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-30: with_fsm_debug_state is the explicit debug scoping boundary
+- `FSM::Debug` is intentionally still one process-global singleton, so the
+  scoped helper is the stable way for embedders to make temporary debug-state
+  changes without leaking them back to the caller.
+- The new audit proves that `with_fsm_debug_state(...)` restores caller state
+  for scalar, list, void, and exception paths. That matters because callers
+  will naturally use it around embedded work that may return different Perl
+  contexts or fail during generation.
+- The same audit preserves the negative boundary: ordinary setters such as
+  `set_fsm_trace_verbosity(...)` are not auto-scoped. If callers use them
+  directly, the state remains process-global until they explicitly restore it.
+
 ## 2026-04-30: registry dispatch should be closed at the lowest extension seam
 - The pipeline already dispatches only `after_parse_source` and
   `after_generate_result`, but `FSM::Extension::Registry::dispatch_hook(...)`

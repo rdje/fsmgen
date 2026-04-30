@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-30: debug-runtime scoped helper behavior now has runtime coverage
+- Added
+  [t/398-debug-runtime-scoped-helper-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/398-debug-runtime-scoped-helper-boundary-audit.t)
+  to prove the `embedding.debug_runtime` scoped helper contract is executable
+  runtime behavior, not just manifest metadata.
+- The audit checks the direct contract, in-process manifest, and both CLI
+  manifest spellings publish `with_fsm_debug_state(...)` in the snapshot helper
+  family, keep `pipeline_scopes_debug_state => true`, and keep
+  `general_debug_calls_auto_scoped => false`.
+- It also proves `with_fsm_debug_state(...)` restores caller debug level,
+  trace-verbosity name, and emoji state across scalar, list, void, and
+  exception paths, while ordinary debug setters remain process-global until
+  callers explicitly scope or restore them. This is `R13` debug-runtime
+  boundary hardening only; no debug API or threading guarantee was widened.
+
 ## 2026-04-30: typed-extension registry direct dispatch now enforces the closed hook set
 - Hardened
   [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)
