@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-30: typed-extension module-name shape now fails before require
+- Hardened
+  [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm)
+  so every `::`-separated extension module-name segment must start with an
+  identifier character before direct module loading or config-line parsing
+  accepts it.
+- Added
+  [t/401-typed-extension-module-name-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/401-typed-extension-module-name-shape-boundary-audit.t)
+  to prove the direct contract, in-process manifest, and both CLI manifest
+  spellings keep the `Module::Name` module-loading shape visible and list the
+  audit in `tested_by` provenance.
+- The audit also proves invalid nested segments such as
+  `FSM::BoundaryAudit::9Bad` are rejected at loader/config/pipeline/CLI
+  boundaries before `require` runs, while malformed config lines still report
+  config-file and line-number context. This is `R13` typed-extension
+  negative-boundary hardening only; no discovery path, hook family, or config
+  syntax was widened.
+
 ## 2026-04-30: typed-extension config line shape now has runtime coverage
 - Added
   [t/400-typed-extension-config-line-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/400-typed-extension-config-line-shape-boundary-audit.t)

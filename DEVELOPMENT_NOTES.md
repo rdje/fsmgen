@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-30: extension module names should fail closed before require
+- The typed-extension contract describes explicit `Module::Name` loading, so
+  validation should reject malformed package segments before Perl tries to
+  `require` a path. Falling through to "Can't locate" makes an invalid name
+  look like a missing file, which is the wrong diagnostic boundary for
+  embedders.
+- The loader now applies the same identifier-segment rule to every `::`
+  segment in direct module names and config-file module lines. Names such as
+  `FSM::BoundaryAudit::9Bad` fail as invalid module names, not as missing
+  modules.
+- This keeps extension activation explicit and auditable: a future broader
+  module-name grammar should require a deliberate contract/schema update
+  instead of appearing through whatever Perl's require path accepts or reports.
+
 ## 2026-04-30: extension config files should stay line-shaped and explicit
 - The typed-extension config surface is deliberately tiny: active lines are
   `module Module::Name`, while blank lines, full-line comments, and inline

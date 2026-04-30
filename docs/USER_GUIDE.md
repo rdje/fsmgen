@@ -2259,6 +2259,12 @@ config files accept only `module Module::Name` lines plus inert blank,
 comment, and inline-comment text; malformed lines report extension config
 file and line-number context; and repeated config files preserve parsed module
 order during in-process hook dispatch.
+[t/401-typed-extension-module-name-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/401-typed-extension-module-name-shape-boundary-audit.t)
+also proves module-name validation fails closed before loading: every
+`::`-separated segment must use the `Module::Name` identifier shape, so names
+such as `FSM::BoundaryAudit::9Bad` are rejected at loader, config parser,
+pipeline, and CLI boundaries before `require` runs or emits missing-module
+fallout.
 [t/392-typed-extension-autoload-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/392-typed-extension-autoload-boundary-audit.t)
 also proves `AUTOLOAD` remains outside the typed-extension hook boundary:
 AUTOLOAD-only extensions, including objects that override `can(...)`, do not

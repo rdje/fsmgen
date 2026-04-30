@@ -43,7 +43,7 @@ sub module_names_from_config_file ($self, $config_path) {
 
             next if $line =~ /^\s*(?:#.*)?$/;
 
-            if ($line =~ /^\s*module\s+([A-Za-z_]\w*(?:::\w+)*)\s*(?:#.*)?$/) {
+            if ($line =~ /^\s*module\s+([A-Za-z_]\w*(?:::[A-Za-z_]\w*)*)\s*(?:#.*)?$/) {
                 push @module_names, $1;
                 next;
             }
@@ -69,7 +69,7 @@ sub load_modules ($self, $module_names) {
             confess "FSM::Extension::Loader requires non-empty extension module names"
                 unless defined($module_name) && $module_name ne '';
             confess "FSM::Extension::Loader rejects invalid extension module name '$module_name'"
-                unless $module_name =~ /\A[A-Za-z_]\w*(?:::\w+)*\z/;
+                unless _is_valid_extension_module_name($module_name);
 
             my $loaded = eval "require $module_name; 1";
             confess "Unable to load extension module '$module_name': $@"
@@ -92,6 +92,11 @@ sub load_modules ($self, $module_names) {
     }
 
     return \@extensions;
+}
+
+sub _is_valid_extension_module_name ($module_name) {
+    return 0 unless defined($module_name) && !ref($module_name);
+    return $module_name =~ /\A[A-Za-z_]\w*(?:::[A-Za-z_]\w*)*\z/ ? 1 : 0;
 }
 
 sub _with_extension_config_context ($config_path, $code_ref) {

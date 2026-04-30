@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-30
+### Typed-extension module-name shape now fails before require
+- Hardened
+  [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm)
+  so extension module names and config-file module lines require every
+  `::`-separated segment to start with an identifier character.
+- Added
+  [t/401-typed-extension-module-name-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/401-typed-extension-module-name-shape-boundary-audit.t)
+  to prove invalid names such as `FSM::BoundaryAudit::9Bad` are rejected at
+  loader, config parser, pipeline, and CLI boundaries before any `require`
+  attempt or "Can't locate" fallout.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  `tested_by` provenance plus the embedding docs.
+
 ### Typed-extension config line shape now has runtime coverage
 - Added
   [t/400-typed-extension-config-line-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/400-typed-extension-config-line-shape-boundary-audit.t)

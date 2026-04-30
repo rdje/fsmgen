@@ -48,6 +48,7 @@ sub build_extension_contract {
             't/396-typed-extension-constructor-boundary-audit.t',
             't/397-typed-extension-registry-dispatch-boundary-audit.t',
             't/400-typed-extension-config-line-shape-boundary-audit.t',
+            't/401-typed-extension-module-name-shape-boundary-audit.t',
         ],
         entrypoints => {
             programmatic_objects => 'FSM::Pipeline::HDLGenerator->new(extensions => [ $object, ... ])',
