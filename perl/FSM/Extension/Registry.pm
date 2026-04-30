@@ -8,6 +8,11 @@ use Scalar::Util qw(blessed);
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
+my %SUPPORTED_HOOK_NAME = map { $_ => 1 } qw(
+    after_parse_source
+    after_generate_result
+);
+
 sub new ($class, %args) {
     my $extensions = $args{extensions} || [];
     confess "FSM::Extension::Registry expects 'extensions' to be an array reference"
@@ -26,6 +31,11 @@ sub new ($class, %args) {
 sub extensions ($self) { return $self->{extensions} }
 
 sub dispatch_hook ($self, $hook_name, $context) {
+    confess "FSM::Extension::Registry requires a non-empty hook name"
+        unless defined($hook_name) && $hook_name ne '';
+    confess "FSM::Extension::Registry rejects unsupported extension hook '$hook_name'"
+        unless $SUPPORTED_HOOK_NAME{$hook_name};
+
     for my $extension (@{$self->extensions}) {
         my $hook_method = UNIVERSAL::can($extension, $hook_name);
         next unless $hook_method;

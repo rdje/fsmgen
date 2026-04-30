@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-30
+### Typed-extension registry direct dispatch now enforces the closed hook set
+- Hardened
+  [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)
+  so direct `dispatch_hook(...)` calls require a non-empty hook name and reject
+  unsupported hook names before resolving or invoking extension methods.
+- Added
+  [t/397-typed-extension-registry-dispatch-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/397-typed-extension-registry-dispatch-boundary-audit.t)
+  to prove direct registry dispatch still accepts the advertised
+  `after_parse_source` and `after_generate_result` hooks, while unsupported
+  hook-shaped names are rejected before extension invocation.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  `tested_by` provenance plus the embedding docs.
+
 ### Typed-extension module constructors now ignore fake can()/AUTOLOAD discovery
 - Hardened
   [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm)

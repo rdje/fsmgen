@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-30: typed-extension registry direct dispatch now enforces the closed hook set
+- Hardened
+  [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)
+  so direct `dispatch_hook(...)` calls require a non-empty hook name and reject
+  unsupported hook names before looking at extension methods.
+- Added
+  [t/397-typed-extension-registry-dispatch-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/397-typed-extension-registry-dispatch-boundary-audit.t)
+  to prove the direct contract, in-process manifest, and both CLI manifest
+  spellings advertise the same closed hook set, direct registry dispatch still
+  accepts `after_parse_source` and `after_generate_result`, and unsupported
+  names such as `before_parse_source`, `before_generate_result`,
+  `after_emit_hdl`, and `on_result` are rejected before extension invocation.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  `tested_by` provenance plus the embedding docs. This is `R13`
+  negative-boundary hardening only; no hook family or extension-loading API
+  was widened.
+
 ## 2026-04-30: typed-extension module constructors now ignore fake can()/AUTOLOAD discovery
 - Hardened
   [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm)

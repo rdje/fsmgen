@@ -2268,6 +2268,11 @@ also proves module-name loading requires a real `new()` method: explicit and
 inherited constructors still work, while extension-provided `can(...)` methods
 and `AUTOLOAD`-only constructor discovery stay outside the typed loading
 boundary.
+[t/397-typed-extension-registry-dispatch-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/397-typed-extension-registry-dispatch-boundary-audit.t)
+also proves the registry's direct `dispatch_hook(...)` entrypoint enforces the
+same closed hook set: `after_parse_source` and `after_generate_result` still
+dispatch, while unsupported hook names are rejected before extension methods
+can run.
 
 For in-process embedders, `FSM::Pipeline::HDLGenerator` no longer leaves its
 requested `debug_level` behind as process-global state after construction or

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-30: registry dispatch should be closed at the lowest extension seam
+- The pipeline already dispatches only `after_parse_source` and
+  `after_generate_result`, but `FSM::Extension::Registry::dispatch_hook(...)`
+  was still a direct method that could be called with arbitrary hook-shaped
+  names.
+- The registry now rejects unknown hook names before asking any extension
+  object whether that method exists. This keeps the hook-set closure rooted at
+  the lowest dispatch seam, not only at the pipeline call sites.
+- Future hook families should be deliberate contract/schema changes. Until
+  then, even direct registry use should fail closed rather than treating
+  extension-defined method names as implicit extension points.
+
 ## 2026-04-30: typed-extension module constructors must be real methods
 - Explicit module loading should instantiate only modules that provide a real
   `new()` method. Trusting `$module_name->can('new')` allowed the extension

@@ -129,6 +129,11 @@ also proves module-name loading requires a real `new()` method: explicit and
 inherited constructors still work, while extension-provided `can(...)` methods
 and `AUTOLOAD`-only constructor discovery stay outside the typed loading
 boundary.
+[t/397-typed-extension-registry-dispatch-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/397-typed-extension-registry-dispatch-boundary-audit.t)
+also proves the registry's direct `dispatch_hook(...)` entrypoint enforces the
+same closed hook set: `after_parse_source` and `after_generate_result` still
+dispatch, while unsupported hook names are rejected before extension methods
+can run.
 
 For embedders, the same boundary is now machine-readable through
 [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
