@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-30
+### Typed-extension config line shape now has runtime coverage
+- Added
+  [t/400-typed-extension-config-line-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/400-typed-extension-config-line-shape-boundary-audit.t)
+  so the public `embedding.typed_extensions` `config_line_shape => 'module
+  Module::Name'` promise is checked against manifest shape and live loader
+  behavior.
+- The audit proves the direct contract, in-process manifest, and both CLI
+  manifest spellings publish config-file loading entrypoints and list the
+  audit in `tested_by` provenance.
+- It also proves only `module Module::Name` lines plus inert comments/blanks
+  are accepted, malformed lines report config-file and line-number context,
+  and repeated config files preserve parsed extension load order. Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  provenance.
+
 ### HDLGenerator facade stateful reuse now has runtime coverage
 - Added
   [t/399-hdl-generator-facade-stateful-reuse-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/399-hdl-generator-facade-stateful-reuse-boundary-audit.t)

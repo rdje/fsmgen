@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-30: typed-extension config line shape now has runtime coverage
+- Added
+  [t/400-typed-extension-config-line-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/400-typed-extension-config-line-shape-boundary-audit.t)
+  to prove the `embedding.typed_extensions` `config_line_shape => 'module
+  Module::Name'` promise is manifest-visible and runtime-backed.
+- The audit checks the direct contract, in-process manifest, and both CLI
+  manifest spellings advertise the config-file loading entrypoints and list
+  the new audit in `tested_by` provenance.
+- It also proves config files accept only `module Module::Name` lines plus
+  inert blank/comment/inline-comment text, reject malformed lines with
+  config-file and line-number context, and preserve module order across
+  repeated config files during in-process extension loading. This is `R13`
+  typed-extension boundary hardening only; no discovery path, hook family, or
+  config syntax was widened.
+
 ## 2026-04-30: HDLGenerator facade stateful reuse now has runtime coverage
 - Added
   [t/399-hdl-generator-facade-stateful-reuse-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/399-hdl-generator-facade-stateful-reuse-boundary-audit.t)

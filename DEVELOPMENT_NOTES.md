@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-30: extension config files should stay line-shaped and explicit
+- The typed-extension config surface is deliberately tiny: active lines are
+  `module Module::Name`, while blank lines, full-line comments, and inline
+  comments are inert. That keeps config files auditable instead of turning
+  them into a second plugin language.
+- The new audit locks both sides of that boundary. Manifest views must keep
+  advertising the exact config line shape, and live loader behavior must reject
+  malformed directives with config-file and line-number context.
+- Multi-file config loading now also has explicit order coverage. Repeated
+  config files preserve their parsed module order into in-process hook
+  dispatch, which is the useful embedder guarantee without adding implicit
+  discovery or widening hook/config syntax.
+
 ## 2026-04-30: facade stateful reuse should mean repeatable configured generation
 - The facade contract already said `stateful_reuse_supported`, but the
   highest-value runtime meaning is not merely that `new(...)` returns an

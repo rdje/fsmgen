@@ -2253,6 +2253,12 @@ runtime-backed in-process: `extension_modules` and `extension_config_files`
 both load a real module from `@INC`, dispatch `after_parse_source` before
 `after_generate_result`, and mutate only the returned raw result for the
 pipeline that requested loading.
+[t/400-typed-extension-config-line-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/400-typed-extension-config-line-shape-boundary-audit.t)
+also proves the advertised config-file line shape is runtime-backed:
+config files accept only `module Module::Name` lines plus inert blank,
+comment, and inline-comment text; malformed lines report extension config
+file and line-number context; and repeated config files preserve parsed module
+order during in-process hook dispatch.
 [t/392-typed-extension-autoload-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/392-typed-extension-autoload-boundary-audit.t)
 also proves `AUTOLOAD` remains outside the typed-extension hook boundary:
 AUTOLOAD-only extensions, including objects that override `can(...)`, do not
