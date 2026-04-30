@@ -2118,8 +2118,11 @@ You can use it either:
 - programmatically when embedding [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) from Perl,
 - or from the CLI with repeated `--extension-module Module::Name` flags.
 
-For CLI loading, the module must already be available in Perl's `@INC`, for example through `PERL5LIB`.
-Config-file loading is also explicit: the config file lists module names, and those modules must also already be available in `@INC`.
+For CLI loading, the module must already be available in Perl's `@INC`, for
+example through `PERL5LIB`, and it must provide a real `new()` method.
+Config-file loading is also explicit: the config file lists module names, and
+those modules must also already be available in `@INC` with real `new()`
+methods.
 
 Current shipped hook:
 - `after_parse_source($context)`
@@ -2260,6 +2263,11 @@ also proves extension discovery remains explicit: nearby `extensions.fsmext`,
 `fsmgen.fsmext`, and legacy `.plg`-shaped files stay inert for in-process and
 CLI generation unless the caller supplies explicit module or config loading
 entrypoints.
+[t/396-typed-extension-constructor-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/396-typed-extension-constructor-boundary-audit.t)
+also proves module-name loading requires a real `new()` method: explicit and
+inherited constructors still work, while extension-provided `can(...)` methods
+and `AUTOLOAD`-only constructor discovery stay outside the typed loading
+boundary.
 
 For in-process embedders, `FSM::Pipeline::HDLGenerator` no longer leaves its
 requested `debug_level` behind as process-global state after construction or

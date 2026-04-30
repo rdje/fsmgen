@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-30: typed-extension module constructors must be real methods
+- Explicit module loading should instantiate only modules that provide a real
+  `new()` method. Trusting `$module_name->can('new')` allowed the extension
+  package itself to lie about constructor availability, and the subsequent
+  `$module_name->new()` call could fall through to `AUTOLOAD`.
+- The loader now uses `UNIVERSAL::can($module_name, 'new')` and invokes the
+  returned coderef directly. This preserves ordinary explicit constructors and
+  inherited constructors while keeping fake `can(...)` and AUTOLOAD-only
+  constructor paths outside the typed-extension boundary.
+- This mirrors the hook-dispatch hardening: extension activation remains
+  explicit, and method discovery for public extension seams should come from
+  Perl's real method table rather than extension-controlled introspection.
+
 ## 2026-04-30: typed-extension discovery must remain explicit
 - The typed-extension contract says legacy `.plg` discovery and automatic
   directory discovery are disabled. That is an important embedder safety

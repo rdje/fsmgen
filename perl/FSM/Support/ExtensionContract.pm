@@ -45,6 +45,7 @@ sub build_extension_contract {
             't/393-typed-extension-hook-set-closed-boundary-audit.t',
             't/394-typed-extension-context-accessor-boundary-audit.t',
             't/395-typed-extension-explicit-discovery-boundary-audit.t',
+            't/396-typed-extension-constructor-boundary-audit.t',
         ],
         entrypoints => {
             programmatic_objects => 'FSM::Pipeline::HDLGenerator->new(extensions => [ $object, ... ])',

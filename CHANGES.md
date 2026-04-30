@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-30
+### Typed-extension module constructors now ignore fake can()/AUTOLOAD discovery
+- Hardened
+  [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm)
+  so explicit module-name loading resolves `new()` with `UNIVERSAL::can(...)`
+  and invokes that coderef directly instead of trusting package-provided
+  `can(...)` methods or `AUTOLOAD` constructor discovery.
+- Added
+  [t/396-typed-extension-constructor-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/396-typed-extension-constructor-boundary-audit.t)
+  to prove explicit and inherited real constructors still work, fake
+  `can(...)`/`AUTOLOAD` constructor paths are rejected, unblessed constructor
+  returns still fail, and the CLI reports the constructor boundary with module
+  context.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  `tested_by` provenance plus the embedding docs.
+
 ### Typed-extension discovery is now proven explicit-only
 - Added
   [t/395-typed-extension-explicit-discovery-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/395-typed-extension-explicit-discovery-boundary-audit.t)

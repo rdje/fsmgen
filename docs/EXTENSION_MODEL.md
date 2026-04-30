@@ -124,6 +124,11 @@ also proves extension discovery remains explicit: nearby `extensions.fsmext`,
 `fsmgen.fsmext`, and legacy `.plg`-shaped files stay inert for in-process and
 CLI generation unless the caller supplies explicit module or config loading
 entrypoints.
+[t/396-typed-extension-constructor-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/396-typed-extension-constructor-boundary-audit.t)
+also proves module-name loading requires a real `new()` method: explicit and
+inherited constructors still work, while extension-provided `can(...)` methods
+and `AUTOLOAD`-only constructor discovery stay outside the typed loading
+boundary.
 
 For embedders, the same boundary is now machine-readable through
 [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
@@ -211,7 +216,8 @@ PERL5LIB=./my_extensions ./bin/fsmgen \
 This is still explicit and typed:
 - there is no directory scan,
 - the module name is provided directly,
-- and the loader instantiates a normal Perl object through `new()`.
+- and the loader instantiates a normal Perl object through a real `new()`
+  method.
 
 ### Example 5: explicit config-file loading
 Extension config file:

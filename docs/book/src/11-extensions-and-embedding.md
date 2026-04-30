@@ -79,7 +79,8 @@ This hook/context boundary is now advertised in the capability manifest under
 - explicit object/module/config loading entrypoints
 - the shipped hook names
 - the stable context accessor names
-- the rule that extension modules loaded by name must provide `new()`
+- the rule that extension modules loaded by name must provide a real `new()`
+  method
 - and the deliberate absence of legacy `.plg` discovery, automatic directory
   discovery, and `AUTOLOAD` hook dispatch
 
@@ -225,6 +226,11 @@ also proves extension discovery remains explicit: nearby `extensions.fsmext`,
 `fsmgen.fsmext`, and legacy `.plg`-shaped files stay inert for in-process and
 CLI generation unless the caller supplies explicit module or config loading
 entrypoints.
+[t/396-typed-extension-constructor-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/396-typed-extension-constructor-boundary-audit.t)
+also proves module-name loading requires a real `new()` method: explicit and
+inherited constructors still work, while extension-provided `can(...)` methods
+and `AUTOLOAD`-only constructor discovery stay outside the typed loading
+boundary.
 
 For in-process embedders, `FSM::Pipeline::HDLGenerator` no longer leaves its
 requested `debug_level` behind as process-global state after construction or

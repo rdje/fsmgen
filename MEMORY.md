@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-30: typed-extension module constructors now ignore fake can()/AUTOLOAD discovery
+- Hardened
+  [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm)
+  so module-name loading resolves `new()` through `UNIVERSAL::can(...)` and
+  invokes that coderef directly instead of trusting an extension module's
+  package-provided `can(...)` method or `AUTOLOAD`.
+- Added
+  [t/396-typed-extension-constructor-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/396-typed-extension-constructor-boundary-audit.t)
+  to prove the direct contract, in-process manifest, and both CLI manifest
+  spellings advertise `constructor_for_module_loading => 'new()'`, explicit
+  and inherited real constructors still work, fake `can(...)`/`AUTOLOAD`
+  constructor paths are rejected, and unblessed constructor returns still fail.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  `tested_by` provenance plus the embedding docs. This is `R13`
+  negative-boundary hardening only; no constructor, discovery path, or hook
+  family was widened.
+
 ## 2026-04-30: typed-extension discovery is now proven explicit-only
 - Added
   [t/395-typed-extension-explicit-discovery-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/395-typed-extension-explicit-discovery-boundary-audit.t)

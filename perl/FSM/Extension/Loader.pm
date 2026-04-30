@@ -75,10 +75,11 @@ sub load_modules ($self, $module_names) {
             confess "Unable to load extension module '$module_name': $@"
                 unless $loaded;
 
+            my $constructor = UNIVERSAL::can($module_name, 'new');
             confess "Extension module '$module_name' must provide new()"
-                unless $module_name->can('new');
+                unless $constructor;
 
-            my $extension = eval { $module_name->new() };
+            my $extension = eval { $constructor->($module_name) };
             confess "Extension module '$module_name' failed to instantiate via new(): $@"
                 if $@;
             confess "Extension module '$module_name' did not return a blessed object from new()"
