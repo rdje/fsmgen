@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-01: debug_level should fail before debug-runtime normalization
+- `debug_level` is a public facade constructor option, so invalid names,
+  references, fractional values, or out-of-range numeric values should fail at
+  `FSM::Pipeline::HDLGenerator->new(...)` rather than falling into
+  `FSM::Debug` scoped-state normalization. The debug runtime can clamp or
+  interpret values for its own lower-level API, but the facade boundary should
+  be narrower and predictable for embedders.
+- The facade now accepts only scalar integer-compatible values in the published
+  numeric trace range `0..4`, canonicalizes accepted string integers to stored
+  integers, and reports targeted constructor diagnostics before any generation
+  work or debug-state mutation can leak.
+- Publishing the same range through both `DebugRuntimeContract` and
+  `HDLGeneratorFacadeContract` keeps the lower-level runtime truth and the
+  public constructor shape aligned without widening the debug-runtime global
+  API, target-language behavior, or raw-result guarantees.
 ## 2026-05-01: target_language should fail before backend selection
 - `target_language` is a public facade constructor option, so unsupported
   strings or reference values should fail at `FSM::Pipeline::HDLGenerator`

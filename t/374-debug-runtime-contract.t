@@ -17,6 +17,7 @@ use FSM::Support::DebugRuntimeContract qw(
     debug_runtime_emoji_control_names
     debug_runtime_family_map
     debug_runtime_named_trace_verbosity_values
+    debug_runtime_numeric_trace_level_range
     debug_runtime_public_top_level_keys
     debug_runtime_snapshot_helper_names
     debug_runtime_snapshot_state_keys
@@ -89,7 +90,7 @@ subtest 'contract exposes the bounded embedding-facing debug runtime seam' => su
     );
     is_deeply(
         $contract->{numeric_trace_level_range},
-        { min => 0, max => 4 },
+        debug_runtime_numeric_trace_level_range(),
         'contract publishes the bounded numeric trace level range',
     );
     ok($contract->{process_global_singleton}, 'contract records that FSM::Debug is still process-global');

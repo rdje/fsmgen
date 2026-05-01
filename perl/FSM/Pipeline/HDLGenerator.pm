@@ -45,7 +45,9 @@ explicit frontend, orchestrator, builder, and backend-owner packages.
 =cut
 
 sub new ($class, %args) {
-    my $requested_debug_level = $args{debug_level} // 0;
+    my $requested_debug_level = _debug_level_constructor_arg(
+        $args{debug_level},
+    );
     return with_fsm_debug_state(
         { debug_level => $requested_debug_level },
         sub {
@@ -126,6 +128,19 @@ sub _array_ref_constructor_arg ($arg_name, $value) {
 
     confess "FSM::Pipeline::HDLGenerator expects '$arg_name' to be an array reference";
 }
+sub _debug_level_constructor_arg ($value) {
+    return 0 unless defined $value;
+    confess "FSM::Pipeline::HDLGenerator expects 'debug_level' to be a scalar integer in the range 0..4"
+        if ref($value);
+    confess "FSM::Pipeline::HDLGenerator expects 'debug_level' to be a scalar integer in the range 0..4"
+        unless $value =~ /\A\s*\d+\s*\z/;
+
+    my $debug_level = int($value);
+    confess "FSM::Pipeline::HDLGenerator expects 'debug_level' to be a scalar integer in the range 0..4"
+        if $debug_level < 0 || $debug_level > 4;
+
+    return $debug_level;
+}
 sub _target_language_constructor_arg ($value) {
     return 'systemverilog' unless defined $value;
     confess "FSM::Pipeline::HDLGenerator expects 'target_language' to be a scalar string"
@@ -160,7 +175,7 @@ __END__
 Creates a new HDL generation pipeline.
 
 Arguments:
-- debug_level: Debug verbosity level (0-3, default: 0)
+- debug_level: Debug verbosity level (0-4, default: 0)
 - target_language: Target HDL language (default: 'systemverilog')
 - quiet: Suppress informational messages (default: 0)
 - strict_mode: Enable strict support-tier enforcement (default: 0)

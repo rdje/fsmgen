@@ -1,6 +1,26 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-01
+### HDLGenerator debug_level now fails closed at the facade seam
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so public `debug_level` constructor values must be scalar
+  integer-compatible inputs in the `0..4` trace range before `FSM::Debug`
+  scoped-state normalization can clamp values or report lower-level
+  diagnostics.
+- Extended
+  [perl/FSM/Support/DebugRuntimeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DebugRuntimeContract.pm)
+  with `debug_runtime_numeric_trace_level_range()`, and republished that range
+  through
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  as `debug_level_numeric_range` with a constructor shape of `integer in
+  debug_level_numeric_range`.
+- Added
+  [t/405-hdl-generator-facade-debug-level-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/405-hdl-generator-facade-debug-level-shape-boundary-audit.t)
+  to prove contract/manifest visibility, accepted in-range construction,
+  targeted rejection of names/references/out-of-range values, and caller
+  debug-state preservation after invalid construction. No roadmap status
+  changed.
 ### HDLGenerator target_language now fails closed at the facade seam
 - Hardened
   [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)

@@ -1,5 +1,26 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-01: HDLGenerator debug_level now fails closed at the facade seam
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so public `debug_level` constructor values are validated and canonicalized
+  before `FSM::Debug` scoped-state normalization can clamp range values or
+  emit lower-level diagnostics. Accepted values are scalar integer-compatible
+  values in the advertised `0..4` range.
+- Extended
+  [perl/FSM/Support/DebugRuntimeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DebugRuntimeContract.pm)
+  with `debug_runtime_numeric_trace_level_range()`, and extended
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  with `debug_level_numeric_range` plus a `constructor_option_shape_map`
+  entry of `integer in debug_level_numeric_range`.
+- Added
+  [t/405-hdl-generator-facade-debug-level-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/405-hdl-generator-facade-debug-level-shape-boundary-audit.t)
+  to prove the direct facade contract, in-process manifest, and both CLI
+  manifest spellings advertise the bounded range, accept only in-range
+  integer-compatible values, reject names/references/out-of-range values with
+  targeted facade diagnostics, and preserve caller debug state on invalid
+  construction. This is `R13` facade-boundary hardening only; no debug-runtime
+  global API, target language, or raw-result guarantee was widened.
 ## 2026-05-01: HDLGenerator target_language now fails closed at the facade seam
 - Hardened
   [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)

@@ -12,6 +12,7 @@ our @EXPORT_OK = qw(
     debug_runtime_family_map
     debug_runtime_emoji_control_names
     debug_runtime_named_trace_verbosity_values
+    debug_runtime_numeric_trace_level_range
     debug_runtime_public_top_level_keys
     debug_runtime_snapshot_helper_names
     debug_runtime_snapshot_state_keys
@@ -50,10 +51,7 @@ sub build_debug_runtime_contract {
         snapshot_state_keys => debug_runtime_snapshot_state_keys(),
         family_map => debug_runtime_family_map(),
         named_trace_verbosity_values => debug_runtime_named_trace_verbosity_values(),
-        numeric_trace_level_range => {
-            min => 0,
-            max => 4,
-        },
+        numeric_trace_level_range => debug_runtime_numeric_trace_level_range(),
         process_global_singleton => JSON::PP::true,
         thread_safe => JSON::PP::false,
         snapshot_json_safe => JSON::PP::false,
@@ -172,6 +170,13 @@ sub debug_runtime_named_trace_verbosity_values {
             debug
         ),
     ];
+}
+
+sub debug_runtime_numeric_trace_level_range {
+    return {
+        min => 0,
+        max => 4,
+    };
 }
 
 1;
