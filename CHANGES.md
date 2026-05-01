@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-01
+### HDLGenerator quiet now fails closed at the facade seam
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so public `quiet` constructor values must be scalar boolean `0` / `1` forms
+  before the compatibility presentation field can retain arbitrary Perl
+  truthiness.
+- Updated
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  so `constructor_option_shape_map` advertises `quiet` as `boolean scalar 0 or
+  1` while preserving its compatibility-option classification.
+- Added
+  [t/407-hdl-generator-facade-quiet-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/407-hdl-generator-facade-quiet-shape-boundary-audit.t)
+  to prove contract/manifest visibility, default false storage, accepted-value
+  canonicalization, and targeted rejection of invalid values before generation
+  or backend diagnostics can leak. No roadmap status changed.
 ### HDLGenerator strict_mode now fails closed at the facade seam
 - Hardened
   [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)

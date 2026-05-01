@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-01: quiet should fail before compatibility state stores truthiness
+- `quiet` is a public facade constructor option even though the in-process
+  facade itself remains presentation-silent. Malformed values should therefore
+  fail at `FSM::Pipeline::HDLGenerator->new(...)` instead of being stored as
+  arbitrary Perl truthiness in the compatibility presentation field.
+- The facade now accepts only scalar boolean-compatible `0` / `1` forms,
+  canonicalizes accepted values to stored integers, and rejects references,
+  names, empty strings, multi-digit numerics, and out-of-range literals with a
+  targeted constructor diagnostic.
+- Publishing the same `boolean scalar 0 or 1` shape through
+  `HDLGeneratorFacadeContract` keeps the embedder contract, capability
+  manifest, and live constructor behavior aligned while preserving the existing
+  split: `quiet` is compatibility/presentation state, not a core runtime
+  generation option.
 ## 2026-05-01: strict_mode should fail before generation-time compatibility checks
 - `strict_mode` is a public facade constructor option, so malformed values
   should fail at `FSM::Pipeline::HDLGenerator->new(...)` rather than being

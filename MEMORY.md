@@ -1,5 +1,27 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-01: HDLGenerator quiet now fails closed at the facade seam
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so public `quiet` constructor values are validated and canonicalized before
+  facade setup can preserve arbitrary Perl truthiness in the compatibility
+  presentation field. Accepted values are scalar booleans `0` / `1`, including
+  string forms that canonicalize to stored integers.
+- Updated
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  so `constructor_option_shape_map` advertises `quiet` as `boolean scalar 0 or
+  1` while keeping it in the compatibility constructor-option family rather
+  than the core runtime family.
+- Added
+  [t/407-hdl-generator-facade-quiet-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/407-hdl-generator-facade-quiet-shape-boundary-audit.t)
+  to prove the direct facade contract, in-process manifest, and both CLI
+  manifest spellings advertise the scalar boolean compatibility shape;
+  accepted values canonicalize; omitted `quiet` defaults to canonical false;
+  and non-boolean names, references, empty strings, multi-digit strings, and
+  out-of-range numeric values fail with targeted facade diagnostics before
+  generation or backend diagnostics can leak. This is `R13` facade-boundary
+  hardening only; no in-process presentation behavior, constructor option, or
+  raw-result guarantee was widened.
 ## 2026-05-01: HDLGenerator strict_mode now fails closed at the facade seam
 - Hardened
   [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)

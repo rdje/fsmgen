@@ -63,6 +63,10 @@ sub new ($class, %args) {
                 'strict_mode',
                 $args{strict_mode},
             );
+            my $quiet = _boolean_constructor_arg(
+                'quiet',
+                $args{quiet},
+            );
             my $source_path_resolver = $args{source_path_resolver}
                 // FSM::SourcePathResolver->new(
                     extra_search_paths => $source_search_paths,
@@ -104,7 +108,7 @@ sub new ($class, %args) {
             my $self = bless {
                 debug_level => $requested_debug_level,
                 target_language => $target_language,
-                quiet => $args{quiet} // 0,
+                quiet => $quiet,
                 strict_mode => $strict_mode,
                 source_path_resolver => $source_path_resolver,
                 rtl_interface_loader => $args{rtl_interface_loader}
