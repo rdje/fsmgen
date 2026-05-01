@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-01
+### HDLGenerator strict_mode now fails closed at the facade seam
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so public `strict_mode` constructor values must be scalar boolean `0` / `1`
+  forms before strict-mode generation logic or raw Perl truthiness can
+  reinterpret malformed inputs.
+- Updated
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  so `constructor_option_shape_map` advertises `strict_mode` as `boolean
+  scalar 0 or 1`.
+- Added
+  [t/406-hdl-generator-facade-strict-mode-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/406-hdl-generator-facade-strict-mode-shape-boundary-audit.t)
+  to prove contract/manifest visibility, accepted-value canonicalization,
+  whitespace-padded false handling without truthiness leakage, and targeted
+  rejection of invalid values before strict-mode generation diagnostics can
+  leak. No roadmap status changed.
 ### HDLGenerator debug_level now fails closed at the facade seam
 - Hardened
   [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)

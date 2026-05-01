@@ -187,7 +187,7 @@ sub hdl_generator_facade_constructor_option_shape_map {
         debug_level => 'integer in debug_level_numeric_range',
         target_language => 'one of target_language_names',
         quiet => 'boolean presentation compatibility flag',
-        strict_mode => 'boolean strict support-tier flag',
+        strict_mode => 'boolean scalar 0 or 1',
         source_search_paths => 'array reference of filesystem search roots',
         extensions => 'array reference of blessed typed-extension objects',
     };

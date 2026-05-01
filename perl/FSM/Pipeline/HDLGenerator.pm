@@ -59,6 +59,10 @@ sub new ($class, %args) {
             my $target_language = _target_language_constructor_arg(
                 $args{target_language},
             );
+            my $strict_mode = _boolean_constructor_arg(
+                'strict_mode',
+                $args{strict_mode},
+            );
             my $source_path_resolver = $args{source_path_resolver}
                 // FSM::SourcePathResolver->new(
                     extra_search_paths => $source_search_paths,
@@ -101,7 +105,7 @@ sub new ($class, %args) {
                 debug_level => $requested_debug_level,
                 target_language => $target_language,
                 quiet => $args{quiet} // 0,
-                strict_mode => $args{strict_mode} // 0,
+                strict_mode => $strict_mode,
                 source_path_resolver => $source_path_resolver,
                 rtl_interface_loader => $args{rtl_interface_loader}
                     // FSM::Composition::RTLInterfaceLoader->new(
@@ -127,6 +131,15 @@ sub _array_ref_constructor_arg ($arg_name, $value) {
     return $value if ref($value) eq 'ARRAY';
 
     confess "FSM::Pipeline::HDLGenerator expects '$arg_name' to be an array reference";
+}
+sub _boolean_constructor_arg ($arg_name, $value) {
+    return 0 unless defined $value;
+    confess "FSM::Pipeline::HDLGenerator expects '$arg_name' to be a scalar boolean 0 or 1"
+        if ref($value);
+    confess "FSM::Pipeline::HDLGenerator expects '$arg_name' to be a scalar boolean 0 or 1"
+        unless $value =~ /\A\s*[01]\s*\z/;
+
+    return int($value);
 }
 sub _debug_level_constructor_arg ($value) {
     return 0 unless defined $value;

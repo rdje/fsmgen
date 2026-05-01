@@ -1,5 +1,26 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-01: HDLGenerator strict_mode now fails closed at the facade seam
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so public `strict_mode` constructor values are validated and canonicalized
+  before strict-mode generation logic or raw Perl truthiness can reinterpret
+  malformed inputs. Accepted values are scalar booleans `0` / `1`, including
+  string forms that canonicalize to stored integers.
+- Updated
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  so `constructor_option_shape_map` advertises `strict_mode` as `boolean
+  scalar 0 or 1`.
+- Added
+  [t/406-hdl-generator-facade-strict-mode-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/406-hdl-generator-facade-strict-mode-shape-boundary-audit.t)
+  to prove the direct facade contract, in-process manifest, and both CLI
+  manifest spellings advertise the scalar boolean shape; accepted values are
+  canonicalized; whitespace-padded false values do not accidentally enable
+  strict mode through truthiness; and non-boolean names, references, empty
+  strings, and out-of-range numeric values fail with targeted facade
+  diagnostics before strict-mode generation diagnostics can leak. This is
+  `R13` facade-boundary hardening only; no strict-mode language behavior,
+  constructor option, or raw-result guarantee was widened.
 ## 2026-05-01: HDLGenerator debug_level now fails closed at the facade seam
 - Hardened
   [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
