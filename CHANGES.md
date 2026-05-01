@@ -1,5 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-05-01
+### README bootstrap import-tree counts refreshed
+- Rebuilt the live project-owned `FSM::...` transitive import closure reachable
+  from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) as
+  part of the README / `SESSION_BOOTSTRAP.md` startup task.
+- Confirmed the static closure still reaches `180` project files total and
+  `179` `.pm` packages with no missing project modules.
+- Updated
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+  to refresh the review date and the stale measured line counts for
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  and
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm).
+  No roadmap status changed.
 ## 2026-04-30
 ### Typed-extension constructor list shapes now fail before dereference
 - Hardened

@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-01: import-tree truth can drift through measured counts even when topology is stable
+- The README bootstrap recheck showed that the `bin/fsmgen` transitive
+  `FSM::...` closure can remain topologically stable while measured
+  architecture-note details still drift. The closure still reports `180`
+  project files, `179` `.pm` packages, and no missing project modules, but the
+  saved line counts for `HDLGenerator.pm` and
+  `HDLGeneratorFacadeContract.pm` were stale after recent `R13` boundary
+  hardening.
+- `docs/BIN_FSMGEN_IMPORT_TREE.md` should therefore be treated as a measured
+  snapshot, not just a package-list note. Bootstrap refreshes should compare
+  both the import topology and the recorded quantitative fields before
+  deciding the note is still honest.
+- This was documentation-truth maintenance only. It did not change the
+  compiler architecture, the active `R13` lane, or any public embedding/API
+  promise.
 ## 2026-04-30: typed-extension constructor list args should fail at the facade seam
 - `extension_modules`, `extension_config_files`, and direct `extensions` are
   public/list-shaped construction inputs, so malformed scalar or hashref values
