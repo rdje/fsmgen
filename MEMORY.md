@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-01: HDLGenerator target_language now fails closed at the facade seam
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so public `target_language` constructor values must be scalar strings and
+  must match one of the advertised lower-case target-language tokens before
+  direct or composition backend selection runs.
+- Extended
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  with `target_language_names`, and changed the `target_language` entry in
+  `constructor_option_shape_map` to point at that bounded token family.
+- Added
+  [t/404-hdl-generator-facade-target-language-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/404-hdl-generator-facade-target-language-shape-boundary-audit.t)
+  to prove the direct facade contract, in-process manifest, and both CLI
+  manifest spellings advertise the token family, accept only those tokens at
+  construction, and reject unsupported strings/reference values before backend
+  fallback or structural-emitter diagnostics can leak. This is `R13`
+  facade-boundary hardening only; no backend support, target-language token,
+  or raw-result guarantee was widened.
 ## 2026-05-01: HDLGenerator source_search_paths list shape now fails at the facade seam
 - Hardened
   [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)

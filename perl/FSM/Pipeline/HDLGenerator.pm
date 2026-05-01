@@ -54,6 +54,9 @@ sub new ($class, %args) {
                 'source_search_paths',
                 $args{source_search_paths},
             );
+            my $target_language = _target_language_constructor_arg(
+                $args{target_language},
+            );
             my $source_path_resolver = $args{source_path_resolver}
                 // FSM::SourcePathResolver->new(
                     extra_search_paths => $source_search_paths,
@@ -94,7 +97,7 @@ sub new ($class, %args) {
             }
             my $self = bless {
                 debug_level => $requested_debug_level,
-                target_language => $args{target_language} // 'systemverilog',
+                target_language => $target_language,
                 quiet => $args{quiet} // 0,
                 strict_mode => $args{strict_mode} // 0,
                 source_path_resolver => $source_path_resolver,
@@ -122,6 +125,16 @@ sub _array_ref_constructor_arg ($arg_name, $value) {
     return $value if ref($value) eq 'ARRAY';
 
     confess "FSM::Pipeline::HDLGenerator expects '$arg_name' to be an array reference";
+}
+sub _target_language_constructor_arg ($value) {
+    return 'systemverilog' unless defined $value;
+    confess "FSM::Pipeline::HDLGenerator expects 'target_language' to be a scalar string"
+        if ref($value);
+
+    my %valid = map { $_ => 1 } qw(systemverilog sv verilog v vhdl);
+    return $value if $valid{$value};
+
+    confess "FSM::Pipeline::HDLGenerator expects 'target_language' to be one of: systemverilog, sv, verilog, v, vhdl";
 }
 
 sub generate_hdl_from_file ($self, $fsm_file) {

@@ -27,6 +27,7 @@ our @EXPORT_OK = qw(
     hdl_generator_facade_method_names
     hdl_generator_facade_public_constructor_option_names
     hdl_generator_facade_public_top_level_keys
+    hdl_generator_facade_target_language_names
 );
 
 sub hdl_generator_facade_contract_source {
@@ -58,6 +59,7 @@ sub build_hdl_generator_facade_contract {
         constructor_option_family_map => hdl_generator_facade_constructor_option_family_map(),
         constructor_option_shape_map => hdl_generator_facade_constructor_option_shape_map(),
         default_target_language => 'systemverilog',
+        target_language_names => hdl_generator_facade_target_language_names(),
         generation_argument_shape => 'filesystem path to a .fsm source root',
         result_contract_source => hdl_generator_result_contract_source(),
         direct_extension_contract_source => extension_contract_source(),
@@ -69,6 +71,7 @@ sub build_hdl_generator_facade_contract {
             'Treat this contract as the bounded public in-process facade around FSM::Pipeline::HDLGenerator constructor and generate_hdl_from_file(...) entrypoints.',
             'Use the grouped constructor_option_family_map to discover the bounded public constructor option families without scraping POD or freezing every currently accepted owner-injection argument.',
             'Use constructor_option_shape_map for the bounded shape contract of each public constructor option.',
+            'Use target_language_names for the accepted lower-case target-language tokens at the facade constructor boundary.',
             'Follow result_contract_source for the returned compatibility-heavy result hash, direct_extension_contract_source for typed extension loading and hook semantics, and debug_runtime_contract_source for the explicit process-global debug save/restore seam.',
             'The current bounded constructor surface covers the core runtime generation options, compatibility presentation state such as quiet, plus direct extension-object injection and supports stateful pipeline reuse across multiple generation calls.',
             'The quiet option is accepted by the in-process facade for constructor/API compatibility, but CLI presentation output remains owned by bin/fsmgen rather than by generate_hdl_from_file(...).',
@@ -94,6 +97,7 @@ sub hdl_generator_facade_public_top_level_keys {
             constructor_option_family_map
             constructor_option_shape_map
             default_target_language
+            target_language_names
             generation_argument_shape
             result_contract_source
             direct_extension_contract_source
@@ -155,6 +159,17 @@ sub hdl_generator_facade_public_constructor_option_names {
     ];
 }
 
+sub hdl_generator_facade_target_language_names {
+    return [
+        qw(
+            systemverilog
+            sv
+            verilog
+            v
+            vhdl
+        ),
+    ];
+}
 sub hdl_generator_facade_constructor_option_family_map {
     return {
         core_constructor_option_names => hdl_generator_facade_core_constructor_option_names(),
@@ -165,7 +180,7 @@ sub hdl_generator_facade_constructor_option_family_map {
 sub hdl_generator_facade_constructor_option_shape_map {
     return {
         debug_level => 'integer trace verbosity compatibility level',
-        target_language => 'target HDL language string',
+        target_language => 'one of target_language_names',
         quiet => 'boolean presentation compatibility flag',
         strict_mode => 'boolean strict support-tier flag',
         source_search_paths => 'array reference of filesystem search roots',

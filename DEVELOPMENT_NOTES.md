@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-01: target_language should fail before backend selection
+- `target_language` is a public facade constructor option, so unsupported
+  strings or reference values should fail at `FSM::Pipeline::HDLGenerator`
+  construction instead of relying on backend-specific behavior. The direct
+  generated-module backend previously defaulted unknown values to
+  SystemVerilog, while the structural composition emitter rejected unsupported
+  values later. That split was not a good public embedder boundary.
+- The facade now validates `target_language` against one explicit lower-case
+  token family: `systemverilog`, `sv`, `verilog`, `v`, and `vhdl`. `vhdl`
+  remains accepted at construction so the existing source-contextual
+  not-implemented backend boundary is preserved at generation time.
+- Publishing the same token family as `target_language_names` keeps the
+  constructor option shape discoverable through the embedding contract and
+  capability manifest without implying any new backend implementation or raw
+  result guarantee.
 ## 2026-05-01: source_search_paths should share the facade list-shape boundary
 - `source_search_paths` is a public facade constructor option, so malformed
   scalar/hashref values should fail at `FSM::Pipeline::HDLGenerator->new(...)`

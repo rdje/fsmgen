@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-01
+### HDLGenerator target_language now fails closed at the facade seam
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so public `target_language` constructor values must be scalar strings and
+  must match `systemverilog`, `sv`, `verilog`, `v`, or `vhdl` before backend
+  selection runs.
+- Extended
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  with `target_language_names` and pointed `constructor_option_shape_map` at
+  that bounded token family.
+- Added
+  [t/404-hdl-generator-facade-target-language-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/404-hdl-generator-facade-target-language-shape-boundary-audit.t)
+  to prove contract/manifest visibility, accepted-token construction, and
+  targeted rejection of unsupported string or reference values before backend
+  fallback or lower-level diagnostics can leak. No roadmap status changed.
 ### HDLGenerator source_search_paths list shape now fails at the facade seam
 - Hardened
   [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
