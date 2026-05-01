@@ -50,9 +50,13 @@ sub new ($class, %args) {
         { debug_level => $requested_debug_level },
         sub {
             fsm_trace_enter('Initialize HDLGenerator pipeline', 2);
+            my $source_search_paths = _array_ref_constructor_arg(
+                'source_search_paths',
+                $args{source_search_paths},
+            );
             my $source_path_resolver = $args{source_path_resolver}
                 // FSM::SourcePathResolver->new(
-                    extra_search_paths => ($args{source_search_paths} || []),
+                    extra_search_paths => $source_search_paths,
                 );
             my $extension_loader = $args{extension_loader}
                 // FSM::Extension::Loader->new();

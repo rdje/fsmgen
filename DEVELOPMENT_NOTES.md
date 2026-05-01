@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-01: source_search_paths should share the facade list-shape boundary
+- `source_search_paths` is a public facade constructor option, so malformed
+  scalar/hashref values should fail at `FSM::Pipeline::HDLGenerator->new(...)`
+  instead of leaking a raw array-reference dereference from
+  `FSM::SourcePathResolver`.
+- The facade now routes `source_search_paths` through the same array-ref shape
+  helper used by the typed-extension list-shaped constructor inputs. That
+  keeps embedder diagnostics anchored to the public constructor seam and keeps
+  source-path resolver internals out of the public failure mode.
+- The facade contract now publishes `constructor_option_shape_map` rather than
+  relying on prose or tests to imply option shapes. This intentionally exposes
+  only bounded shape descriptions for existing public constructor options; it
+  does not make owner-injection args public or widen source-resolution
+  semantics.
 ## 2026-05-01: import-tree truth can drift through measured counts even when topology is stable
 - The README bootstrap recheck showed that the `bin/fsmgen` transitive
   `FSM::...` closure can remain topologically stable while measured

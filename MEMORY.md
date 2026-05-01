@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-01: HDLGenerator source_search_paths list shape now fails at the facade seam
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so public `source_search_paths` constructor values must be array references
+  before
+  [perl/FSM/SourcePathResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/SourcePathResolver.pm)
+  can dereference them.
+- Added
+  [t/403-hdl-generator-facade-source-search-paths-list-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/403-hdl-generator-facade-source-search-paths-list-shape-boundary-audit.t)
+  to prove the direct facade contract, in-process manifest, and both CLI
+  manifest spellings advertise `source_search_paths` as a public core
+  constructor option with an array-ref shape.
+- Extended
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  with `constructor_option_shape_map`, so embedders can discover the bounded
+  shape for each public facade constructor option. This is `R13`
+  facade-boundary hardening only; no constructor option, source-resolution
+  behavior, or raw-result guarantee was widened.
 ## 2026-05-01: README bootstrap import-tree recheck refreshed stale measured counts
 - Ran the README / `SESSION_BOOTSTRAP.md` startup path far enough to rebuild
   the live project-owned `FSM::...` transitive import closure reachable from

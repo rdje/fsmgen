@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-01
+### HDLGenerator source_search_paths list shape now fails at the facade seam
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so `source_search_paths` constructor values are rejected unless they are
+  array references before the source-path resolver can dereference them.
+- Extended
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  with `constructor_option_shape_map` so the public facade contract and
+  capability manifest advertise bounded shapes for public constructor options.
+- Added
+  [t/403-hdl-generator-facade-source-search-paths-list-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/403-hdl-generator-facade-source-search-paths-list-shape-boundary-audit.t)
+  to prove the direct contract, in-process manifest, and both CLI manifest
+  spellings advertise the `source_search_paths` array-ref shape and that
+  scalar/hashref values fail with targeted facade diagnostics. No roadmap
+  status changed.
 ### README bootstrap import-tree counts refreshed
 - Rebuilt the live project-owned `FSM::...` transitive import closure reachable
   from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) as
