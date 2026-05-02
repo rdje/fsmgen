@@ -46,6 +46,7 @@ explicit frontend, orchestrator, builder, and backend-owner packages.
 =cut
 
 sub new ($class, %args) {
+    my $constructor_class = _constructor_receiver_arg($class);
     my $requested_debug_level = _debug_level_constructor_arg(
         $args{debug_level},
     );
@@ -118,7 +119,7 @@ sub new ($class, %args) {
                     ),
                 extension_loader => $extension_loader,
                 extension_registry => $extension_registry,
-            }, $class;
+            }, $constructor_class;
 
             fsm_debug("HDL generation pipeline initialized", 1);
             fsm_debug("  Debug level: $self->{debug_level}", 1);
@@ -128,6 +129,12 @@ sub new ($class, %args) {
             return $self;
         },
     );
+}
+sub _constructor_receiver_arg ($value) {
+    confess "FSM::Pipeline::HDLGenerator expects new(...) invocant to be the FSM::Pipeline::HDLGenerator class name"
+        unless defined($value) && !ref($value) && $value eq __PACKAGE__;
+
+    return $value;
 }
 
 sub _array_ref_constructor_arg ($arg_name, $value) {

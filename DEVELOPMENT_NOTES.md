@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-02: HDLGenerator constructor ownership starts at the receiver
+- `FSM::Pipeline::HDLGenerator->new(%args)` is the public in-process
+  constructor seam, but direct function-style calls could previously pass an
+  arbitrary first argument. A plain string could bless the facade into an
+  unrelated package, `undef` could warn and bless into `main`, and references
+  could leak raw Perl `bless` diagnostics.
+- The facade now validates the constructor receiver before parsing debug
+  options, before entering scoped debug state, and before blessing the object.
+  The published constructor boundary is therefore explicit: the invocant is the
+  scalar `FSM::Pipeline::HDLGenerator` class name, followed by the existing
+  bounded public constructor options.
+- The audit deliberately covers direct contract and manifest visibility,
+  valid construction, function-style misuse with malformed receivers, object
+  method misuse, and debug-state preservation. This is not a subclassing
+  contract, not a new owner-injection surface, and not a widening of accepted
+  constructor options.
 ## 2026-05-02: generate_hdl_from_file owns its receiver shape too
 - `generate_hdl_from_file($path)` already validated its source-path argument,
   but the method still assumed its receiver was a real facade object. A class

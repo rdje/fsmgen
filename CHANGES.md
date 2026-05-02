@@ -1,6 +1,29 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-02
+### HDLGenerator constructor receiver now fails closed at the facade seam
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so `new(...)` validates the constructor invocant before debug-state scoping
+  or `bless`: callers must invoke the facade through the scalar
+  `FSM::Pipeline::HDLGenerator` class name.
+- Updated
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  to advertise `constructor_receiver_shape => 'scalar
+  FSM::Pipeline::HDLGenerator class name'`, and updated
+  [t/375-hdl-generator-facade-contract.t](/Users/richarddje/Documents/github/fsmgen/t/375-hdl-generator-facade-contract.t)
+  to lock the new contract field directly.
+- Added
+  [t/413-hdl-generator-facade-constructor-receiver-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/413-hdl-generator-facade-constructor-receiver-shape-boundary-audit.t)
+  to prove direct contract and manifest visibility, valid construction,
+  targeted rejection of malformed constructor receivers before raw Perl
+  `bless` diagnostics, and caller debug-state preservation. No roadmap status
+  changed.
+- Validation passed with focused facade/manifest tests (`2` files, `5` tests),
+  the nearby HDLGenerator facade audit cluster (`12` files, `43` tests), and
+  the full
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`409` files, `3724` tests, plus mdBook build).
 ### HDLGenerator generation receiver now fails closed at the facade seam
 - Hardened
   [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)

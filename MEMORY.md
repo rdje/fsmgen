@@ -1,5 +1,30 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-02: HDLGenerator constructor receiver now fails closed at the facade seam
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so public `new(...)` calls validate the constructor invocant before debug
+  state is scoped or `bless` runs: the receiver must be the scalar
+  `FSM::Pipeline::HDLGenerator` class name.
+- Updated
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  so `constructor_receiver_shape` is advertised as `scalar
+  FSM::Pipeline::HDLGenerator class name`, and updated
+  [t/375-hdl-generator-facade-contract.t](/Users/richarddje/Documents/github/fsmgen/t/375-hdl-generator-facade-contract.t)
+  to lock that field directly.
+- Added
+  [t/413-hdl-generator-facade-constructor-receiver-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/413-hdl-generator-facade-constructor-receiver-shape-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  valid construction, malformed string/undef/reference/blessed-object
+  invocants, object-method misuse, and caller debug-state preservation. This is
+  `R13` facade-boundary hardening only; no constructor option, owner-injection
+  argument, subclassing promise, source behavior, or raw-result guarantee was
+  widened.
+- Validation passed with focused facade/manifest tests (`t/375` and `t/413`),
+  the nearby HDLGenerator facade audit cluster (`12` files, `43` tests), and
+  the full repo-owned
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`409` files, `3724` tests, plus mdBook build).
 ## 2026-05-02: HDLGenerator generation receiver now fails closed at the facade seam
 - Hardened
   [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
