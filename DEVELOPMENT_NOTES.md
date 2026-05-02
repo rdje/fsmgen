@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-02: programmatic extension entries need entry-level shape checks
+- `extension_modules` and `extension_config_files` already had outer list-shape
+  validation, but their individual entries could still reach loader internals
+  as undef, blank strings, or references. That left room for confusing
+  `require`, file-check, file-open, or reference-stringification diagnostics at
+  a lower layer than the typed-extension contract.
+- The loader now treats those entry shapes as part of the bounded public
+  programmatic extension surface: module entries must be scalar non-empty
+  `Module::Name` values, and config entries must be scalar non-empty
+  config-file paths. The context wrapper labels malformed entries as
+  `<missing>`, `<blank>`, or `<non-scalar>` instead of stringifying caller
+  references.
+- The contract now advertises those shapes under `extension_object_contract`,
+  and the audit covers direct contract, in-process/CLI manifests, direct
+  loader calls, and `HDLGenerator` construction. This is deliberately narrower
+  than adding new extension discovery or config syntax; it only makes the
+  existing explicit entrypoints fail closed.
+- The final validation was intentionally broader than the new audit alone: the
+  focused extension/audit suite passed, and the full repo-owned regression gate
+  passed across `407` files / `3716` tests plus the mdBook build.
 ## 2026-05-02: README bootstrap import-tree refresh is measured-snapshot maintenance
 - The README / `SESSION_BOOTSTRAP.md` startup path should compare both import
   topology and measured snapshot fields in

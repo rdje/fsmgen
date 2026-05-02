@@ -50,6 +50,7 @@ sub build_extension_contract {
             't/400-typed-extension-config-line-shape-boundary-audit.t',
             't/401-typed-extension-module-name-shape-boundary-audit.t',
             't/402-typed-extension-constructor-list-shape-boundary-audit.t',
+            't/411-typed-extension-programmatic-entry-shape-boundary-audit.t',
         ],
         entrypoints => {
             programmatic_objects => 'FSM::Pipeline::HDLGenerator->new(extensions => [ $object, ... ])',
@@ -61,6 +62,8 @@ sub build_extension_contract {
         extension_object_contract => {
             must_be_blessed_object => JSON::PP::true,
             constructor_for_module_loading => 'new()',
+            module_name_shape => 'scalar Module::Name value',
+            config_file_path_shape => 'scalar non-empty extension config file path',
             config_line_shape => 'module Module::Name',
             legacy_plg_discovery => JSON::PP::false,
             automatic_directory_discovery => JSON::PP::false,

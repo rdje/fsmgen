@@ -94,6 +94,16 @@ subtest 'contract declares the bounded typed-extension surface' => sub {
         'new()',
         'contract records the module-loading constructor boundary',
     );
+    is(
+        $contract->{extension_object_contract}{module_name_shape},
+        'scalar Module::Name value',
+        'contract records the programmatic module-name entry shape',
+    );
+    is(
+        $contract->{extension_object_contract}{config_file_path_shape},
+        'scalar non-empty extension config file path',
+        'contract records the programmatic config-file path entry shape',
+    );
     ok(!$contract->{extension_object_contract}{legacy_plg_discovery}, 'contract keeps legacy .plg discovery out');
     ok(!$contract->{extension_object_contract}{autoload_hook_dispatch}, 'contract keeps AUTOLOAD dispatch out');
     ok(!$contract->{full_extension_api_frozen}, 'contract does not overpromise that all future extension API is frozen');

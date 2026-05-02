@@ -1,6 +1,30 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-02
+### Typed-extension programmatic entries now fail closed before stringification
+- Hardened
+  [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm)
+  so programmatic module/config loading entries are validated before lower-level
+  loading behavior runs: `extension_modules` entries must be scalar non-empty
+  `Module::Name` values before `require`, and `extension_config_files` entries
+  must be scalar non-empty config-file paths before file existence checks or
+  opens.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  to advertise the new `module_name_shape` and `config_file_path_shape`
+  metadata under `extension_object_contract`, and updated
+  [t/306-extension-contract.t](/Users/richarddje/Documents/github/fsmgen/t/306-extension-contract.t)
+  to lock those contract fields directly.
+- Added
+  [t/411-typed-extension-programmatic-entry-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/411-typed-extension-programmatic-entry-shape-boundary-audit.t)
+  to prove direct contract and manifest visibility plus targeted loader and
+  pipeline-construction rejection of undef/blank/reference entries before
+  `require`, file-open, or stringification fallout. No roadmap status changed.
+- Validation passed with the focused extension/audit suite
+  (`t/306-extension-contract.t`, `t/400-*`, `t/401-*`, `t/402-*`, and
+  `t/411-*`) and the full
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`407` files, `3716` tests, plus mdBook build).
 ### README bootstrap import-tree recheck refreshed measured counts
 - Rebuilt the live project-owned `FSM::...` transitive import closure reachable
   from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) as

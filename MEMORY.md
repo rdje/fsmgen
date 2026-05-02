@@ -1,5 +1,29 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-02: Typed-extension programmatic entries now fail closed before stringification
+- Hardened
+  [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm)
+  so programmatic `extension_modules` entries must be scalar non-empty
+  `Module::Name` values and programmatic `extension_config_files` entries must
+  be scalar non-empty config-file paths before the loader attempts `require`,
+  file existence checks, file opens, or reference stringification.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  so `extension_object_contract` now advertises `module_name_shape` and
+  `config_file_path_shape`, and added the new audit to typed-extension
+  `tested_by` provenance.
+- Added
+  [t/411-typed-extension-programmatic-entry-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/411-typed-extension-programmatic-entry-shape-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  direct loader failures, and `HDLGenerator` construction failures all keep
+  malformed module/config entries at the bounded typed-extension boundary. This
+  is `R13` typed-extension boundary hardening only; no hook family, CLI option,
+  module-name grammar, config-file language, or raw-result contract was widened.
+- Validation passed with the focused extension/audit suite
+  (`t/306-extension-contract.t`, `t/400-*`, `t/401-*`, `t/402-*`, and
+  `t/411-*`) and the full repo-owned
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`407` files, `3716` tests, plus mdBook build).
 ## 2026-05-02: HDLGenerator source_search_paths entries now fail closed at the facade seam
 - Executed the README / `SESSION_BOOTSTRAP.md` startup path far enough to
   rebuild the live project-owned `FSM::...` transitive import closure reachable
