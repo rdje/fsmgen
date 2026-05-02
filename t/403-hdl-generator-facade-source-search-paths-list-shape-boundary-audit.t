@@ -53,8 +53,8 @@ subtest 'manifests advertise source_search_paths as a list-shaped public facade 
         );
         is(
             $facade->{constructor_option_shape_map}{source_search_paths},
-            'array reference of filesystem search roots',
-            "$label advertises the source_search_paths array-ref shape",
+            'array reference of scalar non-empty filesystem search roots',
+            "$label advertises the source_search_paths array-ref and entry shape",
         );
     }
 };

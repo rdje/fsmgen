@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-02
+### HDLGenerator source_search_paths entries now fail closed at the facade seam
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so public `source_search_paths` constructor values must be array references
+  whose entries are scalar non-empty filesystem search roots before
+  [perl/FSM/SourcePathResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/SourcePathResolver.pm)
+  receives them.
+- Updated
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  so `constructor_option_shape_map.source_search_paths` now advertises `array
+  reference of scalar non-empty filesystem search roots`.
+- Added
+  [t/410-hdl-generator-facade-source-search-paths-entry-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/410-hdl-generator-facade-source-search-paths-entry-shape-boundary-audit.t)
+  to prove direct contract and manifest visibility, valid scalar path-entry
+  construction, targeted rejection of undef/empty/whitespace/reference entries,
+  and caller debug-state preservation on invalid constructor calls. No roadmap
+  status changed.
 ### HDLGenerator generation path now fails closed at the facade seam
 - Hardened
   [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)

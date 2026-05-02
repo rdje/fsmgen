@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-02: source_search_paths entry shape belongs at the facade seam
+- `source_search_paths` is a public facade constructor option, so validating
+  only the outer array reference was still too loose. Reference, undef, empty,
+  or whitespace-only entries could otherwise flow into source-path resolution
+  and be filtered or stringified away from the public constructor boundary.
+- The facade now validates both layers of the advertised shape: the option
+  value must be an array reference, and every entry must be a scalar
+  non-empty filesystem search root. Accepted roots are forwarded unchanged, so
+  real paths with spaces are still supported without canonicalization or
+  resolver behavior changes.
+- The contract wording now says `array reference of scalar non-empty
+  filesystem search roots`, and the audit checks direct contract,
+  in-process/CLI manifests, malformed entries, and caller debug-state
+  restoration on invalid construction. This is a narrow `R13` facade-boundary
+  tightening, not a source-resolution feature change.
 ## 2026-05-02: generate_hdl_from_file owns its argument shape
 - `generate_hdl_from_file($path)` is part of the public in-process facade, so
   malformed generation arguments should fail at

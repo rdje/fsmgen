@@ -188,7 +188,7 @@ sub hdl_generator_facade_constructor_option_shape_map {
         target_language => 'one of target_language_names',
         quiet => 'boolean scalar 0 or 1',
         strict_mode => 'boolean scalar 0 or 1',
-        source_search_paths => 'array reference of filesystem search roots',
+        source_search_paths => 'array reference of scalar non-empty filesystem search roots',
         extensions => 'array reference of blessed typed-extension objects',
     };
 }

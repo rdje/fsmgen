@@ -53,8 +53,7 @@ sub new ($class, %args) {
         { debug_level => $requested_debug_level },
         sub {
             fsm_trace_enter('Initialize HDLGenerator pipeline', 2);
-            my $source_search_paths = _array_ref_constructor_arg(
-                'source_search_paths',
+            my $source_search_paths = _source_search_paths_constructor_arg(
                 $args{source_search_paths},
             );
             my $target_language = _target_language_constructor_arg(
@@ -136,6 +135,16 @@ sub _array_ref_constructor_arg ($arg_name, $value) {
     return $value if ref($value) eq 'ARRAY';
 
     confess "FSM::Pipeline::HDLGenerator expects '$arg_name' to be an array reference";
+}
+sub _source_search_paths_constructor_arg ($value) {
+    my $paths = _array_ref_constructor_arg('source_search_paths', $value);
+    for my $index (0 .. $#$paths) {
+        my $path = $paths->[$index];
+        confess "FSM::Pipeline::HDLGenerator expects 'source_search_paths' entries to be scalar non-empty filesystem search roots"
+            unless defined($path) && !ref($path) && $path =~ /\S/;
+    }
+
+    return $paths;
 }
 sub _extension_objects_constructor_arg ($arg_name, $value) {
     my $extensions = _array_ref_constructor_arg($arg_name, $value);

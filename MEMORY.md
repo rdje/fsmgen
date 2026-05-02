@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-02: HDLGenerator source_search_paths entries now fail closed at the facade seam
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so public `source_search_paths` constructor values now validate both the
+  outer array-reference shape and each scalar non-empty search-root entry
+  before constructing
+  [perl/FSM/SourcePathResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/SourcePathResolver.pm).
+- Updated
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  so `constructor_option_shape_map.source_search_paths` is `array reference of
+  scalar non-empty filesystem search roots`, and updated the existing
+  list-shape audit to match that tighter wording.
+- Added
+  [t/410-hdl-generator-facade-source-search-paths-entry-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/410-hdl-generator-facade-source-search-paths-entry-shape-boundary-audit.t)
+  to prove direct contract, in-process manifest, and both CLI manifest
+  spellings advertise the entry shape; valid scalar path entries are accepted
+  unchanged; and undef/empty/whitespace/reference entries fail with targeted
+  facade diagnostics without mutating caller debug state. This is `R13`
+  facade-boundary hardening only; no source-resolution behavior, constructor
+  option, or raw-result guarantee was widened.
 ## 2026-05-02: HDLGenerator generation arguments now fail closed at the facade seam
 - Hardened
   [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
