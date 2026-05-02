@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-02: generate_hdl_from_file owns its argument shape
+- `generate_hdl_from_file($path)` is part of the public in-process facade, so
+  malformed generation arguments should fail at
+  `FSM::Pipeline::HDLGenerator` instead of reaching
+  `SourceGenerationOrchestrator` truthiness checks or `SourceFrontend` file
+  opens. Missing arguments, empty strings, references, and non-`.fsm` paths are
+  now rejected with one targeted facade diagnostic.
+- The facade contract now spells the method argument as a `scalar filesystem
+  path to a .fsm source root`. That keeps the contract and runtime behavior
+  aligned without widening supported source kinds, changing source existence
+  diagnostics for valid-shaped missing `.fsm` files, or changing the raw result
+  surface.
+- The new audit also checks caller debug-state preservation on invalid
+  generation arguments. Invalid method arguments are rejected before the
+  generation-scoped debug override runs, so embedders do not lose their
+  process-global debug/trace settings because of a bad method call.
 ## 2026-05-02: task completion requires a completed commit workflow
 - Treat the commit workflow as part of the task boundary, not as a separate
   optional cleanup step. A completed implementation, doc update, lane slice, or

@@ -63,7 +63,7 @@ sub build_hdl_generator_facade_contract {
         debug_level_numeric_range => hdl_generator_facade_debug_level_numeric_range(),
         default_target_language => 'systemverilog',
         target_language_names => hdl_generator_facade_target_language_names(),
-        generation_argument_shape => 'filesystem path to a .fsm source root',
+        generation_argument_shape => 'scalar filesystem path to a .fsm source root',
         result_contract_source => hdl_generator_result_contract_source(),
         direct_extension_contract_source => extension_contract_source(),
         debug_runtime_contract_source => debug_runtime_contract_source(),

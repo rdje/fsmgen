@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-02
+### HDLGenerator generation path now fails closed at the facade seam
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so public `generate_hdl_from_file($path)` calls validate the generation
+  source argument before
+  [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm)
+  can reinterpret missing values or stringify references.
+- Updated
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  so `generation_argument_shape` explicitly advertises a scalar filesystem
+  path to a `.fsm` source root.
+- Added
+  [t/409-hdl-generator-facade-generation-argument-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/409-hdl-generator-facade-generation-argument-shape-boundary-audit.t)
+  to prove direct contract and manifest visibility, valid `.fsm` path
+  generation, targeted rejection of omitted/undef/empty/non-`.fsm`/reference
+  values, and caller debug-state preservation on invalid generation calls. No
+  roadmap status changed.
 ### Commit workflow reaffirmed as the mandatory task boundary
 - Tightened
   [COMMIT.md](/Users/richarddje/Documents/github/fsmgen/COMMIT.md)

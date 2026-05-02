@@ -105,7 +105,7 @@ subtest 'contract exposes the bounded HDLGenerator facade seam' => sub {
     );
     is(
         $contract->{generation_argument_shape},
-        'filesystem path to a .fsm source root',
+        'scalar filesystem path to a .fsm source root',
         'contract records the bounded generation argument shape',
     );
     is(

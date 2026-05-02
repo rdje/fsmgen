@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-02: HDLGenerator generation arguments now fail closed at the facade seam
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so `generate_hdl_from_file(...)` now validates its public generation source
+  argument as a scalar `.fsm` path before delegating to
+  [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm).
+- Updated
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  so `generation_argument_shape` is `scalar filesystem path to a .fsm source
+  root`, and updated existing facade contract/reuse audits to match that
+  tightened wording.
+- Added
+  [t/409-hdl-generator-facade-generation-argument-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/409-hdl-generator-facade-generation-argument-shape-boundary-audit.t)
+  to prove direct contract, in-process manifest, and both CLI manifest
+  spellings advertise the boundary; valid `.fsm` paths still generate; and
+  omitted/undef/empty/non-`.fsm`/reference arguments fail with targeted facade
+  diagnostics without mutating caller debug state. This is `R13`
+  facade-boundary hardening only; no source kind, source-resolution behavior,
+  constructor option, or raw-result guarantee was widened.
 ## 2026-05-02: Commit workflow is the mandatory task boundary
 - Re-read
   [COMMIT.md](/Users/richarddje/Documents/github/fsmgen/COMMIT.md)
