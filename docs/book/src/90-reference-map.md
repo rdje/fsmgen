@@ -28,8 +28,14 @@ Some docs are intentionally still focused references:
 - [../../COMPOSITION_LEGACY_MAPPING.md](../../COMPOSITION_LEGACY_MAPPING.md)
 - [../../../ROADMAP_STATUS.md](../../../ROADMAP_STATUS.md)
 - [../../../ROADMAP_V2.md](../../../ROADMAP_V2.md)
+- [../../../COMMIT.md](../../../COMMIT.md)
 
 These should stay precise and sometimes narrower than the book.
+
+`COMMIT.md` is the process safety reference: every completed task, slice, lane,
+or task-scoped activity must close with that workflow before the next work
+starts, so crash recovery and agent handoff can resume from task-scoped
+commits instead of a dirty worktree.
 
 ## What The Old User Guide Still Does
 

@@ -8,14 +8,15 @@ Ignoring it is not a style issue; it is a project-safety failure.
 
 ## Non-negotiable invariant
 - If a task/activity is complete but not committed, that task is not finished.
-- Run this workflow after every completed task/activity without exception.
+- Run this workflow after every completed task, slice, lane, or task-scoped activity without exception.
 - Do not let a long `pnt` streak, apparent momentum, or "just one more small thing" override this rule.
 - Do not expect the user to remind you. The workflow must be followed automatically.
+- Do not ask for user approval before running the commit workflow after a task is complete.
 - Do not accumulate several completed slices in the worktree for a later cleanup commit.
 - If you discover that multiple tasks have been mixed together, stop new work and recover them into the smallest honest task-scoped commits before continuing.
 
 ## When to run this workflow
-- Run after each completed task/activity.
+- Run after each completed task, slice, lane, or task-scoped activity.
 - Run when the user explicitly says `commit workflow`.
 - Run before starting the next task/activity, before replying as if a slice is done, and before any context switch that could blur task boundaries.
 - Do not wait for approval for commit-workflow steps.
@@ -61,8 +62,8 @@ Ignoring it is not a style issue; it is a project-safety failure.
    - For doc-only changes: basic repo state checks are sufficient.
 4. Write `git_message_brief.txt` with:
    - concise subject line,
-   - key bullet points.
-   - Do not add attribution trailers unless the user explicitly asks for them.
+   - key body lines or bullet points,
+   - required attribution trailer for the active agent policy; Oz-authored commits must end with `Co-Authored-By: Oz <oz-agent@warp.dev>`.
 5. Stage intended tracked files (`git add ...`).
    - This and every later git write step must run sequentially.
 6. Commit using:
@@ -86,7 +87,7 @@ Ignoring it is not a style issue; it is a project-safety failure.
 - Keep commits task-scoped (only files relevant to the completed task).
 - Do not stage unrelated untracked directories (for example local sandboxes).
 - Keep behavior-preserving refactor slices small and verifiable.
-- Do not add `Co-Authored-By` or any other attribution trailer unless the user explicitly asks for it.
+- Keep attribution trailers consistent with the required message shape above; never omit a required agent attribution trailer from a task-scoped commit.
 - Prefer one completed slice per commit cycle. If a task naturally fans out into multiple independently valid slices, close each slice with this workflow before moving on.
 
 ## Git index safety

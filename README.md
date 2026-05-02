@@ -4,7 +4,8 @@ Use it first for objective, navigation, and where to find code/docs quickly.
 
 ## Session safety invariant
 - The commit workflow in `COMMIT.md` is mandatory and non-negotiable.
-- After every completed task/activity, run that workflow before starting the next slice.
+- After every completed task, slice, lane, or task-scoped activity, run that workflow before starting or switching to the next one.
+- Do not ask the user whether to run it after completion; run it automatically.
 - Do not batch several finished tasks into one later cleanup commit.
 - Run git index-mutating steps in that workflow sequentially; never overlap `git add`, `git rm`, `git mv`, or `git commit`.
 - The reason is operational, not stylistic: task-scoped commits are the project's crash-recovery mechanism for session loss, app crashes, and machine crashes.
@@ -346,4 +347,4 @@ Read SESSION_BOOTSTRAP.md and start from there.
 ```
 
 That startup ritual must still honor the session safety invariant above:
-`COMMIT.md` is mandatory, and every completed slice must be committed before the next one starts.
+`COMMIT.md` is mandatory, and every completed task, slice, or lane must be committed before the next one starts.

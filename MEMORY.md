@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-02: Commit workflow is the mandatory task boundary
+- Re-read
+  [COMMIT.md](/Users/richarddje/Documents/github/fsmgen/COMMIT.md)
+  and tightened the live operating rule: a task, slice, lane, or task-scoped
+  activity is not complete until the repository has run the documented commit
+  workflow, created the task-scoped commit with `git commit -F
+  git_message_brief.txt`, cleared `git_message_brief.txt`, and verified the
+  final repository state.
+- Mirrored the rule into
+  [README.md](/Users/richarddje/Documents/github/fsmgen/README.md),
+  [SESSION_BOOTSTRAP.md](/Users/richarddje/Documents/github/fsmgen/SESSION_BOOTSTRAP.md),
+  and the mdBook reference map so future sessions see the same crash-recovery
+  discipline before they start or switch work.
+- This is process/continuity hardening only. `R13` remains the active hardening
+  lane, and the next implementation move is still another bounded runtime or
+  negative-boundary audit around remaining embedder assumptions.
 ## 2026-05-01: HDLGenerator extensions now fail closed at the facade seam
 - Hardened
   [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)

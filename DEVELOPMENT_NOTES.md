@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-02: task completion requires a completed commit workflow
+- Treat the commit workflow as part of the task boundary, not as a separate
+  optional cleanup step. A completed implementation, doc update, lane slice, or
+  process-hardening task is still recoverability-incomplete until
+  `COMMIT.md` has been followed through the final status/log verification.
+- The reason is operational continuity. Task-scoped commits plus an empty
+  post-commit `git_message_brief.txt` are the recovery markers that let a new
+  session distinguish completed work from abandoned or crash-interrupted work
+  without reconstructing intent from a dirty worktree.
+- Future agents should not ask whether to run this workflow after a slice is
+  complete. They should update the appropriate live docs, validate to the
+  scope, stage only intended files, commit with `git commit -F
+  git_message_brief.txt`, clear the message file, verify the result, and only
+  then move to the next task.
 ## 2026-05-01: extensions element shape belongs at the facade seam
 - `extensions` is the public direct typed-extension object injection option on
   `FSM::Pipeline::HDLGenerator`, so malformed element values should fail at

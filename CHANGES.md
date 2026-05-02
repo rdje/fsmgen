@@ -1,5 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-05-02
+### Commit workflow reaffirmed as the mandatory task boundary
+- Tightened
+  [COMMIT.md](/Users/richarddje/Documents/github/fsmgen/COMMIT.md)
+  so the mandatory workflow explicitly applies after every completed task,
+  slice, lane, or task-scoped activity and must run automatically without
+  waiting for user approval.
+- Mirrored that operating invariant in
+  [README.md](/Users/richarddje/Documents/github/fsmgen/README.md),
+  [SESSION_BOOTSTRAP.md](/Users/richarddje/Documents/github/fsmgen/SESSION_BOOTSTRAP.md),
+  and the mdBook reference map at
+  [docs/book/src/90-reference-map.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/90-reference-map.md).
+- Recorded the continuity rationale in
+  [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md),
+  [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md),
+  and
+  [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md):
+  the workflow is a crash-recovery boundary, not style cleanup. No roadmap
+  lane status changed.
 ## 2026-05-01
 ### HDLGenerator extensions now fail closed at the facade seam
 - Hardened
