@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-02
+### README bootstrap import-tree recheck refreshed measured counts
+- Rebuilt the live project-owned `FSM::...` transitive import closure reachable
+  from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) as
+  part of executing the README / `SESSION_BOOTSTRAP.md` startup path.
+- Confirmed the static closure still reaches `180` project files total and
+  `179` `.pm` packages with no missing project modules; direct CLI imports are
+  unchanged.
+- Updated
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+  to refresh the review date and the measured line counts for
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  and
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm).
+  Validation included the README quick-start generation commands, mdBook build
+  and serve startup, `--verify-hdl` with Verilator/Yosys passing, and the full
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate passing. No roadmap status changed.
 ### HDLGenerator source_search_paths entries now fail closed at the facade seam
 - Hardened
   [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)

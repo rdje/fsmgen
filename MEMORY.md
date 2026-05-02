@@ -1,6 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
 ## 2026-05-02: HDLGenerator source_search_paths entries now fail closed at the facade seam
+- Executed the README / `SESSION_BOOTSTRAP.md` startup path far enough to
+  rebuild the live project-owned `FSM::...` transitive import closure reachable
+  from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen).
+- The closure still measures `180` project files total, `179` `.pm` packages,
+  and no missing project modules; direct CLI imports are unchanged.
+- Updated
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+  because the saved review date and measured line counts for
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  and
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  had drifted after the latest `R13` facade-boundary hardening. This is
+  documentation-truth maintenance only; roadmap lane status is unchanged.
+## 2026-05-02: HDLGenerator source_search_paths entries now fail closed at the facade seam
 - Hardened
   [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
   so public `source_search_paths` constructor values now validate both the

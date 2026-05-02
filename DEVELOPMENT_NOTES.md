@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-02: README bootstrap import-tree refresh is measured-snapshot maintenance
+- The README / `SESSION_BOOTSTRAP.md` startup path should compare both import
+  topology and measured snapshot fields in
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md).
+  In this pass, topology was stable at `180` project files and `179` `.pm`
+  packages with no missing project modules, but measured line counts for
+  `HDLGenerator.pm` and `HDLGeneratorFacadeContract.pm` had drifted after the
+  latest public-facade validation hardening.
+- Updating only the review date and those measured counts keeps the architecture
+  note honest without inventing a roadmap status transition. The active lane
+  remains `R13` facade/API stabilization, and the next implementation move is
+  still another bounded runtime or negative-boundary audit around remaining
+  embedder assumptions.
+- The validation pattern for this maintenance slice was intentionally broad
+  because the README was being executed as the session entrypoint: quick-start
+  generation, explicit `/tmp` output generation, debug generation, external
+  HDL validation, mdBook build/serve startup, and the full local regression
+  gate all ran successfully.
 ## 2026-05-02: source_search_paths entry shape belongs at the facade seam
 - `source_search_paths` is a public facade constructor option, so validating
   only the outer array reference was still too loose. Reference, undef, empty,

@@ -11,7 +11,7 @@ Use it to keep one current, high-signal picture of:
 Refresh this document at the start of a later session whenever the effective entrypoint/import-tree architecture has moved enough that this note is no longer honest.
 
 Current baseline:
-- Reviewed on `2026-05-01`.
+- Reviewed on `2026-05-02`.
 - Scope is the project-owned transitive `FSM::...` tree reachable from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen).
 - Perl core and non-project helper modules are treated as support dependencies, not as part of the architectural map.
 - Static trace from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) currently reaches `180` project files total, `179` `.pm` packages.
@@ -223,7 +223,7 @@ Reachable package-family counts from [bin/fsmgen](/Users/richarddje/Documents/gi
 - singleton support surfaces: `CoreAST.pm`, `Debug.pm`, `ExpressionNamer.pm`, `ParameterValueSupport.pm`, `SourceClassifier.pm`, `SourcePathResolver.pm`
 
 Current thin-coordinator / public-surface assembler line counts:
-- [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm): `177`
+- [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm): `252`
 - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm): `174`
 - [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm): `110`
 - [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm): `164`
@@ -239,7 +239,7 @@ Current thin-coordinator / public-surface assembler line counts:
 - [perl/FSM/Support/LanguageSurfaceSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/LanguageSurfaceSection.pm): `88`
 - [perl/FSM/Support/DocumentationSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DocumentationSection.pm): `28`
 - [perl/FSM/Support/DebugRuntimeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DebugRuntimeContract.pm): `177`
-- [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm): `162`
+- [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm): `199`
 - [perl/FSM/Support/CheckDiagnostics.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnostics.pm): `253`
 - [perl/FSM/Support/NormalizedSemanticReport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReport.pm): `362`
 
