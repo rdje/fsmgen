@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-01
+### HDLGenerator extensions now fail closed at the facade seam
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so public `extensions` constructor values must be array references whose
+  entries are blessed typed-extension objects before registry setup can accept
+  them.
+- Kept
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  aligned with the live boundary: `constructor_option_shape_map` already
+  advertises `extensions` as `array reference of blessed typed-extension
+  objects`, and the direct extension option remains public without making
+  owner-injection args public.
+- Added
+  [t/408-hdl-generator-facade-extensions-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/408-hdl-generator-facade-extensions-shape-boundary-audit.t)
+  to prove contract/manifest visibility, omitted-value defaulting, blessed
+  object acceptance, and targeted rejection of scalar, hashref, and unblessed
+  element values before registry or raw Perl diagnostics can leak. No roadmap
+  status changed.
 ### HDLGenerator quiet now fails closed at the facade seam
 - Hardened
   [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)

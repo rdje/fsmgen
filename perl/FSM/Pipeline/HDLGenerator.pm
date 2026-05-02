@@ -10,6 +10,7 @@ no warnings 'experimental::signatures';
 use Carp qw(confess);
 use FindBin;
 use lib "$FindBin::Bin";
+use Scalar::Util qw(blessed);
 use FSM::Debug;
 use FSM::Composition::RTLInterfaceLoader;
 use FSM::Extension::Loader;
@@ -83,7 +84,7 @@ sub new ($class, %args) {
                     'extension_modules',
                     $args{extension_modules},
                 );
-                my $direct_extensions = _array_ref_constructor_arg(
+                my $direct_extensions = _extension_objects_constructor_arg(
                     'extensions',
                     $args{extensions},
                 );
@@ -135,6 +136,15 @@ sub _array_ref_constructor_arg ($arg_name, $value) {
     return $value if ref($value) eq 'ARRAY';
 
     confess "FSM::Pipeline::HDLGenerator expects '$arg_name' to be an array reference";
+}
+sub _extension_objects_constructor_arg ($arg_name, $value) {
+    my $extensions = _array_ref_constructor_arg($arg_name, $value);
+    for my $extension (@$extensions) {
+        confess "FSM::Pipeline::HDLGenerator accepts only blessed extension objects in '$arg_name'"
+            unless blessed($extension);
+    }
+
+    return $extensions;
 }
 sub _boolean_constructor_arg ($arg_name, $value) {
     return 0 unless defined $value;

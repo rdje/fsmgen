@@ -1,5 +1,27 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-01: HDLGenerator extensions now fail closed at the facade seam
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so public direct `extensions` constructor values are validated as array
+  references whose elements are blessed objects before
+  [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)
+  is constructed.
+- Left
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  semantically unchanged because it already advertised the intended
+  `extensions` shape as `array reference of blessed typed-extension objects`
+  and kept the option in the direct-extension constructor family.
+- Added
+  [t/408-hdl-generator-facade-extensions-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/408-hdl-generator-facade-extensions-shape-boundary-audit.t)
+  to prove the direct facade contract, in-process manifest, and both CLI
+  manifest spellings expose the blessed-object list shape; omitted
+  `extensions` defaults to an empty registry list; blessed objects are accepted
+  without rewriting; and scalar/hashref/unblessed-element inputs fail with
+  targeted `FSM::Pipeline::HDLGenerator` diagnostics before registry or raw
+  Perl diagnostics can leak. This is `R13` facade-boundary hardening only; no
+  hook family, constructor option, module/config loading path, or raw-result
+  guarantee was widened.
 ## 2026-05-01: HDLGenerator quiet now fails closed at the facade seam
 - Hardened
   [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)

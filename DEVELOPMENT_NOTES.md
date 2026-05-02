@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-01: extensions element shape belongs at the facade seam
+- `extensions` is the public direct typed-extension object injection option on
+  `FSM::Pipeline::HDLGenerator`, so malformed element values should fail at
+  `new(...)` instead of depending on `FSM::Extension::Registry` to reject them
+  during lower-level registry construction.
+- The facade now validates both layers of the advertised shape: the value must
+  be an array reference, and each element must be a blessed object. This keeps
+  diagnostics anchored to the public constructor boundary while preserving the
+  registry's own defensive validation for direct lower-level use.
+- The contract already advertised `extensions` as `array reference of blessed
+  typed-extension objects`; the new audit makes that shape executable across
+  direct contract, in-process manifest, both CLI manifest spellings, and live
+  construction without widening hook dispatch, module/config loading, or
+  owner-injection visibility.
 ## 2026-05-01: quiet should fail before compatibility state stores truthiness
 - `quiet` is a public facade constructor option even though the in-process
   facade itself remains presentation-silent. Malformed values should therefore
