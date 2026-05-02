@@ -63,6 +63,7 @@ sub build_hdl_generator_facade_contract {
         debug_level_numeric_range => hdl_generator_facade_debug_level_numeric_range(),
         default_target_language => 'systemverilog',
         target_language_names => hdl_generator_facade_target_language_names(),
+        generation_receiver_shape => 'blessed FSM::Pipeline::HDLGenerator object',
         generation_argument_shape => 'scalar filesystem path to a .fsm source root',
         result_contract_source => hdl_generator_result_contract_source(),
         direct_extension_contract_source => extension_contract_source(),
@@ -76,6 +77,7 @@ sub build_hdl_generator_facade_contract {
             'Use constructor_option_shape_map for the bounded shape contract of each public constructor option.',
             'Use debug_level_numeric_range for the accepted facade constructor debug_level range.',
             'Use target_language_names for the accepted lower-case target-language tokens at the facade constructor boundary.',
+            'Use generation_receiver_shape and generation_argument_shape for the bounded generate_hdl_from_file(...) method boundary.',
             'Follow result_contract_source for the returned compatibility-heavy result hash, direct_extension_contract_source for typed extension loading and hook semantics, and debug_runtime_contract_source for the explicit process-global debug save/restore seam.',
             'The current bounded constructor surface covers the core runtime generation options, compatibility presentation state such as quiet, plus direct extension-object injection and supports stateful pipeline reuse across multiple generation calls.',
             'The quiet option is accepted by the in-process facade for constructor/API compatibility, but CLI presentation output remains owned by bin/fsmgen rather than by generate_hdl_from_file(...).',
@@ -103,6 +105,7 @@ sub hdl_generator_facade_public_top_level_keys {
             debug_level_numeric_range
             default_target_language
             target_language_names
+            generation_receiver_shape
             generation_argument_shape
             result_contract_source
             direct_extension_contract_source

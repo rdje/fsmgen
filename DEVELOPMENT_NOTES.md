@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-02: generate_hdl_from_file owns its receiver shape too
+- `generate_hdl_from_file($path)` already validated its source-path argument,
+  but the method still assumed its receiver was a real facade object. A class
+  or string invocant could leak a raw Perl `Can't use string as a HASH ref`
+  diagnostic, while undef/hashref invocants could get far enough to surface
+  source-file diagnostics from lower layers.
+- The facade now validates the invocant before reading `$self->{debug_level}`,
+  before applying the scoped debug override, and before source orchestration.
+  The published method boundary is therefore two-part: a blessed
+  `FSM::Pipeline::HDLGenerator` object receiver plus a scalar `.fsm` source
+  path argument. This keeps method misuse anchored to the public facade seam
+  without changing valid object calls, source lookup behavior, or result shape.
+- The new audit intentionally exercises class method misuse, direct function
+  calls with malformed receivers, an unrelated blessed object, valid generation,
+  manifest visibility, and debug-state preservation. This is a narrow `R13`
+  negative-boundary slice, not a new embedding feature or a promise that
+  non-public owner-injection arguments are supported.
 ## 2026-05-02: programmatic extension entries need entry-level shape checks
 - `extension_modules` and `extension_config_files` already had outer list-shape
   validation, but their individual entries could still reach loader internals

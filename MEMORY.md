@@ -1,5 +1,33 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-02: HDLGenerator generation receiver now fails closed at the facade seam
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so public `generate_hdl_from_file(...)` calls first validate the method
+  invocant as a blessed `FSM::Pipeline::HDLGenerator` object before reading
+  facade debug state or delegating to
+  [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm).
+- Updated
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  so `generation_receiver_shape` is now advertised as `blessed
+  FSM::Pipeline::HDLGenerator object`, and updated
+  [t/375-hdl-generator-facade-contract.t](/Users/richarddje/Documents/github/fsmgen/t/375-hdl-generator-facade-contract.t)
+  to lock that field directly.
+- Added
+  [t/412-hdl-generator-facade-generation-receiver-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/412-hdl-generator-facade-generation-receiver-shape-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  valid object generation, and rejection of class/string/undef/hashref/arrayref
+  and unrelated blessed-object receivers with a targeted facade diagnostic
+  before raw Perl hashref errors or source-orchestration/file diagnostics can
+  leak. This is `R13` facade-boundary hardening only; no constructor option,
+  method, source kind, owner-injection argument, or raw-result guarantee was
+  widened.
+- Validation passed with the focused facade/manifest slice
+  (`t/375`, `t/409`, `t/412`, `t/321`, and `t/358`), the broader
+  HDLGenerator facade audit cluster (`t/377`, `t/385`..`t/389`, `t/399`, and
+  `t/403`..`t/410` plus `t/412`), and the full repo-owned
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`408` files, `3720` tests, plus mdBook build).
 ## 2026-05-02: Typed-extension programmatic entries now fail closed before stringification
 - Hardened
   [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm)

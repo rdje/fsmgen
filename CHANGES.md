@@ -1,6 +1,29 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-02
+### HDLGenerator generation receiver now fails closed at the facade seam
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so `generate_hdl_from_file(...)` validates its public method receiver before
+  reading facade state or delegating to
+  [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm):
+  the invocant must be a blessed `FSM::Pipeline::HDLGenerator` object.
+- Updated
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  to advertise `generation_receiver_shape => 'blessed
+  FSM::Pipeline::HDLGenerator object'`, and updated
+  [t/375-hdl-generator-facade-contract.t](/Users/richarddje/Documents/github/fsmgen/t/375-hdl-generator-facade-contract.t)
+  to lock the new contract field directly.
+- Added
+  [t/412-hdl-generator-facade-generation-receiver-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/412-hdl-generator-facade-generation-receiver-shape-boundary-audit.t)
+  to prove direct contract and manifest visibility, valid object generation,
+  targeted rejection of class/string/undef/hashref/arrayref/unrelated blessed
+  invocants, and caller debug-state preservation. No roadmap status changed.
+- Validation passed with the focused facade/manifest tests (`5` files, `19`
+  tests), the broader HDLGenerator facade audit cluster (`16` files, `54`
+  tests), and the full
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`408` files, `3720` tests, plus mdBook build).
 ### Typed-extension programmatic entries now fail closed before stringification
 - Hardened
   [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm)
