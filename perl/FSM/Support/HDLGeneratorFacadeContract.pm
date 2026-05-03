@@ -76,12 +76,14 @@ sub build_hdl_generator_facade_contract {
         stateful_reuse_supported => JSON::PP::true,
         result_surface_json_safe_as_a_whole => JSON::PP::false,
         object_injection_args_public => JSON::PP::false,
+        object_injection_arg_policy => 'non-public owner-injection values fail closed when present and must be blessed objects providing required owner methods',
         guidance => [
             'Treat this contract as the bounded public in-process facade around FSM::Pipeline::HDLGenerator constructor and generate_hdl_from_file(...) entrypoints.',
             'Use the grouped constructor_option_family_map to discover the bounded public constructor option families without scraping POD or freezing every currently accepted owner-injection argument.',
             'Use constructor_receiver_shape, constructor_argument_list_shape, and constructor_option_shape_map for the bounded shape contract of the public constructor boundary.',
             'Constructor arguments after the class invocant are validated as option/value pairs with scalar non-empty option names before Perl hash coercion can reinterpret malformed input.',
             'Unsupported constructor option names are rejected before facade debug-state setup rather than being silently ignored.',
+            'Owner-injection constructor options remain non-public; if internal callers supply them, malformed values are rejected before facade state is constructed or lower-level owner methods are invoked.',
             'Use debug_level_numeric_range for the accepted facade constructor debug_level range.',
             'Use target_language_names for the accepted lower-case target-language tokens at the facade constructor boundary.',
             'Use generation_receiver_shape, generation_argument_list_shape, and generation_argument_shape for the bounded generate_hdl_from_file(...) method boundary.',
@@ -127,6 +129,7 @@ sub hdl_generator_facade_public_top_level_keys {
             stateful_reuse_supported
             result_surface_json_safe_as_a_whole
             object_injection_args_public
+            object_injection_arg_policy
             guidance
         ),
     ];

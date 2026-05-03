@@ -1,6 +1,34 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-03
+### HDLGenerator non-public owner-injection values now fail closed at construction
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so non-public owner-injection constructor values are validated when supplied
+  instead of leaking raw owner method-call diagnostics or creating invalid
+  facade state for later method-entry rejection.
+- The constructor now accepts only blessed injection objects with the required
+  owner method surface for `source_path_resolver`, `extension_loader`,
+  `extension_registry`, and `rtl_interface_loader`; valid internal fakes remain
+  accepted, while malformed scalars, unblessed references, methodless objects,
+  and fake-`can` objects fail with a targeted facade diagnostic.
+- Updated
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  to add `object_injection_arg_policy` while keeping
+  `object_injection_args_public => false`, and updated
+  [t/375-hdl-generator-facade-contract.t](/Users/richarddje/Documents/github/fsmgen/t/375-hdl-generator-facade-contract.t)
+  to lock the policy directly.
+- Added
+  [t/418-hdl-generator-facade-owner-injection-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/418-hdl-generator-facade-owner-injection-boundary-audit.t)
+  to prove direct contract and manifest visibility, hidden owner-injection
+  names, valid internal injections, malformed injection rejection before lower
+  layers or raw Perl diagnostics leak, fake-`can` rejection, and caller
+  debug-state preservation. No roadmap status changed.
+- Validation passed with focused facade tests (`2` files, `5` tests), the
+  adjacent HDLGenerator facade boundary cluster (`11` files, `45` tests), and
+  the full
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`414` files, `3748` tests, plus mdBook build).
 ### HDLGenerator generation receivers now require constructed facade state
 - Hardened
   [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)

@@ -70,14 +70,26 @@ sub new ($class, @constructor_args) {
                 'quiet',
                 $args{quiet},
             );
-            my $source_path_resolver = $args{source_path_resolver}
-                // FSM::SourcePathResolver->new(
-                    extra_search_paths => $source_search_paths,
-                );
-            my $extension_loader = $args{extension_loader}
-                // FSM::Extension::Loader->new();
-            my $extension_registry = $args{extension_registry};
-            unless ($extension_registry) {
+            my $source_path_resolver = _object_injection_constructor_arg(
+                'source_path_resolver',
+                $args{source_path_resolver},
+                qw(normalized_search_paths),
+            );
+            $source_path_resolver //= FSM::SourcePathResolver->new(
+                extra_search_paths => $source_search_paths,
+            );
+            my $extension_loader = _object_injection_constructor_arg(
+                'extension_loader',
+                $args{extension_loader},
+                qw(module_names_from_config_files load_modules),
+            );
+            $extension_loader //= FSM::Extension::Loader->new();
+            my $extension_registry = _object_injection_constructor_arg(
+                'extension_registry',
+                $args{extension_registry},
+                qw(after_parse_source after_generate_result),
+            );
+            unless (defined $extension_registry) {
                 my $extension_config_files = _array_ref_constructor_arg(
                     'extension_config_files',
                     $args{extension_config_files},
@@ -108,6 +120,15 @@ sub new ($class, @constructor_args) {
                     extensions => \@extensions,
                 );
             }
+            my $rtl_interface_loader = _object_injection_constructor_arg(
+                'rtl_interface_loader',
+                $args{rtl_interface_loader},
+                qw(load_interface),
+            );
+            $rtl_interface_loader //= FSM::Composition::RTLInterfaceLoader->new(
+                debug => $requested_debug_level > 0,
+                path_resolver => $source_path_resolver,
+            );
             my $self = bless {
                 __fsmgen_hdl_generator_facade_instance => 1,
                 debug_level => $requested_debug_level,
@@ -115,11 +136,7 @@ sub new ($class, @constructor_args) {
                 quiet => $quiet,
                 strict_mode => $strict_mode,
                 source_path_resolver => $source_path_resolver,
-                rtl_interface_loader => $args{rtl_interface_loader}
-                    // FSM::Composition::RTLInterfaceLoader->new(
-                        debug => $requested_debug_level > 0,
-                        path_resolver => $source_path_resolver,
-                    ),
+                rtl_interface_loader => $rtl_interface_loader,
                 extension_loader => $extension_loader,
                 extension_registry => $extension_registry,
             }, $constructor_class;
@@ -203,6 +220,13 @@ sub _extension_objects_constructor_arg ($arg_name, $value) {
     }
 
     return $extensions;
+}
+sub _object_injection_constructor_arg ($arg_name, $value, @methods) {
+    return undef unless defined $value;
+    die "FSM::Pipeline::HDLGenerator expects non-public owner-injection constructor option '$arg_name' to be a blessed object providing required owner methods\n"
+        unless _blessed_object_with_methods($value, @methods);
+
+    return $value;
 }
 sub _boolean_constructor_arg ($arg_name, $value) {
     return 0 unless defined $value;

@@ -1,5 +1,28 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-03: non-public owner injection still needs a constructor boundary
+- The facade contract deliberately keeps owner-injection constructor options
+  non-public, but the runtime still accepts them for internal wiring and tests.
+  Before this slice, a malformed `extension_loader` could leak a raw `Can't
+  locate object method` diagnostic during construction, while malformed
+  `source_path_resolver`, `extension_registry`, or `rtl_interface_loader`
+  values could be stored into the facade and fail only later at method entry.
+- The constructor now validates defined owner-injection values at the point they
+  enter facade state. The rule is intentionally generic rather than a public
+  per-option shape map: internal injections must be blessed objects that expose
+  the required owner methods, and they are still absent from public constructor
+  option lists and family maps.
+- Method lookup uses `UNIVERSAL::can(...)` so objects cannot fake the required
+  method surface with an overridden `can(...)`. The error path uses a direct
+  facade-owned diagnostic for this helper so a malicious `can(...)` override
+  cannot interfere with `Carp::confess` while the boundary error is being
+  reported.
+- This is a fail-closed internal seam, not public API widening. Valid internal
+  resolver/loader/registry fakes still work, extension module/config loading
+  behavior is unchanged, and generated HDL/result surfaces are unchanged. The
+  new contract field is a policy statement paired with
+  `object_injection_args_public => false`, not a promise that embedders should
+  supply those hidden constructor keys.
 ## 2026-05-03: generation receiver instance state comes before orchestration
 - The earlier `generate_hdl_from_file(...)` receiver boundary rejected obvious
   non-objects and unrelated blessed objects, but it still accepted any object

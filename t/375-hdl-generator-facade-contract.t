@@ -162,6 +162,11 @@ subtest 'contract exposes the bounded HDLGenerator facade seam' => sub {
         !$contract->{object_injection_args_public},
         'contract does not claim the current owner-injection constructor args are public',
     );
+    is(
+        $contract->{object_injection_arg_policy},
+        'non-public owner-injection values fail closed when present and must be blessed objects providing required owner methods',
+        'contract records the bounded non-public owner-injection value policy',
+    );
 };
 
 done_testing();

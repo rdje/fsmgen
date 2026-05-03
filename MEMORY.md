@@ -1,5 +1,37 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-03: HDLGenerator non-public owner-injection values now fail closed at construction
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so the still-accepted but non-public owner-injection constructor options
+  `source_path_resolver`, `extension_loader`, `extension_registry`, and
+  `rtl_interface_loader` are validated when present before facade state is
+  built or lower-level owner methods can run.
+- Defined owner-injection values must now be blessed objects with the required
+  owner method surface, checked with `UNIVERSAL::can(...)` rather than a
+  package-provided `can(...)`; malformed scalars, unblessed references,
+  methodless objects, and fake-`can` objects fail with one facade-owned
+  diagnostic. Valid internal injection objects are still accepted and stored
+  unchanged, preserving the internal test seam without making it public.
+- Updated
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  so `object_injection_arg_policy` advertises that non-public
+  owner-injection values fail closed when supplied while
+  `object_injection_args_public` remains false, and updated
+  [t/375-hdl-generator-facade-contract.t](/Users/richarddje/Documents/github/fsmgen/t/375-hdl-generator-facade-contract.t)
+  to lock that policy field directly.
+- Added
+  [t/418-hdl-generator-facade-owner-injection-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/418-hdl-generator-facade-owner-injection-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  hidden owner-injection names, valid internal injections, malformed injection
+  rejection before raw method-call/lower-layer diagnostics leak, fake-`can`
+  rejection, and caller debug-state preservation.
+- Validation passed with focused facade tests (`2` files, `5` tests), the
+  adjacent HDLGenerator facade boundary cluster (`11` files, `45` tests), and
+  the full repo-owned
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`414` files, `3748` tests, plus mdBook build). Roadmap lane status is
+  unchanged.
 ## 2026-05-03: HDLGenerator generation receivers now require constructed facade state
 - Hardened
   [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
