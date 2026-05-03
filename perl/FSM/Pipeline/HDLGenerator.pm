@@ -47,8 +47,10 @@ explicit frontend, orchestrator, builder, and backend-owner packages.
 
 sub new ($class, %args) {
     my $constructor_class = _constructor_receiver_arg($class);
+    _constructor_arg_names(%args);
+    my $legacy_debug_level = _legacy_debug_constructor_arg($args{debug});
     my $requested_debug_level = _debug_level_constructor_arg(
-        $args{debug_level},
+        exists $args{debug_level} ? $args{debug_level} : $legacy_debug_level,
     );
     return with_fsm_debug_state(
         { debug_level => $requested_debug_level },
@@ -136,6 +138,29 @@ sub _constructor_receiver_arg ($value) {
 
     return $value;
 }
+sub _constructor_arg_names (%args) {
+    my %supported = map { $_ => 1 } qw(
+        debug_level
+        target_language
+        quiet
+        strict_mode
+        source_search_paths
+        extensions
+        debug
+        source_path_resolver
+        extension_loader
+        extension_registry
+        rtl_interface_loader
+        extension_config_files
+        extension_modules
+    );
+    my @unsupported = sort grep { !$supported{$_} } keys %args;
+    confess "FSM::Pipeline::HDLGenerator does not accept unsupported constructor option(s): "
+        . join(', ', @unsupported)
+        if @unsupported;
+
+    return;
+}
 
 sub _array_ref_constructor_arg ($arg_name, $value) {
     return [] unless defined $value;
@@ -183,6 +208,10 @@ sub _debug_level_constructor_arg ($value) {
         if $debug_level < 0 || $debug_level > 4;
 
     return $debug_level;
+}
+sub _legacy_debug_constructor_arg ($value) {
+    return undef unless defined $value;
+    return _boolean_constructor_arg('debug', $value) ? 1 : 0;
 }
 sub _target_language_constructor_arg ($value) {
     return 'systemverilog' unless defined $value;

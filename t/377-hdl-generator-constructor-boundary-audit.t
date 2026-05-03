@@ -38,11 +38,15 @@ my @non_public_extension_loading_args = qw(
     extension_config_files
     extension_modules
 );
+my @non_public_legacy_compatibility_args = qw(
+    debug
+);
 
 my @classified_constructor_args = (
     @public_facade_args,
     @non_public_owner_injection_args,
     @non_public_extension_loading_args,
+    @non_public_legacy_compatibility_args,
 );
 
 subtest 'HDLGenerator constructor args stay deliberately classified' => sub {
@@ -63,6 +67,9 @@ subtest 'HDLGenerator constructor args stay deliberately classified' => sub {
     }
     for my $arg (@non_public_extension_loading_args) {
         ok($accepted{$arg}, "source still accepts non-public extension-loading arg $arg");
+    }
+    for my $arg (@non_public_legacy_compatibility_args) {
+        ok($accepted{$arg}, "source still accepts non-public legacy compatibility arg $arg");
     }
 };
 
@@ -92,6 +99,11 @@ subtest 'facade contract keeps owner-injection args out of the public constructo
         $contract,
         \@non_public_extension_loading_args,
         'module/config extension-loading args',
+    );
+    assert_non_public_args_absent_from_facade_contract(
+        $contract,
+        \@non_public_legacy_compatibility_args,
+        'legacy compatibility args',
     );
 };
 
@@ -133,6 +145,11 @@ subtest 'live manifest keeps the same constructor boundary' => sub {
             $facade,
             \@non_public_extension_loading_args,
             "$label module/config extension-loading args",
+        );
+        assert_non_public_args_absent_from_facade_contract(
+            $facade,
+            \@non_public_legacy_compatibility_args,
+            "$label legacy compatibility args",
         );
     }
 };

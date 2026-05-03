@@ -114,6 +114,11 @@ subtest 'contract exposes the bounded HDLGenerator facade seam' => sub {
         'contract records the bounded constructor receiver shape',
     );
     is(
+        $contract->{constructor_unknown_option_policy},
+        'reject unsupported constructor option names before debug-state setup',
+        'contract records the bounded constructor unknown-option policy',
+    );
+    is(
         $contract->{generation_receiver_shape},
         'blessed FSM::Pipeline::HDLGenerator object',
         'contract records the bounded generation receiver shape',

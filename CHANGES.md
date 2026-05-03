@@ -1,6 +1,33 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-02
+### HDLGenerator constructor option names now fail closed
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so `new(%args)` rejects unsupported constructor option names before
+  debug-state setup or lower-level constructor behavior can run.
+- Preserved the existing internal compatibility surface by keeping non-public
+  owner-injection and extension-loading names accepted and by treating the
+  legacy `debug` key as a non-public boolean compatibility alias for the
+  public `debug_level` path when no explicit `debug_level` is supplied.
+- Updated
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  to advertise `constructor_unknown_option_policy => 'reject unsupported
+  constructor option names before debug-state setup'`, and updated
+  [t/375-hdl-generator-facade-contract.t](/Users/richarddje/Documents/github/fsmgen/t/375-hdl-generator-facade-contract.t)
+  to lock the field directly.
+- Updated
+  [t/377-hdl-generator-constructor-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/377-hdl-generator-constructor-boundary-audit.t)
+  and added
+  [t/414-hdl-generator-facade-constructor-option-name-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/414-hdl-generator-facade-constructor-option-name-boundary-audit.t)
+  to prove the direct contract, manifests, valid public/non-public known-name
+  handling, targeted unknown-name diagnostics, and debug-state preservation.
+  No roadmap status changed.
+- Validation passed with focused facade/constructor tests (`3` files, `9`
+  tests), the nearby HDLGenerator facade audit cluster (`14` files, `49`
+  tests), and the full
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`410` files, `3729` tests, plus mdBook build).
 ### HDLGenerator constructor receiver now fails closed at the facade seam
 - Hardened
   [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)

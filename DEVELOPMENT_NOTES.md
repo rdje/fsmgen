@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-02: constructor option names are part of the facade boundary
+- After receiver and value-shape validation, the remaining constructor gap was
+  name-level drift: `%args` would silently ignore unsupported option names.
+  That is unsafe for embedders because a typo such as `target_lang` can look
+  accepted while the facade falls back to defaults.
+- `FSM::Pipeline::HDLGenerator->new(%args)` now validates constructor option
+  names before debug-state setup and before lower-level constructor behavior.
+  The public contract advertises that policy without adding any new public
+  constructor option family.
+- One compatibility wrinkle is intentional: many legacy internal tests pass
+  `debug => 0`. That key remains accepted as a non-public compatibility key,
+  is kept out of `embedding.hdl_generator_facade` public constructor lists, and
+  maps to a boolean debug level only when `debug_level` is omitted. Prefer the
+  public `debug_level` constructor option for embedder-facing code.
+- The focused audit verifies direct contract and manifest visibility, accepted
+  public names, accepted known non-public names, unsupported-name diagnostics,
+  ordering before known option-shape validation, and debug-state preservation.
+  This is a narrow `R13` fail-closed slice; it does not make owner-injection or
+  legacy `debug` public.
 ## 2026-05-02: HDLGenerator constructor ownership starts at the receiver
 - `FSM::Pipeline::HDLGenerator->new(%args)` is the public in-process
   constructor seam, but direct function-style calls could previously pass an

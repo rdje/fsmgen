@@ -1,5 +1,34 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-02: HDLGenerator constructor option names now fail closed
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so `new(%args)` rejects unsupported constructor option names before
+  debug-state scoping, option-shape validation, owner setup, or generation
+  plumbing can reinterpret typos. Supported names now include the bounded
+  public facade options, the existing non-public owner/extension-loading keys,
+  and the legacy non-public `debug` compatibility key used by older internal
+  tests.
+- Updated
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  so `constructor_unknown_option_policy` advertises `reject unsupported
+  constructor option names before debug-state setup`, and updated
+  [t/375-hdl-generator-facade-contract.t](/Users/richarddje/Documents/github/fsmgen/t/375-hdl-generator-facade-contract.t)
+  to lock that contract field directly.
+- Updated
+  [t/377-hdl-generator-constructor-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/377-hdl-generator-constructor-boundary-audit.t)
+  to classify `debug` as a non-public legacy compatibility constructor key, and
+  added
+  [t/414-hdl-generator-facade-constructor-option-name-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/414-hdl-generator-facade-constructor-option-name-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  valid public construction, known non-public constructor names, typo/multiple
+  unknown-name rejection, ordering before shape validation, and caller
+  debug-state preservation.
+- Validation passed with focused facade/constructor tests (`3` files, `9`
+  tests), the nearby HDLGenerator facade audit cluster (`14` files, `49`
+  tests), and the full repo-owned
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`410` files, `3729` tests, plus mdBook build).
 ## 2026-05-02: HDLGenerator constructor receiver now fails closed at the facade seam
 - Hardened
   [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
