@@ -109,6 +109,11 @@ subtest 'contract exposes the bounded HDLGenerator facade seam' => sub {
         'contract records the bounded generation argument shape',
     );
     is(
+        $contract->{generation_argument_list_shape},
+        'exactly one source-path argument after object invocant',
+        'contract records the bounded generation argument-list shape',
+    );
+    is(
         $contract->{constructor_receiver_shape},
         'scalar FSM::Pipeline::HDLGenerator class name',
         'contract records the bounded constructor receiver shape',

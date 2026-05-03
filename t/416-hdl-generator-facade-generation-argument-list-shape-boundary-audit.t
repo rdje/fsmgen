@@ -31,9 +31,11 @@ END {
         if $INITIAL_DEBUG_STATE;
 }
 
-my $generation_argument_shape = 'scalar filesystem path to a .fsm source root';
+my $generation_argument_list_shape = 'exactly one source-path argument after object invocant';
+my $generation_argument_list_error = qr/FSM::Pipeline::HDLGenerator expects generate_hdl_from_file\(\.\.\.\) arguments after the object invocant to contain exactly one source-path argument/s;
+my $generation_argument_shape_error = qr/FSM::Pipeline::HDLGenerator expects generate_hdl_from_file\(\.\.\.\) argument to be a scalar filesystem path to a \.fsm source root/s;
 
-subtest 'manifests advertise the facade generation path argument shape' => sub {
+subtest 'manifests advertise the facade generation argument-list shape' => sub {
     my @views = (
         {
             label => 'direct facade contract',
@@ -60,9 +62,14 @@ subtest 'manifests advertise the facade generation path argument shape' => sub {
         my $label = $view->{label};
 
         is(
+            $facade->{generation_argument_list_shape},
+            $generation_argument_list_shape,
+            "$label advertises exact generation argument-list cardinality",
+        );
+        is(
             $facade->{generation_argument_shape},
-            $generation_argument_shape,
-            "$label advertises the scalar .fsm generation argument boundary",
+            'scalar filesystem path to a .fsm source root',
+            "$label still advertises the scalar .fsm source-path value shape",
         );
         ok(
             contains_value($facade->{method_names}, 'generate_hdl_from_file'),
@@ -76,7 +83,7 @@ subtest 'manifests advertise the facade generation path argument shape' => sub {
     }
 };
 
-subtest 'HDLGenerator accepts scalar .fsm source paths for generation' => sub {
+subtest 'HDLGenerator accepts exactly one generation source-path argument' => sub {
     my $fixture = make_direct_source_fixture();
     my $pipeline = FSM::Pipeline::HDLGenerator->new(
         debug_level => 0,
@@ -90,16 +97,17 @@ subtest 'HDLGenerator accepts scalar .fsm source paths for generation' => sub {
     };
     my $error = $@;
 
-    ok($result, 'facade accepts a scalar .fsm source path')
+    ok($result, 'facade accepts exactly one .fsm source-path argument')
         or diag($error);
     is(
         $result->{module_info}{module_name},
-        'facade_generation_argument_smoke',
-        'accepted .fsm source path still reaches generation',
+        'facade_generation_argument_list_smoke',
+        'accepted argument list still reaches generation',
     ) if $result;
 };
 
-subtest 'HDLGenerator rejects malformed generation arguments at the facade boundary' => sub {
+subtest 'HDLGenerator rejects missing or extra generation arguments at the facade boundary' => sub {
+    my $fixture = make_direct_source_fixture();
     my $pipeline = FSM::Pipeline::HDLGenerator->new(
         debug_level => 0,
         target_language => 'systemverilog',
@@ -109,51 +117,53 @@ subtest 'HDLGenerator rejects malformed generation arguments at the facade bound
 
     for my $case (
         {
-            label => 'undef argument',
-            code => sub { $pipeline->generate_hdl_from_file(undef); },
+            label => 'omitted source-path argument',
+            code => sub { $pipeline->generate_hdl_from_file(); },
         },
         {
-            label => 'empty string',
-            code => sub { $pipeline->generate_hdl_from_file(''); },
+            label => 'two source-path arguments',
+            code => sub {
+                $pipeline->generate_hdl_from_file(
+                    $fixture->{fsm_path},
+                    $fixture->{fsm_path},
+                );
+            },
         },
         {
-            label => 'whitespace string',
-            code => sub { $pipeline->generate_hdl_from_file('  '); },
+            label => 'valid source-path plus undef',
+            code => sub {
+                $pipeline->generate_hdl_from_file(
+                    $fixture->{fsm_path},
+                    undef,
+                );
+            },
         },
         {
-            label => 'extensionless path',
-            code => sub { $pipeline->generate_hdl_from_file('source_root'); },
-        },
-        {
-            label => 'non-fsm path',
-            code => sub { $pipeline->generate_hdl_from_file('source_root.sv'); },
-        },
-        {
-            label => 'arrayref',
-            code => sub { $pipeline->generate_hdl_from_file(['source_root.fsm']); },
-        },
-        {
-            label => 'hashref',
-            code => sub { $pipeline->generate_hdl_from_file({ source => 'source_root.fsm' }); },
+            label => 'valid source-path plus malformed reference',
+            code => sub {
+                $pipeline->generate_hdl_from_file(
+                    $fixture->{fsm_path},
+                    { extra => 'not-public' },
+                );
+            },
         },
     ) {
         my $error = capture_exception($case->{code});
 
         like(
             $error,
-            qr/FSM::Pipeline::HDLGenerator expects generate_hdl_from_file\(\.\.\.\) argument to be a scalar filesystem path to a \.fsm source root/s,
-            "$case->{label} receives the targeted facade diagnostic",
+            $generation_argument_list_error,
+            "$case->{label} receives the targeted argument-list diagnostic",
         );
         unlike(
             $error,
-            qr/SourceGenerationOrchestrator requires an fsm_file|SourceFrontend requires an fsm_file|Failed to open FSM file|Source file:|Can't use .* as/s,
-            "$case->{label} does not leak lower-level source-open or raw Perl diagnostics",
+            qr/Too many arguments|expected at most|SourceGenerationOrchestrator|Source file:|Failed to open FSM file|Can't use .* as/s,
+            "$case->{label} does not leak Perl signature or lower-level source diagnostics",
         );
     }
 };
 
-subtest 'invalid generation arguments preserve caller debug state' => sub {
-    set_fsm_trace_verbosity('low');
+subtest 'single malformed generation arguments still use the value-shape diagnostic' => sub {
     my $pipeline = FSM::Pipeline::HDLGenerator->new(
         debug_level => 0,
         target_language => 'systemverilog',
@@ -161,17 +171,59 @@ subtest 'invalid generation arguments preserve caller debug state' => sub {
         strict_mode => 1,
     );
 
+    for my $case (
+        {
+            label => 'single undef argument',
+            code => sub { $pipeline->generate_hdl_from_file(undef); },
+        },
+        {
+            label => 'single arrayref argument',
+            code => sub { $pipeline->generate_hdl_from_file(['source_root.fsm']); },
+        },
+        {
+            label => 'single non-fsm scalar argument',
+            code => sub { $pipeline->generate_hdl_from_file('source_root.sv'); },
+        },
+    ) {
+        my $error = capture_exception($case->{code});
+
+        like(
+            $error,
+            $generation_argument_shape_error,
+            "$case->{label} remains covered by the scalar .fsm value-shape diagnostic",
+        );
+        unlike(
+            $error,
+            $generation_argument_list_error,
+            "$case->{label} is not misclassified as an argument-list cardinality failure",
+        );
+    }
+};
+
+subtest 'malformed generation argument lists preserve caller debug state' => sub {
+    my $fixture = make_direct_source_fixture();
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+        strict_mode => 1,
+    );
+    set_fsm_trace_verbosity('low');
+
     my $error = capture_exception(sub {
-        $pipeline->generate_hdl_from_file({ source => 'not-a-scalar.fsm' });
+        $pipeline->generate_hdl_from_file(
+            $fixture->{fsm_path},
+            $fixture->{fsm_path},
+        );
     });
 
     like(
         $error,
-        qr/FSM::Pipeline::HDLGenerator expects generate_hdl_from_file/s,
-        'invalid generation argument still reports the facade diagnostic',
+        $generation_argument_list_error,
+        'extra generation argument still reports the facade argument-list diagnostic',
     );
-    is(get_fsm_debug_level(), 1, 'invalid generation argument does not mutate caller debug level');
-    is(get_fsm_trace_verbosity(), 'low', 'invalid generation argument does not mutate caller trace verbosity');
+    is(get_fsm_debug_level(), 1, 'malformed generation argument list does not mutate caller debug level');
+    is(get_fsm_trace_verbosity(), 'low', 'malformed generation argument list does not mutate caller trace verbosity');
 
     restore_fsm_debug_state($INITIAL_DEBUG_STATE);
 };
@@ -180,12 +232,12 @@ done_testing();
 
 sub make_direct_source_fixture {
     my $tempdir = tempdir(CLEANUP => 1);
-    my $fsm_path = File::Spec->catfile($tempdir, 'facade_generation_argument_smoke.fsm');
+    my $fsm_path = File::Spec->catfile($tempdir, 'facade_generation_argument_list_smoke.fsm');
 
     write_file(
         $fsm_path,
         <<'FSM',
-(?fsm:facade_generation_argument_smoke
+(?fsm:facade_generation_argument_list_smoke
   (+system
     (clock clk)
     (sreset rst)

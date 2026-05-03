@@ -240,9 +240,9 @@ sub _target_language_constructor_arg ($value) {
     confess "FSM::Pipeline::HDLGenerator expects 'target_language' to be one of: systemverilog, sv, verilog, v, vhdl";
 }
 
-sub generate_hdl_from_file ($self, $fsm_file = undef) {
+sub generate_hdl_from_file ($self, @generation_args) {
     my $pipeline = _generation_receiver_arg($self);
-    my $generation_source_path = _generation_source_path_arg($fsm_file);
+    my $generation_source_path = _generation_arg_list(@generation_args);
     return with_fsm_debug_state(
         { debug_level => ($pipeline->{debug_level} // 0) },
         sub {
@@ -258,6 +258,12 @@ sub _generation_receiver_arg ($value) {
         unless blessed($value) && $value->isa(__PACKAGE__);
 
     return $value;
+}
+sub _generation_arg_list (@generation_args) {
+    confess "FSM::Pipeline::HDLGenerator expects generate_hdl_from_file(...) arguments after the object invocant to contain exactly one source-path argument"
+        unless @generation_args == 1;
+
+    return _generation_source_path_arg($generation_args[0]);
 }
 sub _generation_source_path_arg ($value) {
     confess "FSM::Pipeline::HDLGenerator expects generate_hdl_from_file(...) argument to be a scalar filesystem path to a .fsm source root"

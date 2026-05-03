@@ -1,5 +1,32 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-03: HDLGenerator generation argument lists now fail closed before Perl signature diagnostics
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so `generate_hdl_from_file(...)` now captures the raw method argument tail,
+  validates that exactly one source-path argument follows the object invocant,
+  and only then applies the existing scalar `.fsm` path value-shape check. This
+  prevents extra generation arguments from leaking Perl signature diagnostics
+  before the facade boundary has spoken.
+- Updated
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  so `generation_argument_list_shape` advertises `exactly one source-path
+  argument after object invocant`, and updated
+  [t/375-hdl-generator-facade-contract.t](/Users/richarddje/Documents/github/fsmgen/t/375-hdl-generator-facade-contract.t)
+  to lock that contract field directly.
+- Added
+  [t/416-hdl-generator-facade-generation-argument-list-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/416-hdl-generator-facade-generation-argument-list-shape-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  valid exact-one-argument generation, missing/extra argument rejection, single
+  malformed values staying under the existing value-shape diagnostic, and
+  caller debug-state preservation. The existing
+  [t/409-hdl-generator-facade-generation-argument-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/409-hdl-generator-facade-generation-argument-shape-boundary-audit.t)
+  now remains scoped to malformed single source-path values.
+- Validation passed with focused facade/generation tests (`4` files, `14`
+  tests), the nearby HDLGenerator facade audit cluster (`23` files, `78`
+  tests), and the full repo-owned
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`412` files, `3739` tests, plus mdBook build).
 ## 2026-05-03: HDLGenerator constructor argument lists now fail closed before hash coercion
 - Hardened
   [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)

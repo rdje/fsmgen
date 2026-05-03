@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-03: generation argument-list shape comes before Perl signatures
+- `generate_hdl_from_file($path)` already validated the source-path value, but
+  the Perl method signature still owned method argument cardinality. Extra
+  arguments therefore failed with a raw `Too many arguments` signature
+  diagnostic instead of a facade-owned boundary diagnostic.
+- The method now accepts the raw tail as `@generation_args`, validates exactly
+  one argument after the object invocant, and then delegates that single value
+  to the existing scalar `.fsm` path validator. Missing or extra arguments are
+  therefore list-shape failures, while a single malformed value remains a
+  value-shape failure.
+- The contract advertises `generation_argument_list_shape` separately from
+  `generation_argument_shape` for the same reason the constructor now separates
+  receiver/list/name/value layers: embedders need to know both method-call
+  cardinality and single-argument value shape without scraping Perl signatures.
+- Invalid argument lists are rejected before the generation-scoped debug
+  override starts, so caller debug state remains stable on misuse. Valid
+  one-argument generation and existing source-opening behavior for valid-shaped
+  missing files are unchanged.
 ## 2026-05-03: constructor argument-list shape comes before `%args`
 - `FSM::Pipeline::HDLGenerator->new(...)` previously used a Perl signature that
   assigned the raw constructor tail directly into `%args`. That meant odd
