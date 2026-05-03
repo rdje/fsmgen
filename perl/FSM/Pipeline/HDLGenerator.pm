@@ -10,7 +10,7 @@ no warnings 'experimental::signatures';
 use Carp qw(confess);
 use FindBin;
 use lib "$FindBin::Bin";
-use Scalar::Util qw(blessed);
+use Scalar::Util qw(blessed reftype);
 use FSM::Debug;
 use FSM::Composition::RTLInterfaceLoader;
 use FSM::Extension::Loader;
@@ -109,6 +109,7 @@ sub new ($class, @constructor_args) {
                 );
             }
             my $self = bless {
+                __fsmgen_hdl_generator_facade_instance => 1,
                 debug_level => $requested_debug_level,
                 target_language => $target_language,
                 quiet => $quiet,
@@ -254,10 +255,60 @@ sub generate_hdl_from_file ($self, @generation_args) {
     );
 }
 sub _generation_receiver_arg ($value) {
-    confess "FSM::Pipeline::HDLGenerator expects generate_hdl_from_file(...) invocant to be a blessed FSM::Pipeline::HDLGenerator object"
-        unless blessed($value) && $value->isa(__PACKAGE__);
+    my $receiver_error = "FSM::Pipeline::HDLGenerator expects generate_hdl_from_file(...) invocant to be a blessed FSM::Pipeline::HDLGenerator object constructed by new(...) with valid facade state";
+    confess $receiver_error
+        unless blessed($value) && blessed($value) eq __PACKAGE__ && (reftype($value) || '') eq 'HASH';
+    confess $receiver_error
+        unless defined($value->{__fsmgen_hdl_generator_facade_instance})
+            && !ref($value->{__fsmgen_hdl_generator_facade_instance})
+            && $value->{__fsmgen_hdl_generator_facade_instance} eq '1';
+    confess $receiver_error
+        unless _generation_receiver_state_is_valid($value);
 
     return $value;
+}
+sub _generation_receiver_state_is_valid ($value) {
+    return 0 unless _debug_level_state_value($value->{debug_level});
+    return 0 unless _target_language_state_value($value->{target_language});
+    return 0 unless _boolean_state_value($value->{quiet});
+    return 0 unless _boolean_state_value($value->{strict_mode});
+    return 0 unless _blessed_object_with_methods(
+        $value->{source_path_resolver},
+        qw(normalized_search_paths),
+    );
+    return 0 unless _blessed_object_with_methods(
+        $value->{rtl_interface_loader},
+        qw(load_interface),
+    );
+    return 0 unless _blessed_object_with_methods(
+        $value->{extension_loader},
+        qw(module_names_from_config_files load_modules),
+    );
+    return 0 unless _blessed_object_with_methods(
+        $value->{extension_registry},
+        qw(after_parse_source after_generate_result),
+    );
+
+    return 1;
+}
+sub _debug_level_state_value ($value) {
+    return defined($value) && !ref($value) && $value =~ /\A[0-4]\z/;
+}
+sub _target_language_state_value ($value) {
+    return 0 unless defined($value) && !ref($value);
+    my %valid = map { $_ => 1 } qw(systemverilog sv verilog v vhdl);
+    return $valid{$value} ? 1 : 0;
+}
+sub _boolean_state_value ($value) {
+    return defined($value) && !ref($value) && $value =~ /\A[01]\z/;
+}
+sub _blessed_object_with_methods ($value, @methods) {
+    return 0 unless blessed($value);
+    for my $method (@methods) {
+        return 0 unless UNIVERSAL::can($value, $method);
+    }
+
+    return 1;
 }
 sub _generation_arg_list (@generation_args) {
     confess "FSM::Pipeline::HDLGenerator expects generate_hdl_from_file(...) arguments after the object invocant to contain exactly one source-path argument"

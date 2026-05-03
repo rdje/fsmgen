@@ -1,6 +1,34 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-03
+### HDLGenerator generation receivers now require constructed facade state
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so `generate_hdl_from_file(...)` rejects manually blessed exact-class
+  stand-ins, subclassed stand-ins, non-hash receivers, and corrupted facade
+  state before scoped debug-state setup or lower-level source orchestration can
+  reinterpret malformed receiver objects.
+- Added an internal constructed-instance marker and a receiver-state guard that
+  validates exact class identity, hash backing, canonical scalar facade state,
+  and the required resolver/loader/registry method surfaces at method entry.
+- Updated
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  to advertise `generation_receiver_instance_shape => 'exact hash-backed
+  FSM::Pipeline::HDLGenerator instance constructed by new(...) with required
+  facade state'`, and updated
+  [t/375-hdl-generator-facade-contract.t](/Users/richarddje/Documents/github/fsmgen/t/375-hdl-generator-facade-contract.t)
+  to lock the field directly.
+- Added
+  [t/417-hdl-generator-facade-generation-receiver-instance-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/417-hdl-generator-facade-generation-receiver-instance-boundary-audit.t)
+  to prove direct contract and manifest visibility, valid constructed-instance
+  generation, fake exact-class/subclass receiver rejection before source or raw
+  Perl diagnostics leak, corrupted receiver-state rejection, and caller
+  debug-state preservation. No roadmap status changed.
+- Validation passed with focused facade/generation tests (`4` files, `15`
+  tests), the nearby HDLGenerator facade audit cluster (`24` files, `83`
+  tests), and the full
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`413` files, `3744` tests, plus mdBook build).
 ### HDLGenerator generation argument lists now fail closed before Perl signature diagnostics
 - Hardened
   [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)

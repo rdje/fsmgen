@@ -1,5 +1,37 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-03: HDLGenerator generation receivers now require constructed facade state
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so `generate_hdl_from_file(...)` now rejects fake exact-class objects,
+  subclassed stand-ins, non-hash receivers, and corrupted constructed facade
+  state before generation-scoped debug setup or
+  [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm)
+  can run.
+- Constructed facade objects now carry an internal instance marker, and the
+  generation receiver guard checks exact class identity, hash backing, the
+  instance marker, canonical scalar facade state, and the required resolver,
+  RTL-interface loader, extension loader, and extension registry method
+  surfaces before delegating.
+- Updated
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  so `generation_receiver_instance_shape` advertises `exact hash-backed
+  FSM::Pipeline::HDLGenerator instance constructed by new(...) with required
+  facade state`, and updated
+  [t/375-hdl-generator-facade-contract.t](/Users/richarddje/Documents/github/fsmgen/t/375-hdl-generator-facade-contract.t)
+  to lock that contract field directly.
+- Added
+  [t/417-hdl-generator-facade-generation-receiver-instance-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/417-hdl-generator-facade-generation-receiver-instance-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  valid constructed-instance generation, fake exact-class/subclass receiver
+  rejection, corrupted receiver-state rejection, and caller debug-state
+  preservation.
+- Validation passed with focused facade/generation tests (`4` files, `15`
+  tests), the nearby HDLGenerator facade audit cluster (`24` files, `83`
+  tests), and the full repo-owned
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`413` files, `3744` tests, plus mdBook build). Roadmap lane status is
+  unchanged.
 ## 2026-05-03: HDLGenerator generation argument lists now fail closed before Perl signature diagnostics
 - Hardened
   [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)

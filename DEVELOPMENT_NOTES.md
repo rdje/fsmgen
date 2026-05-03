@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-03: generation receiver instance state comes before orchestration
+- The earlier `generate_hdl_from_file(...)` receiver boundary rejected obvious
+  non-objects and unrelated blessed objects, but it still accepted any object
+  whose class claimed `isa('FSM::Pipeline::HDLGenerator')`. Manually blessed
+  exact-class hashes, exact-class arrays, or subclasses could therefore pass
+  the receiver check and leak source-context diagnostics, raw `Not a HASH
+  reference` failures, or extension-registry method failures later.
+- The constructor now stamps real facade objects with an internal instance
+  marker, and the method receiver guard validates exact class identity, hash
+  backing, that marker, canonical scalar facade fields, and the required
+  resolver/loader/registry method surfaces before it enters scoped debug state
+  or source orchestration.
+- The contract now separates the broad public receiver family
+  `generation_receiver_shape` from the stricter runtime ownership promise
+  `generation_receiver_instance_shape`. This keeps the API wording honest:
+  embedders should pass objects returned by `new(...)`, not subclass stand-ins
+  or manually blessed compatibility shapes.
+- This is deliberately a method-entry fail-closed slice, not a new constructor
+  option or subclassing policy. Valid constructed facade objects keep their
+  stateful reuse behavior, while corrupted or fake receiver state fails with a
+  single facade-owned diagnostic and leaves caller debug state unchanged.
 ## 2026-05-03: generation argument-list shape comes before Perl signatures
 - `generate_hdl_from_file($path)` already validated the source-path value, but
   the Perl method signature still owned method argument cardinality. Extra
