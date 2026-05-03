@@ -1,5 +1,30 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-03: HDLGenerator constructor argument lists now fail closed before hash coercion
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so `new(...)` captures raw constructor arguments after the class invocant,
+  validates that they form option/value pairs, validates each option name as a
+  scalar non-empty string, and only then builds `%args`. This prevents Perl hash
+  assignment warnings, reference-key stringification, and accidental lower-level
+  reinterpretation before the facade boundary has spoken.
+- Updated
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  so `constructor_argument_list_shape` advertises `even-length list of scalar
+  non-empty option-name/value pairs after class invocant`, and updated
+  [t/375-hdl-generator-facade-contract.t](/Users/richarddje/Documents/github/fsmgen/t/375-hdl-generator-facade-contract.t)
+  to lock that contract field directly.
+- Added
+  [t/415-hdl-generator-facade-constructor-argument-list-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/415-hdl-generator-facade-constructor-argument-list-shape-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  valid empty/public option-value construction, odd argument-list rejection,
+  malformed option-name rejection before primary-diagnostic stringification,
+  and caller debug-state preservation.
+- Validation passed with focused facade/constructor tests (`4` files, `14`
+  tests), the nearby HDLGenerator facade audit cluster (`22` files, `73`
+  tests), and the full repo-owned
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`411` files, `3734` tests, plus mdBook build).
 ## 2026-05-02: HDLGenerator constructor option names now fail closed
 - Hardened
   [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)

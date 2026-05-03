@@ -1,5 +1,32 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-05-03
+### HDLGenerator constructor argument lists now fail closed before hash coercion
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so `new(...)` validates the raw constructor arguments after the class
+  invocant as an even-length option/value list before Perl hash assignment can
+  warn, stringify reference keys, or mask malformed input.
+- Added scalar non-empty option-name validation before unsupported-name
+  checking, preserving the existing public/non-public constructor option
+  classification and all valid well-formed constructor calls.
+- Updated
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  to advertise `constructor_argument_list_shape => 'even-length list of
+  scalar non-empty option-name/value pairs after class invocant'`, and updated
+  [t/375-hdl-generator-facade-contract.t](/Users/richarddje/Documents/github/fsmgen/t/375-hdl-generator-facade-contract.t)
+  to lock the field directly.
+- Added
+  [t/415-hdl-generator-facade-constructor-argument-list-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/415-hdl-generator-facade-constructor-argument-list-shape-boundary-audit.t)
+  to prove direct contract and manifest visibility, valid empty/public
+  option-value lists, odd-list rejection, non-scalar/empty option-name
+  rejection before stringification, and caller debug-state preservation. No
+  roadmap status changed.
+- Validation passed with focused facade/constructor tests (`4` files, `14`
+  tests), the nearby HDLGenerator facade audit cluster (`22` files, `73`
+  tests), and the full
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`411` files, `3734` tests, plus mdBook build).
 ## 2026-05-02
 ### HDLGenerator constructor option names now fail closed
 - Hardened

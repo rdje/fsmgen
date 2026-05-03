@@ -114,6 +114,11 @@ subtest 'contract exposes the bounded HDLGenerator facade seam' => sub {
         'contract records the bounded constructor receiver shape',
     );
     is(
+        $contract->{constructor_argument_list_shape},
+        'even-length list of scalar non-empty option-name/value pairs after class invocant',
+        'contract records the bounded constructor argument-list shape',
+    );
+    is(
         $contract->{constructor_unknown_option_policy},
         'reject unsupported constructor option names before debug-state setup',
         'contract records the bounded constructor unknown-option policy',

@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-03: constructor argument-list shape comes before `%args`
+- `FSM::Pipeline::HDLGenerator->new(...)` previously used a Perl signature that
+  assigned the raw constructor tail directly into `%args`. That meant odd
+  argument counts and reference option names could be interpreted by Perl before
+  the facade's receiver, option-name, and option-shape guards had complete
+  control of the diagnostic.
+- The constructor now accepts the raw tail as `@constructor_args`, validates an
+  even option/value count, validates scalar non-empty option names, and only
+  then creates `%args` for the existing supported-name and value-shape checks.
+  This makes the constructor boundary deterministic without widening public
+  options or changing valid well-formed calls.
+- The contract advertises the new `constructor_argument_list_shape` separately
+  from `constructor_receiver_shape`, `constructor_unknown_option_policy`, and
+  `constructor_option_shape_map` because these are distinct layers: receiver,
+  pair list, supported names, and per-option values.
+- The audit intentionally checks primary diagnostic text for non-scalar option
+  names rather than the full Carp stack, because `confess` stack traces can show
+  caller argument values. The boundary promise is that the primary facade
+  diagnostic is targeted and occurs before hash coercion or lower-level fallout.
 ## 2026-05-02: constructor option names are part of the facade boundary
 - After receiver and value-shape validation, the remaining constructor gap was
   name-level drift: `%args` would silently ignore unsupported option names.

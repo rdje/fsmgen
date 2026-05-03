@@ -45,9 +45,9 @@ explicit frontend, orchestrator, builder, and backend-owner packages.
 
 =cut
 
-sub new ($class, %args) {
+sub new ($class, @constructor_args) {
     my $constructor_class = _constructor_receiver_arg($class);
-    _constructor_arg_names(%args);
+    my %args = _constructor_arg_list(@constructor_args);
     my $legacy_debug_level = _legacy_debug_constructor_arg($args{debug});
     my $requested_debug_level = _debug_level_constructor_arg(
         exists $args{debug_level} ? $args{debug_level} : $legacy_debug_level,
@@ -137,6 +137,22 @@ sub _constructor_receiver_arg ($value) {
         unless defined($value) && !ref($value) && $value eq __PACKAGE__;
 
     return $value;
+}
+sub _constructor_arg_list (@constructor_args) {
+    confess "FSM::Pipeline::HDLGenerator expects new(...) arguments after the class invocant to be option/value pairs"
+        if @constructor_args % 2;
+
+    my %args;
+    my @remaining = @constructor_args;
+    while (@remaining) {
+        my ($arg_name, $value) = splice @remaining, 0, 2;
+        confess "FSM::Pipeline::HDLGenerator expects new(...) option names to be scalar non-empty strings before constructor option-name validation"
+            unless defined($arg_name) && !ref($arg_name) && $arg_name =~ /\S/;
+        $args{$arg_name} = $value;
+    }
+
+    _constructor_arg_names(%args);
+    return %args;
 }
 sub _constructor_arg_names (%args) {
     my %supported = map { $_ => 1 } qw(

@@ -60,6 +60,7 @@ sub build_hdl_generator_facade_contract {
         direct_extension_option_names => hdl_generator_facade_direct_extension_option_names(),
         constructor_option_family_map => hdl_generator_facade_constructor_option_family_map(),
         constructor_option_shape_map => hdl_generator_facade_constructor_option_shape_map(),
+        constructor_argument_list_shape => 'even-length list of scalar non-empty option-name/value pairs after class invocant',
         constructor_unknown_option_policy => 'reject unsupported constructor option names before debug-state setup',
         debug_level_numeric_range => hdl_generator_facade_debug_level_numeric_range(),
         default_target_language => 'systemverilog',
@@ -76,7 +77,8 @@ sub build_hdl_generator_facade_contract {
         guidance => [
             'Treat this contract as the bounded public in-process facade around FSM::Pipeline::HDLGenerator constructor and generate_hdl_from_file(...) entrypoints.',
             'Use the grouped constructor_option_family_map to discover the bounded public constructor option families without scraping POD or freezing every currently accepted owner-injection argument.',
-            'Use constructor_receiver_shape and constructor_option_shape_map for the bounded shape contract of the public constructor boundary.',
+            'Use constructor_receiver_shape, constructor_argument_list_shape, and constructor_option_shape_map for the bounded shape contract of the public constructor boundary.',
+            'Constructor arguments after the class invocant are validated as option/value pairs with scalar non-empty option names before Perl hash coercion can reinterpret malformed input.',
             'Unsupported constructor option names are rejected before facade debug-state setup rather than being silently ignored.',
             'Use debug_level_numeric_range for the accepted facade constructor debug_level range.',
             'Use target_language_names for the accepted lower-case target-language tokens at the facade constructor boundary.',
@@ -105,6 +107,7 @@ sub hdl_generator_facade_public_top_level_keys {
             direct_extension_option_names
             constructor_option_family_map
             constructor_option_shape_map
+            constructor_argument_list_shape
             constructor_unknown_option_policy
             debug_level_numeric_range
             default_target_language
