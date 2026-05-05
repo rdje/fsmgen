@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: TopLink access should be container-owned
+- `FSM::Composition::TopLink` carries parsed explicit wiring blocks into
+  linked-plan and top-port inference builders. Its `links()` and `raw_ast()`
+  accessors exposed parser-owned arrays directly.
+- TopLink now clones mutable containers on entry and access. Contained link
+  objects keep identity, while list/hash mutation through inspection cannot
+  alter the parsed composition spec.
+- This keeps explicit `?toplink` wiring stable across linked-plan, C2/C3/C4,
+  and top-expression inference passes.
+
 ## 2026-05-05: PortsBlock access should be container-owned
 - `FSM::Composition::PortsBlock` is parsed before top-port inference and plan
   building. Its `ports()` and `raw_ast()` accessors exposed the arrays created

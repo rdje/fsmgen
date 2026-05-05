@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Composition toplink blocks now clone link containers
+- Updated
+  [perl/FSM/Composition/TopLink.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopLink.pm)
+  so toplink link lists and raw AST payloads are cloned at construction and
+  from `links()` / `raw_ast()` accessors.
+- Added
+  [t/515-composition-toplink-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/515-composition-toplink-defensive-copy-boundary-audit.t)
+  to prove constructor and accessor mutation cannot contaminate parsed toplink
+  containers.
+- Focused validation pairs the new TopLink audit with composition parser,
+  linked-plan builder, plan-builder, and top-port inference suites. This is
+  `R13` runtime contract-integrity hardening only; no public manifest shape,
+  user-facing docs, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Composition ports blocks now clone port containers
 - Updated
   [perl/FSM/Composition/PortsBlock.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/PortsBlock.pm)

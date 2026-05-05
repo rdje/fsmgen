@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Composition toplink blocks now clone link containers
+- Updated
+  [perl/FSM/Composition/TopLink.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopLink.pm)
+  so toplink link lists and raw AST payloads are cloned at construction and
+  from accessors. No roadmap status changed.
+- Added
+  [t/515-composition-toplink-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/515-composition-toplink-defensive-copy-boundary-audit.t)
+  to prove constructor and accessor mutation cannot contaminate parsed toplink
+  containers.
 ### Composition ports blocks now clone port containers
 - Updated
   [perl/FSM/Composition/PortsBlock.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/PortsBlock.pm)
