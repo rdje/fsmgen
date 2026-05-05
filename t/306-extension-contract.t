@@ -187,6 +187,11 @@ subtest 'contract declares the bounded typed-extension surface' => sub {
         'exact hash-backed FSM::Extension::Context object constructed by new(...)',
         'contract records the direct context accessor receiver shape',
     );
+    is(
+        $contract->{context_contract}{accessor_argument_list_shape},
+        'no payload arguments after the context invocant',
+        'contract records the direct context accessor argument-list shape',
+    );
     is_deeply(
         sorted($contract->{context_contract}{accessor_method_names}),
         sorted(extension_contract_context_accessors()),

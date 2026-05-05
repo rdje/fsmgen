@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: context accessors should own their argument counts
+- After context accessors gained constructed-object receiver checks, extra
+  accessor arguments still relied on Perl signature diagnostics. That was a
+  small but visible mismatch with the rest of the typed-extension direct-call
+  boundary hardening.
+- Each accessor now validates the receiver first, then validates that no
+  payload arguments follow the context invocant. Keeping the receiver guard
+  first preserves the stronger diagnostic for malformed class/fake receivers.
+- This does not change hook payloads or accessor return values; it only closes
+  the direct accessor call-shape boundary.
+
 ## 2026-05-05: registry methods should own their argument counts
 - After registry methods gained constructed-object receiver checks, malformed
   direct calls with missing or extra payload arguments could still depend on

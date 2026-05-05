@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Typed extension context accessors now own argument counts
+- Hardened
+  [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm)
+  so every direct context accessor rejects payload arguments after the context
+  invocant before raw Perl signature fallout can leak.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  so typed-extension manifests advertise the context accessor argument-list
+  shape, and updated the extension guide/book docs to describe the direct
+  context accessor argument-count boundary.
+- Added
+  [t/433-typed-extension-context-accessor-argument-list-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/433-typed-extension-context-accessor-argument-list-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  valid no-payload accessor calls, extra-payload rejection, bounded
+  diagnostics, and receiver-boundary precedence. No roadmap status changed.
+- Focused validation passed with syntax checks and the adjacent
+  context/contract/manifest cluster (`7` files, `26` tests), followed by the
+  full repo-owned `./bin/ci-regression` gate (`429` files, `3810` tests) and
+  mdBook build.
 ### Typed extension registry methods now own argument counts
 - Hardened
   [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)

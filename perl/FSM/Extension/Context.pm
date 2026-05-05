@@ -86,6 +86,13 @@ my $_validate_context_accessor_receiver = sub {
 
     return;
 };
+my $_validate_context_accessor_argument_count = sub {
+    my ($method_name, @args) = @_;
+    confess "FSM::Extension::Context::$method_name expects no payload arguments after the context invocant"
+        if @args;
+
+    return;
+};
 
 sub new ($class, @arg_pairs) {
     confess "FSM::Extension::Context constructor receiver must be scalar FSM::Extension::Context class name"
@@ -129,38 +136,52 @@ sub new ($class, @arg_pairs) {
     }, $class;
 }
 
-sub stage ($self) {
+sub stage {
+    my ($self, @args) = @_;
     $_validate_context_accessor_receiver->($self, 'stage');
+    $_validate_context_accessor_argument_count->('stage', @args);
     return $self->{stage};
 }
 
-sub pipeline ($self) {
+sub pipeline {
+    my ($self, @args) = @_;
     $_validate_context_accessor_receiver->($self, 'pipeline');
+    $_validate_context_accessor_argument_count->('pipeline', @args);
     return $self->{pipeline};
 }
 
-sub source_path ($self) {
+sub source_path {
+    my ($self, @args) = @_;
     $_validate_context_accessor_receiver->($self, 'source_path');
+    $_validate_context_accessor_argument_count->('source_path', @args);
     return $self->{source_path};
 }
 
-sub target_language ($self) {
+sub target_language {
+    my ($self, @args) = @_;
     $_validate_context_accessor_receiver->($self, 'target_language');
+    $_validate_context_accessor_argument_count->('target_language', @args);
     return $self->{target_language};
 }
 
-sub source_info ($self) {
+sub source_info {
+    my ($self, @args) = @_;
     $_validate_context_accessor_receiver->($self, 'source_info');
+    $_validate_context_accessor_argument_count->('source_info', @args);
     return $self->{source_info};
 }
 
-sub raw_ast ($self) {
+sub raw_ast {
+    my ($self, @args) = @_;
     $_validate_context_accessor_receiver->($self, 'raw_ast');
+    $_validate_context_accessor_argument_count->('raw_ast', @args);
     return $self->{raw_ast};
 }
 
-sub result ($self) {
+sub result {
+    my ($self, @args) = @_;
     $_validate_context_accessor_receiver->($self, 'result');
+    $_validate_context_accessor_argument_count->('result', @args);
     return $self->{result};
 }
 

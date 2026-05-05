@@ -1599,6 +1599,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'exact hash-backed FSM::Extension::Context object constructed by new(...)',
         'manifest records the typed extension context accessor receiver shape',
     );
+    is(
+        $manifest->{embedding}{typed_extensions}{context_contract}{accessor_argument_list_shape},
+        'no payload arguments after the context invocant',
+        'manifest records the typed extension context accessor argument-list shape',
+    );
     is_deeply(
         sorted($manifest->{embedding}{typed_extensions}{context_contract}{accessor_method_names}),
         sorted(extension_contract_context_accessors()),

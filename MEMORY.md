@@ -1,5 +1,35 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Typed extension context accessors now own argument counts
+- Hardened
+  [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm)
+  so every direct context accessor validates the constructed-context receiver
+  first and then rejects any payload arguments after the context invocant
+  before raw Perl signature fallout can leak.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  so the typed-extension contract and capability manifest advertise
+  `context_contract.accessor_argument_list_shape`.
+- Added
+  [t/433-typed-extension-context-accessor-argument-list-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/433-typed-extension-context-accessor-argument-list-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  valid no-payload accessor calls, extra-payload rejection, bounded
+  diagnostics, and receiver-boundary precedence.
+- Updated the extension docs in
+  [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md),
+  [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md),
+  and
+  [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  so the live guide and mdBook source describe the direct context accessor
+  argument-list boundary.
+- Focused validation passed with syntax checks and the adjacent
+  context/contract/manifest cluster (`7` files, `26` tests), followed by the
+  full repo-owned `./bin/ci-regression` gate (`429` files, `3810` tests) and
+  mdBook build.
+- This is `R13` typed-extension embedder-boundary hardening only; no hook
+  family, extension loading entrypoint, generation behavior, or roadmap lane
+  status changed.
+
 ## 2026-05-05: Typed extension registry methods now own argument counts
 - Hardened
   [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)
