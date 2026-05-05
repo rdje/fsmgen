@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Composition port declared-type setter now returns a caller-owned copy
+- Updated
+  [perl/FSM/Composition/Port.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Port.pm)
+  so `set_declared_type_spec(...)` returns a fresh declared-type spec instead
+  of the stored internal hash. No roadmap status changed.
+- Added
+  [t/502-composition-port-declared-type-setter-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/502-composition-port-declared-type-setter-defensive-copy-boundary-audit.t)
+  to prove constructor, accessor, setter-input, and setter-return mutation
+  cannot contaminate the stored port type spec.
 ### Composition net targets now use explicit mutation and caller-owned lists
 - Updated
   [perl/FSM/Composition/Net.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Net.pm)

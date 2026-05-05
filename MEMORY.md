@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Composition port declared-type setter now returns a caller-owned copy
+- Updated
+  [perl/FSM/Composition/Port.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Port.pm)
+  so `set_declared_type_spec(...)` returns a fresh declared-type spec snapshot
+  instead of the stored internal hash.
+- Added
+  [t/502-composition-port-declared-type-setter-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/502-composition-port-declared-type-setter-defensive-copy-boundary-audit.t)
+  to prove constructor input mutation, accessor-return mutation, setter input
+  mutation, and setter-return mutation cannot contaminate stored port type
+  specs.
+- Focused validation pairs the setter audit with typed top-port inference,
+  structural declared-type, and aggregate top-expression inference suites. This
+  is `R13` runtime contract-integrity hardening only; no public manifest shape,
+  user-facing docs, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Composition net targets now use explicit mutation and caller-owned lists
 - Updated
   [perl/FSM/Composition/Net.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Net.pm)

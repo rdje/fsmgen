@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Composition port declared-type setter should mirror accessor ownership
+- `FSM::Composition::Port` already cloned declared type specs at construction
+  and from `declared_type_spec()`, but `set_declared_type_spec(...)` returned
+  the stored hash after assignment.
+- The setter now returns the accessor result, so callers receive a fresh
+  declared-type spec snapshot and cannot mutate port state through the setter
+  return value.
+- This keeps typed top-port inference and realized child interface metadata on
+  the same caller-owned structured-value policy.
+
 ## 2026-05-05: Composition net targets need an explicit mutation API
 - `FSM::Composition::Net` target lists are read by plan snapshots,
   structural-IR extraction, and linked-plan fanout logic. Returning the stored

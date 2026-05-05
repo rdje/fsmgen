@@ -58,7 +58,7 @@ sub set_declared_type_name ($self, $declared_type_name) {
 
 sub set_declared_type_spec ($self, $declared_type_spec) {
     $self->{declared_type_spec} = _clone_structured_value($declared_type_spec);
-    return $self->{declared_type_spec};
+    return $self->declared_type_spec;
 }
 
 sub _clone_structured_value ($value) {
