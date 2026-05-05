@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Regression corpus runtime catalog now has defensive-copy coverage
+- Added
+  [t/491-regression-corpus-runtime-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/491-regression-corpus-runtime-defensive-copy-boundary-audit.t)
+  to prove `regression_corpus_entries()` and `protocol_fixture_entries()`
+  return fresh entry hashes and copied array fields across calls.
+- Focused validation pairs the runtime corpus audit with the support
+  accounting and protocol fixture catalog suites that consume those helpers.
+- This is `R13` regression-corpus runtime contract-integrity coverage only; no
+  public API shape, user-facing docs, mdBook source, generation behavior, or
+  roadmap lane status changed.
+
 ## 2026-05-05: Diagnostic code runtime registry now has defensive-copy coverage
 - Added
   [t/490-diagnostic-codes-runtime-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/490-diagnostic-codes-runtime-defensive-copy-boundary-audit.t)

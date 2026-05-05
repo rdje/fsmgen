@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: regression corpus catalogs should stay mutation-safe
+- The support-accounting catalog is consumed in-process by manifests, check
+  JSON classification, protocol fixture tests, and regression coverage. Those
+  helpers return mutable Perl entry hashes, including array fields.
+- The new audit proves full catalog entry hashes and known array fields are
+  fresh across calls for both the complete regression corpus and the protocol
+  fixture subset.
+- This is coverage only; no corpus catalog shape changed.
+
 ## 2026-05-05: diagnostic code runtime helpers should stay mutation-safe
 - Stable diagnostic-code metadata is shared by check JSON, support accounting,
   and the manifest diagnostics section. Callers receive mutable Perl hashes,
