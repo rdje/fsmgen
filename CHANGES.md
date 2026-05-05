@@ -1,5 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-05-05
+### README bootstrap import-tree snapshot refreshed
+- Re-read the README/commit/bootstrap path and the README-referenced roadmap,
+  guide, focused-reference, continuity, and agent-guidance documents for the
+  session-start recovery pass.
+- Rebuilt the static project-owned `FSM::...` import closure reachable from
+  [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen):
+  topology remains `180` project files total, `179` `.pm` packages, with no
+  missing project modules and unchanged family counts.
+- Updated
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+  to record the `2026-05-05` review plus current measured line counts for the
+  public facade/support surfaces after recent `R13` hardening. No roadmap
+  status changed.
+
 ## 2026-05-03
 ### HDLGenerator non-public owner-injection values now fail closed at construction
 - Hardened

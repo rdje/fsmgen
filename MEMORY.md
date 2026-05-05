@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: README bootstrap import-tree snapshot refreshed
+- Re-read
+  [README.md](/Users/richarddje/Documents/github/fsmgen/README.md),
+  [COMMIT.md](/Users/richarddje/Documents/github/fsmgen/COMMIT.md),
+  [SESSION_BOOTSTRAP.md](/Users/richarddje/Documents/github/fsmgen/SESSION_BOOTSTRAP.md),
+  and the README-referenced roadmap, guide, composition, extension, SPECFORGE,
+  intent-scheduling, book-plan, continuity, and agent-guidance documents as the
+  required session-start recovery pass.
+- Rebuilt the live project-owned `FSM::...` transitive import closure reachable
+  from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen).
+  The static topology remains `180` project files total, `179` `.pm` packages,
+  with no missing project modules and unchanged family counts.
+- Updated
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+  for the `2026-05-05` review and refreshed measured line counts after recent
+  `R13` facade-boundary hardening. This is bootstrap/architecture-note
+  maintenance only; roadmap lane status is unchanged.
+
 ## 2026-05-03: HDLGenerator non-public owner-injection values now fail closed at construction
 - Hardened
   [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)

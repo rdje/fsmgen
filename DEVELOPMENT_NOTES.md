@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: bootstrap import-tree refreshes should distinguish topology from measurement drift
+- The README / `SESSION_BOOTSTRAP.md` path is a real recovery task, not a
+  pleasantry. It should rebuild the current source picture before new
+  implementation work starts, then update
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+  only when the saved architecture note is no longer honest.
+- In this pass, the transitive `FSM::...` import topology from
+  [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) stayed
+  stable: `180` project files total, `179` `.pm` packages, no missing project
+  modules, and unchanged family counts. The stale part was measured line-count
+  drift after recent `R13` facade-boundary work, especially
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  and [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm).
+- Treat this as measured-snapshot maintenance, not a roadmap lane transition.
+  The active implementation lane remains `R13` public embedding/API
+  stabilization, and the next implementation move should still be a bounded
+  runtime or negative-boundary audit around remaining embedder assumptions.
+
 ## 2026-05-03: non-public owner injection still needs a constructor boundary
 - The facade contract deliberately keeps owner-injection constructor options
   non-public, but the runtime still accepts them for internal wiring and tests.
