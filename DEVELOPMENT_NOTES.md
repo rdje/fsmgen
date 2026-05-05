@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: DecisionTree analysis caches should not be caller-mutable
+- DecisionTree signal/conflict analysis is cached internally for repeated
+  queries. Returning the cached containers directly let inspection code mutate
+  subsequent analysis results.
+- `analyze_signals()` and `analyze_conflicts()` now return cloned containers
+  around the cached data. Contained signal/action objects keep identity because
+  the analysis still describes the live AST graph.
+
 ## 2026-05-05: DecisionTree element lists should be inspected as snapshots
 - Decision trees own the ordered list of action/control-flow elements used by
   analyzers and flattening. `add_element(...)` is the mutation API and also

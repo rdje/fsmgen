@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: DecisionTree analysis cache results now return snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so `FSM::CoreAST::DecisionTree->analyze_signals()` and
+  `analyze_conflicts()` still cache computed analysis internally, but return
+  cloned containers to callers. Signal and action objects inside those
+  containers keep identity.
+- Added
+  [t/529-core-ast-decision-tree-analysis-cache-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/529-core-ast-decision-tree-analysis-cache-defensive-copy-boundary-audit.t)
+  to prove returned signal/conflict analysis mutation cannot contaminate the
+  cached analysis used by later calls.
+- Focused validation pairs the new analysis-cache audit with DecisionTree
+  element, enable-graph capture, and decision-tree flattening suites. This is
+  `R13` runtime contract-integrity hardening only; no public manifest shape,
+  user-facing docs, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: DecisionTree elements now return container snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)

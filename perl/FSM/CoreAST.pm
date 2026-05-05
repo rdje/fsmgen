@@ -1956,7 +1956,8 @@ package FSM::CoreAST::DecisionTree;
     
     # Signal Analysis
     sub analyze_signals($self) {
-        return $self->{analysis_cache}{signals} //= $self->_compute_signal_analysis();
+        $self->{analysis_cache}{signals} //= $self->_compute_signal_analysis();
+        return _clone_decision_tree_value($self->{analysis_cache}{signals});
     }
     
     sub _compute_signal_analysis($self) {
@@ -2008,7 +2009,8 @@ package FSM::CoreAST::DecisionTree;
     
     # Conflict Analysis
     sub analyze_conflicts($self) {
-        return $self->{analysis_cache}{conflicts} //= $self->_compute_conflict_analysis();
+        $self->{analysis_cache}{conflicts} //= $self->_compute_conflict_analysis();
+        return _clone_decision_tree_value($self->{analysis_cache}{conflicts});
     }
     
     sub _compute_conflict_analysis($self) {

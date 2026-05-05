@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### DecisionTree analysis cache results now return snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so `FSM::CoreAST::DecisionTree->analyze_signals()` and
+  `analyze_conflicts()` return cloned analysis containers while preserving
+  contained signal/action object identity. No roadmap status changed.
+- Added
+  [t/529-core-ast-decision-tree-analysis-cache-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/529-core-ast-decision-tree-analysis-cache-defensive-copy-boundary-audit.t)
+  to prove caller mutation cannot contaminate cached signal or conflict
+  analysis results.
 ### DecisionTree elements now return container snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
