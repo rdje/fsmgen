@@ -979,11 +979,8 @@ sub create_signal_ref_ast {
     # This is a simplified implementation - in a real system, you'd need to
     # create a proper Signal object and SignalRef AST node
     # For now, we'll create a generic representation that can be converted to SystemVerilog
-    
-    return bless {
-        type => 'intermediate_signal_ref',
-        signal_name => $signal_name
-    }, 'FSM::HDL::IntermediateSignalRef';
+
+    return FSM::HDL::IntermediateSignalRef->new(signal_name => $signal_name);
 }
 
 =head2 create_binary_op_ast($operator, $left, $right)
@@ -994,13 +991,12 @@ Create a new BinaryOp AST node with substituted children.
 
 sub create_binary_op_ast {
     my ($self, $operator, $left, $right) = @_;
-    
-    return bless {
-        type => 'binary_op',
+
+    return FSM::HDL::SubstitutedBinaryOp->new(
         operator => $operator,
         left => $left,
-        right => $right
-    }, 'FSM::HDL::SubstitutedBinaryOp';
+        right => $right,
+    );
 }
 
 =head2 create_unary_op_ast($operator, $operand)
@@ -1011,12 +1007,11 @@ Create a new UnaryOp AST node with substituted operand.
 
 sub create_unary_op_ast {
     my ($self, $operator, $operand) = @_;
-    
-    return bless {
-        type => 'unary_op',
+
+    return FSM::HDL::SubstitutedUnaryOp->new(
         operator => $operator,
-        operand => $operand
-    }, 'FSM::HDL::SubstitutedUnaryOp';
+        operand => $operand,
+    );
 }
 
 # Proper AST classes for intermediate signals

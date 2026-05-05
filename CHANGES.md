@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### AST factorization wrapper factories now use wrapper constructors
+- Updated
+  [perl/FSM/HDL/ASTFactorization.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/ASTFactorization.pm)
+  so wrapper factory helpers route through the validated wrapper constructors
+  instead of hand-blessing hashes. No roadmap status changed.
+- Added
+  [t/545-ast-factorization-wrapper-factory-constructor-audit.t](/Users/richarddje/Documents/github/fsmgen/t/545-ast-factorization-wrapper-factory-constructor-audit.t)
+  to prove factories keep full runtime shape, render correctly, and share
+  constructor validation.
 ### AST factorization wrapper constructors now retain all fields
 - Updated
   [perl/FSM/HDL/ASTFactorization.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/ASTFactorization.pm)

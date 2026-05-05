@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: AST factorization factories should not bypass constructors
+- The `create_*_ast(...)` helpers in `FSM::HDL::ASTFactorization` create the
+  same wrapper classes whose constructors now own required-field validation and
+  runtime shape. Hand-blessing in the factories left a second path to keep in
+  sync.
+- The factories now delegate to the wrapper constructors so validation, type
+  markers, child identity, and rendering behavior are covered by one code path.
+
 ## 2026-05-05: AST factorization wrappers should validate before blessing
 - The wrapper classes at the end of `FSM::HDL::ASTFactorization` are runtime AST
   compatibility objects consumed by factorization, width inference, operand

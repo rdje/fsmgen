@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: AST factorization wrapper factories now use wrapper constructors
+- Updated
+  [perl/FSM/HDL/ASTFactorization.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/ASTFactorization.pm)
+  so `create_signal_ref_ast(...)`, `create_binary_op_ast(...)`, and
+  `create_unary_op_ast(...)` route through
+  `FSM::HDL::IntermediateSignalRef`,
+  `FSM::HDL::SubstitutedBinaryOp`, and
+  `FSM::HDL::SubstitutedUnaryOp` constructors instead of hand-blessing wrapper
+  hashes.
+- Added
+  [t/545-ast-factorization-wrapper-factory-constructor-audit.t](/Users/richarddje/Documents/github/fsmgen/t/545-ast-factorization-wrapper-factory-constructor-audit.t)
+  to prove factories produce constructor-owned runtime shapes, preserve child
+  identity, render correctly, and share constructor validation for empty or
+  missing required fields.
+- Focused validation paired the factory audit with wrapper constructor,
+  intermediate-signal context, AST factorization, enable-graph factorization,
+  and intermediate-signal width suites. This is `R13` runtime
+  contract-integrity hardening only; no public manifest shape, user-facing docs,
+  generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: AST factorization wrapper constructors now retain all fields
 - Updated
   [perl/FSM/HDL/ASTFactorization.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/ASTFactorization.pm)
