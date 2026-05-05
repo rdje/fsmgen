@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: diagnostics sections should stay mutation-safe
+- The manifest diagnostics section nests stable-code registry entries,
+  check-JSON contract data, and its own section contract. Callers receive
+  mutable Perl data, so one returned section must not pollute later section
+  builds.
+- The new audit mutates a returned diagnostics section before proving a fresh
+  build stays clean.
+- This is coverage only; no diagnostics section shape changed.
+
 ## 2026-05-05: support accounting sections should stay mutation-safe
 - The manifest support-accounting section publishes corpus-derived counts,
   identifiers, sanitized catalog payloads, and its nested section contract.

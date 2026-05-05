@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Diagnostics section builder now has defensive-copy coverage
+- Added
+  [t/487-diagnostics-section-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/487-diagnostics-section-defensive-copy-boundary-audit.t)
+  to prove `build_diagnostics_section()` returns fresh nested structures
+  across calls, including stable-code registry entries, check-JSON contract,
+  and the nested section contract. No roadmap status changed.
+- Focused validation passed with the diagnostics section runtime contract,
+  capability manifest runtime contract, and new defensive-copy audit cluster
+  (`3` files, `12` tests).
 ### Support accounting section builder now has defensive-copy coverage
 - Added
   [t/486-support-accounting-section-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/486-support-accounting-section-defensive-copy-boundary-audit.t)
