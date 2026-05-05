@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: HDLGenerator result contracts should stay mutation-safe
+- The HDLGenerator result contract contains several grouped discovery maps for
+  stable subsurfaces, optional composition keys, semantic-layer keys, and
+  shell-only fallback surfaces. In-process callers can mutate the returned Perl
+  data, so fresh calls must not share mutable nested structures with prior
+  results.
+- The new audit mutates a full returned contract and each grouped helper map,
+  then proves fresh calls remain clean and aligned with their helper builders.
+- This is coverage only; no HDLGenerator result contract shape changed.
+
 ## 2026-05-05: embedding sections should stay mutation-safe per call
 - The manifest `embedding` section nests several public child contracts. Since
   in-process callers receive this as ordinary Perl data, caller-side mutation

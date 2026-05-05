@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### HDLGenerator result contract now has defensive-copy coverage
+- Added
+  [t/438-hdl-generator-result-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/438-hdl-generator-result-contract-defensive-copy-boundary-audit.t)
+  to prove `build_hdl_generator_result_contract()` returns fresh nested
+  structures across calls and that grouped stable-subsurface, optional
+  composition, semantic-layer, and shell-only fallback maps are fresh.
+- Updated
+  [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm)
+  so `tested_by` provenance lists the new audit. No roadmap status changed.
+- Focused validation passed with the HDLGenerator result contract, provenance,
+  and new defensive-copy audit cluster (`3` files, `9` tests).
 ### Embedding section builder now has defensive-copy coverage
 - Added
   [t/437-embedding-section-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/437-embedding-section-defensive-copy-boundary-audit.t)

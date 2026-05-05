@@ -109,6 +109,7 @@ sub build_hdl_generator_result_contract {
         entrypoint => 'FSM::Pipeline::HDLGenerator->new(...)->generate_hdl_from_file($path)',
         tested_by => [
             't/305-hdl-generator-result-contract.t',
+            't/438-hdl-generator-result-contract-defensive-copy-boundary-audit.t',
         ],
         public_top_level_presence_keys => [
             qw(
