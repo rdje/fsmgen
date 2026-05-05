@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### SignalManager aggregate payloads now return caller-owned copies
+- Updated
+  [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm)
+  so aggregate payloads registered through `store_aggregate_symbol(...)` are
+  cloned on storage and from `resolve_aggregate_symbol_payload(...)`. No
+  roadmap status changed.
+- Added
+  [t/507-signal-manager-aggregate-payload-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/507-signal-manager-aggregate-payload-defensive-copy-boundary-audit.t)
+  to prove stored aggregate payloads and parameter-value aggregate lookups are
+  isolated from caller mutation.
 ### Composition top symbols now clone local symbol-table access
 - Updated
   [perl/FSM/Composition/TopSymbols.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopSymbols.pm)

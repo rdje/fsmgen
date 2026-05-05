@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: SignalManager aggregate payloads now return caller-owned copies
+- Updated
+  [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm)
+  so aggregate payloads registered through `store_aggregate_symbol(...)` are
+  copied into the signal manager and returned as fresh structures from
+  `resolve_aggregate_symbol_payload(...)`.
+- Added
+  [t/507-signal-manager-aggregate-payload-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/507-signal-manager-aggregate-payload-defensive-copy-boundary-audit.t)
+  to prove store-input mutation, aggregate-payload lookup mutation, and
+  parameter-value aggregate lookup mutation cannot contaminate the stored
+  payload.
+- Focused validation pairs the new SignalManager audit with scalar-width,
+  intent integer normalization, and symbol-definition boundary suites. This is
+  `R13` runtime contract-integrity hardening only; no public manifest shape,
+  user-facing docs, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Composition top symbols now clone local symbol-table access
 - Updated
   [perl/FSM/Composition/TopSymbols.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopSymbols.pm)

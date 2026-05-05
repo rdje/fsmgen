@@ -198,7 +198,8 @@ sub store_type($self, $name, $type_spec) {
 
 sub store_aggregate_symbol($self, $name, $payload = undef) {
     $self->{aggregate_symbols}{$name} = 1 if defined $name && length $name;
-    $self->{aggregate_payloads}{$name} = $payload if defined $name && length $name && defined $payload;
+    $self->{aggregate_payloads}{$name} = _clone_type_spec($payload)
+        if defined $name && length $name && defined $payload;
     return $self->{aggregate_symbols}{$name};
 }
 
@@ -221,7 +222,7 @@ sub aggregate_symbol_prefix_for($self, $name) {
 
 sub resolve_aggregate_symbol_payload($self, $name) {
     return undef unless defined $name;
-    return $self->{aggregate_payloads}{$name};
+    return _clone_type_spec($self->{aggregate_payloads}{$name});
 }
 
 sub resolve_parameter_value_symbol_payload($self, $symbol_name) {

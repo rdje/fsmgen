@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: SignalManager aggregate payload lookup should be snapshot-based
+- `FSM::Adapter::FSMGenFull::SignalManager` owns aggregate-valued symbol roots
+  used by scalar-expression lowering and parameter-value payload lookup. The
+  aggregate symbol registry was isolated, but payload storage and lookup still
+  exposed nested payload references.
+- `store_aggregate_symbol(...)` now clones any provided aggregate payload, and
+  `resolve_aggregate_symbol_payload(...)` returns a fresh clone. The
+  parameter-value aggregate-symbol path inherits the same copy boundary because
+  it resolves through that accessor.
+- This keeps payload-to-type and payload-to-bits consumers free to inspect or
+  normalize returned structures without mutating the signal manager's symbol
+  table.
+
 ## 2026-05-05: TopSymbols local_symbols should be an inspection snapshot
 - After imported package maps were isolated, `TopSymbols->local_symbols` was the
   remaining direct object accessor for composition-root constants, enums, and
