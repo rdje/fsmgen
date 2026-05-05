@@ -6,6 +6,7 @@ use warnings;
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
+use Scalar::Util qw(blessed);
 use FSM::Package::DeclarativeTypeSupport;
 use FSM::Package::Symbols;
 use FSM::Package::ScalarWidthSupport;
@@ -18,8 +19,8 @@ sub new ($class, %args) {
 
     return bless {
         local_symbols => $local_symbols,
-        imported_packages => $args{imported_packages} || {},
-        raw_blocks => $args{raw_blocks} || [],
+        imported_packages => _clone_imported_packages($args{imported_packages} || {}),
+        raw_blocks => _clone($args{raw_blocks} || []),
     }, $class;
 }
 
@@ -27,8 +28,8 @@ sub local_symbols ($self) { return $self->{local_symbols} }
 sub constants ($self) { return $self->{local_symbols}->constants }
 sub enums ($self) { return $self->{local_symbols}->enums }
 sub types ($self) { return $self->{local_symbols}->types }
-sub imported_packages ($self) { return $self->{imported_packages} }
-sub raw_blocks ($self) { return $self->{raw_blocks} }
+sub imported_packages ($self) { return _clone_imported_packages($self->{imported_packages}) }
+sub raw_blocks ($self) { return _clone($self->{raw_blocks}) }
 
 sub store_constant ($self, $name, $payload) {
     return $self->{local_symbols}->store_constant($name, $payload);
@@ -43,13 +44,13 @@ sub store_type ($self, $type_name, $type_hashref) {
 }
 
 sub push_raw_block ($self, $block_ast) {
-    push @{ $self->{raw_blocks} }, $block_ast if defined $block_ast;
-    return $self->{raw_blocks};
+    push @{ $self->{raw_blocks} }, _clone($block_ast) if defined $block_ast;
+    return $self->raw_blocks;
 }
 
 sub import_package ($self, $package_name, $package_symbols) {
-    $self->{imported_packages}{$package_name} = $package_symbols;
-    return $package_symbols;
+    $self->{imported_packages}{$package_name} = _clone_package_symbols($package_symbols);
+    return _clone_package_symbols($self->{imported_packages}{$package_name});
 }
 
 sub _is_deferred_imported_type_alias ($self, $type_spec) {
@@ -166,6 +167,47 @@ sub as_hashref ($self) {
     $symbol_contract->{package_imports} = [ sort keys %{ $self->{imported_packages} || {} } ];
 
     return $symbol_contract;
+}
+
+sub _clone_imported_packages ($packages) {
+    return {} unless ref($packages) eq 'HASH';
+    return {
+        map { $_ => _clone_package_symbols($packages->{$_}) } keys %$packages
+    };
+}
+
+sub _clone_package_symbols ($package_symbols) {
+    return _clone($package_symbols)
+        unless blessed($package_symbols)
+            && $package_symbols->can('constants')
+            && $package_symbols->can('enums')
+            && $package_symbols->can('types')
+            && $package_symbols->can('raw_blocks')
+            && $package_symbols->can('new');
+
+    my $class = ref($package_symbols);
+    return $class->new(
+        constants => $package_symbols->constants,
+        enums => $package_symbols->enums,
+        types => $package_symbols->types,
+        raw_blocks => $package_symbols->raw_blocks,
+    );
+}
+
+sub _clone ($value) {
+    return undef unless defined $value;
+
+    if (ref($value) eq 'HASH') {
+        return {
+            map { $_ => _clone($value->{$_}) } sort keys %$value
+        };
+    }
+
+    if (ref($value) eq 'ARRAY') {
+        return [ map { _clone($_) } @$value ];
+    }
+
+    return $value;
 }
 
 1;

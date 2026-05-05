@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Composition top symbols now clone imported package maps and raw blocks
+- Updated
+  [perl/FSM/Composition/TopSymbols.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopSymbols.pm)
+  so imported package-symbol maps and raw symbol blocks are cloned at
+  construction, access, `import_package(...)`, and `push_raw_block(...)`
+  return boundaries. No roadmap status changed.
+- Added
+  [t/505-composition-top-symbols-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/505-composition-top-symbols-defensive-copy-boundary-audit.t)
+  to prove imported package mutation and raw-block mutation cannot contaminate
+  top-symbol resolution or `as_hashref` package-import summaries.
 ### Package symbol tables now return caller-owned nested payloads
 - Updated
   [perl/FSM/Package/Symbols.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/Symbols.pm)

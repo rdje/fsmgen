@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Composition top symbols now clone imported package maps and raw blocks
+- Updated
+  [perl/FSM/Composition/TopSymbols.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopSymbols.pm)
+  so imported package-symbol maps and raw symbol blocks are cloned at
+  construction, access, `import_package(...)`, and `push_raw_block(...)` return
+  boundaries, including fresh `FSM::Package::Symbols` snapshots for imported
+  packages.
+- Added
+  [t/505-composition-top-symbols-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/505-composition-top-symbols-defensive-copy-boundary-audit.t)
+  to prove imported package mutation and raw-block mutation cannot contaminate
+  top-symbol resolution or `as_hashref` package-import summaries.
+- Focused validation pairs the new TopSymbols audit with composition parser,
+  package-import, package/composition aggregate-value, composition
+  symbol-contract, and declarative scalar/aggregate type suites. This is `R13`
+  runtime contract-integrity hardening only; no public manifest shape,
+  user-facing docs, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Package symbol tables now return caller-owned nested payloads
 - Updated
   [perl/FSM/Package/Symbols.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/Symbols.pm)

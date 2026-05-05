@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: TopSymbols imported packages and raw blocks need snapshot access
+- `FSM::Composition::TopSymbols` owns composition-root local symbols plus the
+  imported package symbol tables used for width/type/payload resolution.
+  Imported package maps and raw symbol-block lists were exposed as mutable
+  containers.
+- TopSymbols now clones imported package maps and raw-block lists at
+  construction and access. `import_package(...)` stores a fresh
+  `FSM::Package::Symbols` snapshot and returns a fresh snapshot; `push_raw_block`
+  does the same for raw symbol block lists.
+- This preserves imported symbol resolution while protecting composition-spec
+  and symbol-contract inspection from accidental mutation.
+
 ## 2026-05-05: Package symbol tables should not expose nested payload storage
 - `FSM::Package::Symbols` backs package roots, direct-root symbols, and
   composition-root symbols. Its public `as_hashref` output was already cloned,
