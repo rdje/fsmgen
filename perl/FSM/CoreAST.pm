@@ -389,16 +389,20 @@ package FSM::CoreAST::UserDefinedBlock;
         );
         
         $self->{block_type} = $args{block_type} // 'module';  # module, entity, etc.
-        $self->{internal_nodes} = $args{internal_nodes} // [];  # AST nodes inside this block
+        # AST nodes inside this block
+        $self->{internal_nodes} =
+            FSM::CoreAST::ASTNode::_clone_ast_node_value($args{internal_nodes} // []);
         
         return $self;
     }
     
     sub block_type($self) { $self->{block_type} }
-    sub internal_nodes($self) { $self->{internal_nodes} }
+    sub internal_nodes($self) {
+        return FSM::CoreAST::ASTNode::_clone_ast_node_value($self->{internal_nodes});
+    }
     
     # HIERARCHICAL NAVIGATION: Into/out of user-defined blocks
-    sub get_internal_nodes($self) { return $self->{internal_nodes} }
+    sub get_internal_nodes($self) { return $self->internal_nodes }
     
     sub add_internal_node($self, $node) {
         push $self->{internal_nodes}->@*, $node;

@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: UserDefinedBlock internal-node lists now return snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so `FSM::CoreAST::UserDefinedBlock` clones `internal_nodes` on construction
+  and returns cloned list containers from `internal_nodes()` and
+  `get_internal_nodes()`. Contained AST node objects retain identity, and
+  `add_internal_node(...)` remains the explicit mutation path that records live
+  parent hierarchy.
+- Added
+  [t/539-core-ast-user-defined-block-internal-node-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/539-core-ast-user-defined-block-internal-node-defensive-copy-boundary-audit.t)
+  to prove constructor/accessor mutation cannot contaminate internal-node lists
+  and rendering still reads the owned list.
+- Focused validation pairs the new UserDefinedBlock audit with ASTNode port-map,
+  Port driven-node, driving-AST canonicalization, and enable-graph AST suites.
+  This is `R13` runtime contract-integrity hardening only; no public manifest
+  shape, user-facing docs, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: ASTNode port maps and attributes now return snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)

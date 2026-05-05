@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### UserDefinedBlock internal-node lists now return snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so `FSM::CoreAST::UserDefinedBlock` clones `internal_nodes` on construction
+  and from `internal_nodes()` / `get_internal_nodes()` while preserving contained
+  AST node identity and `add_internal_node(...)` as the mutation path. No
+  roadmap status changed.
+- Added
+  [t/539-core-ast-user-defined-block-internal-node-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/539-core-ast-user-defined-block-internal-node-defensive-copy-boundary-audit.t)
+  to prove caller mutation cannot contaminate user-defined block internal nodes.
 ### ASTNode port maps and attributes now return snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)

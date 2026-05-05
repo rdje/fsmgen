@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: UserDefinedBlock internal-node lists should be block-owned
+- User-defined blocks own an ordered list of internal AST nodes for traversal and
+  rendering. `add_internal_node(...)` is the mutation API and also records the
+  live parent hierarchy on the child node.
+- `internal_nodes()` and `get_internal_nodes()` now return cloned list
+  containers while preserving child node identity. Rendering continues to read
+  the owned internal list directly.
+
 ## 2026-05-05: ASTNode port-map containers should be node-owned
 - Base AST nodes own their input/output port maps for traversal and rendering.
   The `Port` objects inside remain live graph connection objects, but callers
