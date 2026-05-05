@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: HDLGenerator composition_spec contracts should stay mutation-safe
+- The `composition_spec` branch remains a shell-only raw composition object for
+  in-process compatibility, while its contract helper structures point
+  embedders at stable composition summary and provenance surfaces.
+- The new audit mutates the full returned contract and each exported mutable
+  helper structure, then proves fresh calls remain clean.
+- This is coverage only; no composition_spec contract shape changed.
+
 ## 2026-05-05: HDLGenerator raw_ast contracts should stay mutation-safe
 - The `raw_ast` branch remains a shell-only frontend/debug artifact, but its
   contract helper structures still document the stable inspection alternatives
