@@ -13,8 +13,8 @@ sub new ($class, %args) {
         source_name => $args{source_name},
         module_name => $args{module_name},
         parameter_overrides => _clone($args{parameter_overrides} || []),
-        raw_items => $args{raw_items} || [],
-        raw_ast => $args{raw_ast},
+        raw_items => _clone($args{raw_items} || []),
+        raw_ast => _clone($args{raw_ast}),
     }, $class;
 }
 
@@ -27,8 +27,8 @@ sub set_parameter_overrides ($self, $parameter_overrides) {
     $self->{parameter_overrides} = _clone($parameter_overrides || []);
     return $self->parameter_overrides;
 }
-sub raw_items ($self) { return $self->{raw_items} }
-sub raw_ast ($self) { return $self->{raw_ast} }
+sub raw_items ($self) { return _clone($self->{raw_items}) }
+sub raw_ast ($self) { return _clone($self->{raw_ast}) }
 
 sub _clone ($value) {
     return undef unless defined $value;

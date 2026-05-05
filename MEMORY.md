@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Composition instances now clone raw parse containers
+- Updated
+  [perl/FSM/Composition/Instance.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Instance.pm)
+  so child-instance `raw_items` and `raw_ast` containers are cloned at
+  construction and from accessors, matching the existing parameter-override
+  copy policy.
+- Added
+  [t/518-composition-instance-raw-container-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/518-composition-instance-raw-container-defensive-copy-boundary-audit.t)
+  to prove constructor and accessor mutation cannot contaminate parsed child
+  instance raw parse containers.
+- Focused validation pairs the new Instance raw-container audit with
+  composition parser, generated child realizer, RTL child realizer, and
+  plan-builder suites. This is `R13` runtime contract-integrity hardening only;
+  no public manifest shape, user-facing docs, generation behavior, or roadmap
+  lane status changed.
+
 ## 2026-05-05: Composition specs now clone embedded-source containers
 - Updated
   [perl/FSM/Composition/Spec.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Spec.pm)

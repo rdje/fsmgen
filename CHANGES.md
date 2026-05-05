@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Composition instances now clone raw parse containers
+- Updated
+  [perl/FSM/Composition/Instance.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Instance.pm)
+  so `raw_items` and `raw_ast` are cloned at construction and from accessors,
+  matching the existing parameter-override copy policy. No roadmap status
+  changed.
+- Added
+  [t/518-composition-instance-raw-container-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/518-composition-instance-raw-container-defensive-copy-boundary-audit.t)
+  to prove raw parse container mutation cannot contaminate parsed child
+  instances.
 ### Composition specs now clone embedded-source containers
 - Updated
   [perl/FSM/Composition/Spec.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Spec.pm)

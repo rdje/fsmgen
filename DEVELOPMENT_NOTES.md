@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Instance raw parse containers should follow override ownership
+- `FSM::Composition::Instance` already cloned parameter overrides because
+  generated and RTL child realization rewrites those records during resolution.
+  The sibling raw parse containers still exposed parser-owned arrays.
+- `raw_items` and `raw_ast` are now cloned on construction and access. Scalar
+  identity fields remain direct accessors.
+- This keeps parsed child instances stable while parser tests, child
+  realization, and plan rebuilding inspect original source fragments.
+
 ## 2026-05-05: Spec embedded-source access should snapshot containers
 - `FSM::Composition::Spec` carries the parsed top plus embedded generated-child
   and package roots discovered in the same source file.
