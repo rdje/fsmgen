@@ -89,6 +89,7 @@ sub build_hdl_generator_facade_contract {
             'Use debug_level_numeric_range for the accepted facade constructor debug_level range.',
             'Use target_language_names for the accepted lower-case target-language tokens at the facade constructor boundary.',
             'Use generation_receiver_shape, generation_argument_list_shape, and generation_argument_shape for the bounded generate_hdl_from_file(...) method boundary.',
+            'Direct extension objects supplied through extensions must be blessed and expose at least one real supported typed-extension hook method discoverable without extension-provided can(...) or AUTOLOAD behavior.',
             'Generation receivers must be exact hash-backed FSM::Pipeline::HDLGenerator facade instances constructed by new(...) with the required internal facade state, not subclasses or manually blessed stand-ins.',
             'Generation arguments after the object invocant are validated as exactly one source-path argument before Perl signature or lower-level source-opening diagnostics can reinterpret malformed calls.',
             'Follow result_contract_source for the returned compatibility-heavy result hash, direct_extension_contract_source for typed extension loading and hook semantics, and debug_runtime_contract_source for the explicit process-global debug save/restore seam.',
@@ -212,7 +213,7 @@ sub hdl_generator_facade_constructor_option_shape_map {
         quiet => 'boolean scalar 0 or 1',
         strict_mode => 'boolean scalar 0 or 1',
         source_search_paths => 'array reference of scalar non-empty filesystem search roots',
-        extensions => 'array reference of blessed typed-extension objects',
+        extensions => 'array reference of blessed typed-extension objects with at least one supported hook method',
     };
 }
 sub hdl_generator_facade_debug_level_numeric_range {

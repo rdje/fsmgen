@@ -142,31 +142,38 @@ subtest 'typed-extension contract keeps AUTOLOAD dispatch outside the public bou
             "$label does not advertise AUTOLOAD hook dispatch",
         );
         ok(
+            $contract->{extension_object_contract}{must_provide_supported_hook_method},
+            "$label requires a real supported hook method on extension objects",
+        );
+        is(
+            $contract->{extension_object_contract}{supported_hook_method_policy},
+            'extension objects must provide at least one real supported hook method discoverable by UNIVERSAL::can',
+            "$label records the supported-hook method policy",
+        );
+        ok(
             !$contract->{extension_object_contract}{automatic_directory_discovery},
             "$label does not advertise implicit extension discovery",
         );
     }
 };
 
-subtest 'AUTOLOAD-only extensions do not receive hook dispatch' => sub {
+subtest 'AUTOLOAD-only extensions fail closed before hook dispatch' => sub {
     local @Test::AutoloadOnlyExtension::AUTOLOAD_CALLS = ();
-    my $result = run_pipeline(
-        extensions => [Test::AutoloadOnlyExtension->new()],
-    );
+    my $error = capture_exception(sub {
+        run_pipeline(
+            extensions => [Test::AutoloadOnlyExtension->new()],
+        );
+    });
 
-    is(
-        $result->{module_info}{module_name},
-        'autoload_boundary_root',
-        'generation succeeds with an AUTOLOAD-only extension object present',
-    );
-    ok(
-        !exists $result->{autoload_boundary_explicit_markers},
-        'AUTOLOAD-only extension does not mutate the returned result',
+    like(
+        $error,
+        qr/FSM::Pipeline::HDLGenerator expects each object in 'extensions' to provide at least one supported typed-extension hook method: after_parse_source, after_generate_result/s,
+        'AUTOLOAD-only extension is rejected as a hookless direct extension object',
     );
     is_deeply(
         \@Test::AutoloadOnlyExtension::AUTOLOAD_CALLS,
         [],
-        'AUTOLOAD-only extension is not called for typed hook names',
+        'AUTOLOAD-only extension is not called while rejecting the constructor value',
     );
 };
 
@@ -174,18 +181,16 @@ subtest 'extensions cannot opt into hooks by lying through can() plus AUTOLOAD' 
     local @Test::LyingCanAutoloadExtension::AUTOLOAD_CALLS = ();
     local @Test::LyingCanAutoloadExtension::CAN_CALLS = ();
 
-    my $result = run_pipeline(
-        extensions => [Test::LyingCanAutoloadExtension->new()],
-    );
+    my $error = capture_exception(sub {
+        run_pipeline(
+            extensions => [Test::LyingCanAutoloadExtension->new()],
+        );
+    });
 
-    is(
-        $result->{module_info}{module_name},
-        'autoload_boundary_root',
-        'generation succeeds with a can-overriding AUTOLOAD extension object present',
-    );
-    ok(
-        !exists $result->{autoload_boundary_explicit_markers},
-        'can-overriding AUTOLOAD extension does not mutate the returned result',
+    like(
+        $error,
+        qr/FSM::Pipeline::HDLGenerator expects each object in 'extensions' to provide at least one supported typed-extension hook method: after_parse_source, after_generate_result/s,
+        'can-overriding AUTOLOAD extension is rejected before it can opt into hooks',
     );
     is_deeply(
         \@Test::LyingCanAutoloadExtension::CAN_CALLS,
@@ -195,7 +200,7 @@ subtest 'extensions cannot opt into hooks by lying through can() plus AUTOLOAD' 
     is_deeply(
         \@Test::LyingCanAutoloadExtension::AUTOLOAD_CALLS,
         [],
-        'can-overriding AUTOLOAD extension is not called for typed hook names',
+        'can-overriding AUTOLOAD extension is not called while rejecting the constructor value',
     );
 };
 
@@ -273,4 +278,15 @@ sub write_file {
     open my $fh, '>', $path or die "Cannot open $path for write: $!";
     print {$fh} $contents or die "Cannot write $path: $!";
     close $fh or die "Cannot close $path: $!";
+}
+
+sub capture_exception {
+    my ($code) = @_;
+    my $ok = eval {
+        $code->();
+        1;
+    };
+
+    return '' if $ok;
+    return $@ || 'unknown error';
 }

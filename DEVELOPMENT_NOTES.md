@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: direct extension objects should not silently no-op
+- `extensions => [ ... ]` is a public embedder seam, so accepting any blessed
+  object was too loose. A typo-only object or an object that only implements
+  future-looking methods such as `before_parse_source` could be accepted at
+  construction and then do nothing for every generation call, which is
+  indistinguishable from a successfully installed but ineffective extension.
+- The facade and registry now require each direct extension object to expose at
+  least one currently supported hook method: `after_parse_source` or
+  `after_generate_result`. This keeps the hook set closed while also making
+  the direct-object boundary fail closed for hookless and unsupported-hook-only
+  objects.
+- Hook discovery deliberately uses `UNIVERSAL::can(...)`, matching the existing
+  no-AUTOLOAD policy. Extension-provided `can(...)` methods and `AUTOLOAD`
+  cannot opt an object into the typed hook contract; explicit or inherited real
+  methods remain the supported path.
+- This does not add a hook family or widen extension loading. It tightens the
+  existing `R13` embedder boundary so direct object injection reports malformed
+  extension objects at construction, before registry dispatch, hook execution,
+  or silent no-op behavior can become the observable API.
+
 ## 2026-05-05: bootstrap architecture notes must stay measurement-honest
 - The required README/bootstrap recovery pass can legitimately produce a
   doc-only slice when topology is stable but measured architecture notes drift.

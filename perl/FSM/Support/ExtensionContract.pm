@@ -51,6 +51,7 @@ sub build_extension_contract {
             't/401-typed-extension-module-name-shape-boundary-audit.t',
             't/402-typed-extension-constructor-list-shape-boundary-audit.t',
             't/411-typed-extension-programmatic-entry-shape-boundary-audit.t',
+            't/421-hdl-generator-facade-extension-hook-method-boundary-audit.t',
         ],
         entrypoints => {
             programmatic_objects => 'FSM::Pipeline::HDLGenerator->new(extensions => [ $object, ... ])',
@@ -61,6 +62,8 @@ sub build_extension_contract {
         },
         extension_object_contract => {
             must_be_blessed_object => JSON::PP::true,
+            must_provide_supported_hook_method => JSON::PP::true,
+            supported_hook_method_policy => 'extension objects must provide at least one real supported hook method discoverable by UNIVERSAL::can',
             constructor_for_module_loading => 'new()',
             module_name_shape => 'scalar Module::Name value',
             config_file_path_shape => 'scalar non-empty extension config file path',

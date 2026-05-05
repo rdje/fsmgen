@@ -8,10 +8,11 @@ use Scalar::Util qw(blessed);
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
-my %SUPPORTED_HOOK_NAME = map { $_ => 1 } qw(
+my @SUPPORTED_HOOK_NAMES = qw(
     after_parse_source
     after_generate_result
 );
+my %SUPPORTED_HOOK_NAME = map { $_ => 1 } @SUPPORTED_HOOK_NAMES;
 
 sub new ($class, %args) {
     my $extensions = $args{extensions} || [];
@@ -21,11 +22,22 @@ sub new ($class, %args) {
     for my $extension (@$extensions) {
         confess "FSM::Extension::Registry accepts only blessed extension objects"
             unless blessed($extension);
+        confess "FSM::Extension::Registry expects extension objects to provide at least one supported hook method: "
+            . join(', ', @SUPPORTED_HOOK_NAMES)
+            unless _extension_supports_supported_hook($extension);
     }
 
     return bless {
         extensions => $extensions,
     }, $class;
+}
+
+sub _extension_supports_supported_hook ($extension) {
+    for my $hook_name (@SUPPORTED_HOOK_NAMES) {
+        return 1 if UNIVERSAL::can($extension, $hook_name);
+    }
+
+    return 0;
 }
 
 sub extensions ($self) { return $self->{extensions} }

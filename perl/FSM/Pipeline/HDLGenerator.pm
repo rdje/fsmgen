@@ -18,6 +18,11 @@ use FSM::Extension::Registry;
 use FSM::Pipeline::SourceGenerationOrchestrator;
 use FSM::SourcePathResolver;
 
+my @SUPPORTED_EXTENSION_HOOK_METHODS = qw(
+    after_parse_source
+    after_generate_result
+);
+
 =head1 NAME
 
 FSM::Pipeline::HDLGenerator - Complete FSM to HDL generation pipeline
@@ -228,9 +233,19 @@ sub _extension_objects_constructor_arg ($arg_name, $value) {
     for my $extension (@$extensions) {
         confess "FSM::Pipeline::HDLGenerator accepts only blessed extension objects in '$arg_name'"
             unless blessed($extension);
+        confess "FSM::Pipeline::HDLGenerator expects each object in '$arg_name' to provide at least one supported typed-extension hook method: "
+            . join(', ', @SUPPORTED_EXTENSION_HOOK_METHODS)
+            unless _object_has_supported_extension_hook($extension);
     }
 
     return $extensions;
+}
+sub _object_has_supported_extension_hook ($extension) {
+    for my $hook_method (@SUPPORTED_EXTENSION_HOOK_METHODS) {
+        return 1 if UNIVERSAL::can($extension, $hook_method);
+    }
+
+    return 0;
 }
 sub _object_injection_constructor_arg ($arg_name, $value, @methods) {
     return undef unless defined $value;

@@ -16,7 +16,8 @@ In this document, "typed" does not mean a static Perl type system.
 It means the extension boundary is explicit and structured instead of string-driven.
 
 Concretely:
-- the pipeline accepts normal blessed Perl objects as extensions,
+- the pipeline accepts normal blessed Perl objects with at least one supported
+  hook method as extensions,
 - hook entrypoints are explicit methods on those objects,
 - hook arguments are passed through a named context object with stable accessors,
 - and the registry validates the basic object shape before dispatch.
@@ -41,7 +42,8 @@ Current contract:
 - callers may also pass `extension_config_files => [ 'extensions.fsmext', ... ]` to `FSM::Pipeline::HDLGenerator->new(...)`,
 - the CLI may load repeated `--extension-module Module::Name` entries explicitly from `@INC`,
 - the CLI may also load repeated `--extension-config <file>` entries explicitly,
-- each extension must be a normal blessed Perl object,
+- each extension must be a normal blessed Perl object that provides at least
+  one real supported hook method discoverable by `UNIVERSAL::can`,
 - the shipped hook set today is:
   - `after_parse_source($context)`
   - `after_generate_result($context)`.
@@ -107,13 +109,18 @@ in-process hooks through `FSM::Pipeline::HDLGenerator` while remaining owned by
 `embedding.typed_extensions`.
 [t/392-typed-extension-autoload-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/392-typed-extension-autoload-boundary-audit.t)
 also proves the negative side of the same typed boundary: AUTOLOAD-only
-extensions, including objects that override `can(...)`, do not receive hook
-dispatch, while explicit and inherited real hook methods still run.
+extensions, including objects that override `can(...)`, now fail closed as
+hookless direct extension objects, while explicit and inherited real hook
+methods still run.
 [t/393-typed-extension-hook-set-closed-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/393-typed-extension-hook-set-closed-boundary-audit.t)
 also proves the hook set is closed for the current schema version: extra
 hook-shaped methods such as `before_parse_source` or `after_emit_hdl` remain
 inert during direct and composition generation until the contract deliberately
 adds a new hook family.
+[t/421-hdl-generator-facade-extension-hook-method-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/421-hdl-generator-facade-extension-hook-method-boundary-audit.t)
+also proves the `HDLGenerator` facade and direct registry reject hookless,
+unsupported-hook-only, and `AUTOLOAD`/fake-`can` direct extension objects before
+they can become silent no-ops or leak registry/lower-level fallout.
 [t/394-typed-extension-context-accessor-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/394-typed-extension-context-accessor-boundary-audit.t)
 also proves the context accessor names are stable for the current schema
 version by checking manifest discovery, the implemented

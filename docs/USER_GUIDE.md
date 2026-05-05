@@ -2109,7 +2109,8 @@ What "typed extension" means here:
 - an extension is a normal blessed Perl object, not a string hook name,
 - the hook entrypoint is an explicit Perl method such as `after_generate_result(...)`,
 - the hook receives a typed context object with named accessors such as `source_info`, `target_language`, and `result`,
-- the active pipeline validates that extension entries are objects before using them.
+- the active pipeline validates that extension entries are blessed objects with
+  at least one real supported hook method before using them.
 
 What it is not:
 - not `.plg` file scanning,
@@ -2228,9 +2229,9 @@ resolution, supplied roots generate HDL with the imported package literal, and
 separate facade objects with different roots do not leak resolution state.
 [t/389-hdl-generator-facade-extensions-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/389-hdl-generator-facade-extensions-boundary-audit.t)
 also proves the advertised `extensions` constructor option is runtime-backed as
-direct blessed-object injection: non-blessed values are rejected, injected
-objects dispatch in order, result-hook mutation reaches the returned raw
-result, and separate facade objects do not share injected extension state.
+direct blessed-object injection: non-blessed values are rejected, hook-capable
+injected objects dispatch in order, result-hook mutation reaches the returned
+raw result, and separate facade objects do not share injected extension state.
 [t/390-hdl-generator-facade-quiet-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/390-hdl-generator-facade-quiet-boundary-audit.t)
 also proves the advertised `quiet` constructor option is accepted compatibility
 state rather than core runtime behavior: it is grouped under
@@ -2249,6 +2250,12 @@ facade seam before Perl hash assignment can silently keep only the last value:
 the duplicate-option policy is manifest-backed, public and non-public repeated
 names receive sorted targeted diagnostics, later value-shape or unsupported
 name validation does not run first, and caller debug state is preserved.
+[t/421-hdl-generator-facade-extension-hook-method-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/421-hdl-generator-facade-extension-hook-method-boundary-audit.t)
+also proves direct extension objects must expose at least one real supported
+typed-extension hook method: hookless, unsupported-hook-only, and
+`AUTOLOAD`/fake-`can` objects fail at the facade before registry or raw method
+fallout can leak, while parse-only and result-only real hook objects remain
+accepted.
 [t/399-hdl-generator-facade-stateful-reuse-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/399-hdl-generator-facade-stateful-reuse-boundary-audit.t)
 also proves the advertised `stateful_reuse_supported` promise is
 runtime-backed: one facade object preserves `strict_mode`, `target_language`,
@@ -2286,9 +2293,9 @@ array-reference diagnostics before raw Perl dereference or lower-level loader
 fallout can leak.
 [t/392-typed-extension-autoload-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/392-typed-extension-autoload-boundary-audit.t)
 also proves `AUTOLOAD` remains outside the typed-extension hook boundary:
-AUTOLOAD-only extensions, including objects that override `can(...)`, do not
-receive hook dispatch, while explicit and inherited real hook methods still
-run normally.
+AUTOLOAD-only extensions, including objects that override `can(...)`, fail
+closed as hookless direct extension objects, while explicit and inherited real
+hook methods still run normally.
 [t/393-typed-extension-hook-set-closed-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/393-typed-extension-hook-set-closed-boundary-audit.t)
 also proves the hook set is closed for the current schema version: extra
 hook-shaped methods such as `before_parse_source` or `after_emit_hdl` remain

@@ -15,7 +15,24 @@ use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::Support::HDLGeneratorFacadeContract qw(build_hdl_generator_facade_contract);
 
 {
-    package Test::FacadeExtensionsShapeBlessedObject;
+    package Test::FacadeExtensionsShapeHookObject;
+
+    use strict;
+    use warnings;
+
+    sub new {
+        my ($class) = @_;
+        return bless { calls => 0 }, $class;
+    }
+
+    sub after_generate_result {
+        my ($self, $context) = @_;
+        ++$self->{calls};
+    }
+}
+
+{
+    package Test::FacadeExtensionsShapeHooklessObject;
 
     use strict;
     use warnings;
@@ -65,8 +82,8 @@ subtest 'manifests advertise extensions as a blessed-object list facade option' 
         );
         is(
             $facade->{constructor_option_shape_map}{extensions},
-            'array reference of blessed typed-extension objects',
-            "$label advertises the extensions blessed-object array shape",
+            'array reference of blessed typed-extension objects with at least one supported hook method',
+            "$label advertises the extensions hook-capable blessed-object array shape",
         );
         ok(
             !$facade->{object_injection_args_public},
@@ -88,7 +105,7 @@ subtest 'HDLGenerator accepts omitted and blessed-object extension lists' => sub
         'omitted extensions defaults to an empty direct extension list',
     );
 
-    my $extension = Test::FacadeExtensionsShapeBlessedObject->new();
+    my $extension = Test::FacadeExtensionsShapeHookObject->new();
     my $pipeline = eval {
         FSM::Pipeline::HDLGenerator->new(
             debug_level => 0,
@@ -100,12 +117,12 @@ subtest 'HDLGenerator accepts omitted and blessed-object extension lists' => sub
     };
     my $error = $@;
 
-    ok($pipeline, 'constructor accepts an array reference of blessed extension objects')
+    ok($pipeline, 'constructor accepts an array reference of blessed hook-capable extension objects')
         or diag($error);
     is_deeply(
         $pipeline->{extension_registry}->extensions,
         [$extension],
-        'accepted blessed extension object is stored in the registry without rewriting',
+        'accepted hook-capable extension object is stored in the registry without rewriting',
     ) if $pipeline;
 };
 
@@ -113,17 +130,17 @@ subtest 'HDLGenerator rejects malformed extensions values at the facade boundary
     for my $case (
         {
             label => 'scalar string',
-            value => 'Test::FacadeExtensionsShapeBlessedObject',
+            value => 'Test::FacadeExtensionsShapeHookObject',
             expect => qr/FSM::Pipeline::HDLGenerator expects 'extensions' to be an array reference/s,
         },
         {
             label => 'hashref',
-            value => { extension => 'Test::FacadeExtensionsShapeBlessedObject' },
+            value => { extension => 'Test::FacadeExtensionsShapeHookObject' },
             expect => qr/FSM::Pipeline::HDLGenerator expects 'extensions' to be an array reference/s,
         },
         {
             label => 'unblessed string element',
-            value => ['Test::FacadeExtensionsShapeBlessedObject'],
+            value => ['Test::FacadeExtensionsShapeHookObject'],
             expect => qr/FSM::Pipeline::HDLGenerator accepts only blessed extension objects in 'extensions'/s,
         },
         {
@@ -135,6 +152,11 @@ subtest 'HDLGenerator rejects malformed extensions values at the facade boundary
             label => 'undef element',
             value => [undef],
             expect => qr/FSM::Pipeline::HDLGenerator accepts only blessed extension objects in 'extensions'/s,
+        },
+        {
+            label => 'hookless blessed element',
+            value => [Test::FacadeExtensionsShapeHooklessObject->new()],
+            expect => qr/FSM::Pipeline::HDLGenerator expects each object in 'extensions' to provide at least one supported typed-extension hook method: after_parse_source, after_generate_result/s,
         },
     ) {
         my $error = capture_exception(sub {

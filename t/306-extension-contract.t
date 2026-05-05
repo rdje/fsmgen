@@ -89,6 +89,15 @@ subtest 'contract declares the bounded typed-extension surface' => sub {
         'contract publishes the grouped extension name families',
     );
     ok($contract->{extension_object_contract}{must_be_blessed_object}, 'contract requires extension objects');
+    ok(
+        $contract->{extension_object_contract}{must_provide_supported_hook_method},
+        'contract requires extension objects to provide at least one supported hook method',
+    );
+    is(
+        $contract->{extension_object_contract}{supported_hook_method_policy},
+        'extension objects must provide at least one real supported hook method discoverable by UNIVERSAL::can',
+        'contract records the supported-hook method policy',
+    );
     is(
         $contract->{extension_object_contract}{constructor_for_module_loading},
         'new()',

@@ -93,6 +93,10 @@ subtest 'facade contract advertises direct extension-object injection as public'
         $extension_contract->{extension_object_contract}{must_be_blessed_object},
         'typed-extension contract says direct extension objects must be blessed',
     );
+    ok(
+        $extension_contract->{extension_object_contract}{must_provide_supported_hook_method},
+        'typed-extension contract says direct extension objects must expose a supported hook method',
+    );
 };
 
 subtest 'facade extensions option rejects non-blessed constructor values' => sub {

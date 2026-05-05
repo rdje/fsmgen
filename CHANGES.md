@@ -1,6 +1,39 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### HDLGenerator direct extension objects now require a real supported hook
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  and
+  [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)
+  so direct extension entries must be blessed objects with at least one real
+  supported typed-extension hook method, `after_parse_source` or
+  `after_generate_result`, discoverable through `UNIVERSAL::can(...)`.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  and
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  so the typed-extension manifest and facade manifest advertise the
+  supported-hook-method policy and the stricter direct `extensions` shape.
+- Added
+  [t/421-hdl-generator-facade-extension-hook-method-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/421-hdl-generator-facade-extension-hook-method-boundary-audit.t)
+  to prove manifest visibility, valid parse-only/result-only hook objects,
+  hookless and unsupported-hook-only rejection, fake-`can`/`AUTOLOAD` rejection
+  without invoking extension-owned discovery, registry parity, and caller
+  debug-state preservation.
+- Updated the adjacent extension/facade audits plus
+  [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md),
+  [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md),
+  [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md),
+  and
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+  for the stricter extension boundary and current measured line counts. No
+  roadmap status changed.
+- Validation passed with focused syntax checks, the adjacent extension/facade
+  cluster (`14` files, `85` tests), the repaired adjacent constructor audit
+  cluster (`3` files, `16` tests), and the full
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`417` files, `3763` tests, plus mdBook build).
 ### README bootstrap import-tree line counts rechecked
 - Re-ran the README/commit/bootstrap recovery path and rebuilt the static
   project-owned `FSM::...` import closure reachable from

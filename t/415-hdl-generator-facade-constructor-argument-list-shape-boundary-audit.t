@@ -34,6 +34,10 @@ use FSM::Support::HDLGeneratorFacadeContract qw(
         my ($class) = @_;
         return bless {}, $class;
     }
+
+    sub after_generate_result {
+        return;
+    }
 }
 
 my $INITIAL_DEBUG_STATE = capture_fsm_debug_state();

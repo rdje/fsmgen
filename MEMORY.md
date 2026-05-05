@@ -1,5 +1,43 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: HDLGenerator direct extension objects now require a real supported hook
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so public direct `extensions => [ ... ]` constructor entries must be blessed
+  objects that expose at least one real supported typed-extension hook method
+  (`after_parse_source` or `after_generate_result`) discoverable through
+  `UNIVERSAL::can(...)`.
+- Hardened
+  [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)
+  with the same hook-capable-object boundary, so direct registry construction
+  and loaded extension-object lists cannot silently carry hookless objects.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  and
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  so manifests advertise the stricter hook-method policy and the
+  `extensions` constructor shape as hook-capable blessed extension objects.
+- Added
+  [t/421-hdl-generator-facade-extension-hook-method-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/421-hdl-generator-facade-extension-hook-method-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  valid parse-only/result-only hook objects, hookless and unsupported-hook-only
+  rejection, fake-`can`/`AUTOLOAD` rejection without invoking extension-owned
+  discovery, registry parity, and caller debug-state preservation.
+- Updated the adjacent extension/facade audits and user-facing extension docs
+  so `AUTOLOAD`-only direct extension objects now fail closed instead of being
+  accepted as inert no-ops, while explicit and inherited real hook methods
+  remain supported.
+- Validation passed with focused syntax checks, the adjacent extension /
+  facade cluster (`14` files, `85` tests), the repaired adjacent constructor
+  audit cluster (`3` files, `16` tests), and the full repo-owned
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`417` files, `3763` tests, plus mdBook build).
+- This is `R13` public embedder-boundary hardening only; no hook family,
+  extension loading entrypoint, generation behavior, or roadmap lane status
+  changed. The next honest move remains another bounded runtime or
+  negative-boundary audit around remaining embedder assumptions before widening
+  any public API.
+
 ## 2026-05-05: README bootstrap import-tree line counts rechecked
 - Re-read
   [README.md](/Users/richarddje/Documents/github/fsmgen/README.md),

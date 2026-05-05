@@ -1501,6 +1501,15 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest records the typed extension object boundary',
     );
     ok(
+        $manifest->{embedding}{typed_extensions}{extension_object_contract}{must_provide_supported_hook_method},
+        'manifest records the typed extension supported-hook object boundary',
+    );
+    is(
+        $manifest->{embedding}{typed_extensions}{extension_object_contract}{supported_hook_method_policy},
+        'extension objects must provide at least one real supported hook method discoverable by UNIVERSAL::can',
+        'manifest records the typed extension supported-hook method policy',
+    );
+    ok(
         !$manifest->{embedding}{typed_extensions}{extension_object_contract}{legacy_plg_discovery},
         'manifest records that legacy .plg discovery is not part of typed extensions',
     );
