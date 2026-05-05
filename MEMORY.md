@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Package specs now clone raw AST containers
+- Updated
+  [perl/FSM/Package/Spec.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/Spec.pm)
+  so package `raw_ast` containers are cloned at construction and from
+  `raw_ast()`. `symbols()` still returns the owned `FSM::Package::Symbols`
+  object.
+- Added
+  [t/519-package-spec-raw-ast-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/519-package-spec-raw-ast-defensive-copy-boundary-audit.t)
+  to prove constructor and accessor mutation cannot contaminate parsed package
+  raw AST payloads.
+- Focused validation pairs the new Package::Spec audit with composition
+  package import, package aggregate-value, and declarative scalar/aggregate
+  type suites. This is `R13` runtime contract-integrity hardening only; no
+  public manifest shape, user-facing docs, generation behavior, or roadmap lane
+  status changed.
+
 ## 2026-05-05: Composition instances now clone raw parse containers
 - Updated
   [perl/FSM/Composition/Instance.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Instance.pm)

@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Package spec raw AST access should snapshot containers
+- `FSM::Package::Spec` wraps a package name, its owned `FSM::Package::Symbols`
+  table, and the raw package AST.
+- The package spec now clones raw AST containers on construction and access.
+  `symbols()` remains live because package import projection intentionally
+  resolves through the owned symbol table.
+- This keeps reusable package parsing and import inspection stable after callers
+  examine raw package roots.
+
 ## 2026-05-05: Instance raw parse containers should follow override ownership
 - `FSM::Composition::Instance` already cloned parameter overrides because
   generated and RTL child realization rewrites those records during resolution.

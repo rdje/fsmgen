@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Package specs now clone raw AST containers
+- Updated
+  [perl/FSM/Package/Spec.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/Spec.pm)
+  so package raw AST payloads are cloned at construction and from `raw_ast()`;
+  `symbols()` remains the owned package symbol-table object. No roadmap status
+  changed.
+- Added
+  [t/519-package-spec-raw-ast-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/519-package-spec-raw-ast-defensive-copy-boundary-audit.t)
+  to prove raw AST mutation cannot contaminate parsed package specs.
 ### Composition instances now clone raw parse containers
 - Updated
   [perl/FSM/Composition/Instance.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Instance.pm)
