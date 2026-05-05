@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Normalized semantic composition contract now has defensive-copy coverage
+- Added
+  [t/470-normalized-semantic-composition-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/470-normalized-semantic-composition-contract-defensive-copy-boundary-audit.t)
+  to prove `build_normalized_semantic_composition_contract()` and its exported
+  helper builders return fresh nested structures across calls.
+- Focused validation passed with the normalized semantic composition contract,
+  normalized semantic child runtime contract, and new defensive-copy audit
+  cluster (`3` files, `6` tests).
+- This is `R13` normalized semantic composition contract-integrity coverage
+  only; no public API shape, user-facing docs, mdBook source, generation
+  behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Normalized semantic module contract now has defensive-copy coverage
 - Added
   [t/469-normalized-semantic-module-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/469-normalized-semantic-module-contract-defensive-copy-boundary-audit.t)

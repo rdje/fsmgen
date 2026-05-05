@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: normalized semantic composition contracts should stay mutation-safe
+- The normalized semantic `composition` contract publishes composition summary,
+  collection, nested-owner, and provenance-adjacent helper structures for
+  public semantic JSON consumers.
+- The new audit mutates the full returned contract and each exported mutable
+  helper structure, then proves fresh calls remain clean.
+- This is coverage only; no normalized semantic composition contract shape
+  changed.
+
 ## 2026-05-05: normalized semantic module contracts should stay mutation-safe
 - The normalized semantic `module` contract publishes core module-summary and
   optional metric helper structures for public semantic JSON consumers.
