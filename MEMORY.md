@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: DecisionTree elements now return container snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so `FSM::CoreAST::DecisionTree` clones element-list and attribute containers
+  on construction and from `elements()` / `attributes()`. Contained AST/action
+  elements retain identity, and `add_element(...)` remains the explicit
+  mutation path that invalidates analysis cache state.
+- Added
+  [t/528-core-ast-decision-tree-elements-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/528-core-ast-decision-tree-elements-defensive-copy-boundary-audit.t)
+  to prove constructor and accessor mutation cannot contaminate element lists
+  or attribute metadata.
+- Focused validation pairs the new DecisionTree audit with enable-graph
+  capture, decision-tree flattening, assignment-intent, and core language-form
+  suites. This is `R13` runtime contract-integrity hardening only; no public
+  manifest shape, user-facing docs, generation behavior, or roadmap lane
+  status changed.
+
 ## 2026-05-05: TestNode branches now return container snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)

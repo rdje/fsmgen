@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### DecisionTree elements now return container snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so `FSM::CoreAST::DecisionTree` clones element-list and attribute containers
+  on construction and from accessors while preserving contained element object
+  identity and `add_element(...)` as the mutation path. No roadmap status
+  changed.
+- Added
+  [t/528-core-ast-decision-tree-elements-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/528-core-ast-decision-tree-elements-defensive-copy-boundary-audit.t)
+  to prove constructor and accessor mutation cannot contaminate decision-tree
+  element lists or attribute metadata.
 ### TestNode branches now return container snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)

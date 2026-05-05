@@ -1920,22 +1920,38 @@ package FSM::CoreAST::DecisionTree;
         bless {
             name => $args{name} // Carp::confess("Decision tree name required"),
             enable_condition => $args{enable_condition},
-            elements => $args{elements} // [],  # Mix of actions and control flow
+            elements => _clone_decision_tree_value($args{elements} // []),  # Mix of actions and control flow
             priority => $args{priority} // 0,
-            attributes => $args{attributes} // {},
+            attributes => _clone_decision_tree_value($args{attributes} // {}),
             analysis_cache => {},  # For caching analysis results
         }, $class;
     }
     
     sub name($self) { $self->{name} }
     sub enable_condition($self) { $self->{enable_condition} }
-    sub elements($self) { $self->{elements} }
+    sub elements($self) { _clone_decision_tree_value($self->{elements}) }
     sub priority($self) { $self->{priority} }
-    sub attributes($self) { $self->{attributes} }
+    sub attributes($self) { _clone_decision_tree_value($self->{attributes}) }
     
     sub add_element($self, $element) {
         push $self->{elements}->@*, $element;
         delete $self->{analysis_cache};  # Invalidate cache
+    }
+
+    sub _clone_decision_tree_value($value) {
+        return undef unless defined $value;
+
+        if (ref($value) eq 'HASH') {
+            return {
+                map { $_ => _clone_decision_tree_value($value->{$_}) } sort keys %$value
+            };
+        }
+
+        if (ref($value) eq 'ARRAY') {
+            return [ map { _clone_decision_tree_value($_) } @$value ];
+        }
+
+        return $value;
     }
     
     # Signal Analysis
