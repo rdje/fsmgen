@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: context accessors should run only on constructed context objects
+- `FSM::Extension::Context` construction and payload validation were already
+  owned boundaries, but the accessors themselves still trusted any receiver
+  that Perl dispatched. A class receiver or fake exact-class object could
+  therefore leak raw hash or method-call fallout when an extension or embedder
+  called an accessor directly.
+- Context instances are now stamped by `new(...)`, and the accessor receiver
+  guard is lexical so it does not widen the public accessor method list. Every
+  advertised accessor requires an exact hash-backed stamped context object
+  before returning payload values.
+- This keeps the context object aligned with the loader and registry receiver
+  boundaries without changing hook payload semantics or adding new accessors.
+
 ## 2026-05-05: registry methods should run only on constructed registry objects
 - Once `FSM::Extension::Registry->new(...)` had an owned constructor boundary,
   the registry methods still trusted whatever receiver Perl dispatched. That

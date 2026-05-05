@@ -1,5 +1,38 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Typed extension context accessors now require constructed contexts
+- Hardened
+  [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm)
+  so direct context accessors reject class receivers, subclass stand-ins, and
+  fake exact-class objects before raw accessor fallout can leak. Context
+  instances are now stamped by `new(...)`, and every advertised accessor
+  requires an exact hash-backed `FSM::Extension::Context` object constructed by
+  that constructor.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  so the typed-extension contract and capability manifest advertise
+  `context_contract.accessor_receiver_shape` and
+  `context_contract.accessor_method_names`.
+- Added
+  [t/430-typed-extension-context-accessor-receiver-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/430-typed-extension-context-accessor-receiver-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  valid constructed-context accessor calls, malformed receiver rejection,
+  bounded diagnostics, and exact accessor-surface preservation.
+- Updated the extension docs in
+  [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md),
+  [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md),
+  and
+  [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  so the live guide and mdBook source describe the direct context accessor
+  receiver boundary.
+- Focused validation passed with syntax checks and the adjacent
+  context/registry/contract/manifest cluster (`8` files, `29` tests), followed
+  by the full repo-owned `./bin/ci-regression` gate (`426` files, `3798`
+  tests) and mdBook build.
+- This is `R13` typed-extension embedder-boundary hardening only; no hook
+  family, extension loading entrypoint, generation behavior, or roadmap lane
+  status changed.
+
 ## 2026-05-05: Typed extension registry methods now require constructed registries
 - Hardened
   [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)

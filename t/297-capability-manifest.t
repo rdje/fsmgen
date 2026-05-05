@@ -1585,6 +1585,16 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest records the supported typed extension context constructor option names',
     );
     is(
+        $manifest->{embedding}{typed_extensions}{context_contract}{accessor_receiver_shape},
+        'exact hash-backed FSM::Extension::Context object constructed by new(...)',
+        'manifest records the typed extension context accessor receiver shape',
+    );
+    is_deeply(
+        sorted($manifest->{embedding}{typed_extensions}{context_contract}{accessor_method_names}),
+        sorted(extension_contract_context_accessors()),
+        'manifest records the typed extension context accessor method names',
+    );
+    is(
         $manifest->{embedding}{typed_extensions}{context_contract}{constructor_stage_shape},
         'supported hook stage name',
         'manifest records the typed extension context constructor stage shape',

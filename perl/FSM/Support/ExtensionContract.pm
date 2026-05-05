@@ -64,6 +64,7 @@ sub build_extension_contract {
             't/427-typed-extension-loader-constructor-argument-boundary-audit.t',
             't/428-typed-extension-loader-method-receiver-boundary-audit.t',
             't/429-typed-extension-registry-method-receiver-boundary-audit.t',
+            't/430-typed-extension-context-accessor-receiver-boundary-audit.t',
         ],
         entrypoints => {
             programmatic_objects => 'FSM::Pipeline::HDLGenerator->new(extensions => [ $object, ... ])',
@@ -99,6 +100,8 @@ sub build_extension_contract {
             constructor_receiver_shape => 'scalar FSM::Extension::Context class name',
             constructor_argument_list_shape => 'even-length list of unique scalar non-empty supported option-name/value pairs after class invocant',
             constructor_supported_option_names => extension_contract_context_accessors(),
+            accessor_receiver_shape => 'exact hash-backed FSM::Extension::Context object constructed by new(...)',
+            accessor_method_names => extension_contract_context_accessors(),
             constructor_stage_shape => 'supported hook stage name',
             constructor_common_payload_shape => 'blessed pipeline object, scalar non-empty source_path, scalar non-empty target_language, and source_info hash with scalar non-empty kind',
             constructor_stage_payload_shape => 'after_parse_source requires raw_ast ARRAY and no result; after_generate_result requires result HASH and no raw_ast',

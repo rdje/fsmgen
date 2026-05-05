@@ -1,6 +1,26 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Typed extension context accessors now require constructed contexts
+- Hardened
+  [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm)
+  so every advertised direct context accessor requires an exact hash-backed
+  `FSM::Extension::Context` object constructed by `new(...)`.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  so typed-extension manifests advertise the context accessor receiver shape
+  and accessor method names, and updated the extension guide/book docs to
+  describe the direct context accessor receiver boundary.
+- Added
+  [t/430-typed-extension-context-accessor-receiver-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/430-typed-extension-context-accessor-receiver-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  valid constructed-context accessor calls, malformed receiver rejection,
+  bounded diagnostics, and exact accessor-surface preservation. No roadmap
+  status changed.
+- Focused validation passed with syntax checks and the adjacent
+  context/registry/contract/manifest cluster (`8` files, `29` tests), followed
+  by the full repo-owned `./bin/ci-regression` gate (`426` files, `3798`
+  tests) and mdBook build.
 ### Typed extension registry methods now require constructed registries
 - Hardened
   [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)

@@ -173,6 +173,16 @@ subtest 'contract declares the bounded typed-extension surface' => sub {
         'contract records the supported context constructor option names',
     );
     is(
+        $contract->{context_contract}{accessor_receiver_shape},
+        'exact hash-backed FSM::Extension::Context object constructed by new(...)',
+        'contract records the direct context accessor receiver shape',
+    );
+    is_deeply(
+        sorted($contract->{context_contract}{accessor_method_names}),
+        sorted(extension_contract_context_accessors()),
+        'contract records the direct context accessor method names',
+    );
+    is(
         $contract->{context_contract}{constructor_stage_shape},
         'supported hook stage name',
         'contract records the context constructor stage shape',

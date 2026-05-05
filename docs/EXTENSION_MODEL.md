@@ -171,6 +171,11 @@ also proves direct `FSM::Extension::Context->new(...)` construction accepts
 only the exact class receiver and an even-length list of unique supported
 scalar option names, so malformed constructor calls fail before raw Perl
 argument or `bless` fallout can leak.
+[t/430-typed-extension-context-accessor-receiver-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/430-typed-extension-context-accessor-receiver-boundary-audit.t)
+also proves direct context accessors require an exact hash-backed
+`FSM::Extension::Context` object constructed by `new(...)`, so class receivers,
+subclass stand-ins, and fake exact-class objects fail before raw accessor
+fallout can leak.
 [t/424-typed-extension-context-constructor-payload-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/424-typed-extension-context-constructor-payload-boundary-audit.t)
 also proves direct context construction validates the payload values that hooks
 rely on: supported hook stages, a blessed pipeline, scalar source path and

@@ -4,10 +4,11 @@ use v5.20;
 use strict;
 use warnings;
 use Carp qw(confess);
-use Scalar::Util qw(blessed);
+use Scalar::Util qw(blessed reftype);
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
+my $CONTEXT_INSTANCE_MARKER = __PACKAGE__ . '::constructed';
 my @SUPPORTED_CONTEXT_STAGE_NAMES = qw(
     after_parse_source
     after_generate_result
@@ -75,6 +76,16 @@ my $_validate_context_payload = sub {
     $_validate_context_stage_payload->(%args);
     return;
 };
+my $_validate_context_accessor_receiver = sub {
+    my ($self, $method_name) = @_;
+    confess "FSM::Extension::Context::$method_name requires an exact FSM::Extension::Context object constructed by new(...)"
+        unless blessed($self)
+            && blessed($self) eq __PACKAGE__
+            && (reftype($self) || '') eq 'HASH'
+            && $self->{$CONTEXT_INSTANCE_MARKER};
+
+    return;
+};
 
 sub new ($class, @arg_pairs) {
     confess "FSM::Extension::Context constructor receiver must be scalar FSM::Extension::Context class name"
@@ -107,6 +118,7 @@ sub new ($class, @arg_pairs) {
     $_validate_context_payload->(%args);
 
     return bless {
+        $CONTEXT_INSTANCE_MARKER => 1,
         stage => $args{stage},
         pipeline => $args{pipeline},
         source_path => $args{source_path},
@@ -117,12 +129,39 @@ sub new ($class, @arg_pairs) {
     }, $class;
 }
 
-sub stage ($self) { return $self->{stage} }
-sub pipeline ($self) { return $self->{pipeline} }
-sub source_path ($self) { return $self->{source_path} }
-sub target_language ($self) { return $self->{target_language} }
-sub source_info ($self) { return $self->{source_info} }
-sub raw_ast ($self) { return $self->{raw_ast} }
-sub result ($self) { return $self->{result} }
+sub stage ($self) {
+    $_validate_context_accessor_receiver->($self, 'stage');
+    return $self->{stage};
+}
+
+sub pipeline ($self) {
+    $_validate_context_accessor_receiver->($self, 'pipeline');
+    return $self->{pipeline};
+}
+
+sub source_path ($self) {
+    $_validate_context_accessor_receiver->($self, 'source_path');
+    return $self->{source_path};
+}
+
+sub target_language ($self) {
+    $_validate_context_accessor_receiver->($self, 'target_language');
+    return $self->{target_language};
+}
+
+sub source_info ($self) {
+    $_validate_context_accessor_receiver->($self, 'source_info');
+    return $self->{source_info};
+}
+
+sub raw_ast ($self) {
+    $_validate_context_accessor_receiver->($self, 'raw_ast');
+    return $self->{raw_ast};
+}
+
+sub result ($self) {
+    $_validate_context_accessor_receiver->($self, 'result');
+    return $self->{result};
+}
 
 1;
