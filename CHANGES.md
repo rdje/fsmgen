@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Diagnostic code runtime registry now has defensive-copy coverage
+- Added
+  [t/490-diagnostic-codes-runtime-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/490-diagnostic-codes-runtime-defensive-copy-boundary-audit.t)
+  to prove `diagnostic_code_registry()` and `diagnostic_code_metadata()`
+  return fresh metadata structures across calls while `diagnostic_code_ids()`
+  remains sorted and stable. No roadmap status changed.
+- Focused validation pairs the runtime registry audit with the stable-code
+  registry contract and existing registry defensive-copy suites.
 ### Normalized semantic report builder now has runtime defensive-copy coverage
 - Added
   [t/489-normalized-semantic-report-runtime-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/489-normalized-semantic-report-runtime-defensive-copy-boundary-audit.t)

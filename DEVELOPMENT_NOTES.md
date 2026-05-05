@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: diagnostic code runtime helpers should stay mutation-safe
+- Stable diagnostic-code metadata is shared by check JSON, support accounting,
+  and the manifest diagnostics section. Callers receive mutable Perl hashes,
+  so registry and single-code metadata lookups must return fresh copies.
+- The new audit mutates the full registry and every per-code metadata result
+  before proving fresh lookups keep the canonical sorted code set and clean
+  metadata.
+- This is coverage only; no diagnostic-code registry shape changed.
+
 ## 2026-05-05: normalized semantic reports should stay mutation-safe
 - The normalized semantic JSON report builders project nested semantic payload
   fragments out of in-process result/module metadata and return mutable Perl

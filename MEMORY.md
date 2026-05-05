@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Diagnostic code runtime registry now has defensive-copy coverage
+- Added
+  [t/490-diagnostic-codes-runtime-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/490-diagnostic-codes-runtime-defensive-copy-boundary-audit.t)
+  to prove `diagnostic_code_registry()` and `diagnostic_code_metadata()`
+  return fresh metadata structures across calls while `diagnostic_code_ids()`
+  remains sorted and stable.
+- Focused validation pairs the runtime registry audit with the stable-code
+  registry contract and existing registry defensive-copy suites.
+- This is `R13` diagnostic-code runtime contract-integrity coverage only; no
+  public API shape, user-facing docs, mdBook source, generation behavior, or
+  roadmap lane status changed.
+
 ## 2026-05-05: Normalized semantic report builder now has runtime defensive-copy coverage
 - Added
   [t/489-normalized-semantic-report-runtime-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/489-normalized-semantic-report-runtime-defensive-copy-boundary-audit.t)
