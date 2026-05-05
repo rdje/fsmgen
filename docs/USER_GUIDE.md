@@ -2322,6 +2322,11 @@ also proves module-name loading requires a real `new()` method: explicit and
 inherited constructors still work, while extension-provided `can(...)` methods
 and `AUTOLOAD`-only constructor discovery stay outside the typed loading
 boundary.
+[t/427-typed-extension-loader-constructor-argument-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/427-typed-extension-loader-constructor-argument-boundary-audit.t)
+also proves direct `FSM::Extension::Loader->new(...)` construction accepts
+only the exact class receiver and no option/value arguments, so malformed
+loader constructor calls fail before raw hash-coercion or `bless` fallout can
+leak.
 [t/397-typed-extension-registry-dispatch-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/397-typed-extension-registry-dispatch-boundary-audit.t)
 also proves the registry's direct `dispatch_hook(...)` entrypoint enforces the
 same closed hook set: `after_parse_source` and `after_generate_result` still

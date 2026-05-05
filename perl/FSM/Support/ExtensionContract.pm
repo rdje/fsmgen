@@ -13,6 +13,7 @@ our @EXPORT_OK = qw(
     extension_contract_source
     extension_contract_context_accessors
     extension_contract_hook_names
+    extension_contract_loader_constructor_option_names
     extension_contract_registry_constructor_option_names
     extension_contract_supported_source_kinds
 );
@@ -58,6 +59,7 @@ sub build_extension_contract {
             't/424-typed-extension-context-constructor-payload-boundary-audit.t',
             't/425-typed-extension-dt-source-kind-contract-audit.t',
             't/426-typed-extension-registry-constructor-argument-boundary-audit.t',
+            't/427-typed-extension-loader-constructor-argument-boundary-audit.t',
         ],
         entrypoints => {
             programmatic_objects => 'FSM::Pipeline::HDLGenerator->new(extensions => [ $object, ... ])',
@@ -70,6 +72,9 @@ sub build_extension_contract {
             must_be_blessed_object => JSON::PP::true,
             must_provide_supported_hook_method => JSON::PP::true,
             supported_hook_method_policy => 'extension objects must provide at least one real supported hook method discoverable by UNIVERSAL::can',
+            loader_constructor_receiver_shape => 'scalar FSM::Extension::Loader class name',
+            loader_constructor_argument_list_shape => 'no option/value arguments after class invocant',
+            loader_constructor_supported_option_names => extension_contract_loader_constructor_option_names(),
             registry_constructor_receiver_shape => 'scalar FSM::Extension::Registry class name',
             registry_constructor_argument_list_shape => 'even-length list of unique scalar non-empty supported option-name/value pairs after class invocant',
             registry_constructor_supported_option_names => extension_contract_registry_constructor_option_names(),
@@ -173,6 +178,10 @@ sub extension_contract_context_accessors {
     return [
         qw(stage pipeline source_path target_language source_info raw_ast result)
     ];
+}
+
+sub extension_contract_loader_constructor_option_names {
+    return [];
 }
 
 sub extension_contract_registry_constructor_option_names {

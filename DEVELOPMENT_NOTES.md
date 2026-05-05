@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: loader construction should stay intentionally empty
+- `FSM::Extension::Loader` currently has no constructor options; callers pass
+  module names and config files to explicit loading methods instead. Allowing
+  arbitrary `new(...)` arguments made typos and malformed receiver calls look
+  accepted even though no loader state was being configured.
+- The loader constructor now validates only call mechanics: exact scalar class
+  receiver and an empty argument tail. The existing `load_modules(...)` and
+  `module_names_from_config_files(...)` list-shape checks still own module and
+  config payload validation after a loader is constructed.
+- This keeps loader construction aligned with the registry/context constructor
+  boundaries without adding options, changing loading semantics, or widening
+  the typed-extension API surface.
+
 ## 2026-05-05: registry construction should not inherit Perl hash coercion
 - `FSM::Extension::Registry` is a direct typed-extension embedder object, not
   only an internal owner behind `FSM::Pipeline::HDLGenerator`. After dispatch

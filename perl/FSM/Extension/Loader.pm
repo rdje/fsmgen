@@ -8,7 +8,13 @@ use Scalar::Util qw(blessed);
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
-sub new ($class, %args) {
+sub new {
+    my ($class, @args) = @_;
+    confess "FSM::Extension::Loader constructor receiver must be scalar FSM::Extension::Loader class name"
+        unless defined($class) && !ref($class) && $class eq __PACKAGE__;
+    confess "FSM::Extension::Loader constructor does not accept option/value arguments"
+        if @args;
+
     return bless {}, $class;
 }
 

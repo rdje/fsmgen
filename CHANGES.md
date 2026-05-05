@@ -1,6 +1,27 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Typed extension loader construction now fails closed
+- Hardened
+  [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm)
+  so direct `FSM::Extension::Loader->new(...)` construction requires the exact
+  scalar class receiver and rejects any option/value arguments before loader
+  state is blessed.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  so typed-extension manifests advertise the loader constructor receiver,
+  argument-list, and supported-option fields, and updated the extension
+  guide/book docs to describe the direct loader constructor boundary.
+- Added
+  [t/427-typed-extension-loader-constructor-argument-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/427-typed-extension-loader-constructor-argument-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  valid construction, malformed receiver/argument-tail rejection, bounded
+  diagnostics, and existing module/config list-shaped loading rejection after
+  constructor mechanics pass. No roadmap status changed.
+- Validation passed with syntax checks, the adjacent loader/contract/manifest
+  cluster (`9` files, `52` tests), and the full
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`423` files, `3787` tests, plus mdBook build).
 ### Typed extension registry construction now fails closed
 - Hardened
   [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)
