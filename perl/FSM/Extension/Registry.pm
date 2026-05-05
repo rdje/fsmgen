@@ -4,7 +4,7 @@ use v5.20;
 use strict;
 use warnings;
 use Carp qw(confess);
-use Scalar::Util qw(blessed);
+use Scalar::Util qw(blessed reftype);
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
@@ -17,6 +17,7 @@ my @SUPPORTED_REGISTRY_OPTION_NAMES = qw(
     extensions
 );
 my %SUPPORTED_REGISTRY_OPTION_NAME = map { $_ => 1 } @SUPPORTED_REGISTRY_OPTION_NAMES;
+my $REGISTRY_INSTANCE_MARKER = __PACKAGE__ . '::constructed';
 
 sub new {
     my ($class, @arg_pairs) = @_;
@@ -61,6 +62,7 @@ sub new {
 
     return bless {
         extensions => $extensions,
+        $REGISTRY_INSTANCE_MARKER => 1,
     }, $class;
 }
 
@@ -72,9 +74,13 @@ sub _extension_supports_supported_hook ($extension) {
     return 0;
 }
 
-sub extensions ($self) { return $self->{extensions} }
+sub extensions ($self) {
+    _validate_registry_method_receiver($self, 'extensions');
+    return $self->{extensions};
+}
 
 sub dispatch_hook ($self, $hook_name, $context) {
+    _validate_registry_method_receiver($self, 'dispatch_hook');
     confess "FSM::Extension::Registry requires a non-empty hook name"
         unless defined($hook_name) && $hook_name ne '';
     confess "FSM::Extension::Registry rejects unsupported extension hook '$hook_name'"
@@ -110,11 +116,23 @@ sub _dispatch_context_arg ($hook_name, $context) {
     return;
 }
 
+sub _validate_registry_method_receiver ($self, $method_name) {
+    confess "FSM::Extension::Registry::$method_name requires an exact FSM::Extension::Registry object constructed by new(...)"
+        unless blessed($self)
+            && blessed($self) eq __PACKAGE__
+            && (reftype($self) || '') eq 'HASH'
+            && $self->{$REGISTRY_INSTANCE_MARKER};
+
+    return;
+}
+
 sub after_parse_source ($self, $context) {
+    _validate_registry_method_receiver($self, 'after_parse_source');
     return $self->dispatch_hook('after_parse_source', $context);
 }
 
 sub after_generate_result ($self, $context) {
+    _validate_registry_method_receiver($self, 'after_generate_result');
     return $self->dispatch_hook('after_generate_result', $context);
 }
 

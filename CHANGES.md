@@ -1,6 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Typed extension registry methods now require constructed registries
+- Hardened
+  [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)
+  so direct `extensions(...)`, `dispatch_hook(...)`,
+  `after_parse_source(...)`, and `after_generate_result(...)` calls require an
+  exact hash-backed `FSM::Extension::Registry` object constructed by
+  `new(...)`.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  so typed-extension manifests advertise the registry method receiver shape
+  and method names, and updated the extension guide/book docs to describe the
+  direct registry method receiver boundary.
+- Added
+  [t/429-typed-extension-registry-method-receiver-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/429-typed-extension-registry-method-receiver-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  valid constructed-registry method calls, malformed receiver rejection,
+  bounded diagnostics, and existing hook/context rejection after receiver
+  validation passes. No roadmap status changed.
+- Validation passed with syntax checks, the adjacent registry/contract/manifest
+  cluster (`8` files, `45` tests), and the full
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`425` files, `3795` tests, plus mdBook build).
 ### Typed extension loader methods now require constructed loaders
 - Hardened
   [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm)

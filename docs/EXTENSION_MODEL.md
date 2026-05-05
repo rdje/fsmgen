@@ -126,6 +126,11 @@ also proves direct `FSM::Extension::Registry->new(...)` construction accepts
 only the exact class receiver and an even-length list of unique supported
 scalar option names, so malformed registry constructor calls fail before raw
 hash-coercion or `bless` fallout can leak.
+[t/429-typed-extension-registry-method-receiver-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/429-typed-extension-registry-method-receiver-boundary-audit.t)
+also proves direct registry methods require an exact hash-backed
+`FSM::Extension::Registry` object constructed by `new(...)`, so class
+receivers, subclass stand-ins, and fake exact-class objects fail before hook or
+context diagnostics can leak.
 [t/394-typed-extension-context-accessor-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/394-typed-extension-context-accessor-boundary-audit.t)
 also proves the context accessor names are stable for the current schema
 version by checking manifest discovery, the implemented

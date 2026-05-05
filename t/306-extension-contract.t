@@ -20,6 +20,7 @@ use FSM::Support::ExtensionContract qw(
     extension_contract_name_family_map
     extension_contract_public_top_level_keys
     extension_contract_registry_constructor_option_names
+    extension_contract_registry_method_names
     extension_contract_source
     extension_contract_supported_source_kinds
 );
@@ -140,6 +141,16 @@ subtest 'contract declares the bounded typed-extension surface' => sub {
         sorted($contract->{extension_object_contract}{registry_constructor_supported_option_names}),
         sorted(extension_contract_registry_constructor_option_names()),
         'contract records the supported direct registry constructor option names',
+    );
+    is(
+        $contract->{extension_object_contract}{registry_method_receiver_shape},
+        'exact hash-backed FSM::Extension::Registry object constructed by new(...)',
+        'contract records the direct registry method receiver shape',
+    );
+    is_deeply(
+        sorted($contract->{extension_object_contract}{registry_method_names}),
+        sorted(extension_contract_registry_method_names()),
+        'contract records the direct registry method names',
     );
     is(
         $contract->{extension_object_contract}{registry_dispatch_context_shape},

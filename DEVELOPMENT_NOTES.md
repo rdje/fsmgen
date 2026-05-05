@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: registry methods should run only on constructed registry objects
+- Once `FSM::Extension::Registry->new(...)` had an owned constructor boundary,
+  the registry methods still trusted whatever receiver Perl dispatched. That
+  meant class receivers, subclass stand-ins, or fake exact-class objects could
+  leak hook-name, context, hashref, or method-call fallout before the registry
+  owned the failure.
+- The registry now stamps instances constructed by `new(...)` and validates
+  that `extensions(...)`, `dispatch_hook(...)`, `after_parse_source(...)`, and
+  `after_generate_result(...)` run only on exact hash-backed stamped registry
+  objects. Existing hook-name and dispatch-context validation still runs after
+  the receiver boundary passes.
+- This keeps the direct registry seam aligned with the loader and context
+  receiver boundaries without changing the supported hook set or extension
+  dispatch semantics.
+
 ## 2026-05-05: loader methods should run only on constructed loader objects
 - Once `FSM::Extension::Loader->new(...)` had an owned constructor boundary,
   the loader methods still accepted class receivers and fake exact-class

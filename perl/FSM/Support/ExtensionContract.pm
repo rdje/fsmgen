@@ -16,6 +16,7 @@ our @EXPORT_OK = qw(
     extension_contract_loader_constructor_option_names
     extension_contract_loader_method_names
     extension_contract_registry_constructor_option_names
+    extension_contract_registry_method_names
     extension_contract_supported_source_kinds
 );
 
@@ -62,6 +63,7 @@ sub build_extension_contract {
             't/426-typed-extension-registry-constructor-argument-boundary-audit.t',
             't/427-typed-extension-loader-constructor-argument-boundary-audit.t',
             't/428-typed-extension-loader-method-receiver-boundary-audit.t',
+            't/429-typed-extension-registry-method-receiver-boundary-audit.t',
         ],
         entrypoints => {
             programmatic_objects => 'FSM::Pipeline::HDLGenerator->new(extensions => [ $object, ... ])',
@@ -82,6 +84,8 @@ sub build_extension_contract {
             registry_constructor_receiver_shape => 'scalar FSM::Extension::Registry class name',
             registry_constructor_argument_list_shape => 'even-length list of unique scalar non-empty supported option-name/value pairs after class invocant',
             registry_constructor_supported_option_names => extension_contract_registry_constructor_option_names(),
+            registry_method_receiver_shape => 'exact hash-backed FSM::Extension::Registry object constructed by new(...)',
+            registry_method_names => extension_contract_registry_method_names(),
             registry_dispatch_context_shape => 'FSM::Extension::Context object whose stage matches the dispatched hook name',
             constructor_for_module_loading => 'new()',
             module_name_shape => 'scalar Module::Name value',
@@ -201,6 +205,17 @@ sub extension_contract_loader_method_names {
 sub extension_contract_registry_constructor_option_names {
     return [
         qw(extensions)
+    ];
+}
+
+sub extension_contract_registry_method_names {
+    return [
+        qw(
+            extensions
+            dispatch_hook
+            after_parse_source
+            after_generate_result
+        ),
     ];
 }
 
