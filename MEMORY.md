@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Shared-datapath plan candidate storage now snapshots augmented metadata
+- Updated
+  [perl/FSM/Composition/SharedDatapathSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SharedDatapathSupport.pm)
+  so `augment_plan()` clones the augmented shared-datapath candidate list before
+  storing it on the composition plan, while retaining the existing caller
+  candidate enrichment behavior.
+- Added
+  [t/562-shared-datapath-plan-candidate-storage-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/562-shared-datapath-plan-candidate-storage-defensive-copy-boundary-audit.t)
+  to prove caller candidate mutation after augmentation cannot contaminate
+  plan-stored shared-datapath candidate metadata.
+- Focused validation paired the new audit with shared-datapath support,
+  candidate-cache defensive-copy, candidate-builder, and shared-datapath
+  forward-IR export suites. This is `R13` runtime contract-integrity hardening
+  only; no public manifest shape, user-facing docs, mdBook content, generation
+  behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Generated module_info lowered projections now avoid embedded IR aliases
 - Updated
   [perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm)

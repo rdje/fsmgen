@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Shared-datapath plan candidate storage now snapshots augmented metadata
+- Updated
+  [perl/FSM/Composition/SharedDatapathSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SharedDatapathSupport.pm)
+  so `augment_plan()` stores a cloned shared-datapath candidate list on the
+  composition plan after augmentation, while preserving the existing caller
+  candidate enrichment behavior. No roadmap status changed.
+- Added
+  [t/562-shared-datapath-plan-candidate-storage-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/562-shared-datapath-plan-candidate-storage-defensive-copy-boundary-audit.t)
+  to prove later caller candidate mutation cannot contaminate plan-stored
+  candidate metadata.
 ### Generated module_info lowered projections now avoid embedded IR aliases
 - Updated
   [perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm)

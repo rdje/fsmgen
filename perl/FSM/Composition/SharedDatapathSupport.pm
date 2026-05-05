@@ -508,7 +508,7 @@ sub augment_plan ($class, %args) {
     }
 
     $composition_plan->{auxiliary_assignments} = \@auxiliary_lines;
-    $composition_plan->{shared_datapath_candidates} = $shared_datapath_candidates;
+    $composition_plan->{shared_datapath_candidates} = _clone($shared_datapath_candidates);
     return $composition_plan;
 }
 
@@ -705,6 +705,22 @@ sub _composition_system_signal_names ($composition_plan) {
     }
 
     return ($clock_name, $reset_name);
+}
+
+sub _clone ($value) {
+    return undef unless defined $value;
+
+    if (ref($value) eq 'HASH') {
+        return {
+            map { $_ => _clone($value->{$_}) } keys %$value
+        };
+    }
+
+    if (ref($value) eq 'ARRAY') {
+        return [ map { _clone($_) } @$value ];
+    }
+
+    return $value;
 }
 
 1;

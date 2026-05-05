@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Shared-datapath candidate augmentation has separate plan storage
+- `SharedDatapathSupport::augment_plan()` enriches candidate metadata while it
+  wires helper nets and lifted runtime state. Existing callers and tests observe
+  that enriched candidate list, so the live augmentation surface remains
+  unchanged.
+- The composition plan now receives a cloned snapshot of the enriched candidate
+  list. That keeps plan-owned reporting and forward-IR metadata stable even if
+  the caller later reuses or mutates its candidate array.
+
 ## 2026-05-05: Generated module_info lowered summaries are projections
 - `enrich_with_generated_analysis()` embeds the full lowered RTL IR and also
   publishes selected top-level convenience fields for compatibility. Those
