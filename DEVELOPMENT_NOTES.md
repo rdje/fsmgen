@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Actual connection expressions are returned as snapshots
+- `ActualLiteralSupport::actual_connection_expr_for_target()` sometimes lowers
+  actuals into a new target-width expression, but width-independent actuals and
+  non-actual sources previously returned their stored `connection_expr` hash
+  directly.
+- The helper now clones those already-materialized expressions on return. This
+  keeps binding construction free to inspect or adapt the result without
+  mutating source endpoint metadata.
+
 ## 2026-05-05: module_info projections should not alias embedded IR payloads
 - Composition `module_info` intentionally exposes both embedded forward-IR
   payloads and selected top-level convenience projections. Those top-level

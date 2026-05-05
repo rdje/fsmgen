@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Actual connection-expression reads now return cloned payloads
+- Updated
+  [perl/FSM/Composition/ActualLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ActualLiteralSupport.pm)
+  so `actual_connection_expr_for_target()` clones already-sized or
+  width-independent `connection_expr` payloads before returning them. No roadmap
+  status changed.
+- Added
+  [t/556-composition-actual-connection-expr-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/556-composition-actual-connection-expr-defensive-copy-boundary-audit.t)
+  to prove returned actual/non-actual connection expressions cannot contaminate
+  their source payloads.
 ### Composition module_info top-level IR projections now avoid embedded-payload aliases
 - Updated
   [perl/FSM/Composition/ResultMetadataBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ResultMetadataBuilder.pm)

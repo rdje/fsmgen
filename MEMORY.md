@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Actual connection-expression reads now return cloned payloads
+- Updated
+  [perl/FSM/Composition/ActualLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ActualLiteralSupport.pm)
+  so `actual_connection_expr_for_target()` clones stored `connection_expr`
+  payloads for already-sized, width-independent, and non-actual source paths
+  before returning them.
+- Added
+  [t/556-composition-actual-connection-expr-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/556-composition-actual-connection-expr-defensive-copy-boundary-audit.t)
+  to prove returned connection expressions cannot contaminate source endpoint
+  payloads, while target-width-bound actuals still lower to fresh bit vectors.
+- Focused validation paired the new audit with structural actual toplinks,
+  top-expression toplinks, structural connection-expression helpers, and the
+  binding expression clone audit. This is `R13` runtime contract-integrity
+  hardening only; no public manifest shape, user-facing docs, mdBook content,
+  generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Composition module_info top-level IR projections now avoid embedded-payload aliases
 - Updated
   [perl/FSM/Composition/ResultMetadataBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ResultMetadataBuilder.pm)

@@ -643,10 +643,10 @@ sub is_target_width_bound_actual_kind ($class, $kind) {
 }
 
 sub actual_connection_expr_for_target ($class, $source, $target_width, $fsm_file = undef, $header = undef) {
-    return $source->{connection_expr}
+    return _clone($source->{connection_expr})
         unless ref($source) eq 'HASH' && (($source->{kind} || '') =~ /^actual_/);
 
-    return $source->{connection_expr}
+    return _clone($source->{connection_expr})
         unless $class->is_target_width_bound_actual_kind($source->{kind} || '');
 
     confess "Scalar actuals require a positive target width before binding.\n"
@@ -1137,6 +1137,23 @@ sub _clone_structured_value ($class, $value) {
 
     if (ref($value) eq 'ARRAY') {
         return [map { $class->_clone_structured_value($_) } @$value];
+    }
+
+    return $value;
+}
+
+sub _clone ($value) {
+    return undef unless defined $value;
+
+    if (ref($value) eq 'HASH') {
+        return {
+            map { $_ => _clone($value->{$_}) }
+                keys %$value
+        };
+    }
+
+    if (ref($value) eq 'ARRAY') {
+        return [map { _clone($_) } @$value];
     }
 
     return $value;
