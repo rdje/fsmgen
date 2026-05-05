@@ -151,14 +151,19 @@ also proves direct `FSM::Extension::Context->new(...)` construction accepts
 only the exact class receiver and an even-length list of unique supported
 scalar option names, so malformed constructor calls fail before raw Perl
 argument or `bless` fallout can leak.
+[t/424-typed-extension-context-constructor-payload-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/424-typed-extension-context-constructor-payload-boundary-audit.t)
+also proves direct context construction validates the payload values that hooks
+rely on: supported hook stages, a blessed pipeline, scalar source path and
+target language, scalar `source_info->{kind}`, parse contexts with
+`raw_ast` and no `result`, and result contexts with `result` and no `raw_ast`.
 
 For embedders, the same boundary is now machine-readable through
 [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
 and advertised by `bin/fsmgen --capability-manifest` under
 `embedding.typed_extensions`. That manifest entry is intentionally bounded: it
 names the current loading entrypoints, hook names, context accessor names, and
-the direct context constructor boundary, and non-goals, but it does not claim
-the entire future extension API is frozen.
+the direct context constructor boundaries, and non-goals, but it does not
+claim the entire future extension API is frozen.
 
 ## Examples
 ### Example 1: annotate the returned result

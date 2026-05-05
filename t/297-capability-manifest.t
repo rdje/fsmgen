@@ -1530,6 +1530,21 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         sorted(extension_contract_context_accessors()),
         'manifest records the supported typed extension context constructor option names',
     );
+    is(
+        $manifest->{embedding}{typed_extensions}{context_contract}{constructor_stage_shape},
+        'supported hook stage name',
+        'manifest records the typed extension context constructor stage shape',
+    );
+    is(
+        $manifest->{embedding}{typed_extensions}{context_contract}{constructor_common_payload_shape},
+        'blessed pipeline object, scalar non-empty source_path, scalar non-empty target_language, and source_info hash with scalar non-empty kind',
+        'manifest records the typed extension context constructor common payload shape',
+    );
+    is(
+        $manifest->{embedding}{typed_extensions}{context_contract}{constructor_stage_payload_shape},
+        'after_parse_source requires raw_ast ARRAY and no result; after_generate_result requires result HASH and no raw_ast',
+        'manifest records the typed extension context constructor stage payload shape',
+    );
     ok(
         !$manifest->{embedding}{typed_extensions}{extension_object_contract}{legacy_plg_discovery},
         'manifest records that legacy .plg discovery is not part of typed extensions',

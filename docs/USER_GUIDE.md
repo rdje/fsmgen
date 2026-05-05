@@ -2331,6 +2331,11 @@ also proves direct `FSM::Extension::Context->new(...)` construction accepts
 only the exact class receiver and an even-length list of unique supported
 scalar option names, so malformed constructor calls fail before raw Perl
 argument or `bless` fallout can leak.
+[t/424-typed-extension-context-constructor-payload-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/424-typed-extension-context-constructor-payload-boundary-audit.t)
+also proves direct context construction validates the payload values that hooks
+rely on: supported hook stages, a blessed pipeline, scalar source path and
+target language, scalar `source_info->{kind}`, parse contexts with
+`raw_ast` and no `result`, and result contexts with `result` and no `raw_ast`.
 
 For in-process embedders, `FSM::Pipeline::HDLGenerator` no longer leaves its
 requested `debug_level` behind as process-global state after construction or

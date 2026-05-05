@@ -1,5 +1,44 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Typed extension context payloads now fail closed
+- Hardened
+  [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm)
+  so direct `FSM::Extension::Context->new(...)` construction now validates the
+  context payload values that hooks rely on after the constructor-list boundary
+  passes. Stage must be a supported hook name, `pipeline` must be blessed,
+  `source_path` and `target_language` must be scalar non-empty strings, and
+  `source_info->{kind}` must be scalar and non-empty.
+- Added stage-specific payload checks: `after_parse_source` contexts require a
+  `raw_ast` array reference and reject defined `result`, while
+  `after_generate_result` contexts require a `result` hash reference and
+  reject defined `raw_ast`.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  so the typed-extension contract and capability manifest advertise
+  `context_contract.constructor_stage_shape`,
+  `context_contract.constructor_common_payload_shape`, and
+  `context_contract.constructor_stage_payload_shape`.
+- Added
+  [t/424-typed-extension-context-constructor-payload-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/424-typed-extension-context-constructor-payload-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  valid parse/result contexts, malformed common payload rejection, malformed
+  stage-specific payload rejection, and bounded diagnostics.
+- Updated the extension docs in
+  [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md),
+  [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md),
+  and
+  [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  so the direct context payload boundary is visible in the live guide and
+  mdBook source.
+- Validation passed with syntax checks, the focused contract/manifest/context
+  payload plus `dt` source-kind regression cluster (`15` files, `44` tests),
+  and the full repo-owned
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`420` files, `3775` tests, plus mdBook build).
+- This is `R13` typed-extension embedder-boundary hardening only; no hook
+  family, extension loading entrypoint, generation behavior, or roadmap lane
+  status changed.
+
 ## 2026-05-05: Typed extension context constructor arguments now fail closed
 - Hardened
   [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm)

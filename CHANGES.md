@@ -1,6 +1,33 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Typed extension context payloads now fail closed
+- Hardened
+  [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm)
+  so direct `FSM::Extension::Context->new(...)` construction validates the
+  hook payload values that callers and extensions rely on after constructor
+  mechanics pass: supported hook stage, blessed pipeline, scalar source path
+  and target language, and scalar non-empty `source_info->{kind}`.
+- Added stage-specific payload checks so `after_parse_source` contexts require
+  `raw_ast` as an array reference and reject defined `result`, while
+  `after_generate_result` contexts require `result` as a hash reference and
+  reject defined `raw_ast`.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  so typed-extension manifests advertise the new context stage/common-payload
+  and stage-payload fields, and updated the extension guide/book docs to
+  describe the direct context payload boundary.
+- Added
+  [t/424-typed-extension-context-constructor-payload-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/424-typed-extension-context-constructor-payload-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  valid parse/result contexts, malformed common payload rejection, malformed
+  stage-specific payload rejection, and bounded diagnostics. No roadmap status
+  changed.
+- Validation passed with syntax checks, the focused contract/manifest/context
+  payload plus `dt` source-kind regression cluster (`15` files, `44` tests),
+  and the full
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`420` files, `3775` tests, plus mdBook build).
 ### Typed extension context constructor arguments now fail closed
 - Hardened
   [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm)

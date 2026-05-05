@@ -189,7 +189,13 @@ subtest 'direct registry dispatch rejects unsupported hook names before extensio
         my $extension = Test::RegistryDispatchBoundaryExtension->new();
         my $registry = FSM::Extension::Registry->new(extensions => [$extension]);
         my $error = eval {
-            $registry->dispatch_hook($hook_name, make_context(stage => $hook_name));
+            $registry->dispatch_hook(
+                $hook_name,
+                make_context(
+                    stage => 'after_parse_source',
+                    raw_ast => [],
+                ),
+            );
             undef;
         };
         $error = $@ if !$error;
@@ -214,7 +220,13 @@ subtest 'direct registry dispatch rejects unsupported hook names before extensio
     my $extension = Test::RegistryDispatchBoundaryExtension->new();
     my $registry = FSM::Extension::Registry->new(extensions => [$extension]);
     my $missing_error = eval {
-        $registry->dispatch_hook('', make_context(stage => ''));
+        $registry->dispatch_hook(
+            '',
+            make_context(
+                stage => 'after_parse_source',
+                raw_ast => [],
+            ),
+        );
         undef;
     };
     $missing_error = $@ if !$missing_error;

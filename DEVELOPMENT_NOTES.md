@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: context payload validation belongs after constructor mechanics
+- Once direct `FSM::Extension::Context->new(...)` calls had an owned
+  receiver/list/name boundary, the remaining gap was value shape. Extension
+  hooks assume `stage`, `pipeline`, `source_path`, `target_language`,
+  `source_info`, and the stage-specific `raw_ast`/`result` payload line up
+  with the advertised hook surface. Leaving those unchecked meant direct
+  callers could still build a real context object that failed later inside
+  extension code or registry dispatch.
+- The payload checks run after constructor mechanics, so odd lists, malformed
+  option names, unsupported names, and duplicate names keep their earlier,
+  more precise diagnostics. Only once the argument list is structurally sound
+  does the constructor validate supported stage names, scalar source kind,
+  scalar paths and language, blessed pipeline object, and parse/result payload
+  shape.
+- The stage-specific rule mirrors the shipped pipeline behavior:
+  `after_parse_source` receives `raw_ast` and no `result`;
+  `after_generate_result` receives `result` and no `raw_ast`. This narrows the
+  direct constructor boundary without adding new hooks or claiming a broader
+  extension API freeze.
+
 ## 2026-05-05: context construction should not inherit Perl argument quirks
 - `FSM::Extension::Context` is a public typed-extension object passed through
   the registry and visible to embedders. After the registry started requiring a

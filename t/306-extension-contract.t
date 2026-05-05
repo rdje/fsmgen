@@ -119,6 +119,21 @@ subtest 'contract declares the bounded typed-extension surface' => sub {
         'contract records the supported context constructor option names',
     );
     is(
+        $contract->{context_contract}{constructor_stage_shape},
+        'supported hook stage name',
+        'contract records the context constructor stage shape',
+    );
+    is(
+        $contract->{context_contract}{constructor_common_payload_shape},
+        'blessed pipeline object, scalar non-empty source_path, scalar non-empty target_language, and source_info hash with scalar non-empty kind',
+        'contract records the context constructor common payload shape',
+    );
+    is(
+        $contract->{context_contract}{constructor_stage_payload_shape},
+        'after_parse_source requires raw_ast ARRAY and no result; after_generate_result requires result HASH and no raw_ast',
+        'contract records the context constructor stage payload shape',
+    );
+    is(
         $contract->{extension_object_contract}{constructor_for_module_loading},
         'new()',
         'contract records the module-loading constructor boundary',

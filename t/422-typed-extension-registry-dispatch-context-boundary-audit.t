@@ -171,6 +171,18 @@ done_testing();
 
 sub make_context {
     my (%args) = @_;
+    my @stage_payload = $args{stage} eq 'after_generate_result'
+        ? (
+            result => {
+                module_info => {
+                    module_name => 'registry_dispatch_context_boundary',
+                },
+            },
+        )
+        : (
+            raw_ast => [],
+        );
+
     return FSM::Extension::Context->new(
         stage => $args{stage},
         pipeline => bless({}, 'Test::RegistryDispatchContextBoundaryPipeline'),
@@ -179,7 +191,7 @@ sub make_context {
         source_info => {
             kind => 'fsm',
         },
-        raw_ast => [],
+        @stage_payload,
     );
 }
 
