@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Fixpoint final results now return caller-owned signal maps
+- Updated
+  [perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm)
+  so `finalize_loop_result()` returns cloned intermediate-signal map and
+  metadata containers, while preserving contained AST object identity inside
+  signal records.
+- Added
+  [t/547-factorization-fixpoint-final-result-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/547-factorization-fixpoint-final-result-defensive-copy-boundary-audit.t)
+  to prove mutating finalized result metadata cannot contaminate loop state, and
+  mutating loop state after finalization cannot contaminate the finalized
+  result.
+- Focused validation paired the new final-result boundary audit with
+  loop-state, pass-execution, pass-support, and ASTFactorization signal-context
+  suites. This is `R13` runtime contract-integrity hardening only; no public
+  manifest shape, user-facing docs, generation behavior, or roadmap lane status
+  changed.
+
 ## 2026-05-05: ASTFactorization generated signal contexts now snapshot candidate contexts
 - Updated
   [perl/FSM/HDL/ASTFactorization.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/ASTFactorization.pm)

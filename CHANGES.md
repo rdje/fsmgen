@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Fixpoint final results now return caller-owned signal maps
+- Updated
+  [perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm)
+  so `finalize_loop_result()` clones intermediate-signal map containers while
+  preserving contained AST identity. No roadmap status changed.
+- Added
+  [t/547-factorization-fixpoint-final-result-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/547-factorization-fixpoint-final-result-defensive-copy-boundary-audit.t)
+  to prove finalized result mutation and retained loop-state mutation cannot
+  cross-contaminate each other.
 ### ASTFactorization generated signal contexts now snapshot candidate contexts
 - Updated
   [perl/FSM/HDL/ASTFactorization.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/ASTFactorization.pm)

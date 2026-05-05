@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Fixpoint final results should be projections, not loop state
+- `LoopStateSupport` owns mutable aggregate loop state while pass execution is
+  running. `finalize_loop_result()` is the boundary that projects that state to
+  callers, so the result should not expose the retained loop-state containers.
+- The projection now clones hashes and arrays while preserving blessed AST
+  object identity inside signal records. This keeps result inspection isolated
+  without changing the generated expression objects.
+
 ## 2026-05-05: ASTFactorization context ownership is split deliberately
 - `analyze_and_factorize()` still returns the live `intermediate_signals` map
   because fixpoint pass execution renames colliding pass-local signals through

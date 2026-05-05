@@ -41,6 +41,7 @@ use warnings;
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
+use Scalar::Util qw(blessed);
 use FSM::Debug;
 
 =head2 new
@@ -145,12 +146,29 @@ sub finalize_loop_result ($self, $loop_state, %args) {
     );
 
     return {
-        intermediate_signals => $loop_state->{all_additional_signals},
+        intermediate_signals => _clone_loop_state_value($loop_state->{all_additional_signals} || {}),
         passes_run => $loop_state->{passes_run},
         total_substitution_count => $loop_state->{total_substitution_count},
         total_update_count => $loop_state->{total_update_count},
         termination_reason => $loop_state->{termination_reason},
     };
+}
+
+sub _clone_loop_state_value ($value) {
+    return undef unless defined $value;
+    return $value if blessed($value);
+
+    if (ref($value) eq 'HASH') {
+        return {
+            map { $_ => _clone_loop_state_value($value->{$_}) } sort keys %{$value}
+        };
+    }
+
+    if (ref($value) eq 'ARRAY') {
+        return [ map { _clone_loop_state_value($_) } @{$value} ];
+    }
+
+    return $value;
 }
 
 1;
