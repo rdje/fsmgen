@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Expression operand and argument lists now return snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so base `FSM::CoreAST::Expression` clones operand-list and attribute
+  containers on construction and from `operands()` / `attributes()`.
+  `FSM::CoreAST::FunctionCall->arguments()` now routes through the same
+  snapshot boundary. Contained expression objects retain identity for traversal
+  and rendering.
+- Added
+  [t/531-core-ast-expression-operands-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/531-core-ast-expression-operands-defensive-copy-boundary-audit.t)
+  to prove constructor and accessor mutation cannot contaminate expression
+  operands, attributes, or function-call argument lists.
+- Focused validation pairs the new Expression audit with core language-form,
+  aggregate expression type support, enable-graph capture, and decision-tree
+  flattening suites. This is `R13` runtime contract-integrity hardening only; no
+  public manifest shape, user-facing docs, generation behavior, or roadmap lane
+  status changed.
+
 ## 2026-05-05: State decision-tree lists now return snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)

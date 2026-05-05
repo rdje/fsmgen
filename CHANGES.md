@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Expression operand and argument lists now return snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so base `FSM::CoreAST::Expression` clones operand-list and attribute
+  containers on construction and from accessors, with
+  `FSM::CoreAST::FunctionCall->arguments()` sharing the same snapshot path.
+  Contained expression object identity is preserved. No roadmap status changed.
+- Added
+  [t/531-core-ast-expression-operands-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/531-core-ast-expression-operands-defensive-copy-boundary-audit.t)
+  to prove constructor and accessor mutation cannot contaminate expression-owned
+  operands, attributes, or function-call argument lists.
 ### State decision-tree lists now return snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)

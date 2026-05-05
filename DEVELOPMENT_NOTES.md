@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Expression operand containers should be inspected as snapshots
+- CoreAST expression operands are structural traversal containers used by
+  renderers, expression naming, aggregate inference, and enable-graph capture.
+  The expression objects inside remain the live AST graph; the list/hash
+  containers are not a public mutation API.
+- Base `Expression` construction and `operands()` / `attributes()` now clone
+  only mutable containers, and `FunctionCall->arguments()` reuses that snapshot.
+  Subclasses continue to read their owned internal operands directly for
+  rendering and signal discovery.
+
 ## 2026-05-05: State decision-tree lists should be state-owned
 - State objects own the ordered decision-tree list consumed by parsing,
   analysis, and flattening. `add_decision_tree(...)` is the mutation API used

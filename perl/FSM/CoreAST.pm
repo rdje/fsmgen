@@ -452,15 +452,15 @@ package FSM::CoreAST::Expression;
         # Construct hash step by step to avoid Perl hash construction issues with undef values
         my $hash_to_bless = {};
         $hash_to_bless->{type} = $args{type} // Carp::confess "Expression type required";
-        $hash_to_bless->{operands} = $args{operands} // [];
-        $hash_to_bless->{attributes} = $args{attributes} // {};
+        $hash_to_bless->{operands} = _clone_expression_value($args{operands} // []);
+        $hash_to_bless->{attributes} = _clone_expression_value($args{attributes} // {});
         
         return bless $hash_to_bless, $class;
     }
     
     sub type($self) { $self->{type} }
-    sub operands($self) { $self->{operands} }
-    sub attributes($self) { $self->{attributes} }
+    sub operands($self) { _clone_expression_value($self->{operands}) }
+    sub attributes($self) { _clone_expression_value($self->{attributes}) }
     
     # Override in subclasses
     sub evaluate($self, $context) { Carp::confess "evaluate() must be implemented by subclass" }
@@ -470,6 +470,22 @@ package FSM::CoreAST::Expression;
     sub to_systemverilog($self) { 
         # Default implementation falls back to Verilog
         return $self->to_verilog();
+    }
+
+    sub _clone_expression_value($value) {
+        return undef unless defined $value;
+
+        if (ref($value) eq 'HASH') {
+            return {
+                map { $_ => _clone_expression_value($value->{$_}) } sort keys %$value
+            };
+        }
+
+        if (ref($value) eq 'ARRAY') {
+            return [ map { _clone_expression_value($_) } @$value ];
+        }
+
+        return $value;
     }
 
 package FSM::CoreAST::SignalRef;
@@ -1247,7 +1263,7 @@ package FSM::CoreAST::FunctionCall;
     }
     
     sub function_name($self) { $self->{function_name} }
-    sub arguments($self) { $self->{operands} }
+    sub arguments($self) { $self->operands }
     
     sub get_signals($self) {
         my @signals;
