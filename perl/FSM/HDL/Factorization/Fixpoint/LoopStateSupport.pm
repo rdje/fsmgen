@@ -102,8 +102,9 @@ sub apply_pass_outcome ($self, $loop_state, $pass_outcome, $primary_intermediate
     $loop_state->{total_update_count} += $pass_outcome->{update_count} || 0;
 
     for my $signal_name (sort keys %{ $pass_outcome->{new_unique_signals} || {} }) {
-        $loop_state->{all_additional_signals}{$signal_name} = $pass_outcome->{new_unique_signals}{$signal_name};
-        $primary_intermediate_signals->{$signal_name} = $pass_outcome->{new_unique_signals}{$signal_name};
+        my $signal_info = $pass_outcome->{new_unique_signals}{$signal_name};
+        $loop_state->{all_additional_signals}{$signal_name} = _clone_loop_state_value($signal_info);
+        $primary_intermediate_signals->{$signal_name} = _clone_loop_state_value($signal_info);
     }
 
     $loop_state->{passes_run}++;

@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Fixpoint accepted pass signals are copied on merge
+- Updated
+  [perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm)
+  so `apply_pass_outcome()` clones accepted signal metadata into loop state and
+  the primary intermediate lookup separately while preserving AST identity. No
+  roadmap status changed.
+- Added
+  [t/549-factorization-fixpoint-accepted-signal-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/549-factorization-fixpoint-accepted-signal-defensive-copy-boundary-audit.t)
+  to prove pass-outcome, primary-map, and loop-state metadata do not
+  cross-contaminate after acceptance.
 ### Fixpoint pass selected signal maps now own metadata containers
 - Updated
   [perl/FSM/HDL/Factorization/Fixpoint/PassSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/PassSupport.pm)

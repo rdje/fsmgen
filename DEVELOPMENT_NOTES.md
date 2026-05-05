@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Fixpoint acceptance copies signal metadata into each owner
+- `apply_pass_outcome()` accepts pass-local signal metadata into two owners:
+  aggregate loop state and the live primary intermediate lookup used for later
+  collision checks.
+- Each owner now receives its own cloned signal metadata containers. The AST
+  objects inside remain live by identity, but metadata/context edits through one
+  owner cannot leak into the pass outcome or the other owner.
+
 ## 2026-05-05: Fixpoint selected-signal maps are pass projections
 - `select_new_unique_signals()` projects one pass's live generated signal map
   down to only names not already present in prior additional signals or primary

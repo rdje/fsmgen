@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Fixpoint accepted pass signals are copied on merge
+- Updated
+  [perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm)
+  so `apply_pass_outcome()` clones accepted signal metadata into aggregate loop
+  state and separately into the live primary intermediate lookup, while
+  preserving contained AST object identity.
+- Added
+  [t/549-factorization-fixpoint-accepted-signal-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/549-factorization-fixpoint-accepted-signal-defensive-copy-boundary-audit.t)
+  to prove pass-outcome metadata mutation cannot contaminate accepted loop-state
+  or primary-map entries, and primary-map mutation cannot contaminate loop-state
+  entries.
+- Focused validation paired the accepted-signal audit with selected-map,
+  final-result, loop-state, and pass-execution suites. This is `R13` runtime
+  contract-integrity hardening only; no public manifest shape, user-facing docs,
+  generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Fixpoint pass selected signal maps now own metadata containers
 - Updated
   [perl/FSM/HDL/Factorization/Fixpoint/PassSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/PassSupport.pm)
