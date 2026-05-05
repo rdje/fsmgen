@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Typed extension contract builders now have defensive-copy coverage
+- Added
+  [t/435-typed-extension-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/435-typed-extension-contract-defensive-copy-boundary-audit.t)
+  to prove the typed-extension contract list helpers, grouped
+  `name_family_map`, and full `build_extension_contract()` result return fresh
+  structures across calls.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  so typed-extension `tested_by` provenance lists the new audit. No roadmap
+  status changed.
+- Focused validation passed with the direct contract, provenance, and new
+  defensive-copy audit cluster (`3` files, `8` tests).
 ### Typed extension registry dispatch now requires constructed contexts
 - Hardened
   [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)

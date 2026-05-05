@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: typed-extension contract helpers should stay mutation-safe
+- The typed-extension contract is consumed by embedders and by the capability
+  manifest. Its helper functions already build fresh structures, but that
+  defensive-copy behavior was implicit rather than regression-backed.
+- The new audit mutates returned helper lists, grouped name-family maps, and a
+  full contract payload, then proves fresh calls return unpolluted structures.
+  This keeps caller mutation from becoming hidden process-local contract drift.
+- This is coverage only; no public contract shape changed.
+
 ## 2026-05-05: registry dispatch should reject fake exact contexts itself
 - Once `FSM::Extension::Context` accessors required constructed context
   objects, `FSM::Extension::Registry` still checked dispatch context stage by

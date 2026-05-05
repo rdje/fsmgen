@@ -69,6 +69,7 @@ sub build_extension_contract {
             't/432-typed-extension-registry-method-argument-list-boundary-audit.t',
             't/433-typed-extension-context-accessor-argument-list-boundary-audit.t',
             't/434-typed-extension-registry-dispatch-constructed-context-boundary-audit.t',
+            't/435-typed-extension-contract-defensive-copy-boundary-audit.t',
         ],
         entrypoints => {
             programmatic_objects => 'FSM::Pipeline::HDLGenerator->new(extensions => [ $object, ... ])',
