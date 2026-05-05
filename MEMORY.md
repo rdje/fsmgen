@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: SignalManager usage inspection now returns snapshots
+- Updated
+  [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm)
+  so `get_signal_usage(...)` and `get_all_signal_usages()` return cloned usage
+  snapshots, while `initialize_signal_usage(...)` remains the explicit live
+  mutation path used by signal analysis.
+- Added
+  [t/512-signal-manager-usage-accessor-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/512-signal-manager-usage-accessor-defensive-copy-boundary-audit.t)
+  to prove single-signal and all-signal usage inspection cannot mutate stored
+  analyzer state, while initializer mutation is preserved.
+- Focused validation pairs the new SignalManager usage audit with driving-AST
+  canonicalization and language symbol-definition suites. This is `R13`
+  runtime contract-integrity hardening only; no public manifest shape,
+  user-facing docs, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: SignalManager constant and define literals are cloned across lookup
 - Updated
   [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm)

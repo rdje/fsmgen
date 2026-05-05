@@ -162,11 +162,11 @@ sub initialize_signal_usage($self, $signal_name) {
 }
 
 sub get_signal_usage($self, $signal_name) {
-    return $self->{signal_usage}{$signal_name};
+    return _clone_type_spec($self->{signal_usage}{$signal_name});
 }
 
 sub get_all_signal_usages($self) {
-    return $self->{signal_usage};
+    return _clone_type_spec($self->{signal_usage});
 }
 
 # Symbol Storage

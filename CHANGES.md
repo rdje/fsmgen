@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### SignalManager usage inspection now returns snapshots
+- Updated
+  [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm)
+  so `get_signal_usage(...)` and `get_all_signal_usages()` return cloned usage
+  snapshots while `initialize_signal_usage(...)` remains the analyzer mutation
+  path. No roadmap status changed.
+- Added
+  [t/512-signal-manager-usage-accessor-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/512-signal-manager-usage-accessor-defensive-copy-boundary-audit.t)
+  to prove usage inspection cannot mutate the stored usage map.
 ### SignalManager constant and define literals are cloned across lookup
 - Updated
   [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm)

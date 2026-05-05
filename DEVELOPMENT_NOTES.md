@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: SignalManager usage inspection should not expose analyzer state
+- Signal analysis legitimately mutates usage records through
+  `initialize_signal_usage(...)`, incrementing reference/assignment counters and
+  appending contexts while walking expressions.
+- The read-side accessors now return snapshots: `get_signal_usage(...)` clones
+  one usage record and `get_all_signal_usages()` clones the usage map. The
+  initializer remains the live mutation path, preserving analyzer behavior.
+- This lets diagnostics and future inspection code examine usage state without
+  accidentally changing later signal-role analysis.
+
 ## 2026-05-05: SignalManager literal symbols need object snapshots
 - Constants and defines enter the signal manager as `FSM::CoreAST::Literal`
   objects. Returning those same objects from `resolve_symbol(...)` let a caller
