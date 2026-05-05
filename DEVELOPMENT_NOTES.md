@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: LoweredRTLIR array accessors should not expose object internals
+- `FSM::IR::LoweredRTLIR->new(...)` already cloned array payloads at
+  construction time, and the signal-indexed helper methods already returned
+  cloned entries, but the plain array accessors still exposed the object's
+  stored array references.
+- The array-bearing accessors now return structured copies for output-drive
+  families, standalone-DT multi-drive targets, composition shared-datapath
+  candidates, internal net names, and instance names.
+- `as_hashref` remains isolated after accessor-return mutation, keeping the
+  lowered-IR object usable as a stable in-process source for later normalized
+  semantic output.
+
 ## 2026-05-05: Generated module_info query helpers should not alias fallback arrays
 - The generated-module info query helpers already receive cloned data from the
   lowered-IR helper path, but their fallback path returned the raw

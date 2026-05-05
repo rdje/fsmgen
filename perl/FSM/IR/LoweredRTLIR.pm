@@ -41,11 +41,11 @@ sub new ($class, %args) {
 sub module_name ($self) { return $self->{module_name} }
 sub source_root_kind ($self) { return $self->{source_root_kind} }
 sub target_language ($self) { return $self->{target_language} }
-sub output_drive_families ($self) { return $self->{output_drive_families} }
-sub standalone_dt_multi_drive_targets ($self) { return $self->{standalone_dt_multi_drive_targets} }
-sub composition_shared_datapath_candidates ($self) { return $self->{composition_shared_datapath_candidates} }
-sub internal_net_names ($self) { return $self->{internal_net_names} }
-sub instance_names ($self) { return $self->{instance_names} }
+sub output_drive_families ($self) { return _clone($self->{output_drive_families}) }
+sub standalone_dt_multi_drive_targets ($self) { return _clone($self->{standalone_dt_multi_drive_targets}) }
+sub composition_shared_datapath_candidates ($self) { return _clone($self->{composition_shared_datapath_candidates}) }
+sub internal_net_names ($self) { return _clone($self->{internal_net_names}) }
+sub instance_names ($self) { return _clone($self->{instance_names}) }
 sub auxiliary_assignment_count ($self) { return $self->{auxiliary_assignment_count} }
 
 sub output_drive_families_from_input ($class, $lowered_rtl_ir) {

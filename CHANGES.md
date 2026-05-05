@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### LoweredRTLIR array accessors now return caller-owned copies
+- Updated
+  [perl/FSM/IR/LoweredRTLIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/LoweredRTLIR.pm)
+  so array-bearing accessors return cloned output-drive, standalone-DT,
+  shared-datapath, internal-net, and instance-name arrays. No roadmap status
+  changed.
+- Added
+  [t/497-lowered-rtl-ir-accessor-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/497-lowered-rtl-ir-accessor-defensive-copy-boundary-audit.t)
+  to prove constructor input mutation and accessor-return mutation do not
+  contaminate the stored lowered-IR object or later `as_hashref` output.
 ### Generated module_info fallback helpers now copy nested arrays
 - Updated
   [perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm)
