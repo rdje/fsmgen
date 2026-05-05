@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Backend validation section contract now has defensive-copy coverage
+- Added
+  [t/445-backend-validation-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/445-backend-validation-contract-defensive-copy-boundary-audit.t)
+  to prove `build_backend_validation_contract()` returns fresh nested
+  structures across calls and that backend-validation top-level, nested
+  contract, and nested presence helpers are fresh. No roadmap status changed.
+- Focused validation passed with the backend validation contract, capability
+  manifest runtime contract, and new defensive-copy audit cluster (`3` files,
+  `13` tests).
 ### Diagnostics section contract now has defensive-copy coverage
 - Added
   [t/444-diagnostics-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/444-diagnostics-contract-defensive-copy-boundary-audit.t)

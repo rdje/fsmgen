@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: backend-validation section contracts should stay mutation-safe
+- The capability manifest backend-validation section delegates the current
+  SystemVerilog external-validation child surface through grouped nested
+  contract metadata. In-process consumers receive mutable Perl structures, so
+  caller mutation must not affect later backend-validation contract discovery.
+- The new audit mutates a full returned backend-validation contract and each
+  helper list/map, then proves fresh calls remain clean and aligned with the
+  nested presence map.
+- This is coverage only; no backend-validation section contract shape changed.
+
 ## 2026-05-05: diagnostics section contracts should stay mutation-safe
 - The capability manifest diagnostics section republishes stable-code registry
   and check-JSON child contract key families. In-process consumers receive

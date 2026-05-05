@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Backend validation section contract now has defensive-copy coverage
+- Added
+  [t/445-backend-validation-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/445-backend-validation-contract-defensive-copy-boundary-audit.t)
+  to prove `build_backend_validation_contract()` returns fresh nested
+  structures across calls and that backend-validation top-level, nested
+  contract, and nested presence helpers are fresh.
+- Focused validation passed with the backend validation contract, capability
+  manifest runtime contract, and new defensive-copy audit cluster (`3` files,
+  `13` tests).
+- This is `R13` backend-validation section contract-integrity coverage only;
+  no public API shape, user-facing docs, mdBook source, generation behavior,
+  or roadmap lane status changed.
+
 ## 2026-05-05: Diagnostics section contract now has defensive-copy coverage
 - Added
   [t/444-diagnostics-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/444-diagnostics-contract-defensive-copy-boundary-audit.t)
