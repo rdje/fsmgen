@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Shared-datapath candidate cache needs two owners
+- `candidates_for_plan()` both materializes shared-datapath candidates and
+  caches them on the composition plan. Returning the same freshly built array
+  that was stored in the plan gave callers a way to mutate cached plan state.
+- Fresh builds now clone once into the plan cache and return a separate clone
+  to the caller. Existing cached lookups already flow through the plan accessor,
+  which returns cloned candidate containers.
+
 ## 2026-05-05: StructuralRTLIR binding_expr is a read boundary
 - `FSM::IR::StructuralRTLIR::ConnectionExpr::binding_expr()` is exported as a
   convenience read helper for effective port-binding expressions. Returning the

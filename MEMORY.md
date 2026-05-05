@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Shared-datapath candidate cache now separates plan and caller ownership
+- Updated
+  [perl/FSM/Composition/SharedDatapathCandidateBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SharedDatapathCandidateBuilder.pm)
+  so `candidates_for_plan()` clones freshly built candidate lists into the plan
+  cache and returns a separate cloned list to the caller.
+- Added
+  [t/551-shared-datapath-candidate-cache-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/551-shared-datapath-candidate-cache-defensive-copy-boundary-audit.t)
+  to prove returned freshly built and cached candidate structures cannot
+  contaminate cached plan state.
+- Focused validation paired the cache audit with composition plan accessor,
+  child export, shared-datapath candidate builder/support, and forward-IR export
+  suites. This is `R13` runtime contract-integrity hardening only; no public
+  manifest shape, user-facing docs, mdBook content, generation behavior, or
+  roadmap lane status changed.
+
 ## 2026-05-05: StructuralRTLIR binding expressions now return caller-owned snapshots
 - Updated
   [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm)

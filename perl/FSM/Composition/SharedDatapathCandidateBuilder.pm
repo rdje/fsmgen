@@ -52,8 +52,8 @@ sub candidates_for_plan ($class, %args) {
     }
 
     my $shared_datapath_candidates = $class->build_candidates(%args);
-    $composition_plan->{shared_datapath_candidates} = $shared_datapath_candidates;
-    return $shared_datapath_candidates;
+    $composition_plan->{shared_datapath_candidates} = _clone($shared_datapath_candidates);
+    return _clone($shared_datapath_candidates);
 }
 
 =head2 build_candidates

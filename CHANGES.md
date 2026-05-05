@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Shared-datapath candidate cache now separates plan and caller ownership
+- Updated
+  [perl/FSM/Composition/SharedDatapathCandidateBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SharedDatapathCandidateBuilder.pm)
+  so `candidates_for_plan()` stores a cloned candidate list in the composition
+  plan and returns a separate cloned list to the caller. No roadmap status
+  changed.
+- Added
+  [t/551-shared-datapath-candidate-cache-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/551-shared-datapath-candidate-cache-defensive-copy-boundary-audit.t)
+  to prove freshly built and cached candidate lookups cannot mutate the plan
+  cache through returned structures.
 ### StructuralRTLIR binding expressions now return caller-owned snapshots
 - Updated
   [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm)
