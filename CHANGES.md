@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Composition net targets now use explicit mutation and caller-owned lists
+- Updated
+  [perl/FSM/Composition/Net.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Net.pm)
+  so `targets` lists are copied at construction, `targets()` returns a fresh
+  array, and `add_target(...)` is the explicit mutation API. No roadmap status
+  changed.
+- Updated
+  [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+  to append reused child-source carrier targets through `add_target(...)`.
+- Added
+  [t/501-composition-net-targets-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/501-composition-net-targets-defensive-copy-boundary-audit.t)
+  to prove target-list isolation, declared-type-spec isolation, explicit target
+  mutation, and ignored empty targets.
 ### RealizedInstance mutable accessors now return caller-owned copies
 - Updated
   [perl/FSM/Composition/RealizedInstance.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RealizedInstance.pm)

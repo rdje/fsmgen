@@ -1650,7 +1650,7 @@ sub ensure_child_source_carrier ($class, $source, $targets, $top_ports_by_name, 
             for my $target (@{$targets || []}) {
                 next unless defined($target) && length($target);
                 next if $seen_target{$target}++;
-                push @{$net->targets}, $target;
+                $net->add_target($target);
             }
         }
         my $binding_type_contract = $class->_binding_connection_type_contract($source, undef);

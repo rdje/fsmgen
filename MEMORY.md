@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Composition net targets now use explicit mutation and caller-owned lists
+- Updated
+  [perl/FSM/Composition/Net.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Net.pm)
+  so target lists are copied at construction, `targets()` returns a fresh
+  array, and `add_target(...)` is the explicit mutation API for plan builders.
+- Updated
+  [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+  to append reused child-source carrier targets through `add_target(...)`.
+- Added
+  [t/501-composition-net-targets-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/501-composition-net-targets-defensive-copy-boundary-audit.t)
+  to prove constructor/accessor target-list isolation, declared-type-spec
+  isolation, explicit target mutation, and ignored empty targets.
+- Focused validation pairs the new net audit with linked-plan, child-source
+  expression, plan-builder, generation-orchestrator, structural-IR,
+  shared-datapath, and declared-type contract suites. This is `R13` runtime
+  contract-integrity hardening only; no public manifest shape, user-facing docs,
+  generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: RealizedInstance mutable accessors now return caller-owned copies
 - Updated
   [perl/FSM/Composition/RealizedInstance.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RealizedInstance.pm)

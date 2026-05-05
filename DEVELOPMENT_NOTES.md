@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Composition net targets need an explicit mutation API
+- `FSM::Composition::Net` target lists are read by plan snapshots,
+  structural-IR extraction, and linked-plan fanout logic. Returning the stored
+  array made ordinary inspection capable of mutating the plan.
+- `targets()` now returns a fresh array and construction copies the caller's
+  target list. The one builder path that legitimately extends an existing
+  child-source carrier now uses `add_target(...)`, which updates the stored
+  list and returns a caller-owned snapshot.
+- This preserves linked-plan fanout behavior while making read access safe for
+  downstream inspection and reporting.
+
 ## 2026-05-05: RealizedInstance accessors should not expose child metadata internals
 - `FSM::Composition::RealizedInstance` is the shared runtime carrier read by
   composition planning, structural IR extraction, child export builders, and
