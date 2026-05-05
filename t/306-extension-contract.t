@@ -217,6 +217,15 @@ subtest 'contract declares the bounded typed-extension surface' => sub {
         'after_parse_source requires raw_ast ARRAY and no result; after_generate_result requires result HASH and no raw_ast',
         'contract records the context constructor stage payload shape',
     );
+    is_deeply(
+        $contract->{context_contract}{accessor_copy_policy},
+        {
+            source_info => 'fresh caller-owned source_info snapshot on every accessor call',
+            raw_ast => 'fresh caller-owned raw_ast snapshot on every accessor call when available',
+            result => 'live result hash on after_generate_result; in-process result mutation is allowed',
+        },
+        'contract records typed extension context accessor copy policy',
+    );
     is(
         $contract->{extension_object_contract}{constructor_for_module_loading},
         'new()',

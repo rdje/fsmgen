@@ -1,5 +1,29 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Extension context parse payloads now return snapshots
+- Updated
+  [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm)
+  so `source_info` and `raw_ast` are cloned on construction and from accessors.
+  `result()` remains the live `after_generate_result` mutation surface by
+  design.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm),
+  [t/306-extension-contract.t](/Users/richarddje/Documents/github/fsmgen/t/306-extension-contract.t),
+  and [t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t)
+  so the typed-extension contract and capability manifest advertise the accessor
+  copy policy.
+- Added
+  [t/540-typed-extension-context-payload-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/540-typed-extension-context-payload-defensive-copy-boundary-audit.t)
+  to prove `source_info` / `raw_ast` mutation cannot contaminate the stored
+  context while result-hook augmentation remains live.
+- Updated user-facing extension docs in
+  [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md),
+  [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md),
+  and [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md).
+  Validation included the focused typed-extension gate and `mdbook build
+  docs/book`. This is `R13` extension context contract-integrity hardening only;
+  no roadmap lane status changed.
+
 ## 2026-05-05: UserDefinedBlock internal-node lists now return snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)

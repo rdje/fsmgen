@@ -93,6 +93,23 @@ my $_validate_context_accessor_argument_count = sub {
 
     return;
 };
+my $_clone_context_payload;
+$_clone_context_payload = sub {
+    my ($value) = @_;
+    return undef unless defined $value;
+
+    if (ref($value) eq 'HASH') {
+        return {
+            map { $_ => $_clone_context_payload->($value->{$_}) } sort keys %$value
+        };
+    }
+
+    if (ref($value) eq 'ARRAY') {
+        return [ map { $_clone_context_payload->($_) } @$value ];
+    }
+
+    return $value;
+};
 
 sub new ($class, @arg_pairs) {
     confess "FSM::Extension::Context constructor receiver must be scalar FSM::Extension::Context class name"
@@ -130,8 +147,8 @@ sub new ($class, @arg_pairs) {
         pipeline => $args{pipeline},
         source_path => $args{source_path},
         target_language => $args{target_language},
-        source_info => $args{source_info},
-        raw_ast => $args{raw_ast},
+        source_info => $_clone_context_payload->($args{source_info}),
+        raw_ast => $_clone_context_payload->($args{raw_ast}),
         result => $args{result},
     }, $class;
 }
@@ -168,14 +185,14 @@ sub source_info {
     my ($self, @args) = @_;
     $_validate_context_accessor_receiver->($self, 'source_info');
     $_validate_context_accessor_argument_count->('source_info', @args);
-    return $self->{source_info};
+    return $_clone_context_payload->($self->{source_info});
 }
 
 sub raw_ast {
     my ($self, @args) = @_;
     $_validate_context_accessor_receiver->($self, 'raw_ast');
     $_validate_context_accessor_argument_count->('raw_ast', @args);
-    return $self->{raw_ast};
+    return $_clone_context_payload->($self->{raw_ast});
 }
 
 sub result {

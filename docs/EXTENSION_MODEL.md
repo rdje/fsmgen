@@ -95,11 +95,14 @@ Current intent:
 - `target_language`
   - current target language for generation
 - `source_info`
-  - classified source metadata such as `fsm`, `dt`, or `composition`
+  - classified source metadata such as `fsm`, `dt`, or `composition`; accessors
+    return fresh snapshots
 - `raw_ast`
-  - parsed source AST when the hook runs at the parse frontier
+  - parsed source AST when the hook runs at the parse frontier; accessors return
+    fresh snapshots
 - `result`
-  - the generation result hash returned by the pipeline
+  - the live generation result hash returned by the pipeline; result-hook
+    augmentation mutates this live object by design
 
 The shipped boundary is regression-locked in
 [t/26-extension-mechanism.t](/Users/richarddje/Documents/github/fsmgen/t/26-extension-mechanism.t),

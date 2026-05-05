@@ -1634,6 +1634,15 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'after_parse_source requires raw_ast ARRAY and no result; after_generate_result requires result HASH and no raw_ast',
         'manifest records the typed extension context constructor stage payload shape',
     );
+    is_deeply(
+        $manifest->{embedding}{typed_extensions}{context_contract}{accessor_copy_policy},
+        {
+            source_info => 'fresh caller-owned source_info snapshot on every accessor call',
+            raw_ast => 'fresh caller-owned raw_ast snapshot on every accessor call when available',
+            result => 'live result hash on after_generate_result; in-process result mutation is allowed',
+        },
+        'manifest records the typed extension context accessor copy policy',
+    );
     ok(
         !$manifest->{embedding}{typed_extensions}{extension_object_contract}{legacy_plg_discovery},
         'manifest records that legacy .plg discovery is not part of typed extensions',

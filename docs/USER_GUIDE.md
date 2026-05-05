@@ -2169,9 +2169,13 @@ Current context accessors are:
 - `source_path`: the source file path used for this generation call.
 - `target_language`: the current HDL target.
 - `source_info`: the classified source metadata, such as `fsm`, `dt`, or
-  `composition` in `source_info->{kind}`.
-- `raw_ast`: available on `after_parse_source`.
-- `result`: available on `after_generate_result`.
+  `composition` in `source_info->{kind}`. Each accessor call returns a fresh
+  snapshot.
+- `raw_ast`: available on `after_parse_source`. Each accessor call returns a
+  fresh snapshot.
+- `result`: available on `after_generate_result`. This is the live result hash,
+  so result-hook augmentation mutates the object returned to the in-process
+  caller by design.
 
 Minimal example: add metadata to the returned result
 ```perl

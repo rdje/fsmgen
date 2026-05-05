@@ -115,6 +115,11 @@ sub build_extension_contract {
             constructor_stage_shape => 'supported hook stage name',
             constructor_common_payload_shape => 'blessed pipeline object, scalar non-empty source_path, scalar non-empty target_language, and source_info hash with scalar non-empty kind',
             constructor_stage_payload_shape => 'after_parse_source requires raw_ast ARRAY and no result; after_generate_result requires result HASH and no raw_ast',
+            accessor_copy_policy => {
+                source_info => 'fresh caller-owned source_info snapshot on every accessor call',
+                raw_ast => 'fresh caller-owned raw_ast snapshot on every accessor call when available',
+                result => 'live result hash on after_generate_result; in-process result mutation is allowed',
+            },
         },
         public_top_level_presence_keys => extension_contract_public_top_level_keys(),
         hook_names => extension_contract_hook_names(),

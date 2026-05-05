@@ -107,10 +107,11 @@ The current context accessors are:
 
 `source_info->{kind}` is the classified root kind, such as `fsm`, `dt`, or
 `composition`.
-`raw_ast` is available on `after_parse_source`. `result` is available on
-`after_generate_result`. Result augmentation is a valid in-process extension
-use, but it is not the same thing as publishing a new sanitized JSON
-interchange field.
+`source_info` and `raw_ast` accessors return fresh snapshots; mutating them does
+not alter the stored context. `raw_ast` is available on `after_parse_source`.
+`result` is available on `after_generate_result` and remains the live result hash.
+Result augmentation is a valid in-process extension use, but it is not the same
+thing as publishing a new sanitized JSON interchange field.
 [t/379-extension-result-json-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/379-extension-result-json-boundary-audit.t)
 locks that split: extension-added raw result fields and HDL text remain
 available to in-process callers, while `--emit-semantic-json` and

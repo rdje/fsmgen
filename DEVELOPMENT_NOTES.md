@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Extension parse-frontier payloads should be snapshot-read
+- Typed extensions may inspect `source_info` and `raw_ast` at the parse frontier,
+  but those payloads are context metadata rather than mutation APIs. They now
+  clone on construction and access so one extension cannot pollute the context
+  observed by later code.
+- `result()` intentionally remains live for `after_generate_result` because
+  in-process result augmentation is part of the advertised extension contract.
+  The contract/manifest and user docs now state this split explicitly.
+
 ## 2026-05-05: UserDefinedBlock internal-node lists should be block-owned
 - User-defined blocks own an ordered list of internal AST nodes for traversal and
   rendering. `add_internal_node(...)` is the mutation API and also records the

@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Extension context parse payloads now return snapshots
+- Updated
+  [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm)
+  so typed-extension `source_info` and `raw_ast` payloads are cloned on
+  construction and from accessors. `result()` remains live for
+  `after_generate_result` augmentation. No roadmap status changed.
+- Updated typed-extension contract/manifest coverage and user-facing docs in
+  [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md),
+  [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md),
+  and [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md).
+- Added
+  [t/540-typed-extension-context-payload-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/540-typed-extension-context-payload-defensive-copy-boundary-audit.t)
+  to prove parse payload snapshots and live result augmentation.
 ### UserDefinedBlock internal-node lists now return snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
