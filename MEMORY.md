@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: TestNode branches now return container snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so `FSM::CoreAST::TestNode` clones `test_branches` on construction, from
+  `test_branches()`, and in `add_test_branch(...)`. Stored action objects keep
+  identity for selector analysis and decision-tree flattening.
+- Added
+  [t/527-core-ast-test-node-branches-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/527-core-ast-test-node-branches-defensive-copy-boundary-audit.t)
+  to prove constructor input mutation, accessor-return mutation, and
+  post-add action-list mutation cannot contaminate test-node branches.
+- Focused validation pairs the new TestNode audit with test-selector,
+  computed-test-selector, test-branch-selector, and decision-tree flattening
+  suites. This is `R13` runtime contract-integrity hardening only; no public
+  manifest shape, user-facing docs, generation behavior, or roadmap lane
+  status changed.
+
 ## 2026-05-05: ControlFlow branches now return container snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)

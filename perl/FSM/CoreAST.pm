@@ -1766,17 +1766,17 @@ package FSM::CoreAST::TestNode;
     sub new($class, %args) {
         my $self = $class->SUPER::new(type => 'test_node', %args);
         $self->{test_signal} = $args{test_signal} // Carp::confess "Test signal required";
-        $self->{test_branches} = $args{test_branches} // [];  # [{value => val, actions => [...]}]
+        $self->{test_branches} = _clone_test_node_value($args{test_branches} // []);  # [{value => val, actions => [...]}]
         $self->{fsm_type} = 'test';
         return $self;
     }
     
     sub test_signal($self) { $self->{test_signal} }
-    sub test_branches($self) { $self->{test_branches} }
+    sub test_branches($self) { _clone_test_node_value($self->{test_branches}) }
     sub fsm_type($self) { $self->{fsm_type} }
     
     sub add_test_branch($self, $value, $actions) {
-        push $self->{test_branches}->@*, { value => $value, actions => $actions };
+        push $self->{test_branches}->@*, _clone_test_node_value({ value => $value, actions => $actions });
     }
     
     sub get_all_test_values($self) {
@@ -1789,6 +1789,22 @@ package FSM::CoreAST::TestNode;
             push @actions, $branch->{actions}->@*;
         }
         return \@actions;
+    }
+
+    sub _clone_test_node_value($value) {
+        return undef unless defined $value;
+
+        if (ref($value) eq 'HASH') {
+            return {
+                map { $_ => _clone_test_node_value($value->{$_}) } sort keys %$value
+            };
+        }
+
+        if (ref($value) eq 'ARRAY') {
+            return [ map { _clone_test_node_value($_) } @$value ];
+        }
+
+        return $value;
     }
     
     sub to_verilog($self) {

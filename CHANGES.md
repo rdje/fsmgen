@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### TestNode branches now return container snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so `FSM::CoreAST::TestNode` clones `test_branches` on construction, from
+  `test_branches()`, and through `add_test_branch(...)` while preserving
+  contained action object identity. No roadmap status changed.
+- Added
+  [t/527-core-ast-test-node-branches-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/527-core-ast-test-node-branches-defensive-copy-boundary-audit.t)
+  to prove constructor, accessor, and explicit-branch mutation cannot
+  contaminate test-node branch containers.
 ### ControlFlow branches now return container snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)

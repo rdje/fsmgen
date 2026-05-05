@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: TestNode branch containers should follow ControlFlow ownership
+- `FSM::CoreAST::TestNode` owns its selector branch list separately from the
+  generic `ControlFlow` branch array. An explicit `add_test_branch(...)`
+  mutation path exists, but constructor/accessor containers should not remain
+  caller-owned.
+- TestNode now clones branch containers on entry, access, and branch addition.
+  Contained action objects stay live by identity for selector analysis and
+  flattening.
+
 ## 2026-05-05: ControlFlow branch containers should be node-owned
 - Control-flow nodes expose branch arrays to analyzers and flattening, but the
   mutable list/hash containers are structural metadata rather than a mutation
