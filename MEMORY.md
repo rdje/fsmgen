@@ -1,5 +1,29 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: HDLGenerator legacy debug compatibility now has focused boundary coverage
+- Added
+  [t/419-hdl-generator-facade-legacy-debug-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/419-hdl-generator-facade-legacy-debug-boundary-audit.t)
+  to lock the still-accepted but non-public `debug` constructor compatibility
+  key at the `HDLGenerator` facade seam.
+- The audit proves direct contract, in-process manifest, and both CLI manifest
+  spellings do not advertise `debug` as a public constructor option, public
+  option shape, core runtime option, compatibility presentation option, or
+  direct extension-injection option.
+- Runtime coverage now proves defined scalar boolean `debug` values map to
+  canonical `debug_level` values `0` / `1` only when public `debug_level` is
+  omitted, proves public `debug_level` wins when both keys are supplied, and
+  proves malformed defined legacy values fail with a facade-owned diagnostic
+  before debug-runtime setup or lower-level constructor fallout can leak.
+- Validation passed with the focused audit (`1` file, `5` tests), the adjacent
+  HDLGenerator facade constructor/debug cluster (`5` files, `18` tests), and
+  the full repo-owned
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`415` files, `3753` tests, plus mdBook build).
+- This is `R13` facade-boundary audit coverage only; no manifest surface,
+  production behavior, or lane status changed. The next honest move remains
+  another bounded runtime or negative-boundary audit around remaining embedder
+  assumptions before widening any public API.
+
 ## 2026-05-05: README bootstrap import-tree snapshot refreshed
 - Re-read
   [README.md](/Users/richarddje/Documents/github/fsmgen/README.md),

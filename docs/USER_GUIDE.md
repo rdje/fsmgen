@@ -2236,6 +2236,13 @@ also proves the advertised `quiet` constructor option is accepted compatibility
 state rather than core runtime behavior: it is grouped under
 `compatibility_constructor_option_names`, stays out of the core runtime family,
 and in-process generation captures no stdout/stderr for either quiet value.
+[t/419-hdl-generator-facade-legacy-debug-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/419-hdl-generator-facade-legacy-debug-boundary-audit.t)
+also proves the older `debug` constructor compatibility key stays non-public:
+it is absent from the facade contract and manifest public constructor surfaces,
+maps boolean values to `debug_level` `0` / `1` only when public `debug_level`
+is omitted, yields to public `debug_level` when both are supplied, and rejects
+malformed defined values before debug-runtime setup. New embedder-facing code
+should use `debug_level`, not legacy `debug`.
 [t/399-hdl-generator-facade-stateful-reuse-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/399-hdl-generator-facade-stateful-reuse-boundary-audit.t)
 also proves the advertised `stateful_reuse_supported` promise is
 runtime-backed: one facade object preserves `strict_mode`, `target_language`,

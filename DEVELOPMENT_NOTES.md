@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: legacy debug is compatibility evidence, not a public facade knob
+- The constructor still accepts the legacy `debug` key because older internal
+  call paths used boolean debug state before the public `debug_level` seam was
+  introduced. That does not make `debug` part of
+  `embedding.hdl_generator_facade`; embedders should discover and use
+  `debug_level`.
+- The new audit treats `debug` as a negative-boundary compatibility seam:
+  manifests must not advertise it, the shape map must not document it, and the
+  public option families must not classify it as core runtime state,
+  compatibility presentation state, or extension injection.
+- Runtime precedence is intentionally one-way. A defined scalar boolean
+  legacy `debug` value supplies `debug_level` `0` or `1` only when
+  `debug_level` is omitted; once public `debug_level` is present, it owns the
+  effective debug level, including `0` and higher verbosity values.
+- Invalid defined legacy values are rejected before scoped debug setup, so
+  misuse leaves caller debug state untouched and reports the same facade-owned
+  scalar boolean diagnostic family as the public boolean constructor options.
+  This closes the evidence gap without widening any public API.
+
 ## 2026-05-05: bootstrap import-tree refreshes should distinguish topology from measurement drift
 - The README / `SESSION_BOOTSTRAP.md` path is a real recovery task, not a
   pleasantry. It should rebuild the current source picture before new

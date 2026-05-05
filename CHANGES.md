@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### HDLGenerator legacy debug compatibility now has focused boundary coverage
+- Added
+  [t/419-hdl-generator-facade-legacy-debug-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/419-hdl-generator-facade-legacy-debug-boundary-audit.t)
+  for the still-accepted but non-public `debug` constructor compatibility key.
+- The audit proves `debug` stays out of the direct facade contract, in-process
+  capability manifest, and both capability-manifest CLI spellings, including
+  public constructor names, constructor shape maps, and public constructor
+  option families.
+- Runtime coverage locks defined scalar boolean compatibility values as
+  `debug_level` `0` / `1` fallbacks, proves public `debug_level` precedence
+  when both keys are present, and proves malformed defined legacy values fail
+  with a targeted facade diagnostic before debug-runtime or lower-level
+  constructor diagnostics leak. No production behavior or roadmap status
+  changed.
+- Validation passed with the focused audit (`1` file, `5` tests), the adjacent
+  HDLGenerator facade constructor/debug cluster (`5` files, `18` tests), and
+  the full
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`415` files, `3753` tests, plus mdBook build).
 ### README bootstrap import-tree snapshot refreshed
 - Re-read the README/commit/bootstrap path and the README-referenced roadmap,
   guide, focused-reference, continuity, and agent-guidance documents for the
