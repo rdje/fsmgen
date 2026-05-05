@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: bootstrap architecture notes must stay measurement-honest
+- The required README/bootstrap recovery pass can legitimately produce a
+  doc-only slice when topology is stable but measured architecture notes drift.
+  That is still useful crash-recovery state: the next agent should know both
+  that the `bin/fsmgen` import topology was rechecked and that only measured
+  public-surface line counts moved.
+- This pass kept the static project-owned `FSM::...` closure unchanged at
+  `180` files total, `179` `.pm` packages, no missing project modules, and the
+  same namespace family counts. The refreshed measurements were limited to
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  at `403` lines and
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  at `222` lines after the latest `R13` facade-boundary hardening.
+- Treat this as architecture-note maintenance, not a feature or lane movement.
+  The active implementation lane remains `R13`, and follow-up work should
+  still choose a bounded runtime or negative-boundary audit before widening any
+  embedder-facing API.
+
 ## 2026-05-05: duplicate constructor names must not be Perl hash policy
 - `FSM::Pipeline::HDLGenerator->new(...)` is a facade boundary, so repeated
   option names should not inherit Perl's silent last-value-wins hash

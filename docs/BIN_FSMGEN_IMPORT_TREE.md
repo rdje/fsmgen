@@ -223,7 +223,7 @@ Reachable package-family counts from [bin/fsmgen](/Users/richarddje/Documents/gi
 - singleton support surfaces: `CoreAST.pm`, `Debug.pm`, `ExpressionNamer.pm`, `ParameterValueSupport.pm`, `SourceClassifier.pm`, `SourcePathResolver.pm`
 
 Current thin-coordinator / public-surface assembler line counts:
-- [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm): `392`
+- [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm): `403`
 - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm): `174`
 - [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm): `110`
 - [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm): `164`
@@ -239,7 +239,7 @@ Current thin-coordinator / public-surface assembler line counts:
 - [perl/FSM/Support/LanguageSurfaceSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/LanguageSurfaceSection.pm): `88`
 - [perl/FSM/Support/DocumentationSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DocumentationSection.pm): `28`
 - [perl/FSM/Support/DebugRuntimeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DebugRuntimeContract.pm): `182`
-- [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm): `219`
+- [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm): `222`
 - [perl/FSM/Support/CheckDiagnostics.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnostics.pm): `253`
 - [perl/FSM/Support/NormalizedSemanticReport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReport.pm): `362`
 

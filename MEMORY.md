@@ -1,5 +1,31 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: README bootstrap import-tree line counts rechecked
+- Re-read
+  [README.md](/Users/richarddje/Documents/github/fsmgen/README.md),
+  [COMMIT.md](/Users/richarddje/Documents/github/fsmgen/COMMIT.md),
+  [SESSION_BOOTSTRAP.md](/Users/richarddje/Documents/github/fsmgen/SESSION_BOOTSTRAP.md),
+  and the README-referenced roadmap, guide, composition, extension,
+  SPECFORGE, intent-scheduling, book-plan, continuity, and agent-guidance
+  documents as the required recovery pass before starting new implementation
+  work.
+- Rebuilt the live project-owned `FSM::...` transitive import closure reachable
+  from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen).
+  The static topology remains `180` project files total, `179` `.pm` packages,
+  with no missing project modules and unchanged family counts.
+- Refreshed
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+  for measured public-surface line-count drift after the latest `R13`
+  facade-boundary hardening:
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  is now `403` lines and
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  is now `222` lines.
+- This is bootstrap/architecture-note maintenance only; no roadmap lane status
+  or implementation behavior changed. The next honest move remains another
+  bounded `R13` runtime or negative-boundary audit around remaining embedder
+  assumptions before widening any public API.
+
 ## 2026-05-05: HDLGenerator duplicate constructor options now fail closed before hash overwrite
 - Hardened
   [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)

@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### README bootstrap import-tree line counts rechecked
+- Re-ran the README/commit/bootstrap recovery path and rebuilt the static
+  project-owned `FSM::...` import closure reachable from
+  [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen):
+  topology remains `180` project files total, `179` `.pm` packages, with no
+  missing project modules and unchanged family counts.
+- Updated
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+  to refresh measured line counts after the latest `R13` facade-boundary
+  hardening:
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  is now `403` lines and
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  is now `222` lines. No roadmap status changed.
 ### HDLGenerator duplicate constructor options now fail closed before hash overwrite
 - Hardened
   [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
