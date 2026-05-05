@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: duplicate constructor names must not be Perl hash policy
+- `FSM::Pipeline::HDLGenerator->new(...)` is a facade boundary, so repeated
+  option names should not inherit Perl's silent last-value-wins hash
+  assignment behavior. A call such as `debug_level => 4, debug_level => 0`
+  is ambiguous embedder input, not a deliberate way to override values.
+- The constructor now keeps the raw option/value-list validation layered:
+  odd argument counts fail first, malformed option names fail before
+  stringification, duplicate names fail before `%args` assignment, and only
+  then do supported-name and value-shape checks run.
+- The duplicate policy applies to all scalar option names, including
+  non-public compatibility/internal keys. That is intentional: hidden keys may
+  remain accepted for internal callers, but duplicate hidden keys should not be
+  a back door to silent state rewriting.
+- Rejection happens before scoped debug setup, so duplicate-name misuse cannot
+  leave caller debug state mutated. This is a fail-closed constructor-list
+  hardening slice, not a public constructor-surface expansion.
+- Existing test helpers should model the same rule. The facade extension audit
+  had one helper that expressed "defaults plus overrides" by passing duplicate
+  `target_language` names to the constructor; it now performs the override in a
+  local hash first and sends the facade one unambiguous option list.
+
 ## 2026-05-05: legacy debug is compatibility evidence, not a public facade knob
 - The constructor still accepts the legacy `debug` key because older internal
   call paths used boolean debug state before the public `debug_level` seam was

@@ -2243,6 +2243,12 @@ maps boolean values to `debug_level` `0` / `1` only when public `debug_level`
 is omitted, yields to public `debug_level` when both are supplied, and rejects
 malformed defined values before debug-runtime setup. New embedder-facing code
 should use `debug_level`, not legacy `debug`.
+[t/420-hdl-generator-facade-constructor-duplicate-option-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/420-hdl-generator-facade-constructor-duplicate-option-boundary-audit.t)
+also proves duplicate raw `new(...)` constructor option names fail at the
+facade seam before Perl hash assignment can silently keep only the last value:
+the duplicate-option policy is manifest-backed, public and non-public repeated
+names receive sorted targeted diagnostics, later value-shape or unsupported
+name validation does not run first, and caller debug state is preserved.
 [t/399-hdl-generator-facade-stateful-reuse-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/399-hdl-generator-facade-stateful-reuse-boundary-audit.t)
 also proves the advertised `stateful_reuse_supported` promise is
 runtime-backed: one facade object preserves `strict_mode`, `target_language`,

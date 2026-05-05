@@ -160,17 +160,28 @@ sub _constructor_arg_list (@constructor_args) {
     confess "FSM::Pipeline::HDLGenerator expects new(...) arguments after the class invocant to be option/value pairs"
         if @constructor_args % 2;
 
-    my %args;
+    my (%args, %seen_args, %duplicate_args);
     my @remaining = @constructor_args;
     while (@remaining) {
         my ($arg_name, $value) = splice @remaining, 0, 2;
         confess "FSM::Pipeline::HDLGenerator expects new(...) option names to be scalar non-empty strings before constructor option-name validation"
             unless defined($arg_name) && !ref($arg_name) && $arg_name =~ /\S/;
+        $duplicate_args{$arg_name} = 1 if $seen_args{$arg_name};
+        $seen_args{$arg_name} = 1;
         $args{$arg_name} = $value;
     }
 
+    _constructor_duplicate_arg_names(%duplicate_args);
     _constructor_arg_names(%args);
     return %args;
+}
+sub _constructor_duplicate_arg_names (%duplicate_args) {
+    my @duplicates = sort keys %duplicate_args;
+    confess "FSM::Pipeline::HDLGenerator does not accept duplicate constructor option(s): "
+        . join(', ', @duplicates)
+        if @duplicates;
+
+    return;
 }
 sub _constructor_arg_names (%args) {
     my %supported = map { $_ => 1 } qw(

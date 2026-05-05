@@ -1,6 +1,33 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### HDLGenerator duplicate constructor options now fail closed before hash overwrite
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so duplicate raw `new(...)` option names are rejected before Perl hash
+  assignment can silently overwrite earlier constructor values.
+- Updated
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  to advertise `constructor_duplicate_option_policy`, and updated
+  [t/375-hdl-generator-facade-contract.t](/Users/richarddje/Documents/github/fsmgen/t/375-hdl-generator-facade-contract.t)
+  to lock the new contract field directly.
+- Added
+  [t/420-hdl-generator-facade-constructor-duplicate-option-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/420-hdl-generator-facade-constructor-duplicate-option-boundary-audit.t)
+  to prove direct contract and manifest visibility, duplicate public and
+  non-public option-name rejection, sorted multi-name diagnostics, ordering
+  before value-shape or unsupported-name validation, and caller debug-state
+  preservation. No public constructor option family, generation behavior, or
+  roadmap status changed.
+- Updated
+  [t/389-hdl-generator-facade-extensions-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/389-hdl-generator-facade-extensions-boundary-audit.t)
+  so its local helper builds one merged constructor option map before invoking
+  `HDLGenerator`, instead of depending on duplicate `target_language` list
+  entries and last-value-wins behavior.
+- Validation passed with focused syntax checks, the repaired extension audit
+  plus duplicate-option audit (`2` files, `8` tests), the adjacent facade
+  constructor/contract cluster (`6` files, `23` tests), and the full
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`416` files, `3757` tests, plus mdBook build).
 ### HDLGenerator legacy debug compatibility now has focused boundary coverage
 - Added
   [t/419-hdl-generator-facade-legacy-debug-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/419-hdl-generator-facade-legacy-debug-boundary-audit.t)

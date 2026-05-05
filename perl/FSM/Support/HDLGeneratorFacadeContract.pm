@@ -61,6 +61,7 @@ sub build_hdl_generator_facade_contract {
         constructor_option_family_map => hdl_generator_facade_constructor_option_family_map(),
         constructor_option_shape_map => hdl_generator_facade_constructor_option_shape_map(),
         constructor_argument_list_shape => 'even-length list of scalar non-empty option-name/value pairs after class invocant',
+        constructor_duplicate_option_policy => 'reject duplicate constructor option names before debug-state setup',
         constructor_unknown_option_policy => 'reject unsupported constructor option names before debug-state setup',
         debug_level_numeric_range => hdl_generator_facade_debug_level_numeric_range(),
         default_target_language => 'systemverilog',
@@ -82,6 +83,7 @@ sub build_hdl_generator_facade_contract {
             'Use the grouped constructor_option_family_map to discover the bounded public constructor option families without scraping POD or freezing every currently accepted owner-injection argument.',
             'Use constructor_receiver_shape, constructor_argument_list_shape, and constructor_option_shape_map for the bounded shape contract of the public constructor boundary.',
             'Constructor arguments after the class invocant are validated as option/value pairs with scalar non-empty option names before Perl hash coercion can reinterpret malformed input.',
+            'Duplicate constructor option names are rejected before facade debug-state setup rather than being silently overwritten by Perl hash semantics.',
             'Unsupported constructor option names are rejected before facade debug-state setup rather than being silently ignored.',
             'Owner-injection constructor options remain non-public; if internal callers supply them, malformed values are rejected before facade state is constructed or lower-level owner methods are invoked.',
             'Use debug_level_numeric_range for the accepted facade constructor debug_level range.',
@@ -114,6 +116,7 @@ sub hdl_generator_facade_public_top_level_keys {
             constructor_option_family_map
             constructor_option_shape_map
             constructor_argument_list_shape
+            constructor_duplicate_option_policy
             constructor_unknown_option_policy
             debug_level_numeric_range
             default_target_language

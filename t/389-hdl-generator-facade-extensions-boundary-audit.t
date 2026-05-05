@@ -233,13 +233,15 @@ sub eval_new_pipeline {
 
 sub new_pipeline {
     my (%extra_args) = @_;
-    return FSM::Pipeline::HDLGenerator->new(
+    my %args = (
         debug_level => 0,
         target_language => 'systemverilog',
         strict_mode => 1,
         quiet => 1,
-        %extra_args,
     );
+    $args{$_} = $extra_args{$_} for keys %extra_args;
+
+    return FSM::Pipeline::HDLGenerator->new(%args);
 }
 
 sub marker_labels {

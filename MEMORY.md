@@ -1,5 +1,37 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: HDLGenerator duplicate constructor options now fail closed before hash overwrite
+- Hardened
+  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  so raw `new(...)` option/value lists reject duplicate constructor option
+  names before `%args` assignment can silently keep only the last value.
+- Updated
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  with `constructor_duplicate_option_policy => 'reject duplicate constructor
+  option names before debug-state setup'`, and updated
+  [t/375-hdl-generator-facade-contract.t](/Users/richarddje/Documents/github/fsmgen/t/375-hdl-generator-facade-contract.t)
+  to lock the new contract field directly.
+- Added
+  [t/420-hdl-generator-facade-constructor-duplicate-option-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/420-hdl-generator-facade-constructor-duplicate-option-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  duplicate public and non-public option-name rejection, sorted multi-name
+  diagnostics, duplicate rejection before value-shape or unsupported-name
+  validation, and caller debug-state preservation.
+- Updated
+  [t/389-hdl-generator-facade-extensions-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/389-hdl-generator-facade-extensions-boundary-audit.t)
+  so its local `new_pipeline(...)` helper merges default constructor values
+  before calling the facade instead of relying on duplicate `target_language`
+  arguments and last-value-wins hash semantics.
+- Validation passed with focused syntax checks, the repaired extension audit
+  plus duplicate-option audit (`2` files, `8` tests), the adjacent facade
+  constructor/contract cluster (`6` files, `23` tests), and the full repo-owned
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`416` files, `3757` tests, plus mdBook build).
+- This is `R13` facade-boundary hardening only; no public constructor option
+  family, generation behavior, or lane status changed. The next honest move
+  remains another bounded runtime or negative-boundary audit around remaining
+  embedder assumptions before widening any public API.
+
 ## 2026-05-05: HDLGenerator legacy debug compatibility now has focused boundary coverage
 - Added
   [t/419-hdl-generator-facade-legacy-debug-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/419-hdl-generator-facade-legacy-debug-boundary-audit.t)
