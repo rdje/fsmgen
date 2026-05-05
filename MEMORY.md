@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: FSMModule summary accessors now return snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so `FSM::CoreAST::FSMModule->explicit_system_contract()` and
+  `package_imports()` return cloned summary containers. The legacy
+  `attributes()` accessor remains live because parsing and source-front setup
+  still use the module attribute bag as the explicit mutation surface.
+- Added
+  [t/522-core-ast-fsm-module-summary-accessor-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/522-core-ast-fsm-module-summary-accessor-defensive-copy-boundary-audit.t)
+  to prove accessor-return mutation cannot contaminate the stored system
+  contract or package import list, including nested contract metadata.
+- Focused validation pairs the new CoreAST audit with implicit/explicit system
+  contract, source-frontend, and direct package-import suites. This is `R13`
+  runtime contract-integrity hardening only; no public manifest shape,
+  user-facing docs, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Backend options now use caller-owned structured values
 - Updated
   [perl/FSM/Backend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend.pm)

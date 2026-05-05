@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### FSMModule summary accessors now return snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so `FSM::CoreAST::FSMModule` returns cloned summary containers from
+  `explicit_system_contract()` and `package_imports()` while preserving the
+  legacy live `attributes()` object. No roadmap status changed.
+- Added
+  [t/522-core-ast-fsm-module-summary-accessor-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/522-core-ast-fsm-module-summary-accessor-defensive-copy-boundary-audit.t)
+  to prove mutating those summary accessor returns cannot contaminate the
+  module-owned system contract or package import list.
 ### Backend options now use caller-owned structured values
 - Updated
   [perl/FSM/Backend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend.pm)

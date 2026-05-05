@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: FSMModule summary accessors should not expose mutable internals
+- `FSM::CoreAST::FSMModule` remains a raw in-process compatibility object, and
+  the parser/source frontend still mutate `$module->{attributes}` directly for
+  root kind, package imports, and explicit system contracts.
+- The narrower summary accessors now return clones for
+  `explicit_system_contract()` and `package_imports()`. This lets downstream
+  builders inspect and annotate returned summaries without changing the module
+  state consumed by intent-HIR, module-planning, and package-import reporting.
+- The broad `attributes()` accessor and `direct_root_symbols()` remain live
+  owned surfaces by design; this slice only closes read-only summary leakage.
+
 ## 2026-05-05: Backend options should not expose shared structured values
 - Backend options are configuration data, while the template engine is the live
   collaborator object. The options hash could previously be mutated through

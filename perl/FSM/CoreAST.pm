@@ -2011,10 +2011,10 @@ package FSM::CoreAST::FSMModule;
     sub reset_domains($self) { $self->{reset_domains} }
     sub parameters($self) { $self->{parameters} }
     sub attributes($self) { $self->{attributes} }
-    sub explicit_system_contract($self) { return $self->{attributes}{system_contract} }
+    sub explicit_system_contract($self) { return _clone_fsm_module_value($self->{attributes}{system_contract}) }
     sub source_root_kind($self) { return $self->{attributes}{source_root_kind} // 'fsm' }
     sub direct_root_symbols($self) { return $self->{attributes}{direct_root_symbols} }
-    sub package_imports($self) { return $self->{attributes}{package_imports} || [] }
+    sub package_imports($self) { return _clone_fsm_module_value($self->{attributes}{package_imports} || []) }
     sub is_dt_root($self) { return $self->source_root_kind eq 'dt' }
     sub is_fsm_root($self) { return $self->source_root_kind eq 'fsm' }
 
@@ -2068,6 +2068,22 @@ package FSM::CoreAST::FSMModule;
     }
 
     sub system($self) { return $self->effective_system_contract }
+
+    sub _clone_fsm_module_value($value) {
+        return undef unless defined $value;
+
+        if (ref($value) eq 'HASH') {
+            return {
+                map { $_ => _clone_fsm_module_value($value->{$_}) } sort keys %$value
+            };
+        }
+
+        if (ref($value) eq 'ARRAY') {
+            return [ map { _clone_fsm_module_value($_) } @$value ];
+        }
+
+        return $value;
+    }
 
     sub _reset_keyword_from_name($reset_name) {
         return _looks_active_low_reset_name($reset_name) ? 'areset' : 'sreset';
