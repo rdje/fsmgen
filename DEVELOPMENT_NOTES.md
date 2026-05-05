@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Generated module_info projections own intent-HIR snapshots
+- `GeneratedModuleInfoBuilder::build_from_fsm_module()` accepts either an
+  `IntentHIR` object or a hash-shaped intent payload. The object path already
+  enters through `as_hashref()`, but hash callers could still share top-level
+  projection arrays and nested maps with the returned `module_info`.
+- Top-level generated `module_info` projections now clone structured intent-HIR
+  fields before returning. Semantic object lists and signal-object maps from
+  the FSM module remain live compatibility payloads.
+
 ## 2026-05-05: Source-expression collection is a read boundary
 - `SourceExpressionSpecSupport` recursively walks parsed concat/repeat
   expression trees to expose top-inference and child-source leaves. The

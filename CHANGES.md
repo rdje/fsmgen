@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Generated module_info now owns top-level intent projections
+- Updated
+  [perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm)
+  so generated `module_info` top-level intent-HIR projection fields clone
+  arrays and nested maps from hash inputs instead of retaining caller-owned
+  containers. No roadmap status changed.
+- Added
+  [t/560-generated-module-info-top-level-intent-projection-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/560-generated-module-info-top-level-intent-projection-defensive-copy-boundary-audit.t)
+  to prove mutating the source intent-HIR hash cannot contaminate generated
+  `module_info` top-level projections.
 ### Source-expression spec collectors now return owned leaf snapshots
 - Updated
   [perl/FSM/Composition/SourceExpressionSpecSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SourceExpressionSpecSupport.pm)

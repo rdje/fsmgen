@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Generated module_info now owns top-level intent projections
+- Updated
+  [perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm)
+  so `build_from_fsm_module()` clones generated `module_info` top-level
+  intent-HIR projection arrays and nested maps from hash inputs.
+- Added
+  [t/560-generated-module-info-top-level-intent-projection-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/560-generated-module-info-top-level-intent-projection-defensive-copy-boundary-audit.t)
+  to prove source intent-HIR hash mutation cannot contaminate generated
+  `module_info` top-level projections.
+- Focused validation paired the new audit with generated-module info,
+  generated-info helper defensive-copy, lowered-RTLIR builder, structural-RTLIR
+  builder, and direct symbol-contract forward-IR suites. This is `R13`
+  runtime contract-integrity hardening only; no public manifest shape,
+  user-facing docs, mdBook content, generation behavior, or roadmap lane status
+  changed.
+
 ## 2026-05-05: Source-expression spec collectors now return owned leaf snapshots
 - Updated
   [perl/FSM/Composition/SourceExpressionSpecSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SourceExpressionSpecSupport.pm)
