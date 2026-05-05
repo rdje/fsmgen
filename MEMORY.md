@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: StructuralRTLIR binding expressions now return caller-owned snapshots
+- Updated
+  [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm)
+  so exported `binding_expr()` clones stored `connection_expr` hashes before
+  returning them. The explicit structural binding mutators remain live.
+- Added
+  [t/550-structural-rtl-connection-expr-binding-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/550-structural-rtl-connection-expr-binding-defensive-copy-boundary-audit.t)
+  to prove returned binding-expression mutation and normalized-binding metadata
+  mutation cannot contaminate stored structural binding payloads.
+- Focused validation paired the new audit with StructuralRTLIR accessor,
+  normalized semantic structural-RTL contract, and child-export builder suites.
+  This is `R13` runtime contract-integrity hardening only; no public manifest
+  shape, user-facing docs, mdBook content, generation behavior, or roadmap lane
+  status changed.
+
 ## 2026-05-05: Regression corpus entries now use generic mutable-container cloning
 - Updated
   [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm)

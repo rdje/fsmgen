@@ -227,7 +227,7 @@ sub normalized_binding ($binding) {
 
 sub binding_expr ($binding) {
     return undef unless ref($binding) eq 'HASH';
-    return $binding->{connection_expr} if ref($binding->{connection_expr}) eq 'HASH';
+    return _clone($binding->{connection_expr}) if ref($binding->{connection_expr}) eq 'HASH';
     return signal_ref_expr($binding->{signal_name});
 }
 

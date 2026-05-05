@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### StructuralRTLIR binding expressions now return caller-owned snapshots
+- Updated
+  [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm)
+  so exported `binding_expr()` returns a cloned `connection_expr` payload
+  instead of the live binding-owned hash. Explicit binding mutators remain the
+  mutation path. No roadmap status changed.
+- Added
+  [t/550-structural-rtl-connection-expr-binding-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/550-structural-rtl-connection-expr-binding-defensive-copy-boundary-audit.t)
+  to prove returned expression and normalized-binding metadata mutation cannot
+  contaminate stored structural binding payloads.
 ### Regression corpus entries now use generic mutable-container cloning
 - Updated
   [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm)

@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: StructuralRTLIR binding_expr is a read boundary
+- `FSM::IR::StructuralRTLIR::ConnectionExpr::binding_expr()` is exported as a
+  convenience read helper for effective port-binding expressions. Returning the
+  stored `connection_expr` hash made ordinary inspection a mutation handle.
+- The helper now clones binding-owned expression payloads on return. The
+  explicit `update_binding_signal_ref(...)`, `ensure_signal_ref_binding(...)`,
+  and `set_signal_ref_binding(...)` helpers remain the live mutation surface.
+
 ## 2026-05-05: RegressionCorpus should not need field-specific copy maintenance
 - Regression corpus entries feed support accounting, capability manifests, and
   corpus behavior tests. The old copy helper cloned only the mutable fields that
