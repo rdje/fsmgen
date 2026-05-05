@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: ExpressionNamer query maps should be read snapshots
+- `FSM::ExpressionNamer` owns expression-name caches and generated signal
+  definition records that later wire/assignment generation reads directly.
+- `get_signal_definitions()` and `get_named_expressions()` now return cloned
+  maps for inspection. The generation methods still read the internal maps, so
+  callers can inspect and annotate returned query data without changing emitted
+  declarations or assignments.
+- Contained AST objects keep identity inside cloned definition records; the
+  boundary protects the query maps and scalar definition fields.
+
 ## 2026-05-05: Package spec raw AST access should snapshot containers
 - `FSM::Package::Spec` wraps a package name, its owned `FSM::Package::Symbols`
   table, and the raw package AST.

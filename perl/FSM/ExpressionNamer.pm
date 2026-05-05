@@ -1274,12 +1274,12 @@ sub ast_to_factorization_aware_name($self, $ast) {
 
 # Get all generated signal definitions
 sub get_signal_definitions($self) {
-    return $self->{_signal_definitions};
+    return _clone($self->{_signal_definitions});
 }
 
 # Get named expressions mapping
 sub get_named_expressions($self) {
-    return $self->{_named_expression_strings};
+    return _clone($self->{_named_expression_strings});
 }
 
 # Generate Verilog wire declarations for all named expressions
@@ -1392,6 +1392,22 @@ sub _traverse_native_ast_for_complexity($self, $node, $result, $current_depth) {
     }
     
     # For SignalRef and Literal nodes, no further traversal needed
+}
+
+sub _clone($value) {
+    return undef unless defined $value;
+
+    if (ref($value) eq 'HASH') {
+        return {
+            map { $_ => _clone($value->{$_}) } sort keys %$value
+        };
+    }
+
+    if (ref($value) eq 'ARRAY') {
+        return [ map { _clone($_) } @$value ];
+    }
+
+    return $value;
 }
 
 # Native AST factorization decision method

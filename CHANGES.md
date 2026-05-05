@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### ExpressionNamer query maps now return snapshots
+- Updated
+  [perl/FSM/ExpressionNamer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ExpressionNamer.pm)
+  so `get_signal_definitions()` and `get_named_expressions()` return cloned
+  query maps while generation methods continue to read internal state. No
+  roadmap status changed.
+- Added
+  [t/520-expression-namer-query-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/520-expression-namer-query-defensive-copy-boundary-audit.t)
+  to prove query-map mutation cannot contaminate definitions, expression-name
+  caches, wire declaration lookup, or assignment generation.
 ### Package specs now clone raw AST containers
 - Updated
   [perl/FSM/Package/Spec.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/Spec.pm)

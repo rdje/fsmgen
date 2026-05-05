@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: ExpressionNamer query maps now return snapshots
+- Updated
+  [perl/FSM/ExpressionNamer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ExpressionNamer.pm)
+  so `get_signal_definitions()` and `get_named_expressions()` return cloned
+  query maps. Internal generation paths continue to read the namer's owned
+  definition cache directly.
+- Added
+  [t/520-expression-namer-query-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/520-expression-namer-query-defensive-copy-boundary-audit.t)
+  to prove query-map mutation cannot contaminate definitions, expression-name
+  caches, wire declaration lookup, or assignment generation.
+- Focused validation pairs the new ExpressionNamer audit with driving-AST
+  canonicalization and scalar-width support suites. This is `R13` runtime
+  contract-integrity hardening only; no public manifest shape, user-facing
+  docs, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Package specs now clone raw AST containers
 - Updated
   [perl/FSM/Package/Spec.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/Spec.pm)
