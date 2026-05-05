@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: embedding sections should stay mutation-safe per call
+- The manifest `embedding` section nests several public child contracts. Since
+  in-process callers receive this as ordinary Perl data, caller-side mutation
+  must not pollute later `build_embedding_section()` calls.
+- The new audit mutates a returned embedding section deeply, then proves a
+  fresh section still has clean top-level keys, clean section-contract nested
+  maps, and clean typed-extension / HDLGenerator result child contracts.
+- This is coverage only; no embedding-section shape changed.
+
 ## 2026-05-05: capability manifests should stay mutation-safe per call
 - In-process callers receive the capability manifest as a nested Perl hash.
   Without an explicit regression, a future optimization could accidentally
