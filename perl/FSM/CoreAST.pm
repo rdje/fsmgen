@@ -2054,18 +2054,18 @@ package FSM::CoreAST::State;
     sub new($class, %args) {
         bless {
             name => $args{name} // Carp::confess("State name required"),
-            decision_trees => $args{decision_trees} // [],
+            decision_trees => _clone_state_value($args{decision_trees} // []),
             encoding => $args{encoding},
             state_type => $args{state_type} // 'normal',
-            attributes => $args{attributes} // {},
+            attributes => _clone_state_value($args{attributes} // {}),
         }, $class;
     }
     
     sub name($self) { $self->{name} }
-    sub decision_trees($self) { $self->{decision_trees} }
+    sub decision_trees($self) { _clone_state_value($self->{decision_trees}) }
     sub encoding($self) { $self->{encoding} }
     sub state_type($self) { $self->{state_type} // 'normal' }
-    sub attributes($self) { $self->{attributes} }
+    sub attributes($self) { _clone_state_value($self->{attributes}) }
 
     sub is_reset_state($self) {
         my $state_type = $self->state_type;
@@ -2084,6 +2084,22 @@ package FSM::CoreAST::State;
     
     sub add_decision_tree($self, $dt) {
         push $self->{decision_trees}->@*, $dt;
+    }
+
+    sub _clone_state_value($value) {
+        return undef unless defined $value;
+
+        if (ref($value) eq 'HASH') {
+            return {
+                map { $_ => _clone_state_value($value->{$_}) } sort keys %$value
+            };
+        }
+
+        if (ref($value) eq 'ARRAY') {
+            return [ map { _clone_state_value($_) } @$value ];
+        }
+
+        return $value;
     }
     
     sub get_primary_decision_tree($self) {

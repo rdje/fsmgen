@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: State decision-tree lists should be state-owned
+- State objects own the ordered decision-tree list consumed by parsing,
+  analysis, and flattening. `add_decision_tree(...)` is the mutation API used
+  during parse.
+- Construction and `decision_trees()` / `attributes()` now clone mutable
+  containers while preserving contained `DecisionTree` object identity. This
+  blocks accidental list/hash mutation through inspection without changing
+  state classification or traversal behavior.
+
 ## 2026-05-05: DecisionTree analysis caches should not be caller-mutable
 - DecisionTree signal/conflict analysis is cached internally for repeated
   queries. Returning the cached containers directly let inspection code mutate

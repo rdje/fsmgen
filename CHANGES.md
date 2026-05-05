@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### State decision-tree lists now return snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so `FSM::CoreAST::State` clones decision-tree list and attribute containers
+  on construction and from accessors while preserving contained decision-tree
+  object identity and `add_decision_tree(...)` as the mutation path. No roadmap
+  status changed.
+- Added
+  [t/530-core-ast-state-decision-tree-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/530-core-ast-state-decision-tree-defensive-copy-boundary-audit.t)
+  to prove constructor and accessor mutation cannot contaminate state-owned
+  decision-tree lists or attribute metadata.
 ### DecisionTree analysis cache results now return snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
