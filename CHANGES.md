@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### ASTFactorization generated signal contexts now snapshot candidate contexts
+- Updated
+  [perl/FSM/HDL/ASTFactorization.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/ASTFactorization.pm)
+  so generated intermediate-signal context lists no longer alias structural-map
+  candidate context lists. The `analyze_and_factorize()` intermediate-signal
+  map remains live for downstream pass renaming. No roadmap status changed.
+- Added
+  [t/546-ast-factorization-intermediate-signal-context-snapshot-audit.t](/Users/richarddje/Documents/github/fsmgen/t/546-ast-factorization-intermediate-signal-context-snapshot-audit.t)
+  to prove generated signal and structural-map context lists are independently
+  owned.
 ### AST factorization wrapper factories now use wrapper constructors
 - Updated
   [perl/FSM/HDL/ASTFactorization.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/ASTFactorization.pm)

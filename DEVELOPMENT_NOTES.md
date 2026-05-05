@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: ASTFactorization context ownership is split deliberately
+- `analyze_and_factorize()` still returns the live `intermediate_signals` map
+  because fixpoint pass execution renames colliding pass-local signals through
+  that returned map before substitution.
+- Within that live signal map, each generated signal now owns its `contexts`
+  list separately from the structural-map candidate record. Context lists are
+  debug/accounting metadata, so cross-map aliasing only created accidental
+  contamination risk.
+
 ## 2026-05-05: AST factorization factories should not bypass constructors
 - The `create_*_ast(...)` helpers in `FSM::HDL::ASTFactorization` create the
   same wrapper classes whose constructors now own required-field validation and

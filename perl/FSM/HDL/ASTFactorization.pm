@@ -546,7 +546,7 @@ sub generate_candidate_names {
             ast           => $ast,
             structural_id => $structural_id,
             usage_count   => $candidate_info->{usage_count},
-            contexts      => $candidate_info->{contexts},
+            contexts      => _clone_factorization_value($candidate_info->{contexts} || []),
             width         => 1  # Default to 1-bit, could be made configurable
         };
         
@@ -714,6 +714,24 @@ sub ensure_unique_name {
         $final_name = "${base_name}_${i}";
     }
     return $final_name;
+}
+
+sub _clone_factorization_value {
+    my ($value) = @_;
+    return undef unless defined $value;
+    return $value if blessed($value);
+
+    if (ref($value) eq 'HASH') {
+        return {
+            map { $_ => _clone_factorization_value($value->{$_}) } sort keys %{$value}
+        };
+    }
+
+    if (ref($value) eq 'ARRAY') {
+        return [ map { _clone_factorization_value($_) } @{$value} ];
+    }
+
+    return $value;
 }
 
 =head2 substitute_expressions_with_intermediate_signals()

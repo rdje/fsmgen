@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: ASTFactorization generated signal contexts now snapshot candidate contexts
+- Updated
+  [perl/FSM/HDL/ASTFactorization.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/ASTFactorization.pm)
+  so `generate_candidate_names()` stores cloned context-list containers on
+  generated `intermediate_signals` entries instead of aliasing the
+  `ast_structure_map` candidate context list. The top-level
+  `analyze_and_factorize()` intermediate-signal map remains live by design for
+  downstream fixpoint-pass renaming.
+- Added
+  [t/546-ast-factorization-intermediate-signal-context-snapshot-audit.t](/Users/richarddje/Documents/github/fsmgen/t/546-ast-factorization-intermediate-signal-context-snapshot-audit.t)
+  to prove structural-map context mutation cannot contaminate generated signal
+  contexts, and generated signal context mutation cannot contaminate the
+  structural-map context list.
+- Focused validation paired the new audit with wrapper factory/constructor,
+  enable-graph factorization, and fixpoint pass execution/loop-state suites.
+  This is `R13` runtime contract-integrity hardening only; no public manifest
+  shape, user-facing docs, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: AST factorization wrapper factories now use wrapper constructors
 - Updated
   [perl/FSM/HDL/ASTFactorization.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/ASTFactorization.pm)
