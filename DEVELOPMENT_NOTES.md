@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: SignalManager type registration owns a snapshot
+- `SignalManager->resolve_type(...)` already returned cloned type specs, but
+  `store_type(...)` kept the caller's nested type-spec reference. A caller that
+  reused or normalized that structure after registration could change later
+  type resolution.
+- `store_type(...)` now clones the incoming type spec before storage, making
+  the direct-root type table follow the same caller-owned boundary used by
+  package symbols and composition top symbols.
+- This keeps `+types` resolution, `+size` width lookup, structural declared
+  type metadata, and symbol-contract inspection stable after parse-time
+  registration.
+
 ## 2026-05-05: SignalManager aggregate payload lookup should be snapshot-based
 - `FSM::Adapter::FSMGenFull::SignalManager` owns aggregate-valued symbol roots
   used by scalar-expression lowering and parameter-value payload lookup. The

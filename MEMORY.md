@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: SignalManager type specs are cloned at storage
+- Updated
+  [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm)
+  so `store_type(...)` clones nested type specs before adding them to the
+  direct-root signal manager type table; `resolve_type(...)` and
+  `resolve_type_width(...)` continue to read from that stored snapshot.
+- Added
+  [t/508-signal-manager-type-spec-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/508-signal-manager-type-spec-defensive-copy-boundary-audit.t)
+  to prove store-input mutation and resolver-return mutation cannot contaminate
+  type resolution or width lookup.
+- Focused validation pairs the new SignalManager type-spec audit with
+  declarative scalar type, declarative aggregate type, and structural
+  declared-type contract suites. This is `R13` runtime contract-integrity
+  hardening only; no public manifest shape, user-facing docs, generation
+  behavior, or roadmap lane status changed.
+
 ## 2026-05-05: SignalManager aggregate payloads now return caller-owned copies
 - Updated
   [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm)

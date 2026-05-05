@@ -193,7 +193,7 @@ sub store_param($self, $name, $value) {
 }
 
 sub store_type($self, $name, $type_spec) {
-    $self->{types}{$name} = $type_spec;
+    $self->{types}{$name} = _clone_type_spec($type_spec);
 }
 
 sub store_aggregate_symbol($self, $name, $payload = undef) {

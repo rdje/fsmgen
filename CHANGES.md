@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### SignalManager type specs are cloned at storage
+- Updated
+  [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm)
+  so `store_type(...)` copies nested type specs before adding them to the
+  direct-root signal manager symbol table. No roadmap status changed.
+- Added
+  [t/508-signal-manager-type-spec-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/508-signal-manager-type-spec-defensive-copy-boundary-audit.t)
+  to prove store-input mutation and resolver-return mutation cannot contaminate
+  type resolution or width lookup.
 ### SignalManager aggregate payloads now return caller-owned copies
 - Updated
   [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm)
