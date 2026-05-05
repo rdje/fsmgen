@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### SignalManager constant and define literals are cloned across lookup
+- Updated
+  [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm)
+  so constant and define literal expressions are cloned on storage and from
+  `resolve_symbol(...)`. No roadmap status changed.
+- Added
+  [t/511-signal-manager-literal-symbol-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/511-signal-manager-literal-symbol-defensive-copy-boundary-audit.t)
+  to prove literal input mutation and resolved-literal mutation cannot
+  contaminate symbol, parameter-payload, or positive-integer lookup.
 ### SignalManager enum maps are cloned at storage
 - Updated
   [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm)

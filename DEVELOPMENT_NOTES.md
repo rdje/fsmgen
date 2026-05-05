@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: SignalManager literal symbols need object snapshots
+- Constants and defines enter the signal manager as `FSM::CoreAST::Literal`
+  objects. Returning those same objects from `resolve_symbol(...)` let a caller
+  mutate the stored symbol table through ordinary expression lookup.
+- `store_constant(...)` and `store_define(...)` now clone literal objects on
+  entry, and constant/define branches of `resolve_symbol(...)` return fresh
+  literal objects. Non-literal expression objects are left unchanged because the
+  current direct-root constant/define projection only supplies literals.
+- Parameter-payload lookup and positive-integer scalar lookup keep reading the
+  stored literal snapshot, so local expression parsing cannot corrupt later
+  width or payload resolution.
+
 ## 2026-05-05: SignalManager enum registration owns member maps
 - Direct-root enum declarations feed both expression resolution
   (`mode.RUN` as a literal expression) and parameter-value payload lookup

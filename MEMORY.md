@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: SignalManager constant and define literals are cloned across lookup
+- Updated
+  [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm)
+  so constant and define `FSM::CoreAST::Literal` objects are cloned on
+  `store_constant(...)` / `store_define(...)` and from `resolve_symbol(...)`.
+- Added
+  [t/511-signal-manager-literal-symbol-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/511-signal-manager-literal-symbol-defensive-copy-boundary-audit.t)
+  to prove store-input mutation and resolved-literal mutation cannot
+  contaminate expression lookup, parameter-payload lookup, or positive-integer
+  constant width lookup.
+- Focused validation pairs the new SignalManager literal audit with language
+  symbol-definition, symbol-definition boundary, package aggregate-value, and
+  declarative scalar type suites. This is `R13` runtime contract-integrity
+  hardening only; no public manifest shape, user-facing docs, generation
+  behavior, or roadmap lane status changed.
+
 ## 2026-05-05: SignalManager enum maps are cloned at storage
 - Updated
   [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm)

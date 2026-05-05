@@ -171,7 +171,7 @@ sub get_all_signal_usages($self) {
 
 # Symbol Storage
 sub store_constant($self, $name, $literal_expr) {
-    $self->{constants}{$name} = $literal_expr;
+    $self->{constants}{$name} = _clone_symbol_expression($literal_expr);
 }
 
 sub record_constant_definition($self, $name) {
@@ -185,7 +185,7 @@ sub store_enum($self, $enum_name, $enum_values_hashref) {
 }
 
 sub store_define($self, $name, $value_expr) {
-    $self->{defines}{$name} = $value_expr;
+    $self->{defines}{$name} = _clone_symbol_expression($value_expr);
 }
 
 sub store_param($self, $name, $value) {
@@ -279,13 +279,13 @@ sub resolve_symbol($self, $symbol_name) {
     # 1. Check constants
     if (exists $self->{constants}{$symbol_name}) {
         fsm_debug("      RESOLVED: $symbol_name as constant", 3);
-        return $self->{constants}{$symbol_name};
+        return _clone_symbol_expression($self->{constants}{$symbol_name});
     }
     
     # 2. Check defines
     if (exists $self->{defines}{$symbol_name}) {
         fsm_debug("      RESOLVED: $symbol_name as define", 3);
-        return $self->{defines}{$symbol_name};
+        return _clone_symbol_expression($self->{defines}{$symbol_name});
     }
     
     # 3. Check enum members (format: enum_name.member_name)
@@ -384,6 +384,20 @@ sub _explicit_parameter_ref_width($param_value) {
         if defined($value_text) && $value_text =~ /\A-?\d+'s?[bBoOdDhH]/;
 
     return undef;
+}
+
+sub _clone_symbol_expression($expr) {
+    return undef unless defined $expr;
+
+    if (blessed($expr) && $expr->isa('FSM::CoreAST::Literal')) {
+        return FSM::CoreAST::Literal->new(
+            $expr->value,
+            width => $expr->width,
+            radix => $expr->radix,
+        );
+    }
+
+    return $expr;
 }
 
 sub _literal_to_parameter_payload($literal_expr) {
