@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Normalized semantic system_contract now has defensive-copy coverage
+- Added
+  [t/473-normalized-semantic-system-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/473-normalized-semantic-system-contract-defensive-copy-boundary-audit.t)
+  to prove `build_normalized_semantic_system_contract()` and its exported
+  helper builders return fresh nested structures across calls. No roadmap
+  status changed.
+- Focused validation passed with the normalized semantic system contract,
+  normalized semantic child runtime contract, and new defensive-copy audit
+  cluster (`3` files, `13` tests).
 ### Normalized semantic symbol contract now has defensive-copy coverage
 - Added
   [t/472-normalized-semantic-symbol-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/472-normalized-semantic-symbol-contract-defensive-copy-boundary-audit.t)

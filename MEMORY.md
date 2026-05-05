@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Normalized semantic system_contract now has defensive-copy coverage
+- Added
+  [t/473-normalized-semantic-system-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/473-normalized-semantic-system-contract-defensive-copy-boundary-audit.t)
+  to prove `build_normalized_semantic_system_contract()` and its exported
+  helper builders return fresh nested structures across calls.
+- Focused validation passed with the normalized semantic system contract,
+  normalized semantic child runtime contract, and new defensive-copy audit
+  cluster (`3` files, `13` tests).
+- This is `R13` normalized semantic system_contract contract-integrity
+  coverage only; no public API shape, user-facing docs, mdBook source,
+  generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Normalized semantic symbol contract now has defensive-copy coverage
 - Added
   [t/472-normalized-semantic-symbol-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/472-normalized-semantic-symbol-contract-defensive-copy-boundary-audit.t)
