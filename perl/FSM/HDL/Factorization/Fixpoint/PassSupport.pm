@@ -43,6 +43,7 @@ use warnings;
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
+use Scalar::Util qw(blessed);
 use FSM::Debug;
 
 =head2 new
@@ -147,10 +148,27 @@ sub select_new_unique_signals ($self, $pass_signals, $all_additional_signals, $p
     for my $signal_name (sort keys %{ $pass_signals || {} }) {
         next if exists $all_additional_signals->{$signal_name};
         next if exists $primary_intermediate_signals->{$signal_name};
-        $new_unique_signals{$signal_name} = $pass_signals->{$signal_name};
+        $new_unique_signals{$signal_name} = _clone_pass_signal_value($pass_signals->{$signal_name});
     }
 
     return \%new_unique_signals;
+}
+
+sub _clone_pass_signal_value ($value) {
+    return undef unless defined $value;
+    return $value if blessed($value);
+
+    if (ref($value) eq 'HASH') {
+        return {
+            map { $_ => _clone_pass_signal_value($value->{$_}) } sort keys %{$value}
+        };
+    }
+
+    if (ref($value) eq 'ARRAY') {
+        return [ map { _clone_pass_signal_value($_) } @{$value} ];
+    }
+
+    return $value;
 }
 
 =head2 log_new_unique_signals

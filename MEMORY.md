@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Fixpoint pass selected signal maps now own metadata containers
+- Updated
+  [perl/FSM/HDL/Factorization/Fixpoint/PassSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/PassSupport.pm)
+  so `select_new_unique_signals()` clones selected signal metadata containers
+  while preserving contained AST object identity.
+- Added
+  [t/548-factorization-pass-select-new-unique-signal-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/548-factorization-pass-select-new-unique-signal-defensive-copy-boundary-audit.t)
+  to prove selected maps exclude already-known names, preserve AST identity, and
+  cannot cross-contaminate pass-signal metadata after selection.
+- Focused validation paired the new selection audit with pass-support,
+  pass-execution, loop-state, and final-result boundary suites. This is `R13`
+  runtime contract-integrity hardening only; no public manifest shape,
+  user-facing docs, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Fixpoint final results now return caller-owned signal maps
 - Updated
   [perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm)

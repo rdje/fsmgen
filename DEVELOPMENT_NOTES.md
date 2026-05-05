@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Fixpoint selected-signal maps are pass projections
+- `select_new_unique_signals()` projects one pass's live generated signal map
+  down to only names not already present in prior additional signals or primary
+  first-pass signals.
+- That selected map is now a caller-owned projection of signal metadata
+  containers. AST objects inside each signal record stay live by identity, but
+  context/metadata hashes and arrays no longer alias the pass signal map.
+
 ## 2026-05-05: Fixpoint final results should be projections, not loop state
 - `LoopStateSupport` owns mutable aggregate loop state while pass execution is
   running. `finalize_loop_result()` is the boundary that projects that state to

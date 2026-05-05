@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Fixpoint pass selected signal maps now own metadata containers
+- Updated
+  [perl/FSM/HDL/Factorization/Fixpoint/PassSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/PassSupport.pm)
+  so `select_new_unique_signals()` clones selected signal metadata containers
+  while preserving contained AST identity. No roadmap status changed.
+- Added
+  [t/548-factorization-pass-select-new-unique-signal-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/548-factorization-pass-select-new-unique-signal-defensive-copy-boundary-audit.t)
+  to prove selected signal maps and pass signal maps cannot cross-contaminate
+  after selection.
 ### Fixpoint final results now return caller-owned signal maps
 - Updated
   [perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm)
