@@ -1,6 +1,27 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Typed extension loader methods now require constructed loaders
+- Hardened
+  [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm)
+  so direct `load_modules(...)`, `module_names_from_config_files(...)`, and
+  `module_names_from_config_file(...)` calls require an exact hash-backed
+  `FSM::Extension::Loader` object constructed by `new(...)`.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  so typed-extension manifests advertise the loader method receiver shape and
+  method names, and updated the extension guide/book docs to describe the
+  direct loader method receiver boundary.
+- Added
+  [t/428-typed-extension-loader-method-receiver-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/428-typed-extension-loader-method-receiver-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  valid constructed-loader method calls, malformed receiver rejection, bounded
+  diagnostics, and existing module/config payload rejection after receiver
+  validation passes. No roadmap status changed.
+- Validation passed with syntax checks, the adjacent loader/contract/manifest
+  cluster (`10` files, `56` tests), and the full
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`424` files, `3791` tests, plus mdBook build).
 ### Typed extension loader construction now fails closed
 - Hardened
   [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm)

@@ -4,9 +4,11 @@ use v5.20;
 use strict;
 use warnings;
 use Carp qw(confess);
-use Scalar::Util qw(blessed);
+use Scalar::Util qw(blessed reftype);
 use feature qw(signatures);
 no warnings 'experimental::signatures';
+
+my $LOADER_INSTANCE_MARKER = __PACKAGE__ . '::constructed';
 
 sub new {
     my ($class, @args) = @_;
@@ -15,10 +17,13 @@ sub new {
     confess "FSM::Extension::Loader constructor does not accept option/value arguments"
         if @args;
 
-    return bless {}, $class;
+    return bless {
+        $LOADER_INSTANCE_MARKER => 1,
+    }, $class;
 }
 
 sub module_names_from_config_files ($self, $config_paths) {
+    _validate_loader_method_receiver($self, 'module_names_from_config_files');
     confess "FSM::Extension::Loader expects an array reference of config file paths"
         unless ref($config_paths) eq 'ARRAY';
 
@@ -31,6 +36,7 @@ sub module_names_from_config_files ($self, $config_paths) {
 }
 
 sub module_names_from_config_file ($self, $config_path) {
+    _validate_loader_method_receiver($self, 'module_names_from_config_file');
     return _with_extension_config_context($config_path, sub {
         _validate_extension_config_path($config_path);
         confess "Extension config file not found: $config_path"
@@ -65,6 +71,7 @@ sub module_names_from_config_file ($self, $config_path) {
 }
 
 sub load_modules ($self, $module_names) {
+    _validate_loader_method_receiver($self, 'load_modules');
     confess "FSM::Extension::Loader expects an array reference of module names"
         unless ref($module_names) eq 'ARRAY';
 
@@ -94,6 +101,16 @@ sub load_modules ($self, $module_names) {
     }
 
     return \@extensions;
+}
+
+sub _validate_loader_method_receiver ($self, $method_name) {
+    confess "FSM::Extension::Loader::$method_name requires an exact FSM::Extension::Loader object constructed by new(...)"
+        unless blessed($self)
+            && blessed($self) eq __PACKAGE__
+            && (reftype($self) || '') eq 'HASH'
+            && $self->{$LOADER_INSTANCE_MARKER};
+
+    return;
 }
 
 sub _validate_extension_config_path ($config_path) {

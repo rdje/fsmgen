@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: loader methods should run only on constructed loader objects
+- Once `FSM::Extension::Loader->new(...)` had an owned constructor boundary,
+  the loader methods still accepted class receivers and fake exact-class
+  objects because the methods did not depend on object state. That made direct
+  method calls look more static than the typed-extension contract intends.
+- The loader now stamps instances constructed by `new(...)` and validates that
+  `load_modules(...)`, `module_names_from_config_files(...)`, and
+  `module_names_from_config_file(...)` run only on exact hash-backed stamped
+  loader objects. Payload validation remains owned by each method after the
+  receiver boundary passes.
+- This does not change extension module/config semantics; it only makes the
+  direct loader receiver boundary explicit and regression-backed.
+
 ## 2026-05-05: loader construction should stay intentionally empty
 - `FSM::Extension::Loader` currently has no constructor options; callers pass
   module names and config files to explicit loading methods instead. Allowing

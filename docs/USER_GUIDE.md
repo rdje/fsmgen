@@ -2327,6 +2327,11 @@ also proves direct `FSM::Extension::Loader->new(...)` construction accepts
 only the exact class receiver and no option/value arguments, so malformed
 loader constructor calls fail before raw hash-coercion or `bless` fallout can
 leak.
+[t/428-typed-extension-loader-method-receiver-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/428-typed-extension-loader-method-receiver-boundary-audit.t)
+also proves direct loader methods require an exact hash-backed
+`FSM::Extension::Loader` object constructed by `new(...)`, so class receivers,
+subclass stand-ins, and fake exact-class objects fail before loading payload
+diagnostics can leak.
 [t/397-typed-extension-registry-dispatch-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/397-typed-extension-registry-dispatch-boundary-audit.t)
 also proves the registry's direct `dispatch_hook(...)` entrypoint enforces the
 same closed hook set: `after_parse_source` and `after_generate_result` still

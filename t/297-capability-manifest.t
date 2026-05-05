@@ -49,6 +49,7 @@ use FSM::Support::DebugRuntimeContract qw(
 use FSM::Support::ExtensionContract qw(
     extension_contract_context_accessors
     extension_contract_loader_constructor_option_names
+    extension_contract_loader_method_names
     extension_contract_name_family_map
     extension_contract_registry_constructor_option_names
     extension_contract_source
@@ -1526,6 +1527,16 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         sorted($manifest->{embedding}{typed_extensions}{extension_object_contract}{loader_constructor_supported_option_names}),
         sorted(extension_contract_loader_constructor_option_names()),
         'manifest records the typed extension direct loader constructor option names',
+    );
+    is(
+        $manifest->{embedding}{typed_extensions}{extension_object_contract}{loader_method_receiver_shape},
+        'exact hash-backed FSM::Extension::Loader object constructed by new(...)',
+        'manifest records the typed extension direct loader method receiver shape',
+    );
+    is_deeply(
+        sorted($manifest->{embedding}{typed_extensions}{extension_object_contract}{loader_method_names}),
+        sorted(extension_contract_loader_method_names()),
+        'manifest records the typed extension direct loader method names',
     );
     is(
         $manifest->{embedding}{typed_extensions}{extension_object_contract}{registry_constructor_receiver_shape},

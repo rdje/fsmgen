@@ -14,6 +14,7 @@ our @EXPORT_OK = qw(
     extension_contract_context_accessors
     extension_contract_hook_names
     extension_contract_loader_constructor_option_names
+    extension_contract_loader_method_names
     extension_contract_registry_constructor_option_names
     extension_contract_supported_source_kinds
 );
@@ -60,6 +61,7 @@ sub build_extension_contract {
             't/425-typed-extension-dt-source-kind-contract-audit.t',
             't/426-typed-extension-registry-constructor-argument-boundary-audit.t',
             't/427-typed-extension-loader-constructor-argument-boundary-audit.t',
+            't/428-typed-extension-loader-method-receiver-boundary-audit.t',
         ],
         entrypoints => {
             programmatic_objects => 'FSM::Pipeline::HDLGenerator->new(extensions => [ $object, ... ])',
@@ -75,6 +77,8 @@ sub build_extension_contract {
             loader_constructor_receiver_shape => 'scalar FSM::Extension::Loader class name',
             loader_constructor_argument_list_shape => 'no option/value arguments after class invocant',
             loader_constructor_supported_option_names => extension_contract_loader_constructor_option_names(),
+            loader_method_receiver_shape => 'exact hash-backed FSM::Extension::Loader object constructed by new(...)',
+            loader_method_names => extension_contract_loader_method_names(),
             registry_constructor_receiver_shape => 'scalar FSM::Extension::Registry class name',
             registry_constructor_argument_list_shape => 'even-length list of unique scalar non-empty supported option-name/value pairs after class invocant',
             registry_constructor_supported_option_names => extension_contract_registry_constructor_option_names(),
@@ -182,6 +186,16 @@ sub extension_contract_context_accessors {
 
 sub extension_contract_loader_constructor_option_names {
     return [];
+}
+
+sub extension_contract_loader_method_names {
+    return [
+        qw(
+            load_modules
+            module_names_from_config_file
+            module_names_from_config_files
+        ),
+    ];
 }
 
 sub extension_contract_registry_constructor_option_names {
