@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: IntentHIR mutable accessors should not expose object internals
+- `FSM::IR::IntentHIR->new(...)` already cloned the semantic payloads it owns,
+  and `as_hashref` already rebuilt cloned output for downstream normalized
+  semantic emission.
+- The plain accessors now return structured copies for mutable state/signal/
+  parameter arrays, signal analysis, system contracts, standalone-DT enable
+  families, symbol contracts, and composition child collections.
+- This keeps the intent layer stable after in-process inspection while leaving
+  scalar count/lane accessors unchanged.
+
 ## 2026-05-05: StructuralRTLIR collection accessors should not expose object internals
 - `FSM::IR::StructuralRTLIR->new(...)` already cloned structural connectivity
   payloads at construction time, while targeted helpers such as

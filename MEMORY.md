@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: IntentHIR mutable accessors now return caller-owned copies
+- Updated
+  [perl/FSM/IR/IntentHIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIR.pm)
+  so mutable semantic accessors clone state/signal/parameter arrays,
+  signal/system/symbol contracts, standalone-DT enable summaries, and
+  composition child collections.
+- Added
+  [t/499-intent-hir-accessor-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/499-intent-hir-accessor-defensive-copy-boundary-audit.t)
+  to prove constructor input mutation and accessor/helper-return mutation
+  cannot contaminate the stored intent-IR object, composition helper summaries,
+  or later `as_hashref` output.
+- Focused validation pairs the accessor audit with the existing intent-HIR
+  surface, composition builder, and normalized intent-HIR contract suites. This
+  is `R13` runtime contract-integrity hardening only; no public manifest shape,
+  user-facing docs, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: StructuralRTLIR collection accessors now return caller-owned copies
 - Updated
   [perl/FSM/IR/StructuralRTLIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR.pm)

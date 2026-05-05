@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### IntentHIR mutable accessors now return caller-owned copies
+- Updated
+  [perl/FSM/IR/IntentHIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIR.pm)
+  so mutable semantic accessors return cloned state/signal/parameter arrays,
+  signal/system/symbol contracts, standalone-DT enable summaries, and
+  composition child collections. No roadmap status changed.
+- Added
+  [t/499-intent-hir-accessor-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/499-intent-hir-accessor-defensive-copy-boundary-audit.t)
+  to prove constructor input mutation and accessor/helper-return mutation do
+  not contaminate the stored intent-IR object, composition helper summaries, or
+  later `as_hashref` output.
 ### StructuralRTLIR collection accessors now return caller-owned copies
 - Updated
   [perl/FSM/IR/StructuralRTLIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR.pm)

@@ -55,27 +55,27 @@ sub new ($class, %args) {
 
 sub module_name ($self) { return $self->{module_name} }
 sub source_root_kind ($self) { return $self->{source_root_kind} }
-sub regular_state_names ($self) { return $self->{regular_state_names} }
-sub standalone_dt_names ($self) { return $self->{standalone_dt_names} }
-sub signal_names ($self) { return $self->{signal_names} }
-sub signal_analysis ($self) { return $self->{signal_analysis} }
-sub explicit_system_contract ($self) { return $self->{explicit_system_contract} }
-sub system_contract ($self) { return $self->{system_contract} }
+sub regular_state_names ($self) { return _clone($self->{regular_state_names}) }
+sub standalone_dt_names ($self) { return _clone($self->{standalone_dt_names}) }
+sub signal_names ($self) { return _clone($self->{signal_names}) }
+sub signal_analysis ($self) { return _clone($self->{signal_analysis}) }
+sub explicit_system_contract ($self) { return _clone($self->{explicit_system_contract}) }
+sub system_contract ($self) { return _clone($self->{system_contract}) }
 sub requires_implicit_system_ports ($self) { return $self->{requires_implicit_system_ports} }
-sub standalone_dt_enable_families ($self) { return $self->{standalone_dt_enable_families} }
-sub standalone_dt_module_enable_family ($self) { return $self->{standalone_dt_module_enable_family} }
-sub parameter_names ($self) { return $self->{parameter_names} }
-sub symbol_contract ($self) { return $self->{symbol_contract} }
+sub standalone_dt_enable_families ($self) { return _clone($self->{standalone_dt_enable_families}) }
+sub standalone_dt_module_enable_family ($self) { return _clone($self->{standalone_dt_module_enable_family}) }
+sub parameter_names ($self) { return _clone($self->{parameter_names}) }
+sub symbol_contract ($self) { return _clone($self->{symbol_contract}) }
 sub composition_child_count ($self) { return $self->{composition_child_count} }
-sub composition_children ($self) { return $self->{composition_children} }
+sub composition_children ($self) { return _clone($self->{composition_children}) }
 sub composition_generated_child_count ($self) { return $self->{composition_generated_child_count} }
 sub composition_generated_fsm_child_count ($self) { return $self->{composition_generated_fsm_child_count} }
 sub composition_generated_dt_child_count ($self) { return $self->{composition_generated_dt_child_count} }
-sub composition_generated_children ($self) { return $self->{composition_generated_children} }
+sub composition_generated_children ($self) { return _clone($self->{composition_generated_children}) }
 sub composition_standalone_dt_child_count ($self) { return $self->{composition_standalone_dt_child_count} }
 sub composition_standalone_dt_block_count ($self) { return $self->{composition_standalone_dt_block_count} }
 sub composition_standalone_dt_multi_drive_target_count ($self) { return $self->{composition_standalone_dt_multi_drive_target_count} }
-sub composition_standalone_dt_children ($self) { return $self->{composition_standalone_dt_children} }
+sub composition_standalone_dt_children ($self) { return _clone($self->{composition_standalone_dt_children}) }
 sub composition_lane ($self) { return $self->{composition_lane} }
 
 sub system_contract_from_input ($class, $intent_hir, $default = undef) {
