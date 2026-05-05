@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: RealizedInstance accessors should not expose child metadata internals
+- `FSM::Composition::RealizedInstance` is the shared runtime carrier read by
+  composition planning, structural IR extraction, child export builders, and
+  metadata reporting. Its normalized bindings and generated module metadata are
+  mutable Perl structures.
+- Realized instances now clone interface ports and module metadata at
+  construction, and mutable accessors return cloned payloads. Interface port
+  cloning creates fresh `FSM::Composition::Port` objects so caller-side setter
+  use cannot mutate the stored child interface.
+- The clone policy keeps scalar identity fields and HDL text as direct scalar
+  returns while making the mutable realized-child metadata safe for repeated
+  in-process inspection.
+
 ## 2026-05-05: IntentHIR mutable accessors should not expose object internals
 - `FSM::IR::IntentHIR->new(...)` already cloned the semantic payloads it owns,
   and `as_hashref` already rebuilt cloned output for downstream normalized

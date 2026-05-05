@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### RealizedInstance mutable accessors now return caller-owned copies
+- Updated
+  [perl/FSM/Composition/RealizedInstance.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RealizedInstance.pm)
+  so realized-child interface ports and module metadata are cloned at
+  construction, and mutable accessors return cloned interface-port, binding,
+  parameter-override, and module-info payloads. No roadmap status changed.
+- Added
+  [t/500-realized-instance-accessor-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/500-realized-instance-accessor-defensive-copy-boundary-audit.t)
+  to prove constructor input mutation and accessor-return mutation do not
+  contaminate stored realized child metadata, including fresh
+  `FSM::Composition::Port` objects for interface-port access.
 ### IntentHIR mutable accessors now return caller-owned copies
 - Updated
   [perl/FSM/IR/IntentHIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIR.pm)

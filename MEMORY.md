@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: RealizedInstance mutable accessors now return caller-owned copies
+- Updated
+  [perl/FSM/Composition/RealizedInstance.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RealizedInstance.pm)
+  so realized-child interface ports and module metadata are cloned at
+  construction, and mutable accessors clone interface-port, binding,
+  parameter-override, and module-info payloads.
+- Added
+  [t/500-realized-instance-accessor-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/500-realized-instance-accessor-defensive-copy-boundary-audit.t)
+  to prove constructor input mutation and accessor-return mutation cannot
+  contaminate stored realized child metadata, including fresh
+  `FSM::Composition::Port` objects for interface-port access.
+- Focused validation pairs the accessor audit with realized-instance binding
+  normalization, generated/RTL child realization, composition plan builder, C1
+  and linked-plan builder, realized child interface-port, and structural-IR
+  surface suites. This is `R13` runtime contract-integrity hardening only; no
+  public manifest shape, user-facing docs, generation behavior, or roadmap lane
+  status changed.
+
 ## 2026-05-05: IntentHIR mutable accessors now return caller-owned copies
 - Updated
   [perl/FSM/IR/IntentHIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIR.pm)
