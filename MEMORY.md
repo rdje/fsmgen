@@ -1,5 +1,39 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Typed extension context constructor arguments now fail closed
+- Hardened
+  [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm)
+  so direct `FSM::Extension::Context->new(...)` construction rejects malformed
+  constructor mechanics before raw Perl argument or `bless` fallout can leak.
+  The receiver must be the exact scalar `FSM::Extension::Context` class name,
+  and constructor arguments must be an even-length list of unique supported
+  scalar option names.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  so the typed-extension contract and capability manifest advertise
+  `context_contract.constructor_receiver_shape`,
+  `context_contract.constructor_argument_list_shape`, and
+  `context_contract.constructor_supported_option_names`.
+- Added
+  [t/423-typed-extension-context-constructor-argument-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/423-typed-extension-context-constructor-argument-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  valid construction, malformed receiver rejection, odd argument-list
+  rejection, malformed option-name rejection, unsupported/duplicate option
+  rejection, and bounded diagnostics.
+- Updated the extension docs in
+  [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md),
+  [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md),
+  and
+  [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  so the direct context constructor boundary is user-visible.
+- Validation passed with focused syntax checks, the contract/manifest/context
+  constructor cluster (`5` files, `18` tests), and the full repo-owned
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`419` files, `3771` tests, plus mdBook build).
+- This is `R13` typed-extension embedder-boundary hardening only; no hook
+  family, extension loading entrypoint, generation behavior, or roadmap lane
+  status changed.
+
 ## 2026-05-05: Typed extension registry dispatch contexts now fail closed
 - Hardened
   [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)

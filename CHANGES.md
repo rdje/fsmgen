@@ -1,6 +1,27 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Typed extension context constructor arguments now fail closed
+- Hardened
+  [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm)
+  so direct `FSM::Extension::Context->new(...)` construction requires the
+  exact scalar class receiver and an even-length list of unique supported
+  scalar option names before the context object is blessed.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  so typed-extension manifests advertise the new `context_contract` receiver,
+  argument-list, and supported-option fields, and updated the extension
+  guide/book docs to describe the direct context constructor boundary.
+- Added
+  [t/423-typed-extension-context-constructor-argument-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/423-typed-extension-context-constructor-argument-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  valid construction, malformed receiver/list/name rejection,
+  unsupported/duplicate option rejection, and bounded diagnostics. No roadmap
+  status changed.
+- Validation passed with focused syntax checks, the contract/manifest/context
+  constructor cluster (`5` files, `18` tests), and the full
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`419` files, `3771` tests, plus mdBook build).
 ### Typed extension registry dispatch contexts now fail closed
 - Hardened
   [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)

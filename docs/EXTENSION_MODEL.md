@@ -146,13 +146,19 @@ also proves direct registry dispatch requires a real
 `FSM::Extension::Context` object whose `stage` matches the dispatched hook
 name, so malformed direct contexts fail before extension code can reinterpret
 them.
+[t/423-typed-extension-context-constructor-argument-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/423-typed-extension-context-constructor-argument-boundary-audit.t)
+also proves direct `FSM::Extension::Context->new(...)` construction accepts
+only the exact class receiver and an even-length list of unique supported
+scalar option names, so malformed constructor calls fail before raw Perl
+argument or `bless` fallout can leak.
 
 For embedders, the same boundary is now machine-readable through
 [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
 and advertised by `bin/fsmgen --capability-manifest` under
 `embedding.typed_extensions`. That manifest entry is intentionally bounded: it
 names the current loading entrypoints, hook names, context accessor names, and
-non-goals, but it does not claim the entire future extension API is frozen.
+the direct context constructor boundary, and non-goals, but it does not claim
+the entire future extension API is frozen.
 
 ## Examples
 ### Example 1: annotate the returned result

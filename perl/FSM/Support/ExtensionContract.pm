@@ -53,6 +53,7 @@ sub build_extension_contract {
             't/411-typed-extension-programmatic-entry-shape-boundary-audit.t',
             't/421-hdl-generator-facade-extension-hook-method-boundary-audit.t',
             't/422-typed-extension-registry-dispatch-context-boundary-audit.t',
+            't/423-typed-extension-context-constructor-argument-boundary-audit.t',
         ],
         entrypoints => {
             programmatic_objects => 'FSM::Pipeline::HDLGenerator->new(extensions => [ $object, ... ])',
@@ -73,6 +74,11 @@ sub build_extension_contract {
             legacy_plg_discovery => JSON::PP::false,
             automatic_directory_discovery => JSON::PP::false,
             autoload_hook_dispatch => JSON::PP::false,
+        },
+        context_contract => {
+            constructor_receiver_shape => 'scalar FSM::Extension::Context class name',
+            constructor_argument_list_shape => 'even-length list of unique scalar non-empty supported option-name/value pairs after class invocant',
+            constructor_supported_option_names => extension_contract_context_accessors(),
         },
         public_top_level_presence_keys => extension_contract_public_top_level_keys(),
         hook_names => extension_contract_hook_names(),
@@ -132,6 +138,7 @@ sub extension_contract_public_top_level_keys {
             tested_by
             entrypoints
             extension_object_contract
+            context_contract
             public_top_level_presence_keys
             hook_names
             context_accessors

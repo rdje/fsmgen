@@ -2326,7 +2326,11 @@ also proves direct registry dispatch requires a real
 `FSM::Extension::Context` object whose `stage` matches the dispatched hook
 name, so malformed direct contexts fail before extension code can reinterpret
 them.
-can run.
+[t/423-typed-extension-context-constructor-argument-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/423-typed-extension-context-constructor-argument-boundary-audit.t)
+also proves direct `FSM::Extension::Context->new(...)` construction accepts
+only the exact class receiver and an even-length list of unique supported
+scalar option names, so malformed constructor calls fail before raw Perl
+argument or `bless` fallout can leak.
 
 For in-process embedders, `FSM::Pipeline::HDLGenerator` no longer leaves its
 requested `debug_level` behind as process-global state after construction or

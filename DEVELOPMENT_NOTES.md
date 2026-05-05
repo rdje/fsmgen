@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: context construction should not inherit Perl argument quirks
+- `FSM::Extension::Context` is a public typed-extension object passed through
+  the registry and visible to embedders. After the registry started requiring a
+  real matching-stage context object, direct construction of that object also
+  needed an owned boundary instead of accepting any receiver or letting Perl
+  coerce malformed option lists into a hash.
+- The constructor now validates only construction mechanics in this slice: the
+  invocant must be the exact `FSM::Extension::Context` class name, the tail
+  must be an even-length option/value list, option names must be scalar
+  non-empty supported names, and duplicate names are rejected before `%args`
+  assignment can silently keep the last value.
+- This deliberately does not freeze every context payload value yet. Stage and
+  payload-shape validation can be a separate, smaller `R13` audit so this slice
+  stays focused on raw constructor mechanics and avoids mixing distinct API
+  decisions in one crash-recovery commit.
+
 ## 2026-05-05: direct extension dispatch needs a typed context, not just a hook name
 - `FSM::Extension::Registry->dispatch_hook(...)` already rejected unsupported
   hook names, but direct callers could still pass an undef, hashref, fake

@@ -47,6 +47,7 @@ use FSM::Support::DebugRuntimeContract qw(
     debug_runtime_snapshot_state_keys
 );
 use FSM::Support::ExtensionContract qw(
+    extension_contract_context_accessors
     extension_contract_name_family_map
     extension_contract_source
 );
@@ -1514,6 +1515,21 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'FSM::Extension::Context object whose stage matches the dispatched hook name',
         'manifest records the typed extension direct registry dispatch context shape',
     );
+    is(
+        $manifest->{embedding}{typed_extensions}{context_contract}{constructor_receiver_shape},
+        'scalar FSM::Extension::Context class name',
+        'manifest records the typed extension context constructor receiver shape',
+    );
+    is(
+        $manifest->{embedding}{typed_extensions}{context_contract}{constructor_argument_list_shape},
+        'even-length list of unique scalar non-empty supported option-name/value pairs after class invocant',
+        'manifest records the typed extension context constructor argument-list shape',
+    );
+    is_deeply(
+        sorted($manifest->{embedding}{typed_extensions}{context_contract}{constructor_supported_option_names}),
+        sorted(extension_contract_context_accessors()),
+        'manifest records the supported typed extension context constructor option names',
+    );
     ok(
         !$manifest->{embedding}{typed_extensions}{extension_object_contract}{legacy_plg_discovery},
         'manifest records that legacy .plg discovery is not part of typed extensions',
@@ -1702,4 +1718,9 @@ sub assert_manifest_section_contract_sources {
             "$label: $key keeps advertised section contract owner",
         );
     }
+}
+
+sub sorted {
+    my ($values) = @_;
+    return [sort @{$values || []}];
 }

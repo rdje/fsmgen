@@ -104,6 +104,21 @@ subtest 'contract declares the bounded typed-extension surface' => sub {
         'contract records the direct registry dispatch context shape',
     );
     is(
+        $contract->{context_contract}{constructor_receiver_shape},
+        'scalar FSM::Extension::Context class name',
+        'contract records the context constructor receiver shape',
+    );
+    is(
+        $contract->{context_contract}{constructor_argument_list_shape},
+        'even-length list of unique scalar non-empty supported option-name/value pairs after class invocant',
+        'contract records the context constructor argument-list shape',
+    );
+    is_deeply(
+        sorted($contract->{context_contract}{constructor_supported_option_names}),
+        sorted(extension_contract_context_accessors()),
+        'contract records the supported context constructor option names',
+    );
+    is(
         $contract->{extension_object_contract}{constructor_for_module_loading},
         'new()',
         'contract records the module-loading constructor boundary',
@@ -202,4 +217,9 @@ sub assert_result_record {
     is($record->{raw_ast_ref}, '', "$source_kind result hook does not receive raw AST");
     is($record->{result_ref}, 'HASH', "$source_kind result hook receives result hash");
     is($record->{result_module_name}, $module_name, "$source_kind result hook receives generated module result");
+}
+
+sub sorted {
+    my ($values) = @_;
+    return [sort @{$values || []}];
 }
