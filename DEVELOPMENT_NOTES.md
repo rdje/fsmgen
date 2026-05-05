@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: producer section contracts should stay mutation-safe
+- The producer section contract advertises tool identity key families through
+  top-level, scalar-string, boolean, and grouped presence-family helper lists.
+  Those are mutable Perl structures for in-process consumers, so caller-side
+  mutation must not affect later producer contract discovery.
+- The new audit mutates a full returned producer contract and every producer
+  helper list/map, then proves fresh calls remain clean and aligned with the
+  grouped presence-family map.
+- This is coverage only; no producer section contract shape changed.
+
 ## 2026-05-05: documentation path-list contracts should not alias
 - The documentation section path-list contract map previously reused one hash
   for both `human_contract` and `downstream_alignment`. That was shape-correct

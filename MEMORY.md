@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Producer section contract now has defensive-copy coverage
+- Added
+  [t/449-producer-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/449-producer-contract-defensive-copy-boundary-audit.t)
+  to prove `build_producer_contract()` returns fresh nested structures across
+  calls and that producer top-level, scalar-string, boolean, and grouped
+  presence-family helpers are fresh.
+- Focused validation passed with the producer contract, capability manifest
+  runtime contract, and new defensive-copy audit cluster (`3` files, `13`
+  tests).
+- This is `R13` producer section contract-integrity coverage only; no public
+  API shape, user-facing docs, mdBook source, generation behavior, or roadmap
+  lane status changed.
+
 ## 2026-05-05: Documentation section path contracts no longer alias
 - Updated
   [perl/FSM/Support/DocumentationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DocumentationContract.pm)
