@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: StructuralRTLIR collection accessors should not expose object internals
+- `FSM::IR::StructuralRTLIR->new(...)` already cloned structural connectivity
+  payloads at construction time, while targeted helpers such as
+  `top_port(...)`, `interface_signal_endpoints(...)`, and `as_hashref`
+  returned cloned structures.
+- The plain collection accessors now return structured copies for ports, nets,
+  instances, declared links, resolved links, and auxiliary assignments.
+- This keeps the in-process structural-RTL object stable after caller
+  inspection, including later helper summaries derived from ports or child
+  interface metadata.
+
 ## 2026-05-05: LoweredRTLIR array accessors should not expose object internals
 - `FSM::IR::LoweredRTLIR->new(...)` already cloned array payloads at
   construction time, and the signal-indexed helper methods already returned

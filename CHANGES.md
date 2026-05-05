@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### StructuralRTLIR collection accessors now return caller-owned copies
+- Updated
+  [perl/FSM/IR/StructuralRTLIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR.pm)
+  so collection accessors return cloned ports, nets, instances, declared-link,
+  resolved-link, and auxiliary-assignment arrays. No roadmap status changed.
+- Added
+  [t/498-structural-rtl-ir-accessor-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/498-structural-rtl-ir-accessor-defensive-copy-boundary-audit.t)
+  to prove constructor input mutation and accessor-return mutation do not
+  contaminate the stored structural-IR object, helper summaries, or later
+  `as_hashref` output.
 ### LoweredRTLIR array accessors now return caller-owned copies
 - Updated
   [perl/FSM/IR/LoweredRTLIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/LoweredRTLIR.pm)

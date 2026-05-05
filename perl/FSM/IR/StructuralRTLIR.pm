@@ -41,12 +41,12 @@ sub new ($class, %args) {
 sub module_name ($self) { return $self->{module_name} }
 sub source_root_kind ($self) { return $self->{source_root_kind} }
 sub target_language ($self) { return $self->{target_language} }
-sub ports ($self) { return $self->{ports} }
-sub nets ($self) { return $self->{nets} }
-sub instances ($self) { return $self->{instances} }
-sub declared_links ($self) { return $self->{declared_links} }
-sub resolved_links ($self) { return $self->{resolved_links} }
-sub auxiliary_assignments ($self) { return $self->{auxiliary_assignments} }
+sub ports ($self) { return _clone($self->{ports}) }
+sub nets ($self) { return _clone($self->{nets}) }
+sub instances ($self) { return _clone($self->{instances}) }
+sub declared_links ($self) { return _clone($self->{declared_links}) }
+sub resolved_links ($self) { return _clone($self->{resolved_links}) }
+sub auxiliary_assignments ($self) { return _clone($self->{auxiliary_assignments}) }
 
 sub port_metadata ($self) {
     my (@inputs, @outputs, @multi_bit, @single_bit);

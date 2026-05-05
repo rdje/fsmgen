@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: StructuralRTLIR collection accessors now return caller-owned copies
+- Updated
+  [perl/FSM/IR/StructuralRTLIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR.pm)
+  so collection accessors clone internal arrays for ports, nets, instances,
+  declared links, resolved links, and auxiliary assignments.
+- Added
+  [t/498-structural-rtl-ir-accessor-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/498-structural-rtl-ir-accessor-defensive-copy-boundary-audit.t)
+  to prove constructor input mutation and accessor-return mutation cannot
+  contaminate the stored structural-IR object, helper summaries, or later
+  `as_hashref` output.
+- Focused validation pairs the accessor audit with the existing structural-IR
+  builder and normalized structural-RTL contract suites. This is `R13` runtime
+  contract-integrity hardening only; no public manifest shape, user-facing docs,
+  generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: LoweredRTLIR array accessors now return caller-owned copies
 - Updated
   [perl/FSM/IR/LoweredRTLIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/LoweredRTLIR.pm)
