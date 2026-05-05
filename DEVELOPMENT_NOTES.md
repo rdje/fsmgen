@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: HDLGenerator source_info contracts should stay mutation-safe
+- The in-process `HDLGenerator` `source_info` contract publishes identity,
+  package-import summary, grouped presence, and stable-subsurface helper
+  structures. These are mutable Perl data for embedders, so caller mutation
+  must not affect later source_info contract discovery.
+- The defensive-copy test helper now has a generic module-level assertion for
+  the repeated pattern: mutate the full returned contract, mutate each exported
+  helper structure, and prove fresh calls stay clean.
+- This is coverage only; no HDLGenerator source_info contract shape changed.
+
 ## 2026-05-05: HDL external validation contracts should stay mutation-safe
 - The optional SystemVerilog external-validation contract publishes success
   report families, tool step names, failure-mode families, and stable failure

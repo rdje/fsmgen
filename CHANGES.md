@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### HDLGenerator source_info contract now has defensive-copy coverage
+- Extended
+  [t/lib/FSM/Test/DefensiveCopyAudit.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/DefensiveCopyAudit.pm)
+  with a generic contract-module freshness assertion for the remaining
+  helper-level contract audits.
+- Added
+  [t/461-hdl-generator-source-info-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/461-hdl-generator-source-info-contract-defensive-copy-boundary-audit.t)
+  to prove `build_hdl_generator_source_info_contract()` and its exported
+  helper builders return fresh nested structures across calls. No roadmap
+  status changed.
+- Focused validation passed with the HDLGenerator source_info contract,
+  HDLGenerator leaf runtime contract, and new defensive-copy audit cluster
+  (`3` files, `7` tests).
 ### HDL external validation contract now has defensive-copy coverage
 - Added
   [t/460-hdl-external-validation-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/460-hdl-external-validation-contract-defensive-copy-boundary-audit.t)
