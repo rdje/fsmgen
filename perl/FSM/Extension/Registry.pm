@@ -18,6 +18,13 @@ my @SUPPORTED_REGISTRY_OPTION_NAMES = qw(
 );
 my %SUPPORTED_REGISTRY_OPTION_NAME = map { $_ => 1 } @SUPPORTED_REGISTRY_OPTION_NAMES;
 my $REGISTRY_INSTANCE_MARKER = __PACKAGE__ . '::constructed';
+my $_validate_registry_method_argument_count = sub {
+    my ($method_name, $expected_count, $expected_description, @args) = @_;
+    confess "FSM::Extension::Registry::$method_name expects $expected_description after the registry invocant"
+        unless @args == $expected_count;
+
+    return;
+};
 
 sub new {
     my ($class, @arg_pairs) = @_;
@@ -74,13 +81,25 @@ sub _extension_supports_supported_hook ($extension) {
     return 0;
 }
 
-sub extensions ($self) {
+sub extensions {
+    my ($self, @args) = @_;
     _validate_registry_method_receiver($self, 'extensions');
+    $_validate_registry_method_argument_count->('extensions', 0, 'no payload arguments', @args);
+
     return $self->{extensions};
 }
 
-sub dispatch_hook ($self, $hook_name, $context) {
+sub dispatch_hook {
+    my ($self, @args) = @_;
     _validate_registry_method_receiver($self, 'dispatch_hook');
+    $_validate_registry_method_argument_count->(
+        'dispatch_hook',
+        2,
+        'exactly one hook name and one context argument',
+        @args,
+    );
+
+    my ($hook_name, $context) = @args;
     confess "FSM::Extension::Registry requires a non-empty hook name"
         unless defined($hook_name) && $hook_name ne '';
     confess "FSM::Extension::Registry rejects unsupported extension hook '$hook_name'"
@@ -126,13 +145,31 @@ sub _validate_registry_method_receiver ($self, $method_name) {
     return;
 }
 
-sub after_parse_source ($self, $context) {
+sub after_parse_source {
+    my ($self, @args) = @_;
     _validate_registry_method_receiver($self, 'after_parse_source');
+    $_validate_registry_method_argument_count->(
+        'after_parse_source',
+        1,
+        'exactly one context argument',
+        @args,
+    );
+
+    my ($context) = @args;
     return $self->dispatch_hook('after_parse_source', $context);
 }
 
-sub after_generate_result ($self, $context) {
+sub after_generate_result {
+    my ($self, @args) = @_;
     _validate_registry_method_receiver($self, 'after_generate_result');
+    $_validate_registry_method_argument_count->(
+        'after_generate_result',
+        1,
+        'exactly one context argument',
+        @args,
+    );
+
+    my ($context) = @args;
     return $self->dispatch_hook('after_generate_result', $context);
 }
 

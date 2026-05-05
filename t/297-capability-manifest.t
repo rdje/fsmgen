@@ -1564,6 +1564,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'exact hash-backed FSM::Extension::Registry object constructed by new(...)',
         'manifest records the typed extension direct registry method receiver shape',
     );
+    is(
+        $manifest->{embedding}{typed_extensions}{extension_object_contract}{registry_method_argument_list_shape},
+        'extensions takes no payload arguments; dispatch_hook takes hook name and context; hook wrapper methods take one context argument after the registry invocant',
+        'manifest records the typed extension direct registry method argument-list shape',
+    );
     is_deeply(
         sorted($manifest->{embedding}{typed_extensions}{extension_object_contract}{registry_method_names}),
         sorted(extension_contract_registry_method_names()),

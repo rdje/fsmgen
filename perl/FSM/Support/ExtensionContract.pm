@@ -66,6 +66,7 @@ sub build_extension_contract {
             't/429-typed-extension-registry-method-receiver-boundary-audit.t',
             't/430-typed-extension-context-accessor-receiver-boundary-audit.t',
             't/431-typed-extension-loader-method-argument-list-boundary-audit.t',
+            't/432-typed-extension-registry-method-argument-list-boundary-audit.t',
         ],
         entrypoints => {
             programmatic_objects => 'FSM::Pipeline::HDLGenerator->new(extensions => [ $object, ... ])',
@@ -88,6 +89,7 @@ sub build_extension_contract {
             registry_constructor_argument_list_shape => 'even-length list of unique scalar non-empty supported option-name/value pairs after class invocant',
             registry_constructor_supported_option_names => extension_contract_registry_constructor_option_names(),
             registry_method_receiver_shape => 'exact hash-backed FSM::Extension::Registry object constructed by new(...)',
+            registry_method_argument_list_shape => 'extensions takes no payload arguments; dispatch_hook takes hook name and context; hook wrapper methods take one context argument after the registry invocant',
             registry_method_names => extension_contract_registry_method_names(),
             registry_dispatch_context_shape => 'FSM::Extension::Context object whose stage matches the dispatched hook name',
             constructor_for_module_loading => 'new()',

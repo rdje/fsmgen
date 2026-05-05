@@ -1,6 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Typed extension registry methods now own argument counts
+- Hardened
+  [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)
+  so direct `extensions(...)`, `dispatch_hook(...)`,
+  `after_parse_source(...)`, and `after_generate_result(...)` calls require
+  their advertised payload argument counts before hook/context value checks
+  run.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  so typed-extension manifests advertise the registry method argument-list
+  shape, and updated the extension guide/book docs to describe the direct
+  registry method argument-count boundary.
+- Added
+  [t/432-typed-extension-registry-method-argument-list-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/432-typed-extension-registry-method-argument-list-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  valid registry method payload counts, missing/extra payload rejection,
+  bounded diagnostics, and existing hook/context value boundaries after
+  argument-count validation passes. No roadmap status changed.
+- Focused validation passed with syntax checks and the adjacent
+  registry/contract/manifest cluster (`6` files, `23` tests), followed by the
+  full repo-owned `./bin/ci-regression` gate (`428` files, `3806` tests) and
+  mdBook build.
 ### Typed extension loader methods now own argument counts
 - Hardened
   [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm)

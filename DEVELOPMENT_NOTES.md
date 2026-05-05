@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: registry methods should own their argument counts
+- After registry methods gained constructed-object receiver checks, malformed
+  direct calls with missing or extra payload arguments could still depend on
+  Perl signature diagnostics. That made embedder call-shape mistakes less
+  consistent than the typed-extension contract.
+- `extensions(...)`, `dispatch_hook(...)`, `after_parse_source(...)`, and
+  `after_generate_result(...)` now validate the registry receiver first, then
+  validate each method's payload argument count, then run the existing hook and
+  context value checks. The zero-argument `extensions(...)` method, the
+  two-argument dispatch method, and the one-context hook wrappers each have
+  their own targeted diagnostic.
+- This keeps the direct registry method boundary aligned with the loader
+  method boundary without changing the supported hook set or dispatch
+  semantics.
+
 ## 2026-05-05: loader methods should own their argument counts
 - After loader methods gained constructed-object receiver checks, the remaining
   direct-call mechanics still depended on Perl signatures for missing or extra

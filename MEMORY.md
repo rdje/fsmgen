@@ -1,5 +1,37 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Typed extension registry methods now own argument counts
+- Hardened
+  [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)
+  so direct `extensions(...)`, `dispatch_hook(...)`,
+  `after_parse_source(...)`, and `after_generate_result(...)` calls validate
+  the receiver first and then enforce their advertised payload argument counts
+  before hook/context value checks run.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  so the typed-extension contract and capability manifest advertise
+  `extension_object_contract.registry_method_argument_list_shape`.
+- Added
+  [t/432-typed-extension-registry-method-argument-list-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/432-typed-extension-registry-method-argument-list-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  valid registry method payload counts, missing/extra payload rejection,
+  bounded diagnostics, and existing hook/context value boundaries after
+  argument-count validation passes.
+- Updated the extension docs in
+  [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md),
+  [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md),
+  and
+  [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  so the live guide and mdBook source describe the direct registry method
+  argument-list boundary.
+- Focused validation passed with syntax checks and the adjacent
+  registry/contract/manifest cluster (`6` files, `23` tests), followed by the
+  full repo-owned `./bin/ci-regression` gate (`428` files, `3806` tests) and
+  mdBook build.
+- This is `R13` typed-extension embedder-boundary hardening only; no hook
+  family, extension loading entrypoint, generation behavior, or roadmap lane
+  status changed.
+
 ## 2026-05-05: Typed extension loader methods now own argument counts
 - Hardened
   [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm)

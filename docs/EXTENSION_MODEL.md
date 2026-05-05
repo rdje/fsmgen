@@ -131,6 +131,11 @@ also proves direct registry methods require an exact hash-backed
 `FSM::Extension::Registry` object constructed by `new(...)`, so class
 receivers, subclass stand-ins, and fake exact-class objects fail before hook or
 context diagnostics can leak.
+[t/432-typed-extension-registry-method-argument-list-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/432-typed-extension-registry-method-argument-list-boundary-audit.t)
+also proves direct registry methods own their payload argument counts:
+`extensions(...)` takes no payload arguments, `dispatch_hook(...)` takes a
+hook name and context, and hook wrapper methods take one context argument after
+the registry invocant.
 [t/394-typed-extension-context-accessor-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/394-typed-extension-context-accessor-boundary-audit.t)
 also proves the context accessor names are stable for the current schema
 version by checking manifest discovery, the implemented

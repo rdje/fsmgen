@@ -152,6 +152,11 @@ subtest 'contract declares the bounded typed-extension surface' => sub {
         'exact hash-backed FSM::Extension::Registry object constructed by new(...)',
         'contract records the direct registry method receiver shape',
     );
+    is(
+        $contract->{extension_object_contract}{registry_method_argument_list_shape},
+        'extensions takes no payload arguments; dispatch_hook takes hook name and context; hook wrapper methods take one context argument after the registry invocant',
+        'contract records the direct registry method argument-list shape',
+    );
     is_deeply(
         sorted($contract->{extension_object_contract}{registry_method_names}),
         sorted(extension_contract_registry_method_names()),
