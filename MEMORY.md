@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Action attributes now return snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so base `FSM::CoreAST::Action` attributes are cloned on storage and from
+  `attributes()`. Scalar action identity such as `type()` and `priority()`
+  remains direct.
+- Added
+  [t/525-core-ast-action-attributes-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/525-core-ast-action-attributes-defensive-copy-boundary-audit.t)
+  to prove constructor and accessor mutation cannot contaminate nested
+  action-owned attribute metadata.
+- Focused validation pairs the new base-action audit with side-effect,
+  assignment metadata, and assignment-intent suites. This is `R13` runtime
+  contract-integrity hardening only; no public manifest shape, user-facing
+  docs, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: SideEffect parameters now return snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)

@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Action attributes should be action-owned metadata
+- Base `FSM::CoreAST::Action` attributes are metadata carried by action nodes,
+  unlike signal/module attribute bags that remain live compatibility surfaces.
+- Action construction and `attributes()` now clone nested attribute payloads.
+  This covers assignment, transition, side-effect, and other action subclasses
+  without changing scalar action identity or graph traversal.
+
 ## 2026-05-05: SideEffect parameters should be node-owned metadata
 - `FSM::CoreAST::SideEffect` is a generic CoreAST action carrier for
   non-assignment side-effect hooks. Its `parameters` payload is metadata, not a

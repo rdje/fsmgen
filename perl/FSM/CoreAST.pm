@@ -1289,14 +1289,14 @@ package FSM::CoreAST::Action;
             type => $args{type} // Carp::confess("Action type required"),
             condition => $args{condition},  # Optional enabling condition
             priority => $args{priority} // 0,  # For conflict resolution
-            attributes => $args{attributes} // {},
+            attributes => _clone_action_metadata($args{attributes} // {}),
         }, $class;
     }
     
     sub type($self) { $self->{type} }
     sub condition($self) { $self->{condition} }
     sub priority($self) { $self->{priority} }
-    sub attributes($self) { $self->{attributes} }
+    sub attributes($self) { _clone_action_metadata($self->{attributes}) }
     
     # Override in subclasses
     sub get_target_signals($self) { [] }
@@ -1309,6 +1309,22 @@ package FSM::CoreAST::Action;
     sub get_timing_domain($self) { undef }
     
     sub conflicts_with($self, $other_action) { 0 }  # Override for conflict detection
+
+    sub _clone_action_metadata($value) {
+        return undef unless defined $value;
+
+        if (ref($value) eq 'HASH') {
+            return {
+                map { $_ => _clone_action_metadata($value->{$_}) } sort keys %$value
+            };
+        }
+
+        if (ref($value) eq 'ARRAY') {
+            return [ map { _clone_action_metadata($_) } @$value ];
+        }
+
+        return $value;
+    }
 
 package FSM::CoreAST::Assignment;
     our @ISA = qw(FSM::CoreAST::Action);

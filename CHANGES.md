@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Action attributes now return snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so base `FSM::CoreAST::Action` attribute metadata is cloned on storage and
+  from `attributes()`. No roadmap status changed.
+- Added
+  [t/525-core-ast-action-attributes-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/525-core-ast-action-attributes-defensive-copy-boundary-audit.t)
+  to prove constructor and accessor mutation cannot contaminate action-owned
+  attribute metadata.
 ### SideEffect parameters now return snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
