@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Generated module_info fallback helpers now copy nested arrays
+- Updated
+  [perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm)
+  so `output_drive_families_from_module_info(...)` and
+  `standalone_dt_multi_drive_targets_from_module_info(...)` clone fallback
+  `module_info` arrays when lowered-IR helper data is absent, matching the
+  already-cloned lowered-IR path.
+- Added
+  [t/496-generated-module-info-helper-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/496-generated-module-info-helper-defensive-copy-boundary-audit.t)
+  to prove caller mutation of fallback output-drive families and standalone-DT
+  target summaries cannot mutate the source `module_info` payload.
+- Focused validation pairs the new helper audit with generated-module info and
+  lowered-IR helper suites. This is `R13` runtime contract-integrity hardening
+  only; no public manifest shape, user-facing docs, generation behavior, or
+  roadmap lane status changed.
+
 ## 2026-05-05: source_info package-import summaries now have copy-policy coverage
 - Updated
   [perl/FSM/Support/HDLGeneratorSourceInfoContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorSourceInfoContract.pm)

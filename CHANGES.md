@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Generated module_info fallback helpers now copy nested arrays
+- Updated
+  [perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm)
+  so fallback output-drive-family and standalone-DT target helper results are
+  cloned from `module_info` when lowered-IR helper data is absent. No roadmap
+  status changed.
+- Added
+  [t/496-generated-module-info-helper-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/496-generated-module-info-helper-defensive-copy-boundary-audit.t)
+  to prove caller mutation of those fallback helper arrays does not mutate the
+  source `module_info` payload.
 ### source_info package-import summaries now have copy-policy coverage
 - Updated the nested source-info/result contracts so
   `source_info.package_import_names` is advertised as a fresh caller-owned

@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Generated module_info query helpers should not alias fallback arrays
+- The generated-module info query helpers already receive cloned data from the
+  lowered-IR helper path, but their fallback path returned the raw
+  `module_info` arrays when lowered data was absent.
+- The fallback path now uses the same structured clone helper used for the
+  semantic payload query helpers. Callers can mutate returned output-drive or
+  standalone-DT target summaries without corrupting the source `module_info`
+  payload.
+- This keeps helper behavior consistent without changing the public
+  `HDLGenerator` result shape.
+
 ## 2026-05-05: source_info package-import summaries are caller-owned arrays
 - `source_info.package_import_count` and `source_info.package_import_names` are
   the stable package-import summary surface for raw `HDLGenerator` results,

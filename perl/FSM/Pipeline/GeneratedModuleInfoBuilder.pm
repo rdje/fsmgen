@@ -104,7 +104,7 @@ sub output_drive_families_from_module_info ($class, $module_info) {
         return $output_drive_families;
     }
 
-    return $module_info->{output_drive_families} || [];
+    return _clone_structured_value($module_info->{output_drive_families} || []);
 }
 
 sub intent_hir_from_module_info ($class, $module_info) {
@@ -132,7 +132,7 @@ sub standalone_dt_multi_drive_targets_from_module_info ($class, $module_info) {
         return $standalone_dt_multi_drive_targets;
     }
 
-    return $module_info->{standalone_dt_multi_drive_targets} || [];
+    return _clone_structured_value($module_info->{standalone_dt_multi_drive_targets} || []);
 }
 
 sub _clone_structured_value ($value) {
