@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Composition specs now clone embedded-source containers
+- Updated
+  [perl/FSM/Composition/Spec.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Spec.pm)
+  so embedded FSM/DT/package source maps and raw AST payloads are cloned at
+  construction and from accessors. `top()` still returns the owned parsed
+  `FSM::Composition::Top` object.
+- Added
+  [t/517-composition-spec-container-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/517-composition-spec-container-defensive-copy-boundary-audit.t)
+  to prove constructor and accessor mutation cannot contaminate composition
+  spec containers.
+- Focused validation pairs the new Spec audit with composition parser, source
+  frontend, plan-builder, and generation-orchestrator suites. This is `R13`
+  runtime contract-integrity hardening only; no public manifest shape,
+  user-facing docs, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Composition top containers now return snapshots
 - Updated
   [perl/FSM/Composition/Top.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Top.pm)

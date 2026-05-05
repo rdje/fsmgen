@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Composition specs now clone embedded-source containers
+- Updated
+  [perl/FSM/Composition/Spec.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Spec.pm)
+  so embedded FSM/DT/package source maps and raw AST payloads are cloned at
+  construction and from accessors; `top` remains the owned parsed top object.
+  No roadmap status changed.
+- Added
+  [t/517-composition-spec-container-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/517-composition-spec-container-defensive-copy-boundary-audit.t)
+  to prove constructor and accessor mutation cannot contaminate composition
+  spec containers.
 ### Composition top containers now return snapshots
 - Updated
   [perl/FSM/Composition/Top.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Top.pm)

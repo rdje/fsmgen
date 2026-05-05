@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Spec embedded-source access should snapshot containers
+- `FSM::Composition::Spec` carries the parsed top plus embedded generated-child
+  and package roots discovered in the same source file.
+- Spec now clones embedded FSM, DT, and package source maps and the raw AST on
+  entry and access. The parsed `top()` object remains live because downstream
+  planning intentionally consumes that object graph.
+- This keeps source-front classification, in-memory composition parsing, and
+  plan rebuilding stable when callers inspect embedded-source maps.
+
 ## 2026-05-05: Top access should snapshot parsed containers
 - `FSM::Composition::Top` is the root object for parsed composition specs and
   feeds plan building, type resolution, and metadata generation. Its container
