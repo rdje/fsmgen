@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Report producer contract now has defensive-copy coverage
+- Added
+  [t/lib/FSM/Test/DefensiveCopyAudit.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/DefensiveCopyAudit.pm)
+  as the shared test-only mutation probe for contract defensive-copy audits.
+- Added
+  [t/452-report-producer-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/452-report-producer-contract-defensive-copy-boundary-audit.t)
+  to prove `build_report_producer_contract()` returns fresh nested structures
+  across calls and that report producer common, normalized-semantic extra, and
+  grouped presence-family helpers are fresh. No roadmap status changed.
+- Focused validation passed with the report producer contract, shared report
+  runtime contract, and new defensive-copy audit cluster (`3` files, `8`
+  tests).
 ### Support accounting match contract now has defensive-copy coverage
 - Added
   [t/451-support-accounting-match-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/451-support-accounting-match-contract-defensive-copy-boundary-audit.t)

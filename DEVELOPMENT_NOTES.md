@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: report producer contracts should stay mutation-safe
+- The shared report producer object is reused by check JSON and normalized
+  semantic JSON report shells, with normalized semantic JSON adding one
+  bounded extra field family. Those helper lists/maps are mutable Perl
+  structures for in-process consumers, so caller mutation must not affect
+  later producer contract discovery.
+- The new audit mutates a full returned report producer contract and every
+  helper list/map, then proves fresh calls remain clean and aligned with the
+  grouped presence-family map. The repeated mutation/inspection probe now has
+  a test-only helper so future defensive-copy audits can stay focused on each
+  contract's own advertised families.
+- This is coverage only; no report producer contract shape changed.
+
 ## 2026-05-05: support-accounting match contracts should stay mutation-safe
 - The shared support-accounting match contract is reused by check JSON and
   normalized semantic JSON report shells. Its common, matched-success,

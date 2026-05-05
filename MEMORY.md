@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Report producer contract now has defensive-copy coverage
+- Added
+  [t/lib/FSM/Test/DefensiveCopyAudit.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/DefensiveCopyAudit.pm)
+  as the shared test-only mutation probe for contract defensive-copy audits.
+- Added
+  [t/452-report-producer-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/452-report-producer-contract-defensive-copy-boundary-audit.t)
+  to prove `build_report_producer_contract()` returns fresh nested structures
+  across calls and that report producer common, normalized-semantic extra,
+  and grouped presence-family helpers are fresh.
+- Focused validation passed with the report producer contract, shared report
+  runtime contract, and new defensive-copy audit cluster (`3` files, `8`
+  tests).
+- This is `R13` shared report producer contract-integrity coverage only; no
+  public API shape, user-facing docs, mdBook source, generation behavior, or
+  roadmap lane status changed.
+
 ## 2026-05-05: Support accounting match contract now has defensive-copy coverage
 - Added
   [t/451-support-accounting-match-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/451-support-accounting-match-contract-defensive-copy-boundary-audit.t)
