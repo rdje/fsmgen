@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Port driven-node lists should be port-owned
+- Port driven-node relationships are explicit graph edges maintained through
+  `add_driven_node(...)`. Callers inspecting `get_driven_nodes()` should not be
+  able to mutate the port-owned list container.
+- Driven-node list access now returns snapshots preserving node identity. While
+  auditing this boundary, `ASTNode->get_fanout_nodes()` was corrected to return
+  a flat node list, matching its documented traversal intent.
+
 ## 2026-05-05: Signal constraints should match their add API
 - Signal constraints are metadata list entries, as shown by
   `add_constraint(...)`; the previous default hash shape was inconsistent with

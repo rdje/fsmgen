@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Port driven-node lists now return snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so `FSM::CoreAST::Port` clones `driven_nodes` on construction and returns
+  cloned list containers from `get_driven_nodes()`. Contained AST node objects
+  retain identity, and `add_driven_node(...)` remains the explicit mutation path.
+- Fixed `FSM::CoreAST::ASTNode->get_fanout_nodes()` to flatten driven-node
+  lists into node entries instead of returning each port's driven-node list as a
+  single nested array.
+- Added
+  [t/537-core-ast-port-driven-nodes-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/537-core-ast-port-driven-nodes-defensive-copy-boundary-audit.t)
+  to prove constructor/accessor mutation cannot contaminate driven-node lists
+  and fanout traversal preserves node identity.
+- Focused validation pairs the new Port audit with Signal fanout,
+  driving-AST canonicalization, and enable-graph AST suites. This is `R13`
+  runtime contract-integrity hardening only; no public manifest shape,
+  user-facing docs, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Signal constraints now return snapshots and default to lists
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)

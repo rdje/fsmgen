@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Port driven-node lists now return snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so `FSM::CoreAST::Port` clones `driven_nodes` on construction and from
+  `get_driven_nodes()` while preserving contained AST node identity and
+  `add_driven_node(...)` as the mutation path. `ASTNode->get_fanout_nodes()` now
+  flattens driven-node lists into node entries. No roadmap status changed.
+- Added
+  [t/537-core-ast-port-driven-nodes-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/537-core-ast-port-driven-nodes-defensive-copy-boundary-audit.t)
+  to prove caller mutation cannot contaminate port driven-node lists.
 ### Signal constraints now return snapshots and default to lists
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)

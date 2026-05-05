@@ -195,7 +195,8 @@ package FSM::CoreAST::ASTNode;
         my @fanout_nodes;
         for my $port_name (keys %{$self->{output_ports}}) {
             my $port = $self->{output_ports}{$port_name};
-            push @fanout_nodes, $port->get_driven_nodes() if $port->can('get_driven_nodes');
+            push @fanout_nodes, $port->get_driven_nodes()->@*
+                if $port->can('get_driven_nodes');
         }
         return \@fanout_nodes;
     }
@@ -424,7 +425,7 @@ package FSM::CoreAST::Port;
             width => $args{width} // 1,
             connected_signal => $args{connected_signal},
             driving_node => $args{driving_node},
-            driven_nodes => $args{driven_nodes} // [],
+            driven_nodes => _clone_port_value($args{driven_nodes} // []),
         }, $class;
     }
     
@@ -445,7 +446,23 @@ package FSM::CoreAST::Port;
     sub get_driving_node($self) { $self->{driving_node} }
     
     sub add_driven_node($self, $node) { push $self->{driven_nodes}->@*, $node }
-    sub get_driven_nodes($self) { $self->{driven_nodes} }
+    sub get_driven_nodes($self) { _clone_port_value($self->{driven_nodes}) }
+
+    sub _clone_port_value($value) {
+        return undef unless defined $value;
+
+        if (ref($value) eq 'HASH') {
+            return {
+                map { $_ => _clone_port_value($value->{$_}) } sort keys %$value
+            };
+        }
+
+        if (ref($value) eq 'ARRAY') {
+            return [ map { _clone_port_value($_) } @$value ];
+        }
+
+        return $value;
+    }
 
 #=============================================================================
 # Expression System (Now part of the larger AST web)
