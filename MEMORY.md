@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Report command contract now has defensive-copy coverage
+- Added
+  [t/454-report-command-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/454-report-command-contract-defensive-copy-boundary-audit.t)
+  to prove `build_report_command_contract()` returns fresh nested structures
+  across calls and that report command public, mode, flag, target-language,
+  and grouped presence-family helpers are fresh.
+- Focused validation passed with the report command contract, shared report
+  runtime contract, and new defensive-copy audit cluster (`3` files, `8`
+  tests).
+- This is `R13` shared report command contract-integrity coverage only; no
+  public API shape, user-facing docs, mdBook source, generation behavior, or
+  roadmap lane status changed.
+
 ## 2026-05-05: Report source contract now has defensive-copy coverage
 - Added
   [t/453-report-source-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/453-report-source-contract-defensive-copy-boundary-audit.t)
