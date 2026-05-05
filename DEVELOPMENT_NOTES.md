@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: normalized semantic lowered_rtl_ir contracts should stay mutation-safe
+- The normalized semantic `forward_ir.lowered_rtl_ir` contract publishes the
+  lowered-RTL shell plus composition-only extension helper structures.
+- The new audit mutates the full returned contract and each exported mutable
+  helper structure, then proves fresh calls remain clean.
+- This is coverage only; no normalized semantic lowered_rtl_ir contract shape
+  changed.
+
 ## 2026-05-05: normalized semantic intent_hir contracts should stay mutation-safe
 - The normalized semantic `forward_ir.intent_hir` contract publishes the
   current intent-HIR shell plus composition-only extension helper structures.

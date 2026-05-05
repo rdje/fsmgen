@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Normalized semantic lowered_rtl_ir contract now has defensive-copy coverage
+- Added
+  [t/477-normalized-semantic-lowered-rtl-ir-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/477-normalized-semantic-lowered-rtl-ir-contract-defensive-copy-boundary-audit.t)
+  to prove `build_normalized_semantic_lowered_rtl_ir_contract()` and its
+  exported helper builders return fresh nested structures across calls.
+- Focused validation passed with the normalized semantic lowered_rtl_ir
+  contract, normalized semantic child runtime contract, and new defensive-copy
+  audit cluster (`3` files, `6` tests).
+- This is `R13` normalized semantic lowered_rtl_ir contract-integrity coverage
+  only; no public API shape, user-facing docs, mdBook source, generation
+  behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Normalized semantic intent_hir contract now has defensive-copy coverage
 - Added
   [t/476-normalized-semantic-intent-hir-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/476-normalized-semantic-intent-hir-contract-defensive-copy-boundary-audit.t)
