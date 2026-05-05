@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: HDLGenerator module_info contracts should stay mutation-safe
+- The in-process `HDLGenerator` `module_info` contract publishes module
+  identity, root-kind, direct-summary, and composition-summary helper
+  structures. These mutable Perl structures must remain fresh per call so
+  embedder mutation cannot affect later contract discovery.
+- The new audit uses the generic defensive-copy assertion to mutate the full
+  returned contract and each exported helper structure, then proves fresh calls
+  remain clean.
+- This is coverage only; no HDLGenerator module_info contract shape changed.
+
 ## 2026-05-05: HDLGenerator source_info contracts should stay mutation-safe
 - The in-process `HDLGenerator` `source_info` contract publishes identity,
   package-import summary, grouped presence, and stable-subsurface helper
