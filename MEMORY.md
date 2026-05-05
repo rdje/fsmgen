@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Support accounting contract now has defensive-copy coverage
+- Added
+  [t/450-support-accounting-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/450-support-accounting-contract-defensive-copy-boundary-audit.t)
+  to prove `build_support_accounting_contract()` returns fresh nested
+  structures across calls and that support-accounting top-level, bucket,
+  id-list, catalog-entry, and grouped presence-family helpers are fresh.
+- Focused validation passed with the support accounting contract, capability
+  manifest runtime contract, and new defensive-copy audit cluster (`3` files,
+  `13` tests).
+- This is `R13` support-accounting contract-integrity coverage only; no public
+  API shape, user-facing docs, mdBook source, generation behavior, or roadmap
+  lane status changed.
+
 ## 2026-05-05: Producer section contract now has defensive-copy coverage
 - Added
   [t/449-producer-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/449-producer-contract-defensive-copy-boundary-audit.t)

@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: support-accounting contracts should stay mutation-safe
+- The support-accounting manifest contract publishes bucket, id-list, and
+  catalog-entry key families derived from regression-corpus truth. In-process
+  consumers receive mutable Perl lists/maps, so caller mutation must not affect
+  later support-accounting contract discovery.
+- The new audit mutates a full returned support-accounting contract and every
+  support-accounting helper list/map, then proves fresh calls remain clean and
+  aligned with the grouped presence-family map.
+- This is coverage only; no support-accounting contract shape changed.
+
 ## 2026-05-05: producer section contracts should stay mutation-safe
 - The producer section contract advertises tool identity key families through
   top-level, scalar-string, boolean, and grouped presence-family helper lists.

@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Support accounting contract now has defensive-copy coverage
+- Added
+  [t/450-support-accounting-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/450-support-accounting-contract-defensive-copy-boundary-audit.t)
+  to prove `build_support_accounting_contract()` returns fresh nested
+  structures across calls and that support-accounting top-level, bucket,
+  id-list, catalog-entry, and grouped presence-family helpers are fresh. No
+  roadmap status changed.
+- Focused validation passed with the support accounting contract, capability
+  manifest runtime contract, and new defensive-copy audit cluster (`3` files,
+  `13` tests).
 ### Producer section contract now has defensive-copy coverage
 - Added
   [t/449-producer-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/449-producer-contract-defensive-copy-boundary-audit.t)
