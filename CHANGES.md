@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### IntermediateSignal context metadata is now snapshot-owned
+- Updated
+  [perl/FSM/HDL/ASTFactorization.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/ASTFactorization.pm)
+  so `FSM::AST::IntermediateSignal` clones context metadata on construction and
+  from `contexts()` / `debug_info()`, while keeping `original_expression` live.
+  The constructor now keeps all fields when required fields are present. No
+  roadmap status changed.
+- Added
+  [t/543-ast-factorization-intermediate-signal-context-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/543-ast-factorization-intermediate-signal-context-defensive-copy-boundary-audit.t)
+  to prove caller mutation cannot contaminate intermediate-signal context
+  metadata.
 ### Legacy SignalRef name alias restored GlobalASTManager compatibility
 - Updated
   [perl/FSM/AST/Node.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/AST/Node.pm)

@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: IntermediateSignal context metadata is now snapshot-owned
+- Updated
+  [perl/FSM/HDL/ASTFactorization.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/ASTFactorization.pm)
+  so `FSM::AST::IntermediateSignal` stores cloned `contexts` metadata and
+  returns cloned context entries from `contexts()` and `debug_info()`, while
+  keeping `original_expression` live by identity.
+- Fixed the `FSM::AST::IntermediateSignal->new(...)` required-field fallback so
+  the constructor keeps all fields instead of only `name` when `name` is
+  present.
+- Added
+  [t/543-ast-factorization-intermediate-signal-context-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/543-ast-factorization-intermediate-signal-context-defensive-copy-boundary-audit.t)
+  to prove constructor/accessor/debug-info context mutation cannot contaminate
+  stored context metadata and debug rendering still reads the live original
+  expression.
+- Focused validation paired the new audit with AST factorization,
+  enable-graph factorization, intermediate-signal width, and GlobalASTManager
+  compatibility suites. This is `R13` runtime contract-integrity hardening only;
+  no public manifest shape, user-facing docs, generation behavior, or roadmap
+  lane status changed.
+
 ## 2026-05-05: Legacy SignalRef name alias restored GlobalASTManager compatibility
 - Updated
   [perl/FSM/AST/Node.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/AST/Node.pm)

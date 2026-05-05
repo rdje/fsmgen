@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: IntermediateSignal contexts are metadata, not mutation handles
+- `FSM::AST::IntermediateSignal` carries a live `original_expression` object
+  for rendering and analysis, but its `contexts` list is debug/accounting
+  metadata. Callers should be able to inspect or annotate returned context
+  lists without mutating the stored signal.
+- Construction, `contexts()`, and `debug_info()` now clone context containers.
+  The same audit exposed and fixed the constructor's bare `Carp::confess`
+  fallback parsing bug, which previously dropped fields after `name`.
+
 ## 2026-05-05: Legacy SignalRef should satisfy both name access contracts
 - `FSM::AST::SignalRef` historically exposed `signal_name()`, while
   `FSM::GlobalASTManager` used the CoreAST-style `name()` accessor when building

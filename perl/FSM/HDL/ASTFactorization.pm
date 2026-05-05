@@ -1028,11 +1028,18 @@ use Scalar::Util qw(blessed);
 
 sub new {
     my ($class, %args) = @_;
+
+    my $name = defined($args{name}) && $args{name} ne ''
+        ? $args{name}
+        : Carp::confess("IntermediateSignal requires name");
+    my $original_expression = $args{original_expression}
+        || Carp::confess("IntermediateSignal requires original_expression");
+
     return bless {
-        name => $args{name} || Carp::confess "IntermediateSignal requires name",
-        original_expression => $args{original_expression} || Carp::confess "IntermediateSignal requires original_expression",
+        name => $name,
+        original_expression => $original_expression,
         usage_count => $args{usage_count} || 0,
-        contexts => $args{contexts} || [],
+        contexts => _clone_intermediate_signal_value($args{contexts} || []),
         signal_type => $args{signal_type} || "wire",
         width => $args{width} || 1,
         structural_id => $args{structural_id},
@@ -1045,7 +1052,10 @@ sub name { return shift->{name}; }
 sub signal_name { return shift->{name}; }
 sub original_expression { return shift->{original_expression}; }
 sub usage_count { return shift->{usage_count}; }
-sub contexts { return @{shift->{contexts} || []}; }
+sub contexts {
+    my $contexts = _clone_intermediate_signal_value(shift->{contexts} || []);
+    return @{$contexts};
+}
 sub is_intermediate { return 1; }
 
 # SystemVerilog generation - ONLY place strings are used
@@ -1057,9 +1067,27 @@ sub debug_info {
     return {
         name => $self->{name},
         usage_count => $self->{usage_count},
-        contexts => $self->{contexts},
+        contexts => _clone_intermediate_signal_value($self->{contexts} || []),
         original_sv => eval { $self->{original_expression}->to_systemverilog() } || "[ERROR]"
     };
+}
+
+sub _clone_intermediate_signal_value {
+    my ($value) = @_;
+    return undef unless defined $value;
+    return $value if blessed($value);
+
+    if (ref($value) eq 'HASH') {
+        return {
+            map { $_ => _clone_intermediate_signal_value($value->{$_}) } sort keys %{$value}
+        };
+    }
+
+    if (ref($value) eq 'ARRAY') {
+        return [ map { _clone_intermediate_signal_value($_) } @{$value} ];
+    }
+
+    return $value;
 }
 
 package FSM::HDL::SubstitutedBinaryOp;
