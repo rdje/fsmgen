@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: normalized semantic symbol contracts should stay mutation-safe
+- The normalized semantic `symbol_contract` summary publishes symbol-family,
+  constant-detail, package-import, and grouped presence helper structures for
+  symbol-rich public semantic JSON roots.
+- The new audit mutates the full returned contract and each exported mutable
+  helper structure, then proves fresh calls remain clean.
+- This is coverage only; no normalized semantic symbol contract shape changed.
+
 ## 2026-05-05: normalized semantic forward_ir contracts should stay mutation-safe
 - The normalized semantic `forward_ir` contract republishes nested forward-IR
   child-owner and presence helper structures for public semantic JSON
