@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: HDLGenerator fsm_module contracts should stay mutation-safe
+- The `fsm_module` branch remains a shell-only raw CoreAST compatibility
+  artifact, but its contract helper structures still guide embedders toward
+  stable semantic inspection paths.
+- The new audit mutates the full returned contract and each exported mutable
+  helper structure, then proves fresh calls remain clean.
+- This is coverage only; no fsm_module contract shape changed.
+
 ## 2026-05-05: HDLGenerator resolved_package_imports contracts should stay mutation-safe
 - The `resolved_package_imports` branch is intentionally a shell-only raw
   compatibility artifact, but its contract still publishes helper structures
