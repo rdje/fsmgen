@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: HDLGenerator resolved_package_imports contracts should stay mutation-safe
+- The `resolved_package_imports` branch is intentionally a shell-only raw
+  compatibility artifact, but its contract still publishes helper structures
+  describing where stable package-import inspection should happen.
+- The new audit mutates the full returned contract and each exported helper
+  structure, then proves fresh calls remain clean. This keeps the shell-only
+  compatibility contract from drifting through in-process caller mutation.
+- The generic audit helper now notes scalar helper returns instead of treating
+  them as failures, so contracts can expose scalar classifier facts while still
+  auditing every mutable returned structure.
+- This is coverage only; no resolved_package_imports contract shape changed.
+
 ## 2026-05-05: HDLGenerator statistics contracts should stay mutation-safe
 - The in-process `HDLGenerator` `statistics` contract publishes direct-root
   and composition-root summary helper structures. These mutable Perl
