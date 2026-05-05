@@ -2130,9 +2130,9 @@ package FSM::CoreAST::FSMModule;
             name => $args{name} // Carp::confess("FSM module name required"),
             states => $args{states} // [],
             signals => $args{signals} // {},
-            clock_domains => $args{clock_domains} // {},
-            reset_domains => $args{reset_domains} // {},
-            parameters => $args{parameters} // {},
+            clock_domains => _clone_fsm_module_value($args{clock_domains} // {}),
+            reset_domains => _clone_fsm_module_value($args{reset_domains} // {}),
+            parameters => _clone_fsm_module_value($args{parameters} // {}),
             constraints => $args{constraints} // [],
             attributes => $args{attributes} // {},
         }, $class;
@@ -2141,14 +2141,20 @@ package FSM::CoreAST::FSMModule;
     sub name($self) { $self->{name} }
     sub states($self) { $self->{states} }
     sub signals($self) { $self->{signals} }
-    sub clock_domains($self) { $self->{clock_domains} }
-    sub reset_domains($self) { $self->{reset_domains} }
-    sub parameters($self) { $self->{parameters} }
+    sub clock_domains($self) { _clone_fsm_module_value($self->{clock_domains}) }
+    sub reset_domains($self) { _clone_fsm_module_value($self->{reset_domains}) }
+    sub parameters($self) { _clone_fsm_module_value($self->{parameters}) }
     sub attributes($self) { $self->{attributes} }
     sub explicit_system_contract($self) { return _clone_fsm_module_value($self->{attributes}{system_contract}) }
     sub source_root_kind($self) { return $self->{attributes}{source_root_kind} // 'fsm' }
     sub direct_root_symbols($self) { return $self->{attributes}{direct_root_symbols} }
     sub package_imports($self) { return _clone_fsm_module_value($self->{attributes}{package_imports} || []) }
+    sub set_parameter($self, $name, $parameter_info) {
+        Carp::confess "FSMModule parameter name required"
+            unless defined($name) && !ref($name) && length($name);
+        $self->{parameters}{$name} = _clone_fsm_module_value($parameter_info);
+        return $self->{parameters}{$name};
+    }
     sub is_dt_root($self) { return $self->source_root_kind eq 'dt' }
     sub is_fsm_root($self) { return $self->source_root_kind eq 'fsm' }
 

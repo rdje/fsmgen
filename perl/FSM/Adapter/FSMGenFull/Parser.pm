@@ -2349,11 +2349,11 @@ sub resolve_pending_direct_root_params($self, $module_name, $param_entries) {
         my $value_info = $resolve_param->($name);
         $self->{signal_manager}->store_param($name, $value_info);
 
-        if ($self->{fsm_module} && $self->{fsm_module}->can('parameters')) {
-            $self->{fsm_module}->parameters->{$name} = {
+        if ($self->{fsm_module} && $self->{fsm_module}->can('set_parameter')) {
+            $self->{fsm_module}->set_parameter($name, {
                 %$value_info,
                 origin_kind => 'direct_root_parameter',
-            };
+            });
         }
     }
 

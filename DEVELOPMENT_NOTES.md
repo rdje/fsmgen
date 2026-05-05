@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: FSMModule auxiliary metadata should be snapshot-read
+- `FSM::CoreAST::FSMModule` still exposes `states`, `signals`, and broad
+  `attributes()` as live compatibility surfaces because parser, backend, and
+  synthesis passes rely on those graph maps directly.
+- The narrower auxiliary metadata maps, `clock_domains`, `reset_domains`, and
+  `parameters`, are now snapshot-read from accessors. Direct-root parameter
+  population moved to explicit `set_parameter(...)`, which clones the stored
+  parameter record so parser-owned metadata cannot leak through later
+  inspection.
+
 ## 2026-05-05: BinaryOp operator registry metadata should be registry-owned
 - The BinaryOp operator registry is the live source used by expression renderers
   and precedence checks. `register_operator(...)` is the mutation API for adding

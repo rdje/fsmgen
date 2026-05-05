@@ -1,5 +1,26 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: FSMModule auxiliary metadata maps now return snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so `FSM::CoreAST::FSMModule` clones `clock_domains`, `reset_domains`, and
+  `parameters` maps on construction and from accessors, while leaving `states`,
+  `signals`, and broad `attributes()` as live compatibility surfaces.
+  `set_parameter(...)` is now the explicit parameter mutation path and clones
+  parameter metadata on storage.
+- Updated
+  [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm)
+  to populate direct-root semantic parameters through `set_parameter(...)`
+  instead of mutating the `parameters()` accessor return.
+- Added
+  [t/534-core-ast-fsm-module-auxiliary-container-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/534-core-ast-fsm-module-auxiliary-container-defensive-copy-boundary-audit.t)
+  to prove constructor/accessor mutation cannot contaminate module auxiliary
+  maps and that the live graph compatibility surfaces remain live.
+- Focused validation pairs the new FSMModule auxiliary audit with module-summary,
+  system-section, symbol-definition, source-frontend, and package-import suites.
+  This is `R13` runtime contract-integrity hardening only; no public manifest
+  shape, user-facing docs, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: BinaryOp operator registry metadata now returns snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)

@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### FSMModule auxiliary metadata maps now return snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so `FSM::CoreAST::FSMModule` clones `clock_domains`, `reset_domains`, and
+  `parameters` maps on construction and from accessors while preserving `states`,
+  `signals`, and broad `attributes()` as live compatibility surfaces. Added
+  `set_parameter(...)` as the explicit cloned parameter mutation path. No
+  roadmap status changed.
+- Updated
+  [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm)
+  to populate semantic direct-root parameters through `set_parameter(...)`.
+- Added
+  [t/534-core-ast-fsm-module-auxiliary-container-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/534-core-ast-fsm-module-auxiliary-container-defensive-copy-boundary-audit.t)
+  to prove caller mutation cannot contaminate module auxiliary metadata maps.
 ### BinaryOp operator registry metadata now returns snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
