@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Support accounting section builder now has defensive-copy coverage
+- Added
+  [t/486-support-accounting-section-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/486-support-accounting-section-defensive-copy-boundary-audit.t)
+  to prove `build_support_accounting_section()` returns fresh nested
+  structures across calls, including corpus-derived payloads and the nested
+  section contract. No roadmap status changed.
+- Focused validation passed with the support accounting section runtime
+  contract, capability manifest runtime contract, and new defensive-copy audit
+  cluster (`3` files, `12` tests).
 ### Backend validation section builder now has defensive-copy coverage
 - Added
   [t/485-backend-validation-section-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/485-backend-validation-section-defensive-copy-boundary-audit.t)

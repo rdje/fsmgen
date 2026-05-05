@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Support accounting section builder now has defensive-copy coverage
+- Added
+  [t/486-support-accounting-section-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/486-support-accounting-section-defensive-copy-boundary-audit.t)
+  to prove `build_support_accounting_section()` returns fresh nested
+  structures across calls, including corpus-derived payloads and the nested
+  section contract.
+- Focused validation passed with the support accounting section runtime
+  contract, capability manifest runtime contract, and new defensive-copy audit
+  cluster (`3` files, `12` tests).
+- This is `R13` support accounting section builder contract-integrity coverage
+  only; no public API shape, user-facing docs, mdBook source, generation
+  behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Backend validation section builder now has defensive-copy coverage
 - Added
   [t/485-backend-validation-section-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/485-backend-validation-section-defensive-copy-boundary-audit.t)
