@@ -5,6 +5,7 @@ use v5.20;
 use strict;
 use warnings;
 use Carp qw(confess);
+use Scalar::Util qw(blessed);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 use FSM::Package::IntegerLiteralSupport;
@@ -23,7 +24,8 @@ AST nodes and only converts to strings at the final RTL generation step.
 
 # Base AST Node class
 sub new ($class, %args) {
-    return bless \%args, $class;
+    my %owned_args = map { $_ => _clone_node_value($args{$_}) } keys %args;
+    return bless \%owned_args, $class;
 }
 
 sub type ($self) {
@@ -42,9 +44,33 @@ sub equals ($self, $other) {
     Carp::confess "equals must be implemented by subclasses";
 }
 
+sub _extra_node_args ($self, @reserved_keys) {
+    my %reserved = map { $_ => 1 } @reserved_keys;
+    return map { $_ => _clone_node_value($self->{$_}) }
+        grep { !$reserved{$_} }
+        sort keys %{$self};
+}
+
+sub _clone_node_value ($value) {
+    return undef unless defined $value;
+    return $value if blessed($value);
+
+    if (ref($value) eq 'HASH') {
+        return {
+            map { $_ => _clone_node_value($value->{$_}) } sort keys %{$value}
+        };
+    }
+
+    if (ref($value) eq 'ARRAY') {
+        return [ map { _clone_node_value($_) } @{$value} ];
+    }
+
+    return $value;
+}
+
 # Signal Reference Node
 package FSM::AST::SignalRef;
-use parent 'FSM::AST::Node';
+use parent -norequire, 'FSM::AST::Node';
 
 sub new ($class, $signal_name, %args) {
     return $class->SUPER::new(
@@ -63,7 +89,8 @@ sub to_systemverilog ($self) {
 }
 
 sub clone ($self) {
-    return FSM::AST::SignalRef->new($self->{signal_name});
+    my %extra = FSM::AST::Node::_extra_node_args($self, qw(type signal_name));
+    return FSM::AST::SignalRef->new($self->{signal_name}, %extra);
 }
 
 sub equals ($self, $other) {
@@ -73,7 +100,7 @@ sub equals ($self, $other) {
 
 # Literal Value Node  
 package FSM::AST::Literal;
-use parent 'FSM::AST::Node';
+use parent -norequire, 'FSM::AST::Node';
 
 sub new ($class, $value, %args) {
     return $class->SUPER::new(
@@ -105,7 +132,8 @@ sub to_systemverilog ($self) {
 }
 
 sub clone ($self) {
-    return FSM::AST::Literal->new($self->{value});
+    my %extra = FSM::AST::Node::_extra_node_args($self, qw(type value));
+    return FSM::AST::Literal->new($self->{value}, %extra);
 }
 
 sub equals ($self, $other) {
@@ -115,7 +143,7 @@ sub equals ($self, $other) {
 
 # Unary Operation Node
 package FSM::AST::UnaryOp;
-use parent 'FSM::AST::Node';
+use parent -norequire, 'FSM::AST::Node';
 
 sub new ($class, $operator, $operand, %args) {
     return $class->SUPER::new(
@@ -146,9 +174,11 @@ sub to_systemverilog ($self) {
 }
 
 sub clone ($self) {
+    my %extra = FSM::AST::Node::_extra_node_args($self, qw(type operator operand));
     return FSM::AST::UnaryOp->new(
         $self->{operator},
-        $self->{operand}->clone()
+        $self->{operand}->clone(),
+        %extra
     );
 }
 
@@ -160,7 +190,7 @@ sub equals ($self, $other) {
 
 # Binary Operation Node
 package FSM::AST::BinaryOp;
-use parent 'FSM::AST::Node';
+use parent -norequire, 'FSM::AST::Node';
 
 sub new ($class, $operator, $left, $right, %args) {
     return $class->SUPER::new(
@@ -202,10 +232,12 @@ sub to_systemverilog ($self) {
 }
 
 sub clone ($self) {
+    my %extra = FSM::AST::Node::_extra_node_args($self, qw(type operator left right));
     return FSM::AST::BinaryOp->new(
         $self->{operator},
         $self->{left}->clone(),
-        $self->{right}->clone()
+        $self->{right}->clone(),
+        %extra
     );
 }
 
@@ -218,7 +250,7 @@ sub equals ($self, $other) {
 
 # Logical Constant Node (for true/false)
 package FSM::AST::LogicalConstant;
-use parent 'FSM::AST::Node';
+use parent -norequire, 'FSM::AST::Node';
 
 sub new ($class, $value, %args) {
     return $class->SUPER::new(
@@ -245,7 +277,8 @@ sub to_systemverilog ($self) {
 }
 
 sub clone ($self) {
-    return FSM::AST::LogicalConstant->new($self->{value});
+    my %extra = FSM::AST::Node::_extra_node_args($self, qw(type value));
+    return FSM::AST::LogicalConstant->new($self->{value}, %extra);
 }
 
 sub equals ($self, $other) {

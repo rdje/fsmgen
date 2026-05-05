@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Legacy AST node metadata is now node-owned and clone-preserved
+- Updated
+  [perl/FSM/AST/Node.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/AST/Node.pm)
+  so generic constructor metadata on legacy `FSM::AST::Node` objects is cloned
+  on entry, while blessed AST child objects keep identity at construction.
+  `clone()` now preserves generic metadata for `SignalRef`, `Literal`,
+  `UnaryOp`, `BinaryOp`, and `LogicalConstant`, with cloned metadata containers
+  and recursively cloned structural children where those clones already existed.
+  Same-file subclasses now use `parent -norequire` to avoid reloading the module
+  during direct syntax checks.
+- Added
+  [t/541-legacy-ast-node-metadata-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/541-legacy-ast-node-metadata-defensive-copy-boundary-audit.t)
+  to prove constructor metadata mutation cannot contaminate nodes and clone
+  metadata mutation is isolated from the original.
+- Focused validation paired the new legacy AST audit with enable-graph AST,
+  signal, factorization-policy, and intermediate-signal filter suites. This is
+  `R13` runtime contract-integrity hardening only; no public manifest shape,
+  user-facing docs, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Extension context parse payloads now return snapshots
 - Updated
   [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm)

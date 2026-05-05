@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Legacy AST node metadata is now node-owned and clone-preserved
+- Updated
+  [perl/FSM/AST/Node.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/AST/Node.pm)
+  so generic metadata passed to legacy AST node constructors is cloned on entry
+  and preserved by node clones. Structural child AST objects remain live at
+  construction, and operation clones still clone their structural children. No
+  roadmap status changed. Same-file subclasses now use `parent -norequire` so
+  direct module syntax checks no longer reload the file.
+- Added
+  [t/541-legacy-ast-node-metadata-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/541-legacy-ast-node-metadata-defensive-copy-boundary-audit.t)
+  to prove caller mutation cannot contaminate constructor metadata and clone
+  metadata stays isolated from the original.
 ### Extension context parse payloads now return snapshots
 - Updated
   [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm)

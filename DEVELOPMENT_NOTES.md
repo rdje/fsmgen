@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Legacy AST clone metadata should not be dropped or aliased
+- The older `FSM::AST::Node` tree still feeds enable-graph and factorization
+  compatibility paths. Its structural children remain live AST object
+  references at construction, but generic metadata containers are annotations,
+  not a mutation API.
+- Constructors now snapshot generic metadata containers while preserving blessed
+  child object identity. `clone()` preserves those metadata annotations with
+  independent containers, while continuing to clone structural operation
+  children as before.
+- The same module defines its subclasses inline, so subclass inheritance uses
+  `parent -norequire` to avoid recursively loading the file during syntax
+  checks.
+
 ## 2026-05-05: Extension parse-frontier payloads should be snapshot-read
 - Typed extensions may inspect `source_info` and `raw_ast` at the parse frontier,
   but those payloads are context metadata rather than mutation APIs. They now
