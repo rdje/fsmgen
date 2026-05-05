@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Embedded package source maps should not expose the full source AST
+- `collect_embedded_package_sources()` is a source-frontend helper used by
+  direct and composition import resolution. The returned package-source map is
+  a handoff payload, not a mutation surface into the original parsed file AST.
+- Collected `?pkg` nodes are now cloned before insertion into the map. Package
+  parsing still receives the same raw AST shape, but caller mutation of the
+  collected map cannot alter the frontend's original source tree.
+
 ## 2026-05-05: Deferred parameter override resolution owns result records
 - Non-deferred parameter overrides already pass through the resolver as cloned
   records. Deferred symbol overrides also need that ownership boundary because

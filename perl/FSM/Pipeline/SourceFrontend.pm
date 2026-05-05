@@ -732,7 +732,7 @@ sub collect_embedded_package_sources ($class, $raw_ast) {
         next unless $ast_node->[0] =~ /^\?pkg:/;
         my $package_name = $class->_decode_embedded_package_source_name($ast_node->[0]);
         next unless $package_name;
-        $embedded_package_sources{$package_name} = $ast_node;
+        $embedded_package_sources{$package_name} = _clone($ast_node);
     }
 
     return \%embedded_package_sources;
@@ -749,6 +749,22 @@ sub _unwrap_scalar_token ($class, $value) {
         $unwrapped = $unwrapped->[0];
     }
     return $unwrapped;
+}
+
+sub _clone ($value) {
+    return undef unless defined $value;
+
+    if (ref($value) eq 'HASH') {
+        return {
+            map { $_ => _clone($value->{$_}) } keys %$value
+        };
+    }
+
+    if (ref($value) eq 'ARRAY') {
+        return [ map { _clone($_) } @$value ];
+    }
+
+    return $value;
 }
 
 sub _import_package_symbols_into_signal_manager ($class, %args) {

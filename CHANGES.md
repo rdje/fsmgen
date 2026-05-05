@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Embedded package source collection now returns raw-AST snapshots
+- Updated
+  [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm)
+  so `collect_embedded_package_sources()` clones collected `?pkg` raw-AST
+  nodes instead of returning references into the full source AST. No roadmap
+  status changed.
+- Added
+  [t/564-source-frontend-embedded-package-source-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/564-source-frontend-embedded-package-source-defensive-copy-boundary-audit.t)
+  to prove collected embedded package AST mutation cannot contaminate the
+  source frontend raw AST.
 ### Deferred parameter override resolution now deep-clones source records
 - Updated
   [perl/FSM/Composition/ParameterOverrideResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ParameterOverrideResolver.pm)

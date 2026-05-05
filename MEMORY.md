@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Embedded package source collection now returns raw-AST snapshots
+- Updated
+  [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm)
+  so `collect_embedded_package_sources()` clones collected `?pkg` raw-AST
+  nodes instead of exposing references into the full source AST.
+- Added
+  [t/564-source-frontend-embedded-package-source-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/564-source-frontend-embedded-package-source-defensive-copy-boundary-audit.t)
+  to prove collected embedded package AST mutation cannot contaminate the
+  source frontend raw AST.
+- Focused validation paired the new audit with composition package imports,
+  direct package imports, and composition parser suites. `perl -c` reported
+  syntax OK while emitting the same SourceFrontend redefinition warnings seen
+  when that module is loaded through its dependencies. This is `R13` runtime
+  contract-integrity hardening only; no public manifest shape, user-facing
+  docs, mdBook content, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Deferred parameter override resolution now deep-clones source records
 - Updated
   [perl/FSM/Composition/ParameterOverrideResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ParameterOverrideResolver.pm)
