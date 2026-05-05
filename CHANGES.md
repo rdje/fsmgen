@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Composition top containers now return snapshots
+- Updated
+  [perl/FSM/Composition/Top.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Top.pm)
+  so top-level instance, ports-block, toplink, package-import, and raw AST
+  containers are cloned at construction and from accessors; `top_symbols`
+  remains the owned symbol-table object. No roadmap status changed.
+- Added
+  [t/516-composition-top-container-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/516-composition-top-container-defensive-copy-boundary-audit.t)
+  to prove constructor and accessor mutation cannot contaminate parsed top
+  containers.
 ### Composition toplink blocks now clone link containers
 - Updated
   [perl/FSM/Composition/TopLink.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopLink.pm)

@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Top access should snapshot parsed containers
+- `FSM::Composition::Top` is the root object for parsed composition specs and
+  feeds plan building, type resolution, and metadata generation. Its container
+  accessors exposed the parser-owned arrays directly.
+- Top now clones instance, ports-block, toplink, package-import, and raw AST
+  containers on entry and access. Contained objects retain identity, matching
+  the narrower PortsBlock/TopLink/Plan policy.
+- `top_symbols()` remains a live owned symbol-table object because type and
+  payload resolution intentionally operate through that table after parse-time
+  symbol loading.
+
 ## 2026-05-05: TopLink access should be container-owned
 - `FSM::Composition::TopLink` carries parsed explicit wiring blocks into
   linked-plan and top-port inference builders. Its `links()` and `raw_ast()`
