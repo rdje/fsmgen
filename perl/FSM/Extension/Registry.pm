@@ -13,9 +13,41 @@ my @SUPPORTED_HOOK_NAMES = qw(
     after_generate_result
 );
 my %SUPPORTED_HOOK_NAME = map { $_ => 1 } @SUPPORTED_HOOK_NAMES;
+my @SUPPORTED_REGISTRY_OPTION_NAMES = qw(
+    extensions
+);
+my %SUPPORTED_REGISTRY_OPTION_NAME = map { $_ => 1 } @SUPPORTED_REGISTRY_OPTION_NAMES;
 
-sub new ($class, %args) {
-    my $extensions = $args{extensions} || [];
+sub new {
+    my ($class, @arg_pairs) = @_;
+    confess "FSM::Extension::Registry constructor receiver must be scalar FSM::Extension::Registry class name"
+        unless defined($class) && !ref($class) && $class eq __PACKAGE__;
+    confess "FSM::Extension::Registry constructor arguments must be an even-length option/value list"
+        if @arg_pairs % 2;
+
+    my %seen_option;
+    my %unsupported_options;
+    my %duplicate_options;
+    for (my $i = 0; $i < @arg_pairs; $i += 2) {
+        my $option_name = $arg_pairs[$i];
+        confess "FSM::Extension::Registry constructor option names must be scalar non-empty strings"
+            unless defined($option_name) && !ref($option_name) && $option_name ne '';
+
+        $unsupported_options{$option_name} = 1
+            unless $SUPPORTED_REGISTRY_OPTION_NAME{$option_name};
+        $duplicate_options{$option_name} = 1
+            if $seen_option{$option_name}++;
+    }
+
+    confess "FSM::Extension::Registry constructor rejects unsupported option name(s): "
+        . join(', ', sort keys %unsupported_options)
+        if %unsupported_options;
+    confess "FSM::Extension::Registry constructor rejects duplicate option name(s): "
+        . join(', ', sort keys %duplicate_options)
+        if %duplicate_options;
+
+    my %args = @arg_pairs;
+    my $extensions = exists($args{extensions}) ? $args{extensions} : [];
     confess "FSM::Extension::Registry expects 'extensions' to be an array reference"
         unless ref($extensions) eq 'ARRAY';
 

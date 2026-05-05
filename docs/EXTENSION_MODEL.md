@@ -121,6 +121,11 @@ adds a new hook family.
 also proves the `HDLGenerator` facade and direct registry reject hookless,
 unsupported-hook-only, and `AUTOLOAD`/fake-`can` direct extension objects before
 they can become silent no-ops or leak registry/lower-level fallout.
+[t/426-typed-extension-registry-constructor-argument-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/426-typed-extension-registry-constructor-argument-boundary-audit.t)
+also proves direct `FSM::Extension::Registry->new(...)` construction accepts
+only the exact class receiver and an even-length list of unique supported
+scalar option names, so malformed registry constructor calls fail before raw
+hash-coercion or `bless` fallout can leak.
 [t/394-typed-extension-context-accessor-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/394-typed-extension-context-accessor-boundary-audit.t)
 also proves the context accessor names are stable for the current schema
 version by checking manifest discovery, the implemented

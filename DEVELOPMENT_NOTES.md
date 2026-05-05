@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: registry construction should not inherit Perl hash coercion
+- `FSM::Extension::Registry` is a direct typed-extension embedder object, not
+  only an internal owner behind `FSM::Pipeline::HDLGenerator`. After dispatch
+  contexts and context construction became owned boundaries, raw
+  `Registry->new(...)` calls were the remaining place where malformed
+  receivers, odd lists, duplicate option names, unsupported option names, or
+  reference option names could fall through Perl's hash assignment and `bless`
+  behavior before the registry's own extension-value checks ran.
+- The registry constructor now validates only constructor mechanics first:
+  exact scalar class receiver, even option/value list, scalar non-empty option
+  names, one supported option (`extensions`), and no duplicate option names.
+  The existing extension-array, blessed-object, and supported-hook checks still
+  run afterward, preserving the older value boundary once the call shape is
+  structurally sound.
+- This keeps the direct registry seam aligned with the surrounding R13
+  embedder contract without adding hooks, reopening implicit discovery, or
+  widening the extension API beyond the already advertised constructor surface.
+
 ## 2026-05-05: dt is a real typed-extension source kind
 - The context payload boundary now intentionally validates
   `source_info->{kind}` as scalar and non-empty rather than trying to freeze a

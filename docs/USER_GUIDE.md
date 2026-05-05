@@ -2257,6 +2257,11 @@ typed-extension hook method: hookless, unsupported-hook-only, and
 `AUTOLOAD`/fake-`can` objects fail at the facade before registry or raw method
 fallout can leak, while parse-only and result-only real hook objects remain
 accepted.
+[t/426-typed-extension-registry-constructor-argument-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/426-typed-extension-registry-constructor-argument-boundary-audit.t)
+also proves direct `FSM::Extension::Registry->new(...)` construction accepts
+only the exact class receiver and an even-length list of unique supported
+scalar option names, so malformed registry constructor calls fail before raw
+hash-coercion or `bless` fallout can leak.
 [t/399-hdl-generator-facade-stateful-reuse-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/399-hdl-generator-facade-stateful-reuse-boundary-audit.t)
 also proves the advertised `stateful_reuse_supported` promise is
 runtime-backed: one facade object preserves `strict_mode`, `target_language`,

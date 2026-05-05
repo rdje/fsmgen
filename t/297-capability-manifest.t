@@ -49,6 +49,7 @@ use FSM::Support::DebugRuntimeContract qw(
 use FSM::Support::ExtensionContract qw(
     extension_contract_context_accessors
     extension_contract_name_family_map
+    extension_contract_registry_constructor_option_names
     extension_contract_source
 );
 use FSM::Support::HDLGeneratorFacadeContract qw(
@@ -1509,6 +1510,21 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         $manifest->{embedding}{typed_extensions}{extension_object_contract}{supported_hook_method_policy},
         'extension objects must provide at least one real supported hook method discoverable by UNIVERSAL::can',
         'manifest records the typed extension supported-hook method policy',
+    );
+    is(
+        $manifest->{embedding}{typed_extensions}{extension_object_contract}{registry_constructor_receiver_shape},
+        'scalar FSM::Extension::Registry class name',
+        'manifest records the typed extension direct registry constructor receiver shape',
+    );
+    is(
+        $manifest->{embedding}{typed_extensions}{extension_object_contract}{registry_constructor_argument_list_shape},
+        'even-length list of unique scalar non-empty supported option-name/value pairs after class invocant',
+        'manifest records the typed extension direct registry constructor argument-list shape',
+    );
+    is_deeply(
+        sorted($manifest->{embedding}{typed_extensions}{extension_object_contract}{registry_constructor_supported_option_names}),
+        sorted(extension_contract_registry_constructor_option_names()),
+        'manifest records the typed extension direct registry constructor option names',
     );
     is(
         $manifest->{embedding}{typed_extensions}{extension_object_contract}{registry_dispatch_context_shape},

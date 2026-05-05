@@ -17,6 +17,7 @@ use FSM::Support::ExtensionContract qw(
     extension_contract_hook_names
     extension_contract_name_family_map
     extension_contract_public_top_level_keys
+    extension_contract_registry_constructor_option_names
     extension_contract_source
     extension_contract_supported_source_kinds
 );
@@ -97,6 +98,21 @@ subtest 'contract declares the bounded typed-extension surface' => sub {
         $contract->{extension_object_contract}{supported_hook_method_policy},
         'extension objects must provide at least one real supported hook method discoverable by UNIVERSAL::can',
         'contract records the supported-hook method policy',
+    );
+    is(
+        $contract->{extension_object_contract}{registry_constructor_receiver_shape},
+        'scalar FSM::Extension::Registry class name',
+        'contract records the direct registry constructor receiver shape',
+    );
+    is(
+        $contract->{extension_object_contract}{registry_constructor_argument_list_shape},
+        'even-length list of unique scalar non-empty supported option-name/value pairs after class invocant',
+        'contract records the direct registry constructor argument-list shape',
+    );
+    is_deeply(
+        sorted($contract->{extension_object_contract}{registry_constructor_supported_option_names}),
+        sorted(extension_contract_registry_constructor_option_names()),
+        'contract records the supported direct registry constructor option names',
     );
     is(
         $contract->{extension_object_contract}{registry_dispatch_context_shape},

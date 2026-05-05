@@ -1,6 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Typed extension registry construction now fails closed
+- Hardened
+  [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)
+  so direct `FSM::Extension::Registry->new(...)` construction requires the
+  exact scalar class receiver and an even-length list of unique supported
+  scalar option names before registry state is blessed.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  so typed-extension manifests advertise the registry constructor receiver,
+  argument-list, and supported-option fields, and updated the extension
+  guide/book docs to describe the direct registry constructor boundary.
+- Added
+  [t/426-typed-extension-registry-constructor-argument-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/426-typed-extension-registry-constructor-argument-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  valid construction, malformed receiver/list/name rejection,
+  unsupported/duplicate option rejection, bounded diagnostics, and existing
+  extension value-shape rejection after constructor mechanics pass. No roadmap
+  status changed.
+- Validation passed with syntax checks, the adjacent registry/contract/manifest
+  cluster (`7` files, `41` tests), and the full
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`422` files, `3782` tests, plus mdBook build).
 ### Typed extensions now advertise dt source-kind contexts
 - Updated
   [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
