@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Linked-plan source-family endpoints now clone non-expression descriptors
+- Updated
+  [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+  so `source_family_endpoint()` returns a structured clone for non-expression
+  source descriptors while preserving live port/instance object references. No
+  roadmap status changed.
+- Added
+  [t/557-composition-linked-plan-source-family-endpoint-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/557-composition-linked-plan-source-family-endpoint-defensive-copy-boundary-audit.t)
+  to prove returned endpoint-descriptor mutation cannot contaminate the
+  original source descriptor.
 ### Actual connection-expression reads now return cloned payloads
 - Updated
   [perl/FSM/Composition/ActualLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ActualLiteralSupport.pm)

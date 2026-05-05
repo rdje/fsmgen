@@ -1549,7 +1549,7 @@ sub source_family_endpoint ($class, $source) {
         };
     }
 
-    return $source;
+    return $class->_clone_structured_value($source);
 }
 
 sub source_connection_expr_for_carrier ($class, $source, $carrier_signal_name) {

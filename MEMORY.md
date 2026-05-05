@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Linked-plan source-family endpoints now clone non-expression descriptors
+- Updated
+  [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+  so `source_family_endpoint()` returns a structured clone for non-expression
+  source descriptors, preserving live port/instance object references while
+  copying mutable metadata and connection-expression containers.
+- Added
+  [t/557-composition-linked-plan-source-family-endpoint-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/557-composition-linked-plan-source-family-endpoint-defensive-copy-boundary-audit.t)
+  to prove returned endpoint descriptors cannot mutate original source
+  descriptor containers.
+- Focused validation paired the new audit with linked-plan builder, structural
+  binding leaf consumer, and structural actual toplink suites. This is `R13`
+  runtime contract-integrity hardening only; no public manifest shape,
+  user-facing docs, mdBook content, generation behavior, or roadmap lane status
+  changed.
+
 ## 2026-05-05: Actual connection-expression reads now return cloned payloads
 - Updated
   [perl/FSM/Composition/ActualLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ActualLiteralSupport.pm)

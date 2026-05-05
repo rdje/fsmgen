@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Linked-plan source-family endpoints are read projections
+- `source_family_endpoint()` normalizes link sources for same-family grouping.
+  Child expressions already create a fresh base endpoint descriptor, while
+  ordinary source descriptors were returned by reference.
+- Non-expression source descriptors are now cloned on return. Object references
+  inside descriptors, such as port objects, stay live by identity, but metadata
+  hashes and connection-expression containers are caller-owned snapshots.
+
 ## 2026-05-05: Actual connection expressions are returned as snapshots
 - `ActualLiteralSupport::actual_connection_expr_for_target()` sometimes lowers
   actuals into a new target-width expression, but width-independent actuals and
