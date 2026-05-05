@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Package symbol tables now return caller-owned nested payloads
+- Updated
+  [perl/FSM/Package/Symbols.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/Symbols.pm)
+  so constructor inputs, accessor outputs, store inputs/returns, raw-block
+  pushes, and `resolve_payload(...)` results are cloned. No roadmap status
+  changed.
+- Added
+  [t/504-package-symbols-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/504-package-symbols-defensive-copy-boundary-audit.t)
+  to prove constants, enums, types, raw blocks, exact payload resolution,
+  suffix payload resolution, and type resolution remain caller-owned after
+  mutation attempts.
 ### Composition instance parameter overrides now return caller-owned copies
 - Updated
   [perl/FSM/Composition/Instance.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Instance.pm)

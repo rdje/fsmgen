@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Package symbol tables should not expose nested payload storage
+- `FSM::Package::Symbols` backs package roots, direct-root symbols, and
+  composition-root symbols. Its public `as_hashref` output was already cloned,
+  but constructor/accessor/store/resolve paths could expose nested constant,
+  enum, type, and raw-block structures.
+- Symbol tables now clone constructor inputs, accessor outputs, store
+  inputs/returns, pushed raw blocks, exact resolved payloads, and suffix
+  resolved payloads. `resolve_type(...)` keeps its existing caller-owned
+  behavior.
+- This keeps symbol-contract generation stable after in-process lookups while
+  preserving the existing store methods as the mutation API.
+
 ## 2026-05-05: Composition instance parameter overrides need caller-owned access
 - `FSM::Composition::Instance` carries parsed child parameter overrides before
   generated/RTL child realization and before

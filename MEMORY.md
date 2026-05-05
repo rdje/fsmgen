@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Package symbol tables now return caller-owned nested payloads
+- Updated
+  [perl/FSM/Package/Symbols.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/Symbols.pm)
+  so constructor inputs, accessor outputs, store inputs/returns, raw-block
+  pushes, and `resolve_payload(...)` results are cloned for package,
+  direct-root, and composition-root symbol tables.
+- Added
+  [t/504-package-symbols-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/504-package-symbols-defensive-copy-boundary-audit.t)
+  to prove constants, enums, types, raw blocks, exact payload resolution,
+  suffix payload resolution, and type resolution remain caller-owned after
+  mutation attempts.
+- Focused validation pairs the new symbol audit with composition parser,
+  package/composition aggregate-value, direct/composition symbol-contract,
+  declarative scalar/aggregate type, and composition package-import suites.
+  This is `R13` runtime contract-integrity hardening only; no public manifest
+  shape, user-facing docs, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Composition instance parameter overrides now return caller-owned copies
 - Updated
   [perl/FSM/Composition/Instance.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Instance.pm)

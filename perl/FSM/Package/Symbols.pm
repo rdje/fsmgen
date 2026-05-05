@@ -8,39 +8,39 @@ no warnings 'experimental::signatures';
 
 sub new ($class, %args) {
     return bless {
-        constants => $args{constants} || {},
-        enums => $args{enums} || {},
-        types => $args{types} || {},
-        raw_blocks => $args{raw_blocks} || [],
+        constants => _clone($args{constants} || {}),
+        enums => _clone($args{enums} || {}),
+        types => _clone($args{types} || {}),
+        raw_blocks => _clone($args{raw_blocks} || []),
     }, $class;
 }
 
-sub constants ($self) { return $self->{constants} }
-sub enums ($self) { return $self->{enums} }
-sub types ($self) { return $self->{types} }
-sub raw_blocks ($self) { return $self->{raw_blocks} }
+sub constants ($self) { return _clone($self->{constants}) }
+sub enums ($self) { return _clone($self->{enums}) }
+sub types ($self) { return _clone($self->{types}) }
+sub raw_blocks ($self) { return _clone($self->{raw_blocks}) }
 
 sub store_constant ($self, $name, $payload) {
-    $self->{constants}{$name} = $payload;
-    return $payload;
+    $self->{constants}{$name} = _clone($payload);
+    return _clone($self->{constants}{$name});
 }
 
 sub store_enum ($self, $enum_name, $members_hashref) {
     $self->{enums}{$enum_name} = {
-        %{ $self->{enums}{$enum_name} || {} },
-        %{ $members_hashref || {} },
+        %{ _clone($self->{enums}{$enum_name} || {}) },
+        %{ _clone($members_hashref || {}) },
     };
-    return $self->{enums}{$enum_name};
+    return _clone($self->{enums}{$enum_name});
 }
 
 sub store_type ($self, $type_name, $type_hashref) {
-    $self->{types}{$type_name} = $type_hashref;
-    return $type_hashref;
+    $self->{types}{$type_name} = _clone($type_hashref);
+    return _clone($self->{types}{$type_name});
 }
 
 sub push_raw_block ($self, $block_ast) {
-    push @{ $self->{raw_blocks} }, $block_ast if defined $block_ast;
-    return $self->{raw_blocks};
+    push @{ $self->{raw_blocks} }, _clone($block_ast) if defined $block_ast;
+    return $self->raw_blocks;
 }
 
 sub resolve_actual_payload ($self, $symbol_name) {
@@ -52,23 +52,23 @@ sub resolve_payload ($self, $symbol_name) {
     return undef unless defined($symbol_name) && !ref($symbol_name);
 
     if (exists $self->{constants}{$symbol_name}) {
-        return $self->{constants}{$symbol_name};
+        return _clone($self->{constants}{$symbol_name});
     }
 
     if ($symbol_name =~ /\A([A-Za-z_]\w*)\.([A-Za-z_]\w*)\z/) {
         my ($enum_name, $member_name) = ($1, $2);
         if (exists $self->{enums}{$enum_name} && exists $self->{enums}{$enum_name}{$member_name}) {
-            return {
+            return _clone({
                 kind => 'scalar',
                 payload => $self->{enums}{$enum_name}{$member_name},
-            };
+            });
         }
     }
 
     if ($symbol_name =~ /\A([A-Za-z_]\w*)(.*)\z/) {
         my ($constant_name, $suffix) = ($1, $2);
         if (exists $self->{constants}{$constant_name}) {
-            return _resolve_payload_suffix($self->{constants}{$constant_name}, $suffix);
+            return _clone(_resolve_payload_suffix($self->{constants}{$constant_name}, $suffix));
         }
     }
 
