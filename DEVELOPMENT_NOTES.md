@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: language-surface section contracts should stay mutation-safe
+- The capability manifest language-surface contract publishes first-level
+  syntax-family key lists for strict/default modes, assignments, system
+  contracts, expressions, declarations, and composition. Since in-process
+  consumers can mutate those lists/maps, fresh calls must not share mutable
+  nested structures with prior results.
+- The new audit mutates a full returned language-surface contract and each
+  helper list/map, then proves fresh calls remain clean and aligned with the
+  grouped nested presence map.
+- This is coverage only; no language-surface section contract shape changed.
+
 ## 2026-05-05: backend-validation section contracts should stay mutation-safe
 - The capability manifest backend-validation section delegates the current
   SystemVerilog external-validation child surface through grouped nested

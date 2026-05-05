@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Language surface section contract now has defensive-copy coverage
+- Added
+  [t/446-language-surface-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/446-language-surface-contract-defensive-copy-boundary-audit.t)
+  to prove `build_language_surface_contract()` returns fresh nested structures
+  across calls and that language-surface top-level, strict/default mode,
+  assignment, system-contract, expression, declaration, composition, and nested
+  presence helpers are fresh. No roadmap status changed.
+- Focused validation passed with the language surface contract, capability
+  manifest runtime contract, and new defensive-copy audit cluster (`3` files,
+  `13` tests).
 ### Backend validation section contract now has defensive-copy coverage
 - Added
   [t/445-backend-validation-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/445-backend-validation-contract-defensive-copy-boundary-audit.t)
