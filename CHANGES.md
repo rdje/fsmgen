@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### HDLGenerator statistics contract now has defensive-copy coverage
+- Added
+  [t/463-hdl-generator-statistics-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/463-hdl-generator-statistics-contract-defensive-copy-boundary-audit.t)
+  to prove `build_hdl_generator_statistics_contract()` and its exported helper
+  builders return fresh nested structures across calls. No roadmap status
+  changed.
+- Focused validation passed with the HDLGenerator statistics contract,
+  HDLGenerator leaf runtime contract, and new defensive-copy audit cluster
+  (`3` files, `7` tests).
 ### HDLGenerator module_info contract now has defensive-copy coverage
 - Added
   [t/462-hdl-generator-module-info-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/462-hdl-generator-module-info-contract-defensive-copy-boundary-audit.t)
