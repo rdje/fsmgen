@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: SideEffect parameters should be node-owned metadata
+- `FSM::CoreAST::SideEffect` is a generic CoreAST action carrier for
+  non-assignment side-effect hooks. Its `parameters` payload is metadata, not a
+  live mutation API.
+- SideEffect now clones parameter structures on construction and access. The
+  scalar `effect_type` remains direct, matching the assignment-metadata pattern
+  without widening any generation behavior.
+
 ## 2026-05-05: Assignment metadata should be owned by the assignment node
 - `FSM::CoreAST::Assignment` carries semantic summaries that downstream capture
   and assignment-intent code inspect repeatedly: timing metadata, normalized

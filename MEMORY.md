@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: SideEffect parameters now return snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so `FSM::CoreAST::SideEffect` clones parameter metadata on storage and from
+  `parameters()`, while `effect_type()` remains the direct scalar identity
+  accessor.
+- Added
+  [t/524-core-ast-side-effect-parameters-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/524-core-ast-side-effect-parameters-defensive-copy-boundary-audit.t)
+  to prove constructor and accessor mutation cannot contaminate nested
+  side-effect parameters.
+- Focused validation pairs the new SideEffect audit with the adjacent
+  assignment metadata audit and assignment-intent metadata suite. This is `R13`
+  runtime contract-integrity hardening only; no public manifest shape,
+  user-facing docs, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Assignment metadata accessors now return snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)

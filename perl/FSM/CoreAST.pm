@@ -1428,12 +1428,28 @@ package FSM::CoreAST::SideEffect;
     sub new($class, %args) {
         my $self = $class->SUPER::new(type => 'side_effect', %args);
         $self->{effect_type} = $args{effect_type} // Carp::confess "Side effect type required";
-        $self->{parameters} = $args{parameters} // {};
+        $self->{parameters} = _clone_side_effect_parameters($args{parameters} // {});
         return $self;
     }
     
     sub effect_type($self) { $self->{effect_type} }
-    sub parameters($self) { $self->{parameters} }
+    sub parameters($self) { _clone_side_effect_parameters($self->{parameters}) }
+
+    sub _clone_side_effect_parameters($value) {
+        return undef unless defined $value;
+
+        if (ref($value) eq 'HASH') {
+            return {
+                map { $_ => _clone_side_effect_parameters($value->{$_}) } sort keys %$value
+            };
+        }
+
+        if (ref($value) eq 'ARRAY') {
+            return [ map { _clone_side_effect_parameters($_) } @$value ];
+        }
+
+        return $value;
+    }
 
 #=============================================================================
 # Specific FSM Assignment Types (Format-Independent Semantics)

@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### SideEffect parameters now return snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so `FSM::CoreAST::SideEffect` stores cloned parameter metadata and returns a
+  cloned `parameters()` snapshot. No roadmap status changed.
+- Added
+  [t/524-core-ast-side-effect-parameters-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/524-core-ast-side-effect-parameters-defensive-copy-boundary-audit.t)
+  to prove constructor and accessor mutation cannot contaminate side-effect
+  parameter metadata.
 ### Assignment metadata accessors now return snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
