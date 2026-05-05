@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Legacy SignalRef should satisfy both name access contracts
+- `FSM::AST::SignalRef` historically exposed `signal_name()`, while
+  `FSM::GlobalASTManager` used the CoreAST-style `name()` accessor when building
+  structural signatures and factored signal names.
+- The legacy node now supports both names. Keeping the alias on the node is the
+  narrowest compatibility fix because other legacy factorization code can keep
+  using the CoreAST-style name call without duplicating conditionals.
+
 ## 2026-05-05: Legacy AST clone metadata should not be dropped or aliased
 - The older `FSM::AST::Node` tree still feeds enable-graph and factorization
   compatibility paths. Its structural children remain live AST object

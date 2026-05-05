@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Legacy SignalRef name alias restored GlobalASTManager compatibility
+- Updated
+  [perl/FSM/AST/Node.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/AST/Node.pm)
+  so `FSM::AST::SignalRef` exposes `name()` as an alias for `signal_name()`,
+  matching the method expected by the legacy
+  [perl/FSM/GlobalASTManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/GlobalASTManager.pm)
+  structural-signature and factored-name paths.
+- Added
+  [t/542-global-ast-manager-signal-ref-name-compatibility-audit.t](/Users/richarddje/Documents/github/fsmgen/t/542-global-ast-manager-signal-ref-name-compatibility-audit.t)
+  to prove repeated legacy ASTs containing `SignalRef` leaves can be collected,
+  structurally analyzed, factored, looked up by structure, and emitted as
+  factored-signal summaries.
+- Focused validation paired the new GlobalASTManager audit with the legacy AST
+  metadata audit and factorization policy/fixpoint suites. This is `R13`
+  runtime contract-integrity hardening only; no public manifest shape,
+  user-facing docs, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Legacy AST node metadata is now node-owned and clone-preserved
 - Updated
   [perl/FSM/AST/Node.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/AST/Node.pm)

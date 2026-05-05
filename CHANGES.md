@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Legacy SignalRef name alias restored GlobalASTManager compatibility
+- Updated
+  [perl/FSM/AST/Node.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/AST/Node.pm)
+  so `FSM::AST::SignalRef->name()` aliases `signal_name()`, matching the legacy
+  GlobalASTManager factorization path. No roadmap status changed.
+- Added
+  [t/542-global-ast-manager-signal-ref-name-compatibility-audit.t](/Users/richarddje/Documents/github/fsmgen/t/542-global-ast-manager-signal-ref-name-compatibility-audit.t)
+  to prove repeated legacy ASTs containing signal refs can be factored and
+  emitted through `get_all_factored_signals()`.
 ### Legacy AST node metadata is now node-owned and clone-preserved
 - Updated
   [perl/FSM/AST/Node.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/AST/Node.pm)

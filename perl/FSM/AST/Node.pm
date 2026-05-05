@@ -84,6 +84,10 @@ sub signal_name ($self) {
     return $self->{signal_name};
 }
 
+sub name ($self) {
+    return $self->{signal_name};
+}
+
 sub to_systemverilog ($self) {
     return $self->{signal_name};
 }
