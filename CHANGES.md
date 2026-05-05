@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Report generated-output contract now has defensive-copy coverage
+- Added
+  [t/455-report-generated-output-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/455-report-generated-output-contract-defensive-copy-boundary-audit.t)
+  to prove `build_report_generated_output_contract()` returns fresh nested
+  structures across calls and that report generated-output public, emission,
+  and grouped presence-family helpers are fresh. No roadmap status changed.
+- Focused validation passed with the report generated-output contract, shared
+  report runtime contract, and new defensive-copy audit cluster (`3` files,
+  `8` tests).
 ### Report command contract now has defensive-copy coverage
 - Added
   [t/454-report-command-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/454-report-command-contract-defensive-copy-boundary-audit.t)

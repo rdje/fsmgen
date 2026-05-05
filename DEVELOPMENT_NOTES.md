@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: report generated-output contracts should stay mutation-safe
+- The shared report generated-output object is reused by check JSON and
+  normalized semantic JSON report shells to record whether an invocation
+  emitted HDL artifacts. Its helper lists/maps are mutable Perl data, so
+  caller mutation must not affect later generated-output contract discovery.
+- The new audit mutates a full returned report generated-output contract and
+  every helper list/map, then proves fresh calls remain clean and aligned with
+  the grouped presence-family map.
+- This is coverage only; no report generated-output contract shape changed.
+
 ## 2026-05-05: report command contracts should stay mutation-safe
 - The shared report command object is reused by check JSON and normalized
   semantic JSON report shells. Its mode, flag, target-language, and grouped
