@@ -65,6 +65,12 @@ sub assert_catalog_returns_fresh_entries {
                     "$label entry $id $field array is fresh",
                 );
             }
+
+            assert_no_shared_mutable_refs(
+                $first_entry,
+                $second_entry,
+                "$label entry $id",
+            );
         }
 
         mutate_structure(\@first, $sentinel);
@@ -77,4 +83,27 @@ sub assert_catalog_returns_fresh_entries {
             "$label fresh lookup preserves canonical entry id order after mutation",
         );
     };
+}
+
+sub assert_no_shared_mutable_refs {
+    my ($left, $right, $label) = @_;
+    return unless ref($left) && ref($right);
+    return unless ref($left) eq ref($right);
+
+    if (ref($left) eq 'HASH') {
+        isnt(refaddr($left), refaddr($right), "$label hash container is fresh");
+        for my $key (sort keys %{$left}) {
+            next unless exists $right->{$key};
+            assert_no_shared_mutable_refs($left->{$key}, $right->{$key}, "$label.$key");
+        }
+        return;
+    }
+
+    if (ref($left) eq 'ARRAY') {
+        isnt(refaddr($left), refaddr($right), "$label array container is fresh");
+        for my $index (0 .. $#{$left}) {
+            next unless exists $right->[$index];
+            assert_no_shared_mutable_refs($left->[$index], $right->[$index], "$label\[$index\]");
+        }
+    }
 }

@@ -668,18 +668,24 @@ sub protocol_fixture_entries {
 sub _copy_entry {
     my ($entry) = @_;
 
-    my %copy = %{$entry};
-    if (ref $copy{expected_child_modules} eq 'ARRAY') {
-        $copy{expected_child_modules} = [@{$copy{expected_child_modules}}];
-    }
-    if (ref $copy{expected_hdl_patterns} eq 'ARRAY') {
-        $copy{expected_hdl_patterns} = [@{$copy{expected_hdl_patterns}}];
-    }
-    if (ref $copy{search_path_relpaths} eq 'ARRAY') {
-        $copy{search_path_relpaths} = [@{$copy{search_path_relpaths}}];
+    return _clone_entry_value($entry);
+}
+
+sub _clone_entry_value {
+    my ($value) = @_;
+    return undef unless defined $value;
+
+    if (ref($value) eq 'HASH') {
+        return {
+            map { $_ => _clone_entry_value($value->{$_}) } sort keys %{$value}
+        };
     }
 
-    return \%copy;
+    if (ref($value) eq 'ARRAY') {
+        return [ map { _clone_entry_value($_) } @{$value} ];
+    }
+
+    return $value;
 }
 
 1;

@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Regression corpus entries now use generic mutable-container cloning
+- Updated
+  [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm)
+  so corpus entry copies recursively clone hash and array containers instead of
+  cloning only the currently-known array fields. No roadmap status changed.
+- Strengthened
+  [t/491-regression-corpus-runtime-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/491-regression-corpus-runtime-defensive-copy-boundary-audit.t)
+  to prove fresh corpus lookups do not share mutable containers recursively.
 ### Fixpoint accepted pass signals are copied on merge
 - Updated
   [perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm)

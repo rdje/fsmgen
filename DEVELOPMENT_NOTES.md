@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: RegressionCorpus should not need field-specific copy maintenance
+- Regression corpus entries feed support accounting, capability manifests, and
+  corpus behavior tests. The old copy helper cloned only the mutable fields that
+  existed at the time, which made future nested metadata easy to miss.
+- Entry copying now recursively clones hash and array containers. Non-container
+  values, including regex patterns, stay shared because they are treated as
+  immutable catalog constants.
+
 ## 2026-05-05: Fixpoint acceptance copies signal metadata into each owner
 - `apply_pass_outcome()` accepts pass-local signal metadata into two owners:
   aggregate loop state and the live primary intermediate lookup used for later

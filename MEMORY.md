@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Regression corpus entries now use generic mutable-container cloning
+- Updated
+  [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm)
+  so corpus entry copies recursively clone hash and array containers instead of
+  only the currently-known array fields. Regex/scalar values remain shared by
+  value/reference as before.
+- Strengthened
+  [t/491-regression-corpus-runtime-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/491-regression-corpus-runtime-defensive-copy-boundary-audit.t)
+  to assert that fresh corpus lookups do not share mutable hash or array
+  containers recursively.
+- Focused validation paired the defensive-copy audit with regression-corpus
+  accounting/classified behavior, capability manifest, and support-accounting
+  runtime audits. This is `R13` support-accounting contract-integrity hardening
+  only; no public manifest shape, user-facing docs, generation behavior, or
+  roadmap lane status changed.
+
 ## 2026-05-05: Fixpoint accepted pass signals are copied on merge
 - Updated
   [perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm)
