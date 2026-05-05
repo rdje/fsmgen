@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Check result contract now has defensive-copy coverage
+- Added
+  [t/456-check-result-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/456-check-result-contract-defensive-copy-boundary-audit.t)
+  to prove `build_check_result_contract()` returns fresh nested structures
+  across calls and that check-result public, identity, summary, and grouped
+  presence-family helpers are fresh.
+- Focused validation passed with the check result contract, shared report
+  runtime contract, and new defensive-copy audit cluster (`3` files, `8`
+  tests).
+- This is `R13` check success-result contract-integrity coverage only; no
+  public API shape, user-facing docs, mdBook source, generation behavior, or
+  roadmap lane status changed.
+
 ## 2026-05-05: Report generated-output contract now has defensive-copy coverage
 - Added
   [t/455-report-generated-output-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/455-report-generated-output-contract-defensive-copy-boundary-audit.t)

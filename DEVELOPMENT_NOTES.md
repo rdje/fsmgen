@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: check result contracts should stay mutation-safe
+- The successful check-JSON `result` object publishes module identity and
+  summary-count key families through mutable Perl helper lists/maps. In-process
+  callers must not be able to mutate one returned view and affect later check
+  result contract discovery.
+- The new audit mutates a full returned check result contract and every helper
+  list/map, then proves fresh calls remain clean and aligned with the grouped
+  presence-family map.
+- This is coverage only; no check result contract shape changed.
+
 ## 2026-05-05: report generated-output contracts should stay mutation-safe
 - The shared report generated-output object is reused by check JSON and
   normalized semantic JSON report shells to record whether an invocation
