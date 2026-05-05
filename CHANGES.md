@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Documentation section builder now has defensive-copy coverage
+- Added
+  [t/482-documentation-section-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/482-documentation-section-defensive-copy-boundary-audit.t)
+  to prove `build_documentation_section()` returns fresh nested structures
+  across calls, including path lists and the nested section contract. No
+  roadmap status changed.
+- Focused validation passed with the documentation section runtime contract,
+  capability manifest runtime contract, and new defensive-copy audit cluster
+  (`3` files, `12` tests).
 ### Producer section builder now has defensive-copy coverage
 - Extended
   [t/lib/FSM/Test/DefensiveCopyAudit.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/DefensiveCopyAudit.pm)
