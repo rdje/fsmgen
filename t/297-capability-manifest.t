@@ -1509,6 +1509,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'extension objects must provide at least one real supported hook method discoverable by UNIVERSAL::can',
         'manifest records the typed extension supported-hook method policy',
     );
+    is(
+        $manifest->{embedding}{typed_extensions}{extension_object_contract}{registry_dispatch_context_shape},
+        'FSM::Extension::Context object whose stage matches the dispatched hook name',
+        'manifest records the typed extension direct registry dispatch context shape',
+    );
     ok(
         !$manifest->{embedding}{typed_extensions}{extension_object_contract}{legacy_plg_discovery},
         'manifest records that legacy .plg discovery is not part of typed extensions',

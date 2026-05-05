@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: direct extension dispatch needs a typed context, not just a hook name
+- `FSM::Extension::Registry->dispatch_hook(...)` already rejected unsupported
+  hook names, but direct callers could still pass an undef, hashref, fake
+  context object, or mismatched-stage context into an otherwise supported hook.
+  That left the failure owned by extension code or raw Perl method fallout
+  rather than by the typed extension boundary.
+- The registry now validates the context immediately after hook-name support is
+  established: it must be an exact `FSM::Extension::Context` object and its
+  `stage` accessor must match the dispatched hook name. This keeps the direct
+  registry seam aligned with the pipeline-owned hook calls, where the context
+  is constructed by the source-generation orchestrator for a specific stage.
+- The rule is deliberately small. It does not freeze every context field value
+  or add new hooks; it only makes the direct dispatch API fail closed before a
+  malformed context can be interpreted by extension implementations.
+
 ## 2026-05-05: direct extension objects should not silently no-op
 - `extensions => [ ... ]` is a public embedder seam, so accepting any blessed
   object was too loose. A typo-only object or an object that only implements

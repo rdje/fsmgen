@@ -47,6 +47,7 @@ sub dispatch_hook ($self, $hook_name, $context) {
         unless defined($hook_name) && $hook_name ne '';
     confess "FSM::Extension::Registry rejects unsupported extension hook '$hook_name'"
         unless $SUPPORTED_HOOK_NAME{$hook_name};
+    _dispatch_context_arg($hook_name, $context);
 
     for my $extension (@{$self->extensions}) {
         my $hook_method = UNIVERSAL::can($extension, $hook_name);
@@ -64,6 +65,17 @@ sub dispatch_hook ($self, $hook_name, $context) {
         my $module_name = blessed($extension) || ref($extension) || 'unknown_extension';
         die "Extension module: '$module_name'\nExtension stage: '$hook_name'\n$error";
     }
+}
+
+sub _dispatch_context_arg ($hook_name, $context) {
+    confess "FSM::Extension::Registry expects dispatch context for '$hook_name' to be a FSM::Extension::Context object with matching stage"
+        unless blessed($context)
+            && blessed($context) eq 'FSM::Extension::Context'
+            && defined($context->stage)
+            && !ref($context->stage)
+            && $context->stage eq $hook_name;
+
+    return;
 }
 
 sub after_parse_source ($self, $context) {

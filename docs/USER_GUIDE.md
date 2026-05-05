@@ -2321,6 +2321,12 @@ also proves the registry's direct `dispatch_hook(...)` entrypoint enforces the
 same closed hook set: `after_parse_source` and `after_generate_result` still
 dispatch, while unsupported hook names are rejected before extension methods
 can run.
+[t/422-typed-extension-registry-dispatch-context-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/422-typed-extension-registry-dispatch-context-boundary-audit.t)
+also proves direct registry dispatch requires a real
+`FSM::Extension::Context` object whose `stage` matches the dispatched hook
+name, so malformed direct contexts fail before extension code can reinterpret
+them.
+can run.
 
 For in-process embedders, `FSM::Pipeline::HDLGenerator` no longer leaves its
 requested `debug_level` behind as process-global state after construction or

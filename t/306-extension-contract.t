@@ -99,6 +99,11 @@ subtest 'contract declares the bounded typed-extension surface' => sub {
         'contract records the supported-hook method policy',
     );
     is(
+        $contract->{extension_object_contract}{registry_dispatch_context_shape},
+        'FSM::Extension::Context object whose stage matches the dispatched hook name',
+        'contract records the direct registry dispatch context shape',
+    );
+    is(
         $contract->{extension_object_contract}{constructor_for_module_loading},
         'new()',
         'contract records the module-loading constructor boundary',

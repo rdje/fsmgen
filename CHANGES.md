@@ -1,6 +1,27 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Typed extension registry dispatch contexts now fail closed
+- Hardened
+  [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)
+  so direct `dispatch_hook($hook_name, $context)` calls require a real
+  [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm)
+  object whose `stage` matches the dispatched hook name before any extension
+  method can run.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  so typed-extension manifests advertise `registry_dispatch_context_shape`,
+  and updated the extension guide/book docs to describe the direct dispatch
+  context boundary.
+- Added
+  [t/422-typed-extension-registry-dispatch-context-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/422-typed-extension-registry-dispatch-context-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  valid typed-context dispatch, malformed/fake/mismatched context rejection,
+  and rejection before extension invocation. No roadmap status changed.
+- Validation passed with focused syntax checks, the contract/manifest/registry
+  dispatch cluster (`4` files, `14` tests), and the full
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`418` files, `3766` tests, plus mdBook build).
 ### HDLGenerator direct extension objects now require a real supported hook
 - Hardened
   [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)

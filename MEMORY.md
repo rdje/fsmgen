@@ -1,5 +1,36 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Typed extension registry dispatch contexts now fail closed
+- Hardened
+  [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)
+  so direct `dispatch_hook($hook_name, $context)` calls reject malformed
+  contexts before extension code can reinterpret them. The context must be a
+  real [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm)
+  object whose `stage` matches the dispatched hook name.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  so the typed-extension contract and capability manifest advertise
+  `registry_dispatch_context_shape => 'FSM::Extension::Context object whose
+  stage matches the dispatched hook name'`.
+- Added
+  [t/422-typed-extension-registry-dispatch-context-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/422-typed-extension-registry-dispatch-context-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  valid typed-context dispatch, undef/hashref/fake-context/mismatched-stage
+  rejection, and rejection before extension invocation.
+- Updated the extension docs in
+  [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md),
+  [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md),
+  and
+  [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  so the direct registry dispatch context boundary is user-visible.
+- Validation passed with focused syntax checks, the contract/manifest/registry
+  dispatch cluster (`4` files, `14` tests), and the full repo-owned
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`418` files, `3766` tests, plus mdBook build).
+- This is `R13` typed-extension embedder-boundary hardening only; no hook
+  family, extension loading entrypoint, generation behavior, or roadmap lane
+  status changed.
+
 ## 2026-05-05: HDLGenerator direct extension objects now require a real supported hook
 - Hardened
   [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
