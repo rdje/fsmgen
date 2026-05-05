@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: backend validation sections should stay mutation-safe
+- The manifest backend-validation section nests the external-validation child
+  contract and its own section contract. Callers receive mutable Perl data, so
+  one returned section must not pollute later section builds.
+- The new audit mutates a returned backend-validation section before proving a
+  fresh build stays clean.
+- This is coverage only; no backend validation section shape changed.
+
 ## 2026-05-05: semantic exports sections should stay mutation-safe
 - The manifest semantic-exports section nests the normalized semantic JSON
   contract and its own section contract. Callers receive mutable Perl data, so

@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Backend validation section builder now has defensive-copy coverage
+- Added
+  [t/485-backend-validation-section-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/485-backend-validation-section-defensive-copy-boundary-audit.t)
+  to prove `build_backend_validation_section()` returns fresh nested
+  structures across calls, including the external-validation child contract
+  and nested section contract. No roadmap status changed.
+- Focused validation passed with the backend validation section runtime
+  contract, capability manifest runtime contract, and new defensive-copy audit
+  cluster (`3` files, `12` tests).
 ### Semantic exports section builder now has defensive-copy coverage
 - Added
   [t/484-semantic-exports-section-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/484-semantic-exports-section-defensive-copy-boundary-audit.t)
