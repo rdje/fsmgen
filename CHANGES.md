@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Signal constraints now return snapshots and default to lists
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so `FSM::CoreAST::Signal` stores cloned constraints, returns cloned
+  `constraints()` snapshots, and defaults constraints to an empty list matching
+  `add_constraint(...)`. No roadmap status changed.
+- Added
+  [t/536-core-ast-signal-constraints-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/536-core-ast-signal-constraints-defensive-copy-boundary-audit.t)
+  to prove caller mutation cannot contaminate signal constraints.
 ### Signal fanout lists now return snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)

@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Signal constraints now return snapshots and default to lists
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so `FSM::CoreAST::Signal` stores cloned constraint payloads, returns cloned
+  `constraints()` snapshots, and defaults constraints to an empty list matching
+  `add_constraint(...)`. The explicit add path clones supplied constraint
+  metadata on storage.
+- Added
+  [t/536-core-ast-signal-constraints-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/536-core-ast-signal-constraints-defensive-copy-boundary-audit.t)
+  to prove constructor/accessor/add-path mutation cannot contaminate signal
+  constraints and that default signals accept explicit constraint additions.
+- Focused validation pairs the new Signal constraints audit with the Signal
+  fanout audit, driving-AST canonicalization, enable-graph signal support, and
+  intermediate-signal filter suites. This is `R13` runtime contract-integrity
+  hardening only; signal attributes remain a live compatibility surface, no
+  public manifest shape changed, and roadmap lane status is unchanged.
+
 ## 2026-05-05: Signal fanout lists now return snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)

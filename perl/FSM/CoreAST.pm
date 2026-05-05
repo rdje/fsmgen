@@ -32,7 +32,7 @@ package FSM::CoreAST::Signal;
         $hash_to_bless->{clock_domain} = $args{clock_domain};
         $hash_to_bless->{reset_domain} = $args{reset_domain};
         $hash_to_bless->{attributes} = $args{attributes} // {};
-        $hash_to_bless->{constraints} = $args{constraints} // {};
+        $hash_to_bless->{constraints} = _clone_structured_value($args{constraints} // []);
         
         # FANIN CONE: Every signal has a driving AST expression
         # This is the core of the signal-AST relationship
@@ -55,7 +55,7 @@ package FSM::CoreAST::Signal;
     sub clock_domain($self) { $self->{clock_domain} }
     sub reset_domain($self) { $self->{reset_domain} }
     sub attributes($self) { $self->{attributes} }
-    sub constraints($self) { $self->{constraints} }
+    sub constraints($self) { _clone_structured_value($self->{constraints}) }
     
     sub is_vector($self) { $self->{_width} > 1 }
     sub is_clock($self) { $self->{type} eq 'clock' }
@@ -77,7 +77,11 @@ package FSM::CoreAST::Signal;
         return $self->{attributes}{$key};
     }
     
-    sub add_constraint($self, $constraint) { push $self->{constraints}->@*, $constraint }
+    sub add_constraint($self, $constraint) {
+        Carp::confess "Signal constraints must be stored as an array"
+            unless ref($self->{constraints}) eq 'ARRAY';
+        push $self->{constraints}->@*, _clone_structured_value($constraint);
+    }
     
     # FANIN CONE ACCESS: Core signal-AST relationship methods
     sub driving_ast($self) { $self->{driving_ast} }

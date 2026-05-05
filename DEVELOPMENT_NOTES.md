@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Signal constraints should match their add API
+- Signal constraints are metadata list entries, as shown by
+  `add_constraint(...)`; the previous default hash shape was inconsistent with
+  that mutation API.
+- Signal construction now stores cloned constraint metadata, `constraints()`
+  returns snapshots, and the default is an empty list. The signal attribute bag
+  remains live because synthesis passes use it as compatibility metadata.
+
 ## 2026-05-05: Signal fanout list containers should be signal-owned
 - Signal fanout relationships are graph edges maintained through
   `set_driving_ast(...)` and `add_fanout_signal(...)`; inspection callers should
