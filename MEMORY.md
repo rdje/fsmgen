@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Diagnostic code registry contract now has defensive-copy coverage
+- Added
+  [t/459-diagnostic-code-registry-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/459-diagnostic-code-registry-contract-defensive-copy-boundary-audit.t)
+  to prove `build_diagnostic_code_registry_contract()` returns fresh nested
+  structures across calls and that stable-code registry public-key,
+  entry-key, key-family, bounded-value, and grouped value-family helpers are
+  fresh.
+- Focused validation passed with the diagnostic code registry contract,
+  capability manifest runtime contract, and new defensive-copy audit cluster
+  (`3` files, `14` tests).
+- This is `R13` stable diagnostic-code registry contract-integrity coverage
+  only; no public API shape, user-facing docs, mdBook source, generation
+  behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Check diagnostics contract now has defensive-copy coverage
 - Added
   [t/458-check-diagnostics-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/458-check-diagnostics-contract-defensive-copy-boundary-audit.t)

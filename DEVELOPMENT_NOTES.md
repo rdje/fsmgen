@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: diagnostic code registry contracts should stay mutation-safe
+- The stable diagnostic-code registry contract publishes key families and
+  bounded value families for manifest-facing consumers. The production
+  registry lookups already advertise defensive copies, and the contract helper
+  lists/maps need the same explicit mutation-safety coverage.
+- The new audit mutates a full returned diagnostic code registry contract and
+  every helper list/map, then proves fresh calls remain clean and aligned with
+  the grouped key-family and bounded-value maps.
+- This is coverage only; no diagnostic code registry contract shape changed.
+
 ## 2026-05-05: check diagnostics contracts should stay mutation-safe
 - The check-JSON shell republishes many shared report leaf families plus its
   success, failure, and support-accounting maps. Those nested lists/maps are

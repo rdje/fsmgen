@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Diagnostic code registry contract now has defensive-copy coverage
+- Added
+  [t/459-diagnostic-code-registry-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/459-diagnostic-code-registry-contract-defensive-copy-boundary-audit.t)
+  to prove `build_diagnostic_code_registry_contract()` returns fresh nested
+  structures across calls and that stable-code registry public-key, entry-key,
+  key-family, bounded-value, and grouped value-family helpers are fresh. No
+  roadmap status changed.
+- Focused validation passed with the diagnostic code registry contract,
+  capability manifest runtime contract, and new defensive-copy audit cluster
+  (`3` files, `14` tests).
 ### Check diagnostics contract now has defensive-copy coverage
 - Added
   [t/458-check-diagnostics-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/458-check-diagnostics-contract-defensive-copy-boundary-audit.t)
