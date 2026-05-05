@@ -1318,9 +1318,9 @@ package FSM::CoreAST::Assignment;
         $self->{target} = $args{target} // Carp::confess "Assignment target required";
         $self->{source} = $args{source} // Carp::confess "Assignment source required";
         $self->{assignment_type} = $args{assignment_type} // 'combinatorial';
-        $self->{timing_semantics} = $args{timing_semantics} // {};
+        $self->{timing_semantics} = _clone_assignment_metadata($args{timing_semantics} // {});
         $self->{assignment_intent} = $class->_normalize_assignment_intent(\%args, $self->{assignment_type});
-        $self->{source_provenance} = $args{source_provenance} // {};
+        $self->{source_provenance} = _clone_assignment_metadata($args{source_provenance} // {});
         $self->{output_exposure} = $args{output_exposure} // 'auto';
         return $self;
     }
@@ -1328,9 +1328,9 @@ package FSM::CoreAST::Assignment;
     sub target($self) { $self->{target} }
     sub source($self) { $self->{source} }
     sub assignment_type($self) { $self->{assignment_type} }
-    sub timing_semantics($self) { $self->{timing_semantics} }
-    sub assignment_intent($self) { $self->{assignment_intent} // {} }
-    sub source_provenance($self) { $self->{source_provenance} // {} }
+    sub timing_semantics($self) { _clone_assignment_metadata($self->{timing_semantics}) }
+    sub assignment_intent($self) { _clone_assignment_metadata($self->{assignment_intent} // {}) }
+    sub source_provenance($self) { _clone_assignment_metadata($self->{source_provenance} // {}) }
     sub output_exposure($self) { $self->{output_exposure} // 'auto' }
     sub register_style($self) { ($self->{assignment_intent} // {})->{register_style} }
     sub operator_symbol($self) {
@@ -1370,7 +1370,9 @@ package FSM::CoreAST::Assignment;
     }
     
     sub _normalize_assignment_intent($class, $args, $assignment_type) {
-        my $incoming = (ref($args->{assignment_intent}) eq 'HASH') ? {%{$args->{assignment_intent}}} : {};
+        my $incoming = (ref($args->{assignment_intent}) eq 'HASH')
+            ? _clone_assignment_metadata($args->{assignment_intent})
+            : {};
         
         my $default_register_style = $incoming->{register_style}
             // $args->{register_style}
@@ -1386,6 +1388,22 @@ package FSM::CoreAST::Assignment;
         $incoming->{operator_symbol} //= $default_operator;
         
         return $incoming;
+    }
+
+    sub _clone_assignment_metadata($value) {
+        return undef unless defined $value;
+
+        if (ref($value) eq 'HASH') {
+            return {
+                map { $_ => _clone_assignment_metadata($value->{$_}) } sort keys %$value
+            };
+        }
+
+        if (ref($value) eq 'ARRAY') {
+            return [ map { _clone_assignment_metadata($_) } @$value ];
+        }
+
+        return $value;
     }
 
 package FSM::CoreAST::StateTransition;

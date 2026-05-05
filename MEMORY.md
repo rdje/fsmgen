@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Assignment metadata accessors now return snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so `FSM::CoreAST::Assignment` clones `timing_semantics`,
+  `assignment_intent`, and `source_provenance` on storage and from accessors.
+  Internal `operator_symbol()`, `register_style()`, and `get_timing_domain()`
+  continue to read the assignment-owned metadata directly.
+- Added
+  [t/523-core-ast-assignment-metadata-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/523-core-ast-assignment-metadata-defensive-copy-boundary-audit.t)
+  to prove constructor and accessor mutation cannot contaminate nested
+  assignment metadata.
+- Focused validation pairs the new CoreAST assignment audit with assignment
+  intent, update-shorthand, inline compound modifier, and enable-graph capture
+  suites. This is `R13` runtime contract-integrity hardening only; no public
+  manifest shape, user-facing docs, generation behavior, or roadmap lane
+  status changed.
+
 ## 2026-05-05: FSMModule summary accessors now return snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)

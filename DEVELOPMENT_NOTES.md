@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Assignment metadata should be owned by the assignment node
+- `FSM::CoreAST::Assignment` carries semantic summaries that downstream capture
+  and assignment-intent code inspect repeatedly: timing metadata, normalized
+  assignment intent, and source provenance.
+- Those summaries are now cloned on entry and from accessors. The assignment
+  object still reads its owned internal metadata directly for `operator_symbol`,
+  `register_style`, and timing-domain classification, so existing generation
+  behavior remains unchanged.
+- This keeps tests and later passes free to inspect or annotate returned
+  metadata hashes without modifying the AST node used by capture support.
+
 ## 2026-05-05: FSMModule summary accessors should not expose mutable internals
 - `FSM::CoreAST::FSMModule` remains a raw in-process compatibility object, and
   the parser/source frontend still mutate `$module->{attributes}` directly for

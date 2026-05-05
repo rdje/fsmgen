@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Assignment metadata accessors now return snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so `FSM::CoreAST::Assignment` stores cloned timing, intent, and source
+  provenance metadata and returns cloned summaries from `timing_semantics()`,
+  `assignment_intent()`, and `source_provenance()`. No roadmap status changed.
+- Added
+  [t/523-core-ast-assignment-metadata-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/523-core-ast-assignment-metadata-defensive-copy-boundary-audit.t)
+  to prove constructor and accessor mutation cannot contaminate normalized
+  assignment metadata used by intent extraction and capture support.
 ### FSMModule summary accessors now return snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
