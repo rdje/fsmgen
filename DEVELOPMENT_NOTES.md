@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: embedding contracts should stay mutation-safe
+- The manifest-facing embedding contract groups nested in-process facade,
+  result, composition-report, typed-extension, and debug-runtime contract
+  helper structures.
+- The new audit mutates the full returned contract and each exported mutable
+  helper structure, then proves fresh calls remain clean.
+- This is coverage only; no embedding contract shape changed.
+
 ## 2026-05-05: capability manifest contracts should stay mutation-safe
 - The capability manifest shell contract republishes top-level section
   presence maps and top-level owner maps across the manifest-facing API.

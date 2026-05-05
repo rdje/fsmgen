@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Embedding contract now has defensive-copy coverage
+- Added
+  [t/480-embedding-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/480-embedding-contract-defensive-copy-boundary-audit.t)
+  to prove `build_embedding_contract()` and its exported helper builders
+  return fresh nested structures across calls. No roadmap status changed.
+- Focused validation passed with the embedding contract, embedding section
+  runtime contract, and new defensive-copy audit cluster (`3` files, `9`
+  tests).
 ### Capability manifest contract now has defensive-copy coverage
 - Added
   [t/479-capability-manifest-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/479-capability-manifest-contract-defensive-copy-boundary-audit.t)
