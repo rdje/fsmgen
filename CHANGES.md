@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### HDL external validation contract now has defensive-copy coverage
+- Added
+  [t/460-hdl-external-validation-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/460-hdl-external-validation-contract-defensive-copy-boundary-audit.t)
+  to prove `build_hdl_external_validation_contract()` returns fresh nested
+  structures across calls and that external-validation success-key,
+  success-step, failure-mode, and failure-prefix helpers are fresh. No roadmap
+  status changed.
+- Focused validation passed with the HDL external validation contract,
+  capability manifest runtime contract, and new defensive-copy audit cluster
+  (`3` files, `13` tests).
 ### Diagnostic code registry contract now has defensive-copy coverage
 - Added
   [t/459-diagnostic-code-registry-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/459-diagnostic-code-registry-contract-defensive-copy-boundary-audit.t)

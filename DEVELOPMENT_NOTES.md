@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: HDL external validation contracts should stay mutation-safe
+- The optional SystemVerilog external-validation contract publishes success
+  report families, tool step names, failure-mode families, and stable failure
+  text prefixes. These helper lists/maps are mutable Perl structures for
+  in-process consumers, so caller mutation must not affect later contract
+  discovery.
+- The new audit mutates a full returned HDL external validation contract and
+  every helper list/map, then proves fresh calls remain clean and aligned with
+  the grouped success and failure-mode maps.
+- This is coverage only; no HDL external validation contract shape changed.
+
 ## 2026-05-05: diagnostic code registry contracts should stay mutation-safe
 - The stable diagnostic-code registry contract publishes key families and
   bounded value families for manifest-facing consumers. The production

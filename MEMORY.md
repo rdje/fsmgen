@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: HDL external validation contract now has defensive-copy coverage
+- Added
+  [t/460-hdl-external-validation-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/460-hdl-external-validation-contract-defensive-copy-boundary-audit.t)
+  to prove `build_hdl_external_validation_contract()` returns fresh nested
+  structures across calls and that external-validation success-key,
+  success-step, failure-mode, and failure-prefix helpers are fresh.
+- Focused validation passed with the HDL external validation contract,
+  capability manifest runtime contract, and new defensive-copy audit cluster
+  (`3` files, `13` tests).
+- This is `R13` external validation contract-integrity coverage only; no
+  public API shape, user-facing docs, mdBook source, generation behavior, or
+  roadmap lane status changed.
+
 ## 2026-05-05: Diagnostic code registry contract now has defensive-copy coverage
 - Added
   [t/459-diagnostic-code-registry-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/459-diagnostic-code-registry-contract-defensive-copy-boundary-audit.t)
