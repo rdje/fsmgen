@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Commit workflow no longer permits implicit Oz trailers
+- Updated [COMMIT.md](/Users/richarddje/Documents/github/fsmgen/COMMIT.md)
+  so the mandatory commit workflow now matches the user's current directive:
+  do not add attribution trailers unless the user explicitly asks for them.
+- This resolves the remaining contradiction between the canonical workflow and
+  the already-recorded repository no-trailer policy. No roadmap status changed.
 ### Language surface section builder now has defensive-copy coverage
 - Added
   [t/483-language-surface-section-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/483-language-surface-section-defensive-copy-boundary-audit.t)

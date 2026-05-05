@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: commit messages should not add implicit Oz trailers
+- The current user directive is explicit: future commit messages must not use
+  the previous Oz co-author trailer.
+- `COMMIT.md` now matches the no-trailer policy already recorded in the live
+  notes. The crash-recovery workflow is otherwise unchanged: write
+  `git_message_brief.txt`, commit with `git commit -F`, then truncate and
+  verify the message file.
+
 ## 2026-05-05: language surface sections should stay mutation-safe
 - The manifest language-surface section nests its bounded surface contract and
   authored language-surface summary. Callers receive mutable Perl data, so one

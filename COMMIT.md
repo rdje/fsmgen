@@ -63,7 +63,7 @@ Ignoring it is not a style issue; it is a project-safety failure.
 4. Write `git_message_brief.txt` with:
    - concise subject line,
    - key body lines or bullet points,
-   - required attribution trailer for the active agent policy; Oz-authored commits must end with `Co-Authored-By: Oz <oz-agent@warp.dev>`.
+   - no attribution trailer unless the user explicitly asks for one.
 5. Stage intended tracked files (`git add ...`).
    - This and every later git write step must run sequentially.
 6. Commit using:
@@ -87,7 +87,7 @@ Ignoring it is not a style issue; it is a project-safety failure.
 - Keep commits task-scoped (only files relevant to the completed task).
 - Do not stage unrelated untracked directories (for example local sandboxes).
 - Keep behavior-preserving refactor slices small and verifiable.
-- Keep attribution trailers consistent with the required message shape above; never omit a required agent attribution trailer from a task-scoped commit.
+- Keep attribution trailers out of task-scoped commits unless the user explicitly asks for them.
 - Prefer one completed slice per commit cycle. If a task naturally fans out into multiple independently valid slices, close each slice with this workflow before moving on.
 
 ## Git index safety
