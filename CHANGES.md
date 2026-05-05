@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Direct generation source-info enrichment now snapshots caller metadata
+- Updated
+  [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm)
+  so `generate_from_source()` clones supplied `source_info` metadata before
+  adding direct-generation package-import summary fields. No roadmap status
+  changed.
+- Added
+  [t/570-direct-generation-orchestrator-source-info-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/570-direct-generation-orchestrator-source-info-defensive-copy-boundary-audit.t)
+  to prove direct generation does not mutate caller-owned source-info metadata
+  while still returning owned package-import summary fields.
 ### Source-info package-import augmentation now owns returned hashes
 - Updated
   [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm)

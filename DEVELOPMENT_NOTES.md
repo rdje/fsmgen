@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Direct generation enriches source-info on an owned copy
+- `DirectGenerationOrchestrator::generate_from_source()` accepts a caller
+  supplied `source_info` hash and later adds package-import summary fields from
+  frontend resolution. That enrichment should describe the returned result, not
+  rewrite the caller's classification metadata.
+- The orchestrator now clones the incoming source-info hash before generation
+  uses and result enrichment. Returned direct-generation results preserve the
+  same summary surface while caller-owned metadata remains isolated.
+
 ## 2026-05-05: Source-info augmentation returns an owned summary hash
 - `_augment_source_info_package_import_summary()` may be called with an
   existing source-info hash. Adding package-import fields in place made that

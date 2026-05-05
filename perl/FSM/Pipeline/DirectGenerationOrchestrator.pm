@@ -32,8 +32,8 @@ sub generate_from_source ($class, %args) {
         or confess "DirectGenerationOrchestrator requires a pipeline";
     my $raw_ast = $args{raw_ast}
         or confess "DirectGenerationOrchestrator requires a raw_ast";
-    my $source_info = $args{source_info}
-        || FSM::Pipeline::SourceFrontend->classify_source_ast($raw_ast);
+    my $source_info = _clone($args{source_info}
+        || FSM::Pipeline::SourceFrontend->classify_source_ast($raw_ast));
 
     my %frontend_context;
     my $fsm_module = FSM::Pipeline::SourceFrontend->create_fsm_module(
@@ -93,6 +93,13 @@ sub generate_from_source ($class, %args) {
         raw_ast => $raw_ast,
         source_info => $source_info,
     };
+}
+
+sub _clone ($value) {
+    return undef unless defined $value;
+    return [map { _clone($_) } @$value] if ref($value) eq 'ARRAY';
+    return {map { $_ => _clone($value->{$_}) } keys %$value} if ref($value) eq 'HASH';
+    return $value;
 }
 
 1;

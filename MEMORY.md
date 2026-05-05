@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Direct generation source-info enrichment now snapshots caller metadata
+- Updated
+  [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm)
+  so `generate_from_source()` clones the supplied `source_info` hash before
+  adding result package-import summary fields from the frontend context.
+- Added
+  [t/570-direct-generation-orchestrator-source-info-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/570-direct-generation-orchestrator-source-info-defensive-copy-boundary-audit.t)
+  to prove direct generation does not mutate caller-owned source-info summary
+  fields or alias nested caller metadata, while returned results still own the
+  package-import names summary.
+- Focused validation paired the new audit with direct-generation orchestrator,
+  source-generation orchestrator, and direct package-import suites, then reran
+  the five newest defensive-copy audits plus composition parser, source
+  frontend, direct/source generation orchestrators, composition package imports,
+  and direct package imports. This is `R13` runtime contract-integrity
+  hardening only; no public manifest shape, user-facing docs, mdBook content,
+  generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Source-info package-import augmentation now owns returned hashes
 - Updated
   [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm)
