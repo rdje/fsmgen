@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Capability manifest builder now has defensive-copy coverage
+- Added
+  [t/436-capability-manifest-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/436-capability-manifest-defensive-copy-boundary-audit.t)
+  to prove `build_capability_manifest()` returns fresh nested structures
+  across calls, including the manifest contract maps and embedded
+  typed-extension contract. No roadmap status changed.
+- Focused validation passed with the core capability manifest, runtime
+  manifest, and new defensive-copy audit cluster (`3` files, `13` tests).
 ### Typed extension contract builders now have defensive-copy coverage
 - Added
   [t/435-typed-extension-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/435-typed-extension-contract-defensive-copy-boundary-audit.t)

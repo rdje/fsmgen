@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Capability manifest builder now has defensive-copy coverage
+- Added
+  [t/436-capability-manifest-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/436-capability-manifest-defensive-copy-boundary-audit.t)
+  to prove `build_capability_manifest()` returns fresh nested structures
+  across calls, including the manifest contract maps and embedded
+  typed-extension contract.
+- Focused validation passed with the core capability manifest, runtime
+  manifest, and new defensive-copy audit cluster (`3` files, `13` tests).
+- This is `R13` capability-manifest contract-integrity coverage only; no
+  public API shape, user-facing docs, mdBook source, generation behavior, or
+  roadmap lane status changed.
+
 ## 2026-05-05: Typed extension contract builders now have defensive-copy coverage
 - Added
   [t/435-typed-extension-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/435-typed-extension-contract-defensive-copy-boundary-audit.t)

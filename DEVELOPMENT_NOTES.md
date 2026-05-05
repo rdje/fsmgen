@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: capability manifests should stay mutation-safe per call
+- In-process callers receive the capability manifest as a nested Perl hash.
+  Without an explicit regression, a future optimization could accidentally
+  reuse nested manifest structures and let one caller's mutation affect later
+  `build_capability_manifest()` calls in the same process.
+- The new audit mutates a returned manifest deeply, then proves a fresh
+  manifest still has clean top-level keys, clean manifest-contract presence
+  maps, and a clean embedded typed-extension contract.
+- This is coverage only; no manifest shape changed.
+
 ## 2026-05-05: typed-extension contract helpers should stay mutation-safe
 - The typed-extension contract is consumed by embedders and by the capability
   manifest. Its helper functions already build fresh structures, but that
