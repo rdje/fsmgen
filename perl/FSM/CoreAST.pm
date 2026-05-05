@@ -37,7 +37,8 @@ package FSM::CoreAST::Signal;
         # FANIN CONE: Every signal has a driving AST expression
         # This is the core of the signal-AST relationship
         $hash_to_bless->{driving_ast} = $args{driving_ast};  # The AST expression that drives this signal
-        $hash_to_bless->{fanout_signals} = $args{fanout_signals} // [];  # Signals this drives (for traversing forward)
+        # Signals this drives (for traversing forward)
+        $hash_to_bless->{fanout_signals} = _clone_structured_value($args{fanout_signals} // []);
         
         my $self = bless $hash_to_bless, $class;
         
@@ -80,7 +81,7 @@ package FSM::CoreAST::Signal;
     
     # FANIN CONE ACCESS: Core signal-AST relationship methods
     sub driving_ast($self) { $self->{driving_ast} }
-    sub fanout_signals($self) { $self->{fanout_signals} // [] }
+    sub fanout_signals($self) { _clone_structured_value($self->{fanout_signals} // []) }
     
     sub set_driving_ast($self, $ast) { 
         $self->{driving_ast} = $ast;
@@ -101,7 +102,7 @@ package FSM::CoreAST::Signal;
     
     sub get_fanout_signals($self) {
         # Get all signals that this signal drives
-        return $self->{fanout_signals} // [];
+        return _clone_structured_value($self->{fanout_signals} // []);
     }
     
     # UNIFIED TEXT GENERATION: Always goes through the driving AST

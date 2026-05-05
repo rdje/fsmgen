@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Signal fanout list containers should be signal-owned
+- Signal fanout relationships are graph edges maintained through
+  `set_driving_ast(...)` and `add_fanout_signal(...)`; inspection callers should
+  not mutate the stored fanout list by pushing into an accessor return.
+- `fanout_signals()` and `get_fanout_signals()` now return cloned list
+  containers while preserving contained signal identity. The broader signal
+  attribute bag remains a live compatibility surface for synthesis metadata.
+
 ## 2026-05-05: FSMModule auxiliary metadata should be snapshot-read
 - `FSM::CoreAST::FSMModule` still exposes `states`, `signals`, and broad
   `attributes()` as live compatibility surfaces because parser, backend, and

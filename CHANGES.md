@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Signal fanout lists now return snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so `FSM::CoreAST::Signal` clones `fanout_signals` lists on construction and
+  from `fanout_signals()` / `get_fanout_signals()` while preserving contained
+  signal object identity and `add_fanout_signal(...)` as the mutation path. No
+  roadmap status changed.
+- Added
+  [t/535-core-ast-signal-fanout-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/535-core-ast-signal-fanout-defensive-copy-boundary-audit.t)
+  to prove caller mutation cannot contaminate signal fanout lists.
 ### FSMModule auxiliary metadata maps now return snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)

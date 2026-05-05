@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Signal fanout lists now return snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so `FSM::CoreAST::Signal` clones `fanout_signals` lists on construction and
+  returns cloned list containers from `fanout_signals()` and
+  `get_fanout_signals()`. Contained signal objects retain identity, and
+  `add_fanout_signal(...)` remains the explicit graph mutation path.
+- Added
+  [t/535-core-ast-signal-fanout-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/535-core-ast-signal-fanout-defensive-copy-boundary-audit.t)
+  to prove constructor/accessor mutation cannot contaminate fanout lists and
+  that `set_driving_ast(...)` still updates source fanout relationships.
+- Focused validation pairs the new Signal fanout audit with driving-AST
+  canonicalization, enable-graph AST, signal support, and capture suites. This
+  is `R13` runtime contract-integrity hardening only; signal attributes remain a
+  live compatibility surface, no public manifest shape changed, and roadmap lane
+  status is unchanged.
+
 ## 2026-05-05: FSMModule auxiliary metadata maps now return snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
