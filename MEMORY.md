@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Check failure diagnostic contract now has defensive-copy coverage
+- Added
+  [t/457-check-failure-diagnostic-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/457-check-failure-diagnostic-contract-defensive-copy-boundary-audit.t)
+  to prove `build_check_failure_diagnostic_contract()` returns fresh nested
+  structures across calls and that failure-diagnostic public, matched,
+  optional-artifact, nested support-accounting, and grouped presence-family
+  helpers are fresh.
+- Focused validation passed with the check failure diagnostic contract, shared
+  report runtime contract, and new defensive-copy audit cluster (`3` files,
+  `8` tests).
+- This is `R13` shared failure diagnostic contract-integrity coverage only;
+  no public API shape, user-facing docs, mdBook source, generation behavior,
+  or roadmap lane status changed.
+
 ## 2026-05-05: Check result contract now has defensive-copy coverage
 - Added
   [t/456-check-result-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/456-check-result-contract-defensive-copy-boundary-audit.t)

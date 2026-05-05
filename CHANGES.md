@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Check failure diagnostic contract now has defensive-copy coverage
+- Added
+  [t/457-check-failure-diagnostic-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/457-check-failure-diagnostic-contract-defensive-copy-boundary-audit.t)
+  to prove `build_check_failure_diagnostic_contract()` returns fresh nested
+  structures across calls and that failure-diagnostic public, matched,
+  optional-artifact, nested support-accounting, and grouped presence-family
+  helpers are fresh. No roadmap status changed.
+- Focused validation passed with the check failure diagnostic contract, shared
+  report runtime contract, and new defensive-copy audit cluster (`3` files,
+  `8` tests).
 ### Check result contract now has defensive-copy coverage
 - Added
   [t/456-check-result-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/456-check-result-contract-defensive-copy-boundary-audit.t)

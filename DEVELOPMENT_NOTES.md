@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: check failure diagnostic contracts should stay mutation-safe
+- The shared failure `diagnostic` object is reused by check JSON and
+  normalized semantic JSON failure reports. Its public, matched-only,
+  optional-artifact, nested support-accounting, and grouped presence-family
+  helpers are mutable Perl data, so caller mutation must not affect later
+  failure diagnostic contract discovery.
+- The new audit mutates a full returned check failure diagnostic contract and
+  every helper list/map, then proves fresh calls remain clean and aligned with
+  the grouped presence-family map.
+- This is coverage only; no check failure diagnostic contract shape changed.
+
 ## 2026-05-05: check result contracts should stay mutation-safe
 - The successful check-JSON `result` object publishes module identity and
   summary-count key families through mutable Perl helper lists/maps. In-process
