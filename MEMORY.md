@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Composition module_info top-level IR projections now avoid embedded-payload aliases
+- Updated
+  [perl/FSM/Composition/ResultMetadataBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ResultMetadataBuilder.pm)
+  so top-level `module_info` containers projected from embedded `intent_hir`
+  and `lowered_rtl_ir` payloads are cloned independently from those embedded IR
+  hashes.
+- Added
+  [t/555-composition-result-metadata-forward-ir-alias-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/555-composition-result-metadata-forward-ir-alias-defensive-copy-boundary-audit.t)
+  to prove top-level forward-IR projection mutation cannot contaminate embedded
+  IR payloads in the same result.
+- Focused validation paired the new audit with child-export/provenance
+  result-metadata audits, result-metadata builder, and normalized semantic
+  module/composition contract suites. This is `R13` runtime contract-integrity
+  hardening only; no public manifest shape, user-facing docs, mdBook content,
+  generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Composition result metadata now snapshots child-export inputs
 - Updated
   [perl/FSM/Composition/ResultMetadataBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ResultMetadataBuilder.pm)

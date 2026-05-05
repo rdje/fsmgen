@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Composition module_info top-level IR projections now avoid embedded-payload aliases
+- Updated
+  [perl/FSM/Composition/ResultMetadataBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ResultMetadataBuilder.pm)
+  so top-level `module_info` arrays and hashes projected from embedded
+  `intent_hir` and `lowered_rtl_ir` payloads are cloned independently. No
+  roadmap status changed.
+- Added
+  [t/555-composition-result-metadata-forward-ir-alias-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/555-composition-result-metadata-forward-ir-alias-defensive-copy-boundary-audit.t)
+  to prove mutating top-level forward-IR projections cannot contaminate the
+  embedded IR payloads in the same `module_info` result.
 ### Composition result metadata now snapshots child-export inputs
 - Updated
   [perl/FSM/Composition/ResultMetadataBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ResultMetadataBuilder.pm)

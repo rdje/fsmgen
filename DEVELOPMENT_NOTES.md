@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: module_info projections should not alias embedded IR payloads
+- Composition `module_info` intentionally exposes both embedded forward-IR
+  payloads and selected top-level convenience projections. Those top-level
+  arrays and hashes are report fields, not references back into the embedded IR
+  hashes.
+- `ResultMetadataBuilder` now clones projected top-level containers from
+  `intent_hir` and `lowered_rtl_ir` before returning `module_info`, so callers
+  can annotate top-level report fields without mutating the embedded payload.
+
 ## 2026-05-05: Result metadata owns child-export fallback payloads
 - `ResultMetadataBuilder` can fill composition child metadata from explicit
   child-export inputs when the intent HIR does not already carry those fields.

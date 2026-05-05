@@ -54,27 +54,27 @@ sub build_module_info ($class, %args) {
         source_root_kind => $intent_hir_hash->{source_root_kind},
         regular_states => [],
         regular_state_count => $intent_hir_hash->{regular_state_count},
-        regular_state_names => $intent_hir_hash->{regular_state_names},
+        regular_state_names => _clone($intent_hir_hash->{regular_state_names}),
         standalone_dts => [],
         standalone_dt_count => $intent_hir_hash->{standalone_dt_count},
-        standalone_dt_names => $intent_hir_hash->{standalone_dt_names},
-        signals => $port_metadata->{signals},
+        standalone_dt_names => _clone($intent_hir_hash->{standalone_dt_names}),
+        signals => _clone($port_metadata->{signals}),
         signal_count => $intent_hir_hash->{signal_count},
-        signal_names => $intent_hir_hash->{signal_names},
-        signal_analysis => $intent_hir_hash->{signal_analysis},
-        explicit_system_contract => $intent_hir_hash->{explicit_system_contract},
-        system_contract => $intent_hir_hash->{system_contract},
+        signal_names => _clone($intent_hir_hash->{signal_names}),
+        signal_analysis => _clone($intent_hir_hash->{signal_analysis}),
+        explicit_system_contract => _clone($intent_hir_hash->{explicit_system_contract}),
+        system_contract => _clone($intent_hir_hash->{system_contract}),
         requires_implicit_system_ports => $intent_hir_hash->{requires_implicit_system_ports},
         parameter_count => $intent_hir_hash->{parameter_count},
-        parameter_names => $intent_hir_hash->{parameter_names},
-        symbol_contract => $intent_hir_hash->{symbol_contract},
+        parameter_names => _clone($intent_hir_hash->{parameter_names}),
+        symbol_contract => _clone($intent_hir_hash->{symbol_contract}),
         intent_hir => $intent_hir_hash,
         lowered_rtl_ir => $lowered_rtl_ir_hash,
         structural_rtl_ir => $structural_rtl_ir_hash,
         output_drive_family_count => $lowered_rtl_ir_hash->{output_drive_family_count},
-        output_drive_families => $lowered_rtl_ir_hash->{output_drive_families},
+        output_drive_families => _clone($lowered_rtl_ir_hash->{output_drive_families}),
         standalone_dt_multi_drive_target_count => $lowered_rtl_ir_hash->{standalone_dt_multi_drive_target_count},
-        standalone_dt_multi_drive_targets => $lowered_rtl_ir_hash->{standalone_dt_multi_drive_targets},
+        standalone_dt_multi_drive_targets => _clone($lowered_rtl_ir_hash->{standalone_dt_multi_drive_targets}),
         internal_net_count => (
             exists $lowered_rtl_ir_hash->{internal_net_count}
                 ? $lowered_rtl_ir_hash->{internal_net_count}
@@ -84,7 +84,7 @@ sub build_module_info ($class, %args) {
                         : scalar(@{$composition_plan->nets || []})
                 )
         ),
-        internal_net_names => (
+        internal_net_names => _clone(
             $lowered_rtl_ir_hash->{internal_net_names}
                 || [ map { $_->{name} } @{$structural_rtl_ir_hash->{nets} || []} ]
                 || [ map { $_->name } @{$composition_plan->nets || []} ]
@@ -98,7 +98,7 @@ sub build_module_info ($class, %args) {
                         : scalar(@{$composition_plan->instances || []})
                 )
         ),
-        instance_names => (
+        instance_names => _clone(
             $lowered_rtl_ir_hash->{instance_names}
                 || [ map { $_->{instance_name} } @{$structural_rtl_ir_hash->{instances} || []} ]
                 || [ map { $_->instance_name } @{$composition_plan->instances || []} ]
@@ -122,7 +122,7 @@ sub build_module_info ($class, %args) {
                         : scalar(@{$composition_plan->instances || []})
                 )
         ),
-        composition_children => (
+        composition_children => _clone(
             $intent_hir_hash->{composition_children}
                 || $composition_child_exports->{children}
         ),
@@ -159,7 +159,7 @@ sub build_module_info ($class, %args) {
                 ? $intent_hir_hash->{composition_generated_dt_child_count}
                 : 0
         ),
-        composition_generated_children => (
+        composition_generated_children => _clone(
             $intent_hir_hash->{composition_generated_children} || $generated_child_exports->{children} || []
         ),
         composition_standalone_dt_child_count => (
@@ -177,7 +177,7 @@ sub build_module_info ($class, %args) {
                 ? $intent_hir_hash->{composition_standalone_dt_multi_drive_target_count}
                 : $standalone_dt_child_exports->{multi_drive_target_count}
         ),
-        composition_standalone_dt_children => (
+        composition_standalone_dt_children => _clone(
             $intent_hir_hash->{composition_standalone_dt_children}
                 || $standalone_dt_child_exports->{children}
         ),
@@ -186,7 +186,7 @@ sub build_module_info ($class, %args) {
                 ? $lowered_rtl_ir_hash->{composition_shared_datapath_candidate_count}
                 : 0
         ),
-        composition_shared_datapath_candidates => (
+        composition_shared_datapath_candidates => _clone(
             $lowered_rtl_ir_hash->{composition_shared_datapath_candidates} || []
         ),
         composition_lane => (
