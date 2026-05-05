@@ -57,14 +57,14 @@ sub find_top_root ($self, $raw_ast) {
     return undef unless ref($raw_ast) eq 'ARRAY';
 
     if (@$raw_ast > 0 && !ref($raw_ast->[0]) && $raw_ast->[0] =~ /^\?top:/) {
-        return $raw_ast;
+        return _clone($raw_ast);
     }
 
     for my $ast_node (@$raw_ast) {
         next unless ref($ast_node) eq 'ARRAY';
         next unless @$ast_node > 0;
         next if ref($ast_node->[0]);
-        return $ast_node if $ast_node->[0] =~ /^\?top:/;
+        return _clone($ast_node) if $ast_node->[0] =~ /^\?top:/;
     }
 
     return undef;

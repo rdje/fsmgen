@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Composition top-root lookup is a read projection
+- `find_top_root()` is used by `parse_source()` and can also be called as a
+  parser helper. The result identifies the `?top` subtree; callers do not need
+  a mutation handle back into the full parsed source tree.
+- The helper now returns a cloned top-root AST for both direct-root and
+  multi-root inputs. Top parsing still receives the same shape, but mutation of
+  the lookup result cannot rewrite the parser-owned raw AST.
+
 ## 2026-05-05: Composition embedded source maps are read handoffs
 - Composition parser embedded source collection feeds generated-child and
   package-import planning. The returned maps identify embedded source roots,

@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Composition parser top-root discovery now returns AST snapshots
+- Updated
+  [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm)
+  so `find_top_root()` clones direct-root and multi-root `?top` AST nodes
+  before returning them. No roadmap status changed.
+- Added
+  [t/567-composition-parser-top-root-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/567-composition-parser-top-root-defensive-copy-boundary-audit.t)
+  to prove mutating discovered top roots cannot contaminate the composition
+  parser raw AST.
 ### Composition parser embedded source collectors now return AST snapshots
 - Updated
   [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm)

@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Composition parser top-root discovery now returns AST snapshots
+- Updated
+  [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm)
+  so `find_top_root()` clones the discovered `?top` AST before returning it,
+  covering both direct-root composition sources and multi-root source files.
+- Added
+  [t/567-composition-parser-top-root-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/567-composition-parser-top-root-defensive-copy-boundary-audit.t)
+  to prove returned top-root AST mutation cannot contaminate parser-owned
+  source containers.
+- Focused validation paired the new audit with the embedded-source audit,
+  composition parser suite, and generated child realizer suite. This is `R13`
+  runtime contract-integrity hardening only; no public manifest shape,
+  user-facing docs, mdBook content, generation behavior, or roadmap lane
+  status changed.
+
 ## 2026-05-05: Composition parser embedded source collectors now return AST snapshots
 - Updated
   [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm)
