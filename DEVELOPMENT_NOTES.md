@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: check diagnostics reports should stay mutation-safe
+- The public check JSON report builders return ordinary mutable Perl
+  structures. Runtime callers may inspect or mutate those reports, so a
+  returned success or failure report must not contaminate later builds.
+- The new audit mutates both success and failure reports before proving fresh
+  builds stay clean.
+- This is coverage only; no check JSON report shape changed.
+
 ## 2026-05-05: diagnostics sections should stay mutation-safe
 - The manifest diagnostics section nests stable-code registry entries,
   check-JSON contract data, and its own section contract. Callers receive

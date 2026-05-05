@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Check diagnostics report builder now has runtime defensive-copy coverage
+- Added
+  [t/488-check-diagnostics-report-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/488-check-diagnostics-report-defensive-copy-boundary-audit.t)
+  to prove `build_check_success_report()` and
+  `build_check_failure_report()` return fresh nested report structures across
+  calls. No roadmap status changed.
+- Focused validation pairs the runtime report audit with the existing check
+  diagnostics contract and contract defensive-copy suites.
 ### Diagnostics section builder now has defensive-copy coverage
 - Added
   [t/487-diagnostics-section-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/487-diagnostics-section-defensive-copy-boundary-audit.t)

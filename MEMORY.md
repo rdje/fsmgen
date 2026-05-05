@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Check diagnostics report builder now has runtime defensive-copy coverage
+- Added
+  [t/488-check-diagnostics-report-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/488-check-diagnostics-report-defensive-copy-boundary-audit.t)
+  to prove `build_check_success_report()` and
+  `build_check_failure_report()` return fresh nested report structures across
+  calls.
+- Focused validation pairs the runtime report audit with the existing check
+  diagnostics contract and contract defensive-copy suites.
+- This is `R13` check JSON runtime contract-integrity coverage only; no
+  public API shape, user-facing docs, mdBook source, generation behavior, or
+  roadmap lane status changed.
+
 ## 2026-05-05: Diagnostics section builder now has defensive-copy coverage
 - Added
   [t/487-diagnostics-section-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/487-diagnostics-section-defensive-copy-boundary-audit.t)
