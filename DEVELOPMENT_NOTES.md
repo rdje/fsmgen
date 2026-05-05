@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: report source contracts should stay mutation-safe
+- The shared report source object is reused by check JSON and normalized
+  semantic JSON report shells. Its public, input, resolution, and grouped
+  presence-family helpers are ordinary mutable Perl structures for in-process
+  consumers, so caller mutation must not affect later source contract
+  discovery.
+- The new audit mutates a full returned report source contract and every
+  helper list/map, then proves fresh calls remain clean and aligned with the
+  grouped presence-family map.
+- This is coverage only; no report source contract shape changed.
+
 ## 2026-05-05: report producer contracts should stay mutation-safe
 - The shared report producer object is reused by check JSON and normalized
   semantic JSON report shells, with normalized semantic JSON adding one

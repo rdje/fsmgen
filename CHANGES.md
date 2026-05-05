@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Report source contract now has defensive-copy coverage
+- Added
+  [t/453-report-source-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/453-report-source-contract-defensive-copy-boundary-audit.t)
+  to prove `build_report_source_contract()` returns fresh nested structures
+  across calls and that report source public, input, resolution, and grouped
+  presence-family helpers are fresh. No roadmap status changed.
+- Focused validation passed with the report source contract, shared report
+  runtime contract, and new defensive-copy audit cluster (`3` files, `8`
+  tests).
 ### Report producer contract now has defensive-copy coverage
 - Added
   [t/lib/FSM/Test/DefensiveCopyAudit.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/DefensiveCopyAudit.pm)
