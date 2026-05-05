@@ -34,13 +34,13 @@ sub build_module_info ($class, %args) {
     my $composition_plan = $args{composition_plan}
         or confess "ResultMetadataBuilder requires a composition_plan";
     my $composition_report = _clone($args{composition_report});
-    my $composition_child_exports = $args{composition_child_exports}
+    my $composition_child_exports = _clone($args{composition_child_exports})
         || { child_count => 0, children => [] };
-    my $generated_child_exports = $args{generated_child_exports}
+    my $generated_child_exports = _clone($args{generated_child_exports})
         || FSM::Composition::ChildExportBuilder->build_generated_child_exports(
             composition_child_exports => $composition_child_exports,
         );
-    my $standalone_dt_child_exports = $args{standalone_dt_child_exports}
+    my $standalone_dt_child_exports = _clone($args{standalone_dt_child_exports})
         || FSM::Composition::ChildExportBuilder->build_standalone_dt_child_exports(
             composition_child_exports => $composition_child_exports,
         );

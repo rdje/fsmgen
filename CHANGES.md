@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Composition result metadata now snapshots child-export inputs
+- Updated
+  [perl/FSM/Composition/ResultMetadataBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ResultMetadataBuilder.pm)
+  so `build_module_info()` clones supplied composition, generated-child, and
+  standalone-DT child-export payloads before using them as fallback metadata.
+  No roadmap status changed.
+- Added
+  [t/554-composition-result-metadata-child-export-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/554-composition-result-metadata-child-export-defensive-copy-boundary-audit.t)
+  to prove module-info child-export mutation cannot contaminate source export
+  payloads.
 ### Composition result metadata now snapshots provenance reports
 - Updated
   [perl/FSM/Composition/ResultMetadataBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ResultMetadataBuilder.pm)

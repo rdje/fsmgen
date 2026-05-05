@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Result metadata owns child-export fallback payloads
+- `ResultMetadataBuilder` can fill composition child metadata from explicit
+  child-export inputs when the intent HIR does not already carry those fields.
+  Those exports are pipeline intermediates and should not be exposed as mutable
+  storage through the returned `module_info` hash.
+- Supplied composition, generated-child, and standalone-DT export payloads are
+  now cloned before fallback embedding, matching the existing object/hash clone
+  policy for the forward IR inputs.
+
 ## 2026-05-05: Result metadata owns embedded provenance snapshots
 - `ResultMetadataBuilder` consumes a composition provenance report to fill
   counts and to attach `composition_provenance` to both module info and

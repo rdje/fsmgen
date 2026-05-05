@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Composition result metadata now snapshots child-export inputs
+- Updated
+  [perl/FSM/Composition/ResultMetadataBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ResultMetadataBuilder.pm)
+  so `build_module_info()` clones supplied composition, generated-child, and
+  standalone-DT child-export payloads before using their child arrays as
+  fallback result metadata.
+- Added
+  [t/554-composition-result-metadata-child-export-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/554-composition-result-metadata-child-export-defensive-copy-boundary-audit.t)
+  to prove returned module-info child-export mutation cannot contaminate source
+  export payloads.
+- Focused validation paired the new audit with the provenance metadata audit,
+  result-metadata builder, and child-export builder suites. This is `R13`
+  runtime contract-integrity hardening only; no public manifest shape,
+  user-facing docs, mdBook content, generation behavior, or roadmap lane status
+  changed.
+
 ## 2026-05-05: Composition result metadata now snapshots provenance reports
 - Updated
   [perl/FSM/Composition/ResultMetadataBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ResultMetadataBuilder.pm)
