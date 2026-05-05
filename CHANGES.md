@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Normalized semantic payload contract now has defensive-copy coverage
+- Added
+  [t/442-normalized-semantic-payload-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/442-normalized-semantic-payload-contract-defensive-copy-boundary-audit.t)
+  to prove `build_normalized_semantic_payload_contract()` returns fresh nested
+  structures across calls and that normalized semantic payload helper lists,
+  nested presence maps, presence-family maps, and forward-IR nested maps are
+  fresh. No roadmap status changed.
+- Focused validation passed with the normalized semantic payload contract,
+  normalized semantic report contract, and new defensive-copy audit cluster
+  (`3` files, `9` tests).
 ### Composition report contract now has defensive-copy coverage
 - Added
   [t/441-composition-report-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/441-composition-report-contract-defensive-copy-boundary-audit.t)

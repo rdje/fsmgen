@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: normalized semantic payload contracts should stay mutation-safe
+- The normalized semantic payload contract republishes many child contract key
+  families plus grouped nested-presence and forward-IR maps. In-process
+  consumers receive mutable Perl structures, so a caller mutating one returned
+  payload contract must not pollute later semantic contract discovery.
+- The new audit mutates a full returned payload contract and every payload
+  helper list/map, then proves fresh calls remain clean and aligned with the
+  grouped semantic and forward-IR helper maps.
+- This is coverage only; no normalized semantic payload contract shape changed.
+
 ## 2026-05-05: composition report contracts should stay mutation-safe
 - The composition-report contract and sanitizer are consumed by both the raw
   compatibility result path and the normalized semantic JSON provenance
