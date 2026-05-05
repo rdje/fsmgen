@@ -103,6 +103,8 @@ The current context accessors are:
 - `raw_ast`
 - `result`
 
+`source_info->{kind}` is the classified root kind, such as `fsm`, `dt`, or
+`composition`.
 `raw_ast` is available on `after_parse_source`. `result` is available on
 `after_generate_result`. Result augmentation is a valid in-process extension
 use, but it is not the same thing as publishing a new sanitized JSON
@@ -294,6 +296,10 @@ also proves direct context construction validates the payload values that hooks
 rely on: supported hook stages, a blessed pipeline, scalar source path and
 target language, scalar `source_info->{kind}`, parse contexts with
 `raw_ast` and no `result`, and result contexts with `result` and no `raw_ast`.
+[t/425-typed-extension-dt-source-kind-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/425-typed-extension-dt-source-kind-contract-audit.t)
+also proves standalone `?dt:` roots are part of the bounded typed-extension
+source-kind family: manifests advertise `dt`, and live `dt` generation
+dispatches parse/result contexts whose `source_info->{kind}` is `dt`.
 
 For in-process embedders, `FSM::Pipeline::HDLGenerator` no longer leaves its
 requested `debug_level` behind as process-global state after construction or

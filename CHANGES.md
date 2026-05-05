@@ -1,6 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Typed extensions now advertise dt source-kind contexts
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  so typed-extension manifests advertise `dt` in the bounded
+  `supported_source_kinds` family alongside `fsm` and `composition`.
+- Added
+  [t/425-typed-extension-dt-source-kind-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/425-typed-extension-dt-source-kind-contract-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  grouped `name_family_map` visibility, `tested_by` provenance, and live
+  strict-mode `?dt:` parse/result hook contexts whose `source_info->{kind}` is
+  `dt`. No roadmap status changed.
+- Updated
+  [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md),
+  [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md),
+  and
+  [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  so the live guide and mdBook source name `dt` as a typed-extension context
+  source kind.
+- Validation passed with syntax checks, the adjacent contract/manifest/context
+  cluster (`4` files, `13` tests), and the full
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`421` files, `3777` tests, plus mdBook build).
 ### Typed extension context payloads now fail closed
 - Hardened
   [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm)

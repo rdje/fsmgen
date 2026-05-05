@@ -55,6 +55,7 @@ sub build_extension_contract {
             't/422-typed-extension-registry-dispatch-context-boundary-audit.t',
             't/423-typed-extension-context-constructor-argument-boundary-audit.t',
             't/424-typed-extension-context-constructor-payload-boundary-audit.t',
+            't/425-typed-extension-dt-source-kind-contract-audit.t',
         ],
         entrypoints => {
             programmatic_objects => 'FSM::Pipeline::HDLGenerator->new(extensions => [ $object, ... ])',
@@ -171,7 +172,7 @@ sub extension_contract_context_accessors {
 
 sub extension_contract_supported_source_kinds {
     return [
-        qw(fsm composition)
+        qw(fsm dt composition)
     ];
 }
 

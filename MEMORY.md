@@ -1,5 +1,32 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Typed extensions now advertise dt source-kind contexts
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  so `extension_contract_supported_source_kinds()` and
+  `embedding.typed_extensions.supported_source_kinds` include `dt` alongside
+  `fsm` and `composition`.
+- Added
+  [t/425-typed-extension-dt-source-kind-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/425-typed-extension-dt-source-kind-contract-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  grouped `name_family_map` visibility, `tested_by` provenance, and live
+  strict-mode `?dt:` generation dispatching parse/result contexts whose
+  `source_info->{kind}` is `dt`.
+- Updated the extension docs in
+  [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md),
+  [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md),
+  and
+  [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  so the live guide and mdBook source name `dt` as a typed-extension context
+  source kind.
+- Validation passed with syntax checks, the adjacent contract/manifest/context
+  cluster (`4` files, `13` tests), and the full repo-owned
+  [bin/ci-regression](/Users/richarddje/Documents/github/fsmgen/bin/ci-regression)
+  gate (`421` files, `3777` tests, plus mdBook build).
+- This is `R13` typed-extension contract truth maintenance only; no hook
+  family, extension loading entrypoint, generation behavior, or roadmap lane
+  status changed.
+
 ## 2026-05-05: Typed extension context payloads now fail closed
 - Hardened
   [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm)

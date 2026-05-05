@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: dt is a real typed-extension source kind
+- The context payload boundary now intentionally validates
+  `source_info->{kind}` as scalar and non-empty rather than trying to freeze a
+  source-kind enum inside `FSM::Extension::Context`. The enum-like discovery
+  surface belongs in `FSM::Support::ExtensionContract`, where embedders already
+  look for the supported typed-extension source-kind family.
+- Standalone `?dt:` roots already dispatch typed extension contexts in the live
+  pipeline. Leaving `dt` out of `supported_source_kinds` made the manifest
+  narrower than the runtime behavior, especially after the payload-constructor
+  audit proved `dt` contexts are valid. The contract now advertises `fsm`,
+  `dt`, and `composition`.
+- This is contract truth maintenance, not a new hook family. It documents and
+  regression-locks the source-kind value that embedders already receive during
+  strict-mode standalone-DT generation.
+
 ## 2026-05-05: context payload validation belongs after constructor mechanics
 - Once direct `FSM::Extension::Context->new(...)` calls had an owned
   receiver/list/name boundary, the remaining gap was value shape. Extension

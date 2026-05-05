@@ -92,7 +92,7 @@ Current intent:
 - `target_language`
   - current target language for generation
 - `source_info`
-  - classified source metadata (`fsm` or `composition`, etc.)
+  - classified source metadata such as `fsm`, `dt`, or `composition`
 - `raw_ast`
   - parsed source AST when the hook runs at the parse frontier
 - `result`
@@ -156,6 +156,10 @@ also proves direct context construction validates the payload values that hooks
 rely on: supported hook stages, a blessed pipeline, scalar source path and
 target language, scalar `source_info->{kind}`, parse contexts with
 `raw_ast` and no `result`, and result contexts with `result` and no `raw_ast`.
+[t/425-typed-extension-dt-source-kind-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/425-typed-extension-dt-source-kind-contract-audit.t)
+also proves standalone `?dt:` roots are part of the bounded typed-extension
+source-kind family: manifests advertise `dt`, and live `dt` generation
+dispatches parse/result contexts whose `source_info->{kind}` is `dt`.
 
 For embedders, the same boundary is now machine-readable through
 [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)

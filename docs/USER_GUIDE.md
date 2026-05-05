@@ -2161,7 +2161,8 @@ Current context accessors are:
 - `pipeline`: the current `FSM::Pipeline::HDLGenerator` instance.
 - `source_path`: the source file path used for this generation call.
 - `target_language`: the current HDL target.
-- `source_info`: the classified source metadata.
+- `source_info`: the classified source metadata, such as `fsm`, `dt`, or
+  `composition` in `source_info->{kind}`.
 - `raw_ast`: available on `after_parse_source`.
 - `result`: available on `after_generate_result`.
 
@@ -2336,6 +2337,10 @@ also proves direct context construction validates the payload values that hooks
 rely on: supported hook stages, a blessed pipeline, scalar source path and
 target language, scalar `source_info->{kind}`, parse contexts with
 `raw_ast` and no `result`, and result contexts with `result` and no `raw_ast`.
+[t/425-typed-extension-dt-source-kind-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/425-typed-extension-dt-source-kind-contract-audit.t)
+also proves standalone `?dt:` roots are part of the bounded typed-extension
+source-kind family: manifests advertise `dt`, and live `dt` generation
+dispatches parse/result contexts whose `source_info->{kind}` is `dt`.
 
 For in-process embedders, `FSM::Pipeline::HDLGenerator` no longer leaves its
 requested `debug_level` behind as process-global state after construction or
