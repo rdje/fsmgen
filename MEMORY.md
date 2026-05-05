@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Composition report contract now has defensive-copy coverage
+- Added
+  [t/441-composition-report-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/441-composition-report-contract-defensive-copy-boundary-audit.t)
+  to prove `build_composition_report_contract()` returns fresh nested
+  structures across calls, the grouped composition-report key-family helpers
+  are fresh, and `sanitize_composition_report()` returns fresh nested
+  sanitized output.
+- Updated
+  [perl/FSM/Support/CompositionReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CompositionReportContract.pm)
+  so `tested_by` provenance lists the new defensive-copy audit.
+- Focused validation passed with the composition report contract, provenance,
+  and new defensive-copy audit cluster (`3` files, `9` tests).
+- This is `R13` composition-report contract-integrity coverage only; no
+  public API shape, user-facing docs, mdBook source, generation behavior, or
+  roadmap lane status changed.
+
 ## 2026-05-05: Debug runtime contract now has defensive-copy coverage
 - Added
   [t/440-debug-runtime-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/440-debug-runtime-contract-defensive-copy-boundary-audit.t)

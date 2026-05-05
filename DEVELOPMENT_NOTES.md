@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: composition report contracts should stay mutation-safe
+- The composition-report contract and sanitizer are consumed by both the raw
+  compatibility result path and the normalized semantic JSON provenance
+  fragment. Returned helper maps and sanitized report fragments are mutable
+  Perl data, so caller mutation must not leak into later contract/helper calls
+  or into fresh sanitized output.
+- The new audit mutates the full returned contract, every grouped
+  composition-report helper, and one sanitized report result, then proves fresh
+  calls remain clean and aligned with the declared public key families.
+- This is coverage only; no composition-report contract shape changed.
+
 ## 2026-05-05: debug runtime contracts should stay mutation-safe
 - The debug-runtime contract is embedded in the capability manifest and
   exposes multiple helper lists plus a grouped `family_map`. Those structures

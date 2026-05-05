@@ -33,6 +33,7 @@ sub build_composition_report_contract {
         json_fragment_path => composition_report_json_fragment_path(),
         tested_by => [
             't/307-composition-report-contract.t',
+            't/441-composition-report-contract-defensive-copy-boundary-audit.t',
         ],
         public_top_level_keys => composition_report_public_top_level_keys(),
         summary_keys => composition_report_summary_keys(),
