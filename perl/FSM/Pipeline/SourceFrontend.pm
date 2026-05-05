@@ -483,12 +483,12 @@ sub _direct_root_body_items ($class, %args) {
 
     if (@$raw_ast > 0 && !ref($raw_ast->[0])) {
         if ($header =~ /^\?(?:fsm|dt|mod|module):/) {
-            return ref($raw_ast->[1]) eq 'ARRAY' ? $raw_ast->[1] : undef;
+            return ref($raw_ast->[1]) eq 'ARRAY' ? _clone($raw_ast->[1]) : undef;
         }
 
         if ($header eq '+fsm' && ref($raw_ast->[1]) eq 'ARRAY') {
             my @body = @{$raw_ast->[1]} > 1 ? @{$raw_ast->[1]}[1 .. $#{$raw_ast->[1]}] : ();
-            return \@body;
+            return _clone(\@body);
         }
     }
 
@@ -497,7 +497,7 @@ sub _direct_root_body_items ($class, %args) {
         my $first_header = $first->[0];
 
         if (defined($first_header) && !ref($first_header) && $first_header =~ /^\?(?:fsm|dt|mod|module):/) {
-            return ref($first->[1]) eq 'ARRAY' ? $first->[1] : undef;
+            return ref($first->[1]) eq 'ARRAY' ? _clone($first->[1]) : undef;
         }
 
         if (defined($first_header) && !ref($first_header) && $first_header eq '+fsm') {
@@ -505,11 +505,11 @@ sub _direct_root_body_items ($class, %args) {
                 my $payload = $first->[1];
                 return [] unless ref($payload) eq 'ARRAY';
                 my @body = @$payload > 1 ? @$payload[1 .. $#$payload] : ();
-                return \@body;
+                return _clone(\@body);
             }
 
             my @body = @$raw_ast > 1 ? @$raw_ast[1 .. $#$raw_ast] : ();
-            return \@body;
+            return _clone(\@body);
         }
     }
 
@@ -527,14 +527,14 @@ sub _composition_body_items ($class, %args) {
     my $header = $source_info->{header} // '';
 
     if (@$raw_ast > 0 && !ref($raw_ast->[0]) && $raw_ast->[0] eq $header) {
-        return $raw_ast->[1] if @$raw_ast > 1 && ref($raw_ast->[1]) eq 'ARRAY';
+        return _clone($raw_ast->[1]) if @$raw_ast > 1 && ref($raw_ast->[1]) eq 'ARRAY';
     }
 
     for my $ast_node (@$raw_ast) {
         next unless ref($ast_node) eq 'ARRAY' && @$ast_node > 1;
         next if ref($ast_node->[0]);
         next unless $ast_node->[0] eq $header;
-        return $ast_node->[1] if ref($ast_node->[1]) eq 'ARRAY';
+        return _clone($ast_node->[1]) if ref($ast_node->[1]) eq 'ARRAY';
     }
 
     return undef;

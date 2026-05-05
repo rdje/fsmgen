@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Source-frontend body item helpers now return caller-owned AST slices
+- Updated
+  [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm)
+  so `_direct_root_body_items()` and `_composition_body_items()` clone returned
+  body slices rather than exposing references into the source frontend raw AST.
+- Added
+  [t/565-source-frontend-body-items-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/565-source-frontend-body-items-defensive-copy-boundary-audit.t)
+  to prove direct/composition body item mutation cannot contaminate the parsed
+  source AST.
+- Focused validation paired the new audit with source-frontend, source-info
+  package-import summary, composition package imports, direct package imports,
+  and composition parser suites. `perl -c` reported syntax OK while emitting
+  SourceFrontend redefinition warnings on the direct syntax path. This is `R13`
+  runtime contract-integrity hardening only; no public manifest shape,
+  user-facing docs, mdBook content, generation behavior, or roadmap lane status
+  changed.
+
 ## 2026-05-05: Embedded package source collection now returns raw-AST snapshots
 - Updated
   [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm)

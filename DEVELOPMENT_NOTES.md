@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Source-frontend body item helpers are read projections
+- The direct-root and composition body item helpers feed import discovery and
+  strict-boundary scans. Those scans only need a read projection of the parsed
+  source body, not mutation access to the parser-owned raw AST.
+- Both helpers now clone returned body slices, including nested AST containers.
+  The recognized source shapes and scan behavior are unchanged, but callers
+  cannot mutate the original source tree through the helper return value.
+
 ## 2026-05-05: Embedded package source maps should not expose the full source AST
 - `collect_embedded_package_sources()` is a source-frontend helper used by
   direct and composition import resolution. The returned package-source map is

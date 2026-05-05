@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Source-frontend body item helpers now return caller-owned AST slices
+- Updated
+  [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm)
+  so direct-root and composition body item extraction helpers clone returned
+  AST slices instead of exposing references into the parsed source tree. No
+  roadmap status changed.
+- Added
+  [t/565-source-frontend-body-items-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/565-source-frontend-body-items-defensive-copy-boundary-audit.t)
+  to prove returned direct/composition body item mutation cannot contaminate the
+  source frontend raw AST.
 ### Embedded package source collection now returns raw-AST snapshots
 - Updated
   [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm)
