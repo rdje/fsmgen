@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Debug runtime contract now has defensive-copy coverage
+- Added
+  [t/440-debug-runtime-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/440-debug-runtime-contract-defensive-copy-boundary-audit.t)
+  to prove `build_debug_runtime_contract()` returns fresh nested structures
+  across calls and that debug-runtime helper lists, grouped family maps,
+  trace-verbosity values, and numeric trace-level ranges are fresh.
+- Focused validation passed with the debug runtime contract, capability
+  manifest runtime contract, and new defensive-copy audit cluster (`3` files,
+  `14` tests).
+- This is `R13` debug-runtime contract-integrity coverage only; no public API
+  shape, user-facing docs, mdBook source, generation behavior, or roadmap lane
+  status changed.
+
 ## 2026-05-05: HDLGenerator facade contract now has defensive-copy coverage
 - Added
   [t/439-hdl-generator-facade-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/439-hdl-generator-facade-contract-defensive-copy-boundary-audit.t)

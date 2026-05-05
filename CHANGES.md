@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Debug runtime contract now has defensive-copy coverage
+- Added
+  [t/440-debug-runtime-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/440-debug-runtime-contract-defensive-copy-boundary-audit.t)
+  to prove `build_debug_runtime_contract()` returns fresh nested structures
+  across calls and that debug-runtime helper lists, grouped family maps,
+  trace-verbosity values, and numeric trace-level ranges are fresh. No roadmap
+  status changed.
+- Focused validation passed with the debug runtime contract, capability
+  manifest runtime contract, and new defensive-copy audit cluster (`3` files,
+  `14` tests).
 ### HDLGenerator facade contract now has defensive-copy coverage
 - Added
   [t/439-hdl-generator-facade-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/439-hdl-generator-facade-contract-defensive-copy-boundary-audit.t)

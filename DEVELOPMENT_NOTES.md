@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: debug runtime contracts should stay mutation-safe
+- The debug-runtime contract is embedded in the capability manifest and
+  exposes multiple helper lists plus a grouped `family_map`. Those structures
+  are mutable Perl data for in-process consumers, so caller-side mutation must
+  not leak into later contract or helper calls.
+- The new audit mutates a full returned debug-runtime contract and each helper
+  list/map/range, then proves fresh calls remain clean and aligned with the
+  grouped helper map.
+- This is coverage only; no debug-runtime contract shape changed.
+
 ## 2026-05-05: HDLGenerator facade contracts should stay mutation-safe
 - The HDLGenerator facade contract is embedded in the capability manifest and
   exposes several grouped constructor-option helper views. In-process callers
