@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Source-info augmentation returns an owned summary hash
+- `_augment_source_info_package_import_summary()` may be called with an
+  existing source-info hash. Adding package-import fields in place made that
+  helper a mutation surface for caller-owned classification metadata.
+- The helper now clones the supplied source-info hash before calculating and
+  attaching the package-import summary. The returned summary shape is
+  unchanged, while caller-owned source-info metadata remains isolated.
+
 ## 2026-05-05: Package root lookup is a read projection
 - `find_package_root()` selects the `?pkg` subtree used by package parsing.
   `Package::Spec` already snapshots the root it receives, so direct helper

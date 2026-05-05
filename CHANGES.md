@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Source-info package-import augmentation now owns returned hashes
+- Updated
+  [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm)
+  so `_augment_source_info_package_import_summary()` clones supplied
+  `source_info` hashes before adding package-import summary fields. No roadmap
+  status changed.
+- Added
+  [t/569-source-frontend-source-info-augmentation-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/569-source-frontend-source-info-augmentation-defensive-copy-boundary-audit.t)
+  to prove direct and composition source-info augmentation does not mutate
+  caller-owned source-info containers.
 ### Package parser root discovery now returns AST snapshots
 - Updated
   [perl/FSM/Package/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/Parser.pm)

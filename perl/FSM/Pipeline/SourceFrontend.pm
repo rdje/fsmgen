@@ -186,7 +186,7 @@ sub parse_composition_source ($class, %args) {
 }
 
 sub _augment_source_info_package_import_summary ($class, %args) {
-    my $source_info = $args{source_info} || {};
+    my $source_info = _clone($args{source_info} || {});
     my $package_imports = $class->_safe_source_package_imports(
         raw_ast => $args{raw_ast},
         source_info => $source_info,

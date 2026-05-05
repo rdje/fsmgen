@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Source-info package-import augmentation now owns returned hashes
+- Updated
+  [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm)
+  so `_augment_source_info_package_import_summary()` clones the supplied
+  `source_info` hash before adding `package_import_names` and
+  `package_import_count`.
+- Added
+  [t/569-source-frontend-source-info-augmentation-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/569-source-frontend-source-info-augmentation-defensive-copy-boundary-audit.t)
+  to prove direct-root and composition package-import augmentation does not
+  mutate caller-owned source-info hashes or alias nested caller metadata.
+- Focused validation paired the new audit with source-info package-import
+  summary defensive-copy coverage, source frontend coverage, direct package
+  imports, and composition package imports. `perl -c` reported syntax OK while
+  emitting the known SourceFrontend redefinition warnings on the direct syntax
+  path. This is `R13` runtime contract-integrity hardening only; no public
+  manifest shape, user-facing docs, mdBook content, generation behavior, or
+  roadmap lane status changed.
+
 ## 2026-05-05: Package parser root discovery now returns AST snapshots
 - Updated
   [perl/FSM/Package/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/Parser.pm)
