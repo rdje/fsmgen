@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Documentation section path contracts no longer alias
+- Updated
+  [perl/FSM/Support/DocumentationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DocumentationContract.pm)
+  so `documentation_path_list_contract_map()` returns independent nested path
+  contract hashes for `human_contract` and `downstream_alignment`.
+- Added
+  [t/448-documentation-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/448-documentation-contract-defensive-copy-boundary-audit.t)
+  to prove `build_documentation_contract()` and documentation helpers return
+  fresh structures across calls and that mutating one path-list contract entry
+  cannot mutate the other entry.
+- Focused validation passed with the documentation contract, capability
+  manifest runtime contract, and new defensive-copy audit cluster (`3` files,
+  `13` tests).
+- This is `R13` documentation section contract-integrity hardening only; no
+  public API shape, user-facing docs, mdBook source, generation behavior, or
+  roadmap lane status changed.
+
 ## 2026-05-05: Semantic exports section contract now has defensive-copy coverage
 - Added
   [t/447-semantic-exports-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/447-semantic-exports-contract-defensive-copy-boundary-audit.t)

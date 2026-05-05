@@ -75,10 +75,9 @@ sub documentation_path_contract {
 }
 
 sub documentation_path_list_contract_map {
-    my $contract = documentation_path_contract();
     return {
-        human_contract => $contract,
-        downstream_alignment => $contract,
+        human_contract => documentation_path_contract(),
+        downstream_alignment => documentation_path_contract(),
     };
 }
 

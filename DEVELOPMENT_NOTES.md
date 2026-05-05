@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: documentation path-list contracts should not alias
+- The documentation section path-list contract map previously reused one hash
+  for both `human_contract` and `downstream_alignment`. That was shape-correct
+  but left the returned in-process contract vulnerable to same-result aliasing:
+  mutating one family also changed the other family inside that returned map.
+- The map now builds an independent path-contract hash per family, and the new
+  audit covers both fresh structures across calls and same-result independence
+  between path-list entries.
+- This is contract-integrity hardening only; no documentation section shape or
+  path-list semantics changed.
+
 ## 2026-05-05: semantic-exports section contracts should stay mutation-safe
 - The capability manifest semantic-exports section points consumers at the
   bounded normalized semantic JSON child contract. Its nested contract metadata
