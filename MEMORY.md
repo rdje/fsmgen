@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Semantic exports section builder now has defensive-copy coverage
+- Added
+  [t/484-semantic-exports-section-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/484-semantic-exports-section-defensive-copy-boundary-audit.t)
+  to prove `build_semantic_exports_section()` returns fresh nested structures
+  across calls, including the normalized semantic JSON child contract and
+  nested section contract.
+- Focused validation passed with the semantic exports section runtime
+  contract, capability manifest runtime contract, and new defensive-copy audit
+  cluster (`3` files, `12` tests).
+- This is `R13` semantic exports section builder contract-integrity coverage
+  only; no public API shape, user-facing docs, mdBook source, generation
+  behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Commit workflow no longer permits implicit Oz trailers
 - Updated [COMMIT.md](/Users/richarddje/Documents/github/fsmgen/COMMIT.md)
   so the mandatory commit workflow now matches the user's current directive:
