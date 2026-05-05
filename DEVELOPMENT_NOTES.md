@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: SignalManager enum registration owns member maps
+- Direct-root enum declarations feed both expression resolution
+  (`mode.RUN` as a literal expression) and parameter-value payload lookup
+  (`mode.RUN` as a scalar payload). Both lookup paths read the same enum member
+  table.
+- `store_enum(...)` now clones the incoming member map before storage. Enum
+  lookup results were already freshly constructed, so this closes the input
+  alias without changing lookup behavior.
+- This keeps parse-time enum declarations stable even if caller-side temporary
+  member maps are reused while validating boundary errors.
+
 ## 2026-05-05: SignalManager parameter registration owns value records
 - Parameter value records carry default text, normalized payloads, widths, and
   optional aggregate type specs. `resolve_parameter_value_symbol_payload(...)`

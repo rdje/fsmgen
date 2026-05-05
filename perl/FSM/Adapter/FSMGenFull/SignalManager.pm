@@ -181,7 +181,7 @@ sub record_constant_definition($self, $name) {
 }
 
 sub store_enum($self, $enum_name, $enum_values_hashref) {
-    $self->{enums}{$enum_name} = $enum_values_hashref;
+    $self->{enums}{$enum_name} = _clone_type_spec($enum_values_hashref);
 }
 
 sub store_define($self, $name, $value_expr) {

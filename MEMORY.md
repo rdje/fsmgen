@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: SignalManager enum maps are cloned at storage
+- Updated
+  [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm)
+  so `store_enum(...)` clones enum member maps before adding them to the
+  direct-root signal manager enum table.
+- Added
+  [t/510-signal-manager-enum-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/510-signal-manager-enum-defensive-copy-boundary-audit.t)
+  to prove store-input mutation and enum payload lookup mutation cannot
+  contaminate expression resolution or parameter-payload resolution.
+- Focused validation pairs the new SignalManager enum audit with language
+  symbol-definition and symbol-definition boundary suites. This is `R13`
+  runtime contract-integrity hardening only; no public manifest shape,
+  user-facing docs, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: SignalManager parameter records are cloned at storage
 - Updated
   [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm)

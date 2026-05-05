@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### SignalManager enum maps are cloned at storage
+- Updated
+  [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm)
+  so `store_enum(...)` copies enum member maps before storing them in the
+  direct-root signal manager table. No roadmap status changed.
+- Added
+  [t/510-signal-manager-enum-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/510-signal-manager-enum-defensive-copy-boundary-audit.t)
+  to prove enum expression resolution and enum parameter-payload lookup read
+  from stored snapshots.
 ### SignalManager parameter records are cloned at storage
 - Updated
   [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm)
