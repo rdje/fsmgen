@@ -1142,7 +1142,7 @@ sub _record_inferred_top_port_requirement ($class, $inferred_specs, $top_name, $
         exact_width => $exact_width,
         type => $type,
         declared_type_name => $declared_type_name,
-        declared_type_spec => $declared_type_spec,
+        declared_type_spec => _clone_structured_value($declared_type_spec),
         evidence => [$evidence],
     };
     return 1;
@@ -1238,6 +1238,22 @@ sub _sort_ports (@ports) {
         ||
         $a->name cmp $b->name
     } @ports;
+}
+
+sub _clone_structured_value ($value) {
+    return undef unless defined $value;
+
+    if (ref($value) eq 'HASH') {
+        return {
+            map { $_ => _clone_structured_value($value->{$_}) } sort keys %$value
+        };
+    }
+
+    if (ref($value) eq 'ARRAY') {
+        return [ map { _clone_structured_value($_) } @$value ];
+    }
+
+    return $value;
 }
 
 1;

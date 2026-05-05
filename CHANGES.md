@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Top-port inference now snapshots declared type specs
+- Updated
+  [perl/FSM/Composition/TopPortInferenceBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopPortInferenceBuilder.pm)
+  so inferred top-port requirement state clones incoming declared type specs
+  before storing them. No roadmap status changed.
+- Added
+  [t/558-composition-top-port-inference-declared-type-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/558-composition-top-port-inference-declared-type-defensive-copy-boundary-audit.t)
+  to prove later mutation of the incoming declared type spec cannot contaminate
+  inferred requirement state.
 ### Linked-plan source-family endpoints now clone non-expression descriptors
 - Updated
   [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)

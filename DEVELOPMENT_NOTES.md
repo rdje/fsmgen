@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Inferred top-port type specs are accumulator-owned
+- `_record_inferred_top_port_requirement()` keeps mutable accumulator state
+  while explicit top-link inference converges. Incoming declared type specs can
+  originate from child ports or aggregate-expression analysis and should not
+  remain live through that accumulator.
+- Inferred requirement records now clone the incoming declared type spec at
+  insertion. Later evidence still compares against the accumulator copy, but
+  external type-spec mutations cannot change the pending inferred port shape.
+
 ## 2026-05-05: Linked-plan source-family endpoints are read projections
 - `source_family_endpoint()` normalizes link sources for same-family grouping.
   Child expressions already create a fresh base endpoint descriptor, while

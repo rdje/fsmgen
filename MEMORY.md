@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Top-port inference now snapshots declared type specs
+- Updated
+  [perl/FSM/Composition/TopPortInferenceBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopPortInferenceBuilder.pm)
+  so `_record_inferred_top_port_requirement()` clones incoming declared type
+  specs before storing inferred requirement state.
+- Added
+  [t/558-composition-top-port-inference-declared-type-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/558-composition-top-port-inference-declared-type-defensive-copy-boundary-audit.t)
+  to prove mutating the incoming type spec after recording cannot contaminate
+  inferred top-port requirement state.
+- Focused validation paired the new audit with top-port inference, same-name
+  link, and linked-plan builder suites. This is `R13` runtime
+  contract-integrity hardening only; no public manifest shape, user-facing docs,
+  mdBook content, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Linked-plan source-family endpoints now clone non-expression descriptors
 - Updated
   [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
