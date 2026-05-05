@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Composition result metadata now snapshots provenance reports
+- Updated
+  [perl/FSM/Composition/ResultMetadataBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ResultMetadataBuilder.pm)
+  so `build_module_info()` and `build_statistics()` clone supplied
+  `composition_report` payloads before embedding them in returned metadata. No
+  roadmap status changed.
+- Added
+  [t/553-composition-result-metadata-provenance-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/553-composition-result-metadata-provenance-defensive-copy-boundary-audit.t)
+  to prove result metadata provenance mutation cannot contaminate the source
+  composition report.
 ### Shared-datapath contributor drive-family reads now clone metadata
 - Updated
   [perl/FSM/Composition/SharedDatapathCandidateBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SharedDatapathCandidateBuilder.pm)

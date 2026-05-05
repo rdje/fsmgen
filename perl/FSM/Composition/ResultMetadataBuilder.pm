@@ -33,7 +33,7 @@ already-built child-export, provenance, and forward IR surfaces.
 sub build_module_info ($class, %args) {
     my $composition_plan = $args{composition_plan}
         or confess "ResultMetadataBuilder requires a composition_plan";
-    my $composition_report = $args{composition_report};
+    my $composition_report = _clone($args{composition_report});
     my $composition_child_exports = $args{composition_child_exports}
         || { child_count => 0, children => [] };
     my $generated_child_exports = $args{generated_child_exports}
@@ -207,7 +207,7 @@ already-built provenance and forward IR surfaces.
 sub build_statistics ($class, %args) {
     my $composition_plan = $args{composition_plan}
         or confess "ResultMetadataBuilder requires a composition_plan";
-    my $composition_report = $args{composition_report};
+    my $composition_report = _clone($args{composition_report});
     my $intent_hir_hash = _as_hash($args{intent_hir});
     my $lowered_rtl_ir_hash = _as_hash($args{lowered_rtl_ir});
     my $structural_rtl_ir_hash = _as_hash($args{structural_rtl_ir});

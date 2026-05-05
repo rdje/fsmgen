@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Composition result metadata now snapshots provenance reports
+- Updated
+  [perl/FSM/Composition/ResultMetadataBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ResultMetadataBuilder.pm)
+  so `build_module_info()` and `build_statistics()` clone supplied
+  `composition_report` payloads before embedding `composition_provenance` in
+  returned metadata.
+- Added
+  [t/553-composition-result-metadata-provenance-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/553-composition-result-metadata-provenance-defensive-copy-boundary-audit.t)
+  to prove module-info and statistics provenance mutation cannot contaminate
+  source composition reports.
+- Focused validation paired the new audit with result-metadata builder, plan
+  accessor, and shared-datapath candidate builder suites. This is `R13` runtime
+  contract-integrity hardening only; no public manifest shape, user-facing docs,
+  mdBook content, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Shared-datapath contributor drive-family reads now clone metadata
 - Updated
   [perl/FSM/Composition/SharedDatapathCandidateBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SharedDatapathCandidateBuilder.pm)

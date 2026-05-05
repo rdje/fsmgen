@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Result metadata owns embedded provenance snapshots
+- `ResultMetadataBuilder` consumes a composition provenance report to fill
+  counts and to attach `composition_provenance` to both module info and
+  statistics. Those returned metadata hashes are downstream report payloads, not
+  mutation handles for the provenance builder output.
+- The builder now clones the supplied `composition_report` before embedding it,
+  so callers can inspect or modify result metadata without mutating the source
+  provenance report reused elsewhere in the pipeline.
+
 ## 2026-05-05: Shared-datapath contributor drive-family reads are projections
 - `contributor_output_drive_family()` is a read helper used by storage-class and
   aggregation logic. Returning the contributor's stored drive-family hash made
