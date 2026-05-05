@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: BinaryOp operator registry metadata should be registry-owned
+- The BinaryOp operator registry is the live source used by expression renderers
+  and precedence checks. `register_operator(...)` is the mutation API for adding
+  entries; `get_operator_info(...)` is an introspection surface.
+- Registered metadata is now cloned on storage and from `get_operator_info(...)`,
+  so callers can inspect or annotate returned maps without modifying the
+  renderer-owned registry. Internal rendering still reads the registry directly.
+
 ## 2026-05-05: SignalRef slices should be value snapshots
 - `FSM::CoreAST::SignalRef` slices are two-element value lists consumed by
   renderers, parser validation, aggregate-width inference, and enable-graph

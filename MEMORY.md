@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: BinaryOp operator registry metadata now returns snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so `FSM::CoreAST::BinaryOp->register_operator(...)` stores cloned structured
+  operator metadata and `get_operator_info(...)` returns cloned metadata maps.
+  Rendering and `is_commutative(...)` continue to read the owned registry entry.
+- Added
+  [t/533-core-ast-binary-op-operator-registry-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/533-core-ast-binary-op-operator-registry-defensive-copy-boundary-audit.t)
+  to prove registration input mutation and operator-info mutation cannot
+  contaminate the registry.
+- Focused validation pairs the new BinaryOp registry audit with core language
+  forms, enable-graph AST, factorization policy, and intermediate-signal filter
+  suites. This is `R13` runtime contract-integrity hardening only; no public
+  manifest shape, user-facing docs, generation behavior, or roadmap lane status
+  changed.
+
 ## 2026-05-05: SignalRef slice lists now return snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)

@@ -838,11 +838,12 @@ package FSM::CoreAST::BinaryOp;
     
     # Class methods for operator registry management
     sub register_operator($class, $name, %properties) {
-        $OPERATOR_REGISTRY{$name} = \%properties;
+        $OPERATOR_REGISTRY{$name} =
+            FSM::CoreAST::Expression::_clone_expression_value(\%properties);
     }
     
     sub get_operator_info($class, $operator) {
-        return $OPERATOR_REGISTRY{$operator};
+        return FSM::CoreAST::Expression::_clone_expression_value($OPERATOR_REGISTRY{$operator});
     }
     
     sub is_commutative($class, $operator) {

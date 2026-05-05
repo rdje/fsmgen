@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### BinaryOp operator registry metadata now returns snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so `FSM::CoreAST::BinaryOp->register_operator(...)` clones structured operator
+  metadata on storage and `get_operator_info(...)` returns cloned metadata maps.
+  No roadmap status changed.
+- Added
+  [t/533-core-ast-binary-op-operator-registry-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/533-core-ast-binary-op-operator-registry-defensive-copy-boundary-audit.t)
+  to prove caller mutation cannot contaminate registered operator metadata.
 ### SignalRef slice lists now return snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
