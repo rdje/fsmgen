@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Composition embedded source maps are read handoffs
+- Composition parser embedded source collection feeds generated-child and
+  package-import planning. The returned maps identify embedded source roots,
+  but callers do not need mutation access to the parser-owned full raw AST.
+- Embedded FSM, datapath/module, and package collectors now clone raw-AST nodes
+  before inserting them into the returned maps. Parsing behavior and accepted
+  source headers are unchanged; only the ownership boundary is tightened.
+
 ## 2026-05-05: Source-frontend body item helpers are read projections
 - The direct-root and composition body item helpers feed import discovery and
   strict-boundary scans. Those scans only need a read projection of the parsed

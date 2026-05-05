@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Composition parser embedded source collectors now return AST snapshots
+- Updated
+  [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm)
+  so embedded FSM, datapath/module, and package source collectors clone
+  collected raw-AST nodes before returning source maps. No roadmap status
+  changed.
+- Added
+  [t/566-composition-parser-embedded-source-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/566-composition-parser-embedded-source-defensive-copy-boundary-audit.t)
+  to prove mutating collected embedded source ASTs cannot contaminate the
+  composition parser raw AST.
 ### Source-frontend body item helpers now return caller-owned AST slices
 - Updated
   [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm)

@@ -1038,7 +1038,7 @@ sub collect_embedded_fsm_sources ($self, $raw_ast) {
         next unless $ast_node->[0] =~ /^\?fsm:/;
         my $fsm_name = $self->decode_embedded_fsm_source_name($ast_node->[0]);
         next unless $fsm_name;
-        $embedded_fsm_sources{$fsm_name} = $ast_node;
+        $embedded_fsm_sources{$fsm_name} = _clone($ast_node);
     }
 
     return \%embedded_fsm_sources;
@@ -1055,7 +1055,7 @@ sub collect_embedded_dt_sources ($self, $raw_ast) {
         next unless $ast_node->[0] =~ /^\?(?:dt|mod|module):/;
         my $dt_name = $self->decode_embedded_dt_source_name($ast_node->[0]);
         next unless $dt_name;
-        $embedded_dt_sources{$dt_name} = $ast_node;
+        $embedded_dt_sources{$dt_name} = _clone($ast_node);
     }
 
     return \%embedded_dt_sources;
@@ -1072,7 +1072,7 @@ sub collect_embedded_package_sources ($self, $raw_ast) {
         next unless $ast_node->[0] =~ /^\?pkg:/;
         my $package_name = $self->decode_embedded_package_source_name($ast_node->[0]);
         next unless $package_name;
-        $embedded_package_sources{$package_name} = $ast_node;
+        $embedded_package_sources{$package_name} = _clone($ast_node);
     }
 
     return \%embedded_package_sources;
@@ -1371,6 +1371,12 @@ sub top_value_items ($self, $value_ast) {
     }
 
     return \@items;
+}
+
+sub _clone ($value) {
+    return [map { _clone($_) } @$value] if ref($value) eq 'ARRAY';
+    return {map { $_ => _clone($value->{$_}) } keys %$value} if ref($value) eq 'HASH';
+    return $value;
 }
 
 1;

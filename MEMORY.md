@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Composition parser embedded source collectors now return AST snapshots
+- Updated
+  [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm)
+  so `collect_embedded_fsm_sources()`, `collect_embedded_dt_sources()`, and
+  `collect_embedded_package_sources()` clone returned raw-AST nodes instead of
+  exposing references into the full composition parser raw AST.
+- Added
+  [t/566-composition-parser-embedded-source-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/566-composition-parser-embedded-source-defensive-copy-boundary-audit.t)
+  to prove returned embedded FSM, datapath/module, and package AST mutation
+  cannot contaminate the parser-owned source tree.
+- Focused validation paired the new audit with composition parser, generated
+  child realizer, and composition package-import suites. This is `R13` runtime
+  contract-integrity hardening only; no public manifest shape, user-facing
+  docs, mdBook content, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Source-frontend body item helpers now return caller-owned AST slices
 - Updated
   [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm)
