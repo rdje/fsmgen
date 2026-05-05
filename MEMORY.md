@@ -1,5 +1,37 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Typed extension loader methods now own argument counts
+- Hardened
+  [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm)
+  so direct `load_modules(...)`, `module_names_from_config_files(...)`, and
+  `module_names_from_config_file(...)` calls validate the receiver first and
+  then require exactly one payload argument after the loader invocant before
+  module/config payload checks run.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  so the typed-extension contract and capability manifest advertise
+  `extension_object_contract.loader_method_argument_list_shape`.
+- Added
+  [t/431-typed-extension-loader-method-argument-list-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/431-typed-extension-loader-method-argument-list-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  valid one-payload loader method calls, missing/extra payload rejection,
+  bounded diagnostics, and existing module/config value boundaries after
+  argument-count validation passes.
+- Updated the extension docs in
+  [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md),
+  [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md),
+  and
+  [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  so the live guide and mdBook source describe the direct loader method
+  argument-list boundary.
+- Focused validation passed with syntax checks and the adjacent
+  loader/contract/manifest cluster (`5` files, `20` tests), followed by the
+  full repo-owned `./bin/ci-regression` gate (`427` files, `3802` tests) and
+  mdBook build.
+- This is `R13` typed-extension embedder-boundary hardening only; no hook
+  family, extension loading entrypoint, generation behavior, or roadmap lane
+  status changed.
+
 ## 2026-05-05: Typed extension context accessors now require constructed contexts
 - Hardened
   [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm)

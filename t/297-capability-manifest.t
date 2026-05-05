@@ -1534,6 +1534,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'exact hash-backed FSM::Extension::Loader object constructed by new(...)',
         'manifest records the typed extension direct loader method receiver shape',
     );
+    is(
+        $manifest->{embedding}{typed_extensions}{extension_object_contract}{loader_method_argument_list_shape},
+        'exactly one payload argument after the loader invocant',
+        'manifest records the typed extension direct loader method argument-list shape',
+    );
     is_deeply(
         sorted($manifest->{embedding}{typed_extensions}{extension_object_contract}{loader_method_names}),
         sorted(extension_contract_loader_method_names()),

@@ -1,6 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Typed extension loader methods now own argument counts
+- Hardened
+  [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm)
+  so direct `load_modules(...)`, `module_names_from_config_files(...)`, and
+  `module_names_from_config_file(...)` calls require exactly one payload
+  argument after the loader invocant before module/config payload value checks
+  run.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  so typed-extension manifests advertise the loader method argument-list
+  shape, and updated the extension guide/book docs to describe the direct
+  loader method argument-count boundary.
+- Added
+  [t/431-typed-extension-loader-method-argument-list-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/431-typed-extension-loader-method-argument-list-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  valid one-payload loader method calls, missing/extra payload rejection,
+  bounded diagnostics, and existing module/config value boundaries after
+  argument-count validation passes. No roadmap status changed.
+- Focused validation passed with syntax checks and the adjacent
+  loader/contract/manifest cluster (`5` files, `20` tests), followed by the
+  full repo-owned `./bin/ci-regression` gate (`427` files, `3802` tests) and
+  mdBook build.
 ### Typed extension context accessors now require constructed contexts
 - Hardened
   [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm)

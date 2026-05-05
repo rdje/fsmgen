@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: loader methods should own their argument counts
+- After loader methods gained constructed-object receiver checks, the remaining
+  direct-call mechanics still depended on Perl signatures for missing or extra
+  payload arguments. That made embedder mistakes surface as raw signature
+  fallout instead of typed-extension loader diagnostics.
+- `load_modules(...)`, `module_names_from_config_files(...)`, and
+  `module_names_from_config_file(...)` now validate the loader receiver first,
+  then require exactly one payload argument after the invocant, then run the
+  existing module/config value checks. This keeps the receiver boundary
+  dominant for malformed receivers while giving valid receivers an owned
+  argument-count diagnostic.
+- This does not change module-name, config-file, or config-line semantics; it
+  only closes the direct method call-shape boundary.
+
 ## 2026-05-05: context accessors should run only on constructed context objects
 - `FSM::Extension::Context` construction and payload validation were already
   owned boundaries, but the accessors themselves still trusted any receiver

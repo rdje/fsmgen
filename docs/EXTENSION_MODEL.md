@@ -156,6 +156,10 @@ also proves direct loader methods require an exact hash-backed
 `FSM::Extension::Loader` object constructed by `new(...)`, so class receivers,
 subclass stand-ins, and fake exact-class objects fail before loading payload
 diagnostics can leak.
+[t/431-typed-extension-loader-method-argument-list-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/431-typed-extension-loader-method-argument-list-boundary-audit.t)
+also proves direct loader methods accept exactly one payload argument after the
+loader invocant, so missing or extra payload arguments fail before raw Perl
+signature fallout or payload value diagnostics can leak.
 [t/397-typed-extension-registry-dispatch-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/397-typed-extension-registry-dispatch-boundary-audit.t)
 also proves the registry's direct `dispatch_hook(...)` entrypoint enforces the
 same closed hook set: `after_parse_source` and `after_generate_result` still

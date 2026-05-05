@@ -122,6 +122,11 @@ subtest 'contract declares the bounded typed-extension surface' => sub {
         'exact hash-backed FSM::Extension::Loader object constructed by new(...)',
         'contract records the direct loader method receiver shape',
     );
+    is(
+        $contract->{extension_object_contract}{loader_method_argument_list_shape},
+        'exactly one payload argument after the loader invocant',
+        'contract records the direct loader method argument-list shape',
+    );
     is_deeply(
         sorted($contract->{extension_object_contract}{loader_method_names}),
         sorted(extension_contract_loader_method_names()),

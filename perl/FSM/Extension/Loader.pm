@@ -9,6 +9,13 @@ use feature qw(signatures);
 no warnings 'experimental::signatures';
 
 my $LOADER_INSTANCE_MARKER = __PACKAGE__ . '::constructed';
+my $_validate_loader_method_argument_count = sub {
+    my ($method_name, @args) = @_;
+    confess "FSM::Extension::Loader::$method_name expects exactly one payload argument after the loader invocant"
+        unless @args == 1;
+
+    return;
+};
 
 sub new {
     my ($class, @args) = @_;
@@ -22,8 +29,12 @@ sub new {
     }, $class;
 }
 
-sub module_names_from_config_files ($self, $config_paths) {
+sub module_names_from_config_files {
+    my ($self, @args) = @_;
     _validate_loader_method_receiver($self, 'module_names_from_config_files');
+    $_validate_loader_method_argument_count->('module_names_from_config_files', @args);
+
+    my ($config_paths) = @args;
     confess "FSM::Extension::Loader expects an array reference of config file paths"
         unless ref($config_paths) eq 'ARRAY';
 
@@ -35,8 +46,12 @@ sub module_names_from_config_files ($self, $config_paths) {
     return \@module_names;
 }
 
-sub module_names_from_config_file ($self, $config_path) {
+sub module_names_from_config_file {
+    my ($self, @args) = @_;
     _validate_loader_method_receiver($self, 'module_names_from_config_file');
+    $_validate_loader_method_argument_count->('module_names_from_config_file', @args);
+
+    my ($config_path) = @args;
     return _with_extension_config_context($config_path, sub {
         _validate_extension_config_path($config_path);
         confess "Extension config file not found: $config_path"
@@ -70,8 +85,12 @@ sub module_names_from_config_file ($self, $config_path) {
     });
 }
 
-sub load_modules ($self, $module_names) {
+sub load_modules {
+    my ($self, @args) = @_;
     _validate_loader_method_receiver($self, 'load_modules');
+    $_validate_loader_method_argument_count->('load_modules', @args);
+
+    my ($module_names) = @args;
     confess "FSM::Extension::Loader expects an array reference of module names"
         unless ref($module_names) eq 'ARRAY';
 
