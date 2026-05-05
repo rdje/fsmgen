@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Composition plan containers now return caller-owned snapshots
+- Updated
+  [perl/FSM/Composition/Plan.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Plan.pm)
+  so mutable plan containers are cloned at construction and from accessors,
+  while contained composition objects retain their identity. No roadmap status
+  changed.
+- Added
+  [t/513-composition-plan-accessor-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/513-composition-plan-accessor-defensive-copy-boundary-audit.t)
+  to prove constructor and accessor mutations cannot contaminate plan
+  containers or raw spec payloads.
 ### SignalManager usage inspection now returns snapshots
 - Updated
   [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm)

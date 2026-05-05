@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Composition plans should expose container snapshots
+- `FSM::Composition::Plan` is the shared in-process carrier for planned top
+  ports, links, resolved links, nets, instances, auxiliary assignments,
+  shared-datapath candidates, and the raw composition spec.
+- Plan construction and accessors now clone mutable array/hash containers, but
+  keep contained composition objects by identity. That preserves existing
+  `Port`, `Link`, `Net`, and `RealizedInstance` object behavior while blocking
+  accidental push/splice/hash mutation through inspection.
+- Shared-datapath augmentation still uses the plan object's internal hash as
+  the explicit builder mutation path before the plan is handed to consumers.
+
 ## 2026-05-05: SignalManager usage inspection should not expose analyzer state
 - Signal analysis legitimately mutates usage records through
   `initialize_signal_usage(...)`, incrementing reference/assignment counters and

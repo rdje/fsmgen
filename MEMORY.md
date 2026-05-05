@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Composition plan containers now return caller-owned snapshots
+- Updated
+  [perl/FSM/Composition/Plan.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Plan.pm)
+  so mutable plan containers (`ports`, `links`, `resolved_links`, `nets`,
+  `instances`, `auxiliary_assignments`, `shared_datapath_candidates`, and
+  `raw_spec`) are cloned at construction and from accessors. Blessed contained
+  composition objects retain identity; the array/hash containers are
+  caller-owned snapshots.
+- Added
+  [t/513-composition-plan-accessor-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/513-composition-plan-accessor-defensive-copy-boundary-audit.t)
+  to prove constructor and accessor mutation cannot contaminate plan
+  containers or raw spec payloads.
+- Focused validation pairs the new plan audit with plan-builder,
+  generation-orchestrator, C1 plan-builder, and linked-plan suites. This is
+  `R13` runtime contract-integrity hardening only; no public manifest shape,
+  user-facing docs, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: SignalManager usage inspection now returns snapshots
 - Updated
   [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm)
