@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: check diagnostics contracts should stay mutation-safe
+- The check-JSON shell republishes many shared report leaf families plus its
+  success, failure, and support-accounting maps. Those nested lists/maps are
+  mutable Perl structures, so caller mutation must not create process-local
+  drift between direct contract users and capability-manifest consumers.
+- The new audit mutates a full returned check diagnostics contract and every
+  shell-owned helper list/map, then proves fresh calls remain clean and aligned
+  with the grouped nested-presence and presence-family maps.
+- This is coverage only; no check diagnostics contract shape changed.
+
 ## 2026-05-05: check failure diagnostic contracts should stay mutation-safe
 - The shared failure `diagnostic` object is reused by check JSON and
   normalized semantic JSON failure reports. Its public, matched-only,
