@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Producer section builder now has defensive-copy coverage
+- Extended
+  [t/lib/FSM/Test/DefensiveCopyAudit.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/DefensiveCopyAudit.pm)
+  with a generic exported-builder freshness assertion for manifest section
+  builders.
+- Added
+  [t/481-producer-section-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/481-producer-section-defensive-copy-boundary-audit.t)
+  to prove `build_producer_section()` returns fresh nested structures across
+  calls, including its nested section contract. No roadmap status changed.
+- Focused validation passed with the producer section runtime contract,
+  capability manifest runtime contract, and new defensive-copy audit cluster
+  (`3` files, `12` tests).
 ### Embedding contract now has defensive-copy coverage
 - Added
   [t/480-embedding-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/480-embedding-contract-defensive-copy-boundary-audit.t)

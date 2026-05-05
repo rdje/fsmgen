@@ -8,9 +8,37 @@ use Test::More ();
 
 our @EXPORT_OK = qw(
     assert_contract_module_defensive_copies
+    assert_exported_builder_defensive_copies
     contains_sentinel
     mutate_structure
 );
+
+sub assert_exported_builder_defensive_copies {
+    my (%args) = @_;
+    my $module = $args{module} || die 'module is required';
+    my $builder_name = $args{builder} || die 'builder is required';
+    my $sentinel = $args{sentinel} || '__fsmgen_defensive_copy_audit__';
+
+    eval "require $module; 1" or die $@;
+
+    no strict 'refs';
+    my %exported = map { $_ => 1 } @{"${module}::EXPORT_OK"};
+    my $builder = \&{"${module}::$builder_name"};
+    use strict 'refs';
+
+    Test::More::ok($exported{$builder_name}, "$module exports $builder_name");
+
+    Test::More::subtest "$module $builder_name returns fresh nested structures" => sub {
+        my $first = $builder->();
+        Test::More::ok(ref($first), "$builder_name returns a mutable structure");
+        return unless ref($first);
+
+        mutate_structure($first, $sentinel);
+
+        my $second = $builder->();
+        Test::More::ok(!contains_sentinel($second, $sentinel), 'fresh builder result is not affected by prior caller mutation');
+    };
+}
 
 sub assert_contract_module_defensive_copies {
     my (%args) = @_;

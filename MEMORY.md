@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Producer section builder now has defensive-copy coverage
+- Extended
+  [t/lib/FSM/Test/DefensiveCopyAudit.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/DefensiveCopyAudit.pm)
+  with a generic exported-builder freshness assertion for manifest section
+  builders.
+- Added
+  [t/481-producer-section-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/481-producer-section-defensive-copy-boundary-audit.t)
+  to prove `build_producer_section()` returns fresh nested structures across
+  calls, including its nested section contract.
+- Focused validation passed with the producer section runtime contract,
+  capability manifest runtime contract, and new defensive-copy audit cluster
+  (`3` files, `12` tests).
+- This is `R13` producer section builder contract-integrity coverage only; no
+  public API shape, user-facing docs, mdBook source, generation behavior, or
+  roadmap lane status changed.
+
 ## 2026-05-05: Embedding contract now has defensive-copy coverage
 - Added
   [t/480-embedding-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/480-embedding-contract-defensive-copy-boundary-audit.t)
