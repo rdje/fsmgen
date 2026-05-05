@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Source-expression spec collectors now return owned leaf snapshots
+- Updated
+  [perl/FSM/Composition/SourceExpressionSpecSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SourceExpressionSpecSupport.pm)
+  so `collect_top_expression_inference_specs()` and
+  `collect_top_expression_child_specs()` return cloned leaf specs rather than
+  shallow copies of mutable nested metadata.
+- Added
+  [t/559-composition-source-expression-spec-collection-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/559-composition-source-expression-spec-collection-defensive-copy-boundary-audit.t)
+  to prove returned collected top and child expression specs cannot contaminate
+  their source expression-spec trees.
+- Focused validation paired the new audit with the source-expression support,
+  top-port inference, linked-plan builder, and top-expression toplink suites.
+  This is `R13` runtime contract-integrity hardening only; no public manifest
+  shape, user-facing docs, mdBook content, generation behavior, or roadmap lane
+  status changed.
+
 ## 2026-05-05: Top-port inference now snapshots declared type specs
 - Updated
   [perl/FSM/Composition/TopPortInferenceBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopPortInferenceBuilder.pm)

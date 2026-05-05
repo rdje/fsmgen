@@ -105,9 +105,7 @@ sub collect_top_expression_inference_specs ($class, $spec) {
 
     my $expr_kind = $spec->{expr_kind} || '';
     if ($expr_kind eq 'bit_select' || $expr_kind eq 'slice') {
-        return [{
-            %$spec,
-        }];
+        return [_clone($spec)];
     }
 
     if ($expr_kind eq 'concat') {
@@ -130,9 +128,7 @@ sub collect_top_expression_child_specs ($class, $spec) {
 
     my $expr_kind = $spec->{expr_kind} || '';
     if ($expr_kind eq 'child_signal_ref' || $expr_kind eq 'child_bit_select' || $expr_kind eq 'child_slice' || $expr_kind eq 'child_aggregate_ref') {
-        return [{
-            %$spec,
-        }];
+        return [_clone($spec)];
     }
 
     if ($expr_kind eq 'concat') {
@@ -388,6 +384,22 @@ sub resolve_top_symbol_payload ($class, $payload, $top_symbols) {
     return undef unless $top_symbols && $top_symbols->can('resolve_payload');
 
     return $top_symbols->resolve_payload($payload);
+}
+
+sub _clone ($value) {
+    return undef unless defined $value;
+
+    if (ref($value) eq 'HASH') {
+        return {
+            map { $_ => _clone($value->{$_}) } keys %$value
+        };
+    }
+
+    if (ref($value) eq 'ARRAY') {
+        return [ map { _clone($_) } @$value ];
+    }
+
+    return $value;
 }
 
 1;

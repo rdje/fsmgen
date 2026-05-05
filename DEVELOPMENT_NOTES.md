@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Source-expression collection is a read boundary
+- `SourceExpressionSpecSupport` recursively walks parsed concat/repeat
+  expression trees to expose top-inference and child-source leaves. The
+  collector results are read projections consumed by inference and endpoint
+  grouping, not mutation handles into the parser-owned tree.
+- Collector leaf returns now recursively clone mutable hash and array
+  containers. This preserves scalar spec fields while making nested metadata
+  caller-owned at the collection boundary.
+
 ## 2026-05-05: Inferred top-port type specs are accumulator-owned
 - `_record_inferred_top_port_requirement()` keeps mutable accumulator state
   while explicit top-link inference converges. Incoming declared type specs can

@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Source-expression spec collectors now return owned leaf snapshots
+- Updated
+  [perl/FSM/Composition/SourceExpressionSpecSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SourceExpressionSpecSupport.pm)
+  so top-expression inference and child-source collectors clone returned leaf
+  specs instead of shallow-copying nested metadata containers. No roadmap status
+  changed.
+- Added
+  [t/559-composition-source-expression-spec-collection-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/559-composition-source-expression-spec-collection-defensive-copy-boundary-audit.t)
+  to prove returned collected top and child expression specs cannot mutate their
+  source expression-spec trees.
 ### Top-port inference now snapshots declared type specs
 - Updated
   [perl/FSM/Composition/TopPortInferenceBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopPortInferenceBuilder.pm)
