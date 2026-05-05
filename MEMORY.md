@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: ASTNode port maps and attributes now return snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so base `FSM::CoreAST::ASTNode` clones `input_ports`, `output_ports`, and
+  attribute containers on construction and from accessors. Contained `Port`
+  objects retain identity, and `parent_hierarchy` remains the live graph link.
+- Added
+  [t/538-core-ast-ast-node-port-map-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/538-core-ast-ast-node-port-map-defensive-copy-boundary-audit.t)
+  to prove constructor/accessor mutation cannot contaminate AST node port maps
+  or attributes while fanin traversal still reads owned ports.
+- Focused validation pairs the new ASTNode audit with Port driven-node, Signal
+  fanout, driving-AST canonicalization, and enable-graph AST suites. This is
+  `R13` runtime contract-integrity hardening only; no public manifest shape,
+  user-facing docs, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Port driven-node lists now return snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)

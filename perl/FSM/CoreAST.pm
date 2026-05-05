@@ -164,9 +164,9 @@ package FSM::CoreAST::ASTNode;
         my $hash_to_bless = {};
         $hash_to_bless->{node_type} = $args{node_type} // Carp::confess "AST node type required";
         $hash_to_bless->{name} = $args{name};
-        $hash_to_bless->{input_ports} = $args{input_ports} // {};
-        $hash_to_bless->{output_ports} = $args{output_ports} // {};
-        $hash_to_bless->{attributes} = $args{attributes} // {};
+        $hash_to_bless->{input_ports} = _clone_ast_node_value($args{input_ports} // {});
+        $hash_to_bless->{output_ports} = _clone_ast_node_value($args{output_ports} // {});
+        $hash_to_bless->{attributes} = _clone_ast_node_value($args{attributes} // {});
         $hash_to_bless->{parent_hierarchy} = $args{parent_hierarchy};
         
         return bless $hash_to_bless, $class;
@@ -174,9 +174,9 @@ package FSM::CoreAST::ASTNode;
     
     sub node_type($self) { $self->{node_type} }
     sub name($self) { $self->{name} }
-    sub input_ports($self) { $self->{input_ports} }
-    sub output_ports($self) { $self->{output_ports} }
-    sub attributes($self) { $self->{attributes} }
+    sub input_ports($self) { _clone_ast_node_value($self->{input_ports}) }
+    sub output_ports($self) { _clone_ast_node_value($self->{output_ports}) }
+    sub attributes($self) { _clone_ast_node_value($self->{attributes}) }
     sub parent_hierarchy($self) { $self->{parent_hierarchy} }
     
     # AST WEB NAVIGATION: Core traversal methods
@@ -211,6 +211,22 @@ package FSM::CoreAST::ASTNode;
     sub to_verilog($self) { Carp::confess "to_verilog() must be implemented by subclass" }
     sub to_vhdl($self) { Carp::confess "to_vhdl() must be implemented by subclass" }
     sub to_systemverilog($self) { return $self->to_verilog() }
+
+    sub _clone_ast_node_value($value) {
+        return undef unless defined $value;
+
+        if (ref($value) eq 'HASH') {
+            return {
+                map { $_ => _clone_ast_node_value($value->{$_}) } sort keys %$value
+            };
+        }
+
+        if (ref($value) eq 'ARRAY') {
+            return [ map { _clone_ast_node_value($_) } @$value ];
+        }
+
+        return $value;
+    }
 
 #=============================================================================
 # Primary Gate Nodes (AND, OR, XOR, +, -, *, etc.)

@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: ASTNode port-map containers should be node-owned
+- Base AST nodes own their input/output port maps for traversal and rendering.
+  The `Port` objects inside remain live graph connection objects, but callers
+  inspecting accessors should not be able to delete or add map entries on the
+  stored node.
+- `input_ports()`, `output_ports()`, and `attributes()` now return cloned
+  containers. `parent_hierarchy` intentionally remains a live graph link.
+
 ## 2026-05-05: Port driven-node lists should be port-owned
 - Port driven-node relationships are explicit graph edges maintained through
   `add_driven_node(...)`. Callers inspecting `get_driven_nodes()` should not be

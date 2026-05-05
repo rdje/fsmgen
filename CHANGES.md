@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### ASTNode port maps and attributes now return snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so base `FSM::CoreAST::ASTNode` clones `input_ports`, `output_ports`, and
+  attributes on construction and from accessors while preserving contained
+  `Port` object identity and live `parent_hierarchy`. No roadmap status
+  changed.
+- Added
+  [t/538-core-ast-ast-node-port-map-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/538-core-ast-ast-node-port-map-defensive-copy-boundary-audit.t)
+  to prove caller mutation cannot contaminate AST node port maps or attributes.
 ### Port driven-node lists now return snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
