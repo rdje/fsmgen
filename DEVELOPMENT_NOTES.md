@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: ControlFlow branch containers should be node-owned
+- Control-flow nodes expose branch arrays to analyzers and flattening, but the
+  mutable list/hash containers are structural metadata rather than a mutation
+  API.
+- `ControlFlow` and `ConditionalBranch` now clone branch and attribute
+  containers on entry and access. The contained condition/action AST objects
+  keep identity, so traversal and capture behavior remains unchanged.
+
 ## 2026-05-05: Action attributes should be action-owned metadata
 - Base `FSM::CoreAST::Action` attributes are metadata carried by action nodes,
   unlike signal/module attribute bags that remain live compatibility surfaces.

@@ -1823,15 +1823,31 @@ package FSM::CoreAST::ControlFlow;
         my $hash_ref = {};
         $hash_ref->{type} = $args{type} // Carp::confess "Control flow type required";
         $hash_ref->{condition} = $args{condition};
-        $hash_ref->{branches} = $args{branches} // [];
-        $hash_ref->{attributes} = $args{attributes} // {};
+        $hash_ref->{branches} = _clone_control_flow_value($args{branches} // []);
+        $hash_ref->{attributes} = _clone_control_flow_value($args{attributes} // {});
         return bless $hash_ref, $class;
     }
     
     sub type($self) { $self->{type} }
     sub condition($self) { $self->{condition} }
-    sub branches($self) { $self->{branches} }
-    sub attributes($self) { $self->{attributes} }
+    sub branches($self) { _clone_control_flow_value($self->{branches}) }
+    sub attributes($self) { _clone_control_flow_value($self->{attributes}) }
+
+    sub _clone_control_flow_value($value) {
+        return undef unless defined $value;
+
+        if (ref($value) eq 'HASH') {
+            return {
+                map { $_ => _clone_control_flow_value($value->{$_}) } sort keys %$value
+            };
+        }
+
+        if (ref($value) eq 'ARRAY') {
+            return [ map { _clone_control_flow_value($_) } @$value ];
+        }
+
+        return $value;
+    }
 
 package FSM::CoreAST::ConditionalBranch;
     our @ISA = qw(FSM::CoreAST::ControlFlow);
@@ -1840,8 +1856,8 @@ package FSM::CoreAST::ConditionalBranch;
         my $hash_ref = {
             type => 'conditional',
             condition => $args{condition},
-            branches => $args{branches} // [],
-            attributes => $args{attributes} // {},
+            branches => FSM::CoreAST::ControlFlow::_clone_control_flow_value($args{branches} // []),
+            attributes => FSM::CoreAST::ControlFlow::_clone_control_flow_value($args{attributes} // {}),
         };
         my $self = bless $hash_ref, $class;
         # branches: [{condition => expr, actions => [actions...]}, ...]

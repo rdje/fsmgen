@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### ControlFlow branches now return container snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so `FSM::CoreAST::ControlFlow` and `ConditionalBranch` clone branch and
+  attribute containers on construction and from accessors while preserving
+  contained AST/action object identity. No roadmap status changed.
+- Added
+  [t/526-core-ast-control-flow-branches-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/526-core-ast-control-flow-branches-defensive-copy-boundary-audit.t)
+  to prove constructor and accessor mutation cannot contaminate control-flow
+  branch metadata or action-list containers.
 ### Action attributes now return snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)

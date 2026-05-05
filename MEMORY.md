@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: ControlFlow branches now return container snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so `FSM::CoreAST::ControlFlow` and `ConditionalBranch` clone branch and
+  attribute containers on construction and from `branches()` / `attributes()`.
+  Contained AST/action objects retain identity for analyzers and flattening.
+- Added
+  [t/526-core-ast-control-flow-branches-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/526-core-ast-control-flow-branches-defensive-copy-boundary-audit.t)
+  to prove branch metadata, action-list containers, and attribute maps stay
+  node-owned after constructor/accessor mutation attempts.
+- Focused validation pairs the new control-flow audit with test-selector,
+  enable-graph capture, decision-tree flattening, and assignment-intent suites.
+  This is `R13` runtime contract-integrity hardening only; no public manifest
+  shape, user-facing docs, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Action attributes now return snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
