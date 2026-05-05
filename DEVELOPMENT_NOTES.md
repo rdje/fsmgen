@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: language surface sections should stay mutation-safe
+- The manifest language-surface section nests its bounded surface contract and
+  authored language-surface summary. Callers receive mutable Perl data, so one
+  returned section must not pollute later section builds.
+- The new audit mutates a returned language-surface section before proving a
+  fresh build stays clean.
+- This is coverage only; no language surface section shape changed.
+
 ## 2026-05-05: documentation sections should stay mutation-safe
 - The manifest documentation section publishes path lists plus its nested
   section contract. Callers receive mutable Perl arrays/hashes, so one returned
