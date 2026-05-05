@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: HDLGenerator facade contracts should stay mutation-safe
+- The HDLGenerator facade contract is embedded in the capability manifest and
+  exposes several grouped constructor-option helper views. In-process callers
+  receive ordinary mutable Perl data, so one caller's mutation must not affect
+  a later `build_hdl_generator_facade_contract()` or helper call.
+- The new audit mutates a full returned facade contract plus every facade
+  helper list/map/range, then proves fresh calls remain clean and aligned with
+  their grouped helper builders.
+- This is coverage only; no HDLGenerator facade contract shape changed.
+
 ## 2026-05-05: HDLGenerator result contracts should stay mutation-safe
 - The HDLGenerator result contract contains several grouped discovery maps for
   stable subsurfaces, optional composition keys, semantic-layer keys, and

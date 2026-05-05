@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: HDLGenerator facade contract now has defensive-copy coverage
+- Added
+  [t/439-hdl-generator-facade-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/439-hdl-generator-facade-contract-defensive-copy-boundary-audit.t)
+  to prove `build_hdl_generator_facade_contract()` returns fresh nested
+  structures across calls and that facade constructor-option family, shape,
+  target-language, method-name, top-level-key, and debug-range helpers are
+  fresh.
+- Focused validation passed with the HDLGenerator facade contract, capability
+  manifest runtime contract, and new defensive-copy audit cluster (`3` files,
+  `11` tests).
+- This is `R13` HDLGenerator facade contract-integrity coverage only; no
+  public API shape, user-facing docs, mdBook source, generation behavior, or
+  roadmap lane status changed.
+
 ## 2026-05-05: HDLGenerator result contract now has defensive-copy coverage
 - Added
   [t/438-hdl-generator-result-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/438-hdl-generator-result-contract-defensive-copy-boundary-audit.t)

@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### HDLGenerator facade contract now has defensive-copy coverage
+- Added
+  [t/439-hdl-generator-facade-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/439-hdl-generator-facade-contract-defensive-copy-boundary-audit.t)
+  to prove `build_hdl_generator_facade_contract()` returns fresh nested
+  structures across calls and that facade constructor-option family, shape,
+  target-language, method-name, top-level-key, and debug-range helpers are
+  fresh. No roadmap status changed.
+- Focused validation passed with the HDLGenerator facade contract, capability
+  manifest runtime contract, and new defensive-copy audit cluster (`3` files,
+  `11` tests).
 ### HDLGenerator result contract now has defensive-copy coverage
 - Added
   [t/438-hdl-generator-result-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/438-hdl-generator-result-contract-defensive-copy-boundary-audit.t)
