@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: source path resolver arrays should stay mutation-safe
+- `FSM::SourcePathResolver` sits behind CLI/source lookup and the public
+  `HDLGenerator` `source_search_paths` constructor option. It returns mutable
+  Perl arrays, so callers must not be able to mutate resolver state by holding
+  onto constructor arrays or returned lookup arrays.
+- The new audit proves constructor roots are copied, `extra_search_paths()`
+  returns a fresh array, and `normalized_search_paths(...)` returns a fresh
+  precedence-ordered/de-duplicated list after caller mutation.
+- This is coverage only; no path-resolution behavior or public facade shape
+  changed.
+
 ## 2026-05-05: regression corpus catalogs should stay mutation-safe
 - The support-accounting catalog is consumed in-process by manifests, check
   JSON classification, protocol fixture tests, and regression coverage. Those

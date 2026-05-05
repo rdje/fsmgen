@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Source path resolver now has defensive-copy coverage
+- Added
+  [t/492-source-path-resolver-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/492-source-path-resolver-defensive-copy-boundary-audit.t)
+  to prove `FSM::SourcePathResolver` copies constructor search roots,
+  returns fresh `extra_search_paths()` arrays, and returns fresh normalized
+  search-root arrays after precedence, tilde expansion, and de-duplication.
+  No roadmap status changed.
+- Focused validation pairs the direct resolver audit with the existing
+  facade `source_search_paths` entry-shape and runtime resolution suites.
 ### Regression corpus runtime catalog now has defensive-copy coverage
 - Added
   [t/491-regression-corpus-runtime-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/491-regression-corpus-runtime-defensive-copy-boundary-audit.t)
