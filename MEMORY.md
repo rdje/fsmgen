@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Generated module_info lowered projections now avoid embedded IR aliases
+- Updated
+  [perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm)
+  so `enrich_with_generated_analysis()` clones top-level lowered summary arrays
+  and nested maps projected from embedded `lowered_rtl_ir`.
+- Added
+  [t/561-generated-module-info-lowered-projection-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/561-generated-module-info-lowered-projection-defensive-copy-boundary-audit.t)
+  to prove top-level `output_drive_families` and
+  `standalone_dt_multi_drive_targets` mutation cannot contaminate the embedded
+  lowered RTL IR payload.
+- Focused validation paired the new audit with generated-module info,
+  generated-info helper defensive-copy, lowered-RTLIR builder, structural-RTLIR
+  builder, and generated-module emitter suites. This is `R13` runtime
+  contract-integrity hardening only; no public manifest shape, user-facing
+  docs, mdBook content, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Generated module_info now owns top-level intent projections
 - Updated
   [perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm)

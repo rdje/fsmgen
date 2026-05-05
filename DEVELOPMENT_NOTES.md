@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Generated module_info lowered summaries are projections
+- `enrich_with_generated_analysis()` embeds the full lowered RTL IR and also
+  publishes selected top-level convenience fields for compatibility. Those
+  top-level fields should be report projections, not aliases back into the
+  embedded lowered IR hash.
+- The generated `output_drive_families` and
+  `standalone_dt_multi_drive_targets` top-level fields now clone the lowered IR
+  arrays before assignment. The embedded `lowered_rtl_ir` payload remains the
+  canonical lowered snapshot.
+
 ## 2026-05-05: Generated module_info projections own intent-HIR snapshots
 - `GeneratedModuleInfoBuilder::build_from_fsm_module()` accepts either an
   `IntentHIR` object or a hash-shaped intent payload. The object path already

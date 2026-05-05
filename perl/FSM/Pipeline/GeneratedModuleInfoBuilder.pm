@@ -87,9 +87,10 @@ sub enrich_with_generated_analysis ($class, %args) {
     my $lowered_rtl_ir_hash = $lowered_rtl_ir->as_hashref;
 
     $module_info->{output_drive_family_count} = $lowered_rtl_ir_hash->{output_drive_family_count};
-    $module_info->{output_drive_families} = $lowered_rtl_ir_hash->{output_drive_families};
+    $module_info->{output_drive_families} = _clone_structured_value($lowered_rtl_ir_hash->{output_drive_families});
     $module_info->{standalone_dt_multi_drive_target_count} = $lowered_rtl_ir_hash->{standalone_dt_multi_drive_target_count};
-    $module_info->{standalone_dt_multi_drive_targets} = $lowered_rtl_ir_hash->{standalone_dt_multi_drive_targets};
+    $module_info->{standalone_dt_multi_drive_targets}
+        = _clone_structured_value($lowered_rtl_ir_hash->{standalone_dt_multi_drive_targets});
     $module_info->{lowered_rtl_ir} = $lowered_rtl_ir_hash;
     return $module_info;
 }

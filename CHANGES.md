@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Generated module_info lowered projections now avoid embedded IR aliases
+- Updated
+  [perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm)
+  so top-level generated `module_info` lowered summary fields clone arrays and
+  nested maps projected from embedded `lowered_rtl_ir`. No roadmap status
+  changed.
+- Added
+  [t/561-generated-module-info-lowered-projection-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/561-generated-module-info-lowered-projection-defensive-copy-boundary-audit.t)
+  to prove mutating top-level lowered projections cannot contaminate the
+  embedded lowered RTL IR payload.
 ### Generated module_info now owns top-level intent projections
 - Updated
   [perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm)
