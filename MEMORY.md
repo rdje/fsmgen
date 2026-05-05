@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Package parser root discovery now returns AST snapshots
+- Updated
+  [perl/FSM/Package/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/Parser.pm)
+  so `find_package_root()` clones discovered `?pkg` ASTs before returning
+  them, covering both direct-root package sources and multi-root source files.
+- Added
+  [t/568-package-parser-root-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/568-package-parser-root-defensive-copy-boundary-audit.t)
+  to prove returned package-root AST mutation cannot contaminate parser-owned
+  source containers.
+- Focused validation paired the new audit with Package::Spec raw-AST
+  defensive-copy coverage, composition package imports, direct package imports,
+  and package aggregate value/path suites. This is `R13` runtime
+  contract-integrity hardening only; no public manifest shape, user-facing
+  docs, mdBook content, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Composition parser top-root discovery now returns AST snapshots
 - Updated
   [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm)

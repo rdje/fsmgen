@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Package parser root discovery now returns AST snapshots
+- Updated
+  [perl/FSM/Package/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/Parser.pm)
+  so `find_package_root()` clones direct-root and multi-root `?pkg` AST nodes
+  before returning them. No roadmap status changed.
+- Added
+  [t/568-package-parser-root-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/568-package-parser-root-defensive-copy-boundary-audit.t)
+  to prove mutating discovered package roots cannot contaminate the package
+  parser raw AST.
 ### Composition parser top-root discovery now returns AST snapshots
 - Updated
   [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm)

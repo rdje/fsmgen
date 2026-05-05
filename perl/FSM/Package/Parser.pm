@@ -32,14 +32,14 @@ sub find_package_root ($self, $raw_ast) {
     return undef unless ref($raw_ast) eq 'ARRAY';
 
     if (@$raw_ast > 0 && !ref($raw_ast->[0]) && $raw_ast->[0] =~ /^\?pkg:/) {
-        return $raw_ast;
+        return _clone($raw_ast);
     }
 
     for my $ast_node (@$raw_ast) {
         next unless ref($ast_node) eq 'ARRAY';
         next unless @$ast_node > 0;
         next if ref($ast_node->[0]);
-        return $ast_node if $ast_node->[0] =~ /^\?pkg:/;
+        return _clone($ast_node) if $ast_node->[0] =~ /^\?pkg:/;
     }
 
     return undef;
@@ -631,6 +631,12 @@ sub package_value_items ($self, $value_ast) {
     }
 
     return \@items;
+}
+
+sub _clone ($value) {
+    return [map { _clone($_) } @$value] if ref($value) eq 'ARRAY';
+    return {map { $_ => _clone($value->{$_}) } keys %$value} if ref($value) eq 'HASH';
+    return $value;
 }
 
 1;

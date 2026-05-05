@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Package root lookup is a read projection
+- `find_package_root()` selects the `?pkg` subtree used by package parsing.
+  `Package::Spec` already snapshots the root it receives, so direct helper
+  callers should get the same read-projection boundary.
+- The helper now returns a cloned package-root AST for both direct-root and
+  multi-root inputs. Accepted package syntax and parsed symbol behavior are
+  unchanged; only the raw-AST alias boundary is tightened.
+
 ## 2026-05-05: Composition top-root lookup is a read projection
 - `find_top_root()` is used by `parse_source()` and can also be called as a
   parser helper. The result identifies the `?top` subtree; callers do not need
