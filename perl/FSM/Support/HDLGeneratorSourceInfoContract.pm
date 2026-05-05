@@ -10,6 +10,7 @@ our @EXPORT_OK = qw(
     build_hdl_generator_source_info_contract
     hdl_generator_source_info_contract_source
     hdl_generator_source_info_identity_keys
+    hdl_generator_source_info_package_import_summary_copy_policy
     hdl_generator_source_info_presence_key_family_map
     hdl_generator_source_info_stable_subsurfaces
     hdl_generator_source_info_summary_keys
@@ -38,6 +39,7 @@ sub build_hdl_generator_source_info_contract {
         },
         identity_presence_keys => hdl_generator_source_info_identity_keys(),
         summary_presence_keys => hdl_generator_source_info_summary_keys(),
+        package_import_summary_copy_policy => hdl_generator_source_info_package_import_summary_copy_policy(),
         presence_key_family_map => hdl_generator_source_info_presence_key_family_map(),
         stable_subsurfaces => hdl_generator_source_info_stable_subsurfaces(),
         full_hash_stable => JSON::PP::false,
@@ -45,6 +47,7 @@ sub build_hdl_generator_source_info_contract {
         guidance => [
             q{Treat this contract as the bounded nested `source_info` object reused by in-process `HDLGenerator` results.},
             'The bounded public promise covers the current source identity keys plus the package-import summary keys.',
+            'The package_import_names summary is returned as a fresh caller-owned array on each returned source_info object.',
             'Use the grouped presence_key_family_map to discover the bounded source_info identity and summary key families without collecting those key-family lists separately.',
             'The wider source_info hash remains compatibility-heavy on composition roots, so callers should target the advertised stable subsurfaces instead of treating the whole hash as public API.',
         ],
@@ -63,6 +66,10 @@ sub hdl_generator_source_info_summary_keys {
         package_import_count
         package_import_names
     )];
+}
+
+sub hdl_generator_source_info_package_import_summary_copy_policy {
+    return 'package_import_names is a fresh caller-owned array on each returned source_info object';
 }
 
 sub hdl_generator_source_info_presence_key_family_map {

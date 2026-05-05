@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: source_info package-import summaries now have copy-policy coverage
+- Updated
+  [perl/FSM/Support/HDLGeneratorSourceInfoContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorSourceInfoContract.pm)
+  and the parent
+  [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm)
+  to advertise that `source_info.package_import_names` is a fresh
+  caller-owned array on each returned `source_info` object.
+- Added
+  [t/495-source-info-package-import-summary-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/495-source-info-package-import-summary-defensive-copy-boundary-audit.t)
+  to prove direct source-info/result contracts, in-process manifest, both CLI
+  manifest spellings, fresh source-frontend classifications, and fresh
+  `HDLGenerator` direct/composition result summaries after caller mutation.
+- Updated
+  [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+  and the mdBook extension/embedding chapter to document the copy policy. This
+  is `R13` result/source-info contract hardening only; roadmap lane status is
+  unchanged.
+
 ## 2026-05-05: Debug restore now validates snapshot state shape
 - Updated
   [perl/FSM/Debug.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Debug.pm)

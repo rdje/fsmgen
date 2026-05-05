@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### source_info package-import summaries now have copy-policy coverage
+- Updated the nested source-info/result contracts so
+  `source_info.package_import_names` is advertised as a fresh caller-owned
+  array on each returned `source_info` object. No roadmap status changed.
+- Added
+  [t/495-source-info-package-import-summary-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/495-source-info-package-import-summary-defensive-copy-boundary-audit.t)
+  to prove contract/manifest publication, source-frontend classification
+  freshness, and repeated `HDLGenerator` direct/composition result freshness
+  after caller mutation.
+- Updated the user guide and mdBook extension/embedding chapter with the
+  package-import summary copy policy.
 ### Debug restore now validates snapshot state shape
 - Updated
   [perl/FSM/Debug.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Debug.pm)

@@ -1927,7 +1927,10 @@ interchange surface.
 That same caution now explicitly includes `resolved_package_imports`: the
 top-level branch remains a raw hash of `FSM::Package::Spec` objects, so the
 stable package-import surface is `source_info.package_import_count` plus
-`source_info.package_import_names`, not the typed package-spec payloads.
+`source_info.package_import_names`, not the typed package-spec payloads. The
+`package_import_names` list is a fresh caller-owned array on each returned
+`source_info` object, so local caller mutation of one returned summary does not
+affect a later result.
 That shell-only branch now also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorResolvedPackageImportsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResolvedPackageImportsContract.pm),
 so embedders have one dedicated contract to follow for that raw package-spec

@@ -156,6 +156,11 @@ subtest 'contract declares the bounded HDLGenerator result surface' => sub {
         hdl_generator_source_info_summary_keys(),
         'contract publishes bounded source_info summary keys',
     );
+    is(
+        $contract->{source_info_package_import_summary_copy_policy},
+        'package_import_names is a fresh caller-owned array on each returned source_info object',
+        'contract republishes the source_info package-import summary copy policy',
+    );
     is_deeply(
         $contract->{source_info_stable_subsurfaces},
         hdl_generator_source_info_stable_subsurfaces(),

@@ -1272,6 +1272,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         scalar(@{$manifest->{embedding}{hdl_generator_result}{source_info_summary_presence_keys} || []}) >= 2,
         'manifest advertises bounded HDLGenerator source_info summary key presence',
     );
+    is(
+        $manifest->{embedding}{hdl_generator_result}{source_info_package_import_summary_copy_policy},
+        'package_import_names is a fresh caller-owned array on each returned source_info object',
+        'manifest records the HDLGenerator source_info package-import summary copy policy',
+    );
     is_deeply(
         $manifest->{embedding}{hdl_generator_result}{source_info_stable_subsurfaces},
         ['source_info.header', 'source_info.kind', 'source_info.package_import_count', 'source_info.package_import_names'],

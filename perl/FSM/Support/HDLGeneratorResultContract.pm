@@ -56,6 +56,7 @@ use FSM::Support::HDLGeneratorStatisticsContract qw(
 use FSM::Support::HDLGeneratorSourceInfoContract qw(
     hdl_generator_source_info_contract_source
     hdl_generator_source_info_identity_keys
+    hdl_generator_source_info_package_import_summary_copy_policy
     hdl_generator_source_info_stable_subsurfaces
     hdl_generator_source_info_summary_keys
 );
@@ -110,6 +111,7 @@ sub build_hdl_generator_result_contract {
         tested_by => [
             't/305-hdl-generator-result-contract.t',
             't/438-hdl-generator-result-contract-defensive-copy-boundary-audit.t',
+            't/495-source-info-package-import-summary-defensive-copy-boundary-audit.t',
         ],
         public_top_level_presence_keys => [
             qw(
@@ -145,6 +147,7 @@ sub build_hdl_generator_result_contract {
         source_info_contract_source => hdl_generator_source_info_contract_source(),
         source_info_identity_presence_keys => hdl_generator_result_source_info_identity_keys(),
         source_info_summary_presence_keys => hdl_generator_result_source_info_summary_keys(),
+        source_info_package_import_summary_copy_policy => hdl_generator_source_info_package_import_summary_copy_policy(),
         source_info_full_hash_stable => JSON::PP::false,
         source_info_stable_subsurfaces => hdl_generator_source_info_stable_subsurfaces(),
         module_info_contract_source => hdl_generator_module_info_contract_source(),

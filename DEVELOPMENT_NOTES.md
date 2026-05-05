@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: source_info package-import summaries are caller-owned arrays
+- `source_info.package_import_count` and `source_info.package_import_names` are
+  the stable package-import summary surface for raw `HDLGenerator` results,
+  especially because `resolved_package_imports` remains a shell-only raw
+  package-spec branch.
+- The source-info contract now states that `package_import_names` is fresh on
+  each returned `source_info` object. Callers may mutate a returned result for
+  local bookkeeping without contaminating a later classification or generation
+  call.
+- The new audit proves both direct source-frontier classification and repeated
+  `HDLGenerator` generation for direct/composition roots preserve that
+  caller-owned summary-array boundary.
+
 ## 2026-05-05: restore_fsm_debug_state owns snapshot validation
 - `FSM::Debug` is still a process-global singleton, so malformed restore
   snapshots should fail before they can partially apply debug level, trace

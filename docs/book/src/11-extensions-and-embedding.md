@@ -473,6 +473,9 @@ The top-level `resolved_package_imports` branch is therefore shell-only: it is
 still a hash of raw `FSM::Package::Spec` objects, so stable package-import
 inspection should use `source_info.package_import_count` and
 `source_info.package_import_names` instead of traversing those typed values.
+The `package_import_names` list is a fresh caller-owned array on each returned
+`source_info` object, so local caller mutation of one returned summary does not
+affect a later result.
 That same owner now also publishes a grouped `fallback_surface_map` so
 embedders can discover the bounded source-info package-import fallback family
 from one place instead of collecting those fallback paths separately.
