@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Normalized semantic report contract now has defensive-copy coverage
+- Added
+  [t/443-normalized-semantic-report-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/443-normalized-semantic-report-contract-defensive-copy-boundary-audit.t)
+  to prove `build_normalized_semantic_report_contract()` returns fresh nested
+  structures across calls and that report-level top-level, nested-presence,
+  presence-family, success, failure, support-accounting, semantic, and
+  forward-IR helper lists/maps are fresh.
+- Focused validation passed with the normalized semantic report contract,
+  normalized semantic payload contract, and new defensive-copy audit cluster
+  (`3` files, `9` tests).
+- This is `R13` normalized semantic report contract-integrity coverage only;
+  no public API shape, user-facing docs, mdBook source, generation behavior,
+  or roadmap lane status changed.
+
 ## 2026-05-05: Normalized semantic payload contract now has defensive-copy coverage
 - Added
   [t/442-normalized-semantic-payload-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/442-normalized-semantic-payload-contract-defensive-copy-boundary-audit.t)
