@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Support accounting match contract now has defensive-copy coverage
+- Added
+  [t/451-support-accounting-match-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/451-support-accounting-match-contract-defensive-copy-boundary-audit.t)
+  to prove `build_support_accounting_match_contract()` returns fresh nested
+  structures across calls and that shared support-accounting common,
+  matched-success, matched-failure, and grouped presence-family helpers are
+  fresh.
+- Focused validation passed with the support accounting match contract, shared
+  report runtime contract, and new defensive-copy audit cluster (`3` files,
+  `8` tests).
+- The full repo gate also passed after this final batch slice (`447` Perl test
+  files, `3864` tests) followed by a successful `mdbook build`.
+- This is `R13` shared support-accounting match contract-integrity coverage
+  only; no public API shape, user-facing docs, mdBook source, generation
+  behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Support accounting contract now has defensive-copy coverage
 - Added
   [t/450-support-accounting-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/450-support-accounting-contract-defensive-copy-boundary-audit.t)

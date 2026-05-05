@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Support accounting match contract now has defensive-copy coverage
+- Added
+  [t/451-support-accounting-match-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/451-support-accounting-match-contract-defensive-copy-boundary-audit.t)
+  to prove `build_support_accounting_match_contract()` returns fresh nested
+  structures across calls and that shared support-accounting common,
+  matched-success, matched-failure, and grouped presence-family helpers are
+  fresh. No roadmap status changed.
+- Focused validation passed with the support accounting match contract, shared
+  report runtime contract, and new defensive-copy audit cluster (`3` files,
+  `8` tests).
+- The full repo gate also passed after this final batch slice (`447` Perl test
+  files, `3864` tests) followed by a successful `mdbook build`.
 ### Support accounting contract now has defensive-copy coverage
 - Added
   [t/450-support-accounting-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/450-support-accounting-contract-defensive-copy-boundary-audit.t)

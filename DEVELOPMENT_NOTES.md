@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: support-accounting match contracts should stay mutation-safe
+- The shared support-accounting match contract is reused by check JSON and
+  normalized semantic JSON report shells. Its common, matched-success,
+  matched-failure, and grouped presence-family helpers are mutable Perl
+  structures, so caller mutation must not create process-local drift between
+  public report contract consumers.
+- The new audit mutates a full returned support-accounting match contract and
+  every helper list/map, then proves fresh calls remain clean and aligned with
+  the grouped presence-family map.
+- This is coverage only; no support-accounting match contract shape changed.
+
 ## 2026-05-05: support-accounting contracts should stay mutation-safe
 - The support-accounting manifest contract publishes bucket, id-list, and
   catalog-entry key families derived from regression-corpus truth. In-process
