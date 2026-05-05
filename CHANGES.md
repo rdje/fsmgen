@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Backend options now use caller-owned structured values
+- Updated
+  [perl/FSM/Backend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend.pm)
+  so backend options are cloned on construction, `options()`, `set_option(...)`,
+  and `get_option(...)`, while template-engine access remains live. No roadmap
+  status changed.
+- Added
+  [t/521-backend-options-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/521-backend-options-defensive-copy-boundary-audit.t)
+  to prove constructor, accessor, setter, getter, and default option payloads
+  are isolated from caller mutation.
 ### ExpressionNamer query maps now return snapshots
 - Updated
   [perl/FSM/ExpressionNamer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ExpressionNamer.pm)

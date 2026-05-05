@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Backend options now use caller-owned structured values
+- Updated
+  [perl/FSM/Backend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend.pm)
+  so backend option payloads are cloned on construction, `options()`,
+  `set_option(...)`, and `get_option(...)`. `template_engine()` remains the
+  live backend template object.
+- Added
+  [t/521-backend-options-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/521-backend-options-defensive-copy-boundary-audit.t)
+  to prove constructor, accessor, setter, getter, and structured default option
+  payloads are isolated from caller mutation.
+- Focused validation pairs the new backend option audit with the legacy
+  SystemVerilog backend reset-policy suite. This is `R13` runtime
+  contract-integrity hardening only; no public manifest shape, user-facing
+  docs, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: ExpressionNamer query maps now return snapshots
 - Updated
   [perl/FSM/ExpressionNamer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ExpressionNamer.pm)

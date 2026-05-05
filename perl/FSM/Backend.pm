@@ -25,24 +25,40 @@ package FSM::Backend::Base {
     sub new($class, %args) {
         my $self = {
             template_engine => $args{template_engine} // croak("Template engine required"),
-            options => $args{options} // {},
+            options => _clone($args{options} // {}),
         };
         return bless $self, $class;
     }
 
     sub template_engine($self) { return $self->{template_engine} }
-    sub options($self) { return $self->{options} }
+    sub options($self) { return _clone($self->{options}) }
 
     sub generate($self, $ast_module) {
         croak "generate() must be implemented by subclass";
     }
 
     sub set_option($self, $key, $value) {
-        $self->{options}{$key} = $value;
+        $self->{options}{$key} = _clone($value);
     }
 
     sub get_option($self, $key, $default = undef) {
-        return $self->{options}{$key} // $default;
+        return _clone(defined($self->{options}{$key}) ? $self->{options}{$key} : $default);
+    }
+
+    sub _clone($value) {
+        return undef unless defined $value;
+
+        if (ref($value) eq 'HASH') {
+            return {
+                map { $_ => _clone($value->{$_}) } sort keys %$value
+            };
+        }
+
+        if (ref($value) eq 'ARRAY') {
+            return [ map { _clone($_) } @$value ];
+        }
+
+        return $value;
     }
 }
 
@@ -66,12 +82,12 @@ package FSM::Backend::VHDL {
         );
 
         # Set default VHDL options
-        $self->{options} = {
+        $self->{options} = FSM::Backend::Base::_clone({
             use_numeric_std => 1,
             reset_active_low => 1,
             state_encoding => 'auto', # auto, binary, onehot, gray
             %{$args{options} // {}}
-        };
+        });
 
         return $self;
     }
@@ -260,12 +276,12 @@ package FSM::Backend::SystemVerilog {
         );
 
         # Set default SystemVerilog options
-        $self->{options} = {
+        $self->{options} = FSM::Backend::Base::_clone({
             reset_active_low => 1,
             state_encoding => 'auto', # auto, binary, onehot, gray
             use_enum => 1,
             %{$args{options} // {}}
-        };
+        });
 
         return $self;
     }

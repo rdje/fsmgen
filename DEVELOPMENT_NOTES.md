@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Backend options should not expose shared structured values
+- Backend options are configuration data, while the template engine is the live
+  collaborator object. The options hash could previously be mutated through
+  constructor aliases or accessor returns.
+- Backend base construction, `options()`, `set_option(...)`, and
+  `get_option(...)` now clone structured option payloads. VHDL and
+  SystemVerilog default option merges clone after applying caller overrides.
+- This keeps legacy backend configuration stable while preserving the explicit
+  `set_option(...)` mutation API.
+
 ## 2026-05-05: ExpressionNamer query maps should be read snapshots
 - `FSM::ExpressionNamer` owns expression-name caches and generated signal
   definition records that later wire/assignment generation reads directly.
