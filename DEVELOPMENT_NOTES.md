@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Shared-datapath contributor drive-family reads are projections
+- `contributor_output_drive_family()` is a read helper used by storage-class and
+  aggregation logic. Returning the contributor's stored drive-family hash made
+  that read path a hidden metadata mutation handle.
+- The helper now returns cloned metadata for both the primary
+  `output_drive_family` path and the legacy `drive_intent` fallback. Callers
+  that need to update candidates must do so through the candidate payload they
+  already own.
+
 ## 2026-05-05: Shared-datapath candidate cache needs two owners
 - `candidates_for_plan()` both materializes shared-datapath candidates and
   caches them on the composition plan. Returning the same freshly built array

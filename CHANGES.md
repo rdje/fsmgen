@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Shared-datapath contributor drive-family reads now clone metadata
+- Updated
+  [perl/FSM/Composition/SharedDatapathCandidateBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SharedDatapathCandidateBuilder.pm)
+  so `contributor_output_drive_family()` returns cloned `output_drive_family`
+  or fallback `drive_intent` payloads. No roadmap status changed.
+- Added
+  [t/552-shared-datapath-contributor-drive-family-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/552-shared-datapath-contributor-drive-family-defensive-copy-boundary-audit.t)
+  to prove caller mutation cannot contaminate contributor drive-family metadata
+  or the source used to build drive-intent projections.
 ### Shared-datapath candidate cache now separates plan and caller ownership
 - Updated
   [perl/FSM/Composition/SharedDatapathCandidateBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SharedDatapathCandidateBuilder.pm)

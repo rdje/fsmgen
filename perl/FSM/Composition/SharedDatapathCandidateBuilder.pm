@@ -394,8 +394,8 @@ contributor.
 
 sub contributor_output_drive_family ($class, $contributor) {
     return {} unless ref($contributor) eq 'HASH';
-    return $contributor->{output_drive_family} if ref($contributor->{output_drive_family}) eq 'HASH';
-    return $contributor->{drive_intent} if ref($contributor->{drive_intent}) eq 'HASH';
+    return _clone($contributor->{output_drive_family}) if ref($contributor->{output_drive_family}) eq 'HASH';
+    return _clone($contributor->{drive_intent}) if ref($contributor->{drive_intent}) eq 'HASH';
     return {};
 }
 

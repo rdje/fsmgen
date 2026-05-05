@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Shared-datapath contributor drive-family reads now clone metadata
+- Updated
+  [perl/FSM/Composition/SharedDatapathCandidateBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SharedDatapathCandidateBuilder.pm)
+  so `contributor_output_drive_family()` returns cloned `output_drive_family`
+  or fallback `drive_intent` payloads instead of live contributor-owned hashes.
+- Added
+  [t/552-shared-datapath-contributor-drive-family-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/552-shared-datapath-contributor-drive-family-defensive-copy-boundary-audit.t)
+  to prove returned drive-family metadata and drive-intent projections cannot
+  contaminate their sources.
+- Focused validation paired the new audit with the candidate-cache audit and
+  shared-datapath candidate builder/support plus forward-IR export suites. This
+  is `R13` runtime contract-integrity hardening only; no public manifest shape,
+  user-facing docs, mdBook content, generation behavior, or roadmap lane status
+  changed.
+
 ## 2026-05-05: Shared-datapath candidate cache now separates plan and caller ownership
 - Updated
   [perl/FSM/Composition/SharedDatapathCandidateBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SharedDatapathCandidateBuilder.pm)
