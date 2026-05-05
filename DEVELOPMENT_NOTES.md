@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: normalized semantic module contracts should stay mutation-safe
+- The normalized semantic `module` contract publishes core module-summary and
+  optional metric helper structures for public semantic JSON consumers.
+- The new audit mutates the full returned contract and each exported mutable
+  helper structure, then proves fresh calls remain clean.
+- This is coverage only; no normalized semantic module contract shape changed.
+
 ## 2026-05-05: HDLGenerator composition_plan contracts should stay mutation-safe
 - The `composition_plan` branch remains a shell-only raw composition plan
   object for in-process compatibility, while its contract helper structures
