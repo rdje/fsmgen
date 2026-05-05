@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: SignalManager parameter records are cloned at storage
+- Updated
+  [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm)
+  so `store_param(...)` clones nested parameter value records before adding
+  them to the direct-root signal manager parameter table.
+- Added
+  [t/509-signal-manager-param-value-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/509-signal-manager-param-value-defensive-copy-boundary-audit.t)
+  to prove store-input mutation, exact payload lookup mutation, suffix payload
+  lookup mutation, and `ParameterRef` construction cannot contaminate stored
+  parameter defaults or type metadata.
+- Focused validation pairs the new SignalManager parameter audit with language
+  symbol-definition, multi-RTL child composition, and generated-child parameter
+  override suites. This is `R13` runtime contract-integrity hardening only; no
+  public manifest shape, user-facing docs, generation behavior, or roadmap lane
+  status changed.
+
 ## 2026-05-05: SignalManager type specs are cloned at storage
 - Updated
   [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm)

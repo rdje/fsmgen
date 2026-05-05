@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: SignalManager parameter registration owns value records
+- Parameter value records carry default text, normalized payloads, widths, and
+  optional aggregate type specs. `resolve_parameter_value_symbol_payload(...)`
+  and `ParameterRef` construction already cloned outputs, but the stored
+  parameter record still aliased the caller's parse-time value hash.
+- `store_param(...)` now clones the entire value record before storage. Exact
+  parameter payload lookup, suffix payload lookup, and `resolve_symbol(...)`
+  parameter references all read from the signal-manager-owned snapshot.
+- This keeps direct-root parameter defaults stable when later parser or
+  composition code reuses normalized value structures for override checks.
+
 ## 2026-05-05: SignalManager type registration owns a snapshot
 - `SignalManager->resolve_type(...)` already returned cloned type specs, but
   `store_type(...)` kept the caller's nested type-spec reference. A caller that

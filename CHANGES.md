@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### SignalManager parameter records are cloned at storage
+- Updated
+  [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm)
+  so `store_param(...)` copies nested parameter value records before storing
+  them in the direct-root signal manager table. No roadmap status changed.
+- Added
+  [t/509-signal-manager-param-value-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/509-signal-manager-param-value-defensive-copy-boundary-audit.t)
+  to prove exact payload lookup, suffix payload lookup, and `ParameterRef`
+  construction read from caller-owned snapshots.
 ### SignalManager type specs are cloned at storage
 - Updated
   [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm)

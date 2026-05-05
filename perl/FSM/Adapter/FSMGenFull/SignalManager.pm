@@ -189,7 +189,7 @@ sub store_define($self, $name, $value_expr) {
 }
 
 sub store_param($self, $name, $value) {
-    $self->{params}{$name} = $value;
+    $self->{params}{$name} = _clone_type_spec($value);
 }
 
 sub store_type($self, $name, $type_spec) {
