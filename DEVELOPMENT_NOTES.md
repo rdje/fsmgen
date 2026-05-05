@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: diagnostics section contracts should stay mutation-safe
+- The capability manifest diagnostics section republishes stable-code registry
+  and check-JSON child contract key families. In-process consumers receive
+  mutable Perl structures, so caller mutation of one contract view must not
+  pollute later diagnostics-section discovery.
+- The new audit mutates a full returned diagnostics contract plus each
+  diagnostics helper list/map, then proves fresh calls remain clean and
+  aligned with the grouped nested-presence and presence-family maps.
+- This is coverage only; no diagnostics section contract shape changed.
+
 ## 2026-05-05: normalized semantic report contracts should stay mutation-safe
 - The normalized semantic report contract republishes shared report-shell
   families, success/failure families, support-accounting families, and nested

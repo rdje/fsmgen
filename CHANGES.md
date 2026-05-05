@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Diagnostics section contract now has defensive-copy coverage
+- Added
+  [t/444-diagnostics-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/444-diagnostics-contract-defensive-copy-boundary-audit.t)
+  to prove `build_diagnostics_contract()` returns fresh nested structures
+  across calls and that diagnostics section helper lists, nested presence maps,
+  and presence-family maps are fresh. No roadmap status changed.
+- Focused validation passed with the diagnostics contract, capability manifest
+  runtime contract, and new defensive-copy audit cluster (`3` files, `13`
+  tests).
 ### Normalized semantic report contract now has defensive-copy coverage
 - Added
   [t/443-normalized-semantic-report-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/443-normalized-semantic-report-contract-defensive-copy-boundary-audit.t)
