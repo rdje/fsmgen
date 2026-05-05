@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: normalized semantic reports should stay mutation-safe
+- The normalized semantic JSON report builders project nested semantic payload
+  fragments out of in-process result/module metadata and return mutable Perl
+  structures to callers.
+- The new audit mutates both success and failure reports before proving fresh
+  builds stay clean, including nested `semantic` and diagnostic/support
+  accounting fragments.
+- This is coverage only; no normalized semantic report shape changed.
+
 ## 2026-05-05: check diagnostics reports should stay mutation-safe
 - The public check JSON report builders return ordinary mutable Perl
   structures. Runtime callers may inspect or mutate those reports, so a

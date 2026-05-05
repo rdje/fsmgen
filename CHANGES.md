@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Normalized semantic report builder now has runtime defensive-copy coverage
+- Added
+  [t/489-normalized-semantic-report-runtime-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/489-normalized-semantic-report-runtime-defensive-copy-boundary-audit.t)
+  to prove `build_normalized_semantic_success_report()` and
+  `build_normalized_semantic_failure_report()` return fresh nested report
+  structures across calls, including copied semantic payload fragments. No
+  roadmap status changed.
+- Focused validation pairs the runtime report audit with the existing
+  normalized semantic JSON contract and contract defensive-copy suites.
 ### Check diagnostics report builder now has runtime defensive-copy coverage
 - Added
   [t/488-check-diagnostics-report-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/488-check-diagnostics-report-defensive-copy-boundary-audit.t)
