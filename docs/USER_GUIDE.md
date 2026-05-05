@@ -1813,6 +1813,10 @@ It now also captures a real trace-bound debug-state snapshot and proves
 `snapshot_state_keys` matches the emitted snapshot shape.
 That same trace-bound snapshot is checked as not JSON-safe as a whole, matching
 the advertised debug-runtime contract.
+[t/494-debug-runtime-restore-state-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/494-debug-runtime-restore-state-boundary-audit.t)
+also proves `restore_fsm_debug_state(...)` rejects malformed snapshots before
+mutating process-global debug state, and that the restore argument shape is
+advertised through `embedding.debug_runtime`.
 [t/398-debug-runtime-scoped-helper-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/398-debug-runtime-scoped-helper-boundary-audit.t)
 also proves `with_fsm_debug_state(...)` restores caller debug state across
 scalar, list, void, and error paths, while ordinary debug setters remain
@@ -2417,7 +2421,13 @@ restore_fsm_debug_state($saved);
 
 That restore path preserves the caller-facing trace/debug configuration,
 including the original trace sink, instead of forcing embedders to rebuild the
-global debug settings by hand after a temporary trace-file switch.
+global debug settings by hand after a temporary trace-file switch. Restores now
+accept exact schema-version-1 snapshots from `capture_fsm_debug_state(...)` and
+reject malformed partial snapshots before mutating process-global debug state.
+[t/494-debug-runtime-restore-state-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/494-debug-runtime-restore-state-boundary-audit.t)
+proves that restore argument shape through the direct contract, in-process
+manifest, both CLI manifest spellings, valid captured restores, targeted
+malformed-snapshot diagnostics, and caller-state preservation on rejection.
 [t/398-debug-runtime-scoped-helper-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/398-debug-runtime-scoped-helper-boundary-audit.t)
 also proves `with_fsm_debug_state(...)` restores caller debug state across
 scalar, list, void, and error paths, while ordinary debug setters remain
@@ -2426,8 +2436,9 @@ That current in-process seam is now also advertised through
 `embedding.debug_runtime`, owned by
 [perl/FSM/Support/DebugRuntimeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DebugRuntimeContract.pm).
 That bounded contract publishes the shipped helper families, the bounded
-snapshot-state keys, the supported named trace-verbosity values, and the
-current limit that `FSM::Debug` is still one process-global singleton rather
+snapshot-state keys, the restore snapshot argument shape, the supported named
+trace-verbosity values, and the current limit that `FSM::Debug` is still one
+process-global singleton rather
 than a thread-local debug context.
 
 This is useful when:

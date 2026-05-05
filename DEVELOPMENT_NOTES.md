@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: restore_fsm_debug_state owns snapshot validation
+- `FSM::Debug` is still a process-global singleton, so malformed restore
+  snapshots should fail before they can partially apply debug level, trace
+  indentation, trace sink, or emoji state.
+- `restore_fsm_debug_state(...)` now validates the exact schema-version-1
+  snapshot shell and bounded scalar values before opening/rebinding trace
+  output or mutating globals. Captured snapshots remain the supported restore
+  input; arbitrary partial hashes are not part of the public contract.
+- The debug-runtime manifest now states the restore snapshot argument shape so
+  embedders can treat the save/restore seam as exact and process-local rather
+  than JSON-safe or loosely coercive.
+
 ## 2026-05-05: registry extension lists are configuration, hook objects are live
 - `FSM::Extension::Registry` stores the configured extension list as registry
   state. Callers should not be able to mutate that list after construction by

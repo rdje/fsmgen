@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Debug restore now validates snapshot state shape
+- Updated
+  [perl/FSM/Debug.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Debug.pm)
+  so `restore_fsm_debug_state(...)` rejects malformed snapshots before
+  applying process-global debug state. No roadmap status changed.
+- Added
+  [t/494-debug-runtime-restore-state-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/494-debug-runtime-restore-state-boundary-audit.t)
+  to prove the manifest-backed restore snapshot argument shape, valid captured
+  restore, malformed snapshot diagnostics, and caller-state preservation on
+  rejection.
+- Updated the debug-runtime contract plus user-facing guide and mdBook
+  embedding text to advertise the exact schema-version-1 restore snapshot
+  shape.
 ### Extension registry lists now copy caller-owned arrays
 - Updated
   [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)

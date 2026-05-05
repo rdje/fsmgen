@@ -378,7 +378,9 @@ restore_fsm_debug_state($saved);
 
 That restore path preserves the caller-facing trace/debug configuration,
 including the original trace sink, instead of forcing embedders to reconstruct
-global debug state by hand after a temporary trace-file switch.
+global debug state by hand after a temporary trace-file switch. Restores now
+accept exact schema-version-1 snapshots from `capture_fsm_debug_state(...)` and
+reject malformed partial snapshots before mutating process-global debug state.
 [t/374-debug-runtime-contract.t](/Users/richarddje/Documents/github/fsmgen/t/374-debug-runtime-contract.t)
 now also checks that the debug-runtime contract's advertised top-level key list
 exactly covers the emitted debug-runtime contract shell, matching the same
@@ -391,6 +393,10 @@ It also captures a trace-bound debug-state snapshot and proves the advertised
 debug level, trace path, live filehandle, and emoji state.
 That trace-bound snapshot is also checked as not JSON-safe as a whole, matching
 the contract's `snapshot_json_safe => false` claim.
+[t/494-debug-runtime-restore-state-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/494-debug-runtime-restore-state-boundary-audit.t)
+also proves the manifest-backed restore argument shape, valid captured
+restores, targeted malformed-snapshot diagnostics, and caller-state
+preservation on rejection.
 [t/398-debug-runtime-scoped-helper-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/398-debug-runtime-scoped-helper-boundary-audit.t)
 also proves `with_fsm_debug_state(...)` restores caller debug state across
 scalar, list, void, and error paths, while ordinary debug setters remain

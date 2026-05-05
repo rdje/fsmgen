@@ -45,6 +45,7 @@ sub build_debug_runtime_contract {
         },
         public_top_level_presence_keys => debug_runtime_public_top_level_keys(),
         snapshot_helper_names => debug_runtime_snapshot_helper_names(),
+        restore_snapshot_argument_shape => 'exact schema-version-1 snapshot hash with the advertised snapshot_state_keys and bounded scalar values',
         state_control_names => debug_runtime_state_control_names(),
         trace_output_control_names => debug_runtime_trace_output_control_names(),
         emoji_control_names => debug_runtime_emoji_control_names(),
@@ -78,6 +79,7 @@ sub debug_runtime_public_top_level_keys {
             entrypoints
             public_top_level_presence_keys
             snapshot_helper_names
+            restore_snapshot_argument_shape
             state_control_names
             trace_output_control_names
             emoji_control_names

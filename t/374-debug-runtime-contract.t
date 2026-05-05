@@ -58,6 +58,11 @@ subtest 'contract exposes the bounded embedding-facing debug runtime seam' => su
         debug_runtime_snapshot_helper_names(),
         'contract publishes the bounded save/restore helper family',
     );
+    is(
+        $contract->{restore_snapshot_argument_shape},
+        'exact schema-version-1 snapshot hash with the advertised snapshot_state_keys and bounded scalar values',
+        'contract publishes the restore snapshot argument shape',
+    );
     is_deeply(
         $contract->{state_control_names},
         debug_runtime_state_control_names(),

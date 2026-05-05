@@ -59,6 +59,17 @@ our %LEVEL_EMOJI = (
     4 => '🧠',
 );
 
+my @DEBUG_STATE_SNAPSHOT_KEYS = qw(
+    schema_version
+    debug_level
+    debug_enabled
+    trace_indent_level
+    trace_output_fh
+    trace_output_file
+    trace_emojis_enabled
+);
+my %DEBUG_STATE_SNAPSHOT_KEY = map { $_ => 1 } @DEBUG_STATE_SNAPSHOT_KEYS;
+
 =head1 NAME
 
 FSM::Debug - Global debug flag system for all FSM modules
@@ -215,10 +226,7 @@ sub capture_fsm_debug_state() {
 }
 
 sub restore_fsm_debug_state($state) {
-    confess "[Debug.pm][restore_fsm_debug_state()] Expected a hashref state snapshot"
-        unless ref($state) eq 'HASH';
-    confess "[Debug.pm][restore_fsm_debug_state()] Unsupported debug-state schema version"
-        unless ($state->{schema_version} // 0) == 1;
+    _validate_debug_state_snapshot($state);
 
     my $saved_fh = $state->{trace_output_fh};
     my $saved_path = $state->{trace_output_file};
@@ -247,6 +255,66 @@ sub restore_fsm_debug_state($state) {
     $TRACE_EMOJIS_ENABLED = $state->{trace_emojis_enabled} ? 1 : 0;
 
     return $DEBUG_LEVEL;
+}
+
+sub _validate_debug_state_snapshot($state) {
+    confess "[Debug.pm][restore_fsm_debug_state()] Expected a hashref state snapshot"
+        unless ref($state) eq 'HASH';
+
+    my %missing_keys = map { $_ => 1 } @DEBUG_STATE_SNAPSHOT_KEYS;
+    my %unsupported_keys;
+    for my $key (keys %{$state}) {
+        if ($DEBUG_STATE_SNAPSHOT_KEY{$key}) {
+            delete $missing_keys{$key};
+            next;
+        }
+        $unsupported_keys{$key} = 1;
+    }
+
+    confess "[Debug.pm][restore_fsm_debug_state()] Missing debug-state snapshot key(s): "
+        . join(', ', sort keys %missing_keys)
+        if %missing_keys;
+    confess "[Debug.pm][restore_fsm_debug_state()] Unsupported debug-state snapshot key(s): "
+        . join(', ', sort keys %unsupported_keys)
+        if %unsupported_keys;
+    confess "[Debug.pm][restore_fsm_debug_state()] Unsupported debug-state schema version"
+        unless _is_integer_scalar($state->{schema_version})
+            && $state->{schema_version} == 1;
+    confess "[Debug.pm][restore_fsm_debug_state()] Expected debug_level to be an integer trace level from 0 through 4"
+        unless _is_integer_scalar($state->{debug_level})
+            && $state->{debug_level} >= 0
+            && $state->{debug_level} <= 4;
+    confess "[Debug.pm][restore_fsm_debug_state()] Expected debug_enabled to be boolean 0 or 1"
+        unless _is_boolean_scalar($state->{debug_enabled});
+    confess "[Debug.pm][restore_fsm_debug_state()] Expected trace_indent_level to be a non-negative integer"
+        unless _is_integer_scalar($state->{trace_indent_level})
+            && $state->{trace_indent_level} >= 0;
+    confess "[Debug.pm][restore_fsm_debug_state()] Expected trace_output_file to be undef or a scalar non-empty path"
+        unless !defined($state->{trace_output_file})
+            || (!ref($state->{trace_output_file}) && $state->{trace_output_file} ne '');
+    confess "[Debug.pm][restore_fsm_debug_state()] Expected trace_output_fh to be undef or a filehandle snapshot"
+        unless _is_filehandle_snapshot($state->{trace_output_fh});
+    confess "[Debug.pm][restore_fsm_debug_state()] Expected trace_output_file when trace_output_fh is defined"
+        if defined($state->{trace_output_fh}) && !defined($state->{trace_output_file});
+    confess "[Debug.pm][restore_fsm_debug_state()] Expected trace_emojis_enabled to be boolean 0 or 1"
+        unless _is_boolean_scalar($state->{trace_emojis_enabled});
+
+    return;
+}
+
+sub _is_integer_scalar($value) {
+    return defined($value) && !ref($value) && $value =~ /\A[0-9]+\z/;
+}
+
+sub _is_boolean_scalar($value) {
+    return defined($value) && !ref($value) && $value =~ /\A[01]\z/;
+}
+
+sub _is_filehandle_snapshot($fh) {
+    return 1 unless defined $fh;
+    return 0 unless ref($fh);
+    return 1 if ref($fh) eq 'GLOB';
+    return eval { $fh->can('fileno') } ? 1 : 0;
 }
 
 sub with_fsm_debug_state($overrides, $code) {

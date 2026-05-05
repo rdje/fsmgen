@@ -1663,6 +1663,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         debug_runtime_snapshot_state_keys(),
         'manifest records the bounded debug-runtime snapshot-state keys',
     );
+    is(
+        $manifest->{embedding}{debug_runtime}{restore_snapshot_argument_shape},
+        'exact schema-version-1 snapshot hash with the advertised snapshot_state_keys and bounded scalar values',
+        'manifest records the bounded debug-runtime restore snapshot argument shape',
+    );
     is_deeply(
         $manifest->{embedding}{debug_runtime}{named_trace_verbosity_values},
         debug_runtime_named_trace_verbosity_values(),

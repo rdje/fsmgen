@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Debug restore now validates snapshot state shape
+- Updated
+  [perl/FSM/Debug.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Debug.pm)
+  so `restore_fsm_debug_state(...)` validates an exact schema-version-1
+  snapshot shape, bounded scalar fields, optional trace path, and filehandle
+  snapshot shape before applying any process-global debug state.
+- Added
+  [t/494-debug-runtime-restore-state-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/494-debug-runtime-restore-state-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  valid captured restores, malformed snapshot rejection, targeted diagnostics,
+  and no caller-state mutation on rejection.
+- Updated
+  [perl/FSM/Support/DebugRuntimeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DebugRuntimeContract.pm),
+  [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md),
+  and the mdBook extension/embedding chapter to advertise the restore snapshot
+  argument shape. This is `R13` debug-runtime boundary hardening only; roadmap
+  lane status is unchanged.
+
 ## 2026-05-05: Extension registry lists now copy caller-owned arrays
 - Updated
   [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)
