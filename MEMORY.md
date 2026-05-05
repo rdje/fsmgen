@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Composition top symbols now clone local symbol-table access
+- Updated
+  [perl/FSM/Composition/TopSymbols.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopSymbols.pm)
+  so the composition-root local symbol table is cloned at construction and
+  from `local_symbols()`, while `store_constant(...)`, `store_enum(...)`, and
+  `store_type(...)` remain the explicit mutation APIs and return caller-owned
+  snapshots.
+- Added
+  [t/506-composition-top-symbols-local-symbols-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/506-composition-top-symbols-local-symbols-defensive-copy-boundary-audit.t)
+  to prove local-symbol constructor/accessor mutation and store-wrapper return
+  mutation cannot contaminate top-symbol resolution.
+- Focused validation pairs the new local-symbol audit with composition parser,
+  composition aggregate-value, composition symbol-contract, and declarative
+  scalar/aggregate type suites. This is `R13` runtime contract-integrity
+  hardening only; no public manifest shape, user-facing docs, generation
+  behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Composition top symbols now clone imported package maps and raw blocks
 - Updated
   [perl/FSM/Composition/TopSymbols.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopSymbols.pm)

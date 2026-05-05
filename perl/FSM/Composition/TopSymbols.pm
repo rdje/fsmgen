@@ -18,13 +18,13 @@ sub new ($class, %args) {
     );
 
     return bless {
-        local_symbols => $local_symbols,
+        local_symbols => _clone_package_symbols($local_symbols),
         imported_packages => _clone_imported_packages($args{imported_packages} || {}),
         raw_blocks => _clone($args{raw_blocks} || []),
     }, $class;
 }
 
-sub local_symbols ($self) { return $self->{local_symbols} }
+sub local_symbols ($self) { return _clone_package_symbols($self->{local_symbols}) }
 sub constants ($self) { return $self->{local_symbols}->constants }
 sub enums ($self) { return $self->{local_symbols}->enums }
 sub types ($self) { return $self->{local_symbols}->types }

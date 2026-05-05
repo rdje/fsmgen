@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: TopSymbols local_symbols should be an inspection snapshot
+- After imported package maps were isolated, `TopSymbols->local_symbols` was the
+  remaining direct object accessor for composition-root constants, enums, and
+  types.
+- TopSymbols now clones the local `FSM::Package::Symbols` table at construction
+  and when returning `local_symbols()`. The wrapper store methods remain the
+  intended mutation API and return caller-owned snapshots through the underlying
+  package-symbol clone policy.
+- This keeps local composition-root symbol resolution stable during parser,
+  package-import, and symbol-contract inspection.
+
 ## 2026-05-05: TopSymbols imported packages and raw blocks need snapshot access
 - `FSM::Composition::TopSymbols` owns composition-root local symbols plus the
   imported package symbol tables used for width/type/payload resolution.

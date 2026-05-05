@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Composition top symbols now clone local symbol-table access
+- Updated
+  [perl/FSM/Composition/TopSymbols.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopSymbols.pm)
+  so the composition-root local symbol table is cloned at construction and
+  from `local_symbols()`, while `store_constant(...)`, `store_enum(...)`, and
+  `store_type(...)` remain the explicit mutation APIs. No roadmap status
+  changed.
+- Added
+  [t/506-composition-top-symbols-local-symbols-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/506-composition-top-symbols-local-symbols-defensive-copy-boundary-audit.t)
+  to prove local-symbol constructor/accessor mutation and store-wrapper return
+  mutation cannot contaminate top-symbol resolution.
 ### Composition top symbols now clone imported package maps and raw blocks
 - Updated
   [perl/FSM/Composition/TopSymbols.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopSymbols.pm)
