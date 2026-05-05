@@ -81,6 +81,8 @@ This hook/context boundary is now advertised in the capability manifest under
 - the stable context accessor names
 - the rule that extension modules loaded by name must provide a real `new()`
   method
+- the rule that registry extension arrays are copied while extension objects
+  remain live hook objects
 - and the deliberate absence of legacy `.plg` discovery, automatic directory
   discovery, and `AUTOLOAD` hook dispatch
 
@@ -227,6 +229,11 @@ also proves direct registry methods own their payload argument counts:
 `extensions(...)` takes no payload arguments, `dispatch_hook(...)` takes a
 hook name and context, and hook wrapper methods take one context argument after
 the registry invocant.
+[t/493-typed-extension-registry-extension-list-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/493-typed-extension-registry-extension-list-defensive-copy-boundary-audit.t)
+also proves direct registry construction and `extensions()` accessor calls copy
+the extension array, so caller-side list mutation cannot alter the registry's
+configured dispatch list while the extension objects remain the live hook
+objects that dispatch invokes.
 [t/399-hdl-generator-facade-stateful-reuse-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/399-hdl-generator-facade-stateful-reuse-boundary-audit.t)
 also proves the advertised `stateful_reuse_supported` promise is
 runtime-backed: one facade object preserves `strict_mode`, `target_language`,

@@ -168,6 +168,11 @@ subtest 'contract declares the bounded typed-extension surface' => sub {
         'contract records the direct registry dispatch context shape',
     );
     is(
+        $contract->{extension_object_contract}{registry_extension_list_policy},
+        'constructor and extensions accessor copy the extension array; extension objects remain live hook objects',
+        'contract records the registry extension-list copy policy',
+    );
+    is(
         $contract->{context_contract}{constructor_receiver_shape},
         'scalar FSM::Extension::Context class name',
         'contract records the context constructor receiver shape',

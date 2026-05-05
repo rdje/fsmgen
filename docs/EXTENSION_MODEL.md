@@ -44,6 +44,9 @@ Current contract:
 - the CLI may also load repeated `--extension-config <file>` entries explicitly,
 - each extension must be a normal blessed Perl object that provides at least
   one real supported hook method discoverable by `UNIVERSAL::can`,
+- the registry copies extension arrays at construction and from `extensions()`
+  accessors while keeping the extension objects themselves as live hook
+  objects,
 - the shipped hook set today is:
   - `after_parse_source($context)`
   - `after_generate_result($context)`.
@@ -136,6 +139,11 @@ also proves direct registry methods own their payload argument counts:
 `extensions(...)` takes no payload arguments, `dispatch_hook(...)` takes a
 hook name and context, and hook wrapper methods take one context argument after
 the registry invocant.
+[t/493-typed-extension-registry-extension-list-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/493-typed-extension-registry-extension-list-defensive-copy-boundary-audit.t)
+also proves direct registry construction and `extensions()` accessor calls copy
+the extension array, so caller-side list mutation cannot alter the registry's
+configured dispatch list while the extension objects remain the live hook
+objects that dispatch invokes.
 [t/394-typed-extension-context-accessor-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/394-typed-extension-context-accessor-boundary-audit.t)
 also proves the context accessor names are stable for the current schema
 version by checking manifest discovery, the implemented
@@ -209,8 +217,9 @@ For embedders, the same boundary is now machine-readable through
 and advertised by `bin/fsmgen --capability-manifest` under
 `embedding.typed_extensions`. That manifest entry is intentionally bounded: it
 names the current loading entrypoints, hook names, context accessor names, and
-the direct context constructor boundaries, and non-goals, but it does not
-claim the entire future extension API is frozen.
+the direct registry/context boundaries, including registry extension-list copy
+policy and non-goals, but it does not claim the entire future extension API is
+frozen.
 
 ## Examples
 ### Example 1: annotate the returned result

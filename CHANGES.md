@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Extension registry lists now copy caller-owned arrays
+- Updated
+  [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)
+  so direct typed-extension registry construction copies the supplied
+  `extensions` array and `extensions()` returns fresh arrays without cloning
+  the live hook objects. No roadmap status changed.
+- Added
+  [t/493-typed-extension-registry-extension-list-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/493-typed-extension-registry-extension-list-defensive-copy-boundary-audit.t)
+  to prove direct contract/manifest provenance, constructor-list isolation,
+  accessor-list isolation, and dispatch over the registry-owned list.
+- Updated the typed-extension contract plus extension docs in
+  [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md),
+  [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md),
+  and the mdBook extension chapter to advertise the registry extension-list
+  copy policy.
 ### Source path resolver now has defensive-copy coverage
 - Added
   [t/492-source-path-resolver-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/492-source-path-resolver-defensive-copy-boundary-audit.t)

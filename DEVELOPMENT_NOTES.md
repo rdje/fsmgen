@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: registry extension lists are configuration, hook objects are live
+- `FSM::Extension::Registry` stores the configured extension list as registry
+  state. Callers should not be able to mutate that list after construction by
+  holding the original array or a value returned by `extensions()`.
+- The registry now copies those arrays but deliberately keeps the extension
+  object references themselves. Stateful extension objects and result
+  augmentation still work through the same live hook objects; only the list
+  container is isolated.
+- The machine-readable typed-extension contract and mirrored extension docs now
+  state this copy policy so embedders can distinguish list ownership from hook
+  object identity.
+
 ## 2026-05-05: source path resolver arrays should stay mutation-safe
 - `FSM::SourcePathResolver` sits behind CLI/source lookup and the public
   `HDLGenerator` `source_search_paths` constructor option. It returns mutable

@@ -2138,7 +2138,7 @@ This hook/context boundary is also advertised in the capability manifest under
 [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm).
 That manifest entry is the machine-readable contract for embedders that need to
 discover the current hook names, context accessor names, loading entrypoints,
-and deliberate non-goals.
+registry extension-list copy policy, and deliberate non-goals.
 It also advertises the grouped `name_family_map` key as part of that bounded
 top-level contract shell, and
 [t/306-extension-contract.t](/Users/richarddje/Documents/github/fsmgen/t/306-extension-contract.t)
@@ -2272,6 +2272,11 @@ also proves direct registry methods own their payload argument counts:
 `extensions(...)` takes no payload arguments, `dispatch_hook(...)` takes a
 hook name and context, and hook wrapper methods take one context argument after
 the registry invocant.
+[t/493-typed-extension-registry-extension-list-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/493-typed-extension-registry-extension-list-defensive-copy-boundary-audit.t)
+also proves direct registry construction and `extensions()` accessor calls copy
+the extension array, so caller-side list mutation cannot alter the registry's
+configured dispatch list while the extension objects remain the live hook
+objects that dispatch invokes.
 [t/399-hdl-generator-facade-stateful-reuse-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/399-hdl-generator-facade-stateful-reuse-boundary-audit.t)
 also proves the advertised `stateful_reuse_supported` promise is
 runtime-backed: one facade object preserves `strict_mode`, `target_language`,

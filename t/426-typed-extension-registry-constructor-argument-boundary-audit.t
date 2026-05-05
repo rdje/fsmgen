@@ -106,10 +106,15 @@ subtest 'direct registry construction accepts the exact class receiver and suppo
     my $registry = FSM::Extension::Registry->new(extensions => $extensions);
 
     isa_ok($registry, 'FSM::Extension::Registry');
-    is(
+    isnt(
         $registry->extensions,
         $extensions,
-        'registry preserves the accepted extension array reference',
+        'registry does not expose the accepted extension array reference',
+    );
+    is_deeply(
+        $registry->extensions,
+        $extensions,
+        'registry preserves the accepted extension object list values',
     );
 };
 

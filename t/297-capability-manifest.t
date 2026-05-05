@@ -1580,6 +1580,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest records the typed extension direct registry dispatch context shape',
     );
     is(
+        $manifest->{embedding}{typed_extensions}{extension_object_contract}{registry_extension_list_policy},
+        'constructor and extensions accessor copy the extension array; extension objects remain live hook objects',
+        'manifest records the typed extension registry extension-list copy policy',
+    );
+    is(
         $manifest->{embedding}{typed_extensions}{context_contract}{constructor_receiver_shape},
         'scalar FSM::Extension::Context class name',
         'manifest records the typed extension context constructor receiver shape',

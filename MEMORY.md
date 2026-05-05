@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Extension registry lists now copy caller-owned arrays
+- Updated
+  [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)
+  so `FSM::Extension::Registry->new(extensions => ...)` stores a registry-owned
+  copy of the extension array and `extensions()` returns a fresh array each
+  time. Extension objects themselves remain the live hook objects used during
+  dispatch.
+- Added
+  [t/493-typed-extension-registry-extension-list-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/493-typed-extension-registry-extension-list-defensive-copy-boundary-audit.t)
+  and updated the direct/manifest typed-extension contract to advertise the
+  registry extension-list copy policy.
+- Updated the mirrored user-facing extension docs in
+  [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md),
+  [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md),
+  and the mdBook extension chapter. This is `R13` typed-extension runtime
+  contract hardening only; roadmap lane status is unchanged.
+
 ## 2026-05-05: Source path resolver now has defensive-copy coverage
 - Added
   [t/492-source-path-resolver-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/492-source-path-resolver-defensive-copy-boundary-audit.t)

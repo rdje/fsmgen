@@ -69,7 +69,7 @@ sub new {
     }
 
     return bless {
-        extensions => $extensions,
+        extensions => [@{$extensions}],
         $REGISTRY_INSTANCE_MARKER => 1,
     }, $class;
 }
@@ -87,7 +87,7 @@ sub extensions {
     _validate_registry_method_receiver($self, 'extensions');
     $_validate_registry_method_argument_count->('extensions', 0, 'no payload arguments', @args);
 
-    return $self->{extensions};
+    return [@{$self->{extensions}}];
 }
 
 sub dispatch_hook {
