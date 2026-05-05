@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: HDLGenerator composition_plan contract now has defensive-copy coverage
+- Added
+  [t/468-hdl-generator-composition-plan-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/468-hdl-generator-composition-plan-contract-defensive-copy-boundary-audit.t)
+  to prove `build_hdl_generator_composition_plan_contract()` and its exported
+  helper builders return fresh nested structures across calls.
+- Focused validation passed with the composition_plan contract, HDLGenerator
+  shell-only runtime contract, and new defensive-copy audit cluster (`3`
+  files, `6` tests).
+- This is `R13` HDLGenerator composition_plan contract-integrity coverage
+  only; no public API shape, user-facing docs, mdBook source, generation
+  behavior, or roadmap lane status changed.
+
 ## 2026-05-05: HDLGenerator composition_spec contract now has defensive-copy coverage
 - Added
   [t/467-hdl-generator-composition-spec-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/467-hdl-generator-composition-spec-contract-defensive-copy-boundary-audit.t)

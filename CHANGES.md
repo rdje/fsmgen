@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### HDLGenerator composition_plan contract now has defensive-copy coverage
+- Added
+  [t/468-hdl-generator-composition-plan-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/468-hdl-generator-composition-plan-contract-defensive-copy-boundary-audit.t)
+  to prove `build_hdl_generator_composition_plan_contract()` and its exported
+  helper builders return fresh nested structures across calls. No roadmap
+  status changed.
+- Focused validation passed with the composition_plan contract, HDLGenerator
+  shell-only runtime contract, and new defensive-copy audit cluster (`3`
+  files, `6` tests).
 ### HDLGenerator composition_spec contract now has defensive-copy coverage
 - Added
   [t/467-hdl-generator-composition-spec-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/467-hdl-generator-composition-spec-contract-defensive-copy-boundary-audit.t)
