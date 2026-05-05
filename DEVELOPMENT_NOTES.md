@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: PortsBlock access should be container-owned
+- `FSM::Composition::PortsBlock` is parsed before top-port inference and plan
+  building. Its `ports()` and `raw_ast()` accessors exposed the arrays created
+  during parsing.
+- PortsBlock now clones mutable containers on entry and access. Contained port
+  objects keep identity, matching the composition plan rule, while array/hash
+  mutation through inspection cannot change the parsed composition spec.
+- This keeps `?ports` parsing stable for C1, explicit-link, and declarative
+  type flows that repeatedly inspect the same ports block.
+
 ## 2026-05-05: Composition plans should expose container snapshots
 - `FSM::Composition::Plan` is the shared in-process carrier for planned top
   ports, links, resolved links, nets, instances, auxiliary assignments,

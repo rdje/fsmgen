@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Composition ports blocks now clone port containers
+- Updated
+  [perl/FSM/Composition/PortsBlock.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/PortsBlock.pm)
+  so ports-block port lists and raw AST payloads are cloned at construction
+  and from `ports()` / `raw_ast()` accessors.
+- Added
+  [t/514-composition-ports-block-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/514-composition-ports-block-defensive-copy-boundary-audit.t)
+  to prove constructor and accessor mutation cannot contaminate parsed ports
+  block containers.
+- Focused validation pairs the new PortsBlock audit with composition parser,
+  plan-builder, C1 plan-builder, and declarative scalar type suites. This is
+  `R13` runtime contract-integrity hardening only; no public manifest shape,
+  user-facing docs, generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Composition plan containers now return caller-owned snapshots
 - Updated
   [perl/FSM/Composition/Plan.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Plan.pm)

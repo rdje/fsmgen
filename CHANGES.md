@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Composition ports blocks now clone port containers
+- Updated
+  [perl/FSM/Composition/PortsBlock.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/PortsBlock.pm)
+  so ports-block port lists and raw AST payloads are cloned at construction
+  and from accessors. No roadmap status changed.
+- Added
+  [t/514-composition-ports-block-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/514-composition-ports-block-defensive-copy-boundary-audit.t)
+  to prove constructor and accessor mutation cannot contaminate parsed ports
+  block containers.
 ### Composition plan containers now return caller-owned snapshots
 - Updated
   [perl/FSM/Composition/Plan.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Plan.pm)
