@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Composition instance parameter overrides need caller-owned access
+- `FSM::Composition::Instance` carries parsed child parameter overrides before
+  generated/RTL child realization and before
+  `FSM::Composition::ParameterOverrideResolver` normalizes them.
+- Constructor, accessor, and setter paths now clone the override array and
+  nested values. The setter remains the only mutation point used by the
+  resolver, and it returns a fresh snapshot instead of the stored list.
+- This keeps parsed and resolved child-parameter payloads stable across parser,
+  realizer, plan, structural IR, and intent HIR inspection.
+
 ## 2026-05-05: Composition port declared-type setter should mirror accessor ownership
 - `FSM::Composition::Port` already cloned declared type specs at construction
   and from `declared_type_spec()`, but `set_declared_type_spec(...)` returned

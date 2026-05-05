@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Composition instance parameter overrides now return caller-owned copies
+- Updated
+  [perl/FSM/Composition/Instance.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Instance.pm)
+  so `parameter_overrides` are copied at construction, `parameter_overrides()`
+  returns a fresh array, and `set_parameter_overrides(...)` copies input and
+  returns a fresh snapshot. No roadmap status changed.
+- Added
+  [t/503-composition-instance-parameter-overrides-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/503-composition-instance-parameter-overrides-defensive-copy-boundary-audit.t)
+  to prove constructor, accessor, setter-input, and setter-return mutation
+  cannot contaminate parsed or resolved child-parameter overrides.
 ### Composition port declared-type setter now returns a caller-owned copy
 - Updated
   [perl/FSM/Composition/Port.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Port.pm)

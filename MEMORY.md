@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Composition instance parameter overrides now return caller-owned copies
+- Updated
+  [perl/FSM/Composition/Instance.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Instance.pm)
+  so parsed child `parameter_overrides` are copied at construction,
+  `parameter_overrides()` returns a fresh array, and
+  `set_parameter_overrides(...)` copies input and returns a fresh snapshot.
+- Added
+  [t/503-composition-instance-parameter-overrides-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/503-composition-instance-parameter-overrides-defensive-copy-boundary-audit.t)
+  to prove constructor input mutation, accessor-return mutation, setter input
+  mutation, and setter-return mutation cannot contaminate parsed or resolved
+  child-parameter overrides.
+- Focused validation pairs the new override audit with parser, generated child
+  parameter override, generated/RTL child realizer, and multi-RTL parameter
+  override suites. This is `R13` runtime contract-integrity hardening only; no
+  public manifest shape, user-facing docs, generation behavior, or roadmap lane
+  status changed.
+
 ## 2026-05-05: Composition port declared-type setter now returns a caller-owned copy
 - Updated
   [perl/FSM/Composition/Port.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Port.pm)

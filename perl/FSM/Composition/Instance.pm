@@ -12,7 +12,7 @@ sub new ($class, %args) {
         name => $args{name},
         source_name => $args{source_name},
         module_name => $args{module_name},
-        parameter_overrides => $args{parameter_overrides} || [],
+        parameter_overrides => _clone($args{parameter_overrides} || []),
         raw_items => $args{raw_items} || [],
         raw_ast => $args{raw_ast},
     }, $class;
@@ -22,12 +22,26 @@ sub kind ($self) { return $self->{kind} }
 sub name ($self) { return $self->{name} }
 sub source_name ($self) { return $self->{source_name} }
 sub module_name ($self) { return $self->{module_name} }
-sub parameter_overrides ($self) { return $self->{parameter_overrides} }
+sub parameter_overrides ($self) { return _clone($self->{parameter_overrides}) }
 sub set_parameter_overrides ($self, $parameter_overrides) {
-    $self->{parameter_overrides} = $parameter_overrides || [];
-    return $self->{parameter_overrides};
+    $self->{parameter_overrides} = _clone($parameter_overrides || []);
+    return $self->parameter_overrides;
 }
 sub raw_items ($self) { return $self->{raw_items} }
 sub raw_ast ($self) { return $self->{raw_ast} }
+
+sub _clone ($value) {
+    return undef unless defined $value;
+
+    if (ref($value) eq 'HASH') {
+        return { map { $_ => _clone($value->{$_}) } keys %$value };
+    }
+
+    if (ref($value) eq 'ARRAY') {
+        return [ map { _clone($_) } @$value ];
+    }
+
+    return $value;
+}
 
 1;
