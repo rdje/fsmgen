@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: AST factorization wrapper constructors now retain all fields
+- Updated
+  [perl/FSM/HDL/ASTFactorization.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/ASTFactorization.pm)
+  so `FSM::HDL::SubstitutedBinaryOp`,
+  `FSM::HDL::SubstitutedUnaryOp`, and
+  `FSM::HDL::IntermediateSignalRef` constructors validate required fields
+  before building their hashes. This fixes the same bare `Carp::confess`
+  fallback issue as the previous `IntermediateSignal` slice, where present
+  leading fields could swallow later hash entries.
+- Added
+  [t/544-ast-factorization-wrapper-constructor-field-audit.t](/Users/richarddje/Documents/github/fsmgen/t/544-ast-factorization-wrapper-constructor-field-audit.t)
+  to prove wrapper constructors retain operator/child/type fields, render
+  correctly, preserve child identity, keep signal-ref compatibility, and reject
+  missing required fields.
+- Focused validation paired the wrapper audit with intermediate-signal context,
+  AST factorization, enable-graph factorization, intermediate-signal width, and
+  operand-contract validation suites. This is `R13` runtime
+  contract-integrity hardening only; no public manifest shape, user-facing docs,
+  generation behavior, or roadmap lane status changed.
+
 ## 2026-05-05: IntermediateSignal context metadata is now snapshot-owned
 - Updated
   [perl/FSM/HDL/ASTFactorization.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/ASTFactorization.pm)

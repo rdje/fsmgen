@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### AST factorization wrapper constructors now retain all fields
+- Updated
+  [perl/FSM/HDL/ASTFactorization.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/ASTFactorization.pm)
+  so substituted binary/unary op wrappers and intermediate-signal references
+  validate required fields before constructing their runtime hashes. No roadmap
+  status changed.
+- Added
+  [t/544-ast-factorization-wrapper-constructor-field-audit.t](/Users/richarddje/Documents/github/fsmgen/t/544-ast-factorization-wrapper-constructor-field-audit.t)
+  to prove wrapper constructors retain full runtime shape, render correctly, and
+  reject missing required fields.
 ### IntermediateSignal context metadata is now snapshot-owned
 - Updated
   [perl/FSM/HDL/ASTFactorization.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/ASTFactorization.pm)

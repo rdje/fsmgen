@@ -1098,10 +1098,19 @@ use Scalar::Util qw(blessed);
 
 sub new {
     my ($class, %args) = @_;
+
+    my $operator = defined($args{operator}) && $args{operator} ne ''
+        ? $args{operator}
+        : Carp::confess("SubstitutedBinaryOp requires operator");
+    my $left = $args{left}
+        || Carp::confess("SubstitutedBinaryOp requires left");
+    my $right = $args{right}
+        || Carp::confess("SubstitutedBinaryOp requires right");
+
     return bless {
-        operator => $args{operator} || Carp::confess "SubstitutedBinaryOp requires operator",
-        left => $args{left} || Carp::confess "SubstitutedBinaryOp requires left",
-        right => $args{right} || Carp::confess "SubstitutedBinaryOp requires right",
+        operator => $operator,
+        left => $left,
+        right => $right,
         type => 'binary_op'
     }, $class;
 }
@@ -1128,9 +1137,16 @@ use Scalar::Util qw(blessed);
 
 sub new {
     my ($class, %args) = @_;
+
+    my $operator = defined($args{operator}) && $args{operator} ne ''
+        ? $args{operator}
+        : Carp::confess("SubstitutedUnaryOp requires operator");
+    my $operand = $args{operand}
+        || Carp::confess("SubstitutedUnaryOp requires operand");
+
     return bless {
-        operator => $args{operator} || Carp::confess "SubstitutedUnaryOp requires operator",
-        operand => $args{operand} || Carp::confess "SubstitutedUnaryOp requires operand",
+        operator => $operator,
+        operand => $operand,
         type => 'unary_op'
     }, $class;
 }
@@ -1156,8 +1172,13 @@ use Scalar::Util qw(blessed);
 # It's designed to be compatible with the existing AST signal reference classes
 sub new {
     my ($class, %args) = @_;
+
+    my $signal_name = defined($args{signal_name}) && $args{signal_name} ne ''
+        ? $args{signal_name}
+        : Carp::confess("IntermediateSignalRef requires signal_name");
+
     return bless {
-        signal_name => $args{signal_name} || Carp::confess "IntermediateSignalRef requires signal_name",
+        signal_name => $signal_name,
         type => 'intermediate_signal_ref'
     }, $class;
 }

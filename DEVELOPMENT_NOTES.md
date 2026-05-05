@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: AST factorization wrappers should validate before blessing
+- The wrapper classes at the end of `FSM::HDL::ASTFactorization` are runtime AST
+  compatibility objects consumed by factorization, width inference, operand
+  validation, and rendering. Their required-field fallback should not be part of
+  the hash literal because bare `Carp::confess` can consume the rest of the
+  list.
+- The substituted binary/unary wrappers and intermediate-signal reference now
+  validate into local variables first, then bless a complete runtime shape.
+
 ## 2026-05-05: IntermediateSignal contexts are metadata, not mutation handles
 - `FSM::AST::IntermediateSignal` carries a live `original_expression` object
   for rendering and analysis, but its `contexts` list is debug/accounting
