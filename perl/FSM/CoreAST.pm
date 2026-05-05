@@ -494,12 +494,13 @@ package FSM::CoreAST::SignalRef;
     sub new($class, $signal, %args) {
         my $self = $class->SUPER::new(type => 'signal_ref', %args);
         $self->{signal} = $signal;
-        $self->{slice} = $args{slice};  # [high, low] or undef for full signal
+        # [high, low] or undef for full signal
+        $self->{slice} = FSM::CoreAST::Expression::_clone_expression_value($args{slice});
         return $self;
     }
     
     sub signal($self) { $self->{signal} }
-    sub slice($self) { $self->{slice} }
+    sub slice($self) { FSM::CoreAST::Expression::_clone_expression_value($self->{slice}) }
     sub name($self) { 
         # Convenience method for HDL generators - delegate to signal's name
         return $self->{signal} && $self->{signal}->can('name') ? 

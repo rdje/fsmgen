@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### SignalRef slice lists now return snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so `FSM::CoreAST::SignalRef` clones slice lists on construction and from
+  `slice()` while preserving the referenced signal object identity. No roadmap
+  status changed.
+- Added
+  [t/532-core-ast-signal-ref-slice-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/532-core-ast-signal-ref-slice-defensive-copy-boundary-audit.t)
+  to prove caller mutation cannot contaminate sliced references and unsliced
+  references still report `undef`.
 ### Expression operand and argument lists now return snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)

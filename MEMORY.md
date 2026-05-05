@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: SignalRef slice lists now return snapshots
+- Updated
+  [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+  so `FSM::CoreAST::SignalRef` clones slice lists on construction and from
+  `slice()`. The referenced signal object remains live by identity, and HDL
+  renderers continue to read the owned internal slice.
+- Added
+  [t/532-core-ast-signal-ref-slice-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/532-core-ast-signal-ref-slice-defensive-copy-boundary-audit.t)
+  to prove constructor and accessor mutation cannot contaminate sliced
+  references, while unsliced references still report `undef`.
+- Focused validation pairs the new SignalRef audit with enable-graph AST,
+  aggregate expression type support, enable-graph capture, and operand-contract
+  suites. This is `R13` runtime contract-integrity hardening only; no public
+  manifest shape, user-facing docs, generation behavior, or roadmap lane status
+  changed.
+
 ## 2026-05-05: Expression operand and argument lists now return snapshots
 - Updated
   [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)

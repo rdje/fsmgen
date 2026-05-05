@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: SignalRef slices should be value snapshots
+- `FSM::CoreAST::SignalRef` slices are two-element value lists consumed by
+  renderers, parser validation, aggregate-width inference, and enable-graph
+  lowering. They are not a mutation API for changing a reference after
+  construction.
+- SignalRef now clones the slice container on construction and from `slice()`,
+  while keeping the referenced signal object live by identity. Subclass renderers
+  still read internal owned data directly.
+
 ## 2026-05-05: Expression operand containers should be inspected as snapshots
 - CoreAST expression operands are structural traversal containers used by
   renderers, expression naming, aggregate inference, and enable-graph capture.
