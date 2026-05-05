@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Semantic exports section contract now has defensive-copy coverage
+- Added
+  [t/447-semantic-exports-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/447-semantic-exports-contract-defensive-copy-boundary-audit.t)
+  to prove `build_semantic_exports_contract()` returns fresh nested structures
+  across calls and that semantic-exports top-level, nested contract, and nested
+  presence helpers are fresh. No roadmap status changed.
+- Focused validation passed with the semantic exports contract, capability
+  manifest runtime contract, and new defensive-copy audit cluster (`3` files,
+  `13` tests).
 ### Language surface section contract now has defensive-copy coverage
 - Added
   [t/446-language-surface-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/446-language-surface-contract-defensive-copy-boundary-audit.t)

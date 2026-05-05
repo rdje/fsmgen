@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: semantic-exports section contracts should stay mutation-safe
+- The capability manifest semantic-exports section points consumers at the
+  bounded normalized semantic JSON child contract. Its nested contract metadata
+  and nested presence map are mutable in-process Perl structures, so caller
+  mutation must not affect later semantic-exports contract discovery.
+- The new audit mutates a full returned semantic-exports contract and each
+  helper list/map, then proves fresh calls remain clean and aligned with the
+  nested presence map.
+- This is coverage only; no semantic-exports section contract shape changed.
+
 ## 2026-05-05: language-surface section contracts should stay mutation-safe
 - The capability manifest language-surface contract publishes first-level
   syntax-family key lists for strict/default modes, assignments, system
