@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Capability manifest contract now has defensive-copy coverage
+- Added
+  [t/479-capability-manifest-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/479-capability-manifest-contract-defensive-copy-boundary-audit.t)
+  to prove `build_capability_manifest_contract()` and its exported helper
+  builders return fresh nested structures across calls.
+- Focused validation passed with the capability manifest contract, capability
+  manifest runtime contract, and new defensive-copy audit cluster (`3` files,
+  `13` tests).
+- This is `R13` capability manifest contract-integrity coverage only; no
+  public API shape, user-facing docs, mdBook source, generation behavior, or
+  roadmap lane status changed.
+
 ## 2026-05-05: Normalized semantic structural_rtl_ir contract now has defensive-copy coverage
 - Added
   [t/478-normalized-semantic-structural-rtl-ir-contract-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/478-normalized-semantic-structural-rtl-ir-contract-defensive-copy-boundary-audit.t)
