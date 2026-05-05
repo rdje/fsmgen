@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: Deferred parameter override resolution owns result records
+- Non-deferred parameter overrides already pass through the resolver as cloned
+  records. Deferred symbol overrides also need that ownership boundary because
+  they preserve parser metadata and raw source fields while replacing the
+  resolved value fields.
+- Deferred override resolution now starts from a deep clone of the parser
+  override record. Resolution still removes deferred bookkeeping and updates
+  canonical value fields, but nested parser metadata cannot be mutated through
+  the resolved record.
+
 ## 2026-05-05: Shared-datapath candidate augmentation has separate plan storage
 - `SharedDatapathSupport::augment_plan()` enriches candidate metadata while it
   wires helper nets and lifted runtime state. Existing callers and tests observe

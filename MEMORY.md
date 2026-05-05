@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Deferred parameter override resolution now deep-clones source records
+- Updated
+  [perl/FSM/Composition/ParameterOverrideResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ParameterOverrideResolver.pm)
+  so deferred symbol override resolution starts from a deep clone of the parser
+  override record before replacing resolved value fields and clearing deferred
+  bookkeeping.
+- Added
+  [t/563-composition-parameter-override-resolution-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/563-composition-parameter-override-resolution-defensive-copy-boundary-audit.t)
+  to prove resolved override metadata mutation cannot contaminate parser-owned
+  deferred override records.
+- Focused validation paired the new audit with the composition instance
+  parameter override defensive-copy audit plus RTL and generated-child parameter
+  override pipeline suites. This is `R13` runtime contract-integrity hardening
+  only; no public manifest shape, user-facing docs, mdBook content, generation
+  behavior, or roadmap lane status changed.
+
 ## 2026-05-05: Shared-datapath plan candidate storage now snapshots augmented metadata
 - Updated
   [perl/FSM/Composition/SharedDatapathSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SharedDatapathSupport.pm)

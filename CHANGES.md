@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Deferred parameter override resolution now deep-clones source records
+- Updated
+  [perl/FSM/Composition/ParameterOverrideResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ParameterOverrideResolver.pm)
+  so deferred symbol override resolution starts from a cloned override record
+  before replacing resolved value fields. No roadmap status changed.
+- Added
+  [t/563-composition-parameter-override-resolution-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/563-composition-parameter-override-resolution-defensive-copy-boundary-audit.t)
+  to prove mutating resolved override metadata cannot contaminate parser-owned
+  deferred override records.
 ### Shared-datapath plan candidate storage now snapshots augmented metadata
 - Updated
   [perl/FSM/Composition/SharedDatapathSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SharedDatapathSupport.pm)

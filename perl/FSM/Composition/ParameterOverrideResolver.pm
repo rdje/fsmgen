@@ -76,13 +76,11 @@ sub _resolve_override ($class, %args) {
         },
     );
 
-    my $resolved = {
-        %$override,
-        value_text => $value_info->{value_text},
-        value_kind => $value_info->{value_kind},
-        value_payload => $value_info->{value_payload},
-        origin_kind => $override->{origin_kind} // 'child_parameter_override',
-    };
+    my $resolved = _clone($override);
+    $resolved->{value_text} = $value_info->{value_text};
+    $resolved->{value_kind} = $value_info->{value_kind};
+    $resolved->{value_payload} = $value_info->{value_payload};
+    $resolved->{origin_kind} = $override->{origin_kind} // 'child_parameter_override';
     $resolved->{value_width} = $value_info->{value_width} if defined $value_info->{value_width};
     $resolved->{value_type_spec} = $value_info->{value_type_spec} if ref($value_info->{value_type_spec}) eq 'HASH';
 
