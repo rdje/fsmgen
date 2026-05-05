@@ -15,12 +15,12 @@ use FSM::Extension::Registry;
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::Support::ExtensionContract qw(build_extension_contract);
 
-my $audit_test = 't/422-typed-extension-registry-dispatch-context-boundary-audit.t';
+my $audit_test = 't/434-typed-extension-registry-dispatch-constructed-context-boundary-audit.t';
 my $dispatch_context_shape = 'exact hash-backed FSM::Extension::Context object constructed by new(...) whose stage matches the dispatched hook name';
 my $dispatch_context_error = qr/FSM::Extension::Registry expects dispatch context for 'after_parse_source' to be a FSM::Extension::Context object with matching stage/s;
 
 {
-    package Test::RegistryDispatchContextBoundaryExtension;
+    package Test::RegistryDispatchConstructedContextBoundaryExtension;
 
     use strict;
     use warnings;
@@ -42,22 +42,7 @@ my $dispatch_context_error = qr/FSM::Extension::Registry expects dispatch contex
     sub calls { return shift->{calls} }
 }
 
-{
-    package Test::RegistryDispatchContextBoundaryFakeContext;
-
-    use strict;
-    use warnings;
-
-    sub new {
-        my ($class, %args) = @_;
-        return bless \%args, $class;
-    }
-
-    sub stage { return shift->{stage} }
-    sub source_info { return shift->{source_info} }
-}
-
-subtest 'typed-extension manifests publish the registry dispatch context shape' => sub {
+subtest 'typed-extension manifests publish the constructed dispatch-context boundary' => sub {
     my @views = (
         {
             label => 'direct typed-extension contract',
@@ -86,17 +71,17 @@ subtest 'typed-extension manifests publish the registry dispatch context shape' 
         is(
             $contract->{extension_object_contract}{registry_dispatch_context_shape},
             $dispatch_context_shape,
-            "$label advertises the direct registry dispatch context shape",
+            "$label advertises the constructed direct registry dispatch-context shape",
         );
         ok(
             contains_value($contract->{tested_by}, $audit_test),
-            "$label lists this dispatch-context audit in tested_by provenance",
+            "$label lists this constructed dispatch-context audit in tested_by provenance",
         );
     }
 };
 
-subtest 'direct registry dispatch still accepts a matching typed context' => sub {
-    my $extension = Test::RegistryDispatchContextBoundaryExtension->new();
+subtest 'direct registry dispatch accepts constructed matching contexts' => sub {
+    my $extension = Test::RegistryDispatchConstructedContextBoundaryExtension->new();
     my $registry = FSM::Extension::Registry->new(extensions => [$extension]);
 
     $registry->dispatch_hook('after_parse_source', make_context(
@@ -111,48 +96,41 @@ subtest 'direct registry dispatch still accepts a matching typed context' => sub
                 source_kind => 'fsm',
             },
         ],
-        'matching typed dispatch context reaches the supported extension hook',
+        'constructed matching dispatch context reaches the supported extension hook',
     );
 };
 
-subtest 'direct registry dispatch rejects malformed contexts before extension invocation' => sub {
-    for my $case (
+subtest 'direct registry dispatch rejects fake exact-class contexts before context accessor fallout' => sub {
+    my @contexts = (
         {
-            label => 'undef context',
-            context => undef,
-        },
-        {
-            label => 'hashref context',
-            context => {
-                stage => 'after_parse_source',
-            },
-        },
-        {
-            label => 'fake context class',
-            context => Test::RegistryDispatchContextBoundaryFakeContext->new(
-                stage => 'after_parse_source',
-                source_info => {
-                    kind => 'fsm',
+            label => 'fake exact-class hash object',
+            value => bless(
+                {
+                    stage => 'after_parse_source',
+                    source_info => {
+                        kind => 'fsm',
+                    },
                 },
+                'FSM::Extension::Context',
             ),
         },
         {
-            label => 'typed context with mismatched stage',
-            context => make_context(
-                stage => 'after_generate_result',
-            ),
+            label => 'fake exact-class array object',
+            value => bless([], 'FSM::Extension::Context'),
         },
-    ) {
-        my $extension = Test::RegistryDispatchContextBoundaryExtension->new();
+    );
+
+    for my $case (@contexts) {
+        my $extension = Test::RegistryDispatchConstructedContextBoundaryExtension->new();
         my $registry = FSM::Extension::Registry->new(extensions => [$extension]);
         my $error = capture_exception(sub {
-            $registry->dispatch_hook('after_parse_source', $case->{context});
+            $registry->dispatch_hook('after_parse_source', $case->{value});
         });
 
         like(
             $error,
             $dispatch_context_error,
-            "$case->{label} receives the targeted dispatch-context diagnostic",
+            "$case->{label} receives the targeted registry dispatch-context diagnostic",
         );
         is_deeply(
             $extension->calls,
@@ -161,10 +139,32 @@ subtest 'direct registry dispatch rejects malformed contexts before extension in
         );
         unlike(
             primary_diagnostic($error),
-            qr/Can't locate object method|Can't use .* as|HASH\(|ARRAY\(|source_info/s,
-            "$case->{label} does not leak raw context or hook fallout",
+            qr/FSM::Extension::Context::stage requires|HASH\(|ARRAY\(|Can't locate object method|Can't use/s,
+            "$case->{label} does not leak context accessor or raw receiver fallout",
         );
     }
+};
+
+subtest 'constructed mismatched contexts still fail at the stage-match boundary' => sub {
+    my $registry = FSM::Extension::Registry->new(
+        extensions => [Test::RegistryDispatchConstructedContextBoundaryExtension->new()],
+    );
+    my $error = capture_exception(sub {
+        $registry->dispatch_hook('after_parse_source', make_context(
+            stage => 'after_generate_result',
+        ));
+    });
+
+    like(
+        $error,
+        $dispatch_context_error,
+        'constructed context with mismatched stage receives the registry dispatch-context diagnostic',
+    );
+    unlike(
+        primary_diagnostic($error),
+        qr/FSM::Extension::Context::stage requires|HASH\(|ARRAY\(|Can't locate object method|Can't use/s,
+        'constructed mismatched context does not leak context accessor or raw receiver fallout',
+    );
 };
 
 done_testing();
@@ -175,7 +175,7 @@ sub make_context {
         ? (
             result => {
                 module_info => {
-                    module_name => 'registry_dispatch_context_boundary',
+                    module_name => 'registry_dispatch_constructed_context_boundary',
                 },
             },
         )
@@ -185,8 +185,8 @@ sub make_context {
 
     return FSM::Extension::Context->new(
         stage => $args{stage},
-        pipeline => bless({}, 'Test::RegistryDispatchContextBoundaryPipeline'),
-        source_path => '/tmp/registry_dispatch_context_boundary.fsm',
+        pipeline => bless({}, 'Test::RegistryDispatchConstructedContextBoundaryPipeline'),
+        source_path => '/tmp/registry_dispatch_constructed_context_boundary.fsm',
         target_language => 'systemverilog',
         source_info => {
             kind => 'fsm',

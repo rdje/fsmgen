@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-05: registry dispatch should reject fake exact contexts itself
+- Once `FSM::Extension::Context` accessors required constructed context
+  objects, `FSM::Extension::Registry` still checked dispatch context stage by
+  calling `$context->stage`. A fake exact-class context could therefore pass
+  the registry's class-name check and then fail through the context accessor
+  receiver guard instead of the registry dispatch-context boundary.
+- Registry dispatch now checks for an exact hash-backed constructed context
+  before reading the stage, then performs the existing stage match check. This
+  keeps invalid dispatch inputs owned by the registry and prevents extensions
+  from running on malformed contexts.
+- The check intentionally does not add a public `Context` predicate, because
+  the accessor surface is deliberately closed and regression-backed.
+
 ## 2026-05-05: context accessors should own their argument counts
 - After context accessors gained constructed-object receiver checks, extra
   accessor arguments still relied on Perl signature diagnostics. That was a

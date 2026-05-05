@@ -1,5 +1,37 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-05: Typed extension registry dispatch now requires constructed contexts
+- Hardened
+  [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)
+  so direct `dispatch_hook(...)` rejects fake exact-class context objects at
+  the registry dispatch boundary before context accessor receiver diagnostics
+  or raw receiver fallout can leak.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  so typed-extension manifests advertise the dispatch context shape as an
+  exact hash-backed `FSM::Extension::Context` object constructed by
+  `new(...)` whose stage matches the dispatched hook.
+- Added
+  [t/434-typed-extension-registry-dispatch-constructed-context-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/434-typed-extension-registry-dispatch-constructed-context-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  valid constructed matching contexts, fake exact-class context rejection,
+  stage-mismatch rejection, no extension invocation on invalid contexts, and
+  bounded diagnostics.
+- Updated the extension docs in
+  [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md),
+  [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md),
+  and
+  [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  so the live guide and mdBook source describe the constructed-context
+  dispatch boundary.
+- Focused validation passed with syntax checks and the adjacent
+  registry/context/contract/manifest cluster (`6` files, `22` tests), followed
+  by the full repo-owned `./bin/ci-regression` gate (`430` files, `3814`
+  tests) and mdBook build.
+- This is `R13` typed-extension embedder-boundary hardening only; no hook
+  family, extension loading entrypoint, generation behavior, or roadmap lane
+  status changed.
+
 ## 2026-05-05: Typed extension context accessors now own argument counts
 - Hardened
   [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm)

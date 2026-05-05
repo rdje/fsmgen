@@ -2356,6 +2356,11 @@ also proves direct registry dispatch requires a real
 `FSM::Extension::Context` object whose `stage` matches the dispatched hook
 name, so malformed direct contexts fail before extension code can reinterpret
 them.
+[t/434-typed-extension-registry-dispatch-constructed-context-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/434-typed-extension-registry-dispatch-constructed-context-boundary-audit.t)
+also proves direct registry dispatch requires an exact hash-backed context
+object constructed by `FSM::Extension::Context->new(...)`, so fake exact-class
+context objects fail at the registry boundary before context accessor fallout
+can leak.
 [t/423-typed-extension-context-constructor-argument-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/423-typed-extension-context-constructor-argument-boundary-audit.t)
 also proves direct `FSM::Extension::Context->new(...)` construction accepts
 only the exact class receiver and an even-length list of unique supported

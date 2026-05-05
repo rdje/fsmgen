@@ -164,7 +164,7 @@ subtest 'contract declares the bounded typed-extension surface' => sub {
     );
     is(
         $contract->{extension_object_contract}{registry_dispatch_context_shape},
-        'FSM::Extension::Context object whose stage matches the dispatched hook name',
+        'exact hash-backed FSM::Extension::Context object constructed by new(...) whose stage matches the dispatched hook name',
         'contract records the direct registry dispatch context shape',
     );
     is(

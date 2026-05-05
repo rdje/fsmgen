@@ -1,6 +1,27 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-05
+### Typed extension registry dispatch now requires constructed contexts
+- Hardened
+  [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)
+  so direct `dispatch_hook(...)` rejects fake exact-class context objects at
+  the registry dispatch boundary before context accessor receiver diagnostics
+  or raw receiver fallout can leak.
+- Updated
+  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  so typed-extension manifests advertise the constructed-context dispatch
+  shape, and updated the extension guide/book docs to describe the stricter
+  direct dispatch context boundary.
+- Added
+  [t/434-typed-extension-registry-dispatch-constructed-context-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/434-typed-extension-registry-dispatch-constructed-context-boundary-audit.t)
+  to prove direct contract, in-process manifest, both CLI manifest spellings,
+  valid constructed matching contexts, fake exact-class context rejection,
+  stage-mismatch rejection, no extension invocation on invalid contexts, and
+  bounded diagnostics. No roadmap status changed.
+- Focused validation passed with syntax checks and the adjacent
+  registry/context/contract/manifest cluster (`6` files, `22` tests), followed
+  by the full repo-owned `./bin/ci-regression` gate (`430` files, `3814`
+  tests) and mdBook build.
 ### Typed extension context accessors now own argument counts
 - Hardened
   [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm)

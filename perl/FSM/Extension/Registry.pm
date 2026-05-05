@@ -18,6 +18,7 @@ my @SUPPORTED_REGISTRY_OPTION_NAMES = qw(
 );
 my %SUPPORTED_REGISTRY_OPTION_NAME = map { $_ => 1 } @SUPPORTED_REGISTRY_OPTION_NAMES;
 my $REGISTRY_INSTANCE_MARKER = __PACKAGE__ . '::constructed';
+my $CONTEXT_INSTANCE_MARKER = 'FSM::Extension::Context::constructed';
 my $_validate_registry_method_argument_count = sub {
     my ($method_name, $expected_count, $expected_description, @args) = @_;
     confess "FSM::Extension::Registry::$method_name expects $expected_description after the registry invocant"
@@ -128,9 +129,14 @@ sub _dispatch_context_arg ($hook_name, $context) {
     confess "FSM::Extension::Registry expects dispatch context for '$hook_name' to be a FSM::Extension::Context object with matching stage"
         unless blessed($context)
             && blessed($context) eq 'FSM::Extension::Context'
-            && defined($context->stage)
-            && !ref($context->stage)
-            && $context->stage eq $hook_name;
+            && (reftype($context) || '') eq 'HASH'
+            && $context->{$CONTEXT_INSTANCE_MARKER};
+
+    my $stage = $context->stage;
+    confess "FSM::Extension::Registry expects dispatch context for '$hook_name' to be a FSM::Extension::Context object with matching stage"
+        unless defined($stage)
+            && !ref($stage)
+            && $stage eq $hook_name;
 
     return;
 }

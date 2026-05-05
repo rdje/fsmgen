@@ -1576,7 +1576,7 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     );
     is(
         $manifest->{embedding}{typed_extensions}{extension_object_contract}{registry_dispatch_context_shape},
-        'FSM::Extension::Context object whose stage matches the dispatched hook name',
+        'exact hash-backed FSM::Extension::Context object constructed by new(...) whose stage matches the dispatched hook name',
         'manifest records the typed extension direct registry dispatch context shape',
     );
     is(
