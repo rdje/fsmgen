@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-08: Direct generation raw AST result branch is returned as a snapshot
+- Updated
+  [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm)
+  so direct-generation results clone the top-level `raw_ast` compatibility
+  branch before returning it instead of exposing the caller/parser AST array.
+- Added
+  [t/577-direct-generation-raw-ast-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/577-direct-generation-raw-ast-alias-boundary-audit.t)
+  to prove mutating the returned direct-generation `raw_ast` cannot contaminate
+  the caller/parser AST, and later caller/parser AST mutation cannot
+  contaminate the returned result branch.
+- Focused validation:
+  `perl -Iperl -c perl/FSM/Pipeline/DirectGenerationOrchestrator.pm && perl -Iperl -c t/577-direct-generation-raw-ast-alias-boundary-audit.t && prove -Iperl t/577-direct-generation-raw-ast-alias-boundary-audit.t`
+  passed. This is `R13` runtime contract-integrity hardening only; no public
+  manifest shape, user-facing docs, mdBook content, generation behavior, or
+  roadmap lane status changed.
 ## 2026-05-08: Direct generation raw backend statistics are returned as snapshots
 - Updated
   [perl/FSM/Backend/GeneratedModuleEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/GeneratedModuleEmitter.pm)

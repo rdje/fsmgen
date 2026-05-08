@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-08: Direct-generation raw_ast is a result snapshot, not a parser mutation handle
+- Direct generation carries `raw_ast` as an unsanitized compatibility branch for
+  in-process diagnostics and fallback inspection. Even though the branch is not
+  a stable public interchange payload, returning the same array supplied by the
+  caller/parser gives result consumers a mutation handle back into the original
+  parse tree.
+- `DirectGenerationOrchestrator` now clones the top-level `raw_ast` result
+  branch at return time. The compatibility shape is unchanged, but result-local
+  annotation or inspection cannot rewrite the caller/parser AST, and later
+  caller-side AST mutation cannot rewrite the returned result.
 ## 2026-05-08: Raw backend statistics are snapshots, not backend mutation handles
 - Direct generation keeps the backend `FlattenedDT` object on the pipeline after
   generation, while also returning raw backend statistics maps for compatibility

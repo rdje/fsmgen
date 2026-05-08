@@ -90,7 +90,7 @@ sub generate_from_source ($class, %args) {
         hdl_code => $hdl_code,
         statistics => $statistics,
         resolved_package_imports => ($frontend_context{resolved_package_imports} || {}),
-        raw_ast => $raw_ast,
+        raw_ast => _clone($raw_ast),
         source_info => $source_info,
     };
 }
