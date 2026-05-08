@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-08
+### Composition generation raw AST result branch is returned as a snapshot
+- Updated
+  [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm)
+  so the top-level composition-generation `raw_ast` compatibility branch is
+  cloned before return instead of aliasing the caller/parser AST array. No
+  roadmap status changed.
+- Added
+  [t/578-composition-generation-raw-ast-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/578-composition-generation-raw-ast-alias-boundary-audit.t)
+  to prove returned raw-AST mutation and caller/parser AST mutation cannot
+  cross-contaminate each other.
 ### Direct generation raw AST result branch is returned as a snapshot
 - Updated
   [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm)

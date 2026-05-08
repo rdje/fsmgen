@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-08: Composition generation raw AST result branch is returned as a snapshot
+- Updated
+  [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm)
+  so composition-generation results clone the top-level `raw_ast`
+  compatibility branch before returning it instead of exposing the
+  caller/parser AST array.
+- Added
+  [t/578-composition-generation-raw-ast-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/578-composition-generation-raw-ast-alias-boundary-audit.t)
+  to prove mutating the returned composition-generation `raw_ast` cannot
+  contaminate the caller/parser AST, and later caller/parser AST mutation
+  cannot contaminate the returned result branch.
+- Focused validation:
+  `prove -Iperl t/578-composition-generation-raw-ast-alias-boundary-audit.t`
+  passed. This is `R13` runtime contract-integrity hardening only; no public
+  manifest shape, user-facing docs, mdBook content, generation behavior, or
+  roadmap lane status changed.
 ## 2026-05-08: Direct generation raw AST result branch is returned as a snapshot
 - Updated
   [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm)
