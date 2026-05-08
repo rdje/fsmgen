@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-08
+### Direct generation semantic IR result projections no longer alias module-info mirrors
+- Updated
+  [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm)
+  so top-level direct-generation semantic IR result branches are cloned
+  projections rather than aliases of their `module_info` mirrors. No roadmap
+  status changed.
+- Added
+  [t/574-direct-generation-semantic-ir-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/574-direct-generation-semantic-ir-alias-boundary-audit.t)
+  to prove mutating either same-result semantic IR branch family cannot
+  contaminate the other.
 ### Composition resolved package imports no longer alias source-info payloads
 - Updated
   [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm)

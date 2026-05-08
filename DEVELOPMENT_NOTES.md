@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-08: Direct result semantic IR branches are projections, not module-info aliases
+- Direct generation intentionally exposes semantic IR payloads twice: top-level
+  result branches for convenient embedders and mirrored payloads under
+  `module_info` for compatibility with older module-info consumers. Those two
+  locations should begin equivalent, but callers should not get one shared hash
+  that lets annotation of one branch rewrite the other.
+- `DirectGenerationOrchestrator` now clones the top-level semantic IR result
+  projections at the return boundary. The wider result shape is unchanged,
+  while top-level `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir`
+  branches are caller-owned snapshots separate from `module_info` mirrors.
 ## 2026-05-08: Composition resolved-import maps are separate result projections
 - Composition generation can carry resolved package metadata both as the
   top-level `resolved_package_imports` result branch and inside the wider

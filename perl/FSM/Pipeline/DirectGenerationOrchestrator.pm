@@ -83,9 +83,9 @@ sub generate_from_source ($class, %args) {
 
     return {
         fsm_module => $fsm_module,
-        intent_hir => $intent_hir->as_hashref,
-        lowered_rtl_ir => $module_info->{lowered_rtl_ir},
-        structural_rtl_ir => $module_info->{structural_rtl_ir},
+        intent_hir => _clone($intent_hir->as_hashref),
+        lowered_rtl_ir => _clone($module_info->{lowered_rtl_ir}),
+        structural_rtl_ir => _clone($module_info->{structural_rtl_ir}),
         module_info => $module_info,
         hdl_code => $hdl_code,
         statistics => $statistics,
