@@ -143,7 +143,7 @@ sub generate_from_source ($class, %args) {
         module_info => $module_info,
         hdl_code => $hdl_code,
         statistics => $statistics,
-        resolved_package_imports => $resolved_package_imports,
+        resolved_package_imports => _clone($resolved_package_imports),
         raw_ast => $raw_ast,
         source_info => $source_info,
     };

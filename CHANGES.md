@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-08
+### Composition resolved package imports no longer alias source-info payloads
+- Updated
+  [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm)
+  so the top-level `resolved_package_imports` result branch is a cloned hash
+  instead of an alias to `source_info.resolved_package_imports`. No roadmap
+  status changed.
+- Added
+  [t/573-composition-generation-resolved-package-imports-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/573-composition-generation-resolved-package-imports-alias-boundary-audit.t)
+  to prove mutating either same-result package-import metadata branch cannot
+  contaminate the other while raw package spec objects remain available.
 ### Composition generation source-info enrichment now snapshots caller metadata
 - Updated
   [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm)

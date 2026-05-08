@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-08: Composition resolved-import maps are separate result projections
+- Composition generation can carry resolved package metadata both as the
+  top-level `resolved_package_imports` result branch and inside the wider
+  `source_info` compatibility payload. Those two hashes describe the same
+  package specs, but callers should not receive one shared container that lets
+  annotation of one branch rewrite the other.
+- `GenerationOrchestrator` now clones the top-level resolved-import hash on
+  return. Raw `FSM::Package::Spec` values remain live compatibility objects by
+  identity, while the enclosing result maps are independently owned snapshots.
 ## 2026-05-08: Composition generation enriches source-info on an owned copy
 - `Composition::GenerationOrchestrator::generate_from_source()` accepts a caller
   supplied `source_info` hash and then attaches composition-only internals such

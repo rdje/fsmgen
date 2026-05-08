@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-08: Composition resolved package imports no longer alias source-info payloads
+- Updated
+  [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm)
+  so composition results clone the top-level `resolved_package_imports` hash
+  returned from `generate_from_source()`.
+- Added
+  [t/573-composition-generation-resolved-package-imports-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/573-composition-generation-resolved-package-imports-alias-boundary-audit.t)
+  to prove same-result mutation of top-level `resolved_package_imports` cannot
+  contaminate the wider `source_info.resolved_package_imports` compatibility
+  payload, and vice versa, while preserving raw `FSM::Package::Spec` values.
+- Focused validation:
+  `prove -Iperl t/573-composition-generation-resolved-package-imports-alias-boundary-audit.t`
+  passed. This is `R13` runtime contract-integrity hardening only; no public
+  manifest shape, user-facing docs, mdBook content, generation behavior, or
+  roadmap lane status changed.
 ## 2026-05-08: Composition generation source-info enrichment now snapshots caller metadata
 - Updated
   [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm)
