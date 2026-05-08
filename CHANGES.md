@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-08
+### Direct generation raw backend statistics are returned as snapshots
+- Updated
+  [perl/FSM/Backend/GeneratedModuleEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/GeneratedModuleEmitter.pm)
+  so raw backend statistics maps are cloned before exposure through returned
+  direct-generation results. No roadmap status changed.
+- Added
+  [t/576-direct-generation-statistics-raw-backend-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/576-direct-generation-statistics-raw-backend-alias-boundary-audit.t)
+  to prove raw statistics maps and retained backend generator maps cannot
+  cross-contaminate each other through mutation.
 ### Composition spec result branches no longer share the same mutable shell object
 - Updated
   [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm)

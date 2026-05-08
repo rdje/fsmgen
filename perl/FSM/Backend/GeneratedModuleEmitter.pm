@@ -98,17 +98,16 @@ sub statistics_from_generator ($class, $hdl_generator = undef) {
         my @reused = grep { $expression_usage->{$_} > 1 } keys %$expression_usage;
         for my $signal_name (sort { $expression_usage->{$b} <=> $expression_usage->{$a} } @reused) {
             my $usage = $expression_usage->{$signal_name};
-            my $expression = $intermediate_signals->{$signal_name};
+            my $expression = _clone($intermediate_signals->{$signal_name});
             push @{$stats->{reused_expressions}}, {
                 signal => $signal_name,
                 expression => $expression,
                 usage_count => $usage,
             };
         }
-
-        $stats->{raw_intermediate_signals} = $intermediate_signals;
-        $stats->{raw_global_expressions} = $global_expressions;
-        $stats->{raw_expression_usage} = $expression_usage;
+        $stats->{raw_intermediate_signals} = _clone($intermediate_signals);
+        $stats->{raw_global_expressions} = _clone($global_expressions);
+        $stats->{raw_expression_usage} = _clone($expression_usage);
     }
 
     fsm_debug("Statistics gathering complete", 1);
@@ -172,6 +171,13 @@ sub augment_with_standalone_dt_assertions ($class, %args) {
     }
 
     return $hdl_code . "\n$assertion_block\n";
+}
+
+sub _clone ($value) {
+    return undef unless defined $value;
+    return { map { $_ => _clone($value->{$_}) } keys %$value } if ref($value) eq 'HASH';
+    return [ map { _clone($_) } @$value ] if ref($value) eq 'ARRAY';
+    return $value;
 }
 
 1;

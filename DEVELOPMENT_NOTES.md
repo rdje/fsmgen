@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-08: Raw backend statistics are snapshots, not backend mutation handles
+- Direct generation keeps the backend `FlattenedDT` object on the pipeline after
+  generation, while also returning raw backend statistics maps for compatibility
+  and diagnostics. Those returned statistics should be a result snapshot, not a
+  mutation handle back into the retained backend object.
+- `GeneratedModuleEmitter::statistics_from_generator()` now clones
+  `intermediate_signals`, `global_expressions`, and `expression_usage` before
+  attaching them as `raw_*` statistics fields. The raw map values remain
+  compatibility diagnostics, but their enclosing containers are caller-owned at
+  the result boundary.
 ## 2026-05-08: Composition spec compatibility payloads are separate snapshots
 - Composition generation exposes the parsed composition spec both at the
   top-level `composition_spec` result branch and inside the wider `source_info`

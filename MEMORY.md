@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-08: Direct generation raw backend statistics are returned as snapshots
+- Updated
+  [perl/FSM/Backend/GeneratedModuleEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/GeneratedModuleEmitter.pm)
+  so `statistics.raw_intermediate_signals`, `statistics.raw_global_expressions`,
+  and `statistics.raw_expression_usage` are cloned raw backend map snapshots
+  instead of aliases to the retained direct-generation backend object.
+- Added
+  [t/576-direct-generation-statistics-raw-backend-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/576-direct-generation-statistics-raw-backend-alias-boundary-audit.t)
+  to prove mutating returned raw statistics maps cannot contaminate the backend
+  generator, and later backend map mutation cannot contaminate the returned
+  result.
+- Focused validation:
+  `perl -Iperl -c perl/FSM/Backend/GeneratedModuleEmitter.pm && perl -Iperl -c t/576-direct-generation-statistics-raw-backend-alias-boundary-audit.t && prove -Iperl t/576-direct-generation-statistics-raw-backend-alias-boundary-audit.t`
+  passed. This is `R13` runtime contract-integrity hardening only; no public
+  manifest shape, user-facing docs, mdBook content, generation behavior, or
+  roadmap lane status changed.
 ## 2026-05-08: Direct generation semantic IR result projections no longer alias module-info mirrors
 - Updated
   [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm)
