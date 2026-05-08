@@ -38,7 +38,7 @@ sub generate_from_source ($class, %args) {
         or confess "GenerationOrchestrator requires a pipeline";
     my $fsm_file = $args{fsm_file}
         or confess "GenerationOrchestrator requires an fsm_file";
-    my $source_info = $args{source_info} || {};
+    my $source_info = _clone($args{source_info} || {});
     my $raw_ast = $args{raw_ast};
     my $target_language = $args{target_language} // ($pipeline->{target_language} // 'systemverilog');
     my $header = $args{header} // ($source_info->{header} // '?top:name');
@@ -147,6 +147,12 @@ sub generate_from_source ($class, %args) {
         raw_ast => $raw_ast,
         source_info => $source_info,
     };
+}
+sub _clone ($value) {
+    return undef unless defined $value;
+    return [map { _clone($_) } @$value] if ref($value) eq 'ARRAY';
+    return {map { $_ => _clone($value->{$_}) } keys %$value} if ref($value) eq 'HASH';
+    return $value;
 }
 
 1;

@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-08
+### Composition generation source-info enrichment now snapshots caller metadata
+- Updated
+  [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm)
+  so `generate_from_source()` clones supplied `source_info` metadata before
+  adding composition-generation internal result payloads. No roadmap status
+  changed.
+- Added
+  [t/572-composition-generation-orchestrator-source-info-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/572-composition-generation-orchestrator-source-info-defensive-copy-boundary-audit.t)
+  to prove composition generation does not mutate caller-owned source-info
+  metadata while still returning owned composition internals.
 ### Source generation extension context snapshots now have integration coverage
 - Added
   [t/571-source-generation-orchestrator-extension-context-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/571-source-generation-orchestrator-extension-context-defensive-copy-boundary-audit.t)

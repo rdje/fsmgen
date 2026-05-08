@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-08: Composition generation enriches source-info on an owned copy
+- `Composition::GenerationOrchestrator::generate_from_source()` accepts a caller
+  supplied `source_info` hash and then attaches composition-only internals such
+  as `composition_spec` for the returned bounded result. That enrichment should
+  describe the returned result, not rewrite caller-owned classification
+  metadata.
+- The orchestrator now clones the incoming source-info hash before generation
+  uses and result enrichment. This mirrors the direct-generation boundary:
+  returned composition results preserve their internal payloads while caller
+  metadata remains isolated.
 ## 2026-05-08: SourceGenerationOrchestrator must preserve extension context ownership boundaries
 - `FSM::Extension::Context` already defines `source_info` and `raw_ast` as
   snapshot accessors and `result` as the live result-hook mutation surface. The

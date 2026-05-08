@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-08: Composition generation source-info enrichment now snapshots caller metadata
+- Updated
+  [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm)
+  so `generate_from_source()` clones supplied `source_info` hashes before
+  adding composition-generation internal result payloads such as
+  `composition_spec`.
+- Added
+  [t/572-composition-generation-orchestrator-source-info-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/572-composition-generation-orchestrator-source-info-defensive-copy-boundary-audit.t)
+  to prove composition generation does not mutate caller-owned source-info
+  classification metadata or alias nested caller metadata through the returned
+  result surface.
+- Focused validation:
+  `prove -Iperl t/189-composition-generation-orchestrator.t t/195-pipeline-source-generation-orchestrator.t t/570-direct-generation-orchestrator-source-info-defensive-copy-boundary-audit.t t/572-composition-generation-orchestrator-source-info-defensive-copy-boundary-audit.t`
+  passed. This is `R13` runtime contract-integrity hardening only; no public
+  manifest shape, user-facing docs, mdBook content, generation behavior, or
+  roadmap lane status changed.
 ## 2026-05-08: Source generation extension contexts now have integration coverage for snapshot payloads
 - Added
   [t/571-source-generation-orchestrator-extension-context-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/571-source-generation-orchestrator-extension-context-defensive-copy-boundary-audit.t)
