@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-08
+### Composition spec result branches no longer share the same mutable shell object
+- Updated
+  [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm)
+  so `source_info.composition_spec` is populated from a cloned shell snapshot
+  instead of aliasing the top-level `composition_spec` branch. No roadmap
+  status changed.
+- Added
+  [t/575-composition-generation-composition-spec-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/575-composition-generation-composition-spec-alias-boundary-audit.t)
+  to prove mutating either same-result composition-spec branch cannot
+  contaminate the other.
 ### Direct generation semantic IR result projections no longer alias module-info mirrors
 - Updated
   [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm)

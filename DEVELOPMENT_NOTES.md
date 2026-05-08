@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-08: Composition spec compatibility payloads are separate snapshots
+- Composition generation exposes the parsed composition spec both at the
+  top-level `composition_spec` result branch and inside the wider `source_info`
+  compatibility payload. These branches should describe the same parsed shell,
+  but callers should not receive one shared mutable object that lets annotation
+  of one branch rewrite the other.
+- `GenerationOrchestrator` now deep-clones shell objects when cloning
+  composition-generation metadata and always stores a cloned
+  `source_info.composition_spec` snapshot. The top-level compatibility branch
+  remains available, while `source_info` owns its copy.
 ## 2026-05-08: Direct result semantic IR branches are projections, not module-info aliases
 - Direct generation intentionally exposes semantic IR payloads twice: top-level
   result branches for convenient embedders and mirrored payloads under

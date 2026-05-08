@@ -2,6 +2,22 @@
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
 ## 2026-05-08: Direct generation semantic IR result projections no longer alias module-info mirrors
 - Updated
+  [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm)
+  so composition-generation `source_info.composition_spec` is a cloned shell
+  snapshot rather than the same mutable object returned through the top-level
+  `composition_spec` branch.
+- Added
+  [t/575-composition-generation-composition-spec-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/575-composition-generation-composition-spec-alias-boundary-audit.t)
+  to prove same-result mutation cannot cross-contaminate top-level
+  `composition_spec` and `source_info.composition_spec` branches in either
+  direction.
+- Focused validation:
+  `perl -Iperl -c perl/FSM/Composition/GenerationOrchestrator.pm && prove -Iperl t/575-composition-generation-composition-spec-alias-boundary-audit.t t/572-composition-generation-orchestrator-source-info-defensive-copy-boundary-audit.t t/573-composition-generation-resolved-package-imports-alias-boundary-audit.t t/189-composition-generation-orchestrator.t t/305-hdl-generator-result-contract.t`
+  passed. This is `R13` runtime contract-integrity hardening only; no public
+  manifest shape, user-facing docs, mdBook content, generation behavior, or
+  roadmap lane status changed.
+## 2026-05-08: Direct generation semantic IR result projections no longer alias module-info mirrors
+- Updated
   [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm)
   so direct-generation top-level `intent_hir`, `lowered_rtl_ir`, and
   `structural_rtl_ir` result branches are cloned semantic projections rather

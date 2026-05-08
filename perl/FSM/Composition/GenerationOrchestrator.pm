@@ -20,6 +20,7 @@ use warnings;
 use Carp qw(confess);
 use feature qw(signatures);
 no warnings 'experimental::signatures';
+use Storable qw(dclone);
 
 use FSM::Backend::GeneratedModuleEmitter;
 use FSM::Backend::VerilogFamily::StructuralRTLIREmitter;
@@ -53,7 +54,7 @@ sub generate_from_source ($class, %args) {
     my $statistics_seed = $args{statistics_seed}
         // FSM::Backend::GeneratedModuleEmitter->statistics_from_generator(undef);
 
-    $source_info->{composition_spec} //= $composition_spec;
+    $source_info->{composition_spec} = _clone($composition_spec);
 
     my $resolved_package_imports = $args{resolved_package_imports}
         || $source_info->{resolved_package_imports}
@@ -152,6 +153,7 @@ sub _clone ($value) {
     return undef unless defined $value;
     return [map { _clone($_) } @$value] if ref($value) eq 'ARRAY';
     return {map { $_ => _clone($value->{$_}) } keys %$value} if ref($value) eq 'HASH';
+    return dclone($value) if ref($value);
     return $value;
 }
 
