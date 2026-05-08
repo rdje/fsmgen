@@ -1,5 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-05-08
+### `bin/fsmgen` import tree snapshot refreshed
+- Updated
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+  with the current review date and refreshed measured line counts for the live
+  `bin/fsmgen` transitive project-owned import closure.
+- The refreshed snapshot preserves the closure totals at `180` reachable
+  project files and `179` reachable `.pm` packages. No roadmap status changed.
 ## 2026-05-05
 ### Direct generation source-info enrichment now snapshots caller metadata
 - Updated

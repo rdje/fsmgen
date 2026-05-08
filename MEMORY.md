@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-08: `bin/fsmgen` import tree snapshot refreshed
+- Updated
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+  after rechecking the current `bin/fsmgen` transitive project-owned import
+  closure.
+- The refreshed snapshot keeps the reachable project-file and package counts
+  unchanged at `180` files and `179` `.pm` packages, while bringing the review
+  date and measured line-count tables back in sync with the live tree.
+- This is a documentation/bootstrap slice for batch workflow safety. No source
+  behavior, public API surface, user-facing mdBook content, roadmap lane
+  status, or active `R13` deliverable changed.
 ## 2026-05-05: Direct generation source-info enrichment now snapshots caller metadata
 - Updated
   [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm)

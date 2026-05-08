@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-08: import tree snapshots are bootstrap guardrails
+- `docs/BIN_FSMGEN_IMPORT_TREE.md` is intentionally a live architecture note,
+  not a generated artifact. Refreshing it at session start keeps later roadmap
+  slices grounded in the current `bin/fsmgen` runtime spine and prevents stale
+  line-count evidence from steering ownership decisions.
+- The 2026-05-08 refresh confirmed that the closure shape itself did not move:
+  the static project-owned reachability remains `180` files and `179` `.pm`
+  packages. Only measured line-count tables and the review date needed
+  adjustment.
 ## 2026-05-05: Direct generation enriches source-info on an owned copy
 - `DirectGenerationOrchestrator::generate_from_source()` accepts a caller
   supplied `source_info` hash and later adds package-import summary fields from
