@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-08: Source generation extension contexts now have integration coverage for snapshot payloads
+- Added
+  [t/571-source-generation-orchestrator-extension-context-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/571-source-generation-orchestrator-extension-context-defensive-copy-boundary-audit.t)
+  to prove `SourceGenerationOrchestrator` extension hooks cannot contaminate
+  live generation state by mutating `source_info` or `raw_ast` accessor
+  snapshots from `FSM::Extension::Context`.
+- The audit also proves the intended `after_generate_result` mutation surface
+  remains live through `context->result`, keeping extension result augmentation
+  compatible while isolating parse/result metadata snapshots.
+- Focused validation:
+  `prove -lv t/571-source-generation-orchestrator-extension-context-defensive-copy-boundary-audit.t`
+  passed. This is `R13` integration contract-integrity coverage only; no source
+  behavior, public manifest shape, user-facing docs, mdBook content, or roadmap
+  lane status changed.
 ## 2026-05-08: `bin/fsmgen` import tree snapshot refreshed
 - Updated
   [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)

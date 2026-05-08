@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-08: SourceGenerationOrchestrator must preserve extension context ownership boundaries
+- `FSM::Extension::Context` already defines `source_info` and `raw_ast` as
+  snapshot accessors and `result` as the live result-hook mutation surface. The
+  source orchestrator is the integration point where those typed contexts wrap
+  real file parsing, direct/composition dispatch, and extension hooks.
+- The new `t/571` audit treats a mutating extension as a hostile boundary test:
+  parse/result hook mutations to accessor snapshots must not rewrite live source
+  classification, raw AST input, or returned result metadata, while explicit
+  result-hook augmentation through `context->result` must still work.
 ## 2026-05-08: import tree snapshots are bootstrap guardrails
 - `docs/BIN_FSMGEN_IMPORT_TREE.md` is intentionally a live architecture note,
   not a generated artifact. Refreshing it at session start keeps later roadmap

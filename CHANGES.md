@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-08
+### Source generation extension context snapshots now have integration coverage
+- Added
+  [t/571-source-generation-orchestrator-extension-context-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/571-source-generation-orchestrator-extension-context-defensive-copy-boundary-audit.t)
+  to prove `SourceGenerationOrchestrator` extension hooks see original source
+  metadata while mutations to `source_info` and `raw_ast` accessor snapshots do
+  not contaminate live generation or returned result metadata. No roadmap
+  status changed.
+- The same audit keeps the documented result-hook contract explicit by proving
+  `context->result` remains the live augmentation surface.
 ### `bin/fsmgen` import tree snapshot refreshed
 - Updated
   [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
