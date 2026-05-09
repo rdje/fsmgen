@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Serializable plan/report contract public-key metadata is aligned
+- Added
+  [t/656-serializable-plan-report-contract-public-key-alignment-audit.t](t/656-serializable-plan-report-contract-public-key-alignment-audit.t)
+  to prove the parent `embedding.serializable_plan_reports` contract advertises
+  every top-level key it emits.
+- Fixed the parent contract's `public_top_level_presence_keys` metadata to list
+  the existing report-key and fragment-path metadata branches it already emitted.
 ### Capability manifest serializable plan/report JSON round-trip surface is audited
 - Added
   [t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t](t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t)

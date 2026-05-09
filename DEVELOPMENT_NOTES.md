@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Serializable plan/report public-key metadata must match output
+- `embedding.serializable_plan_reports.public_top_level_presence_keys` must be a
+  complete inventory of the parent contract's emitted top-level keys, including
+  report-key and fragment-path metadata branches used by embedders.
 ## 2026-05-09: Manifest serializable plan/report branch round-trips as JSON data
 - The full capability manifest must survive JSON encode/decode with the
   `embedding.serializable_plan_reports` branch, child contracts, nested owner

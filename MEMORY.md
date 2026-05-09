@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Serializable plan/report public-key metadata is aligned
+- Added
+  [t/656-serializable-plan-report-contract-public-key-alignment-audit.t](t/656-serializable-plan-report-contract-public-key-alignment-audit.t)
+  and fixed `public_top_level_presence_keys` for
+  `embedding.serializable_plan_reports` so it lists every top-level key the
+  parent contract emits.
+- Focused validation passed:
+  `prove -l t/656-serializable-plan-report-contract-public-key-alignment-audit.t t/654-serializable-plan-report-contract-json-roundtrip-audit.t t/629-serializable-plan-report-contract.t t/297-capability-manifest.t`.
 ## 2026-05-09: Capability manifest serializable plan/report JSON round-trip surface is audited
 - Added
   [t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t](t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t)

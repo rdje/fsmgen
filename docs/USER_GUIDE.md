@@ -1811,8 +1811,9 @@ for raw `HDLGenerator` compatibility shells. The parent contract returns fresh
 nested maps, lists, and embedded child contracts, and the capability manifest
 rebuilds that embedded child cleanly per call. The contract also round-trips as
 JSON with child contracts and replacement guidance intact, and the full
-capability manifest preserves that branch across JSON encode/decode. Its first
-dedicated plan API is
+capability manifest preserves that branch across JSON encode/decode. Its
+advertised public top-level key list is locked to the keys the parent contract
+emits. Its first dedicated plan API is
 [perl/FSM/Support/SerializableCompositionPlanSnapshot.pm](perl/FSM/Support/SerializableCompositionPlanSnapshot.pm),
 which builds a JSON-safe `composition_plan_snapshot` with shallow counts and
 summaries for ports, links, nets, instances, auxiliary assignments, and

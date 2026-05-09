@@ -491,7 +491,8 @@ rebuilds the embedded `serializable_plan_reports` child and its grouped
 presence-key map cleanly each time. The parent contract round-trips as JSON
 with nested contract owners, child contracts, and raw-shell replacement guidance
 intact, and the full capability manifest preserves that branch across JSON
-encode/decode.
+encode/decode. Its advertised public top-level key list is regression-locked to
+the keys the parent contract actually emits.
 The first plan-oriented API behind that surface is
 [perl/FSM/Support/SerializableCompositionPlanSnapshot.pm](perl/FSM/Support/SerializableCompositionPlanSnapshot.pm):
 `build_serializable_composition_plan_snapshot(...)` emits a JSON-safe

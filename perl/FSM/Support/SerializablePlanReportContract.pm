@@ -79,12 +79,16 @@ sub serializable_plan_report_public_top_level_keys {
             status
             contract_source
             purpose
+            public_top_level_presence_keys
             json_safe_surface_keys
             nested_contract_source_map
             raw_shell_replacement_map
             composition_plan_snapshot_contract
             generation_result_snapshot_contract
             diagnostic_summary_contract
+            normalized_semantic_report_public_top_level_keys
+            composition_report_public_top_level_keys
+            composition_report_json_fragment_path
             current_serializable_surfaces_json_safe
             raw_hdl_generator_branches_json_safe
             guidance
