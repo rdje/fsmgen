@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Capability manifest surface registry parity is audited
+- Added
+  [t/667-capability-manifest-serializable-plan-report-surface-registry-audit.t](t/667-capability-manifest-serializable-plan-report-surface-registry-audit.t)
+  to prove the capability manifest embeds the canonical
+  `serializable_plan_reports.surface_registry` and rebuilds it cleanly after
+  caller mutation.
+- This is `R13` manifest registry coverage only; no public manifest shape
+  changed.
 ### Serializable plan/report surface registry copy boundary is audited
 - Added
   [t/666-serializable-plan-report-surface-registry-defensive-copy-audit.t](t/666-serializable-plan-report-surface-registry-defensive-copy-audit.t)

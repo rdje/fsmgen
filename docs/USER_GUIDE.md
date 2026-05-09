@@ -1809,7 +1809,8 @@ The `embedding.serializable_plan_reports` child is owned by
 and advertises the current JSON-safe report families plus replacement guidance
 for raw `HDLGenerator` compatibility shells. Its `surface_registry` maps each
 surface to its contract owner and primary report paths, with fresh caller-owned
-containers. The parent contract returns fresh
+containers. The capability manifest embeds the canonical registry and rebuilds
+it cleanly. The parent contract returns fresh
 nested maps, lists, and embedded child contracts, and the capability manifest
 rebuilds that embedded child cleanly per call. The contract also round-trips as
 JSON with child contracts and replacement guidance intact, and the full

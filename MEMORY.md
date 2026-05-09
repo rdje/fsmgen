@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Capability manifest surface registry parity is audited
+- Added
+  [t/667-capability-manifest-serializable-plan-report-surface-registry-audit.t](t/667-capability-manifest-serializable-plan-report-surface-registry-audit.t)
+  to prove the manifest embeds the canonical `surface_registry` and rebuilds it
+  cleanly after caller mutation.
+- Focused validation passed:
+  `prove -l t/667-capability-manifest-serializable-plan-report-surface-registry-audit.t t/666-serializable-plan-report-surface-registry-defensive-copy-audit.t t/646-capability-manifest-serializable-plan-report-copy-boundary-audit.t t/297-capability-manifest.t`.
 ## 2026-05-09: Serializable plan/report surface registry copy boundary is audited
 - Added
   [t/666-serializable-plan-report-surface-registry-defensive-copy-audit.t](t/666-serializable-plan-report-surface-registry-defensive-copy-audit.t)

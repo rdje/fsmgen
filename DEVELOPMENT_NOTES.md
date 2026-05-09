@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Manifest embeds the canonical serializable surface registry
+- `build_capability_manifest(...)` must embed the canonical
+  `serializable_plan_reports.surface_registry` and rebuild that registry cleanly
+  after caller mutation.
 ## 2026-05-09: Serializable plan/report registry containers are caller-owned
 - `serializable_plan_report_surface_registry()` and the parent contract's
   embedded `surface_registry` return fresh nested containers. Callers can
