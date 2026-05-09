@@ -514,8 +514,11 @@ JSON with nested contract owners, child contracts, raw-shell replacement keys,
 and raw-shell replacement guidance intact, and the full capability manifest
 preserves that branch and its entry-key list across JSON encode/decode. Its
 advertised public top-level key list is regression-locked to the keys the parent
-contract actually emits, and
-its nested source map is locked against the embedded child contracts it carries.
+contract actually emits, and its nested source map is locked against the
+embedded child contracts it carries.
+The JSON-safety flags in that parent contract are explicit JSON booleans:
+current serializable report surfaces are marked safe, while raw `HDLGenerator`
+branches are marked non-safe interchange payloads.
 The full capability manifest preserves that parent and child source-owner
 metadata when embedding the branch.
 The first plan-oriented API behind that surface is

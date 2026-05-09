@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Plan/report JSON-safety flags are booleans, not prose
+- `current_serializable_surfaces_json_safe` and
+  `raw_hdl_generator_branches_json_safe` are machine-readable JSON booleans.
+  The flags distinguish the advertised serializable report surfaces from raw
+  in-process `HDLGenerator` compatibility branches without relying on prose
+  parsing.
 ## 2026-05-09: Parent raw shell replacement keys are JSON discovery data
 - Parent-contract `raw_shell_replacement_keys` must survive JSON encode/decode
   and continue to describe the decoded `raw_shell_replacement_map`. That keeps

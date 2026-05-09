@@ -1833,8 +1833,11 @@ also round-trips as JSON with child contracts, replacement keys, and replacement
 guidance intact,
 and the full capability manifest preserves that branch and its entry-key list
 across JSON encode/decode. Its advertised public top-level key list is locked to
-the keys the parent contract
-emits, and its nested source map is locked against the embedded child contracts.
+the keys the parent contract emits, and its nested source map is locked against
+the embedded child contracts.
+The JSON-safety flags in that parent contract are explicit JSON booleans:
+current serializable report surfaces are marked safe, while raw `HDLGenerator`
+branches are marked non-safe interchange payloads.
 The full capability manifest preserves that source-owner metadata when embedding
 the branch.
 Its first dedicated plan API is

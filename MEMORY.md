@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Plan/report JSON-safety flags are boolean-audited
+- Added
+  [t/685-serializable-plan-report-json-safety-flags-contract.t](t/685-serializable-plan-report-json-safety-flags-contract.t)
+  to prove `current_serializable_surfaces_json_safe` and
+  `raw_hdl_generator_branches_json_safe` are explicit JSON booleans with the
+  intended truth values.
+- Focused validation passed:
+  `perl -Iperl -c t/685-serializable-plan-report-json-safety-flags-contract.t && prove -l t/685-serializable-plan-report-json-safety-flags-contract.t t/629-serializable-plan-report-contract.t && mdbook build docs/book`.
 ## 2026-05-09: Raw shell replacement keys round-trip as JSON
 - Updated
   [t/654-serializable-plan-report-contract-json-roundtrip-audit.t](t/654-serializable-plan-report-contract-json-roundtrip-audit.t)
