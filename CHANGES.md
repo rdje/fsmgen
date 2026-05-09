@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Public report key metadata round-trips as JSON
+- Updated
+  [t/654-serializable-plan-report-contract-json-roundtrip-audit.t](t/654-serializable-plan-report-contract-json-roundtrip-audit.t)
+  to prove parent-contract report key metadata and the composition report JSON
+  fragment path survive JSON encode/decode.
 ### Manifest public report key metadata round-trips as JSON
 - Added
   [t/693-capability-manifest-plan-report-public-report-key-metadata-json-roundtrip-audit.t](t/693-capability-manifest-plan-report-public-report-key-metadata-json-roundtrip-audit.t)

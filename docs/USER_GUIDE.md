@@ -1846,9 +1846,9 @@ capability manifest embeds the same structured guidance with JSON round-trip
 coverage.
 The parent contract also embeds normalized semantic and composition report public
 key metadata, plus the composition report JSON fragment path, from their
-canonical report contracts; the capability manifest carries the same metadata in
-its serializable plan/report branch and preserves it across manifest JSON
-encode/decode.
+canonical report contracts and preserves that metadata across JSON round-trip.
+The capability manifest carries the same metadata in its serializable
+plan/report branch and preserves it across manifest JSON encode/decode.
 The full capability manifest preserves that source-owner metadata when embedding
 the branch.
 Its first dedicated plan API is

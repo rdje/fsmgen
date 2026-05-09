@@ -10,6 +10,11 @@ use Scalar::Util qw(blessed);
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
+use FSM::Support::CompositionReportContract qw(
+    composition_report_json_fragment_path
+    composition_report_public_top_level_keys
+);
+use FSM::Support::NormalizedSemanticReportContract qw(normalized_semantic_public_top_level_keys);
 use FSM::Support::SerializablePlanReportContract qw(
     build_serializable_plan_report_contract
     serializable_plan_report_nested_contract_source_map
@@ -62,6 +67,21 @@ subtest 'serializable plan/report contract remains plain data after JSON round t
     ok(
         grep({ /raw HDLGenerator branches/ } @{$decoded->{guidance}}),
         'round-trip guidance still warns about raw HDLGenerator branches',
+    );
+    is_deeply(
+        $decoded->{normalized_semantic_report_public_top_level_keys},
+        normalized_semantic_public_top_level_keys(),
+        'round-trip contract keeps normalized semantic report top-level keys',
+    );
+    is_deeply(
+        $decoded->{composition_report_public_top_level_keys},
+        composition_report_public_top_level_keys(),
+        'round-trip contract keeps composition report top-level keys',
+    );
+    is(
+        $decoded->{composition_report_json_fragment_path},
+        composition_report_json_fragment_path(),
+        'round-trip contract keeps composition report JSON fragment path',
     );
     is(
         $decoded->{composition_plan_snapshot_contract}{object_name},

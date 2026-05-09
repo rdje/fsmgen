@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Public report key metadata survives serialization
+- The parent serializable plan/report contract must preserve report-key metadata
+  and the composition report fragment path through JSON encode/decode. Serialized
+  contract consumers should not lose the same owner-derived metadata that direct
+  callers receive.
 ## 2026-05-09: Manifest public report key metadata survives serialization
 - Manifest-embedded public report key metadata must remain available after
   capability-manifest JSON encode/decode. Decoded manifests should still carry
