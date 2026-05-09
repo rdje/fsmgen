@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Manifest registry entry shape is in the main audit
+- The main manifest branch JSON audit now checks decoded
+  `surface_registry_entry_keys` against every decoded registry entry. Manifest
+  consumers can trust the embedded entry-shape metadata after serialization.
 ## 2026-05-09: Manifest source map stays aligned after serialization
 - The manifest branch's decoded `nested_contract_source_map` should cover the
   same surfaces as decoded `json_safe_surface_keys`. The main branch audit now

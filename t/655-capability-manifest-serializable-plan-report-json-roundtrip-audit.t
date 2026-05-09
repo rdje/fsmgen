@@ -22,6 +22,7 @@ use FSM::Support::SerializablePlanReportContract qw(
     serializable_plan_report_raw_shell_replacement_keys
     serializable_plan_report_raw_shell_replacement_map
     serializable_plan_report_surface_registry
+    serializable_plan_report_surface_registry_entry_keys
 );
 
 subtest 'capability manifest serializable_plan_reports branch survives JSON round trip' => sub {
@@ -51,6 +52,18 @@ subtest 'capability manifest serializable_plan_reports branch survives JSON roun
         serializable_plan_report_surface_registry(),
         'round-trip manifest keeps serializable surface registry',
     );
+    is_deeply(
+        $branch->{surface_registry_entry_keys},
+        serializable_plan_report_surface_registry_entry_keys(),
+        'round-trip manifest keeps surface registry entry key list',
+    );
+    for my $surface (sort keys %{$branch->{surface_registry}}) {
+        is_deeply(
+            as_set([keys %{$branch->{surface_registry}{$surface}}]),
+            as_set($branch->{surface_registry_entry_keys}),
+            "$surface round-trip manifest registry entry keys match decoded shape",
+        );
+    }
     is_deeply(
         as_set([keys %{$branch->{surface_registry}}]),
         as_set(serializable_plan_report_json_safe_surface_keys()),
