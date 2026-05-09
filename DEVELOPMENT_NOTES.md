@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Parent plan/report guidance survives serialization
+- Parent serializable plan/report guidance must remain usable after JSON
+  encode/decode. Decoded guidance should still preserve the unique scalar list
+  and the paired embedder rules without relying on the Perl builder.
 ## 2026-05-09: Manifest plan/report guidance survives serialization
 - Manifest-embedded serializable plan/report guidance must remain usable after
   capability-manifest JSON encode/decode. Decoded guidance should still be a

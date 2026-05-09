@@ -48,6 +48,21 @@ subtest 'serializable plan/report contract remains plain data after JSON round t
         as_set($decoded->{raw_shell_replacement_keys}),
         'round-trip replacement map keys match decoded key list',
     );
+    ok(ref($decoded->{guidance}) eq 'ARRAY', 'round-trip contract keeps guidance as an array');
+    ok(@{$decoded->{guidance}} > 0, 'round-trip contract keeps non-empty guidance');
+    is(
+        scalar(@{$decoded->{guidance}}),
+        scalar(keys %{as_set($decoded->{guidance})}),
+        'round-trip guidance entries remain unique',
+    );
+    ok(
+        grep({ /JSON-safe report surfaces/ } @{$decoded->{guidance}}),
+        'round-trip guidance still points to JSON-safe surfaces',
+    );
+    ok(
+        grep({ /raw HDLGenerator branches/ } @{$decoded->{guidance}}),
+        'round-trip guidance still warns about raw HDLGenerator branches',
+    );
     is(
         $decoded->{composition_plan_snapshot_contract}{object_name},
         'composition_plan_snapshot',
