@@ -531,7 +531,8 @@ JSON now embeds that summary for both success and failure reports, and check JSO
 uses the same summary for `--check --json` / `--check-json` outputs.
 Check JSON top-level key presence is runtime-locked too: success and failure
 reports both include `diagnostic_summary`, while only success reports include the
-success-only `result` branch.
+success-only `result` branch. Actual check JSON reports are round-trip locked
+with embedded diagnostic summary data intact.
 The diagnostic summary builder and contract return fresh caller-owned
 containers, so local annotations of code lists or count maps do not pollute
 later report construction. Both public JSON report families rebuild their

@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Check JSON diagnostic summary JSON round-trip surface is audited
+- Added
+  [t/653-check-json-diagnostic-summary-json-roundtrip-audit.t](t/653-check-json-diagnostic-summary-json-roundtrip-audit.t)
+  to prove actual check JSON reports round-trip with embedded
+  `diagnostic_summary` data intact while preserving the failure omission of
+  success-only `result`.
+- This is `R13` public-report JSON-safety coverage only; no public JSON shape
+  changed.
 ### Normalized semantic embedded snapshots JSON round-trip surface is audited
 - Added
   [t/652-normalized-semantic-snapshots-json-roundtrip-audit.t](t/652-normalized-semantic-snapshots-json-roundtrip-audit.t)

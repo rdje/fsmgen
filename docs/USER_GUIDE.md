@@ -1840,7 +1840,8 @@ as `diagnostic_summary`, a JSON-safe count/code/severity summary that avoids
 binding to full diagnostic payload shapes. Normalized semantic JSON now embeds
 that summary for both success and failure reports, and check JSON now embeds the
 same summary for both `--check --json` and `--check-json` outputs. Diagnostic
-summary presence is runtime-locked in check JSON success and failure reports.
+summary presence is runtime-locked in check JSON success and failure reports,
+and actual check JSON reports round-trip with the summary intact.
 summary lists and count maps are caller-owned fresh containers rebuilt per
 report, and both public JSON report families are checked against the same
 standalone summary builder. Diagnostic summaries are JSON round-trip locked for

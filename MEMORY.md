@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Check JSON diagnostic summary JSON round-trip surface is audited
+- Added
+  [t/653-check-json-diagnostic-summary-json-roundtrip-audit.t](t/653-check-json-diagnostic-summary-json-roundtrip-audit.t)
+  to prove actual check JSON reports round-trip with embedded
+  `diagnostic_summary` data intact.
+- Focused validation passed:
+  `prove -l t/653-check-json-diagnostic-summary-json-roundtrip-audit.t t/648-check-json-diagnostic-summary-presence-runtime-contract-audit.t t/637-check-json-diagnostic-summary.t`.
 ## 2026-05-09: Normalized semantic embedded snapshots JSON round-trip surface is audited
 - Added
   [t/652-normalized-semantic-snapshots-json-roundtrip-audit.t](t/652-normalized-semantic-snapshots-json-roundtrip-audit.t)

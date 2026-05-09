@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Check JSON reports round-trip with diagnostic summary
+- Actual check JSON reports must survive JSON encode/decode with embedded
+  `diagnostic_summary` data intact while preserving success-only `result`
+  presence rules.
 ## 2026-05-09: Semantic reports round-trip with embedded snapshots
 - Actual normalized semantic JSON reports must survive JSON encode/decode with
   `generation_result_snapshot`, `semantic.composition.plan_snapshot`, and
