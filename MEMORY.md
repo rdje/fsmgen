@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Manifest report key metadata is covered in the main branch audit
+- Updated
+  [t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t](t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t)
+  to prove manifest-embedded normalized semantic keys, composition report keys,
+  and the composition report JSON fragment path survive the main JSON round-trip.
+- Focused validation passed:
+  `perl -Iperl -c t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t && prove -l t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t t/693-capability-manifest-plan-report-public-report-key-metadata-json-roundtrip-audit.t t/654-serializable-plan-report-contract-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-09: Manifest diagnostic child contract round-trips exactly
 - Updated
   [t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t](t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t)

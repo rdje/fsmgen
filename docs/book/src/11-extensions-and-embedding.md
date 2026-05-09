@@ -548,7 +548,8 @@ The parent contract also embeds normalized semantic and composition report publi
 key metadata, plus the composition report JSON fragment path, from their
 canonical report contracts and preserves that metadata across JSON round-trip.
 The capability manifest carries the same metadata in its serializable
-plan/report branch and preserves it across manifest JSON encode/decode.
+plan/report branch and preserves it across manifest JSON encode/decode,
+including in the main branch round-trip audit.
 The full capability manifest preserves that parent and child source-owner
 metadata when embedding the branch.
 The first plan-oriented API behind that surface is

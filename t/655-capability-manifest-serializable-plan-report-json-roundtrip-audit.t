@@ -11,6 +11,11 @@ use Scalar::Util qw(blessed);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
+use FSM::Support::CompositionReportContract qw(
+    composition_report_json_fragment_path
+    composition_report_public_top_level_keys
+);
+use FSM::Support::NormalizedSemanticReportContract qw(normalized_semantic_public_top_level_keys);
 use FSM::Support::SerializablePlanReportContract qw(
     serializable_plan_report_json_safe_surface_keys
     serializable_plan_report_nested_contract_source_map
@@ -54,6 +59,21 @@ subtest 'capability manifest serializable_plan_reports branch survives JSON roun
         $branch->{guidance},
         $manifest->{embedding}{serializable_plan_reports}{guidance},
         'round-trip manifest keeps exact guidance list',
+    );
+    is_deeply(
+        $branch->{normalized_semantic_report_public_top_level_keys},
+        normalized_semantic_public_top_level_keys(),
+        'round-trip manifest keeps normalized semantic report top-level keys',
+    );
+    is_deeply(
+        $branch->{composition_report_public_top_level_keys},
+        composition_report_public_top_level_keys(),
+        'round-trip manifest keeps composition report top-level keys',
+    );
+    is(
+        $branch->{composition_report_json_fragment_path},
+        composition_report_json_fragment_path(),
+        'round-trip manifest keeps composition report JSON fragment path',
     );
     is_deeply(
         $branch->{composition_plan_snapshot_contract},

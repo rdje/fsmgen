@@ -1866,6 +1866,8 @@ across manifest JSON encode/decode.
 The parent contract also embeds normalized semantic and composition report public
 key metadata, plus the composition report JSON fragment path, from their
 canonical report contracts and preserves that metadata across JSON round-trip.
+The manifest branch main round-trip audit preserves the same report key metadata
+and fragment path.
 The capability manifest carries the same metadata in its serializable
 plan/report branch and preserves it across manifest JSON encode/decode.
 The full capability manifest preserves that source-owner metadata when embedding

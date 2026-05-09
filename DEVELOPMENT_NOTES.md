@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Manifest report key metadata is in the main audit
+- The main manifest branch JSON audit now covers normalized semantic report keys,
+  composition report keys, and the composition report fragment path. This keeps
+  the broad branch audit aligned with the dedicated metadata round-trip test.
 ## 2026-05-09: Manifest diagnostic child contract survives exactly
 - The manifest JSON audit now checks exact preservation of the diagnostic summary
   child contract, completing exact manifest checks for the three embedded child
