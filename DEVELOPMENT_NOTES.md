@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Manifest serializable plan/report child is rebuilt cleanly
+- `build_capability_manifest(...)` must rebuild `embedding.serializable_plan_reports`
+  and the embedding section's grouped serializable-plan/report presence keys
+  cleanly each call. Caller mutation of one manifest must not pollute later
+  manifest construction.
 ## 2026-05-09: Serializable plan/report contract containers are caller-owned
 - `build_serializable_plan_report_contract(...)` returns fresh nested maps,
   lists, and embedded child contracts. Callers can annotate manifest-discovery

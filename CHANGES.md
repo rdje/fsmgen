@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Capability manifest serializable plan/report copy boundary is audited
+- Added
+  [t/646-capability-manifest-serializable-plan-report-copy-boundary-audit.t](t/646-capability-manifest-serializable-plan-report-copy-boundary-audit.t)
+  to prove the capability manifest rebuilds `embedding.serializable_plan_reports`
+  and its grouped presence-key map cleanly after caller mutation.
+- This is `R13` contract-integrity coverage only; no public manifest shape
+  changed.
 ### Serializable plan/report contract defensive-copy boundary is audited
 - Added
   [t/645-serializable-plan-report-contract-defensive-copy-boundary-audit.t](t/645-serializable-plan-report-contract-defensive-copy-boundary-audit.t)

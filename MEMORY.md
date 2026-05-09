@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Capability manifest serializable plan/report copy boundary is audited
+- Added
+  [t/646-capability-manifest-serializable-plan-report-copy-boundary-audit.t](t/646-capability-manifest-serializable-plan-report-copy-boundary-audit.t)
+  to prove `build_capability_manifest(...)` rebuilds
+  `embedding.serializable_plan_reports` and its grouped presence-key map cleanly.
+- Focused validation passed:
+  `prove -l t/646-capability-manifest-serializable-plan-report-copy-boundary-audit.t t/437-embedding-section-defensive-copy-boundary-audit.t t/645-serializable-plan-report-contract-defensive-copy-boundary-audit.t t/297-capability-manifest.t`.
 ## 2026-05-09: Serializable plan/report contract defensive-copy boundary is audited
 - Added
   [t/645-serializable-plan-report-contract-defensive-copy-boundary-audit.t](t/645-serializable-plan-report-contract-defensive-copy-boundary-audit.t)
