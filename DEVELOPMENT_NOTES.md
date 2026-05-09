@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Semantic JSON carries the plan snapshot
+- `semantic.composition.plan_snapshot` is now the public JSON report path for
+  the bounded composition plan snapshot. This keeps the in-process builder and
+  CLI/report behavior aligned without making the raw `composition_plan` object
+  itself public JSON.
+- The normalized semantic composition contract now names the plan-snapshot
+  contract owner alongside the existing provenance-report owner.
 ## 2026-05-09: Composition plan snapshots are JSON-safe summaries
 - [perl/FSM/Support/SerializableCompositionPlanSnapshot.pm](perl/FSM/Support/SerializableCompositionPlanSnapshot.pm)
   is the first concrete serializable plan API behind

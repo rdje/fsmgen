@@ -20,6 +20,9 @@ use FSM::Support::NormalizedSemanticCompositionContract qw(
     normalized_semantic_composition_presence_keys
     normalized_semantic_composition_summary_presence_keys
 );
+use FSM::Support::SerializableCompositionPlanSnapshot qw(
+    serializable_composition_plan_snapshot_contract_source
+);
 
 subtest 'contract exposes the bounded normalized semantic composition object' => sub {
     my $contract = build_normalized_semantic_composition_contract();
@@ -45,9 +48,15 @@ subtest 'contract exposes the bounded normalized semantic composition object' =>
     is_deeply(
         $contract->{nested_contract_source_map},
         {
+            plan_snapshot => serializable_composition_plan_snapshot_contract_source(),
             provenance_report => composition_report_contract_source(),
         },
         'contract publishes the bounded composition nested-contract ownership map',
+    );
+    is(
+        $contract->{plan_snapshot_contract_source},
+        serializable_composition_plan_snapshot_contract_source(),
+        'contract records the nested plan-snapshot owner',
     );
     is(
         $contract->{provenance_report_contract_source},

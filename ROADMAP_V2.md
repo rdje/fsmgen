@@ -633,6 +633,8 @@ Current direction:
 - First plan API: [perl/FSM/Support/SerializableCompositionPlanSnapshot.pm](perl/FSM/Support/SerializableCompositionPlanSnapshot.pm)
   now provides a bounded JSON-safe `composition_plan_snapshot` summary for raw
   composition plans.
+- Public report path: successful normalized semantic JSON reports now embed that
+  snapshot at `semantic.composition.plan_snapshot` for composition roots.
 
 Expected result:
 - the project becomes a stronger platform for downstream tooling, not just a CLI.

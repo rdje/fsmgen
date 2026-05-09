@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Semantic JSON embeds composition plan snapshots
+- Successful normalized semantic JSON reports for composition roots now include
+  `semantic.composition.plan_snapshot`, built by
+  [perl/FSM/Support/SerializableCompositionPlanSnapshot.pm](perl/FSM/Support/SerializableCompositionPlanSnapshot.pm).
+- Updated
+  [perl/FSM/Support/NormalizedSemanticCompositionContract.pm](perl/FSM/Support/NormalizedSemanticCompositionContract.pm)
+  so the nested composition contract advertises the plan-snapshot owner.
+- Added
+  [t/631-normalized-semantic-composition-plan-snapshot.t](t/631-normalized-semantic-composition-plan-snapshot.t)
+  to lock the public CLI report path.
 ### Serializable composition plan snapshots are available
 - Added
   [perl/FSM/Support/SerializableCompositionPlanSnapshot.pm](perl/FSM/Support/SerializableCompositionPlanSnapshot.pm)

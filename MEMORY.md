@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Semantic JSON embeds composition plan snapshots
+- Successful normalized semantic JSON reports for composition roots now include
+  `semantic.composition.plan_snapshot`.
+- The nested composition contract advertises the snapshot owner through
+  [perl/FSM/Support/NormalizedSemanticCompositionContract.pm](perl/FSM/Support/NormalizedSemanticCompositionContract.pm).
+- Focused validation passed:
+  `prove -l t/631-normalized-semantic-composition-plan-snapshot.t t/630-serializable-composition-plan-snapshot.t t/333-normalized-semantic-composition-contract.t t/354-normalized-semantic-child-runtime-contract-audit.t t/302-normalized-semantic-json.t t/297-capability-manifest.t`.
 ## 2026-05-09: Serializable composition plan snapshots are available
 - Added [perl/FSM/Support/SerializableCompositionPlanSnapshot.pm](perl/FSM/Support/SerializableCompositionPlanSnapshot.pm)
   with `build_serializable_composition_plan_snapshot(...)` and its bounded

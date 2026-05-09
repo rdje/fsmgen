@@ -1812,7 +1812,8 @@ for raw `HDLGenerator` compatibility shells. Its first dedicated plan API is
 which builds a JSON-safe `composition_plan_snapshot` with shallow counts and
 summaries for ports, links, nets, instances, auxiliary assignments, and
 shared-datapath candidates without exporting the raw `FSM::Composition::Plan`
-object graph.
+object graph. Successful normalized semantic JSON reports for composition roots
+now embed that public snapshot at `semantic.composition.plan_snapshot`.
 The sibling facade and debug-runtime child contracts also have direct
 self-description guards:
 [t/375-hdl-generator-facade-contract.t](t/375-hdl-generator-facade-contract.t)

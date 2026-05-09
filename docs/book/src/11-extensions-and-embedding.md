@@ -491,7 +491,9 @@ The first plan-oriented API behind that surface is
 `composition_plan_snapshot` with bounded summaries for the plan lane, top module,
 ports, links, resolved-link endpoints, nets, instances, auxiliary assignments,
 and shared-datapath candidates without exposing the raw
-`FSM::Composition::Plan` object graph.
+`FSM::Composition::Plan` object graph. Successful normalized semantic JSON
+reports for composition roots now embed that same snapshot at
+`semantic.composition.plan_snapshot`.
 Tracked documentation and book links use paths relative to the repository root;
 machine-local absolute filesystem paths are not part of the public embedding
 surface.
