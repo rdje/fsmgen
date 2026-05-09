@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Plan/report guidance is machine-checkable embedder metadata
+- The parent serializable plan/report `guidance` branch is intentionally a
+  structured list of unique scalar strings. It must keep both halves of the
+  embedder rule visible: prefer JSON-safe report surfaces, and do not treat raw
+  `HDLGenerator` branches as portable interchange payloads.
 ## 2026-05-09: Manifest JSON-safety flags survive serialization
 - Manifest-embedded serializable plan/report safety flags must remain boolean
   metadata after capability-manifest JSON encode/decode. A decoded manifest

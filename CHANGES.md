@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Plan/report guidance is structured
+- Added
+  [t/688-serializable-plan-report-guidance-contract.t](t/688-serializable-plan-report-guidance-contract.t)
+  to prove parent-contract `guidance` is a non-empty unique list of scalar
+  strings that points embedders toward JSON-safe surfaces and away from raw
+  `HDLGenerator` branches as interchange payloads.
 ### Manifest plan/report JSON-safety flags round-trip as JSON
 - Added
   [t/687-capability-manifest-plan-report-json-safety-flags-json-roundtrip-audit.t](t/687-capability-manifest-plan-report-json-safety-flags-json-roundtrip-audit.t)

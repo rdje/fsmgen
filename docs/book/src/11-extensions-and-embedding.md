@@ -521,6 +521,8 @@ current serializable report surfaces are marked safe, while raw `HDLGenerator`
 branches are marked non-safe interchange payloads. The capability manifest
 embeds those flags with the same boolean shape and values, and preserves them
 across manifest JSON encode/decode.
+The parent `guidance` list is also regression-checked as unique scalar guidance
+that keeps those embedder rules visible.
 The full capability manifest preserves that parent and child source-owner
 metadata when embedding the branch.
 The first plan-oriented API behind that surface is
