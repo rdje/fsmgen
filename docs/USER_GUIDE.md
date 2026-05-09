@@ -1847,8 +1847,9 @@ also round-trips as JSON with child contracts, exact composition snapshot child
 metadata, exact generation snapshot child metadata, exact diagnostic summary
 child metadata, replacement keys, and replacement guidance intact,
 and the full capability manifest preserves that branch, its exact composition
-snapshot child metadata, exact generation snapshot child metadata, and its
-entry-key list across JSON encode/decode. Its
+snapshot child metadata, exact generation snapshot child metadata, exact
+diagnostic summary child metadata, and its entry-key list across JSON
+encode/decode. Its
 advertised public top-level key list is locked to
 the keys the parent contract emits, and its nested source map is locked against
 the embedded child contracts.

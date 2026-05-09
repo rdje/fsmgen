@@ -75,6 +75,11 @@ subtest 'capability manifest serializable_plan_reports branch survives JSON roun
         'generation_result_snapshot',
         'round-trip manifest keeps generation snapshot child contract',
     );
+    is_deeply(
+        $branch->{diagnostic_summary_contract},
+        $manifest->{embedding}{serializable_plan_reports}{diagnostic_summary_contract},
+        'round-trip manifest keeps exact diagnostic child contract',
+    );
     is(
         $branch->{diagnostic_summary_contract}{object_name},
         'diagnostic_summary',
