@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Surface registry entries have required structure
+- Every `surface_registry` entry must include a scalar `contract_source`, a
+  non-empty `primary_report_paths` array, and no duplicate paths within that
+  surface.
 ## 2026-05-09: Surface registry paths are logical and portable
 - `surface_registry.primary_report_paths` entries must remain dotted logical
   report paths. They must not become absolute filesystem paths or machine-local

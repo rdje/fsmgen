@@ -1808,7 +1808,8 @@ The `embedding.serializable_plan_reports` child is owned by
 [perl/FSM/Support/SerializablePlanReportContract.pm](perl/FSM/Support/SerializablePlanReportContract.pm)
 and advertises the current JSON-safe report families plus replacement guidance
 for raw `HDLGenerator` compatibility shells. Its `surface_registry` maps each
-surface to its contract owner and portable dotted primary report paths, with fresh caller-owned
+surface to its contract owner and portable dotted primary report paths, with
+non-empty unique path lists and fresh caller-owned
 containers that round-trip as JSON data. The capability manifest embeds the
 canonical registry, rebuilds it cleanly, and preserves it across manifest JSON
 encode/decode. Embedding nested presence metadata advertises the registry branch.

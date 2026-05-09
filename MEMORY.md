@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Serializable plan/report surface registry structure is audited
+- Added
+  [t/672-serializable-plan-report-surface-registry-structure-audit.t](t/672-serializable-plan-report-surface-registry-structure-audit.t)
+  to prove registry entries have owners, non-empty path arrays, and no duplicate
+  paths within each surface.
+- Focused validation passed:
+  `prove -l t/672-serializable-plan-report-surface-registry-structure-audit.t t/671-serializable-plan-report-surface-registry-path-portability-audit.t t/665-serializable-plan-report-surface-registry.t`.
 ## 2026-05-09: Serializable plan/report surface registry paths are portable
 - Added
   [t/671-serializable-plan-report-surface-registry-path-portability-audit.t](t/671-serializable-plan-report-surface-registry-path-portability-audit.t)

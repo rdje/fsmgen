@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Serializable plan/report surface registry structure is audited
+- Added
+  [t/672-serializable-plan-report-surface-registry-structure-audit.t](t/672-serializable-plan-report-surface-registry-structure-audit.t)
+  to prove every registry entry has a scalar `contract_source`, at least one
+  `primary_report_paths` entry, and no duplicate paths within a surface.
+- This is `R13` registry-structure coverage only; no public shape changed.
 ### Serializable plan/report surface registry paths are portable
 - Added
   [t/671-serializable-plan-report-surface-registry-path-portability-audit.t](t/671-serializable-plan-report-surface-registry-path-portability-audit.t)
