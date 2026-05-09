@@ -589,6 +589,8 @@ which is the contract to follow for `header`, `kind`,
 Reusable `HDLGenerator` facade objects return fresh `source_info` containers per
 generation, so caller mutation of one result's classification or package summary
 does not leak into a later result produced by the same facade object.
+That reuse rule covers composition `source_info` too, including the top-root
+header and package-import summary list.
 For direct package imports, `source_info.package_import_names` is also audited
 against the raw `fsm_module.attributes.package_imports` compatibility branch:
 the two arrays preserve the same authored import order without sharing mutable

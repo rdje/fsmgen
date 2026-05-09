@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Stateful facade reuse returns fresh composition source_info
+- Composition `source_info` carries the classified top-root header plus package
+  import summaries. Its heavier composition mirrors are audited separately, but
+  the source-info container itself also needs reuse coverage.
+- The audit mutates the composition header, import count, and import-name list in
+  a first result, then proves the next generation returns the original
+  source-info summary.
 ## 2026-05-09: Stateful facade reuse returns fresh composition statistics
 - Composition `statistics` carries scalar backend-style counts plus a
   `composition_provenance` mirror. Reusing a facade must rebuild that statistics
