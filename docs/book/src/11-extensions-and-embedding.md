@@ -523,8 +523,9 @@ discovery-time annotations do not pollute later manifest construction. The
 capability manifest builder also rebuilds the embedded
 `serializable_plan_reports` child, entry-key list, and its
 grouped presence-key map cleanly each time. The parent contract round-trips as
-JSON with nested contract owners, child contracts, raw-shell replacement keys,
-and raw-shell replacement guidance intact, and the full capability manifest
+JSON with nested contract owners, child contracts, exact composition snapshot
+child metadata, raw-shell replacement keys, and raw-shell replacement guidance
+intact, and the full capability manifest
 preserves that branch and its entry-key list across JSON encode/decode. Its
 advertised public top-level key list is regression-locked to the keys the parent
 contract actually emits, and its nested source map is locked against the

@@ -153,6 +153,11 @@ subtest 'serializable plan/report contract remains plain data after JSON round t
     );
     ok($decoded->{current_serializable_surfaces_json_safe}, 'round-trip current surfaces remain JSON-safe');
     ok(!$decoded->{raw_hdl_generator_branches_json_safe}, 'round-trip raw HDLGenerator branches remain non-JSON-safe');
+    is_deeply(
+        $decoded->{composition_plan_snapshot_contract},
+        $contract->{composition_plan_snapshot_contract},
+        'round-trip contract keeps exact composition child contract',
+    );
     is(
         $decoded->{composition_plan_snapshot_contract}{object_name},
         'composition_plan_snapshot',

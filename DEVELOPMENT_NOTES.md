@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Parent composition child contract survives exactly
+- The parent plan/report contract embeds the full composition plan snapshot
+  child contract. Full-contract JSON round-trip coverage now checks that child
+  metadata exactly, not only its `object_name` marker.
 ## 2026-05-09: Manifest guidance survives exactly
 - Manifest-embedded plan/report guidance should preserve exact ordering and
   wording through JSON encode/decode in the main branch audit, matching the
