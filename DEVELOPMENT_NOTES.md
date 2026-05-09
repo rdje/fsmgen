@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator result owner map stays JSON-audited
+- The bounded `HDLGenerator` result contract now has focused JSON round-trip
+  coverage for `nested_contract_source_map`. Decoded owner-map entries must stay
+  aligned with the scalar owner fields for `source_info`, `module_info`, and
+  `statistics`.
+- This keeps result-contract ownership discovery guarded without adding fields.
 ## 2026-05-10: HDLGenerator result top-level keys stay JSON-audited
 - The bounded `HDLGenerator` result contract now has focused JSON round-trip
   coverage for its public, direct-root, and composition-root top-level key

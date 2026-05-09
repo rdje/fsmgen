@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: HDLGenerator result owner map survives JSON
+- Added
+  [t/722-hdl-generator-result-contract-owner-map-json-roundtrip-audit.t](t/722-hdl-generator-result-contract-owner-map-json-roundtrip-audit.t)
+  to prove the bounded `HDLGenerator` result contract's decoded
+  `nested_contract_source_map` survives JSON round trip and remains aligned with
+  the scalar owner fields for `source_info`, `module_info`, and `statistics`.
+- This keeps result-contract ownership discovery auditable without changing the
+  result contract API.
+- Focused validation passed:
+  `perl -Iperl -c t/722-hdl-generator-result-contract-owner-map-json-roundtrip-audit.t && prove -l t/722-hdl-generator-result-contract-owner-map-json-roundtrip-audit.t t/305-hdl-generator-result-contract.t t/438-hdl-generator-result-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: HDLGenerator result top-level keys survive JSON
 - Added
   [t/721-hdl-generator-result-contract-top-level-keys-json-roundtrip-audit.t](t/721-hdl-generator-result-contract-top-level-keys-json-roundtrip-audit.t)

@@ -79,7 +79,8 @@ The bounded `HDLGenerator` result contract has also started receiving focused
 JSON round-trip coverage, beginning with an identity guard for its schema
 version, bounded status, owner, entrypoint, and primary test reference. Its
 top-level public, direct-root, and composition-root key families are now guarded
-after JSON round trip as well.
+after JSON round trip as well, along with the nested contract owner map that
+ties result branches back to their scalar owner fields.
 
 ## Current Philosophy
 
