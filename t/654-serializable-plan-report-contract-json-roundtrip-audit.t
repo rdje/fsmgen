@@ -138,6 +138,16 @@ subtest 'serializable plan/report contract remains plain data after JSON round t
         composition_report_json_fragment_path(),
         'round-trip contract keeps composition report JSON fragment path',
     );
+    ok(
+        is_json_boolean($decoded->{current_serializable_surfaces_json_safe}),
+        'round-trip contract keeps current surface JSON-safe flag as JSON boolean',
+    );
+    ok(
+        is_json_boolean($decoded->{raw_hdl_generator_branches_json_safe}),
+        'round-trip contract keeps raw HDLGenerator JSON-safe flag as JSON boolean',
+    );
+    ok($decoded->{current_serializable_surfaces_json_safe}, 'round-trip current surfaces remain JSON-safe');
+    ok(!$decoded->{raw_hdl_generator_branches_json_safe}, 'round-trip raw HDLGenerator branches remain non-JSON-safe');
     is(
         $decoded->{composition_plan_snapshot_contract}{object_name},
         'composition_plan_snapshot',
@@ -174,6 +184,11 @@ sub contains_blessed {
     }
 
     return 0;
+}
+
+sub is_json_boolean {
+    my ($value) = @_;
+    return defined(blessed($value)) && blessed($value) eq 'JSON::PP::Boolean';
 }
 
 sub as_set {

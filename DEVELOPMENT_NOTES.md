@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Parent JSON-safety flags survive serialization
+- The parent JSON-safety flags are machine-readable booleans, not prose. They
+  must survive full contract JSON encode/decode with their JSON boolean shape and
+  truth values intact.
 ## 2026-05-09: Manifest branch registry survives serialization
 - The manifest-embedded `serializable_plan_reports` branch should preserve its
   `surface_registry` through manifest JSON encode/decode. The decoded registry

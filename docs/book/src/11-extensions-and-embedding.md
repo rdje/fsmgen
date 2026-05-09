@@ -531,7 +531,8 @@ contract actually emits, and its nested source map is locked against the
 embedded child contracts it carries.
 The JSON-safety flags in that parent contract are explicit JSON booleans:
 current serializable report surfaces are marked safe, while raw `HDLGenerator`
-branches are marked non-safe interchange payloads. The capability manifest
+branches are marked non-safe interchange payloads, and those flags survive
+contract JSON round-trip with their boolean shape intact. The capability manifest
 embeds those flags with the same boolean shape and values, and preserves them
 across manifest JSON encode/decode.
 The parent `guidance` list is also regression-checked as unique scalar guidance
