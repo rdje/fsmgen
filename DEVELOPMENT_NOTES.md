@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Stateful facade reuse returns fresh resolved package specs
+- `resolved_package_imports` is shell-only because its values are raw
+  `FSM::Package::Spec` objects. The map container was already stateful-audited;
+  the package-spec object graph itself also needs to be rebuilt for later
+  generations on the same facade.
+- The audit mutates the package name, resolved symbol payload, and raw package
+  AST in a first result, then proves a later generation on the same facade
+  returns the original imported package spec.
 ## 2026-05-09: Stateful facade reuse returns fresh standalone-dt FSM modules
 - Standalone `?dt` roots also return a raw `fsm_module` compatibility object,
   but its state list is synthesized from top-level decision-tree blocks rather

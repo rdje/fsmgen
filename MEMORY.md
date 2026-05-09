@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Stateful resolved package specs are alias-audited
+- Added
+  [t/605-hdl-generator-stateful-resolved-package-spec-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/605-hdl-generator-stateful-resolved-package-spec-alias-boundary-audit.t)
+  to prove mutating one generation result's raw `FSM::Package::Spec` object under
+  `resolved_package_imports` does not contaminate a later generation on the same
+  reusable `HDLGenerator` facade object.
+- Focused validation:
+  `perl -Iperl -c t/605-hdl-generator-stateful-resolved-package-spec-alias-boundary-audit.t && prove -lv t/594-hdl-generator-stateful-resolved-package-imports-alias-boundary-audit.t t/605-hdl-generator-stateful-resolved-package-spec-alias-boundary-audit.t && mdbook build docs/book`
+  passed. This is `R13` runtime contract-integrity coverage only; no production
+  code, public manifest shape, user-facing generation behavior, or roadmap lane
+  status changed.
 ## 2026-05-09: Stateful standalone-dt fsm_module results are alias-audited
 - Added
   [t/604-hdl-generator-stateful-standalone-dt-fsm-module-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/604-hdl-generator-stateful-standalone-dt-fsm-module-alias-boundary-audit.t)

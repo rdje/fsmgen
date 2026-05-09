@@ -508,6 +508,9 @@ Reusable `HDLGenerator` facade objects also return a fresh
 `resolved_package_imports` map for each generation: caller mutation of one
 result's raw map does not leak into a later result produced by the same facade
 object.
+The raw `FSM::Package::Spec` values inside that map are also per-generation
+objects for facade reuse: mutating one result's package name, symbols, or raw
+package AST does not leak into a later generation.
 The top-level `fsm_module` branch is shell-only too when it is defined: it is a
 raw `FSM::CoreAST::FSMModule` object kept for in-process compatibility, so
 structured downstream consumers should prefer `intent_hir`, `lowered_rtl_ir`,
