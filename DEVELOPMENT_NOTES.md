@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Snapshot reports remain success-only
+- The new `generation_result_snapshot` and composition `plan_snapshot` branches
+  are success-only report surfaces. Failed semantic JSON still carries
+  diagnostics and support-accounting information, but no partial semantic or
+  generation snapshot payload.
+- This keeps failure reports small and avoids implying that rejected inputs have
+  stable generated-plan/result semantics.
 ## 2026-05-09: Semantic JSON carries the generation result snapshot
 - Successful normalized semantic JSON reports now expose
   `generation_result_snapshot` as a success-only top-level branch. This makes the

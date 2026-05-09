@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Semantic snapshot failure boundary is locked
+- Added [t/634-normalized-semantic-snapshot-failure-boundary.t](t/634-normalized-semantic-snapshot-failure-boundary.t)
+  to prove failed semantic JSON omits `semantic`, `generation_result_snapshot`,
+  and composition `plan_snapshot` branches.
+- Focused validation passed:
+  `prove -l t/634-normalized-semantic-snapshot-failure-boundary.t t/633-normalized-semantic-generation-result-snapshot.t t/631-normalized-semantic-composition-plan-snapshot.t t/311-normalized-semantic-report-contract.t`
+  and `prove -l t/302-normalized-semantic-json.t t/297-capability-manifest.t`.
 ## 2026-05-09: Semantic JSON embeds generation result snapshots
 - Successful normalized semantic JSON reports now include top-level
   `generation_result_snapshot`.

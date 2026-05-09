@@ -500,7 +500,10 @@ as `generation_result_snapshot`, a JSON-safe summary of raw `HDLGenerator`
 results that records stable module/source/HDL-size facts, semantic-layer
 presence, and raw-shell presence/class metadata without turning the raw result
 hash into a public JSON API. Successful normalized semantic JSON reports now
-expose that snapshot as top-level `generation_result_snapshot`.
+expose that snapshot as top-level `generation_result_snapshot`. Failed semantic
+JSON reports deliberately omit both `generation_result_snapshot` and semantic
+composition `plan_snapshot`, preserving the existing success-only boundary for
+generated semantics.
 Tracked documentation and book links use paths relative to the repository root;
 machine-local absolute filesystem paths are not part of the public embedding
 surface.

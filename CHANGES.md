@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Semantic snapshot failure boundary is regression-locked
+- Added
+  [t/634-normalized-semantic-snapshot-failure-boundary.t](t/634-normalized-semantic-snapshot-failure-boundary.t)
+  to prove failed normalized semantic JSON reports keep omitting success-only
+  branches, including `semantic`, `generation_result_snapshot`, and
+  composition `plan_snapshot`.
+- This is `R13` contract coverage only; it preserves the existing failure-report
+  shape while locking the new snapshot APIs to successful reports.
 ### Semantic JSON embeds generation result snapshots
 - Successful normalized semantic JSON reports now include top-level
   `generation_result_snapshot`, built by
