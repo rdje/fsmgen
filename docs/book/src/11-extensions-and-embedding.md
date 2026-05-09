@@ -512,8 +512,9 @@ JSON now embeds that summary for both success and failure reports, and check JSO
 uses the same summary for `--check --json` / `--check-json` outputs.
 The diagnostic summary builder and contract return fresh caller-owned
 containers, so local annotations of code lists or count maps do not pollute
-later report construction. Both public JSON report families are regression-locked
-to the same standalone summary builder output.
+later report construction. Both public JSON report families rebuild their
+embedded summaries per report and are regression-locked to the same standalone
+summary builder output.
 Tracked documentation and book links use paths relative to the repository root;
 machine-local absolute filesystem paths are not part of the public embedding
 surface.

@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Public diagnostic summaries are rebuilt per report
+- Check JSON and normalized semantic JSON report builders must create fresh
+  `diagnostic_summary` containers per report. Caller mutation of one emitted
+  summary must not affect later report construction.
 ## 2026-05-09: Embedded diagnostic summaries share one builder
 - Check JSON and normalized semantic JSON should not each maintain their own
   diagnostic summary shape. Both embedded summaries are runtime-checked against

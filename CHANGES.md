@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Public report diagnostic summary alias boundary is audited
+- Added
+  [t/640-public-report-diagnostic-summary-alias-boundary-audit.t](t/640-public-report-diagnostic-summary-alias-boundary-audit.t)
+  to prove mutating a returned check/semantic `diagnostic_summary` does not
+  contaminate a later public report build.
+- This is `R13` contract-integrity coverage only; no public report shape
+  changed.
 ### Diagnostic summary public-report parity is audited
 - Added
   [t/639-diagnostic-summary-public-report-runtime-contract-audit.t](t/639-diagnostic-summary-public-report-runtime-contract-audit.t)

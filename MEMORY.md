@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Public report diagnostic summary alias boundary is audited
+- Added
+  [t/640-public-report-diagnostic-summary-alias-boundary-audit.t](t/640-public-report-diagnostic-summary-alias-boundary-audit.t)
+  to prove mutating one returned check/semantic `diagnostic_summary` does not
+  contaminate later report builds.
+- Focused validation passed:
+  `prove -l t/640-public-report-diagnostic-summary-alias-boundary-audit.t t/638-serializable-diagnostic-summary-defensive-copy-boundary-audit.t t/639-diagnostic-summary-public-report-runtime-contract-audit.t`.
 ## 2026-05-09: Diagnostic summary public-report parity is audited
 - Added
   [t/639-diagnostic-summary-public-report-runtime-contract-audit.t](t/639-diagnostic-summary-public-report-runtime-contract-audit.t)
