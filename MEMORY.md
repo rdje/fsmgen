@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Capability manifest surface registry structure is audited
+- Added
+  [t/676-capability-manifest-surface-registry-structure-audit.t](t/676-capability-manifest-surface-registry-structure-audit.t)
+  to prove manifest-embedded registry entries have owners, non-empty path arrays,
+  and no duplicate paths.
+- Focused validation passed:
+  `prove -l t/676-capability-manifest-surface-registry-structure-audit.t t/672-serializable-plan-report-surface-registry-structure-audit.t t/675-capability-manifest-surface-registry-path-portability-audit.t t/674-capability-manifest-surface-registry-owner-map-parity-audit.t t/297-capability-manifest.t`.
 ## 2026-05-09: Capability manifest surface registry paths are portable
 - Added
   [t/675-capability-manifest-surface-registry-path-portability-audit.t](t/675-capability-manifest-surface-registry-path-portability-audit.t)

@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Capability manifest surface registry structure is audited
+- Added
+  [t/676-capability-manifest-surface-registry-structure-audit.t](t/676-capability-manifest-surface-registry-structure-audit.t)
+  to prove manifest-embedded registry entries have scalar owners, non-empty path
+  arrays, and no duplicate paths within each surface.
+- This completes the current `R13` registry hardening pass for explicit
+  serializable plan/report discovery.
 ### Capability manifest surface registry paths are portable
 - Added
   [t/675-capability-manifest-surface-registry-path-portability-audit.t](t/675-capability-manifest-surface-registry-path-portability-audit.t)

@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Manifest registry entries have required structure
+- Manifest-embedded `surface_registry` entries must carry scalar owners,
+  non-empty path arrays, and no duplicate paths within each surface, matching the
+  standalone registry invariants.
 ## 2026-05-09: Manifest registry paths are logical and portable
 - Manifest-embedded `surface_registry.primary_report_paths` entries must remain
   dotted logical report paths. They must not become absolute filesystem paths or
