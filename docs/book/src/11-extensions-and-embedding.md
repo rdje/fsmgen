@@ -637,6 +637,8 @@ Reusable `HDLGenerator` facade objects return fresh `statistics` containers per
 generation, so caller mutation of one result's scalar statistics or nested raw
 backend maps does not leak into a later result produced by the same facade
 object.
+Composition statistics follow the same reuse rule, including the nested
+`statistics.composition_provenance` mirror.
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded summary and composition-only statistics
 key families from one place instead of collecting those key lists

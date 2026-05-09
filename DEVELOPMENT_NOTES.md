@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Stateful facade reuse returns fresh composition statistics
+- Composition `statistics` carries scalar backend-style counts plus a
+  `composition_provenance` mirror. Reusing a facade must rebuild that statistics
+  tree rather than preserving caller annotations.
+- The audit mutates scalar statistics, provenance counts, and nested link
+  context in a first composition result, then proves a later generation returns
+  the original statistics data.
 ## 2026-05-09: Stateful facade reuse returns fresh composition module_info
 - Composition `module_info` contains nested summaries for the top module,
   signal analysis, and realized/generated child summaries. Reusing a facade must
