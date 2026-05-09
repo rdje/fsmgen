@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Normalized semantic top-level key alignment is audited
+- Added
+  [t/658-normalized-semantic-top-level-key-alignment-audit.t](t/658-normalized-semantic-top-level-key-alignment-audit.t)
+  to prove semantic JSON success/failure top-level key sets exactly match the
+  advertised common and success-only contracts.
+- Focused validation passed:
+  `prove -l t/658-normalized-semantic-top-level-key-alignment-audit.t t/647-normalized-semantic-snapshot-presence-runtime-contract-audit.t t/311-normalized-semantic-report-contract.t`.
 ## 2026-05-09: Serializable child report public-key metadata is audited
 - Added
   [t/657-serializable-child-report-public-key-alignment-audit.t](t/657-serializable-child-report-public-key-alignment-audit.t)

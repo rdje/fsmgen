@@ -1837,7 +1837,8 @@ failure outputs, and actual semantic JSON reports round-trip with embedded
 snapshot data intact. Failed
 semantic JSON reports omit these success
 snapshots, including composition `plan_snapshot`, and continue to expose only
-the bounded failure diagnostics/reporting surface.
+the bounded failure diagnostics/reporting surface. Success and failure semantic
+reports are locked to exactly their advertised top-level key sets.
 For tooling that only needs diagnostic status, the same manifest child now
 advertises [perl/FSM/Support/SerializableDiagnosticSummary.pm](perl/FSM/Support/SerializableDiagnosticSummary.pm)
 as `diagnostic_summary`, a JSON-safe count/code/severity summary that avoids

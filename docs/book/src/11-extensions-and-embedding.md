@@ -526,7 +526,8 @@ round-trip locked with embedded generation, composition, and diagnostic snapshot
 data intact. Failed semantic
 JSON reports deliberately omit both `generation_result_snapshot` and semantic
 composition `plan_snapshot`, preserving the existing success-only boundary for
-generated semantics.
+generated semantics. Semantic success and failure reports are also locked to
+emit exactly their advertised top-level key sets.
 The manifest surface also advertises
 [perl/FSM/Support/SerializableDiagnosticSummary.pm](perl/FSM/Support/SerializableDiagnosticSummary.pm)
 as `diagnostic_summary`, a JSON-safe diagnostic count/code/severity summary for

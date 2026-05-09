@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Semantic top-level report keys must match contract sets
+- Actual normalized semantic JSON success reports must emit exactly common
+  top-level keys plus success-only keys. Failure reports must emit exactly common
+  top-level keys and no success-only snapshot branches.
 ## 2026-05-09: Serializable child public-key metadata must match output
 - `composition_plan_snapshot`, `generation_result_snapshot`, and
   `diagnostic_summary` public top-level key helpers must remain exact
