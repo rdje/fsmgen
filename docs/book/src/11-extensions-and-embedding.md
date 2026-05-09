@@ -491,7 +491,8 @@ and a non-empty unique path list, and returns
 fresh caller-owned containers that round-trip as JSON data. The capability manifest embeds the canonical
 registry, rebuilds it cleanly after caller mutation, and preserves it across
 manifest JSON encode/decode. Embedding nested presence metadata advertises the
-registry branch for manifest consumers. That parent
+registry branch for manifest consumers, and the manifest-embedded registry
+owners stay aligned with the manifest-embedded nested source map. That parent
 contract returns fresh nested
 maps, lists, and embedded child contracts, so discovery-time annotations do not
 pollute later manifest construction. The capability manifest builder also

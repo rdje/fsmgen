@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Capability manifest surface registry owners are aligned
+- Added
+  [t/674-capability-manifest-surface-registry-owner-map-parity-audit.t](t/674-capability-manifest-surface-registry-owner-map-parity-audit.t)
+  to prove manifest-embedded registry owners match manifest-embedded nested
+  source maps.
+- Focused validation passed:
+  `prove -l t/674-capability-manifest-surface-registry-owner-map-parity-audit.t t/673-serializable-plan-report-surface-registry-owner-map-parity-audit.t t/667-capability-manifest-serializable-plan-report-surface-registry-audit.t t/297-capability-manifest.t`.
 ## 2026-05-09: Serializable plan/report surface registry owners are aligned
 - Added
   [t/673-serializable-plan-report-surface-registry-owner-map-parity-audit.t](t/673-serializable-plan-report-surface-registry-owner-map-parity-audit.t)

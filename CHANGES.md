@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Capability manifest surface registry owners are aligned
+- Added
+  [t/674-capability-manifest-surface-registry-owner-map-parity-audit.t](t/674-capability-manifest-surface-registry-owner-map-parity-audit.t)
+  to prove the manifest-embedded `surface_registry` owner map stays aligned with
+  the manifest-embedded `nested_contract_source_map`.
+- This is `R13` manifest registry owner-parity coverage only; no public shape
+  changed.
 ### Serializable plan/report surface registry owners are aligned
 - Added
   [t/673-serializable-plan-report-surface-registry-owner-map-parity-audit.t](t/673-serializable-plan-report-surface-registry-owner-map-parity-audit.t)

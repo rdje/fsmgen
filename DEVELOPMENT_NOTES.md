@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Manifest registry owners match manifest source maps
+- In the full capability manifest, `surface_registry.<surface>.contract_source`
+  must match the same branch's `nested_contract_source_map.<surface>` for every
+  advertised serializable surface.
 ## 2026-05-09: Surface registry owners match nested contract owners
 - `surface_registry.<surface>.contract_source` must match
   `nested_contract_source_map.<surface>` for every advertised serializable

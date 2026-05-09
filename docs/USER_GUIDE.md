@@ -1813,6 +1813,8 @@ owners aligned to the nested source map, non-empty unique path lists, and fresh 
 containers that round-trip as JSON data. The capability manifest embeds the
 canonical registry, rebuilds it cleanly, and preserves it across manifest JSON
 encode/decode. Embedding nested presence metadata advertises the registry branch.
+Manifest-embedded registry owners stay aligned with the manifest-embedded nested
+source map.
 The parent contract returns fresh
 nested maps, lists, and embedded child contracts, and the capability manifest
 rebuilds that embedded child cleanly per call. The contract also round-trips as
