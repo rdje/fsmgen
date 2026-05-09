@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Stateful facade reuse returns fresh standalone dt package summaries
+- Standalone `?dt` roots share the same `source_info` package-summary contract as
+  direct `?fsm` roots, including package imports resolved through
+  `source_search_paths`.
+- The audit mutates the returned import-name list and count in a first `?dt`
+  result, then proves the next generation on the same facade rebuilds the
+  authored `shared_external` summary.
 ## 2026-05-09: Stateful facade reuse returns fresh direct source-info package summaries
 - The earlier direct `source_info` reuse audit covered the empty import-summary
   path. Direct roots with real package imports also need explicit reuse coverage

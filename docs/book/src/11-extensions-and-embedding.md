@@ -590,6 +590,8 @@ Reusable `HDLGenerator` facade objects return fresh `source_info` containers per
 generation, so caller mutation of one result's classification or package summary
 does not leak into a later result produced by the same facade object.
 That includes direct roots with non-empty package-import summaries.
+Standalone `?dt` roots follow the same source-info reuse rule when their
+packages are resolved through `source_search_paths`.
 That reuse rule covers composition `source_info` too, including the top-root
 header and package-import summary list.
 For direct package imports, `source_info.package_import_names` is also audited

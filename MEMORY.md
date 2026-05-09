@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Stateful standalone dt source_info package summaries are alias-audited
+- Added
+  [t/618-hdl-generator-stateful-standalone-dt-source-info-package-summary-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/618-hdl-generator-stateful-standalone-dt-source-info-package-summary-alias-boundary-audit.t)
+  to prove mutating one standalone `?dt` result's non-empty
+  `source_info.package_import_names` / `package_import_count` summary does not
+  contaminate a later generation on the same reusable `HDLGenerator` facade
+  object.
+- Focused validation:
+  `perl -Iperl -c t/618-hdl-generator-stateful-standalone-dt-source-info-package-summary-alias-boundary-audit.t && prove -lv t/592-standalone-dt-package-import-summary-alias-boundary-audit.t t/618-hdl-generator-stateful-standalone-dt-source-info-package-summary-alias-boundary-audit.t && mdbook build docs/book`
+  passed. This is `R13` runtime contract-integrity coverage only; no production
+  code, public manifest shape, user-facing generation behavior, or roadmap lane
+  status changed.
 ## 2026-05-09: Stateful direct source_info package summaries are alias-audited
 - Added
   [t/617-hdl-generator-stateful-direct-source-info-package-summary-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/617-hdl-generator-stateful-direct-source-info-package-summary-alias-boundary-audit.t)
