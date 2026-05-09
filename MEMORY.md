@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Serializable plan/report registry entry keys are explicit
+- Added `surface_registry_entry_keys` to `embedding.serializable_plan_reports`
+  and exported `serializable_plan_report_surface_registry_entry_keys()`.
+- Added
+  [t/677-serializable-plan-report-surface-registry-entry-contract.t](t/677-serializable-plan-report-surface-registry-entry-contract.t).
+- Focused validation passed:
+  `perl -Iperl -c t/677-serializable-plan-report-surface-registry-entry-contract.t && prove -l t/677-serializable-plan-report-surface-registry-entry-contract.t t/656-serializable-plan-report-contract-public-key-alignment-audit.t t/665-serializable-plan-report-surface-registry.t t/672-serializable-plan-report-surface-registry-structure-audit.t && mdbook build docs/book`.
 ## 2026-05-09: Capability manifest surface registry structure is audited
 - Added
   [t/676-capability-manifest-surface-registry-structure-audit.t](t/676-capability-manifest-surface-registry-structure-audit.t)

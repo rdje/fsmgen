@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Serializable plan/report registry entry keys are explicit
+- Added `surface_registry_entry_keys` to the parent
+  `embedding.serializable_plan_reports` contract and exported
+  `serializable_plan_report_surface_registry_entry_keys()`.
+- Added
+  [t/677-serializable-plan-report-surface-registry-entry-contract.t](t/677-serializable-plan-report-surface-registry-entry-contract.t)
+  to prove every registry entry uses exactly the advertised entry shape.
 ### Capability manifest surface registry structure is audited
 - Added
   [t/676-capability-manifest-surface-registry-structure-audit.t](t/676-capability-manifest-surface-registry-structure-audit.t)

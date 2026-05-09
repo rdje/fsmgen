@@ -495,6 +495,8 @@ registry branch for manifest consumers, and the manifest-embedded registry
 owners stay aligned with the manifest-embedded nested source map. Manifest
 registry paths remain portable dotted report paths, and manifest registry entries
 mirror the standalone registry's scalar-owner/non-empty-unique-path invariants.
+The parent contract also publishes `surface_registry_entry_keys` so tools can
+discover the per-surface entry shape directly.
 That parent
 contract returns fresh nested
 maps, lists, and embedded child contracts, so discovery-time annotations do not

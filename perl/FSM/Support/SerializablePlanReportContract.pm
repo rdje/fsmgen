@@ -35,6 +35,7 @@ our @EXPORT_OK = qw(
     serializable_plan_report_nested_contract_source_map
     serializable_plan_report_public_top_level_keys
     serializable_plan_report_raw_shell_replacement_map
+    serializable_plan_report_surface_registry_entry_keys
     serializable_plan_report_surface_registry
 );
 
@@ -50,6 +51,7 @@ sub build_serializable_plan_report_contract {
         purpose => 'Advertise JSON-safe plan/report surfaces for embedders instead of raw in-process compatibility shells.',
         public_top_level_presence_keys => serializable_plan_report_public_top_level_keys(),
         json_safe_surface_keys => serializable_plan_report_json_safe_surface_keys(),
+        surface_registry_entry_keys => serializable_plan_report_surface_registry_entry_keys(),
         surface_registry => serializable_plan_report_surface_registry(),
         nested_contract_source_map => serializable_plan_report_nested_contract_source_map(),
         raw_shell_replacement_map => serializable_plan_report_raw_shell_replacement_map(),
@@ -83,6 +85,7 @@ sub serializable_plan_report_public_top_level_keys {
             purpose
             public_top_level_presence_keys
             json_safe_surface_keys
+            surface_registry_entry_keys
             surface_registry
             nested_contract_source_map
             raw_shell_replacement_map
@@ -107,6 +110,15 @@ sub serializable_plan_report_json_safe_surface_keys {
             generation_result_snapshot
             diagnostic_summary
             composition_provenance_report
+        ),
+    ];
+}
+
+sub serializable_plan_report_surface_registry_entry_keys {
+    return [
+        qw(
+            contract_source
+            primary_report_paths
         ),
     ];
 }

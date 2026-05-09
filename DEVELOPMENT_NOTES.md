@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Surface registry entry keys are explicit
+- `embedding.serializable_plan_reports.surface_registry_entry_keys` advertises
+  the stable shape of each registry entry. Each entry must expose only
+  `contract_source` and `primary_report_paths`.
 ## 2026-05-09: Manifest registry entries have required structure
 - Manifest-embedded `surface_registry` entries must carry scalar owners,
   non-empty path arrays, and no duplicate paths within each surface, matching the
