@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Manifest-embedded surface registry round-trips as JSON data
+- The capability manifest must survive JSON encode/decode with
+  `embedding.serializable_plan_reports.surface_registry` intact and equal to the
+  canonical registry helper.
 ## 2026-05-09: Serializable plan/report registry round-trips as JSON data
 - `serializable_plan_report_surface_registry()` must survive JSON encode/decode
   with owner strings and primary report path lists intact.
