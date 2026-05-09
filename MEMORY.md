@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Serializable plan/report surface registry is explicit
+- Added `surface_registry` to `embedding.serializable_plan_reports` and exported
+  `serializable_plan_report_surface_registry()` for embedders that need a stable
+  owner/path map.
+- Added
+  [t/665-serializable-plan-report-surface-registry.t](t/665-serializable-plan-report-surface-registry.t).
+- Focused validation passed:
+  `prove -l t/665-serializable-plan-report-surface-registry.t t/656-serializable-plan-report-contract-public-key-alignment-audit.t t/654-serializable-plan-report-contract-json-roundtrip-audit.t t/629-serializable-plan-report-contract.t t/297-capability-manifest.t`.
 ## 2026-05-09: Public report embedded snapshot key alignment is audited
 - Added
   [t/664-public-report-embedded-snapshot-key-alignment-audit.t](t/664-public-report-embedded-snapshot-key-alignment-audit.t)

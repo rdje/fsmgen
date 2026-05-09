@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Serializable plan/report surface registry is explicit
+- Added `surface_registry` to the parent `embedding.serializable_plan_reports`
+  contract and exported `serializable_plan_report_surface_registry()`.
+- Added
+  [t/665-serializable-plan-report-surface-registry.t](t/665-serializable-plan-report-surface-registry.t)
+  to prove the registry covers every advertised surface, records stable
+  contract owners, and lists primary report paths for embedders.
 ### Public report embedded snapshot key alignment is audited
 - Added
   [t/664-public-report-embedded-snapshot-key-alignment-audit.t](t/664-public-report-embedded-snapshot-key-alignment-audit.t)

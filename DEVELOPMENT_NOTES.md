@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Serializable plan/report surfaces have an explicit registry
+- `embedding.serializable_plan_reports.surface_registry` is the canonical map
+  from surface name to contract owner and primary report paths. Use it when
+  embedding tooling needs to discover where each serializable report appears.
 ## 2026-05-09: Public reports must preserve embedded snapshot key sets
 - Normalized semantic JSON and check JSON must embed serializable snapshot/summary
   branches with top-level key sets matching the standalone builders' advertised

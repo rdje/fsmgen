@@ -35,6 +35,7 @@ our @EXPORT_OK = qw(
     serializable_plan_report_nested_contract_source_map
     serializable_plan_report_public_top_level_keys
     serializable_plan_report_raw_shell_replacement_map
+    serializable_plan_report_surface_registry
 );
 
 sub serializable_plan_report_contract_source {
@@ -49,6 +50,7 @@ sub build_serializable_plan_report_contract {
         purpose => 'Advertise JSON-safe plan/report surfaces for embedders instead of raw in-process compatibility shells.',
         public_top_level_presence_keys => serializable_plan_report_public_top_level_keys(),
         json_safe_surface_keys => serializable_plan_report_json_safe_surface_keys(),
+        surface_registry => serializable_plan_report_surface_registry(),
         nested_contract_source_map => serializable_plan_report_nested_contract_source_map(),
         raw_shell_replacement_map => serializable_plan_report_raw_shell_replacement_map(),
         composition_plan_snapshot_contract => build_serializable_composition_plan_snapshot_contract(),
@@ -81,6 +83,7 @@ sub serializable_plan_report_public_top_level_keys {
             purpose
             public_top_level_presence_keys
             json_safe_surface_keys
+            surface_registry
             nested_contract_source_map
             raw_shell_replacement_map
             composition_plan_snapshot_contract
@@ -127,6 +130,43 @@ sub serializable_plan_report_raw_shell_replacement_map {
         fsm_module => 'semantic_exports.normalized_semantic_json.semantic.forward_ir',
         raw_ast => 'semantic_exports.normalized_semantic_json.semantic.forward_ir.intent_hir',
         resolved_package_imports => 'embedding.hdl_generator_result.source_info_summary_presence_keys',
+    };
+}
+
+sub serializable_plan_report_surface_registry {
+    return {
+        normalized_semantic_json => {
+            contract_source => normalized_semantic_report_contract_source(),
+            primary_report_paths => ['semantic_exports.normalized_semantic_json'],
+        },
+        composition_plan_snapshot => {
+            contract_source => serializable_composition_plan_snapshot_contract_source(),
+            primary_report_paths => [
+                'embedding.serializable_plan_reports.composition_plan_snapshot_contract',
+                'semantic_exports.normalized_semantic_json.semantic.composition.plan_snapshot',
+            ],
+        },
+        generation_result_snapshot => {
+            contract_source => serializable_generation_result_snapshot_contract_source(),
+            primary_report_paths => [
+                'embedding.serializable_plan_reports.generation_result_snapshot_contract',
+                'semantic_exports.normalized_semantic_json.generation_result_snapshot',
+            ],
+        },
+        diagnostic_summary => {
+            contract_source => serializable_diagnostic_summary_contract_source(),
+            primary_report_paths => [
+                'embedding.serializable_plan_reports.diagnostic_summary_contract',
+                'semantic_exports.normalized_semantic_json.diagnostic_summary',
+                'check_json.diagnostic_summary',
+            ],
+        },
+        composition_provenance_report => {
+            contract_source => composition_report_contract_source(),
+            primary_report_paths => [
+                composition_report_json_fragment_path(),
+            ],
+        },
     };
 }
 
