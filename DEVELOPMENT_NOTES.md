@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Manifest plan/report guidance survives serialization
+- Manifest-embedded serializable plan/report guidance must remain usable after
+  capability-manifest JSON encode/decode. Decoded guidance should still be a
+  unique scalar list that preserves both embedder rules without in-process
+  helper access.
 ## 2026-05-09: Manifest plan/report guidance mirrors the parent contract
 - The capability manifest embeds the serializable plan/report `guidance` list as
   structured scalar metadata, not as unbounded prose. Manifest consumers should

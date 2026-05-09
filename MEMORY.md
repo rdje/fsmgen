@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Manifest plan/report guidance round-trips as JSON
+- Added
+  [t/690-capability-manifest-plan-report-guidance-json-roundtrip-audit.t](t/690-capability-manifest-plan-report-guidance-json-roundtrip-audit.t)
+  to prove manifest-embedded plan/report `guidance` survives JSON encode/decode
+  as non-empty unique scalar guidance with the embedder rules intact.
+- Focused validation passed:
+  `perl -Iperl -c t/690-capability-manifest-plan-report-guidance-json-roundtrip-audit.t && prove -l t/690-capability-manifest-plan-report-guidance-json-roundtrip-audit.t t/689-capability-manifest-serializable-plan-report-guidance-contract.t t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-09: Manifest plan/report guidance is structured
 - Added
   [t/689-capability-manifest-serializable-plan-report-guidance-contract.t](t/689-capability-manifest-serializable-plan-report-guidance-contract.t)

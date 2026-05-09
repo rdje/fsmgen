@@ -1842,7 +1842,7 @@ embeds those flags with the same boolean shape and values, and preserves them
 across manifest JSON encode/decode.
 The parent `guidance` list is also regression-checked as unique scalar guidance
 that keeps those embedder rules visible, and the capability manifest embeds the
-same structured guidance.
+same structured guidance with JSON round-trip coverage.
 The full capability manifest preserves that source-owner metadata when embedding
 the branch.
 Its first dedicated plan API is
