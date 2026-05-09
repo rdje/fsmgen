@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Public report key metadata points at canonical owners
+- The serializable plan/report parent carries report-key metadata for normalized
+  semantic JSON and composition provenance reports. Those lists and the
+  composition report fragment path must stay sourced from their owning support
+  contracts, not copied as stale inline constants.
 ## 2026-05-09: Parent plan/report guidance survives serialization
 - Parent serializable plan/report guidance must remain usable after JSON
   encode/decode. Decoded guidance should still preserve the unique scalar list

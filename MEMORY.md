@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Public report key metadata is embedded explicitly
+- Added
+  [t/691-serializable-plan-report-public-report-key-metadata.t](t/691-serializable-plan-report-public-report-key-metadata.t)
+  to prove the serializable plan/report parent embeds normalized semantic report
+  top-level keys, composition report top-level keys, and the composition report
+  JSON fragment path from their canonical owners.
+- Focused validation passed:
+  `perl -Iperl -c t/691-serializable-plan-report-public-report-key-metadata.t && prove -l t/691-serializable-plan-report-public-report-key-metadata.t t/629-serializable-plan-report-contract.t && mdbook build docs/book`.
 ## 2026-05-09: Plan/report guidance round-trips as JSON
 - Updated
   [t/654-serializable-plan-report-contract-json-roundtrip-audit.t](t/654-serializable-plan-report-contract-json-roundtrip-audit.t)

@@ -1844,6 +1844,9 @@ The parent `guidance` list is also regression-checked as unique scalar guidance
 that keeps those embedder rules visible and survives JSON round-trip; the
 capability manifest embeds the same structured guidance with JSON round-trip
 coverage.
+The parent contract also embeds normalized semantic and composition report public
+key metadata, plus the composition report JSON fragment path, from their
+canonical report contracts.
 The full capability manifest preserves that source-owner metadata when embedding
 the branch.
 Its first dedicated plan API is
