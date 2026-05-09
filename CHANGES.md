@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Composition generation module-info lowered-IR mirrors are alias-audited
+- Added
+  [t/582-composition-generation-module-info-lowered-ir-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/582-composition-generation-module-info-lowered-ir-alias-boundary-audit.t)
+  to prove live composition-generation `module_info` lowered summary
+  projections such as `internal_net_names` and `instance_names` do not alias
+  their embedded `lowered_rtl_ir` mirrors.
+- Clarified that same `module_info` summary/embedded-`lowered_rtl_ir`
+  ownership rule in
+  [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md),
+  [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md),
+  and
+  [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md).
+- This is `R13` runtime contract-integrity coverage only. No production code,
+  public manifest shape, generation behavior, or roadmap lane status changed.
 ### Composition generation module-info forward-IR mirrors are alias-audited
 - Added
   [t/581-composition-generation-module-info-forward-ir-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/581-composition-generation-module-info-forward-ir-alias-boundary-audit.t)

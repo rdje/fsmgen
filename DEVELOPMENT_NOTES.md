@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Composition module-info lowered summaries must not alias embedded lowered RTL IR
+- Composition `module_info` also mirrors selected lowered RTL summaries outside
+  the embedded serialized `lowered_rtl_ir` payload. For composition tops with
+  realized instances and internal nets, lists such as `internal_net_names` and
+  `instance_names` should start equivalent to the lowered-IR mirrors without
+  sharing mutable array containers.
+- The new integration audit locks that behavior through the public
+  `HDLGenerator` composition path, complementing the metadata-builder unit
+  coverage for lowered summary projections. The docs now state the same
+  ownership rule alongside the intent-HIR module-info mirror rule.
 ## 2026-05-09: Composition module-info summary projections must not alias embedded intent HIR
 - Composition `module_info` carries both compatibility summary projections and
   the embedded serialized `intent_hir` payload. Summary branches such as
