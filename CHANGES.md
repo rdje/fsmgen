@@ -1,5 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-05-10
+### Bootstrap import-tree snapshot refreshed
+- Rechecked [bin/fsmgen](bin/fsmgen) and its project-owned transitive
+  `FSM::...` import closure during the mandatory session bootstrap.
+- Updated [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md)
+  for the current measured closure: `184` files total, `183` `.pm` packages,
+  `Support` at `62` reachable packages, and
+  [perl/FSM/Composition/GenerationOrchestrator.pm](perl/FSM/Composition/GenerationOrchestrator.pm)
+  at `172` lines.
+- Added the import-tree note to the mdBook reference map and refreshed
+  [README.md](README.md)'s Markdown index so the onboarding hub lists the
+  current tracked documentation set more honestly.
 ## 2026-05-09
 ### Parent replacement paths stay portable after JSON
 - Updated

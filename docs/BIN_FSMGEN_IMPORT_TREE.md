@@ -11,10 +11,10 @@ Use it to keep one current, high-signal picture of:
 Refresh this document at the start of a later session whenever the effective entrypoint/import-tree architecture has moved enough that this note is no longer honest.
 
 Current baseline:
-- Reviewed on `2026-05-08`.
+- Reviewed on `2026-05-10`.
 - Scope is the project-owned transitive `FSM::...` tree reachable from [bin/fsmgen](bin/fsmgen).
 - Perl core and non-project helper modules are treated as support dependencies, not as part of the architectural map.
-- Static trace from [bin/fsmgen](bin/fsmgen) currently reaches `180` project files total, `179` `.pm` packages.
+- Static trace from [bin/fsmgen](bin/fsmgen) currently reaches `184` project files total, `183` `.pm` packages.
 - The former composition-local parameter/generic helper is now a compatibility shim; the active neutral owner is [perl/FSM/ParameterValueSupport.pm](perl/FSM/ParameterValueSupport.pm), including bounded scalar expressions and matching-shape leafwise aggregate expression folding.
 - Shared integer literal parsing is now reachable through [perl/FSM/Package/IntegerLiteralSupport.pm](perl/FSM/Package/IntegerLiteralSupport.pm), keeping common decimal, `0d`, based SystemVerilog, `0x`, `0b`, `0o`, and intent-level sized `.fsm` spellings such as `5'23`, `8'-10`, `8'-0xA`, `8'-0b1010`, and `20'x1` consistent across scalar widths, constants, and direct `+size` expression terms while normalizing to legal target-HDL literals before backend emission.
 - The top-level manifest owner [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm) is now intentionally thin: it is a small assembler over dedicated top-level public section builders in [perl/FSM/Support/ProducerSection.pm](perl/FSM/Support/ProducerSection.pm), [perl/FSM/Support/SupportAccountingSection.pm](perl/FSM/Support/SupportAccountingSection.pm), [perl/FSM/Support/DiagnosticsSection.pm](perl/FSM/Support/DiagnosticsSection.pm), [perl/FSM/Support/SemanticExportsSection.pm](perl/FSM/Support/SemanticExportsSection.pm), [perl/FSM/Support/BackendValidationSection.pm](perl/FSM/Support/BackendValidationSection.pm), [perl/FSM/Support/EmbeddingSection.pm](perl/FSM/Support/EmbeddingSection.pm), [perl/FSM/Support/LanguageSurfaceSection.pm](perl/FSM/Support/LanguageSurfaceSection.pm), and [perl/FSM/Support/DocumentationSection.pm](perl/FSM/Support/DocumentationSection.pm), while [perl/FSM/Support/CapabilityManifestContract.pm](perl/FSM/Support/CapabilityManifestContract.pm) continues to own the bounded manifest shell and grouped discovery tables.
@@ -209,7 +209,9 @@ This is the current static measurement view behind the qualitative assessment
 above.
 
 Reachable package-family counts from [bin/fsmgen](bin/fsmgen):
-- `Support`: `58`
+- total reachable project files: `184`
+- reachable `.pm` packages: `183`
+- `Support`: `62`
 - `Composition`: `35`
 - `HDL`: `32`
 - `Package`: `14`
@@ -226,7 +228,7 @@ Current thin-coordinator / public-surface assembler line counts:
 - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm): `418`
 - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](perl/FSM/Pipeline/SourceGenerationOrchestrator.pm): `174`
 - [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](perl/FSM/Pipeline/DirectGenerationOrchestrator.pm): `117`
-- [perl/FSM/Composition/GenerationOrchestrator.pm](perl/FSM/Composition/GenerationOrchestrator.pm): `164`
+- [perl/FSM/Composition/GenerationOrchestrator.pm](perl/FSM/Composition/GenerationOrchestrator.pm): `172`
 - [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm): `172`
 - [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm): `34`
 - [perl/FSM/Support/CapabilityManifestContract.pm](perl/FSM/Support/CapabilityManifestContract.pm): `265`

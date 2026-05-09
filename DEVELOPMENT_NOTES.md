@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Bootstrap import-tree measurement
+- The bootstrap source-reading lane should continue treating
+  [bin/fsmgen](bin/fsmgen) as a CLI/reporting shell around
+  `FSM::Pipeline::HDLGenerator`, not as the owner of generation policy.
+- The refreshed static measurement found `184` reachable project files and
+  `183` reachable `.pm` packages. The qualitative interpretation remains the
+  same: current architectural risk is concentrated in the parser/core
+  AST/expression infrastructure and composition planning, while the public
+  facade and orchestrators stay relatively bounded.
+- [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) should be
+  refreshed whenever this measured snapshot drifts enough to affect onboarding
+  decisions.
 ## 2026-05-09: Parent replacement paths stay portable after serialization
 - Decoded parent `raw_shell_replacement_map` values should remain portable
   dotted report paths. The main parent JSON audit now checks replacement targets

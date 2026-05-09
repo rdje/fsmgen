@@ -36,11 +36,14 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 10. `docs/EXTENSION_MODEL.md`: active `R7` typed extension boundary replacing legacy `.plg` / `PPlugin` as architecture direction.
 11. `docs/SPECFORGE_FEEDBACK_RESPONSE.md`: FSMGen's tracked response and alignment plan for SPECFORGE adapter feedback.
 12. `docs/INTENT_SCHEDULING_BRAINSTORM.md`: living brainstorm log for an intent-scheduling layer above explicit cycle-authored `.fsm`.
-13. `CHANGES.md`: chronological technical changes.
-14. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
-15. `MEMORY.md`: continuity/handoff state.
-16. `WARP.md`: repository-specific agent/development guidance.
-17. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
+13. `docs/BIN_FSMGEN_IMPORT_TREE.md`: live `bin/fsmgen` import-tree and runtime-spine architecture snapshot.
+14. `docs/REGRESSION_CORPUS.md`: human-readable regression/support-accounting corpus companion.
+15. `docs/INTENT_CAPTURE_AXI_CASE_STUDY.md`: AXI intent-capture case-study notes for future high-level synthesis work.
+16. `CHANGES.md`: chronological technical changes.
+17. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
+18. `MEMORY.md`: continuity/handoff state.
+19. `WARP.md`: repository-specific agent/development guidance.
+20. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
 
 ## Documentation index (all `.md` files in this repo)
 - `README.md` — single entry point and navigation hub.
@@ -50,17 +53,21 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/book/` — mdBook source for the progressive FSMGen book.
 - `docs/BOOK_PLAN.md` — migration plan from the monolithic guide into the mdBook.
 - `docs/USER_GUIDE.md` — broad live reference and command usage during the split.
+- `docs/BIN_FSMGEN_IMPORT_TREE.md` — live `bin/fsmgen` import-tree and runtime-spine architecture snapshot.
 - `docs/COMPOSITION_SCOPE.md` — concrete composition scope and acceptance boundary for the active architecture.
 - `docs/COMPOSITION_LEGACY_MAPPING.md` — historical legacy-composition behavior mapped onto the active architecture.
 - `docs/EXTENSION_MODEL.md` — typed extension boundary for the active `R7` replacement path.
 - `docs/SPECFORGE_FEEDBACK_RESPONSE.md` — tracked FSMGen response to SPECFORGE adapter/tool-integration feedback.
 - `docs/INTENT_SCHEDULING_BRAINSTORM.md` — living brainstorm log for inferring/scheduling cycles from a hardware-native intent layer above explicit `.fsm`.
+- `docs/REGRESSION_CORPUS.md` — human-readable companion to the machine-checked support and regression catalog.
+- `docs/INTENT_CAPTURE_AXI_CASE_STUDY.md` — AXI intent-capture case-study notes for future high-level synthesis work.
 - `CHANGES.md` — persistent technical change history.
 - `DEVELOPMENT_NOTES.md` — architecture notes and engineering rationale.
 - `MEMORY.md` — live continuity context and recovery notes.
 - `COMMIT.md` — canonical commit workflow specification.
 - `WARP.md` — project guidance for Warp/agent workflows.
 - `.agents/workflows/commit.md` — agent workflow definition for commit operations.
+- `.github/workflows-disabled/README.md` — explains why legacy workflows are intentionally parked.
 
 ## Project file and directory map
 ### Core entrypoints and pipeline

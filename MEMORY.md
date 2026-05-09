@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Bootstrap import-tree snapshot refreshed
+- Completed the README/COMMIT/bootstrap documentation pass and rechecked
+  [bin/fsmgen](bin/fsmgen) plus the project-owned transitive `FSM::...` import
+  closure before starting new roadmap implementation work.
+- Updated [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md)
+  because the measured closure is now `184` files total / `183` `.pm`
+  packages, with `Support` at `62` reachable packages and
+  [perl/FSM/Composition/GenerationOrchestrator.pm](perl/FSM/Composition/GenerationOrchestrator.pm)
+  at `172` lines.
+- Validation passed for this doc/bootstrap slice:
+  `perl -Iperl -c bin/fsmgen && mdbook build docs/book`.
 ## 2026-05-09: Parent replacement paths stay portable after JSON
 - Updated
   [t/654-serializable-plan-report-contract-json-roundtrip-audit.t](t/654-serializable-plan-report-contract-json-roundtrip-audit.t)
