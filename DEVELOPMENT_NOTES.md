@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Diagnostic summary containers are caller-owned
+- `build_serializable_diagnostic_summary_contract(...)` and
+  `build_serializable_diagnostic_summary(...)` must return fresh nested
+  containers. Callers can annotate key lists, code lists, and count maps without
+  polluting later summaries.
 ## 2026-05-09: Check JSON carries diagnostic summaries
 - `diagnostic_summary` is now shared by normalized semantic JSON and check JSON.
 - This keeps the stable-code/count inspection surface consistent across the two

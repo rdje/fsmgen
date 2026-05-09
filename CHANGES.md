@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Diagnostic summary defensive-copy boundary is audited
+- Added
+  [t/638-serializable-diagnostic-summary-defensive-copy-boundary-audit.t](t/638-serializable-diagnostic-summary-defensive-copy-boundary-audit.t)
+  to prove diagnostic summary contracts and generated summaries return fresh
+  caller-owned containers.
+- This is `R13` contract-integrity coverage for the new serializable diagnostic
+  report surface; no public JSON shape changed.
 ### Check JSON embeds diagnostic summaries
 - `--check --json` / `--check-json` reports now include top-level
   `diagnostic_summary` for both success and failure outputs, using the same

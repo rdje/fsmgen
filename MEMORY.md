@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Diagnostic summary defensive-copy boundary is audited
+- Added
+  [t/638-serializable-diagnostic-summary-defensive-copy-boundary-audit.t](t/638-serializable-diagnostic-summary-defensive-copy-boundary-audit.t)
+  to prove diagnostic summary contract/report containers are fresh across calls.
+- Focused validation passed:
+  `prove -l t/638-serializable-diagnostic-summary-defensive-copy-boundary-audit.t t/635-serializable-diagnostic-summary.t t/629-serializable-plan-report-contract.t`.
 ## 2026-05-09: Check JSON embeds diagnostic summaries
 - `--check --json` and `--check-json` now include top-level
   `diagnostic_summary` for both success and failure outputs.
