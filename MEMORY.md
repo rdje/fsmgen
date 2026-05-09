@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Manifest nested source map stays aligned after JSON
+- Updated
+  [t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t](t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t)
+  to prove the decoded manifest `nested_contract_source_map` still covers the
+  decoded `json_safe_surface_keys` list.
+- Focused validation passed:
+  `perl -Iperl -c t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t && prove -l t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t t/674-capability-manifest-surface-registry-owner-map-parity-audit.t t/654-serializable-plan-report-contract-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-09: Parent nested source map stays aligned after JSON
 - Updated
   [t/654-serializable-plan-report-contract-json-roundtrip-audit.t](t/654-serializable-plan-report-contract-json-roundtrip-audit.t)

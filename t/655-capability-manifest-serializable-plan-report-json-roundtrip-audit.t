@@ -42,6 +42,11 @@ subtest 'capability manifest serializable_plan_reports branch survives JSON roun
         'round-trip manifest keeps serializable nested contract owner map',
     );
     is_deeply(
+        as_set([keys %{$branch->{nested_contract_source_map}}]),
+        as_set($branch->{json_safe_surface_keys}),
+        'round-trip manifest source map covers decoded JSON-safe surfaces',
+    );
+    is_deeply(
         $branch->{surface_registry},
         serializable_plan_report_surface_registry(),
         'round-trip manifest keeps serializable surface registry',

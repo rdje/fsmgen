@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Manifest source map stays aligned after serialization
+- The manifest branch's decoded `nested_contract_source_map` should cover the
+  same surfaces as decoded `json_safe_surface_keys`. The main branch audit now
+  catches drift between manifest discovery keys and child owner metadata.
 ## 2026-05-09: Parent source map stays aligned after serialization
 - The decoded parent `nested_contract_source_map` should cover the same surface
   family as decoded `json_safe_surface_keys`. This catches serialized contract

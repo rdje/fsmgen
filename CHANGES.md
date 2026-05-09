@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Manifest nested source map stays aligned after JSON
+- Updated
+  [t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t](t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t)
+  to prove the decoded manifest `nested_contract_source_map` still covers the
+  decoded `json_safe_surface_keys` list.
 ### Parent nested source map stays aligned after JSON
 - Updated
   [t/654-serializable-plan-report-contract-json-roundtrip-audit.t](t/654-serializable-plan-report-contract-json-roundtrip-audit.t)
