@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Manifest plan/report identity metadata round-trips as JSON
+- Added
+  [t/696-capability-manifest-plan-report-identity-metadata-json-roundtrip-audit.t](t/696-capability-manifest-plan-report-identity-metadata-json-roundtrip-audit.t)
+  to prove manifest-embedded identity metadata survives JSON encode/decode with
+  schema version, status, source owner, and purpose intact.
 ### Manifest plan/report identity metadata is explicit
 - Added
   [t/695-capability-manifest-plan-report-identity-metadata.t](t/695-capability-manifest-plan-report-identity-metadata.t)

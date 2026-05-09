@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Manifest plan/report identity survives serialization
+- Manifest-embedded serializable plan/report identity metadata must remain
+  available after capability-manifest JSON encode/decode. Decoded manifests
+  should still be self-describing before consumers inspect detailed report
+  metadata.
 ## 2026-05-09: Manifest plan/report identity mirrors the parent contract
 - The capability manifest's serializable plan/report branch must expose the same
   identity metadata as the parent contract: schema version, bounded-public

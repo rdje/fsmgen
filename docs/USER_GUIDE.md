@@ -1808,9 +1808,10 @@ The `embedding.serializable_plan_reports` child is owned by
 [perl/FSM/Support/SerializablePlanReportContract.pm](perl/FSM/Support/SerializablePlanReportContract.pm)
 and exposes machine-readable identity metadata for schema version, bounded-public
 status, owner, and purpose; the capability manifest embeds the same identity
-metadata. It advertises the current JSON-safe report families plus replacement
-guidance for raw `HDLGenerator` compatibility shells. The
-parent contract publishes `raw_shell_replacement_keys` so tools can discover
+metadata and preserves it across manifest JSON encode/decode. It advertises the
+current JSON-safe report families plus replacement guidance for raw
+`HDLGenerator` compatibility shells. The parent contract publishes
+`raw_shell_replacement_keys` so tools can discover
 that compatibility branch family directly. The capability manifest embeds that
 same key list with a matching replacement map, rebuilds it cleanly per call, and
 preserves it across manifest JSON encode/decode. Its
