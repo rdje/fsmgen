@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Parent raw-shell replacement keys stay JSON-audited
+- The standalone serializable plan/report contract now has a focused JSON
+  round-trip guard for `raw_shell_replacement_keys`. Decoded keys must still
+  match the canonical helper and the decoded replacement-map key set.
+- This keeps the parent raw-to-serializable replacement guidance aligned with
+  the manifest-embedded branch without adding fields.
 ## 2026-05-10: Parent JSON-safety flags stay JSON-audited
 - The standalone serializable plan/report contract now has a focused JSON
   round-trip guard for its two JSON-safety flags. They must decode as real

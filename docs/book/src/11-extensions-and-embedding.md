@@ -45,7 +45,9 @@ check the public key lists for the normalized semantic and composition
 provenance reports those surfaces point at. The same branch carries embedder
 guidance that is audited to keep directing consumers toward those JSON-safe
 reports rather than raw in-process `HDLGenerator` branches, and its JSON-safety
-flags are audited as decoded JSON booleans with that same safe/raw split.
+flags are audited as decoded JSON booleans with that same safe/raw split. The
+raw-shell replacement key list is also audited after JSON round trip so tools
+can match raw compatibility branches to their advertised portable replacements.
 
 The public machine-JSON CLI boundary is runtime-audited too:
 [t/384-public-json-trace-stdout-boundary-audit.t](t/384-public-json-trace-stdout-boundary-audit.t)

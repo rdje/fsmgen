@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Parent raw-shell replacement keys survive JSON
+- Added
+  [t/705-serializable-plan-report-raw-shell-replacement-keys-json-roundtrip-audit.t](t/705-serializable-plan-report-raw-shell-replacement-keys-json-roundtrip-audit.t)
+  to prove the standalone serializable plan/report contract's decoded
+  `raw_shell_replacement_keys` still match the canonical helper and decoded
+  `raw_shell_replacement_map` key set.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions decoded raw-shell replacement guidance.
 ### Parent plan/report JSON-safety flags survive JSON
 - Added
   [t/704-serializable-plan-report-json-safety-flags-json-roundtrip-audit.t](t/704-serializable-plan-report-json-safety-flags-json-roundtrip-audit.t)
