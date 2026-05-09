@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Composition result semantic IR mirrors must stay equivalent without aliasing
+- Composition generation intentionally exposes semantic IR payloads twice:
+  top-level `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` branches for
+  convenient embedders, and mirrored payloads under `module_info` for older
+  module-info consumers. The branches should compare equal at return time, but
+  result-local annotation of one location must not mutate the other.
+- The existing composition return boundary already produces separate hash trees
+  for those payloads. The new audit locks that runtime contract directly and
+  mirrors the earlier direct-generation semantic IR alias-boundary coverage
+  without widening the public result contract.
 ## 2026-05-08: Composition-generation raw_ast is a result snapshot, not a parser mutation handle
 - Composition generation carries `raw_ast` as the same unsanitized compatibility
   branch used for in-process diagnostics and fallback inspection. Returning the

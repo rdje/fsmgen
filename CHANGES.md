@@ -1,5 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-05-09
+### Composition generation semantic IR result projections are alias-audited
+- Added
+  [t/579-composition-generation-semantic-ir-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/579-composition-generation-semantic-ir-alias-boundary-audit.t)
+  to prove composition-generation top-level `intent_hir`, `lowered_rtl_ir`,
+  and `structural_rtl_ir` result branches begin equivalent to their
+  `module_info` mirrors without sharing mutable hash trees.
+- This is `R13` runtime contract-integrity coverage only. No production code,
+  public manifest shape, generation behavior, or roadmap lane status changed.
 ## 2026-05-08
 ### Composition generation raw AST result branch is returned as a snapshot
 - Updated

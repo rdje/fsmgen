@@ -555,6 +555,9 @@ follow the same honesty rule: they reuse the dedicated normalized-semantic
 shell owners and their advertised shell keys, but the `HDLGenerator` result
 contract does not treat those top-level hashes as separately stabilized full
 trees beyond those shell boundaries.
+Direct and composition generation now both have alias-boundary audits proving
+those top-level semantic IR hashes are caller-owned result projections, not
+shared mutable trees with their same-result `module_info` mirrors.
 The whole raw result hash is now runtime-audited as non-JSON-safe too:
 [t/378-hdl-generator-result-json-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/378-hdl-generator-result-json-boundary-audit.t)
 checks real direct and composition `HDLGenerator` results against strict JSON

@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Composition generation semantic IR result projections are alias-audited
+- Added
+  [t/579-composition-generation-semantic-ir-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/579-composition-generation-semantic-ir-alias-boundary-audit.t)
+  to prove composition-generation top-level `intent_hir`, `lowered_rtl_ir`,
+  and `structural_rtl_ir` branches are separate mutable hash trees from their
+  same-result `module_info` mirrors while remaining initially equivalent.
+- Focused validation:
+  `perl -Iperl -c t/579-composition-generation-semantic-ir-alias-boundary-audit.t && prove -lv t/305-hdl-generator-result-contract.t t/378-hdl-generator-result-json-boundary-audit.t t/574-direct-generation-semantic-ir-alias-boundary-audit.t t/578-composition-generation-raw-ast-alias-boundary-audit.t t/579-composition-generation-semantic-ir-alias-boundary-audit.t && mdbook build docs/book`
+  passed. This is `R13` runtime contract-integrity coverage only; no production
+  code, public manifest shape, user-facing generation behavior, or roadmap lane
+  status changed.
 ## 2026-05-08: Composition generation raw AST result branch is returned as a snapshot
 - Updated
   [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm)
