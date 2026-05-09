@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Stateful composition resolved-import maps are alias-audited
+- Added
+  [t/611-hdl-generator-stateful-composition-resolved-package-import-map-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/611-hdl-generator-stateful-composition-resolved-package-import-map-alias-boundary-audit.t)
+  to prove mutating one composition result's top-level
+  `resolved_package_imports` map or `source_info.resolved_package_imports` map
+  does not contaminate a later generation on the same reusable `HDLGenerator`
+  facade object.
+- This is `R13` runtime contract-integrity coverage only. No production code,
+  public manifest shape, generation behavior, or roadmap lane status changed.
 ### Stateful source_info composition specs are alias-audited
 - Added
   [t/610-hdl-generator-stateful-source-info-composition-spec-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/610-hdl-generator-stateful-source-info-composition-spec-alias-boundary-audit.t)

@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Stateful facade reuse returns fresh composition resolved-import maps
+- Composition results expose resolved import maps at the top level and under
+  `source_info`. Reusing a facade must rebuild those map containers each
+  generation, not just the raw package-spec objects inside them.
+- The audit replaces map entries and adds extra keys in a first result, then
+  proves a later generation on the same facade returns only the original
+  `shared_local` package-spec entries.
 ## 2026-05-09: Stateful facade reuse returns fresh source-info composition specs
 - Composition results carry both the top-level raw `composition_spec` and the
   `source_info.composition_spec` compatibility mirror. The top-level branch was

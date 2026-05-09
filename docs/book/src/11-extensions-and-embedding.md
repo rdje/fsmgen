@@ -523,6 +523,8 @@ other one.
 Reusable `HDLGenerator` facade objects also rebuild both composition
 package-spec mirrors for each generation, so caller mutation of one composition
 result's resolved package specs does not leak into the next composition result.
+The enclosing composition resolved-import maps are also fresh per generation for
+both the top-level branch and the `source_info` mirror.
 The top-level `fsm_module` branch is shell-only too when it is defined: it is a
 raw `FSM::CoreAST::FSMModule` object kept for in-process compatibility, so
 structured downstream consumers should prefer `intent_hir`, `lowered_rtl_ir`,

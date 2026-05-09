@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Stateful composition resolved-import maps are alias-audited
+- Added
+  [t/611-hdl-generator-stateful-composition-resolved-package-import-map-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/611-hdl-generator-stateful-composition-resolved-package-import-map-alias-boundary-audit.t)
+  to prove mutating one composition result's top-level
+  `resolved_package_imports` map or `source_info.resolved_package_imports` map
+  does not contaminate a later generation on the same reusable `HDLGenerator`
+  facade object.
+- Focused validation:
+  `perl -Iperl -c t/611-hdl-generator-stateful-composition-resolved-package-import-map-alias-boundary-audit.t && prove -lv t/573-composition-generation-resolved-package-imports-alias-boundary-audit.t t/611-hdl-generator-stateful-composition-resolved-package-import-map-alias-boundary-audit.t && mdbook build docs/book`
+  passed. This is `R13` runtime contract-integrity coverage only; no production
+  code, public manifest shape, user-facing generation behavior, or roadmap lane
+  status changed.
 ## 2026-05-09: Stateful source_info composition specs are alias-audited
 - Added
   [t/610-hdl-generator-stateful-source-info-composition-spec-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/610-hdl-generator-stateful-source-info-composition-spec-alias-boundary-audit.t)
