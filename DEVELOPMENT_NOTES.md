@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Diagnostic summaries round-trip as JSON data
+- Serializable diagnostic summaries must survive JSON encode/decode while
+  preserving count maps, severity totals, and sorted unique-code lists. The audit
+  treats `JSON::PP::Boolean` values as JSON-safe scalars.
 ## 2026-05-09: Check JSON diagnostic-summary key presence is runtime-locked
 - Check JSON success and failure reports must include advertised common keys,
   including `diagnostic_summary`. Success reports keep the success-only `result`

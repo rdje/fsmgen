@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Diagnostic summary JSON round-trip surface is audited
+- Added
+  [t/649-serializable-diagnostic-summary-json-roundtrip-audit.t](t/649-serializable-diagnostic-summary-json-roundtrip-audit.t)
+  to prove serializable diagnostic summaries encode/decode as JSON while
+  preserving stable counts, severities, and sorted unique codes.
+- This is `R13` JSON-safety coverage only; no public JSON shape changed.
 ### Check JSON diagnostic summary key presence is audited
 - Added
   [t/648-check-json-diagnostic-summary-presence-runtime-contract-audit.t](t/648-check-json-diagnostic-summary-presence-runtime-contract-audit.t)

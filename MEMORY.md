@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Diagnostic summary JSON round-trip surface is audited
+- Added
+  [t/649-serializable-diagnostic-summary-json-roundtrip-audit.t](t/649-serializable-diagnostic-summary-json-roundtrip-audit.t)
+  to prove serializable diagnostic summaries encode/decode as JSON while
+  preserving counts, severities, and sorted unique codes.
+- Focused validation passed after allowing `JSON::PP::Boolean` as JSON-safe:
+  `prove -l t/649-serializable-diagnostic-summary-json-roundtrip-audit.t t/635-serializable-diagnostic-summary.t t/638-serializable-diagnostic-summary-defensive-copy-boundary-audit.t`.
 ## 2026-05-09: Check JSON diagnostic summary key presence is audited
 - Added
   [t/648-check-json-diagnostic-summary-presence-runtime-contract-audit.t](t/648-check-json-diagnostic-summary-presence-runtime-contract-audit.t)

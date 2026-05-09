@@ -1840,7 +1840,8 @@ same summary for both `--check --json` and `--check-json` outputs. Diagnostic
 summary presence is runtime-locked in check JSON success and failure reports.
 summary lists and count maps are caller-owned fresh containers rebuilt per
 report, and both public JSON report families are checked against the same
-standalone summary builder.
+standalone summary builder. Diagnostic summaries are JSON round-trip locked for
+stable counts, severities, and unique-code lists.
 The sibling facade and debug-runtime child contracts also have direct
 self-description guards:
 [t/375-hdl-generator-facade-contract.t](t/375-hdl-generator-facade-contract.t)

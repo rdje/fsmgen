@@ -531,7 +531,9 @@ The diagnostic summary builder and contract return fresh caller-owned
 containers, so local annotations of code lists or count maps do not pollute
 later report construction. Both public JSON report families rebuild their
 embedded summaries per report and are regression-locked to the same standalone
-summary builder output.
+summary builder output. Diagnostic summaries are also JSON round-trip locked:
+stable counts, severities, and unique-code lists survive encode/decode as plain
+JSON data.
 Tracked documentation and book links use paths relative to the repository root;
 machine-local absolute filesystem paths are not part of the public embedding
 surface.
