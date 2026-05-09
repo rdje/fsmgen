@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Parent plan/report public keys survive serialization
+- The parent `public_top_level_presence_keys` list must keep describing the
+  serialized contract payload after JSON encode/decode. This preserves the
+  contract's self-describing boundary for direct embedders that do not consume
+  the full capability manifest.
 ## 2026-05-09: Manifest plan/report public keys survive serialization
 - Manifest-embedded `public_top_level_presence_keys` must keep describing the
   decoded `serializable_plan_reports` payload after JSON encode/decode. That

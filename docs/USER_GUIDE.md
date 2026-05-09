@@ -1813,7 +1813,9 @@ identity metadata also survives contract JSON round-trip. It advertises the
 current JSON-safe report families plus replacement guidance for raw
 `HDLGenerator` compatibility shells, and the advertised JSON-safe surface list
 survives contract JSON round-trip; the capability manifest preserves the same
-surface list across manifest JSON encode/decode. The parent contract publishes
+surface list across manifest JSON encode/decode. The parent contract's
+`public_top_level_presence_keys` list also survives JSON encode/decode and still
+matches the decoded contract payload. The parent contract publishes
 `raw_shell_replacement_keys` so tools can discover
 that compatibility branch family directly. The capability manifest embeds that
 same key list with a matching replacement map, rebuilds it cleanly per call, and

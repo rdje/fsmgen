@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Parent plan/report public key list round-trips as JSON
+- Updated
+  [t/654-serializable-plan-report-contract-json-roundtrip-audit.t](t/654-serializable-plan-report-contract-json-roundtrip-audit.t)
+  to prove parent-contract `public_top_level_presence_keys` survive JSON
+  encode/decode and still match the decoded contract payload.
+- Focused validation passed:
+  `perl -Iperl -c t/654-serializable-plan-report-contract-json-roundtrip-audit.t && prove -l t/654-serializable-plan-report-contract-json-roundtrip-audit.t t/656-serializable-plan-report-contract-public-key-alignment-audit.t t/698-capability-manifest-plan-report-public-keys-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-09: Manifest plan/report public key list round-trips as JSON
 - Added
   [t/698-capability-manifest-plan-report-public-keys-json-roundtrip-audit.t](t/698-capability-manifest-plan-report-public-keys-json-roundtrip-audit.t)

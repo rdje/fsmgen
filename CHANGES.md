@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Parent plan/report public key list round-trips as JSON
+- Updated
+  [t/654-serializable-plan-report-contract-json-roundtrip-audit.t](t/654-serializable-plan-report-contract-json-roundtrip-audit.t)
+  to prove parent-contract `public_top_level_presence_keys` survive JSON
+  encode/decode and still match the decoded contract payload.
 ### Manifest plan/report public key list round-trips as JSON
 - Added
   [t/698-capability-manifest-plan-report-public-keys-json-roundtrip-audit.t](t/698-capability-manifest-plan-report-public-keys-json-roundtrip-audit.t)
