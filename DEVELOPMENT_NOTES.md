@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Semantic composition plan snapshots are rebuilt per report
+- Normalized semantic JSON report builders must create a fresh
+  `semantic.composition.plan_snapshot` per composition success report. Caller
+  annotations of one emitted snapshot must not leak into a later report build.
 ## 2026-05-09: Composition plan snapshot containers are caller-owned
 - `build_serializable_composition_plan_snapshot_contract(...)` and
   `build_serializable_composition_plan_snapshot(...)` return fresh nested

@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Semantic composition plan snapshot alias boundary is audited
+- Added
+  [t/644-normalized-semantic-composition-plan-snapshot-alias-boundary-audit.t](t/644-normalized-semantic-composition-plan-snapshot-alias-boundary-audit.t)
+  to prove mutating one semantic report's `semantic.composition.plan_snapshot`
+  does not contaminate later report builds.
+- Focused validation passed:
+  `prove -l t/644-normalized-semantic-composition-plan-snapshot-alias-boundary-audit.t t/631-normalized-semantic-composition-plan-snapshot.t t/643-serializable-composition-plan-snapshot-defensive-copy-boundary-audit.t`.
 ## 2026-05-09: Composition plan snapshot defensive-copy boundary is audited
 - Added
   [t/643-serializable-composition-plan-snapshot-defensive-copy-boundary-audit.t](t/643-serializable-composition-plan-snapshot-defensive-copy-boundary-audit.t)

@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Semantic composition plan snapshot alias boundary is audited
+- Added
+  [t/644-normalized-semantic-composition-plan-snapshot-alias-boundary-audit.t](t/644-normalized-semantic-composition-plan-snapshot-alias-boundary-audit.t)
+  to prove mutating one normalized semantic report's
+  `semantic.composition.plan_snapshot` does not contaminate a later report
+  build.
+- This is `R13` contract-integrity coverage only; no public JSON shape changed.
 ### Composition plan snapshot defensive-copy boundary is audited
 - Added
   [t/643-serializable-composition-plan-snapshot-defensive-copy-boundary-audit.t](t/643-serializable-composition-plan-snapshot-defensive-copy-boundary-audit.t)
