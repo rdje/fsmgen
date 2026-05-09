@@ -1802,8 +1802,12 @@ The manifest's `embedding` section now follows the same pattern:
 [perl/FSM/Support/EmbeddingContract.pm](perl/FSM/Support/EmbeddingContract.pm)
 names the published top-level and nested contract-owner map advertised through
 `embedding.section_contract`, while the narrower result, composition-report,
-typed-extension, and debug-runtime details continue to live behind their own
-dedicated contracts.
+serializable plan/report, typed-extension, and debug-runtime details continue
+to live behind their own dedicated contracts.
+The `embedding.serializable_plan_reports` child is owned by
+[perl/FSM/Support/SerializablePlanReportContract.pm](perl/FSM/Support/SerializablePlanReportContract.pm)
+and advertises the current JSON-safe report families plus replacement guidance
+for raw `HDLGenerator` compatibility shells.
 The sibling facade and debug-runtime child contracts also have direct
 self-description guards:
 [t/375-hdl-generator-facade-contract.t](t/375-hdl-generator-facade-contract.t)

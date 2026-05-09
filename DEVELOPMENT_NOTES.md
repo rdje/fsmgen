@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Serializable plan/report contract is the first R13 API surface
+- [perl/FSM/Support/SerializablePlanReportContract.pm](perl/FSM/Support/SerializablePlanReportContract.pm)
+  makes the `R13` decision executable in the capability manifest instead of
+  leaving it as prose.
+- The initial surface deliberately advertises existing JSON-safe reports:
+  normalized semantic JSON and the sanitized composition provenance report.
+  It also records replacement guidance for raw `HDLGenerator` branches so
+  embedders have a bounded manifest key to follow before future plan snapshots
+  are added.
 ## 2026-05-09: Documentation paths stay repo-relative
 - Tracked documentation should not capture user-specific filesystem roots.
   Repo-owned paths in live docs and mdBook sources are relative to the git repo

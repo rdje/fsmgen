@@ -15,6 +15,7 @@ use FSM::Support::EmbeddingContract qw(
 use FSM::Support::EmbeddingSection qw(build_embedding_section);
 use FSM::Support::ExtensionContract qw(build_extension_contract);
 use FSM::Support::HDLGeneratorResultContract qw(build_hdl_generator_result_contract);
+use FSM::Support::SerializablePlanReportContract qw(build_serializable_plan_report_contract);
 
 my $sentinel = '__mutated_by_t437__';
 
@@ -45,11 +46,13 @@ subtest 'embedding section child contracts remain fresh and aligned' => sub {
     my $first = build_embedding_section();
     $first->{typed_extensions}{hook_names}[0] = $sentinel;
     $first->{hdl_generator_result}{known_top_level_keys}[0] = $sentinel;
+    $first->{serializable_plan_reports}{json_safe_surface_keys}[0] = $sentinel;
     push @{$first->{section_contract}{nested_presence_key_map}{typed_extensions}}, $sentinel;
 
     my $second = build_embedding_section();
     ok(!contains_sentinel($second->{typed_extensions}), 'fresh typed_extensions child contract is not polluted');
     ok(!contains_sentinel($second->{hdl_generator_result}), 'fresh hdl_generator_result child contract is not polluted');
+    ok(!contains_sentinel($second->{serializable_plan_reports}), 'fresh serializable_plan_reports child contract is not polluted');
     ok(!contains_sentinel($second->{section_contract}{nested_presence_key_map}), 'fresh nested_presence_key_map is not polluted');
     is_deeply(
         $second->{typed_extensions},
@@ -60,6 +63,11 @@ subtest 'embedding section child contracts remain fresh and aligned' => sub {
         $second->{hdl_generator_result},
         build_hdl_generator_result_contract(),
         'fresh embedding section embeds a clean HDLGenerator result contract',
+    );
+    is_deeply(
+        $second->{serializable_plan_reports},
+        build_serializable_plan_report_contract(),
+        'fresh embedding section embeds a clean serializable plan/report contract',
     );
 };
 

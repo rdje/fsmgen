@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Serializable plan/report contract is advertised
+- Added [perl/FSM/Support/SerializablePlanReportContract.pm](perl/FSM/Support/SerializablePlanReportContract.pm)
+  and exposed it as `embedding.serializable_plan_reports` in the capability
+  manifest.
+- The contract lists the current JSON-safe report families and maps raw
+  `HDLGenerator` compatibility shells to preferred serializable replacements.
+- Focused validation passed:
+  `prove -l t/629-serializable-plan-report-contract.t`,
+  `prove -l t/321-embedding-contract.t t/437-embedding-section-defensive-copy-boundary-audit.t`,
+  and `prove -l t/297-capability-manifest.t`.
 ## 2026-05-09: Documentation paths are repo-relative
 - User clarified that paths mentioned in live docs/book must be relative to the
   project root and must not capture local filesystem structure.

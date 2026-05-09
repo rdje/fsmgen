@@ -480,6 +480,11 @@ branches remain useful in-process compatibility shells, but downstream tooling
 should not have to traverse raw objects such as `composition_spec`,
 `composition_plan`, `fsm_module`, `raw_ast`, or `resolved_package_imports` to
 build stable machine-readable integrations.
+That direction now has a concrete manifest surface:
+[perl/FSM/Support/SerializablePlanReportContract.pm](perl/FSM/Support/SerializablePlanReportContract.pm)
+is advertised as `embedding.serializable_plan_reports`, listing the current
+JSON-safe report families and mapping raw `HDLGenerator` compatibility shells to
+preferred serializable replacements.
 Tracked documentation and book links use paths relative to the repository root;
 machine-local absolute filesystem paths are not part of the public embedding
 surface.
@@ -1203,15 +1208,16 @@ The `embedding` section now follows the same split too:
 [perl/FSM/Support/EmbeddingContract.pm](perl/FSM/Support/EmbeddingContract.pm)
 owns the published top-level and nested contract-owner map advertised through
 `embedding.section_contract`, while the narrower result, composition-report,
-facade, typed-extension, and debug-runtime contracts still own their deeper
-public promises.
+serializable plan/report, facade, typed-extension, and debug-runtime contracts
+still own their deeper public promises.
 The emitted `embedding` section itself is now built through
 [perl/FSM/Support/EmbeddingSection.pm](perl/FSM/Support/EmbeddingSection.pm)
 and runtime-locked as an exact dedicated-builder projection across both
 in-process and CLI manifest surfaces. That keeps the grouped
 `composition_report`, `hdl_generator_facade`, `hdl_generator_result`,
-`typed_extensions`, and `debug_runtime` child contracts in one place instead
-of leaving that public section as duplicated inline manifest assembly logic.
+`serializable_plan_reports`, `typed_extensions`, and `debug_runtime` child
+contracts in one place instead of leaving that public section as duplicated
+inline manifest assembly logic.
 The `hdl_generator_facade` child also has a constructor-boundary audit in
 [t/377-hdl-generator-constructor-boundary-audit.t](t/377-hdl-generator-constructor-boundary-audit.t),
 so new constructor arguments cannot quietly appear without being classified as
@@ -1220,8 +1226,8 @@ non-public extension-loading options.
 That section shell now also publishes a grouped `nested_presence_key_map` so
 downstream tools can discover the bounded child key families for
 `composition_report`, `hdl_generator_facade`, `hdl_generator_result`,
-`typed_extensions`, and `debug_runtime` from one place before descending into
-those narrower contracts.
+`serializable_plan_reports`, `typed_extensions`, and `debug_runtime` from one
+place before descending into those narrower contracts.
 The `diagnostics` section now follows the same split too:
 [perl/FSM/Support/DiagnosticsContract.pm](perl/FSM/Support/DiagnosticsContract.pm)
 owns the published top-level, scalar-string, and stable-code entry families

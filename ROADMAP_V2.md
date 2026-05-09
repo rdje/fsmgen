@@ -627,6 +627,9 @@ Current direction:
   `composition_report` remain in-process compatibility shells, while new
   embedder-facing work should prefer bounded JSON-safe snapshots/reports that
   can be versioned, regression-locked, and documented independently.
+- First surface: `embedding.serializable_plan_reports` now advertises the
+  current JSON-safe report families and raw-shell replacement guidance through
+  [perl/FSM/Support/SerializablePlanReportContract.pm](perl/FSM/Support/SerializablePlanReportContract.pm).
 
 Expected result:
 - the project becomes a stronger platform for downstream tooling, not just a CLI.

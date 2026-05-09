@@ -38,6 +38,9 @@ use FSM::Support::HDLGeneratorResultContract qw(
     hdl_generator_result_contract_source
     hdl_generator_result_known_top_level_keys
 );
+use FSM::Support::SerializablePlanReportContract qw(
+    serializable_plan_report_contract_source
+);
 
 my $manifest = build_capability_manifest();
 
@@ -72,6 +75,7 @@ subtest 'contract exposes the bounded embedding section' => sub {
             composition_report => composition_report_contract_source(),
             hdl_generator_facade => hdl_generator_facade_contract_source(),
             hdl_generator_result => hdl_generator_result_contract_source(),
+            serializable_plan_reports => serializable_plan_report_contract_source(),
             typed_extensions => extension_contract_source(),
             debug_runtime => debug_runtime_contract_source(),
         },

@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Serializable plan/report contract is advertised
+- Added
+  [perl/FSM/Support/SerializablePlanReportContract.pm](perl/FSM/Support/SerializablePlanReportContract.pm)
+  and the `embedding.serializable_plan_reports` capability-manifest child.
+- The new contract advertises current JSON-safe plan/report surfaces
+  (`normalized_semantic_json` and composition provenance reports) and maps raw
+  `HDLGenerator` compatibility shells to preferred serializable replacements.
+- Added
+  [t/629-serializable-plan-report-contract.t](t/629-serializable-plan-report-contract.t)
+  and refreshed embedding contract coverage so the in-process and CLI manifests
+  cannot drop the new `R13` surface silently.
 ### Documentation paths are repo-relative
 - Normalized tracked markdown references so live docs and mdBook sources no
   longer capture machine-local absolute paths.
