@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Stateful facade reuse returns fresh direct FSM modules
+- The raw `fsm_module` branch is a per-generation semantic object graph for
+  direct roots. It is intentionally available to in-process embedders, but reuse
+  of a facade must rebuild it rather than preserving caller mutations.
+- The audit mutates the module name, one nested signal object, and the states
+  array in a first result, then proves a later generation on the same facade
+  returns the original graph shape.
 ## 2026-05-09: Stateful facade reuse returns fresh composition reports
 - The raw `composition_report` branch is a per-generation provenance report.
   Reusing a facade must not let caller edits to one result's report counts or

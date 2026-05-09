@@ -515,7 +515,12 @@ structured downstream consumers should prefer `intent_hir`, `lowered_rtl_ir`,
 also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorFSMModuleContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFSMModuleContract.pm),
 which is the contract to follow for the raw CoreAST-object rule plus the
-semantic-summary fallback surfaces. The top-level `raw_ast`
+semantic-summary fallback surfaces.
+Reusable `HDLGenerator` facade objects return fresh direct-generation
+`fsm_module` object graphs per generation, so caller mutation of one result's
+raw module object, nested signals, or state array does not leak into a later
+result produced by the same facade object.
+The top-level `raw_ast`
 branch is likewise shell-only and intentionally treated as a frontend/debug
 artifact rather than a public interchange tree, so structured consumers should
 prefer `intent_hir` instead of binding themselves to parser-level arrays. That
