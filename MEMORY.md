@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Semantic generation snapshot alias boundary is audited
+- Added
+  [t/642-normalized-semantic-generation-snapshot-alias-boundary-audit.t](t/642-normalized-semantic-generation-snapshot-alias-boundary-audit.t)
+  to prove mutating one semantic report's `generation_result_snapshot` does not
+  contaminate later report builds.
+- Focused validation passed:
+  `prove -l t/642-normalized-semantic-generation-snapshot-alias-boundary-audit.t t/633-normalized-semantic-generation-result-snapshot.t t/641-serializable-generation-result-snapshot-defensive-copy-boundary-audit.t`.
 ## 2026-05-09: Generation result snapshot defensive-copy boundary is audited
 - Added
   [t/641-serializable-generation-result-snapshot-defensive-copy-boundary-audit.t](t/641-serializable-generation-result-snapshot-defensive-copy-boundary-audit.t)

@@ -1821,7 +1821,8 @@ module/source/HDL-size facts plus raw-shell presence metadata without exporting
 the raw `HDLGenerator` result hash as a public JSON API. Successful normalized
 semantic JSON reports now expose that snapshot as top-level
 `generation_result_snapshot`. Generation result snapshot lists and summary maps
-are caller-owned fresh containers. Failed semantic JSON reports omit these success
+are caller-owned fresh containers rebuilt for each semantic report. Failed
+semantic JSON reports omit these success
 snapshots, including composition `plan_snapshot`, and continue to expose only
 the bounded failure diagnostics/reporting surface.
 For tooling that only needs diagnostic status, the same manifest child now

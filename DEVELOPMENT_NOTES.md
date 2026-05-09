@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Semantic generation snapshots are rebuilt per report
+- Normalized semantic JSON report builders must create a fresh
+  `generation_result_snapshot` per success report. Caller annotations of one
+  emitted snapshot must not leak into a later report build.
 ## 2026-05-09: Generation result snapshot containers are caller-owned
 - `build_serializable_generation_result_snapshot_contract(...)` and
   `build_serializable_generation_result_snapshot(...)` return fresh nested

@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Semantic generation snapshot alias boundary is audited
+- Added
+  [t/642-normalized-semantic-generation-snapshot-alias-boundary-audit.t](t/642-normalized-semantic-generation-snapshot-alias-boundary-audit.t)
+  to prove mutating one normalized semantic report's
+  `generation_result_snapshot` does not contaminate a later report build.
+- This is `R13` contract-integrity coverage only; no public JSON shape changed.
 ### Generation result snapshot defensive-copy boundary is audited
 - Added
   [t/641-serializable-generation-result-snapshot-defensive-copy-boundary-audit.t](t/641-serializable-generation-result-snapshot-defensive-copy-boundary-audit.t)
