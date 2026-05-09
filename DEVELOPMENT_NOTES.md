@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Parent replacement paths stay portable after serialization
+- Decoded parent `raw_shell_replacement_map` values should remain portable
+  dotted report paths. The main parent JSON audit now checks replacement targets
+  with the same path-portability rule used by registry paths.
 ## 2026-05-09: Manifest registry owners stay aligned after serialization
 - The manifest main JSON audit now checks decoded registry owners against the
   decoded nested source map, matching the parent owner-alignment guard for

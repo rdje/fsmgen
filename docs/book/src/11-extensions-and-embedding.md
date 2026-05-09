@@ -496,7 +496,8 @@ The parent contract publishes `raw_shell_replacement_keys` so tools can discover
 that compatibility branch family directly. The capability manifest embeds that
 same key list with a matching replacement map, rebuilds it cleanly per call, and
 preserves it across manifest JSON encode/decode, including in the main manifest
-branch audit. Its
+branch audit. The parent main round-trip audit also keeps decoded replacement
+paths portable. Its
 `surface_registry` maps each serializable surface to its contract owner and
 portable dotted primary report paths. Each registry entry has a scalar owner
 aligned with the nested source map and a non-empty unique path list, and returns

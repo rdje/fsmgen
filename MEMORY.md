@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Parent replacement paths stay portable after JSON
+- Updated
+  [t/654-serializable-plan-report-contract-json-roundtrip-audit.t](t/654-serializable-plan-report-contract-json-roundtrip-audit.t)
+  to prove decoded parent-contract `raw_shell_replacement_map` paths remain
+  portable dotted report paths in the main round-trip audit.
+- Focused validation passed:
+  `perl -Iperl -c t/654-serializable-plan-report-contract-json-roundtrip-audit.t && prove -l t/654-serializable-plan-report-contract-json-roundtrip-audit.t t/681-serializable-plan-report-raw-shell-replacement-keys-contract.t t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-09: Manifest registry owners stay aligned after JSON
 - Updated
   [t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t](t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t)

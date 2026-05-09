@@ -128,6 +128,12 @@ subtest 'serializable plan/report contract remains plain data after JSON round t
         as_set($decoded->{raw_shell_replacement_keys}),
         'round-trip replacement map keys match decoded key list',
     );
+    for my $raw_key (sort keys %{$decoded->{raw_shell_replacement_map}}) {
+        ok(
+            is_portable_report_path($decoded->{raw_shell_replacement_map}{$raw_key}),
+            "$raw_key round-trip replacement path remains portable: $decoded->{raw_shell_replacement_map}{$raw_key}",
+        );
+    }
     is_deeply(
         $decoded->{guidance},
         $contract->{guidance},
