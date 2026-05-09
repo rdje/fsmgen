@@ -90,6 +90,10 @@ That registry ownership rule is runtime-audited directly: mutating the caller's
 extension array after `FSM::Extension::Registry->new(...)`, or mutating an
 `extensions()` accessor array, cannot add hooks to the registry. The extension
 objects themselves remain live hook objects by identity.
+The same construction-time ownership applies at the facade loader entrypoint:
+`HDLGenerator->new(extension_modules => \@modules)` resolves and registers the
+listed modules during construction, so later caller mutation of `@modules` does
+not add, remove, or replace hooks on that facade object.
 
 That same owner now also publishes a grouped `name_family_map` so embedders
 can discover the bounded hook-name, context-accessor, and supported-source-kind

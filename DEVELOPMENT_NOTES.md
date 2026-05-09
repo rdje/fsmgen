@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Programmatic extension module lists are construction-time inputs
+- `HDLGenerator->new(extension_modules => \@modules)` resolves module names and
+  builds the typed-extension registry during facade construction. The resulting
+  facade owns the loaded extension objects; it does not keep consulting the
+  caller's module-name array during later generation.
+- The alias audit uses competing temporary extension modules, mutates the caller
+  array after construction, and proves only the constructor-time module runs.
+  This mirrors the registry-array ownership rule at the facade entrypoint.
 ## 2026-05-09: Extension registry arrays are snapshots, extension objects stay live
 - `FSM::Extension::Registry` deliberately copies the extension array supplied at
   construction and also returns a fresh array from `extensions()`. That prevents

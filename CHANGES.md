@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### HDLGenerator extension_modules constructor input is alias-audited
+- Added
+  [t/586-hdl-generator-extension-modules-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/586-hdl-generator-extension-modules-alias-boundary-audit.t)
+  to prove `HDLGenerator->new(extension_modules => \@modules)` loads extensions
+  from the constructor-time module-name list, so later caller mutation of
+  `@modules` cannot add or replace hooks on that facade object.
+- This is `R13` runtime contract-integrity coverage only. No production code,
+  public manifest shape, generation behavior, or roadmap lane status changed.
 ### Typed extension registry extension arrays are alias-audited
 - Added
   [t/585-typed-extension-registry-extension-array-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/585-typed-extension-registry-extension-array-alias-boundary-audit.t)
