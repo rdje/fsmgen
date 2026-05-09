@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Stateful facade reuse returns fresh composition intent_hir
+- Composition `intent_hir` combines the top intent summary with realized child
+  summaries. Reusing a facade must rebuild that semantic shell per generation.
+- The audit mutates `module_name`, nested `signal_analysis`, and
+  `composition_children` in a first composition result, then proves the next
+  generation returns the authored semantic summary.
 ## 2026-05-09: Stateful facade reuse returns fresh direct structural_rtl_ir
 - The direct `structural_rtl_ir` shell carries structural ports, nets, links,
   and counts. Reusing a facade must rebuild that shell per generation.

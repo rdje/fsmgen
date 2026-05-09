@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Stateful composition intent_hir results are alias-audited
+- Added
+  [t/625-hdl-generator-stateful-composition-intent-hir-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/625-hdl-generator-stateful-composition-intent-hir-alias-boundary-audit.t)
+  to prove mutating one composition-generation result's `intent_hir` shell does
+  not contaminate a later generation on the same reusable `HDLGenerator` facade
+  object.
+- Focused validation:
+  `perl -Iperl -c t/625-hdl-generator-stateful-composition-intent-hir-alias-boundary-audit.t && prove -lv t/625-hdl-generator-stateful-composition-intent-hir-alias-boundary-audit.t t/581-composition-generation-module-info-forward-ir-alias-boundary-audit.t && mdbook build docs/book`
+  passed. This is `R13` runtime contract-integrity coverage only; no production
+  code, public manifest shape, user-facing generation behavior, or roadmap lane
+  status changed.
 ## 2026-05-09: Stateful direct structural_rtl_ir results are alias-audited
 - Added
   [t/624-hdl-generator-stateful-direct-structural-rtl-ir-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/624-hdl-generator-stateful-direct-structural-rtl-ir-alias-boundary-audit.t)
