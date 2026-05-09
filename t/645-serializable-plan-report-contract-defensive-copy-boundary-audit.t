@@ -13,6 +13,7 @@ use FSM::Support::SerializablePlanReportContract qw(
     serializable_plan_report_json_safe_surface_keys
     serializable_plan_report_nested_contract_source_map
     serializable_plan_report_public_top_level_keys
+    serializable_plan_report_raw_shell_replacement_keys
     serializable_plan_report_raw_shell_replacement_map
 );
 
@@ -23,6 +24,7 @@ subtest 'serializable plan/report contract returns fresh nested containers' => s
     $first->{public_top_level_presence_keys}[0] = $sentinel;
     $first->{json_safe_surface_keys}[0] = $sentinel;
     $first->{nested_contract_source_map}{$sentinel} = $sentinel;
+    $first->{raw_shell_replacement_keys}[0] = $sentinel;
     $first->{raw_shell_replacement_map}{composition_plan} = $sentinel;
     $first->{composition_plan_snapshot_contract}{public_top_level_presence_keys}[0] = $sentinel;
     $first->{generation_result_snapshot_contract}{summary_keys}[0] = $sentinel;
@@ -50,6 +52,11 @@ subtest 'serializable plan/report contract returns fresh nested containers' => s
         $second->{raw_shell_replacement_map},
         serializable_plan_report_raw_shell_replacement_map(),
         'fresh contract keeps raw-shell replacement map',
+    );
+    is_deeply(
+        $second->{raw_shell_replacement_keys},
+        serializable_plan_report_raw_shell_replacement_keys(),
+        'fresh contract keeps raw-shell replacement key list',
     );
 };
 

@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Parent raw shell replacement key discovery is caller-owned
+- The parent `embedding.serializable_plan_reports` contract rebuilds
+  `raw_shell_replacement_keys` as caller-owned metadata. Mutating the advertised
+  replacement-key list from one contract build must not affect later contract
+  discovery.
 ## 2026-05-09: Manifest raw shell replacement keys are JSON discovery data
 - `raw_shell_replacement_keys` is manifest metadata, not a Perl-only helper. It
   must survive capability-manifest JSON encode/decode and continue to describe

@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Raw shell replacement keys are copy-audited
+- Updated
+  [t/645-serializable-plan-report-contract-defensive-copy-boundary-audit.t](t/645-serializable-plan-report-contract-defensive-copy-boundary-audit.t)
+  to mutate and assert the parent contract's `raw_shell_replacement_keys` list
+  directly.
+- Focused validation passed:
+  `perl -Iperl -c t/645-serializable-plan-report-contract-defensive-copy-boundary-audit.t && prove -l t/645-serializable-plan-report-contract-defensive-copy-boundary-audit.t t/681-serializable-plan-report-raw-shell-replacement-keys-contract.t && mdbook build docs/book`.
 ## 2026-05-09: Manifest raw shell replacement keys round-trip as JSON
 - Added
   [t/684-capability-manifest-raw-shell-replacement-keys-json-roundtrip-audit.t](t/684-capability-manifest-raw-shell-replacement-keys-json-roundtrip-audit.t)

@@ -505,9 +505,10 @@ discover the per-surface entry shape directly, and the capability manifest
 embeds that same entry-key list alongside registry entries that match it.
 That parent
 contract returns fresh nested
-maps, lists, and embedded child contracts, so discovery-time annotations do not
-pollute later manifest construction. The capability manifest builder also
-rebuilds the embedded `serializable_plan_reports` child, entry-key list, and its
+maps, lists, raw replacement-key lists, and embedded child contracts, so
+discovery-time annotations do not pollute later manifest construction. The
+capability manifest builder also rebuilds the embedded
+`serializable_plan_reports` child, entry-key list, and its
 grouped presence-key map cleanly each time. The parent contract round-trips as
 JSON with nested contract owners, child contracts, and raw-shell replacement
 guidance intact, and the full capability manifest preserves that branch and its
