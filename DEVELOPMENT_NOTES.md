@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Stateful facade reuse returns fresh direct result containers
+- The `HDLGenerator` result hash is a per-generation container. Even when nested
+  branches are separately owned, callers must not be able to add, delete, or
+  replace top-level fields in one result and affect a later result from the same
+  facade.
+- The audit mutates `hdl_code`, adds a caller-only top-level key, and deletes the
+  `statistics` branch in a first direct result, then proves the next generation
+  rebuilds the expected top-level result shape.
 ## 2026-05-09: Stateful facade reuse returns fresh composition resolved-import maps
 - Composition results expose resolved import maps at the top level and under
   `source_info`. Reusing a facade must rebuild those map containers each

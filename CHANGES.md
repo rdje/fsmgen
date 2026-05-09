@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Stateful direct result containers are alias-audited
+- Added
+  [t/612-hdl-generator-stateful-result-container-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/612-hdl-generator-stateful-result-container-alias-boundary-audit.t)
+  to prove mutating one direct-generation result's top-level result hash does not
+  contaminate a later generation on the same reusable `HDLGenerator` facade
+  object.
+- This is `R13` runtime contract-integrity coverage only. No production code,
+  public manifest shape, generation behavior, or roadmap lane status changed.
 ### Stateful composition resolved-import maps are alias-audited
 - Added
   [t/611-hdl-generator-stateful-composition-resolved-package-import-map-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/611-hdl-generator-stateful-composition-resolved-package-import-map-alias-boundary-audit.t)
