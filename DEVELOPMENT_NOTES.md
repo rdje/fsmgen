@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Parent registry owners stay aligned after serialization
+- The parent main JSON audit now checks decoded registry owners against the
+  decoded nested source map. This keeps owner metadata aligned after the full
+  contract is serialized and decoded.
 ## 2026-05-09: Manifest registry paths stay portable after serialization
 - Decoded manifest `surface_registry` paths should remain portable dotted report
   paths in the main branch audit, matching the dedicated manifest path

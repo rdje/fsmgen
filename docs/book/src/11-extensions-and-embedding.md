@@ -503,7 +503,8 @@ aligned with the nested source map and a non-empty unique path list, and returns
 fresh caller-owned containers that round-trip as JSON data. The parent contract
 also preserves the embedded registry across full-contract JSON round-trip and
 keeps it aligned with the decoded JSON-safe surface list while keeping decoded
-registry paths portable. The capability
+registry paths portable and registry owners aligned with the decoded nested
+source map. The capability
 manifest embeds the canonical registry, rebuilds it cleanly after caller
 mutation, preserves it across manifest JSON encode/decode, and keeps the decoded
 registry aligned with the JSON-safe surface list while keeping decoded registry

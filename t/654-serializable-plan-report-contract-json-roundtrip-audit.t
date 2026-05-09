@@ -99,6 +99,11 @@ subtest 'serializable plan/report contract remains plain data after JSON round t
             as_set($decoded->{surface_registry_entry_keys}),
             "$surface round-trip registry entry keys match decoded shape",
         );
+        is(
+            $decoded->{surface_registry}{$surface}{contract_source},
+            $decoded->{nested_contract_source_map}{$surface},
+            "$surface round-trip registry owner matches decoded source map",
+        );
         for my $path (@{$decoded->{surface_registry}{$surface}{primary_report_paths} || []}) {
             ok(is_portable_report_path($path), "$surface round-trip registry path remains portable: $path");
         }
