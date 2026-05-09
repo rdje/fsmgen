@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Public reports must preserve embedded snapshot key sets
+- Normalized semantic JSON and check JSON must embed serializable snapshot/summary
+  branches with top-level key sets matching the standalone builders' advertised
+  public key lists.
 ## 2026-05-09: Public reports must preserve embedded snapshot owners
 - Normalized semantic JSON and check JSON must embed serializable snapshot/summary
   branches with `contract_source` and `report_source` metadata matching the

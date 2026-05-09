@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Public report embedded snapshot key alignment is audited
+- Added
+  [t/664-public-report-embedded-snapshot-key-alignment-audit.t](t/664-public-report-embedded-snapshot-key-alignment-audit.t)
+  to prove normalized semantic JSON and check JSON embed snapshot/summary
+  branches with the same top-level key sets advertised by the standalone
+  serializable builders.
+- This is `R13` public-report key-alignment coverage only; no public JSON shape
+  changed.
 ### Public report embedded snapshot source ownership is audited
 - Added
   [t/663-public-report-embedded-snapshot-source-ownership-audit.t](t/663-public-report-embedded-snapshot-source-ownership-audit.t)

@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Public report embedded snapshot key alignment is audited
+- Added
+  [t/664-public-report-embedded-snapshot-key-alignment-audit.t](t/664-public-report-embedded-snapshot-key-alignment-audit.t)
+  to prove semantic/check JSON embed snapshot branches with standalone
+  serializable builder key sets.
+- Focused validation passed:
+  `prove -l t/664-public-report-embedded-snapshot-key-alignment-audit.t t/663-public-report-embedded-snapshot-source-ownership-audit.t t/657-serializable-child-report-public-key-alignment-audit.t`.
 ## 2026-05-09: Public report embedded snapshot source ownership is audited
 - Added
   [t/663-public-report-embedded-snapshot-source-ownership-audit.t](t/663-public-report-embedded-snapshot-source-ownership-audit.t)

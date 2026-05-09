@@ -1858,7 +1858,8 @@ stable counts, severities, and unique-code lists.
 The child serializable report APIs also lock their advertised public top-level
 key lists to the keys their builders emit, and each child contract/report points
 `contract_source` and `report_source` at its owning support module. Public
-semantic/check JSON reports preserve those owners on embedded snapshot branches.
+semantic/check JSON reports preserve those owners and standalone top-level key
+sets on embedded snapshot branches.
 The sibling facade and debug-runtime child contracts also have direct
 self-description guards:
 [t/375-hdl-generator-facade-contract.t](t/375-hdl-generator-facade-contract.t)
