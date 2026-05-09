@@ -47,7 +47,9 @@ guidance that is audited to keep directing consumers toward those JSON-safe
 reports rather than raw in-process `HDLGenerator` branches, and its JSON-safety
 flags are audited as decoded JSON booleans with that same safe/raw split. The
 raw-shell replacement key list is also audited after JSON round trip so tools
-can match raw compatibility branches to their advertised portable replacements.
+can match raw compatibility branches to their advertised portable replacements;
+a matching defensive-copy guard proves caller mutation of that replacement-key
+list does not pollute the next built parent contract.
 The surface-registry entry-key list is audited the same way, so each decoded
 registry entry can be checked against the advertised bounded entry shape; a
 matching defensive-copy guard proves caller mutation of that list does not

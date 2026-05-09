@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Parent raw-shell replacement keys rebuild cleanly
+- Added
+  [t/708-serializable-plan-report-raw-shell-replacement-keys-defensive-copy-audit.t](t/708-serializable-plan-report-raw-shell-replacement-keys-defensive-copy-audit.t)
+  to prove caller mutation of a built parent contract's
+  `raw_shell_replacement_keys` list cannot pollute the next standalone
+  serializable plan/report contract.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions the defensive-copy guard for raw compatibility
+  replacement guidance.
 ### Parent registry entry keys rebuild cleanly
 - Added
   [t/707-serializable-plan-report-surface-registry-entry-keys-defensive-copy-audit.t](t/707-serializable-plan-report-surface-registry-entry-keys-defensive-copy-audit.t)

@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Parent raw-shell replacement keys rebuild cleanly
+- The standalone serializable plan/report contract now has focused
+  defensive-copy coverage for `raw_shell_replacement_keys`. Mutating one built
+  contract's replacement-key list must not affect the next build.
+- This keeps parent-side raw compatibility replacement guidance independently
+  guarded, matching the manifest-embedded branch without adding fields.
 ## 2026-05-10: Parent registry entry keys rebuild cleanly
 - The standalone serializable plan/report contract now has focused
   defensive-copy coverage for `surface_registry_entry_keys`. Mutating one built
