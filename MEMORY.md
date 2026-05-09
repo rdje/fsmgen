@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Serializable plan/report surface registry JSON round-trip is audited
+- Added
+  [t/668-serializable-plan-report-surface-registry-json-roundtrip-audit.t](t/668-serializable-plan-report-surface-registry-json-roundtrip-audit.t)
+  to prove `surface_registry` owner/path data survives JSON encode/decode.
+- Focused validation passed:
+  `prove -l t/668-serializable-plan-report-surface-registry-json-roundtrip-audit.t t/667-capability-manifest-serializable-plan-report-surface-registry-audit.t t/665-serializable-plan-report-surface-registry.t`.
 ## 2026-05-09: Capability manifest surface registry parity is audited
 - Added
   [t/667-capability-manifest-serializable-plan-report-surface-registry-audit.t](t/667-capability-manifest-serializable-plan-report-surface-registry-audit.t)

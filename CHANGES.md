@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Serializable plan/report surface registry JSON round-trip is audited
+- Added
+  [t/668-serializable-plan-report-surface-registry-json-roundtrip-audit.t](t/668-serializable-plan-report-surface-registry-json-roundtrip-audit.t)
+  to prove `serializable_plan_report_surface_registry()` survives JSON
+  encode/decode with owner and primary report path data intact.
+- This is `R13` registry JSON-safety coverage only; no public shape changed.
 ### Capability manifest surface registry parity is audited
 - Added
   [t/667-capability-manifest-serializable-plan-report-surface-registry-audit.t](t/667-capability-manifest-serializable-plan-report-surface-registry-audit.t)

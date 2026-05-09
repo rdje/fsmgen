@@ -1,5 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Serializable plan/report registry round-trips as JSON data
+- `serializable_plan_report_surface_registry()` must survive JSON encode/decode
+  with owner strings and primary report path lists intact.
 ## 2026-05-09: Manifest embeds the canonical serializable surface registry
 - `build_capability_manifest(...)` must embed the canonical
   `serializable_plan_reports.surface_registry` and rebuild that registry cleanly
