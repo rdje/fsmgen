@@ -8,6 +8,11 @@ This is the persistent technical change history for FSMGen.
   as `signal_analysis`, `composition_children`, and
   `composition_generated_children` do not alias their embedded `intent_hir`
   mirrors.
+- Clarified that same `module_info` summary/embedded-`intent_hir` ownership rule
+  in [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md),
+  [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md),
+  and
+  [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md).
 - This is `R13` runtime contract-integrity coverage only. No production code,
   public manifest shape, generation behavior, or roadmap lane status changed.
 ### Composition generation provenance report mirrors are alias-audited

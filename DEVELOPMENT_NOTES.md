@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Composition module-info summary projections must not alias embedded intent HIR
+- Composition `module_info` carries both compatibility summary projections and
+  the embedded serialized `intent_hir` payload. Summary branches such as
+  `signal_analysis`, `composition_children`, and
+  `composition_generated_children` should stay equivalent to their embedded
+  intent-HIR mirrors at return time, but callers must be able to annotate either
+  location without mutating the other.
+- The metadata builder already had unit coverage for this clone boundary. The
+  new integration audit locks the same contract through the public
+  `HDLGenerator` composition path so embedders see separate owned containers in
+  real returned results.
 ## 2026-05-09: Composition provenance mirrors must stay equivalent without aliasing
 - Composition generation exposes the raw `composition_report` compatibility
   branch and also mirrors that provenance under `module_info` and `statistics`

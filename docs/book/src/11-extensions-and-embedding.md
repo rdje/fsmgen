@@ -542,6 +542,10 @@ That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded identity, summary, and composition-only
 module-info key families from one place instead of collecting those key lists
 separately.
+Composition `module_info` summary projections such as `signal_analysis`,
+`composition_children`, and `composition_generated_children` are also audited
+as owned result containers. They start equivalent to their embedded
+`intent_hir` mirrors, but annotating either location does not mutate the other.
 The nested `statistics` object now also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorStatisticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorStatisticsContract.pm),
 which is the contract to follow for the direct-root scalar summary keys and

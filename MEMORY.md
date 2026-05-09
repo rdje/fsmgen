@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Composition generation module-info forward-IR mirrors are alias-audited
+- Added
+  [t/581-composition-generation-module-info-forward-ir-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/581-composition-generation-module-info-forward-ir-alias-boundary-audit.t)
+  to prove live composition-generation `module_info` summary projections for
+  `signal_analysis`, `composition_children`, and `composition_generated_children`
+  are separate mutable containers from their embedded `intent_hir` mirrors while
+  remaining initially equivalent.
+- Clarified that same ownership rule in the mdBook, user guide, and composition
+  scope notes.
+- Focused validation:
+  `perl -Iperl -c t/581-composition-generation-module-info-forward-ir-alias-boundary-audit.t && prove -lv t/555-composition-result-metadata-forward-ir-alias-defensive-copy-boundary-audit.t t/581-composition-generation-module-info-forward-ir-alias-boundary-audit.t t/305-hdl-generator-result-contract.t && mdbook build docs/book`
+  passed. This is `R13` runtime contract-integrity coverage only; no production
+  code, public manifest shape, user-facing generation behavior, or roadmap lane
+  status changed.
 ## 2026-05-09: Composition generation provenance report mirrors are alias-audited
 - Added
   [t/580-composition-generation-provenance-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/580-composition-generation-provenance-alias-boundary-audit.t)
