@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Parent public key list rebuilds cleanly
+- Added
+  [t/709-serializable-plan-report-public-keys-defensive-copy-audit.t](t/709-serializable-plan-report-public-keys-defensive-copy-audit.t)
+  to prove caller mutation of a built parent contract's
+  `public_top_level_presence_keys` list cannot pollute a freshly built
+  standalone serializable plan/report contract.
+- This gives the parent public discovery key list its own focused `R13`
+  defensive-copy guard without changing the serializable report API.
+- Focused validation passed:
+  `perl -Iperl -c t/709-serializable-plan-report-public-keys-defensive-copy-audit.t && prove -l t/709-serializable-plan-report-public-keys-defensive-copy-audit.t t/645-serializable-plan-report-contract-defensive-copy-boundary-audit.t t/646-capability-manifest-serializable-plan-report-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Parent raw-shell replacement keys rebuild cleanly
 - Added
   [t/708-serializable-plan-report-raw-shell-replacement-keys-defensive-copy-audit.t](t/708-serializable-plan-report-raw-shell-replacement-keys-defensive-copy-audit.t)
