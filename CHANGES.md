@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Manifest raw shell replacement keys round-trip as JSON
+- Added
+  [t/684-capability-manifest-raw-shell-replacement-keys-json-roundtrip-audit.t](t/684-capability-manifest-raw-shell-replacement-keys-json-roundtrip-audit.t)
+  to prove manifest-embedded `raw_shell_replacement_keys` survive JSON
+  encode/decode and still describe the decoded replacement map.
 ### Manifest raw shell replacement keys are copy-audited
 - Added
   [t/683-capability-manifest-raw-shell-replacement-keys-defensive-copy-audit.t](t/683-capability-manifest-raw-shell-replacement-keys-defensive-copy-audit.t)

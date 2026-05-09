@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Manifest raw shell replacement keys are JSON discovery data
+- `raw_shell_replacement_keys` is manifest metadata, not a Perl-only helper. It
+  must survive capability-manifest JSON encode/decode and continue to describe
+  the decoded `raw_shell_replacement_map` without requiring in-process support
+  module access.
 ## 2026-05-09: Manifest raw shell replacement key discovery is caller-owned
 - Manifest consumers may annotate `raw_shell_replacement_keys` during discovery,
   but those mutations must remain caller-local. Fresh manifest builds must

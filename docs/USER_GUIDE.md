@@ -1810,7 +1810,8 @@ and advertises the current JSON-safe report families plus replacement guidance
 for raw `HDLGenerator` compatibility shells. The parent contract publishes
 `raw_shell_replacement_keys` so tools can discover that compatibility branch
 family directly, and the capability manifest embeds that same key list with a
-matching replacement map and rebuilds it cleanly per call. Its
+matching replacement map, rebuilds it cleanly per call, and preserves it across
+manifest JSON encode/decode. Its
 `surface_registry` maps each surface to its contract owner and portable dotted
 primary report paths, with
 owners aligned to the nested source map, non-empty unique path lists, and fresh
