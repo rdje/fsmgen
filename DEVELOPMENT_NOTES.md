@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Parent JSON-safety flags stay JSON-audited
+- The standalone serializable plan/report contract now has a focused JSON
+  round-trip guard for its two JSON-safety flags. They must decode as real
+  `JSON::PP::Boolean` values while preserving the intended truth split:
+  serializable report surfaces are safe, raw `HDLGenerator` branches are not.
+- This keeps the parent safety signal aligned with the manifest-embedded branch
+  without adding fields.
 ## 2026-05-10: Parent guidance stays JSON-audited
 - The standalone serializable plan/report contract now has a focused JSON
   round-trip guard for embedder guidance. Decoded guidance must stay a unique

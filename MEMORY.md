@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Parent plan/report JSON-safety flags survive JSON
+- Added
+  [t/704-serializable-plan-report-json-safety-flags-json-roundtrip-audit.t](t/704-serializable-plan-report-json-safety-flags-json-roundtrip-audit.t)
+  to lock the standalone serializable plan/report contract's decoded
+  JSON-safety flags as real JSON booleans after serialization, with current
+  serializable surfaces true and raw `HDLGenerator` branches false.
+- This mirrors the manifest-side JSON-safety flag guard without changing the
+  current `R13` serializable report API.
+- Focused validation passed:
+  `perl -Iperl -c t/704-serializable-plan-report-json-safety-flags-json-roundtrip-audit.t && prove -l t/704-serializable-plan-report-json-safety-flags-json-roundtrip-audit.t t/687-capability-manifest-plan-report-json-safety-flags-json-roundtrip-audit.t t/654-serializable-plan-report-contract-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Parent plan/report guidance survives JSON
 - Added
   [t/703-serializable-plan-report-guidance-json-roundtrip-audit.t](t/703-serializable-plan-report-guidance-json-roundtrip-audit.t)
