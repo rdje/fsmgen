@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Check JSON top-level key alignment is audited
+- Added
+  [t/659-check-json-top-level-key-alignment-audit.t](t/659-check-json-top-level-key-alignment-audit.t)
+  to prove check JSON success/failure top-level key sets exactly match the
+  advertised common and success-only contracts.
+- Focused validation passed:
+  `prove -l t/659-check-json-top-level-key-alignment-audit.t t/648-check-json-diagnostic-summary-presence-runtime-contract-audit.t t/312-check-diagnostics-contract.t`.
 ## 2026-05-09: Normalized semantic top-level key alignment is audited
 - Added
   [t/658-normalized-semantic-top-level-key-alignment-audit.t](t/658-normalized-semantic-top-level-key-alignment-audit.t)

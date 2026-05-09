@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Check JSON top-level key alignment is audited
+- Added
+  [t/659-check-json-top-level-key-alignment-audit.t](t/659-check-json-top-level-key-alignment-audit.t)
+  to prove actual check JSON success reports emit exactly common plus
+  success-only top-level keys, while failure reports emit exactly common keys.
+- This is `R13` public-report contract coverage only; no public JSON shape
+  changed.
 ### Normalized semantic top-level key alignment is audited
 - Added
   [t/658-normalized-semantic-top-level-key-alignment-audit.t](t/658-normalized-semantic-top-level-key-alignment-audit.t)

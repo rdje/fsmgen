@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Check JSON top-level report keys must match contract sets
+- Actual check JSON success reports must emit exactly common top-level keys plus
+  the success-only `result` key. Failure reports must emit exactly common
+  top-level keys and no success-only branches.
 ## 2026-05-09: Semantic top-level report keys must match contract sets
 - Actual normalized semantic JSON success reports must emit exactly common
   top-level keys plus success-only keys. Failure reports must emit exactly common
