@@ -1,7 +1,7 @@
 # FSMGen Documentation Book Plan
 
 This document captures the planned split of the monolithic
-[USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+[USER_GUIDE.md](docs/USER_GUIDE.md)
 into a book-like documentation set.
 
 Status: in progress.
@@ -15,10 +15,10 @@ The mdBook scaffold now exists under
 
 The migration is still incomplete:
 
-- [USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+- [USER_GUIDE.md](docs/USER_GUIDE.md)
   remains the broad reference during the split,
 - focused reference docs such as
-  [COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md)
+  [COMPOSITION_SCOPE.md](docs/COMPOSITION_SCOPE.md)
   still carry the narrow normative boundary for their lanes,
 - and the book should keep absorbing user-facing material until it becomes the
   default learning surface.
@@ -37,7 +37,7 @@ The book must be treated as an evolving public product artifact:
   maintainer notes.
 - downstream tool-facing contracts should also have a book home. The current
   SPECFORGE alignment response lives in
-  [SPECFORGE_FEEDBACK_RESPONSE.md](/Users/richarddje/Documents/github/fsmgen/docs/SPECFORGE_FEEDBACK_RESPONSE.md)
+  [SPECFORGE_FEEDBACK_RESPONSE.md](docs/SPECFORGE_FEEDBACK_RESPONSE.md)
   and is linked from the embedding chapter until those surfaces mature into
   dedicated capability/check/normalized-export reference chapters.
 
@@ -72,7 +72,7 @@ Practical rule:
 ## Why split the guide
 
 The current
-[USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+[USER_GUIDE.md](docs/USER_GUIDE.md)
 is already large enough that it is doing too many jobs at once:
 
 - introduction
@@ -189,13 +189,13 @@ The preferred long-term structure is:
 
 These docs should remain separate even after the split:
 
-- [COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md)
+- [COMPOSITION_SCOPE.md](docs/COMPOSITION_SCOPE.md)
   - precise composition support boundary
-- [EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md)
+- [EXTENSION_MODEL.md](docs/EXTENSION_MODEL.md)
   - extension-specific reference
-- [REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md)
+- [REGRESSION_CORPUS.md](docs/REGRESSION_CORPUS.md)
   - regression/reference process
-- [INTENT_CAPTURE_AXI_CASE_STUDY.md](/Users/richarddje/Documents/github/fsmgen/docs/INTENT_CAPTURE_AXI_CASE_STUDY.md)
+- [INTENT_CAPTURE_AXI_CASE_STUDY.md](docs/INTENT_CAPTURE_AXI_CASE_STUDY.md)
   - focused case study
 
 The book chapters should link to these focused references instead of duplicating
@@ -204,7 +204,7 @@ their narrow technical detail.
 ## Mapping from the current guide
 
 The current
-[USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+[USER_GUIDE.md](docs/USER_GUIDE.md)
 should be split roughly as follows:
 
 - `1) What FSMGen is` -> `00-introduction.md`
@@ -267,7 +267,7 @@ Status: in progress.
 - extract composition basics
 - extract advanced composition topics
 - keep
-  [COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md)
+  [COMPOSITION_SCOPE.md](docs/COMPOSITION_SCOPE.md)
   as the precise support-boundary companion
 
 ### Phase 5: split tooling/debugging/troubleshooting

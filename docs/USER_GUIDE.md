@@ -36,7 +36,7 @@ Current limitation:
 - `C2` multi-generated-child composition via explicit `?toplink` wiring with `instance.port` child endpoints, source-side top-port bit/slice expressions, source-side child-output bit/slice expressions, bounded source-side concat and repeat expressions including nested brace-group forms, and the first bounded source-actual forms (`=open`, scalar `=0` / `=1`, unsized binary/decimal/signed-decimal/octal/hex direct forms such as `=0b10`, `='b10`, `=0d10`, `='d10`, `=-1`, `=0d-1`, `='sd-1`, `='sb1010`, `='so7`, `='shA`, `=0o7`, `='o7`, `=0xA`, `='hA`, `=170`, or `=A5`, underscore-separated spellings such as `=0b1010_0101`, `='b1010_0101`, `=1_70`, `='d1_70`, `=0o2_45`, `='o2_45`, `='hA_5`, `='so6_45`, `='shA_5`, and `=8'hA_5`, exact-width `=N'b...` / `=N'sb...` / `=N'd...` / `=N'sd...` / `=N'o...` / `=N'so...` / `=N'h...` / `=N'sh...`, and named literal actuals resolved from composition-root `(+constants ...)` / `(+enums ...)` or imported `?pkg:name` packages such as `=RESET_BYTE`, `=mode.BUSY`, `=shared.RESET_BYTE`, or `=shared.mode.BUSY`), with `=open` still targeting realized child inputs only while direct scalar `=0` / `=1` plus unsized binary/decimal/octal/hex direct actuals widen to the realized child-input or declared top-output target width, unsized signed decimal direct actuals and unsized signed binary/octal/hex direct actuals widen when the signed value fits the direct target range, exact-width literal actuals may now also target declared top outputs, and named literal actuals stay bounded to those same direct actual and concat-operand positions on the existing structural literal path, together with bounded omitted/empty-`?ports` inference when explicit top links themselves still make the top boundary unambiguous, bounded undeclared top-interface inference for still-top-facing child inputs and unique top-facing child outputs, bounded plain-explicit-port same-name convention, and bounded same-name internal-carrier inference for unique producer-to-consumer families.
   - `C3` explicit-link composition for any explicit-link top that includes at least one `?rtl` child, with that same bounded source-side top-expression and source-actual slice plus the same bounded undeclared top-interface, plain-explicit-port convention, and internal-carrier inference rules.
   - `C4` declared top-port connect-by-name via `=name` declarations inside `?ports`.
-- See [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md) for the scoped `R6` plan and [docs/COMPOSITION_LEGACY_MAPPING.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_LEGACY_MAPPING.md) for historical context.
+- See [docs/COMPOSITION_SCOPE.md](docs/COMPOSITION_SCOPE.md) for the scoped `R6` plan and [docs/COMPOSITION_LEGACY_MAPPING.md](docs/COMPOSITION_LEGACY_MAPPING.md) for historical context.
 
 ## 2) Core concepts
 ### FSM input file
@@ -1277,8 +1277,8 @@ This currently works because:
 - and the same spellings can drive realized child inputs through `/=.../uart_tx.port/` on that same typed structural path.
 
 Maintained regression examples:
-- [t/corpus/direct_intent_integer_literals.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_intent_integer_literals.fsm)
-- [t/corpus/composition_intent_integer_literals.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/composition_intent_integer_literals.fsm)
+- [t/corpus/direct_intent_integer_literals.fsm](t/corpus/direct_intent_integer_literals.fsm)
+- [t/corpus/composition_intent_integer_literals.fsm](t/corpus/composition_intent_integer_literals.fsm)
 
 Current narrow typed whole-aggregate actual example:
 ```lisp
@@ -1697,11 +1697,11 @@ Example parameterized generated child:
 
 The capability manifest is the first machine-readable downstream-tool support
 surface. It is generated from
-[perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+[perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm)
 and backed by
-[perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm),
+[perl/FSM/Support/RegressionCorpus.pm](perl/FSM/Support/RegressionCorpus.pm),
 and
-[perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm),
+[perl/FSM/Support/DiagnosticCodes.pm](perl/FSM/Support/DiagnosticCodes.pm),
 so support-accounting counts, strict-supported entries, compatibility residue,
 expected-failure diagnostic codes, documentation pointers, and intentionally
 blocked/not-yet-public surfaces share one source with the regression catalog.
@@ -1709,86 +1709,86 @@ It also advertises which bounded machine-readable surfaces have current
 supported-corpus coverage, including check JSON and normalized semantic JSON.
 Those two public JSON/report surfaces now also share one bounded nested-object
 owner for their `support_accounting` match payloads:
-[perl/FSM/Support/SupportAccountingMatchContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingMatchContract.pm).
+[perl/FSM/Support/SupportAccountingMatchContract.pm](perl/FSM/Support/SupportAccountingMatchContract.pm).
 Those same two public JSON/report surfaces now also share one bounded nested
 `producer` object owner for FSMGen identity plus the report builder owner:
-[perl/FSM/Support/ReportProducerContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportProducerContract.pm).
+[perl/FSM/Support/ReportProducerContract.pm](perl/FSM/Support/ReportProducerContract.pm).
 Those same two public JSON/report surfaces now also share one bounded nested
 `source` object owner for the caller-facing input string and resolved source
 path:
-[perl/FSM/Support/ReportSourceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportSourceContract.pm).
+[perl/FSM/Support/ReportSourceContract.pm](perl/FSM/Support/ReportSourceContract.pm).
 Those same two public JSON/report surfaces now also share one bounded nested
 `command` object owner for invocation metadata such as `mode`, `json`,
 `strict_mode`, and `target_language`:
-[perl/FSM/Support/ReportCommandContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportCommandContract.pm).
+[perl/FSM/Support/ReportCommandContract.pm](perl/FSM/Support/ReportCommandContract.pm).
 Those same two public JSON/report surfaces now also share one bounded nested
 `generated_output` object owner for whether the report invocation emitted HDL
 artifacts:
-[perl/FSM/Support/ReportGeneratedOutputContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportGeneratedOutputContract.pm).
+[perl/FSM/Support/ReportGeneratedOutputContract.pm](perl/FSM/Support/ReportGeneratedOutputContract.pm).
 Successful public check JSON reports now also have one bounded nested `result`
 object owner for module identity plus basic summary counts:
-[perl/FSM/Support/CheckResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckResultContract.pm).
+[perl/FSM/Support/CheckResultContract.pm](perl/FSM/Support/CheckResultContract.pm).
 Failed public check JSON reports now also have one bounded nested `diagnostic`
 object owner for the core stable diagnostic fields, matched-only corpus keys,
 optional extracted artifact paths, and nested support-accounting metadata:
-[perl/FSM/Support/CheckFailureDiagnosticContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckFailureDiagnosticContract.pm).
+[perl/FSM/Support/CheckFailureDiagnosticContract.pm](perl/FSM/Support/CheckFailureDiagnosticContract.pm).
 Failed public normalized semantic JSON reports now explicitly reuse that same
 bounded nested `diagnostic` owner too.
 Successful public normalized semantic JSON reports now also have one bounded
 nested `semantic` object owner for module/system metadata, signal analysis,
 and the forward-IR projection:
-[perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm).
+[perl/FSM/Support/NormalizedSemanticPayloadContract.pm](perl/FSM/Support/NormalizedSemanticPayloadContract.pm).
 The nested `semantic.system_contract` summary inside that payload now also has
 its own bounded owner for the current clock/reset contract keys:
-[perl/FSM/Support/NormalizedSemanticSystemContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSystemContract.pm).
+[perl/FSM/Support/NormalizedSemanticSystemContract.pm](perl/FSM/Support/NormalizedSemanticSystemContract.pm).
 The nested `semantic.explicit_system_contract` summary inside that payload now
 also has its own bounded owner when the authored explicit contract is
 preserved:
-[perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm).
+[perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm](perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm).
 The nested `semantic.signal_analysis` summary inside that payload now also has
 its own bounded owner for the current sanitized signal families plus the shared
 core signal-entry keys emitted across direct and composition roots:
-[perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm).
+[perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm](perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm).
 The nested `semantic.forward_ir` summary inside that payload now also has its
 own bounded owner for the current sanitized forward semantic projections:
-[perl/FSM/Support/NormalizedSemanticForwardIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticForwardIRContract.pm).
+[perl/FSM/Support/NormalizedSemanticForwardIRContract.pm](perl/FSM/Support/NormalizedSemanticForwardIRContract.pm).
 The nested `semantic.forward_ir.lowered_rtl_ir` summary inside that branch now
 also has its own bounded owner for the current lowered-RTL shell plus the
 current composition-only extension keys:
-[perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm).
+[perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm](perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm).
 The nested `semantic.forward_ir.structural_rtl_ir` summary inside that branch
 now also has its own bounded owner for the current structural-RTL shell:
-[perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm).
+[perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm](perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm).
 The nested `semantic.forward_ir.intent_hir` summary inside that branch now
 also has its own bounded owner for the current intent-hir shell plus the
 current composition-only extension keys:
-[perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm).
+[perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm](perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm).
 The optional `semantic.symbol_contract` summary inside that payload now also
 has its own bounded owner for symbol-rich sources:
-[perl/FSM/Support/NormalizedSemanticSymbolContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSymbolContract.pm).
+[perl/FSM/Support/NormalizedSemanticSymbolContract.pm](perl/FSM/Support/NormalizedSemanticSymbolContract.pm).
 The nested `semantic.module` summary inside that payload now also has its own
 bounded owner for the core module keys plus the current optional metric-key
 family:
-[perl/FSM/Support/NormalizedSemanticModuleContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticModuleContract.pm).
+[perl/FSM/Support/NormalizedSemanticModuleContract.pm](perl/FSM/Support/NormalizedSemanticModuleContract.pm).
 The nested `semantic.composition` summary inside that payload now also has its
 own bounded owner for composition sources:
-[perl/FSM/Support/NormalizedSemanticCompositionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticCompositionContract.pm).
+[perl/FSM/Support/NormalizedSemanticCompositionContract.pm](perl/FSM/Support/NormalizedSemanticCompositionContract.pm).
 The bounded contract for the manifest's `support_accounting` section now has
 its own explicit owner in
-[perl/FSM/Support/SupportAccountingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingContract.pm).
+[perl/FSM/Support/SupportAccountingContract.pm](perl/FSM/Support/SupportAccountingContract.pm).
 That contract is also advertised through the manifest itself, so downstream
 tools can discover the bounded top-level section keys plus the current
 sanitized catalog-entry keys without scraping prose.
 The manifest-facing stable diagnostic-code registry now has the same split:
-[perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm)
+[perl/FSM/Support/DiagnosticCodes.pm](perl/FSM/Support/DiagnosticCodes.pm)
 still owns the production `FSMGEN_*` data, while
-[perl/FSM/Support/DiagnosticCodeRegistryContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodeRegistryContract.pm)
+[perl/FSM/Support/DiagnosticCodeRegistryContract.pm](perl/FSM/Support/DiagnosticCodeRegistryContract.pm)
 owns the bounded public sibling-key and stable-entry-key promise advertised
 through `diagnostics.stable_code_registry`.
 The manifest shell itself now has its own explicit bounded owner too:
-[perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+[perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm)
 builds the JSON document, while
-[perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm)
+[perl/FSM/Support/CapabilityManifestContract.pm](perl/FSM/Support/CapabilityManifestContract.pm)
 owns the bounded top-level plus first nested section key lists advertised
 through top-level `manifest_contract`.
 That shell contract now also explicitly includes the first nested
@@ -1799,15 +1799,15 @@ owner through `support_accounting.section_contract`, while deliberately keeping
 the existing inline support-accounting contract fields and corpus metadata for
 compatibility.
 The manifest's `embedding` section now follows the same pattern:
-[perl/FSM/Support/EmbeddingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingContract.pm)
+[perl/FSM/Support/EmbeddingContract.pm](perl/FSM/Support/EmbeddingContract.pm)
 names the published top-level and nested contract-owner map advertised through
 `embedding.section_contract`, while the narrower result, composition-report,
 typed-extension, and debug-runtime details continue to live behind their own
 dedicated contracts.
 The sibling facade and debug-runtime child contracts also have direct
 self-description guards:
-[t/375-hdl-generator-facade-contract.t](/Users/richarddje/Documents/github/fsmgen/t/375-hdl-generator-facade-contract.t)
-and [t/374-debug-runtime-contract.t](/Users/richarddje/Documents/github/fsmgen/t/374-debug-runtime-contract.t)
+[t/375-hdl-generator-facade-contract.t](t/375-hdl-generator-facade-contract.t)
+and [t/374-debug-runtime-contract.t](t/374-debug-runtime-contract.t)
 now require each advertised top-level key list to exactly cover its emitted
 contract shell.
 The debug-runtime contract test also checks that the advertised debug helper
@@ -1817,68 +1817,68 @@ It now also captures a real trace-bound debug-state snapshot and proves
 `snapshot_state_keys` matches the emitted snapshot shape.
 That same trace-bound snapshot is checked as not JSON-safe as a whole, matching
 the advertised debug-runtime contract.
-[t/494-debug-runtime-restore-state-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/494-debug-runtime-restore-state-boundary-audit.t)
+[t/494-debug-runtime-restore-state-boundary-audit.t](t/494-debug-runtime-restore-state-boundary-audit.t)
 also proves `restore_fsm_debug_state(...)` rejects malformed snapshots before
 mutating process-global debug state, and that the restore argument shape is
 advertised through `embedding.debug_runtime`.
-[t/398-debug-runtime-scoped-helper-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/398-debug-runtime-scoped-helper-boundary-audit.t)
+[t/398-debug-runtime-scoped-helper-boundary-audit.t](t/398-debug-runtime-scoped-helper-boundary-audit.t)
 also proves `with_fsm_debug_state(...)` restores caller debug state across
 scalar, list, void, and error paths, while ordinary debug setters remain
 process-global unless callers explicitly scope or restore them.
 The manifest's `diagnostics` section now follows the same pattern:
-[perl/FSM/Support/DiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsContract.pm)
+[perl/FSM/Support/DiagnosticsContract.pm](perl/FSM/Support/DiagnosticsContract.pm)
 names the published top-level, scalar-string, and stable-code entry families
 advertised through `diagnostics.section_contract`, while the narrower stable
 registry and check-JSON details continue to live behind their own dedicated
 contracts.
 The manifest's `producer` section now follows the same pattern:
-[perl/FSM/Support/ProducerContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ProducerContract.pm)
+[perl/FSM/Support/ProducerContract.pm](perl/FSM/Support/ProducerContract.pm)
 names the published top-level, scalar-string, and boolean field families
 advertised through `producer.section_contract`, while the broader producer
 story stays deliberately narrow: current tool/build identity, not a fully
 stabilized package-release surface.
 The manifest's `semantic_exports` section now follows the same pattern:
-[perl/FSM/Support/SemanticExportsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SemanticExportsContract.pm)
+[perl/FSM/Support/SemanticExportsContract.pm](perl/FSM/Support/SemanticExportsContract.pm)
 names the published top-level and nested contract-owner map advertised through
 `semantic_exports.section_contract`, while the broader semantic export story
 stays deliberately narrow: current bounded interchange surfaces, not every
 future semantic report format FSMGen may publish later.
 The manifest's `backend_validation` section now follows the same pattern:
-[perl/FSM/Support/BackendValidationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/BackendValidationContract.pm)
+[perl/FSM/Support/BackendValidationContract.pm](perl/FSM/Support/BackendValidationContract.pm)
 names the published top-level and nested contract-owner map advertised through
 `backend_validation.section_contract`, while the broader backend validation
 story stays deliberately narrow: current bounded validation lanes, not every
 future backend/toolchain validation report FSMGen may publish later.
 The manifest's `language_surface` section now also has its own bounded owner:
-[perl/FSM/Support/LanguageSurfaceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/LanguageSurfaceContract.pm)
+[perl/FSM/Support/LanguageSurfaceContract.pm](perl/FSM/Support/LanguageSurfaceContract.pm)
 names the published top-level and first nested section-key lists advertised
 through `language_surface.surface_contract`, while deeper authored-language
 meaning stays with narrower contracts or future deliberate widening.
 The manifest's `documentation` section now follows the same pattern:
-[perl/FSM/Support/DocumentationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DocumentationContract.pm)
+[perl/FSM/Support/DocumentationContract.pm](perl/FSM/Support/DocumentationContract.pm)
 names the published top-level and path-list keys advertised through
 `documentation.section_contract`, while the exact set of doc paths remains
 widenable as long as the manifest keeps pointing at repo-relative Markdown
 files.
 Public `tested_by` provenance is also audited:
-[t/381-contract-tested-by-provenance-audit.t](/Users/richarddje/Documents/github/fsmgen/t/381-contract-tested-by-provenance-audit.t)
+[t/381-contract-tested-by-provenance-audit.t](t/381-contract-tested-by-provenance-audit.t)
 walks the direct support contracts plus the in-process and CLI manifest
 surfaces, finds every `tested_by` list, and requires each published entry to
 stay a relative existing `t/*.t` file.
 Public module provenance is audited the same way:
-[t/382-contract-module-provenance-audit.t](/Users/richarddje/Documents/github/fsmgen/t/382-contract-module-provenance-audit.t)
+[t/382-contract-module-provenance-audit.t](t/382-contract-module-provenance-audit.t)
 walks direct contracts plus manifest outputs, finds fields such as
 `contract_source`, `*_contract_source_map`, `implementation_owners`,
 `report_sources`, `report_builder`, and `registry_source`, and requires each
 value to be a loadable `FSM::...` module under `perl/`.
 Grouped discovery maps are audited too:
-[t/383-contract-family-map-integrity-audit.t](/Users/richarddje/Documents/github/fsmgen/t/383-contract-family-map-integrity-audit.t)
+[t/383-contract-family-map-integrity-audit.t](t/383-contract-family-map-integrity-audit.t)
 requires public maps such as `presence_key_family_map`,
 `nested_presence_key_map`, `constructor_option_family_map`, `name_family_map`,
 and `family_map` to remain hashes of non-empty unique scalar lists and to match
 same-named sibling lists when present.
 The public machine-JSON stdout boundary is audited too:
-[t/384-public-json-trace-stdout-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/384-public-json-trace-stdout-boundary-audit.t)
+[t/384-public-json-trace-stdout-boundary-audit.t](t/384-public-json-trace-stdout-boundary-audit.t)
 runs the capability manifest, check JSON, and normalized semantic JSON CLI
 paths with debug/trace options enabled, proving stdout remains JSON-only,
 stderr stays clean, trace output is routed to the requested trace file for
@@ -1900,7 +1900,7 @@ the MIPI byte-serial, packet-FIFO, tester-control, and timer examples, the
 cleaned historical direct sample `fsm/trial_1.fsm`, plus the supported APB
 requester/completer and AMBA requester protocol fixtures.
 The bounded contract for this lane now has its own explicit owner in
-[perl/FSM/Support/HDLExternalValidationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLExternalValidationContract.pm).
+[perl/FSM/Support/HDLExternalValidationContract.pm](perl/FSM/Support/HDLExternalValidationContract.pm).
 The capability manifest advertises that contract so downstream tools can
 discover the command shape, tool identities, stage names, and bounded success
 result/step keys without scraping prose.
@@ -1924,7 +1924,7 @@ JSON-safe. Nested compatibility fields may still contain live CoreAST/AST
 objects; use `--emit-semantic-json` when the integration needs a sanitized
 machine interchange document.
 That boundary is runtime-audited by
-[t/378-hdl-generator-result-json-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/378-hdl-generator-result-json-boundary-audit.t),
+[t/378-hdl-generator-result-json-boundary-audit.t](t/378-hdl-generator-result-json-boundary-audit.t),
 which checks real direct and composition raw results against strict JSON
 encoding and verifies the normalized semantic JSON path as the JSON-safe
 interchange surface.
@@ -1936,12 +1936,12 @@ stable package-import surface is `source_info.package_import_count` plus
 `source_info` object, so local caller mutation of one returned summary does not
 affect a later result.
 That shell-only branch now also has its own explicit owner through
-[perl/FSM/Support/HDLGeneratorResolvedPackageImportsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResolvedPackageImportsContract.pm),
+[perl/FSM/Support/HDLGeneratorResolvedPackageImportsContract.pm](perl/FSM/Support/HDLGeneratorResolvedPackageImportsContract.pm),
 so embedders have one dedicated contract to follow for that raw package-spec
 map rule plus the bounded package-import summary surface.
 The public `support_accounting` match objects emitted by both `--check --json`
 and `--emit-semantic-json` now share one bounded nested-object contract too:
-[perl/FSM/Support/SupportAccountingMatchContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingMatchContract.pm)
+[perl/FSM/Support/SupportAccountingMatchContract.pm](perl/FSM/Support/SupportAccountingMatchContract.pm)
 owns the common `matched` key plus the success-side and failure-side matched
 identity keys advertised through those two report contracts.
 The same manifest also advertises the bounded typed-extension/context contract:
@@ -1964,12 +1964,12 @@ and `composition_plan` as shell-only raw `FSM::Composition::Spec` and
 using those live Perl objects intentionally while JSON-minded tools stay on the
 sanitized semantic-report path. The `composition_spec` branch now also has its
 own explicit owner through
-[perl/FSM/Support/HDLGeneratorCompositionSpecContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorCompositionSpecContract.pm),
+[perl/FSM/Support/HDLGeneratorCompositionSpecContract.pm](perl/FSM/Support/HDLGeneratorCompositionSpecContract.pm),
 so embedders have one dedicated contract to follow for that raw
 composition-spec rule plus the sanitized composition-summary fallback
 surfaces. The `composition_plan` branch now also has its own explicit owner
 through
-[perl/FSM/Support/HDLGeneratorCompositionPlanContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorCompositionPlanContract.pm),
+[perl/FSM/Support/HDLGeneratorCompositionPlanContract.pm](perl/FSM/Support/HDLGeneratorCompositionPlanContract.pm),
 so embedders have one dedicated contract to follow for that raw
 composition-plan rule plus the same sanitized composition-summary fallback
 surfaces.
@@ -1979,11 +1979,11 @@ shell-only frontend/debug artifact. In both cases, downstream structured
 consumers should prefer `intent_hir`, the other semantic layers, or normalized
 semantic JSON instead of binding themselves to live CoreAST or parser-array
 payloads. The `fsm_module` branch now also has its own explicit owner through
-[perl/FSM/Support/HDLGeneratorFSMModuleContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFSMModuleContract.pm),
+[perl/FSM/Support/HDLGeneratorFSMModuleContract.pm](perl/FSM/Support/HDLGeneratorFSMModuleContract.pm),
 so embedders have one dedicated contract to follow for that raw CoreAST-object
 rule plus the bounded semantic-summary fallback surfaces. The `raw_ast` branch
 now also has its own explicit owner through
-[perl/FSM/Support/HDLGeneratorRawASTContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorRawASTContract.pm),
+[perl/FSM/Support/HDLGeneratorRawASTContract.pm](perl/FSM/Support/HDLGeneratorRawASTContract.pm),
 so embedders have one dedicated contract to follow for that parser/debug-array
 rule plus the bounded `intent_hir` fallback surface.
 It now also machine-advertises that the whole `source_info`, `module_info`, and
@@ -1991,16 +1991,16 @@ It now also machine-advertises that the whole `source_info`, `module_info`, and
 is the advertised identity/summary subsurfaces inside those hashes, not a
 promise that every nested compatibility-heavy field in the wider hash is frozen.
 The nested `source_info` object now also has its own explicit owner through
-[perl/FSM/Support/HDLGeneratorSourceInfoContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorSourceInfoContract.pm),
+[perl/FSM/Support/HDLGeneratorSourceInfoContract.pm](perl/FSM/Support/HDLGeneratorSourceInfoContract.pm),
 so embedders have one dedicated contract to follow for the current source
 identity and package-import summary fields.
 The nested `module_info` object now also has its own explicit owner through
-[perl/FSM/Support/HDLGeneratorModuleInfoContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorModuleInfoContract.pm),
+[perl/FSM/Support/HDLGeneratorModuleInfoContract.pm](perl/FSM/Support/HDLGeneratorModuleInfoContract.pm),
 so embedders have one dedicated contract to follow for the current module
 identity fields plus the direct-root and composition-only scalar summary
 families.
 The nested `statistics` object now also has its own explicit owner through
-[perl/FSM/Support/HDLGeneratorStatisticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorStatisticsContract.pm),
+[perl/FSM/Support/HDLGeneratorStatisticsContract.pm](perl/FSM/Support/HDLGeneratorStatisticsContract.pm),
 so embedders have one dedicated contract to follow for the current direct-root
 and composition-only scalar summary families there too.
 The same goes for top-level `intent_hir`, `lowered_rtl_ir`, and
@@ -2038,7 +2038,7 @@ Failures outside the current classifier still return JSON with a `null` code
 rather than pretending a stable diagnostic identity exists.
 The bounded key-presence contract for this surface now has its own explicit
 owner in
-[perl/FSM/Support/CheckDiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnosticsContract.pm).
+[perl/FSM/Support/CheckDiagnosticsContract.pm](perl/FSM/Support/CheckDiagnosticsContract.pm).
 That contract is also advertised through `--capability-manifest`, so
 downstream tools can discover the common top-level keys plus the current
 bounded success-result and failure-diagnostic keys without scraping prose or
@@ -2082,7 +2082,7 @@ reject through `--emit-semantic-json`, emit a stable diagnostic/support-accounti
 failure report, write no HDL, and expose no partial semantic payload.
 The bounded key-presence contract for this surface now has its own explicit
 owner in
-[perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm).
+[perl/FSM/Support/NormalizedSemanticReportContract.pm](perl/FSM/Support/NormalizedSemanticReportContract.pm).
 That contract is also advertised through `--capability-manifest`, so downstream
 tools can discover the current top-level and bounded nested success/composition
 keys without scraping prose or inferring them from ad hoc samples.
@@ -2135,7 +2135,7 @@ What it is not:
 
 The current boundary is explicit.
 You can use it either:
-- programmatically when embedding [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) from Perl,
+- programmatically when embedding [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) from Perl,
 - or from the CLI with repeated `--extension-module Module::Name` flags.
 
 For CLI loading, the module must already be available in Perl's `@INC`, for
@@ -2150,13 +2150,13 @@ Current shipped hook:
 
 This hook/context boundary is also advertised in the capability manifest under
 `embedding.typed_extensions`, backed by
-[perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm).
+[perl/FSM/Support/ExtensionContract.pm](perl/FSM/Support/ExtensionContract.pm).
 That manifest entry is the machine-readable contract for embedders that need to
 discover the current hook names, context accessor names, loading entrypoints,
 registry extension-list copy policy, and deliberate non-goals.
 It also advertises the grouped `name_family_map` key as part of that bounded
 top-level contract shell, and
-[t/306-extension-contract.t](/Users/richarddje/Documents/github/fsmgen/t/306-extension-contract.t)
+[t/306-extension-contract.t](t/306-extension-contract.t)
 now checks that the contract's advertised top-level key list exactly covers the
 keys emitted by the typed-extension contract builder.
 
@@ -2166,7 +2166,7 @@ What they do:
 
 Result augmentation is an in-process extension behavior, not an automatic
 normalized-semantic JSON schema extension.
-[t/379-extension-result-json-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/379-extension-result-json-boundary-audit.t)
+[t/379-extension-result-json-boundary-audit.t](t/379-extension-result-json-boundary-audit.t)
 locks that boundary by proving extension-added raw result fields and HDL text
 stay available on the raw result while `--emit-semantic-json` keeps them out of
 the sanitized public JSON payload.
@@ -2213,7 +2213,7 @@ my $result = $pipeline->generate_hdl_from_file('fsm/trial_0.fsm');
 
 That public constructor-plus-generate seam is now machine-advertised too under
 `embedding.hdl_generator_facade`, backed by
-[perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm).
+[perl/FSM/Support/HDLGeneratorFacadeContract.pm](perl/FSM/Support/HDLGeneratorFacadeContract.pm).
 The current bounded facade contract covers `new(...)`,
 `generate_hdl_from_file(...)`, the core runtime constructor options
 `debug_level`, `target_language`, `strict_mode`, and `source_search_paths`, the
@@ -2223,188 +2223,188 @@ It intentionally does not freeze the lower-level owner-injection constructor
 arguments, and it leaves module/config-file extension loading behind
 `embedding.typed_extensions` so the narrower in-process seam stays honest.
 That boundary is regression-audited by
-[t/377-hdl-generator-constructor-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/377-hdl-generator-constructor-boundary-audit.t):
+[t/377-hdl-generator-constructor-boundary-audit.t](t/377-hdl-generator-constructor-boundary-audit.t):
 every current constructor `%args` key must be classified, and owner-injection
 arguments must stay out of the facade contract and live manifest public
 constructor-option lists.
-[t/385-hdl-generator-facade-strict-mode-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/385-hdl-generator-facade-strict-mode-boundary-audit.t)
+[t/385-hdl-generator-facade-strict-mode-boundary-audit.t](t/385-hdl-generator-facade-strict-mode-boundary-audit.t)
 also proves the advertised `strict_mode` constructor option is runtime-backed:
 the default facade compiles the legacy infix-assignment compatibility fixture,
 the strict facade rejects that same source with the canonical pair-form hint,
 and the same strict facade object still accepts the canonical pair-form fixture.
-[t/386-hdl-generator-facade-target-language-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/386-hdl-generator-facade-target-language-boundary-audit.t)
+[t/386-hdl-generator-facade-target-language-boundary-audit.t](t/386-hdl-generator-facade-target-language-boundary-audit.t)
 also proves the advertised `target_language` constructor option routes real
 direct backend behavior: the default path emits SystemVerilog forms, explicit
 `verilog` emits Verilog forms, and explicit `vhdl` remains a source-contextual
 not-implemented boundary rather than a completed backend promise.
-[t/387-hdl-generator-facade-debug-level-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/387-hdl-generator-facade-debug-level-boundary-audit.t)
+[t/387-hdl-generator-facade-debug-level-boundary-audit.t](t/387-hdl-generator-facade-debug-level-boundary-audit.t)
 also proves the advertised `debug_level` constructor option is runtime-backed
 and scoped: level `0` stays silent, level `2` emits low/medium trace without
 high-detail raw-AST dumps, level `4` emits that high-detail path, and the
 caller debug state is restored afterward.
-[t/388-hdl-generator-facade-source-search-paths-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/388-hdl-generator-facade-source-search-paths-boundary-audit.t)
+[t/388-hdl-generator-facade-source-search-paths-boundary-audit.t](t/388-hdl-generator-facade-source-search-paths-boundary-audit.t)
 also proves the advertised `source_search_paths` constructor option is
 runtime-backed and facade-local: missing roots fail at external package
 resolution, supplied roots generate HDL with the imported package literal, and
 separate facade objects with different roots do not leak resolution state.
-[t/389-hdl-generator-facade-extensions-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/389-hdl-generator-facade-extensions-boundary-audit.t)
+[t/389-hdl-generator-facade-extensions-boundary-audit.t](t/389-hdl-generator-facade-extensions-boundary-audit.t)
 also proves the advertised `extensions` constructor option is runtime-backed as
 direct blessed-object injection: non-blessed values are rejected, hook-capable
 injected objects dispatch in order, result-hook mutation reaches the returned
 raw result, and separate facade objects do not share injected extension state.
-[t/390-hdl-generator-facade-quiet-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/390-hdl-generator-facade-quiet-boundary-audit.t)
+[t/390-hdl-generator-facade-quiet-boundary-audit.t](t/390-hdl-generator-facade-quiet-boundary-audit.t)
 also proves the advertised `quiet` constructor option is accepted compatibility
 state rather than core runtime behavior: it is grouped under
 `compatibility_constructor_option_names`, stays out of the core runtime family,
 and in-process generation captures no stdout/stderr for either quiet value.
-[t/419-hdl-generator-facade-legacy-debug-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/419-hdl-generator-facade-legacy-debug-boundary-audit.t)
+[t/419-hdl-generator-facade-legacy-debug-boundary-audit.t](t/419-hdl-generator-facade-legacy-debug-boundary-audit.t)
 also proves the older `debug` constructor compatibility key stays non-public:
 it is absent from the facade contract and manifest public constructor surfaces,
 maps boolean values to `debug_level` `0` / `1` only when public `debug_level`
 is omitted, yields to public `debug_level` when both are supplied, and rejects
 malformed defined values before debug-runtime setup. New embedder-facing code
 should use `debug_level`, not legacy `debug`.
-[t/420-hdl-generator-facade-constructor-duplicate-option-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/420-hdl-generator-facade-constructor-duplicate-option-boundary-audit.t)
+[t/420-hdl-generator-facade-constructor-duplicate-option-boundary-audit.t](t/420-hdl-generator-facade-constructor-duplicate-option-boundary-audit.t)
 also proves duplicate raw `new(...)` constructor option names fail at the
 facade seam before Perl hash assignment can silently keep only the last value:
 the duplicate-option policy is manifest-backed, public and non-public repeated
 names receive sorted targeted diagnostics, later value-shape or unsupported
 name validation does not run first, and caller debug state is preserved.
-[t/421-hdl-generator-facade-extension-hook-method-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/421-hdl-generator-facade-extension-hook-method-boundary-audit.t)
+[t/421-hdl-generator-facade-extension-hook-method-boundary-audit.t](t/421-hdl-generator-facade-extension-hook-method-boundary-audit.t)
 also proves direct extension objects must expose at least one real supported
 typed-extension hook method: hookless, unsupported-hook-only, and
 `AUTOLOAD`/fake-`can` objects fail at the facade before registry or raw method
 fallout can leak, while parse-only and result-only real hook objects remain
 accepted.
-[t/426-typed-extension-registry-constructor-argument-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/426-typed-extension-registry-constructor-argument-boundary-audit.t)
+[t/426-typed-extension-registry-constructor-argument-boundary-audit.t](t/426-typed-extension-registry-constructor-argument-boundary-audit.t)
 also proves direct `FSM::Extension::Registry->new(...)` construction accepts
 only the exact class receiver and an even-length list of unique supported
 scalar option names, so malformed registry constructor calls fail before raw
 hash-coercion or `bless` fallout can leak.
-[t/429-typed-extension-registry-method-receiver-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/429-typed-extension-registry-method-receiver-boundary-audit.t)
+[t/429-typed-extension-registry-method-receiver-boundary-audit.t](t/429-typed-extension-registry-method-receiver-boundary-audit.t)
 also proves direct registry methods require an exact hash-backed
 `FSM::Extension::Registry` object constructed by `new(...)`, so class
 receivers, subclass stand-ins, and fake exact-class objects fail before hook or
 context diagnostics can leak.
-[t/432-typed-extension-registry-method-argument-list-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/432-typed-extension-registry-method-argument-list-boundary-audit.t)
+[t/432-typed-extension-registry-method-argument-list-boundary-audit.t](t/432-typed-extension-registry-method-argument-list-boundary-audit.t)
 also proves direct registry methods own their payload argument counts:
 `extensions(...)` takes no payload arguments, `dispatch_hook(...)` takes a
 hook name and context, and hook wrapper methods take one context argument after
 the registry invocant.
-[t/493-typed-extension-registry-extension-list-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/493-typed-extension-registry-extension-list-defensive-copy-boundary-audit.t)
+[t/493-typed-extension-registry-extension-list-defensive-copy-boundary-audit.t](t/493-typed-extension-registry-extension-list-defensive-copy-boundary-audit.t)
 also proves direct registry construction and `extensions()` accessor calls copy
 the extension array, so caller-side list mutation cannot alter the registry's
 configured dispatch list while the extension objects remain the live hook
 objects that dispatch invokes.
-[t/399-hdl-generator-facade-stateful-reuse-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/399-hdl-generator-facade-stateful-reuse-boundary-audit.t)
+[t/399-hdl-generator-facade-stateful-reuse-boundary-audit.t](t/399-hdl-generator-facade-stateful-reuse-boundary-audit.t)
 also proves the advertised `stateful_reuse_supported` promise is
 runtime-backed: one facade object preserves `strict_mode`, `target_language`,
 and `source_search_paths` across success, strict-mode failure, and later
 success, while restoring caller debug state after each path and still keeping
 lower-level owner-injection constructor args outside the public facade surface.
-[t/380-extension-loading-command-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/380-extension-loading-command-boundary-audit.t)
+[t/380-extension-loading-command-boundary-audit.t](t/380-extension-loading-command-boundary-audit.t)
 also locks the module/config loading-owner split: those loading entrypoints are
 advertised by `embedding.typed_extensions`, not by
 `embedding.hdl_generator_facade`, and semantic JSON `command` objects remain
 limited to report-mode metadata even when extension loading is active.
-[t/391-typed-extension-programmatic-loading-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/391-typed-extension-programmatic-loading-boundary-audit.t)
+[t/391-typed-extension-programmatic-loading-boundary-audit.t](t/391-typed-extension-programmatic-loading-boundary-audit.t)
 also proves that same typed-extension-owned programmatic loading seam is
 runtime-backed in-process: `extension_modules` and `extension_config_files`
 both load a real module from `@INC`, dispatch `after_parse_source` before
 `after_generate_result`, and mutate only the returned raw result for the
 pipeline that requested loading.
-[t/400-typed-extension-config-line-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/400-typed-extension-config-line-shape-boundary-audit.t)
+[t/400-typed-extension-config-line-shape-boundary-audit.t](t/400-typed-extension-config-line-shape-boundary-audit.t)
 also proves the advertised config-file line shape is runtime-backed:
 config files accept only `module Module::Name` lines plus inert blank,
 comment, and inline-comment text; malformed lines report extension config
 file and line-number context; and repeated config files preserve parsed module
 order during in-process hook dispatch.
-[t/401-typed-extension-module-name-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/401-typed-extension-module-name-shape-boundary-audit.t)
+[t/401-typed-extension-module-name-shape-boundary-audit.t](t/401-typed-extension-module-name-shape-boundary-audit.t)
 also proves module-name validation fails closed before loading: every
 `::`-separated segment must use the `Module::Name` identifier shape, so names
 such as `FSM::BoundaryAudit::9Bad` are rejected at loader, config parser,
 pipeline, and CLI boundaries before `require` runs or emits missing-module
 fallout.
-[t/402-typed-extension-constructor-list-shape-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/402-typed-extension-constructor-list-shape-boundary-audit.t)
+[t/402-typed-extension-constructor-list-shape-boundary-audit.t](t/402-typed-extension-constructor-list-shape-boundary-audit.t)
 also proves the constructor list shape for programmatic extension loading
 fails at the facade seam: scalar/hash values for `extension_modules`,
 `extension_config_files`, and direct `extensions` are rejected with targeted
 array-reference diagnostics before raw Perl dereference or lower-level loader
 fallout can leak.
-[t/392-typed-extension-autoload-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/392-typed-extension-autoload-boundary-audit.t)
+[t/392-typed-extension-autoload-boundary-audit.t](t/392-typed-extension-autoload-boundary-audit.t)
 also proves `AUTOLOAD` remains outside the typed-extension hook boundary:
 AUTOLOAD-only extensions, including objects that override `can(...)`, fail
 closed as hookless direct extension objects, while explicit and inherited real
 hook methods still run normally.
-[t/393-typed-extension-hook-set-closed-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/393-typed-extension-hook-set-closed-boundary-audit.t)
+[t/393-typed-extension-hook-set-closed-boundary-audit.t](t/393-typed-extension-hook-set-closed-boundary-audit.t)
 also proves the hook set is closed for the current schema version: extra
 hook-shaped methods such as `before_parse_source` or `after_emit_hdl` remain
 inert during direct and composition generation until the contract deliberately
 adds a new hook family.
-[t/394-typed-extension-context-accessor-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/394-typed-extension-context-accessor-boundary-audit.t)
+[t/394-typed-extension-context-accessor-boundary-audit.t](t/394-typed-extension-context-accessor-boundary-audit.t)
 also proves the context accessor names are stable for the current schema
 version by checking manifest discovery, the implemented
 `FSM::Extension::Context` methods, and real direct plus composition hook
 contexts through every advertised accessor.
-[t/395-typed-extension-explicit-discovery-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/395-typed-extension-explicit-discovery-boundary-audit.t)
+[t/395-typed-extension-explicit-discovery-boundary-audit.t](t/395-typed-extension-explicit-discovery-boundary-audit.t)
 also proves extension discovery remains explicit: nearby `extensions.fsmext`,
 `fsmgen.fsmext`, and legacy `.plg`-shaped files stay inert for in-process and
 CLI generation unless the caller supplies explicit module or config loading
 entrypoints.
-[t/396-typed-extension-constructor-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/396-typed-extension-constructor-boundary-audit.t)
+[t/396-typed-extension-constructor-boundary-audit.t](t/396-typed-extension-constructor-boundary-audit.t)
 also proves module-name loading requires a real `new()` method: explicit and
 inherited constructors still work, while extension-provided `can(...)` methods
 and `AUTOLOAD`-only constructor discovery stay outside the typed loading
 boundary.
-[t/427-typed-extension-loader-constructor-argument-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/427-typed-extension-loader-constructor-argument-boundary-audit.t)
+[t/427-typed-extension-loader-constructor-argument-boundary-audit.t](t/427-typed-extension-loader-constructor-argument-boundary-audit.t)
 also proves direct `FSM::Extension::Loader->new(...)` construction accepts
 only the exact class receiver and no option/value arguments, so malformed
 loader constructor calls fail before raw hash-coercion or `bless` fallout can
 leak.
-[t/428-typed-extension-loader-method-receiver-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/428-typed-extension-loader-method-receiver-boundary-audit.t)
+[t/428-typed-extension-loader-method-receiver-boundary-audit.t](t/428-typed-extension-loader-method-receiver-boundary-audit.t)
 also proves direct loader methods require an exact hash-backed
 `FSM::Extension::Loader` object constructed by `new(...)`, so class receivers,
 subclass stand-ins, and fake exact-class objects fail before loading payload
 diagnostics can leak.
-[t/431-typed-extension-loader-method-argument-list-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/431-typed-extension-loader-method-argument-list-boundary-audit.t)
+[t/431-typed-extension-loader-method-argument-list-boundary-audit.t](t/431-typed-extension-loader-method-argument-list-boundary-audit.t)
 also proves direct loader methods accept exactly one payload argument after the
 loader invocant, so missing or extra payload arguments fail before raw Perl
 signature fallout or payload value diagnostics can leak.
-[t/397-typed-extension-registry-dispatch-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/397-typed-extension-registry-dispatch-boundary-audit.t)
+[t/397-typed-extension-registry-dispatch-boundary-audit.t](t/397-typed-extension-registry-dispatch-boundary-audit.t)
 also proves the registry's direct `dispatch_hook(...)` entrypoint enforces the
 same closed hook set: `after_parse_source` and `after_generate_result` still
 dispatch, while unsupported hook names are rejected before extension methods
 can run.
-[t/422-typed-extension-registry-dispatch-context-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/422-typed-extension-registry-dispatch-context-boundary-audit.t)
+[t/422-typed-extension-registry-dispatch-context-boundary-audit.t](t/422-typed-extension-registry-dispatch-context-boundary-audit.t)
 also proves direct registry dispatch requires a real
 `FSM::Extension::Context` object whose `stage` matches the dispatched hook
 name, so malformed direct contexts fail before extension code can reinterpret
 them.
-[t/434-typed-extension-registry-dispatch-constructed-context-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/434-typed-extension-registry-dispatch-constructed-context-boundary-audit.t)
+[t/434-typed-extension-registry-dispatch-constructed-context-boundary-audit.t](t/434-typed-extension-registry-dispatch-constructed-context-boundary-audit.t)
 also proves direct registry dispatch requires an exact hash-backed context
 object constructed by `FSM::Extension::Context->new(...)`, so fake exact-class
 context objects fail at the registry boundary before context accessor fallout
 can leak.
-[t/423-typed-extension-context-constructor-argument-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/423-typed-extension-context-constructor-argument-boundary-audit.t)
+[t/423-typed-extension-context-constructor-argument-boundary-audit.t](t/423-typed-extension-context-constructor-argument-boundary-audit.t)
 also proves direct `FSM::Extension::Context->new(...)` construction accepts
 only the exact class receiver and an even-length list of unique supported
 scalar option names, so malformed constructor calls fail before raw Perl
 argument or `bless` fallout can leak.
-[t/430-typed-extension-context-accessor-receiver-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/430-typed-extension-context-accessor-receiver-boundary-audit.t)
+[t/430-typed-extension-context-accessor-receiver-boundary-audit.t](t/430-typed-extension-context-accessor-receiver-boundary-audit.t)
 also proves direct context accessors require an exact hash-backed
 `FSM::Extension::Context` object constructed by `new(...)`, so class receivers,
 subclass stand-ins, and fake exact-class objects fail before raw accessor
 fallout can leak.
-[t/433-typed-extension-context-accessor-argument-list-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/433-typed-extension-context-accessor-argument-list-boundary-audit.t)
+[t/433-typed-extension-context-accessor-argument-list-boundary-audit.t](t/433-typed-extension-context-accessor-argument-list-boundary-audit.t)
 also proves direct context accessors take no payload arguments after the
 context invocant, so extra accessor arguments fail before raw Perl signature
 fallout can leak.
-[t/424-typed-extension-context-constructor-payload-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/424-typed-extension-context-constructor-payload-boundary-audit.t)
+[t/424-typed-extension-context-constructor-payload-boundary-audit.t](t/424-typed-extension-context-constructor-payload-boundary-audit.t)
 also proves direct context construction validates the payload values that hooks
 rely on: supported hook stages, a blessed pipeline, scalar source path and
 target language, scalar `source_info->{kind}`, parse contexts with
 `raw_ast` and no `result`, and result contexts with `result` and no `raw_ast`.
-[t/425-typed-extension-dt-source-kind-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/425-typed-extension-dt-source-kind-contract-audit.t)
+[t/425-typed-extension-dt-source-kind-contract-audit.t](t/425-typed-extension-dt-source-kind-contract-audit.t)
 also proves standalone `?dt:` roots are part of the bounded typed-extension
 source-kind family: manifests advertise `dt`, and live `dt` generation
 dispatches parse/result contexts whose `source_info->{kind}` is `dt`.
@@ -2439,17 +2439,17 @@ including the original trace sink, instead of forcing embedders to rebuild the
 global debug settings by hand after a temporary trace-file switch. Restores now
 accept exact schema-version-1 snapshots from `capture_fsm_debug_state(...)` and
 reject malformed partial snapshots before mutating process-global debug state.
-[t/494-debug-runtime-restore-state-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/494-debug-runtime-restore-state-boundary-audit.t)
+[t/494-debug-runtime-restore-state-boundary-audit.t](t/494-debug-runtime-restore-state-boundary-audit.t)
 proves that restore argument shape through the direct contract, in-process
 manifest, both CLI manifest spellings, valid captured restores, targeted
 malformed-snapshot diagnostics, and caller-state preservation on rejection.
-[t/398-debug-runtime-scoped-helper-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/398-debug-runtime-scoped-helper-boundary-audit.t)
+[t/398-debug-runtime-scoped-helper-boundary-audit.t](t/398-debug-runtime-scoped-helper-boundary-audit.t)
 also proves `with_fsm_debug_state(...)` restores caller debug state across
 scalar, list, void, and error paths, while ordinary debug setters remain
 process-global unless callers explicitly scope or restore them.
 That current in-process seam is now also advertised through
 `embedding.debug_runtime`, owned by
-[perl/FSM/Support/DebugRuntimeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DebugRuntimeContract.pm).
+[perl/FSM/Support/DebugRuntimeContract.pm](perl/FSM/Support/DebugRuntimeContract.pm).
 That bounded contract publishes the shipped helper families, the bounded
 snapshot-state keys, the restore snapshot argument shape, the supported named
 trace-verbosity values, and the current limit that `FSM::Debug` is still one
@@ -2544,7 +2544,7 @@ Practical rule:
 - if a typed extension hook fails, the current pipeline/CLI now keeps `Source file:`, `Extension module:`, and `Extension stage:` labels around that failure so the failing hook stays source-local and actionable,
 - if you need `.plg` discovery, auto-discovery, richer extension parameters, or broad mid-pipeline mutation hooks, that is not part of the shipped boundary.
 
-See [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md) for the architecture note and exact current contract.
+See [docs/EXTENSION_MODEL.md](docs/EXTENSION_MODEL.md) for the architecture note and exact current contract.
 
 ## 8) External compatibility flow (legacy environment)
 If working in the external flow that uses `generate_fsm_hdl.pl`, the equivalent command pattern is:

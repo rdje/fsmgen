@@ -11,6 +11,13 @@ Use it first for objective, navigation, and where to find code/docs quickly.
 - The reason is operational, not stylistic: task-scoped commits are the project's crash-recovery mechanism for session loss, app crashes, and machine crashes.
 - If a task is complete but not committed, that task is not safely finished yet.
 
+## Documentation path invariant
+- Paths in live docs and the mdBook must be relative to the repository root.
+- Do not record machine-local absolute paths such as user home directories in
+  tracked documentation.
+- If a note references an external workspace, describe it without linking to a
+  local filesystem path.
+
 ## Project objective
 FSMGen compiles Lisp-like `.fsm` state machine specifications into synthesizable HDL.
 Current primary target is SystemVerilog, with Verilog conversion support and explicit VHDL not-implemented signaling.
@@ -156,7 +163,7 @@ cd docs/book && mdbook serve
 - It runs the full Perl regression suite with `prove -I perl t`.
 - It also builds the mdBook with `mdbook build docs/book`, so the user-facing book stays under the same local quality gate.
 - When `verilator` and `yosys` are installed, the external SystemVerilog validation smoke runs too; otherwise that test is skipped.
-- GitHub Actions is intentionally parked right now under [.github/workflows-disabled/README.md](/Users/richarddje/Documents/github/fsmgen/.github/workflows-disabled/README.md), so this local gate is currently the canonical actively used regression entrypoint.
+- GitHub Actions is intentionally parked right now under [.github/workflows-disabled/README.md](.github/workflows-disabled/README.md), so this local gate is currently the canonical actively used regression entrypoint.
 
 ## CLI quick reference
 ```bash
@@ -182,79 +189,79 @@ expected-failure entries, while `--emit-semantic-json` is corpus-covered across
 current supported, strict-supported, and expected-failure entries.
 Those two public JSON/report surfaces now also share one bounded nested-object
 owner for their `support_accounting` match payloads:
-[perl/FSM/Support/SupportAccountingMatchContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingMatchContract.pm).
+[perl/FSM/Support/SupportAccountingMatchContract.pm](perl/FSM/Support/SupportAccountingMatchContract.pm).
 Those same two public JSON/report surfaces now also share one bounded nested
 `producer` object owner for FSMGen identity plus the report builder owner:
-[perl/FSM/Support/ReportProducerContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportProducerContract.pm).
+[perl/FSM/Support/ReportProducerContract.pm](perl/FSM/Support/ReportProducerContract.pm).
 Those same two public JSON/report surfaces now also share one bounded nested
 `source` object owner for the caller-facing input string and resolved source
 path:
-[perl/FSM/Support/ReportSourceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportSourceContract.pm).
+[perl/FSM/Support/ReportSourceContract.pm](perl/FSM/Support/ReportSourceContract.pm).
 Those same two public JSON/report surfaces now also share one bounded nested
 `command` object owner for invocation metadata such as `mode`, `json`,
 `strict_mode`, and `target_language`:
-[perl/FSM/Support/ReportCommandContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportCommandContract.pm).
+[perl/FSM/Support/ReportCommandContract.pm](perl/FSM/Support/ReportCommandContract.pm).
 Those same two public JSON/report surfaces now also share one bounded nested
 `generated_output` object owner for whether the report invocation emitted HDL
 artifacts:
-[perl/FSM/Support/ReportGeneratedOutputContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ReportGeneratedOutputContract.pm).
+[perl/FSM/Support/ReportGeneratedOutputContract.pm](perl/FSM/Support/ReportGeneratedOutputContract.pm).
 Successful public check JSON reports now also have one bounded nested `result`
 object owner for module identity plus basic summary counts:
-[perl/FSM/Support/CheckResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckResultContract.pm).
+[perl/FSM/Support/CheckResultContract.pm](perl/FSM/Support/CheckResultContract.pm).
 Failed public check JSON reports now also have one bounded nested `diagnostic`
 object owner for the core stable diagnostic fields, matched-only corpus keys,
 optional extracted artifact paths, and nested support-accounting metadata:
-[perl/FSM/Support/CheckFailureDiagnosticContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckFailureDiagnosticContract.pm).
+[perl/FSM/Support/CheckFailureDiagnosticContract.pm](perl/FSM/Support/CheckFailureDiagnosticContract.pm).
 Failed public normalized semantic JSON reports now explicitly reuse that same
 bounded nested `diagnostic` owner too.
 Successful public normalized semantic JSON reports now also have one bounded
 nested `semantic` object owner for module/system metadata, signal analysis,
 and the forward-IR projection:
-[perl/FSM/Support/NormalizedSemanticPayloadContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticPayloadContract.pm).
+[perl/FSM/Support/NormalizedSemanticPayloadContract.pm](perl/FSM/Support/NormalizedSemanticPayloadContract.pm).
 The nested `semantic.system_contract` summary inside that payload now also has
 its own bounded owner for the explicit clock/reset contract keys emitted today:
-[perl/FSM/Support/NormalizedSemanticSystemContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSystemContract.pm).
+[perl/FSM/Support/NormalizedSemanticSystemContract.pm](perl/FSM/Support/NormalizedSemanticSystemContract.pm).
 The nested `semantic.explicit_system_contract` summary inside that payload now
 also has its own bounded owner when the authored explicit contract is
 preserved:
-[perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm).
+[perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm](perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm).
 The nested `semantic.signal_analysis` summary inside that payload now also has
 its own bounded owner for the current sanitized signal families plus the shared
 core signal-entry keys emitted across direct and composition roots:
-[perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm).
+[perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm](perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm).
 The nested `semantic.forward_ir` summary inside that payload now also has its
 own bounded owner for the current sanitized forward semantic projections:
-[perl/FSM/Support/NormalizedSemanticForwardIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticForwardIRContract.pm).
+[perl/FSM/Support/NormalizedSemanticForwardIRContract.pm](perl/FSM/Support/NormalizedSemanticForwardIRContract.pm).
 The nested `semantic.forward_ir.lowered_rtl_ir` summary inside that branch now
 also has its own bounded owner for the current lowered-RTL shell plus the
 current composition-only extension keys:
-[perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm).
+[perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm](perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm).
 The nested `semantic.forward_ir.structural_rtl_ir` summary inside that branch
 now also has its own bounded owner for the current structural-RTL shell:
-[perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm).
+[perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm](perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm).
 The nested `semantic.forward_ir.intent_hir` summary inside that branch now
 also has its own bounded owner for the current intent-hir shell plus the
 current composition-only extension keys:
-[perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm).
+[perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm](perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm).
 The optional `semantic.symbol_contract` summary inside that payload now also
 has its own bounded owner for symbol-rich sources:
-[perl/FSM/Support/NormalizedSemanticSymbolContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticSymbolContract.pm).
+[perl/FSM/Support/NormalizedSemanticSymbolContract.pm](perl/FSM/Support/NormalizedSemanticSymbolContract.pm).
 The nested `semantic.module` summary inside that payload now also has its own
 bounded owner for the core module keys plus the current optional metric-key
 family:
-[perl/FSM/Support/NormalizedSemanticModuleContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticModuleContract.pm).
+[perl/FSM/Support/NormalizedSemanticModuleContract.pm](perl/FSM/Support/NormalizedSemanticModuleContract.pm).
 The nested `semantic.composition` summary inside that payload now also has its
 own bounded owner for composition sources:
-[perl/FSM/Support/NormalizedSemanticCompositionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticCompositionContract.pm).
+[perl/FSM/Support/NormalizedSemanticCompositionContract.pm](perl/FSM/Support/NormalizedSemanticCompositionContract.pm).
 The manifest-facing stable diagnostic-code registry now has its own explicit
 bounded contract owner in
-[perl/FSM/Support/DiagnosticCodeRegistryContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodeRegistryContract.pm),
+[perl/FSM/Support/DiagnosticCodeRegistryContract.pm](perl/FSM/Support/DiagnosticCodeRegistryContract.pm),
 so downstream tools can discover the public diagnostics sibling keys and stable
 entry keys without treating the whole diagnostics tree as frozen.
 The capability manifest shell now has that same explicit split too:
-[perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+[perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm)
 builds the JSON, while
-[perl/FSM/Support/CapabilityManifestContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifestContract.pm)
+[perl/FSM/Support/CapabilityManifestContract.pm](perl/FSM/Support/CapabilityManifestContract.pm)
 owns the bounded top-level and first nested section key lists advertised under
 `manifest_contract`.
 That shell contract now explicitly includes the first nested
@@ -266,60 +273,60 @@ bounded owner through `support_accounting.section_contract`, while keeping the
 existing inline support-accounting payload and catalog metadata in place for
 compatibility.
 The manifest's `embedding` section now follows that split too:
-[perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+[perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm)
 still publishes the current in-process embedding surfaces, while
-[perl/FSM/Support/EmbeddingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/EmbeddingContract.pm)
+[perl/FSM/Support/EmbeddingContract.pm](perl/FSM/Support/EmbeddingContract.pm)
 owns the bounded top-level and nested contract-owner map advertised through
 `embedding.section_contract` without flattening the whole embedding tree into
 one accidental API.
 The current embedding children include
 `embedding.debug_runtime`, owned by
-[perl/FSM/Support/DebugRuntimeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DebugRuntimeContract.pm),
+[perl/FSM/Support/DebugRuntimeContract.pm](perl/FSM/Support/DebugRuntimeContract.pm),
 and `embedding.hdl_generator_facade`, owned by
-[perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm),
+[perl/FSM/Support/HDLGeneratorFacadeContract.pm](perl/FSM/Support/HDLGeneratorFacadeContract.pm),
 so callers can discover the shipped in-process runtime/facade boundaries from
 the manifest instead of inferring them from Perl implementation files.
 The manifest's `diagnostics` section now follows that split too:
-[perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+[perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm)
 still publishes the current registry/check surfaces, while
-[perl/FSM/Support/DiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticsContract.pm)
+[perl/FSM/Support/DiagnosticsContract.pm](perl/FSM/Support/DiagnosticsContract.pm)
 owns the bounded top-level, scalar-string, and stable-code entry families
 advertised through `diagnostics.section_contract` without flattening the whole
 diagnostics tree into one accidental API.
 The manifest's `producer` section now follows that split too:
-[perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+[perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm)
 still publishes the current FSMGen identity/build metadata, while
-[perl/FSM/Support/ProducerContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ProducerContract.pm)
+[perl/FSM/Support/ProducerContract.pm](perl/FSM/Support/ProducerContract.pm)
 owns the bounded top-level, scalar-string, and boolean field families
 advertised through `producer.section_contract`. That keeps tool/build identity
 discoverable without pretending this is already a package-manager release API.
 The manifest's `semantic_exports` section now follows that split too:
-[perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+[perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm)
 still publishes the current bounded semantic interchange surfaces, while
-[perl/FSM/Support/SemanticExportsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SemanticExportsContract.pm)
+[perl/FSM/Support/SemanticExportsContract.pm](perl/FSM/Support/SemanticExportsContract.pm)
 owns the bounded top-level and nested contract-owner map advertised through
 `semantic_exports.section_contract`. That keeps `normalized_semantic_json`
 discoverable without pretending every future semantic export format is already
 frozen.
 The manifest's `backend_validation` section now follows that split too:
-[perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+[perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm)
 still publishes the current backend validation surfaces, while
-[perl/FSM/Support/BackendValidationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/BackendValidationContract.pm)
+[perl/FSM/Support/BackendValidationContract.pm](perl/FSM/Support/BackendValidationContract.pm)
 owns the bounded top-level and nested contract-owner map advertised through
 `backend_validation.section_contract`. That keeps
 `systemverilog_external` discoverable without pretending every future backend
 validation lane is already frozen.
 The manifest's `language_surface` section now follows the same pattern:
-[perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+[perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm)
 still publishes the authored-surface summary, while
-[perl/FSM/Support/LanguageSurfaceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/LanguageSurfaceContract.pm)
+[perl/FSM/Support/LanguageSurfaceContract.pm](perl/FSM/Support/LanguageSurfaceContract.pm)
 owns the bounded top-level and first nested section-key lists advertised
 through `language_surface.surface_contract` without pretending the whole
 authored language is frozen.
 The manifest's `documentation` section now has the same split too:
-[perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+[perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm)
 still publishes the current doc pointers, while
-[perl/FSM/Support/DocumentationContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DocumentationContract.pm)
+[perl/FSM/Support/DocumentationContract.pm](perl/FSM/Support/DocumentationContract.pm)
 owns the bounded top-level and path-list contract advertised through
 `documentation.section_contract` without freezing the exact file lists forever.
 

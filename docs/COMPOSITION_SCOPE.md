@@ -50,8 +50,8 @@ This document defines the concrete `R6` scope for composition-oriented work in t
 
 ## Current active boundary
 - `bin/fsmgen` currently compiles a single FSM or standalone-DT source into HDL.
-- [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) parses a source file with `Lispish::multi(...)`, classifies the top-level source kind, and routes `?top:name` inputs through a typed composition parser plus the shipped `C1`/`C2`/`C3`/`C4` realization lanes or an explicit scope-boundary diagnostic.
-- [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) currently accepts active single-module roots shaped like `?fsm:name`, `?dt:name`, `?mod:name`, `?module:name`, or `+fsm`.
+- [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) parses a source file with `Lispish::multi(...)`, classifies the top-level source kind, and routes `?top:name` inputs through a typed composition parser plus the shipped `C1`/`C2`/`C3`/`C4` realization lanes or an explicit scope-boundary diagnostic.
+- [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm) currently accepts active single-module roots shaped like `?fsm:name`, `?dt:name`, `?mod:name`, `?module:name`, or `+fsm`.
 
 ## Current shipped runtime subset
 The currently shipped composition behavior is intentionally bounded:
@@ -372,7 +372,7 @@ Planned typed objects:
 Exact package names may change, but the architecture must stay typed at this boundary.
 
 Historical note:
-- [docs/COMPOSITION_LEGACY_MAPPING.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_LEGACY_MAPPING.md) captures how the obsolete `fx/bin/fsmgen` composition lane maps onto this modern scope without reviving its plugin/eval machinery.
+- [docs/COMPOSITION_LEGACY_MAPPING.md](docs/COMPOSITION_LEGACY_MAPPING.md) captures how the obsolete `fx/bin/fsmgen` composition lane maps onto this modern scope without reviving its plugin/eval machinery.
 
 ## Acceptance matrix for the first composition lane
 These are the executable scenarios that must exist before `R6` can be closed.

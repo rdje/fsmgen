@@ -5,7 +5,7 @@ description: Thin agent-facing wrapper for the authoritative commit workflow in 
 
 This file is not the source of truth.
 
-The authoritative commit workflow is [COMMIT.md](/Users/richarddje/Documents/github/fsmgen/COMMIT.md).
+The authoritative commit workflow is [COMMIT.md](COMMIT.md).
 Follow that file exactly.
 
 Rules for this helper:

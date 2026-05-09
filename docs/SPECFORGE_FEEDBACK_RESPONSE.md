@@ -2,7 +2,7 @@
 
 This document is FSMGen's tracked response to SPECFORGE's feedback in:
 
-- `/Users/richarddje/Documents/github/specforge/docs/FSMGEN_FEEDBACK.md`
+- `the external SPECFORGE feedback document`
 
 It exists so SPECFORGE can align its `.fsm` adapter planning with FSMGen's
 accepted direction without relying on transient chat context.
@@ -91,11 +91,11 @@ entry, and migration-hint availability. They also include a nested
 classification, diagnostic code, and migration-hint availability. The classifier
 chooses the most specific matching expected-error pattern, and the current
 expected-failure corpus is covered end-to-end by
-[t/300-check-json-regression-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/300-check-json-regression-corpus.t).
+[t/300-check-json-regression-corpus.t](t/300-check-json-regression-corpus.t).
 The accepted side is also covered: supported-smoke entries must succeed through
 `--check-json`, and strict-supported entries must succeed through
 `--strict --check-json`, as locked by
-[t/301-check-json-supported-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/301-check-json-supported-corpus.t).
+[t/301-check-json-supported-corpus.t](t/301-check-json-supported-corpus.t).
 Failures outside the current support-accounting classifier still emit JSON, but
 their code is `null` rather than inventing a false stable identity.
 
@@ -105,7 +105,7 @@ FSMGen should introduce stable diagnostic identities before exposing JSON
 diagnostics as a public integration surface.
 
 This first ownership slice now exists. The production registry lives in
-[perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm),
+[perl/FSM/Support/DiagnosticCodes.pm](perl/FSM/Support/DiagnosticCodes.pm),
 every current `expected_failure` support-accounting entry carries a known
 `FSMGEN_*` code, and the capability manifest exposes the registry plus those
 entry-level codes. The requirement is stable machine identity across wording
@@ -117,10 +117,10 @@ improvements. Examples of the public shape:
 - `FSMGEN_COMPOSITION_MISSING_RTLIF`
 
 Codes are regression-backed by
-[t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t),
-[t/297-capability-manifest.t](/Users/richarddje/Documents/github/fsmgen/t/297-capability-manifest.t),
+[t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t),
+[t/297-capability-manifest.t](t/297-capability-manifest.t),
 and
-[t/298-diagnostic-code-registry.t](/Users/richarddje/Documents/github/fsmgen/t/298-diagnostic-code-registry.t).
+[t/298-diagnostic-code-registry.t](t/298-diagnostic-code-registry.t).
 They are cataloged for manifest/corpus integration and emitted by the bounded
 check-only JSON path now. The bounded path now also regression-locks the exact
 stable code for every current expected-failure corpus entry and clean success

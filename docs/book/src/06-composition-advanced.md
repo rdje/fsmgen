@@ -113,8 +113,8 @@ That example shows both direct actual and concat actual lowering:
 
 Maintained repo examples:
 
-- [direct_intent_integer_literals.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_intent_integer_literals.fsm)
-- [composition_intent_integer_literals.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/composition_intent_integer_literals.fsm)
+- [direct_intent_integer_literals.fsm](t/corpus/direct_intent_integer_literals.fsm)
+- [composition_intent_integer_literals.fsm](t/corpus/composition_intent_integer_literals.fsm)
 
 ## Concat Sources
 

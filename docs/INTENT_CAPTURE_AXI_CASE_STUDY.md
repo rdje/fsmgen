@@ -1,8 +1,8 @@
 # AXI Intent-Capture Case Study
 
-This note preserves the detailed lessons extracted from the external AXI
-workspace at
-[`/Users/richarddje/Documents/livework/protocols/arm/axi`](/Users/richarddje/Documents/livework/protocols/arm/axi).
+This note preserves the detailed lessons extracted from an external AXI
+workspace outside this repository. The original local filesystem location is
+intentionally not recorded here.
 
 It is the current best concrete reference for the future `H4` intent-capture
 lane:
@@ -20,25 +20,25 @@ Use this note when future work starts on:
 ## External source inventory
 
 Primary source workspace:
-- [`/Users/richarddje/Documents/livework/protocols/arm/axi`](/Users/richarddje/Documents/livework/protocols/arm/axi)
+- external AXI protocol workspace, not tracked in this repository
 
 Key extracted method files:
-- [`/Users/richarddje/Documents/livework/protocols/arm/axi/PROTOCOL_EXTRACTION_METHOD.md`](/Users/richarddje/Documents/livework/protocols/arm/axi/PROTOCOL_EXTRACTION_METHOD.md)
-- [`/Users/richarddje/Documents/livework/protocols/arm/axi/PROTOCOL_PDF_TO_FSM_REFERENCE.md`](/Users/richarddje/Documents/livework/protocols/arm/axi/PROTOCOL_PDF_TO_FSM_REFERENCE.md)
-- [`/Users/richarddje/Documents/livework/protocols/arm/axi/PROTOCOL_EXTRACTION_PROMPT.md`](/Users/richarddje/Documents/livework/protocols/arm/axi/PROTOCOL_EXTRACTION_PROMPT.md)
-- [`/Users/richarddje/Documents/livework/protocols/arm/axi/PROTOCOL_EXTRACTION_WORKSHEET.md`](/Users/richarddje/Documents/livework/protocols/arm/axi/PROTOCOL_EXTRACTION_WORKSHEET.md)
+- `PROTOCOL_EXTRACTION_METHOD.md`
+- `PROTOCOL_PDF_TO_FSM_REFERENCE.md`
+- `PROTOCOL_EXTRACTION_PROMPT.md`
+- `PROTOCOL_EXTRACTION_WORKSHEET.md`
 
 AXI-specific applied artifacts:
-- [`/Users/richarddje/Documents/livework/protocols/arm/axi/AXI_PROTOCOL_DOSSIER.md`](/Users/richarddje/Documents/livework/protocols/arm/axi/AXI_PROTOCOL_DOSSIER.md)
-- [`/Users/richarddje/Documents/livework/protocols/arm/axi/AXI_ACTOR_CATALOG.md`](/Users/richarddje/Documents/livework/protocols/arm/axi/AXI_ACTOR_CATALOG.md)
-- [`/Users/richarddje/Documents/livework/protocols/arm/axi/AXI_FSM_DECOMPOSITION.md`](/Users/richarddje/Documents/livework/protocols/arm/axi/AXI_FSM_DECOMPOSITION.md)
-- [`/Users/richarddje/Documents/livework/protocols/arm/axi/AXI_CORE_EXTRACTION_WORKSHEET.md`](/Users/richarddje/Documents/livework/protocols/arm/axi/AXI_CORE_EXTRACTION_WORKSHEET.md)
-- [`/Users/richarddje/Documents/livework/protocols/arm/axi/fsm/transport_valid_ready_channel.fsm`](/Users/richarddje/Documents/livework/protocols/arm/axi/fsm/transport_valid_ready_channel.fsm)
+- `AXI_PROTOCOL_DOSSIER.md`
+- `AXI_ACTOR_CATALOG.md`
+- `AXI_FSM_DECOMPOSITION.md`
+- `AXI_CORE_EXTRACTION_WORKSHEET.md`
+- `fsm/transport_valid_ready_channel.fsm`
 
 Normalized source material:
-- [`/Users/richarddje/Documents/livework/protocols/arm/axi/IHI0022L_amba_axi_protocol_spec.pdf`](/Users/richarddje/Documents/livework/protocols/arm/axi/IHI0022L_amba_axi_protocol_spec.pdf)
-- [`/Users/richarddje/Documents/livework/protocols/arm/axi/md/IHI0022L_amba_axi_protocol_spec.md`](/Users/richarddje/Documents/livework/protocols/arm/axi/md/IHI0022L_amba_axi_protocol_spec.md)
-- [`/Users/richarddje/Documents/livework/protocols/arm/axi/md/IHI0022L_amba_axi_protocol_spec/IHI0022L_amba_axi_protocol_spec_meta.json`](/Users/richarddje/Documents/livework/protocols/arm/axi/md/IHI0022L_amba_axi_protocol_spec/IHI0022L_amba_axi_protocol_spec_meta.json)
+- `IHI0022L_amba_axi_protocol_spec.pdf`
+- `md/IHI0022L_amba_axi_protocol_spec.md`
+- `md/IHI0022L_amba_axi_protocol_spec/IHI0022L_amba_axi_protocol_spec_meta.json`
 
 ## What The AXI Workspace Already Proves
 
@@ -170,7 +170,7 @@ This should remain a core part of the future lane.
 
 ## What The First Emitted AXI `.fsm` Tells Us
 
-[`transport_valid_ready_channel.fsm`](/Users/richarddje/Documents/livework/protocols/arm/axi/fsm/transport_valid_ready_channel.fsm)
+`fsm/transport_valid_ready_channel.fsm`
 is exactly the right kind of first emitted asset:
 - small,
 - reusable,

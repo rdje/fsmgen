@@ -30,11 +30,11 @@ not:
 
 ## Current shipped boundary
 The current active toolchain now supports programmatic typed extensions through:
-- [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)
-- [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm)
-- [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm)
-- [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
-- [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen)
+- [perl/FSM/Extension/Registry.pm](perl/FSM/Extension/Registry.pm)
+- [perl/FSM/Extension/Context.pm](perl/FSM/Extension/Context.pm)
+- [perl/FSM/Extension/Loader.pm](perl/FSM/Extension/Loader.pm)
+- [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm)
+- [bin/fsmgen](bin/fsmgen)
 
 Current contract:
 - callers may pass `extensions => [ $extension_object, ... ]` to `FSM::Pipeline::HDLGenerator->new(...)`,
@@ -85,7 +85,7 @@ Current intent:
 - or other post-generation behavior that does not require the old plugin model.
 
 ## Hook context
-`$context` is a [FSM::Extension::Context](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm) object with:
+`$context` is a [FSM::Extension::Context](perl/FSM/Extension/Context.pm) object with:
 - `stage`
   - current hook stage name such as `after_parse_source` or `after_generate_result`
 - `pipeline`
@@ -105,118 +105,118 @@ Current intent:
     augmentation mutates this live object by design
 
 The shipped boundary is regression-locked in
-[t/26-extension-mechanism.t](/Users/richarddje/Documents/github/fsmgen/t/26-extension-mechanism.t),
-[t/27-extension-loading.t](/Users/richarddje/Documents/github/fsmgen/t/27-extension-loading.t),
-and [t/28-extension-config-loading.t](/Users/richarddje/Documents/github/fsmgen/t/28-extension-config-loading.t).
+[t/26-extension-mechanism.t](t/26-extension-mechanism.t),
+[t/27-extension-loading.t](t/27-extension-loading.t),
+and [t/28-extension-config-loading.t](t/28-extension-config-loading.t).
 The manifest-owned programmatic loading boundary is also audited in
-[t/391-typed-extension-programmatic-loading-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/391-typed-extension-programmatic-loading-boundary-audit.t),
+[t/391-typed-extension-programmatic-loading-boundary-audit.t](t/391-typed-extension-programmatic-loading-boundary-audit.t),
 which proves `extension_modules` and `extension_config_files` dispatch real
 in-process hooks through `FSM::Pipeline::HDLGenerator` while remaining owned by
 `embedding.typed_extensions`.
-[t/392-typed-extension-autoload-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/392-typed-extension-autoload-boundary-audit.t)
+[t/392-typed-extension-autoload-boundary-audit.t](t/392-typed-extension-autoload-boundary-audit.t)
 also proves the negative side of the same typed boundary: AUTOLOAD-only
 extensions, including objects that override `can(...)`, now fail closed as
 hookless direct extension objects, while explicit and inherited real hook
 methods still run.
-[t/393-typed-extension-hook-set-closed-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/393-typed-extension-hook-set-closed-boundary-audit.t)
+[t/393-typed-extension-hook-set-closed-boundary-audit.t](t/393-typed-extension-hook-set-closed-boundary-audit.t)
 also proves the hook set is closed for the current schema version: extra
 hook-shaped methods such as `before_parse_source` or `after_emit_hdl` remain
 inert during direct and composition generation until the contract deliberately
 adds a new hook family.
-[t/421-hdl-generator-facade-extension-hook-method-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/421-hdl-generator-facade-extension-hook-method-boundary-audit.t)
+[t/421-hdl-generator-facade-extension-hook-method-boundary-audit.t](t/421-hdl-generator-facade-extension-hook-method-boundary-audit.t)
 also proves the `HDLGenerator` facade and direct registry reject hookless,
 unsupported-hook-only, and `AUTOLOAD`/fake-`can` direct extension objects before
 they can become silent no-ops or leak registry/lower-level fallout.
-[t/426-typed-extension-registry-constructor-argument-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/426-typed-extension-registry-constructor-argument-boundary-audit.t)
+[t/426-typed-extension-registry-constructor-argument-boundary-audit.t](t/426-typed-extension-registry-constructor-argument-boundary-audit.t)
 also proves direct `FSM::Extension::Registry->new(...)` construction accepts
 only the exact class receiver and an even-length list of unique supported
 scalar option names, so malformed registry constructor calls fail before raw
 hash-coercion or `bless` fallout can leak.
-[t/429-typed-extension-registry-method-receiver-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/429-typed-extension-registry-method-receiver-boundary-audit.t)
+[t/429-typed-extension-registry-method-receiver-boundary-audit.t](t/429-typed-extension-registry-method-receiver-boundary-audit.t)
 also proves direct registry methods require an exact hash-backed
 `FSM::Extension::Registry` object constructed by `new(...)`, so class
 receivers, subclass stand-ins, and fake exact-class objects fail before hook or
 context diagnostics can leak.
-[t/432-typed-extension-registry-method-argument-list-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/432-typed-extension-registry-method-argument-list-boundary-audit.t)
+[t/432-typed-extension-registry-method-argument-list-boundary-audit.t](t/432-typed-extension-registry-method-argument-list-boundary-audit.t)
 also proves direct registry methods own their payload argument counts:
 `extensions(...)` takes no payload arguments, `dispatch_hook(...)` takes a
 hook name and context, and hook wrapper methods take one context argument after
 the registry invocant.
-[t/493-typed-extension-registry-extension-list-defensive-copy-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/493-typed-extension-registry-extension-list-defensive-copy-boundary-audit.t)
+[t/493-typed-extension-registry-extension-list-defensive-copy-boundary-audit.t](t/493-typed-extension-registry-extension-list-defensive-copy-boundary-audit.t)
 also proves direct registry construction and `extensions()` accessor calls copy
 the extension array, so caller-side list mutation cannot alter the registry's
 configured dispatch list while the extension objects remain the live hook
 objects that dispatch invokes.
-[t/394-typed-extension-context-accessor-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/394-typed-extension-context-accessor-boundary-audit.t)
+[t/394-typed-extension-context-accessor-boundary-audit.t](t/394-typed-extension-context-accessor-boundary-audit.t)
 also proves the context accessor names are stable for the current schema
 version by checking manifest discovery, the implemented
 `FSM::Extension::Context` methods, and real direct plus composition hook
 contexts through every advertised accessor.
-[t/395-typed-extension-explicit-discovery-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/395-typed-extension-explicit-discovery-boundary-audit.t)
+[t/395-typed-extension-explicit-discovery-boundary-audit.t](t/395-typed-extension-explicit-discovery-boundary-audit.t)
 also proves extension discovery remains explicit: nearby `extensions.fsmext`,
 `fsmgen.fsmext`, and legacy `.plg`-shaped files stay inert for in-process and
 CLI generation unless the caller supplies explicit module or config loading
 entrypoints.
-[t/396-typed-extension-constructor-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/396-typed-extension-constructor-boundary-audit.t)
+[t/396-typed-extension-constructor-boundary-audit.t](t/396-typed-extension-constructor-boundary-audit.t)
 also proves module-name loading requires a real `new()` method: explicit and
 inherited constructors still work, while extension-provided `can(...)` methods
 and `AUTOLOAD`-only constructor discovery stay outside the typed loading
 boundary.
-[t/427-typed-extension-loader-constructor-argument-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/427-typed-extension-loader-constructor-argument-boundary-audit.t)
+[t/427-typed-extension-loader-constructor-argument-boundary-audit.t](t/427-typed-extension-loader-constructor-argument-boundary-audit.t)
 also proves direct `FSM::Extension::Loader->new(...)` construction accepts
 only the exact class receiver and no option/value arguments, so malformed
 loader constructor calls fail before raw hash-coercion or `bless` fallout can
 leak.
-[t/428-typed-extension-loader-method-receiver-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/428-typed-extension-loader-method-receiver-boundary-audit.t)
+[t/428-typed-extension-loader-method-receiver-boundary-audit.t](t/428-typed-extension-loader-method-receiver-boundary-audit.t)
 also proves direct loader methods require an exact hash-backed
 `FSM::Extension::Loader` object constructed by `new(...)`, so class receivers,
 subclass stand-ins, and fake exact-class objects fail before loading payload
 diagnostics can leak.
-[t/431-typed-extension-loader-method-argument-list-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/431-typed-extension-loader-method-argument-list-boundary-audit.t)
+[t/431-typed-extension-loader-method-argument-list-boundary-audit.t](t/431-typed-extension-loader-method-argument-list-boundary-audit.t)
 also proves direct loader methods accept exactly one payload argument after the
 loader invocant, so missing or extra payload arguments fail before raw Perl
 signature fallout or payload value diagnostics can leak.
-[t/397-typed-extension-registry-dispatch-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/397-typed-extension-registry-dispatch-boundary-audit.t)
+[t/397-typed-extension-registry-dispatch-boundary-audit.t](t/397-typed-extension-registry-dispatch-boundary-audit.t)
 also proves the registry's direct `dispatch_hook(...)` entrypoint enforces the
 same closed hook set: `after_parse_source` and `after_generate_result` still
 dispatch, while unsupported hook names are rejected before extension methods
 can run.
-[t/422-typed-extension-registry-dispatch-context-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/422-typed-extension-registry-dispatch-context-boundary-audit.t)
+[t/422-typed-extension-registry-dispatch-context-boundary-audit.t](t/422-typed-extension-registry-dispatch-context-boundary-audit.t)
 also proves direct registry dispatch requires a real
 `FSM::Extension::Context` object whose `stage` matches the dispatched hook
 name, so malformed direct contexts fail before extension code can reinterpret
 them.
-[t/434-typed-extension-registry-dispatch-constructed-context-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/434-typed-extension-registry-dispatch-constructed-context-boundary-audit.t)
+[t/434-typed-extension-registry-dispatch-constructed-context-boundary-audit.t](t/434-typed-extension-registry-dispatch-constructed-context-boundary-audit.t)
 also proves direct registry dispatch requires an exact hash-backed context
 object constructed by `FSM::Extension::Context->new(...)`, so fake exact-class
 context objects fail at the registry boundary before context accessor fallout
 can leak.
-[t/423-typed-extension-context-constructor-argument-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/423-typed-extension-context-constructor-argument-boundary-audit.t)
+[t/423-typed-extension-context-constructor-argument-boundary-audit.t](t/423-typed-extension-context-constructor-argument-boundary-audit.t)
 also proves direct `FSM::Extension::Context->new(...)` construction accepts
 only the exact class receiver and an even-length list of unique supported
 scalar option names, so malformed constructor calls fail before raw Perl
 argument or `bless` fallout can leak.
-[t/430-typed-extension-context-accessor-receiver-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/430-typed-extension-context-accessor-receiver-boundary-audit.t)
+[t/430-typed-extension-context-accessor-receiver-boundary-audit.t](t/430-typed-extension-context-accessor-receiver-boundary-audit.t)
 also proves direct context accessors require an exact hash-backed
 `FSM::Extension::Context` object constructed by `new(...)`, so class receivers,
 subclass stand-ins, and fake exact-class objects fail before raw accessor
 fallout can leak.
-[t/433-typed-extension-context-accessor-argument-list-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/433-typed-extension-context-accessor-argument-list-boundary-audit.t)
+[t/433-typed-extension-context-accessor-argument-list-boundary-audit.t](t/433-typed-extension-context-accessor-argument-list-boundary-audit.t)
 also proves direct context accessors take no payload arguments after the
 context invocant, so extra accessor arguments fail before raw Perl signature
 fallout can leak.
-[t/424-typed-extension-context-constructor-payload-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/424-typed-extension-context-constructor-payload-boundary-audit.t)
+[t/424-typed-extension-context-constructor-payload-boundary-audit.t](t/424-typed-extension-context-constructor-payload-boundary-audit.t)
 also proves direct context construction validates the payload values that hooks
 rely on: supported hook stages, a blessed pipeline, scalar source path and
 target language, scalar `source_info->{kind}`, parse contexts with
 `raw_ast` and no `result`, and result contexts with `result` and no `raw_ast`.
-[t/425-typed-extension-dt-source-kind-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/425-typed-extension-dt-source-kind-contract-audit.t)
+[t/425-typed-extension-dt-source-kind-contract-audit.t](t/425-typed-extension-dt-source-kind-contract-audit.t)
 also proves standalone `?dt:` roots are part of the bounded typed-extension
 source-kind family: manifests advertise `dt`, and live `dt` generation
 dispatches parse/result contexts whose `source_info->{kind}` is `dt`.
 
 For embedders, the same boundary is now machine-readable through
-[perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+[perl/FSM/Support/ExtensionContract.pm](perl/FSM/Support/ExtensionContract.pm)
 and advertised by `bin/fsmgen --capability-manifest` under
 `embedding.typed_extensions`. That manifest entry is intentionally bounded: it
 names the current loading entrypoints, hook names, context accessor names, and

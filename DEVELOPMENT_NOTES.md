@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Documentation paths stay repo-relative
+- Tracked documentation should not capture user-specific filesystem roots.
+  Repo-owned paths in live docs and mdBook sources are relative to the git repo
+  root, and external workspaces are described without local absolute links.
+- This keeps the live docs portable across checkouts and prevents session
+  continuity notes from depending on one developer's local directory layout.
 ## 2026-05-09: R13 chooses explicit serializable plan/report APIs
 - `R13` should now move from only hardening raw in-process result branches toward
   explicit serializable plan/report APIs for downstream tooling.
@@ -1991,9 +1997,9 @@ This document captures engineering rationale, design constraints, and working de
 - This pass kept the static project-owned `FSM::...` closure unchanged at
   `180` files total, `179` `.pm` packages, no missing project modules, and the
   same namespace family counts. The refreshed measurements were limited to
-  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm)
   at `403` lines and
-  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm)
+  [perl/FSM/Support/HDLGeneratorFacadeContract.pm](perl/FSM/Support/HDLGeneratorFacadeContract.pm)
   at `222` lines after the latest `R13` facade-boundary hardening.
 - Treat this as architecture-note maintenance, not a feature or lane movement.
   The active implementation lane remains `R13`, and follow-up work should
@@ -2044,15 +2050,15 @@ This document captures engineering rationale, design constraints, and working de
 - The README / `SESSION_BOOTSTRAP.md` path is a real recovery task, not a
   pleasantry. It should rebuild the current source picture before new
   implementation work starts, then update
-  [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md)
   only when the saved architecture note is no longer honest.
 - In this pass, the transitive `FSM::...` import topology from
-  [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) stayed
+  [bin/fsmgen](bin/fsmgen) stayed
   stable: `180` project files total, `179` `.pm` packages, no missing project
   modules, and unchanged family counts. The stale part was measured line-count
   drift after recent `R13` facade-boundary work, especially
-  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
-  and [perl/FSM/Support/HDLGeneratorFacadeContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorFacadeContract.pm).
+  [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm)
+  and [perl/FSM/Support/HDLGeneratorFacadeContract.pm](perl/FSM/Support/HDLGeneratorFacadeContract.pm).
 - Treat this as measured-snapshot maintenance, not a roadmap lane transition.
   The active implementation lane remains `R13` public embedding/API
   stabilization, and the next implementation move should still be a bounded
@@ -2214,7 +2220,7 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-05-02: README bootstrap import-tree refresh is measured-snapshot maintenance
 - The README / `SESSION_BOOTSTRAP.md` startup path should compare both import
   topology and measured snapshot fields in
-  [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md).
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md).
   In this pass, topology was stable at `180` project files and `179` `.pm`
   packages with no missing project modules, but measured line counts for
   `HDLGenerator.pm` and `HDLGeneratorFacadeContract.pm` had drifted after the
@@ -2672,15 +2678,15 @@ This document captures engineering rationale, design constraints, and working de
 
 ## 2026-04-29: README bootstrap rechecks should repair small measured-doc drift too
 - The bootstrap ritual is useful only if it treats
-  [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md)
   as a measured architecture note, not just as a once-a-session memory jog.
 - This recheck confirmed the important closure facts were still current:
-  [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) still
+  [bin/fsmgen](bin/fsmgen) still
   reaches `180` project files / `179` `.pm` packages, with no missing
   project-owned modules.
 - The stale details were smaller but still worth fixing because they are the
   source-visible contract of the note:
-  [perl/FSM/Support/HDLExternalValidation.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLExternalValidation.pm)
+  [perl/FSM/Support/HDLExternalValidation.pm](perl/FSM/Support/HDLExternalValidation.pm)
   is a direct CLI import, optional external validation is one of the CLI's
   lifecycle-routing responsibilities, and the entrypoint is now `1013` lines.
 - That distinction matters: the root-cause architecture picture did not move,
@@ -2838,7 +2844,7 @@ This document captures engineering rationale, design constraints, and working de
   `R13` fix was not to pretend the whole trace system was suddenly local or
   thread-safe.
 - The root cause that actually hurt embedders was narrower:
-  [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm)
   used to set global debug state during `new(...)` and leave it changed for
   the rest of the process.
 - The honest first stabilization step is therefore:
@@ -2854,14 +2860,14 @@ This document captures engineering rationale, design constraints, and working de
 
 ## 2026-04-28: the import-tree note should be refreshed from measured closure truth, not from memory
 - The startup task in
-  [SESSION_BOOTSTRAP.md](/Users/richarddje/Documents/github/fsmgen/SESSION_BOOTSTRAP.md)
+  [SESSION_BOOTSTRAP.md](SESSION_BOOTSTRAP.md)
   is only useful if
-  [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md)
   is treated as a measured architecture note instead of a slowly fossilizing
   narrative.
 - This refresh confirmed the right method again:
   rebuild the project-owned transitive `FSM::...` closure from
-  [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen), compare
+  [bin/fsmgen](bin/fsmgen), compare
   the saved linked-module set against the live closure, then update the
   measured counts and responsibility groups only from source-backed evidence.
 - That is how we caught the real drift here:
@@ -2931,7 +2937,7 @@ This document captures engineering rationale, design constraints, and working de
 
 ## 2026-04-22: the three intentional manifest-context enrichments should be named builders, not audit-only expectations
 - After the section extractions, the remaining duplication was no longer in
-  [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+  [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm)
   itself, but in the parity audit that still rebuilt the three intentional
   manifest-context enrichments inline.
 - The root-cause cleanup was to give each enrichment an explicit named builder
@@ -2955,7 +2961,7 @@ This document captures engineering rationale, design constraints, and working de
   - the stable diagnostic-code registry remains the maintained truth,
   - and the bounded manifest-context `check_json` enrichment stays visible in
     one deliberate builder instead of hiding inline inside
-    [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm).
+    [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm).
 - That is a better root-cause cleanup than adding more parity tests around
   duplicated assembly logic, because the assembly logic itself is now singular.
 
@@ -2964,15 +2970,15 @@ This document captures engineering rationale, design constraints, and working de
   `support_accounting`.
 - Extracting it behind one dedicated builder removed the remaining private
   support-accounting assembly helpers from
-  [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm)
+  [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm)
   instead of merely wrapping them in another layer.
 - That makes the ownership split cleaner:
-  - [perl/FSM/Support/SupportAccountingSection.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingSection.pm)
+  - [perl/FSM/Support/SupportAccountingSection.pm](perl/FSM/Support/SupportAccountingSection.pm)
     now owns the exact manifest projection,
-  - [perl/FSM/Support/SupportAccountingContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/SupportAccountingContract.pm)
+  - [perl/FSM/Support/SupportAccountingContract.pm](perl/FSM/Support/SupportAccountingContract.pm)
     continues to own the bounded public key promises,
   - and
-    [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm)
+    [perl/FSM/Support/RegressionCorpus.pm](perl/FSM/Support/RegressionCorpus.pm)
     remains the maintained truth for the derived counts and sanitized catalog
     entries.
 
@@ -3277,13 +3283,13 @@ This document captures engineering rationale, design constraints, and working de
 - This is a quality-gate hardening slice. It does not widen product behavior,
   but it makes one important user surface stop depending on human memory.
 - The strengthened gate immediately exposed a real source-front consistency bug:
-  [t/197-pipeline-source-frontend.t](/Users/richarddje/Documents/github/fsmgen/t/197-pipeline-source-frontend.t)
+  [t/197-pipeline-source-frontend.t](t/197-pipeline-source-frontend.t)
   caught that direct-root `SourceFrontend->classify_source_ast(...)` no longer
   matched the bounded `source_info` shape later carried by the pipeline because
   `package_import_count` and `package_import_names` were only being backfilled
   deeper in generation orchestration.
 - The right fix was to normalize those package-import summary keys directly in
-  [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm)
+  [perl/FSM/Pipeline/SourceFrontend.pm](perl/FSM/Pipeline/SourceFrontend.pm)
   from raw AST when the import list is safely knowable for valid direct or
   composition roots, then lock that behavior with a focused regression instead
   of weakening the comparison.
@@ -4479,7 +4485,7 @@ This document captures engineering rationale, design constraints, and working de
   - and the `HDLGenerator` result shell could keep a third copy of the same
     fragment path.
 - The safer regularization is to let
-  [perl/FSM/Support/CompositionReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CompositionReportContract.pm)
+  [perl/FSM/Support/CompositionReportContract.pm](perl/FSM/Support/CompositionReportContract.pm)
   export those helper facts directly and make sibling contracts reuse them.
 - That keeps `R13` narrower and more honest:
   - one owner now defines the composition-report contract identity/path facts,
@@ -5231,10 +5237,10 @@ This document captures engineering rationale, design constraints, and working de
 - The import-tree note is meant to be a live measured picture, not just a
   narrative description.
 - When a new package becomes part of the reachable `bin/fsmgen` support
-  surface, the family counts in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+  surface, the family counts in [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md)
   must be corrected even if the broader architecture story is unchanged.
 - This rerun confirmed that the new
-  [perl/FSM/Support/LanguageSurfaceContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/LanguageSurfaceContract.pm)
+  [perl/FSM/Support/LanguageSurfaceContract.pm](perl/FSM/Support/LanguageSurfaceContract.pm)
   slice did exactly that: it widened the live reachable `Support` family count
   from `15` to `16`, so leaving the old number behind would make the bootstrap
   note technically stale.
@@ -5360,7 +5366,7 @@ This document captures engineering rationale, design constraints, and working de
   letting the manifest or narrative docs become the only contract shape.
 
 ## 2026-04-18: bootstrap/import-tree notes should refresh measured facts, not churn narrative needlessly
-- The saved [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+- The saved [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md)
   note is meant to stay high-signal and honest. When the runtime spine and
   ownership story are still correct, the right maintenance move is to refresh
   the measured facts that drifted, not to rewrite the whole narrative.
@@ -5409,7 +5415,7 @@ This document captures engineering rationale, design constraints, and working de
   - commit it,
   - then start the next slice.
 - The workflow text must not contain contradictory policy either. A stale
-  mandatory co-author-trailer sentence in [COMMIT.md](/Users/richarddje/Documents/github/fsmgen/COMMIT.md)
+  mandatory co-author-trailer sentence in [COMMIT.md](COMMIT.md)
   conflicted with the live repository instruction to avoid attribution
   trailers unless explicitly requested, so the workflow now matches that
   no-trailer default.
@@ -5460,20 +5466,20 @@ This document captures engineering rationale, design constraints, and working de
   next-value/D-input carrier as the authored LHS, so reading that same LHS from
   the RHS builds combinational feedback.
 - The fix is intentionally semantic:
-  - [fsm/amba_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/amba_requester.fsm)
+  - [fsm/amba_requester.fsm](fsm/amba_requester.fsm)
     now uses `<-` for Q-named registers such as `addr_q`, `beats_remaining_q`,
     `wrap_base_q`, and related protocol state,
-  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm)
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm)
     now rejects `<=` / `<=+` when the RHS expression or guard reads the same
     D-input-named LHS,
-  - and [t/02-combinational-self-dependency.t](/Users/richarddje/Documents/github/fsmgen/t/02-combinational-self-dependency.t)
+  - and [t/02-combinational-self-dependency.t](t/02-combinational-self-dependency.t)
     locks that pre-generation diagnostic while keeping `A <- A` valid.
 - The authoring rule is:
   - use `<-` when the signal name is the registered Q/output value,
   - use `<=` only when the signal name intentionally denotes the D-input side,
   - and use `<=+` plus the generated `_r` mirror when a design needs both
     same-cycle D visibility and registered Q visibility.
-- [t/308-systemverilog-external-validation.t](/Users/richarddje/Documents/github/fsmgen/t/308-systemverilog-external-validation.t)
+- [t/308-systemverilog-external-validation.t](t/308-systemverilog-external-validation.t)
   now includes `fsm/amba_requester.fsm` in the optional Verilator/Yosys smoke,
   and direct `./bin/fsmgen --quiet --verify-hdl ... fsm/amba_requester.fsm`
   passes locally with Verilator/Yosys installed.
@@ -5543,7 +5549,7 @@ This document captures engineering rationale, design constraints, and working de
 
 ## 2026-04-18: .fsm intent literals must lower to target-HDL literals before emission
 - Added intent-level sized integer literal normalization to
-  [perl/FSM/Package/IntegerLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/IntegerLiteralSupport.pm).
+  [perl/FSM/Package/IntegerLiteralSupport.pm](perl/FSM/Package/IntegerLiteralSupport.pm).
 - The `.fsm` source surface may now accept friendly forms that are not legal
   SystemVerilog by themselves:
   - `5'23` means value `23` represented on 5 bits and lowers to `5'd23`,
@@ -5568,7 +5574,7 @@ This document captures engineering rationale, design constraints, and working de
 
 ## 2026-04-18: external HDL tools are backend gates, not semantic substitutes
 - Added
-  [perl/FSM/Support/HDLExternalValidation.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLExternalValidation.pm)
+  [perl/FSM/Support/HDLExternalValidation.pm](perl/FSM/Support/HDLExternalValidation.pm)
   as the owner for optional generated-SystemVerilog validation with Verilator
   and Yosys.
 - The intended validation stack is layered:
@@ -5604,7 +5610,7 @@ This document captures engineering rationale, design constraints, and working de
 
 ## 2026-04-18: composition report contract separates raw plan data from JSON interchange
 - Added
-  [perl/FSM/Support/CompositionReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CompositionReportContract.pm)
+  [perl/FSM/Support/CompositionReportContract.pm](perl/FSM/Support/CompositionReportContract.pm)
   as the production owner for a bounded serializable composition provenance
   report.
 - The important distinction is now explicit:
@@ -5624,7 +5630,7 @@ This document captures engineering rationale, design constraints, and working de
 
 ## 2026-04-17: typed extension contract is explicit public embedding surface
 - Added
-  [perl/FSM/Support/ExtensionContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/ExtensionContract.pm)
+  [perl/FSM/Support/ExtensionContract.pm](perl/FSM/Support/ExtensionContract.pm)
   as the production owner for the bounded typed-extension/context contract.
 - The contract records what is intentionally public today:
   - explicit object injection through `extensions => [ $object, ... ]`,
@@ -5651,7 +5657,7 @@ This document captures engineering rationale, design constraints, and working de
 
 ## 2026-04-17: HDLGenerator result contract distinguishes presence from interchange
 - Added
-  [perl/FSM/Support/HDLGeneratorResultContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResultContract.pm)
+  [perl/FSM/Support/HDLGeneratorResultContract.pm](perl/FSM/Support/HDLGeneratorResultContract.pm)
   as the production owner for the first bounded
   `FSM::Pipeline::HDLGenerator->generate_hdl_from_file(...)` result contract.
 - The contract deliberately stabilizes top-level key presence, not every nested
@@ -5702,7 +5708,7 @@ This document captures engineering rationale, design constraints, and working de
     contract.
 
 ## 2026-04-17: semantic JSON rejected-side coverage follows support accounting
-- Added [t/304-normalized-semantic-json-regression-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/304-normalized-semantic-json-regression-corpus.t)
+- Added [t/304-normalized-semantic-json-regression-corpus.t](t/304-normalized-semantic-json-regression-corpus.t)
   so every current `expected_failure` support-accounting entry must reject
   through `bin/fsmgen --emit-semantic-json`.
 - The rejected-side semantic JSON contract now proves:
@@ -5723,7 +5729,7 @@ This document captures engineering rationale, design constraints, and working de
     capability manifest can advertise rejected-side coverage honestly.
 
 ## 2026-04-17: semantic JSON accepted-side coverage follows support accounting
-- Added [t/303-normalized-semantic-json-supported-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/303-normalized-semantic-json-supported-corpus.t)
+- Added [t/303-normalized-semantic-json-supported-corpus.t](t/303-normalized-semantic-json-supported-corpus.t)
   so every current `supported_smoke` support-accounting entry must succeed
   through `bin/fsmgen --emit-semantic-json`.
 - The same test also runs every `strict_supported` entry through
@@ -5750,7 +5756,7 @@ This document captures engineering rationale, design constraints, and working de
 
 ## 2026-04-17: bounded normalized semantic JSON is live
 - Added
-  [perl/FSM/Support/NormalizedSemanticReport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReport.pm)
+  [perl/FSM/Support/NormalizedSemanticReport.pm](perl/FSM/Support/NormalizedSemanticReport.pm)
   as the production owner for the first `--emit-semantic-json` report shape.
 - `bin/fsmgen --strict --emit-semantic-json path/to/file.fsm` now:
   - runs the full pipeline,
@@ -5779,7 +5785,7 @@ This document captures engineering rationale, design constraints, and working de
   `support_accounting` object.
 - For corpus-backed accepted sources, the report builder matches the resolved
   source path against non-failure entries in
-  [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm)
+  [perl/FSM/Support/RegressionCorpus.pm](perl/FSM/Support/RegressionCorpus.pm)
   and emits:
   - the matched entry id,
   - corpus family,
@@ -5798,7 +5804,7 @@ This document captures engineering rationale, design constraints, and working de
     invented from unstructured CLI text.
 
 ## 2026-04-17: check JSON success is corpus-covered
-- Added [t/301-check-json-supported-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/301-check-json-supported-corpus.t)
+- Added [t/301-check-json-supported-corpus.t](t/301-check-json-supported-corpus.t)
   so every current `supported_smoke` support-accounting entry must succeed
   through `bin/fsmgen --check-json`.
 - The same test also runs every `strict_supported` entry through
@@ -5821,13 +5827,13 @@ This document captures engineering rationale, design constraints, and working de
     forcing downstream tools to reverse-engineer it from the test suite.
 
 ## 2026-04-17: check JSON classification is corpus-covered
-- Added [t/300-check-json-regression-corpus.t](/Users/richarddje/Documents/github/fsmgen/t/300-check-json-regression-corpus.t)
+- Added [t/300-check-json-regression-corpus.t](t/300-check-json-regression-corpus.t)
   so every current `expected_failure` support-accounting entry must reject
   through `bin/fsmgen --check-json`, emit decodable JSON, write no HDL, and
   report the exact stable diagnostic code and corpus entry promised by
-  [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm).
+  [perl/FSM/Support/RegressionCorpus.pm](perl/FSM/Support/RegressionCorpus.pm).
 - Updated
-  [perl/FSM/Support/CheckDiagnostics.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnostics.pm)
+  [perl/FSM/Support/CheckDiagnostics.pm](perl/FSM/Support/CheckDiagnostics.pm)
   so classification ranks all matching expected-failure patterns by specificity
   instead of taking the first corpus match.
 - Added a nested `support_accounting` diagnostic object for matched failures.
@@ -5844,7 +5850,7 @@ This document captures engineering rationale, design constraints, and working de
 
 ## 2026-04-17: bounded check JSON diagnostics are live
 - Added
-  [perl/FSM/Support/CheckDiagnostics.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnostics.pm)
+  [perl/FSM/Support/CheckDiagnostics.pm](perl/FSM/Support/CheckDiagnostics.pm)
   as the production owner for the first `--check --json` report shape.
 - `bin/fsmgen --check --json path/to/file.fsm` now:
   - runs the full pipeline,
@@ -5866,10 +5872,10 @@ This document captures engineering rationale, design constraints, and working de
 
 ## 2026-04-17: stable diagnostic-code ownership is live
 - Added
-  [perl/FSM/Support/DiagnosticCodes.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/DiagnosticCodes.pm)
+  [perl/FSM/Support/DiagnosticCodes.pm](perl/FSM/Support/DiagnosticCodes.pm)
   as the production owner for stable `FSMGEN_*` diagnostic identities.
 - Every current `expected_failure` entry in
-  [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm)
+  [perl/FSM/Support/RegressionCorpus.pm](perl/FSM/Support/RegressionCorpus.pm)
   now carries a known `diagnostic_code`.
 - The capability manifest now exposes both entry-level diagnostic codes and the
   registry metadata. Bounded check-only JSON diagnostic emission has since
@@ -5887,10 +5893,10 @@ This document captures engineering rationale, design constraints, and working de
 - Implemented the first downstream-tool capability manifest behind
   `bin/fsmgen --capability-manifest`.
 - The manifest owner is
-  [perl/FSM/Support/CapabilityManifest.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CapabilityManifest.pm).
+  [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm).
 - The support-accounting catalog owner moved from the test tree to
-  [perl/FSM/Support/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/RegressionCorpus.pm),
-  with [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm)
+  [perl/FSM/Support/RegressionCorpus.pm](perl/FSM/Support/RegressionCorpus.pm),
+  with [t/lib/FSM/Test/RegressionCorpus.pm](t/lib/FSM/Test/RegressionCorpus.pm)
   left as a compatibility wrapper.
 - Rationale:
   - a public manifest should not depend on `t/lib` as its real owner,
@@ -5903,7 +5909,7 @@ This document captures engineering rationale, design constraints, and working de
 
 ## 2026-04-17: SPECFORGE feedback response is tracked
 - Added
-  [docs/SPECFORGE_FEEDBACK_RESPONSE.md](/Users/richarddje/Documents/github/fsmgen/docs/SPECFORGE_FEEDBACK_RESPONSE.md)
+  [docs/SPECFORGE_FEEDBACK_RESPONSE.md](docs/SPECFORGE_FEEDBACK_RESPONSE.md)
   as FSMGen's durable response to SPECFORGE's `.fsm` adapter feedback.
 - FSMGen agrees with the main cross-project framing:
   - SPECFORGE should keep canonical `IntentIR` ownership,
@@ -5930,7 +5936,7 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-17: corpus coverage buckets are tied to classifications
 - Tightened the `R12` support-accounting catalog by adding an explicit
   coverage-to-classification matrix to
-  [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t).
+  [t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t).
 - The matrix records that:
   - `direct_root_pipeline_cli` and `composition_top_pipeline_cli` belong to
     `supported_smoke`,
@@ -5946,7 +5952,7 @@ This document captures engineering rationale, design constraints, and working de
 
 ## 2026-04-17: expected-failure entries require typed diagnostic metadata
 - Tightened the failure side of the `R12` support-accounting catalog.
-- [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+- [t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t)
   now validates two expected-failure metadata rules:
   - every `expected_failure` entry must carry `expected_error_pattern` as a
     compiled regular expression,
@@ -5963,7 +5969,7 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-17: supported language-feature entries require HDL-shape evidence
 - Tightened the `R12` support-accounting contract for positive direct
   language-feature entries.
-- [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+- [t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t)
   now validates two metadata rules:
   - any catalog entry with `expected_hdl_patterns` must store them as an array
     of compiled regular expressions,
@@ -5979,7 +5985,7 @@ This document captures engineering rationale, design constraints, and working de
 
 ## 2026-04-17: supported success has a catalog-level behavior gate
 - Expanded
-  [t/296-regression-corpus-supported-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/296-regression-corpus-supported-behavior.t)
+  [t/296-regression-corpus-supported-behavior.t](t/296-regression-corpus-supported-behavior.t)
   so both `supported_smoke` and `strict_supported` are now executable directly
   from the maintained regression catalog.
 - The gate:
@@ -6006,17 +6012,17 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-17: protocol fixtures are strict-supported
 - Continued `R12` by promoting the imported protocol smoke fixtures from
   default-compatible examples to strict-supported examples.
-- [fsm/apb_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_requester.fsm),
-  [fsm/apb_completer.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_completer.fsm),
-  and [fsm/amba_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/amba_requester.fsm)
+- [fsm/apb_requester.fsm](fsm/apb_requester.fsm),
+  [fsm/apb_completer.fsm](fsm/apb_completer.fsm),
+  and [fsm/amba_requester.fsm](fsm/amba_requester.fsm)
   now use canonical `(areset rst_n)`, canonical `(:= (signal value))`, and
   canonical assignment-pair body forms.
-- [fsm/apb_tb.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_tb.fsm)
+- [fsm/apb_tb.fsm](fsm/apb_tb.fsm)
   now exposes `rst_n` so the APB composition top stays aligned with the
   generated protocol children.
-- [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm)
+- [t/lib/FSM/Test/RegressionCorpus.pm](t/lib/FSM/Test/RegressionCorpus.pm)
   now marks all four protocol fixtures as `strict_supported`.
-- [t/247-protocol-fixture-regression-smoke.t](/Users/richarddje/Documents/github/fsmgen/t/247-protocol-fixture-regression-smoke.t)
+- [t/247-protocol-fixture-regression-smoke.t](t/247-protocol-fixture-regression-smoke.t)
   runs the protocol direct actors and APB composition top through strict
   pipeline and strict CLI in addition to default smoke.
 - Rationale:
@@ -6043,10 +6049,10 @@ This document captures engineering rationale, design constraints, and working de
   - LHS concat/cat deconstruction,
   - expression-backed width assignment examples,
   - and runtime div/mod assignment examples.
-- [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm)
+- [t/lib/FSM/Test/RegressionCorpus.pm](t/lib/FSM/Test/RegressionCorpus.pm)
   now marks all ten current supported direct language-feature fixtures as
   `strict_supported`.
-- [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+- [t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t)
   now records ten strict-supported entries and enforces that every supported
   direct language-feature fixture carries the marker.
 - Rationale:
@@ -6062,9 +6068,9 @@ This document captures engineering rationale, design constraints, and working de
 - Widened the positive strict-mode support-accounting marker from the first
   canonical assignment-pair fixture to the nearby canonical reset and
   init/default fixtures.
-- [t/corpus/direct_sreset_active_high.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_sreset_active_high.fsm),
-  [t/corpus/direct_areset_active_low.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_areset_active_low.fsm),
-  and [t/corpus/direct_canonical_init_directive.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_canonical_init_directive.fsm)
+- [t/corpus/direct_sreset_active_high.fsm](t/corpus/direct_sreset_active_high.fsm),
+  [t/corpus/direct_areset_active_low.fsm](t/corpus/direct_areset_active_low.fsm),
+  and [t/corpus/direct_canonical_init_directive.fsm](t/corpus/direct_canonical_init_directive.fsm)
   are now tagged `strict_supported` in the maintained regression catalog.
 - While adding those markers, the focused strict-supported gate exposed that
   the reset/init fixtures still used infix body assignments. Those assignments
@@ -6088,13 +6094,13 @@ This document captures engineering rationale, design constraints, and working de
   supported fixtures that must compile under strict mode as well as default
   mode.
 - The first marked fixture is
-  [t/corpus/direct_assignment_pair_form.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_assignment_pair_form.fsm)
+  [t/corpus/direct_assignment_pair_form.fsm](t/corpus/direct_assignment_pair_form.fsm)
   because it is the canonical assignment surface that strict diagnostics point
   users toward when rejecting infix compatibility spellings.
-- [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t)
+- [t/261-regression-corpus-supported-language-features.t](t/261-regression-corpus-supported-language-features.t)
   now runs marked supported fixtures through both `strict_mode => 1` and
   `bin/fsmgen --strict`, preserving the same expected HDL-shape checks.
-- [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+- [t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t)
   locks the marker as a direct-root supported FSM contract, so future markers
   cannot drift onto legacy or expected-failure entries by accident.
 - Rationale:
@@ -6111,10 +6117,10 @@ This document captures engineering rationale, design constraints, and working de
   that discover helper/intermediate signals.
 - The rendered stage text is still emitted later, after enable conditions, so
   the final HDL layout remains unchanged.
-- [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm)
+- [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm)
   now names that pre-declaration preparation step explicitly as
   `prepare_consolidated_intermediate_stage(...)`.
-- [t/293-systemverilog-post-flattening-assembly-support.t](/Users/richarddje/Documents/github/fsmgen/t/293-systemverilog-post-flattening-assembly-support.t)
+- [t/293-systemverilog-post-flattening-assembly-support.t](t/293-systemverilog-post-flattening-assembly-support.t)
   locks the ordering with fake owners, so a future “more natural looking”
   reordering that emits declarations before stage preparation will fail locally
   instead of silently dropping helper declarations.
@@ -6126,11 +6132,11 @@ This document captures engineering rationale, design constraints, and working de
   `121` `.pm` packages.
 - The only material package-family count change from the saved snapshot is that
   `FSM::Package::*` is now `14` reachable packages because
-  [perl/FSM/Package/IntegerLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/IntegerLiteralSupport.pm)
+  [perl/FSM/Package/IntegerLiteralSupport.pm](perl/FSM/Package/IntegerLiteralSupport.pm)
   is on the live scalar-width / direct `+size` expression path.
 - The runtime spine assessment remains stable:
-  [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) is still a
-  CLI/reporting shell, [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+  [bin/fsmgen](bin/fsmgen) is still a
+  CLI/reporting shell, [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm)
   remains the thin facade, and the next architectural pressure is still in the
   direct backend and large parser/CoreAST/expression surfaces rather than in
   the top-level pipeline facade.
@@ -6139,7 +6145,7 @@ This document captures engineering rationale, design constraints, and working de
 - Continued the strict assignment-surface work by adding a named regression
   corpus pair for infix assignment residue:
   - default mode must still compile
-    [t/corpus/legacy_infix_assignment.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_infix_assignment.fsm),
+    [t/corpus/legacy_infix_assignment.fsm](t/corpus/legacy_infix_assignment.fsm),
   - strict mode must reject that same source before HDL emission,
   - the strict diagnostic must point to the canonical pair form such as
     `(= (OUT SRC))`,
@@ -6166,7 +6172,7 @@ This document captures engineering rationale, design constraints, and working de
   - the shared `SourceFrontend` owner applies the same boundary to direct roots
     and generated child sources,
   - and the focused regression in
-    [t/295-strict-mode-infix-assignment-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/295-strict-mode-infix-assignment-boundary.t)
+    [t/295-strict-mode-infix-assignment-boundary.t](t/295-strict-mode-infix-assignment-boundary.t)
     proves default compatibility, strict acceptance of pair syntax, direct
     rejection, CLI behavior, and child-source context.
 - Rationale:
@@ -6199,9 +6205,9 @@ This document captures engineering rationale, design constraints, and working de
   - existing infix forms remain shipped compatibility syntax,
   - both surfaces normalize through the same assignment builder before width,
     LHS, guard, and generation validation,
-  - [t/29-language-contract-core-forms.t](/Users/richarddje/Documents/github/fsmgen/t/29-language-contract-core-forms.t)
+  - [t/29-language-contract-core-forms.t](t/29-language-contract-core-forms.t)
     locks parser/CoreAST/HDL behavior,
-  - and [t/corpus/direct_assignment_pair_form.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_assignment_pair_form.fsm)
+  - and [t/corpus/direct_assignment_pair_form.fsm](t/corpus/direct_assignment_pair_form.fsm)
     makes the support claim visible in the maintained pipeline/CLI corpus.
 
 ## 2026-04-16: runtime div/mod support belongs in the support corpus
@@ -6447,11 +6453,11 @@ This document captures engineering rationale, design constraints, and working de
   - the reset correction is user-visible and easy to regress visually, so it
     should live in the named support corpus instead of only in focused reset
     tests,
-  - [t/corpus/direct_sreset_active_high.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_sreset_active_high.fsm)
+  - [t/corpus/direct_sreset_active_high.fsm](t/corpus/direct_sreset_active_high.fsm)
     locks `sreset reset` as synchronous active-high intent: generated
     SystemVerilog must use a clock-only event control and test `reset` as the
     active condition,
-  - [t/corpus/direct_areset_active_low.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_areset_active_low.fsm)
+  - [t/corpus/direct_areset_active_low.fsm](t/corpus/direct_areset_active_low.fsm)
     locks `areset rst_n` as asynchronous active-low intent: generated
     SystemVerilog must include `negedge rst_n` and test `!rst_n`,
   - and keeping both entries under `direct_root_pipeline_cli` makes the
@@ -6466,7 +6472,7 @@ This document captures engineering rationale, design constraints, and working de
   - a same-width aggregate mismatch is the exact failure family the
     pre-generation validation layer is meant to catch before the HDL backend
     emits a flattened visual representation,
-  - [t/corpus/direct_aggregate_contract_mismatch.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_aggregate_contract_mismatch.fsm)
+  - [t/corpus/direct_aggregate_contract_mismatch.fsm](t/corpus/direct_aggregate_contract_mismatch.fsm)
     deliberately makes `FRAME` and `OUT` both pack to three bits while keeping
     their contracts incompatible as record versus list,
   - keeping it under `direct_generation_contract_rejection_pipeline_cli`
@@ -6484,7 +6490,7 @@ This document captures engineering rationale, design constraints, and working de
   - keeping it in `language_contract_rejection_pipeline_cli` avoids pretending
     every assignment-width-looking failure happens in the same pre-generation
     backend contract phase,
-  - [t/corpus/direct_lhs_deconstruct_width_mismatch.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_lhs_deconstruct_width_mismatch.fsm)
+  - [t/corpus/direct_lhs_deconstruct_width_mismatch.fsm](t/corpus/direct_lhs_deconstruct_width_mismatch.fsm)
     mirrors the focused deconstruct legality test while giving the failure a
     named corpus identity,
   - and the existing language-contract expected-failure harness now proves the
@@ -6501,10 +6507,10 @@ This document captures engineering rationale, design constraints, and working de
     source parsed successfully,
   - giving that family its own `direct_generation_contract_rejection_pipeline_cli`
     bucket keeps support accounting honest about where the rejection happens,
-  - [t/corpus/direct_rhs_concat_width_mismatch.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_rhs_concat_width_mismatch.fsm)
+  - [t/corpus/direct_rhs_concat_width_mismatch.fsm](t/corpus/direct_rhs_concat_width_mismatch.fsm)
     is deliberately small and mirrors the existing focused width-contract
     regression shape,
-  - and [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
+  - and [t/249-regression-corpus-classified-behavior.t](t/249-regression-corpus-classified-behavior.t)
     now proves both pipeline and CLI keep source-file context plus the authored
     direct assignment-width diagnostic before any HDL is emitted.
 
@@ -6516,7 +6522,7 @@ This document captures engineering rationale, design constraints, and working de
     paired user-facing surface, so after support-accounting RHS `(concat ...)`
     / `(cat ...)`, the next small auditable slice was to support-account the
     LHS side too,
-  - [t/corpus/direct_lhs_deconstruct_pack.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_lhs_deconstruct_pack.fsm)
+  - [t/corpus/direct_lhs_deconstruct_pack.fsm](t/corpus/direct_lhs_deconstruct_pack.fsm)
     keeps the fixture bounded to static writable operands: one `(concat HI LO)`
     split, one `(cat CAT_HI CAT_LO)` alias split, and one same-base sliced
     deconstruct that must rejoin as a packed assignment to `OUT`,
@@ -6524,7 +6530,7 @@ This document captures engineering rationale, design constraints, and working de
     and CLI output, so this remains a catalog/accounting slice rather than a
     generator behavior change,
   - and the focused deconstruct legality/aggregate-shape behavior stays in
-    [t/283-direct-lhs-deconstruct-assignment.t](/Users/richarddje/Documents/github/fsmgen/t/283-direct-lhs-deconstruct-assignment.t),
+    [t/283-direct-lhs-deconstruct-assignment.t](t/283-direct-lhs-deconstruct-assignment.t),
     while the corpus tracks the broad support claim with stable HDL shapes.
 
 ## 2026-04-13: direct RHS pack expressions are now support-accounted
@@ -6535,29 +6541,29 @@ This document captures engineering rationale, design constraints, and working de
   - direct RHS `(concat ...)` / `(cat ...)` support is already implemented and
     focused-regression-locked, but a support claim is stronger when the feature
     also appears as a named corpus asset,
-  - [t/corpus/direct_rhs_concat_pack.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_rhs_concat_pack.fsm)
+  - [t/corpus/direct_rhs_concat_pack.fsm](t/corpus/direct_rhs_concat_pack.fsm)
     keeps the fixture intentionally direct and small: one flat `(concat ...)`,
     one `(cat ...)` alias, and one nested `(concat ...)`,
-  - [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t)
+  - [t/261-regression-corpus-supported-language-features.t](t/261-regression-corpus-supported-language-features.t)
     already executes supported language-feature corpus entries through both
     pipeline and CLI, so the slice only needed a catalog entry plus precise
     semantic HDL patterns,
-  - and [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+  - and [t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t)
     now treats the corpus growth as an explicit accounting change (`28`
     entries, `7` supported-smoke entries), not an incidental fixture addition.
 
 ## 2026-04-13: generation-pipeline shell is a pure post-flattening delegate
 - Continued the `R11` lower-level direct-backend convergence lane by removing
   the last fallback construction from
-  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm).
+  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm).
 - Rationale:
-  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm)
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm)
     is now the canonical owner for post-flattening direct SystemVerilog
     assembly,
   - the older generation-pipeline compatibility shell should therefore require
     the live owner on the backend context rather than silently constructing a
     fresh owner when that field is missing,
-  - [t/232-systemverilog-generation-pipeline-support.t](/Users/richarddje/Documents/github/fsmgen/t/232-systemverilog-generation-pipeline-support.t)
+  - [t/232-systemverilog-generation-pipeline-support.t](t/232-systemverilog-generation-pipeline-support.t)
     now has a spy-owner slice that proves the shell forwards directly into the
     assembly owner with no broader backend dependency set,
   - and this keeps “compatibility shell” semantics consistent with the
@@ -6569,13 +6575,13 @@ This document captures engineering rationale, design constraints, and working de
   the remaining detached fallback implementations from the older
   consolidated-intermediate compatibility shells.
 - Rationale:
-  - once [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm),
-    [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm),
-    and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm)
+  - once [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm),
+    [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm),
+    and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm)
     became the live owners, keeping fallback copies inside
-    [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm),
-    [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm),
-    and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm)
+    [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm),
+    [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm),
+    and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm)
     preserved multiple ways to construct the same backend behavior,
   - compatibility now means “stable old method name that forwards into the
     canonical owner,” not “second implementation that tries to stay equivalent
@@ -6591,13 +6597,13 @@ This document captures engineering rationale, design constraints, and working de
   the old consolidated-intermediate emitter regression to the actual live owner
   boundary.
 - Rationale:
-  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm)
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm)
     is now a compatibility shell; the real prepared-block rendering owner is
-    [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm),
+    [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm),
   - a compatibility-shell test should therefore prove wrapper parity with that
     live owner, not recreate scaffold/header/internal-declaration/prefix
     sequencing that belongs to the post-flattening assembly owner,
-  - [t/200-systemverilog-consolidated-intermediate-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/200-systemverilog-consolidated-intermediate-emitter.t)
+  - [t/200-systemverilog-consolidated-intermediate-emitter.t](t/200-systemverilog-consolidated-intermediate-emitter.t)
     now builds a prepared block through the live stage-preparation owner and
     compares the emitter output directly to the live renderer output,
   - and this keeps broad generated-module sequencing covered in the direct
@@ -6607,10 +6613,10 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-13: consolidated block shell delegates to stage preparation
 - Continued the `R11` lower-level direct-backend convergence lane by removing
   the last duplicated prepared-block reconstruction sequence from
-  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm).
+  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm).
 - Rationale:
   - prepared-block reconstruction now has one live owner,
-    [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm),
+    [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm),
     which composes collection, planning, and prepared-block projection,
   - the older block-support package is retained only as a compatibility shell,
     so its first move should be to ask the live owner rather than copy its
@@ -6623,10 +6629,10 @@ This document captures engineering rationale, design constraints, and working de
 
 ## 2026-04-13: direct SV contract checks are anchored on the live assembly path
 - After moving final direct SystemVerilog assembly into
-  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm),
+  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm),
   the operand-contract and assignment-width regression tests that model final
   HDL emission should no longer instantiate
-  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm)
+  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm)
   as their primary path.
 - Rationale:
   - pre-generation validation is still owned by the consolidated-intermediate
@@ -6634,9 +6640,9 @@ This document captures engineering rationale, design constraints, and working de
     post-flattening assembly owner that production direct generation now uses,
   - the generation-pipeline package is retained as a compatibility shell and
     still has its own focused regression in
-    [t/232-systemverilog-generation-pipeline-support.t](/Users/richarddje/Documents/github/fsmgen/t/232-systemverilog-generation-pipeline-support.t),
-  - [t/269-systemverilog-operand-contract-validation-support.t](/Users/richarddje/Documents/github/fsmgen/t/269-systemverilog-operand-contract-validation-support.t)
-    and [t/270-systemverilog-assignment-width-contract-validation.t](/Users/richarddje/Documents/github/fsmgen/t/270-systemverilog-assignment-width-contract-validation.t)
+    [t/232-systemverilog-generation-pipeline-support.t](t/232-systemverilog-generation-pipeline-support.t),
+  - [t/269-systemverilog-operand-contract-validation-support.t](t/269-systemverilog-operand-contract-validation-support.t)
+    and [t/270-systemverilog-assignment-width-contract-validation.t](t/270-systemverilog-assignment-width-contract-validation.t)
     now prove undeclared/unassigned operands, scalar width mismatches, direct
     RHS concat mismatches, and aggregate-contract mismatches on the live
     assembly path,
@@ -6646,9 +6652,9 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-13: post-flattening SystemVerilog assembly owner
 - Continued the `R11` direct-backend convergence lane by moving the live
   scaffold/declaration/enable/stage/tail assembly sequence out of
-  [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm)
+  [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](perl/FSM/HDL/FlattenedDT/Orchestrator.pm)
   and into a direct SystemVerilog owner:
-  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm).
+  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm).
 - Rationale:
   - the orchestrator's honest job is per-run reset, module-reference setup,
     decision-tree flattening, and handoff to the post-flattening assembly owner,
@@ -6656,7 +6662,7 @@ This document captures engineering rationale, design constraints, and working de
     belongs: generate the prescan-aware consolidated stage first so declarations
     see the required intermediate-signal state, then emit scaffold, declarations,
     enable conditions, stage HDL, and tail closeout,
-  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm)
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm)
     remains directly testable as a compatibility shell, but delegates to the
     live owner so there is only one post-flattening assembly sequence to keep
     correct,
@@ -6672,11 +6678,11 @@ This document captures engineering rationale, design constraints, and working de
     intermediate planning/rendering and the following declaration pass safe,
   - therefore the generation orchestrator should not coordinate it as a
     separate lower-level prerequisite before asking for stage HDL,
-  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPrescanPreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPrescanPreparationSupport.pm)
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPrescanPreparationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPrescanPreparationSupport.pm)
     now records `backend_sv_enable_prescan_prepared` so direct compatibility
     callers and the live stage owner can share the same side-effect boundary
     without double-running the preparation,
-  - [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm)
+  - [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](perl/FSM/HDL/FlattenedDT/Orchestrator.pm)
     clears that guard during per-run reset to preserve generator reuse safety,
   - and the live top-level sequence now reads as flatten, ask the prescan-aware
     consolidated stage for its HDL, emit scaffold/declarations, emit enable
@@ -6693,7 +6699,7 @@ This document captures engineering rationale, design constraints, and working de
     consolidated-intermediate stage boundary because it validates the prepared
     block before any corresponding HDL is emitted,
   - placing that validation inside
-    [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm)
+    [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm)
     makes both the live orchestrator and compatibility wrappers consume the
     same owner contract,
   - and the next honest direct-backend seam is now the remaining lower-level
@@ -6733,24 +6739,24 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-12: README bootstrap import-tree refresh
 - Re-ran the README / session-bootstrap architecture pass after the recent
   parameter/generic expression work.
-- The live [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen)
+- The live [bin/fsmgen](bin/fsmgen)
   transitive project-owned import tree still measures `120` project files and
   `119` `.pm` packages.
 - The honest family split now treats
-  [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm)
+  [perl/FSM/ParameterValueSupport.pm](perl/FSM/ParameterValueSupport.pm)
   as its own singleton semantic-value owner instead of burying it under
   `Composition`: it owns scalar/aggregate parameter/generic value
   normalization plus bounded scalar-expression and matching-shape
   aggregate-expression folding for direct `+params`, `.rtlif` defaults, external
   `?rtl` overrides, and generated `?fsmc` / `?dtc` overrides.
-- The remaining architecture read did not change: [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen)
+- The remaining architecture read did not change: [bin/fsmgen](bin/fsmgen)
   is still a CLI/reporting shell, `HDLGenerator` is still a thin facade, the
   composition/forward-IR path remains the cleanest directional architecture, and
   the direct single-module backend stack remains the heavier convergence seam.
 
 ## 2026-04-12: aggregate parameter/generic bitwise expressions are folded semantically
 - Added the first bounded aggregate operator-expression slice in
-  [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm).
+  [perl/FSM/ParameterValueSupport.pm](perl/FSM/ParameterValueSupport.pm).
 - Supported aggregate expression shape:
   - operator-first bitwise expressions using `&`, `|`, `^`, `and`, `or`, or
     `xor`,
@@ -6899,9 +6905,9 @@ This document captures engineering rationale, design constraints, and working de
   example `param_pkg.DEFAULT_WIDTH`, `param_pkg.DEFAULT_LANES`, or
   `param_pkg.frame_mode.RUN`.
 - The implementation deliberately resolves through imported packages only:
-  - [perl/FSM/Composition/RTLChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLChildRealizer.pm)
+  - [perl/FSM/Composition/RTLChildRealizer.pm](perl/FSM/Composition/RTLChildRealizer.pm)
     passes the post-import composition `TopSymbols` into
-    [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm),
+    [perl/FSM/Composition/RTLInterfaceLoader.pm](perl/FSM/Composition/RTLInterfaceLoader.pm),
   - the loader accepts only package-qualified names whose first path segment is
     one of the imported packages,
   - unqualified top-local symbols deliberately remain out of scope for `.rtlif`
@@ -6921,7 +6927,7 @@ This document captures engineering rationale, design constraints, and working de
     values immediately,
   - semantic-looking values that cannot be resolved during parse are preserved
     as deferred override values,
-  - [perl/FSM/Composition/ParameterOverrideResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ParameterOverrideResolver.pm)
+  - [perl/FSM/Composition/ParameterOverrideResolver.pm](perl/FSM/Composition/ParameterOverrideResolver.pm)
     resolves those deferred values after package imports populate
     `TopSymbols`,
   - unresolved value symbols still fail before composition planning,
@@ -6951,7 +6957,7 @@ This document captures engineering rationale, design constraints, and working de
 
 ## 2026-04-11: parameter/generic value normalization now has a neutral owner
 - Moved the bounded scalar/list/map parameter value policy into
-  [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm).
+  [perl/FSM/ParameterValueSupport.pm](perl/FSM/ParameterValueSupport.pm).
 - Rationale:
   - parameter/generic normalization is no longer only a composition concern now
     that direct-root `+params` consumes the same value surface,
@@ -7025,20 +7031,20 @@ This document captures engineering rationale, design constraints, and working de
 - Promoted four root/structure-level `.rtlif` metadata rejections into the
   regression corpus together.
 - Landed behavior:
-  - [t/corpus/missing_rtlif_root_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/missing_rtlif_root_top.fsm)
-    plus [t/corpus/missing_root_uart_tx.rtlif](/Users/richarddje/Documents/github/fsmgen/t/corpus/missing_root_uart_tx.rtlif)
+  - [t/corpus/missing_rtlif_root_top.fsm](t/corpus/missing_rtlif_root_top.fsm)
+    plus [t/corpus/missing_root_uart_tx.rtlif](t/corpus/missing_root_uart_tx.rtlif)
     records a metadata sidecar that exists but omits the required
     `?rtlif:missing_root_uart_tx` root,
-  - [t/corpus/empty_rtlif_port_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/empty_rtlif_port_top.fsm)
-    plus [t/corpus/empty_port_uart_tx.rtlif](/Users/richarddje/Documents/github/fsmgen/t/corpus/empty_port_uart_tx.rtlif)
+  - [t/corpus/empty_rtlif_port_top.fsm](t/corpus/empty_rtlif_port_top.fsm)
+    plus [t/corpus/empty_port_uart_tx.rtlif](t/corpus/empty_port_uart_tx.rtlif)
     records an otherwise valid root that declares no ports,
-  - [t/corpus/nested_rtlif_port_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/nested_rtlif_port_top.fsm)
-    plus [t/corpus/nested_port_uart_tx.rtlif](/Users/richarddje/Documents/github/fsmgen/t/corpus/nested_port_uart_tx.rtlif)
+  - [t/corpus/nested_rtlif_port_top.fsm](t/corpus/nested_rtlif_port_top.fsm)
+    plus [t/corpus/nested_port_uart_tx.rtlif](t/corpus/nested_port_uart_tx.rtlif)
     records a nested sidecar structure under the active flat metadata root,
-  - [t/corpus/duplicate_embedded_rtlif_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/duplicate_embedded_rtlif_top.fsm)
+  - [t/corpus/duplicate_embedded_rtlif_top.fsm](t/corpus/duplicate_embedded_rtlif_top.fsm)
     records two embedded `?rtlif:embedded_dup_uart_tx` roots in the same
     composition source,
-  - and [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
+  - and [t/249-regression-corpus-classified-behavior.t](t/249-regression-corpus-classified-behavior.t)
     now proves all four corpus entries reject through both the pipeline API
     and `bin/fsmgen` CLI without emitting HDL.
 - Why this boundary matters:
@@ -7056,16 +7062,16 @@ This document captures engineering rationale, design constraints, and working de
 - Promoted three focused token-scoped `.rtlif` metadata rejections into the
   regression corpus together.
 - Landed behavior:
-  - [t/corpus/invalid_rtlif_port_type_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_rtlif_port_type_top.fsm)
-    plus [t/corpus/invalid_type_uart_tx.rtlif](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_type_uart_tx.rtlif)
+  - [t/corpus/invalid_rtlif_port_type_top.fsm](t/corpus/invalid_rtlif_port_type_top.fsm)
+    plus [t/corpus/invalid_type_uart_tx.rtlif](t/corpus/invalid_type_uart_tx.rtlif)
     records unsupported explicit port type `status`,
-  - [t/corpus/invalid_rtlif_port_token_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_rtlif_port_token_top.fsm)
-    plus [t/corpus/invalid_token_uart_tx.rtlif](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_token_uart_tx.rtlif)
+  - [t/corpus/invalid_rtlif_port_token_top.fsm](t/corpus/invalid_rtlif_port_token_top.fsm)
+    plus [t/corpus/invalid_token_uart_tx.rtlif](t/corpus/invalid_token_uart_tx.rtlif)
     records an invalid token shape using `data-in<8:data`,
-  - [t/corpus/invalid_rtlif_port_width_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_rtlif_port_width_top.fsm)
-    plus [t/corpus/invalid_width_uart_tx.rtlif](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_width_uart_tx.rtlif)
+  - [t/corpus/invalid_rtlif_port_width_top.fsm](t/corpus/invalid_rtlif_port_width_top.fsm)
+    plus [t/corpus/invalid_width_uart_tx.rtlif](t/corpus/invalid_width_uart_tx.rtlif)
     records non-positive explicit width `data_in<0:data`,
-  - and [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
+  - and [t/249-regression-corpus-classified-behavior.t](t/249-regression-corpus-classified-behavior.t)
     now proves all three corpus entries reject through both the pipeline API
     and `bin/fsmgen` CLI without emitting HDL.
 - Why this boundary matters:
@@ -7081,17 +7087,17 @@ This document captures engineering rationale, design constraints, and working de
 - Promoted the focused `.rtlif` duplicate-port rejection into the regression
   corpus.
 - Landed behavior:
-  - [t/corpus/duplicate_rtlif_port_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/duplicate_rtlif_port_top.fsm)
+  - [t/corpus/duplicate_rtlif_port_top.fsm](t/corpus/duplicate_rtlif_port_top.fsm)
     composes an external `?rtl:duplicate_port_uart_tx` child through a small
     top-level wrapper,
-  - [t/corpus/duplicate_port_uart_tx.rtlif](/Users/richarddje/Documents/github/fsmgen/t/corpus/duplicate_port_uart_tx.rtlif)
+  - [t/corpus/duplicate_port_uart_tx.rtlif](t/corpus/duplicate_port_uart_tx.rtlif)
     intentionally repeats `txd>:data`, so the fixture targets the
     declaration-uniqueness boundary without mixing in system-role or type
     failures,
-  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm)
+  - [t/lib/FSM/Test/RegressionCorpus.pm](t/lib/FSM/Test/RegressionCorpus.pm)
     classifies `contract.duplicate_rtlif_port_declaration` as an
     `expected_failure` under `composition_contract_rejection_pipeline_cli`,
-  - and [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
+  - and [t/249-regression-corpus-classified-behavior.t](t/249-regression-corpus-classified-behavior.t)
     now proves that the corpus entry rejects through both the pipeline API and
     `bin/fsmgen` CLI without emitting HDL.
 - Why this boundary matters:
@@ -7106,17 +7112,17 @@ This document captures engineering rationale, design constraints, and working de
 - Promoted the focused `.rtlif` output-direction system-role rejection into the
   regression corpus, not just the direct contract tests.
 - Landed behavior:
-  - [t/corpus/invalid_rtl_system_direction_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_rtl_system_direction_top.fsm)
+  - [t/corpus/invalid_rtl_system_direction_top.fsm](t/corpus/invalid_rtl_system_direction_top.fsm)
     composes an external `?rtl:invalid_sysdir_uart_tx` child through a small
     top-level wrapper,
-  - [t/corpus/invalid_sysdir_uart_tx.rtlif](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_sysdir_uart_tx.rtlif)
+  - [t/corpus/invalid_sysdir_uart_tx.rtlif](t/corpus/invalid_sysdir_uart_tx.rtlif)
     intentionally declares `core_clk>:clock` and `rst_async_n>:reset` while
     keeping normal `data` ports valid, so the fixture targets the system-role
     direction contract precisely,
-  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm)
+  - [t/lib/FSM/Test/RegressionCorpus.pm](t/lib/FSM/Test/RegressionCorpus.pm)
     classifies `contract.invalid_rtl_system_port_direction` as an
     `expected_failure` under `composition_contract_rejection_pipeline_cli`,
-  - and [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
+  - and [t/249-regression-corpus-classified-behavior.t](t/249-regression-corpus-classified-behavior.t)
     now proves that the same corpus entry rejects through both the pipeline
     API and `bin/fsmgen` CLI without emitting HDL.
 - Why this boundary matters:
@@ -7130,7 +7136,7 @@ This document captures engineering rationale, design constraints, and working de
 
 ## 2026-04-11: `.rtlif` system-role direction failures stay summary-backed
 - Added explicit regression coverage in
-  [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t)
+  [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t)
   for the new blocked `.rtlif` system-port direction diagnostic.
 - Landed behavior:
   - pipeline-level failure reports now lock the resolved `RTL metadata file`,
@@ -7140,13 +7146,13 @@ This document captures engineering rationale, design constraints, and working de
     direction,
   - non-quiet `bin/fsmgen` runs now have the same summary contract locked at
     CLI level,
-  - and [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm)
+  - and [perl/FSM/Composition/FailureReportBuilder.pm](perl/FSM/Composition/FailureReportBuilder.pm)
     needed no production-code change because its existing blocked-boundary,
     token-context, artifact, and reason extraction rules were already general
     enough.
 - Why this boundary matters:
   - the raw validator failure from
-    [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm)
+    [perl/FSM/Composition/RTLInterfaceLoader.pm](perl/FSM/Composition/RTLInterfaceLoader.pm)
     is not the whole user experience,
   - malformed external interface metadata should fail before generation while
     also producing the short, scannable composition summary users see first,
@@ -7155,7 +7161,7 @@ This document captures engineering rationale, design constraints, and working de
 
 ## 2026-04-11: `.rtlif` system roles are input-only
 - Landed a bounded `R11` composition-contract hardening slice in
-  [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm).
+  [perl/FSM/Composition/RTLInterfaceLoader.pm](perl/FSM/Composition/RTLInterfaceLoader.pm).
 - Problem found:
   - typed `.rtlif` metadata already treated `:clock` and `:reset` as system
     roles for custom-named external RTL system ports,
@@ -7169,7 +7175,7 @@ This document captures engineering rationale, design constraints, and working de
   - output-direction `clock` / `reset` metadata is rejected before composition
     planning,
   - ordinary `data` outputs such as `txd>:data` remain valid,
-  - and [t/88-rtlif-typed-port-contract.t](/Users/richarddje/Documents/github/fsmgen/t/88-rtlif-typed-port-contract.t)
+  - and [t/88-rtlif-typed-port-contract.t](t/88-rtlif-typed-port-contract.t)
     locks the rule through direct loader use, pipeline diagnostics, and CLI
     no-output failure behavior.
 - Why this boundary matters:
@@ -7181,7 +7187,7 @@ This document captures engineering rationale, design constraints, and working de
 
 ## 2026-04-11: aggregate top-expression paths must participate in inference
 - Landed a bounded `R11` feature/diagnostic slice in
-  [perl/FSM/Composition/TopPortInferenceBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopPortInferenceBuilder.pm).
+  [perl/FSM/Composition/TopPortInferenceBuilder.pm](perl/FSM/Composition/TopPortInferenceBuilder.pm).
 - Problem found:
   - the explicit-link planner already knew how to reinterpret a two-part token
     such as `in_frame.tag` as a declared aggregate top-port path when
@@ -7211,7 +7217,7 @@ This document captures engineering rationale, design constraints, and working de
   - undeclared aggregate roots such as `in_frame.tag` now fail with an
     authored top-port diagnostic that says a declared aggregate root/type is
     needed before member/item access can guide inference,
-  - and [t/288-composition-aggregate-top-expression-inference.t](/Users/richarddje/Documents/github/fsmgen/t/288-composition-aggregate-top-expression-inference.t)
+  - and [t/288-composition-aggregate-top-expression-inference.t](t/288-composition-aggregate-top-expression-inference.t)
     locks both the accepted concat-inference case and the blocked diagnostic.
 - Why this boundary matters:
   - this keeps the convention-over-configuration direction moving without
@@ -7228,18 +7234,18 @@ This document captures engineering rationale, design constraints, and working de
 
 ## 2026-04-11: composition source-expression parsing belongs below the planner too
 - Extracted the bounded explicit-toplink source-expression parser out of
-  [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
-  into [perl/FSM/Composition/SourceExpressionSpecSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SourceExpressionSpecSupport.pm).
+  [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm)
+  into [perl/FSM/Composition/SourceExpressionSpecSupport.pm](perl/FSM/Composition/SourceExpressionSpecSupport.pm).
 - Landed behavior:
   - top/child bit-select and slice source specs, aggregate source paths, concat
     groups, repeat groups, literal operands, top-symbol payload lookup, and
     source-expression inference/child-base collection now live in the support
     owner,
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm)
     still owns the higher-level planning context: endpoint resolution,
     aggregate compatibility checks, carrier allocation, binding preservation,
     and diagnostics,
-  - and [t/287-composition-source-expression-spec-support.t](/Users/richarddje/Documents/github/fsmgen/t/287-composition-source-expression-spec-support.t)
+  - and [t/287-composition-source-expression-spec-support.t](t/287-composition-source-expression-spec-support.t)
     locks the support owner directly while the existing concat/top-output and
     aggregate composition tests keep the end-to-end path honest.
 - Why this boundary matters:
@@ -7252,13 +7258,13 @@ This document captures engineering rationale, design constraints, and working de
   - the generated HDL still receives planned structural connection
     expressions rather than rediscovering authored source syntax,
   - and the live import-tree snapshot now records the source-expression owner
-    explicitly with [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+    explicitly with [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm)
     reduced to `1824` lines.
 
 ## 2026-04-11: composition actual literal policy belongs below the planner
 - Extracted composition open/numeric actual literal policy out of
-  [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
-  into [perl/FSM/Composition/ActualLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ActualLiteralSupport.pm).
+  [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm)
+  into [perl/FSM/Composition/ActualLiteralSupport.pm](perl/FSM/Composition/ActualLiteralSupport.pm).
 - Landed behavior:
   - direct actual endpoint parsing for `=open`, scalar `=0` / `=1`,
     unsized binary/decimal/octal/hex forms, signed unsized forms, bare
@@ -7269,11 +7275,11 @@ This document captures engineering rationale, design constraints, and working de
   - direct actual bindings now ask the same owner for target-width widening,
     signed/unsigned overflow rejection, and actual binding type-contract
     construction,
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm)
     still owns the higher-level planning context: explicit-link role checks,
     top-symbol lookup, aggregate compatibility checks, child-source carriers,
     and diagnostics,
-  - and [t/286-composition-actual-literal-support.t](/Users/richarddje/Documents/github/fsmgen/t/286-composition-actual-literal-support.t)
+  - and [t/286-composition-actual-literal-support.t](t/286-composition-actual-literal-support.t)
     locks the support owner directly while the existing structural-actual and
     top-expression concat tests keep the end-to-end path honest.
 - Why this boundary matters:
@@ -7285,22 +7291,22 @@ This document captures engineering rationale, design constraints, and working de
   - the generated HDL still remains a representation of planned structural
     expressions rather than a place that rediscovers numeric intent,
   - and the live import-tree snapshot now honestly shows
-    [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm)
-    as the largest reachable file again, while [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+    [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm)
+    as the largest reachable file again, while [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm)
     remains a composition-planning seam instead of the numeric-literal owner.
 
 ## 2026-04-11: bootstrap import-tree refresh should track semantic package growth
 - Executed the README/session bootstrap path and refreshed the saved
-  [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen)
+  [bin/fsmgen](bin/fsmgen)
   import-tree analysis because the old `2026-04-02` measurement was no
   longer honest.
 - Bootstrap measurement at that point, later superseded by the actual-literal
   and source-expression extraction notes above:
-  - static project-owned closure rooted at [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen): `116` files total,
+  - static project-owned closure rooted at [bin/fsmgen](bin/fsmgen): `116` files total,
   - reachable `.pm` packages: `115`,
   - largest reachable package by line count:
-    [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm),
-  - and the semantic [perl/FSM/Package](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package) family is now explicit in the live spine with `13` reachable packages.
+    [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm),
+  - and the semantic [perl/FSM/Package](perl/FSM/Package) family is now explicit in the live spine with `13` reachable packages.
 - Engineering read:
   - the package/type family growth is expected and desirable because named
     values, packages, type aliases, aggregate payload lowering, aggregate path
@@ -7308,7 +7314,7 @@ This document captures engineering rationale, design constraints, and working de
   - the next risk is not that those package files exist, but that package/type
     semantics must stay shared across direct, composition, and future backend
     consumers instead of drifting into parser-local forks,
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm)
     is now a real future extraction seam because explicit-link source
     expressions, literal actuals, aggregate compatibility, and binding-type
     preservation all meet there,
@@ -7762,19 +7768,19 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-09: the documentation split should now be planned concretely
 - Promoted the earlier “book-like docs” direction into a concrete migration
   plan because the current
-  [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+  [docs/USER_GUIDE.md](docs/USER_GUIDE.md)
   is already large enough that planning the split is justified now, not later.
 - Planning decision:
   - keep `docs/USER_GUIDE.md` as the landing page / table of contents,
   - move the bulk of the teaching/reference material into a chaptered
     `docs/book/` set,
   - keep focused precision references such as
-    [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md)
+    [docs/COMPOSITION_SCOPE.md](docs/COMPOSITION_SCOPE.md)
     separate,
   - and make the split incremental so documentation quality does not dip while
     the migration is in progress.
 - The live planning artifact is now
-  [docs/BOOK_PLAN.md](/Users/richarddje/Documents/github/fsmgen/docs/BOOK_PLAN.md).
+  [docs/BOOK_PLAN.md](docs/BOOK_PLAN.md).
 
 ## 2026-04-09: when the guide gets too large, split it into a book-like docs set
 - Saved an explicit documentation-architecture rule for future language and
@@ -7897,9 +7903,9 @@ This document captures engineering rationale, design constraints, and working de
   - and treat user-facing docs as part of shipping the feature rather than a
     later cleanup pass.
 - Practical owner surfaces:
-  - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+  - [docs/USER_GUIDE.md](docs/USER_GUIDE.md)
     for live syntax/behavior and realistic examples,
-  - [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md)
+  - [docs/COMPOSITION_SCOPE.md](docs/COMPOSITION_SCOPE.md)
     for composition-specific contract boundaries,
   - and the roadmap/history notes for steering, rationale, and continuity.
 
@@ -7938,7 +7944,7 @@ This document captures engineering rationale, design constraints, and working de
   - composition `?ports` width tokens may now use those same local/imported
     positive integer scalar symbols on the live width path,
   - one shared helper in
-    [perl/FSM/Package/ScalarWidthSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/ScalarWidthSupport.pm)
+    [perl/FSM/Package/ScalarWidthSupport.pm](perl/FSM/Package/ScalarWidthSupport.pm)
     now owns extraction of one positive integer width from canonical scalar
     payloads and literal-like spellings,
   - and the direct-root and composition width-token owners now both reuse
@@ -7960,7 +7966,7 @@ This document captures engineering rationale, design constraints, and working de
     types such as `(type byte_t shared_types.byte)`,
   - unresolved imported package type refs now lower first into one bounded
     deferred imported-alias marker inside
-    [perl/FSM/Composition/TopSymbols.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopSymbols.pm)
+    [perl/FSM/Composition/TopSymbols.pm](perl/FSM/Composition/TopSymbols.pm)
     instead of failing immediately or forcing import resolution into parsing,
   - dependent local aliases collapse onto that same deferred marker during the
     declarative type-resolution pass,
@@ -7982,9 +7988,9 @@ This document captures engineering rationale, design constraints, and working de
   - composition `?ports` may now use direct package-qualified imported scalar
     type aliases such as `out_data>shared_types.byte`,
   - authored width tokens now survive parsing on
-    [perl/FSM/Composition/Port.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Port.pm)
+    [perl/FSM/Composition/Port.pm](perl/FSM/Composition/Port.pm)
     and resolve through the shared
-    [perl/FSM/Composition/PortWidthResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/PortWidthResolver.pm)
+    [perl/FSM/Composition/PortWidthResolver.pm](perl/FSM/Composition/PortWidthResolver.pm)
     helper,
   - semantic package import resolution now rebinds those unresolved imported
     widths before composition planning starts,
@@ -8028,7 +8034,7 @@ This document captures engineering rationale, design constraints, and working de
     packages now accept bounded `+types` declarations for `bit`, `(bits N)`,
     and named scalar aliases,
   - those aliases resolve through one shared
-    [perl/FSM/Package/DeclarativeTypeResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/DeclarativeTypeResolver.pm)
+    [perl/FSM/Package/DeclarativeTypeResolver.pm](perl/FSM/Package/DeclarativeTypeResolver.pm)
     pass instead of parser order,
   - direct-root `+size` and local composition `?ports` widths may now use
     those scalar type names,
@@ -8071,7 +8077,7 @@ This document captures engineering rationale, design constraints, and working de
 - Landed behavior:
   - direct roots, composition tops, and `?pkg:name` packages now resolve
     `+constants` / `+enums` through one shared
-    [perl/FSM/Package/DeclarativeSymbolResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/DeclarativeSymbolResolver.pm)
+    [perl/FSM/Package/DeclarativeSymbolResolver.pm](perl/FSM/Package/DeclarativeSymbolResolver.pm)
     pass instead of parser-order canonicalization,
   - aggregate values may now reuse same-scope constants, enum members, and
     whole list-valued roots regardless of declaration order,
@@ -8095,7 +8101,7 @@ This document captures engineering rationale, design constraints, and working de
     list-valued roots such as `(HEADER (mode.BUSY RESET_BYTE))` and
     `(PACKET (HEADER mode.IDLE))` regardless of declaration order,
   - one shared
-    [perl/FSM/Package/SignalManagerProjectionSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/SignalManagerProjectionSupport.pm)
+    [perl/FSM/Package/SignalManagerProjectionSupport.pm](perl/FSM/Package/SignalManagerProjectionSupport.pm)
     helper now owns how canonical symbol payloads are projected back into the
     scalar-expression layer,
   - and that same helper now keeps direct parsing, composition-top parsing,
@@ -8119,7 +8125,7 @@ This document captures engineering rationale, design constraints, and working de
   - bounded composition actual/concat positions may now use those same whole
     list-valued roots such as `=HEADER`, `=TAIL`, or `=shared.HEADER`,
   - and the lowering now goes through one shared
-    [perl/FSM/Package/PayloadLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/PayloadLiteralSupport.pm)
+    [perl/FSM/Package/PayloadLiteralSupport.pm](perl/FSM/Package/PayloadLiteralSupport.pm)
     helper instead of teaching the direct and composition paths two separate
     aggregate-flattening stories.
 - Why this boundary is deliberate:
@@ -8134,11 +8140,11 @@ This document captures engineering rationale, design constraints, and working de
 - Landed behavior:
   - composition `?top` results now preserve one bounded local/import symbol
     contract through composition-top `intent_hir`,
-  - [perl/FSM/Composition/ResultMetadataBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ResultMetadataBuilder.pm)
+  - [perl/FSM/Composition/ResultMetadataBuilder.pm](perl/FSM/Composition/ResultMetadataBuilder.pm)
     now mirrors that same contract into top-level composition `module_info`,
-  - [perl/FSM/Composition/TopSymbols.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopSymbols.pm)
+  - [perl/FSM/Composition/TopSymbols.pm](perl/FSM/Composition/TopSymbols.pm)
     now exposes the same bounded export surface as direct-root symbols,
-  - and [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm)
+  - and [perl/FSM/Composition/Parser.pm](perl/FSM/Composition/Parser.pm)
     now canonicalizes top-constant scalar leaves onto the same wrapped payload
     shape used by direct roots, so the exported contract stays structurally
     aligned instead of drifting into two competing representations.
@@ -8156,9 +8162,9 @@ This document captures engineering rationale, design constraints, and working de
   - direct `?fsm` / `?dt` roots now preserve one bounded local symbol contract
     on the semantic module instead of flattening every local constant/enum away
     immediately,
-  - [perl/FSM/IR/IntentHIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIRBuilder.pm)
+  - [perl/FSM/IR/IntentHIRBuilder.pm](perl/FSM/IR/IntentHIRBuilder.pm)
     now mirrors that contract into forward `intent_hir`,
-  - [perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm)
+  - [perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm](perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm)
     now mirrors the same contract into top-level `module_info`,
   - and the shipped surface currently includes local constant/enum names and
     counts, canonical constant payloads, scalar-leaf convenience payloads,
@@ -8324,7 +8330,7 @@ This document captures engineering rationale, design constraints, and working de
   - and it preserves an honest contract: scalar-leaf access is live now,
     whole-aggregate flow/types remain future work.
 - Implementation note:
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm)
     now also prefers typed top-expression parsing when a `/source/target/`
     token contains concat/repeat syntax even if the source begins with an
     actual operand, so package-backed concat sources like
@@ -8374,9 +8380,9 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-06: composition-top symbols should feed literal actuals through the same bounded structural path
 - Kept this in the active `R11` lane and widened explicit-toplink expressiveness without pretending the future full type system is already shipped.
 - Landed behavior:
-  - [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) now accepts bounded `(+constants ...)` and `(+enums ...)` sections directly under `?top`,
-  - [perl/FSM/Composition/TopSymbols.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopSymbols.pm) now canonicalizes those composition-top symbols into the existing literal payload family,
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now resolves named actuals such as `=RESET_BYTE` and `=mode.BUSY` from that symbol table on direct bindings and bounded concat operands,
+  - [perl/FSM/Composition/Parser.pm](perl/FSM/Composition/Parser.pm) now accepts bounded `(+constants ...)` and `(+enums ...)` sections directly under `?top`,
+  - [perl/FSM/Composition/TopSymbols.pm](perl/FSM/Composition/TopSymbols.pm) now canonicalizes those composition-top symbols into the existing literal payload family,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now resolves named actuals such as `=RESET_BYTE` and `=mode.BUSY` from that symbol table on direct bindings and bounded concat operands,
   - and those named actuals still lower through the same structural literal path as the shipped numeric actual families rather than through a renderer-only text escape.
 - Why this is worth shipping:
   - it removes a real magic-number hotspot in composition wiring without waiting for the much larger future aggregate/type lane,
@@ -8386,7 +8392,7 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-05: unsized signed decimal concat actuals can be intrinsic-width too when width comes from signed range
 - Kept this in the active `R11` lane and widened concat only where the width rule stays local, typed, and regression-backable.
 - Landed behavior:
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts unsized signed decimal concat operands such as `=-1`, `=0d-1`, and `='sd-1`,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts unsized signed decimal concat operands such as `=-1`, `=0d-1`, and `='sd-1`,
   - those operands now lower into the same typed `bit_vector_literal_expr` path as the other concat literal families,
   - their width now comes from the minimum signed width needed to represent the value rather than from the child-input target or from raw decimal digit count,
   - and the blocked concat-operand wording now names intrinsic-width unsized signed decimal forms honestly beside the already-shipped unsigned numeric and signed based families.
@@ -8398,7 +8404,7 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-05: SV unsized signed based actual spellings should normalize onto the existing structural literal families too
 - Kept this in the active `R11` lane and widened the signed literal spelling surface without opening a second signed-only lowering contract.
 - Landed behavior:
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts direct actual spellings such as `='sb1010`, `='so645`, and `='shA5`,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts direct actual spellings such as `='sb1010`, `='so645`, and `='shA5`,
   - direct bindings treat those forms as intrinsic-width signed payloads that sign-extend to the direct target width only when the signed value fits the target range,
   - bounded concat operands now also accept intrinsic-width `='sb...`, `='so...`, and `='sh...` aliases on the same typed literal path,
   - and the concise failure wording now names those signed based aliases honestly instead of leaving the implementation wider than the docs and summary surface.
@@ -8410,7 +8416,7 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-05: standard SV unsized actual spellings should normalize onto the existing unsized literal families
 - Kept this in the active `R11` lane and widened the source spelling surface without opening a second literal semantics path.
 - Landed behavior:
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts direct actual spellings such as `='b10100101`, `='d170`, `='sd-1`, `='o245`, and `='hA5`,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts direct actual spellings such as `='b10100101`, `='d170`, `='sd-1`, `='o245`, and `='hA5`,
   - direct bindings treat `='b...`, `='d...`, `='o...`, and `='h...` as aliases for the already-shipped unsized binary/decimal/octal/hex numeric families, while `='sd...` aliases the existing unsized signed-decimal direct lane,
   - bounded concat operands now also accept intrinsic-width `='b...`, `='d...`, `='o...`, and `='h...` aliases on the same typed literal path,
   - and the concise failure wording now names those aliases honestly instead of leaving the implementation wider than the docs and summary surface.
@@ -8422,7 +8428,7 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-05: exact-width signed based literals should stay on the existing bit-vector contract
 - Kept this in the active `R11` lane and widened the exact-width literal family in the narrowest honest way instead of pretending signed based literals need a new semantic category.
 - Landed behavior:
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts exact-width signed binary/octal/hex actuals such as `=8'sb10100101`, `=8'so245`, and `=8'shA5` on direct realized child-input and declared top-output bindings,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts exact-width signed binary/octal/hex actuals such as `=8'sb10100101`, `=8'so245`, and `=8'shA5` on direct realized child-input and declared top-output bindings,
   - those same exact-width signed based forms now also work inside bounded source-side concat operands,
   - they lower through the same exact-width `bit_vector_literal_expr` path already used by unsigned binary/octal/hex literal actuals, so the AST still carries one backend-neutral exact-width bit-pattern contract rather than a signed-only literal node,
   - and payloads that exceed the declared width now fail explicitly instead of truncating or silently changing width.
@@ -8434,7 +8440,7 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-05: signed decimal structural actuals belong on the same bounded literal path, not on a parallel signed-literal special case
 - Kept this in the active `R11` lane and widened the shipped numeric actual family in the narrowest honest way instead of opening a backend-specific signed expression shortcut.
 - Landed behavior:
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts unsized signed decimal direct actuals such as `=-1` and `=0d-1` on direct realized child-input and declared top-output bindings,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts unsized signed decimal direct actuals such as `=-1` and `=0d-1` on direct realized child-input and declared top-output bindings,
   - those unsized signed decimal direct actuals now widen only when the numeric value fits the signed range of the direct target width and then lower into the same exact-width two's-complement `bit_vector_literal_expr` used by the existing structural literal family,
   - the same bounded literal machinery now also accepts exact-width signed decimal forms such as `=8'sd-1` on both direct bindings and bounded concat operands,
   - and exact-width signed decimal payloads that exceed the declared signed range now fail explicitly instead of truncating or silently changing meaning.
@@ -8446,8 +8452,8 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-05: bounded repeat groups belong in the typed source-expression AST, not in renderer-only text
 - Kept this in the active `R11` lane and shipped the next source-expression widening as a structural-AST feature instead of another ad hoc string case.
 - Landed behavior:
-  - [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm) now exposes `repeat_expr(...)` as a first-class bounded connection-expression node beside `concat_expr(...)`, with recursive signal discovery and backend rendering rather than treating `{N{...}}` as opaque text,
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now parses source-side repeat groups such as `{3{status_bus[0]}}` and `{2{producer.serial_lo}}` through the same explicit-toplink source-expression family as top refs, child refs, slices, literals, and concat,
+  - [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm) now exposes `repeat_expr(...)` as a first-class bounded connection-expression node beside `concat_expr(...)`, with recursive signal discovery and backend rendering rather than treating `{N{...}}` as opaque text,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now parses source-side repeat groups such as `{3{status_bus[0]}}` and `{2{producer.serial_lo}}` through the same explicit-toplink source-expression family as top refs, child refs, slices, literals, and concat,
   - repeated child-output operands now reuse the same deterministic base-carrier family as the already-shipped projected child-output source forms instead of inventing repeat-only helper nets,
   - and repeat groups may now also appear inside bounded concat sources, so replication composes with the existing typed source-expression family instead of opening a separate syntax island.
 - Why this is worth shipping:
@@ -8458,10 +8464,10 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-04: child-output concat operands now share the bounded top-expression path too
 - Kept this in the active `R11` lane and widened source-side concat one more time without weakening the typed explicit-link contract.
 - Landed behavior:
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts child-output concat operands such as `producer.payload`, `producer.payload[7:4]`, and `producer.payload[0]` beside the existing top-port and literal operand families,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts child-output concat operands such as `producer.payload`, `producer.payload[7:4]`, and `producer.payload[0]` beside the existing top-port and literal operand families,
   - those child-output concat operands lower through the same typed `concat_expr` path for realized child inputs and declared top outputs, while reusing one deterministic base carrier per referenced child output instead of inventing per-projection helper nets,
-  - [perl/FSM/Composition/TopPortInferenceBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopPortInferenceBuilder.pm) now treats those child operands as known-width explicit child-output uses and therefore keeps omitted/empty-`?ports` inference focused on the true undeclared top operands in the same concat source,
-  - and [perl/FSM/Composition/ProvenanceReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ProvenanceReportBuilder.pm) plus [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) keep provenance and blocked summaries honest through concise `Child expression '...'` context for out-of-range child concat operands.
+  - [perl/FSM/Composition/TopPortInferenceBuilder.pm](perl/FSM/Composition/TopPortInferenceBuilder.pm) now treats those child operands as known-width explicit child-output uses and therefore keeps omitted/empty-`?ports` inference focused on the true undeclared top operands in the same concat source,
+  - and [perl/FSM/Composition/ProvenanceReportBuilder.pm](perl/FSM/Composition/ProvenanceReportBuilder.pm) plus [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) keep provenance and blocked summaries honest through concise `Child expression '...'` context for out-of-range child concat operands.
 - Why this is worth shipping:
   - it closes the remaining gap between already-shipped child-output projections and the bounded concat source family instead of leaving concat as an arbitrary top-only special case,
   - it reuses the typed structural path and deterministic carrier contract already established for projected child-output sources rather than adding a second lower-quality lowering path,
@@ -8470,7 +8476,7 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-04: unsized decimal concat operands can be intrinsic-width too if width comes from numeric value
 - Kept this in the active `R11` lane and widened the concat family only where the width rule stays explicit and local to the operand itself.
 - Landed behavior:
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts unsized decimal concat operands such as `=170` and `=0d170`,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts unsized decimal concat operands such as `=170` and `=0d170`,
   - those operands now lower into the same typed `bit_vector_literal_expr` concat form as the other intrinsic-width unsized families,
   - their width now comes from the minimum bit-width of the numeric value rather than from the child-input target or from decimal digit count,
   - and the blocked concat-operand wording now names binary/decimal/octal/hex intrinsic-width families honestly instead of leaving decimal behind as if concat still rejected it.
@@ -8482,9 +8488,9 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-04: nested toplink concat grouping needed a source-front-end fix, not a lowering workaround
 - Kept this in the active `R11` lane and fixed the real quality seam instead of adding another local planner special case.
 - Landed behavior:
-  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now preserves literal brace groups inside slash-delimited link tokens while reading `.fsm` files, so the Lispish reader no longer destroys nested `?toplink` concat structure before typed composition parsing starts,
+  - [perl/FSM/Pipeline/SourceFrontend.pm](perl/FSM/Pipeline/SourceFrontend.pm) now preserves literal brace groups inside slash-delimited link tokens while reading `.fsm` files, so the Lispish reader no longer destroys nested `?toplink` concat structure before typed composition parsing starts,
   - nested source expressions such as `header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}` now therefore survive from raw AST into typed `concat_expr` lowering, direct top-output assignment, and omitted/empty-`?ports` inference,
-  - and the nested-concat success path is now locked not only at the linked-plan layer but also at the raw source/frontend layer through [t/197-pipeline-source-frontend.t](/Users/richarddje/Documents/github/fsmgen/t/197-pipeline-source-frontend.t), [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t), [t/267-composition-top-expression-top-outputs.t](/Users/richarddje/Documents/github/fsmgen/t/267-composition-top-expression-top-outputs.t), and [t/101-composition-explicit-link-implicit-ports.t](/Users/richarddje/Documents/github/fsmgen/t/101-composition-explicit-link-implicit-ports.t).
+  - and the nested-concat success path is now locked not only at the linked-plan layer but also at the raw source/frontend layer through [t/197-pipeline-source-frontend.t](t/197-pipeline-source-frontend.t), [t/264-composition-toplink-concat-expressions.t](t/264-composition-toplink-concat-expressions.t), [t/267-composition-top-expression-top-outputs.t](t/267-composition-top-expression-top-outputs.t), and [t/101-composition-explicit-link-implicit-ports.t](t/101-composition-explicit-link-implicit-ports.t).
 - Why this is worth shipping:
   - the generated HDL is only supposed to reflect the AST, so preserving nested grouping has to happen before lowering rather than being reconstructed later from damaged text,
   - fixing it at the source boundary keeps the planner/emitter honest and simpler,
@@ -8493,7 +8499,7 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-04: bounded concat can grow to intrinsic-width unsized binary/octal/hex actuals without reintroducing target-width guessing
 - Kept this in the active `R11` lane and widened the bounded concat family only where operand width is self-determined by spelling.
 - Landed behavior:
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts intrinsic-width unsized binary/octal/hex concat operands such as `=0b1_0`, `=0o2`, `=0xA`, and bare `=A`,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts intrinsic-width unsized binary/octal/hex concat operands such as `=0b1_0`, `=0o2`, `=0xA`, and bare `=A`,
   - those operands lower through the same typed `bit_vector_literal_expr` concat path as the existing exact-width literal operands,
   - their width now comes from the digits themselves, so binary keeps bit count, octal keeps three bits per digit, and hex keeps four bits per digit,
   - and this later turned out to generalize cleanly to unsized decimal spellings too once concat decimal width was defined as the minimum bit-width required by the numeric value.
@@ -8505,7 +8511,7 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-04: prefixed unsized direct actuals should share the same direct-binding contract as the bare unsized family
 - Kept this in the active `R11` lane and landed it as the next bounded structural-actual widening rather than inventing a wider coercion rule.
 - Landed behavior:
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts prefixed unsized direct actuals such as `=0b10100101`, `=0d170`, and `=0xA5` on direct realized child-input and declared top-output bindings,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts prefixed unsized direct actuals such as `=0b10100101`, `=0d170`, and `=0xA5` on direct realized child-input and declared top-output bindings,
   - those prefixed unsized direct actuals now widen to the direct binding target width as numeric values and fail explicitly when the numeric value does not fit,
   - the direct-binding family wording now treats those prefixed forms and the earlier bare `=170` / `=A5` spellings as one bounded unsized numeric slice,
   - exact-width forms such as `=8'd5` and `=8'hA5` still stay exact-width contracts rather than being widened again,
@@ -8520,8 +8526,8 @@ This document captures engineering rationale, design constraints, and working de
 - Current architectural take:
   - the project should keep the current flattened generation mode as the default and continue to treat it as the primary debug-oriented path,
   - a second selectable generated-module mode that preserves FSM/DT control structure in the emitted HDL through target-language `if` / `case` / statement-oriented forms looks feasible and valuable for readability/review,
-  - that future mode should branch at the generated-module backend selection seam in [perl/FSM/Backend/GeneratedModuleEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/GeneratedModuleEmitter.pm), not by creating a second parser or semantic pipeline,
-  - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) and [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) therefore look like the right public surface to carry one future generation-style option such as `flattened` versus `structured`, while keeping `flattened` as the default,
+  - that future mode should branch at the generated-module backend selection seam in [perl/FSM/Backend/GeneratedModuleEmitter.pm](perl/FSM/Backend/GeneratedModuleEmitter.pm), not by creating a second parser or semantic pipeline,
+  - [bin/fsmgen](bin/fsmgen) and [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) therefore look like the right public surface to carry one future generation-style option such as `flattened` versus `structured`, while keeping `flattened` as the default,
   - the shared language checks, provenance, forward IR, and pre-generation validation gates should stay common across both modes,
   - and the structured mode should therefore be treated as a second lowering/emission route over the same validated module semantics, not as a looser alternative semantics.
 - Suggested implementation order if this feature is opened:
@@ -8535,7 +8541,7 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-04: unsized positive decimal/hex direct actuals now belong to the shipped direct-binding contract
 - Kept this in the active `R11` lane and landed it as the next bounded structural-actual widening instead of leaving it as a steering-only note.
 - Landed behavior:
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts unsized positive decimal direct actuals such as `=170` and unsized hex direct actuals such as `=A5` on direct realized child-input and declared top-output bindings,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts unsized positive decimal direct actuals such as `=170` and unsized hex direct actuals such as `=A5` on direct realized child-input and declared top-output bindings,
   - those unsized direct actuals now widen to the direct binding target width as numeric values and fail explicitly when the numeric value does not fit,
   - exact-width forms such as `=8'd5` and `=8'hA5` still stay exact-width contracts rather than being widened again,
   - and bounded concat operands still stay stricter than direct bindings, so unsized numeric widening does not silently leak into concat.
@@ -8547,7 +8553,7 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-04: unsized numeric direct actuals are a plausible next widening, but exact-width forms should stay exact
 - Recorded this as steering guidance for the next structural-actual feature slice rather than as shipped behavior.
 - Current implementation direction:
-  - unsized positive decimal direct actuals such as `=170` and unsized hex direct actuals such as `=A5` are reasonable next candidates for the direct-binding path in [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm),
+  - unsized positive decimal direct actuals such as `=170` and unsized hex direct actuals such as `=A5` are reasonable next candidates for the direct-binding path in [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm),
   - the intended semantics for that future slice would be “treat the token as a numeric value, widen it to the realized child-input or declared top-output target width, and fail explicitly on overflow,”
   - exact-width forms such as `=8'd5` and `=8'hA5` should stay exact-width contracts rather than being silently widened again to a larger target,
   - and bounded concat operands should stay stricter than direct bindings: unsized numeric widening should not silently appear inside concat unless a separate concat-specific contract is opened deliberately.
@@ -8559,7 +8565,7 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-04: direct scalar `=0` and `=1` actuals should widen to the direct binding target
 - Kept this in the active `R11` lane as the next bounded structural-actual refinement because the planner already had the target endpoint width in hand anywhere direct actuals bind.
 - Landed behavior:
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now treats direct explicit-actual sources `=0` and `=1` as scalar numeric zero/one values that widen to the realized child-input or declared top-output target width instead of behaving like accidental one-bit-only direct bindings,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now treats direct explicit-actual sources `=0` and `=1` as scalar numeric zero/one values that widen to the realized child-input or declared top-output target width instead of behaving like accidental one-bit-only direct bindings,
   - exact-width binary/decimal/hex literal actuals still require exact target-width agreement,
   - bounded concat operands still keep `=0` / `=1` as one-bit operands unless an exact-width literal is spelled explicitly there,
   - and the concise structural-actual family wording now explicitly says the shipped slice covers `=open`, scalar `=0` / `=1`, and exact-width binary/decimal/hex literal actuals.
@@ -8571,7 +8577,7 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-04: direct literal actuals should reach top outputs through the same typed path too
 - Kept this in the active `R11` lane as the next bounded structural-actual widening because the planner already had the typed connection-expression path and the direct top-output auxiliary-assignment path in place.
 - Landed behavior:
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now allows direct literal actual sources such as `=0`, `=1`, `=8'b10100101`, `=8'd165`, and `=8'hA5` to drive declared top outputs directly through explicit top-output assignments,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now allows direct literal actual sources such as `=0`, `=1`, `=8'b10100101`, `=8'd165`, and `=8'hA5` to drive declared top outputs directly through explicit top-output assignments,
   - direct realized child-input actual bindings still use the same typed `bit_vector_literal_expr` payload on the child port bindings, so child-input and top-output literal uses now share one structural literal contract,
   - and `=open` remains intentionally limited to realized child input ports, because “leave this formal unconnected” is honest structural child-binding semantics but not honest top-output wiring.
 - Why this is worth shipping:
@@ -8582,9 +8588,9 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-04: source-side top expressions should reach top outputs through the same typed path
 - Kept this in the active `R11` lane as another feature slice because the typed top-expression path and the existing top-output auxiliary-assignment surface were already in place.
 - Landed behavior:
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now allows source-side top-port bit/slice expressions and bounded concat expressions to drive declared top outputs directly through emitted top-output assignments,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now allows source-side top-port bit/slice expressions and bounded concat expressions to drive declared top outputs directly through emitted top-output assignments,
   - sibling child-input consumers still use the same `connection_expr` payloads on realized instance bindings, so direct top-output and direct child-input expression uses now share one structural planner path instead of diverging into text-only special cases,
-  - and [t/263-composition-toplink-top-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/263-composition-toplink-top-expressions.t) plus [t/267-composition-top-expression-top-outputs.t](/Users/richarddje/Documents/github/fsmgen/t/267-composition-top-expression-top-outputs.t) now lock both the typed linked-plan shape and the emitted HDL assignment path, including bounded concat rendering.
+  - and [t/263-composition-toplink-top-expressions.t](t/263-composition-toplink-top-expressions.t) plus [t/267-composition-top-expression-top-outputs.t](t/267-composition-top-expression-top-outputs.t) now lock both the typed linked-plan shape and the emitted HDL assignment path, including bounded concat rendering.
 - Why this is worth shipping:
   - it widens a real user-facing gap that was already called out as the next honest seam after plain top-input fanout,
   - it reuses the existing backend-neutral expression AST plus renderer instead of inventing one-off string assembly for top assignments,
@@ -8593,10 +8599,10 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-04: plain declared top-input fanout to top outputs should be real wiring, not blocked topology
 - Kept this in the active `R11` lane as another feature slice because the plan/emitter architecture already had the pieces needed for this without inventing new syntax.
 - Landed behavior:
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now lets one declared top input drive one or more top outputs directly through explicit top-output assignments while sibling child-input consumers continue to bind to that same top input signal directly,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now lets one declared top input drive one or more top outputs directly through explicit top-output assignments while sibling child-input consumers continue to bind to that same top input signal directly,
   - the planner therefore keeps this topology net-free on the top-input side instead of inventing an unnecessary helper carrier just to bounce one existing top signal back out,
-  - [perl/FSM/Composition/SharedDatapathSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SharedDatapathSupport.pm) now preserves those preexisting top-boundary assignments when shared-datapath runtime rewriting is also active, instead of replacing them wholesale,
-  - and [t/176-composition-linked-plan-builder.t](/Users/richarddje/Documents/github/fsmgen/t/176-composition-linked-plan-builder.t) plus [t/266-composition-top-input-top-output-fanout.t](/Users/richarddje/Documents/github/fsmgen/t/266-composition-top-input-top-output-fanout.t) now lock both the direct linked-plan contract and the mixed-runtime end-to-end emission path.
+  - [perl/FSM/Composition/SharedDatapathSupport.pm](perl/FSM/Composition/SharedDatapathSupport.pm) now preserves those preexisting top-boundary assignments when shared-datapath runtime rewriting is also active, instead of replacing them wholesale,
+  - and [t/176-composition-linked-plan-builder.t](t/176-composition-linked-plan-builder.t) plus [t/266-composition-top-input-top-output-fanout.t](t/266-composition-top-input-top-output-fanout.t) now lock both the direct linked-plan contract and the mixed-runtime end-to-end emission path.
 - Why this is worth shipping:
   - the old block was stricter than the real structural model required, because a declared top input already exists as a stable signal and only needs explicit public re-export assignments,
   - preserving those assignments across shared-datapath augmentation makes the feature honest in mixed tops instead of only in artificially isolated fixtures,
@@ -8605,7 +8611,7 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-04: child-output fanout to multiple top outputs should be a real topology, not a blocked sibling
 - Kept this in the active `R11` lane as another feature slice instead of returning to topology-report hardening while the implementation path was still straightforward.
 - Landed behavior:
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now allows one realized child output source to drive multiple top outputs in explicit-link composition,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now allows one realized child output source to drive multiple top outputs in explicit-link composition,
   - the planner realizes that topology through one deterministic shared carrier net plus explicit top-output assignments, so sibling child-input consumers can reuse the same source without rebinding one public top output as the internal carrier,
   - the generated top therefore stays honest about structure: one real driver net from the child, plus explicit public fanout assignments at the top boundary,
   - and the still-blocked sibling topology remains top-input directly to top-output, which still lacks a shipped explicit-link contract.
@@ -8617,10 +8623,10 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-04: exact-width decimal actuals should widen the literal family without widening the AST shape
 - Kept this in the active `R11` lane as a bounded structural-actual/runtime widening instead of introducing a fresh connection-expression node kind.
 - Landed behavior:
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts exact-width decimal literal actuals such as `=8'd165` and normalizes them into the same `bit_vector_literal_expr` shape already used by binary and hex forms,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts exact-width decimal literal actuals such as `=8'd165` and normalizes them into the same `bit_vector_literal_expr` shape already used by binary and hex forms,
   - that same decimal literal family now also works inside bounded source-side concat operands, so the direct actual path and the concat-operand path still share one structural literal contract,
   - unsized decimal-like forms remain outside the active boundary, and overflowing decimal payloads now fail explicitly instead of silently truncating to the declared width,
-  - and [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t), [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t), and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now lock the widened runtime and concise-summary wording.
+  - and [t/262-composition-structural-actual-toplinks.t](t/262-composition-structural-actual-toplinks.t), [t/264-composition-toplink-concat-expressions.t](t/264-composition-toplink-concat-expressions.t), and [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) now lock the widened runtime and concise-summary wording.
 - Why this is worth shipping:
   - decimal literal actuals are a natural next user-facing widening after binary and hex, but they do not require a new backend-specific escape hatch because the planner still lowers them into the same backend-neutral bit-vector payload,
   - it keeps the literal family honest by requiring explicit declared width and by rejecting overflow instead of silently discarding value bits,
@@ -8629,8 +8635,8 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-02: explicit-actual failure summaries should keep the actual token, not just the prose reason
 - Kept this in the active `R11` lane as a small contract-hardening follow-up to the shipped explicit-toplink structural-actual feature rather than treating it as a second runtime widening.
 - Landed behavior:
-  - [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm) now treats the new structural-actual diagnostic forms as first-class summary context, mapping `uses actual source '...'` to `Actual source '...'` and `uses actual endpoint '...'` to `Actual endpoint '...'`,
-  - [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now locks both pipeline and CLI coverage for blocked literal-source role failures and blocked actual-endpoint target failures on the live explicit-toplink path.
+  - [perl/FSM/Composition/FailureReportBuilder.pm](perl/FSM/Composition/FailureReportBuilder.pm) now treats the new structural-actual diagnostic forms as first-class summary context, mapping `uses actual source '...'` to `Actual source '...'` and `uses actual endpoint '...'` to `Actual endpoint '...'`,
+  - [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) now locks both pipeline and CLI coverage for blocked literal-source role failures and blocked actual-endpoint target failures on the live explicit-toplink path.
 - Why this is worth shipping:
   - the preceding structural-actual slice had already added real runtime support, so failed runs should expose those same `=...` tokens in the bounded summary instead of burying them only in the raw exception text,
   - it keeps the non-quiet composition summary honest and symmetric with the older child-endpoint/top-port summary families,
@@ -8639,8 +8645,8 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-02: README quick-start examples should stay on known-good live samples
 - Kept this as a documentation-honesty slice instead of treating it as roadmap progress, because the live runtime and roadmap state did not change.
 - Landed behavior:
-  - [README.md](/Users/richarddje/Documents/github/fsmgen/README.md), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), and [WARP.md](/Users/richarddje/Documents/github/fsmgen/WARP.md) now use [fsm/lte_dif_pmaster.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/lte_dif_pmaster.fsm) for their non-trivial debug / known-good sample commands instead of [fsm/trial_1.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/trial_1.fsm),
-  - [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) is now refreshed to the current 2026-04-02 measured snapshot without changing its qualitative architecture read.
+  - [README.md](README.md), [docs/USER_GUIDE.md](docs/USER_GUIDE.md), and [WARP.md](WARP.md) now use [fsm/lte_dif_pmaster.fsm](fsm/lte_dif_pmaster.fsm) for their non-trivial debug / known-good sample commands instead of [fsm/trial_1.fsm](fsm/trial_1.fsm),
+  - [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) is now refreshed to the current 2026-04-02 measured snapshot without changing its qualitative architecture read.
 - Why this is worth shipping:
   - executing onboarding docs should not immediately route users into legacy/out-of-scope fixtures that no longer match the documented operator boundary,
   - `trial_1` is still useful historical context, but it is no longer honest as a first debug/run recommendation because the active parser rejects its `!&` residue,
@@ -8649,9 +8655,9 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-02: strict mode now narrows the direct module-root alias family too
 - Switched back into the visible `R9` lane after the recent `R10` diagnostics slice so support-tier enforcement keeps alternating with the diagnostics work instead of stalling behind it.
 - Landed behavior:
-  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now rejects the long direct-root alias `?module:` in strict mode and points users to canonical `?mod:module_name`,
+  - [perl/FSM/Pipeline/SourceFrontend.pm](perl/FSM/Pipeline/SourceFrontend.pm) now rejects the long direct-root alias `?module:` in strict mode and points users to canonical `?mod:module_name`,
   - default mode still accepts `?module:` on the same current direct single-module path, so this is a support-tier narrowing rather than a default-mode language removal,
-  - [t/240-strict-mode-standalone-dt-alias-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/240-strict-mode-standalone-dt-alias-boundary.t) now locks the split through the shared frontend plus pipeline and CLI entry points.
+  - [t/240-strict-mode-standalone-dt-alias-boundary.t](t/240-strict-mode-standalone-dt-alias-boundary.t) now locks the split through the shared frontend plus pipeline and CLI entry points.
 - Why this is worth shipping:
   - it reduces one more equivalent spelling in the strict lane without touching the broader module-root semantics,
   - it stays aligned with your earlier clarification that `?mod` / `?module` are module roots, not `?dt` aliases,
@@ -8660,9 +8666,9 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-02: missing composition lookup now keeps explicit search-path context too
 - Switched back into the visible `R10` lane after the recent `R12` widening so the cadence stays feature-facing instead of drifting into too many corpus-only slices in a row.
 - Landed behavior:
-  - [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) now promotes missing external generated-child lookup search details into first-class `Search roots:` and `Searched locations:` lines instead of leaving them only inside the longer prose diagnostic,
-  - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) now promotes missing external `.rtlif` lookup search details into a first-class `Search roots:` line too,
-  - [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm) plus [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now carry that same `Search roots:` value into the non-quiet composition failure summary rather than discarding it after the raw failure text is built.
+  - [perl/FSM/Composition/GeneratedChildRealizer.pm](perl/FSM/Composition/GeneratedChildRealizer.pm) now promotes missing external generated-child lookup search details into first-class `Search roots:` and `Searched locations:` lines instead of leaving them only inside the longer prose diagnostic,
+  - [perl/FSM/Composition/RTLInterfaceLoader.pm](perl/FSM/Composition/RTLInterfaceLoader.pm) now promotes missing external `.rtlif` lookup search details into a first-class `Search roots:` line too,
+  - [perl/FSM/Composition/FailureReportBuilder.pm](perl/FSM/Composition/FailureReportBuilder.pm) plus [bin/fsmgen](bin/fsmgen) now carry that same `Search roots:` value into the non-quiet composition failure summary rather than discarding it after the raw failure text is built.
 - Why this is worth shipping:
   - it keeps the active search contract visible when multi-root resolution fails,
   - it makes missing lookup failures more actionable without changing any composition semantics,
@@ -8671,9 +8677,9 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-02: `R12` now counts shipped partial-write support as named corpus behavior
 - Switched from the recent `R8` correctness streak into `R12` so the new partial indexed/sliced LHS support would be part of audited support accounting rather than only local contract tests.
 - Landed behavior:
-  - [t/corpus/partial_lhs_with_size.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/partial_lhs_with_size.fsm) now carries the explicit-`+size` partial-write surface into the corpus,
-  - [t/corpus/partial_lhs_inferred_width.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/partial_lhs_inferred_width.fsm) now carries the no-`+size` inferred-width partial-write surface into the corpus,
-  - [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t) now checks those entries through both pipeline and CLI while also locking emitted HDL details instead of only compile success.
+  - [t/corpus/partial_lhs_with_size.fsm](t/corpus/partial_lhs_with_size.fsm) now carries the explicit-`+size` partial-write surface into the corpus,
+  - [t/corpus/partial_lhs_inferred_width.fsm](t/corpus/partial_lhs_inferred_width.fsm) now carries the no-`+size` inferred-width partial-write surface into the corpus,
+  - [t/261-regression-corpus-supported-language-features.t](t/261-regression-corpus-supported-language-features.t) now checks those entries through both pipeline and CLI while also locking emitted HDL details instead of only compile success.
 - Why this matters:
   - it makes the support story for partial indexed/sliced LHS behavior auditable in the same corpus as other shipped contracts,
   - it broadens `supported_smoke` beyond imported examples into real language features,
@@ -8682,7 +8688,7 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-02: static numeric partial LHS writes are now a real shipped contract on the direct path
 - Continued with a visible language/correctness slice because parsed syntax without correct backend lowering was not acceptable support.
 - Landed behavior:
-  - [perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm) now normalizes same-context partial writes before RHS grouping and mux generation instead of letting capture-time base-signal naming collapse them into raw whole-signal replacement,
+  - [perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm](perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm) now normalizes same-context partial writes before RHS grouping and mux generation instead of letting capture-time base-signal naming collapse them into raw whole-signal replacement,
   - piecewise combinational writes such as `(OUT[3:2] = HI)`, `(OUT[1] = MID)`, `(OUT[0] = LO)` now assemble into one full-width combinational mux input,
   - piecewise `<-` writes now assemble into one full-width `_next` expression,
   - piecewise `<=` writes now assemble into one full-width D-input expression,
@@ -8695,7 +8701,7 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-02: partial dual-output writes now keep full-width auxiliary outputs
 - Continued the same visible language/correctness lane because the first partial-write fix had corrected the merged mux input but still left `<-=` / `<=+` auxiliary outputs (`next_*`, `*_r`) narrowed to the fragment width.
 - Landed behavior:
-  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now infers the base-signal width for indexed/sliced LHS targets from both existing signal metadata and the slice/index bounds themselves,
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm) now infers the base-signal width for indexed/sliced LHS targets from both existing signal metadata and the slice/index bounds themselves,
   - that inferred base width now updates the signal registry on the direct path instead of only trusting a full-width unsliced target to do that widening,
   - and the same base width now drives the `<-=` and `<=+` auxiliary output registration, so `next_*` / `*_r` stay full-width even when the assignment itself only writes a slice or one bit.
 - Why this matters:
@@ -8706,7 +8712,7 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-02: partial target width inference is now explicitly locked without +size
 - Continued with a small regression/contract slice because the next honest question after the parser fix was whether the same support still held when no explicit `+size` was present for the target at all.
 - Landed behavior:
-  - [t/260-partial-target-width-inference.t](/Users/richarddje/Documents/github/fsmgen/t/260-partial-target-width-inference.t) now locks slice-only width inference such as `OUT[3:2]` and index-only width inference such as `IDXOUT[4]`,
+  - [t/260-partial-target-width-inference.t](t/260-partial-target-width-inference.t) now locks slice-only width inference such as `OUT[3:2]` and index-only width inference such as `IDXOUT[4]`,
   - it does that through generated HDL and module-declaration checks, not just parser-level AST inspection,
   - and it keeps the no-`+size` case honest for plain combinational partial writes plus dual-output sequential families.
 - Why this matters:
@@ -8717,9 +8723,9 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-02: strict mode now treats the compact top-level `:=` directive as compatibility residue
 - Continued the visible `R9` lane by widening strict mode into the legacy compact init/reset surface instead of keeping strict enforcement limited to root families and the explicit `+system` reset spelling.
 - Landed behavior:
-  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now rejects the compact top-level `(:= signal=value)` directive in strict mode on the current `?fsm:` / `?dt:` path while leaving default-mode compatibility intact,
+  - [perl/FSM/Pipeline/SourceFrontend.pm](perl/FSM/Pipeline/SourceFrontend.pm) now rejects the compact top-level `(:= signal=value)` directive in strict mode on the current `?fsm:` / `?dt:` path while leaving default-mode compatibility intact,
   - that boundary lives in the same shared direct-root strict owner as the earlier empty-`(+size)` and explicit-`(asreset rstn)` cuts, so it reaches those direct roots and generated child sources while still leaving top-level `?mod:` / `?module:` roots untouched,
-  - [t/257-strict-mode-compact-init-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/257-strict-mode-compact-init-boundary.t) now locks the new boundary through the shared frontend plus pipeline and CLI entry points for a direct root and an external `?dtc` child,
+  - [t/257-strict-mode-compact-init-boundary.t](t/257-strict-mode-compact-init-boundary.t) now locks the new boundary through the shared frontend plus pipeline and CLI entry points for a direct root and an external `?dtc` child,
   - and the strict diagnostic now points to the canonical pair replacement
     `(:= (signal value))` for the compact `:=` compatibility form.
 - Why this is worth shipping:
@@ -8731,11 +8737,11 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-01: `R12` now counts missing generated-child lookup as composition-contract rejection too
 - Continued the visible `R12` lane by widening the same composition-contract bucket that already covered missing external `.rtlif` sidecars into missing external generated-child source lookup too.
 - Landed behavior:
-  - [t/corpus/missing_fsm_child_source_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/missing_fsm_child_source_top.fsm) and [t/corpus/missing_dt_child_source_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/missing_dt_child_source_top.fsm) now capture the bounded “missing external `?fsmc` / `?dtc` child source” failures as named corpus assets,
-  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) now classifies them as `contract.missing_fsm_child_source` and `contract.missing_dt_child_source`,
+  - [t/corpus/missing_fsm_child_source_top.fsm](t/corpus/missing_fsm_child_source_top.fsm) and [t/corpus/missing_dt_child_source_top.fsm](t/corpus/missing_dt_child_source_top.fsm) now capture the bounded “missing external `?fsmc` / `?dtc` child source” failures as named corpus assets,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](t/lib/FSM/Test/RegressionCorpus.pm) now classifies them as `contract.missing_fsm_child_source` and `contract.missing_dt_child_source`,
   - those entries use the existing `composition_contract_rejection_pipeline_cli` coverage bucket and record the missing-child boundary through the `Expected child source file:` diagnostics family,
-  - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now checks both composition rejection paths through both pipeline and CLI,
-  - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) now explains that the composition-contract bucket is intentionally broader than only the `.rtlif` sidecar family.
+  - [t/249-regression-corpus-classified-behavior.t](t/249-regression-corpus-classified-behavior.t) now checks both composition rejection paths through both pipeline and CLI,
+  - and [docs/REGRESSION_CORPUS.md](docs/REGRESSION_CORPUS.md) now explains that the composition-contract bucket is intentionally broader than only the `.rtlif` sidecar family.
 - Why this is worth shipping:
   - it proves the composition-contract corpus is about boundary families, not one isolated subsystem,
   - it converts the freshly shipped missing-child diagnostics into explicit support accounting,
@@ -8744,10 +8750,10 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-01: unresolved external generated-child lookup now keeps an expected-artifact label
 - Continued the visible `R10` lane by tightening the missing-child `?fsmc` / `?dtc` case instead of letting unresolved external child lookup remain slightly less actionable than wrong-kind child realization or missing `.rtlif` sidecars.
 - Landed behavior:
-  - [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) now distinguishes unresolved external child lookup from resolved wrong-kind child failures at the artifact-label level,
+  - [perl/FSM/Composition/GeneratedChildRealizer.pm](perl/FSM/Composition/GeneratedChildRealizer.pm) now distinguishes unresolved external child lookup from resolved wrong-kind child failures at the artifact-label level,
   - missing external child lookup now keeps `Source file: '...'`, `Expected child source file: 'source_name.fsm'`, and `Generated child source: '?fsmc/?dtc' 'source_name'`,
   - resolved wrong-kind external child failures still keep the concrete `Child source file: 'resolved/path/source.fsm'` plus `Parent composition source: '...'`,
-  - and [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm) now turns that same expected child filename into a first-class failure-summary artifact.
+  - and [perl/FSM/Composition/FailureReportBuilder.pm](perl/FSM/Composition/FailureReportBuilder.pm) now turns that same expected child filename into a first-class failure-summary artifact.
 - Why this is worth shipping:
   - it makes missing external child lookup as actionable as the already-shipped wrong-kind child and missing-sidecar `.rtlif` cases,
   - it keeps the wording honest by distinguishing “expected child file was not found” from “resolved child file exists but has the wrong root kind,”
@@ -8756,11 +8762,11 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-01: `R12` now counts one composition-contract rejection family too
 - Continued the visible `R12` lane by widening the corpus into one static composition-top expected-failure asset instead of keeping all negative entries limited to strict-mode or direct language-contract cases.
 - Landed behavior:
-  - [t/corpus/missing_rtl_metadata_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/missing_rtl_metadata_top.fsm) now captures the bounded “missing external `.rtlif` sidecar” composition failure as a named corpus asset,
-  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) now classifies it as `contract.missing_rtl_metadata_sidecar`,
+  - [t/corpus/missing_rtl_metadata_top.fsm](t/corpus/missing_rtl_metadata_top.fsm) now captures the bounded “missing external `.rtlif` sidecar” composition failure as a named corpus asset,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](t/lib/FSM/Test/RegressionCorpus.pm) now classifies it as `contract.missing_rtl_metadata_sidecar`,
   - that entry uses the new `composition_contract_rejection_pipeline_cli` coverage bucket and records the missing-sidecar boundary through the `Expected RTL metadata file:` diagnostic family,
-  - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now checks that composition rejection path through both pipeline and CLI,
-  - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) now explains that bucket alongside the earlier strict and language-contract rejection buckets.
+  - [t/249-regression-corpus-classified-behavior.t](t/249-regression-corpus-classified-behavior.t) now checks that composition rejection path through both pipeline and CLI,
+  - and [docs/REGRESSION_CORPUS.md](docs/REGRESSION_CORPUS.md) now explains that bucket alongside the earlier strict and language-contract rejection buckets.
 - Why this is worth shipping:
   - it proves the corpus can talk about composition contract failures, not only parser/strict failures,
   - it connects the freshly shipped missing-`.rtlif` diagnostics work to explicit support accounting,
@@ -8769,10 +8775,10 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-01: unresolved external `.rtlif` lookup now keeps an expected-artifact label
 - Continued the visible `R10` lane by tightening the missing-sidecar `?rtl` case instead of letting unresolved metadata lookup remain the one remaining rawer edge in the RTL-child diagnostics family.
 - Landed behavior:
-  - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) now distinguishes unresolved external sidecar lookup from resolved external metadata parsing/validation,
+  - [perl/FSM/Composition/RTLInterfaceLoader.pm](perl/FSM/Composition/RTLInterfaceLoader.pm) now distinguishes unresolved external sidecar lookup from resolved external metadata parsing/validation,
   - missing sidecar lookup now keeps `Source file: '...'`, `Expected RTL metadata file: 'module.rtlif'`, and `RTL child module: '?rtl' 'module_name'`,
   - resolved external metadata failures still keep the concrete `RTL metadata file: 'resolved/path/module.rtlif'` plus `Parent composition source: '...'`,
-  - and [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm) now turns that same expected sidecar name into a first-class failure-summary artifact.
+  - and [perl/FSM/Composition/FailureReportBuilder.pm](perl/FSM/Composition/FailureReportBuilder.pm) now turns that same expected sidecar name into a first-class failure-summary artifact.
 - Why this is worth shipping:
   - it makes the missing-sidecar case as actionable as the already-shipped malformed-sidecar cases,
   - it keeps the wording honest by distinguishing “expected but not found” from “resolved and malformed,”
@@ -8781,10 +8787,10 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-01: strict mode now treats explicit `asreset` as compatibility residue
 - Continued the visible `R9` lane by widening strict-mode enforcement into another explicit `+system` compatibility-residue cut instead of inventing a new syntax family.
 - Landed behavior:
-  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now scans direct-root body items for explicit `(asreset rstn)` inside `+system` and rejects that spelling in strict mode with a canonical `(sreset rstn)` migration hint,
+  - [perl/FSM/Pipeline/SourceFrontend.pm](perl/FSM/Pipeline/SourceFrontend.pm) now scans direct-root body items for explicit `(asreset rstn)` inside `+system` and rejects that spelling in strict mode with a canonical `(sreset rstn)` migration hint,
   - the same shared strict owner still leaves default-mode compatibility intact and still applies when semantic direct-root parsing is reached through generated child realization,
-  - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) now passes `raw_ast` into the shared top-level strict hook too, which means section-level strict rules no longer rely on the later semantic-module creation path to fire,
-  - and [t/254-strict-mode-asreset-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/254-strict-mode-asreset-boundary.t) now locks both the direct-root and external `?fsmc` child-source boundary shapes through pipeline and CLI.
+  - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) now passes `raw_ast` into the shared top-level strict hook too, which means section-level strict rules no longer rely on the later semantic-module creation path to fire,
+  - and [t/254-strict-mode-asreset-boundary.t](t/254-strict-mode-asreset-boundary.t) now locks both the direct-root and external `?fsmc` child-source boundary shapes through pipeline and CLI.
 - Why this is worth shipping:
   - it keeps `R9` moving in the same pattern as the earlier empty-`(+size)` cut: default-mode compatibility remains, strict mode narrows to one current authored spelling,
   - it turns another known compatibility residue into an explicit support-tier choice instead of leaving it only as quietly accepted parser behavior,
@@ -8793,10 +8799,10 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-01: `R12` widened into child-root compatibility accounting
 - Continued the visible `R12` lane by moving support accounting into generated-child source-root compatibility residue instead of keeping it limited to direct roots and section no-ops.
 - Landed behavior:
-  - [t/corpus/legacy_fsm_child_root_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_fsm_child_root_top.fsm) plus [t/corpus/legacy_fsm_child_root_src.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_fsm_child_root_src.fsm) now model the compatibility-retained external `?fsmc` child-root case,
-  - [t/corpus/legacy_dt_child_root_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_dt_child_root_top.fsm) plus [t/corpus/legacy_dt_child_root_src.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_dt_child_root_src.fsm) now model the matching external `?dtc` child-root case,
-  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) now carries `search_path_relpaths` as first-class catalog metadata so support-accounting entries can describe not only the source file but also the resolution roots required to realize the contract honestly,
-  - and [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now builds per-entry pipelines with those search roots and also forwards them through CLI `--path` arguments.
+  - [t/corpus/legacy_fsm_child_root_top.fsm](t/corpus/legacy_fsm_child_root_top.fsm) plus [t/corpus/legacy_fsm_child_root_src.fsm](t/corpus/legacy_fsm_child_root_src.fsm) now model the compatibility-retained external `?fsmc` child-root case,
+  - [t/corpus/legacy_dt_child_root_top.fsm](t/corpus/legacy_dt_child_root_top.fsm) plus [t/corpus/legacy_dt_child_root_src.fsm](t/corpus/legacy_dt_child_root_src.fsm) now model the matching external `?dtc` child-root case,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](t/lib/FSM/Test/RegressionCorpus.pm) now carries `search_path_relpaths` as first-class catalog metadata so support-accounting entries can describe not only the source file but also the resolution roots required to realize the contract honestly,
+  - and [t/249-regression-corpus-classified-behavior.t](t/249-regression-corpus-classified-behavior.t) now builds per-entry pipelines with those search roots and also forwards them through CLI `--path` arguments.
 - Why this is worth shipping:
   - it lets `R12` count child-resolution behavior explicitly instead of treating all support accounting as if it were direct-root only,
   - it ties the earlier strict child-root boundary work into the auditable corpus instead of leaving it only in isolated focused tests,
@@ -8805,10 +8811,10 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-01: typed extension loading failures now keep artifact labels too
 - Continued the visible `R10` lane by widening the diagnostics family one step earlier into extension loading and pipeline construction.
 - Landed behavior:
-  - [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm) now annotates malformed config-file failures with `Extension config file: '...'` and module-load / constructor failures with `Extension module: '...'`,
-  - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now wraps `HDLGenerator->new(...)` in the same cleaned CLI error presentation path used for later ordinary string failures,
-  - [t/253-extension-loader-diagnostic-context.t](/Users/richarddje/Documents/github/fsmgen/t/253-extension-loader-diagnostic-context.t) now locks malformed extension config input plus constructor-failing extension modules through both pipeline and CLI entry points,
-  - and [t/lib/FSM/TestExtension/BadNew.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/TestExtension/BadNew.pm) now provides the dedicated constructor-failure helper module for that coverage.
+  - [perl/FSM/Extension/Loader.pm](perl/FSM/Extension/Loader.pm) now annotates malformed config-file failures with `Extension config file: '...'` and module-load / constructor failures with `Extension module: '...'`,
+  - [bin/fsmgen](bin/fsmgen) now wraps `HDLGenerator->new(...)` in the same cleaned CLI error presentation path used for later ordinary string failures,
+  - [t/253-extension-loader-diagnostic-context.t](t/253-extension-loader-diagnostic-context.t) now locks malformed extension config input plus constructor-failing extension modules through both pipeline and CLI entry points,
+  - and [t/lib/FSM/TestExtension/BadNew.pm](t/lib/FSM/TestExtension/BadNew.pm) now provides the dedicated constructor-failure helper module for that coverage.
 - Why this is worth shipping:
   - extension loading failures are user-visible and happen before normal source generation, so they should not fall back to raw constructor or script-line fallout after we already cleaned later diagnostics,
   - the new labels make those failures actionable immediately by naming the failing config file or module,
@@ -8817,12 +8823,12 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-01: the corpus now accounts for section-level compatibility residue too
 - Continued the visible `R12` lane by widening the support-accounting model beyond root-level compatibility residue.
 - Landed behavior:
-  - [t/corpus/legacy_empty_size_noop.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_empty_size_noop.fsm) is now the first explicit section-level compatibility-residue corpus asset,
-  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) now records that same file twice with two distinct contracts:
+  - [t/corpus/legacy_empty_size_noop.fsm](t/corpus/legacy_empty_size_noop.fsm) is now the first explicit section-level compatibility-residue corpus asset,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](t/lib/FSM/Test/RegressionCorpus.pm) now records that same file twice with two distinct contracts:
     - `legacy.empty_size_noop.default_compat` as `legacy_out_of_scope`
     - `legacy.empty_size_noop.strict_rejection` as `expected_failure`
-  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now knows the new `legacy_section_default_pipeline_cli` and `strict_section_rejection_pipeline_cli` buckets,
-  - and [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now checks both the default-mode compatibility path and the strict-mode rejection path for that asset.
+  - [t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t) now knows the new `legacy_section_default_pipeline_cli` and `strict_section_rejection_pipeline_cli` buckets,
+  - and [t/249-regression-corpus-classified-behavior.t](t/249-regression-corpus-classified-behavior.t) now checks both the default-mode compatibility path and the strict-mode rejection path for that asset.
 - Why this is worth shipping:
   - it proves the corpus can talk about section-level compatibility residue, not only root-level legacy forms,
   - it makes the empty-`(+size)` strict/default split part of auditable support accounting instead of leaving it as an isolated regression,
@@ -8831,10 +8837,10 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-01: typed extension hook failures now keep source-local context too
 - Continued the visible `R10` lane by widening the same artifact-label pattern into typed extension hook failures instead of letting those failures bypass the newer source-local wrappers.
 - Landed behavior:
-  - [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm) now annotates ordinary hook failures with `Extension module: '...'` and `Extension stage: '...'`,
-  - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) now runs both `after_parse_source` and `after_generate_result` under the same `Source file: '...'` wrapper used by the earlier top-level diagnostics slices,
-  - [t/252-extension-diagnostic-context.t](/Users/richarddje/Documents/github/fsmgen/t/252-extension-diagnostic-context.t) now locks parse-hook and result-hook failure shapes through both pipeline and CLI entry points,
-  - and [t/lib/FSM/TestExtension/Exploding.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/TestExtension/Exploding.pm) now provides the dedicated exploding extension used for that regression coverage.
+  - [perl/FSM/Extension/Registry.pm](perl/FSM/Extension/Registry.pm) now annotates ordinary hook failures with `Extension module: '...'` and `Extension stage: '...'`,
+  - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) now runs both `after_parse_source` and `after_generate_result` under the same `Source file: '...'` wrapper used by the earlier top-level diagnostics slices,
+  - [t/252-extension-diagnostic-context.t](t/252-extension-diagnostic-context.t) now locks parse-hook and result-hook failure shapes through both pipeline and CLI entry points,
+  - and [t/lib/FSM/TestExtension/Exploding.pm](t/lib/FSM/TestExtension/Exploding.pm) now provides the dedicated exploding extension used for that regression coverage.
 - Why this is worth shipping:
   - extension failures are user-visible when teams start embedding or customizing FSMGen, so they should not fall back to raw hook fallout after we already cleaned the main pipeline paths,
   - the new shape makes extension failures actionable immediately by naming the failing source, the failing module, and the failing hook stage,
@@ -8843,10 +8849,10 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-01: strict mode now rejects the legacy empty `(+size)` no-op
 - Continued the visible `R9` lane by moving beyond root-family cleanup into the first section-level compatibility cut.
 - Landed behavior:
-  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now rejects the legacy empty `(+size)` section in strict mode while leaving default-mode compatibility unchanged,
+  - [perl/FSM/Pipeline/SourceFrontend.pm](perl/FSM/Pipeline/SourceFrontend.pm) now rejects the legacy empty `(+size)` section in strict mode while leaving default-mode compatibility unchanged,
   - that check lives in the shared direct-root strict owner, so it reaches top-level sources and generated child sources through the same semantic-module path instead of being hard-coded in only one caller,
-  - [t/251-strict-mode-empty-size-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/251-strict-mode-empty-size-boundary.t) now locks the boundary through the shared frontend plus pipeline and CLI entry points,
-  - and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents the right split: default mode still accepts empty `(+size)` as compatibility residue, strict mode requires either explicit `(+size (signal width) ...)` entries or no `+size` section at all.
+  - [t/251-strict-mode-empty-size-boundary.t](t/251-strict-mode-empty-size-boundary.t) now locks the boundary through the shared frontend plus pipeline and CLI entry points,
+  - and [docs/USER_GUIDE.md](docs/USER_GUIDE.md) now documents the right split: default mode still accepts empty `(+size)` as compatibility residue, strict mode requires either explicit `(+size (signal width) ...)` entries or no `+size` section at all.
 - Why this is worth shipping:
   - it is a real strict-mode support-tier cut that users can see without destabilizing the broader language surface,
   - it starts moving `R9` from root-family cleanup into section-level compatibility residue, which is the next honest shape for strict mode,
@@ -8855,10 +8861,10 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-01: CLI entrypoint failures now keep requested-source and output-file context
 - Switched back to the visible `R10` lane after the recent `R12` corpus streak and tightened the CLI failure shape before the pipeline even starts.
 - Landed behavior:
-  - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now wraps unresolved source-lookup failures with `Requested source: '...'`,
+  - [bin/fsmgen](bin/fsmgen) now wraps unresolved source-lookup failures with `Requested source: '...'`,
   - output-open failures now keep both `Source file: '...'` and `Output file: '...'` before the underlying open/write diagnostic,
-  - [t/250-cli-entrypoint-file-context.t](/Users/richarddje/Documents/github/fsmgen/t/250-cli-entrypoint-file-context.t) now locks both failure families,
-  - and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents those pre-pipeline CLI artifact labels beside the later source-local pipeline diagnostics.
+  - [t/250-cli-entrypoint-file-context.t](t/250-cli-entrypoint-file-context.t) now locks both failure families,
+  - and [docs/USER_GUIDE.md](docs/USER_GUIDE.md) now documents those pre-pipeline CLI artifact labels beside the later source-local pipeline diagnostics.
 - Why this is worth shipping:
   - users hit missing-input and output-path failures by hand all the time,
   - those failures happen before the richer pipeline provenance layer can help,
@@ -8867,11 +8873,11 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-01: the corpus now includes a static malformed-language expected-failure asset
 - Widened the visible `R12` catalog so `expected_failure` is no longer only about strict-mode compatibility cuts.
 - Landed behavior:
-  - [t/corpus/language_contract_bad_size_entry.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/language_contract_bad_size_entry.fsm) is now the first static malformed-language corpus asset,
-  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) now classifies it as `contract.language_contract_bad_size_entry`,
+  - [t/corpus/language_contract_bad_size_entry.fsm](t/corpus/language_contract_bad_size_entry.fsm) is now the first static malformed-language corpus asset,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](t/lib/FSM/Test/RegressionCorpus.pm) now classifies it as `contract.language_contract_bad_size_entry`,
   - that entry uses the new `language_contract_rejection_pipeline_cli` coverage bucket and records the normal `Malformed '+size' entry` boundary,
-  - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now checks that ordinary pipeline and CLI rejection path with source-file context,
-  - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) now explains that bucket alongside the earlier strict-root rejection bucket.
+  - [t/249-regression-corpus-classified-behavior.t](t/249-regression-corpus-classified-behavior.t) now checks that ordinary pipeline and CLI rejection path with source-file context,
+  - and [docs/REGRESSION_CORPUS.md](docs/REGRESSION_CORPUS.md) now explains that bucket alongside the earlier strict-root rejection bucket.
 - Why this is worth shipping:
   - it proves the catalog can talk about language-contract failures, not only compatibility mode splits,
   - it gives `R12` a static malformed asset we can build future negative coverage from,
@@ -8880,11 +8886,11 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-01: the first corpus catalog now carries explicit non-supported classifications too
 - Widened the visible `R12` catalog so it no longer only says what we support; it now also says one concrete thing we retain only as compatibility and one concrete thing we intentionally reject.
 - Landed behavior:
-  - [fsm/mipicsi2_txccore_ulp.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/mipicsi2_txccore_ulp.fsm) is now the first real dual-contract asset in [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm),
+  - [fsm/mipicsi2_txccore_ulp.fsm](fsm/mipicsi2_txccore_ulp.fsm) is now the first real dual-contract asset in [t/lib/FSM/Test/RegressionCorpus.pm](t/lib/FSM/Test/RegressionCorpus.pm),
   - `legacy.mipicsi2_txccore_ulp.default_compat` is classified as `legacy_out_of_scope` and still compiles through pipeline and CLI in default mode,
   - `legacy.mipicsi2_txccore_ulp.strict_rejection` is classified as `expected_failure` and now locks the strict `+fsm` rejection path through pipeline and CLI,
-  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now allows repeated file paths when the contract differs and instead treats the catalog entry as the unit of support accounting,
-  - and [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now exercises those first non-supported classifications end to end.
+  - [t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t) now allows repeated file paths when the contract differs and instead treats the catalog entry as the unit of support accounting,
+  - and [t/249-regression-corpus-classified-behavior.t](t/249-regression-corpus-classified-behavior.t) now exercises those first non-supported classifications end to end.
 - Why this is worth shipping:
   - support accounting is more honest when it says both “supported here” and “not part of supported surface here,”
   - the same repo asset can now carry multiple explicit contracts instead of forcing everything into one bucket,
@@ -8893,10 +8899,10 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-01: first protocol corpus slice now has explicit catalog/accounting structure
 - Strengthened the visible `R12` start so it is not just one smoke test over four files.
 - Landed behavior:
-  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) now acts as the first machine-checked regression-corpus catalog,
-  - [t/247-protocol-fixture-regression-smoke.t](/Users/richarddje/Documents/github/fsmgen/t/247-protocol-fixture-regression-smoke.t) now reads from that catalog instead of carrying the first protocol list inline,
-  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now locks catalog uniqueness, known classifications, known coverage buckets, and real repo asset existence,
-  - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) is now the human-readable companion note for the same first slice.
+  - [t/lib/FSM/Test/RegressionCorpus.pm](t/lib/FSM/Test/RegressionCorpus.pm) now acts as the first machine-checked regression-corpus catalog,
+  - [t/247-protocol-fixture-regression-smoke.t](t/247-protocol-fixture-regression-smoke.t) now reads from that catalog instead of carrying the first protocol list inline,
+  - [t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t) now locks catalog uniqueness, known classifications, known coverage buckets, and real repo asset existence,
+  - and [docs/REGRESSION_CORPUS.md](docs/REGRESSION_CORPUS.md) is now the human-readable companion note for the same first slice.
 - Why this is worth shipping:
   - `R12` is supposed to make support claims auditable, not just accumulate examples,
   - it gives us a real growth pattern for future corpus work,
@@ -8905,9 +8911,9 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-01: protocol fixture smoke now starts `R12`
 - Started the visible `R12` lane by turning the imported APB / AMBA protocol seeds into regression-backed corpus entries instead of leaving them as examples only.
 - Landed behavior:
-  - [t/247-protocol-fixture-regression-smoke.t](/Users/richarddje/Documents/github/fsmgen/t/247-protocol-fixture-regression-smoke.t) now locks direct-root compile smoke for [fsm/apb_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_requester.fsm), [fsm/apb_completer.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_completer.fsm), and [fsm/amba_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/amba_requester.fsm),
-  - that same test now also locks [fsm/apb_tb.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_tb.fsm) as a composed regression seed through both the pipeline and CLI, including its generated-child and explicit-link lane,
-  - and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) now moves `R12` from `not started` to `in progress`.
+  - [t/247-protocol-fixture-regression-smoke.t](t/247-protocol-fixture-regression-smoke.t) now locks direct-root compile smoke for [fsm/apb_requester.fsm](fsm/apb_requester.fsm), [fsm/apb_completer.fsm](fsm/apb_completer.fsm), and [fsm/amba_requester.fsm](fsm/amba_requester.fsm),
+  - that same test now also locks [fsm/apb_tb.fsm](fsm/apb_tb.fsm) as a composed regression seed through both the pipeline and CLI, including its generated-child and explicit-link lane,
+  - and [ROADMAP_STATUS.md](ROADMAP_STATUS.md) now moves `R12` from `not started` to `in progress`.
 - Why this is worth shipping:
   - it makes the imported protocol seeds count toward auditable support claims instead of just repo size,
   - it starts the corpus lane with a mix of direct roots and one real composition top,
@@ -8916,9 +8922,9 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-01: CLI diagnostics now suppress raw Perl stack traces
 - Continued the visible `R10` diagnostics lane by cleaning the last-mile CLI presentation of the source-local error shapes we already shipped.
 - Landed behavior:
-  - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now normalizes ordinary string errors before printing them, removing raw Perl `confess` stack frames while preserving the real diagnostic text and any earlier `Source file:` / `Parent composition source:` / `Generated child source:` context lines,
+  - [bin/fsmgen](bin/fsmgen) now normalizes ordinary string errors before printing them, removing raw Perl `confess` stack frames while preserving the real diagnostic text and any earlier `Source file:` / `Parent composition source:` / `Generated child source:` context lines,
   - the composition failure summary path is unchanged and still derives from the original raw error text before CLI presentation is cleaned,
-  - and [t/246-cli-error-output-cleanup.t](/Users/richarddje/Documents/github/fsmgen/t/246-cli-error-output-cleanup.t) now locks the cleaned CLI output for one top-level parse failure and one generated-child failure.
+  - and [t/246-cli-error-output-cleanup.t](t/246-cli-error-output-cleanup.t) now locks the cleaned CLI output for one top-level parse failure and one generated-child failure.
 - Why this is worth shipping:
   - it is immediately visible to users running the CLI by hand,
   - it keeps the work from the earlier `R10` source-local context slices readable instead of burying it under call-frame noise,
@@ -8927,10 +8933,10 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-01: strict mode now requires canonical `?fsm:` roots under `?fsmc`
 - Continued the visible `R9` lane by making the FSM-child side of the strict child-root contract explicit instead of relying only on the broader top-level `+fsm` rejection text.
 - Landed behavior:
-  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now also rejects legacy `+fsm` specifically when it is used as the root of a `?fsmc` child source,
+  - [perl/FSM/Pipeline/SourceFrontend.pm](perl/FSM/Pipeline/SourceFrontend.pm) now also rejects legacy `+fsm` specifically when it is used as the root of a `?fsmc` child source,
   - that rejection now gives the child-specific migration hint toward canonical `?fsm:source_name` instead of only the earlier top-level `?fsm:module_name` wording,
-  - [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) already applies the generated-child strict helper before semantic realization, so both pipeline and CLI now surface that stricter child-root message with the full child-source context,
-  - and [t/245-strict-mode-fsm-child-root-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/245-strict-mode-fsm-child-root-boundary.t) now locks the external flattened and nested legacy `+fsm` child-root families end to end.
+  - [perl/FSM/Composition/GeneratedChildRealizer.pm](perl/FSM/Composition/GeneratedChildRealizer.pm) already applies the generated-child strict helper before semantic realization, so both pipeline and CLI now surface that stricter child-root message with the full child-source context,
+  - and [t/245-strict-mode-fsm-child-root-boundary.t](t/245-strict-mode-fsm-child-root-boundary.t) now locks the external flattened and nested legacy `+fsm` child-root families end to end.
 - Why this is worth shipping:
   - it makes the strict child-root contract symmetric across `?fsmc` and `?dtc`,
   - it gives users a more accurate migration hint at the exact child-source boundary they are hitting,
@@ -8939,10 +8945,10 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-01: generated-child resolution failures now keep source-local context too
 - Continued the visible `R10` diagnostics lane by widening the earlier generated-child error-shape pattern into the two adjacent external-child failure families that were still surfacing only raw search or wrong-kind text.
 - Landed behavior:
-  - [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) now routes external child-source resolution failures and wrong-kind external child failures through `_with_generated_child_source_context(...)` instead of raising them bare,
+  - [perl/FSM/Composition/GeneratedChildRealizer.pm](perl/FSM/Composition/GeneratedChildRealizer.pm) now routes external child-source resolution failures and wrong-kind external child failures through `_with_generated_child_source_context(...)` instead of raising them bare,
   - wrong-kind external child failures now keep `Source file: 'child_source.fsm'`, `Parent composition source: 'top_source.fsm'`, and `Generated child source: '?fsmc/?dtc' 'source_name'`,
   - unresolved external child failures now keep `Source file: 'top_source.fsm'` plus the same generated-child identity line without inventing a nonexistent child-file artifact,
-  - and [t/244-composition-child-resolution-diagnostic-context.t](/Users/richarddje/Documents/github/fsmgen/t/244-composition-child-resolution-diagnostic-context.t) now locks both failure families through pipeline and CLI entry points.
+  - and [t/244-composition-child-resolution-diagnostic-context.t](t/244-composition-child-resolution-diagnostic-context.t) now locks both failure families through pipeline and CLI entry points.
 - Why this is worth shipping:
   - it makes the generated-child diagnostics story consistent across parse failures, unresolved external children, and wrong-kind external children,
   - it keeps the real failing artifact visible when one exists and stays honest when none was ever resolved,
@@ -8951,10 +8957,10 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-01: strict mode now requires canonical `?dt:` roots under `?dtc`
 - Continued the visible `R9` lane by making one child-specific support-tier cut instead of pretending the broader module-root contract is already settled.
 - Landed behavior:
-  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now owns `enforce_strict_generated_child_source_boundary(...)` beside the earlier top-level strict-root helper,
-  - [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) now calls that helper before semantic realization so strict mode rejects `?mod:` / `?module:` when they are used specifically as `?dtc` child roots,
+  - [perl/FSM/Pipeline/SourceFrontend.pm](perl/FSM/Pipeline/SourceFrontend.pm) now owns `enforce_strict_generated_child_source_boundary(...)` beside the earlier top-level strict-root helper,
+  - [perl/FSM/Composition/GeneratedChildRealizer.pm](perl/FSM/Composition/GeneratedChildRealizer.pm) now calls that helper before semantic realization so strict mode rejects `?mod:` / `?module:` when they are used specifically as `?dtc` child roots,
   - top-level `?mod:` / `?module:` roots remain accepted in strict mode on the current shared direct path,
-  - and [t/240-strict-mode-standalone-dt-alias-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/240-strict-mode-standalone-dt-alias-boundary.t) now locks the updated behavior through both pipeline and CLI for embedded and external child sources.
+  - and [t/240-strict-mode-standalone-dt-alias-boundary.t](t/240-strict-mode-standalone-dt-alias-boundary.t) now locks the updated behavior through both pipeline and CLI for embedded and external child sources.
 - Why this is worth shipping:
   - it aligns strict mode with the intended semantic distinction you called out earlier: `?dt` is one decision tree, while `?mod:` / `?module:` are broader module roots,
   - it narrows one real compatibility residue without overreaching into the still-settling top-level module-root contract,
@@ -8963,10 +8969,10 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-04-01: RTL child metadata diagnostics now keep metadata-file and parent-source context
 - Continued the visible `R10` diagnostics lane by widening the earlier source-local error-shape pattern into the external/embedded RTL metadata path instead of leaving `?rtl` composition failures to surface only the inner `.rtlif` loader diagnostic.
 - Landed behavior:
-  - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) now wraps external sidecar resolution/parsing/validation and embedded `?rtlif` validation with one bounded context helper,
+  - [perl/FSM/Composition/RTLInterfaceLoader.pm](perl/FSM/Composition/RTLInterfaceLoader.pm) now wraps external sidecar resolution/parsing/validation and embedded `?rtlif` validation with one bounded context helper,
   - sidecar `.rtlif` failures now keep `RTL metadata file: 'module.rtlif'`, `Parent composition source: 'top_source.fsm'`, and `RTL child module: '?rtl' 'module_name'`,
   - embedded `?rtlif` failures now keep `Source file: 'top_source.fsm'` plus the same RTL-child identity line,
-  - and [t/243-composition-rtl-child-diagnostic-context.t](/Users/richarddje/Documents/github/fsmgen/t/243-composition-rtl-child-diagnostic-context.t) now locks both the external-sidecar and embedded-metadata failure families through pipeline and CLI entry points.
+  - and [t/243-composition-rtl-child-diagnostic-context.t](t/243-composition-rtl-child-diagnostic-context.t) now locks both the external-sidecar and embedded-metadata failure families through pipeline and CLI entry points.
 - Why this is worth shipping:
   - it makes the diagnostics story symmetric across the two main composition child families that can fail in separate files,
   - it keeps the resolved `.rtlif` sidecar visible when that is the failing artifact instead of forcing users to infer it from the longer message body,
@@ -8975,10 +8981,10 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-31: generated-child diagnostics now keep child-source and parent-source context
 - Continued the visible `R10` diagnostics lane by widening the earlier top-level `Source file:` pattern into generated-child realization instead of leaving multi-file composition failures to surface only the inner child parser/adapter text.
 - Landed behavior:
-  - [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) now wraps both external child-source loading and generated-child semantic compilation with one bounded source-context helper,
+  - [perl/FSM/Composition/GeneratedChildRealizer.pm](perl/FSM/Composition/GeneratedChildRealizer.pm) now wraps both external child-source loading and generated-child semantic compilation with one bounded source-context helper,
   - external generated-child failures now keep `Source file: 'child_source.fsm'`, `Parent composition source: 'top_source.fsm'`, and `Generated child source: '?fsmc/?dtc' 'source_name'`,
   - embedded generated-child failures now keep `Source file: 'top_source.fsm'` plus the same generated-child identity line,
-  - and [t/242-composition-child-source-file-diagnostic-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/242-composition-child-source-file-diagnostic-boundary.t) now locks both the external-child and embedded-child malformed-source families through pipeline and CLI entry points.
+  - and [t/242-composition-child-source-file-diagnostic-boundary.t](t/242-composition-child-source-file-diagnostic-boundary.t) now locks both the external-child and embedded-child malformed-source families through pipeline and CLI entry points.
 - Why this is worth shipping:
   - it makes the first `R10` diagnostics pattern pay off in the place where multi-file designs become harder to debug,
   - it keeps the real failing child file visible without losing the parent composition source that led to that realization path,
@@ -8987,11 +8993,11 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-31: strict mode correction keeps `?mod:` / `?module:` distinct from `?dt:`
 - Corrected the visible `R9` strict-mode lane after an overreach in the previous root-family cut.
 - Landed behavior:
-  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) still owns the shared strict root-family enforcement helper,
-  - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) still delegates top-level strict root checking there,
-  - [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm) and [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) still pass strict mode through semantic module creation so generated child sources inherit the same root-family boundary,
+  - [perl/FSM/Pipeline/SourceFrontend.pm](perl/FSM/Pipeline/SourceFrontend.pm) still owns the shared strict root-family enforcement helper,
+  - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) still delegates top-level strict root checking there,
+  - [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](perl/FSM/Pipeline/DirectGenerationOrchestrator.pm) and [perl/FSM/Composition/GeneratedChildRealizer.pm](perl/FSM/Composition/GeneratedChildRealizer.pm) still pass strict mode through semantic module creation so generated child sources inherit the same root-family boundary,
   - but that shared boundary no longer rejects `?mod:` / `?module:` or suggests migrating them to `?dt:`,
-  - and [t/240-strict-mode-standalone-dt-alias-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/240-strict-mode-standalone-dt-alias-boundary.t) now locks strict-mode acceptance for top-level `?dt:` / `?mod:` / `?module:` roots plus `?dtc` child realization through `?mod:` / `?module:`.
+  - and [t/240-strict-mode-standalone-dt-alias-boundary.t](t/240-strict-mode-standalone-dt-alias-boundary.t) now locks strict-mode acceptance for top-level `?dt:` / `?mod:` / `?module:` roots plus `?dtc` child realization through `?mod:` / `?module:`.
 - Design correction:
   - `?dt` describes one decision tree,
   - `?mod:` / `?module:` are broader module/entity-architecture roots in the intended language model,
@@ -8999,9 +9005,9 @@ This document captures engineering rationale, design constraints, and working de
 
 ## 2026-03-31: strict mode now exists as a real first support-tier slice
 - This is the first intentional `R9` implementation slice rather than more planning-only strict-mode language:
-  - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now accepts `--strict`,
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now accepts `strict_mode => 1`,
-  - and [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) now enforces the first real support-tier cut by rejecting the legacy `+fsm` root family in strict mode.
+  - [bin/fsmgen](bin/fsmgen) now accepts `--strict`,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now accepts `strict_mode => 1`,
+  - and [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) now enforces the first real support-tier cut by rejecting the legacy `+fsm` root family in strict mode.
 - Boundary decision:
   - strict mode is deliberately starting with one high-signal compatibility cut instead of pretending the whole final support-tier model is already implemented,
   - modern explicit `?fsm:name` roots still compile under strict mode,
@@ -9024,26 +9030,26 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-31: live direct backend no longer instantiates the generation-structural-prelude shell
 - Continued the active `R11` backend-breakdown lane by retiring one more fake live owner once the scaffold and internal-declaration emitters were explicit enough that the wrapper no longer represented a real runtime boundary.
 - Landed behavior:
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the live direct backend no longer instantiates `backend_sv_generation_structural_prelude_support`,
-  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so it now reaches scaffold/header/module/state/internal-declaration assembly directly before enable-condition generation,
-  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationStructuralPreludeSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationStructuralPreludeSupport.pm) so it now survives only as a compatibility shell over the live scaffold and internal-declaration owners,
-  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm) and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm) so the older compatibility shells rebuild their structural prefix directly over those live owners,
-  - retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t), [t/232-systemverilog-generation-pipeline-support.t](/Users/richarddje/Documents/github/fsmgen/t/232-systemverilog-generation-pipeline-support.t), [t/233-systemverilog-generation-prelude-support.t](/Users/richarddje/Documents/github/fsmgen/t/233-systemverilog-generation-prelude-support.t), [t/234-systemverilog-generation-tail-support.t](/Users/richarddje/Documents/github/fsmgen/t/234-systemverilog-generation-tail-support.t), and [t/237-systemverilog-generation-structural-prelude-support.t](/Users/richarddje/Documents/github/fsmgen/t/237-systemverilog-generation-structural-prelude-support.t),
-  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `97`-file / `96`-package snapshot.
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) so the live direct backend no longer instantiates `backend_sv_generation_structural_prelude_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so it now reaches scaffold/header/module/state/internal-declaration assembly directly before enable-condition generation,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationStructuralPreludeSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationStructuralPreludeSupport.pm) so it now survives only as a compatibility shell over the live scaffold and internal-declaration owners,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm) and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm) so the older compatibility shells rebuild their structural prefix directly over those live owners,
+  - retargeted [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t), [t/232-systemverilog-generation-pipeline-support.t](t/232-systemverilog-generation-pipeline-support.t), [t/233-systemverilog-generation-prelude-support.t](t/233-systemverilog-generation-prelude-support.t), [t/234-systemverilog-generation-tail-support.t](t/234-systemverilog-generation-tail-support.t), and [t/237-systemverilog-generation-structural-prelude-support.t](t/237-systemverilog-generation-structural-prelude-support.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `97`-file / `96`-package snapshot.
 - Why this is worth shipping:
   - it makes the live direct backend path more honest by removing another wrapper that no longer owns real behavior,
   - it leaves the compatibility-shell test surface intact without pretending that shell is still architecturally central,
-  - and it narrows the next honest seam to the remaining prescan/stage/tail coordination plus the still-central top-level orchestration in [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm).
+  - and it narrows the next honest seam to the remaining prescan/stage/tail coordination plus the still-central top-level orchestration in [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](perl/FSM/HDL/FlattenedDT/Orchestrator.pm).
 
 ## 2026-03-31: live direct backend no longer instantiates the generation-enable-preparation shell
 - Continued the active `R11` backend-breakdown lane by retiring one more fake live owner once enable-condition emission and the extracted prescan-preparation owner were both explicit enough that the wrapper no longer represented a real runtime boundary.
 - Landed behavior:
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the live direct backend no longer instantiates `backend_sv_generation_enable_preparation_support`,
-  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so it now emits enable conditions and runs the extracted prescan-preparation owner directly after the structural prelude,
-  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationEnablePreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationEnablePreparationSupport.pm) so it now survives only as a compatibility shell over those live owners,
-  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm) and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm) so the older compatibility shells rebuild their pre-stage flow over direct enable-condition generation plus the extracted prescan owner,
-  - retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t), [t/232-systemverilog-generation-pipeline-support.t](/Users/richarddje/Documents/github/fsmgen/t/232-systemverilog-generation-pipeline-support.t), [t/233-systemverilog-generation-prelude-support.t](/Users/richarddje/Documents/github/fsmgen/t/233-systemverilog-generation-prelude-support.t), [t/234-systemverilog-generation-tail-support.t](/Users/richarddje/Documents/github/fsmgen/t/234-systemverilog-generation-tail-support.t), and [t/236-systemverilog-generation-enable-preparation-support.t](/Users/richarddje/Documents/github/fsmgen/t/236-systemverilog-generation-enable-preparation-support.t),
-  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `98`-file / `97`-package snapshot.
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) so the live direct backend no longer instantiates `backend_sv_generation_enable_preparation_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so it now emits enable conditions and runs the extracted prescan-preparation owner directly after the structural prelude,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationEnablePreparationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationEnablePreparationSupport.pm) so it now survives only as a compatibility shell over those live owners,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm) and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm) so the older compatibility shells rebuild their pre-stage flow over direct enable-condition generation plus the extracted prescan owner,
+  - retargeted [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t), [t/232-systemverilog-generation-pipeline-support.t](t/232-systemverilog-generation-pipeline-support.t), [t/233-systemverilog-generation-prelude-support.t](t/233-systemverilog-generation-prelude-support.t), [t/234-systemverilog-generation-tail-support.t](t/234-systemverilog-generation-tail-support.t), and [t/236-systemverilog-generation-enable-preparation-support.t](t/236-systemverilog-generation-enable-preparation-support.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `98`-file / `97`-package snapshot.
 - Why this is worth shipping:
   - it makes the live direct backend path more honest by removing another thin wrapper that no longer owns real behavior,
   - it makes the pre-stage flow easier to read as “structural prelude, enable conditions, prescan, consolidated stage” instead of one more facade hop,
@@ -9052,11 +9058,11 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-31: live direct backend no longer instantiates the generation-pipeline shell
 - Continued the active `R11` backend-breakdown lane by retiring one more fake live owner once the post-flattening direct backend sequence had been reduced to a straightforward orchestration of already-extracted structural-prelude, enable-preparation, consolidated-stage, and tail owners.
 - Landed behavior:
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the live direct backend no longer instantiates `backend_sv_generation_pipeline_support`,
-  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so it now composes structural-prelude generation, enable-oriented preparation, consolidated intermediate stage generation, and tail closeout directly after flattening,
-  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm) so it now survives only as a compatibility shell over those live owners,
-  - retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) and [t/232-systemverilog-generation-pipeline-support.t](/Users/richarddje/Documents/github/fsmgen/t/232-systemverilog-generation-pipeline-support.t),
-  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `99`-file / `98`-package snapshot.
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) so the live direct backend no longer instantiates `backend_sv_generation_pipeline_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so it now composes structural-prelude generation, enable-oriented preparation, consolidated intermediate stage generation, and tail closeout directly after flattening,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm) so it now survives only as a compatibility shell over those live owners,
+  - retargeted [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t) and [t/232-systemverilog-generation-pipeline-support.t](t/232-systemverilog-generation-pipeline-support.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `99`-file / `98`-package snapshot.
 - Why this is worth shipping:
   - it makes the live direct backend path more honest by removing a thin wrapper that no longer represented a real runtime boundary,
   - it leaves the compatibility-shell surface available for direct owner tests without pretending that shell is still architecturally central,
@@ -9065,11 +9071,11 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-31: live direct backend no longer instantiates the generation-prelude shell
 - Continued the active `R11` backend-breakdown lane by retiring one more fake live owner once the structural-prelude and enable-preparation halves were both explicit enough that the old prelude wrapper no longer represented a real runtime boundary.
 - Landed behavior:
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the live direct backend no longer instantiates `backend_sv_generation_prelude_support`,
-  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm) so it now composes the extracted structural-prelude and enable-preparation owners directly before the consolidated stage and tail owners,
-  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm) so it now survives only as a compatibility shell over those live owners,
-  - retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t), [t/232-systemverilog-generation-pipeline-support.t](/Users/richarddje/Documents/github/fsmgen/t/232-systemverilog-generation-pipeline-support.t), [t/233-systemverilog-generation-prelude-support.t](/Users/richarddje/Documents/github/fsmgen/t/233-systemverilog-generation-prelude-support.t), and [t/234-systemverilog-generation-tail-support.t](/Users/richarddje/Documents/github/fsmgen/t/234-systemverilog-generation-tail-support.t),
-  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `100`-file / `99`-package snapshot.
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) so the live direct backend no longer instantiates `backend_sv_generation_prelude_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm) so it now composes the extracted structural-prelude and enable-preparation owners directly before the consolidated stage and tail owners,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm) so it now survives only as a compatibility shell over those live owners,
+  - retargeted [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t), [t/232-systemverilog-generation-pipeline-support.t](t/232-systemverilog-generation-pipeline-support.t), [t/233-systemverilog-generation-prelude-support.t](t/233-systemverilog-generation-prelude-support.t), and [t/234-systemverilog-generation-tail-support.t](t/234-systemverilog-generation-tail-support.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `100`-file / `99`-package snapshot.
 - Why this is worth shipping:
   - it makes the live backend path honest again by removing a wrapper that had become architectural residue rather than a real runtime owner,
   - it lets future sessions read the pre-stage direct backend sequence directly as structural-prelude assembly plus enable-oriented preparation instead of mentally stepping through one more facade,
@@ -9078,11 +9084,11 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-31: live direct backend prescan preparation now has a dedicated owner
 - Continued the active `R11` backend-breakdown lane by splitting the state-mutating prescan half away from the enable-fragment emitter once the structural prelude and broader enable-preparation wrapper were both explicit enough to leave logical-op counting and WEN/EN prescan with a clean owner of their own.
 - Landed behavior:
-  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPrescanPreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPrescanPreparationSupport.pm) as the live owner of logical-operation counting plus WEN/EN prescan after enable-condition emission,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates `backend_sv_generation_prescan_preparation_support`,
-  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationEnablePreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationEnablePreparationSupport.pm) so it now keeps only enable-condition emission plus delegation to the extracted prescan owner,
-  - added [t/238-systemverilog-generation-prescan-preparation-support.t](/Users/richarddje/Documents/github/fsmgen/t/238-systemverilog-generation-prescan-preparation-support.t), retargeted [t/236-systemverilog-generation-enable-preparation-support.t](/Users/richarddje/Documents/github/fsmgen/t/236-systemverilog-generation-enable-preparation-support.t) and [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t),
-  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `101`-file / `100`-package snapshot.
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPrescanPreparationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPrescanPreparationSupport.pm) as the live owner of logical-operation counting plus WEN/EN prescan after enable-condition emission,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates `backend_sv_generation_prescan_preparation_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationEnablePreparationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationEnablePreparationSupport.pm) so it now keeps only enable-condition emission plus delegation to the extracted prescan owner,
+  - added [t/238-systemverilog-generation-prescan-preparation-support.t](t/238-systemverilog-generation-prescan-preparation-support.t), retargeted [t/236-systemverilog-generation-enable-preparation-support.t](t/236-systemverilog-generation-enable-preparation-support.t) and [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `101`-file / `100`-package snapshot.
 - Why this is worth shipping:
   - it makes the live enable-preparation owner honest by separating emitted HDL from pure backend-analysis side effects,
   - it gives the direct backend a named owner for the timing-sensitive count-before-prescan contract that seeds later consolidated intermediate generation,
@@ -9091,11 +9097,11 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-31: live direct backend structural pre-stage prelude now has a dedicated owner
 - Continued the active `R11` backend-breakdown lane by pulling the structural prefix out of the broader prelude once the non-structural enable/prescan pocket already had its own owner and the remaining scaffold/internal-declaration half was clean enough to stand alone.
 - Landed behavior:
-  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationStructuralPreludeSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationStructuralPreludeSupport.pm) as the live owner of scaffold rendering plus internal declaration rendering before enable-oriented pre-stage preparation,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates `backend_sv_generation_structural_prelude_support`,
-  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm) so it now keeps only structural-prelude plus enable-preparation composition,
-  - added [t/237-systemverilog-generation-structural-prelude-support.t](/Users/richarddje/Documents/github/fsmgen/t/237-systemverilog-generation-structural-prelude-support.t), retargeted [t/233-systemverilog-generation-prelude-support.t](/Users/richarddje/Documents/github/fsmgen/t/233-systemverilog-generation-prelude-support.t) and [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t),
-  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `100`-file / `99`-package snapshot.
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationStructuralPreludeSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationStructuralPreludeSupport.pm) as the live owner of scaffold rendering plus internal declaration rendering before enable-oriented pre-stage preparation,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates `backend_sv_generation_structural_prelude_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm) so it now keeps only structural-prelude plus enable-preparation composition,
+  - added [t/237-systemverilog-generation-structural-prelude-support.t](t/237-systemverilog-generation-structural-prelude-support.t), retargeted [t/233-systemverilog-generation-prelude-support.t](t/233-systemverilog-generation-prelude-support.t) and [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `100`-file / `99`-package snapshot.
 - Why this is worth shipping:
   - it makes the live prelude owner honest by separating the purely structural prefix from the state-mutating enable preparation that follows it,
   - it gives the direct backend a named owner for the structural SystemVerilog prefix that has to exist before any enable-oriented preparation runs,
@@ -9104,11 +9110,11 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-31: live direct backend enable-oriented pre-stage preparation now has a dedicated owner
 - Continued the active `R11` backend-breakdown lane by pulling the non-structural enable/prescan pocket out of the broader prelude once the scaffold and declaration neighbors were already explicit enough to leave that preparation family with a clean owner of its own.
 - Landed behavior:
-  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationEnablePreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationEnablePreparationSupport.pm) as the live owner of enable-condition generation, logical-operation counting, and WEN/EN prescan before consolidated intermediate generation,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates `backend_sv_generation_enable_preparation_support`,
-  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm) so it now keeps only scaffold/declaration composition plus delegation to that extracted owner,
-  - added [t/236-systemverilog-generation-enable-preparation-support.t](/Users/richarddje/Documents/github/fsmgen/t/236-systemverilog-generation-enable-preparation-support.t), retargeted [t/233-systemverilog-generation-prelude-support.t](/Users/richarddje/Documents/github/fsmgen/t/233-systemverilog-generation-prelude-support.t) and [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t),
-  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `99`-file / `98`-package snapshot.
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationEnablePreparationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationEnablePreparationSupport.pm) as the live owner of enable-condition generation, logical-operation counting, and WEN/EN prescan before consolidated intermediate generation,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates `backend_sv_generation_enable_preparation_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm) so it now keeps only scaffold/declaration composition plus delegation to that extracted owner,
+  - added [t/236-systemverilog-generation-enable-preparation-support.t](t/236-systemverilog-generation-enable-preparation-support.t), retargeted [t/233-systemverilog-generation-prelude-support.t](t/233-systemverilog-generation-prelude-support.t) and [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `99`-file / `98`-package snapshot.
 - Why this is worth shipping:
   - it makes the prelude owner more honest by separating structural prelude assembly from the enable-oriented preparation that mutates backend state,
   - it gives the direct backend a named owner for the timing-sensitive logical-op counting and WEN/EN prescan sequence,
@@ -9117,11 +9123,11 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-31: live direct backend recursive decision-tree flattening now has a dedicated owner
 - Continued the active `R11` backend-breakdown lane by pulling the large recursive flattening cluster out of the top-level orchestrator once the capture and assignment-analysis neighbors were explicit enough to give that step an honest owner of its own.
 - Landed behavior:
-  - added [perl/FSM/HDL/FlattenedDT/DecisionTreeFlatteningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/DecisionTreeFlatteningSupport.pm) as the live owner of recursive regular-state and standalone-DT flattening plus unified assignment-analysis handoff,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates `decision_tree_flattening_support`,
-  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so its flattening methods now delegate there instead of keeping the recursive traversal inline,
-  - added [t/235-flatteneddt-decision-tree-flattening-support.t](/Users/richarddje/Documents/github/fsmgen/t/235-flatteneddt-decision-tree-flattening-support.t), retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t),
-  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `98`-file / `97`-package snapshot.
+  - added [perl/FSM/HDL/FlattenedDT/DecisionTreeFlatteningSupport.pm](perl/FSM/HDL/FlattenedDT/DecisionTreeFlatteningSupport.pm) as the live owner of recursive regular-state and standalone-DT flattening plus unified assignment-analysis handoff,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates `decision_tree_flattening_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so its flattening methods now delegate there instead of keeping the recursive traversal inline,
+  - added [t/235-flatteneddt-decision-tree-flattening-support.t](t/235-flatteneddt-decision-tree-flattening-support.t), retargeted [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `98`-file / `97`-package snapshot.
 - Why this is worth shipping:
   - it makes `Orchestrator` materially thinner instead of leaving the deepest recursive traversal pocket there indefinitely,
   - it gives the direct backend a named owner for the capture-heavy flattening phase that precedes text assembly,
@@ -9130,11 +9136,11 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-31: live direct backend post-stage SystemVerilog tail now has a dedicated owner
 - Continued the active `R11` backend-breakdown lane by pulling the post-stage WEN/EN, assignment, and closeout sequence out of the broader generation pipeline once that tail was clearly cohesive enough to stand on its own.
 - Landed behavior:
-  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationTailSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationTailSupport.pm) as the live owner of unified WEN/EN emission, signal-assignment emission, and final `endmodule` closeout after consolidated intermediate generation,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates `backend_sv_generation_tail_support`,
-  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm) so it now keeps only prelude/stage/tail composition over that extracted tail owner,
-  - added [t/234-systemverilog-generation-tail-support.t](/Users/richarddje/Documents/github/fsmgen/t/234-systemverilog-generation-tail-support.t), retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) and [t/232-systemverilog-generation-pipeline-support.t](/Users/richarddje/Documents/github/fsmgen/t/232-systemverilog-generation-pipeline-support.t),
-  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `97`-file / `96`-package snapshot.
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationTailSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationTailSupport.pm) as the live owner of unified WEN/EN emission, signal-assignment emission, and final `endmodule` closeout after consolidated intermediate generation,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates `backend_sv_generation_tail_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm) so it now keeps only prelude/stage/tail composition over that extracted tail owner,
+  - added [t/234-systemverilog-generation-tail-support.t](t/234-systemverilog-generation-tail-support.t), retargeted [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t) and [t/232-systemverilog-generation-pipeline-support.t](t/232-systemverilog-generation-pipeline-support.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `97`-file / `96`-package snapshot.
 - Why this is worth shipping:
   - it makes the live generation pipeline more honest by separating post-stage closeout from prelude and stage composition,
   - it gives the direct backend a named boundary for WEN/EN generation, final assignment emission, and module closeout,
@@ -9143,11 +9149,11 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-31: live direct backend pre-stage SystemVerilog prelude now has a dedicated owner
 - Continued the active `R11` backend-breakdown lane by pulling the pre-stage scaffold/declaration/enable/prescan sequence out of the broader generation pipeline once that sequence was clearly cohesive enough to stand on its own.
 - Landed behavior:
-  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm) as the live owner of scaffold emission, declaration emission, enable generation, factorization-policy preparation, and WEN/EN prescan before consolidated intermediate generation,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates `backend_sv_generation_prelude_support`,
-  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm) so it now keeps only post-prelude module assembly over the extracted prelude owner,
-  - added [t/233-systemverilog-generation-prelude-support.t](/Users/richarddje/Documents/github/fsmgen/t/233-systemverilog-generation-prelude-support.t), retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) and [t/232-systemverilog-generation-pipeline-support.t](/Users/richarddje/Documents/github/fsmgen/t/232-systemverilog-generation-pipeline-support.t),
-  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `96`-file / `95`-package snapshot.
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm) as the live owner of scaffold emission, declaration emission, enable generation, factorization-policy preparation, and WEN/EN prescan before consolidated intermediate generation,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates `backend_sv_generation_prelude_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm) so it now keeps only post-prelude module assembly over the extracted prelude owner,
+  - added [t/233-systemverilog-generation-prelude-support.t](t/233-systemverilog-generation-prelude-support.t), retargeted [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t) and [t/232-systemverilog-generation-pipeline-support.t](t/232-systemverilog-generation-pipeline-support.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `96`-file / `95`-package snapshot.
 - Why this is worth shipping:
   - it makes the live generation pipeline more honest by separating the pre-stage setup from the later stage/WEN-EN/assignment closeout flow,
   - it gives the direct backend a named boundary for the side-effect-heavy enable/prescan preparation sequence,
@@ -9156,11 +9162,11 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-31: live direct backend post-flattening SystemVerilog assembly now has a dedicated pipeline owner
 - Continued the active `R11` backend-breakdown lane by moving the whole post-flattening HDL assembly sequence out of `Orchestrator` once the lower-level owners were explicit enough to support an honest live pipeline owner.
 - Landed behavior:
-  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm) as the live owner of scaffold emission, declaration emission, enable generation, factorization-policy preparation, consolidated intermediate stage generation, unified WEN/EN emission, assignment emission, and module closeout,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates `backend_sv_generation_pipeline_support`,
-  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so it now keeps per-run reset, FSM-module attachment, and decision-tree flattening while delegating the whole post-flattening SystemVerilog assembly sequence,
-  - added [t/232-systemverilog-generation-pipeline-support.t](/Users/richarddje/Documents/github/fsmgen/t/232-systemverilog-generation-pipeline-support.t), retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t),
-  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `95`-file / `94`-package snapshot.
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm) as the live owner of scaffold emission, declaration emission, enable generation, factorization-policy preparation, consolidated intermediate stage generation, unified WEN/EN emission, assignment emission, and module closeout,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates `backend_sv_generation_pipeline_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so it now keeps per-run reset, FSM-module attachment, and decision-tree flattening while delegating the whole post-flattening SystemVerilog assembly sequence,
+  - added [t/232-systemverilog-generation-pipeline-support.t](t/232-systemverilog-generation-pipeline-support.t), retargeted [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `95`-file / `94`-package snapshot.
 - Why this is worth shipping:
   - it makes `Orchestrator` narrower in a real architectural way instead of leaving one large post-flattening sequence pocket there indefinitely,
   - it gives the live direct backend a clearer boundary between semantic flattening and text assembly,
@@ -9169,13 +9175,13 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-31: live direct backend stage 6 now has its own explicit consolidated stage owner
 - Continued the active `R11` backend-breakdown lane by making the live stage-6 handoff explicit again instead of leaving `Orchestrator` to hand-compose two already-extracted owners after the old generation wrapper had been retired from the live path.
 - Landed behavior:
-  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm) as the live owner of full consolidated intermediate stage generation over stage preparation plus rendering,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates `backend_sv_consolidated_intermediate_stage_support`,
-  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so live stage 6 delegates to that owner instead of hand-composing stage preparation plus rendering inline,
-  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm) so the compatibility shell now points at the real live stage owner when it exists,
-  - refreshed the ownership docs in [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm) and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm),
-  - retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) and [t/224-systemverilog-consolidated-intermediate-generation-support.t](/Users/richarddje/Documents/github/fsmgen/t/224-systemverilog-consolidated-intermediate-generation-support.t), added [t/231-systemverilog-consolidated-intermediate-stage-support.t](/Users/richarddje/Documents/github/fsmgen/t/231-systemverilog-consolidated-intermediate-stage-support.t),
-  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `94`-file / `93`-package snapshot.
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm) as the live owner of full consolidated intermediate stage generation over stage preparation plus rendering,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates `backend_sv_consolidated_intermediate_stage_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so live stage 6 delegates to that owner instead of hand-composing stage preparation plus rendering inline,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm) so the compatibility shell now points at the real live stage owner when it exists,
+  - refreshed the ownership docs in [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm) and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm),
+  - retargeted [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t) and [t/224-systemverilog-consolidated-intermediate-generation-support.t](t/224-systemverilog-consolidated-intermediate-generation-support.t), added [t/231-systemverilog-consolidated-intermediate-stage-support.t](t/231-systemverilog-consolidated-intermediate-stage-support.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `94`-file / `93`-package snapshot.
 - Why this is worth shipping:
   - it restores an honest live owner for stage 6 without routing runtime back through the old compatibility shell,
   - it makes `Orchestrator` thinner in a real way rather than only renaming the same sequencing pocket,
@@ -9184,11 +9190,11 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-30: live direct backend no longer instantiates the consolidated intermediate generation compatibility shell
 - Continued the active `R11` backend-breakdown lane by removing one more fake live owner instead of letting a compatibility wrapper continue to look architecturally central after its responsibilities had already been extracted.
 - Landed behavior:
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend no longer instantiates `backend_sv_consolidated_intermediate_generation_support`,
-  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so live stage 6 now composes [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm) plus [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm) directly,
-  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm) so it now survives only as a compatibility-shell test surface outside the live backend path,
-  - retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) and [t/224-systemverilog-consolidated-intermediate-generation-support.t](/Users/richarddje/Documents/github/fsmgen/t/224-systemverilog-consolidated-intermediate-generation-support.t),
-  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `93`-file / `92`-package snapshot.
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) so the direct backend no longer instantiates `backend_sv_consolidated_intermediate_generation_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so live stage 6 now composes [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm) plus [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm) directly,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm) so it now survives only as a compatibility-shell test surface outside the live backend path,
+  - retargeted [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t) and [t/224-systemverilog-consolidated-intermediate-generation-support.t](t/224-systemverilog-consolidated-intermediate-generation-support.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `93`-file / `92`-package snapshot.
 - Why this is worth shipping:
   - it makes the live stage boundary truthful again by letting `Orchestrator` compose the real extracted owners instead of routing runtime through one more wrapper,
   - it keeps the compatibility-shell story honest by moving the generation wrapper fully out of the live import spine rather than only narrowing its POD,
@@ -9197,12 +9203,12 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-30: live consolidated intermediate prepared-block rendering now has a dedicated backend owner
 - Continued the active `R11` backend-breakdown lane by pulling one more live responsibility out of the generation wrapper instead of letting that wrapper quietly keep the final render step inline.
 - Landed behavior:
-  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm) as the live owner of prepared-block rendering over the extracted declaration and assignment owners,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates that owner explicitly,
-  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm) so the live stage is now only the wrapper that composes stage preparation plus the rendering owner,
-  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) so the compatibility shell delegates to the new live rendering owner when it exists,
-  - retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) and [t/224-systemverilog-consolidated-intermediate-generation-support.t](/Users/richarddje/Documents/github/fsmgen/t/224-systemverilog-consolidated-intermediate-generation-support.t), added [t/230-systemverilog-consolidated-intermediate-rendering-support.t](/Users/richarddje/Documents/github/fsmgen/t/230-systemverilog-consolidated-intermediate-rendering-support.t),
-  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `94`-file / `93`-package snapshot.
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm) as the live owner of prepared-block rendering over the extracted declaration and assignment owners,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates that owner explicitly,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm) so the live stage is now only the wrapper that composes stage preparation plus the rendering owner,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) so the compatibility shell delegates to the new live rendering owner when it exists,
+  - retargeted [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t) and [t/224-systemverilog-consolidated-intermediate-generation-support.t](t/224-systemverilog-consolidated-intermediate-generation-support.t), added [t/230-systemverilog-consolidated-intermediate-rendering-support.t](t/230-systemverilog-consolidated-intermediate-rendering-support.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `94`-file / `93`-package snapshot.
 - Why this is worth shipping:
   - it makes the live stage wrapper honest instead of leaving one more real owner hidden inside it,
   - it keeps the compatibility-shell story honest by letting the old emitter point at the real owner instead of the last wrapper that happened to still render,
@@ -9211,12 +9217,12 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-30: live consolidated intermediate stage preparation now has a dedicated backend owner
 - Continued the active `R11` backend-breakdown lane by pulling one more live coordination pocket out of stage generation instead of letting the narrowed generation owner quietly keep rebuilding prepared blocks inline.
 - Landed behavior:
-  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm) as the live owner of prepared-block reconstruction from the extracted collection, planning, and prepared-block projection owners,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates that owner explicitly,
-  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm) so the live stage now composes stage preparation plus final prepared-block rendering,
-  - corrected [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm) POD so the compatibility shell names the new live owner honestly,
-  - retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) and [t/224-systemverilog-consolidated-intermediate-generation-support.t](/Users/richarddje/Documents/github/fsmgen/t/224-systemverilog-consolidated-intermediate-generation-support.t), added [t/229-systemverilog-consolidated-intermediate-stage-preparation-support.t](/Users/richarddje/Documents/github/fsmgen/t/229-systemverilog-consolidated-intermediate-stage-preparation-support.t),
-  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `93`-file / `92`-package snapshot.
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm) as the live owner of prepared-block reconstruction from the extracted collection, planning, and prepared-block projection owners,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates that owner explicitly,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm) so the live stage now composes stage preparation plus final prepared-block rendering,
+  - corrected [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm) POD so the compatibility shell names the new live owner honestly,
+  - retargeted [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t) and [t/224-systemverilog-consolidated-intermediate-generation-support.t](t/224-systemverilog-consolidated-intermediate-generation-support.t), added [t/229-systemverilog-consolidated-intermediate-stage-preparation-support.t](t/229-systemverilog-consolidated-intermediate-stage-preparation-support.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `93`-file / `92`-package snapshot.
 - Why this is worth shipping:
   - it removes one more live coordination pocket from stage generation instead of only renaming the same boundary again,
   - it keeps the compatibility-shell story honest by not routing the live backend back through the retired block owner,
@@ -9225,11 +9231,11 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-30: live direct backend no longer instantiates the consolidated emitter compatibility shell
 - Continued the active `R11` backend-breakdown lane by removing one more no-longer-honest live owner instead of preserving it as runtime architecture theater.
 - Landed behavior:
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the live direct backend no longer instantiates `backend_sv_consolidated_intermediate`,
-  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm) so the live stage now owns final prepared-block rendering directly in addition to collection, planning, and prepared-block projection,
-  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) to an honest compatibility-shell role outside the live backend path,
-  - retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) and [t/224-systemverilog-consolidated-intermediate-generation-support.t](/Users/richarddje/Documents/github/fsmgen/t/224-systemverilog-consolidated-intermediate-generation-support.t) so the direct-owner coverage reflects the real runtime path,
-  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `92`-file / `91`-package snapshot.
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) so the live direct backend no longer instantiates `backend_sv_consolidated_intermediate`,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm) so the live stage now owns final prepared-block rendering directly in addition to collection, planning, and prepared-block projection,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) to an honest compatibility-shell role outside the live backend path,
+  - retargeted [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t) and [t/224-systemverilog-consolidated-intermediate-generation-support.t](t/224-systemverilog-consolidated-intermediate-generation-support.t) so the direct-owner coverage reflects the real runtime path,
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `92`-file / `91`-package snapshot.
 - Why this is worth shipping:
   - it removes one more fake live owner from the direct backend path,
   - it makes stage generation read truthfully as the place where prepared-block rendering actually happens,
@@ -9248,12 +9254,12 @@ This document captures engineering rationale, design constraints, and working de
   - and it prevents future work from confusing authored modular reuse with naive file inclusion or one-level composition only.
 
 ## 2026-03-30: actor-first protocol extraction guidance and first imported APB/AMBA fixtures are now logged
-- Reviewed the external protocol-extraction notes under `/Users/richarddje/Documents/livework/protocols/arm/amba/` and folded the useful parts into repo memory instead of relying on off-repo recollection.
+- Reviewed the external protocol-extraction notes under `the external AMBA protocol workspace` and folded the useful parts into repo memory instead of relying on off-repo recollection.
 - Saved direction:
   - the method is a strong fit for the saved `H4` lane because it starts from normalized `Markdown`, works actor-first, and explicitly separates source facts, derived machine rules, local design decisions, and explicit abstractions,
   - the useful working artifacts are: protocol dossier, actor catalog, actor sheet per actor, assertion ledger, abstraction/boundedness log, FSM mapping sheet, and validation log,
   - interfaces plus invariants/contracts/gates should be captured in plain English before `.fsm` emission,
-  - and the repo now has first imported seed fixtures in [fsm/apb_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_requester.fsm), [fsm/apb_completer.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_completer.fsm), [fsm/apb_tb.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_tb.fsm), and [fsm/amba_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/amba_requester.fsm).
+  - and the repo now has first imported seed fixtures in [fsm/apb_requester.fsm](fsm/apb_requester.fsm), [fsm/apb_completer.fsm](fsm/apb_completer.fsm), [fsm/apb_tb.fsm](fsm/apb_tb.fsm), and [fsm/amba_requester.fsm](fsm/amba_requester.fsm).
 - Why this is worth saving:
   - it gives the future intent-capture lane a concrete working method instead of only a high-level aspiration,
   - it seeds the repo with real protocol examples that future sessions can validate and refine,
@@ -9275,17 +9281,17 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-31: top-level failures now keep explicit source-file context and `R10` is active
 - Started the first dedicated `R10` provenance/diagnostic slice instead of leaving that lane as roadmap text only.
 - Landed behavior:
-  - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) now wraps top-level parse/generation failures with a stable `Source file: '...'` line at the source-file orchestration boundary,
+  - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) now wraps top-level parse/generation failures with a stable `Source file: '...'` line at the source-file orchestration boundary,
   - that source-local context now reaches both ordinary top-level parser/adapter failures and strict-mode support-tier failures,
-  - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents that top-level and strict-mode failures keep the `Source file:` context line,
-  - and [t/241-top-level-source-file-diagnostic-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/241-top-level-source-file-diagnostic-boundary.t) now locks that behavior end to end through both pipeline and CLI entry points.
+  - [docs/USER_GUIDE.md](docs/USER_GUIDE.md) now documents that top-level and strict-mode failures keep the `Source file:` context line,
+  - and [t/241-top-level-source-file-diagnostic-boundary.t](t/241-top-level-source-file-diagnostic-boundary.t) now locks that behavior end to end through both pipeline and CLI entry points.
 - Why this is worth shipping:
   - it is a small but real user-facing diagnostic upgrade,
   - it makes large multi-file runs more source-local without disturbing the underlying construct-family diagnostics,
   - and it moves `R10` from `not started` to `in progress` with a reusable top-level error-shaping pattern rather than another abstract roadmap note.
 
 ## 2026-03-31: AXI intent-capture case study and executable-PDF target are now preserved in detail
-- Reviewed the external AXI workspace under `/Users/richarddje/Documents/livework/protocols/arm/axi/` end to end and preserved the detailed conclusions in [docs/INTENT_CAPTURE_AXI_CASE_STUDY.md](/Users/richarddje/Documents/github/fsmgen/docs/INTENT_CAPTURE_AXI_CASE_STUDY.md) instead of leaving them as session-local analysis.
+- Reviewed the external AXI workspace under `the external AXI protocol workspace` end to end and preserved the detailed conclusions in [docs/INTENT_CAPTURE_AXI_CASE_STUDY.md](docs/INTENT_CAPTURE_AXI_CASE_STUDY.md) instead of leaving them as session-local analysis.
 - Saved direction:
   - the AXI workspace is now treated as the strongest concrete reference for the future `H4` lane rather than just another brainstorm,
   - the most durable method signals are:
@@ -9324,99 +9330,99 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-30: live direct backend no longer instantiates the consolidated block compatibility shell
 - Continued the active `R11` backend-breakdown lane by removing one more no-longer-honest live owner instead of preserving it as runtime architecture theater.
 - Landed behavior:
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the live direct backend no longer instantiates `backend_sv_consolidated_intermediate_block_support`,
-  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm) so the live stage now composes collection, planning, prepared-block projection, and final rendering directly,
-  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm) to an honest compatibility-shell role outside the live backend path,
-  - retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t), [t/200-systemverilog-consolidated-intermediate-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/200-systemverilog-consolidated-intermediate-emitter.t), [t/219-systemverilog-consolidated-intermediate-block-support.t](/Users/richarddje/Documents/github/fsmgen/t/219-systemverilog-consolidated-intermediate-block-support.t), [t/222-systemverilog-consolidated-intermediate-assignment-support.t](/Users/richarddje/Documents/github/fsmgen/t/222-systemverilog-consolidated-intermediate-assignment-support.t), [t/223-systemverilog-consolidated-intermediate-declaration-support.t](/Users/richarddje/Documents/github/fsmgen/t/223-systemverilog-consolidated-intermediate-declaration-support.t), and [t/224-systemverilog-consolidated-intermediate-generation-support.t](/Users/richarddje/Documents/github/fsmgen/t/224-systemverilog-consolidated-intermediate-generation-support.t) so the direct-owner coverage reflects the real runtime path,
-  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `93`-file / `92`-package snapshot.
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) so the live direct backend no longer instantiates `backend_sv_consolidated_intermediate_block_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm) so the live stage now composes collection, planning, prepared-block projection, and final rendering directly,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm) to an honest compatibility-shell role outside the live backend path,
+  - retargeted [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t), [t/200-systemverilog-consolidated-intermediate-emitter.t](t/200-systemverilog-consolidated-intermediate-emitter.t), [t/219-systemverilog-consolidated-intermediate-block-support.t](t/219-systemverilog-consolidated-intermediate-block-support.t), [t/222-systemverilog-consolidated-intermediate-assignment-support.t](t/222-systemverilog-consolidated-intermediate-assignment-support.t), [t/223-systemverilog-consolidated-intermediate-declaration-support.t](t/223-systemverilog-consolidated-intermediate-declaration-support.t), and [t/224-systemverilog-consolidated-intermediate-generation-support.t](t/224-systemverilog-consolidated-intermediate-generation-support.t) so the direct-owner coverage reflects the real runtime path,
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `93`-file / `92`-package snapshot.
 - Why this is worth shipping:
   - it removes one more fake live owner from the direct backend path,
   - it makes the stage owner read truthfully as the place where collection/planning/prepared-block projection/final render are composed,
   - and it narrows the next honest seam to the remaining planning/prepared-block/generation/emitter coordination instead of another compatibility shell.
 
 ## 2026-03-29: prepared consolidated intermediate block projection now has a dedicated owner
-- Continued the active `R11` backend-breakdown lane by pulling prepared block-contract projection out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm) instead of leaving collection-plus-planning coordination mixed together with final prepared-block assembly.
+- Continued the active `R11` backend-breakdown lane by pulling prepared block-contract projection out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm) instead of leaving collection-plus-planning coordination mixed together with final prepared-block assembly.
 - Landed behavior:
-  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePreparedBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePreparedBlockSupport.pm) as the owner of prepared consolidated block-contract projection,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates that owner explicitly,
-  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm) to collection plus planning handoff into the new prepared-block owner,
-  - added [t/228-systemverilog-consolidated-intermediate-prepared-block-support.t](/Users/richarddje/Documents/github/fsmgen/t/228-systemverilog-consolidated-intermediate-prepared-block-support.t),
-  - retargeted [t/219-systemverilog-consolidated-intermediate-block-support.t](/Users/richarddje/Documents/github/fsmgen/t/219-systemverilog-consolidated-intermediate-block-support.t) so it now locks the narrowed block owner against the extracted collection, planning, and prepared-block owners,
-  - tightened [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t),
-  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `94`-file / `93`-package snapshot.
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePreparedBlockSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePreparedBlockSupport.pm) as the owner of prepared consolidated block-contract projection,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates that owner explicitly,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm) to collection plus planning handoff into the new prepared-block owner,
+  - added [t/228-systemverilog-consolidated-intermediate-prepared-block-support.t](t/228-systemverilog-consolidated-intermediate-prepared-block-support.t),
+  - retargeted [t/219-systemverilog-consolidated-intermediate-block-support.t](t/219-systemverilog-consolidated-intermediate-block-support.t) so it now locks the narrowed block owner against the extracted collection, planning, and prepared-block owners,
+  - tightened [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `94`-file / `93`-package snapshot.
 - Why this is worth shipping:
   - it makes the direct consolidated backend read more honestly as `collect -> normalize -> classify -> rescue/select -> dependency-map/order -> plan -> block handoff -> prepared block projection -> render`,
   - it removes one more mixed-responsibility pocket from the block owner instead of just renaming it,
   - and it narrows the next seam to the remaining coordination between block handoff, stage generation, and final emission rather than the already-extracted prepared contract assembly.
 
 ## 2026-03-29: consolidated intermediate dependency mechanics now have a dedicated owner
-- Continued the active `R11` backend-breakdown lane by pulling dependency-map construction plus dependency-safe ordering out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm) instead of leaving graph mechanics mixed together with overall plan composition.
+- Continued the active `R11` backend-breakdown lane by pulling dependency-map construction plus dependency-safe ordering out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm) instead of leaving graph mechanics mixed together with overall plan composition.
 - Landed behavior:
-  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDependencySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDependencySupport.pm) as the owner of consolidated dependency-map construction plus dependency-safe ordering,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates that owner explicitly,
-  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm) to overall plan composition over the extracted selection and dependency owners,
-  - added [t/227-systemverilog-consolidated-intermediate-dependency-support.t](/Users/richarddje/Documents/github/fsmgen/t/227-systemverilog-consolidated-intermediate-dependency-support.t),
-  - retargeted [t/215-systemverilog-consolidated-intermediate-planning-support.t](/Users/richarddje/Documents/github/fsmgen/t/215-systemverilog-consolidated-intermediate-planning-support.t) so it now locks the narrowed planning owner against the new dependency seam,
-  - tightened [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t),
-  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `93`-file / `92`-package snapshot.
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDependencySupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDependencySupport.pm) as the owner of consolidated dependency-map construction plus dependency-safe ordering,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates that owner explicitly,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm) to overall plan composition over the extracted selection and dependency owners,
+  - added [t/227-systemverilog-consolidated-intermediate-dependency-support.t](t/227-systemverilog-consolidated-intermediate-dependency-support.t),
+  - retargeted [t/215-systemverilog-consolidated-intermediate-planning-support.t](t/215-systemverilog-consolidated-intermediate-planning-support.t) so it now locks the narrowed planning owner against the new dependency seam,
+  - tightened [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `93`-file / `92`-package snapshot.
 - Why this is worth shipping:
   - it makes the consolidated backend stage read more honestly as `collect -> normalize -> classify -> rescue/select -> dependency graph -> plan -> prepare -> render`,
   - it removes another mixed-responsibility pocket from the planning owner instead of just renaming it,
   - and it narrows the next seam to the remaining coordination between plan composition, block preparation, and final emission rather than the already-extracted graph mechanics.
 
 ## 2026-03-28: consolidated intermediate classification now has a dedicated owner
-- Continued the active `R11` backend-breakdown lane by pulling the initial AST-first keep/filter pass out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm) instead of leaving first-pass classification mixed together with dependency rescue and final kept/filtered summary projection.
+- Continued the active `R11` backend-breakdown lane by pulling the initial AST-first keep/filter pass out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm) instead of leaving first-pass classification mixed together with dependency rescue and final kept/filtered summary projection.
 - Landed behavior:
-  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateClassificationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateClassificationSupport.pm) as the owner of per-signal render lookup plus AST-first keep/filter dispatch,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates that owner explicitly,
-  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm) to dependency-aware rescue and final kept/filtered summary projection over the extracted initial partition,
-  - added [t/226-systemverilog-consolidated-intermediate-classification-support.t](/Users/richarddje/Documents/github/fsmgen/t/226-systemverilog-consolidated-intermediate-classification-support.t),
-  - retargeted [t/221-systemverilog-consolidated-intermediate-selection-support.t](/Users/richarddje/Documents/github/fsmgen/t/221-systemverilog-consolidated-intermediate-selection-support.t) so it now locks the narrowed rescue/final-selection owner against the new classification seam,
-  - tightened [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t),
-  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `92`-file / `91`-package snapshot.
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateClassificationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateClassificationSupport.pm) as the owner of per-signal render lookup plus AST-first keep/filter dispatch,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates that owner explicitly,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm) to dependency-aware rescue and final kept/filtered summary projection over the extracted initial partition,
+  - added [t/226-systemverilog-consolidated-intermediate-classification-support.t](t/226-systemverilog-consolidated-intermediate-classification-support.t),
+  - retargeted [t/221-systemverilog-consolidated-intermediate-selection-support.t](t/221-systemverilog-consolidated-intermediate-selection-support.t) so it now locks the narrowed rescue/final-selection owner against the new classification seam,
+  - tightened [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `92`-file / `91`-package snapshot.
 - Why this is worth shipping:
   - it makes the direct consolidated-intermediate stage read more honestly as `collect -> normalize -> classify -> rescue/select -> plan -> prepare -> render`,
   - it removes one more mixed-responsibility pocket from the live runtime path,
   - and it keeps the next seam focused on the remaining coordination between selection, planning, block preparation, and final emission instead of the already-extracted first-pass classification.
 
 ## 2026-03-28: consolidated intermediate normalization now has a dedicated owner
-- Continued the active `R11` backend-breakdown lane by pulling runtime metadata normalization out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm) instead of leaving merged-signal collection and normalized metadata preparation fused together in one oversized backend owner.
+- Continued the active `R11` backend-breakdown lane by pulling runtime metadata normalization out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm) instead of leaving merged-signal collection and normalized metadata preparation fused together in one oversized backend owner.
 - Landed behavior:
-  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateNormalizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateNormalizationSupport.pm) as the owner of runtime AST, width, dependency, rendered-expression, and live-usage normalization over the merged consolidated intermediate set,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates that owner explicitly,
-  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm) to trace plus merged-signal collection with a final handoff into the normalization owner,
-  - tightened [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm) POD so the block-preparation contract names collection and normalization as separate neighbors,
-  - added [t/225-systemverilog-consolidated-intermediate-normalization-support.t](/Users/richarddje/Documents/github/fsmgen/t/225-systemverilog-consolidated-intermediate-normalization-support.t),
-  - tightened [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t),
-  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `91`-file / `90`-package snapshot.
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateNormalizationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateNormalizationSupport.pm) as the owner of runtime AST, width, dependency, rendered-expression, and live-usage normalization over the merged consolidated intermediate set,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates that owner explicitly,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm) to trace plus merged-signal collection with a final handoff into the normalization owner,
+  - tightened [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm) POD so the block-preparation contract names collection and normalization as separate neighbors,
+  - added [t/225-systemverilog-consolidated-intermediate-normalization-support.t](t/225-systemverilog-consolidated-intermediate-normalization-support.t),
+  - tightened [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `91`-file / `90`-package snapshot.
 - Why this is worth shipping:
   - it shrinks the biggest live owner in the consolidated-intermediate cluster instead of just moving another tiny helper,
   - it makes the stage read more honestly as `collect -> normalize -> select -> plan -> prepare -> render`,
   - and it keeps the next seam focused on the remaining lower-level coordination inside selection, planning, block preparation, and final emission.
 
 ## 2026-03-28: consolidated intermediate stage generation now has a dedicated owner
-- Continued the active `R11` backend-breakdown lane by pulling the direct consolidated-intermediate stage handoff out of [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) instead of leaving that runtime stage coordinated inline after block preparation and render ownership were already split out.
+- Continued the active `R11` backend-breakdown lane by pulling the direct consolidated-intermediate stage handoff out of [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](perl/FSM/HDL/FlattenedDT/Orchestrator.pm) instead of leaving that runtime stage coordinated inline after block preparation and render ownership were already split out.
 - Landed behavior:
-  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm) as the owner of the full direct consolidated-intermediate stage handoff,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates that owner explicitly,
-  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so step 6 now delegates to that stage owner instead of manually coordinating block preparation plus emitter rendering,
-  - added [t/224-systemverilog-consolidated-intermediate-generation-support.t](/Users/richarddje/Documents/github/fsmgen/t/224-systemverilog-consolidated-intermediate-generation-support.t),
-  - tightened [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t),
-  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `90`-file / `89`-package snapshot.
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm) as the owner of the full direct consolidated-intermediate stage handoff,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates that owner explicitly,
+  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so step 6 now delegates to that stage owner instead of manually coordinating block preparation plus emitter rendering,
+  - added [t/224-systemverilog-consolidated-intermediate-generation-support.t](t/224-systemverilog-consolidated-intermediate-generation-support.t),
+  - tightened [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `90`-file / `89`-package snapshot.
 - Why this is worth shipping:
   - it removes one more coordination pocket from the older direct backend orchestrator,
   - it makes the consolidated-intermediate stack read more honestly as a staged owner family rather than a set of extracted helpers still manually wired inline,
   - and it sharpens the next seam to the remaining lower-level coordination inside the selection/planning/block/emitter cluster rather than the top-of-stage handoff.
 
 ## 2026-03-28: consolidated intermediate declaration rendering now has a dedicated owner
-- Continued the active `R11` backend-breakdown lane by pulling prepared wire declaration rendering out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) instead of leaving width-aware declarations mixed together with block composition and assignment handoff.
+- Continued the active `R11` backend-breakdown lane by pulling prepared wire declaration rendering out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) instead of leaving width-aware declarations mixed together with block composition and assignment handoff.
 - Landed behavior:
-  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDeclarationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDeclarationSupport.pm) as the owner of prepared consolidated wire declarations,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates that owner explicitly,
-  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) to final block composition over extracted declaration and assignment owners,
-  - added [t/223-systemverilog-consolidated-intermediate-declaration-support.t](/Users/richarddje/Documents/github/fsmgen/t/223-systemverilog-consolidated-intermediate-declaration-support.t),
-  - tightened [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t),
-  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `89`-file / `88`-package snapshot.
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDeclarationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDeclarationSupport.pm) as the owner of prepared consolidated wire declarations,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates that owner explicitly,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) to final block composition over extracted declaration and assignment owners,
+  - added [t/223-systemverilog-consolidated-intermediate-declaration-support.t](t/223-systemverilog-consolidated-intermediate-declaration-support.t),
+  - tightened [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `89`-file / `88`-package snapshot.
 - Why this is worth shipping:
   - it turns width-aware consolidated declarations into one honest backend owner instead of burying them in the emitter shell,
   - it leaves the emitter reading more truthfully as block composition rather than half declaration renderer,
@@ -9425,59 +9431,59 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-28: live direct backend no longer instantiates the intermediate dispatcher shell
 - Continued the active `R11` backend-breakdown lane by removing one no-longer-honest live-path shell instead of preserving it as runtime architecture theater.
 - Landed behavior:
-  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm) so it now owns the live AST-first keep/filter dispatch directly by combining the extracted recovery and filter-policy owners,
-  - removed the live `backend_sv_intermediate_support` instantiation from [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm),
-  - kept [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm) only as a compatibility-shell package with honest POD, outside the live `bin/fsmgen` import spine,
-  - tightened [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) and [t/221-systemverilog-consolidated-intermediate-selection-support.t](/Users/richarddje/Documents/github/fsmgen/t/221-systemverilog-consolidated-intermediate-selection-support.t) so the owner boundary now reflects the real runtime path,
-  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured post-change snapshot of `88` reachable project files and `87` reachable `.pm` packages.
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm) so it now owns the live AST-first keep/filter dispatch directly by combining the extracted recovery and filter-policy owners,
+  - removed the live `backend_sv_intermediate_support` instantiation from [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm),
+  - kept [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm) only as a compatibility-shell package with honest POD, outside the live `bin/fsmgen` import spine,
+  - tightened [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t) and [t/221-systemverilog-consolidated-intermediate-selection-support.t](t/221-systemverilog-consolidated-intermediate-selection-support.t) so the owner boundary now reflects the real runtime path,
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured post-change snapshot of `88` reachable project files and `87` reachable `.pm` packages.
 - Why this is worth shipping:
   - it removes one more fake runtime owner from the direct backend path,
   - it makes the consolidated selection package read more honestly as the live owner of keep/filter dispatch,
   - and it sharpens the next seam correctly: remaining coordination across selection, planning, block preparation, and the narrowed emitter rather than another compatibility shell.
 
 ## 2026-03-28: consolidated intermediate assignment emission now has a dedicated owner
-- Continued the active `R11` backend-breakdown lane by pulling prepared assign emission out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) instead of leaving final block composition, wire declarations, expression recovery, and assign rendering mixed together in one emitter package.
+- Continued the active `R11` backend-breakdown lane by pulling prepared assign emission out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) instead of leaving final block composition, wire declarations, expression recovery, and assign rendering mixed together in one emitter package.
 - Landed behavior:
-  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateAssignmentSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateAssignmentSupport.pm) as the owner of prepared consolidated assign emission,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend instantiates that owner explicitly,
-  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) to block composition plus wire-declaration rendering with assignment emission delegated,
-  - added [t/222-systemverilog-consolidated-intermediate-assignment-support.t](/Users/richarddje/Documents/github/fsmgen/t/222-systemverilog-consolidated-intermediate-assignment-support.t),
-  - and tightened [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) so the backend owner boundary is saved honestly.
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateAssignmentSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateAssignmentSupport.pm) as the owner of prepared consolidated assign emission,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) so the direct backend instantiates that owner explicitly,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) to block composition plus wire-declaration rendering with assignment emission delegated,
+  - added [t/222-systemverilog-consolidated-intermediate-assignment-support.t](t/222-systemverilog-consolidated-intermediate-assignment-support.t),
+  - and tightened [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t) so the backend owner boundary is saved honestly.
 - Why this is worth shipping:
   - it turns “emit the prepared assign lines” into a real owner instead of leaving that logic buried inside the block emitter,
   - it leaves the emitter reading more honestly as block composition plus declaration rendering,
   - and it keeps the next seam focused on the remaining coordination between block preparation, declaration rendering, and final block assembly rather than more hidden assign-line logic.
 
 ## 2026-03-28: consolidated intermediate selection now has a dedicated owner
-- Continued the active `R11` backend-breakdown lane by pulling the set-level keep/filter/rescue decision family out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm) instead of leaving selection policy mixed together with dependency-map construction, ordering, and plan composition.
+- Continued the active `R11` backend-breakdown lane by pulling the set-level keep/filter/rescue decision family out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm) instead of leaving selection policy mixed together with dependency-map construction, ordering, and plan composition.
 - Landed behavior:
-  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm) as the owner of dependency-aware keep/filter/rescue selection over the normalized consolidated intermediate set,
-  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm) to dependency-map construction, dependency-safe ordering, and overall plan composition,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend instantiates and uses the new owner explicitly,
-  - added [t/221-systemverilog-consolidated-intermediate-selection-support.t](/Users/richarddje/Documents/github/fsmgen/t/221-systemverilog-consolidated-intermediate-selection-support.t),
-  - and tightened [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) plus [t/215-systemverilog-consolidated-intermediate-planning-support.t](/Users/richarddje/Documents/github/fsmgen/t/215-systemverilog-consolidated-intermediate-planning-support.t) so the owner boundary is saved honestly.
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm) as the owner of dependency-aware keep/filter/rescue selection over the normalized consolidated intermediate set,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm) to dependency-map construction, dependency-safe ordering, and overall plan composition,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) so the direct backend instantiates and uses the new owner explicitly,
+  - added [t/221-systemverilog-consolidated-intermediate-selection-support.t](t/221-systemverilog-consolidated-intermediate-selection-support.t),
+  - and tightened [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t) plus [t/215-systemverilog-consolidated-intermediate-planning-support.t](t/215-systemverilog-consolidated-intermediate-planning-support.t) so the owner boundary is saved honestly.
 - Why this is worth shipping:
   - it separates “which consolidated signals survive and why” from “how the surviving set gets ordered and packaged,”
   - it leaves planning reading more honestly as planning instead of half selection policy,
   - and it keeps the next seam focused on the remaining direct-backend coordination around consolidated block preparation and final emission rather than another buried set-level rescue pocket.
 
 ## 2026-03-28: new-session bootstrap is now a dedicated root document
-- Added [SESSION_BOOTSTRAP.md](/Users/richarddje/Documents/github/fsmgen/SESSION_BOOTSTRAP.md) instead of burying the startup ritual at the end of [README.md](/Users/richarddje/Documents/github/fsmgen/README.md).
+- Added [SESSION_BOOTSTRAP.md](SESSION_BOOTSTRAP.md) instead of burying the startup ritual at the end of [README.md](README.md).
 - Why this shape is better:
-  - [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) stays the general onboarding/navigation hub,
+  - [README.md](README.md) stays the general onboarding/navigation hub,
   - the session-start ritual gets one explicit file that a user can name in one sentence,
   - and the startup instruction stays easy to evolve without turning the README into a mixed onboarding/workflow document.
 - Saved policy:
   - for a normal new engineering session, the preferred one-line instruction is now:
     - `Read SESSION_BOOTSTRAP.md and start from there.`
-  - [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) should keep pointing to that file, but the detailed startup ritual should live in the dedicated bootstrap document, not in the README body.
+  - [README.md](README.md) should keep pointing to that file, but the detailed startup ritual should live in the dedicated bootstrap document, not in the README body.
 
 ## 2026-03-28: refreshed `bin/fsmgen` import-tree measurement snapshot
-- Re-read [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) plus the README-linked Markdown set, then re-traced [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) against the live source tree instead of relying only on prior session continuity.
-- Saved one measured architecture snapshot in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md):
+- Re-read [README.md](README.md) plus the README-linked Markdown set, then re-traced [bin/fsmgen](bin/fsmgen) against the live source tree instead of relying only on prior session continuity.
+- Saved one measured architecture snapshot in [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md):
   - current static reachability remains `87` project files / `86` `.pm` packages,
   - `HDLGenerator` is still honestly thin at `147` lines, with orchestration gravity sitting below it in the explicit source/direct/composition orchestrators,
-  - the largest reachable files by line count are now explicitly recorded, including [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm), [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm), [perl/FSM/ExpressionNamer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ExpressionNamer.pm), and the direct backend/support families,
+  - the largest reachable files by line count are now explicitly recorded, including [perl/FSM/CoreAST.pm](perl/FSM/CoreAST.pm), [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm), [perl/FSM/ExpressionNamer.pm](perl/FSM/ExpressionNamer.pm), and the direct backend/support families,
   - and the note now distinguishes “largest file” from “current architecture risk,” so future sessions do not confuse foundational size with the active `R11` backend lane.
 - Why this is worth saving:
   - it keeps the architecture note honest after the recent backend extractions,
@@ -9485,127 +9491,127 @@ This document captures engineering rationale, design constraints, and working de
   - and it sharpens the roadmap steering language: the top facade is no longer the problem; the remaining gravity is lower in the direct backend and a few large support/builders.
 
 ## 2026-03-28: direct intermediate width normalization now has a dedicated backend owner
-- Continued the active `R11` backend-breakdown lane by pulling width normalization and recursive width inference out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm) instead of leaving runtime-AST recovery, expression recovery, dependency recovery, and width policy mixed together in one package.
+- Continued the active `R11` backend-breakdown lane by pulling width normalization and recursive width inference out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm) instead of leaving runtime-AST recovery, expression recovery, dependency recovery, and width policy mixed together in one package.
 - Landed behavior:
-  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalWidthSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalWidthSupport.pm) as the owner of width normalization and recursive width inference for direct intermediate signals,
-  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm) to runtime-AST lookup, rendered-expression recovery, and dependency recovery,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm), and the recovery path so the live backend asks the width owner directly,
-  - and added [t/220-systemverilog-intermediate-signal-width-support.t](/Users/richarddje/Documents/github/fsmgen/t/220-systemverilog-intermediate-signal-width-support.t) while tightening [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) and [t/213-systemverilog-intermediate-signal-recovery-support.t](/Users/richarddje/Documents/github/fsmgen/t/213-systemverilog-intermediate-signal-recovery-support.t).
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalWidthSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalWidthSupport.pm) as the owner of width normalization and recursive width inference for direct intermediate signals,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm) to runtime-AST lookup, rendered-expression recovery, and dependency recovery,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm), and the recovery path so the live backend asks the width owner directly,
+  - and added [t/220-systemverilog-intermediate-signal-width-support.t](t/220-systemverilog-intermediate-signal-width-support.t) while tightening [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t) and [t/213-systemverilog-intermediate-signal-recovery-support.t](t/213-systemverilog-intermediate-signal-recovery-support.t).
 - Why this is worth shipping:
   - it turns width handling into a truthful backend owner instead of a side pocket inside recovery,
   - it makes the recovery package read more honestly as recovery,
   - and it keeps the next seam focused on the remaining consolidated-intermediate coordination rather than hidden width residue.
 
 ## 2026-03-28: consolidated intermediate block preparation now has a dedicated owner
-- Continued the active `R11` backend-breakdown lane by pulling collection-plus-planning coordination for the direct consolidated intermediate block out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) instead of leaving that package half-renderer and half-block-preparation coordinator.
+- Continued the active `R11` backend-breakdown lane by pulling collection-plus-planning coordination for the direct consolidated intermediate block out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) instead of leaving that package half-renderer and half-block-preparation coordinator.
 - Landed behavior:
-  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm) as the owner of collection-plus-planning composition for one prepared consolidated intermediate block,
-  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) to pure rendering from that prepared block contract,
-  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm), [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm), and the direct boundary tests,
-  - and added [t/219-systemverilog-consolidated-intermediate-block-support.t](/Users/richarddje/Documents/github/fsmgen/t/219-systemverilog-consolidated-intermediate-block-support.t).
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm) as the owner of collection-plus-planning composition for one prepared consolidated intermediate block,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) to pure rendering from that prepared block contract,
+  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](perl/FSM/HDL/FlattenedDT/Orchestrator.pm), [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm), and the direct boundary tests,
+  - and added [t/219-systemverilog-consolidated-intermediate-block-support.t](t/219-systemverilog-consolidated-intermediate-block-support.t).
 - Why this is worth shipping:
   - it makes the emitter description finally truthful,
   - it turns “prepare the consolidated block” into a real owner instead of an inline prelude,
   - and it moves the next backend seam away from collection/planning handoff and toward the remaining direct rendering/sequence coordination.
 
 ## 2026-03-28: fixpoint loop state now has a dedicated owner
-- Continued the active `R11` backend-breakdown lane by pulling aggregate loop-state creation, accepted-pass outcome application, and final termination/result normalization out of [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm) instead of leaving that mutable state lifecycle mixed into the same package as pass scheduling and top-level coordination.
+- Continued the active `R11` backend-breakdown lane by pulling aggregate loop-state creation, accepted-pass outcome application, and final termination/result normalization out of [perl/FSM/HDL/Factorization/Fixpoint.pm](perl/FSM/HDL/Factorization/Fixpoint.pm) instead of leaving that mutable state lifecycle mixed into the same package as pass scheduling and top-level coordination.
 - Landed behavior:
-  - added [perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm) as the owner of the aggregate loop-state contract,
-  - narrowed [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm) to pass scheduling and top-level coordination,
-  - added [t/218-factorization-fixpoint-loop-state-support.t](/Users/richarddje/Documents/github/fsmgen/t/218-factorization-fixpoint-loop-state-support.t),
-  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) plus the roadmap/history notes so the saved architecture matches the live split.
+  - added [perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm](perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm) as the owner of the aggregate loop-state contract,
+  - narrowed [perl/FSM/HDL/Factorization/Fixpoint.pm](perl/FSM/HDL/Factorization/Fixpoint.pm) to pass scheduling and top-level coordination,
+  - added [t/218-factorization-fixpoint-loop-state-support.t](t/218-factorization-fixpoint-loop-state-support.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) plus the roadmap/history notes so the saved architecture matches the live split.
 - Why this is worth shipping:
   - it turns the aggregate fixpoint state contract into a real owner instead of a leftover loop-local hash,
   - it leaves `Fixpoint` reading more honestly as the pass scheduler,
   - and it moves the next backend seam away from “still more fixpoint bookkeeping” toward the remaining direct-backend dispatcher/planning/emission coordination.
 
 ## 2026-03-28: fixpoint pass execution now has a dedicated factorization owner
-- Continued the active `R11` backend-breakdown lane by pulling the one-pass execution body out of [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm) instead of leaving factorizer construction, repeated-signature short-circuiting, and per-pass substitution/update work mixed into the same package as the outer loop and aggregate termination contract.
+- Continued the active `R11` backend-breakdown lane by pulling the one-pass execution body out of [perl/FSM/HDL/Factorization/Fixpoint.pm](perl/FSM/HDL/Factorization/Fixpoint.pm) instead of leaving factorizer construction, repeated-signature short-circuiting, and per-pass substitution/update work mixed into the same package as the outer loop and aggregate termination contract.
 - Landed behavior:
-  - added [perl/FSM/HDL/Factorization/Fixpoint/PassExecutionSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/PassExecutionSupport.pm) as the owner of the one-pass execution family,
-  - narrowed [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm) to the outer loop, pass-cap, and aggregate-result contract while keeping package-level and routine-level POD honest,
-  - added [t/217-factorization-fixpoint-pass-execution-support.t](/Users/richarddje/Documents/github/fsmgen/t/217-factorization-fixpoint-pass-execution-support.t),
-  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) plus the roadmap/history notes so the fixpoint split is saved accurately.
+  - added [perl/FSM/HDL/Factorization/Fixpoint/PassExecutionSupport.pm](perl/FSM/HDL/Factorization/Fixpoint/PassExecutionSupport.pm) as the owner of the one-pass execution family,
+  - narrowed [perl/FSM/HDL/Factorization/Fixpoint.pm](perl/FSM/HDL/Factorization/Fixpoint.pm) to the outer loop, pass-cap, and aggregate-result contract while keeping package-level and routine-level POD honest,
+  - added [t/217-factorization-fixpoint-pass-execution-support.t](t/217-factorization-fixpoint-pass-execution-support.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) plus the roadmap/history notes so the fixpoint split is saved accurately.
 - Why this is worth shipping:
   - it turns “run one pass” into a real owner instead of leaving that body buried inside the loop package,
   - it leaves `Fixpoint` reading more honestly as outer orchestration plus aggregate termination policy,
   - and it keeps the next seam honest: the remaining post-factorization convergence work is no longer hidden in the one-pass body.
 
 ## 2026-03-28: direct intermediate filter heuristics now have a dedicated backend owner
-- Continued the active `R11` backend-breakdown lane by pulling the real AST-aware/runtime-fallback filter heuristics out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm) instead of leaving the consolidated-signal dispatcher mixed together with the actual keep/filter decision family.
+- Continued the active `R11` backend-breakdown lane by pulling the real AST-aware/runtime-fallback filter heuristics out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm) instead of leaving the consolidated-signal dispatcher mixed together with the actual keep/filter decision family.
 - Landed behavior:
-  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalFilterPolicySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalFilterPolicySupport.pm) as the owner of AST-aware filter heuristics, runtime-AST-miss live-usage fallback, and the small AST-shape predicates used by that path,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
-  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm) to consolidated-signal filter dispatch over recovery lookup plus the extracted policy owner,
-  - added [t/216-systemverilog-intermediate-signal-filter-policy-support.t](/Users/richarddje/Documents/github/fsmgen/t/216-systemverilog-intermediate-signal-filter-policy-support.t),
-  - and tightened [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) so the backend owner boundary is locked honestly.
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalFilterPolicySupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalFilterPolicySupport.pm) as the owner of AST-aware filter heuristics, runtime-AST-miss live-usage fallback, and the small AST-shape predicates used by that path,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm) to consolidated-signal filter dispatch over recovery lookup plus the extracted policy owner,
+  - added [t/216-systemverilog-intermediate-signal-filter-policy-support.t](t/216-systemverilog-intermediate-signal-filter-policy-support.t),
+  - and tightened [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t) so the backend owner boundary is locked honestly.
 - Why this is worth shipping:
   - it turns “what metadata do we have?” and “what heuristics decide whether to keep it?” into separate owners instead of one muddy backend package,
   - it narrows the existing intermediate-signal support package to the dispatcher role it was already behaving like in the surrounding architecture,
   - and it keeps the next seam honest: remaining post-factorization loop/planning/emission gravity rather than more AST-vs-runtime filter splitting.
 
 ## 2026-03-28: consolidated intermediate planning now has a dedicated backend owner
-- Continued the active `R11` backend-breakdown lane by pulling dependency-map construction, dependency-aware rescue/filter planning, and emission ordering out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) instead of leaving merged-signal planning and final HDL emission mixed together.
+- Continued the active `R11` backend-breakdown lane by pulling dependency-map construction, dependency-aware rescue/filter planning, and emission ordering out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) instead of leaving merged-signal planning and final HDL emission mixed together.
 - Landed behavior:
-  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm) as the owner of dependency-map construction, dependency-aware rescue/filter planning, and dependency-safe emission ordering,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
-  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) to final wire/assign emission from the extracted plan,
-  - added [t/215-systemverilog-consolidated-intermediate-planning-support.t](/Users/richarddje/Documents/github/fsmgen/t/215-systemverilog-consolidated-intermediate-planning-support.t),
-  - and tightened [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) so the live owner boundary is locked honestly.
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm) as the owner of dependency-map construction, dependency-aware rescue/filter planning, and dependency-safe emission ordering,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) to final wire/assign emission from the extracted plan,
+  - added [t/215-systemverilog-consolidated-intermediate-planning-support.t](t/215-systemverilog-consolidated-intermediate-planning-support.t),
+  - and tightened [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t) so the live owner boundary is locked honestly.
 - Why this is worth shipping:
   - it makes the direct consolidated intermediate path read like preparation, planning, and emission as three real responsibilities instead of two overloaded ones,
   - it narrows the emitter to “turn a plan into HDL” instead of making it quietly own rescue and ordering policy,
   - and it keeps the next seam honest: remaining post-factorization/filter-policy gravity rather than more consolidated-order plumbing.
 
 ## 2026-03-28: fixpoint pass support now has a dedicated factorization owner
-- Continued the active `R11` backend-breakdown lane by pulling the per-pass helper family out of [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm) instead of leaving primary intermediate lookup, deterministic pass signatures, collision recovery, and new-signal projection/debugging mixed into the same package as the iterative loop and termination policy.
+- Continued the active `R11` backend-breakdown lane by pulling the per-pass helper family out of [perl/FSM/HDL/Factorization/Fixpoint.pm](perl/FSM/HDL/Factorization/Fixpoint.pm) instead of leaving primary intermediate lookup, deterministic pass signatures, collision recovery, and new-signal projection/debugging mixed into the same package as the iterative loop and termination policy.
 - Landed behavior:
-  - added [perl/FSM/HDL/Factorization/Fixpoint/PassSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/PassSupport.pm) as the owner of the per-pass helper family,
-  - narrowed [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm) to loop orchestration, termination policy, and aggregate result reporting,
-  - added [t/214-factorization-fixpoint-pass-support.t](/Users/richarddje/Documents/github/fsmgen/t/214-factorization-fixpoint-pass-support.t) to lock the extracted owner directly,
-  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) plus the roadmap/history notes so the remaining post-factorization hotspots stay honest.
+  - added [perl/FSM/HDL/Factorization/Fixpoint/PassSupport.pm](perl/FSM/HDL/Factorization/Fixpoint/PassSupport.pm) as the owner of the per-pass helper family,
+  - narrowed [perl/FSM/HDL/Factorization/Fixpoint.pm](perl/FSM/HDL/Factorization/Fixpoint.pm) to loop orchestration, termination policy, and aggregate result reporting,
+  - added [t/214-factorization-fixpoint-pass-support.t](t/214-factorization-fixpoint-pass-support.t) to lock the extracted owner directly,
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) plus the roadmap/history notes so the remaining post-factorization hotspots stay honest.
 - Why this is worth shipping:
   - it makes the iterative second-pass lane read like one real loop owner plus one real per-pass helper owner instead of one mixed package,
   - it keeps the next seam honest by narrowing `Fixpoint` to policy/termination work rather than helper clutter,
   - and it gives us a direct contract lock around second-pass signature and collision behavior without routing through the whole backend.
 
 ## 2026-03-28: direct intermediate runtime recovery now has a dedicated backend owner
-- Continued the active `R11` backend-breakdown lane by pulling the runtime-AST and metadata-recovery half of the direct intermediate-signal path out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm) instead of leaving runtime lookup, dependency recovery, rendered-expression caching, width inference, and filter policy mixed together in one package.
+- Continued the active `R11` backend-breakdown lane by pulling the runtime-AST and metadata-recovery half of the direct intermediate-signal path out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm) instead of leaving runtime lookup, dependency recovery, rendered-expression caching, width inference, and filter policy mixed together in one package.
 - Landed behavior:
-  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm) as the owner of runtime AST lookup, rendered-expression caching, dependency recovery, and width inference,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
-  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm) to filter policy over normalized metadata,
-  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm) and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) so the live direct backend now asks the recovery owner for normalized metadata and the filter owner for keep/drop decisions,
-  - added [t/213-systemverilog-intermediate-signal-recovery-support.t](/Users/richarddje/Documents/github/fsmgen/t/213-systemverilog-intermediate-signal-recovery-support.t),
-  - and retargeted [t/07-runtime-ast-miss-dependency-recovery.t](/Users/richarddje/Documents/github/fsmgen/t/07-runtime-ast-miss-dependency-recovery.t), [t/08-driving-ast-canonicalization.t](/Users/richarddje/Documents/github/fsmgen/t/08-driving-ast-canonicalization.t), and [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) to the real owner boundary.
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm) as the owner of runtime AST lookup, rendered-expression caching, dependency recovery, and width inference,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm) to filter policy over normalized metadata,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm) and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) so the live direct backend now asks the recovery owner for normalized metadata and the filter owner for keep/drop decisions,
+  - added [t/213-systemverilog-intermediate-signal-recovery-support.t](t/213-systemverilog-intermediate-signal-recovery-support.t),
+  - and retargeted [t/07-runtime-ast-miss-dependency-recovery.t](t/07-runtime-ast-miss-dependency-recovery.t), [t/08-driving-ast-canonicalization.t](t/08-driving-ast-canonicalization.t), and [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t) to the real owner boundary.
 - Why this is worth shipping:
   - it makes “recover normalized intermediate metadata” and “decide whether to emit it” two separate, honest backend responsibilities,
   - it keeps the consolidated-emitter path clearer because recovery, filter policy, and final emission no longer collapse into one support owner,
   - and it sharpens the next seam honestly to the remaining post-factorization filter/emission/fixpoint gravity rather than runtime-lookup sprawl.
 
 ## 2026-03-28: direct consolidated intermediate preparation now has a dedicated backend owner
-- Continued the active `R11` backend-breakdown lane by pulling the merged-signal preparation and normalization half of the direct consolidated intermediate path out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) instead of leaving AST-factorized, prescanned, and FSMGen-parsed intermediate collection mixed together with the final dependency-aware emitter.
+- Continued the active `R11` backend-breakdown lane by pulling the merged-signal preparation and normalization half of the direct consolidated intermediate path out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) instead of leaving AST-factorized, prescanned, and FSMGen-parsed intermediate collection mixed together with the final dependency-aware emitter.
 - Landed behavior:
-  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm) as the owner of merged consolidated intermediate collection plus runtime metadata normalization,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
-  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) so it now asks the new support owner for the consolidated signal set before doing dependency-aware filtering, ordering, and final wire/assign emission,
-  - added [t/212-systemverilog-consolidated-intermediate-support.t](/Users/richarddje/Documents/github/fsmgen/t/212-systemverilog-consolidated-intermediate-support.t),
-  - and tightened [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) so the backend owner boundary is locked honestly.
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm) as the owner of merged consolidated intermediate collection plus runtime metadata normalization,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) so it now asks the new support owner for the consolidated signal set before doing dependency-aware filtering, ordering, and final wire/assign emission,
+  - added [t/212-systemverilog-consolidated-intermediate-support.t](t/212-systemverilog-consolidated-intermediate-support.t),
+  - and tightened [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t) so the backend owner boundary is locked honestly.
 - Why this is worth shipping:
   - it makes the direct consolidated intermediate path read like two real responsibilities instead of one oversized emitter,
   - it keeps merged-signal collection and normalization reusable and testable without entangling them with final HDL emission,
   - and it sharpens the next seam honestly to the remaining post-factorization runtime/filtering/fixpoint gravity rather than more first-pass splitting.
 
 ## 2026-03-28: direct SystemVerilog global factorization now has a dedicated backend owner
-- Continued the active `R11` backend-breakdown lane by pulling the live first-pass AST-factorization pipeline out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm) instead of leaving factorizer construction, substitution, original-AST refresh, fixpoint delegation, and factorizer persistence mixed together with the downstream substituted-AST lookup surface.
+- Continued the active `R11` backend-breakdown lane by pulling the live first-pass AST-factorization pipeline out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm) instead of leaving factorizer construction, substitution, original-AST refresh, fixpoint delegation, and factorizer persistence mixed together with the downstream substituted-AST lookup surface.
 - Landed behavior:
-  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm) as the owner of the live direct first-pass factorization pipeline,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
-  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) so the live direct backend path now asks that owner directly for first-pass factorization,
-  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm) to substituted-AST lookup plus the legacy direct intermediate-signal rendering helper,
-  - added [t/211-systemverilog-global-factorization-support.t](/Users/richarddje/Documents/github/fsmgen/t/211-systemverilog-global-factorization-support.t),
-  - and tightened [t/201-systemverilog-ast-factorization-support.t](/Users/richarddje/Documents/github/fsmgen/t/201-systemverilog-ast-factorization-support.t) plus [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) so the owner boundary is locked honestly.
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm) as the owner of the live direct first-pass factorization pipeline,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) so the live direct backend path now asks that owner directly for first-pass factorization,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm) to substituted-AST lookup plus the legacy direct intermediate-signal rendering helper,
+  - added [t/211-systemverilog-global-factorization-support.t](t/211-systemverilog-global-factorization-support.t),
+  - and tightened [t/201-systemverilog-ast-factorization-support.t](t/201-systemverilog-ast-factorization-support.t) plus [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t) so the owner boundary is locked honestly.
 - Why this is worth shipping:
   - it turns the first-pass factorization pipeline into a real owner instead of leaving it buried in a downstream lookup package,
   - it sharpens the direct backend picture so “first-pass factorization” and “post-factorization runtime lookup” are no longer the same package responsibility,
@@ -9614,24 +9620,24 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-27: EnableGraph factorization support now has a dedicated owner
 - Continued the active `R11` backend-breakdown lane by pulling the synthesis-side factorization-analysis and substitution/live-usage evidence family out of the broader `EnableGraph` owner instead of leaving AST-factorization bookkeeping, substitution synchronization, and live-usage derivation mixed into the same package as broader synthesis planning.
 - Landed behavior:
-  - added [perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm) as the owner of logical-operation counting, factorizer feed preparation, second-pass AST feed selection, substitution synchronization back into owner-side AST structures, AST-based intermediate-signal live-usage evidence, and high-count logical-operation discovery,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
-  - updated [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm), and [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm) so the live backend and iterative factorization callers now ask that owner directly,
-  - removed the extracted family from [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm),
-  - and added [t/203-enable-graph-factorization-support.t](/Users/richarddje/Documents/github/fsmgen/t/203-enable-graph-factorization-support.t) plus refreshed [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) so the new owner is locked directly.
+  - added [perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm](perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm) as the owner of logical-operation counting, factorizer feed preparation, second-pass AST feed selection, substitution synchronization back into owner-side AST structures, AST-based intermediate-signal live-usage evidence, and high-count logical-operation discovery,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
+  - updated [perl/FSM/Synthesis/EnableGraph.pm](perl/FSM/Synthesis/EnableGraph.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm), and [perl/FSM/HDL/Factorization/Fixpoint.pm](perl/FSM/HDL/Factorization/Fixpoint.pm) so the live backend and iterative factorization callers now ask that owner directly,
+  - removed the extracted family from [perl/FSM/Synthesis/EnableGraph.pm](perl/FSM/Synthesis/EnableGraph.pm),
+  - and added [t/203-enable-graph-factorization-support.t](t/203-enable-graph-factorization-support.t) plus refreshed [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t) so the new owner is locked directly.
 - Why this is worth shipping:
   - it makes the remaining `EnableGraph` gravity more honest by separating factorization bookkeeping from broader synthesis planning,
   - it gives the fixpoint and direct backend owners one explicit synthesis-side support boundary instead of hidden cross-calls back into `EnableGraph`,
   - and it records one useful contract nuance explicitly: in the prepared direct backend context, a synthesized intermediate can be live by substitution evidence only, so this owner should not be treated as the owner of final-expression truth.
 
 ## 2026-03-27: EnableGraph intermediate-signal support now has a dedicated owner
-- Continued the active `R11` backend-breakdown lane by pulling the intermediate-signal registry and dependency-recovery family out of the broader synthesis owner instead of leaving defining-AST recovery, compatibility-expression parsing, signal-name dependency AST recovery, and referenced-intermediate tracking mixed into [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm).
+- Continued the active `R11` backend-breakdown lane by pulling the intermediate-signal registry and dependency-recovery family out of the broader synthesis owner instead of leaving defining-AST recovery, compatibility-expression parsing, signal-name dependency AST recovery, and referenced-intermediate tracking mixed into [perl/FSM/Synthesis/EnableGraph.pm](perl/FSM/Synthesis/EnableGraph.pm).
 - Landed behavior:
-  - added [perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm) as the owner of normalized intermediate-signal registry access, native defining-AST lookup, compatibility-expression parsing, rendered-expression recovery, signal-name dependency AST recovery, and referenced-intermediate declaration tracking,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
-  - updated [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm), and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) so the live backend and synthesis callers now ask that owner directly,
-  - removed the extracted family from [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm),
-  - and added [t/202-enable-graph-intermediate-signal-support.t](/Users/richarddje/Documents/github/fsmgen/t/202-enable-graph-intermediate-signal-support.t) plus refreshed [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) to lock the new owner directly.
+  - added [perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm](perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm) as the owner of normalized intermediate-signal registry access, native defining-AST lookup, compatibility-expression parsing, rendered-expression recovery, signal-name dependency AST recovery, and referenced-intermediate declaration tracking,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
+  - updated [perl/FSM/Synthesis/EnableGraph.pm](perl/FSM/Synthesis/EnableGraph.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm), and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) so the live backend and synthesis callers now ask that owner directly,
+  - removed the extracted family from [perl/FSM/Synthesis/EnableGraph.pm](perl/FSM/Synthesis/EnableGraph.pm),
+  - and added [t/202-enable-graph-intermediate-signal-support.t](t/202-enable-graph-intermediate-signal-support.t) plus refreshed [t/10-ast-first-enable-structure.t](t/10-ast-first-enable-structure.t) to lock the new owner directly.
 - Why this is worth shipping:
   - it makes the synthesis/backend boundary more honest by pulling one coherent support family out of the broader `EnableGraph` gravity well,
   - it aligns the synthesis side with the explicit-owner pattern we already applied under the direct SystemVerilog backend,
@@ -9640,10 +9646,10 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-27: direct SystemVerilog AST factorization support now has a dedicated backend owner and the old backend package is retired
 - Continued the active `R11` backend-breakdown lane by pulling the remaining AST-factorization/substitution family out of the older direct SystemVerilog backend package instead of leaving one last misnamed package as a grab bag around the real owner seams.
 - Landed behavior:
-  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm) as the owner of global AST factorization, iterative post-substitution factorization, substituted-AST lookup, and the legacy direct intermediate-signal rendering helper,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm), and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm) so the live direct backend path now asks that owner directly,
-  - removed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) from the live backend path entirely,
-  - and added [t/201-systemverilog-ast-factorization-support.t](/Users/richarddje/Documents/github/fsmgen/t/201-systemverilog-ast-factorization-support.t) to lock the extracted owner directly against a realistic shared-expression factorization fixture.
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm) as the owner of global AST factorization, iterative post-substitution factorization, substituted-AST lookup, and the legacy direct intermediate-signal rendering helper,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm), and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm) so the live direct backend path now asks that owner directly,
+  - removed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) from the live backend path entirely,
+  - and added [t/201-systemverilog-ast-factorization-support.t](t/201-systemverilog-ast-factorization-support.t) to lock the extracted owner directly against a realistic shared-expression factorization fixture.
 - Why this is worth shipping:
   - it retires the last misleading direct SystemVerilog monolith instead of preserving it as a compatibility shell,
   - it makes the remaining backend gravity more honest: the deeper pressure is now in `EnableGraph` plus the fixpoint/factorization machinery, not in one misnamed backend package,
@@ -9652,11 +9658,11 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-27: direct SystemVerilog consolidated intermediate emission now has a dedicated backend owner
 - Continued the active `R11` backend-breakdown lane by pulling the consolidated intermediate-signal emission family out of the larger SystemVerilog renderer instead of leaving AST-factorized plus pre-scanned intermediate merging, dependency-aware filtering, and final wire/assign emission mixed into the same backend package as factorization support.
 - Landed behavior:
-  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) as the owner of the direct consolidated intermediate-signal emission block,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
-  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so the direct backend path now asks that owner directly for the consolidated intermediate block,
-  - reduced [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) by removing the inline consolidated emitter and its topological-sort helper,
-  - and added [t/200-systemverilog-consolidated-intermediate-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/200-systemverilog-consolidated-intermediate-emitter.t) to lock the extracted owner directly against the emitted backend prefix for a realistic shared-expression direct-root fixture.
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) as the owner of the direct consolidated intermediate-signal emission block,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
+  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so the direct backend path now asks that owner directly for the consolidated intermediate block,
+  - reduced [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) by removing the inline consolidated emitter and its topological-sort helper,
+  - and added [t/200-systemverilog-consolidated-intermediate-emitter.t](t/200-systemverilog-consolidated-intermediate-emitter.t) to lock the extracted owner directly against the emitted backend prefix for a realistic shared-expression direct-root fixture.
 - Why this is worth shipping:
   - it turns another real slice of the older direct backend into a named owner instead of one broad renderer,
   - it leaves `SystemVerilog.pm` closer to the narrower AST-factorization/substitution role that is actually still concentrated there,
@@ -9665,10 +9671,10 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-27: direct SystemVerilog intermediate-signal support now has a dedicated backend owner
 - Continued the active `R11` backend-breakdown lane by pulling the runtime-AST/intermediate-signal support family out of the larger SystemVerilog renderer instead of leaving AST recovery, dependency recovery, width inference, and AST-aware filtering mixed into the consolidated emitter path.
 - Landed behavior:
-  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm) as the owner of runtime AST recovery, rendered-expression caching, dependency recovery, width inference, and AST-aware filtering for the direct consolidated intermediate-signal path,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
-  - reduced [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) so the consolidated emitter now asks that owner for the support family instead of carrying it inline,
-  - and updated [t/07-runtime-ast-miss-dependency-recovery.t](/Users/richarddje/Documents/github/fsmgen/t/07-runtime-ast-miss-dependency-recovery.t) plus [t/08-driving-ast-canonicalization.t](/Users/richarddje/Documents/github/fsmgen/t/08-driving-ast-canonicalization.t) so those runtime-AST regression locks now point at the new owner directly.
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm) as the owner of runtime AST recovery, rendered-expression caching, dependency recovery, width inference, and AST-aware filtering for the direct consolidated intermediate-signal path,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
+  - reduced [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) so the consolidated emitter now asks that owner for the support family instead of carrying it inline,
+  - and updated [t/07-runtime-ast-miss-dependency-recovery.t](t/07-runtime-ast-miss-dependency-recovery.t) plus [t/08-driving-ast-canonicalization.t](t/08-driving-ast-canonicalization.t) so those runtime-AST regression locks now point at the new owner directly.
 - Why this is worth shipping:
   - it turns another real slice of the older direct backend into an explicit package boundary instead of one broad renderer,
   - it makes the runtime-AST/intermediate-signal support family testable as its own owner without inventing throwaway wrapper tests,
@@ -9677,11 +9683,11 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-27: direct SystemVerilog internal declaration rendering now has a dedicated backend owner
 - Continued the active `R11` backend-breakdown lane by pulling the bounded internal declaration family out of the larger SystemVerilog renderer instead of leaving declaration rendering mixed together with intermediate-signal and factorization logic.
 - Landed behavior:
-  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm) as the owner of internal storage declaration rendering and auxiliary helper-register declaration rendering from the enable-graph plan,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
-  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so the direct backend path now asks that owner directly for the declaration block,
-  - reduced [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) by removing the inline declaration renderer,
-  - and added [t/199-systemverilog-internal-declaration-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/199-systemverilog-internal-declaration-emitter.t) to lock the new owner directly against the emitted direct-backend prefix for a realistic internal/helper-register fixture.
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm) as the owner of internal storage declaration rendering and auxiliary helper-register declaration rendering from the enable-graph plan,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
+  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so the direct backend path now asks that owner directly for the declaration block,
+  - reduced [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) by removing the inline declaration renderer,
+  - and added [t/199-systemverilog-internal-declaration-emitter.t](t/199-systemverilog-internal-declaration-emitter.t) to lock the new owner directly against the emitted direct-backend prefix for a realistic internal/helper-register fixture.
 - Why this is worth shipping:
   - it keeps turning the older direct backend into named owner slices instead of a single broad renderer,
   - it gives the enable-graph declaration plan a dedicated rendering boundary,
@@ -9690,22 +9696,22 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-26: direct SystemVerilog scaffold rendering now has a dedicated backend owner
 - Continued the active `R11` backend-breakdown lane by pulling the bounded direct SystemVerilog scaffold family out of the larger renderer instead of leaving header/module/state rendering mixed together with intermediate-signal and factorization logic.
 - Landed behavior:
-  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm) as the owner of direct generated-module header rendering, module declaration rendering, state encoding rendering, and state register rendering,
-  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
-  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so the older direct backend path now asks the scaffold owner directly for those top-of-module sections,
-  - reduced [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) by removing that scaffold family from the broader renderer,
-  - and added [t/198-systemverilog-scaffold-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/198-systemverilog-scaffold-emitter.t) to lock the new owner directly against the emitted direct-backend prefix for both regular-state and standalone-DT roots.
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm) as the owner of direct generated-module header rendering, module declaration rendering, state encoding rendering, and state register rendering,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
+  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so the older direct backend path now asks the scaffold owner directly for those top-of-module sections,
+  - reduced [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) by removing that scaffold family from the broader renderer,
+  - and added [t/198-systemverilog-scaffold-emitter.t](t/198-systemverilog-scaffold-emitter.t) to lock the new owner directly against the emitted direct-backend prefix for both regular-state and standalone-DT roots.
 - Why this is worth shipping:
   - it starts turning the older direct backend into named owner slices instead of one undifferentiated SystemVerilog renderer,
   - it makes the backend scaffold boundary explicit without pretending the harder intermediate-signal/factorization core is solved already,
   - and it sharpens the next seam honestly: deeper cleanup inside the remaining SystemVerilog/EnableGraph backend core, not more pipeline facade work.
 
 ## 2026-03-26: old source-frontend wrapper residue is now gone from the pipeline facade
-- Continued the active `R11` package-breakdown lane by removing the last frontend pass-through residue from `HDLGenerator` instead of leaving parse/classify/composition-parse/semantic-module helpers there after [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) was already the real owner.
+- Continued the active `R11` package-breakdown lane by removing the last frontend pass-through residue from `HDLGenerator` instead of leaving parse/classify/composition-parse/semantic-module helpers there after [perl/FSM/Pipeline/SourceFrontend.pm](perl/FSM/Pipeline/SourceFrontend.pm) was already the real owner.
 - Landed behavior:
-  - updated the remaining regression callers in [t/13-composition-source-classification.t](/Users/richarddje/Documents/github/fsmgen/t/13-composition-source-classification.t), [t/184-composition-generated-child-realizer.t](/Users/richarddje/Documents/github/fsmgen/t/184-composition-generated-child-realizer.t), [t/185-composition-rtl-child-realizer.t](/Users/richarddje/Documents/github/fsmgen/t/185-composition-rtl-child-realizer.t), [t/186-composition-plan-builder.t](/Users/richarddje/Documents/github/fsmgen/t/186-composition-plan-builder.t), [t/190-pipeline-direct-generation-orchestrator.t](/Users/richarddje/Documents/github/fsmgen/t/190-pipeline-direct-generation-orchestrator.t), and [t/197-pipeline-source-frontend.t](/Users/richarddje/Documents/github/fsmgen/t/197-pipeline-source-frontend.t) so they now ask [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) directly,
+  - updated the remaining regression callers in [t/13-composition-source-classification.t](t/13-composition-source-classification.t), [t/184-composition-generated-child-realizer.t](t/184-composition-generated-child-realizer.t), [t/185-composition-rtl-child-realizer.t](t/185-composition-rtl-child-realizer.t), [t/186-composition-plan-builder.t](t/186-composition-plan-builder.t), [t/190-pipeline-direct-generation-orchestrator.t](t/190-pipeline-direct-generation-orchestrator.t), and [t/197-pipeline-source-frontend.t](t/197-pipeline-source-frontend.t) so they now ask [perl/FSM/Pipeline/SourceFrontend.pm](perl/FSM/Pipeline/SourceFrontend.pm) directly,
   - repurposed the source-frontend owner test so it now checks `SourceFrontend` against the real pipeline result surface instead of comparing it to facade wrappers,
-  - and removed the final source-frontend wrapper methods from [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm), leaving that package with shared configuration plus the top-level `generate_hdl_from_file(...)` entrypoint.
+  - and removed the final source-frontend wrapper methods from [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm), leaving that package with shared configuration plus the top-level `generate_hdl_from_file(...)` entrypoint.
 - Why this is worth shipping:
   - it finishes the honest facade cleanup instead of leaving one last fake ownership pocket in `HDLGenerator`,
   - it makes the frontend owner boundary real in both code and tests,
@@ -9714,9 +9720,9 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-26: old direct generated-module helper residue is now gone from the pipeline facade
 - Continued the active `R11` package-breakdown lane by removing the remaining direct generated-module helper pocket from `HDLGenerator` instead of leaving direct-root/generated-child callers and direct-owner tests to route through facade wrappers after the explicit owner packages already existed.
 - Landed behavior:
-  - updated [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm), [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm), and [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm) so they now call [perl/FSM/IR/IntentHIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIRBuilder.pm), [perl/FSM/IR/StructuralRTLIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIRBuilder.pm), [perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm), and [perl/FSM/Backend/GeneratedModuleEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/GeneratedModuleEmitter.pm) directly,
-  - updated the direct-owner coverage in [t/191-forward-intent-hir-builder-direct-root.t](/Users/richarddje/Documents/github/fsmgen/t/191-forward-intent-hir-builder-direct-root.t), [t/192-forward-lowered-rtl-ir-builder-direct-root.t](/Users/richarddje/Documents/github/fsmgen/t/192-forward-lowered-rtl-ir-builder-direct-root.t), [t/193-forward-structural-rtl-ir-builder-direct-root.t](/Users/richarddje/Documents/github/fsmgen/t/193-forward-structural-rtl-ir-builder-direct-root.t), [t/194-generated-module-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/194-generated-module-emitter.t), [t/196-generated-module-info-builder.t](/Users/richarddje/Documents/github/fsmgen/t/196-generated-module-info-builder.t), [t/182-composition-result-metadata-builder.t](/Users/richarddje/Documents/github/fsmgen/t/182-composition-result-metadata-builder.t), and [t/189-composition-generation-orchestrator.t](/Users/richarddje/Documents/github/fsmgen/t/189-composition-generation-orchestrator.t) so they now ask the owner packages directly,
-  - and removed the now-dead direct helper methods from [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm), leaving it with shared configuration, the top-level `generate_hdl_from_file(...)` facade, and the small public source-frontend surface.
+  - updated [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](perl/FSM/Pipeline/DirectGenerationOrchestrator.pm), [perl/FSM/Composition/GeneratedChildRealizer.pm](perl/FSM/Composition/GeneratedChildRealizer.pm), and [perl/FSM/Composition/GenerationOrchestrator.pm](perl/FSM/Composition/GenerationOrchestrator.pm) so they now call [perl/FSM/IR/IntentHIRBuilder.pm](perl/FSM/IR/IntentHIRBuilder.pm), [perl/FSM/IR/StructuralRTLIRBuilder.pm](perl/FSM/IR/StructuralRTLIRBuilder.pm), [perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm](perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm), and [perl/FSM/Backend/GeneratedModuleEmitter.pm](perl/FSM/Backend/GeneratedModuleEmitter.pm) directly,
+  - updated the direct-owner coverage in [t/191-forward-intent-hir-builder-direct-root.t](t/191-forward-intent-hir-builder-direct-root.t), [t/192-forward-lowered-rtl-ir-builder-direct-root.t](t/192-forward-lowered-rtl-ir-builder-direct-root.t), [t/193-forward-structural-rtl-ir-builder-direct-root.t](t/193-forward-structural-rtl-ir-builder-direct-root.t), [t/194-generated-module-emitter.t](t/194-generated-module-emitter.t), [t/196-generated-module-info-builder.t](t/196-generated-module-info-builder.t), [t/182-composition-result-metadata-builder.t](t/182-composition-result-metadata-builder.t), and [t/189-composition-generation-orchestrator.t](t/189-composition-generation-orchestrator.t) so they now ask the owner packages directly,
+  - and removed the now-dead direct helper methods from [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm), leaving it with shared configuration, the top-level `generate_hdl_from_file(...)` facade, and the small public source-frontend surface.
 - Why this is worth shipping:
   - it turns `HDLGenerator` into a genuinely thin facade instead of a facade plus one last direct-root helper grab bag,
   - it makes the direct-root/generated-child callers reflect the real package ownership we have been extracting,
@@ -9725,10 +9731,10 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-26: old composition reporting helper residue is now gone from the pipeline facade
 - Continued the active `R11` package-breakdown lane by removing one more stale wrapper pocket from `HDLGenerator` instead of leaving composition failure-summary and provenance/override/block label helpers there after the builder owners already existed.
 - Landed behavior:
-  - removed those old wrapper methods from [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm),
-  - updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so the CLI now asks [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm) and [perl/FSM/Composition/ProvenanceReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ProvenanceReportBuilder.pm) for those reporting surfaces directly,
-  - updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so direct failure-summary coverage now points at the real owner too,
-  - and tightened the package-level POD in [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so it describes the thinner facade role honestly.
+  - removed those old wrapper methods from [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm),
+  - updated [bin/fsmgen](bin/fsmgen) so the CLI now asks [perl/FSM/Composition/FailureReportBuilder.pm](perl/FSM/Composition/FailureReportBuilder.pm) and [perl/FSM/Composition/ProvenanceReportBuilder.pm](perl/FSM/Composition/ProvenanceReportBuilder.pm) for those reporting surfaces directly,
+  - updated [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) so direct failure-summary coverage now points at the real owner too,
+  - and tightened the package-level POD in [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) so it describes the thinner facade role honestly.
 - Why this is worth shipping:
   - it removes another pocket of fake ownership from `HDLGenerator`,
   - it makes the CLI/reporting edge talk to the real builder owners instead of routing through stale facade glue,
@@ -9737,10 +9743,10 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-26: bounded source parsing and semantic-module creation now live in a dedicated frontend package
 - Continued the active `R11` package-breakdown lane by moving the bounded source-frontend family out of `HDLGenerator` instead of leaving file parsing, source-kind classification, composition parsing, and semantic FSM/DT module creation as one more mixed coordinator-owned pocket.
 - Landed behavior:
-  - added [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) as the owner of Lispish file parsing, top-level source-kind classification, typed composition parsing, and semantic FSM/DT module creation,
-  - updated [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm), [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm), [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm), and [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) so they now call that owner directly,
-  - reduced [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) to thin delegations for the same frontend family,
-  - and added [t/197-pipeline-source-frontend.t](/Users/richarddje/Documents/github/fsmgen/t/197-pipeline-source-frontend.t) as the direct owner lock.
+  - added [perl/FSM/Pipeline/SourceFrontend.pm](perl/FSM/Pipeline/SourceFrontend.pm) as the owner of Lispish file parsing, top-level source-kind classification, typed composition parsing, and semantic FSM/DT module creation,
+  - updated [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](perl/FSM/Pipeline/SourceGenerationOrchestrator.pm), [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](perl/FSM/Pipeline/DirectGenerationOrchestrator.pm), [perl/FSM/Composition/GenerationOrchestrator.pm](perl/FSM/Composition/GenerationOrchestrator.pm), and [perl/FSM/Composition/GeneratedChildRealizer.pm](perl/FSM/Composition/GeneratedChildRealizer.pm) so they now call that owner directly,
+  - reduced [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) to thin delegations for the same frontend family,
+  - and added [t/197-pipeline-source-frontend.t](t/197-pipeline-source-frontend.t) as the direct owner lock.
 - Why this is worth shipping:
   - it removes another real frontend ownership cluster from `HDLGenerator`,
   - it gives the source/discovery layer one honest owner instead of scattering it across the facade plus multiple orchestrators,
@@ -9749,12 +9755,12 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-26: bounded generated-module module_info construction now lives in a dedicated pipeline builder
 - Continued the active `R11` package-breakdown lane by moving the generated-module `module_info` family out of `HDLGenerator` instead of leaving semantic summary build, lowered enrichment, and query helpers as one more mixed compatibility cluster in the pipeline facade.
 - Landed behavior:
-  - added [perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm) as the owner of bounded generated-module `module_info` construction from one semantic FSM/DT module plus its intent HIR,
+  - added [perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm](perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm) as the owner of bounded generated-module `module_info` construction from one semantic FSM/DT module plus its intent HIR,
   - that package now also owns lowered generated-analysis enrichment plus normalized output-drive-family and grouped standalone-DT target queries,
-  - updated [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm) and [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) so they now call that owner directly,
-  - reduced [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) to thin delegations for the same metadata family,
-  - added [t/196-generated-module-info-builder.t](/Users/richarddje/Documents/github/fsmgen/t/196-generated-module-info-builder.t) as the direct owner lock,
-  - and tightened [t/194-generated-module-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/194-generated-module-emitter.t) so it normalizes non-semantic intermediate declaration ordering instead of treating backend line order as part of the contract.
+  - updated [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](perl/FSM/Pipeline/DirectGenerationOrchestrator.pm) and [perl/FSM/Composition/GeneratedChildRealizer.pm](perl/FSM/Composition/GeneratedChildRealizer.pm) so they now call that owner directly,
+  - reduced [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) to thin delegations for the same metadata family,
+  - added [t/196-generated-module-info-builder.t](t/196-generated-module-info-builder.t) as the direct owner lock,
+  - and tightened [t/194-generated-module-emitter.t](t/194-generated-module-emitter.t) so it normalizes non-semantic intermediate declaration ordering instead of treating backend line order as part of the contract.
 - Why this is worth shipping:
   - it removes another real generated-module compatibility/result family from `HDLGenerator`,
   - it gives both the direct-root and realized generated-child paths one honest metadata owner instead of rebuilding that family through pipeline-local helpers,
@@ -9763,10 +9769,10 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-26: top-level source/file dispatch now lives in a dedicated pipeline orchestrator
 - Continued the active `R11` package-breakdown lane by moving the top-level file/source dispatch cluster out of `HDLGenerator` instead of leaving parse/classify/dispatch plus extension-hook/finalization flow as one more coordinator-owned pocket.
 - Landed behavior:
-  - added [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) as the owner of top-level source-file orchestration,
+  - added [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) as the owner of top-level source-file orchestration,
   - that package now parses one file, classifies the source root, dispatches into the direct-root or composition orchestrator, and drives the surrounding extension-hook/final-result boundary,
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now delegates `generate_hdl_from_file(...)` there instead of keeping that source-level flow inline,
-  - and [t/195-pipeline-source-generation-orchestrator.t](/Users/richarddje/Documents/github/fsmgen/t/195-pipeline-source-generation-orchestrator.t) now locks the extracted owner directly across direct-root, composition, and extension-hook paths.
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now delegates `generate_hdl_from_file(...)` there instead of keeping that source-level flow inline,
+  - and [t/195-pipeline-source-generation-orchestrator.t](t/195-pipeline-source-generation-orchestrator.t) now locks the extracted owner directly across direct-root, composition, and extension-hook paths.
 - Why this is worth shipping:
   - it makes `HDLGenerator` more honestly facade-like instead of leaving one more whole coordinator stage inline,
   - it gives the top-level entrypoint flow the same kind of explicit owner that composition and direct-root generation already have underneath it,
@@ -9775,10 +9781,10 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-26: bounded direct generated-module backend execution now lives in a dedicated backend package
 - Continued the active `R11` package-breakdown lane by moving the remaining bounded direct generated-module backend family out of `HDLGenerator` and its immediate callers instead of leaving backend-method selection, statistics, and standalone-DT assertion postprocessing spread across the pipeline/orchestrator layer.
 - Landed behavior:
-  - added [perl/FSM/Backend/GeneratedModuleEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/GeneratedModuleEmitter.pm) as the owner of bounded direct generated-module backend execution for direct roots and realized generated children,
+  - added [perl/FSM/Backend/GeneratedModuleEmitter.pm](perl/FSM/Backend/GeneratedModuleEmitter.pm) as the owner of bounded direct generated-module backend execution for direct roots and realized generated children,
   - moved backend-method selection, direct HDL emission through the older `FlattenedDT` family, backend statistics collection, and standalone-DT assertion postprocessing under that package,
-  - updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm), [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm), and [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) so they now delegate that bounded backend family there,
-  - and added [t/194-generated-module-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/194-generated-module-emitter.t) to rebuild the same emitted HDL and backend statistics from explicit inputs and lock them against the full pipeline result surface.
+  - updated [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm), [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](perl/FSM/Pipeline/DirectGenerationOrchestrator.pm), and [perl/FSM/Composition/GeneratedChildRealizer.pm](perl/FSM/Composition/GeneratedChildRealizer.pm) so they now delegate that bounded backend family there,
+  - and added [t/194-generated-module-emitter.t](t/194-generated-module-emitter.t) to rebuild the same emitted HDL and backend statistics from explicit inputs and lock them against the full pipeline result surface.
 - Why this is worth shipping:
   - it removes one more real backend-oriented family from `HDLGenerator` instead of only moving builders and reporting helpers,
   - it gives the still-older `FlattenedDT` / `EnableGraph` backend path one honest entrypoint package instead of several coordinator-owned fragments,
@@ -9787,10 +9793,10 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-26: direct-root StructuralRTLIR construction now lives in the IR builder package
 - Continued the active `R11` package-breakdown lane by moving bounded direct-root structural-IR construction out of `HDLGenerator` instead of leaving the direct path with a composition-only structural builder and an inline direct-root structural helper family.
 - Landed behavior:
-  - widened [perl/FSM/IR/StructuralRTLIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIRBuilder.pm) so it now owns direct-root `StructuralRTLIR` construction from generated-module analysis,
+  - widened [perl/FSM/IR/StructuralRTLIRBuilder.pm](perl/FSM/IR/StructuralRTLIRBuilder.pm) so it now owns direct-root `StructuralRTLIR` construction from generated-module analysis,
   - moved direct-root module-boundary port assembly and implicit-system-port structural projection under that IR-layer builder,
-  - updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so its direct-root `build_structural_rtl_ir` path is now just a thin delegation to the builder,
-  - and added [t/193-forward-structural-rtl-ir-builder-direct-root.t](/Users/richarddje/Documents/github/fsmgen/t/193-forward-structural-rtl-ir-builder-direct-root.t) to lock the extracted direct-root owner against the pipeline result surface.
+  - updated [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) so its direct-root `build_structural_rtl_ir` path is now just a thin delegation to the builder,
+  - and added [t/193-forward-structural-rtl-ir-builder-direct-root.t](t/193-forward-structural-rtl-ir-builder-direct-root.t) to lock the extracted direct-root owner against the pipeline result surface.
 - Why this is worth shipping:
   - it makes `StructuralRTLIRBuilder` honest on both the composition and direct-root sides,
   - it removes another real forward-IR builder pocket from `HDLGenerator`,
@@ -9799,10 +9805,10 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-26: direct-root LoweredRTLIR construction now lives in the IR builder package
 - Continued the active `R11` package-breakdown lane by moving bounded direct-root lowered-IR construction out of `HDLGenerator` instead of leaving the direct path with a composition-only lowered builder and an inline direct-root lowered helper family.
 - Landed behavior:
-  - widened [perl/FSM/IR/LoweredRTLIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/LoweredRTLIRBuilder.pm) so it now owns direct-root `LoweredRTLIR` construction from generated-module analysis plus direct backend analysis state,
+  - widened [perl/FSM/IR/LoweredRTLIRBuilder.pm](perl/FSM/IR/LoweredRTLIRBuilder.pm) so it now owns direct-root `LoweredRTLIR` construction from generated-module analysis plus direct backend analysis state,
   - moved direct-root output-drive-family analysis, standalone-DT lowered-target assembly, and onehot-style multi-drive assertion metadata under that IR-layer builder,
-  - updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so its direct-root `build_lowered_rtl_ir` path is now just a thin delegation to the builder,
-  - and added [t/192-forward-lowered-rtl-ir-builder-direct-root.t](/Users/richarddje/Documents/github/fsmgen/t/192-forward-lowered-rtl-ir-builder-direct-root.t) to lock the extracted direct-root owner against the pipeline result surface.
+  - updated [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) so its direct-root `build_lowered_rtl_ir` path is now just a thin delegation to the builder,
+  - and added [t/192-forward-lowered-rtl-ir-builder-direct-root.t](t/192-forward-lowered-rtl-ir-builder-direct-root.t) to lock the extracted direct-root owner against the pipeline result surface.
 - Why this is worth shipping:
   - it makes `LoweredRTLIRBuilder` honest on both the composition and direct-root sides,
   - it removes another real lowered-builder pocket from `HDLGenerator`,
@@ -9811,10 +9817,10 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-26: direct-root IntentHIR construction now lives in the IR builder package
 - Continued the active `R11` package-breakdown lane by moving bounded direct-root semantic-HIR construction out of `HDLGenerator` instead of leaving the direct path with a composition-only builder and an inline direct-root semantic helper family.
 - Landed behavior:
-  - widened [perl/FSM/IR/IntentHIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIRBuilder.pm) so it now owns direct-root `IntentHIR` construction from a semantic FSM/DT module,
+  - widened [perl/FSM/IR/IntentHIRBuilder.pm](perl/FSM/IR/IntentHIRBuilder.pm) so it now owns direct-root `IntentHIR` construction from a semantic FSM/DT module,
   - moved direct-root signal-analysis grouping, signal-direction inference, and standalone-DT enable-family assembly under that IR-layer builder,
-  - updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so its direct-root `build_intent_hir` path is now just a thin delegation to the builder,
-  - and added [t/191-forward-intent-hir-builder-direct-root.t](/Users/richarddje/Documents/github/fsmgen/t/191-forward-intent-hir-builder-direct-root.t) to lock the extracted direct-root owner against the pipeline result surface.
+  - updated [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) so its direct-root `build_intent_hir` path is now just a thin delegation to the builder,
+  - and added [t/191-forward-intent-hir-builder-direct-root.t](t/191-forward-intent-hir-builder-direct-root.t) to lock the extracted direct-root owner against the pipeline result surface.
 - Why this is worth shipping:
   - it makes `IntentHIRBuilder` honest on both the composition and direct-root sides,
   - it removes another real semantic-builder pocket from `HDLGenerator`,
@@ -9823,10 +9829,10 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-26: direct-root generation orchestration now lives in a dedicated pipeline package
 - Continued the active `R11` package-breakdown lane by moving the bounded non-composition generation/result-assembly cluster out of `HDLGenerator` instead of leaving the direct-root path inline after the composition-side orchestrator split was already in place.
 - Landed behavior:
-  - added [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm) as the owner of parsed direct-root source to bounded result-surface orchestration,
+  - added [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](perl/FSM/Pipeline/DirectGenerationOrchestrator.pm) as the owner of parsed direct-root source to bounded result-surface orchestration,
   - that package now coordinates semantic module creation, forward-IR extraction, direct HDL generation, module-info enrichment, structural IR export, and statistics collection through the existing direct-path helpers,
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now delegates the direct path there instead of keeping the cluster inline,
-  - and the new direct owner lock in [t/190-pipeline-direct-generation-orchestrator.t](/Users/richarddje/Documents/github/fsmgen/t/190-pipeline-direct-generation-orchestrator.t) now rebuilds the same bounded direct-root generation surface from parsed inputs and checks it against the full pipeline result.
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now delegates the direct path there instead of keeping the cluster inline,
+  - and the new direct owner lock in [t/190-pipeline-direct-generation-orchestrator.t](t/190-pipeline-direct-generation-orchestrator.t) now rebuilds the same bounded direct-root generation surface from parsed inputs and checks it against the full pipeline result.
 - Why this is worth shipping:
   - it gives the non-composition path the same honest orchestrator boundary the composition path already has,
   - it leaves `HDLGenerator` looking more like a dispatch/facade coordinator and less like the only place where full generation results are assembled,
@@ -9835,10 +9841,10 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-26: composition generation orchestration now lives in a dedicated composition package
 - Continued the active `R11` package-breakdown lane by moving the remaining bounded composition generation/result-assembly cluster out of `HDLGenerator` instead of leaving the whole composition-top path inline after the narrower builder splits were already in place.
 - Landed behavior:
-  - added [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm) as the owner of parsed composition source to bounded result-surface orchestration,
+  - added [perl/FSM/Composition/GenerationOrchestrator.pm](perl/FSM/Composition/GenerationOrchestrator.pm) as the owner of parsed composition source to bounded result-surface orchestration,
   - that package now coordinates plan construction, child-export projection, composition-top forward-IR assembly, structural top emission, and result-metadata/statistics assembly through the already-extracted narrower builders,
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now delegates the composition path there instead of keeping the cluster inline,
-  - and the new direct owner lock in [t/189-composition-generation-orchestrator.t](/Users/richarddje/Documents/github/fsmgen/t/189-composition-generation-orchestrator.t) now rebuilds the same bounded composition generation surface from parsed inputs and checks it against the pipeline result.
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now delegates the composition path there instead of keeping the cluster inline,
+  - and the new direct owner lock in [t/189-composition-generation-orchestrator.t](t/189-composition-generation-orchestrator.t) now rebuilds the same bounded composition generation surface from parsed inputs and checks it against the pipeline result.
 - Why this is worth shipping:
   - it removes the last obvious composition-top result-assembly cluster from `HDLGenerator`,
   - it makes the composition side look much more like a real orchestrator-over-builders architecture instead of one big pipeline method with extracted helpers around it,
@@ -9847,9 +9853,9 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-26: composition-top LoweredRTLIR construction now lives in a dedicated IR builder package
 - Continued the active `R11` package-breakdown lane by moving bounded composition-top lowered-IR construction out of `HDLGenerator` instead of leaving one more forward-IR assembly family inline in the pipeline coordinator.
 - Landed behavior:
-  - added [perl/FSM/IR/LoweredRTLIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/LoweredRTLIRBuilder.pm) as the owner of composition-top `LoweredRTLIR` construction from an already-built composition plan plus surrounding structural, semantic, and shared-datapath inputs,
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now delegates that bounded composition-top lowered assembly to the IR-layer builder instead of keeping the object construction inline,
-  - and the new direct owner lock in [t/188-composition-lowered-rtl-ir-builder.t](/Users/richarddje/Documents/github/fsmgen/t/188-composition-lowered-rtl-ir-builder.t) now rebuilds the same bounded top-level `lowered_rtl_ir` surface from explicit inputs and checks it against the pipeline result.
+  - added [perl/FSM/IR/LoweredRTLIRBuilder.pm](perl/FSM/IR/LoweredRTLIRBuilder.pm) as the owner of composition-top `LoweredRTLIR` construction from an already-built composition plan plus surrounding structural, semantic, and shared-datapath inputs,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now delegates that bounded composition-top lowered assembly to the IR-layer builder instead of keeping the object construction inline,
+  - and the new direct owner lock in [t/188-composition-lowered-rtl-ir-builder.t](t/188-composition-lowered-rtl-ir-builder.t) now rebuilds the same bounded top-level `lowered_rtl_ir` surface from explicit inputs and checks it against the pipeline result.
 - Why this is worth shipping:
   - it removes another real forward-IR assembly seam from `HDLGenerator`,
   - it completes the composition-top builder trio beside the already-extracted semantic and structural builder/emitter split,
@@ -9858,9 +9864,9 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-25: composition-top IntentHIR construction now lives in a dedicated IR builder package
 - Continued the active `R11` package-breakdown lane by moving bounded composition-top semantic-HIR construction out of `HDLGenerator` instead of leaving one more forward-IR assembly family inline in the pipeline coordinator.
 - Landed behavior:
-  - added [perl/FSM/IR/IntentHIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIRBuilder.pm) as the owner of composition-top `IntentHIR` construction from an already-built composition plan plus surrounding structural and child-export inputs,
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now delegates that bounded composition-top semantic assembly to the IR-layer builder instead of keeping the object construction inline,
-  - and the new direct owner lock in [t/187-composition-intent-hir-builder.t](/Users/richarddje/Documents/github/fsmgen/t/187-composition-intent-hir-builder.t) now rebuilds the same bounded top-level `intent_hir` surface from explicit inputs and checks it against the pipeline result.
+  - added [perl/FSM/IR/IntentHIRBuilder.pm](perl/FSM/IR/IntentHIRBuilder.pm) as the owner of composition-top `IntentHIR` construction from an already-built composition plan plus surrounding structural and child-export inputs,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now delegates that bounded composition-top semantic assembly to the IR-layer builder instead of keeping the object construction inline,
+  - and the new direct owner lock in [t/187-composition-intent-hir-builder.t](t/187-composition-intent-hir-builder.t) now rebuilds the same bounded top-level `intent_hir` surface from explicit inputs and checks it against the pipeline result.
 - Why this is worth shipping:
   - it removes another real forward-IR assembly seam from `HDLGenerator`,
   - it makes the composition-top semantic-builder role explicit beside the already-extracted structural builder/emitter split,
@@ -9869,9 +9875,9 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-25: composition plan orchestration now lives in a dedicated builder package
 - Continued the active `R11` package-breakdown lane by moving the bounded composition-plan orchestration cluster out of `HDLGenerator` instead of leaving lane selection and plan augmentation as another inline coordinator-owned family.
 - Landed behavior:
-  - added [perl/FSM/Composition/PlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/PlanBuilder.pm) as the owner of child realization dispatch, `?ports` shape gating, top-port inference handoff, lane selection, and shared-datapath plan augmentation,
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now delegates full composition-plan construction to that package instead of keeping the orchestration cluster inline,
-  - and the new direct owner lock in [t/186-composition-plan-builder.t](/Users/richarddje/Documents/github/fsmgen/t/186-composition-plan-builder.t) now covers bounded `C1`, `C3`, and `C4` rebuilds while the earlier builder/realizer tests keep the narrower helper owners honest.
+  - added [perl/FSM/Composition/PlanBuilder.pm](perl/FSM/Composition/PlanBuilder.pm) as the owner of child realization dispatch, `?ports` shape gating, top-port inference handoff, lane selection, and shared-datapath plan augmentation,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now delegates full composition-plan construction to that package instead of keeping the orchestration cluster inline,
+  - and the new direct owner lock in [t/186-composition-plan-builder.t](t/186-composition-plan-builder.t) now covers bounded `C1`, `C3`, and `C4` rebuilds while the earlier builder/realizer tests keep the narrower helper owners honest.
 - Why this is worth shipping:
   - it removes one of the last obvious composition-shape coordination clusters from `HDLGenerator`,
   - it makes the split between narrow lane helpers and the higher-level plan orchestrator explicit instead of conversational,
@@ -9880,9 +9886,9 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-25: rtl child realization now lives in a dedicated composition package
 - Continued the active `R11` package-breakdown lane by moving the bounded `?rtl` child realization pocket out of `HDLGenerator` instead of leaving external-RTL child projection as another inline coordinator-owned family.
 - Landed behavior:
-  - added [perl/FSM/Composition/RTLChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLChildRealizer.pm) as the owner of `?rtl` child realization into normalized `FSM::Composition::RealizedInstance` carriers,
-  - that package now consumes already-loaded `.rtlif` metadata from [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) instead of mixing metadata loading, validation, and realized-child projection back together inside the pipeline coordinator,
-  - and the new direct owner lock in [t/185-composition-rtl-child-realizer.t](/Users/richarddje/Documents/github/fsmgen/t/185-composition-rtl-child-realizer.t) now covers both embedded `?rtlif` and sidecar `.rtlif` realization paths while the older embedded-root and external-RTL composition tests keep the broader contract honest.
+  - added [perl/FSM/Composition/RTLChildRealizer.pm](perl/FSM/Composition/RTLChildRealizer.pm) as the owner of `?rtl` child realization into normalized `FSM::Composition::RealizedInstance` carriers,
+  - that package now consumes already-loaded `.rtlif` metadata from [perl/FSM/Composition/RTLInterfaceLoader.pm](perl/FSM/Composition/RTLInterfaceLoader.pm) instead of mixing metadata loading, validation, and realized-child projection back together inside the pipeline coordinator,
+  - and the new direct owner lock in [t/185-composition-rtl-child-realizer.t](t/185-composition-rtl-child-realizer.t) now covers both embedded `?rtlif` and sidecar `.rtlif` realization paths while the older embedded-root and external-RTL composition tests keep the broader contract honest.
 - Why this is worth shipping:
   - it removes another real child/source-orchestration pocket from `HDLGenerator`,
   - it makes the ownership split between `.rtlif` metadata loading and runtime child realization explicit instead of implicit,
@@ -9891,9 +9897,9 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-25: generated-child realization now lives in a dedicated composition package
 - Continued the active `R11` package-breakdown lane by moving the `?fsmc` / `?dtc` realization and external generated-child source-loading family out of `HDLGenerator` instead of leaving those child-specific orchestration rules inline in the pipeline coordinator.
 - Landed behavior:
-  - added [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) as the owner of embedded/external generated-child loading, wrong-kind source validation, child compilation, shared-datapath export augmentation for realized `?fsmc` children, and `FSM::Composition::RealizedInstance` construction,
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now delegates `?fsmc` / `?dtc` realization to that package instead of keeping the whole family inline,
-  - and the new direct owner lock in [t/184-composition-generated-child-realizer.t](/Users/richarddje/Documents/github/fsmgen/t/184-composition-generated-child-realizer.t) now covers both embedded `?fsmc` and external `?dtc` realization paths while the older child-source/default-source/shared-datapath tests keep the failure and runtime contracts honest.
+  - added [perl/FSM/Composition/GeneratedChildRealizer.pm](perl/FSM/Composition/GeneratedChildRealizer.pm) as the owner of embedded/external generated-child loading, wrong-kind source validation, child compilation, shared-datapath export augmentation for realized `?fsmc` children, and `FSM::Composition::RealizedInstance` construction,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now delegates `?fsmc` / `?dtc` realization to that package instead of keeping the whole family inline,
+  - and the new direct owner lock in [t/184-composition-generated-child-realizer.t](t/184-composition-generated-child-realizer.t) now covers both embedded `?fsmc` and external `?dtc` realization paths while the older child-source/default-source/shared-datapath tests keep the failure and runtime contracts honest.
 - Why this is worth shipping:
   - it removes another real child/source-orchestration pocket from `HDLGenerator`,
   - it gives generated-child source resolution and realization one explicit owner instead of splitting that responsibility between inline helpers and later composition consumers,
@@ -9902,7 +9908,7 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-25: shared-datapath candidate assembly now lives in a dedicated builder package
 - Continued the active `R11` package-breakdown lane by moving the shared-datapath candidate family out of `HDLGenerator` instead of leaving candidate discovery and contributor/peer-read metadata assembly as another pipeline-owned composition pocket.
 - Landed behavior:
-  - added [perl/FSM/Composition/SharedDatapathCandidateBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SharedDatapathCandidateBuilder.pm) as the owner of shared-datapath candidate discovery,
+  - added [perl/FSM/Composition/SharedDatapathCandidateBuilder.pm](perl/FSM/Composition/SharedDatapathCandidateBuilder.pm) as the owner of shared-datapath candidate discovery,
   - that package now owns the normalized contributor, drive-intent, peer-read, and aggregate-enable family metadata derived from structural bindings and lowered child drive families,
   - and the direct shared-datapath leaf/nonleaf binding contract plus a new builder-specific lock now point at that package instead of the pipeline coordinator.
 - Why this is worth shipping:
@@ -9913,9 +9919,9 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-25: composition result metadata now lives in a dedicated builder package
 - Continued the active `R11` package-breakdown lane by moving the success-path composition result-metadata family out of `HDLGenerator` instead of leaving `module_info` and `statistics` assembly as another coordinator-owned pocket.
 - Landed behavior:
-  - added [perl/FSM/Composition/ResultMetadataBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ResultMetadataBuilder.pm) as the owner of composition `module_info` and `statistics` assembly,
+  - added [perl/FSM/Composition/ResultMetadataBuilder.pm](perl/FSM/Composition/ResultMetadataBuilder.pm) as the owner of composition `module_info` and `statistics` assembly,
   - that package now consumes already-built composition provenance, child exports, and forward IR inputs rather than rebuilding earlier layers itself,
-  - and the new direct contract lock in [t/182-composition-result-metadata-builder.t](/Users/richarddje/Documents/github/fsmgen/t/182-composition-result-metadata-builder.t) keeps the extracted builder aligned with the pipeline result surfaces.
+  - and the new direct contract lock in [t/182-composition-result-metadata-builder.t](t/182-composition-result-metadata-builder.t) keeps the extracted builder aligned with the pipeline result surfaces.
 - Why this is worth shipping:
   - it removes another real result-assembly family from `HDLGenerator`,
   - it gives the success-path result metadata the same explicit owner treatment we already gave child exports, provenance reporting, and failure summaries,
@@ -9924,9 +9930,9 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-25: composition failure summaries now live in a dedicated builder package
 - Continued the active `R11` package-breakdown lane by moving the bounded failed-run composition summary family out of `HDLGenerator` instead of leaving blocked-boundary and concise-reason extraction as another coordinator-owned result-assembly pocket.
 - Landed behavior:
-  - added [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm) as the owner of composition failure-summary construction,
+  - added [perl/FSM/Composition/FailureReportBuilder.pm](perl/FSM/Composition/FailureReportBuilder.pm) as the owner of composition failure-summary construction,
   - that package now owns blocked-boundary, construct, artifact, context, and concise-reason extraction from raised composition diagnostics,
-  - and the new direct contract lock in [t/181-composition-failure-report-builder.t](/Users/richarddje/Documents/github/fsmgen/t/181-composition-failure-report-builder.t) keeps the extracted builder aligned with the pipeline failure-report surface.
+  - and the new direct contract lock in [t/181-composition-failure-report-builder.t](t/181-composition-failure-report-builder.t) keeps the extracted builder aligned with the pipeline failure-report surface.
 - Why this is worth shipping:
   - it removes another real composition reporting/result-assembly family from `HDLGenerator`,
   - it gives successful-run provenance reporting and failed-run summary extraction separate honest owners instead of keeping both families tangled in the coordinator,
@@ -9935,9 +9941,9 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-25: composition child exports now live in a dedicated builder package
 - Continued the active `R11` package-breakdown lane by moving the composition child-export family out of `HDLGenerator` instead of leaving those semantic result-assembly surfaces as another coordinator-owned helper cluster.
 - Landed behavior:
-  - added [perl/FSM/Composition/ChildExportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ChildExportBuilder.pm) as the owner of the unified realized-child export surface,
+  - added [perl/FSM/Composition/ChildExportBuilder.pm](perl/FSM/Composition/ChildExportBuilder.pm) as the owner of the unified realized-child export surface,
   - that same package now also owns the narrower generated-child and standalone-DT child export views,
-  - and the new direct contract lock in [t/180-composition-child-export-builder.t](/Users/richarddje/Documents/github/fsmgen/t/180-composition-child-export-builder.t) keeps those builder outputs aligned with the pipeline/module-info surfaces.
+  - and the new direct contract lock in [t/180-composition-child-export-builder.t](t/180-composition-child-export-builder.t) keeps those builder outputs aligned with the pipeline/module-info surfaces.
 - Why this is worth shipping:
   - it removes another real composition result-assembly family from `HDLGenerator`,
   - it gives the forward-IR/export story a clearer composition-side owner instead of leaving child export projection spread across the coordinator,
@@ -9945,7 +9951,7 @@ This document captures engineering rationale, design constraints, and working de
 
 ## 2026-03-25: keep a dedicated live note for the `bin/fsmgen` import tree and runtime spine
 - Saved documentation rule:
-  - the deep analysis of [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) and its transitive project-owned import tree now lives in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md),
+  - the deep analysis of [bin/fsmgen](bin/fsmgen) and its transitive project-owned import tree now lives in [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md),
   - that file is intentionally a live architecture note, not a one-off snapshot,
   - and it should be refreshed at the start of a later session whenever the effective entrypoint/runtime spine or package-hotspot picture has changed enough that the saved analysis is no longer honest.
 - Why this is worth saving:
@@ -10729,7 +10735,7 @@ This document captures engineering rationale, design constraints, and working de
   - these were reachable, user-facing `C1` failure families with stable context subjects,
   - the summary behavior already existed,
   - and this keeps the failure-summary contract honest instead of letting CLI coverage lag behind the pipeline-side extractor.
-- Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock those two CLI summary branches, while [t/23-composition-errors.t](/Users/richarddje/Documents/github/fsmgen/t/23-composition-errors.t) remains the focused explicit-link regression anchor nearby.
+- Updated [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) to lock those two CLI summary branches, while [t/23-composition-errors.t](t/23-composition-errors.t) remains the focused explicit-link regression anchor nearby.
 
 ## 2026-03-19: future syntax-power guidance is now recorded with a bounded meta-programming rule
 - Recorded the recent “what would make `fsmgen` much more powerful while staying terse and elegant” discussion as future language guidance rather than leaving it in conversation only.
@@ -10766,7 +10772,7 @@ This document captures engineering rationale, design constraints, and working de
   - the extractor already supported these width/type token wordings through the shared `token '...'` diagnostic shape,
   - but without this regression lock, the token-shape branch could stay green while width/type summary behavior drifted,
   - and this keeps the failed-run summary contract honest without widening reporting logic any further.
-- Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock both pipeline-side extraction and non-quiet CLI summary output for blocked `.rtlif` port-sizing and port-typing failures.
+- Updated [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) to lock both pipeline-side extraction and non-quiet CLI summary output for blocked `.rtlif` port-sizing and port-typing failures.
 
 ## 2026-03-19: Rust FSMGen is now tracked with an initial repo-shape recommendation
 - Recorded the recent long-term Rust discussion under the existing `H1` horizon instead of turning it into an active lane prematurely.
@@ -10789,82 +10795,82 @@ This document captures engineering rationale, design constraints, and working de
   - the extractor already supported the flatness wording through the shared `under '?rtlif:<module>'` shape,
   - but without this regression lock, that branch could drift while the nearby root-scoped families stayed green,
   - and this keeps the failed-run summary contract honest without widening reporting logic any further.
-- Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock both pipeline-side extraction and non-quiet CLI summary output for blocked `.rtlif` flatness failures.
+- Updated [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) to lock both pipeline-side extraction and non-quiet CLI summary output for blocked `.rtlif` flatness failures.
 
 ## 2026-03-19: file-based `.rtlif` root failures now keep RTL root context in failed-run summaries
 - Continued the active `R11` diagnostics/reporting lane by broadening one already-shipped `RTL root` context family into the file-based `.rtlif` path where the same token is already present in the blocked diagnostic.
 - Landed behavior:
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now extracts `?rtlif:<module>` as `RTL root` context for file-based root-scoped `.rtlif` failures such as missing-root and empty-port cases,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now extracts `?rtlif:<module>` as `RTL root` context for file-based root-scoped `.rtlif` failures such as missing-root and empty-port cases,
   - while still preserving the resolved metadata file as the primary `RTL metadata file:` artifact line.
 - Why this is worth shipping:
   - file-based root-contract failures already had clear blocked boundaries and metadata-file artifacts, but the root token itself was still buried in the longer reason text,
   - this keeps the summary model consistent across embedded and file-based `.rtlif` root failures,
   - and it stays bounded because it only reuses structure that the raised diagnostics already expose.
-- Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock both pipeline-side extraction and non-quiet CLI summary output for missing-root and empty-port root-scoped `.rtlif` failures.
+- Updated [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) to lock both pipeline-side extraction and non-quiet CLI summary output for missing-root and empty-port root-scoped `.rtlif` failures.
 
 ## 2026-03-19: embedded `.rtlif` duplicate-root failures now keep RTL root context in failed-run summaries
 - Continued the active `R11` diagnostics/reporting lane by surfacing one more stable failed-run subject that was already present in the raw diagnostic.
 - Landed behavior:
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now extracts embedded `.rtlif` duplicate-root tokens as `RTL root` context when a blocked uniqueness diagnostic already names the repeated root,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now extracts embedded `.rtlif` duplicate-root tokens as `RTL root` context when a blocked uniqueness diagnostic already names the repeated root,
   - and the non-quiet CLI summary now prints that concise `Context:` line without inventing an external metadata-file artifact for embedded metadata.
 - Why this is worth shipping:
   - embedded-root uniqueness failures already had a clear blocked boundary, but the most actionable subject, the repeated `?rtlif:<module>` root token, was still buried in the raw exception text,
   - this keeps the current failed-run summary model honest by reusing structure the diagnostic already exposes,
   - and it stays bounded because it does not widen extraction beyond the embedded duplicate-root family.
-- Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock both pipeline-side extraction and non-quiet CLI summary output for blocked embedded `.rtlif` duplicate-root failures.
+- Updated [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) to lock both pipeline-side extraction and non-quiet CLI summary output for blocked embedded `.rtlif` duplicate-root failures.
 
 ## 2026-03-19: duplicate-port `.rtlif` failures now keep repeated RTL port context in failed-run summaries
 - Continued the active `R11` diagnostics/reporting lane by enriching one more stable failed-run context family instead of widening composition behavior again.
 - Landed behavior:
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now extracts repeated `.rtlif` port names as `RTL port` context when a blocked declaration-uniqueness diagnostic already names the repeated port,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now extracts repeated `.rtlif` port names as `RTL port` context when a blocked declaration-uniqueness diagnostic already names the repeated port,
   - while still preserving the resolved metadata file as the primary `RTL metadata file:` artifact line.
 - Why this is worth shipping:
   - duplicate-port `.rtlif` failures already had a clean blocked boundary and artifact line, but the most actionable subject, the repeated port name itself, was still buried in the longer raw exception text,
   - this keeps the failed-run summary model honest by reusing structure the diagnostic already exposes instead of inventing a second parser,
   - and it is a good fit for the current lane because it improves failed-run ergonomics without changing any composition planning behavior.
-- Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock both pipeline-side extraction and non-quiet CLI summary output for blocked duplicate-port `.rtlif` failures.
+- Updated [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) to lock both pipeline-side extraction and non-quiet CLI summary output for blocked duplicate-port `.rtlif` failures.
 
 ## 2026-03-18: non-quiet failed composition runs now print a first bounded failure summary
 - Continued the active `R11` diagnostics/reporting lane by moving one step beyond pure exception text for failed composition runs.
 - Landed behavior:
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now derives a small composition failure report from blocked composition diagnostics,
-  - and [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now prints a bounded `=== Composition Failure Summary ===` section during non-quiet failed composition runs when that blocked boundary can be classified honestly, including a `Lane:` line when the raised diagnostic already names the active `C1` / `C2` / `C3` / `C4` lane, a `Construct:` line when the failure text points clearly at one active syntax construct such as `?ports`, `?toplink`, `?rtl`, `?fsmc`, `?dtc`, or `=port`, a generated-child source-file line when a blocked `?fsmc` / `?dtc` realization failure already names the resolved external `.fsm` file, an external RTL metadata-file line when a blocked `.rtlif` structure, token, sizing, typing, flatness, or declaration failure already names the resolved metadata file, a concise context line when the offending child/top-port/explicit-endpoint/metadata/token can be identified cleanly, plus a concise blocked-reason line when the first real reason sentence can be separated cleanly from follow-up details.
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now derives a small composition failure report from blocked composition diagnostics,
+  - and [bin/fsmgen](bin/fsmgen) now prints a bounded `=== Composition Failure Summary ===` section during non-quiet failed composition runs when that blocked boundary can be classified honestly, including a `Lane:` line when the raised diagnostic already names the active `C1` / `C2` / `C3` / `C4` lane, a `Construct:` line when the failure text points clearly at one active syntax construct such as `?ports`, `?toplink`, `?rtl`, `?fsmc`, `?dtc`, or `=port`, a generated-child source-file line when a blocked `?fsmc` / `?dtc` realization failure already names the resolved external `.fsm` file, an external RTL metadata-file line when a blocked `.rtlif` structure, token, sizing, typing, flatness, or declaration failure already names the resolved metadata file, a concise context line when the offending child/top-port/explicit-endpoint/metadata/token can be identified cleanly, plus a concise blocked-reason line when the first real reason sentence can be separated cleanly from follow-up details.
 - Why this is worth shipping:
   - it gives users a cleaner read on blocked composition failures without mutating the underlying exception text,
   - it keeps quiet-mode and test-facing raw failure behavior intact,
   - and it is the first bounded step from successful-run provenance/block summaries into failed-run composition reporting.
-- Added [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock both pipeline-side failure-report extraction and the non-quiet CLI summary surface, including concise reason extraction that trims follow-up detail such as search roots, wrong-kind corrective notes, and repeated metadata-file prefixes, concise context extraction for unsupported-child, top-port, explicit-link endpoint, and `.rtlif` token failures, generated-child source-file extraction for wrong-kind `?fsmc` realization failures, external RTL metadata-file extraction for blocked `.rtlif` structure and token failures, lane extraction for `C1`- and `C3`-scoped failures, and construct extraction for `?ports`, `?rtl`, `?fsmc`, and `?toplink` without inventing construct lines for unsupported child headers.
+- Added [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) to lock both pipeline-side failure-report extraction and the non-quiet CLI summary surface, including concise reason extraction that trims follow-up detail such as search roots, wrong-kind corrective notes, and repeated metadata-file prefixes, concise context extraction for unsupported-child, top-port, explicit-link endpoint, and `.rtlif` token failures, generated-child source-file extraction for wrong-kind `?fsmc` realization failures, external RTL metadata-file extraction for blocked `.rtlif` structure and token failures, lane extraction for `C1`- and `C3`-scoped failures, and construct extraction for `?ports`, `?rtl`, `?fsmc`, and `?toplink` without inventing construct lines for unsupported child headers.
 
 ## 2026-03-18: malformed generated-child source payloads now say source shape/count is blocked
 - Continued the active `R11` diagnostics lane by tightening the next reachable generated-child payload parser boundary without changing composition planning behavior.
 - Landed behavior:
-  - [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) now says composition child source shape is blocked when `?fsmc` / `?dtc` payloads use nested option structures instead of one flat source name,
+  - [perl/FSM/Composition/Parser.pm](perl/FSM/Composition/Parser.pm) now says composition child source shape is blocked when `?fsmc` / `?dtc` payloads use nested option structures instead of one flat source name,
   - and it now says composition child source count is blocked when those same payloads declare zero or multiple flat source names instead of exactly one.
 - Why this is worth shipping:
   - it closes another older-wording pocket on a real composition parser-visible generated-child boundary,
   - it keeps the shipped one-source-per-generated-child contract unchanged while aligning malformed source-payload failures with the rest of the blocked diagnostics lane,
   - and it adds focused direct parser plus pipeline and CLI coverage for both `?fsmc` and `?dtc`.
-- Added [t/130-composition-generated-child-source-shape-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/130-composition-generated-child-source-shape-diagnostics.t) and updated [t/14-composition-parser.t](/Users/richarddje/Documents/github/fsmgen/t/14-composition-parser.t) to lock the new wording.
+- Added [t/130-composition-generated-child-source-shape-diagnostics.t](t/130-composition-generated-child-source-shape-diagnostics.t) and updated [t/14-composition-parser.t](t/14-composition-parser.t) to lock the new wording.
 
 ## 2026-03-18: unsupported composition child kinds now say child-kind support is blocked
 - Continued the active `R11` diagnostics lane by tightening the next reachable composition child-kind parser boundary without changing composition planning behavior.
 - Landed behavior:
-  - [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) now says composition child-kind support is blocked when a composition child header falls outside the active `?fsmc` / `?dtc` / `?rtl` / `?ports` / `?toplink` family.
+  - [perl/FSM/Composition/Parser.pm](perl/FSM/Composition/Parser.pm) now says composition child-kind support is blocked when a composition child header falls outside the active `?fsmc` / `?dtc` / `?rtl` / `?ports` / `?toplink` family.
 - Why this is worth shipping:
   - it closes another older-wording pocket on a real composition parser-visible family boundary,
   - it keeps the shipped child-kind contract unchanged while aligning unsupported-child failures with the rest of the blocked diagnostics lane,
   - and it adds focused regression coverage through direct parser, pipeline, and CLI entrypoints.
-- Added [t/129-composition-unsupported-child-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/129-composition-unsupported-child-diagnostics.t) and updated [t/25-composition-legacy-scope-errors.t](/Users/richarddje/Documents/github/fsmgen/t/25-composition-legacy-scope-errors.t) to lock the new wording.
+- Added [t/129-composition-unsupported-child-diagnostics.t](t/129-composition-unsupported-child-diagnostics.t) and updated [t/25-composition-legacy-scope-errors.t](t/25-composition-legacy-scope-errors.t) to lock the new wording.
 
 ## 2026-03-18: malformed composition child entries now say child structure is blocked
 - Continued the active `R11` diagnostics lane by tightening the next reachable composition child-entry parser boundary without changing composition planning behavior.
 - Landed behavior:
-  - [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) now says blocked child-structure failures for empty child entries, blocked child-header-shape failures for non-string child headers, and blocked child item-list-shape failures for dotted-pair child payloads.
+  - [perl/FSM/Composition/Parser.pm](perl/FSM/Composition/Parser.pm) now says blocked child-structure failures for empty child entries, blocked child-header-shape failures for non-string child headers, and blocked child item-list-shape failures for dotted-pair child payloads.
 - Why this is worth shipping:
   - it closes another older-wording pocket on real malformed composition parser input that users can reach directly,
   - it keeps the shipped child-kind contract unchanged while aligning malformed child-entry failures with the rest of the blocked diagnostics lane,
   - and it also retires the older undef-header warning path instead of leaving that noise to leak through pipeline and CLI runs.
-- Added [t/128-composition-child-structure-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/128-composition-child-structure-diagnostics.t) to lock the new wording through both pipeline and CLI entrypoints.
+- Added [t/128-composition-child-structure-diagnostics.t](t/128-composition-child-structure-diagnostics.t) to lock the new wording through both pipeline and CLI entrypoints.
 
 ## 2026-03-18: `?toplink` naming cleanup is now tracked as future syntax work
 - Captured the recent naming discussion explicitly instead of leaving it in chat only.
@@ -10876,125 +10882,125 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-18: legacy `?ports` mapping directives now say port declaration mode is blocked
 - Continued the active `R11` diagnostics lane by tightening the next reachable composition-parser legacy-`?ports` boundary without changing composition planning behavior.
 - Landed behavior:
-  - [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) now says composition port declaration *mode* is blocked when `?ports` contains a legacy mapping directive like `/foo/bar/` instead of explicit top-port declarations.
+  - [perl/FSM/Composition/Parser.pm](perl/FSM/Composition/Parser.pm) now says composition port declaration *mode* is blocked when `?ports` contains a legacy mapping directive like `/foo/bar/` instead of explicit top-port declarations.
 - Why this is worth shipping:
   - it closes another older-wording pocket on a real parser-visible composition boundary,
   - it keeps the current parser contract unchanged while lining legacy mapping-directive failures up with the rest of the blocked diagnostics lane,
   - and it adds focused regression coverage through pipeline and CLI entrypoints in addition to the existing direct parser check.
-- Added [t/127-composition-ports-mapping-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/127-composition-ports-mapping-diagnostics.t) and updated [t/25-composition-legacy-scope-errors.t](/Users/richarddje/Documents/github/fsmgen/t/25-composition-legacy-scope-errors.t) to lock the new wording.
+- Added [t/127-composition-ports-mapping-diagnostics.t](t/127-composition-ports-mapping-diagnostics.t) and updated [t/25-composition-legacy-scope-errors.t](t/25-composition-legacy-scope-errors.t) to lock the new wording.
 
 ## 2026-03-18: malformed `?ports` and `?toplink` parser items now say parser token boundaries are blocked
 - Continued the active `R11` diagnostics lane by tightening the next reachable composition-parser token-boundary family without changing composition planning behavior.
 - Landed behavior:
-  - [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) now says blocked parser token-boundary failures for nested `?ports`, invalid `?ports` tokens, non-positive `?ports` widths, nested `?toplink` items, and unsupported `?toplink` tokens.
+  - [perl/FSM/Composition/Parser.pm](perl/FSM/Composition/Parser.pm) now says blocked parser token-boundary failures for nested `?ports`, invalid `?ports` tokens, non-positive `?ports` widths, nested `?toplink` items, and unsupported `?toplink` tokens.
 - Why this is worth shipping:
   - it closes another older-wording pocket on real composition parser boundaries that users can hit before planning,
   - it keeps the shipped parser token contract unchanged while lining malformed `?ports` / `?toplink` failures up with the rest of the blocked diagnostics lane,
   - and it adds focused regression coverage through pipeline and CLI entrypoints.
-- Added [t/126-composition-parser-token-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/126-composition-parser-token-diagnostics.t) to lock the new wording.
+- Added [t/126-composition-parser-token-diagnostics.t](t/126-composition-parser-token-diagnostics.t) to lock the new wording.
 
 ## 2026-03-18: duplicate embedded `.rtlif` roots now say embedded-root uniqueness is blocked
 - Continued the active `R11` diagnostics lane by tightening the next reachable embedded-RTL metadata uniqueness failure path without changing composition planning behavior.
 - Landed behavior:
-  - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) now says RTL interface metadata embedded-root *uniqueness* is blocked when the same composition source contains multiple embedded `?rtlif:<module>` roots for one external RTL child.
+  - [perl/FSM/Composition/RTLInterfaceLoader.pm](perl/FSM/Composition/RTLInterfaceLoader.pm) now says RTL interface metadata embedded-root *uniqueness* is blocked when the same composition source contains multiple embedded `?rtlif:<module>` roots for one external RTL child.
 - Why this is worth shipping:
   - it closes another older-wording pocket on a real embedded-RTL metadata-contract boundary,
   - it keeps the shipped embedded-root precedence/uniqueness contract unchanged while lining duplicate-embedded-root failures up with the rest of the blocked diagnostics lane,
   - and it adds focused regression coverage through pipeline and CLI entrypoints in addition to the existing direct-loader check.
-- Added [t/125-composition-embedded-rtlif-duplicate-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/125-composition-embedded-rtlif-duplicate-diagnostics.t) and updated [t/89-composition-embedded-rtlif-roots.t](/Users/richarddje/Documents/github/fsmgen/t/89-composition-embedded-rtlif-roots.t) to lock the new wording.
+- Added [t/125-composition-embedded-rtlif-duplicate-diagnostics.t](t/125-composition-embedded-rtlif-duplicate-diagnostics.t) and updated [t/89-composition-embedded-rtlif-roots.t](t/89-composition-embedded-rtlif-roots.t) to lock the new wording.
 
 ## 2026-03-18: nested external `.rtlif` metadata now says flatness is blocked
 - Continued the active `R11` diagnostics lane by tightening the next reachable external-RTL flatness failure path without changing composition planning behavior.
 - Landed behavior:
-  - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) now says RTL interface metadata *flatness* is blocked when a reachable `.rtlif` file contains nested structure under the required `?rtlif:<module>` root.
+  - [perl/FSM/Composition/RTLInterfaceLoader.pm](perl/FSM/Composition/RTLInterfaceLoader.pm) now says RTL interface metadata *flatness* is blocked when a reachable `.rtlif` file contains nested structure under the required `?rtlif:<module>` root.
 - Why this is worth shipping:
   - it closes another older-wording pocket on a real external-RTL interface-contract boundary,
   - it keeps the shipped `.rtlif` flat-token contract unchanged while lining nested-metadata failures up with the rest of the blocked diagnostics lane,
   - and it adds focused regression coverage through both pipeline and CLI entrypoints.
-- Added [t/124-composition-rtlif-flatness-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/124-composition-rtlif-flatness-diagnostics.t) to lock blocked wording for nested external `.rtlif` metadata.
+- Added [t/124-composition-rtlif-flatness-diagnostics.t](t/124-composition-rtlif-flatness-diagnostics.t) to lock blocked wording for nested external `.rtlif` metadata.
 
 ## 2026-03-18: empty external `.rtlif` interfaces now say metadata port presence is blocked
 - Continued the active `R11` diagnostics lane by tightening the next reachable external-RTL port-presence failure path without changing composition planning behavior.
 - Landed behavior:
-  - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) now says RTL interface metadata port *presence* is blocked when a reachable `.rtlif` file declares no ports under the required `?rtlif:<module>` root.
+  - [perl/FSM/Composition/RTLInterfaceLoader.pm](perl/FSM/Composition/RTLInterfaceLoader.pm) now says RTL interface metadata port *presence* is blocked when a reachable `.rtlif` file declares no ports under the required `?rtlif:<module>` root.
 - Why this is worth shipping:
   - it closes another older-wording pocket on a real external-RTL interface-contract boundary,
   - it keeps the shipped `.rtlif` port-presence contract unchanged while lining empty-interface failures up with the rest of the blocked diagnostics lane,
   - and it adds focused regression coverage through both pipeline and CLI entrypoints.
-- Added [t/123-composition-rtlif-empty-port-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/123-composition-rtlif-empty-port-diagnostics.t) to lock blocked wording for empty external `.rtlif` interfaces.
+- Added [t/123-composition-rtlif-empty-port-diagnostics.t](t/123-composition-rtlif-empty-port-diagnostics.t) to lock blocked wording for empty external `.rtlif` interfaces.
 
 ## 2026-03-18: duplicate external `.rtlif` ports now say declaration uniqueness is blocked
 - Continued the active `R11` diagnostics lane by tightening the next reachable external-RTL duplicate-declaration failure path without changing composition planning behavior.
 - Landed behavior:
-  - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) now says RTL interface metadata port declaration *uniqueness* is blocked when a reachable `.rtlif` file repeats the same port name.
+  - [perl/FSM/Composition/RTLInterfaceLoader.pm](perl/FSM/Composition/RTLInterfaceLoader.pm) now says RTL interface metadata port declaration *uniqueness* is blocked when a reachable `.rtlif` file repeats the same port name.
 - Why this is worth shipping:
   - it closes another older-wording pocket on a real external-RTL interface-contract boundary,
   - it keeps the shipped `.rtlif` declaration contract unchanged while lining duplicate-port failures up with the rest of the blocked diagnostics lane,
   - and it adds focused regression coverage through both pipeline and CLI entrypoints.
-- Added [t/122-composition-rtlif-duplicate-port-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/122-composition-rtlif-duplicate-port-diagnostics.t) to lock blocked wording for duplicate external `.rtlif` ports.
+- Added [t/122-composition-rtlif-duplicate-port-diagnostics.t](t/122-composition-rtlif-duplicate-port-diagnostics.t) to lock blocked wording for duplicate external `.rtlif` ports.
 
 ## 2026-03-18: non-positive external `.rtlif` widths now say metadata port sizing is blocked
 - Continued the active `R11` diagnostics lane by tightening the next reachable external-RTL width-contract failure path without changing composition planning behavior.
 - Landed behavior:
-  - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) now says RTL interface metadata port *sizing* is blocked when a reachable `.rtlif` token declares a non-positive explicit width.
+  - [perl/FSM/Composition/RTLInterfaceLoader.pm](perl/FSM/Composition/RTLInterfaceLoader.pm) now says RTL interface metadata port *sizing* is blocked when a reachable `.rtlif` token declares a non-positive explicit width.
 - Why this is worth shipping:
   - it closes another older-wording pocket on a real external-RTL token-contract boundary,
   - it keeps the shipped `.rtlif` width contract unchanged while lining non-positive-width failures up with the rest of the blocked diagnostics lane,
   - and it adds focused regression coverage through both pipeline and CLI entrypoints.
-- Added [t/121-composition-rtlif-width-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/121-composition-rtlif-width-diagnostics.t) to lock blocked wording for non-positive external `.rtlif` widths.
+- Added [t/121-composition-rtlif-width-diagnostics.t](t/121-composition-rtlif-width-diagnostics.t) to lock blocked wording for non-positive external `.rtlif` widths.
 
 ## 2026-03-18: invalid external `.rtlif` port tokens now say metadata token shape is blocked
 - Continued the active `R11` diagnostics lane by tightening the next reachable external-RTL token-shape failure path without changing composition planning behavior.
 - Landed behavior:
-  - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) now says RTL interface metadata token *shape* is blocked when a reachable `.rtlif` token is syntactically invalid for the current flat port-token contract.
+  - [perl/FSM/Composition/RTLInterfaceLoader.pm](perl/FSM/Composition/RTLInterfaceLoader.pm) now says RTL interface metadata token *shape* is blocked when a reachable `.rtlif` token is syntactically invalid for the current flat port-token contract.
 - Why this is worth shipping:
   - it closes another older-wording pocket on a real external-RTL token-contract boundary,
   - it keeps the shipped `.rtlif` token contract unchanged while lining invalid-token failures up with the rest of the blocked diagnostics lane,
   - and it adds focused regression coverage through both pipeline and CLI entrypoints.
-- Added [t/120-composition-rtlif-token-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/120-composition-rtlif-token-diagnostics.t) to lock blocked wording for invalid external `.rtlif` port tokens.
+- Added [t/120-composition-rtlif-token-diagnostics.t](t/120-composition-rtlif-token-diagnostics.t) to lock blocked wording for invalid external `.rtlif` port tokens.
 
 ## 2026-03-17: unsupported external `.rtlif` port types now say metadata typing is blocked
 - Continued the active `R11` diagnostics lane by tightening the next reachable external-RTL token-contract failure path without changing composition planning behavior.
 - Landed behavior:
-  - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) now says RTL interface metadata port *typing* is blocked when a reachable `.rtlif` token resolves to an unsupported explicit type outside the current `data|clock|reset` contract.
+  - [perl/FSM/Composition/RTLInterfaceLoader.pm](perl/FSM/Composition/RTLInterfaceLoader.pm) now says RTL interface metadata port *typing* is blocked when a reachable `.rtlif` token resolves to an unsupported explicit type outside the current `data|clock|reset` contract.
 - Why this is worth shipping:
   - it closes another older-wording pocket on a real external-RTL integration boundary,
   - it keeps the shipped `.rtlif` token contract unchanged while lining unsupported-type failures up with the rest of the blocked diagnostics lane,
   - and it adds focused regression coverage through both pipeline and CLI entrypoints while preserving the existing direct loader coverage.
-- Added [t/119-composition-rtlif-type-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/119-composition-rtlif-type-diagnostics.t) to lock blocked wording for unsupported external `.rtlif` port types.
+- Added [t/119-composition-rtlif-type-diagnostics.t](t/119-composition-rtlif-type-diagnostics.t) to lock blocked wording for unsupported external `.rtlif` port types.
 
 ## 2026-03-17: wrong-root external `.rtlif` metadata now says structure is blocked
 - Continued the active `R11` diagnostics lane by tightening the next reachable external-RTL failure path without changing composition planning behavior.
 - Landed behavior:
-  - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) now says RTL interface metadata *structure* is blocked when a reachable external `.rtlif` file does not contain the required `?rtlif:<module>` root for the active `?rtl` child.
+  - [perl/FSM/Composition/RTLInterfaceLoader.pm](perl/FSM/Composition/RTLInterfaceLoader.pm) now says RTL interface metadata *structure* is blocked when a reachable external `.rtlif` file does not contain the required `?rtlif:<module>` root for the active `?rtl` child.
 - Why this is worth shipping:
   - it closes another older-wording pocket on a real external-RTL interface-source boundary,
   - it keeps the `.rtlif` contract unchanged while lining the missing-root failure up with the rest of the blocked diagnostics lane,
   - and it adds focused regression coverage through both pipeline and CLI entrypoints.
-- Added [t/118-composition-rtlif-root-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/118-composition-rtlif-root-diagnostics.t) to lock blocked wording for wrong-root or garbage external `.rtlif` metadata.
+- Added [t/118-composition-rtlif-root-diagnostics.t](t/118-composition-rtlif-root-diagnostics.t) to lock blocked wording for wrong-root or garbage external `.rtlif` metadata.
 
 ## 2026-03-17: missing external `.rtlif` metadata now says resolution is blocked
 - Continued the active `R11` diagnostics lane by tightening a reachable external-RTL failure path without changing composition planning behavior.
 - Landed behavior:
-  - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) now says RTL interface metadata *resolution* is blocked when a `?rtl` child has no reachable sidecar or embedded `.rtlif` metadata.
+  - [perl/FSM/Composition/RTLInterfaceLoader.pm](perl/FSM/Composition/RTLInterfaceLoader.pm) now says RTL interface metadata *resolution* is blocked when a `?rtl` child has no reachable sidecar or embedded `.rtlif` metadata.
 - Why this is worth shipping:
   - it closes another older-wording pocket on a real mixed-composition integration boundary,
   - it keeps the external-RTL contract unchanged while lining the metadata-lookup failure up with the rest of the blocked diagnostics lane,
   - and it adds focused regression coverage through both pipeline and CLI entrypoints.
-- Added [t/117-composition-rtlif-metadata-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/117-composition-rtlif-metadata-diagnostics.t) to lock blocked wording for missing external `.rtlif` metadata.
+- Added [t/117-composition-rtlif-metadata-diagnostics.t](t/117-composition-rtlif-metadata-diagnostics.t) to lock blocked wording for missing external `.rtlif` metadata.
 ## 2026-03-17: blocked `C2` lane selection now says so explicitly
 - Continued the active `R11` diagnostics lane by tightening a reachable lane-selection gate without changing composition planning behavior.
 - Landed behavior:
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now says `C2` lane selection is *blocked* when an explicit-link generated-child composition still provides only one generated child instead of the minimum two-child `C2` shape.
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now says `C2` lane selection is *blocked* when an explicit-link generated-child composition still provides only one generated child instead of the minimum two-child `C2` shape.
 - Why this is worth shipping:
   - it closes another older-wording pocket on a real explicit-link composition path that users can hit directly,
   - it keeps planner behavior unchanged while lining the `C2` minimum-shape gate up with the rest of the blocked diagnostics lane,
   - and it adds focused regression coverage through both pipeline and CLI entrypoints.
-- Added [t/116-composition-c2-lane-selection-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/116-composition-c2-lane-selection-diagnostics.t) to lock the blocked wording for one-generated-child explicit-link tops.
+- Added [t/116-composition-c2-lane-selection-diagnostics.t](t/116-composition-c2-lane-selection-diagnostics.t) to lock the blocked wording for one-generated-child explicit-link tops.
 ## 2026-03-17: generated child-source failures now say resolution or realization is blocked
 - Continued the active `R11` diagnostics lane by tightening the external generated-child failure path without changing composition realization behavior.
 - Landed behavior:
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now says child-source *resolution* is blocked when external `?fsmc` / `?dtc` lookup cannot find an embedded or searchable `.fsm` child source,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now says child-source *resolution* is blocked when external `?fsmc` / `?dtc` lookup cannot find an embedded or searchable `.fsm` child source,
   - and it now says child-source *realization* is blocked when a resolved external `?fsmc` / `?dtc` file exists but is rooted under the wrong active source kind.
   - wrong-kind `?fsmc` failures now also point users to `?dtc` for standalone-DT children,
   - and wrong-kind `?dtc` failures now also point users to `?fsmc` for FSM children.
@@ -11002,183 +11008,183 @@ This document captures engineering rationale, design constraints, and working de
   - it closes another older-wording pocket right on a common reusable-module integration failure path,
   - it fixes an outdated diagnostic note that still described standalone-DT child realization as future work even though `?dtc` is already shipped,
   - and it adds focused regression coverage through both pipeline and CLI entrypoints.
-- Added [t/115-composition-child-source-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/115-composition-child-source-diagnostics.t) to lock missing-child, wrong-kind-`?fsmc`, and wrong-kind-`?dtc` wording.
+- Added [t/115-composition-child-source-diagnostics.t](t/115-composition-child-source-diagnostics.t) to lock missing-child, wrong-kind-`?fsmc`, and wrong-kind-`?dtc` wording.
 ## 2026-03-17: unsupported composition backend targets now say target support is blocked
 - Continued the active `R11` diagnostics lane by tightening the remaining composition target-support gate without changing backend behavior.
 - Landed behavior:
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now says composition target support is *blocked* when a valid `?top` source asks for a backend outside the currently emitted SystemVerilog/Verilog composition lanes,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now says composition target support is *blocked* when a valid `?top` source asks for a backend outside the currently emitted SystemVerilog/Verilog composition lanes,
   - and the diagnostic still keeps the concrete requested target language in the exception text.
 - Why this is worth shipping:
   - it closes another older-wording pocket on a real CLI-facing composition boundary,
   - it keeps backend behavior unchanged while lining the target-support gate up with the rest of the blocked-wording lane,
   - and it adds focused regression coverage through both pipeline and CLI entrypoints.
-- Added [t/114-composition-target-support-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/114-composition-target-support-diagnostics.t) to lock the blocked wording for unsupported composition backend targets.
+- Added [t/114-composition-target-support-diagnostics.t](t/114-composition-target-support-diagnostics.t) to lock the blocked wording for unsupported composition backend targets.
 ## 2026-03-17: endpoint-shape diagnostics now say when binding is blocked
 - Continued the active `R11` diagnostics lane by tightening two remaining public endpoint-shape branches without changing composition behavior.
 - Landed behavior:
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now says declared connect-by-name is *blocked* when a top author tries to declare shared system ports like `clk` or `rstn` with `=name`,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now says declared connect-by-name is *blocked* when a top author tries to declare shared system ports like `clk` or `rstn` with `=name`,
   - and it now says explicit link endpoint resolution is *blocked* when a `?toplink` endpoint uses unsupported syntax instead of a top-port name or `instance.port`.
 - Why this is worth shipping:
   - it closes another older-wording pocket right on the composition endpoint surface users type directly,
   - it keeps binding behavior unchanged while lining those endpoint-shape failures up with the rest of the blocked-wording lane,
   - and it adds focused regression coverage instead of relying on incidental parser/planner fallout.
-- Added [t/113-composition-endpoint-shape-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/113-composition-endpoint-shape-diagnostics.t) to lock reserved-system `=name` and unsupported explicit endpoint syntax wording.
+- Added [t/113-composition-endpoint-shape-diagnostics.t](t/113-composition-endpoint-shape-diagnostics.t) to lock reserved-system `=name` and unsupported explicit endpoint syntax wording.
 ## 2026-03-17: duplicate composition declarations now say when shape is blocked
 - Continued the active `R11` diagnostics lane by tightening the remaining duplicate-declaration branches without changing composition behavior.
 - Landed behavior:
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now says composition shape is *blocked* when `?ports` declares the same top port name more than once,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now says composition shape is *blocked* when `?ports` declares the same top port name more than once,
   - and it now says the same thing when linked planning sees the same realized child instance name more than once.
 - Why this is worth shipping:
   - it closes another older-wording pocket in public composition-shape diagnostics,
   - it keeps planning behavior unchanged while lining duplicate declarations up with the rest of the blocked-wording lane,
   - and it adds focused regression coverage instead of relying on incidental failures.
-- Added [t/112-composition-duplicate-declaration-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/112-composition-duplicate-declaration-diagnostics.t) to lock duplicate top-port and duplicate child-instance wording.
+- Added [t/112-composition-duplicate-declaration-diagnostics.t](t/112-composition-duplicate-declaration-diagnostics.t) to lock duplicate top-port and duplicate child-instance wording.
 ## 2026-03-17: `C1` passthrough exposure failures now say when exposure is blocked
 - Continued the active `R11` diagnostics lane by tightening the remaining public `C1` passthrough exposure branches without changing composition behavior.
 - Landed behavior:
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now says `C1` passthrough exposure is *blocked* when explicit top exposure omits a realized child port,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now says `C1` passthrough exposure is *blocked* when explicit top exposure omits a realized child port,
   - and it now says the same thing when an explicitly declared top port does not exist on the realized child interface or disagrees with that child interface on width or direction.
 - Why this is worth shipping:
   - it closes another older-wording pocket in the remaining single-child public-path diagnostics,
   - it keeps behavior unchanged while lining those `C1` failures up with the rest of the active blocked-wording lane,
   - and it adds focused coverage instead of relying only on the older `C1` success test.
-- Added [t/111-composition-c1-port-exposure-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/111-composition-c1-port-exposure-diagnostics.t) to lock missing-exposure, unknown-child-port, width-mismatch, and direction-mismatch wording for `C1` passthrough exposure.
+- Added [t/111-composition-c1-port-exposure-diagnostics.t](t/111-composition-c1-port-exposure-diagnostics.t) to lock missing-exposure, unknown-child-port, width-mismatch, and direction-mismatch wording for `C1` passthrough exposure.
 ## 2026-03-17: declared connect-by-name failures now say when the declared match is blocked
 - Continued the active `R11` lane by extending the blocked-wording diagnostics into the declared `=name` connect-by-name path.
 - Landed behavior:
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now says declared connect-by-name is *blocked* when same-name child endpoints disagree on direction or width, when an output-side match is ambiguous, or when no realized child endpoint exists,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now says declared connect-by-name is *blocked* when same-name child endpoints disagree on direction or width, when an output-side match is ambiguous, or when no realized child endpoint exists,
   - and it still keeps the concrete same-name endpoint evidence in those failures.
 - Why this is worth shipping:
   - it broadens the blocked-wording lane into another major composition family users hit directly,
   - it reuses already-shipped focused `C4` coverage instead of inventing a larger feature slice,
   - and it keeps `R11` moving on diagnostics clarity rather than hidden planner changes.
-- Updated [t/24-composition-connect-by-name.t](/Users/richarddje/Documents/github/fsmgen/t/24-composition-connect-by-name.t) and [t/95-composition-connect-by-name-input-fanout.t](/Users/richarddje/Documents/github/fsmgen/t/95-composition-connect-by-name-input-fanout.t) to lock the broadened blocked-wording surface for declared connect-by-name.
+- Updated [t/24-composition-connect-by-name.t](t/24-composition-connect-by-name.t) and [t/95-composition-connect-by-name-input-fanout.t](t/95-composition-connect-by-name-input-fanout.t) to lock the broadened blocked-wording surface for declared connect-by-name.
 ## 2026-03-17: explicit-toplink top-port inference failures now say when inference is blocked
 - Continued the active `R11` lane by extending the blocked-wording diagnostics into the explicit-toplink-driven undeclared top-port inference path.
 - Landed behavior:
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now says explicit top-link port inference is *blocked* when one undeclared top endpoint is used as both input and output, or when the linked child endpoints disagree on width or type metadata,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now says explicit top-link port inference is *blocked* when one undeclared top endpoint is used as both input and output, or when the linked child endpoints disagree on width or type metadata,
   - and it still reports the concrete explicit-link evidence instead of collapsing those failures into generic ambiguity text.
 - Why this is worth shipping:
   - it broadens the failure-path blocked-wording lane into another important convention-over-configuration inference family,
   - it closes previously untested width/type wording branches in the explicit-toplink path,
   - and it keeps the current `R11` step on diagnostics clarity rather than new behavior.
-- Updated [t/101-composition-explicit-link-implicit-ports.t](/Users/richarddje/Documents/github/fsmgen/t/101-composition-explicit-link-implicit-ports.t) to lock mixed-role, width-mismatch, and type-mismatch blocked diagnostics for explicit-toplink-driven undeclared top-port inference.
+- Updated [t/101-composition-explicit-link-implicit-ports.t](t/101-composition-explicit-link-implicit-ports.t) to lock mixed-role, width-mismatch, and type-mismatch blocked diagnostics for explicit-toplink-driven undeclared top-port inference.
 ## 2026-03-17: top-level composition lane/shape gates now say they are blocked
 - Continued the active `R11` diagnostics lane by tightening the remaining top-level composition lane/shape gates without changing planning behavior.
 - Landed behavior:
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now says composition lane entry is *blocked* when no child instances exist,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now says composition lane entry is *blocked* when no child instances exist,
   - and it now says composition shape is *blocked* when `?ports` multiplicity is invalid or when omitted/empty `?ports` appears outside the bounded inference cases.
 - Why this is worth shipping:
   - it extends the same blocked-wording style all the way up to the top-level composition shape gates,
   - it keeps the planner behavior unchanged,
   - and it adds focused regression coverage instead of relying only on older generic wording.
-- Updated [t/13-composition-source-classification.t](/Users/richarddje/Documents/github/fsmgen/t/13-composition-source-classification.t) and added [t/110-composition-shape-gate-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/110-composition-shape-gate-diagnostics.t) to lock the no-child, multi-`?ports`, omitted-`?ports`, and empty-`?ports` blocked wording.
+- Updated [t/13-composition-source-classification.t](t/13-composition-source-classification.t) and added [t/110-composition-shape-gate-diagnostics.t](t/110-composition-shape-gate-diagnostics.t) to lock the no-child, multi-`?ports`, omitted-`?ports`, and empty-`?ports` blocked wording.
 ## 2026-03-17: explicit-link lane-entry and topology failures now say they are blocked
 - Continued the active `R11` diagnostics lane by tightening the remaining explicit-link lane-entry and topology branches without changing composition behavior.
 - Landed behavior:
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now says explicit-link lane entry is *blocked* when a `C2`/`C3` lane is entered without any explicit `?toplink`,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now says explicit-link lane entry is *blocked* when a `C2`/`C3` lane is entered without any explicit `?toplink`,
   - and it now says explicit-link topology is *blocked* when a top input tries to drive a top output directly or when one source tries to drive multiple top outputs.
 - Why this is worth shipping:
   - it closes another older-wording pocket in the explicit-link diagnostics family,
   - it keeps the planner behavior unchanged while making the failure surface read consistently,
   - and it adds focused regression coverage instead of relying on indirect behavior.
-- Added [t/109-composition-explicit-link-topology-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/109-composition-explicit-link-topology-diagnostics.t) to lock missing-`?toplink`, top-input-to-top-output, and multi-top-output-source diagnostics.
+- Added [t/109-composition-explicit-link-topology-diagnostics.t](t/109-composition-explicit-link-topology-diagnostics.t) to lock missing-`?toplink`, top-input-to-top-output, and multi-top-output-source diagnostics.
 ## 2026-03-17: explicit-link unwired-port failures now say wiring is blocked
 - Continued the active `R11` diagnostics lane by tightening the remaining explicit-link unwired-port branches without changing composition behavior.
 - Landed behavior:
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now says explicit-link top wiring is *blocked* when a declared non-system top port remains unused in an explicit-link lane,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now says explicit-link top wiring is *blocked* when a declared non-system top port remains unused in an explicit-link lane,
   - and it now says realized child wiring is *blocked* when a realized child port is still left unconnected after explicit-link planning.
 - Why this is worth shipping:
   - it closes another older-wording pocket in the explicit-link family,
   - it lines those unwired-port branches up with the same blocked-language used everywhere else in the active diagnostics lane,
   - and it keeps the planner behavior unchanged.
-- Added [t/108-composition-explicit-link-wiring-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/108-composition-explicit-link-wiring-diagnostics.t) to lock unused declared top-input, unused declared top-output, and unconnected realized-child-port diagnostics.
+- Added [t/108-composition-explicit-link-wiring-diagnostics.t](t/108-composition-explicit-link-wiring-diagnostics.t) to lock unused declared top-input, unused declared top-output, and unconnected realized-child-port diagnostics.
 ## 2026-03-17: explicit toplink validation failures now say when the declared link is blocked
 - Continued the active `R11` diagnostics lane by tightening the main explicit `?toplink` validation family without changing composition behavior.
 - Landed behavior:
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now says explicit link endpoint resolution is *blocked* when a declared link names a missing endpoint,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now says explicit link endpoint resolution is *blocked* when a declared link names a missing endpoint,
   - and explicit link validation now says the declared link is *blocked* when direction, duplicate-drive, or width evidence prevents that declared `?toplink` from applying.
 - Why this is worth shipping:
   - it extends the same blocked-wording style into the core explicit-link validation family instead of leaving that branch in older direct-error wording,
   - it keeps the existing endpoint detail intact,
   - and it broadens diagnostics clarity without widening planner behavior.
-- Updated [t/23-composition-errors.t](/Users/richarddje/Documents/github/fsmgen/t/23-composition-errors.t) to lock blocked wording across duplicate-driver, width-mismatch, unknown-endpoint, and direction-mismatch explicit-link failures.
+- Updated [t/23-composition-errors.t](t/23-composition-errors.t) to lock blocked wording across duplicate-driver, width-mismatch, unknown-endpoint, and direction-mismatch explicit-link failures.
 ## 2026-03-17: explicit top-output re-export mismatches now say when re-export is blocked
 - Continued the active `R11` diagnostics lane with the next small failure-path wording seam instead of widening behavior again.
 - Landed behavior:
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now says explicit top-output re-export is *blocked* when a declared top output disagrees with the inferred same-name internal-carrier family on width or interface type,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now says explicit top-output re-export is *blocked* when a declared top output disagrees with the inferred same-name internal-carrier family on width or interface type,
   - and the exception still keeps the resolved child-side width/type detail.
 - Why this is worth shipping:
   - it lines the re-export override boundary up with the same blocked-wording style already used across the other convention-first composition families,
   - it makes the local-override failure easier to read without changing planner behavior,
   - and it closes the remaining older-wording pocket in the internal-carrier branch.
-- Expanded [t/100-composition-internal-carrier-top-reexport.t](/Users/richarddje/Documents/github/fsmgen/t/100-composition-internal-carrier-top-reexport.t) to lock both width-mismatch and type-mismatch blocked wording for explicit top-output re-export.
+- Expanded [t/100-composition-internal-carrier-top-reexport.t](t/100-composition-internal-carrier-top-reexport.t) to lock both width-mismatch and type-mismatch blocked wording for explicit top-output re-export.
 ## 2026-03-17: undeclared inference failure diagnostics now say when convention is blocked
 - Continued the active `R11` lane by broadening the new blocked-wording diagnostics one step further without changing composition behavior.
 - Landed behavior:
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now says undeclared top-input inference, undeclared top-output inference, and undeclared same-name internal-carrier inference are *blocked* when width/type ambiguity or multiple drivers prevent the bounded convention-first path from applying,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now says undeclared top-input inference, undeclared top-output inference, and undeclared same-name internal-carrier inference are *blocked* when width/type ambiguity or multiple drivers prevent the bounded convention-first path from applying,
   - and the planner still keeps the concrete conflicting endpoint detail in the same exceptions.
 - Why this is worth shipping:
   - it extends the earlier plain-explicit-top-port blocked-wording slice into the main undeclared inference families users hit while leaning on convention-first composition,
   - it lines up those failure paths with the already-shipped successful-run `Convention Blocks` summary,
   - and it keeps `R11` moving on diagnostics clarity rather than widening hidden auto-wiring.
-- Updated [t/97-composition-implicit-multi-child-inputs.t](/Users/richarddje/Documents/github/fsmgen/t/97-composition-implicit-multi-child-inputs.t), [t/98-composition-implicit-multi-child-outputs.t](/Users/richarddje/Documents/github/fsmgen/t/98-composition-implicit-multi-child-outputs.t), and [t/99-composition-implicit-internal-carriers.t](/Users/richarddje/Documents/github/fsmgen/t/99-composition-implicit-internal-carriers.t) to lock the broadened blocked-wording surface across those three inference families.
+- Updated [t/97-composition-implicit-multi-child-inputs.t](t/97-composition-implicit-multi-child-inputs.t), [t/98-composition-implicit-multi-child-outputs.t](t/98-composition-implicit-multi-child-outputs.t), and [t/99-composition-implicit-internal-carriers.t](t/99-composition-implicit-internal-carriers.t) to lock the broadened blocked-wording surface across those three inference families.
 ## 2026-03-17: plain explicit top-port failure diagnostics now say when convention is blocked
 - Continued the active `R11` lane by closing the first failure-path wording seam instead of widening composition behavior again.
 - Landed behavior:
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now says the plain explicit top-port same-name convention is *blocked* when mixed-direction, width-mismatched, type-mismatched, or ambiguous child-side evidence prevents convention-first binding,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now says the plain explicit top-port same-name convention is *blocked* when mixed-direction, width-mismatched, type-mismatched, or ambiguous child-side evidence prevents convention-first binding,
   - and it keeps the existing concrete detail about the conflicting child endpoints instead of replacing it with a vaguer message.
 - Why this is worth shipping:
   - it aligns failure-path wording with the already-shipped successful-run `Convention Blocks` summary,
   - it makes the roadmap’s “inferred / blocked / overridden” vocabulary more consistent in actual troubleshooting,
   - and it keeps the current `R11` step focused on diagnostics clarity rather than new hidden inference.
-- [t/107-composition-blocked-failure-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/107-composition-blocked-failure-diagnostics.t) locks the first bounded blocked-wording failure cases for plain explicit top-input and top-output convention.
+- [t/107-composition-blocked-failure-diagnostics.t](t/107-composition-blocked-failure-diagnostics.t) locks the first bounded blocked-wording failure cases for plain explicit top-input and top-output convention.
 ## 2026-03-17: composition provenance now reports blocked convention cases too
 - Continued the active `R11` lane by making the first successful-run “blocked” cases visible instead of leaving that concept only in future notes.
 - Landed behavior:
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now derives blocked convention events into `composition_report`,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now derives blocked convention events into `composition_report`,
   - those events currently cover explicit child links blocking undeclared top-input/top-output inference and inferred internal carriers staying internal by default,
-  - and [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now prints a dedicated `Convention Blocks` section when such events are present.
+  - and [bin/fsmgen](bin/fsmgen) now prints a dedicated `Convention Blocks` section when such events are present.
 - Why this is worth shipping:
   - it closes the first user-facing “blocked” gap for successful composition runs,
   - it stays additive on top of the new provenance and override summaries,
   - and it makes the next remaining diagnostics seam clearer: broader failure-path wording rather than more success-path inference.
-- [t/106-composition-blocked-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/106-composition-blocked-reporting.t) locks both blocked undeclared top-interface inference and kept-internal carrier reporting across pipeline and CLI surfaces.
+- [t/106-composition-blocked-reporting.t](t/106-composition-blocked-reporting.t) locks both blocked undeclared top-interface inference and kept-internal carrier reporting across pipeline and CLI surfaces.
 ## 2026-03-17: composition provenance now reports local override events too
 - Continued the active `R11` lane by making the first “overridden” cases visible in successful composition runs instead of stopping at declared-versus-inferred counts.
 - Landed behavior:
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now derives override events into `composition_report`,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now derives override events into `composition_report`,
   - those events currently cover explicit toplinks overriding same-name top-input/top-output convention and explicit top outputs re-exporting inferred internal carriers,
-  - and [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now prints a dedicated `Convention Overrides` section when such events are present.
+  - and [bin/fsmgen](bin/fsmgen) now prints a dedicated `Convention Overrides` section when such events are present.
 - Why this is worth shipping:
   - it turns the roadmap’s “overridden” concept into real surfaced data instead of leaving it implicit in planner behavior,
   - it keeps the reporting layer additive and bounded,
   - and it makes the next diagnostics step clearer: the remaining gap is now mostly the “blocked” side, not override visibility.
-- [t/105-composition-override-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/105-composition-override-reporting.t) locks both explicit-toplink override reporting and explicit top-output internal-carrier re-export reporting across pipeline and CLI surfaces.
+- [t/105-composition-override-reporting.t](t/105-composition-override-reporting.t) locks both explicit-toplink override reporting and explicit top-output internal-carrier re-export reporting across pipeline and CLI surfaces.
 ## 2026-03-17: composition provenance now reaches the result hash and CLI summary
 - Continued the active `R11` lane by turning the new plan-side provenance metadata into something users and embedding callers can actually see without spelunking typed plan objects manually.
 - Landed behavior:
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now builds `composition_report` for composition sources,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now builds `composition_report` for composition sources,
   - that report summarizes top-port and resolved-link provenance by `origin_kind` plus declared / inferred / auto category counts,
-  - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now prints a composition summary plus provenance counts in non-quiet runs,
+  - [bin/fsmgen](bin/fsmgen) now prints a composition summary plus provenance counts in non-quiet runs,
   - and composition `module_info` / `statistics` now carry the resolved-link count and attached provenance summary too.
 - Why this is worth shipping:
   - it turns the earlier transparency metadata into a usable diagnostics/reporting surface instead of leaving it as an internal-only affordance,
   - it keeps the result additive and structured for future embedding work,
   - and it gives us a clean base for later “blocked” / “overridden” diagnostics without inventing a second reporting model.
-- [t/104-composition-provenance-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/104-composition-provenance-reporting.t) locks both the pipeline-facing report counts and the CLI-facing provenance summary.
+- [t/104-composition-provenance-reporting.t](t/104-composition-provenance-reporting.t) locks both the pipeline-facing report counts and the CLI-facing provenance summary.
 ## 2026-03-17: typed composition plans now surface first-pass provenance
 - Continued the active `R11` lane by making the convention engine more transparent without widening the wiring contract again.
 - Landed behavior:
-  - [perl/FSM/Composition/Port.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Port.pm) now carries `origin_kind`,
-  - [perl/FSM/Composition/Link.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Link.pm) now carries `origin_kind`,
-  - [perl/FSM/Composition/Plan.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Plan.pm) now carries `resolved_links`,
-  - and [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now annotates declared, inferred, convention-based, internal-carrier, and auto-system composition decisions with that metadata.
+  - [perl/FSM/Composition/Port.pm](perl/FSM/Composition/Port.pm) now carries `origin_kind`,
+  - [perl/FSM/Composition/Link.pm](perl/FSM/Composition/Link.pm) now carries `origin_kind`,
+  - [perl/FSM/Composition/Plan.pm](perl/FSM/Composition/Plan.pm) now carries `resolved_links`,
+  - and [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now annotates declared, inferred, convention-based, internal-carrier, and auto-system composition decisions with that metadata.
 - Why this is worth shipping:
   - it is the first concrete step toward the roadmap rule that diagnostics should explain whether a port or link was inferred, blocked, or overridden,
   - it helps future embedding/reporting work without changing the existing planner contract abruptly,
   - and it keeps the new transparency contract additive by leaving the old `links` field alone while introducing `resolved_links` for the full planned link set.
-- [t/103-composition-provenance-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/103-composition-provenance-metadata.t) locks parser-side declared provenance, `C1` inferred passthrough provenance, explicit-toplink-driven inferred top-port provenance, and resolved-link provenance for plain-explicit-port convention plus internal-carrier re-export.
+- [t/103-composition-provenance-metadata.t](t/103-composition-provenance-metadata.t) locks parser-side declared provenance, `C1` inferred passthrough provenance, explicit-toplink-driven inferred top-port provenance, and resolved-link provenance for plain-explicit-port convention plus internal-carrier re-export.
 ## 2026-03-17: explicit-link `C2` / `C3` plain explicit top ports can now reuse same-name convention
 - Continued the active `R11` lane by removing another layer of top-boundary boilerplate without collapsing `C2` / `C3` into broad hidden auto-wiring.
 - Landed behavior:
@@ -11190,17 +11196,17 @@ This document captures engineering rationale, design constraints, and working de
   - it moves the tool closer to the intended convention-over-configuration integration style,
   - it keeps `=name` available as the stricter opt-in `C4` contract instead of turning every same-name case into that lane,
   - and it preserves honest boundaries by still failing mixed-direction input families and ambiguous output families explicitly.
-- [t/102-composition-explicit-port-convention.t](/Users/richarddje/Documents/github/fsmgen/t/102-composition-explicit-port-convention.t) locks generated-child `C2` success, mixed generated-plus-`?rtl` `C3` success, mixed-direction rejection for plain explicit top inputs, and ambiguity rejection for plain explicit top outputs.
+- [t/102-composition-explicit-port-convention.t](t/102-composition-explicit-port-convention.t) locks generated-child `C2` success, mixed generated-plus-`?rtl` `C3` success, mixed-direction rejection for plain explicit top inputs, and ambiguity rejection for plain explicit top outputs.
 ## 2026-03-17: architecture hotspot snapshot for future refactor work
-- Took a fresh read-through from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) down the active imported `FSM::*` tree and recorded the main refactor seams explicitly instead of leaving them as conversational analysis only.
+- Took a fresh read-through from [bin/fsmgen](bin/fsmgen) down the active imported `FSM::*` tree and recorded the main refactor seams explicitly instead of leaving them as conversational analysis only.
 - Current hotspot set worth tracking deliberately:
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now owns too much of the composition story at once: source orchestration, child realization, interface inference, lane selection, top planning, and top emission,
-  - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) remains the strongest synthesis gravity well in the tree and is still the most likely future refactor hotspot,
-  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) still carries enough planning/normalization logic that the backend boundary is not yet a purely honest rendering boundary,
-  - the coexistence of [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm) and the `FSM::AST::*` family is workable but still a real complexity seam, with too much of the bridge remaining implicit inside `EnableGraph`,
-  - [perl/FSM/ExpressionNamer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ExpressionNamer.pm) now looks secondary relative to the active AST-first factoring path and should eventually be either justified as live surface or retired as residue,
-  - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) still carries some stale compatibility/help wording,
-  - and [perl/FSM/Debug.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Debug.pm) still relies on global state that is acceptable for the CLI but worth revisiting before deeper embedding/API work.
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now owns too much of the composition story at once: source orchestration, child realization, interface inference, lane selection, top planning, and top emission,
+  - [perl/FSM/Synthesis/EnableGraph.pm](perl/FSM/Synthesis/EnableGraph.pm) remains the strongest synthesis gravity well in the tree and is still the most likely future refactor hotspot,
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) still carries enough planning/normalization logic that the backend boundary is not yet a purely honest rendering boundary,
+  - the coexistence of [perl/FSM/CoreAST.pm](perl/FSM/CoreAST.pm) and the `FSM::AST::*` family is workable but still a real complexity seam, with too much of the bridge remaining implicit inside `EnableGraph`,
+  - [perl/FSM/ExpressionNamer.pm](perl/FSM/ExpressionNamer.pm) now looks secondary relative to the active AST-first factoring path and should eventually be either justified as live surface or retired as residue,
+  - [bin/fsmgen](bin/fsmgen) still carries some stale compatibility/help wording,
+  - and [perl/FSM/Debug.pm](perl/FSM/Debug.pm) still relies on global state that is acceptable for the CLI but worth revisiting before deeper embedding/API work.
 - Design note from this audit:
   - the right follow-up is not a broad “refactor everything” pass,
   - it is to keep naming these seams in the roadmap and then retire them in bounded slices while the active `R11` composition/type contracts are still being shaped.
@@ -11215,7 +11221,7 @@ This document captures engineering rationale, design constraints, and working de
   - it moves the active tool closer to the intended “convention first, configuration only where needed” integration style,
   - it preserves honest boundaries by still rejecting undeclared top endpoints that are used as both inputs and outputs,
   - and it builds directly on the already-shipped undeclared top-input/top-output/internal-carrier slices instead of inventing a separate auto-wiring system.
-- [t/101-composition-explicit-link-implicit-ports.t](/Users/richarddje/Documents/github/fsmgen/t/101-composition-explicit-link-implicit-ports.t) locks generated-child renamed-endpoint success, RTL-backed renamed-endpoint success, and mixed-role undeclared-endpoint rejection.
+- [t/101-composition-explicit-link-implicit-ports.t](t/101-composition-explicit-link-implicit-ports.t) locks generated-child renamed-endpoint success, RTL-backed renamed-endpoint success, and mixed-role undeclared-endpoint rejection.
 
 ## 2026-03-17: explicit-link `C2` / `C3` can now re-export inferred same-name internal carriers through explicit top outputs
 - Continued the active `R11` lane by turning the last internal-carrier follow-up question into a shipped local-override rule instead of leaving it as future design intent.
@@ -11227,7 +11233,7 @@ This document captures engineering rationale, design constraints, and working de
   - it keeps convention as the default integration path,
   - it adds the first real “local override without whole-interface restatement” slice on top of that convention,
   - and it matches the intended integration model more honestly than forcing users back into manual child-to-child links just to expose one already-conventional carrier.
-- [t/100-composition-internal-carrier-top-reexport.t](/Users/richarddje/Documents/github/fsmgen/t/100-composition-internal-carrier-top-reexport.t) locks generated-child success, mixed generated-plus-RTL success, same-name output ambiguity rejection, and explicit top-output type-mismatch rejection for this re-export rule.
+- [t/100-composition-internal-carrier-top-reexport.t](t/100-composition-internal-carrier-top-reexport.t) locks generated-child success, mixed generated-plus-RTL success, same-name output ambiguity rejection, and explicit top-output type-mismatch rejection for this re-export rule.
 
 ## 2026-03-17: explicit-link `C2` / `C3` can now infer same-name internal carriers
 - Continued the active `R11` lane by landing the next convention-first slice after undeclared top inputs and undeclared unique top outputs.
@@ -11239,7 +11245,7 @@ This document captures engineering rationale, design constraints, and working de
   - it restores one of the most useful convention-over-configuration integration shortcuts without reopening broad hidden wiring,
   - it keeps explicit declarations as precise local overrides because any explicit top port or explicit link touching that signal family suppresses the inference,
   - and it established the base carrier-inference rule that the newer shipped explicit top-output re-export slice now builds on.
-- [t/99-composition-implicit-internal-carriers.t](/Users/richarddje/Documents/github/fsmgen/t/99-composition-implicit-internal-carriers.t) locks generated-child fanout success, mixed generated-plus-RTL success, and ambiguity rejection for several same-name driving outputs.
+- [t/99-composition-implicit-internal-carriers.t](t/99-composition-implicit-internal-carriers.t) locks generated-child fanout success, mixed generated-plus-RTL success, and ambiguity rejection for several same-name driving outputs.
 
 ## 2026-03-17: explicit-link `C2` / `C3` can now infer undeclared unique top outputs
 - Continued the active `R11` lane by widening undeclared top-interface inference one more careful step beyond the earlier single-child `C1` slice and the just-shipped multi-child top-input slice.
@@ -11251,7 +11257,7 @@ This document captures engineering rationale, design constraints, and working de
   - it removes another common layer of top-level boilerplate from real integration work,
   - it stays aligned with the convention-first rule that top-facing unique child outputs should surface naturally while internally consumed outputs should stay internal by default,
   - and it keeps the harder same-name producer-to-consumer internal-carrier question as a future bounded slice instead of mixing that semantics into this one.
-- [t/98-composition-implicit-multi-child-outputs.t](/Users/richarddje/Documents/github/fsmgen/t/98-composition-implicit-multi-child-outputs.t) locks generated-child success, external-RTL success, and several-same-name-output ambiguity rejection.
+- [t/98-composition-implicit-multi-child-outputs.t](t/98-composition-implicit-multi-child-outputs.t) locks generated-child success, external-RTL success, and several-same-name-output ambiguity rejection.
 
 ## 2026-03-17: future `R11` now records a convention-first, local-override composition policy
 - Captured one more future `R11` rule so we do not drift into either extreme:
@@ -11277,7 +11283,7 @@ This document captures engineering rationale, design constraints, and working de
   - it removes repetitive top-input boilerplate from real multi-child integration cases,
   - it stays convention-over-configuration without becoming hidden carrier inference,
   - and it keeps output exposure and producer-to-consumer internalization as future explicit design questions rather than mixing them into this slice.
-- [t/97-composition-implicit-multi-child-inputs.t](/Users/richarddje/Documents/github/fsmgen/t/97-composition-implicit-multi-child-inputs.t) locks shared-input success plus width-mismatch rejection.
+- [t/97-composition-implicit-multi-child-inputs.t](t/97-composition-implicit-multi-child-inputs.t) locks shared-input success plus width-mismatch rejection.
 
 ## 2026-03-17: single-child `C1` can now infer the top interface when `?ports` is omitted or empty
 - Continued the active `R11` lane by taking the first bounded undeclared top-interface inference step instead of jumping straight into multi-child auto-wiring.
@@ -11289,7 +11295,7 @@ This document captures engineering rationale, design constraints, and working de
   - it brings back a useful convention-over-configuration shortcut for the simplest integration case,
   - it works for generated children and external `?rtl` children alike because both already realize a typed interface,
   - and it stays bounded because it does not yet create multi-child internal carriers or ambiguous inferred top exports.
-- [t/96-composition-implicit-single-child-ports.t](/Users/richarddje/Documents/github/fsmgen/t/96-composition-implicit-single-child-ports.t) locks omitted-`?ports` and empty-`?ports` inference through pipeline and CLI.
+- [t/96-composition-implicit-single-child-ports.t](t/96-composition-implicit-single-child-ports.t) locks omitted-`?ports` and empty-`?ports` inference through pipeline and CLI.
 
 ## 2026-03-17: future `R11` now includes a portable synthesizable-type and inference-first lane
 - Captured one more concrete future `R11` direction instead of leaving scalar/aggregate type support as loose brainstorming only.
@@ -11326,7 +11332,7 @@ This document captures engineering rationale, design constraints, and working de
   - it keeps producer ownership strict on outputs,
   - it gives a real convention-over-configuration speedup for common integration cases where one parent input should feed several children,
   - and it improves the usefulness of the current explicit `=name` contract without yet widening into full undeclared top-interface inference.
-- [t/95-composition-connect-by-name-input-fanout.t](/Users/richarddje/Documents/github/fsmgen/t/95-composition-connect-by-name-input-fanout.t) locks fanout success plus mixed-direction rejection.
+- [t/95-composition-connect-by-name-input-fanout.t](t/95-composition-connect-by-name-input-fanout.t) locks fanout success plus mixed-direction rejection.
 
 ## 2026-03-17: declared connect-by-name `C4` now covers multi-generated-plus-`?rtl` tops too
 - Continued the active `R11` lane by broadening the already-shipped declared connect-by-name planner one more bounded step instead of introducing another wiring mode.
@@ -11337,7 +11343,7 @@ This document captures engineering rationale, design constraints, and working de
   - it keeps `C4` symmetric with the broader mixed `C3` slice we already ship,
   - the by-name linker was already general enough once the old guard stopped rejecting this topology,
   - and it lets users expose top-facing signals by exact name without falling back to all-explicit top wiring just because the composition mixes several generated children with RTL children.
-- [t/94-composition-multi-generated-plus-rtl-connect-by-name.t](/Users/richarddje/Documents/github/fsmgen/t/94-composition-multi-generated-plus-rtl-connect-by-name.t) locks the first multi-generated-plus-`?rtl` `C4` success path.
+- [t/94-composition-multi-generated-plus-rtl-connect-by-name.t](t/94-composition-multi-generated-plus-rtl-connect-by-name.t) locks the first multi-generated-plus-`?rtl` `C4` success path.
 
 ## 2026-03-17: explicit-link `C3` now covers multi-generated-plus-`?rtl` tops too
 - Continued the active `R11` lane by broadening the already-shipped external-RTL explicit-link planner one more bounded step instead of adding another composition family.
@@ -11348,7 +11354,7 @@ This document captures engineering rationale, design constraints, and working de
   - the linked planner/emitter was already general enough to handle this topology honestly once the old guard was removed,
   - it keeps explicit-link `C3` focused on “external RTL participates in the explicit-link plan” instead of freezing it at one generated child forever,
   - and it gives `fsmgen` a more useful integration wrapper for mixed generated-controller/generated-datapath plus external-RTL tops without widening syntax.
-- [t/93-composition-multi-generated-plus-rtl-children.t](/Users/richarddje/Documents/github/fsmgen/t/93-composition-multi-generated-plus-rtl-children.t) locks the first multi-generated-plus-`?rtl` `C3` success path.
+- [t/93-composition-multi-generated-plus-rtl-children.t](t/93-composition-multi-generated-plus-rtl-children.t) locks the first multi-generated-plus-`?rtl` `C3` success path.
 
 ## 2026-03-17: declared connect-by-name `C4` now covers multi-`?rtl` tops too
 - Continued the active `R11` lane by broadening the already-shipped declared connect-by-name planner one bounded step further instead of introducing another wiring mode.
@@ -11359,7 +11365,7 @@ This document captures engineering rationale, design constraints, and working de
   - it keeps the `C3`/`C4` external-RTL growth symmetric, so users do not have to fall back from declared by-name to explicit top-output wiring just because the top has more than one RTL child,
   - the existing exact-match by-name planner was already general enough, so this slice mainly promotes real existing behavior into an honest supported contract,
   - and it preserves the same safety boundary: no hidden inference beyond exactly one same-name, same-direction, same-width child endpoint.
-- [t/92-composition-multi-rtl-connect-by-name.t](/Users/richarddje/Documents/github/fsmgen/t/92-composition-multi-rtl-connect-by-name.t) locks the first multi-`?rtl` and one-generated-plus-multi-`?rtl` `C4` success paths plus ambiguous multi-RTL by-name rejection.
+- [t/92-composition-multi-rtl-connect-by-name.t](t/92-composition-multi-rtl-connect-by-name.t) locks the first multi-`?rtl` and one-generated-plus-multi-`?rtl` `C4` success paths plus ambiguous multi-RTL by-name rejection.
 
 ## 2026-03-16: explicit-link `C3` now covers multi-`?rtl` tops too
 - Continued the active `R11` lane by broadening the already-shipped external-RTL explicit-link planner one bounded step further instead of inventing a new composition family.
@@ -11370,7 +11376,7 @@ This document captures engineering rationale, design constraints, and working de
   - the typed `.rtlif` interface-source lane is now strong enough to describe several external children in one top without changing the topology language,
   - the planner/emitter already handled the general case under the old guard, so this slice turns existing generality into an honest supported contract,
   - and it gives `fsmgen` a useful wrapper/integration step for several existing RTL blocks before the bigger shared-datapath work lands.
-- [t/91-composition-multi-rtl-children.t](/Users/richarddje/Documents/github/fsmgen/t/91-composition-multi-rtl-children.t) locks the first multi-`?rtl` `C3` success paths for both all-RTL and generated-plus-multi-RTL tops.
+- [t/91-composition-multi-rtl-children.t](t/91-composition-multi-rtl-children.t) locks the first multi-`?rtl` `C3` success paths for both all-RTL and generated-plus-multi-RTL tops.
 
 ## 2026-03-16: single external `?rtl` child composition now has a first shipped `R11` slice
 - Continued the active `R11` lane by broadening the already-shipped composition planner in one bounded way instead of inventing a new syntax family.
@@ -11382,7 +11388,7 @@ This document captures engineering rationale, design constraints, and working de
   - it turns the recently strengthened `.rtlif` interface-source contract into a more immediately useful wrapper/composition capability,
   - it lets `fsmgen` generate narrow top wrappers around existing RTL blocks without forcing a generated FSM/DT child to be present,
   - and it stays bounded because the child count is still one and the wiring rules are still the same exact explicit/by-name rules already used elsewhere.
-- [t/90-composition-single-rtl-child.t](/Users/richarddje/Documents/github/fsmgen/t/90-composition-single-rtl-child.t) locks the single-`?rtl` `C1`, `C3`, and `C4` success paths.
+- [t/90-composition-single-rtl-child.t](t/90-composition-single-rtl-child.t) locks the single-`?rtl` `C1`, `C3`, and `C4` success paths.
 
 ## 2026-03-16: embedded `?rtlif` roots now have a first shipped `R11` slice
 - Continued the active `R11` lane by turning the freshly formalized `.rtlif` mini-contract into a more usable interface-source behavior instead of widening composition syntax again.
@@ -11394,7 +11400,7 @@ This document captures engineering rationale, design constraints, and working de
   - we still have one external RTL child in the shipped mixed lane,
   - we still do not parse or regenerate external RTL internals,
   - but we no longer force interface metadata to live in a second file when the composition author wants the contract beside the top.
-- [t/89-composition-embedded-rtlif-roots.t](/Users/richarddje/Documents/github/fsmgen/t/89-composition-embedded-rtlif-roots.t) locks embedded-root precedence, no-sidecar mixed composition success, and duplicate embedded-root rejection.
+- [t/89-composition-embedded-rtlif-roots.t](t/89-composition-embedded-rtlif-roots.t) locks embedded-root precedence, no-sidecar mixed composition success, and duplicate embedded-root rejection.
 
 ## 2026-03-16: typed `.rtlif` ports now have a first deliberate `R11` contract slice
 - Continued the active `R11` lane by tightening the smallest external-RTL contract that already affects real composition behavior instead of widening syntax again.
@@ -11406,7 +11412,7 @@ This document captures engineering rationale, design constraints, and working de
 - Practical effect:
   - mixed generated-child plus `?rtl` composition no longer has to pretend every external RTL system port is literally named `clk` or `rst_n`,
   - typed `.rtlif` metadata can now carry custom-named RTL system ports honestly while still keeping auto-wiring narrow and explicit.
-- [t/88-rtlif-typed-port-contract.t](/Users/richarddje/Documents/github/fsmgen/t/88-rtlif-typed-port-contract.t) locks direct typed-token parsing, custom-system-port auto-wiring, and rejection of unsupported explicit type names.
+- [t/88-rtlif-typed-port-contract.t](t/88-rtlif-typed-port-contract.t) locks direct typed-token parsing, custom-system-port auto-wiring, and rejection of unsupported explicit type names.
 
 ## 2026-03-16: mixed generated-child plus external RTL declared connect-by-name now has a first shipped `R11` slice
 - Continued the active `R11` lane in the next bounded direction instead of widening composition syntax blindly.
@@ -11417,7 +11423,7 @@ This document captures engineering rationale, design constraints, and working de
 - That last point fixed a real bug:
   - RHS-only standalone-DT signals such as `payload_in` could be misclassified as outputs only because their names started with `p`,
   - the mixed `?dtc` plus `?rtl` by-name slice now proves that those signals stay inputs when the semantic AST says they are inputs.
-- [t/87-composition-mixed-connect-by-name.t](/Users/richarddje/Documents/github/fsmgen/t/87-composition-mixed-connect-by-name.t) locks mixed `?fsmc` + `?rtl` success, mixed `?dtc` + `?rtl` success, and cross-kind ambiguity rejection.
+- [t/87-composition-mixed-connect-by-name.t](t/87-composition-mixed-connect-by-name.t) locks mixed `?fsmc` + `?rtl` success, mixed `?dtc` + `?rtl` success, and cross-kind ambiguity rejection.
 
 ## 2026-03-16: single-child declared connect-by-name now has a first shipped `R11` slice
 - Continued the active `R11` lane by broadening the already-shipped declared connect-by-name contract in one bounded direction instead of inventing a new composition family.
@@ -11425,7 +11431,7 @@ This document captures engineering rationale, design constraints, and working de
   - `?top:name` can now use `=name` wiring with exactly one generated child (`?fsmc` or `?dtc`),
   - the planner keeps the same deterministic rule as before: exactly one same-named child endpoint with the same direction and width,
   - and combinational standalone-DT children still keep an honest non-system interface in that single-child by-name lane.
-- [t/86-composition-single-child-connect-by-name.t](/Users/richarddje/Documents/github/fsmgen/t/86-composition-single-child-connect-by-name.t) locks the first single-child `?fsmc` and `?dtc` success paths through pipeline and CLI.
+- [t/86-composition-single-child-connect-by-name.t](t/86-composition-single-child-connect-by-name.t) locks the first single-child `?fsmc` and `?dtc` success paths through pipeline and CLI.
 
 ## 2026-03-16: composition-facing standalone-DT children now have a first shipped `R11` slice
 - The reusable standalone-DT lane now reaches the active composition runtime directly too.
@@ -11452,7 +11458,7 @@ This document captures engineering rationale, design constraints, and working de
   - malformed compact directives like `(:= BROKEN)` at parser level,
   - and malformed RHS values like `(:= tester_reset=<start)` across parser, pipeline, and CLI.
 - The remaining gap was malformed payload shape, where non-scalar forms like `(:= (tester_reset=1 extra))` were rejected by the parser but not called out as their own regression-backed boundary.
-- [t/81-language-contract-init-directive-shape-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/81-language-contract-init-directive-shape-boundary.t) now locks:
+- [t/81-language-contract-init-directive-shape-boundary.t](t/81-language-contract-init-directive-shape-boundary.t) now locks:
   - malformed non-scalar `:=` payloads through parser, pipeline, and CLI,
   - and malformed compact directives like `(:= BROKEN)` through pipeline and CLI too.
 ## 2026-03-16: reset naming now distinguishes current `?fsm` compatibility residue from future/default convention
@@ -11530,9 +11536,9 @@ This document captures engineering rationale, design constraints, and working de
   - bare `.fsm` input lookup searches those explicit roots before `FSMLIB`,
   - and the same explicit roots now also feed `.rtlif` metadata lookup for the current external-RTL composition lane.
 - The implementation uses one small shared resolver instead of duplicating root ordering again:
-  - [perl/FSM/SourcePathResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/SourcePathResolver.pm) now normalizes explicit roots plus `FSMLIB`,
-  - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) uses it for bare input resolution,
-  - and [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) uses it for sidecar metadata lookup.
+  - [perl/FSM/SourcePathResolver.pm](perl/FSM/SourcePathResolver.pm) now normalizes explicit roots plus `FSMLIB`,
+  - [bin/fsmgen](bin/fsmgen) uses it for bare input resolution,
+  - and [perl/FSM/Composition/RTLInterfaceLoader.pm](perl/FSM/Composition/RTLInterfaceLoader.pm) uses it for sidecar metadata lookup.
 - This is still a bounded slice:
   - it improves top-level bare input lookup and current `.rtlif` lookup,
   - but it does not yet define the broader reusable-root/reference contract for future multi-source `.fsm` composition.
@@ -11738,7 +11744,7 @@ This document captures engineering rationale, design constraints, and working de
 - This `R8` slice does not widen the parser. It makes the contract truthful:
   - the live docs now include those alternate spellings,
   - focused regression coverage now locks their assignment intent, arithmetic lowering, and HDL generation,
-  - and the parser comment in [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now names the same supported family the docs do.
+  - and the parser comment in [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm) now names the same supported family the docs do.
 ## 2026-03-15: unsupported assignment operators now fail through an explicit boundary
 - The active assignment family was already stable on the happy path, but unsupported operators like `?=` and `=>` were still leaking a raw internal parser `confess`.
 - The active contract is now explicit on that malformed side too:
@@ -11762,9 +11768,9 @@ This document captures engineering rationale, design constraints, and working de
   - selector tokens and computed selectors were already explicit,
   - but the plain `?SIG` form was still accepting the signal name more loosely than the rest of the active language.
 - Implementation:
-  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now requires plain test nodes to use `?signal_name` with an HDL-identifier-compatible signal name.
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm) now requires plain test nodes to use `?signal_name` with an HDL-identifier-compatible signal name.
   - The computed-selector path `?(expr)` remains unchanged and supported.
-- Focused regression coverage now exists in [t/54-language-contract-test-signal-name-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/54-language-contract-test-signal-name-boundary.t) for:
+- Focused regression coverage now exists in [t/54-language-contract-test-signal-name-boundary.t](t/54-language-contract-test-signal-name-boundary.t) for:
   - a valid plain `?SIG` success case,
   - malformed signal names like `?bad-name` and `?0`,
   - and pipeline/CLI confirmation that malformed plain test-node signal names do not emit HDL.
@@ -11776,10 +11782,10 @@ This document captures engineering rationale, design constraints, and working de
   - state/DT block names are now validated explicitly,
   - but transition targets were still mostly taken on trust and could drift into invalid `STATE_*` references or undeclared-state targets later in HDL generation.
 - Implementation:
-  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates transition target spelling immediately while parsing `->`.
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates transition target spelling immediately while parsing `->`.
   - Transition targets must be HDL-identifier-compatible regular-state names.
   - After the FSM is fully parsed, the parser now validates that each recorded transition target resolves to a declared regular FSM-state DT block inside the same FSM source.
-- Focused regression coverage now exists in [t/53-language-contract-transition-target-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/53-language-contract-transition-target-boundary.t) for:
+- Focused regression coverage now exists in [t/53-language-contract-transition-target-boundary.t](t/53-language-contract-transition-target-boundary.t) for:
   - declared forward transition targets,
   - malformed target names like `bad-name`,
   - non-state targets like `-comb`,
@@ -11794,11 +11800,11 @@ This document captures engineering rationale, design constraints, and working de
   - source-root names were already validated explicitly,
   - but state/DT block names were still mostly being accepted on trust and only failing later if HDL generation tripped over them.
 - Implementation:
-  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates state/DT block names up front.
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates state/DT block names up front.
   - Regular FSM-state DT names must be HDL-identifier-compatible.
   - General/combinational DT names must use exactly one leading `-` plus an HDL-identifier-compatible base name.
   - Reset-state names remain limited to the already supported special spellings.
-- Focused regression coverage now exists in [t/52-language-contract-state-name-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/52-language-contract-state-name-boundary.t) for:
+- Focused regression coverage now exists in [t/52-language-contract-state-name-boundary.t](t/52-language-contract-state-name-boundary.t) for:
   - a success path with valid regular and standalone DT names,
   - malformed regular state names like `bad-name`,
   - malformed standalone DT names like `-bad-name` and `--bad`,
@@ -11811,11 +11817,11 @@ This document captures engineering rationale, design constraints, and working de
   - `+constants`, `+define`, `+params`, and `+enums` already had a documented happy path,
   - but malformed shapes were still relying on Perl list unpacking and incidental `undef` fallout instead of a real language-contract boundary.
 - Implementation:
-  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates the shape of each symbol-definition family explicitly before storing symbols.
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates the shape of each symbol-definition family explicitly before storing symbols.
   - `+constants` and `+params` now require non-empty lists of `(NAME scalar_value)` entries.
   - `+define` now requires exactly one `(NAME scalar_value)` pair.
   - `+enums` now requires a non-empty list of `(enum_name (MEMBER value) ...)` definitions, with at least one member per enum.
-- Focused regression coverage now exists in [t/51-language-contract-symbol-definition-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/51-language-contract-symbol-definition-boundary.t) for:
+- Focused regression coverage now exists in [t/51-language-contract-symbol-definition-boundary.t](t/51-language-contract-symbol-definition-boundary.t) for:
   - empty sections,
   - malformed payloads,
   - malformed entry/member shapes,
@@ -11829,9 +11835,9 @@ This document captures engineering rationale, design constraints, and working de
   - the shipped corpus still contains a legacy empty `(+size)` block,
   - and the parser was treating that as a silent no-op while also silently ignoring malformed non-list payloads.
 - Implementation:
-  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now parses `+size` through an explicit contract helper.
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm) now parses `+size` through an explicit contract helper.
   - The helper keeps legacy empty `(+size)` supported as a no-op, but requires non-empty forms to be a list of `(signal width_or_type)` entries; that width slot has since been widened to positive integer constant expressions as recorded in the 2026-04-16 note above.
-- Focused regression coverage now exists in [t/50-language-contract-size-section-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/50-language-contract-size-section-boundary.t) for:
+- Focused regression coverage now exists in [t/50-language-contract-size-section-boundary.t](t/50-language-contract-size-section-boundary.t) for:
   - successful parsing/generation with empty `(+size)`,
   - targeted rejection of malformed payloads like `(+size BROKEN)`,
   - targeted rejection of malformed entries like `(A)`,
@@ -11844,8 +11850,8 @@ This document captures engineering rationale, design constraints, and working de
   - empty blocks like `(idle)` or `(-misc)` were not part of the intended language,
   - but the parser could still build an empty pseudo-state by falling through with no decision trees.
 - Implementation:
-  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects state/DT blocks that do not contain at least one nested decision-tree body or action form.
-- Focused regression coverage now exists in [t/49-language-contract-state-body-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/49-language-contract-state-body-boundary.t) for:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects state/DT blocks that do not contain at least one nested decision-tree body or action form.
+- Focused regression coverage now exists in [t/49-language-contract-state-body-boundary.t](t/49-language-contract-state-body-boundary.t) for:
   - empty FSM-state DT blocks,
   - empty general/combinational DT blocks,
   - and pipeline/CLI confirmation that those malformed blocks do not emit HDL.
@@ -11858,9 +11864,9 @@ This document captures engineering rationale, design constraints, and working de
   - runtime behavior was already mostly correct,
   - but the AST contract still relied too much on the leading `-` naming convention instead of preserving that role explicitly.
 - Implementation:
-  - [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm) now exposes `is_standalone_dt` and treats standalone DTs as an explicit state-role family beside regular states and reset-state DTs.
-  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now classifies hyphen-prefixed non-reset DT blocks as `state_type => standalone_dt`.
-- Focused regression coverage now exists in [t/48-language-contract-standalone-dt-classification.t](/Users/richarddje/Documents/github/fsmgen/t/48-language-contract-standalone-dt-classification.t) for:
+  - [perl/FSM/CoreAST.pm](perl/FSM/CoreAST.pm) now exposes `is_standalone_dt` and treats standalone DTs as an explicit state-role family beside regular states and reset-state DTs.
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm) now classifies hyphen-prefixed non-reset DT blocks as `state_type => standalone_dt`.
+- Focused regression coverage now exists in [t/48-language-contract-standalone-dt-classification.t](t/48-language-contract-standalone-dt-classification.t) for:
   - explicit `standalone_dt` AST classification,
   - exclusion of those blocks from the encoded-state plan,
   - and DT-style enable emission instead of `current_state == ...` comparisons.
@@ -11874,9 +11880,9 @@ This document captures engineering rationale, design constraints, and working de
   - but the active parsers were decoding those names with `\w+`-style prefix matching,
   - which meant malformed names could silently truncate to a valid prefix like `bad`.
 - Implementation:
-  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates `?fsm:module_name` roots as a whole and rejects malformed names explicitly.
-  - [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) now validates `?top:top_name` roots as a whole and also validates embedded composition child sources like `?fsm:source_name` as a whole.
-- Focused regression coverage now exists in [t/47-language-contract-source-name-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/47-language-contract-source-name-boundary.t) for:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates `?fsm:module_name` roots as a whole and rejects malformed names explicitly.
+  - [perl/FSM/Composition/Parser.pm](perl/FSM/Composition/Parser.pm) now validates `?top:top_name` roots as a whole and also validates embedded composition child sources like `?fsm:source_name` as a whole.
+- Focused regression coverage now exists in [t/47-language-contract-source-name-boundary.t](t/47-language-contract-source-name-boundary.t) for:
   - malformed top-level `?fsm:bad-name` roots,
   - malformed top-level `?top:bad-name` roots,
   - and malformed embedded composition child sources like `?fsm:bad-name`.
@@ -11891,10 +11897,10 @@ This document captures engineering rationale, design constraints, and working de
     - and the nested legacy root form `(+fsm module_name ...)`,
   - while malformed `+fsm` roots without a scalar module name still drifted through header decoding instead of getting a targeted contract failure.
 - Implementation:
-  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates the legacy `+fsm` source family explicitly before decoding the module name.
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates the legacy `+fsm` source family explicitly before decoding the module name.
   - well-formed `+fsm` roots in either shipped legacy layout still parse through the active FSM path,
   - malformed `+fsm` roots now fail with a targeted `Malformed '+fsm' root` diagnostic instead of relying on incidental AST fallout.
-- Focused regression coverage now exists in [t/46-language-contract-flat-plus-fsm-root.t](/Users/richarddje/Documents/github/fsmgen/t/46-language-contract-flat-plus-fsm-root.t) for:
+- Focused regression coverage now exists in [t/46-language-contract-flat-plus-fsm-root.t](t/46-language-contract-flat-plus-fsm-root.t) for:
   - source classification of `+fsm` as an active FSM source kind,
   - direct adapter parsing and pipeline/CLI generation for both shipped legacy `+fsm` layouts,
   - and explicit parser/pipeline/CLI rejection of malformed `+fsm` roots missing a scalar module name.
@@ -11920,10 +11926,10 @@ This document captures engineering rationale, design constraints, and working de
   - but the normalized reset-state metadata was not being preserved through `FSM::CoreAST::State`,
   - and normalized reset-state names like `syncreset` were still being treated as ordinary encoded states because downstream code only checked for a leading `-`.
 - Implementation:
-  - [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm) now preserves `state_type` on `FSM::CoreAST::State` and exposes `state_type`, `is_reset_state`, and `is_regular_state` accessors.
-  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now treats `-syncrst` and `-syncreset` as the same sync-reset family, and `-asyncrst` and `-asyncreset` as the same async-reset family.
-  - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm), [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm), and [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now classify reset-state blocks as DT-like blocks rather than regular encoded states.
-- Focused regression coverage now exists in [t/45-language-contract-reset-state-spellings.t](/Users/richarddje/Documents/github/fsmgen/t/45-language-contract-reset-state-spellings.t) for:
+  - [perl/FSM/CoreAST.pm](perl/FSM/CoreAST.pm) now preserves `state_type` on `FSM::CoreAST::State` and exposes `state_type`, `is_reset_state`, and `is_regular_state` accessors.
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm) now treats `-syncrst` and `-syncreset` as the same sync-reset family, and `-asyncrst` and `-asyncreset` as the same async-reset family.
+  - [perl/FSM/Synthesis/EnableGraph.pm](perl/FSM/Synthesis/EnableGraph.pm), [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](perl/FSM/HDL/FlattenedDT/Orchestrator.pm), and [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now classify reset-state blocks as DT-like blocks rather than regular encoded states.
+- Focused regression coverage now exists in [t/45-language-contract-reset-state-spellings.t](t/45-language-contract-reset-state-spellings.t) for:
   - canonical and legacy reset-state spellings normalizing to the same internal identities,
   - reset-state blocks staying out of the regular state-encoding plan,
   - and emitted HDL using DT-style enables instead of `current_state == SYNCRESET` / `ASYNCRESET` comparisons.
@@ -11934,7 +11940,7 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-15: the broader operator-arity contract is now active
 - The next `R8` slice promotes the previously saved operator-arity agreement into the active parser instead of leaving it as design-only continuity.
 - Implementation:
-  - [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) now supports:
+  - [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) now supports:
     - n-ary relational chains such as `(< low mid high)` and `(== a b c d)`,
     - relational word aliases such as `eq`, `ne`, `lt`, `le`, `gt`, and `ge`,
     - unary alias `not`,
@@ -11943,11 +11949,11 @@ This document captures engineering rationale, design constraints, and working de
     - `(< a b c)` => `((a < b) && (b < c))`
     - `(eq a b c d)` => `((a == b) && (b == c) && (c == d))`
 - The slice also fixed one real end-to-end contract gap exposed by the new operator coverage:
-  - [perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm) now follows the driving AST of parser-created intermediate expression signals during signal-role analysis,
+  - [perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm](perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm) now follows the driving AST of parser-created intermediate expression signals during signal-role analysis,
   - so source inputs referenced only through those intermediate signals stay live in generated module interfaces.
 - Focused regression coverage now exists in:
-  - [t/44-language-contract-relational-operators.t](/Users/richarddje/Documents/github/fsmgen/t/44-language-contract-relational-operators.t),
-  - and [t/40-language-contract-expression-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/40-language-contract-expression-boundary.t), whose malformed comparison-arity case is now `(== a)` instead of pretending chained comparison forms are unsupported.
+  - [t/44-language-contract-relational-operators.t](t/44-language-contract-relational-operators.t),
+  - and [t/40-language-contract-expression-boundary.t](t/40-language-contract-expression-boundary.t), whose malformed comparison-arity case is now `(== a)` instead of pretending chained comparison forms are unsupported.
 - Boundary decision:
   - the broader operator family is no longer only a design note,
   - it is now part of the active supported language contract,
@@ -11959,8 +11965,8 @@ This document captures engineering rationale, design constraints, and working de
   - `(lhs := value)`
   - which we have discussed as a possible future canonical form, but which is not part of the active contract yet.
 - Implementation:
-  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects unsupported top-level bare forms explicitly instead of skipping them.
-- Focused regression coverage now exists in [t/43-language-contract-top-level-form-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/43-language-contract-top-level-form-boundary.t) for:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects unsupported top-level bare forms explicitly instead of skipping them.
+- Focused regression coverage now exists in [t/43-language-contract-top-level-form-boundary.t](t/43-language-contract-top-level-form-boundary.t) for:
   - explicit rejection of future-looking bare init syntax like `(tester_reset := 1)`,
   - explicit rejection of malformed bare scalar forms like `(BROKEN 1)`,
   - and pipeline/CLI confirmation that these forms no longer disappear silently.
@@ -11972,9 +11978,9 @@ This document captures engineering rationale, design constraints, and working de
   - active branch selectors are meant to be explicit selector tokens like `=0`, `=OTHER`, `!=8'0`, or `>8'3`,
   - not accidental bare selector payloads like `BUSY` or `0`.
 - Implementation:
-  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates test-branch selectors explicitly during parse and rejects bare selector payloads with a targeted diagnostic.
-  - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) now enforces the same operator-prefixed selector rule in runtime lowering so direct AST callers cannot bypass the active contract accidentally.
-- Focused regression coverage now exists in [t/42-language-contract-test-selector-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/42-language-contract-test-selector-boundary.t) for:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates test-branch selectors explicitly during parse and rejects bare selector payloads with a targeted diagnostic.
+  - [perl/FSM/Synthesis/EnableGraph.pm](perl/FSM/Synthesis/EnableGraph.pm) now enforces the same operator-prefixed selector rule in runtime lowering so direct AST callers cannot bypass the active contract accidentally.
+- Focused regression coverage now exists in [t/42-language-contract-test-selector-boundary.t](t/42-language-contract-test-selector-boundary.t) for:
   - explicit rejection of bare symbolic selectors like `BUSY`,
   - explicit rejection of bare numeric selectors like `0`,
   - and continued support for explicit symbolic equality selectors like `=OTHER`.
@@ -11989,9 +11995,9 @@ This document captures engineering rationale, design constraints, and working de
   - the active toolchain now evaluates the root source kind first,
   - and unsupported tagged source kinds fail at that boundary instead of being treated as accidental containers for live FSM parsing.
 - Implementation:
-  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects unsupported tagged top-level source roots with a targeted diagnostic before the nested-`?fsm` fallback can fire.
-  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now rejects the same boundary explicitly in the active pipeline and CLI path.
-- Focused regression coverage now exists in [t/41-language-contract-top-level-source-kind-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/41-language-contract-top-level-source-kind-boundary.t) for:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects unsupported tagged top-level source roots with a targeted diagnostic before the nested-`?fsm` fallback can fire.
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now rejects the same boundary explicitly in the active pipeline and CLI path.
+- Focused regression coverage now exists in [t/41-language-contract-top-level-source-kind-boundary.t](t/41-language-contract-top-level-source-kind-boundary.t) for:
   - direct classifier truth (`kind => unknown`, `header => ?define:...`),
   - direct adapter rejection,
   - pipeline rejection,
@@ -12002,7 +12008,7 @@ This document captures engineering rationale, design constraints, and working de
   - and a nested live FSM inside an unsupported tagged wrapper does not make that wrapper supported.
 ## 2026-03-15: unsupported expression forms now fail explicitly
 - The next `R8` slice now closes one more parser-visible gray zone around expressions:
-  - [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) now rejects:
+  - [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) now rejects:
     - unknown operator forms such as `(bogus B C)`,
     - malformed active-operator arity such as `(== B C D)`,
     - empty expression lists,
@@ -12010,7 +12016,7 @@ This document captures engineering rationale, design constraints, and working de
     - and guard-only tokens used in ordinary RHS expression position such as `<start`.
 - This slice also preserves one real active compatibility path explicitly instead of accidentally:
   - inline scalar comparison tokens such as `cnt[2:1]!=2'2` are now parsed as real comparison ASTs in ordinary expression position.
-- Focused regression coverage now exists in [t/40-language-contract-expression-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/40-language-contract-expression-boundary.t) for:
+- Focused regression coverage now exists in [t/40-language-contract-expression-boundary.t](t/40-language-contract-expression-boundary.t) for:
   - supported inline scalar comparison tokens,
   - unsupported RHS operators,
   - malformed RHS operator arity,
@@ -12020,15 +12026,15 @@ This document captures engineering rationale, design constraints, and working de
   - it makes the current operator boundary explicit and rejects unsupported expression forms truthfully instead of letting them drift through `undef` fallthrough or arbitrary fake-signal registration.
 ## 2026-03-15: shorthand guard comparisons are now part of the active contract
 - The saved guard-language agreement from 2026-03-14 is now partially promoted into the active `R8` contract instead of remaining a future-only note.
-- [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) now lowers the shorthand guard family explicitly:
+- [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) now lowers the shorthand guard family explicitly:
   - `(<foo ...)` -> `foo != 0`
   - `(<!foo ...)` -> `foo == 0`
   - `(<foo=value ...)` / `(<foo==value ...)` -> equality
   - `(<foo!=value ...)`, `(<foo<value ...)`, `(<foo<=value ...)`, `(<foo>value ...)`, `(<foo>=value ...)` -> the corresponding comparison operators
 - This applies to both guarded blocks and suffix guards, because suffix guards already lower through the same condition parser boundary.
 - Focused regression coverage now exists in:
-  - [t/39-language-contract-guard-shorthand.t](/Users/richarddje/Documents/github/fsmgen/t/39-language-contract-guard-shorthand.t) for the shorthand family directly,
-  - and [t/29-language-contract-core-forms.t](/Users/richarddje/Documents/github/fsmgen/t/29-language-contract-core-forms.t), which now expects explicit comparison ASTs for the simple `<foo` / `<!foo` forms.
+  - [t/39-language-contract-guard-shorthand.t](t/39-language-contract-guard-shorthand.t) for the shorthand family directly,
+  - and [t/29-language-contract-core-forms.t](t/29-language-contract-core-forms.t), which now expects explicit comparison ASTs for the simple `<foo` / `<!foo` forms.
 - Boundary decision:
   - the shorthand guard family is no longer just a saved future direction,
   - it is now an active supported language feature,
@@ -12042,9 +12048,9 @@ This document captures engineering rationale, design constraints, and working de
   - forms like `?[READ]` act like generics to be populated later,
   - so they should not be treated as live active-language constructs until a real generic/template lane exists.
 - This `R8` slice now makes that boundary explicit:
-  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects placeholder test selectors and repeat macros with targeted diagnostics instead of letting them drift into ordinary `?sig` parsing.
-  - [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) now rejects placeholder scalar tokens explicitly instead of registering them as ordinary signal names.
-- Focused regression coverage now exists in [t/38-language-contract-generic-placeholder-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/38-language-contract-generic-placeholder-boundary.t) for:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects placeholder test selectors and repeat macros with targeted diagnostics instead of letting them drift into ordinary `?sig` parsing.
+  - [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) now rejects placeholder scalar tokens explicitly instead of registering them as ordinary signal names.
+- Focused regression coverage now exists in [t/38-language-contract-generic-placeholder-boundary.t](t/38-language-contract-generic-placeholder-boundary.t) for:
   - `?[READ]`,
   - `?repeat:[MAX_COUNT]`,
   - and `[DATAIN]`.
@@ -12064,9 +12070,9 @@ This document captures engineering rationale, design constraints, and working de
 - The shipped parser already supported the computed-selector test-node form:
   - `?(expr)` where `expr` is a selector expression such as `(| A B)`.
 - This `R8` slice closes the runtime gap that kept that form from being honestly supported:
-  - [perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm) now analyzes the computed selector signal's driving AST, so the source signals used inside `expr` remain live inputs instead of disappearing from the generated interface.
-  - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) now treats parser-created intermediate selector signals as real intermediate signals during later dependency/filtering analysis instead of dropping them through AST-factorization heuristics.
-- Focused regression coverage now exists in [t/37-language-contract-computed-test-selector.t](/Users/richarddje/Documents/github/fsmgen/t/37-language-contract-computed-test-selector.t) for:
+  - [perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm](perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm) now analyzes the computed selector signal's driving AST, so the source signals used inside `expr` remain live inputs instead of disappearing from the generated interface.
+  - [perl/FSM/Synthesis/EnableGraph.pm](perl/FSM/Synthesis/EnableGraph.pm) now treats parser-created intermediate selector signals as real intermediate signals during later dependency/filtering analysis instead of dropping them through AST-factorization heuristics.
+- Focused regression coverage now exists in [t/37-language-contract-computed-test-selector.t](t/37-language-contract-computed-test-selector.t) for:
   - the computed-selector form itself,
   - the synthesized intermediate selector signal,
   - the source-signal interface exposure,
@@ -12078,27 +12084,27 @@ This document captures engineering rationale, design constraints, and working de
 - The shipped corpus and active lowering path already relied on a broader `?sig` selector family than the docs admitted:
   - selectors like `!=8'0`, `>8'3`, and `<=8'3` are real active language forms, not just `=0` / `=1`.
 - This `R8` slice now makes that truthful:
-  - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) now lowers relational test-node selectors with the matching comparison operator instead of collapsing everything to equality,
-  - and [t/36-language-contract-test-branch-selectors.t](/Users/richarddje/Documents/github/fsmgen/t/36-language-contract-test-branch-selectors.t) now locks that behavior through captured condition ASTs and emitted HDL.
+  - [perl/FSM/Synthesis/EnableGraph.pm](perl/FSM/Synthesis/EnableGraph.pm) now lowers relational test-node selectors with the matching comparison operator instead of collapsing everything to equality,
+  - and [t/36-language-contract-test-branch-selectors.t](t/36-language-contract-test-branch-selectors.t) now locks that behavior through captured condition ASTs and emitted HDL.
 - Boundary decision:
   - active `?sig` selectors now include exact-value and relational operators,
   - and the docs now state that broader selector family explicitly instead of underspecifying the live language.
 ## 2026-03-15: malformed empty test-node branches now fail explicitly
 - The next `R8` slice now tightens the `?sig` / case-style dispatch boundary:
-  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now emits a targeted malformed-test-branch diagnostic instead of leaking malformed empty branches through a generic internal `undef` action failure.
-- Focused regression coverage now exists in [t/35-language-contract-test-branch-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/35-language-contract-test-branch-boundary.t) for:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm) now emits a targeted malformed-test-branch diagnostic instead of leaking malformed empty branches through a generic internal `undef` action failure.
+- Focused regression coverage now exists in [t/35-language-contract-test-branch-boundary.t](t/35-language-contract-test-branch-boundary.t) for:
   - empty branches such as `(?MODE (=0))`,
   - and mixed test nodes where one branch is valid but another branch is empty.
 - Boundary decision:
   - active test-node support still treats `?sig` as the case/switch-style multi-way exact-value form,
   - and each branch must now be understood as `selector + at least one nested action`.
 ## 2026-03-15: `:=` is now an explicit top-level init/reset directive, and future canonical forms are saved
-- The active tree already uses compact top-level directives such as `(:= tester_reset=1)` in shipped corpus files like [fsm/mipicsi2_configreg.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/mipicsi2_configreg.fsm).
+- The active tree already uses compact top-level directives such as `(:= tester_reset=1)` in shipped corpus files like [fsm/mipicsi2_configreg.fsm](fsm/mipicsi2_configreg.fsm).
 - This `R8` slice makes that boundary explicit instead of leaving it accidental:
-  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now treats `:=` as a real top-level init/reset directive,
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm) now treats `:=` as a real top-level init/reset directive,
   - records explicit reset/default metadata on the target signal,
   - and no longer lets malformed DT actions or empty guarded blocks disappear silently.
-- Focused regression coverage now exists in [t/34-language-contract-malformed-actions.t](/Users/richarddje/Documents/github/fsmgen/t/34-language-contract-malformed-actions.t) for:
+- Focused regression coverage now exists in [t/34-language-contract-malformed-actions.t](t/34-language-contract-malformed-actions.t) for:
   - supported top-level compact `:=` directives,
   - malformed single-token DT action forms such as `(BROKEN)`,
   - malformed `:=` directives such as `(:= BROKEN)`,
@@ -12112,9 +12118,9 @@ This document captures engineering rationale, design constraints, and working de
   - while malformed DT action tokens still fail explicitly instead of being silently dropped.
 ## 2026-03-15: bare condition suffixes now fail explicitly
 - The next `R8` slice now closes one more parser-visible legacy ambiguity around guarded-action syntax:
-  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects bare suffix tails like `start` or `full` in assignment/transition suffix positions,
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects bare suffix tails like `start` or `full` in assignment/transition suffix positions,
   - so suffix guards must use the explicit active forms `<sig`, `<!sig`, or explicit condition-expression payloads.
-- Focused regression coverage now exists in [t/33-language-contract-condition-suffix-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/33-language-contract-condition-suffix-boundary.t) for:
+- Focused regression coverage now exists in [t/33-language-contract-condition-suffix-boundary.t](t/33-language-contract-condition-suffix-boundary.t) for:
   - bare assignment suffix rejection,
   - and bare transition suffix rejection.
 - Boundary decision:
@@ -12135,9 +12141,9 @@ This document captures engineering rationale, design constraints, and working de
   - not part of the current supported contract.
 ## 2026-03-15: unsupported top-level `+...` directives now fail explicitly
 - The next `R8` slice now closes one more parser-visible legacy ambiguity:
-  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) no longer lets unknown top-level `+...` directive sections drift into fake state parsing,
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm) no longer lets unknown top-level `+...` directive sections drift into fake state parsing,
   - and now emits a targeted error that lists the currently supported top-level directive family inside `?fsm:name`.
-- Focused regression coverage now exists in [t/32-language-contract-top-level-directive-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/32-language-contract-top-level-directive-boundary.t) for:
+- Focused regression coverage now exists in [t/32-language-contract-top-level-directive-boundary.t](t/32-language-contract-top-level-directive-boundary.t) for:
   - unknown directive sections such as `(+bogus ...)`,
   - and future-looking but currently unsupported section spellings such as `(+clock clk)`.
 - Boundary decision:
@@ -12145,14 +12151,14 @@ This document captures engineering rationale, design constraints, and working de
   - it only makes the current supported boundary explicit and rejects unsupported `+...` top-level directives truthfully.
 ## 2026-03-15: the conventional `+system` section is now part of the active `R8` contract
 - The next `R8` slice is now regression-backed and promoted into the live support boundary:
-  - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now treats the conventional shared-system declaration as fully supported:
+  - [docs/USER_GUIDE.md](docs/USER_GUIDE.md) now treats the conventional shared-system declaration as fully supported:
     - `(+system (clock clk) (sreset rstn))`
     - `(+system (clock clk) (asreset rstn))`
 - The parser no longer silently ignores `+system`:
-  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates the active `+system` contract explicitly,
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates the active `+system` contract explicitly,
   - records default clock/reset domains,
   - and registers typed system signals for `clk` and `rstn`.
-- Focused regression coverage now exists in [t/31-language-contract-system-section.t](/Users/richarddje/Documents/github/fsmgen/t/31-language-contract-system-section.t) for:
+- Focused regression coverage now exists in [t/31-language-contract-system-section.t](t/31-language-contract-system-section.t) for:
   - the accepted conventional `+system` declaration,
   - non-conventional clock-name rejection,
   - unsupported directive rejection,
@@ -12163,15 +12169,15 @@ This document captures engineering rationale, design constraints, and working de
   - but it still does not widen the contract into arbitrary system metadata, custom clock/reset names, or richer reset-mode differentiation.
 ## 2026-03-15: symbol-definition sections are now part of the active `R8` contract
 - The next `R8` slice is now regression-backed and promoted into the live support boundary:
-  - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now treats the symbol-definition families as fully supported:
+  - [docs/USER_GUIDE.md](docs/USER_GUIDE.md) now treats the symbol-definition families as fully supported:
     - `(+constants ...)`,
     - `(+enums ...)`,
     - `(+define ...)`,
     - `(+params ...)`.
-- The parser bug uncovered while tightening this contract is now fixed in [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm):
+- The parser bug uncovered while tightening this contract is now fixed in [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm):
   - packed one-element Lispish array wrappers are now unwrapped consistently before scalar parsing for constants, defines, params, and enum members,
   - which restores correct literal resolution for `+constants` and `+define` in particular.
-- Focused regression coverage now exists in [t/30-language-contract-symbol-definitions.t](/Users/richarddje/Documents/github/fsmgen/t/30-language-contract-symbol-definitions.t) for:
+- Focused regression coverage now exists in [t/30-language-contract-symbol-definitions.t](t/30-language-contract-symbol-definitions.t) for:
   - symbol-summary counts,
   - RHS literal resolution for constants, defines, params, and enum members,
   - and guard equality resolution against symbol-defined values.
@@ -12182,7 +12188,7 @@ This document captures engineering rationale, design constraints, and working de
   - `(+system ...)` beyond the conventional `clk` / `rstn` path remains unresolved and stays outside the supported tier for now.
 ## 2026-03-14: first `R8` language-contract slice is now promoted and regression-backed
 - The first real `R8` slice is now live in the user-facing contract:
-  - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now contains a draft normative language-contract section for:
+  - [docs/USER_GUIDE.md](docs/USER_GUIDE.md) now contains a draft normative language-contract section for:
     - guarded blocks,
     - condition suffixes,
     - update shorthand,
@@ -12194,7 +12200,7 @@ This document captures engineering rationale, design constraints, and working de
   - inline compound modifiers,
   - and the current regression-backed broader operator surface
   are no longer left in the vague “implemented but not strong enough” bucket.
-- Focused regression coverage now exists in [t/29-language-contract-core-forms.t](/Users/richarddje/Documents/github/fsmgen/t/29-language-contract-core-forms.t) for:
+- Focused regression coverage now exists in [t/29-language-contract-core-forms.t](t/29-language-contract-core-forms.t) for:
   - simple and nested guarded blocks,
   - logical guarded expressions,
   - suffix guards,
@@ -12203,8 +12209,8 @@ This document captures engineering rationale, design constraints, and working de
 - Boundary decision:
   - the more systematic future sugar direction discussed earlier, especially canonical shorthand such as `<foo==3` over a fully explicit guard expression, remains a saved future design note rather than part of the active contract today.
 - Small support fix landed with this slice:
-  - [perl/FSM/ExpressionNamer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ExpressionNamer.pm) now defensively handles undefined legacy expression strings,
-  - and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) no longer emits avoidable warning noise when debug-rendering some driving ASTs.
+  - [perl/FSM/ExpressionNamer.pm](perl/FSM/ExpressionNamer.pm) now defensively handles undefined legacy expression strings,
+  - and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) no longer emits avoidable warning noise when debug-rendering some driving ASTs.
 ## 2026-03-14: long-term horizon goals are now captured explicitly
 - The detailed roadmap now records two explicit long-term horizon goals:
   - a Rust implementation of FSMGen,
@@ -12219,8 +12225,8 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-14: roadmap v2 is now opened with `R8` as the active lane
 - The first roadmap (`R0`..`R7`) remains closed and historically complete.
 - The project now has an explicit second roadmap generation:
-  - [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) remains the canonical live board,
-  - [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) is the detailed companion roadmap for the post-modernization workstream set.
+  - [ROADMAP_STATUS.md](ROADMAP_STATUS.md) remains the canonical live board,
+  - [ROADMAP_V2.md](ROADMAP_V2.md) is the detailed companion roadmap for the post-modernization workstream set.
 - Rationale:
   - the project no longer needs another broad modernization/refactor roadmap,
   - it now needs a contract-hardening roadmap focused on language clarity, diagnostics, support accounting, and deliberate backend growth,
@@ -12456,7 +12462,7 @@ means:
     - and what is intentionally outside the active model,
   - the user also called out standalone DT blocks explicitly, and that point mattered: the guide should reflect the active runtime truth rather than defaulting to a state-centric explanation.
 - Documentation outcome:
-  - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now contains a dedicated live support section for current `.fsm` constructs,
+  - [docs/USER_GUIDE.md](docs/USER_GUIDE.md) now contains a dedicated live support section for current `.fsm` constructs,
   - that section now names standalone hyphen-prefixed blocks such as `(-alpha_dt ...)`, `(-misc ...)`, and `(-mycombit ...)` as supported standalone DT constructs,
   - it also states the current runtime distinction clearly:
     - regular named states participate in state encoding and transition planning,
@@ -12477,10 +12483,10 @@ means:
   - a small explicit config-file layer lets users keep stable extension lists out of the shell command line without reopening directory scans or `.plg`-style hook discovery,
   - the right config contract is intentionally tiny: one explicit `module Module::Name` declaration per active line plus optional blank/comment lines.
 - Structural outcome:
-  - [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm) now parses extension-config files and reports malformed lines with file/line diagnostics,
+  - [perl/FSM/Extension/Loader.pm](perl/FSM/Extension/Loader.pm) now parses extension-config files and reports malformed lines with file/line diagnostics,
   - `HDLGenerator` now accepts `extension_config_files => [ ... ]`,
-  - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now accepts repeated `--extension-config <file>` flags,
-  - the new behavior is locked by [t/28-extension-config-loading.t](/Users/richarddje/Documents/github/fsmgen/t/28-extension-config-loading.t).
+  - [bin/fsmgen](bin/fsmgen) now accepts repeated `--extension-config <file>` flags,
+  - the new behavior is locked by [t/28-extension-config-loading.t](t/28-extension-config-loading.t).
 - Boundary decision:
   - the extension-loading story is now explicit at three levels:
     - direct objects,
@@ -12498,9 +12504,9 @@ means:
   - the right next step was an explicit loading path, not auto-discovery; users need a way to ask for one specific extension module without reopening `.plg` scans or string-hook registries,
   - loading by explicit module name keeps the architecture typed and testable because the boundary is still: validate name, load module, instantiate object, dispatch explicit method.
 - Structural outcome:
-  - the codebase now has [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm) as the narrow explicit module loader for `R7`,
+  - the codebase now has [perl/FSM/Extension/Loader.pm](perl/FSM/Extension/Loader.pm) as the narrow explicit module loader for `R7`,
   - `HDLGenerator` now accepts `extension_modules => [ ... ]`,
-  - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now accepts repeated `--extension-module Module::Name` flags,
+  - [bin/fsmgen](bin/fsmgen) now accepts repeated `--extension-module Module::Name` flags,
   - the tests now lock both the pipeline-side and CLI-side explicit loading path.
 - Boundary decision:
   - this is still not `.plg` compatibility,
@@ -12517,8 +12523,8 @@ means:
   - the user guide is the right place to show what the current extension seam actually feels like in practice,
   - the architecture note should also say explicitly that "typed" here means structured object/method/context dispatch, not a static type system claim.
 - Documentation outcome:
-  - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now has a dedicated typed-extension section with concrete examples for result annotation and telemetry collection,
-  - [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md) now defines "typed" more plainly and gives a second realistic extension example.
+  - [docs/USER_GUIDE.md](docs/USER_GUIDE.md) now has a dedicated typed-extension section with concrete examples for result annotation and telemetry collection,
+  - [docs/EXTENSION_MODEL.md](docs/EXTENSION_MODEL.md) now defines "typed" more plainly and gives a second realistic extension example.
 - Roadmap consequence:
   - no roadmap status changed,
   - this is clarity work around the already-shipped first `R7` boundary, not a new `R7` capability slice.
@@ -12609,7 +12615,7 @@ means:
   - the narrow honest next step after `C2` was therefore to consume pre-parsed interface metadata in a typed way, not to revive the legacy `entity_loader(...)` / plugin DB path,
   - using a sidecar metadata artifact keeps the scope tight while still proving the architecture can plan and validate mixed `?fsmc` + `?rtl` tops end to end.
 - Structural outcome:
-  - the composition layer now has a dedicated [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm),
+  - the composition layer now has a dedicated [perl/FSM/Composition/RTLInterfaceLoader.pm](perl/FSM/Composition/RTLInterfaceLoader.pm),
   - `HDLGenerator` now realizes `?rtl` children through typed `<module>.rtlif` metadata instead of rejecting them,
   - the explicit-link planner is now reused for a dedicated `C3` lane rather than for FSM-only `C2` alone,
   - mixed tops instantiate the external RTL child but never emit its internals.
@@ -14080,9 +14086,9 @@ means:
   - the repository’s active CI path is Perl-only, so the earlier Rust-specific include-path guard was unnecessary and has been removed,
   - the shared CI entrypoint now stays focused on the actual project contract: repo-root-aware execution of the Perl regression suite.
 - Verification:
-  - validated the shared local entrypoint from outside the repo root with `bash -lc 'cd /tmp && /Users/richarddje/Documents/github/fsmgen/bin/ci-regression'`,
+  - validated the shared local entrypoint from outside the repo root with `bash -lc 'cd /tmp && bin/ci-regression'`,
   - the full regression remained green (`prove -I perl t` -> `Files=6`, `Tests=125`),
-  - audited tracked `.github`, `bin`, `perl`, `t`, `README.md`, and `docs` content and found no active references to untracked `fx/`, `plugin/`, `specs/`, or machine-specific `/Users/...` paths.
+  - audited tracked `.github`, `bin`, `perl`, `t`, `README.md`, and `docs` content and found no active references to untracked `fx/`, `plugin/`, `specs/`, or machine-specific `machine-specific absolute paths` paths.
 - Working guidance:
   - keep future CI checks in repo-owned scripts first and let workflow YAML delegate to them,
   - when checking whether GitHub CI depends on untracked content, audit the active tracked workflow/runtime/test path rather than broad legacy trees that are not in use.
@@ -16363,7 +16369,7 @@ It is an exact-delay pulse request:
   - and undeclared top-input inference plus explicit-child-link block
     reporting now treat those child inputs as already explicitly wired instead
     of inventing same-name top ports around them.
-- [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t)
+- [t/262-composition-structural-actual-toplinks.t](t/262-composition-structural-actual-toplinks.t)
   now locks:
   - direct linked-plan preservation of literal and `open` actual bindings,
   - end-to-end pipeline and CLI emission of `.data_in(8'b...)` and `.enable()`,
@@ -16390,7 +16396,7 @@ It is an exact-delay pulse request:
   - and blocked range failures now keep `Top expression '...'` context in the
     bounded non-quiet composition-failure summary instead of leaving the
     active expression only in raw exception text.
-- [t/263-composition-toplink-top-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/263-composition-toplink-top-expressions.t)
+- [t/263-composition-toplink-top-expressions.t](t/263-composition-toplink-top-expressions.t)
   now locks:
   - direct linked-plan preservation of bit-select and slice bindings,
   - end-to-end pipeline and CLI emission of `.data_in(payload_bus[15:8])` and
@@ -16417,13 +16423,13 @@ It is an exact-delay pulse request:
   - top-expression uses contribute a minimum required width,
   - and the builder now rejects mixes like `payload_bus[15:8]` plus
     `/payload_bus/child.full_in/` when the exact-width evidence is too narrow.
-- [t/177-composition-top-port-inference-builder.t](/Users/richarddje/Documents/github/fsmgen/t/177-composition-top-port-inference-builder.t)
+- [t/177-composition-top-port-inference-builder.t](t/177-composition-top-port-inference-builder.t)
   now locks:
   - direct inference of undeclared top inputs from source-side top-expression
     evidence,
   - and rejection of incompatible exact-width versus top-expression width
     evidence.
-- [t/101-composition-explicit-link-implicit-ports.t](/Users/richarddje/Documents/github/fsmgen/t/101-composition-explicit-link-implicit-ports.t)
+- [t/101-composition-explicit-link-implicit-ports.t](t/101-composition-explicit-link-implicit-ports.t)
   now also locks:
   - RTL-backed `C3` success with omitted `?ports` and inferred top inputs
     coming from source-side top expressions.
@@ -16442,29 +16448,29 @@ It is an exact-delay pulse request:
     the same `Top expression '...'` summary boundary instead of falling back
     to generic endpoint wording.
 - The planner/runtime/inference contract is now honest for that slice:
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm)
     now lowers those concat sources into typed structural `concat_expr`
     bindings directly on realized child inputs,
   - the emitter walks those concat bindings directly instead of inventing
     helper nets or fake top ports,
-  - [perl/FSM/Composition/TopPortInferenceBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopPortInferenceBuilder.pm)
+  - [perl/FSM/Composition/TopPortInferenceBuilder.pm](perl/FSM/Composition/TopPortInferenceBuilder.pm)
     now treats concat-targeted child inputs as already explicitly linked for
     undeclared same-name top-input inference,
   - and omitted/empty-`?ports` top-boundary inference now also sees inferable
     bit/slice operands inside those concat sources while still refusing to
     guess widths for undeclared whole-port concat operands.
-- [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t)
+- [t/264-composition-toplink-concat-expressions.t](t/264-composition-toplink-concat-expressions.t)
   now locks:
   - direct linked-plan preservation of bounded concat bindings,
   - end-to-end pipeline and CLI emission of those concat child-input
     bindings,
   - and blocked unsupported concat-operand rejection for that first shipped
     source-side concat slice.
-- [t/177-composition-top-port-inference-builder.t](/Users/richarddje/Documents/github/fsmgen/t/177-composition-top-port-inference-builder.t)
+- [t/177-composition-top-port-inference-builder.t](t/177-composition-top-port-inference-builder.t)
   now also locks:
   - direct inference of undeclared top inputs from inferable concat
     top-expression operands.
-- [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t)
+- [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t)
   now also locks:
   - `Top expression '...'` summary context for blocked concat-operand
     failures.
@@ -16482,23 +16488,23 @@ It is an exact-delay pulse request:
   - and several still-unsized whole-port operands still fail explicitly
     instead of guessing several widths from one child-input target.
 - The planner/reporting contract is now honest for that slice:
-  - [perl/FSM/Composition/TopPortInferenceBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopPortInferenceBuilder.pm)
+  - [perl/FSM/Composition/TopPortInferenceBuilder.pm](perl/FSM/Composition/TopPortInferenceBuilder.pm)
     now iterates explicit-toplink expression evidence until one exact-width
     concat remainder can be fixed honestly,
   - that same builder now rejects the sibling several-unknown concat case
     explicitly instead of deferring to a later undeclared-top-port failure,
-  - and [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm)
+  - and [perl/FSM/Composition/FailureReportBuilder.pm](perl/FSM/Composition/FailureReportBuilder.pm)
     now also keeps `Top expression '...'` summary context for that blocked
     omitted-port concat-width inference wording.
-- [t/177-composition-top-port-inference-builder.t](/Users/richarddje/Documents/github/fsmgen/t/177-composition-top-port-inference-builder.t)
+- [t/177-composition-top-port-inference-builder.t](t/177-composition-top-port-inference-builder.t)
   now also locks:
   - residual-width inference for one undeclared whole-port concat operand,
   - and blocked several-unknown whole-port concat-operand rejection.
-- [t/101-composition-explicit-link-implicit-ports.t](/Users/richarddje/Documents/github/fsmgen/t/101-composition-explicit-link-implicit-ports.t)
+- [t/101-composition-explicit-link-implicit-ports.t](t/101-composition-explicit-link-implicit-ports.t)
   now also locks:
   - RTL-backed `C3` success for that residual-width omitted-`?ports` concat
     case.
-- [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t)
+- [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t)
   now also locks:
   - the concise blocked-boundary/context/reason summary for the several-
     unknown omitted-port concat-width failure.
@@ -16517,7 +16523,7 @@ It is an exact-delay pulse request:
   - and overflowing hex payloads now fail explicitly instead of silently
     truncating to the declared width.
 - The planner/reporting contract is now honest for that slice:
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm)
     now normalizes accepted hex literals into the same structural
     `bit_vector_literal_expr` form used by the binary slice,
   - direct actual bindings and concat-literal operands therefore stay on the
@@ -16525,16 +16531,16 @@ It is an exact-delay pulse request:
     node family,
   - and the blocked wording now consistently says `binary or hex` where the
     widened literal family is the real contract.
-- [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t)
+- [t/262-composition-structural-actual-toplinks.t](t/262-composition-structural-actual-toplinks.t)
   now also locks:
   - direct linked-plan and end-to-end pipeline/CLI success for exact-width
     hex actual sources,
   - blocked unsupported decimal-like actual rejection,
   - and blocked overflowing hex-literal rejection.
-- [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t)
+- [t/264-composition-toplink-concat-expressions.t](t/264-composition-toplink-concat-expressions.t)
   now also locks:
   - bounded source-side concat success with a normalized hex literal operand.
-- [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t)
+- [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t)
   now also locks:
   - the widened concise binary/hex literal reason text in the blocked
     explicit-actual and concat-operand summary families.
@@ -16555,7 +16561,7 @@ It is an exact-delay pulse request:
     explicitly instead of leaving octal outside the shipped bounded-literal
     contract.
 - The planner/reporting contract is now honest for that slice:
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm)
     now parses prefixed unsized `0o` actuals plus exact-width `'o` literals
     and lowers both into the same structural `bit_vector_literal_expr`
     payload already used by the binary/decimal/hex family,
@@ -16563,7 +16569,7 @@ It is an exact-delay pulse request:
     operands without widening unsized numerics there,
   - and the concise blocked-reason wording now says binary/decimal/octal/hex
     where that is the real contract.
-- [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t)
+- [t/262-composition-structural-actual-toplinks.t](t/262-composition-structural-actual-toplinks.t)
   now also locks:
   - direct linked-plan and end-to-end pipeline/CLI success for unsized and
     exact-width octal actual sources,
@@ -16571,11 +16577,11 @@ It is an exact-delay pulse request:
     live family,
   - blocked overflowing unsized octal rejection,
   - and blocked overflowing exact-width octal rejection.
-- [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t)
+- [t/264-composition-toplink-concat-expressions.t](t/264-composition-toplink-concat-expressions.t)
   now also locks:
   - bounded source-side concat success with a normalized exact-width octal
     literal operand.
-- [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t)
+- [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t)
   now also locks:
   - the widened concise binary/decimal/octal/hex literal reason text in the
     blocked explicit-actual and concat-operand summary families.
@@ -16593,16 +16599,16 @@ It is an exact-delay pulse request:
   - and the live direct-vs-concat boundary stays unchanged: unsized numerics
     still widen only on direct bindings, not inside concat.
 - The planner contract is now honest for that slice:
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm)
     now normalizes underscore-separated digits before the existing binary /
     decimal / octal / hex width and overflow logic,
   - so separated spellings lower into the same structural
     `bit_vector_literal_expr` payloads instead of introducing a second parsed
     literal path.
-- [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t)
+- [t/262-composition-structural-actual-toplinks.t](t/262-composition-structural-actual-toplinks.t)
   now locks separated direct-actual spellings through linked-plan, pipeline,
   and CLI coverage across the existing bounded radix family.
-- [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t)
+- [t/264-composition-toplink-concat-expressions.t](t/264-composition-toplink-concat-expressions.t)
   now also locks a separated exact-width literal operand through the bounded
   concat path.
 
@@ -16618,36 +16624,36 @@ It is an exact-delay pulse request:
     `instance.port[index]` and `instance.port[msb:lsb]` forms rather than
     opening arbitrary child-side expressions.
 - The planner/reporting contract is now honest for that slice:
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm)
     now resolves child-output bit/slice endpoints directly, groups them by
     one deterministic base child-output carrier, and binds typed projected
     expressions off that carrier for sibling child-input consumers and direct
     top-output assignments,
-  - [perl/FSM/Composition/TopPortInferenceBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopPortInferenceBuilder.pm)
+  - [perl/FSM/Composition/TopPortInferenceBuilder.pm](perl/FSM/Composition/TopPortInferenceBuilder.pm)
     now treats those child-expression sources as explicit links too, so
     omitted/empty-`?ports` same-name inference no longer tries to re-drive
     those same child-input or top-output families accidentally,
-  - [perl/FSM/Composition/ProvenanceReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ProvenanceReportBuilder.pm)
+  - [perl/FSM/Composition/ProvenanceReportBuilder.pm](perl/FSM/Composition/ProvenanceReportBuilder.pm)
     now surfaces first-class `child_expression` context with the preserved
     base endpoint and projected width,
-  - and [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm)
+  - and [perl/FSM/Composition/FailureReportBuilder.pm](perl/FSM/Composition/FailureReportBuilder.pm)
     now keeps concise `Child expression '...'` summary context for blocked
     projected-child range failures.
-- [t/271-composition-child-source-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/271-composition-child-source-expressions.t)
+- [t/271-composition-child-source-expressions.t](t/271-composition-child-source-expressions.t)
   now locks:
   - linked-plan preservation of projected child-output bindings through one
     deterministic base carrier,
   - end-to-end pipeline and CLI emission of child-output bit/slice sources on
     sibling child-input and direct top-output paths,
   - and blocked out-of-range child-expression rejection.
-- [t/113-composition-endpoint-shape-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/113-composition-endpoint-shape-diagnostics.t)
+- [t/113-composition-endpoint-shape-diagnostics.t](t/113-composition-endpoint-shape-diagnostics.t)
   now also locks the widened unsupported-endpoint wording for source-side
   child-output bit/slice expressions.
-- [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t)
+- [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t)
   now also locks:
   - pipeline and CLI `Child expression 'producer.payload[8]'` summary
     context for blocked projected-child range failures.
-- [t/179-composition-provenance-report-builder.t](/Users/richarddje/Documents/github/fsmgen/t/179-composition-provenance-report-builder.t)
+- [t/179-composition-provenance-report-builder.t](t/179-composition-provenance-report-builder.t)
   now also locks:
   - first-class provenance context for projected child-output endpoints,
   - including preserved base endpoint and projected width metadata.
@@ -16667,22 +16673,22 @@ It is an exact-delay pulse request:
   - and generated child sources realized through that same direct-root path
     may use the same bounded package-import contract too.
 - The implementation contract is now honest for that slice:
-  - [perl/FSM/Package/ImportResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/ImportResolver.pm)
+  - [perl/FSM/Package/ImportResolver.pm](perl/FSM/Package/ImportResolver.pm)
     now owns the shared package search-and-parse path for embedded and
     external package imports,
-  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm)
+  - [perl/FSM/Pipeline/SourceFrontend.pm](perl/FSM/Pipeline/SourceFrontend.pm)
     now preloads direct-root package symbols into the direct parser signal
     manager before direct-root expression parsing starts,
-  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm)
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm)
     now accepts top-level `+import` on direct generated roots and preserves
     ordered import metadata on the parsed module,
-  - [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm)
+  - [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm)
     now resolves multi-dot namespaced package symbols before falling through
     to generic dotted-token rejection,
-  - and [perl/FSM/Composition/PackageImportResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/PackageImportResolver.pm)
+  - and [perl/FSM/Composition/PackageImportResolver.pm](perl/FSM/Composition/PackageImportResolver.pm)
     now reuses that same shared resolver instead of keeping a separate
     composition-only package lookup implementation.
-- [t/273-direct-package-imports.t](/Users/richarddje/Documents/github/fsmgen/t/273-direct-package-imports.t)
+- [t/273-direct-package-imports.t](t/273-direct-package-imports.t)
   now locks:
   - direct `?fsm` package imports through pipeline and CLI,
   - direct `?dt` package imports through pipeline and CLI,
@@ -16704,25 +16710,25 @@ It is an exact-delay pulse request:
     composition top ports.
 - The implementation is intentionally semantic-first rather than backend-
   spelling-first:
-  - [perl/FSM/Package/DeclarativeScalarTypeSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/DeclarativeScalarTypeSupport.pm)
+  - [perl/FSM/Package/DeclarativeScalarTypeSupport.pm](perl/FSM/Package/DeclarativeScalarTypeSupport.pm)
     now owns the shared scalar-type canonicalization rules so direct roots,
     composition tops, and semantic packages do not keep drifting on three
     parser-local implementations,
-  - [perl/FSM/Composition/TopSymbols.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopSymbols.pm)
+  - [perl/FSM/Composition/TopSymbols.pm](perl/FSM/Composition/TopSymbols.pm)
     now preserves explicit signed overrides only when the author actually
     asked for them, instead of letting deferred imported aliases silently
     clobber imported signed types with a placeholder `signed => 0`,
-  - and [perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm)
+  - and [perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm](perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm)
     now recovers signedness for internal/helper declarations from the
     analyzed LHS signal path when that signal never became a normal
     `fsm_module->signals` entry.
 - The live regression locks are in:
-  - [t/279-declarative-scalar-types.t](/Users/richarddje/Documents/github/fsmgen/t/279-declarative-scalar-types.t)
-  - [t/277-direct-symbol-contract-forward-ir.t](/Users/richarddje/Documents/github/fsmgen/t/277-direct-symbol-contract-forward-ir.t)
-  - [t/278-composition-symbol-contract-forward-ir.t](/Users/richarddje/Documents/github/fsmgen/t/278-composition-symbol-contract-forward-ir.t)
-  - [t/198-systemverilog-scaffold-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/198-systemverilog-scaffold-emitter.t)
-  - [t/199-systemverilog-internal-declaration-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/199-systemverilog-internal-declaration-emitter.t)
-  - [t/204-enable-graph-module-planning-support.t](/Users/richarddje/Documents/github/fsmgen/t/204-enable-graph-module-planning-support.t)
+  - [t/279-declarative-scalar-types.t](t/279-declarative-scalar-types.t)
+  - [t/277-direct-symbol-contract-forward-ir.t](t/277-direct-symbol-contract-forward-ir.t)
+  - [t/278-composition-symbol-contract-forward-ir.t](t/278-composition-symbol-contract-forward-ir.t)
+  - [t/198-systemverilog-scaffold-emitter.t](t/198-systemverilog-scaffold-emitter.t)
+  - [t/199-systemverilog-internal-declaration-emitter.t](t/199-systemverilog-internal-declaration-emitter.t)
+  - [t/204-enable-graph-module-planning-support.t](t/204-enable-graph-module-planning-support.t)
 
 ## 2026-04-08: explicit two-state and four-state scalar aliases now ride the bounded `+types` lane end to end
 - Continued the bounded semantic type lane by shipping the first explicit
@@ -16736,11 +16742,11 @@ It is an exact-delay pulse request:
     carriers, with `two_state -> bit` and `four_state -> logic`, while bare
     `bit` / `(bits N)` keep the current compatibility surface unchanged.
 - The implementation is still semantic-first:
-  - [perl/FSM/Package/DeclarativeScalarTypeSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/DeclarativeScalarTypeSupport.pm)
+  - [perl/FSM/Package/DeclarativeScalarTypeSupport.pm](perl/FSM/Package/DeclarativeScalarTypeSupport.pm)
     now owns the shared `(two_state ...)` / `(four_state ...)` wrapper
     canonicalization so direct roots, composition tops, and semantic packages
     do not drift on parser-local state-model rules,
-  - [perl/FSM/Composition/TopSymbols.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopSymbols.pm)
+  - [perl/FSM/Composition/TopSymbols.pm](perl/FSM/Composition/TopSymbols.pm)
     now keeps explicit state-model overrides on deferred imported aliases
     through finalization instead of dropping them when the imported type is
     resolved,
@@ -16748,38 +16754,38 @@ It is an exact-delay pulse request:
     state-model intent late from semantic metadata instead of forcing raw
     backend spellings into the authored `.fsm` surface.
 - The live regression locks are in:
-  - [t/279-declarative-scalar-types.t](/Users/richarddje/Documents/github/fsmgen/t/279-declarative-scalar-types.t)
-  - [t/277-direct-symbol-contract-forward-ir.t](/Users/richarddje/Documents/github/fsmgen/t/277-direct-symbol-contract-forward-ir.t)
-  - [t/278-composition-symbol-contract-forward-ir.t](/Users/richarddje/Documents/github/fsmgen/t/278-composition-symbol-contract-forward-ir.t)
-  - [t/198-systemverilog-scaffold-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/198-systemverilog-scaffold-emitter.t)
-  - [t/199-systemverilog-internal-declaration-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/199-systemverilog-internal-declaration-emitter.t)
-  - [t/204-enable-graph-module-planning-support.t](/Users/richarddje/Documents/github/fsmgen/t/204-enable-graph-module-planning-support.t)
+  - [t/279-declarative-scalar-types.t](t/279-declarative-scalar-types.t)
+  - [t/277-direct-symbol-contract-forward-ir.t](t/277-direct-symbol-contract-forward-ir.t)
+  - [t/278-composition-symbol-contract-forward-ir.t](t/278-composition-symbol-contract-forward-ir.t)
+  - [t/198-systemverilog-scaffold-emitter.t](t/198-systemverilog-scaffold-emitter.t)
+  - [t/199-systemverilog-internal-declaration-emitter.t](t/199-systemverilog-internal-declaration-emitter.t)
+  - [t/204-enable-graph-module-planning-support.t](t/204-enable-graph-module-planning-support.t)
 
 ## 2026-04-09: the documentation split is now a real mdBook migration, not only a plan
 - The project now has a real mdBook source tree under
-  [docs/book/](/Users/richarddje/Documents/github/fsmgen/docs/book)
+  [docs/book/](docs/book)
   with a usable `book.toml`, `SUMMARY.md`, and the first shipped chapter set.
 - The book is now the progressive documentation surface:
-  - [docs/book/src/00-introduction.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/00-introduction.md)
-  - [docs/book/src/01-first-fsm.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/01-first-fsm.md)
-  - [docs/book/src/02-language-basics.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/02-language-basics.md)
-  - [docs/book/src/03-decision-trees-and-fsms.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/03-decision-trees-and-fsms.md)
-  - [docs/book/src/04-symbols-types-and-imports.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/04-symbols-types-and-imports.md)
-  - [docs/book/src/05-composition-basics.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/05-composition-basics.md)
-  - [docs/book/src/06-composition-advanced.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/06-composition-advanced.md)
-  - [docs/book/src/07-packages-and-sharing.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/07-packages-and-sharing.md)
-  - [docs/book/src/08-type-inference-and-aggregate-data.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/08-type-inference-and-aggregate-data.md)
-  - [docs/book/src/09-generated-hdl-debugging-and-inspection.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/09-generated-hdl-debugging-and-inspection.md)
-  - [docs/book/src/10-errors-strict-mode-and-troubleshooting.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/10-errors-strict-mode-and-troubleshooting.md)
-  - [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
-  - [docs/book/src/12-cookbook.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/12-cookbook.md)
-  - [docs/book/src/90-reference-map.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/90-reference-map.md)
+  - [docs/book/src/00-introduction.md](docs/book/src/00-introduction.md)
+  - [docs/book/src/01-first-fsm.md](docs/book/src/01-first-fsm.md)
+  - [docs/book/src/02-language-basics.md](docs/book/src/02-language-basics.md)
+  - [docs/book/src/03-decision-trees-and-fsms.md](docs/book/src/03-decision-trees-and-fsms.md)
+  - [docs/book/src/04-symbols-types-and-imports.md](docs/book/src/04-symbols-types-and-imports.md)
+  - [docs/book/src/05-composition-basics.md](docs/book/src/05-composition-basics.md)
+  - [docs/book/src/06-composition-advanced.md](docs/book/src/06-composition-advanced.md)
+  - [docs/book/src/07-packages-and-sharing.md](docs/book/src/07-packages-and-sharing.md)
+  - [docs/book/src/08-type-inference-and-aggregate-data.md](docs/book/src/08-type-inference-and-aggregate-data.md)
+  - [docs/book/src/09-generated-hdl-debugging-and-inspection.md](docs/book/src/09-generated-hdl-debugging-and-inspection.md)
+  - [docs/book/src/10-errors-strict-mode-and-troubleshooting.md](docs/book/src/10-errors-strict-mode-and-troubleshooting.md)
+  - [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  - [docs/book/src/12-cookbook.md](docs/book/src/12-cookbook.md)
+  - [docs/book/src/90-reference-map.md](docs/book/src/90-reference-map.md)
 - The migration stance is now explicit:
   - the mdBook is the friendly learning path,
-  - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+  - [docs/USER_GUIDE.md](docs/USER_GUIDE.md)
     remains the broad live reference while material is still being split,
   - and narrow normative docs such as
-    [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md)
+    [docs/COMPOSITION_SCOPE.md](docs/COMPOSITION_SCOPE.md)
     should stay focused rather than being copied wholesale into the book.
 - Local doc build hygiene matters too: the generated mdBook output directory
   `docs/book/book/` should stay ignored so validating the book never dirties
@@ -16794,7 +16800,7 @@ It is an exact-delay pulse request:
 
 ## 2026-04-22: `HDLGenerator` leaf-owner contracts now have a runtime audit too
 - Added
-  [t/355-hdl-generator-leaf-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/355-hdl-generator-leaf-runtime-contract-audit.t)
+  [t/355-hdl-generator-leaf-runtime-contract-audit.t](t/355-hdl-generator-leaf-runtime-contract-audit.t)
   as an `R13` hardening regression over real in-process `HDLGenerator`
   results.
 - The audit now proves that the bounded `source_info`, `module_info`, and
@@ -16808,7 +16814,7 @@ It is an exact-delay pulse request:
 
 ## 2026-04-22: shell-only `HDLGenerator` compatibility branches now have a runtime audit too
 - Added
-  [t/356-hdl-generator-shell-only-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/356-hdl-generator-shell-only-runtime-contract-audit.t)
+  [t/356-hdl-generator-shell-only-runtime-contract-audit.t](t/356-hdl-generator-shell-only-runtime-contract-audit.t)
   as an `R13` hardening regression over the shell-only compatibility branches
   kept by in-process `HDLGenerator` results.
 - The audit now proves that `fsm_module`, `raw_ast`,
@@ -16824,15 +16830,15 @@ It is an exact-delay pulse request:
 
 ## 2026-04-22: public report shells now have a runtime audit too
 - Added
-  [t/357-public-report-shell-runtime-contract-audit.t](/Users/richarddje/Documents/github/fsmgen/t/357-public-report-shell-runtime-contract-audit.t)
+  [t/357-public-report-shell-runtime-contract-audit.t](t/357-public-report-shell-runtime-contract-audit.t)
   as an `R13` hardening regression over the public `check JSON` and
   `normalized semantic JSON` report shells themselves.
 - The audit now proves that real success and matched-failure payloads keep the
   bounded public top-level keys, success-only top-level keys, and shell-owned
   nested key families advertised by
-  [perl/FSM/Support/CheckDiagnosticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CheckDiagnosticsContract.pm)
+  [perl/FSM/Support/CheckDiagnosticsContract.pm](perl/FSM/Support/CheckDiagnosticsContract.pm)
   and
-  [perl/FSM/Support/NormalizedSemanticReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/NormalizedSemanticReportContract.pm).
+  [perl/FSM/Support/NormalizedSemanticReportContract.pm](perl/FSM/Support/NormalizedSemanticReportContract.pm).
 - This complements the earlier shared-leaf and unmatched-failure audits by
   locking the public report-shell boundary itself instead of only the nested
   objects under it.

@@ -5,8 +5,8 @@ This note records how the obsolete `fx/bin/fsmgen` composition flow worked and h
 It is context only.
 
 The active source of truth remains:
-- [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md)
-- [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md)
+- [docs/COMPOSITION_SCOPE.md](docs/COMPOSITION_SCOPE.md)
+- [ROADMAP_STATUS.md](ROADMAP_STATUS.md)
 
 ## Why this note exists
 - The legacy tool already had a real composition path.
@@ -21,9 +21,9 @@ So the useful question is not “how do we copy the old code?”, but:
 ## Legacy call tree
 The legacy composition entrypath was:
 
-- [fx/bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/fx/bin/fsmgen)
+- [fx/bin/fsmgen](fx/bin/fsmgen)
   - CLI argument parsing only
-- [fx/perl/FSMGen.pm](/Users/richarddje/Documents/github/fsmgen/fx/perl/FSMGen.pm) `start_from_file(...)`
+- [fx/perl/FSMGen.pm](fx/perl/FSMGen.pm) `start_from_file(...)`
   - loads Lispish ASTs
   - classifies `?define:*`, `?fsm:*`, and `?top:*`
   - calls `top_exec(...)` for each top-level `?top:*`
@@ -31,7 +31,7 @@ The legacy composition entrypath was:
 The key historical point is that the old tool did already have a separate composition lane.
 
 ## What `top_exec(...)` actually did
-In [fx/perl/FSMGen.pm](/Users/richarddje/Documents/github/fsmgen/fx/perl/FSMGen.pm), `top_exec(...)` recursively handled:
+In [fx/perl/FSMGen.pm](fx/perl/FSMGen.pm), `top_exec(...)` recursively handled:
 
 - `?fsmc`
   - compile child FSM content through the old FSM path
@@ -54,9 +54,9 @@ It then inferred:
 ## Legacy mechanisms we should not reproduce
 The old composition system depended heavily on dynamic dispatch through:
 
-- [fx/perl/FSMGen.pm](/Users/richarddje/Documents/github/fsmgen/fx/perl/FSMGen.pm) `AUTOLOAD`
-- [fx/perl/PPlugin.pm](/Users/richarddje/Documents/github/fsmgen/fx/perl/PPlugin.pm)
-- [fx/plugin/fsmgen.plg](/Users/richarddje/Documents/github/fsmgen/fx/plugin/fsmgen.plg)
+- [fx/perl/FSMGen.pm](fx/perl/FSMGen.pm) `AUTOLOAD`
+- [fx/perl/PPlugin.pm](fx/perl/PPlugin.pm)
+- [fx/plugin/fsmgen.plg](fx/plugin/fsmgen.plg)
 
 That means many composition helpers were not normal typed code paths at all. They were plugin/eval-resolved helpers such as:
 

@@ -29,20 +29,20 @@ Before doing anything else, perform this task first:
 ## Expected behavior
 For a normal new session, the agent should:
 
-1. Read [README.md](/Users/richarddje/Documents/github/fsmgen/README.md).
-2. Read [COMMIT.md](/Users/richarddje/Documents/github/fsmgen/COMMIT.md) early and adopt it as a non-negotiable session rule.
-3. Read the Markdown files referenced from [README.md](/Users/richarddje/Documents/github/fsmgen/README.md).
+1. Read [README.md](README.md).
+2. Read [COMMIT.md](COMMIT.md) early and adopt it as a non-negotiable session rule.
+3. Read the Markdown files referenced from [README.md](README.md).
 4. Rebuild a current understanding of:
    - the live roadmap state,
    - the current architecture,
    - the current active lane,
    - and the continuity/history notes that matter for the ongoing work.
-5. Analyze [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) and the project-owned transitive `FSM::...` import tree from source.
-6. Compare that live source picture against [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md).
-7. Update [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) if the saved picture is stale, incomplete, or no longer honest.
-8. Then continue by helping fulfil the objectives captured in [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) and tracked live in [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md).
-9. After every completed task, slice, lane, or task-scoped activity from that point on, run the full workflow in [COMMIT.md](/Users/richarddje/Documents/github/fsmgen/COMMIT.md) before starting or switching to another one.
-10. When that workflow reaches git write steps, run them sequentially and treat a stale `.git/index.lock` as a recovery event governed by [COMMIT.md](/Users/richarddje/Documents/github/fsmgen/COMMIT.md).
+5. Analyze [bin/fsmgen](bin/fsmgen) and the project-owned transitive `FSM::...` import tree from source.
+6. Compare that live source picture against [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md).
+7. Update [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) if the saved picture is stale, incomplete, or no longer honest.
+8. Then continue by helping fulfil the objectives captured in [ROADMAP_V2.md](ROADMAP_V2.md) and tracked live in [ROADMAP_STATUS.md](ROADMAP_STATUS.md).
+9. After every completed task, slice, lane, or task-scoped activity from that point on, run the full workflow in [COMMIT.md](COMMIT.md) before starting or switching to another one.
+10. When that workflow reaches git write steps, run them sequentially and treat a stale `.git/index.lock` as a recovery event governed by [COMMIT.md](COMMIT.md).
 
 ## Expected close-out from that startup task
 After completing the bootstrap task, the agent should report:
@@ -50,7 +50,7 @@ After completing the bootstrap task, the agent should report:
 - whether the documentation pass was completed,
 - the current understanding of the project and architecture,
 - the current `bin/fsmgen` runtime spine and hotspot assessment,
-- whether [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) was updated,
+- whether [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) was updated,
 - and the next honest roadmap seam to work on.
 
 ## Scope note
