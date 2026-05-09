@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Manifest public report key metadata round-trips as JSON
+- Added
+  [t/693-capability-manifest-plan-report-public-report-key-metadata-json-roundtrip-audit.t](t/693-capability-manifest-plan-report-public-report-key-metadata-json-roundtrip-audit.t)
+  to prove manifest-embedded report key metadata and the composition report JSON
+  fragment path survive capability-manifest JSON encode/decode.
+- Focused validation passed:
+  `perl -Iperl -c t/693-capability-manifest-plan-report-public-report-key-metadata-json-roundtrip-audit.t && prove -l t/693-capability-manifest-plan-report-public-report-key-metadata-json-roundtrip-audit.t t/692-capability-manifest-plan-report-public-report-key-metadata.t t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-09: Manifest public report key metadata is embedded explicitly
 - Added
   [t/692-capability-manifest-plan-report-public-report-key-metadata.t](t/692-capability-manifest-plan-report-public-report-key-metadata.t)

@@ -1847,7 +1847,8 @@ coverage.
 The parent contract also embeds normalized semantic and composition report public
 key metadata, plus the composition report JSON fragment path, from their
 canonical report contracts; the capability manifest carries the same metadata in
-its serializable plan/report branch.
+its serializable plan/report branch and preserves it across manifest JSON
+encode/decode.
 The full capability manifest preserves that source-owner metadata when embedding
 the branch.
 Its first dedicated plan API is
