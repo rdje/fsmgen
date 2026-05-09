@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Embedding contract advertises the surface registry branch
+- Added
+  [t/670-embedding-contract-surface-registry-presence-audit.t](t/670-embedding-contract-surface-registry-presence-audit.t)
+  to prove `embedding.nested_presence_key_map.serializable_plan_reports`
+  advertises the new `surface_registry` branch.
+- This is `R13` manifest-discovery coverage only; no public shape changed.
 ### Capability manifest surface registry JSON round-trip is audited
 - Added
   [t/669-capability-manifest-surface-registry-json-roundtrip-audit.t](t/669-capability-manifest-surface-registry-json-roundtrip-audit.t)

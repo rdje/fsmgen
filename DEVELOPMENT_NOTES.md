@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Embedding discovery advertises the surface registry
+- `embedding.nested_presence_key_map.serializable_plan_reports` must include
+  `surface_registry`, so manifest consumers can discover the registry through the
+  same nested key-family mechanism as other serializable report branches.
 ## 2026-05-09: Manifest-embedded surface registry round-trips as JSON data
 - The capability manifest must survive JSON encode/decode with
   `embedding.serializable_plan_reports.surface_registry` intact and equal to the

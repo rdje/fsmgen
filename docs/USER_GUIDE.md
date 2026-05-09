@@ -1811,7 +1811,8 @@ for raw `HDLGenerator` compatibility shells. Its `surface_registry` maps each
 surface to its contract owner and primary report paths, with fresh caller-owned
 containers that round-trip as JSON data. The capability manifest embeds the
 canonical registry, rebuilds it cleanly, and preserves it across manifest JSON
-encode/decode. The parent contract returns fresh
+encode/decode. Embedding nested presence metadata advertises the registry branch.
+The parent contract returns fresh
 nested maps, lists, and embedded child contracts, and the capability manifest
 rebuilds that embedded child cleanly per call. The contract also round-trips as
 JSON with child contracts and replacement guidance intact, and the full

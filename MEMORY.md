@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Embedding contract advertises the surface registry branch
+- Added
+  [t/670-embedding-contract-surface-registry-presence-audit.t](t/670-embedding-contract-surface-registry-presence-audit.t)
+  to prove embedding nested presence metadata includes
+  `serializable_plan_reports.surface_registry`.
+- Focused validation passed:
+  `prove -l t/670-embedding-contract-surface-registry-presence-audit.t t/321-embedding-contract.t t/665-serializable-plan-report-surface-registry.t t/297-capability-manifest.t`.
 ## 2026-05-09: Capability manifest surface registry JSON round-trip is audited
 - Added
   [t/669-capability-manifest-surface-registry-json-roundtrip-audit.t](t/669-capability-manifest-surface-registry-json-roundtrip-audit.t)
