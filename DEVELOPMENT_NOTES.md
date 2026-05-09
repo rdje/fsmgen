@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Manifest raw shell replacement keys mirror the parent contract
+- The capability manifest is the JSON discovery surface for
+  `embedding.serializable_plan_reports`, so its embedded
+  `raw_shell_replacement_keys` list must stay canonical and aligned with the
+  embedded replacement map.
 ## 2026-05-09: Raw shell replacement keys are explicit discovery metadata
 - `embedding.serializable_plan_reports.raw_shell_replacement_keys` advertises
   the raw `HDLGenerator` compatibility branch family that has serializable

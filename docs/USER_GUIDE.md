@@ -1809,7 +1809,8 @@ The `embedding.serializable_plan_reports` child is owned by
 and advertises the current JSON-safe report families plus replacement guidance
 for raw `HDLGenerator` compatibility shells. The parent contract publishes
 `raw_shell_replacement_keys` so tools can discover that compatibility branch
-family directly. Its `surface_registry` maps each
+family directly, and the capability manifest embeds that same key list with a
+matching replacement map. Its `surface_registry` maps each
 surface to its contract owner and portable dotted primary report paths, with
 owners aligned to the nested source map, non-empty unique path lists, and fresh caller-owned
 containers that round-trip as JSON data. The capability manifest embeds the

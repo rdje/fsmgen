@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Manifest raw shell replacement keys are explicit
+- Added
+  [t/682-capability-manifest-raw-shell-replacement-keys-contract.t](t/682-capability-manifest-raw-shell-replacement-keys-contract.t)
+  to prove the capability manifest embeds canonical
+  `raw_shell_replacement_keys` and that its replacement map matches that
+  advertised key family.
+- Focused validation passed:
+  `perl -Iperl -c t/682-capability-manifest-raw-shell-replacement-keys-contract.t && prove -l t/682-capability-manifest-raw-shell-replacement-keys-contract.t t/681-serializable-plan-report-raw-shell-replacement-keys-contract.t t/629-serializable-plan-report-contract.t && mdbook build docs/book`.
 ## 2026-05-09: Raw shell replacement keys are explicit
 - Added `raw_shell_replacement_keys` to
   `embedding.serializable_plan_reports` and exported

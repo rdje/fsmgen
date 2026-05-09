@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Manifest raw shell replacement keys are explicit
+- Added
+  [t/682-capability-manifest-raw-shell-replacement-keys-contract.t](t/682-capability-manifest-raw-shell-replacement-keys-contract.t)
+  to prove the capability manifest embeds canonical
+  `raw_shell_replacement_keys` and that its replacement map matches that
+  advertised key family.
 ### Raw shell replacement keys are explicit
 - Added `raw_shell_replacement_keys` to
   `embedding.serializable_plan_reports` and exported
