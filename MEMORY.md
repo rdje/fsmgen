@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Check JSON diagnostic summary key presence is audited
+- Added
+  [t/648-check-json-diagnostic-summary-presence-runtime-contract-audit.t](t/648-check-json-diagnostic-summary-presence-runtime-contract-audit.t)
+  to prove check JSON success/failure top-level key presence matches the
+  advertised contract after `diagnostic_summary` was added.
+- Focused validation passed:
+  `prove -l t/648-check-json-diagnostic-summary-presence-runtime-contract-audit.t t/312-check-diagnostics-contract.t t/637-check-json-diagnostic-summary.t`.
 ## 2026-05-09: Normalized semantic snapshot key presence is audited
 - Added
   [t/647-normalized-semantic-snapshot-presence-runtime-contract-audit.t](t/647-normalized-semantic-snapshot-presence-runtime-contract-audit.t)

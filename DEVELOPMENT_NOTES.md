@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Check JSON diagnostic-summary key presence is runtime-locked
+- Check JSON success and failure reports must include advertised common keys,
+  including `diagnostic_summary`. Success reports keep the success-only `result`
+  branch, while failure reports omit it.
 ## 2026-05-09: Semantic snapshot key presence is runtime-locked
 - Normalized semantic JSON success reports must include the advertised common
   keys plus success-only `semantic` and `generation_result_snapshot` branches.

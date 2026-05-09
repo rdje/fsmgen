@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Check JSON diagnostic summary key presence is audited
+- Added
+  [t/648-check-json-diagnostic-summary-presence-runtime-contract-audit.t](t/648-check-json-diagnostic-summary-presence-runtime-contract-audit.t)
+  to prove check JSON success and failure reports match the advertised
+  top-level/success-only key contract after adding `diagnostic_summary`.
+- This is `R13` runtime contract coverage only; no public JSON shape changed.
 ### Normalized semantic snapshot key presence is audited
 - Added
   [t/647-normalized-semantic-snapshot-presence-runtime-contract-audit.t](t/647-normalized-semantic-snapshot-presence-runtime-contract-audit.t)

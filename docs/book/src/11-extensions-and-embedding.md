@@ -524,6 +524,9 @@ as `diagnostic_summary`, a JSON-safe diagnostic count/code/severity summary for
 tools that do not need to copy complete diagnostic payloads. Normalized semantic
 JSON now embeds that summary for both success and failure reports, and check JSON
 uses the same summary for `--check --json` / `--check-json` outputs.
+Check JSON top-level key presence is runtime-locked too: success and failure
+reports both include `diagnostic_summary`, while only success reports include the
+success-only `result` branch.
 The diagnostic summary builder and contract return fresh caller-owned
 containers, so local annotations of code lists or count maps do not pollute
 later report construction. Both public JSON report families rebuild their
