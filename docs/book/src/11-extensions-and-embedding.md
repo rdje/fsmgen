@@ -544,6 +544,8 @@ embedded summaries per report and are regression-locked to the same standalone
 summary builder output. Diagnostic summaries are also JSON round-trip locked:
 stable counts, severities, and unique-code lists survive encode/decode as plain
 JSON data.
+Each child serializable report API is regression-locked so its advertised public
+top-level key list matches the keys its builder actually emits.
 Tracked documentation and book links use paths relative to the repository root;
 machine-local absolute filesystem paths are not part of the public embedding
 surface.

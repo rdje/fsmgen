@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Serializable child public-key metadata must match output
+- `composition_plan_snapshot`, `generation_result_snapshot`, and
+  `diagnostic_summary` public top-level key helpers must remain exact
+  inventories of the keys their builders emit.
 ## 2026-05-09: Serializable plan/report public-key metadata must match output
 - `embedding.serializable_plan_reports.public_top_level_presence_keys` must be a
   complete inventory of the parent contract's emitted top-level keys, including

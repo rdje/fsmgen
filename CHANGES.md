@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Serializable child report public-key metadata is audited
+- Added
+  [t/657-serializable-child-report-public-key-alignment-audit.t](t/657-serializable-child-report-public-key-alignment-audit.t)
+  to prove `composition_plan_snapshot`, `generation_result_snapshot`, and
+  `diagnostic_summary` advertise exactly the top-level keys they emit.
+- This is `R13` contract-integrity coverage only; no public JSON shape changed.
 ### Serializable plan/report contract public-key metadata is aligned
 - Added
   [t/656-serializable-plan-report-contract-public-key-alignment-audit.t](t/656-serializable-plan-report-contract-public-key-alignment-audit.t)

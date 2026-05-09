@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Serializable child report public-key metadata is audited
+- Added
+  [t/657-serializable-child-report-public-key-alignment-audit.t](t/657-serializable-child-report-public-key-alignment-audit.t)
+  to prove child serializable report builders emit exactly their advertised
+  public top-level keys.
+- Focused validation passed:
+  `prove -l t/657-serializable-child-report-public-key-alignment-audit.t t/630-serializable-composition-plan-snapshot.t t/632-serializable-generation-result-snapshot.t t/635-serializable-diagnostic-summary.t`.
 ## 2026-05-09: Serializable plan/report public-key metadata is aligned
 - Added
   [t/656-serializable-plan-report-contract-public-key-alignment-audit.t](t/656-serializable-plan-report-contract-public-key-alignment-audit.t)
