@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator semantic layer map stays JSON-audited
+- The bounded `HDLGenerator` result contract now has focused JSON round-trip
+  coverage for `semantic_layer_presence_key_family_map`. Decoded grouped entries
+  must stay aligned with the scalar `intent_hir`, `lowered_rtl_ir`, and
+  `structural_rtl_ir` presence lists.
+- This keeps semantic-layer shell discovery guarded without adding fields.
 ## 2026-05-10: HDLGenerator optional composition map stays JSON-audited
 - The bounded `HDLGenerator` result contract now has focused JSON round-trip
   coverage for `optional_composition_key_family_map`. Decoded grouped entries

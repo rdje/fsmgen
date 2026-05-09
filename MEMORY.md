@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: HDLGenerator semantic layer map survives JSON
+- Added
+  [t/725-hdl-generator-result-contract-semantic-layer-map-json-roundtrip-audit.t](t/725-hdl-generator-result-contract-semantic-layer-map-json-roundtrip-audit.t)
+  to prove the bounded `HDLGenerator` result contract's decoded
+  `semantic_layer_presence_key_family_map` survives JSON round trip and remains
+  aligned with the scalar `intent_hir`, `lowered_rtl_ir`, and
+  `structural_rtl_ir` presence key lists.
+- This keeps semantic-layer shell discovery auditable without changing the
+  result contract API.
+- Focused validation passed:
+  `perl -Iperl -c t/725-hdl-generator-result-contract-semantic-layer-map-json-roundtrip-audit.t && prove -l t/725-hdl-generator-result-contract-semantic-layer-map-json-roundtrip-audit.t t/305-hdl-generator-result-contract.t t/438-hdl-generator-result-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: HDLGenerator optional composition map survives JSON
 - Added
   [t/724-hdl-generator-result-contract-optional-composition-map-json-roundtrip-audit.t](t/724-hdl-generator-result-contract-optional-composition-map-json-roundtrip-audit.t)

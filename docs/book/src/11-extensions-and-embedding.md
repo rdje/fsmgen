@@ -83,7 +83,8 @@ after JSON round trip as well, along with the nested contract owner map that
 ties result branches back to their scalar owner fields. The stable subsurface map
 is also guarded after JSON round trip so grouped nested-surface discovery stays
 aligned with the scalar fields it summarizes. The optional composition
-key-family map is guarded the same way for composition-only discovery.
+key-family map is guarded the same way for composition-only discovery, and the
+semantic-layer presence family map now has the same JSON round-trip coverage.
 
 ## Current Philosophy
 
