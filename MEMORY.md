@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Check JSON embeds diagnostic summaries
+- `--check --json` and `--check-json` now include top-level
+  `diagnostic_summary` for both success and failure outputs.
+- Focused validation passed:
+  `prove -l t/637-check-json-diagnostic-summary.t t/636-normalized-semantic-diagnostic-summary.t t/312-check-diagnostics-contract.t`
+  and `prove -Iperl t/299-check-json-diagnostics.t t/301-check-json-supported-corpus.t t/297-capability-manifest.t`.
 ## 2026-05-09: Semantic JSON embeds diagnostic summaries
 - Normalized semantic JSON now includes top-level `diagnostic_summary` for both
   success and failure reports.

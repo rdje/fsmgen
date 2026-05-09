@@ -11,6 +11,7 @@ use JSON::PP ();
 
 use FSM::Support::DiagnosticCodes qw(diagnostic_code_metadata);
 use FSM::Support::RegressionCorpus qw(regression_corpus_entries);
+use FSM::Support::SerializableDiagnosticSummary qw(build_serializable_diagnostic_summary);
 
 our @EXPORT_OK = qw(build_check_failure_report build_check_success_report);
 
@@ -30,6 +31,12 @@ sub build_check_success_report {
         source => _source_contract(%args),
         success => JSON::PP::true,
         diagnostics => [],
+        diagnostic_summary => build_serializable_diagnostic_summary(
+            report => {
+                success => JSON::PP::true,
+                diagnostics => [],
+            },
+        ),
         support_accounting => _success_support_accounting_contract($match),
         result => {
             module_name => $module_info->{module_name},
@@ -95,6 +102,12 @@ sub build_check_failure_report {
         source => _source_contract(%args),
         success => JSON::PP::false,
         diagnostics => [\%diagnostic],
+        diagnostic_summary => build_serializable_diagnostic_summary(
+            report => {
+                success => JSON::PP::false,
+                diagnostics => [\%diagnostic],
+            },
+        ),
         generated_output => {
             emitted => JSON::PP::false,
         },

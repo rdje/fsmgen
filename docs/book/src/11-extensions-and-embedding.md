@@ -508,7 +508,8 @@ The manifest surface also advertises
 [perl/FSM/Support/SerializableDiagnosticSummary.pm](perl/FSM/Support/SerializableDiagnosticSummary.pm)
 as `diagnostic_summary`, a JSON-safe diagnostic count/code/severity summary for
 tools that do not need to copy complete diagnostic payloads. Normalized semantic
-JSON now embeds that summary for both success and failure reports.
+JSON now embeds that summary for both success and failure reports, and check JSON
+uses the same summary for `--check --json` / `--check-json` outputs.
 Tracked documentation and book links use paths relative to the repository root;
 machine-local absolute filesystem paths are not part of the public embedding
 surface.

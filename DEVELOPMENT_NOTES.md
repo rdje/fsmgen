@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Check JSON carries diagnostic summaries
+- `diagnostic_summary` is now shared by normalized semantic JSON and check JSON.
+- This keeps the stable-code/count inspection surface consistent across the two
+  public JSON report families while leaving the full diagnostic payloads under
+  their existing contracts.
 ## 2026-05-09: Semantic JSON carries diagnostic summaries
 - `diagnostic_summary` is now a top-level normalized semantic JSON branch for
   both success and failure reports.

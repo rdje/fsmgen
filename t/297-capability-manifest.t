@@ -507,6 +507,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest records the check-json command nested contract owner',
     );
     is(
+        $manifest->{diagnostics}{check_json}{nested_contract_source_map}{diagnostic_summary},
+        serializable_diagnostic_summary_contract_source(),
+        'manifest records the check-json diagnostic summary owner',
+    );
+    is(
         $manifest->{diagnostics}{check_json}{nested_contract_source_map}{result},
         check_result_contract_source(),
         'manifest records the check-json result nested contract owner',
@@ -540,6 +545,11 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         $manifest->{diagnostics}{check_json}{command_contract_source},
         report_command_contract_source(),
         'manifest records the shared check-JSON command nested-object owner',
+    );
+    is(
+        $manifest->{diagnostics}{check_json}{diagnostic_summary_contract_source},
+        serializable_diagnostic_summary_contract_source(),
+        'manifest records the shared check-JSON diagnostic summary owner',
     );
     is(
         $manifest->{diagnostics}{check_json}{result_contract_source},

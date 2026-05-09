@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Check JSON embeds diagnostic summaries
+- `--check --json` / `--check-json` reports now include top-level
+  `diagnostic_summary` for both success and failure outputs, using the same
+  [perl/FSM/Support/SerializableDiagnosticSummary.pm](perl/FSM/Support/SerializableDiagnosticSummary.pm)
+  surface as normalized semantic JSON.
+- Updated
+  [perl/FSM/Support/CheckDiagnosticsContract.pm](perl/FSM/Support/CheckDiagnosticsContract.pm)
+  and manifest regressions so check JSON advertises the summary owner.
+- Added [t/637-check-json-diagnostic-summary.t](t/637-check-json-diagnostic-summary.t)
+  to lock the public check JSON CLI path.
 ### Semantic JSON embeds diagnostic summaries
 - Normalized semantic JSON now includes top-level `diagnostic_summary` for both
   successful and failed reports, built by

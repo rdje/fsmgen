@@ -46,6 +46,9 @@ use FSM::Support::ReportGeneratedOutputContract qw(
     report_generated_output_contract_source
     report_generated_output_presence_keys
 );
+use FSM::Support::SerializableDiagnosticSummary qw(
+    serializable_diagnostic_summary_contract_source
+);
 use FSM::Support::ReportProducerContract qw(
     report_producer_common_keys
     report_producer_contract_source
@@ -90,6 +93,7 @@ subtest 'contract exposes the bounded check JSON surface' => sub {
         $contract->{nested_contract_source_map},
         {
             command => report_command_contract_source(),
+            diagnostic_summary => serializable_diagnostic_summary_contract_source(),
             failure_diagnostic => check_failure_diagnostic_contract_source(),
             generated_output => report_generated_output_contract_source(),
             producer => report_producer_contract_source(),
@@ -108,6 +112,11 @@ subtest 'contract exposes the bounded check JSON surface' => sub {
         $contract->{command_contract_source},
         report_command_contract_source(),
         'contract records the shared command nested-object owner',
+    );
+    is(
+        $contract->{diagnostic_summary_contract_source},
+        serializable_diagnostic_summary_contract_source(),
+        'contract records the diagnostic summary owner',
     );
     is(
         $contract->{result_contract_source},

@@ -645,6 +645,8 @@ Current direction:
   inspection.
 - Public report path: normalized semantic JSON now embeds that summary for both
   success and failure reports.
+- Shared report path: check JSON now embeds the same summary for both success
+  and failure reports.
 
 Expected result:
 - the project becomes a stronger platform for downstream tooling, not just a CLI.

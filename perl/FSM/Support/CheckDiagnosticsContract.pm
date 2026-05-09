@@ -25,6 +25,10 @@ use FSM::Support::ReportGeneratedOutputContract qw(
     report_generated_output_contract_source
     report_generated_output_presence_keys
 );
+use FSM::Support::SerializableDiagnosticSummary qw(
+    serializable_diagnostic_summary_contract_source
+    serializable_diagnostic_summary_public_top_level_keys
+);
 use FSM::Support::ReportProducerContract qw(
     report_producer_common_keys
     report_producer_contract_source
@@ -87,6 +91,7 @@ sub build_check_diagnostics_contract {
         emits_failure_diagnostic_support_accounting_object => JSON::PP::true,
         nested_contract_source_map => {
             command => report_command_contract_source(),
+            diagnostic_summary => serializable_diagnostic_summary_contract_source(),
             failure_diagnostic => check_failure_diagnostic_contract_source(),
             generated_output => report_generated_output_contract_source(),
             producer => report_producer_contract_source(),
@@ -95,6 +100,7 @@ sub build_check_diagnostics_contract {
             support_accounting => support_accounting_match_contract_source(),
         },
         command_contract_source => report_command_contract_source(),
+        diagnostic_summary_contract_source => serializable_diagnostic_summary_contract_source(),
         failure_diagnostic_contract_source => check_failure_diagnostic_contract_source(),
         result_contract_source => check_result_contract_source(),
         generated_output_contract_source => report_generated_output_contract_source(),
@@ -122,6 +128,7 @@ sub build_check_diagnostics_contract {
         guidance => [
             'Treat the published top-level, success-result, and failure-diagnostic key lists as the bounded public check-JSON contract for schema version 1.',
             'The nested command object is shared with normalized semantic JSON and stays bounded through FSM::Support::ReportCommandContract.',
+            'The top-level diagnostic_summary object is shared with normalized semantic JSON and stays bounded through FSM::Support::SerializableDiagnosticSummary.',
             'The nested failure diagnostic object stays bounded through FSM::Support::CheckFailureDiagnosticContract.',
             'The nested success result object stays bounded through FSM::Support::CheckResultContract.',
             'The nested generated_output object is shared with normalized semantic JSON and stays bounded through FSM::Support::ReportGeneratedOutputContract.',
@@ -144,6 +151,7 @@ sub check_json_public_top_level_keys {
             source
             success
             diagnostics
+            diagnostic_summary
             generated_output
         ),
     ];
@@ -152,6 +160,7 @@ sub check_json_public_top_level_keys {
 sub check_json_nested_presence_key_map {
     return {
         command => report_command_presence_keys(),
+        diagnostic_summary => serializable_diagnostic_summary_public_top_level_keys(),
         result => check_result_presence_keys(),
         failure_diagnostic => check_json_failure_diagnostic_keys(),
         generated_output => report_generated_output_presence_keys(),
