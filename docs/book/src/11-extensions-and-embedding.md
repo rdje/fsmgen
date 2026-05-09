@@ -85,6 +85,8 @@ is also guarded after JSON round trip so grouped nested-surface discovery stays
 aligned with the scalar fields it summarizes. The optional composition
 key-family map is guarded the same way for composition-only discovery, and the
 semantic-layer presence family map now has the same JSON round-trip coverage.
+The shell-only fallback surface map is also JSON-audited so raw compatibility
+branches keep pointing at their advertised structured replacements.
 
 ## Current Philosophy
 
