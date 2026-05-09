@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Capability manifest surface registry paths are portable
+- Added
+  [t/675-capability-manifest-surface-registry-path-portability-audit.t](t/675-capability-manifest-surface-registry-path-portability-audit.t)
+  to prove manifest-embedded registry `primary_report_paths` stay dotted logical
+  report paths and never become machine-local absolute paths.
+- This is `R13` manifest registry portability coverage only; no public shape
+  changed.
 ### Capability manifest surface registry owners are aligned
 - Added
   [t/674-capability-manifest-surface-registry-owner-map-parity-audit.t](t/674-capability-manifest-surface-registry-owner-map-parity-audit.t)
