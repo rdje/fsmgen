@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Parent generation child contract rebuilds cleanly
+- Added
+  [t/718-serializable-plan-report-generation-child-contract-defensive-copy-audit.t](t/718-serializable-plan-report-generation-child-contract-defensive-copy-audit.t)
+  to prove caller mutation of a built parent contract's
+  `generation_result_snapshot_contract` cannot pollute the next standalone
+  serializable plan/report contract.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions the defensive-copy guard for the embedded
+  generation child contract.
 ### Parent composition child contract rebuilds cleanly
 - Added
   [t/717-serializable-plan-report-composition-child-contract-defensive-copy-audit.t](t/717-serializable-plan-report-composition-child-contract-defensive-copy-audit.t)
