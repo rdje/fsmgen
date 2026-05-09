@@ -53,7 +53,7 @@ and defensively rebuilt after caller mutation.
 The generation-result snapshot child contract is audited and defensively rebuilt
 the same way, keeping both child-report contracts tied to their owners after
 serialization. The diagnostic-summary child contract now has the same parent
-JSON round-trip guard.
+JSON round-trip and defensive-copy guards.
 The branch also carries embedder
 guidance that is audited to keep directing consumers toward those JSON-safe
 reports rather than raw in-process `HDLGenerator` branches; its list is also

@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Parent diagnostic child contract rebuilds cleanly
+- The parent serializable plan/report contract now has focused defensive-copy
+  coverage for its embedded `diagnostic_summary_contract`. Mutating one built
+  parent contract's child metadata must not affect the next build.
+- This completes the current embedded child-contract defensive-copy trio without
+  adding fields.
 ## 2026-05-10: Parent generation child contract rebuilds cleanly
 - The parent serializable plan/report contract now has focused defensive-copy
   coverage for its embedded `generation_result_snapshot_contract`. Mutating one
