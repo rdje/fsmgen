@@ -1826,7 +1826,8 @@ primary report paths, with
 owners aligned to the nested source map, non-empty unique path lists, and fresh
 caller-owned containers that round-trip as JSON data. The parent contract also
 preserves the embedded registry across full-contract JSON round-trip and keeps it
-aligned with the decoded JSON-safe surface list. The capability manifest
+aligned with the decoded JSON-safe surface list while keeping decoded registry
+paths portable. The capability manifest
 embeds the canonical registry, rebuilds it cleanly, preserves it across manifest
 JSON encode/decode, and keeps the decoded registry aligned with the JSON-safe
 surface list. Its manifest-embedded

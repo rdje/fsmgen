@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Parent registry paths stay portable after serialization
+- Decoded parent `surface_registry` paths should remain portable dotted report
+  paths, not absolute or machine-local paths. The main parent JSON audit now
+  checks that invariant on the embedded registry payload.
 ## 2026-05-09: Parent registry entry shape is in the main audit
 - The parent JSON audit now checks decoded `surface_registry_entry_keys` against
   every decoded registry entry. Direct contract consumers can validate entry

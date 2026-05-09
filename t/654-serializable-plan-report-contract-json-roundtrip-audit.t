@@ -99,6 +99,9 @@ subtest 'serializable plan/report contract remains plain data after JSON round t
             as_set($decoded->{surface_registry_entry_keys}),
             "$surface round-trip registry entry keys match decoded shape",
         );
+        for my $path (@{$decoded->{surface_registry}{$surface}{primary_report_paths} || []}) {
+            ok(is_portable_report_path($path), "$surface round-trip registry path remains portable: $path");
+        }
     }
     is_deeply(
         as_set([keys %{$decoded->{surface_registry}}]),
@@ -221,6 +224,15 @@ sub contains_blessed {
 sub is_json_boolean {
     my ($value) = @_;
     return defined(blessed($value)) && blessed($value) eq 'JSON::PP::Boolean';
+}
+
+sub is_portable_report_path {
+    my ($path) = @_;
+    return defined($path)
+        && !ref($path)
+        && $path !~ m{\A/}
+        && $path !~ m{/Users/}
+        && $path =~ /\A[A-Za-z0-9_]+(?:\.[A-Za-z0-9_]+)*\z/;
 }
 
 sub as_set {
