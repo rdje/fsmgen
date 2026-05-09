@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Manifest JSON-safety flags survive serialization
+- Manifest-embedded serializable plan/report safety flags must remain boolean
+  metadata after capability-manifest JSON encode/decode. A decoded manifest
+  should still distinguish safe serializable surfaces from raw in-process
+  compatibility branches without helper-module access.
 ## 2026-05-09: Manifest JSON-safety flags mirror the parent contract
 - Manifest consumers see the same machine-readable JSON booleans for
   serializable plan/report safety: current serializable surfaces are safe, while

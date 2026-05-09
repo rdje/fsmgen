@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Manifest plan/report JSON-safety flags round-trip as JSON
+- Added
+  [t/687-capability-manifest-plan-report-json-safety-flags-json-roundtrip-audit.t](t/687-capability-manifest-plan-report-json-safety-flags-json-roundtrip-audit.t)
+  to prove manifest-embedded plan/report JSON-safety flags survive JSON
+  encode/decode with boolean shape and intended truth values intact.
 ### Manifest plan/report JSON-safety flags are boolean-audited
 - Added
   [t/686-capability-manifest-serializable-plan-report-json-safety-flags.t](t/686-capability-manifest-serializable-plan-report-json-safety-flags.t)

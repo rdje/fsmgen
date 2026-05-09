@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Manifest plan/report JSON-safety flags round-trip as JSON
+- Added
+  [t/687-capability-manifest-plan-report-json-safety-flags-json-roundtrip-audit.t](t/687-capability-manifest-plan-report-json-safety-flags-json-roundtrip-audit.t)
+  to prove manifest-embedded plan/report JSON-safety flags survive JSON
+  encode/decode with boolean shape and intended truth values intact.
+- Focused validation passed:
+  `perl -Iperl -c t/687-capability-manifest-plan-report-json-safety-flags-json-roundtrip-audit.t && prove -l t/687-capability-manifest-plan-report-json-safety-flags-json-roundtrip-audit.t t/686-capability-manifest-serializable-plan-report-json-safety-flags.t t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-09: Manifest plan/report JSON-safety flags are boolean-audited
 - Added
   [t/686-capability-manifest-serializable-plan-report-json-safety-flags.t](t/686-capability-manifest-serializable-plan-report-json-safety-flags.t)
