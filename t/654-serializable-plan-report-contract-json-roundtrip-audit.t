@@ -163,6 +163,11 @@ subtest 'serializable plan/report contract remains plain data after JSON round t
         'composition_plan_snapshot',
         'round-trip contract keeps composition child contract',
     );
+    is_deeply(
+        $decoded->{generation_result_snapshot_contract},
+        $contract->{generation_result_snapshot_contract},
+        'round-trip contract keeps exact generation child contract',
+    );
     is(
         $decoded->{generation_result_snapshot_contract}{object_name},
         'generation_result_snapshot',

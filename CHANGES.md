@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Parent generation child contract round-trips exactly
+- Updated
+  [t/654-serializable-plan-report-contract-json-roundtrip-audit.t](t/654-serializable-plan-report-contract-json-roundtrip-audit.t)
+  to prove the embedded `generation_result_snapshot_contract` survives parent
+  contract JSON encode/decode exactly.
 ### Manifest composition child contract round-trips exactly
 - Updated
   [t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t](t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t)

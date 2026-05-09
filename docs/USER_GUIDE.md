@@ -1844,7 +1844,8 @@ nested maps, lists, raw replacement-key lists, and embedded child contracts, and
 the capability manifest rebuilds that embedded child and entry-key list cleanly
 per call. The contract
 also round-trips as JSON with child contracts, exact composition snapshot child
-metadata, replacement keys, and replacement guidance intact,
+metadata, exact generation snapshot child metadata, replacement keys, and
+replacement guidance intact,
 and the full capability manifest preserves that branch, its exact composition
 snapshot child metadata, and its entry-key list across JSON encode/decode. Its
 advertised public top-level key list is locked to

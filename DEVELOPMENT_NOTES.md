@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Parent generation child contract survives exactly
+- Full-contract JSON round-trip coverage now checks exact preservation of the
+  generation result snapshot child contract, keeping that embedded contract tied
+  to its dedicated snapshot builder metadata.
 ## 2026-05-09: Manifest composition child contract survives exactly
 - The manifest JSON audit now checks exact preservation of the embedded
   composition plan snapshot child contract. This keeps manifest consumers aligned
