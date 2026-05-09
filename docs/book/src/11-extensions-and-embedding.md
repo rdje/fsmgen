@@ -86,6 +86,11 @@ This hook/context boundary is now advertised in the capability manifest under
 - and the deliberate absence of legacy `.plg` discovery, automatic directory
   discovery, and `AUTOLOAD` hook dispatch
 
+That registry ownership rule is runtime-audited directly: mutating the caller's
+extension array after `FSM::Extension::Registry->new(...)`, or mutating an
+`extensions()` accessor array, cannot add hooks to the registry. The extension
+objects themselves remain live hook objects by identity.
+
 That same owner now also publishes a grouped `name_family_map` so embedders
 can discover the bounded hook-name, context-accessor, and supported-source-kind
 families from one place instead of collecting those name lists separately.

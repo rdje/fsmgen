@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Extension registry arrays are snapshots, extension objects stay live
+- `FSM::Extension::Registry` deliberately copies the extension array supplied at
+  construction and also returns a fresh array from `extensions()`. That prevents
+  caller-side array mutation from adding or removing registered hooks after the
+  registry is built.
+- The registry does not clone extension objects themselves. Hook objects remain
+  live so their own state and methods are the dispatch surface; only the array
+  containers are owned by the registry boundary.
 ## 2026-05-09: Source search paths are facade construction snapshots
 - `HDLGenerator->new(source_search_paths => \@paths)` hands the list to
   `SourcePathResolver`, which copies the array into facade-local resolver state.

@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Typed extension registry extension arrays are alias-audited
+- Added
+  [t/585-typed-extension-registry-extension-array-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/585-typed-extension-registry-extension-array-alias-boundary-audit.t)
+  to prove `FSM::Extension::Registry` snapshots caller extension arrays and
+  `extensions()` accessor arrays while preserving live extension object identity
+  for hook dispatch.
+- Focused validation:
+  `perl -Iperl -c t/585-typed-extension-registry-extension-array-alias-boundary-audit.t && prove -lv t/426-typed-extension-registry-constructor-argument-boundary-audit.t t/585-typed-extension-registry-extension-array-alias-boundary-audit.t && mdbook build docs/book`
+  passed. This is `R13` runtime contract-integrity coverage only; no production
+  code, public manifest shape, user-facing generation behavior, or roadmap lane
+  status changed.
 ## 2026-05-09: HDLGenerator source_search_paths constructor input is alias-audited
 - Added
   [t/584-hdl-generator-source-search-paths-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/584-hdl-generator-source-search-paths-alias-boundary-audit.t)

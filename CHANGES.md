@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Typed extension registry extension arrays are alias-audited
+- Added
+  [t/585-typed-extension-registry-extension-array-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/585-typed-extension-registry-extension-array-alias-boundary-audit.t)
+  to prove `FSM::Extension::Registry` snapshots caller extension arrays and
+  `extensions()` accessor arrays while preserving live extension object identity
+  for hook dispatch.
+- This is `R13` runtime contract-integrity coverage only. No production code,
+  public manifest shape, generation behavior, or roadmap lane status changed.
 ### HDLGenerator source_search_paths constructor input is alias-audited
 - Added
   [t/584-hdl-generator-source-search-paths-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/584-hdl-generator-source-search-paths-alias-boundary-audit.t)
