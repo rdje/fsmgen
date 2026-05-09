@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Generation result snapshot defensive-copy boundary is audited
+- Added
+  [t/641-serializable-generation-result-snapshot-defensive-copy-boundary-audit.t](t/641-serializable-generation-result-snapshot-defensive-copy-boundary-audit.t)
+  to prove generation result snapshot contract/report containers are fresh
+  across calls.
+- Focused validation passed:
+  `prove -l t/641-serializable-generation-result-snapshot-defensive-copy-boundary-audit.t t/632-serializable-generation-result-snapshot.t t/629-serializable-plan-report-contract.t`.
 ## 2026-05-09: Public report diagnostic summary alias boundary is audited
 - Added
   [t/640-public-report-diagnostic-summary-alias-boundary-audit.t](t/640-public-report-diagnostic-summary-alias-boundary-audit.t)

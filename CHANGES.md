@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Generation result snapshot defensive-copy boundary is audited
+- Added
+  [t/641-serializable-generation-result-snapshot-defensive-copy-boundary-audit.t](t/641-serializable-generation-result-snapshot-defensive-copy-boundary-audit.t)
+  to prove generation result snapshot contracts and generated snapshots return
+  fresh caller-owned containers.
+- This is `R13` contract-integrity coverage for the serializable generation
+  result surface; no public JSON shape changed.
 ### Public report diagnostic summary alias boundary is audited
 - Added
   [t/640-public-report-diagnostic-summary-alias-boundary-audit.t](t/640-public-report-diagnostic-summary-alias-boundary-audit.t)

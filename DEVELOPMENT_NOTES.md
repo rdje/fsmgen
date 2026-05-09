@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Generation result snapshot containers are caller-owned
+- `build_serializable_generation_result_snapshot_contract(...)` and
+  `build_serializable_generation_result_snapshot(...)` return fresh nested
+  containers. Callers can annotate key lists, summary hashes, and raw-shell
+  metadata without contaminating later snapshots.
 ## 2026-05-09: Public diagnostic summaries are rebuilt per report
 - Check JSON and normalized semantic JSON report builders must create fresh
   `diagnostic_summary` containers per report. Caller mutation of one emitted
