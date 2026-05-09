@@ -49,6 +49,8 @@ focused mutation guard. The parent surface-to-owner map is also defensively
 rebuilt, so callers cannot mutate one decoded contract into the next. The same
 parent branch embeds the composition-plan snapshot child contract, and that
 embedded child contract is JSON-round-trip audited against its canonical owner.
+The generation-result snapshot child contract is audited the same way, keeping
+both child-report contracts tied to their owners after serialization.
 The branch also carries embedder
 guidance that is audited to keep directing consumers toward those JSON-safe
 reports rather than raw in-process `HDLGenerator` branches; its list is also
