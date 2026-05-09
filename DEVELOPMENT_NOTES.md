@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Stateful facade reuse returns fresh composition lowered_rtl_ir
+- Composition `lowered_rtl_ir` exposes top-level lowered summaries such as
+  instance names and internal net names. Reusing a facade must rebuild that
+  lowered semantic shell per generation.
+- The audit mutates `module_name`, `instance_names`, and `internal_net_names` in
+  a first composition result, then proves the next generation returns the
+  original lowered shell.
 ## 2026-05-09: Stateful facade reuse returns fresh composition intent_hir
 - Composition `intent_hir` combines the top intent summary with realized child
   summaries. Reusing a facade must rebuild that semantic shell per generation.
