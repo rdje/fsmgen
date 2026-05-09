@@ -557,6 +557,9 @@ The nested `source_info` object now also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorSourceInfoContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorSourceInfoContract.pm),
 which is the contract to follow for `header`, `kind`,
 `package_import_count`, and `package_import_names`.
+Reusable `HDLGenerator` facade objects return fresh `source_info` containers per
+generation, so caller mutation of one result's classification or package summary
+does not leak into a later result produced by the same facade object.
 For direct package imports, `source_info.package_import_names` is also audited
 against the raw `fsm_module.attributes.package_imports` compatibility branch:
 the two arrays preserve the same authored import order without sharing mutable

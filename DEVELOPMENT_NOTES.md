@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Stateful facade reuse returns fresh source_info containers
+- `source_info` is a per-generation classification and package-summary object.
+  Reusing one `HDLGenerator` facade must not let caller edits to an earlier
+  result's header or package-import summary affect a later result.
+- The audit mutates `header`, `package_import_count`, and
+  `package_import_names` in a first result, then proves a later generation on
+  the same facade rebuilds clean source metadata.
 ## 2026-05-09: Stateful facade reuse returns fresh statistics containers
 - `statistics` is a per-generation result summary. Reusing one `HDLGenerator`
   facade must not make later results observe caller edits to an earlier result's
