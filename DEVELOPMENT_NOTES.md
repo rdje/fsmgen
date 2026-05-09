@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Manifest plan/report public keys survive serialization
+- Manifest-embedded `public_top_level_presence_keys` must keep describing the
+  decoded `serializable_plan_reports` payload after JSON encode/decode. That
+  keeps the branch self-describing for tools that consume only the manifest JSON.
 ## 2026-05-09: Manifest JSON-safe surface keys survive serialization
 - Manifest-embedded `json_safe_surface_keys` must remain a stable discovery list
   after capability-manifest JSON encode/decode. Decoded manifests should let

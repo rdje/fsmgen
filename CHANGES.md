@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Manifest plan/report public key list round-trips as JSON
+- Added
+  [t/698-capability-manifest-plan-report-public-keys-json-roundtrip-audit.t](t/698-capability-manifest-plan-report-public-keys-json-roundtrip-audit.t)
+  to prove manifest-embedded `public_top_level_presence_keys` survive JSON
+  encode/decode and still match the decoded branch payload.
 ### Manifest JSON-safe surface keys round-trip as JSON
 - Added
   [t/697-capability-manifest-plan-report-surface-keys-json-roundtrip-audit.t](t/697-capability-manifest-plan-report-surface-keys-json-roundtrip-audit.t)

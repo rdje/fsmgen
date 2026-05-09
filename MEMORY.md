@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Manifest plan/report public key list round-trips as JSON
+- Added
+  [t/698-capability-manifest-plan-report-public-keys-json-roundtrip-audit.t](t/698-capability-manifest-plan-report-public-keys-json-roundtrip-audit.t)
+  to prove manifest-embedded `public_top_level_presence_keys` survive JSON
+  encode/decode and still match the decoded branch payload.
+- Focused validation passed:
+  `perl -Iperl -c t/698-capability-manifest-plan-report-public-keys-json-roundtrip-audit.t && prove -l t/698-capability-manifest-plan-report-public-keys-json-roundtrip-audit.t t/656-serializable-plan-report-contract-public-key-alignment-audit.t t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-09: Manifest JSON-safe surface keys round-trip as JSON
 - Added
   [t/697-capability-manifest-plan-report-surface-keys-json-roundtrip-audit.t](t/697-capability-manifest-plan-report-surface-keys-json-roundtrip-audit.t)

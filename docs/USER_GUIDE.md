@@ -1823,8 +1823,10 @@ primary report paths, with
 owners aligned to the nested source map, non-empty unique path lists, and fresh
 caller-owned containers that round-trip as JSON data. The capability manifest
 embeds the canonical registry, rebuilds it cleanly, and preserves it across
-manifest JSON encode/decode. Embedding nested presence metadata advertises the
-registry branch.
+manifest JSON encode/decode. Its manifest-embedded
+`public_top_level_presence_keys` list also survives JSON encode/decode and still
+matches the decoded `serializable_plan_reports` payload. Embedding nested
+presence metadata advertises the registry branch.
 Manifest-embedded registry owners stay aligned with the manifest-embedded nested
 source map, and manifest registry paths remain portable dotted report paths with
 the same scalar-owner/non-empty-unique-path invariants as the standalone registry.

@@ -501,11 +501,14 @@ aligned with the nested source map and a non-empty unique path list, and returns
 fresh caller-owned containers that round-trip as JSON data. The capability
 manifest embeds the canonical
 registry, rebuilds it cleanly after caller mutation, and preserves it across
-manifest JSON encode/decode. Embedding nested presence metadata advertises the
-registry branch for manifest consumers, and the manifest-embedded registry
-owners stay aligned with the manifest-embedded nested source map. Manifest
-registry paths remain portable dotted report paths, and manifest registry entries
-mirror the standalone registry's scalar-owner/non-empty-unique-path invariants.
+manifest JSON encode/decode. Its manifest-embedded
+`public_top_level_presence_keys` list also survives JSON encode/decode and still
+matches the decoded `serializable_plan_reports` payload. Embedding nested
+presence metadata advertises the registry branch for manifest consumers, and the
+manifest-embedded registry owners stay aligned with the manifest-embedded nested
+source map. Manifest registry paths remain portable dotted report paths, and
+manifest registry entries mirror the standalone registry's
+scalar-owner/non-empty-unique-path invariants.
 The parent contract also publishes `surface_registry_entry_keys` so tools can
 discover the per-surface entry shape directly, and the capability manifest
 embeds that same entry-key list alongside registry entries that match it.
