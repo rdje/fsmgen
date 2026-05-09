@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Parent registry entry keys rebuild cleanly
+- The standalone serializable plan/report contract now has focused
+  defensive-copy coverage for `surface_registry_entry_keys`. Mutating one built
+  contract's entry-key list must not affect the next build.
+- This keeps parent-side registry entry-shape discovery independently guarded,
+  matching the manifest-embedded branch without adding fields.
 ## 2026-05-10: Parent registry entry keys stay JSON-audited
 - The standalone serializable plan/report contract now has a focused JSON
   round-trip guard for `surface_registry_entry_keys`. Decoded entry-key

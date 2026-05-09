@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Parent registry entry keys rebuild cleanly
+- Added
+  [t/707-serializable-plan-report-surface-registry-entry-keys-defensive-copy-audit.t](t/707-serializable-plan-report-surface-registry-entry-keys-defensive-copy-audit.t)
+  to prove caller mutation of a built parent contract's
+  `surface_registry_entry_keys` list cannot pollute a freshly built standalone
+  serializable plan/report contract.
+- This mirrors the manifest-side registry-entry-key defensive-copy guard without
+  changing the current `R13` serializable report API.
+- Focused validation passed:
+  `perl -Iperl -c t/707-serializable-plan-report-surface-registry-entry-keys-defensive-copy-audit.t && prove -l t/707-serializable-plan-report-surface-registry-entry-keys-defensive-copy-audit.t t/679-capability-manifest-surface-registry-entry-keys-defensive-copy-audit.t t/645-serializable-plan-report-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Parent registry entry keys survive JSON
 - Added
   [t/706-serializable-plan-report-surface-registry-entry-keys-json-roundtrip-audit.t](t/706-serializable-plan-report-surface-registry-entry-keys-json-roundtrip-audit.t)
