@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Parent guidance rebuilds cleanly
+- Added
+  [t/713-serializable-plan-report-guidance-defensive-copy-audit.t](t/713-serializable-plan-report-guidance-defensive-copy-audit.t)
+  to prove caller mutation of a built parent contract's `guidance` list cannot
+  pollute the next standalone serializable plan/report contract.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions the defensive-copy guard for embedder guidance.
 ### Parent raw-shell replacement map rebuilds cleanly
 - Added
   [t/712-serializable-plan-report-raw-shell-replacement-map-defensive-copy-audit.t](t/712-serializable-plan-report-raw-shell-replacement-map-defensive-copy-audit.t)

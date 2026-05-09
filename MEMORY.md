@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Parent guidance rebuilds cleanly
+- Added
+  [t/713-serializable-plan-report-guidance-defensive-copy-audit.t](t/713-serializable-plan-report-guidance-defensive-copy-audit.t)
+  to prove caller mutation of a built parent contract's `guidance` list cannot
+  pollute a freshly built standalone serializable plan/report contract.
+- This gives the parent embedder-guidance list its own focused `R13`
+  defensive-copy guard without changing the serializable report API.
+- Focused validation passed:
+  `perl -Iperl -c t/713-serializable-plan-report-guidance-defensive-copy-audit.t && prove -l t/713-serializable-plan-report-guidance-defensive-copy-audit.t t/703-serializable-plan-report-guidance-json-roundtrip-audit.t t/645-serializable-plan-report-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Parent raw-shell replacement map rebuilds cleanly
 - Added
   [t/712-serializable-plan-report-raw-shell-replacement-map-defensive-copy-audit.t](t/712-serializable-plan-report-raw-shell-replacement-map-defensive-copy-audit.t)

@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Parent guidance rebuilds cleanly
+- The standalone serializable plan/report contract now has focused
+  defensive-copy coverage for `guidance`. Mutating one built contract's
+  embedder guidance list must not affect the next build.
+- This keeps the parent guidance surface independently guarded alongside its
+  JSON round-trip audit without adding fields.
 ## 2026-05-10: Parent raw-shell replacement map rebuilds cleanly
 - The standalone serializable plan/report contract now has focused
   defensive-copy coverage for `raw_shell_replacement_map`. Mutating one built
