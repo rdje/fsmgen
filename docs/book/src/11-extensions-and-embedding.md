@@ -536,7 +536,7 @@ contract JSON round-trip with their boolean shape intact. The capability manifes
 embeds those flags with the same boolean shape and values, and preserves them
 across manifest JSON encode/decode in the main manifest branch audit.
 The parent `guidance` list is also regression-checked as unique scalar guidance
-that keeps those embedder rules visible and survives JSON round-trip; the
+that keeps those embedder rules visible and survives JSON round-trip exactly; the
 capability manifest embeds the same structured guidance with JSON round-trip
 coverage.
 The parent contract also embeds normalized semantic and composition report public

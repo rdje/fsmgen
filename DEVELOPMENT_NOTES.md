@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Parent guidance survives exactly
+- Parent plan/report guidance is ordered embedder advice. The full-contract JSON
+  audit now checks exact list preservation so wording, ordering, and cardinality
+  do not drift silently through serialization.
 ## 2026-05-09: Manifest JSON-safety flags survive serialization
 - Manifest-embedded plan/report JSON-safety flags must remain JSON booleans
   through manifest encode/decode in the main branch audit. This keeps decoded

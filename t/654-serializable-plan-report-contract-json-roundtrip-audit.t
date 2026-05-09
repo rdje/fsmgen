@@ -108,6 +108,11 @@ subtest 'serializable plan/report contract remains plain data after JSON round t
         as_set($decoded->{raw_shell_replacement_keys}),
         'round-trip replacement map keys match decoded key list',
     );
+    is_deeply(
+        $decoded->{guidance},
+        $contract->{guidance},
+        'round-trip contract keeps exact guidance list',
+    );
     ok(ref($decoded->{guidance}) eq 'ARRAY', 'round-trip contract keeps guidance as an array');
     ok(@{$decoded->{guidance}} > 0, 'round-trip contract keeps non-empty guidance');
     is(

@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Parent guidance list round-trips exactly
+- Updated
+  [t/654-serializable-plan-report-contract-json-roundtrip-audit.t](t/654-serializable-plan-report-contract-json-roundtrip-audit.t)
+  to prove the parent-contract `guidance` list survives JSON encode/decode
+  exactly, not only as non-empty unique scalar advice.
+- Focused validation passed:
+  `perl -Iperl -c t/654-serializable-plan-report-contract-json-roundtrip-audit.t && prove -l t/654-serializable-plan-report-contract-json-roundtrip-audit.t t/688-serializable-plan-report-guidance-contract.t t/690-capability-manifest-plan-report-guidance-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-09: Manifest JSON-safety flags round-trip as booleans
 - Updated
   [t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t](t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t)
