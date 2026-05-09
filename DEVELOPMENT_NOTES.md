@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Stateful facade reuse returns fresh extension context snapshots
+- Typed extension contexts intentionally expose cloned `source_info` and
+  `raw_ast` snapshots while keeping `result()` live for result-hook augmentation.
+  Reusing a facade must create fresh snapshots for every generation.
+- The audit mutates parse and result context snapshots during one generation,
+  then proves a later generation's hooks still see the original source metadata
+  and parser root while result-hook mutation remains live.
 ## 2026-05-09: Stateful facade reuse returns fresh external package specs
 - External package imports are resolved through configured search paths, but the
   returned raw `FSM::Package::Spec` values still need to be per-generation

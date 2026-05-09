@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Stateful extension context snapshots are alias-audited
+- Added
+  [t/609-hdl-generator-stateful-extension-context-snapshot-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/609-hdl-generator-stateful-extension-context-snapshot-alias-boundary-audit.t)
+  to prove reusable `HDLGenerator` facade objects build fresh typed-extension
+  `source_info` and `raw_ast` context snapshots for each generation while
+  preserving `context->result` as the live result-hook augmentation surface.
+- This is `R13` runtime contract-integrity coverage only. No production code,
+  public manifest shape, generation behavior, or roadmap lane status changed.
 ### Stateful external resolved package specs are alias-audited
 - Added
   [t/608-hdl-generator-stateful-external-resolved-package-spec-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/608-hdl-generator-stateful-external-resolved-package-spec-alias-boundary-audit.t)
