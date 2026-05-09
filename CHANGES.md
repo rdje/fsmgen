@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Manifest plan/report identity metadata is explicit
+- Added
+  [t/695-capability-manifest-plan-report-identity-metadata.t](t/695-capability-manifest-plan-report-identity-metadata.t)
+  to prove the capability manifest embeds serializable plan/report schema
+  version, status, source owner, and non-empty purpose metadata.
 ### Plan/report identity metadata is explicit
 - Added
   [t/694-serializable-plan-report-identity-metadata-contract.t](t/694-serializable-plan-report-identity-metadata-contract.t)

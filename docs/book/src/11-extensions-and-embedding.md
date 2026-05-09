@@ -484,8 +484,9 @@ That direction now has a concrete manifest surface:
 [perl/FSM/Support/SerializablePlanReportContract.pm](perl/FSM/Support/SerializablePlanReportContract.pm)
 is advertised as `embedding.serializable_plan_reports`, with machine-readable
 identity metadata for schema version, bounded-public status, owner, and purpose.
-It lists the current JSON-safe report families and maps raw `HDLGenerator`
-compatibility shells to preferred serializable replacements. The parent contract
+The capability manifest embeds the same identity metadata. It lists the current
+JSON-safe report families and maps raw `HDLGenerator` compatibility shells to
+preferred serializable replacements. The parent contract
 publishes `raw_shell_replacement_keys` so tools can discover that compatibility
 branch family directly. The capability manifest embeds that same key list with a
 matching replacement map, rebuilds it cleanly per call, and preserves it across

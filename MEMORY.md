@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Manifest plan/report identity metadata is explicit
+- Added
+  [t/695-capability-manifest-plan-report-identity-metadata.t](t/695-capability-manifest-plan-report-identity-metadata.t)
+  to prove the capability manifest embeds serializable plan/report schema
+  version, status, source owner, and non-empty purpose metadata.
+- Focused validation passed:
+  `perl -Iperl -c t/695-capability-manifest-plan-report-identity-metadata.t && prove -l t/695-capability-manifest-plan-report-identity-metadata.t t/694-serializable-plan-report-identity-metadata-contract.t t/297-capability-manifest.t && mdbook build docs/book`.
 ## 2026-05-09: Plan/report identity metadata is explicit
 - Added
   [t/694-serializable-plan-report-identity-metadata-contract.t](t/694-serializable-plan-report-identity-metadata-contract.t)

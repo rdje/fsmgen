@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Manifest plan/report identity mirrors the parent contract
+- The capability manifest's serializable plan/report branch must expose the same
+  identity metadata as the parent contract: schema version, bounded-public
+  status, owner, and purpose. This keeps manifest discovery self-describing
+  before consumers inspect nested report families.
 ## 2026-05-09: Plan/report identity metadata is discovery data
 - The serializable plan/report parent identity fields are part of the public
   discovery surface: schema version, bounded-public status, owning source module,
