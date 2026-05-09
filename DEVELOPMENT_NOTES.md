@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Manifest registry entry keys are JSON discovery data
+- `surface_registry_entry_keys` is manifest metadata, not a Perl-only helper.
+  It must survive capability-manifest JSON encode/decode and continue to
+  describe the decoded `surface_registry` entries without requiring consumers to
+  consult in-process support modules.
 ## 2026-05-09: Manifest registry entry-key discovery is caller-owned
 - Manifest consumers may annotate or inspect `surface_registry_entry_keys` during
   discovery, but those mutations must remain caller-local. Fresh manifest builds

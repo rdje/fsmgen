@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Capability manifest registry entry keys round-trip as JSON
+- Added
+  [t/680-capability-manifest-surface-registry-entry-keys-json-roundtrip-audit.t](t/680-capability-manifest-surface-registry-entry-keys-json-roundtrip-audit.t)
+  to prove manifest-embedded `surface_registry_entry_keys` survive JSON
+  encode/decode and still describe every decoded registry entry.
 ### Capability manifest registry entry keys are copy-audited
 - Added
   [t/679-capability-manifest-surface-registry-entry-keys-defensive-copy-audit.t](t/679-capability-manifest-surface-registry-entry-keys-defensive-copy-audit.t)

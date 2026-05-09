@@ -504,12 +504,13 @@ maps, lists, and embedded child contracts, so discovery-time annotations do not
 pollute later manifest construction. The capability manifest builder also
 rebuilds the embedded `serializable_plan_reports` child, entry-key list, and its
 grouped presence-key map cleanly each time. The parent contract round-trips as
-JSON with nested contract owners, child contracts, and raw-shell replacement guidance
-intact, and the full capability manifest preserves that branch across JSON
-encode/decode. Its advertised public top-level key list is regression-locked to
-the keys the parent contract actually emits, and its nested source map is locked
-against the embedded child contracts it carries. The full capability manifest
-preserves that parent and child source-owner metadata when embedding the branch.
+JSON with nested contract owners, child contracts, and raw-shell replacement
+guidance intact, and the full capability manifest preserves that branch and its
+entry-key list across JSON encode/decode. Its advertised public top-level key
+list is regression-locked to the keys the parent contract actually emits, and
+its nested source map is locked against the embedded child contracts it carries.
+The full capability manifest preserves that parent and child source-owner
+metadata when embedding the branch.
 The first plan-oriented API behind that surface is
 [perl/FSM/Support/SerializableCompositionPlanSnapshot.pm](perl/FSM/Support/SerializableCompositionPlanSnapshot.pm):
 `build_serializable_composition_plan_snapshot(...)` emits a JSON-safe

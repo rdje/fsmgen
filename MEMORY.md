@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Manifest registry entry keys round-trip as JSON
+- Added
+  [t/680-capability-manifest-surface-registry-entry-keys-json-roundtrip-audit.t](t/680-capability-manifest-surface-registry-entry-keys-json-roundtrip-audit.t)
+  to prove manifest-embedded `surface_registry_entry_keys` survive JSON
+  encode/decode and still describe every decoded registry entry.
+- Focused validation passed:
+  `perl -Iperl -c t/680-capability-manifest-surface-registry-entry-keys-json-roundtrip-audit.t && prove -l t/680-capability-manifest-surface-registry-entry-keys-json-roundtrip-audit.t t/679-capability-manifest-surface-registry-entry-keys-defensive-copy-audit.t t/669-capability-manifest-surface-registry-json-roundtrip-audit.t t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-09: Manifest registry entry keys are copy-audited
 - Added
   [t/679-capability-manifest-surface-registry-entry-keys-defensive-copy-audit.t](t/679-capability-manifest-surface-registry-entry-keys-defensive-copy-audit.t)
