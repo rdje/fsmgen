@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Stateful facade reuse returns fresh composition package specs
+- Composition results expose raw package specs in both top-level
+  `resolved_package_imports` and `source_info.resolved_package_imports`. Reusing
+  a facade must rebuild both mirrors for each composition generation.
+- The audit mutates package names, enum payloads, and raw package AST metadata in
+  a first result, then proves a later generation on the same facade returns the
+  original package-spec mirrors.
 ## 2026-05-09: Composition resolved package-spec mirrors are object-independent
 - Composition results expose resolved imports at the top level and also under
   `source_info`. The maps had existing alias coverage; this audit verifies the

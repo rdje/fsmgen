@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Stateful composition resolved package specs are alias-audited
+- Added
+  [t/607-hdl-generator-stateful-composition-resolved-package-spec-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/607-hdl-generator-stateful-composition-resolved-package-spec-alias-boundary-audit.t)
+  to prove mutating one composition result's raw resolved package-spec mirrors
+  does not contaminate a later composition generation on the same reusable
+  `HDLGenerator` facade object.
+- This is `R13` runtime contract-integrity coverage only. No production code,
+  public manifest shape, generation behavior, or roadmap lane status changed.
 ### Composition resolved package-spec mirrors are alias-audited
 - Added
   [t/606-composition-generation-resolved-package-spec-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/606-composition-generation-resolved-package-spec-alias-boundary-audit.t)

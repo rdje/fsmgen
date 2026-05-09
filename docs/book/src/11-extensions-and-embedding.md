@@ -515,6 +515,9 @@ Composition results keep the top-level `resolved_package_imports` map and
 `source_info.resolved_package_imports` as independent mirrors down to the raw
 package-spec object graph, so annotating either mirror does not rewrite the
 other one.
+Reusable `HDLGenerator` facade objects also rebuild both composition
+package-spec mirrors for each generation, so caller mutation of one composition
+result's resolved package specs does not leak into the next composition result.
 The top-level `fsm_module` branch is shell-only too when it is defined: it is a
 raw `FSM::CoreAST::FSMModule` object kept for in-process compatibility, so
 structured downstream consumers should prefer `intent_hir`, `lowered_rtl_ir`,
