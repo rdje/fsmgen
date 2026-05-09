@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Parent composition child contract stays JSON-audited
+- The parent serializable plan/report contract now has a focused JSON
+  round-trip guard for its embedded `composition_plan_snapshot_contract`.
+  Decoded parent metadata must continue matching the canonical child contract
+  owner in `FSM::Support::SerializableCompositionPlanSnapshot`.
+- This keeps the parent contract's advertised child-report surface tied to the
+  child owner without adding fields.
 ## 2026-05-10: Parent guidance rebuilds cleanly
 - The standalone serializable plan/report contract now has focused
   defensive-copy coverage for `guidance`. Mutating one built contract's

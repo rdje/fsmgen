@@ -47,7 +47,9 @@ defensive-copy guard proves caller mutation of the parent public-key list does
 not pollute the next built contract, and the JSON-safe surface list has the same
 focused mutation guard. The parent surface-to-owner map is also defensively
 rebuilt, so callers cannot mutate one decoded contract into the next. The same
-branch carries embedder
+parent branch embeds the composition-plan snapshot child contract, and that
+embedded child contract is JSON-round-trip audited against its canonical owner.
+The branch also carries embedder
 guidance that is audited to keep directing consumers toward those JSON-safe
 reports rather than raw in-process `HDLGenerator` branches; its list is also
 defensively rebuilt after caller mutation. The JSON-safety flags are audited as

@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Parent composition child contract survives JSON
+- Added
+  [t/714-serializable-plan-report-composition-child-contract-json-roundtrip-audit.t](t/714-serializable-plan-report-composition-child-contract-json-roundtrip-audit.t)
+  to prove the parent serializable plan/report contract's decoded
+  `composition_plan_snapshot_contract` still equals the canonical child
+  contract and preserves identity metadata after JSON round trip.
+- This keeps the parent advertised composition snapshot child tied to
+  [perl/FSM/Support/SerializableCompositionPlanSnapshot.pm](perl/FSM/Support/SerializableCompositionPlanSnapshot.pm)
+  without changing the serializable report API.
+- Focused validation passed:
+  `perl -Iperl -c t/714-serializable-plan-report-composition-child-contract-json-roundtrip-audit.t && prove -l t/714-serializable-plan-report-composition-child-contract-json-roundtrip-audit.t t/651-serializable-composition-plan-snapshot-json-roundtrip-audit.t t/654-serializable-plan-report-contract-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Parent guidance rebuilds cleanly
 - Added
   [t/713-serializable-plan-report-guidance-defensive-copy-audit.t](t/713-serializable-plan-report-guidance-defensive-copy-audit.t)
