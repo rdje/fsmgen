@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### HDLGenerator result identity survives JSON
+- Added
+  [t/720-hdl-generator-result-contract-identity-json-roundtrip-audit.t](t/720-hdl-generator-result-contract-identity-json-roundtrip-audit.t)
+  to prove the bounded `HDLGenerator` result contract's decoded identity
+  metadata keeps schema version, bounded status, canonical owner, entrypoint,
+  and primary test reference.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions the result-contract JSON identity guard.
 ### Parent diagnostic child contract rebuilds cleanly
 - Added
   [t/719-serializable-plan-report-diagnostic-child-contract-defensive-copy-audit.t](t/719-serializable-plan-report-diagnostic-child-contract-defensive-copy-audit.t)

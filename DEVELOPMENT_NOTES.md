@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator result identity stays JSON-audited
+- The bounded `HDLGenerator` result contract now has focused JSON round-trip
+  coverage for identity metadata: schema version, bounded status, canonical
+  owner, entrypoint, and primary test reference.
+- This begins the same parent-contract JSON audit style for
+  `FSM::Support::HDLGeneratorResultContract` without adding fields.
 ## 2026-05-10: Parent diagnostic child contract rebuilds cleanly
 - The parent serializable plan/report contract now has focused defensive-copy
   coverage for its embedded `diagnostic_summary_contract`. Mutating one built

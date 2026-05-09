@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: HDLGenerator result identity survives JSON
+- Added
+  [t/720-hdl-generator-result-contract-identity-json-roundtrip-audit.t](t/720-hdl-generator-result-contract-identity-json-roundtrip-audit.t)
+  to prove the bounded `HDLGenerator` result contract's decoded identity
+  metadata keeps schema version, bounded status, canonical owner, entrypoint,
+  and primary test reference after JSON round trip.
+- This starts a focused `R13` JSON audit lane for
+  [perl/FSM/Support/HDLGeneratorResultContract.pm](perl/FSM/Support/HDLGeneratorResultContract.pm)
+  without changing the result contract API.
+- Focused validation passed:
+  `perl -Iperl -c t/720-hdl-generator-result-contract-identity-json-roundtrip-audit.t && prove -l t/720-hdl-generator-result-contract-identity-json-roundtrip-audit.t t/305-hdl-generator-result-contract.t t/438-hdl-generator-result-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Parent diagnostic child contract rebuilds cleanly
 - Added
   [t/719-serializable-plan-report-diagnostic-child-contract-defensive-copy-audit.t](t/719-serializable-plan-report-diagnostic-child-contract-defensive-copy-audit.t)
