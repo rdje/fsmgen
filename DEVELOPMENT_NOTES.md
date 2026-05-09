@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Parent surface key list rebuilds cleanly
+- The standalone serializable plan/report contract now has focused
+  defensive-copy coverage for `json_safe_surface_keys`. Mutating one built
+  contract's JSON-safe surface discovery list must not affect the next build.
+- This keeps the parent report-surface discovery contract independently guarded
+  without adding fields.
 ## 2026-05-10: Parent public key list rebuilds cleanly
 - The standalone serializable plan/report contract now has focused
   defensive-copy coverage for `public_top_level_presence_keys`. Mutating one

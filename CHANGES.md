@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Parent surface key list rebuilds cleanly
+- Added
+  [t/710-serializable-plan-report-surface-keys-defensive-copy-audit.t](t/710-serializable-plan-report-surface-keys-defensive-copy-audit.t)
+  to prove caller mutation of a built parent contract's
+  `json_safe_surface_keys` list cannot pollute the next standalone
+  serializable plan/report contract.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions the defensive-copy guard for parent JSON-safe
+  surface discovery.
 ### Parent public key list rebuilds cleanly
 - Added
   [t/709-serializable-plan-report-public-keys-defensive-copy-audit.t](t/709-serializable-plan-report-public-keys-defensive-copy-audit.t)

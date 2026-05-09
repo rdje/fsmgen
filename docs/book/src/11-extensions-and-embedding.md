@@ -44,7 +44,8 @@ metadata, discover the advertised portable report surfaces they decoded, and
 check the public key lists for the bounded shell itself and for the normalized
 semantic and composition provenance reports those surfaces point at. A matching
 defensive-copy guard proves caller mutation of the parent public-key list does
-not pollute the next built contract. The same branch carries embedder
+not pollute the next built contract, and the JSON-safe surface list has the same
+focused mutation guard. The same branch carries embedder
 guidance that is audited to keep directing consumers toward those JSON-safe
 reports rather than raw in-process `HDLGenerator` branches, and its JSON-safety
 flags are audited as decoded JSON booleans with that same safe/raw split. The
