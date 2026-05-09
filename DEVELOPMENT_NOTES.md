@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Plan/report identity survives serialization
+- Parent serializable plan/report identity metadata must remain available after
+  JSON encode/decode. Serialized contracts should still be self-describing before
+  consumers inspect detailed report metadata or helper-owned key families.
 ## 2026-05-09: Manifest plan/report identity survives serialization
 - Manifest-embedded serializable plan/report identity metadata must remain
   available after capability-manifest JSON encode/decode. Decoded manifests

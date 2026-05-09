@@ -28,10 +28,21 @@ subtest 'serializable plan/report contract remains plain data after JSON round t
     my $decoded = decode_json(encode_json($contract));
 
     ok(!contains_blessed($decoded), 'decoded contract contains no unexpected blessed values');
+    is($decoded->{schema_version}, 1, 'round-trip contract keeps schema version 1');
+    is($decoded->{status}, 'bounded_public', 'round-trip contract keeps bounded_public status');
     is(
         $decoded->{contract_source},
         'FSM::Support::SerializablePlanReportContract',
         'round-trip contract keeps contract source',
+    );
+    ok(
+        defined($decoded->{purpose}) && !ref($decoded->{purpose}) && length($decoded->{purpose}),
+        'round-trip contract keeps non-empty scalar purpose',
+    );
+    like(
+        $decoded->{purpose},
+        qr/JSON-safe plan\/report surfaces/,
+        'round-trip purpose describes JSON-safe plan/report surfaces',
     );
     is_deeply(
         $decoded->{nested_contract_source_map},

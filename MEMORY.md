@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Plan/report identity metadata round-trips as JSON
+- Updated
+  [t/654-serializable-plan-report-contract-json-roundtrip-audit.t](t/654-serializable-plan-report-contract-json-roundtrip-audit.t)
+  to prove parent-contract identity metadata survives JSON encode/decode with
+  schema version, status, source owner, and purpose intact.
+- Focused validation passed:
+  `perl -Iperl -c t/654-serializable-plan-report-contract-json-roundtrip-audit.t && prove -l t/654-serializable-plan-report-contract-json-roundtrip-audit.t t/694-serializable-plan-report-identity-metadata-contract.t && mdbook build docs/book`.
 ## 2026-05-09: Manifest plan/report identity metadata round-trips as JSON
 - Added
   [t/696-capability-manifest-plan-report-identity-metadata-json-roundtrip-audit.t](t/696-capability-manifest-plan-report-identity-metadata-json-roundtrip-audit.t)

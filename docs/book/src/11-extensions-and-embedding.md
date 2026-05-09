@@ -485,13 +485,13 @@ That direction now has a concrete manifest surface:
 is advertised as `embedding.serializable_plan_reports`, with machine-readable
 identity metadata for schema version, bounded-public status, owner, and purpose.
 The capability manifest embeds the same identity metadata and preserves it
-across manifest JSON encode/decode. It lists the current JSON-safe report
-families and maps raw `HDLGenerator` compatibility shells to preferred
-serializable replacements. The parent contract
-publishes `raw_shell_replacement_keys` so tools can discover that compatibility
-branch family directly. The capability manifest embeds that same key list with a
-matching replacement map, rebuilds it cleanly per call, and preserves it across
-manifest JSON encode/decode. Its
+across manifest JSON encode/decode. That parent identity metadata also survives
+contract JSON round-trip. It lists the current JSON-safe report families and maps
+raw `HDLGenerator` compatibility shells to preferred serializable replacements.
+The parent contract publishes `raw_shell_replacement_keys` so tools can discover
+that compatibility branch family directly. The capability manifest embeds that
+same key list with a matching replacement map, rebuilds it cleanly per call, and
+preserves it across manifest JSON encode/decode. Its
 `surface_registry` maps each serializable surface to its contract owner and
 portable dotted primary report paths. Each registry entry has a scalar owner
 aligned with the nested source map and a non-empty unique path list, and returns
