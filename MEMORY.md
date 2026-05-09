@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Raw shell replacement keys round-trip as JSON
+- Updated
+  [t/654-serializable-plan-report-contract-json-roundtrip-audit.t](t/654-serializable-plan-report-contract-json-roundtrip-audit.t)
+  to prove parent-contract `raw_shell_replacement_keys` survive JSON
+  encode/decode and still describe the decoded replacement map.
+- Focused validation passed:
+  `perl -Iperl -c t/654-serializable-plan-report-contract-json-roundtrip-audit.t && prove -l t/654-serializable-plan-report-contract-json-roundtrip-audit.t t/681-serializable-plan-report-raw-shell-replacement-keys-contract.t && mdbook build docs/book`.
 ## 2026-05-09: Raw shell replacement keys are copy-audited
 - Updated
   [t/645-serializable-plan-report-contract-defensive-copy-boundary-audit.t](t/645-serializable-plan-report-contract-defensive-copy-boundary-audit.t)

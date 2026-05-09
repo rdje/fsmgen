@@ -13,6 +13,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Support::SerializablePlanReportContract qw(
     build_serializable_plan_report_contract
     serializable_plan_report_nested_contract_source_map
+    serializable_plan_report_raw_shell_replacement_keys
     serializable_plan_report_raw_shell_replacement_map
 );
 
@@ -36,6 +37,16 @@ subtest 'serializable plan/report contract remains plain data after JSON round t
         $decoded->{raw_shell_replacement_map},
         serializable_plan_report_raw_shell_replacement_map(),
         'round-trip contract keeps raw-shell replacement map',
+    );
+    is_deeply(
+        $decoded->{raw_shell_replacement_keys},
+        serializable_plan_report_raw_shell_replacement_keys(),
+        'round-trip contract keeps raw-shell replacement key list',
+    );
+    is_deeply(
+        as_set([keys %{$decoded->{raw_shell_replacement_map}}]),
+        as_set($decoded->{raw_shell_replacement_keys}),
+        'round-trip replacement map keys match decoded key list',
     );
     is(
         $decoded->{composition_plan_snapshot_contract}{object_name},
@@ -73,4 +84,9 @@ sub contains_blessed {
     }
 
     return 0;
+}
+
+sub as_set {
+    my ($values) = @_;
+    return {map { $_ => 1 } @{$values || []}};
 }

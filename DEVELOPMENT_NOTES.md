@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Parent raw shell replacement keys are JSON discovery data
+- Parent-contract `raw_shell_replacement_keys` must survive JSON encode/decode
+  and continue to describe the decoded `raw_shell_replacement_map`. That keeps
+  replacement-key discovery usable from serialized contract data, not just from
+  in-process helper calls.
 ## 2026-05-09: Parent raw shell replacement key discovery is caller-owned
 - The parent `embedding.serializable_plan_reports` contract rebuilds
   `raw_shell_replacement_keys` as caller-owned metadata. Mutating the advertised

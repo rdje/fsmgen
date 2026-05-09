@@ -1829,7 +1829,8 @@ The parent contract returns fresh
 nested maps, lists, raw replacement-key lists, and embedded child contracts, and
 the capability manifest rebuilds that embedded child and entry-key list cleanly
 per call. The contract
-also round-trips as JSON with child contracts and replacement guidance intact,
+also round-trips as JSON with child contracts, replacement keys, and replacement
+guidance intact,
 and the full capability manifest preserves that branch and its entry-key list
 across JSON encode/decode. Its advertised public top-level key list is locked to
 the keys the parent contract
