@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Stateful semantic IR results are alias-audited
+- Added
+  [t/599-hdl-generator-stateful-semantic-ir-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/599-hdl-generator-stateful-semantic-ir-alias-boundary-audit.t)
+  to prove mutating one generation result's top-level `intent_hir`,
+  `lowered_rtl_ir`, or `structural_rtl_ir` maps does not contaminate a later
+  generation on the same reusable `HDLGenerator` facade object.
+- This is `R13` runtime contract-integrity coverage only. No production code,
+  public manifest shape, generation behavior, or roadmap lane status changed.
 ### Stateful source_info results are alias-audited
 - Added
   [t/598-hdl-generator-stateful-source-info-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/598-hdl-generator-stateful-source-info-alias-boundary-audit.t)

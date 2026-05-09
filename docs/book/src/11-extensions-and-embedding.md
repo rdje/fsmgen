@@ -626,6 +626,10 @@ must treat them as separate mutable projections. Mutating
 `result->{intent_hir}`, `result->{lowered_rtl_ir}`, or
 `result->{structural_rtl_ir}` must not rewrite the same-result `module_info`
 mirror, and mutating the mirror must not rewrite the top-level projection.
+Reusable `HDLGenerator` facade objects also return fresh top-level semantic IR
+maps per generation, so caller mutation of one result's `intent_hir`,
+`lowered_rtl_ir`, or `structural_rtl_ir` does not leak into a later result
+produced by the same facade object.
 The whole raw result hash is now runtime-audited as non-JSON-safe too:
 [t/378-hdl-generator-result-json-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/378-hdl-generator-result-json-boundary-audit.t)
 checks real direct and composition `HDLGenerator` results against strict JSON
