@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Parent composition child contract rebuilds cleanly
+- The parent serializable plan/report contract now has focused defensive-copy
+  coverage for its embedded `composition_plan_snapshot_contract`. Mutating one
+  built parent contract's child metadata must not affect the next build.
+- This keeps the embedded composition child contract independently guarded
+  alongside its JSON round-trip audit without adding fields.
 ## 2026-05-10: Parent diagnostic child contract stays JSON-audited
 - The parent serializable plan/report contract now has a focused JSON
   round-trip guard for its embedded `diagnostic_summary_contract`. Decoded

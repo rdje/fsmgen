@@ -48,7 +48,8 @@ not pollute the next built contract, and the JSON-safe surface list has the same
 focused mutation guard. The parent surface-to-owner map is also defensively
 rebuilt, so callers cannot mutate one decoded contract into the next. The same
 parent branch embeds the composition-plan snapshot child contract, and that
-embedded child contract is JSON-round-trip audited against its canonical owner.
+embedded child contract is JSON-round-trip audited against its canonical owner
+and defensively rebuilt after caller mutation.
 The generation-result snapshot child contract is audited the same way, keeping
 both child-report contracts tied to their owners after serialization. The
 diagnostic-summary child contract now has the same parent JSON round-trip guard.
