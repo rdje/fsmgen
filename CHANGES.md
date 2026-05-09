@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Serializable generation result snapshots are advertised
+- Added
+  [perl/FSM/Support/SerializableGenerationResultSnapshot.pm](perl/FSM/Support/SerializableGenerationResultSnapshot.pm)
+  as a JSON-safe `HDLGenerator` result snapshot surface for embedders.
+- `embedding.serializable_plan_reports` now advertises
+  `generation_result_snapshot` as the preferred bounded replacement for treating
+  the raw `HDLGenerator` result hash as a JSON API.
+- Added
+  [t/632-serializable-generation-result-snapshot.t](t/632-serializable-generation-result-snapshot.t)
+  to prove direct and composition snapshots encode as JSON while exposing only
+  stable scalar summaries and raw-shell presence/class metadata.
 ### Semantic JSON embeds composition plan snapshots
 - Successful normalized semantic JSON reports for composition roots now include
   `semantic.composition.plan_snapshot`, built by

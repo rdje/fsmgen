@@ -20,6 +20,9 @@ use FSM::Support::NormalizedSemanticReportContract qw(normalized_semantic_report
 use FSM::Support::SerializableCompositionPlanSnapshot qw(
     serializable_composition_plan_snapshot_contract_source
 );
+use FSM::Support::SerializableGenerationResultSnapshot qw(
+    serializable_generation_result_snapshot_contract_source
+);
 use FSM::Support::SerializablePlanReportContract qw(
     build_serializable_plan_report_contract
     serializable_plan_report_contract_source
@@ -63,6 +66,11 @@ subtest 'serializable plan/report contract advertises JSON-safe surface families
         $contract->{nested_contract_source_map}{composition_plan_snapshot},
         serializable_composition_plan_snapshot_contract_source(),
         'composition plan snapshot is the serializable plan snapshot contract',
+    );
+    is(
+        $contract->{nested_contract_source_map}{generation_result_snapshot},
+        serializable_generation_result_snapshot_contract_source(),
+        'generation result snapshot is the serializable report snapshot contract',
     );
     is(
         $contract->{nested_contract_source_map}{composition_provenance_report},

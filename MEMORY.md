@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Serializable generation result snapshots are advertised
+- Added [perl/FSM/Support/SerializableGenerationResultSnapshot.pm](perl/FSM/Support/SerializableGenerationResultSnapshot.pm)
+  and advertised `generation_result_snapshot` through
+  `embedding.serializable_plan_reports`.
+- This gives embedders a JSON-safe result summary without exposing raw
+  `HDLGenerator` result branches as a public JSON surface.
+- Focused validation passed:
+  `prove -l t/632-serializable-generation-result-snapshot.t t/629-serializable-plan-report-contract.t t/630-serializable-composition-plan-snapshot.t t/631-normalized-semantic-composition-plan-snapshot.t t/321-embedding-contract.t t/297-capability-manifest.t`.
 ## 2026-05-09: Semantic JSON embeds composition plan snapshots
 - Successful normalized semantic JSON reports for composition roots now include
   `semantic.composition.plan_snapshot`.

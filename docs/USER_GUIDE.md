@@ -1814,6 +1814,11 @@ summaries for ports, links, nets, instances, auxiliary assignments, and
 shared-datapath candidates without exporting the raw `FSM::Composition::Plan`
 object graph. Successful normalized semantic JSON reports for composition roots
 now embed that public snapshot at `semantic.composition.plan_snapshot`.
+The same manifest child also advertises
+[perl/FSM/Support/SerializableGenerationResultSnapshot.pm](perl/FSM/Support/SerializableGenerationResultSnapshot.pm)
+as `generation_result_snapshot`, a JSON-safe result summary that records stable
+module/source/HDL-size facts plus raw-shell presence metadata without exporting
+the raw `HDLGenerator` result hash as a public JSON API.
 The sibling facade and debug-runtime child contracts also have direct
 self-description guards:
 [t/375-hdl-generator-facade-contract.t](t/375-hdl-generator-facade-contract.t)

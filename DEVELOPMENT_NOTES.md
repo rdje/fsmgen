@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Generation result snapshots summarize raw results safely
+- [perl/FSM/Support/SerializableGenerationResultSnapshot.pm](perl/FSM/Support/SerializableGenerationResultSnapshot.pm)
+  provides a JSON-safe summary of an `HDLGenerator` result without exporting the
+  raw result hash as a public interchange payload.
+- The snapshot records top-level key presence, module/source/HDL-size summaries,
+  stable summary branch presence, semantic-layer presence, and raw-shell
+  presence/class metadata. This gives embedders a bounded report surface while
+  raw AST/CoreAST/package/composition objects stay in-process details.
 ## 2026-05-09: Semantic JSON carries the plan snapshot
 - `semantic.composition.plan_snapshot` is now the public JSON report path for
   the bounded composition plan snapshot. This keeps the in-process builder and

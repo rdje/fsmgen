@@ -635,6 +635,9 @@ Current direction:
   composition plans.
 - Public report path: successful normalized semantic JSON reports now embed that
   snapshot at `semantic.composition.plan_snapshot` for composition roots.
+- Second report API: [perl/FSM/Support/SerializableGenerationResultSnapshot.pm](perl/FSM/Support/SerializableGenerationResultSnapshot.pm)
+  now provides a JSON-safe `generation_result_snapshot` summary for raw
+  `HDLGenerator` results.
 
 Expected result:
 - the project becomes a stronger platform for downstream tooling, not just a CLI.

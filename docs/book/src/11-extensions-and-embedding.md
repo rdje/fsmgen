@@ -494,6 +494,12 @@ and shared-datapath candidates without exposing the raw
 `FSM::Composition::Plan` object graph. Successful normalized semantic JSON
 reports for composition roots now embed that same snapshot at
 `semantic.composition.plan_snapshot`.
+The manifest surface also advertises
+[perl/FSM/Support/SerializableGenerationResultSnapshot.pm](perl/FSM/Support/SerializableGenerationResultSnapshot.pm)
+as `generation_result_snapshot`, a JSON-safe summary of raw `HDLGenerator`
+results that records stable module/source/HDL-size facts, semantic-layer
+presence, and raw-shell presence/class metadata without turning the raw result
+hash into a public JSON API.
 Tracked documentation and book links use paths relative to the repository root;
 machine-local absolute filesystem paths are not part of the public embedding
 surface.
