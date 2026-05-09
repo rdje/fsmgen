@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: R13 serializable plan/report API direction is recorded
+- User explicitly chose the `R13` direction that surfaces should become more
+  explicit serializable plan/report APIs.
+- Updated [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md)
+  and [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  so future slices treat JSON-safe, bounded snapshots/reports as the preferred
+  direction for new embedder-facing work, while raw `HDLGenerator` branches
+  remain in-process compatibility shells.
+- Focused validation: `mdbook build docs/book` passed.
 ## 2026-05-09: Stateful standalone dt intent_hir results are alias-audited
 - Added
   [t/628-hdl-generator-stateful-standalone-dt-intent-hir-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/628-hdl-generator-stateful-standalone-dt-intent-hir-alias-boundary-audit.t)

@@ -474,6 +474,13 @@ my $result = FSM::Pipeline::HDLGenerator->new(
 )->generate_hdl_from_file('path/to/file.fsm');
 ```
 
+`R13` now treats explicit serializable plan/report APIs as the preferred
+direction for new embedder-facing surfaces. The raw `HDLGenerator` result
+branches remain useful in-process compatibility shells, but downstream tooling
+should not have to traverse raw objects such as `composition_spec`,
+`composition_plan`, `fsm_module`, `raw_ast`, or `resolved_package_imports` to
+build stable machine-readable integrations.
+
 The bounded contract stabilizes top-level key presence for fields such as
 `hdl_code`, `module_info`, `intent_hir`, `lowered_rtl_ir`,
 `structural_rtl_ir`, `source_info`, and `resolved_package_imports`. It also

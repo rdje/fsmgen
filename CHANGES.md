@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### R13 serializable plan/report API direction is recorded
+- Updated [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md)
+  and the embedding book chapter to make explicit serializable plan/report APIs
+  the chosen `R13` direction for new embedder-facing surfaces.
+- Raw `HDLGenerator` result branches remain in-process compatibility shells, but
+  new downstream-tooling work should prefer bounded JSON-safe snapshots/reports
+  that can be versioned and regression-locked independently.
 ### Stateful standalone dt intent_hir results are alias-audited
 - Added
   [t/628-hdl-generator-stateful-standalone-dt-intent-hir-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/628-hdl-generator-stateful-standalone-dt-intent-hir-alias-boundary-audit.t)

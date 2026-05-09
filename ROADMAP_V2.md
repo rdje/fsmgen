@@ -617,7 +617,16 @@ Goal:
 Deliverable themes:
 - stabilize the `HDLGenerator` result contract,
 - document the typed extension/context contract at an embedding level,
-- and consider a more explicit serializable plan/report boundary where useful.
+- and grow explicit serializable plan/report APIs instead of leaving downstream
+  tooling to traverse raw in-process compatibility shells.
+
+Current direction:
+- The serializable plan/report boundary is now an affirmative `R13` direction,
+  not an optional maybe. Raw branches such as `composition_spec`,
+  `composition_plan`, `fsm_module`, `raw_ast`, `resolved_package_imports`, and
+  `composition_report` remain in-process compatibility shells, while new
+  embedder-facing work should prefer bounded JSON-safe snapshots/reports that
+  can be versioned, regression-locked, and documented independently.
 
 Expected result:
 - the project becomes a stronger platform for downstream tooling, not just a CLI.

@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: R13 chooses explicit serializable plan/report APIs
+- `R13` should now move from only hardening raw in-process result branches toward
+  explicit serializable plan/report APIs for downstream tooling.
+- The compatibility rule remains: raw `HDLGenerator` branches can continue to
+  exist for in-process callers, but new embedder-facing work should expose
+  bounded JSON-safe snapshots/reports that are separately versioned,
+  documented, and regression-locked.
 ## 2026-05-09: Stateful facade reuse returns fresh standalone dt intent_hir
 - Standalone `?dt` `intent_hir` exposes the authored data-transform intent
   summary. Reusing a facade must rebuild the semantic shell per generation.
