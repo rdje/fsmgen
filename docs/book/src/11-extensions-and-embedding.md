@@ -555,9 +555,13 @@ follow the same honesty rule: they reuse the dedicated normalized-semantic
 shell owners and their advertised shell keys, but the `HDLGenerator` result
 contract does not treat those top-level hashes as separately stabilized full
 trees beyond those shell boundaries.
-Direct and composition generation now both have alias-boundary audits proving
-those top-level semantic IR hashes are caller-owned result projections, not
-shared mutable trees with their same-result `module_info` mirrors.
+Direct and composition generation both expose those semantic IR payloads twice:
+as convenient top-level result branches and as compatibility mirrors under
+`module_info`. Those locations should compare equal at return time, but callers
+must treat them as separate mutable projections. Mutating
+`result->{intent_hir}`, `result->{lowered_rtl_ir}`, or
+`result->{structural_rtl_ir}` must not rewrite the same-result `module_info`
+mirror, and mutating the mirror must not rewrite the top-level projection.
 The whole raw result hash is now runtime-audited as non-JSON-safe too:
 [t/378-hdl-generator-result-json-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/378-hdl-generator-result-json-boundary-audit.t)
 checks real direct and composition `HDLGenerator` results against strict JSON
@@ -583,6 +587,12 @@ a serializable public JSON surface, so embedders should follow
 [perl/FSM/Support/CompositionReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CompositionReportContract.pm)
 and the sanitized
 `semantic.composition.provenance_report` fragment for downstream interchange.
+Composition generation also mirrors provenance into
+`module_info.composition_provenance` and `statistics.composition_provenance`.
+Those three branches should compare equal at return time, but they are separate
+result containers: caller-side annotation of raw `composition_report` must not
+rewrite `module_info` or `statistics`, and annotation of either mirror must not
+rewrite the raw report or the other mirror.
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded composition-report summary, collection,
 count-map, example-map, and ordered-list families from one place instead of

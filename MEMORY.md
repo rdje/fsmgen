@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Composition generation provenance report mirrors are alias-audited
+- Added
+  [t/580-composition-generation-provenance-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/580-composition-generation-provenance-alias-boundary-audit.t)
+  to prove composition-generation provenance payloads are separate mutable
+  containers across top-level `composition_report`,
+  `module_info.composition_provenance`, and
+  `statistics.composition_provenance` while remaining initially equivalent.
+- Focused validation:
+  `perl -Iperl -c t/580-composition-generation-provenance-alias-boundary-audit.t && prove -lv t/553-composition-result-metadata-provenance-defensive-copy-boundary-audit.t t/580-composition-generation-provenance-alias-boundary-audit.t t/305-hdl-generator-result-contract.t t/378-hdl-generator-result-json-boundary-audit.t && mdbook build docs/book`
+  passed. This is `R13` runtime contract-integrity coverage only; no production
+  code, public manifest shape, user-facing generation behavior, or roadmap lane
+  status changed.
 ## 2026-05-09: Composition generation semantic IR result projections are alias-audited
 - Added
   [t/579-composition-generation-semantic-ir-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/579-composition-generation-semantic-ir-alias-boundary-audit.t)

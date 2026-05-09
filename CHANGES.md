@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Composition generation provenance report mirrors are alias-audited
+- Added
+  [t/580-composition-generation-provenance-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/580-composition-generation-provenance-alias-boundary-audit.t)
+  to prove returned composition-generation provenance payloads remain separate
+  mutable containers across `composition_report`,
+  `module_info.composition_provenance`, and
+  `statistics.composition_provenance`.
+- This is `R13` runtime contract-integrity coverage only. No production code,
+  public manifest shape, generation behavior, or roadmap lane status changed.
 ### Composition generation semantic IR result projections are alias-audited
 - Added
   [t/579-composition-generation-semantic-ir-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/579-composition-generation-semantic-ir-alias-boundary-audit.t)

@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Composition provenance mirrors must stay equivalent without aliasing
+- Composition generation exposes the raw `composition_report` compatibility
+  branch and also mirrors that provenance under `module_info` and `statistics`
+  for older in-process consumers. Those three result locations should start
+  equivalent, but result-local annotation of one location must not rewrite the
+  other two.
+- `ResultMetadataBuilder` already cloned provenance inputs for the individual
+  metadata builders. The new integration audit locks the full
+  `HDLGenerator` composition result boundary so the top-level report and both
+  mirrors stay separate mutable containers without widening the public JSON
+  contract for raw provenance.
 ## 2026-05-09: Composition result semantic IR mirrors must stay equivalent without aliasing
 - Composition generation intentionally exposes semantic IR payloads twice:
   top-level `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` branches for
