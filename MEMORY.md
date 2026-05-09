@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Parent plan/report public keys survive JSON
+- Added
+  [t/699-serializable-plan-report-public-keys-json-roundtrip-audit.t](t/699-serializable-plan-report-public-keys-json-roundtrip-audit.t)
+  to lock the standalone serializable plan/report contract's decoded
+  `public_top_level_presence_keys` against both the canonical helper and the
+  decoded contract shell after JSON round trip.
+- This mirrors the manifest-side public-key JSON guard while keeping the
+  current `R13` public report API shape unchanged.
+- Focused validation passed:
+  `perl -Iperl -c t/699-serializable-plan-report-public-keys-json-roundtrip-audit.t && prove -l t/699-serializable-plan-report-public-keys-json-roundtrip-audit.t t/698-capability-manifest-plan-report-public-keys-json-roundtrip-audit.t t/654-serializable-plan-report-contract-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Bootstrap import-tree snapshot refreshed
 - Completed the README/COMMIT/bootstrap documentation pass and rechecked
   [bin/fsmgen](bin/fsmgen) plus the project-owned transitive `FSM::...` import

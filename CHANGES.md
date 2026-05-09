@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Parent plan/report public keys survive JSON
+- Added
+  [t/699-serializable-plan-report-public-keys-json-roundtrip-audit.t](t/699-serializable-plan-report-public-keys-json-roundtrip-audit.t)
+  to prove the standalone serializable plan/report contract's decoded
+  `public_top_level_presence_keys` still match the canonical helper and the
+  decoded contract shell after JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book points embedders at the public-key discovery guard.
 ### Bootstrap import-tree snapshot refreshed
 - Rechecked [bin/fsmgen](bin/fsmgen) and its project-owned transitive
   `FSM::...` import closure during the mandatory session bootstrap.

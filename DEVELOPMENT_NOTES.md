@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Parent public-key metadata stays JSON-audited
+- The standalone serializable plan/report contract now has the same focused
+  public-key JSON guard shape as the manifest-embedded branch. The invariant is
+  intentionally narrow: after JSON round trip, `public_top_level_presence_keys`
+  must still equal the canonical helper and the decoded contract's actual
+  top-level key set.
+- This is an `R13` guard-only slice. It does not add new public fields; it makes
+  the existing discovery list harder to drift from the emitted parent shell.
 ## 2026-05-10: Bootstrap import-tree measurement
 - The bootstrap source-reading lane should continue treating
   [bin/fsmgen](bin/fsmgen) as a CLI/reporting shell around
