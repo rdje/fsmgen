@@ -1838,8 +1838,10 @@ source map, and manifest registry paths remain portable dotted report paths with
 the same scalar-owner/non-empty-unique-path invariants as the standalone registry.
 The parent contract publishes `surface_registry_entry_keys` for direct discovery
 of the per-surface entry shape, preserves that unique list across contract JSON
-round-trip, and the capability manifest embeds that same entry-key list alongside
-registry entries that match it, including in the main manifest branch audit.
+round-trip, and checks decoded registry entries against it in the main parent
+round-trip audit. The capability manifest embeds that same entry-key list
+alongside registry entries that match it, including in the main manifest branch
+audit.
 The parent contract returns fresh
 nested maps, lists, raw replacement-key lists, and embedded child contracts, and
 the capability manifest rebuilds that embedded child and entry-key list cleanly

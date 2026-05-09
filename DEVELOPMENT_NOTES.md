@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Parent registry entry shape is in the main audit
+- The parent JSON audit now checks decoded `surface_registry_entry_keys` against
+  every decoded registry entry. Direct contract consumers can validate entry
+  shape from the serialized payload itself.
 ## 2026-05-09: Manifest registry entry shape is in the main audit
 - The main manifest branch JSON audit now checks decoded
   `surface_registry_entry_keys` against every decoded registry entry. Manifest

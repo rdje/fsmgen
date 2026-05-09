@@ -515,7 +515,8 @@ manifest registry entries mirror the standalone registry's
 scalar-owner/non-empty-unique-path invariants.
 The parent contract also publishes `surface_registry_entry_keys` so tools can
 discover the per-surface entry shape directly, preserves that unique list across
-contract JSON round-trip, and the capability manifest embeds that same entry-key
+contract JSON round-trip, and checks decoded registry entries against it in the
+main parent round-trip audit. The capability manifest embeds that same entry-key
 list alongside registry entries that match it, including in the main manifest
 branch audit.
 That parent

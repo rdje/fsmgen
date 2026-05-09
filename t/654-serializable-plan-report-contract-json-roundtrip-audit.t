@@ -93,6 +93,13 @@ subtest 'serializable plan/report contract remains plain data after JSON round t
         serializable_plan_report_surface_registry(),
         'round-trip contract keeps surface registry',
     );
+    for my $surface (sort keys %{$decoded->{surface_registry}}) {
+        is_deeply(
+            as_set([keys %{$decoded->{surface_registry}{$surface}}]),
+            as_set($decoded->{surface_registry_entry_keys}),
+            "$surface round-trip registry entry keys match decoded shape",
+        );
+    }
     is_deeply(
         as_set([keys %{$decoded->{surface_registry}}]),
         as_set($decoded->{json_safe_surface_keys}),
