@@ -599,6 +599,10 @@ The nested `statistics` object now also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorStatisticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorStatisticsContract.pm),
 which is the contract to follow for the direct-root scalar summary keys and
 the composition-only scalar summary keys.
+Reusable `HDLGenerator` facade objects return fresh `statistics` containers per
+generation, so caller mutation of one result's scalar statistics or nested raw
+backend maps does not leak into a later result produced by the same facade
+object.
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded summary and composition-only statistics
 key families from one place instead of collecting those key lists
