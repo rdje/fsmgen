@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Public reports must preserve embedded snapshot owners
+- Normalized semantic JSON and check JSON must embed serializable snapshot/summary
+  branches with `contract_source` and `report_source` metadata matching the
+  standalone builders.
 ## 2026-05-09: Manifest serializable plan/report source metadata must persist
 - The capability manifest's `embedding.serializable_plan_reports` branch must
   preserve the parent contract owner and every child contract owner when

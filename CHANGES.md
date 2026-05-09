@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Public report embedded snapshot source ownership is audited
+- Added
+  [t/663-public-report-embedded-snapshot-source-ownership-audit.t](t/663-public-report-embedded-snapshot-source-ownership-audit.t)
+  to prove normalized semantic JSON and check JSON embed snapshot/summary
+  branches with the same `contract_source` and `report_source` owners as the
+  standalone serializable builders.
+- This is `R13` public-report source-ownership coverage only; no public JSON
+  shape changed.
 ### Capability manifest serializable plan/report source ownership is audited
 - Added
   [t/662-capability-manifest-serializable-plan-report-source-ownership-audit.t](t/662-capability-manifest-serializable-plan-report-source-ownership-audit.t)

@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Public report embedded snapshot source ownership is audited
+- Added
+  [t/663-public-report-embedded-snapshot-source-ownership-audit.t](t/663-public-report-embedded-snapshot-source-ownership-audit.t)
+  to prove semantic/check JSON embed snapshot branches with the same owners as
+  the standalone serializable builders.
+- Focused validation passed:
+  `prove -l t/663-public-report-embedded-snapshot-source-ownership-audit.t t/652-normalized-semantic-snapshots-json-roundtrip-audit.t t/653-check-json-diagnostic-summary-json-roundtrip-audit.t t/660-serializable-child-report-source-ownership-audit.t`.
 ## 2026-05-09: Capability manifest serializable plan/report source ownership is audited
 - Added
   [t/662-capability-manifest-serializable-plan-report-source-ownership-audit.t](t/662-capability-manifest-serializable-plan-report-source-ownership-audit.t)
