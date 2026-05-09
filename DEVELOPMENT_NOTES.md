@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Manifest guidance survives exactly
+- Manifest-embedded plan/report guidance should preserve exact ordering and
+  wording through JSON encode/decode in the main branch audit, matching the
+  parent guidance contract rather than only proving non-empty scalar shape.
 ## 2026-05-09: Parent guidance survives exactly
 - Parent plan/report guidance is ordered embedder advice. The full-contract JSON
   audit now checks exact list preservation so wording, ordering, and cardinality

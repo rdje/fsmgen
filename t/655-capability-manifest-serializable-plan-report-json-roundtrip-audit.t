@@ -50,6 +50,11 @@ subtest 'capability manifest serializable_plan_reports branch survives JSON roun
         serializable_plan_report_raw_shell_replacement_map(),
         'round-trip manifest keeps raw-shell replacement map',
     );
+    is_deeply(
+        $branch->{guidance},
+        $manifest->{embedding}{serializable_plan_reports}{guidance},
+        'round-trip manifest keeps exact guidance list',
+    );
     is(
         $branch->{composition_plan_snapshot_contract}{object_name},
         'composition_plan_snapshot',
