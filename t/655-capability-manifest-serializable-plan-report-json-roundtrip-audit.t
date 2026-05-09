@@ -65,6 +65,16 @@ subtest 'capability manifest serializable_plan_reports branch survives JSON roun
         'diagnostic_summary',
         'round-trip manifest keeps diagnostic summary child contract',
     );
+    ok(
+        is_json_boolean($branch->{current_serializable_surfaces_json_safe}),
+        'round-trip manifest keeps current surface JSON-safe flag as JSON boolean',
+    );
+    ok(
+        is_json_boolean($branch->{raw_hdl_generator_branches_json_safe}),
+        'round-trip manifest keeps raw HDLGenerator JSON-safe flag as JSON boolean',
+    );
+    ok($branch->{current_serializable_surfaces_json_safe}, 'round-trip manifest keeps current surfaces JSON-safe');
+    ok(!$branch->{raw_hdl_generator_branches_json_safe}, 'round-trip manifest keeps raw HDLGenerator branches non-JSON-safe');
 };
 
 done_testing();
@@ -91,4 +101,9 @@ sub contains_blessed {
     }
 
     return 0;
+}
+
+sub is_json_boolean {
+    my ($value) = @_;
+    return defined(blessed($value)) && blessed($value) eq 'JSON::PP::Boolean';
 }

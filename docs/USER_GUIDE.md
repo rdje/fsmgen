@@ -1854,7 +1854,7 @@ current serializable report surfaces are marked safe, while raw `HDLGenerator`
 branches are marked non-safe interchange payloads, and those flags survive
 contract JSON round-trip with their boolean shape intact. The capability manifest
 embeds those flags with the same boolean shape and values, and preserves them
-across manifest JSON encode/decode.
+across manifest JSON encode/decode in the main manifest branch audit.
 The parent `guidance` list is also regression-checked as unique scalar guidance
 that keeps those embedder rules visible and survives JSON round-trip; the
 capability manifest embeds the same structured guidance with JSON round-trip
