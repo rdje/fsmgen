@@ -1817,7 +1817,8 @@ Manifest-embedded registry owners stay aligned with the manifest-embedded nested
 source map, and manifest registry paths remain portable dotted report paths with
 the same scalar-owner/non-empty-unique-path invariants as the standalone registry.
 The parent contract publishes `surface_registry_entry_keys` for direct discovery
-of the per-surface entry shape.
+of the per-surface entry shape, and the capability manifest embeds that same
+entry-key list alongside registry entries that match it.
 The parent contract returns fresh
 nested maps, lists, and embedded child contracts, and the capability manifest
 rebuilds that embedded child cleanly per call. The contract also round-trips as

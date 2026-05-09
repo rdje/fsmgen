@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Capability manifest registry entry keys are explicit
+- Added
+  [t/678-capability-manifest-surface-registry-entry-contract.t](t/678-capability-manifest-surface-registry-entry-contract.t)
+  to prove the capability manifest embeds the canonical
+  `surface_registry_entry_keys` list and that every manifest-embedded registry
+  entry matches that advertised shape.
+- Focused validation passed:
+  `perl -Iperl -c t/678-capability-manifest-surface-registry-entry-contract.t && prove -l t/678-capability-manifest-surface-registry-entry-contract.t t/677-serializable-plan-report-surface-registry-entry-contract.t t/667-capability-manifest-serializable-plan-report-surface-registry-audit.t t/676-capability-manifest-surface-registry-structure-audit.t && mdbook build docs/book`.
 ## 2026-05-09: Serializable plan/report registry entry keys are explicit
 - Added `surface_registry_entry_keys` to `embedding.serializable_plan_reports`
   and exported `serializable_plan_report_surface_registry_entry_keys()`.

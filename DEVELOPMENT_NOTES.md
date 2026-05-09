@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Manifest registry entry keys mirror the parent contract
+- The capability manifest embeds `embedding.serializable_plan_reports` as the
+  public discovery branch, so its embedded `surface_registry_entry_keys` list
+  must stay canonical rather than requiring manifest consumers to infer the
+  entry shape from current registry entries.
 ## 2026-05-09: Surface registry entry keys are explicit
 - `embedding.serializable_plan_reports.surface_registry_entry_keys` advertises
   the stable shape of each registry entry. Each entry must expose only

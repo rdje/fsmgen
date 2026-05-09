@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Capability manifest registry entry keys are explicit
+- Added
+  [t/678-capability-manifest-surface-registry-entry-contract.t](t/678-capability-manifest-surface-registry-entry-contract.t)
+  to prove the capability manifest embeds canonical
+  `surface_registry_entry_keys` and that every manifest-embedded registry entry
+  uses exactly that advertised shape.
 ### Serializable plan/report registry entry keys are explicit
 - Added `surface_registry_entry_keys` to the parent
   `embedding.serializable_plan_reports` contract and exported

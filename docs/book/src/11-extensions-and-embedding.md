@@ -496,7 +496,8 @@ owners stay aligned with the manifest-embedded nested source map. Manifest
 registry paths remain portable dotted report paths, and manifest registry entries
 mirror the standalone registry's scalar-owner/non-empty-unique-path invariants.
 The parent contract also publishes `surface_registry_entry_keys` so tools can
-discover the per-surface entry shape directly.
+discover the per-surface entry shape directly, and the capability manifest
+embeds that same entry-key list alongside registry entries that match it.
 That parent
 contract returns fresh nested
 maps, lists, and embedded child contracts, so discovery-time annotations do not
