@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Composition plan snapshot JSON round-trip surface is audited
+- Added
+  [t/651-serializable-composition-plan-snapshot-json-roundtrip-audit.t](t/651-serializable-composition-plan-snapshot-json-roundtrip-audit.t)
+  to prove serializable composition plan snapshots encode/decode as JSON while
+  preserving plan summaries and child collections.
+- Focused validation passed:
+  `prove -l t/651-serializable-composition-plan-snapshot-json-roundtrip-audit.t t/630-serializable-composition-plan-snapshot.t t/643-serializable-composition-plan-snapshot-defensive-copy-boundary-audit.t`.
 ## 2026-05-09: Generation result snapshot JSON round-trip surface is audited
 - Added
   [t/650-serializable-generation-result-snapshot-json-roundtrip-audit.t](t/650-serializable-generation-result-snapshot-json-roundtrip-audit.t)

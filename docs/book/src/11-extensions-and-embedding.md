@@ -501,7 +501,8 @@ reports for composition roots now embed that same snapshot at
 reports return fresh caller-owned containers, so local annotations of port,
 instance, or link summaries do not pollute later snapshot construction;
 normalized semantic reports also rebuild the embedded composition plan snapshot
-per report.
+per report. Composition plan snapshots are JSON round-trip locked for plan
+summaries, child instance names, port collections, and resolved links.
 The manifest surface also advertises
 [perl/FSM/Support/SerializableGenerationResultSnapshot.pm](perl/FSM/Support/SerializableGenerationResultSnapshot.pm)
 as `generation_result_snapshot`, a JSON-safe summary of raw `HDLGenerator`

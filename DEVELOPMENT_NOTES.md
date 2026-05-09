@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Composition plan snapshots round-trip as JSON data
+- Serializable composition plan snapshots must survive JSON encode/decode while
+  preserving top-level plan facts, count summaries, child instance names, port
+  collections, and resolved links.
 ## 2026-05-09: Generation result snapshots round-trip as JSON data
 - Serializable generation result snapshots must survive JSON encode/decode while
   preserving bounded module/source facts, HDL size metadata, top-level key lists,

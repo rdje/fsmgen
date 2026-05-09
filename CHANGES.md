@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Composition plan snapshot JSON round-trip surface is audited
+- Added
+  [t/651-serializable-composition-plan-snapshot-json-roundtrip-audit.t](t/651-serializable-composition-plan-snapshot-json-roundtrip-audit.t)
+  to prove serializable composition plan snapshots encode/decode as JSON while
+  preserving top-level summaries, child instance names, port collections, and
+  resolved links.
+- This is `R13` JSON-safety coverage only; no public JSON shape changed.
 ### Generation result snapshot JSON round-trip surface is audited
 - Added
   [t/650-serializable-generation-result-snapshot-json-roundtrip-audit.t](t/650-serializable-generation-result-snapshot-json-roundtrip-audit.t)
