@@ -550,6 +550,10 @@ The nested `source_info` object now also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorSourceInfoContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorSourceInfoContract.pm),
 which is the contract to follow for `header`, `kind`,
 `package_import_count`, and `package_import_names`.
+For direct package imports, `source_info.package_import_names` is also audited
+against the raw `fsm_module.attributes.package_imports` compatibility branch:
+the two arrays preserve the same authored import order without sharing mutable
+containers.
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded identity and summary source-info key
 families from one place instead of collecting those key lists separately.

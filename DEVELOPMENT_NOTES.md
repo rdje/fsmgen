@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Direct package-import summaries do not alias raw module attributes
+- Direct generation returns both the bounded `source_info.package_import_names`
+  summary and the raw shell-only `fsm_module.attributes.package_imports`
+  compatibility branch. They should preserve the same authored import order but
+  stay independently mutable.
+- The audit mutates each branch separately and proves the other branch remains
+  unchanged, keeping the stable `source_info` summary insulated from raw
+  compatibility object edits.
 ## 2026-05-09: Direct module_info lowered summaries mirror lowered RTL IR without aliasing it
 - Direct-generation `module_info` keeps lowered compatibility summaries such as
   `output_drive_families` and `standalone_dt_multi_drive_targets` alongside the
