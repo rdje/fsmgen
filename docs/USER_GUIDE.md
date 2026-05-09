@@ -1845,8 +1845,9 @@ the capability manifest rebuilds that embedded child and entry-key list cleanly
 per call. The contract
 also round-trips as JSON with child contracts, exact composition snapshot child
 metadata, replacement keys, and replacement guidance intact,
-and the full capability manifest preserves that branch and its entry-key list
-across JSON encode/decode. Its advertised public top-level key list is locked to
+and the full capability manifest preserves that branch, its exact composition
+snapshot child metadata, and its entry-key list across JSON encode/decode. Its
+advertised public top-level key list is locked to
 the keys the parent contract emits, and its nested source map is locked against
 the embedded child contracts.
 The JSON-safety flags in that parent contract are explicit JSON booleans:

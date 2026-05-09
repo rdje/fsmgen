@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Manifest composition child contract survives exactly
+- The manifest JSON audit now checks exact preservation of the embedded
+  composition plan snapshot child contract. This keeps manifest consumers aligned
+  with the same child metadata direct contract consumers receive.
 ## 2026-05-09: Parent composition child contract survives exactly
 - The parent plan/report contract embeds the full composition plan snapshot
   child contract. Full-contract JSON round-trip coverage now checks that child

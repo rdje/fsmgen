@@ -55,6 +55,11 @@ subtest 'capability manifest serializable_plan_reports branch survives JSON roun
         $manifest->{embedding}{serializable_plan_reports}{guidance},
         'round-trip manifest keeps exact guidance list',
     );
+    is_deeply(
+        $branch->{composition_plan_snapshot_contract},
+        $manifest->{embedding}{serializable_plan_reports}{composition_plan_snapshot_contract},
+        'round-trip manifest keeps exact composition child contract',
+    );
     is(
         $branch->{composition_plan_snapshot_contract}{object_name},
         'composition_plan_snapshot',
