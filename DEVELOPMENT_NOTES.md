@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Surface registry paths are logical and portable
+- `surface_registry.primary_report_paths` entries must remain dotted logical
+  report paths. They must not become absolute filesystem paths or machine-local
+  workspace paths.
 ## 2026-05-09: Embedding discovery advertises the surface registry
 - `embedding.nested_presence_key_map.serializable_plan_reports` must include
   `surface_registry`, so manifest consumers can discover the registry through the

@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Serializable plan/report surface registry paths are portable
+- Added
+  [t/671-serializable-plan-report-surface-registry-path-portability-audit.t](t/671-serializable-plan-report-surface-registry-path-portability-audit.t)
+  to prove registry `primary_report_paths` stay dotted logical paths, not
+  machine-local absolute filesystem paths.
+- This directly reinforces the live-doc/book relative-path rule for the explicit
+  `R13` registry surface.
 ### Embedding contract advertises the surface registry branch
 - Added
   [t/670-embedding-contract-surface-registry-presence-audit.t](t/670-embedding-contract-surface-registry-presence-audit.t)
