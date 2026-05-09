@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Stateful direct intent_hir results are alias-audited
+- Added
+  [t/622-hdl-generator-stateful-direct-intent-hir-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/622-hdl-generator-stateful-direct-intent-hir-alias-boundary-audit.t)
+  to prove mutating one direct-generation result's `intent_hir` shell does not
+  contaminate a later generation on the same reusable `HDLGenerator` facade
+  object.
+- This is `R13` runtime contract-integrity coverage only. No production code,
+  public manifest shape, generation behavior, or roadmap lane status changed.
 ### Stateful standalone dt statistics results are alias-audited
 - Added
   [t/621-hdl-generator-stateful-standalone-dt-statistics-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/621-hdl-generator-stateful-standalone-dt-statistics-alias-boundary-audit.t)

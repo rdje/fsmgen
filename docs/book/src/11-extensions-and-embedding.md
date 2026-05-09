@@ -673,6 +673,8 @@ Reusable `HDLGenerator` facade objects also return fresh top-level semantic IR
 maps per generation, so caller mutation of one result's `intent_hir`,
 `lowered_rtl_ir`, or `structural_rtl_ir` does not leak into a later result
 produced by the same facade object.
+The direct-generation `intent_hir` shell is explicitly audited under that
+stateful facade-reuse rule.
 The whole raw result hash is now runtime-audited as non-JSON-safe too:
 [t/378-hdl-generator-result-json-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/378-hdl-generator-result-json-boundary-audit.t)
 checks real direct and composition `HDLGenerator` results against strict JSON
