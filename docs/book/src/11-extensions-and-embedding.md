@@ -524,8 +524,9 @@ capability manifest builder also rebuilds the embedded
 `serializable_plan_reports` child, entry-key list, and its
 grouped presence-key map cleanly each time. The parent contract round-trips as
 JSON with nested contract owners, child contracts, exact composition snapshot
-child metadata, exact generation snapshot child metadata, raw-shell replacement
-keys, and raw-shell replacement guidance intact, and the full capability
+child metadata, exact generation snapshot child metadata, exact diagnostic
+summary child metadata, raw-shell replacement keys, and raw-shell replacement
+guidance intact, and the full capability
 manifest preserves that branch, its exact
 composition snapshot child metadata, exact generation snapshot child metadata,
 and its entry-key list across JSON encode/decode. Its
