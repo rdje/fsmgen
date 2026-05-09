@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator shell fallback family map stays JSON-audited
+- The bounded `HDLGenerator` result contract now has focused JSON round-trip
+  coverage for `shell_only_fallback_surface_family_map`. Decoded grouped
+  entries must stay aligned with scalar fallback-family fields for shell-only
+  branches.
+- This keeps narrower raw-branch fallback-family discovery guarded without
+  adding fields.
 ## 2026-05-10: HDLGenerator shell fallback map stays JSON-audited
 - The bounded `HDLGenerator` result contract now has focused JSON round-trip
   coverage for `shell_only_fallback_surface_map`. Decoded grouped entries must

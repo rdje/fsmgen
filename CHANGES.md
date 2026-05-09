@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### HDLGenerator shell fallback family map survives JSON
+- Added
+  [t/727-hdl-generator-result-contract-shell-fallback-family-json-roundtrip-audit.t](t/727-hdl-generator-result-contract-shell-fallback-family-json-roundtrip-audit.t)
+  to prove the bounded `HDLGenerator` result contract's decoded
+  `shell_only_fallback_surface_family_map` survives JSON round trip and remains
+  aligned with scalar fallback-family fields for shell-only branches.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions shell-only fallback-family JSON coverage.
 ### HDLGenerator shell fallback map survives JSON
 - Added
   [t/726-hdl-generator-result-contract-shell-fallback-map-json-roundtrip-audit.t](t/726-hdl-generator-result-contract-shell-fallback-map-json-roundtrip-audit.t)

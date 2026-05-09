@@ -86,7 +86,8 @@ aligned with the scalar fields it summarizes. The optional composition
 key-family map is guarded the same way for composition-only discovery, and the
 semantic-layer presence family map now has the same JSON round-trip coverage.
 The shell-only fallback surface map is also JSON-audited so raw compatibility
-branches keep pointing at their advertised structured replacements.
+branches keep pointing at their advertised structured replacements, and the
+narrower fallback-family map is guarded the same way.
 
 ## Current Philosophy
 

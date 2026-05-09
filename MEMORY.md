@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: HDLGenerator shell fallback family map survives JSON
+- Added
+  [t/727-hdl-generator-result-contract-shell-fallback-family-json-roundtrip-audit.t](t/727-hdl-generator-result-contract-shell-fallback-family-json-roundtrip-audit.t)
+  to prove the bounded `HDLGenerator` result contract's decoded
+  `shell_only_fallback_surface_family_map` survives JSON round trip and remains
+  aligned with scalar fallback-family fields for shell-only branches.
+- This keeps grouped shell-only fallback-family discovery auditable without
+  changing the result contract API.
+- Focused validation passed:
+  `perl -Iperl -c t/727-hdl-generator-result-contract-shell-fallback-family-json-roundtrip-audit.t && prove -l t/727-hdl-generator-result-contract-shell-fallback-family-json-roundtrip-audit.t t/305-hdl-generator-result-contract.t t/438-hdl-generator-result-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: HDLGenerator shell fallback map survives JSON
 - Added
   [t/726-hdl-generator-result-contract-shell-fallback-map-json-roundtrip-audit.t](t/726-hdl-generator-result-contract-shell-fallback-map-json-roundtrip-audit.t)
