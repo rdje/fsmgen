@@ -617,6 +617,8 @@ generation, so caller mutation of one result's module summary does not leak into
 a later result produced by the same facade object.
 That reuse rule covers composition `module_info` too, including top-level module
 summaries, signal analysis, and child summary containers.
+Standalone `?dt` `module_info` follows the same facade-reuse ownership rule for
+module and signal summaries.
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded identity, summary, and composition-only
 module-info key families from one place instead of collecting those key lists

@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Stateful facade reuse returns fresh standalone dt module_info
+- Standalone `?dt` `module_info` exposes the root module summary and signal
+  summaries used by embedders. Reusing a facade must rebuild those containers
+  just as it does for direct `?fsm` and composition roots.
+- The audit mutates `module_name`, nested `signal_analysis`, and `signal_names`
+  in a first `?dt` result, then proves the next generation returns the authored
+  summary.
 ## 2026-05-09: Stateful facade reuse returns fresh standalone dt result containers
 - Standalone `?dt` generation returns the same top-level `HDLGenerator` result
   shape as other source roots. Reusing a facade must rebuild that result hash per
