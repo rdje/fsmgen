@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Stateful composition module_info results are alias-audited
+- Added
+  [t/614-hdl-generator-stateful-composition-module-info-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/614-hdl-generator-stateful-composition-module-info-alias-boundary-audit.t)
+  to prove mutating one composition-generation result's `module_info` summary
+  containers does not contaminate a later generation on the same reusable
+  `HDLGenerator` facade object.
+- Focused validation:
+  `perl -Iperl -c t/614-hdl-generator-stateful-composition-module-info-alias-boundary-audit.t && prove -lv t/581-composition-generation-module-info-forward-ir-alias-boundary-audit.t t/614-hdl-generator-stateful-composition-module-info-alias-boundary-audit.t && mdbook build docs/book`
+  passed. This is `R13` runtime contract-integrity coverage only; no production
+  code, public manifest shape, user-facing generation behavior, or roadmap lane
+  status changed.
 ## 2026-05-09: Stateful composition result containers are alias-audited
 - Added
   [t/613-hdl-generator-stateful-composition-result-container-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/613-hdl-generator-stateful-composition-result-container-alias-boundary-audit.t)

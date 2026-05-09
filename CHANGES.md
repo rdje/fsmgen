@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Stateful composition module_info results are alias-audited
+- Added
+  [t/614-hdl-generator-stateful-composition-module-info-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/614-hdl-generator-stateful-composition-module-info-alias-boundary-audit.t)
+  to prove mutating one composition-generation result's `module_info` summary
+  containers does not contaminate a later generation on the same reusable
+  `HDLGenerator` facade object.
+- This is `R13` runtime contract-integrity coverage only. No production code,
+  public manifest shape, generation behavior, or roadmap lane status changed.
 ### Stateful composition result containers are alias-audited
 - Added
   [t/613-hdl-generator-stateful-composition-result-container-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/613-hdl-generator-stateful-composition-result-container-alias-boundary-audit.t)

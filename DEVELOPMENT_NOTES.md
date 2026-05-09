@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Stateful facade reuse returns fresh composition module_info
+- Composition `module_info` contains nested summaries for the top module,
+  signal analysis, and realized/generated child summaries. Reusing a facade must
+  rebuild those containers for each generation.
+- The audit mutates `module_name`, `signal_analysis`, and
+  `composition_children` in a first composition result, then proves the next
+  generation returns the original summary data.
 ## 2026-05-09: Stateful facade reuse returns fresh composition result containers
 - Composition result hashes are also per-generation containers. Caller mutation
   of top-level `hdl_code`, added ad hoc keys, or removal of composition-only
