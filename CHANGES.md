@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Normalized semantic embedded snapshots JSON round-trip surface is audited
+- Added
+  [t/652-normalized-semantic-snapshots-json-roundtrip-audit.t](t/652-normalized-semantic-snapshots-json-roundtrip-audit.t)
+  to prove actual normalized semantic JSON reports round-trip with embedded
+  `generation_result_snapshot`, `semantic.composition.plan_snapshot`, and
+  `diagnostic_summary` data intact.
+- This is `R13` public-report JSON-safety coverage only; no public JSON shape
+  changed.
 ### Composition plan snapshot JSON round-trip surface is audited
 - Added
   [t/651-serializable-composition-plan-snapshot-json-roundtrip-audit.t](t/651-serializable-composition-plan-snapshot-json-roundtrip-audit.t)

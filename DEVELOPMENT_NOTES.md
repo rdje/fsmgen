@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Semantic reports round-trip with embedded snapshots
+- Actual normalized semantic JSON reports must survive JSON encode/decode with
+  `generation_result_snapshot`, `semantic.composition.plan_snapshot`, and
+  `diagnostic_summary` data intact.
 ## 2026-05-09: Composition plan snapshots round-trip as JSON data
 - Serializable composition plan snapshots must survive JSON encode/decode while
   preserving top-level plan facts, count summaries, child instance names, port

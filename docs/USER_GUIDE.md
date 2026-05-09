@@ -1829,7 +1829,8 @@ semantic JSON reports now expose that snapshot as top-level
 are caller-owned fresh containers rebuilt for each semantic report, and the
 snapshot is JSON round-trip locked for bounded summaries and raw-shell metadata.
 Semantic report top-level key presence is runtime-locked across success and
-failure outputs. Failed
+failure outputs, and actual semantic JSON reports round-trip with embedded
+snapshot data intact. Failed
 semantic JSON reports omit these success
 snapshots, including composition `plan_snapshot`, and continue to expose only
 the bounded failure diagnostics/reporting surface.

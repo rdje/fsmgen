@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Normalized semantic embedded snapshots JSON round-trip surface is audited
+- Added
+  [t/652-normalized-semantic-snapshots-json-roundtrip-audit.t](t/652-normalized-semantic-snapshots-json-roundtrip-audit.t)
+  to prove actual normalized semantic JSON reports round-trip with embedded
+  generation, composition, and diagnostic snapshot data intact.
+- Focused validation passed:
+  `prove -l t/652-normalized-semantic-snapshots-json-roundtrip-audit.t t/647-normalized-semantic-snapshot-presence-runtime-contract-audit.t t/633-normalized-semantic-generation-result-snapshot.t t/631-normalized-semantic-composition-plan-snapshot.t`.
 ## 2026-05-09: Composition plan snapshot JSON round-trip surface is audited
 - Added
   [t/651-serializable-composition-plan-snapshot-json-roundtrip-audit.t](t/651-serializable-composition-plan-snapshot-json-roundtrip-audit.t)

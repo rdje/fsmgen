@@ -517,7 +517,9 @@ snapshot construction; normalized semantic reports also rebuild the embedded
 round-trip locked for bounded module/source facts, HDL size metadata, key lists,
 and raw-shell metadata. Semantic report top-level key presence
 is runtime-locked so success reports include the advertised success-only snapshot
-branches and failure reports omit them. Failed semantic
+branches and failure reports omit them. Actual semantic JSON reports are also
+round-trip locked with embedded generation, composition, and diagnostic snapshot
+data intact. Failed semantic
 JSON reports deliberately omit both `generation_result_snapshot` and semantic
 composition `plan_snapshot`, preserving the existing success-only boundary for
 generated semantics.
