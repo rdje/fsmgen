@@ -572,6 +572,10 @@ to their embedded `intent_hir` mirrors without sharing mutable containers.
 The same rule applies to lowered summary projections such as
 `internal_net_names` and `instance_names`: they start equivalent to the embedded
 `lowered_rtl_ir` mirrors without sharing mutable containers.
+Direct-generation lowered summaries such as `output_drive_families` and
+`standalone_dt_multi_drive_targets` are audited the same way: initially
+equivalent to their embedded `lowered_rtl_ir` mirrors, independently mutable
+after return.
 The nested `statistics` object now also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorStatisticsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorStatisticsContract.pm),
 which is the contract to follow for the direct-root scalar summary keys and

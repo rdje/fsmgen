@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Direct module_info lowered summaries mirror lowered RTL IR without aliasing it
+- Direct-generation `module_info` keeps lowered compatibility summaries such as
+  `output_drive_families` and `standalone_dt_multi_drive_targets` alongside the
+  embedded `lowered_rtl_ir` payload. They should compare equal at return time
+  without sharing mutable array/hash containers.
+- The new audit proves mutation of the summary branch and mutation of the
+  embedded lowered mirror stay isolated, matching the composition lowered-mirror
+  ownership rule.
 ## 2026-05-09: Direct module_info forward summaries mirror intent HIR without aliasing it
 - Direct-generation `module_info` keeps compatibility summary fields such as
   `signal_analysis` and `signal_names` alongside the embedded `intent_hir`
