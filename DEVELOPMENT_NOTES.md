@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Composition package-import summaries do not alias raw composition specs
+- Composition generation exposes package imports through both the bounded
+  `source_info.package_import_names` summary and the shell-only
+  `composition_spec->top->package_imports` object graph. These arrays should
+  match in authored order but remain independently mutable.
+- The audit mutates the stable summary and the raw composition-spec branch in
+  separate results and proves neither mutation crosses to the other branch.
 ## 2026-05-09: Standalone DT package-import summaries match direct-root ownership
 - Standalone `?dt` generation follows the same package-import summary ownership
   rule as `?fsm` roots: the bounded `source_info.package_import_names` array and

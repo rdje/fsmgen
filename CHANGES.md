@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Composition package-import summaries are alias-audited
+- Added
+  [t/593-composition-generation-package-import-summary-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/593-composition-generation-package-import-summary-alias-boundary-audit.t)
+  to prove composition-generation `source_info.package_import_names` stays
+  equivalent to raw `composition_spec->top->package_imports` without sharing the
+  same mutable array.
+- This is `R13` runtime contract-integrity coverage only. No production code,
+  public manifest shape, generation behavior, or roadmap lane status changed.
 ### Standalone DT package-import summaries are alias-audited
 - Added
   [t/592-standalone-dt-package-import-summary-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/592-standalone-dt-package-import-summary-alias-boundary-audit.t)
