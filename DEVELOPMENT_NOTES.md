@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Manifest plan/report guidance mirrors the parent contract
+- The capability manifest embeds the serializable plan/report `guidance` list as
+  structured scalar metadata, not as unbounded prose. Manifest consumers should
+  see the same JSON-safe-surface preference and raw-shell warning that direct
+  contract callers see.
 ## 2026-05-09: Plan/report guidance is machine-checkable embedder metadata
 - The parent serializable plan/report `guidance` branch is intentionally a
   structured list of unique scalar strings. It must keep both halves of the
