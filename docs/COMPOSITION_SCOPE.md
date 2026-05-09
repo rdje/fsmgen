@@ -131,6 +131,7 @@ The currently shipped composition behavior is intentionally bounded:
 - composition generation results now also expose a user-facing provenance summary:
   - `FSM::Pipeline::HDLGenerator->generate_hdl_from_file(...)` returns `composition_report` for composition sources,
   - that report summarizes top-port and resolved-link provenance by `origin_kind`,
+  - `module_info.composition_provenance` and `statistics.composition_provenance` mirror the same provenance report for compatibility and statistics consumers, but those result branches are separate mutable containers rather than aliases of the raw `composition_report`,
   - it also summarizes the first shipped local override events, such as explicit top links overriding same-name convention and explicit top outputs re-exporting inferred internal carriers, and now keeps one concise example subject per override kind,
   - and it now summarizes the first shipped “blocked” convention cases too, such as explicit child links blocking undeclared top-interface inference and inferred internal carriers staying internal by default, and now keeps one concise example subject per block kind,
   - and the first bounded failure-path wording slice is now shipped too, so plain explicit top-port same-name convention failures now say when that convention is blocked rather than only implying it,

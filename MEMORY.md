@@ -7,6 +7,11 @@ This is the live continuity document for fast session recovery after crashes, re
   containers across top-level `composition_report`,
   `module_info.composition_provenance`, and
   `statistics.composition_provenance` while remaining initially equivalent.
+- Clarified the same provenance ownership rule in the mdBook, user guide, and
+  composition scope notes. Also clarified assignment output-exposure docs so
+  `(<= (output_data> 8'1))` / `(output_data> <= 8'1)` keep the required LHS
+  output marker, while `(<= (output_data 8'1))` does not request public output
+  exposure.
 - Focused validation:
   `perl -Iperl -c t/580-composition-generation-provenance-alias-boundary-audit.t && prove -lv t/553-composition-result-metadata-provenance-defensive-copy-boundary-audit.t t/580-composition-generation-provenance-alias-boundary-audit.t t/305-hdl-generator-result-contract.t t/378-hdl-generator-result-json-boundary-audit.t && mdbook build docs/book`
   passed. This is `R13` runtime contract-integrity coverage only; no production

@@ -10,7 +10,9 @@ This document captures engineering rationale, design constraints, and working de
   metadata builders. The new integration audit locks the full
   `HDLGenerator` composition result boundary so the top-level report and both
   mirrors stay separate mutable containers without widening the public JSON
-  contract for raw provenance.
+  contract for raw provenance. The same ownership rule is now called out in the
+  mdBook, user guide, and composition scope notes so embedders do not have to
+  infer it from tests.
 ## 2026-05-09: Composition result semantic IR mirrors must stay equivalent without aliasing
 - Composition generation intentionally exposes semantic IR payloads twice:
   top-level `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` branches for

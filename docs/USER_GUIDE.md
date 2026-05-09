@@ -165,6 +165,7 @@ Combinational DT note:
 - Canonical assignment pair forms such as `(<- (Q D))`, `(<= (D_IN NEXT_VALUE))`, `(= (A B))`, `(<-= (I J))`, `(<=+ (D_IN NEXT_VALUE))`, and `(<N (P 1))`
 - Default-mode infix assignment compatibility forms such as `(Q <- D)`, `(D_IN <= NEXT_VALUE)`, `(A = B)`, `(I <-= J)`, `(K <=+ L)`, and `(P <N 1)`
 - Explicit output exposure on the LHS, for example `(= (G> H))`, `(<= (output_data> 8'1))`, `(G> = H)`, and `(output_data> <= 8'1)`
+  - the `>` marker must stay on the LHS in either spelling; `(<= (output_data> 8'1))` is equivalent to `(output_data> <= 8'1)`, while `(<= (output_data 8'1))` drives an unmarked internal target and does not request public output exposure
 - Dual-output register form `(<-= (I J))` or `(I <-= J)` producing `next_I`
 - Dual-output D-input form `(<=+ (K L))` or `(K <=+ L)` producing `K_r`
 - Delayed pulse form `(<N (P 0))`, `(<N (P 1))`, `(P <N 0)`, and `(P <N 1)`, including `N=0`
@@ -1950,6 +1951,10 @@ composition-report split: raw `composition_report` is an in-process
 compatibility report and is not promised JSON-safe, while the sanitized
 `semantic.composition.provenance_report` fragment in normalized semantic JSON
 is the serializable downstream surface.
+The raw result also mirrors that provenance into
+`module_info.composition_provenance` and `statistics.composition_provenance`.
+Those mirrors start equivalent to `composition_report`, but they are separate
+mutable result containers; annotation of one branch must not mutate the others.
 The same `HDLGenerator` result contract now also calls out `composition_spec`
 and `composition_plan` as shell-only raw `FSM::Composition::Spec` and
 `FSM::Composition::Plan` compatibility objects, so composition callers can keep

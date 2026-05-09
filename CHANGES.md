@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Composition generation module-info forward-IR mirrors are alias-audited
+- Added
+  [t/581-composition-generation-module-info-forward-ir-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/581-composition-generation-module-info-forward-ir-alias-boundary-audit.t)
+  to prove live composition-generation `module_info` summary projections such
+  as `signal_analysis`, `composition_children`, and
+  `composition_generated_children` do not alias their embedded `intent_hir`
+  mirrors.
+- This is `R13` runtime contract-integrity coverage only. No production code,
+  public manifest shape, generation behavior, or roadmap lane status changed.
 ### Composition generation provenance report mirrors are alias-audited
 - Added
   [t/580-composition-generation-provenance-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/580-composition-generation-provenance-alias-boundary-audit.t)
@@ -8,6 +17,17 @@ This is the persistent technical change history for FSMGen.
   mutable containers across `composition_report`,
   `module_info.composition_provenance`, and
   `statistics.composition_provenance`.
+- Clarified the same provenance-mirror ownership rule in
+  [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md),
+  [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md),
+  and
+  [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md).
+- Clarified the assignment output-exposure wording in
+  [docs/book/src/02-language-basics.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/02-language-basics.md)
+  and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md):
+  `(<= (output_data> 8'1))` is equivalent to `(output_data> <= 8'1)`,
+  while `(<= (output_data 8'1))` omits the LHS output marker and does not
+  request public output exposure.
 - This is `R13` runtime contract-integrity coverage only. No production code,
   public manifest shape, generation behavior, or roadmap lane status changed.
 ### Composition generation semantic IR result projections are alias-audited

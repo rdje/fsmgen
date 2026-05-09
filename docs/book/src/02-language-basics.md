@@ -167,14 +167,23 @@ registered feedback. If you really need same-cycle D visibility and a separate
 registered Q mirror, use `<=+` and read the generated `A_r` mirror.
 
 The same pair form covers the active LHS/RHS surface, including nested
-expressions, RHS concat, aggregate leaves, and LHS deconstruct:
+expressions, RHS concat, aggregate leaves, explicit output exposure, and LHS
+deconstruct:
 
 ```lisp
 (=  (OUT (concat HI LO)))
+(<= (output_data> 8'1))
 (=  ((concat HI LO) DATA))
 (<- ((cat REG_HI REG_LO) NEXT_DATA) <load)
 (=  (FRAME.payload TAIL))
 ```
+
+The `>` marker is part of the authored LHS. It means "expose this driven target
+as an output port" for direct roots and generated composition children. For
+example, `(<= (output_data> 8'1))` is the canonical pair-form equivalent of the
+default-mode compatibility spelling `(output_data> <= 8'1)`. It is not the same
+as `(<= (output_data 8'1))`, which drives the internal D-input-named target
+without requesting public output exposure.
 
 Existing infix forms such as `(OUT = VALUE)` and `(Q <- D)` remain compatibility
 spellings. Both surfaces normalize into the same assignment AST/IR before HDL
