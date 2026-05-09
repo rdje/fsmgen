@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Embedded diagnostic summaries share one builder
+- Check JSON and normalized semantic JSON should not each maintain their own
+  diagnostic summary shape. Both embedded summaries are runtime-checked against
+  `build_serializable_diagnostic_summary(...)`.
 ## 2026-05-09: Diagnostic summary containers are caller-owned
 - `build_serializable_diagnostic_summary_contract(...)` and
   `build_serializable_diagnostic_summary(...)` must return fresh nested

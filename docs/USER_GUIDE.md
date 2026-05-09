@@ -1829,7 +1829,8 @@ as `diagnostic_summary`, a JSON-safe count/code/severity summary that avoids
 binding to full diagnostic payload shapes. Normalized semantic JSON now embeds
 that summary for both success and failure reports, and check JSON now embeds the
 same summary for both `--check --json` and `--check-json` outputs. Diagnostic
-summary lists and count maps are caller-owned fresh containers.
+summary lists and count maps are caller-owned fresh containers, and both public
+JSON report families are checked against the same standalone summary builder.
 The sibling facade and debug-runtime child contracts also have direct
 self-description guards:
 [t/375-hdl-generator-facade-contract.t](t/375-hdl-generator-facade-contract.t)

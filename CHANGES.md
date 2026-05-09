@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Diagnostic summary public-report parity is audited
+- Added
+  [t/639-diagnostic-summary-public-report-runtime-contract-audit.t](t/639-diagnostic-summary-public-report-runtime-contract-audit.t)
+  to prove semantic JSON and check JSON embed the same `diagnostic_summary`
+  payload produced by
+  [perl/FSM/Support/SerializableDiagnosticSummary.pm](perl/FSM/Support/SerializableDiagnosticSummary.pm).
+- This is runtime contract coverage only; it changes no public JSON shape.
 ### Diagnostic summary defensive-copy boundary is audited
 - Added
   [t/638-serializable-diagnostic-summary-defensive-copy-boundary-audit.t](t/638-serializable-diagnostic-summary-defensive-copy-boundary-audit.t)

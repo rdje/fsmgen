@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Diagnostic summary public-report parity is audited
+- Added
+  [t/639-diagnostic-summary-public-report-runtime-contract-audit.t](t/639-diagnostic-summary-public-report-runtime-contract-audit.t)
+  to prove semantic JSON and check JSON embed diagnostic summaries matching the
+  standalone builder output.
+- Focused validation passed:
+  `prove -l t/639-diagnostic-summary-public-report-runtime-contract-audit.t t/638-serializable-diagnostic-summary-defensive-copy-boundary-audit.t t/636-normalized-semantic-diagnostic-summary.t t/637-check-json-diagnostic-summary.t`.
 ## 2026-05-09: Diagnostic summary defensive-copy boundary is audited
 - Added
   [t/638-serializable-diagnostic-summary-defensive-copy-boundary-audit.t](t/638-serializable-diagnostic-summary-defensive-copy-boundary-audit.t)
