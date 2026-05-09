@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### HDLGenerator stable subsurfaces survive JSON
+- Added
+  [t/723-hdl-generator-result-contract-stable-subsurface-json-roundtrip-audit.t](t/723-hdl-generator-result-contract-stable-subsurface-json-roundtrip-audit.t)
+  to prove the bounded `HDLGenerator` result contract's decoded
+  `stable_subsurface_map` survives JSON round trip and remains aligned with
+  scalar stable-subsurface fields for `source_info`, `module_info`, and
+  `statistics`.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions stable-subsurface JSON coverage.
 ### HDLGenerator result owner map survives JSON
 - Added
   [t/722-hdl-generator-result-contract-owner-map-json-roundtrip-audit.t](t/722-hdl-generator-result-contract-owner-map-json-roundtrip-audit.t)

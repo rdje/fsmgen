@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator stable subsurfaces stay JSON-audited
+- The bounded `HDLGenerator` result contract now has focused JSON round-trip
+  coverage for `stable_subsurface_map`. Decoded grouped entries must stay
+  aligned with the scalar stable-subsurface fields for `source_info`,
+  `module_info`, and `statistics`.
+- This keeps stable nested-surface discovery guarded without adding fields.
 ## 2026-05-10: HDLGenerator result owner map stays JSON-audited
 - The bounded `HDLGenerator` result contract now has focused JSON round-trip
   coverage for `nested_contract_source_map`. Decoded owner-map entries must stay
