@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: HDLGenerator direct extensions constructor input is alias-audited
+- Added
+  [t/588-hdl-generator-direct-extensions-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/588-hdl-generator-direct-extensions-alias-boundary-audit.t)
+  to prove `HDLGenerator->new(extensions => \@objects)` registers the
+  constructor-time extension object list, so later caller mutation of `@objects`
+  cannot add or replace hooks on that facade object while live extension object
+  identity is preserved for dispatch.
+- Focused validation:
+  `perl -Iperl -c t/588-hdl-generator-direct-extensions-alias-boundary-audit.t && prove -lv t/395-typed-extension-explicit-discovery-boundary-audit.t t/588-hdl-generator-direct-extensions-alias-boundary-audit.t && mdbook build docs/book`
+  passed. This is `R13` runtime contract-integrity coverage only; no production
+  code, public manifest shape, user-facing generation behavior, or roadmap lane
+  status changed.
 ## 2026-05-09: HDLGenerator extension_config_files constructor input is alias-audited
 - Added
   [t/587-hdl-generator-extension-config-files-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/587-hdl-generator-extension-config-files-alias-boundary-audit.t)

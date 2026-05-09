@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### HDLGenerator direct extensions constructor input is alias-audited
+- Added
+  [t/588-hdl-generator-direct-extensions-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/588-hdl-generator-direct-extensions-alias-boundary-audit.t)
+  to prove `HDLGenerator->new(extensions => \@objects)` registers the
+  constructor-time extension object list, so later caller mutation of `@objects`
+  cannot add or replace hooks on that facade object while live extension object
+  identity is preserved for dispatch.
+- This is `R13` runtime contract-integrity coverage only. No production code,
+  public manifest shape, generation behavior, or roadmap lane status changed.
 ### HDLGenerator extension_config_files constructor input is alias-audited
 - Added
   [t/587-hdl-generator-extension-config-files-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/587-hdl-generator-extension-config-files-alias-boundary-audit.t)

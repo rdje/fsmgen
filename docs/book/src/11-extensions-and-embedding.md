@@ -98,6 +98,9 @@ not add, remove, or replace hooks on that facade object.
 for config-file discovery: the constructor-time config path list is read during
 facade construction, and later caller mutation of `@configs` cannot change the
 installed hooks.
+Direct `HDLGenerator->new(extensions => \@objects)` construction follows the
+registry rule as well: the array container is snapped at construction, while the
+extension objects themselves remain live hook objects by identity.
 
 That same owner now also publishes a grouped `name_family_map` so embedders
 can discover the bounded hook-name, context-accessor, and supported-source-kind

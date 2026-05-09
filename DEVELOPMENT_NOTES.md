@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Direct extension object lists are construction-time inputs
+- `HDLGenerator->new(extensions => \@objects)` validates and registers the
+  constructor-time object list through the typed-extension registry. Later
+  caller-side array edits cannot add, remove, or replace hooks on that facade
+  object.
+- As with direct registry construction, only the array container is owned by the
+  boundary. Extension objects themselves remain live by identity so their
+  stateful hook behavior is preserved.
 ## 2026-05-09: Programmatic extension config-file lists are construction-time inputs
 - `HDLGenerator->new(extension_config_files => \@configs)` reads the supplied
   config files and builds the typed-extension registry during facade
