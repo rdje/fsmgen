@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Manifest public report key metadata mirrors the parent contract
+- The capability manifest's serializable plan/report branch must carry the same
+  normalized semantic and composition report key metadata as the parent contract.
+  Manifest consumers should not need to reconstruct those key families from
+  separate support modules.
 ## 2026-05-09: Public report key metadata points at canonical owners
 - The serializable plan/report parent carries report-key metadata for normalized
   semantic JSON and composition provenance reports. Those lists and the

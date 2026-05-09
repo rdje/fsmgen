@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Manifest public report key metadata is embedded explicitly
+- Added
+  [t/692-capability-manifest-plan-report-public-report-key-metadata.t](t/692-capability-manifest-plan-report-public-report-key-metadata.t)
+  to prove the capability manifest embeds normalized semantic report keys,
+  composition report keys, and the composition report JSON fragment path through
+  its serializable plan/report branch.
 ### Public report key metadata is embedded explicitly
 - Added
   [t/691-serializable-plan-report-public-report-key-metadata.t](t/691-serializable-plan-report-public-report-key-metadata.t)

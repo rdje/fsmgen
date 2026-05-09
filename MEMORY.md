@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Manifest public report key metadata is embedded explicitly
+- Added
+  [t/692-capability-manifest-plan-report-public-report-key-metadata.t](t/692-capability-manifest-plan-report-public-report-key-metadata.t)
+  to prove the capability manifest embeds normalized semantic report keys,
+  composition report keys, and the composition report JSON fragment path through
+  its serializable plan/report branch.
+- Focused validation passed:
+  `perl -Iperl -c t/692-capability-manifest-plan-report-public-report-key-metadata.t && prove -l t/692-capability-manifest-plan-report-public-report-key-metadata.t t/691-serializable-plan-report-public-report-key-metadata.t t/297-capability-manifest.t && mdbook build docs/book`.
 ## 2026-05-09: Public report key metadata is embedded explicitly
 - Added
   [t/691-serializable-plan-report-public-report-key-metadata.t](t/691-serializable-plan-report-public-report-key-metadata.t)
