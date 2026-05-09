@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Generation result snapshots round-trip as JSON data
+- Serializable generation result snapshots must survive JSON encode/decode while
+  preserving bounded module/source facts, HDL size metadata, top-level key lists,
+  and raw-shell presence/class metadata.
 ## 2026-05-09: Diagnostic summaries round-trip as JSON data
 - Serializable diagnostic summaries must survive JSON encode/decode while
   preserving count maps, severity totals, and sorted unique-code lists. The audit

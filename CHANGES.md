@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Generation result snapshot JSON round-trip surface is audited
+- Added
+  [t/650-serializable-generation-result-snapshot-json-roundtrip-audit.t](t/650-serializable-generation-result-snapshot-json-roundtrip-audit.t)
+  to prove serializable generation result snapshots encode/decode as JSON while
+  preserving module/source summaries, HDL size metadata, top-level keys, and
+  raw-shell metadata.
+- This is `R13` JSON-safety coverage only; no public JSON shape changed.
 ### Diagnostic summary JSON round-trip surface is audited
 - Added
   [t/649-serializable-diagnostic-summary-json-roundtrip-audit.t](t/649-serializable-diagnostic-summary-json-roundtrip-audit.t)

@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Generation result snapshot JSON round-trip surface is audited
+- Added
+  [t/650-serializable-generation-result-snapshot-json-roundtrip-audit.t](t/650-serializable-generation-result-snapshot-json-roundtrip-audit.t)
+  to prove serializable generation result snapshots encode/decode as JSON while
+  preserving stable summaries and raw-shell metadata.
+- Focused validation passed:
+  `prove -l t/650-serializable-generation-result-snapshot-json-roundtrip-audit.t t/632-serializable-generation-result-snapshot.t t/641-serializable-generation-result-snapshot-defensive-copy-boundary-audit.t`.
 ## 2026-05-09: Diagnostic summary JSON round-trip surface is audited
 - Added
   [t/649-serializable-diagnostic-summary-json-roundtrip-audit.t](t/649-serializable-diagnostic-summary-json-roundtrip-audit.t)
