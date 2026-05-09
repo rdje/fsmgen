@@ -1831,7 +1831,8 @@ paths portable and registry owners aligned with the decoded nested source map.
 The capability manifest
 embeds the canonical registry, rebuilds it cleanly, preserves it across manifest
 JSON encode/decode, keeps the decoded registry aligned with the JSON-safe
-surface list, and keeps decoded registry paths portable. Its manifest-embedded
+surface list, keeps decoded registry paths portable, and keeps decoded registry
+owners aligned with the decoded nested source map. Its manifest-embedded
 `public_top_level_presence_keys` list also survives JSON encode/decode and still
 matches the decoded `serializable_plan_reports` payload. Embedding nested
 presence metadata advertises the registry branch.

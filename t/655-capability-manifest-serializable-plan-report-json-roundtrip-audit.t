@@ -63,6 +63,11 @@ subtest 'capability manifest serializable_plan_reports branch survives JSON roun
             as_set($branch->{surface_registry_entry_keys}),
             "$surface round-trip manifest registry entry keys match decoded shape",
         );
+        is(
+            $branch->{surface_registry}{$surface}{contract_source},
+            $branch->{nested_contract_source_map}{$surface},
+            "$surface round-trip manifest registry owner matches decoded source map",
+        );
         for my $path (@{$branch->{surface_registry}{$surface}{primary_report_paths} || []}) {
             ok(is_portable_report_path($path), "$surface round-trip manifest registry path remains portable: $path");
         }

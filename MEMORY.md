@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Manifest registry owners stay aligned after JSON
+- Updated
+  [t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t](t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t)
+  to prove decoded manifest registry owners still match the decoded nested
+  source map in the main branch audit.
+- Focused validation passed:
+  `perl -Iperl -c t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t && prove -l t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t t/674-capability-manifest-surface-registry-owner-map-parity-audit.t t/654-serializable-plan-report-contract-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-09: Parent registry owners stay aligned after JSON
 - Updated
   [t/654-serializable-plan-report-contract-json-roundtrip-audit.t](t/654-serializable-plan-report-contract-json-roundtrip-audit.t)
