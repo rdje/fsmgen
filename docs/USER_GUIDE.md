@@ -1814,6 +1814,8 @@ JSON with child contracts and replacement guidance intact, and the full
 capability manifest preserves that branch across JSON encode/decode. Its
 advertised public top-level key list is locked to the keys the parent contract
 emits, and its nested source map is locked against the embedded child contracts.
+The full capability manifest preserves that source-owner metadata when embedding
+the branch.
 Its first dedicated plan API is
 [perl/FSM/Support/SerializableCompositionPlanSnapshot.pm](perl/FSM/Support/SerializableCompositionPlanSnapshot.pm),
 which builds a JSON-safe `composition_plan_snapshot` with shallow counts and

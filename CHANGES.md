@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Capability manifest serializable plan/report source ownership is audited
+- Added
+  [t/662-capability-manifest-serializable-plan-report-source-ownership-audit.t](t/662-capability-manifest-serializable-plan-report-source-ownership-audit.t)
+  to prove the manifest's `embedding.serializable_plan_reports` branch preserves
+  parent and child source-owner metadata when embedded.
+- This is `R13` manifest source-ownership coverage only; no public manifest shape
+  changed.
 ### Serializable plan/report nested source ownership is audited
 - Added
   [t/661-serializable-plan-report-source-ownership-audit.t](t/661-serializable-plan-report-source-ownership-audit.t)

@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Capability manifest serializable plan/report source ownership is audited
+- Added
+  [t/662-capability-manifest-serializable-plan-report-source-ownership-audit.t](t/662-capability-manifest-serializable-plan-report-source-ownership-audit.t)
+  to prove manifest-embedded `serializable_plan_reports` preserves parent and
+  child source-owner metadata.
+- Focused validation passed:
+  `prove -l t/662-capability-manifest-serializable-plan-report-source-ownership-audit.t t/661-serializable-plan-report-source-ownership-audit.t t/646-capability-manifest-serializable-plan-report-copy-boundary-audit.t t/297-capability-manifest.t`.
 ## 2026-05-09: Serializable plan/report nested source ownership is audited
 - Added
   [t/661-serializable-plan-report-source-ownership-audit.t](t/661-serializable-plan-report-source-ownership-audit.t)

@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Manifest serializable plan/report source metadata must persist
+- The capability manifest's `embedding.serializable_plan_reports` branch must
+  preserve the parent contract owner and every child contract owner when
+  embedded in the full manifest.
 ## 2026-05-09: Parent serializable plan/report source map must align
 - `embedding.serializable_plan_reports.contract_source` must point to the parent
   contract owner, and `nested_contract_source_map` must agree with the embedded
