@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Parent public report key metadata survives JSON
+- Added
+  [t/702-serializable-plan-report-public-report-key-metadata-json-roundtrip-audit.t](t/702-serializable-plan-report-public-report-key-metadata-json-roundtrip-audit.t)
+  to lock decoded normalized-semantic report key metadata, composition-report
+  key metadata, and the composition provenance JSON fragment path in the
+  standalone serializable plan/report parent contract.
+- This mirrors the manifest-side public-report-key metadata guard without
+  changing the current `R13` serializable report API.
+- Focused validation passed:
+  `perl -Iperl -c t/702-serializable-plan-report-public-report-key-metadata-json-roundtrip-audit.t && prove -l t/702-serializable-plan-report-public-report-key-metadata-json-roundtrip-audit.t t/693-capability-manifest-plan-report-public-report-key-metadata-json-roundtrip-audit.t t/654-serializable-plan-report-contract-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Parent plan/report identity survives JSON
 - Added
   [t/701-serializable-plan-report-identity-metadata-json-roundtrip-audit.t](t/701-serializable-plan-report-identity-metadata-json-roundtrip-audit.t)

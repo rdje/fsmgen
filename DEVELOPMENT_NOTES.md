@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Parent public report key metadata stays JSON-audited
+- The standalone serializable plan/report contract now has a focused JSON
+  round-trip guard for the public report key metadata that points embedders at
+  normalized semantic JSON and composition provenance. Decoded metadata must
+  keep matching the canonical report-contract helpers.
+- This keeps the parent contract's report-discovery facts aligned with the
+  manifest-embedded branch without widening the `R13` surface.
 ## 2026-05-10: Parent identity metadata stays JSON-audited
 - The standalone serializable plan/report contract now has a focused identity
   JSON round-trip guard that mirrors the manifest-embedded branch. Decoded

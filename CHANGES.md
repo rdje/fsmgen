@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Parent public report key metadata survives JSON
+- Added
+  [t/702-serializable-plan-report-public-report-key-metadata-json-roundtrip-audit.t](t/702-serializable-plan-report-public-report-key-metadata-json-roundtrip-audit.t)
+  to prove the standalone serializable plan/report contract's decoded
+  normalized-semantic report keys, composition-report keys, and composition
+  provenance JSON fragment path still match their canonical helpers.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions public report key metadata for decoded report
+  discovery.
 ### Parent plan/report identity survives JSON
 - Added
   [t/701-serializable-plan-report-identity-metadata-json-roundtrip-audit.t](t/701-serializable-plan-report-identity-metadata-json-roundtrip-audit.t)
