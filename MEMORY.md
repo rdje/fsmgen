@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Parent nested source map rebuilds cleanly
+- Added
+  [t/711-serializable-plan-report-nested-source-map-defensive-copy-audit.t](t/711-serializable-plan-report-nested-source-map-defensive-copy-audit.t)
+  to prove caller mutation of a built parent contract's
+  `nested_contract_source_map` cannot pollute a freshly built standalone
+  serializable plan/report contract.
+- This gives the parent surface-to-owner discovery map its own focused `R13`
+  defensive-copy guard without changing the serializable report API.
+- Focused validation passed:
+  `perl -Iperl -c t/711-serializable-plan-report-nested-source-map-defensive-copy-audit.t && prove -l t/711-serializable-plan-report-nested-source-map-defensive-copy-audit.t t/645-serializable-plan-report-contract-defensive-copy-boundary-audit.t t/646-capability-manifest-serializable-plan-report-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Parent surface key list rebuilds cleanly
 - Added
   [t/710-serializable-plan-report-surface-keys-defensive-copy-audit.t](t/710-serializable-plan-report-surface-keys-defensive-copy-audit.t)

@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Parent nested source map rebuilds cleanly
+- Added
+  [t/711-serializable-plan-report-nested-source-map-defensive-copy-audit.t](t/711-serializable-plan-report-nested-source-map-defensive-copy-audit.t)
+  to prove caller mutation of a built parent contract's
+  `nested_contract_source_map` cannot pollute the next standalone serializable
+  plan/report contract.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions the defensive-copy guard for parent surface-owner
+  discovery.
 ### Parent surface key list rebuilds cleanly
 - Added
   [t/710-serializable-plan-report-surface-keys-defensive-copy-audit.t](t/710-serializable-plan-report-surface-keys-defensive-copy-audit.t)

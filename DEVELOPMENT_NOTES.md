@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Parent nested source map rebuilds cleanly
+- The standalone serializable plan/report contract now has focused
+  defensive-copy coverage for `nested_contract_source_map`. Mutating one built
+  contract's surface-to-owner map must not affect the next build.
+- This keeps the parent surface-owner discovery contract independently guarded
+  without adding fields.
 ## 2026-05-10: Parent surface key list rebuilds cleanly
 - The standalone serializable plan/report contract now has focused
   defensive-copy coverage for `json_safe_surface_keys`. Mutating one built
