@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Parent diagnostic child contract survives JSON
+- Added
+  [t/716-serializable-plan-report-diagnostic-child-contract-json-roundtrip-audit.t](t/716-serializable-plan-report-diagnostic-child-contract-json-roundtrip-audit.t)
+  to prove the parent serializable plan/report contract's decoded
+  `diagnostic_summary_contract` still equals the canonical child contract and
+  preserves identity metadata after JSON round trip.
+- This keeps the parent advertised diagnostic-summary child tied to
+  [perl/FSM/Support/SerializableDiagnosticSummary.pm](perl/FSM/Support/SerializableDiagnosticSummary.pm)
+  without changing the serializable report API.
+- Focused validation passed:
+  `perl -Iperl -c t/716-serializable-plan-report-diagnostic-child-contract-json-roundtrip-audit.t && prove -l t/716-serializable-plan-report-diagnostic-child-contract-json-roundtrip-audit.t t/649-serializable-diagnostic-summary-json-roundtrip-audit.t t/654-serializable-plan-report-contract-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Parent generation child contract survives JSON
 - Added
   [t/715-serializable-plan-report-generation-child-contract-json-roundtrip-audit.t](t/715-serializable-plan-report-generation-child-contract-json-roundtrip-audit.t)

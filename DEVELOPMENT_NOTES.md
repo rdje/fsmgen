@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Parent diagnostic child contract stays JSON-audited
+- The parent serializable plan/report contract now has a focused JSON
+  round-trip guard for its embedded `diagnostic_summary_contract`. Decoded
+  parent metadata must continue matching the canonical child contract owner in
+  `FSM::Support::SerializableDiagnosticSummary`.
+- This completes the current parent embedded child-contract trio guard without
+  adding fields.
 ## 2026-05-10: Parent generation child contract stays JSON-audited
 - The parent serializable plan/report contract now has a focused JSON
   round-trip guard for its embedded `generation_result_snapshot_contract`.

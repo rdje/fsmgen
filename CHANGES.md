@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Parent diagnostic child contract survives JSON
+- Added
+  [t/716-serializable-plan-report-diagnostic-child-contract-json-roundtrip-audit.t](t/716-serializable-plan-report-diagnostic-child-contract-json-roundtrip-audit.t)
+  to prove the parent serializable plan/report contract's decoded
+  `diagnostic_summary_contract` still equals the canonical child contract and
+  preserves identity metadata.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions the embedded diagnostic child-contract guard.
 ### Parent generation child contract survives JSON
 - Added
   [t/715-serializable-plan-report-generation-child-contract-json-roundtrip-audit.t](t/715-serializable-plan-report-generation-child-contract-json-roundtrip-audit.t)
