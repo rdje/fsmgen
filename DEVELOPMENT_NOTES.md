@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Stateful facade reuse returns fresh resolved package maps
+- `HDLGenerator` facade objects are reusable, but each generation result must own
+  its raw `resolved_package_imports` map. A caller may annotate or replace
+  entries in one returned map without changing later results from the same
+  facade object.
+- The audit mutates a first result's package map and proves a later generation on
+  the same object rebuilds the expected raw package-spec map.
 ## 2026-05-09: Composition package-import summaries do not alias raw composition specs
 - Composition generation exposes package imports through both the bounded
   `source_info.package_import_names` summary and the shell-only

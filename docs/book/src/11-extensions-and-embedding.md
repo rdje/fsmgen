@@ -504,6 +504,10 @@ That shell-only branch now also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorResolvedPackageImportsContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorResolvedPackageImportsContract.pm),
 which is the contract to follow for the raw package-spec-map rule plus that
 bounded package-import summary surface.
+Reusable `HDLGenerator` facade objects also return a fresh
+`resolved_package_imports` map for each generation: caller mutation of one
+result's raw map does not leak into a later result produced by the same facade
+object.
 The top-level `fsm_module` branch is shell-only too when it is defined: it is a
 raw `FSM::CoreAST::FSMModule` object kept for in-process compatibility, so
 structured downstream consumers should prefer `intent_hir`, `lowered_rtl_ir`,
