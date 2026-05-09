@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Stateful standalone-dt fsm_module results are alias-audited
+- Added
+  [t/604-hdl-generator-stateful-standalone-dt-fsm-module-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/604-hdl-generator-stateful-standalone-dt-fsm-module-alias-boundary-audit.t)
+  to prove mutating one standalone `?dt` result's raw `fsm_module` object graph
+  does not contaminate a later generation on the same reusable `HDLGenerator`
+  facade object.
+- This is `R13` runtime contract-integrity coverage only. No production code,
+  public manifest shape, generation behavior, or roadmap lane status changed.
 ### Stateful direct fsm_module results are alias-audited
 - Added
   [t/603-hdl-generator-stateful-fsm-module-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/603-hdl-generator-stateful-fsm-module-alias-boundary-audit.t)

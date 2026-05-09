@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Stateful facade reuse returns fresh standalone-dt FSM modules
+- Standalone `?dt` roots also return a raw `fsm_module` compatibility object,
+  but its state list is synthesized from top-level decision-tree blocks rather
+  than regular FSM states. That shape needs its own reuse audit.
+- The audit mutates the module name, one nested signal object, and the
+  standalone-dt state array in a first result, then proves a later generation on
+  the same facade rebuilds the original `?dt` graph.
 ## 2026-05-09: Stateful facade reuse returns fresh direct FSM modules
 - The raw `fsm_module` branch is a per-generation semantic object graph for
   direct roots. It is intentionally available to in-process embedders, but reuse

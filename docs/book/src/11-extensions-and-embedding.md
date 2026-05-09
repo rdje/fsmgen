@@ -520,6 +520,8 @@ Reusable `HDLGenerator` facade objects return fresh direct-generation
 `fsm_module` object graphs per generation, so caller mutation of one result's
 raw module object, nested signals, or state array does not leak into a later
 result produced by the same facade object.
+Standalone `?dt` roots follow the same reuse rule for their distinct
+decision-tree-shaped `fsm_module` graphs.
 The top-level `raw_ast`
 branch is likewise shell-only and intentionally treated as a frontend/debug
 artifact rather than a public interchange tree, so structured consumers should
