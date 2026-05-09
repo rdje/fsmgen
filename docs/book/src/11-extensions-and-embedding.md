@@ -527,8 +527,8 @@ JSON with nested contract owners, child contracts, exact composition snapshot
 child metadata, exact generation snapshot child metadata, raw-shell replacement
 keys, and raw-shell replacement guidance intact, and the full capability
 manifest preserves that branch, its exact
-composition snapshot child metadata, and its entry-key list across JSON
-encode/decode. Its
+composition snapshot child metadata, exact generation snapshot child metadata,
+and its entry-key list across JSON encode/decode. Its
 advertised public top-level key list is regression-locked to the keys the parent
 contract actually emits, and its nested source map is locked against the
 embedded child contracts it carries.
