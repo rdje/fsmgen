@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Stateful facade reuse returns fresh standalone dt result containers
+- Standalone `?dt` generation returns the same top-level `HDLGenerator` result
+  shape as other source roots. Reusing a facade must rebuild that result hash per
+  generation.
+- The audit mutates `hdl_code`, adds a caller-only top-level key, and deletes the
+  `module_info` branch in a first `?dt` result, then proves the next generation
+  rebuilds the expected top-level result shape.
 ## 2026-05-09: Stateful facade reuse returns fresh standalone dt package summaries
 - Standalone `?dt` roots share the same `source_info` package-summary contract as
   direct `?fsm` roots, including package imports resolved through
