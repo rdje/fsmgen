@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Stateful facade reuse returns fresh standalone dt statistics
+- Standalone `?dt` statistics expose the common backend statistics surface:
+  scalar counts/flags plus raw nested maps. Reusing a facade must rebuild that
+  statistics tree for each generation.
+- The audit mutates `intermediate_signals`, `factoring_enabled`, and
+  `raw_intermediate_signals` in a first `?dt` result, then proves the next
+  generation returns the original values.
 ## 2026-05-09: Stateful facade reuse returns fresh standalone dt module_info
 - Standalone `?dt` `module_info` exposes the root module summary and signal
   summaries used by embedders. Reusing a facade must rebuild those containers

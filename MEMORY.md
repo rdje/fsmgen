@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Stateful standalone dt statistics results are alias-audited
+- Added
+  [t/621-hdl-generator-stateful-standalone-dt-statistics-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/621-hdl-generator-stateful-standalone-dt-statistics-alias-boundary-audit.t)
+  to prove mutating one standalone `?dt` result's `statistics` scalar fields and
+  nested raw maps does not contaminate a later generation on the same reusable
+  `HDLGenerator` facade object.
+- Focused validation:
+  `perl -Iperl -c t/621-hdl-generator-stateful-standalone-dt-statistics-alias-boundary-audit.t && prove -lv t/621-hdl-generator-stateful-standalone-dt-statistics-alias-boundary-audit.t t/597-hdl-generator-stateful-statistics-alias-boundary-audit.t && mdbook build docs/book`
+  passed. This is `R13` runtime contract-integrity coverage only; no production
+  code, public manifest shape, user-facing generation behavior, or roadmap lane
+  status changed.
 ## 2026-05-09: Stateful standalone dt module_info results are alias-audited
 - Added
   [t/620-hdl-generator-stateful-standalone-dt-module-info-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/620-hdl-generator-stateful-standalone-dt-module-info-alias-boundary-audit.t)
