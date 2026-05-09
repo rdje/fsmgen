@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Manifest JSON-safety flags mirror the parent contract
+- Manifest consumers see the same machine-readable JSON booleans for
+  serializable plan/report safety: current serializable surfaces are safe, while
+  raw `HDLGenerator` compatibility branches are not portable interchange
+  payloads.
 ## 2026-05-09: Plan/report JSON-safety flags are booleans, not prose
 - `current_serializable_surfaces_json_safe` and
   `raw_hdl_generator_branches_json_safe` are machine-readable JSON booleans.

@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Manifest plan/report JSON-safety flags are boolean-audited
+- Added
+  [t/686-capability-manifest-serializable-plan-report-json-safety-flags.t](t/686-capability-manifest-serializable-plan-report-json-safety-flags.t)
+  to prove manifest-embedded `current_serializable_surfaces_json_safe` and
+  `raw_hdl_generator_branches_json_safe` are explicit JSON booleans with the
+  intended truth values.
+- Focused validation passed:
+  `perl -Iperl -c t/686-capability-manifest-serializable-plan-report-json-safety-flags.t && prove -l t/686-capability-manifest-serializable-plan-report-json-safety-flags.t t/685-serializable-plan-report-json-safety-flags-contract.t t/297-capability-manifest.t && mdbook build docs/book`.
 ## 2026-05-09: Plan/report JSON-safety flags are boolean-audited
 - Added
   [t/685-serializable-plan-report-json-safety-flags-contract.t](t/685-serializable-plan-report-json-safety-flags-contract.t)
