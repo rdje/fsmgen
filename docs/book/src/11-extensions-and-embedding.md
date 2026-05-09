@@ -496,6 +496,8 @@ classifying live/raw/unsanitized compatibility payloads such as `fsm_module`,
 Reusable `HDLGenerator` facade objects return fresh top-level direct result
 containers per generation, so caller additions, replacements, or deletions on
 one result do not leak into a later direct result from the same facade.
+Composition generation follows the same top-level result-container reuse rule,
+including composition-only branches such as `composition_report`.
 The top-level `resolved_package_imports` branch is therefore shell-only: it is
 still a hash of raw `FSM::Package::Spec` objects, so stable package-import
 inspection should use `source_info.package_import_count` and

@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Stateful facade reuse returns fresh composition result containers
+- Composition result hashes are also per-generation containers. Caller mutation
+  of top-level `hdl_code`, added ad hoc keys, or removal of composition-only
+  branches must not alter a later result from the same facade.
+- The audit mutates a first composition result's top-level hash and proves the
+  next generation rebuilds the expected composition result shape.
 ## 2026-05-09: Stateful facade reuse returns fresh direct result containers
 - The `HDLGenerator` result hash is a per-generation container. Even when nested
   branches are separately owned, callers must not be able to add, delete, or
