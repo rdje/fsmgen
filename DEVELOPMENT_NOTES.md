@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator source-info keys stay JSON-audited
+- The bounded `HDLGenerator` result contract now has focused JSON round-trip
+  coverage for `source_info_identity_presence_keys` and
+  `source_info_summary_presence_keys`. Decoded key lists must stay aligned with
+  the canonical source-info helper lists.
+- The same guard keeps the source-info full-hash stability flag and
+  package-import copy policy observable without adding fields.
 ## 2026-05-10: HDLGenerator shell fallback family map stays JSON-audited
 - The bounded `HDLGenerator` result contract now has focused JSON round-trip
   coverage for `shell_only_fallback_surface_family_map`. Decoded grouped

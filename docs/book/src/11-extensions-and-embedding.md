@@ -87,7 +87,9 @@ key-family map is guarded the same way for composition-only discovery, and the
 semantic-layer presence family map now has the same JSON round-trip coverage.
 The shell-only fallback surface map is also JSON-audited so raw compatibility
 branches keep pointing at their advertised structured replacements, and the
-narrower fallback-family map is guarded the same way.
+narrower fallback-family map is guarded the same way. The result contract's
+source-info identity and summary key lists are also JSON-audited, along with the
+full-hash stability flag and package-import copy-policy note.
 
 ## Current Philosophy
 
@@ -802,7 +804,10 @@ the raw `composition_spec->top->package_imports` branch without sharing its
 mutable array.
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded identity and summary source-info key
-families from one place instead of collecting those key lists separately.
+families from one place instead of collecting those key lists separately. The
+parent result contract keeps JSON round-trip coverage for those two source-info
+key lists so this discovery path remains portable in serialized contract
+metadata.
 The nested `module_info` object now also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorModuleInfoContract.pm](perl/FSM/Support/HDLGeneratorModuleInfoContract.pm),
 which is the contract to follow for `module_name`,

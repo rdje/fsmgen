@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### HDLGenerator source-info keys survive JSON
+- Added
+  [t/728-hdl-generator-result-contract-source-info-keys-json-roundtrip-audit.t](t/728-hdl-generator-result-contract-source-info-keys-json-roundtrip-audit.t)
+  to prove the bounded `HDLGenerator` result contract's decoded
+  `source_info_identity_presence_keys` and
+  `source_info_summary_presence_keys` survive JSON round trip and still match
+  their canonical helpers.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions result-contract source-info key JSON coverage.
 ### HDLGenerator shell fallback family map survives JSON
 - Added
   [t/727-hdl-generator-result-contract-shell-fallback-family-json-roundtrip-audit.t](t/727-hdl-generator-result-contract-shell-fallback-family-json-roundtrip-audit.t)

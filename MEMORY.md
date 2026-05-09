@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: HDLGenerator source-info keys survive JSON
+- Added
+  [t/728-hdl-generator-result-contract-source-info-keys-json-roundtrip-audit.t](t/728-hdl-generator-result-contract-source-info-keys-json-roundtrip-audit.t)
+  to prove the bounded `HDLGenerator` result contract's decoded
+  `source_info_identity_presence_keys` and
+  `source_info_summary_presence_keys` survive JSON round trip and still match
+  their canonical helper lists.
+- The guard also keeps the decoded `source_info` full-hash stability flag and
+  package-import copy-policy wording visible.
+- Focused validation passed:
+  `perl -Iperl -c t/728-hdl-generator-result-contract-source-info-keys-json-roundtrip-audit.t && prove -l t/728-hdl-generator-result-contract-source-info-keys-json-roundtrip-audit.t t/305-hdl-generator-result-contract.t t/438-hdl-generator-result-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: HDLGenerator shell fallback family map survives JSON
 - Added
   [t/727-hdl-generator-result-contract-shell-fallback-family-json-roundtrip-audit.t](t/727-hdl-generator-result-contract-shell-fallback-family-json-roundtrip-audit.t)
