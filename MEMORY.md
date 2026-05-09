@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Serializable plan/report nested source ownership is audited
+- Added
+  [t/661-serializable-plan-report-source-ownership-audit.t](t/661-serializable-plan-report-source-ownership-audit.t)
+  to prove the parent serializable plan/report contract owner and nested source
+  map align with embedded child contracts.
+- Focused validation passed:
+  `prove -l t/661-serializable-plan-report-source-ownership-audit.t t/660-serializable-child-report-source-ownership-audit.t t/629-serializable-plan-report-contract.t t/297-capability-manifest.t`.
 ## 2026-05-09: Serializable child report source ownership is audited
 - Added
   [t/660-serializable-child-report-source-ownership-audit.t](t/660-serializable-child-report-source-ownership-audit.t)

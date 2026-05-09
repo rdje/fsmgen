@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Parent serializable plan/report source map must align
+- `embedding.serializable_plan_reports.contract_source` must point to the parent
+  contract owner, and `nested_contract_source_map` must agree with the embedded
+  child contracts it carries.
 ## 2026-05-09: Serializable child reports must identify their owner
 - Child serializable report contracts and emitted payloads must carry
   `contract_source` and `report_source` values that point to their owning

@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Serializable plan/report nested source ownership is audited
+- Added
+  [t/661-serializable-plan-report-source-ownership-audit.t](t/661-serializable-plan-report-source-ownership-audit.t)
+  to prove the parent `embedding.serializable_plan_reports` contract owner and
+  nested source map align with the embedded child contracts.
+- This is `R13` source-ownership metadata coverage only; no public manifest
+  shape changed.
 ### Serializable child report source ownership is audited
 - Added
   [t/660-serializable-child-report-source-ownership-audit.t](t/660-serializable-child-report-source-ownership-audit.t)
