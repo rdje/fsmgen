@@ -653,7 +653,10 @@ now also has its own explicit owner through
 which is the contract to follow for the raw composition-plan rule plus the
 same sanitized composition-summary fallback surfaces. That same owner now also
 publishes a grouped `fallback_surface_map` so embedders can discover the
-bounded semantic-composition fallback families from one place. Raw
+bounded semantic-composition fallback families from one place. Reusable
+`HDLGenerator` facade objects return fresh `composition_plan` objects per
+composition generation, so caller mutation of one result's raw plan object graph
+does not leak into a later result produced by the same facade object. Raw
 `composition_report` is likewise an in-process compatibility hash rather than
 a serializable public JSON surface, so embedders should follow
 [perl/FSM/Support/CompositionReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CompositionReportContract.pm)
