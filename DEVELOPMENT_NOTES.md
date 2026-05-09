@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Stateful facade reuse returns fresh direct lowered_rtl_ir
+- The top-level direct `lowered_rtl_ir` hash is also a per-generation semantic
+  shell. Reusing a facade must rebuild both existing lowered summaries and any
+  absent optional branches.
+- The audit mutates `module_name`, `output_drive_families`, and adds an
+  optional net-name branch in a first direct result, then proves the next
+  generation returns the original lowered RTL shell.
 ## 2026-05-09: Stateful facade reuse returns fresh direct intent_hir
 - The top-level direct `intent_hir` hash is a raw semantic-layer compatibility
   shell, but it is still a per-generation result branch. Reusing a facade must

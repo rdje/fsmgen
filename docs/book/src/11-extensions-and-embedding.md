@@ -675,6 +675,8 @@ maps per generation, so caller mutation of one result's `intent_hir`,
 produced by the same facade object.
 The direct-generation `intent_hir` shell is explicitly audited under that
 stateful facade-reuse rule.
+The direct-generation `lowered_rtl_ir` shell is audited under the same rule,
+including caller-created optional branches.
 The whole raw result hash is now runtime-audited as non-JSON-safe too:
 [t/378-hdl-generator-result-json-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/378-hdl-generator-result-json-boundary-audit.t)
 checks real direct and composition `HDLGenerator` results against strict JSON
