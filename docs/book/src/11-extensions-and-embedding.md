@@ -523,6 +523,9 @@ shell-only branch now also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorRawASTContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorRawASTContract.pm),
 which is the contract to follow for the parser/debug-array rule plus the
 `intent_hir` fallback surface.
+Reusable `HDLGenerator` facade objects return a fresh `raw_ast` snapshot per
+generation, so caller mutation of one result's parser/debug array does not leak
+into a later result produced by the same facade object.
 The same result contract now machine-advertises the narrower “stable
 subsurface” boundary for the nested hashes too: the whole `source_info`,
 `module_info`, and `statistics` hashes are still not stable APIs, but the
