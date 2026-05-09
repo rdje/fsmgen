@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Serializable plan/report contract defensive-copy boundary is audited
+- Added
+  [t/645-serializable-plan-report-contract-defensive-copy-boundary-audit.t](t/645-serializable-plan-report-contract-defensive-copy-boundary-audit.t)
+  to prove the parent `embedding.serializable_plan_reports` contract returns
+  fresh nested maps, lists, and embedded child contracts.
+- This is `R13` contract-integrity coverage only; no public manifest shape
+  changed.
 ### Semantic composition plan snapshot alias boundary is audited
 - Added
   [t/644-normalized-semantic-composition-plan-snapshot-alias-boundary-audit.t](t/644-normalized-semantic-composition-plan-snapshot-alias-boundary-audit.t)

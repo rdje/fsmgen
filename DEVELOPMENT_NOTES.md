@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Serializable plan/report contract containers are caller-owned
+- `build_serializable_plan_report_contract(...)` returns fresh nested maps,
+  lists, and embedded child contracts. Callers can annotate manifest-discovery
+  data without polluting later contract construction.
 ## 2026-05-09: Semantic composition plan snapshots are rebuilt per report
 - Normalized semantic JSON report builders must create a fresh
   `semantic.composition.plan_snapshot` per composition success report. Caller

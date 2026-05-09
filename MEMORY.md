@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Serializable plan/report contract defensive-copy boundary is audited
+- Added
+  [t/645-serializable-plan-report-contract-defensive-copy-boundary-audit.t](t/645-serializable-plan-report-contract-defensive-copy-boundary-audit.t)
+  to prove `embedding.serializable_plan_reports` contract containers and
+  embedded child contracts are fresh across calls.
+- Focused validation passed:
+  `prove -l t/645-serializable-plan-report-contract-defensive-copy-boundary-audit.t t/629-serializable-plan-report-contract.t t/321-embedding-contract.t`.
 ## 2026-05-09: Semantic composition plan snapshot alias boundary is audited
 - Added
   [t/644-normalized-semantic-composition-plan-snapshot-alias-boundary-audit.t](t/644-normalized-semantic-composition-plan-snapshot-alias-boundary-audit.t)

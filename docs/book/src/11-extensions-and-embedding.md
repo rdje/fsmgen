@@ -484,7 +484,9 @@ That direction now has a concrete manifest surface:
 [perl/FSM/Support/SerializablePlanReportContract.pm](perl/FSM/Support/SerializablePlanReportContract.pm)
 is advertised as `embedding.serializable_plan_reports`, listing the current
 JSON-safe report families and mapping raw `HDLGenerator` compatibility shells to
-preferred serializable replacements.
+preferred serializable replacements. That parent contract returns fresh nested
+maps, lists, and embedded child contracts, so discovery-time annotations do not
+pollute later manifest construction.
 The first plan-oriented API behind that surface is
 [perl/FSM/Support/SerializableCompositionPlanSnapshot.pm](perl/FSM/Support/SerializableCompositionPlanSnapshot.pm):
 `build_serializable_composition_plan_snapshot(...)` emits a JSON-safe
