@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Semantic snapshot key presence is runtime-locked
+- Normalized semantic JSON success reports must include the advertised common
+  keys plus success-only `semantic` and `generation_result_snapshot` branches.
+  Failure reports must keep the common keys, including `diagnostic_summary`, and
+  omit success-only snapshot branches.
 ## 2026-05-09: Manifest serializable plan/report child is rebuilt cleanly
 - `build_capability_manifest(...)` must rebuild `embedding.serializable_plan_reports`
   and the embedding section's grouped serializable-plan/report presence keys

@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Normalized semantic snapshot key presence is audited
+- Added
+  [t/647-normalized-semantic-snapshot-presence-runtime-contract-audit.t](t/647-normalized-semantic-snapshot-presence-runtime-contract-audit.t)
+  to prove normalized semantic JSON success and failure reports match the
+  advertised top-level/success-only key contract after adding snapshot branches.
+- This is `R13` runtime contract coverage only; no public JSON shape changed.
 ### Capability manifest serializable plan/report copy boundary is audited
 - Added
   [t/646-capability-manifest-serializable-plan-report-copy-boundary-audit.t](t/646-capability-manifest-serializable-plan-report-copy-boundary-audit.t)

@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Normalized semantic snapshot key presence is audited
+- Added
+  [t/647-normalized-semantic-snapshot-presence-runtime-contract-audit.t](t/647-normalized-semantic-snapshot-presence-runtime-contract-audit.t)
+  to prove normalized semantic JSON success/failure top-level key presence
+  matches the advertised contract after snapshot additions.
+- Focused validation passed:
+  `prove -l t/647-normalized-semantic-snapshot-presence-runtime-contract-audit.t t/311-normalized-semantic-report-contract.t t/633-normalized-semantic-generation-result-snapshot.t t/636-normalized-semantic-diagnostic-summary.t`.
 ## 2026-05-09: Capability manifest serializable plan/report copy boundary is audited
 - Added
   [t/646-capability-manifest-serializable-plan-report-copy-boundary-audit.t](t/646-capability-manifest-serializable-plan-report-copy-boundary-audit.t)

@@ -512,7 +512,9 @@ expose that snapshot as top-level `generation_result_snapshot`. Generation
 result snapshot contracts and reports return fresh caller-owned containers, so
 local annotations of summary hashes or raw-shell metadata do not pollute later
 snapshot construction; normalized semantic reports also rebuild the embedded
-`generation_result_snapshot` per report. Failed semantic
+`generation_result_snapshot` per report. Semantic report top-level key presence
+is runtime-locked so success reports include the advertised success-only snapshot
+branches and failure reports omit them. Failed semantic
 JSON reports deliberately omit both `generation_result_snapshot` and semantic
 composition `plan_snapshot`, preserving the existing success-only boundary for
 generated semantics.
