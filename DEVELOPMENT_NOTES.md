@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Composition statistics seeds are snapshots, not caller mutation handles
+- Composition generation can accept a statistics seed before adding
+  composition-specific counts and provenance. That seed may contain nested
+  diagnostic arrays and hashes from earlier generation layers, so returned
+  statistics must not expose those caller-owned containers directly.
+- `ResultMetadataBuilder` already clones the seed before enriching it. The new
+  integration audit locks that behavior through `GenerationOrchestrator` with a
+  caller-supplied seed, proving mutation cannot cross the generation result
+  boundary in either direction.
 ## 2026-05-09: Composition module-info lowered summaries must not alias embedded lowered RTL IR
 - Composition `module_info` also mirrors selected lowered RTL summaries outside
   the embedded serialized `lowered_rtl_ir` payload. For composition tops with

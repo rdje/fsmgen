@@ -557,6 +557,10 @@ That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded summary and composition-only statistics
 key families from one place instead of collecting those key lists
 separately.
+Composition statistics returned from a caller-supplied `statistics_seed` are
+also audited as owned snapshots: nested seed arrays and hashes remain
+caller-owned, while the returned `statistics` branch can be annotated without
+rewriting the original seed.
 The top-level `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` hashes
 follow the same honesty rule: they reuse the dedicated normalized-semantic
 shell owners and their advertised shell keys, but the `HDLGenerator` result
