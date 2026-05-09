@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Capability manifest registry entry keys are copy-audited
+- Added
+  [t/679-capability-manifest-surface-registry-entry-keys-defensive-copy-audit.t](t/679-capability-manifest-surface-registry-entry-keys-defensive-copy-audit.t)
+  to prove caller mutation of manifest-embedded
+  `surface_registry_entry_keys` does not pollute later manifest builds.
 ### Capability manifest registry entry keys are explicit
 - Added
   [t/678-capability-manifest-surface-registry-entry-contract.t](t/678-capability-manifest-surface-registry-entry-contract.t)

@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Manifest registry entry-key discovery is caller-owned
+- Manifest consumers may annotate or inspect `surface_registry_entry_keys` during
+  discovery, but those mutations must remain caller-local. Fresh manifest builds
+  must rebuild the embedded serializable plan/report contract from the canonical
+  owner instead of sharing the previous caller's list.
 ## 2026-05-09: Manifest registry entry keys mirror the parent contract
 - The capability manifest embeds `embedding.serializable_plan_reports` as the
   public discovery branch, so its embedded `surface_registry_entry_keys` list

@@ -1821,9 +1821,9 @@ of the per-surface entry shape, and the capability manifest embeds that same
 entry-key list alongside registry entries that match it.
 The parent contract returns fresh
 nested maps, lists, and embedded child contracts, and the capability manifest
-rebuilds that embedded child cleanly per call. The contract also round-trips as
-JSON with child contracts and replacement guidance intact, and the full
-capability manifest preserves that branch across JSON encode/decode. Its
+rebuilds that embedded child and entry-key list cleanly per call. The contract
+also round-trips as JSON with child contracts and replacement guidance intact,
+and the full capability manifest preserves that branch across JSON encode/decode. Its
 advertised public top-level key list is locked to the keys the parent contract
 emits, and its nested source map is locked against the embedded child contracts.
 The full capability manifest preserves that source-owner metadata when embedding
