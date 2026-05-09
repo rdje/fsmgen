@@ -186,6 +186,10 @@ also proves the advertised `source_search_paths` constructor option is
 runtime-backed and facade-local: missing roots fail at external package
 resolution, supplied roots generate HDL with the imported package literal, and
 separate facade objects with different roots do not leak resolution state.
+That facade-local rule includes input ownership: the constructor-time
+`source_search_paths` array is copied into the resolver, so later caller
+mutation of the original array reference does not change package resolution for
+that facade object.
 [t/389-hdl-generator-facade-extensions-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/389-hdl-generator-facade-extensions-boundary-audit.t)
 also proves the advertised `extensions` constructor option is runtime-backed as
 direct blessed-object injection: non-blessed values are rejected, hook-capable

@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Source search paths are facade construction snapshots
+- `HDLGenerator->new(source_search_paths => \@paths)` hands the list to
+  `SourcePathResolver`, which copies the array into facade-local resolver state.
+  That keeps package resolution stable for one facade object even if the caller
+  later edits or reuses the original array reference.
+- The new audit exercises the public facade path with competing package roots:
+  after construction, caller mutation toward other roots must not affect
+  generation, and `extra_search_paths()` must report the constructor-time
+  snapshot.
 ## 2026-05-09: Composition statistics seeds are snapshots, not caller mutation handles
 - Composition generation can accept a statistics seed before adding
   composition-specific counts and provenance. That seed may contain nested

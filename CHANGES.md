@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### HDLGenerator source_search_paths constructor input is alias-audited
+- Added
+  [t/584-hdl-generator-source-search-paths-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/584-hdl-generator-source-search-paths-alias-boundary-audit.t)
+  to prove `HDLGenerator->new(source_search_paths => \@paths)` snapshots the
+  constructor-time path list through its resolver, so later caller mutation of
+  `@paths` cannot change package resolution for that facade object.
+- This is `R13` runtime contract-integrity coverage only. No production code,
+  public manifest shape, generation behavior, or roadmap lane status changed.
 ### Composition generation statistics seeds are alias-audited
 - Added
   [t/583-composition-generation-statistics-seed-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/583-composition-generation-statistics-seed-alias-boundary-audit.t)

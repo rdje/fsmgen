@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: HDLGenerator source_search_paths constructor input is alias-audited
+- Added
+  [t/584-hdl-generator-source-search-paths-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/584-hdl-generator-source-search-paths-alias-boundary-audit.t)
+  to prove `HDLGenerator->new(source_search_paths => \@paths)` snapshots the
+  constructor-time path list through its `SourcePathResolver`, so later caller
+  mutation of `@paths` cannot change package resolution for that facade object.
+- Focused validation:
+  `perl -Iperl -c t/584-hdl-generator-source-search-paths-alias-boundary-audit.t && prove -lv t/388-hdl-generator-facade-source-search-paths-boundary-audit.t t/584-hdl-generator-source-search-paths-alias-boundary-audit.t && mdbook build docs/book`
+  passed. This is `R13` runtime contract-integrity coverage only; no production
+  code, public manifest shape, user-facing generation behavior, or roadmap lane
+  status changed.
 ## 2026-05-09: Composition generation statistics seeds are alias-audited
 - Added
   [t/583-composition-generation-statistics-seed-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/583-composition-generation-statistics-seed-alias-boundary-audit.t)
