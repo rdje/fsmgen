@@ -495,6 +495,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - `R13` Public embedding/API stabilization, backed by `R12` regression corpus and support accounting.
 - Current next decision point:
   - The bounded `HDLGenerator` result contract now has a dedicated JSON
+    round-trip guard for its optional composition key-family map.
+    [t/724-hdl-generator-result-contract-optional-composition-map-json-roundtrip-audit.t](t/724-hdl-generator-result-contract-optional-composition-map-json-roundtrip-audit.t)
+    proves decoded `optional_composition_key_family_map` survives serialization
+    and stays aligned with its scalar optional-composition key lists.
+  - The bounded `HDLGenerator` result contract now has a dedicated JSON
     round-trip guard for its stable subsurface map.
     [t/723-hdl-generator-result-contract-stable-subsurface-json-roundtrip-audit.t](t/723-hdl-generator-result-contract-stable-subsurface-json-roundtrip-audit.t)
     proves decoded `stable_subsurface_map` survives serialization and stays
@@ -2903,6 +2908,10 @@ Done:
   locks the bounded `HDLGenerator` result contract's decoded stable subsurface
   map and its alignment with scalar `source_info`, `module_info`, and
   `statistics` stable-subsurface fields.
+- [t/724-hdl-generator-result-contract-optional-composition-map-json-roundtrip-audit.t](t/724-hdl-generator-result-contract-optional-composition-map-json-roundtrip-audit.t)
+  locks the bounded `HDLGenerator` result contract's decoded optional
+  composition key-family map and its alignment with scalar optional-composition
+  key lists.
 - The current global debug singleton no longer leaks quite so casually into the embedding contract: [perl/FSM/Debug.pm](perl/FSM/Debug.pm) now exports explicit debug-state save/restore helpers, and [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now scopes its requested `debug_level` to constructor/generation calls instead of leaving that mutable global state behind in caller process state; [t/373-debug-state-embedding-scope.t](t/373-debug-state-embedding-scope.t) locks both the save/restore behavior and the non-leaking pipeline behavior.
 - That current in-process debug seam now also has its own explicit bounded embedding child owner through [perl/FSM/Support/DebugRuntimeContract.pm](perl/FSM/Support/DebugRuntimeContract.pm); it stabilizes the explicit save/restore helper families, the bounded snapshot-state keys, the supported named trace-verbosity values, and the still-honest limit that `FSM::Debug` remains a process-global singleton rather than a thread-local context, is advertised through `embedding.debug_runtime`, and is regression-locked by [t/374-debug-runtime-contract.t](t/374-debug-runtime-contract.t) plus the embedding/manifest regressions.
 - The nested `source_info` object used by in-process `HDLGenerator` results now also has its own explicit contract owner through `FSM::Support::HDLGeneratorSourceInfoContract`; it stabilizes the current `header` / `kind` identity keys plus the `package_import_count` / `package_import_names` summary keys, keeps the wider `source_info` hash explicitly non-stable, is advertised through `FSM::Support::HDLGeneratorResultContract`, and is regression-locked by `t/342-hdl-generator-source-info-contract.t` plus the embedding/result-contract regressions.

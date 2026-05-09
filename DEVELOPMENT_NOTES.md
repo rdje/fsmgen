@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator optional composition map stays JSON-audited
+- The bounded `HDLGenerator` result contract now has focused JSON round-trip
+  coverage for `optional_composition_key_family_map`. Decoded grouped entries
+  must stay aligned with the scalar optional-composition key lists.
+- This keeps composition-only key discovery guarded without adding fields.
 ## 2026-05-10: HDLGenerator stable subsurfaces stay JSON-audited
 - The bounded `HDLGenerator` result contract now has focused JSON round-trip
   coverage for `stable_subsurface_map`. Decoded grouped entries must stay

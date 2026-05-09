@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### HDLGenerator optional composition map survives JSON
+- Added
+  [t/724-hdl-generator-result-contract-optional-composition-map-json-roundtrip-audit.t](t/724-hdl-generator-result-contract-optional-composition-map-json-roundtrip-audit.t)
+  to prove the bounded `HDLGenerator` result contract's decoded
+  `optional_composition_key_family_map` survives JSON round trip and remains
+  aligned with scalar optional-composition key lists.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions optional composition-family JSON coverage.
 ### HDLGenerator stable subsurfaces survive JSON
 - Added
   [t/723-hdl-generator-result-contract-stable-subsurface-json-roundtrip-audit.t](t/723-hdl-generator-result-contract-stable-subsurface-json-roundtrip-audit.t)
