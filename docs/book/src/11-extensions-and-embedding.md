@@ -499,7 +499,9 @@ preserves it across manifest JSON encode/decode. Its
 `surface_registry` maps each serializable surface to its contract owner and
 portable dotted primary report paths. Each registry entry has a scalar owner
 aligned with the nested source map and a non-empty unique path list, and returns
-fresh caller-owned containers that round-trip as JSON data. The capability
+fresh caller-owned containers that round-trip as JSON data. The parent contract
+also preserves the embedded registry across full-contract JSON round-trip and
+keeps it aligned with the decoded JSON-safe surface list. The capability
 manifest embeds the canonical
 registry, rebuilds it cleanly after caller mutation, and preserves it across
 manifest JSON encode/decode. Its manifest-embedded

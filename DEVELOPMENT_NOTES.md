@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Parent registry survives full-contract serialization
+- The parent `surface_registry` should survive as part of the complete
+  serializable plan/report contract, not only as a standalone helper payload. The
+  decoded registry must still cover the decoded JSON-safe surface list.
 ## 2026-05-09: Parent registry entry keys survive serialization
 - The parent `surface_registry_entry_keys` list is the compact schema for each
   registry entry. It must survive contract JSON encode/decode as a unique list
