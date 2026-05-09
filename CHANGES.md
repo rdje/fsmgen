@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Parent plan/report guidance survives JSON
+- Added
+  [t/703-serializable-plan-report-guidance-json-roundtrip-audit.t](t/703-serializable-plan-report-guidance-json-roundtrip-audit.t)
+  to prove the standalone serializable plan/report contract's decoded
+  `guidance` list remains a unique non-empty scalar list that still directs
+  embedders toward JSON-safe reports and away from raw `HDLGenerator` branches.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions decoded guidance alongside report discovery.
 ### Parent public report key metadata survives JSON
 - Added
   [t/702-serializable-plan-report-public-report-key-metadata-json-roundtrip-audit.t](t/702-serializable-plan-report-public-report-key-metadata-json-roundtrip-audit.t)

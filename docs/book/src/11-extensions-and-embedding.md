@@ -42,7 +42,9 @@ standalone parent contract and the manifest-embedded branch are JSON-round-trip
 audited so embedders can validate the bounded shell, confirm its identity
 metadata, discover the advertised portable report surfaces they decoded, and
 check the public key lists for the normalized semantic and composition
-provenance reports those surfaces point at.
+provenance reports those surfaces point at. The same branch carries embedder
+guidance that is audited to keep directing consumers toward those JSON-safe
+reports rather than raw in-process `HDLGenerator` branches.
 
 The public machine-JSON CLI boundary is runtime-audited too:
 [t/384-public-json-trace-stdout-boundary-audit.t](t/384-public-json-trace-stdout-boundary-audit.t)

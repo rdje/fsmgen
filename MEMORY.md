@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Parent plan/report guidance survives JSON
+- Added
+  [t/703-serializable-plan-report-guidance-json-roundtrip-audit.t](t/703-serializable-plan-report-guidance-json-roundtrip-audit.t)
+  to lock the standalone serializable plan/report contract's decoded
+  `guidance` list as a unique non-empty scalar list that still points embedders
+  toward JSON-safe report surfaces and away from raw `HDLGenerator` branches.
+- This mirrors the manifest-side guidance JSON guard without changing the
+  current `R13` serializable report API.
+- Focused validation passed:
+  `perl -Iperl -c t/703-serializable-plan-report-guidance-json-roundtrip-audit.t && prove -l t/703-serializable-plan-report-guidance-json-roundtrip-audit.t t/690-capability-manifest-plan-report-guidance-json-roundtrip-audit.t t/654-serializable-plan-report-contract-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Parent public report key metadata survives JSON
 - Added
   [t/702-serializable-plan-report-public-report-key-metadata-json-roundtrip-audit.t](t/702-serializable-plan-report-public-report-key-metadata-json-roundtrip-audit.t)

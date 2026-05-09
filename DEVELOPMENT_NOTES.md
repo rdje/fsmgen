@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Parent guidance stays JSON-audited
+- The standalone serializable plan/report contract now has a focused JSON
+  round-trip guard for embedder guidance. Decoded guidance must stay a unique
+  non-empty scalar list and continue pointing consumers toward JSON-safe report
+  surfaces rather than raw `HDLGenerator` branches.
+- This keeps the parent guidance contract aligned with the manifest-embedded
+  branch without adding fields.
 ## 2026-05-10: Parent public report key metadata stays JSON-audited
 - The standalone serializable plan/report contract now has a focused JSON
   round-trip guard for the public report key metadata that points embedders at
