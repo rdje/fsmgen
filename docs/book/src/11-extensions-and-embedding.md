@@ -485,7 +485,8 @@ That direction now has a concrete manifest surface:
 is advertised as `embedding.serializable_plan_reports`, listing the current
 JSON-safe report families and mapping raw `HDLGenerator` compatibility shells to
 preferred serializable replacements. Its `surface_registry` maps each
-serializable surface to its contract owner and primary report paths. That parent
+serializable surface to its contract owner and primary report paths, and returns
+fresh caller-owned containers. That parent
 contract returns fresh nested
 maps, lists, and embedded child contracts, so discovery-time annotations do not
 pollute later manifest construction. The capability manifest builder also

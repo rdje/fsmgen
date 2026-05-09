@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Serializable plan/report registry containers are caller-owned
+- `serializable_plan_report_surface_registry()` and the parent contract's
+  embedded `surface_registry` return fresh nested containers. Callers can
+  annotate registry entries or path lists without polluting later builds.
 ## 2026-05-09: Serializable plan/report surfaces have an explicit registry
 - `embedding.serializable_plan_reports.surface_registry` is the canonical map
   from surface name to contract owner and primary report paths. Use it when

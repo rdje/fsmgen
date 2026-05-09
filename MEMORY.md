@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Serializable plan/report surface registry copy boundary is audited
+- Added
+  [t/666-serializable-plan-report-surface-registry-defensive-copy-audit.t](t/666-serializable-plan-report-surface-registry-defensive-copy-audit.t)
+  to prove the explicit `surface_registry` returns fresh nested containers.
+- Focused validation passed:
+  `prove -l t/666-serializable-plan-report-surface-registry-defensive-copy-audit.t t/665-serializable-plan-report-surface-registry.t t/645-serializable-plan-report-contract-defensive-copy-boundary-audit.t`.
 ## 2026-05-09: Serializable plan/report surface registry is explicit
 - Added `surface_registry` to `embedding.serializable_plan_reports` and exported
   `serializable_plan_report_surface_registry()` for embedders that need a stable

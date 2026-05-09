@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Serializable plan/report surface registry copy boundary is audited
+- Added
+  [t/666-serializable-plan-report-surface-registry-defensive-copy-audit.t](t/666-serializable-plan-report-surface-registry-defensive-copy-audit.t)
+  to prove `serializable_plan_report_surface_registry()` and the parent contract's
+  embedded registry return fresh caller-owned nested containers.
+- This is `R13` contract-integrity coverage for the explicit registry; no public
+  shape changed.
 ### Serializable plan/report surface registry is explicit
 - Added `surface_registry` to the parent `embedding.serializable_plan_reports`
   contract and exported `serializable_plan_report_surface_registry()`.
