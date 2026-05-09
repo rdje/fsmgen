@@ -630,6 +630,9 @@ Current direction:
 - First surface: `embedding.serializable_plan_reports` now advertises the
   current JSON-safe report families and raw-shell replacement guidance through
   [perl/FSM/Support/SerializablePlanReportContract.pm](perl/FSM/Support/SerializablePlanReportContract.pm).
+- First plan API: [perl/FSM/Support/SerializableCompositionPlanSnapshot.pm](perl/FSM/Support/SerializableCompositionPlanSnapshot.pm)
+  now provides a bounded JSON-safe `composition_plan_snapshot` summary for raw
+  composition plans.
 
 Expected result:
 - the project becomes a stronger platform for downstream tooling, not just a CLI.

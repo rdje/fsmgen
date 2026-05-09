@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Serializable composition plan snapshots are available
+- Added [perl/FSM/Support/SerializableCompositionPlanSnapshot.pm](perl/FSM/Support/SerializableCompositionPlanSnapshot.pm)
+  with `build_serializable_composition_plan_snapshot(...)` and its bounded
+  contract.
+- Updated `embedding.serializable_plan_reports` so `composition_plan_snapshot`
+  is the preferred JSON-safe replacement for raw `HDLGenerator`
+  `composition_plan` traversal.
+- Focused validation passed:
+  `prove -l t/630-serializable-composition-plan-snapshot.t t/629-serializable-plan-report-contract.t t/321-embedding-contract.t t/297-capability-manifest.t`.
 ## 2026-05-09: Serializable plan/report contract is advertised
 - Added [perl/FSM/Support/SerializablePlanReportContract.pm](perl/FSM/Support/SerializablePlanReportContract.pm)
   and exposed it as `embedding.serializable_plan_reports` in the capability

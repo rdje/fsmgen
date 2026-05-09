@@ -1807,7 +1807,12 @@ to live behind their own dedicated contracts.
 The `embedding.serializable_plan_reports` child is owned by
 [perl/FSM/Support/SerializablePlanReportContract.pm](perl/FSM/Support/SerializablePlanReportContract.pm)
 and advertises the current JSON-safe report families plus replacement guidance
-for raw `HDLGenerator` compatibility shells.
+for raw `HDLGenerator` compatibility shells. Its first dedicated plan API is
+[perl/FSM/Support/SerializableCompositionPlanSnapshot.pm](perl/FSM/Support/SerializableCompositionPlanSnapshot.pm),
+which builds a JSON-safe `composition_plan_snapshot` with shallow counts and
+summaries for ports, links, nets, instances, auxiliary assignments, and
+shared-datapath candidates without exporting the raw `FSM::Composition::Plan`
+object graph.
 The sibling facade and debug-runtime child contracts also have direct
 self-description guards:
 [t/375-hdl-generator-facade-contract.t](t/375-hdl-generator-facade-contract.t)

@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Serializable composition plan snapshots are available
+- Added
+  [perl/FSM/Support/SerializableCompositionPlanSnapshot.pm](perl/FSM/Support/SerializableCompositionPlanSnapshot.pm)
+  as the first bounded plan snapshot API under the `R13` serializable
+  plan/report direction.
+- `embedding.serializable_plan_reports` now advertises
+  `composition_plan_snapshot` as the preferred replacement for raw
+  `HDLGenerator` `composition_plan` traversal.
+- Added
+  [t/630-serializable-composition-plan-snapshot.t](t/630-serializable-composition-plan-snapshot.t)
+  to prove the snapshot contract, JSON encodability, absent-plan shape, and
+  absence of raw blessed plan objects.
 ### Serializable plan/report contract is advertised
 - Added
   [perl/FSM/Support/SerializablePlanReportContract.pm](perl/FSM/Support/SerializablePlanReportContract.pm)

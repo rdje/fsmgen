@@ -17,6 +17,9 @@ use FSM::Support::EmbeddingContract qw(
     embedding_nested_presence_key_map
 );
 use FSM::Support::NormalizedSemanticReportContract qw(normalized_semantic_report_contract_source);
+use FSM::Support::SerializableCompositionPlanSnapshot qw(
+    serializable_composition_plan_snapshot_contract_source
+);
 use FSM::Support::SerializablePlanReportContract qw(
     build_serializable_plan_report_contract
     serializable_plan_report_contract_source
@@ -55,6 +58,11 @@ subtest 'serializable plan/report contract advertises JSON-safe surface families
         $contract->{nested_contract_source_map}{normalized_semantic_json},
         normalized_semantic_report_contract_source(),
         'normalized semantic JSON is the semantic report contract',
+    );
+    is(
+        $contract->{nested_contract_source_map}{composition_plan_snapshot},
+        serializable_composition_plan_snapshot_contract_source(),
+        'composition plan snapshot is the serializable plan snapshot contract',
     );
     is(
         $contract->{nested_contract_source_map}{composition_provenance_report},

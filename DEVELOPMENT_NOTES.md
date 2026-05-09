@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Composition plan snapshots are JSON-safe summaries
+- [perl/FSM/Support/SerializableCompositionPlanSnapshot.pm](perl/FSM/Support/SerializableCompositionPlanSnapshot.pm)
+  is the first concrete serializable plan API behind
+  `embedding.serializable_plan_reports`.
+- The snapshot intentionally exports shallow, bounded plan facts: lane, top name,
+  counts, top ports, links, resolved-link endpoints, nets, child instances,
+  auxiliary assignments, and shared-datapath candidate summaries. It does not
+  expose the raw `FSM::Composition::Plan` object graph as public JSON.
 ## 2026-05-09: Serializable plan/report contract is the first R13 API surface
 - [perl/FSM/Support/SerializablePlanReportContract.pm](perl/FSM/Support/SerializablePlanReportContract.pm)
   makes the `R13` decision executable in the capability manifest instead of

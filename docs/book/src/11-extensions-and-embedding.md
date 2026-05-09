@@ -485,6 +485,13 @@ That direction now has a concrete manifest surface:
 is advertised as `embedding.serializable_plan_reports`, listing the current
 JSON-safe report families and mapping raw `HDLGenerator` compatibility shells to
 preferred serializable replacements.
+The first plan-oriented API behind that surface is
+[perl/FSM/Support/SerializableCompositionPlanSnapshot.pm](perl/FSM/Support/SerializableCompositionPlanSnapshot.pm):
+`build_serializable_composition_plan_snapshot(...)` emits a JSON-safe
+`composition_plan_snapshot` with bounded summaries for the plan lane, top module,
+ports, links, resolved-link endpoints, nets, instances, auxiliary assignments,
+and shared-datapath candidates without exposing the raw
+`FSM::Composition::Plan` object graph.
 Tracked documentation and book links use paths relative to the repository root;
 machine-local absolute filesystem paths are not part of the public embedding
 surface.
