@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Direct generation module_info forward summaries are alias-audited
+- Added
+  [t/589-direct-generation-module-info-forward-ir-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/589-direct-generation-module-info-forward-ir-alias-boundary-audit.t)
+  to prove direct-generation `module_info` forward summary containers such as
+  `signal_analysis` and `signal_names` remain equivalent to their embedded
+  `intent_hir` mirrors without sharing mutable containers.
+- This is `R13` runtime contract-integrity coverage only. No production code,
+  public manifest shape, generation behavior, or roadmap lane status changed.
 ### HDLGenerator direct extensions constructor input is alias-audited
 - Added
   [t/588-hdl-generator-direct-extensions-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/588-hdl-generator-direct-extensions-alias-boundary-audit.t)

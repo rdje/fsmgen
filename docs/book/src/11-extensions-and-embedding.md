@@ -566,6 +566,9 @@ Composition `module_info` summary projections such as `signal_analysis`,
 `composition_children`, and `composition_generated_children` are also audited
 as owned result containers. They start equivalent to their embedded
 `intent_hir` mirrors, but annotating either location does not mutate the other.
+Direct-generation `module_info` forward summary projections such as
+`signal_analysis` and `signal_names` follow the same rule: they start equivalent
+to their embedded `intent_hir` mirrors without sharing mutable containers.
 The same rule applies to lowered summary projections such as
 `internal_net_names` and `instance_names`: they start equivalent to the embedded
 `lowered_rtl_ir` mirrors without sharing mutable containers.

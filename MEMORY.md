@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Direct generation module_info forward summaries are alias-audited
+- Added
+  [t/589-direct-generation-module-info-forward-ir-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/589-direct-generation-module-info-forward-ir-alias-boundary-audit.t)
+  to prove direct-generation `module_info` forward summary containers such as
+  `signal_analysis` and `signal_names` remain equivalent to their embedded
+  `intent_hir` mirrors without sharing mutable containers.
+- Focused validation:
+  `perl -Iperl -c t/589-direct-generation-module-info-forward-ir-alias-boundary-audit.t && prove -lv t/574-direct-generation-semantic-ir-alias-boundary-audit.t t/589-direct-generation-module-info-forward-ir-alias-boundary-audit.t && mdbook build docs/book`
+  passed. This is `R13` runtime contract-integrity coverage only; no production
+  code, public manifest shape, user-facing generation behavior, or roadmap lane
+  status changed.
 ## 2026-05-09: HDLGenerator direct extensions constructor input is alias-audited
 - Added
   [t/588-hdl-generator-direct-extensions-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/588-hdl-generator-direct-extensions-alias-boundary-audit.t)

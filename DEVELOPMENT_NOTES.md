@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Direct module_info forward summaries mirror intent HIR without aliasing it
+- Direct-generation `module_info` keeps compatibility summary fields such as
+  `signal_analysis` and `signal_names` alongside the embedded `intent_hir`
+  payload. These fields should be initially equivalent but independently owned.
+- The new audit proves mutation in either direction stays local to the mutated
+  branch, matching the composition-generation mirror rule already locked for
+  forward-IR summaries.
 ## 2026-05-09: Direct extension object lists are construction-time inputs
 - `HDLGenerator->new(extensions => \@objects)` validates and registers the
   constructor-time object list through the typed-extension registry. Later
