@@ -22,6 +22,7 @@ use FSM::Support::SerializablePlanReportContract qw(
     serializable_plan_report_public_top_level_keys
     serializable_plan_report_raw_shell_replacement_keys
     serializable_plan_report_raw_shell_replacement_map
+    serializable_plan_report_surface_registry_entry_keys
 );
 
 subtest 'serializable plan/report contract remains plain data after JSON round trip' => sub {
@@ -65,6 +66,16 @@ subtest 'serializable plan/report contract remains plain data after JSON round t
         scalar(@{$decoded->{json_safe_surface_keys}}),
         scalar(keys %{as_set($decoded->{json_safe_surface_keys})}),
         'round-trip JSON-safe surface key list remains unique',
+    );
+    is_deeply(
+        $decoded->{surface_registry_entry_keys},
+        serializable_plan_report_surface_registry_entry_keys(),
+        'round-trip contract keeps surface registry entry key list',
+    );
+    is(
+        scalar(@{$decoded->{surface_registry_entry_keys}}),
+        scalar(keys %{as_set($decoded->{surface_registry_entry_keys})}),
+        'round-trip surface registry entry key list remains unique',
     );
     is_deeply(
         $decoded->{nested_contract_source_map},

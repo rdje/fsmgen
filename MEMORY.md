@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Parent surface registry entry keys round-trip as JSON
+- Updated
+  [t/654-serializable-plan-report-contract-json-roundtrip-audit.t](t/654-serializable-plan-report-contract-json-roundtrip-audit.t)
+  to prove parent-contract `surface_registry_entry_keys` survive JSON
+  encode/decode and remain unique.
+- Focused validation passed:
+  `perl -Iperl -c t/654-serializable-plan-report-contract-json-roundtrip-audit.t && prove -l t/654-serializable-plan-report-contract-json-roundtrip-audit.t t/677-serializable-plan-report-surface-registry-entry-contract.t t/680-capability-manifest-surface-registry-entry-keys-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-09: Parent plan/report public key list round-trips as JSON
 - Updated
   [t/654-serializable-plan-report-contract-json-roundtrip-audit.t](t/654-serializable-plan-report-contract-json-roundtrip-audit.t)

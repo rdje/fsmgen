@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Parent registry entry keys survive serialization
+- The parent `surface_registry_entry_keys` list is the compact schema for each
+  registry entry. It must survive contract JSON encode/decode as a unique list
+  so direct embedders can validate decoded registry entries without loading Perl.
 ## 2026-05-09: Parent plan/report public keys survive serialization
 - The parent `public_top_level_presence_keys` list must keep describing the
   serialized contract payload after JSON encode/decode. This preserves the
