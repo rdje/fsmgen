@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Stateful facade reuse returns fresh source-info composition specs
+- Composition results carry both the top-level raw `composition_spec` and the
+  `source_info.composition_spec` compatibility mirror. The top-level branch was
+  already stateful-audited; the source-info mirror now has the same reuse
+  coverage.
+- The audit mutates the source-info top name and package-import list in a first
+  result, then proves a later generation on the same facade returns the original
+  composition spec mirror.
 ## 2026-05-09: Stateful facade reuse returns fresh extension context snapshots
 - Typed extension contexts intentionally expose cloned `source_info` and
   `raw_ast` snapshots while keeping `result()` live for result-hook augmentation.

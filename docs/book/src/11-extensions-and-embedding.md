@@ -669,7 +669,9 @@ bounded semantic-composition fallback families from one place. Reusable
 `HDLGenerator` facade objects return fresh `composition_spec` objects per
 composition generation, so caller mutation of one result's raw composition
 object graph does not leak into a later result produced by the same facade
-object. The `composition_plan` branch
+object. The `source_info.composition_spec` compatibility mirror follows the
+same per-generation ownership rule when a facade object is reused. The
+`composition_plan` branch
 now also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorCompositionPlanContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorCompositionPlanContract.pm),
 which is the contract to follow for the raw composition-plan rule plus the

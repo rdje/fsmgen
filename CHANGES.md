@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Stateful source_info composition specs are alias-audited
+- Added
+  [t/610-hdl-generator-stateful-source-info-composition-spec-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/610-hdl-generator-stateful-source-info-composition-spec-alias-boundary-audit.t)
+  to prove mutating one composition result's
+  `source_info.composition_spec` object graph does not contaminate a later
+  generation on the same reusable `HDLGenerator` facade object.
+- This is `R13` runtime contract-integrity coverage only. No production code,
+  public manifest shape, generation behavior, or roadmap lane status changed.
 ### Stateful extension context snapshots are alias-audited
 - Added
   [t/609-hdl-generator-stateful-extension-context-snapshot-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/609-hdl-generator-stateful-extension-context-snapshot-alias-boundary-audit.t)
