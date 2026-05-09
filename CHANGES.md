@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Manifest raw shell replacement keys are copy-audited
+- Added
+  [t/683-capability-manifest-raw-shell-replacement-keys-defensive-copy-audit.t](t/683-capability-manifest-raw-shell-replacement-keys-defensive-copy-audit.t)
+  to prove caller mutation of manifest-embedded
+  `raw_shell_replacement_keys` does not pollute later manifest builds.
 ### Manifest raw shell replacement keys are explicit
 - Added
   [t/682-capability-manifest-raw-shell-replacement-keys-contract.t](t/682-capability-manifest-raw-shell-replacement-keys-contract.t)

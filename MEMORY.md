@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Manifest raw shell replacement keys are copy-audited
+- Added
+  [t/683-capability-manifest-raw-shell-replacement-keys-defensive-copy-audit.t](t/683-capability-manifest-raw-shell-replacement-keys-defensive-copy-audit.t)
+  to prove caller mutation of manifest-embedded `raw_shell_replacement_keys`
+  does not pollute later manifest builds and the rebuilt child contract remains
+  canonical.
+- Focused validation passed:
+  `perl -Iperl -c t/683-capability-manifest-raw-shell-replacement-keys-defensive-copy-audit.t && prove -l t/683-capability-manifest-raw-shell-replacement-keys-defensive-copy-audit.t t/682-capability-manifest-raw-shell-replacement-keys-contract.t t/646-capability-manifest-serializable-plan-report-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-09: Manifest raw shell replacement keys are explicit
 - Added
   [t/682-capability-manifest-raw-shell-replacement-keys-contract.t](t/682-capability-manifest-raw-shell-replacement-keys-contract.t)

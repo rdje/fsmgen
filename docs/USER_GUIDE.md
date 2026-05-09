@@ -1810,12 +1810,14 @@ and advertises the current JSON-safe report families plus replacement guidance
 for raw `HDLGenerator` compatibility shells. The parent contract publishes
 `raw_shell_replacement_keys` so tools can discover that compatibility branch
 family directly, and the capability manifest embeds that same key list with a
-matching replacement map. Its `surface_registry` maps each
-surface to its contract owner and portable dotted primary report paths, with
-owners aligned to the nested source map, non-empty unique path lists, and fresh caller-owned
-containers that round-trip as JSON data. The capability manifest embeds the
-canonical registry, rebuilds it cleanly, and preserves it across manifest JSON
-encode/decode. Embedding nested presence metadata advertises the registry branch.
+matching replacement map and rebuilds it cleanly per call. Its
+`surface_registry` maps each surface to its contract owner and portable dotted
+primary report paths, with
+owners aligned to the nested source map, non-empty unique path lists, and fresh
+caller-owned containers that round-trip as JSON data. The capability manifest
+embeds the canonical registry, rebuilds it cleanly, and preserves it across
+manifest JSON encode/decode. Embedding nested presence metadata advertises the
+registry branch.
 Manifest-embedded registry owners stay aligned with the manifest-embedded nested
 source map, and manifest registry paths remain portable dotted report paths with
 the same scalar-owner/non-empty-unique-path invariants as the standalone registry.

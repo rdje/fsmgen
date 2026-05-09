@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Manifest raw shell replacement key discovery is caller-owned
+- Manifest consumers may annotate `raw_shell_replacement_keys` during discovery,
+  but those mutations must remain caller-local. Fresh manifest builds must
+  rebuild the embedded serializable plan/report contract from the canonical
+  owner instead of sharing the previous caller's replacement-key list.
 ## 2026-05-09: Manifest raw shell replacement keys mirror the parent contract
 - The capability manifest is the JSON discovery surface for
   `embedding.serializable_plan_reports`, so its embedded
