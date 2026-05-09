@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Composition resolved package-spec mirrors are object-independent
+- Composition results expose resolved imports at the top level and also under
+  `source_info`. The maps had existing alias coverage; this audit verifies the
+  raw `FSM::Package::Spec` objects inside those maps are independent mirrors too.
+- The audit mutates package names, enum payloads, and raw package ASTs from each
+  side in turn and proves the sibling mirror remains unchanged.
 ## 2026-05-09: Stateful facade reuse returns fresh resolved package specs
 - `resolved_package_imports` is shell-only because its values are raw
   `FSM::Package::Spec` objects. The map container was already stateful-audited;

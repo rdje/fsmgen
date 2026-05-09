@@ -511,6 +511,10 @@ object.
 The raw `FSM::Package::Spec` values inside that map are also per-generation
 objects for facade reuse: mutating one result's package name, symbols, or raw
 package AST does not leak into a later generation.
+Composition results keep the top-level `resolved_package_imports` map and
+`source_info.resolved_package_imports` as independent mirrors down to the raw
+package-spec object graph, so annotating either mirror does not rewrite the
+other one.
 The top-level `fsm_module` branch is shell-only too when it is defined: it is a
 raw `FSM::CoreAST::FSMModule` object kept for in-process compatibility, so
 structured downstream consumers should prefer `intent_hir`, `lowered_rtl_ir`,

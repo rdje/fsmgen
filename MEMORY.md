@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Composition resolved package-spec mirrors are alias-audited
+- Added
+  [t/606-composition-generation-resolved-package-spec-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/606-composition-generation-resolved-package-spec-alias-boundary-audit.t)
+  to prove top-level `resolved_package_imports` and
+  `source_info.resolved_package_imports` do not share raw
+  `FSM::Package::Spec` object graphs in composition results.
+- Focused validation:
+  `perl -Iperl -c t/606-composition-generation-resolved-package-spec-alias-boundary-audit.t && prove -lv t/573-composition-generation-resolved-package-imports-alias-boundary-audit.t t/606-composition-generation-resolved-package-spec-alias-boundary-audit.t && mdbook build docs/book`
+  passed. This is `R13` runtime contract-integrity coverage only; no production
+  code, public manifest shape, user-facing generation behavior, or roadmap lane
+  status changed.
 ## 2026-05-09: Stateful resolved package specs are alias-audited
 - Added
   [t/605-hdl-generator-stateful-resolved-package-spec-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/605-hdl-generator-stateful-resolved-package-spec-alias-boundary-audit.t)

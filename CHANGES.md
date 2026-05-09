@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Composition resolved package-spec mirrors are alias-audited
+- Added
+  [t/606-composition-generation-resolved-package-spec-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/606-composition-generation-resolved-package-spec-alias-boundary-audit.t)
+  to prove top-level `resolved_package_imports` and
+  `source_info.resolved_package_imports` do not share raw
+  `FSM::Package::Spec` object graphs in composition results.
+- This is `R13` runtime contract-integrity coverage only. No production code,
+  public manifest shape, generation behavior, or roadmap lane status changed.
 ### Stateful resolved package specs are alias-audited
 - Added
   [t/605-hdl-generator-stateful-resolved-package-spec-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/605-hdl-generator-stateful-resolved-package-spec-alias-boundary-audit.t)
