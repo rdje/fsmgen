@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Programmatic extension config-file lists are construction-time inputs
+- `HDLGenerator->new(extension_config_files => \@configs)` reads the supplied
+  config files and builds the typed-extension registry during facade
+  construction. Later edits to the caller's config-file path array cannot change
+  which hooks are installed on that facade object.
+- The audit mirrors the `extension_modules` list boundary with competing
+  temporary config files, then proves only the constructor-time config path is
+  used during generation.
 ## 2026-05-09: Programmatic extension module lists are construction-time inputs
 - `HDLGenerator->new(extension_modules => \@modules)` resolves module names and
   builds the typed-extension registry during facade construction. The resulting

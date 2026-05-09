@@ -94,6 +94,10 @@ The same construction-time ownership applies at the facade loader entrypoint:
 `HDLGenerator->new(extension_modules => \@modules)` resolves and registers the
 listed modules during construction, so later caller mutation of `@modules` does
 not add, remove, or replace hooks on that facade object.
+`HDLGenerator->new(extension_config_files => \@configs)` follows the same rule
+for config-file discovery: the constructor-time config path list is read during
+facade construction, and later caller mutation of `@configs` cannot change the
+installed hooks.
 
 That same owner now also publishes a grouped `name_family_map` so embedders
 can discover the bounded hook-name, context-accessor, and supported-source-kind
