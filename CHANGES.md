@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Manifest replacement keys are covered in the main branch audit
+- Updated
+  [t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t](t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t)
+  to prove manifest-embedded `raw_shell_replacement_keys` survive the main JSON
+  round-trip and still match the replacement map.
 ### Manifest report key metadata is covered in the main branch audit
 - Updated
   [t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t](t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t)

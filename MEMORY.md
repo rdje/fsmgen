@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Manifest replacement keys are covered in the main branch audit
+- Updated
+  [t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t](t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t)
+  to prove manifest-embedded `raw_shell_replacement_keys` survive the main JSON
+  round-trip and still match the replacement map.
+- Focused validation passed:
+  `perl -Iperl -c t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t && prove -l t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t t/684-capability-manifest-raw-shell-replacement-keys-json-roundtrip-audit.t t/654-serializable-plan-report-contract-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-09: Manifest report key metadata is covered in the main branch audit
 - Updated
   [t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t](t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t)

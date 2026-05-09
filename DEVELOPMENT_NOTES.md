@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Manifest replacement keys are in the main audit
+- The main manifest branch JSON audit now covers `raw_shell_replacement_keys`
+  alongside the replacement map. Decoded manifests should expose both the map and
+  its advertised key family in one broad branch check.
 ## 2026-05-09: Manifest report key metadata is in the main audit
 - The main manifest branch JSON audit now covers normalized semantic report keys,
   composition report keys, and the composition report fragment path. This keeps

@@ -19,6 +19,7 @@ use FSM::Support::NormalizedSemanticReportContract qw(normalized_semantic_public
 use FSM::Support::SerializablePlanReportContract qw(
     serializable_plan_report_json_safe_surface_keys
     serializable_plan_report_nested_contract_source_map
+    serializable_plan_report_raw_shell_replacement_keys
     serializable_plan_report_raw_shell_replacement_map
     serializable_plan_report_surface_registry
 );
@@ -54,6 +55,16 @@ subtest 'capability manifest serializable_plan_reports branch survives JSON roun
         $branch->{raw_shell_replacement_map},
         serializable_plan_report_raw_shell_replacement_map(),
         'round-trip manifest keeps raw-shell replacement map',
+    );
+    is_deeply(
+        $branch->{raw_shell_replacement_keys},
+        serializable_plan_report_raw_shell_replacement_keys(),
+        'round-trip manifest keeps raw-shell replacement key list',
+    );
+    is_deeply(
+        as_set([keys %{$branch->{raw_shell_replacement_map}}]),
+        as_set($branch->{raw_shell_replacement_keys}),
+        'round-trip manifest replacement map keys match decoded key list',
     );
     is_deeply(
         $branch->{guidance},
