@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Serializable child report source ownership is audited
+- Added
+  [t/660-serializable-child-report-source-ownership-audit.t](t/660-serializable-child-report-source-ownership-audit.t)
+  to prove child serializable contracts and reports identify their owning support
+  module through `contract_source` and `report_source`.
+- This is `R13` source-ownership metadata coverage only; no public JSON shape
+  changed.
 ### Check JSON top-level key alignment is audited
 - Added
   [t/659-check-json-top-level-key-alignment-audit.t](t/659-check-json-top-level-key-alignment-audit.t)

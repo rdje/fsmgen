@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Serializable child report source ownership is audited
+- Added
+  [t/660-serializable-child-report-source-ownership-audit.t](t/660-serializable-child-report-source-ownership-audit.t)
+  to prove child serializable report contracts and payloads point
+  `contract_source` and `report_source` at their owning support modules.
+- Focused validation passed:
+  `prove -l t/660-serializable-child-report-source-ownership-audit.t t/657-serializable-child-report-public-key-alignment-audit.t t/629-serializable-plan-report-contract.t`.
 ## 2026-05-09: Check JSON top-level key alignment is audited
 - Added
   [t/659-check-json-top-level-key-alignment-audit.t](t/659-check-json-top-level-key-alignment-audit.t)

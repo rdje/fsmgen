@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Serializable child reports must identify their owner
+- Child serializable report contracts and emitted payloads must carry
+  `contract_source` and `report_source` values that point to their owning
+  support module.
 ## 2026-05-09: Check JSON top-level report keys must match contract sets
 - Actual check JSON success reports must emit exactly common top-level keys plus
   the success-only `result` key. Failure reports must emit exactly common
