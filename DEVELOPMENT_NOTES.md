@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Parent registry entry keys stay JSON-audited
+- The standalone serializable plan/report contract now has a focused JSON
+  round-trip guard for `surface_registry_entry_keys`. Decoded entry-key
+  metadata must still match the canonical helper and every decoded registry
+  entry shape.
+- This keeps the parent registry shape signal aligned with the manifest-embedded
+  branch without adding fields.
 ## 2026-05-10: Parent raw-shell replacement keys stay JSON-audited
 - The standalone serializable plan/report contract now has a focused JSON
   round-trip guard for `raw_shell_replacement_keys`. Decoded keys must still

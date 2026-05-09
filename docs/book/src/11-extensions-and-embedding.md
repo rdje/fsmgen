@@ -48,6 +48,8 @@ reports rather than raw in-process `HDLGenerator` branches, and its JSON-safety
 flags are audited as decoded JSON booleans with that same safe/raw split. The
 raw-shell replacement key list is also audited after JSON round trip so tools
 can match raw compatibility branches to their advertised portable replacements.
+The surface-registry entry-key list is audited the same way, so each decoded
+registry entry can be checked against the advertised bounded entry shape.
 
 The public machine-JSON CLI boundary is runtime-audited too:
 [t/384-public-json-trace-stdout-boundary-audit.t](t/384-public-json-trace-stdout-boundary-audit.t)

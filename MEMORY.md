@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Parent registry entry keys survive JSON
+- Added
+  [t/706-serializable-plan-report-surface-registry-entry-keys-json-roundtrip-audit.t](t/706-serializable-plan-report-surface-registry-entry-keys-json-roundtrip-audit.t)
+  to lock the standalone serializable plan/report contract's decoded
+  `surface_registry_entry_keys` against the canonical helper and every decoded
+  `surface_registry` entry shape after JSON round trip.
+- This mirrors the manifest-side registry-entry-key guard without changing the
+  current `R13` serializable report API.
+- Focused validation passed:
+  `perl -Iperl -c t/706-serializable-plan-report-surface-registry-entry-keys-json-roundtrip-audit.t && prove -l t/706-serializable-plan-report-surface-registry-entry-keys-json-roundtrip-audit.t t/680-capability-manifest-surface-registry-entry-keys-json-roundtrip-audit.t t/654-serializable-plan-report-contract-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Parent raw-shell replacement keys survive JSON
 - Added
   [t/705-serializable-plan-report-raw-shell-replacement-keys-json-roundtrip-audit.t](t/705-serializable-plan-report-raw-shell-replacement-keys-json-roundtrip-audit.t)

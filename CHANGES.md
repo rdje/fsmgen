@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Parent registry entry keys survive JSON
+- Added
+  [t/706-serializable-plan-report-surface-registry-entry-keys-json-roundtrip-audit.t](t/706-serializable-plan-report-surface-registry-entry-keys-json-roundtrip-audit.t)
+  to prove the standalone serializable plan/report contract's decoded
+  `surface_registry_entry_keys` still match the canonical helper and every
+  decoded `surface_registry` entry shape.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions decoded surface-registry entry-shape discovery.
 ### Parent raw-shell replacement keys survive JSON
 - Added
   [t/705-serializable-plan-report-raw-shell-replacement-keys-json-roundtrip-audit.t](t/705-serializable-plan-report-raw-shell-replacement-keys-json-roundtrip-audit.t)
