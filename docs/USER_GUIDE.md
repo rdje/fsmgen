@@ -1826,7 +1826,8 @@ the bounded failure diagnostics/reporting surface.
 For tooling that only needs diagnostic status, the same manifest child now
 advertises [perl/FSM/Support/SerializableDiagnosticSummary.pm](perl/FSM/Support/SerializableDiagnosticSummary.pm)
 as `diagnostic_summary`, a JSON-safe count/code/severity summary that avoids
-binding to full diagnostic payload shapes.
+binding to full diagnostic payload shapes. Normalized semantic JSON now embeds
+that summary for both success and failure reports.
 The sibling facade and debug-runtime child contracts also have direct
 self-description guards:
 [t/375-hdl-generator-facade-contract.t](t/375-hdl-generator-facade-contract.t)

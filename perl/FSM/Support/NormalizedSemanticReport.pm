@@ -9,6 +9,7 @@ use JSON::PP ();
 use FSM::Support::CheckDiagnostics qw(build_check_failure_report build_check_success_report);
 use FSM::Support::CompositionReportContract qw(sanitize_composition_report);
 use FSM::Support::SerializableCompositionPlanSnapshot qw(build_serializable_composition_plan_snapshot);
+use FSM::Support::SerializableDiagnosticSummary qw(build_serializable_diagnostic_summary);
 use FSM::Support::SerializableGenerationResultSnapshot qw(build_serializable_generation_result_snapshot);
 
 our @EXPORT_OK = qw(
@@ -36,6 +37,12 @@ sub build_normalized_semantic_success_report {
         source => _source_contract(%args),
         success => JSON::PP::true,
         diagnostics => [],
+        diagnostic_summary => build_serializable_diagnostic_summary(
+            report => {
+                success => JSON::PP::true,
+                diagnostics => [],
+            },
+        ),
         support_accounting => $check_report->{support_accounting} || _unmatched_support_accounting(),
         semantic => _semantic_contract(
             result => $result,
@@ -74,6 +81,12 @@ sub build_normalized_semantic_failure_report {
         source => _source_contract(%args),
         success => JSON::PP::false,
         diagnostics => $diagnostics,
+        diagnostic_summary => build_serializable_diagnostic_summary(
+            report => {
+                success => JSON::PP::false,
+                diagnostics => $diagnostics,
+            },
+        ),
         support_accounting => $support_accounting,
         generated_output => {
             emitted => JSON::PP::false,

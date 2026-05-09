@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Semantic JSON embeds diagnostic summaries
+- Normalized semantic JSON now includes top-level `diagnostic_summary` for both
+  success and failure reports.
+- Focused validation passed:
+  `prove -l t/636-normalized-semantic-diagnostic-summary.t t/635-serializable-diagnostic-summary.t t/311-normalized-semantic-report-contract.t`
+  and `prove -l t/297-capability-manifest.t t/302-normalized-semantic-json.t t/634-normalized-semantic-snapshot-failure-boundary.t`.
 ## 2026-05-09: Serializable diagnostic summaries are advertised
 - Added [perl/FSM/Support/SerializableDiagnosticSummary.pm](perl/FSM/Support/SerializableDiagnosticSummary.pm)
   and advertised `diagnostic_summary` through

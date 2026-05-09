@@ -643,6 +643,8 @@ Current direction:
 - Diagnostic report API: [perl/FSM/Support/SerializableDiagnosticSummary.pm](perl/FSM/Support/SerializableDiagnosticSummary.pm)
   now provides a JSON-safe `diagnostic_summary` for stable diagnostic code/count
   inspection.
+- Public report path: normalized semantic JSON now embeds that summary for both
+  success and failure reports.
 
 Expected result:
 - the project becomes a stronger platform for downstream tooling, not just a CLI.

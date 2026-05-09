@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Semantic JSON embeds diagnostic summaries
+- Normalized semantic JSON now includes top-level `diagnostic_summary` for both
+  successful and failed reports, built by
+  [perl/FSM/Support/SerializableDiagnosticSummary.pm](perl/FSM/Support/SerializableDiagnosticSummary.pm).
+- Updated
+  [perl/FSM/Support/NormalizedSemanticReportContract.pm](perl/FSM/Support/NormalizedSemanticReportContract.pm)
+  and manifest regressions so the diagnostic summary owner is advertised.
+- Added [t/636-normalized-semantic-diagnostic-summary.t](t/636-normalized-semantic-diagnostic-summary.t)
+  to lock the public CLI path for success and failure summaries.
 ### Serializable diagnostic summaries are advertised
 - Added
   [perl/FSM/Support/SerializableDiagnosticSummary.pm](perl/FSM/Support/SerializableDiagnosticSummary.pm)

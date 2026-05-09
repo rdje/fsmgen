@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Semantic JSON carries diagnostic summaries
+- `diagnostic_summary` is now a top-level normalized semantic JSON branch for
+  both success and failure reports.
+- Unlike generation/plan snapshots, diagnostic summaries are not success-only:
+  the summary is useful exactly when a report fails, and it remains bounded to
+  counts/codes/severity metadata rather than duplicating full diagnostics.
 ## 2026-05-09: Diagnostic summaries are bounded report surfaces
 - [perl/FSM/Support/SerializableDiagnosticSummary.pm](perl/FSM/Support/SerializableDiagnosticSummary.pm)
   summarizes diagnostic arrays into counts, stable codes, severity counts, and

@@ -27,6 +27,9 @@ use FSM::Support::ReportGeneratedOutputContract qw(
 use FSM::Support::SerializableGenerationResultSnapshot qw(
     serializable_generation_result_snapshot_contract_source
 );
+use FSM::Support::SerializableDiagnosticSummary qw(
+    serializable_diagnostic_summary_contract_source
+);
 use FSM::Support::ReportProducerContract qw(
     report_producer_contract_source
 );
@@ -153,6 +156,7 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         {
             command => report_command_contract_source(),
             failure_diagnostic => check_failure_diagnostic_contract_source(),
+            diagnostic_summary => serializable_diagnostic_summary_contract_source(),
             generated_output => report_generated_output_contract_source(),
             generation_result_snapshot => serializable_generation_result_snapshot_contract_source(),
             composition => normalized_semantic_composition_contract_source(),
@@ -208,6 +212,11 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         $contract->{failure_diagnostic_contract_source},
         check_failure_diagnostic_contract_source(),
         'contract records the shared failure diagnostic nested-object owner',
+    );
+    is(
+        $contract->{diagnostic_summary_contract_source},
+        serializable_diagnostic_summary_contract_source(),
+        'contract records the diagnostic summary owner',
     );
     is(
         $contract->{generated_output_contract_source},
