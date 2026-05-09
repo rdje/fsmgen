@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Stateful facade reuse returns fresh direct structural_rtl_ir
+- The direct `structural_rtl_ir` shell carries structural ports, nets, links,
+  and counts. Reusing a facade must rebuild that shell per generation.
+- The audit mutates `module_name`, a port entry, and the nets list in a first
+  direct result, then proves the next generation returns the original structural
+  shell.
 ## 2026-05-09: Stateful facade reuse returns fresh direct lowered_rtl_ir
 - The top-level direct `lowered_rtl_ir` hash is also a per-generation semantic
   shell. Reusing a facade must rebuild both existing lowered summaries and any
