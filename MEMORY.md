@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Serializable plan/report surface registry owners are aligned
+- Added
+  [t/673-serializable-plan-report-surface-registry-owner-map-parity-audit.t](t/673-serializable-plan-report-surface-registry-owner-map-parity-audit.t)
+  to prove every `surface_registry` owner matches
+  `nested_contract_source_map`.
+- Focused validation passed:
+  `prove -l t/673-serializable-plan-report-surface-registry-owner-map-parity-audit.t t/672-serializable-plan-report-surface-registry-structure-audit.t t/661-serializable-plan-report-source-ownership-audit.t t/665-serializable-plan-report-surface-registry.t`.
 ## 2026-05-09: Serializable plan/report surface registry structure is audited
 - Added
   [t/672-serializable-plan-report-surface-registry-structure-audit.t](t/672-serializable-plan-report-surface-registry-structure-audit.t)

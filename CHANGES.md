@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Serializable plan/report surface registry owners are aligned
+- Added
+  [t/673-serializable-plan-report-surface-registry-owner-map-parity-audit.t](t/673-serializable-plan-report-surface-registry-owner-map-parity-audit.t)
+  to prove every `surface_registry` owner matches
+  `nested_contract_source_map` for the same surface, both standalone and inside
+  the parent contract.
+- This is `R13` registry owner-parity coverage only; no public shape changed.
 ### Serializable plan/report surface registry structure is audited
 - Added
   [t/672-serializable-plan-report-surface-registry-structure-audit.t](t/672-serializable-plan-report-surface-registry-structure-audit.t)
