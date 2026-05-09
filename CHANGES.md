@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Semantic JSON embeds generation result snapshots
+- Successful normalized semantic JSON reports now include top-level
+  `generation_result_snapshot`, built by
+  [perl/FSM/Support/SerializableGenerationResultSnapshot.pm](perl/FSM/Support/SerializableGenerationResultSnapshot.pm).
+- Updated
+  [perl/FSM/Support/NormalizedSemanticReportContract.pm](perl/FSM/Support/NormalizedSemanticReportContract.pm)
+  and manifest regressions so the snapshot is advertised as a success-only
+  public report branch.
+- Added
+  [t/633-normalized-semantic-generation-result-snapshot.t](t/633-normalized-semantic-generation-result-snapshot.t)
+  to lock the direct and composition CLI report paths.
 ### Serializable generation result snapshots are advertised
 - Added
   [perl/FSM/Support/SerializableGenerationResultSnapshot.pm](perl/FSM/Support/SerializableGenerationResultSnapshot.pm)

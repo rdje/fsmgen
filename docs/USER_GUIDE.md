@@ -1818,7 +1818,9 @@ The same manifest child also advertises
 [perl/FSM/Support/SerializableGenerationResultSnapshot.pm](perl/FSM/Support/SerializableGenerationResultSnapshot.pm)
 as `generation_result_snapshot`, a JSON-safe result summary that records stable
 module/source/HDL-size facts plus raw-shell presence metadata without exporting
-the raw `HDLGenerator` result hash as a public JSON API.
+the raw `HDLGenerator` result hash as a public JSON API. Successful normalized
+semantic JSON reports now expose that snapshot as top-level
+`generation_result_snapshot`.
 The sibling facade and debug-runtime child contracts also have direct
 self-description guards:
 [t/375-hdl-generator-facade-contract.t](t/375-hdl-generator-facade-contract.t)

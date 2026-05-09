@@ -499,7 +499,8 @@ The manifest surface also advertises
 as `generation_result_snapshot`, a JSON-safe summary of raw `HDLGenerator`
 results that records stable module/source/HDL-size facts, semantic-layer
 presence, and raw-shell presence/class metadata without turning the raw result
-hash into a public JSON API.
+hash into a public JSON API. Successful normalized semantic JSON reports now
+expose that snapshot as top-level `generation_result_snapshot`.
 Tracked documentation and book links use paths relative to the repository root;
 machine-local absolute filesystem paths are not part of the public embedding
 surface.

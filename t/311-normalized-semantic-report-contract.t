@@ -24,6 +24,9 @@ use FSM::Support::ReportCommandContract qw(
 use FSM::Support::ReportGeneratedOutputContract qw(
     report_generated_output_contract_source
 );
+use FSM::Support::SerializableGenerationResultSnapshot qw(
+    serializable_generation_result_snapshot_contract_source
+);
 use FSM::Support::ReportProducerContract qw(
     report_producer_contract_source
 );
@@ -151,6 +154,7 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
             command => report_command_contract_source(),
             failure_diagnostic => check_failure_diagnostic_contract_source(),
             generated_output => report_generated_output_contract_source(),
+            generation_result_snapshot => serializable_generation_result_snapshot_contract_source(),
             composition => normalized_semantic_composition_contract_source(),
             explicit_system_contract => normalized_semantic_explicit_system_contract_source(),
             forward_ir => normalized_semantic_forward_ir_contract_source(),
@@ -209,6 +213,11 @@ subtest 'contract exposes the bounded normalized semantic surface' => sub {
         $contract->{generated_output_contract_source},
         report_generated_output_contract_source(),
         'contract records the shared generated_output nested-object owner',
+    );
+    is(
+        $contract->{generation_result_snapshot_contract_source},
+        serializable_generation_result_snapshot_contract_source(),
+        'contract records the success-only generation-result snapshot owner',
     );
     is(
         $contract->{composition_contract_source},

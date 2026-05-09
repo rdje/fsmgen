@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Semantic JSON carries the generation result snapshot
+- Successful normalized semantic JSON reports now expose
+  `generation_result_snapshot` as a success-only top-level branch. This makes the
+  JSON-safe result summary available through the public CLI report path.
+- Failure reports still omit success-only payloads, preserving the existing
+  success/failure split while widening the bounded success contract.
 ## 2026-05-09: Generation result snapshots summarize raw results safely
 - [perl/FSM/Support/SerializableGenerationResultSnapshot.pm](perl/FSM/Support/SerializableGenerationResultSnapshot.pm)
   provides a JSON-safe summary of an `HDLGenerator` result without exporting the

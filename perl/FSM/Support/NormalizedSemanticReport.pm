@@ -9,6 +9,7 @@ use JSON::PP ();
 use FSM::Support::CheckDiagnostics qw(build_check_failure_report build_check_success_report);
 use FSM::Support::CompositionReportContract qw(sanitize_composition_report);
 use FSM::Support::SerializableCompositionPlanSnapshot qw(build_serializable_composition_plan_snapshot);
+use FSM::Support::SerializableGenerationResultSnapshot qw(build_serializable_generation_result_snapshot);
 
 our @EXPORT_OK = qw(
     build_normalized_semantic_failure_report
@@ -41,6 +42,7 @@ sub build_normalized_semantic_success_report {
             module_info => $module_info,
             target_language => $args{target_language},
         ),
+        generation_result_snapshot => build_serializable_generation_result_snapshot(result => $result),
         generated_output => {
             emitted => JSON::PP::false,
         },

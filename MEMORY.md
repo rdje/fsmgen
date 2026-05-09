@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Semantic JSON embeds generation result snapshots
+- Successful normalized semantic JSON reports now include top-level
+  `generation_result_snapshot`.
+- [perl/FSM/Support/NormalizedSemanticReportContract.pm](perl/FSM/Support/NormalizedSemanticReportContract.pm)
+  advertises the snapshot as a success-only public report branch.
+- Focused validation passed:
+  `prove -l t/297-capability-manifest.t t/633-normalized-semantic-generation-result-snapshot.t t/632-serializable-generation-result-snapshot.t t/311-normalized-semantic-report-contract.t t/302-normalized-semantic-json.t t/354-normalized-semantic-child-runtime-contract-audit.t`.
 ## 2026-05-09: Serializable generation result snapshots are advertised
 - Added [perl/FSM/Support/SerializableGenerationResultSnapshot.pm](perl/FSM/Support/SerializableGenerationResultSnapshot.pm)
   and advertised `generation_result_snapshot` through

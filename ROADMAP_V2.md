@@ -638,6 +638,8 @@ Current direction:
 - Second report API: [perl/FSM/Support/SerializableGenerationResultSnapshot.pm](perl/FSM/Support/SerializableGenerationResultSnapshot.pm)
   now provides a JSON-safe `generation_result_snapshot` summary for raw
   `HDLGenerator` results.
+- Public report path: successful normalized semantic JSON reports now embed that
+  snapshot as top-level `generation_result_snapshot`.
 
 Expected result:
 - the project becomes a stronger platform for downstream tooling, not just a CLI.
