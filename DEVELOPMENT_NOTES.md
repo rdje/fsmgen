@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator result top-level keys stay JSON-audited
+- The bounded `HDLGenerator` result contract now has focused JSON round-trip
+  coverage for its public, direct-root, and composition-root top-level key
+  families. Decoded families must still match the canonical known-key helper.
+- This keeps the result contract's top-level shell discoverability guarded
+  without adding fields.
 ## 2026-05-10: HDLGenerator result identity stays JSON-audited
 - The bounded `HDLGenerator` result contract now has focused JSON round-trip
   coverage for identity metadata: schema version, bounded status, canonical

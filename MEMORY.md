@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: HDLGenerator result top-level keys survive JSON
+- Added
+  [t/721-hdl-generator-result-contract-top-level-keys-json-roundtrip-audit.t](t/721-hdl-generator-result-contract-top-level-keys-json-roundtrip-audit.t)
+  to prove the bounded `HDLGenerator` result contract's decoded public,
+  direct-root, and composition-root top-level key families survive JSON round
+  trip and still match the canonical known-key helper.
+- This keeps the result contract's top-level shell discoverability auditable
+  without changing the result contract API.
+- Focused validation passed:
+  `perl -Iperl -c t/721-hdl-generator-result-contract-top-level-keys-json-roundtrip-audit.t && prove -l t/721-hdl-generator-result-contract-top-level-keys-json-roundtrip-audit.t t/305-hdl-generator-result-contract.t t/438-hdl-generator-result-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: HDLGenerator result identity survives JSON
 - Added
   [t/720-hdl-generator-result-contract-identity-json-roundtrip-audit.t](t/720-hdl-generator-result-contract-identity-json-roundtrip-audit.t)

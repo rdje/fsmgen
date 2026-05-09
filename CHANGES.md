@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### HDLGenerator result top-level keys survive JSON
+- Added
+  [t/721-hdl-generator-result-contract-top-level-keys-json-roundtrip-audit.t](t/721-hdl-generator-result-contract-top-level-keys-json-roundtrip-audit.t)
+  to prove the bounded `HDLGenerator` result contract's decoded public,
+  direct-root, and composition-root top-level key families survive JSON round
+  trip and still match the canonical known-key helper.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions result-contract top-level key JSON coverage.
 ### HDLGenerator result identity survives JSON
 - Added
   [t/720-hdl-generator-result-contract-identity-json-roundtrip-audit.t](t/720-hdl-generator-result-contract-identity-json-roundtrip-audit.t)

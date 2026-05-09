@@ -77,7 +77,9 @@ stays clean, trace output is routed to the requested trace file for report
 modes, and check/semantic JSON still do not write HDL artifacts.
 The bounded `HDLGenerator` result contract has also started receiving focused
 JSON round-trip coverage, beginning with an identity guard for its schema
-version, bounded status, owner, entrypoint, and primary test reference.
+version, bounded status, owner, entrypoint, and primary test reference. Its
+top-level public, direct-root, and composition-root key families are now guarded
+after JSON round trip as well.
 
 ## Current Philosophy
 
