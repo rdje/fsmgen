@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Parent surface-key metadata stays JSON-audited
+- The standalone serializable plan/report contract now has a focused
+  `json_safe_surface_keys` JSON round-trip guard that mirrors the
+  manifest-embedded branch. After decoding, the advertised surface list must
+  still equal the canonical helper and remain unique.
+- This keeps the existing `R13` discovery list auditable without adding new
+  serializable report fields.
 ## 2026-05-10: Parent public-key metadata stays JSON-audited
 - The standalone serializable plan/report contract now has the same focused
   public-key JSON guard shape as the manifest-embedded branch. The invariant is

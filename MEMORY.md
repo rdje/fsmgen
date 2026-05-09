@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Parent plan/report surface keys survive JSON
+- Added
+  [t/700-serializable-plan-report-surface-keys-json-roundtrip-audit.t](t/700-serializable-plan-report-surface-keys-json-roundtrip-audit.t)
+  to lock the standalone serializable plan/report contract's decoded
+  `json_safe_surface_keys` against the canonical helper and uniqueness after
+  JSON round trip.
+- This mirrors the manifest-side surface-key JSON guard while keeping the
+  `R13` serializable report API surface unchanged.
+- Focused validation passed:
+  `perl -Iperl -c t/700-serializable-plan-report-surface-keys-json-roundtrip-audit.t && prove -l t/700-serializable-plan-report-surface-keys-json-roundtrip-audit.t t/697-capability-manifest-plan-report-surface-keys-json-roundtrip-audit.t t/654-serializable-plan-report-contract-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Parent plan/report public keys survive JSON
 - Added
   [t/699-serializable-plan-report-public-keys-json-roundtrip-audit.t](t/699-serializable-plan-report-public-keys-json-roundtrip-audit.t)

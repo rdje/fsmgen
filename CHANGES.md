@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Parent plan/report surface keys survive JSON
+- Added
+  [t/700-serializable-plan-report-surface-keys-json-roundtrip-audit.t](t/700-serializable-plan-report-surface-keys-json-roundtrip-audit.t)
+  to prove the standalone serializable plan/report contract's decoded
+  `json_safe_surface_keys` still match the canonical helper and remain unique
+  after JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions both public-key and JSON-safe surface-key discovery.
 ### Parent plan/report public keys survive JSON
 - Added
   [t/699-serializable-plan-report-public-keys-json-roundtrip-audit.t](t/699-serializable-plan-report-public-keys-json-roundtrip-audit.t)
