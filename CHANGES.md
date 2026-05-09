@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Manifest JSON-safe surface keys round-trip as JSON
+- Added
+  [t/697-capability-manifest-plan-report-surface-keys-json-roundtrip-audit.t](t/697-capability-manifest-plan-report-surface-keys-json-roundtrip-audit.t)
+  to prove manifest-embedded `json_safe_surface_keys` survive JSON encode/decode
+  and remain unique.
 ### JSON-safe surface keys round-trip in the parent contract
 - Updated
   [t/654-serializable-plan-report-contract-json-roundtrip-audit.t](t/654-serializable-plan-report-contract-json-roundtrip-audit.t)

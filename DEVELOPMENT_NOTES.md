@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Manifest JSON-safe surface keys survive serialization
+- Manifest-embedded `json_safe_surface_keys` must remain a stable discovery list
+  after capability-manifest JSON encode/decode. Decoded manifests should let
+  embedders enumerate the bounded JSON-safe report families without Perl helper
+  calls and without duplicate surface names.
 ## 2026-05-09: JSON-safe surface keys survive parent serialization
 - `json_safe_surface_keys` is the parent contract's advertised serializable
   surface family. Serialized contracts must preserve that unique list so
