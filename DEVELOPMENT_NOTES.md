@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Manifest serializable plan/report branch round-trips as JSON data
+- The full capability manifest must survive JSON encode/decode with the
+  `embedding.serializable_plan_reports` branch, child contracts, nested owner
+  maps, and raw-shell replacement guidance intact.
 ## 2026-05-09: Serializable plan/report contract round-trips as JSON data
 - The parent `embedding.serializable_plan_reports` contract must survive JSON
   encode/decode while preserving nested contract owner maps, embedded child

@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Capability manifest serializable plan/report JSON round-trip surface is audited
+- Added
+  [t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t](t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t)
+  to prove the full capability manifest round-trips with
+  `embedding.serializable_plan_reports` child contracts, nested owner maps, and
+  raw-shell replacement guidance intact.
+- This is `R13` manifest JSON-safety coverage only; no public manifest shape
+  changed.
 ### Serializable plan/report contract JSON round-trip surface is audited
 - Added
   [t/654-serializable-plan-report-contract-json-roundtrip-audit.t](t/654-serializable-plan-report-contract-json-roundtrip-audit.t)
