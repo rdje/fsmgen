@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Raw shell replacement keys are explicit
+- Added `raw_shell_replacement_keys` to
+  `embedding.serializable_plan_reports` and exported
+  `serializable_plan_report_raw_shell_replacement_keys()`.
+- Added
+  [t/681-serializable-plan-report-raw-shell-replacement-keys-contract.t](t/681-serializable-plan-report-raw-shell-replacement-keys-contract.t)
+  to prove the replacement map key family is advertised directly and matches
+  the replacement map.
+- Focused validation passed:
+  `perl -Iperl -c t/681-serializable-plan-report-raw-shell-replacement-keys-contract.t && prove -l t/681-serializable-plan-report-raw-shell-replacement-keys-contract.t t/656-serializable-plan-report-contract-public-key-alignment-audit.t t/629-serializable-plan-report-contract.t && mdbook build docs/book`.
 ## 2026-05-09: Manifest registry entry keys round-trip as JSON
 - Added
   [t/680-capability-manifest-surface-registry-entry-keys-json-roundtrip-audit.t](t/680-capability-manifest-surface-registry-entry-keys-json-roundtrip-audit.t)

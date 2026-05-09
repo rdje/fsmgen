@@ -484,7 +484,9 @@ That direction now has a concrete manifest surface:
 [perl/FSM/Support/SerializablePlanReportContract.pm](perl/FSM/Support/SerializablePlanReportContract.pm)
 is advertised as `embedding.serializable_plan_reports`, listing the current
 JSON-safe report families and mapping raw `HDLGenerator` compatibility shells to
-preferred serializable replacements. Its `surface_registry` maps each
+preferred serializable replacements. The parent contract publishes
+`raw_shell_replacement_keys` so tools can discover that compatibility branch
+family directly. Its `surface_registry` maps each
 serializable surface to its contract owner and portable dotted primary report
 paths. Each registry entry has a scalar owner aligned with the nested source map
 and a non-empty unique path list, and returns

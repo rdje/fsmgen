@@ -34,6 +34,7 @@ our @EXPORT_OK = qw(
     serializable_plan_report_json_safe_surface_keys
     serializable_plan_report_nested_contract_source_map
     serializable_plan_report_public_top_level_keys
+    serializable_plan_report_raw_shell_replacement_keys
     serializable_plan_report_raw_shell_replacement_map
     serializable_plan_report_surface_registry_entry_keys
     serializable_plan_report_surface_registry
@@ -54,6 +55,7 @@ sub build_serializable_plan_report_contract {
         surface_registry_entry_keys => serializable_plan_report_surface_registry_entry_keys(),
         surface_registry => serializable_plan_report_surface_registry(),
         nested_contract_source_map => serializable_plan_report_nested_contract_source_map(),
+        raw_shell_replacement_keys => serializable_plan_report_raw_shell_replacement_keys(),
         raw_shell_replacement_map => serializable_plan_report_raw_shell_replacement_map(),
         composition_plan_snapshot_contract => build_serializable_composition_plan_snapshot_contract(),
         generation_result_snapshot_contract => build_serializable_generation_result_snapshot_contract(),
@@ -88,6 +90,7 @@ sub serializable_plan_report_public_top_level_keys {
             surface_registry_entry_keys
             surface_registry
             nested_contract_source_map
+            raw_shell_replacement_keys
             raw_shell_replacement_map
             composition_plan_snapshot_contract
             generation_result_snapshot_contract
@@ -131,6 +134,20 @@ sub serializable_plan_report_nested_contract_source_map {
         diagnostic_summary => serializable_diagnostic_summary_contract_source(),
         composition_provenance_report => composition_report_contract_source(),
     };
+}
+
+sub serializable_plan_report_raw_shell_replacement_keys {
+    return [
+        qw(
+            composition_report
+            composition_plan
+            hdl_generator_result
+            composition_spec
+            fsm_module
+            raw_ast
+            resolved_package_imports
+        ),
+    ];
 }
 
 sub serializable_plan_report_raw_shell_replacement_map {

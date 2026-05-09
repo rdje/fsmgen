@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Raw shell replacement keys are explicit discovery metadata
+- `embedding.serializable_plan_reports.raw_shell_replacement_keys` advertises
+  the raw `HDLGenerator` compatibility branch family that has serializable
+  replacements. This lets embedders discover the key family without inferring it
+  from the current replacement map.
 ## 2026-05-09: Manifest registry entry keys are JSON discovery data
 - `surface_registry_entry_keys` is manifest metadata, not a Perl-only helper.
   It must survive capability-manifest JSON encode/decode and continue to

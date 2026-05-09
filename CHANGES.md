@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Raw shell replacement keys are explicit
+- Added `raw_shell_replacement_keys` to
+  `embedding.serializable_plan_reports` and exported
+  `serializable_plan_report_raw_shell_replacement_keys()`.
+- Added
+  [t/681-serializable-plan-report-raw-shell-replacement-keys-contract.t](t/681-serializable-plan-report-raw-shell-replacement-keys-contract.t)
+  to prove the replacement map key family is advertised directly and matches
+  the replacement map.
 ### Capability manifest registry entry keys round-trip as JSON
 - Added
   [t/680-capability-manifest-surface-registry-entry-keys-json-roundtrip-audit.t](t/680-capability-manifest-surface-registry-entry-keys-json-roundtrip-audit.t)
