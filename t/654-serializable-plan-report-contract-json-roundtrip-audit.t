@@ -17,6 +17,7 @@ use FSM::Support::CompositionReportContract qw(
 use FSM::Support::NormalizedSemanticReportContract qw(normalized_semantic_public_top_level_keys);
 use FSM::Support::SerializablePlanReportContract qw(
     build_serializable_plan_report_contract
+    serializable_plan_report_json_safe_surface_keys
     serializable_plan_report_nested_contract_source_map
     serializable_plan_report_raw_shell_replacement_keys
     serializable_plan_report_raw_shell_replacement_map
@@ -43,6 +44,16 @@ subtest 'serializable plan/report contract remains plain data after JSON round t
         $decoded->{purpose},
         qr/JSON-safe plan\/report surfaces/,
         'round-trip purpose describes JSON-safe plan/report surfaces',
+    );
+    is_deeply(
+        $decoded->{json_safe_surface_keys},
+        serializable_plan_report_json_safe_surface_keys(),
+        'round-trip contract keeps JSON-safe surface key list',
+    );
+    is(
+        scalar(@{$decoded->{json_safe_surface_keys}}),
+        scalar(keys %{as_set($decoded->{json_safe_surface_keys})}),
+        'round-trip JSON-safe surface key list remains unique',
     );
     is_deeply(
         $decoded->{nested_contract_source_map},

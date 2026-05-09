@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: JSON-safe surface keys survive parent serialization
+- `json_safe_surface_keys` is the parent contract's advertised serializable
+  surface family. Serialized contracts must preserve that unique list so
+  embedders can discover available JSON-safe report branches without calling the
+  Perl helper.
 ## 2026-05-09: Plan/report identity survives serialization
 - Parent serializable plan/report identity metadata must remain available after
   JSON encode/decode. Serialized contracts should still be self-describing before
