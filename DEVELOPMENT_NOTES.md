@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Stateful facade reuse returns fresh composition reports
+- The raw `composition_report` branch is a per-generation provenance report.
+  Reusing a facade must not let caller edits to one result's report counts or
+  nested link provenance affect a later result.
+- The audit mutates `port_origin_counts` and one resolved-link source context in
+  a first result, then proves a later generation on the same facade rebuilds a
+  clean report.
 ## 2026-05-09: Stateful facade reuse returns fresh composition plans
 - The shell-only `composition_plan` branch is a per-generation raw composition
   planning object. Reusing a facade must not let caller edits to one result's

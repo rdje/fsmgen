@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Stateful composition_report results are alias-audited
+- Added
+  [t/602-hdl-generator-stateful-composition-report-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/602-hdl-generator-stateful-composition-report-alias-boundary-audit.t)
+  to prove mutating one generation result's raw `composition_report` hash does
+  not contaminate a later generation on the same reusable `HDLGenerator` facade
+  object.
+- Focused validation:
+  `perl -Iperl -c t/602-hdl-generator-stateful-composition-report-alias-boundary-audit.t && prove -lv t/580-composition-generation-provenance-alias-boundary-audit.t t/602-hdl-generator-stateful-composition-report-alias-boundary-audit.t && mdbook build docs/book`
+  passed. This is `R13` runtime contract-integrity coverage only; no production
+  code, public manifest shape, user-facing generation behavior, or roadmap lane
+  status changed.
 ## 2026-05-09: Stateful composition_plan results are alias-audited
 - Added
   [t/601-hdl-generator-stateful-composition-plan-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/601-hdl-generator-stateful-composition-plan-alias-boundary-audit.t)

@@ -662,6 +662,10 @@ a serializable public JSON surface, so embedders should follow
 [perl/FSM/Support/CompositionReportContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/CompositionReportContract.pm)
 and the sanitized
 `semantic.composition.provenance_report` fragment for downstream interchange.
+Reusable `HDLGenerator` facade objects return fresh `composition_report`
+containers per composition generation, so caller mutation of one result's raw
+provenance report does not leak into a later result produced by the same facade
+object.
 Composition generation also mirrors provenance into
 `module_info.composition_provenance` and `statistics.composition_provenance`.
 Those three branches should compare equal at return time, but they are separate
