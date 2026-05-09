@@ -488,7 +488,9 @@ preferred serializable replacements. That parent contract returns fresh nested
 maps, lists, and embedded child contracts, so discovery-time annotations do not
 pollute later manifest construction. The capability manifest builder also
 rebuilds the embedded `serializable_plan_reports` child and its grouped
-presence-key map cleanly each time.
+presence-key map cleanly each time. The parent contract round-trips as JSON
+with nested contract owners, child contracts, and raw-shell replacement guidance
+intact.
 The first plan-oriented API behind that surface is
 [perl/FSM/Support/SerializableCompositionPlanSnapshot.pm](perl/FSM/Support/SerializableCompositionPlanSnapshot.pm):
 `build_serializable_composition_plan_snapshot(...)` emits a JSON-safe

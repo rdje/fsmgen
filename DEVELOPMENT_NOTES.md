@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Serializable plan/report contract round-trips as JSON data
+- The parent `embedding.serializable_plan_reports` contract must survive JSON
+  encode/decode while preserving nested contract owner maps, embedded child
+  contracts, and raw-shell replacement guidance.
 ## 2026-05-09: Check JSON reports round-trip with diagnostic summary
 - Actual check JSON reports must survive JSON encode/decode with embedded
   `diagnostic_summary` data intact while preserving success-only `result`

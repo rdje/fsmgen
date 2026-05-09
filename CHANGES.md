@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Serializable plan/report contract JSON round-trip surface is audited
+- Added
+  [t/654-serializable-plan-report-contract-json-roundtrip-audit.t](t/654-serializable-plan-report-contract-json-roundtrip-audit.t)
+  to prove the parent `embedding.serializable_plan_reports` contract encodes and
+  decodes as JSON while preserving nested contract owners, child contracts, and
+  raw-shell replacement guidance.
+- This is `R13` manifest-contract JSON-safety coverage only; no public manifest
+  shape changed.
 ### Check JSON diagnostic summary JSON round-trip surface is audited
 - Added
   [t/653-check-json-diagnostic-summary-json-roundtrip-audit.t](t/653-check-json-diagnostic-summary-json-roundtrip-audit.t)

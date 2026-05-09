@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Serializable plan/report contract JSON round-trip surface is audited
+- Added
+  [t/654-serializable-plan-report-contract-json-roundtrip-audit.t](t/654-serializable-plan-report-contract-json-roundtrip-audit.t)
+  to prove `embedding.serializable_plan_reports` contract data round-trips with
+  child contracts and raw-shell guidance intact.
+- Focused validation passed:
+  `prove -l t/654-serializable-plan-report-contract-json-roundtrip-audit.t t/645-serializable-plan-report-contract-defensive-copy-boundary-audit.t t/629-serializable-plan-report-contract.t`.
 ## 2026-05-09: Check JSON diagnostic summary JSON round-trip surface is audited
 - Added
   [t/653-check-json-diagnostic-summary-json-roundtrip-audit.t](t/653-check-json-diagnostic-summary-json-roundtrip-audit.t)
