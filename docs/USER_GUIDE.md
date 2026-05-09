@@ -1826,8 +1826,9 @@ owners aligned to the nested source map, non-empty unique path lists, and fresh
 caller-owned containers that round-trip as JSON data. The parent contract also
 preserves the embedded registry across full-contract JSON round-trip and keeps it
 aligned with the decoded JSON-safe surface list. The capability manifest
-embeds the canonical registry, rebuilds it cleanly, and preserves it across
-manifest JSON encode/decode. Its manifest-embedded
+embeds the canonical registry, rebuilds it cleanly, preserves it across manifest
+JSON encode/decode, and keeps the decoded registry aligned with the JSON-safe
+surface list. Its manifest-embedded
 `public_top_level_presence_keys` list also survives JSON encode/decode and still
 matches the decoded `serializable_plan_reports` payload. Embedding nested
 presence metadata advertises the registry branch.

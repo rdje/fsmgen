@@ -12,8 +12,10 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::Support::SerializablePlanReportContract qw(
+    serializable_plan_report_json_safe_surface_keys
     serializable_plan_report_nested_contract_source_map
     serializable_plan_report_raw_shell_replacement_map
+    serializable_plan_report_surface_registry
 );
 
 subtest 'capability manifest serializable_plan_reports branch survives JSON round trip' => sub {
@@ -32,6 +34,16 @@ subtest 'capability manifest serializable_plan_reports branch survives JSON roun
         $branch->{nested_contract_source_map},
         serializable_plan_report_nested_contract_source_map(),
         'round-trip manifest keeps serializable nested contract owner map',
+    );
+    is_deeply(
+        $branch->{surface_registry},
+        serializable_plan_report_surface_registry(),
+        'round-trip manifest keeps serializable surface registry',
+    );
+    is_deeply(
+        as_set([keys %{$branch->{surface_registry}}]),
+        as_set(serializable_plan_report_json_safe_surface_keys()),
+        'round-trip manifest registry covers JSON-safe surfaces',
     );
     is_deeply(
         $branch->{raw_shell_replacement_map},
@@ -56,6 +68,11 @@ subtest 'capability manifest serializable_plan_reports branch survives JSON roun
 };
 
 done_testing();
+
+sub as_set {
+    my ($values) = @_;
+    return {map { $_ => 1 } @{$values || []}};
+}
 
 sub contains_blessed {
     my ($value) = @_;

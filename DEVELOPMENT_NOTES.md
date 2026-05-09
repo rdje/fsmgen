@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Manifest branch registry survives serialization
+- The manifest-embedded `serializable_plan_reports` branch should preserve its
+  `surface_registry` through manifest JSON encode/decode. The decoded registry
+  must still cover the JSON-safe surface list advertised by the same contract.
 ## 2026-05-09: Parent registry survives full-contract serialization
 - The parent `surface_registry` should survive as part of the complete
   serializable plan/report contract, not only as a standalone helper payload. The

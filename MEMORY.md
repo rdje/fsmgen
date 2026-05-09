@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Manifest branch surface registry round-trips as JSON
+- Updated
+  [t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t](t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t)
+  to prove the manifest-embedded plan/report `surface_registry` survives JSON
+  encode/decode and still covers the JSON-safe surface list.
+- Focused validation passed:
+  `perl -Iperl -c t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t && prove -l t/655-capability-manifest-serializable-plan-report-json-roundtrip-audit.t t/669-capability-manifest-surface-registry-json-roundtrip-audit.t t/654-serializable-plan-report-contract-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-09: Parent surface registry round-trips inside the contract JSON
 - Updated
   [t/654-serializable-plan-report-contract-json-roundtrip-audit.t](t/654-serializable-plan-report-contract-json-roundtrip-audit.t)
