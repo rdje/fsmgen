@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Standalone DT package-import summaries match direct-root ownership
+- Standalone `?dt` generation follows the same package-import summary ownership
+  rule as `?fsm` roots: the bounded `source_info.package_import_names` array and
+  raw `fsm_module.attributes.package_imports` array start equivalent but remain
+  independent mutable containers.
+- The audit uses an external package root through `source_search_paths` and
+  proves edits to either returned branch do not rewrite the other.
 ## 2026-05-09: Direct package-import summaries do not alias raw module attributes
 - Direct generation returns both the bounded `source_info.package_import_names`
   summary and the raw shell-only `fsm_module.attributes.package_imports`

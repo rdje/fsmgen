@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Standalone DT package-import summaries are alias-audited
+- Added
+  [t/592-standalone-dt-package-import-summary-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/592-standalone-dt-package-import-summary-alias-boundary-audit.t)
+  to prove standalone `?dt` generation keeps `source_info.package_import_names`
+  equivalent to raw `fsm_module.attributes.package_imports` without sharing the
+  same mutable array.
+- Focused validation:
+  `perl -Iperl -c t/592-standalone-dt-package-import-summary-alias-boundary-audit.t && prove -lv t/273-direct-package-imports.t t/592-standalone-dt-package-import-summary-alias-boundary-audit.t && mdbook build docs/book`
+  passed. This is `R13` runtime contract-integrity coverage only; no production
+  code, public manifest shape, user-facing generation behavior, or roadmap lane
+  status changed.
 ## 2026-05-09: Direct generation package-import summaries are alias-audited
 - Added
   [t/591-direct-generation-package-import-summary-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/591-direct-generation-package-import-summary-alias-boundary-audit.t)

@@ -554,6 +554,8 @@ For direct package imports, `source_info.package_import_names` is also audited
 against the raw `fsm_module.attributes.package_imports` compatibility branch:
 the two arrays preserve the same authored import order without sharing mutable
 containers.
+Standalone `?dt` roots use the same package-import summary ownership rule,
+including external packages resolved through `source_search_paths`.
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded identity and summary source-info key
 families from one place instead of collecting those key lists separately.

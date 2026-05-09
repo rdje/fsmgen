@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Standalone DT package-import summaries are alias-audited
+- Added
+  [t/592-standalone-dt-package-import-summary-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/592-standalone-dt-package-import-summary-alias-boundary-audit.t)
+  to prove standalone `?dt` generation keeps `source_info.package_import_names`
+  equivalent to raw `fsm_module.attributes.package_imports` without sharing the
+  same mutable array.
+- This is `R13` runtime contract-integrity coverage only. No production code,
+  public manifest shape, generation behavior, or roadmap lane status changed.
 ### Direct generation package-import summaries are alias-audited
 - Added
   [t/591-direct-generation-package-import-summary-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/591-direct-generation-package-import-summary-alias-boundary-audit.t)
