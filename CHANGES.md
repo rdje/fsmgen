@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Plan/report identity metadata is explicit
+- Added
+  [t/694-serializable-plan-report-identity-metadata-contract.t](t/694-serializable-plan-report-identity-metadata-contract.t)
+  to prove the parent contract exposes schema version, status, source owner, and
+  non-empty purpose metadata for JSON-safe plan/report discovery.
 ### Public report key metadata round-trips as JSON
 - Updated
   [t/654-serializable-plan-report-contract-json-roundtrip-audit.t](t/654-serializable-plan-report-contract-json-roundtrip-audit.t)

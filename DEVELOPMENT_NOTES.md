@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Plan/report identity metadata is discovery data
+- The serializable plan/report parent identity fields are part of the public
+  discovery surface: schema version, bounded-public status, owning source module,
+  and a non-empty purpose string. They should remain machine-checkable before
+  tools descend into detailed key families.
 ## 2026-05-09: Public report key metadata survives serialization
 - The parent serializable plan/report contract must preserve report-key metadata
   and the composition report fragment path through JSON encode/decode. Serialized

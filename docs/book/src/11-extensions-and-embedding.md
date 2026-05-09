@@ -482,11 +482,12 @@ should not have to traverse raw objects such as `composition_spec`,
 build stable machine-readable integrations.
 That direction now has a concrete manifest surface:
 [perl/FSM/Support/SerializablePlanReportContract.pm](perl/FSM/Support/SerializablePlanReportContract.pm)
-is advertised as `embedding.serializable_plan_reports`, listing the current
-JSON-safe report families and mapping raw `HDLGenerator` compatibility shells to
-preferred serializable replacements. The parent contract publishes
-`raw_shell_replacement_keys` so tools can discover that compatibility branch
-family directly, and the capability manifest embeds that same key list with a
+is advertised as `embedding.serializable_plan_reports`, with machine-readable
+identity metadata for schema version, bounded-public status, owner, and purpose.
+It lists the current JSON-safe report families and maps raw `HDLGenerator`
+compatibility shells to preferred serializable replacements. The parent contract
+publishes `raw_shell_replacement_keys` so tools can discover that compatibility
+branch family directly. The capability manifest embeds that same key list with a
 matching replacement map, rebuilds it cleanly per call, and preserves it across
 manifest JSON encode/decode. Its
 `surface_registry` maps each serializable surface to its contract owner and

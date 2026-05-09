@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Plan/report identity metadata is explicit
+- Added
+  [t/694-serializable-plan-report-identity-metadata-contract.t](t/694-serializable-plan-report-identity-metadata-contract.t)
+  to prove the parent contract exposes schema version, status, source owner, and
+  non-empty purpose metadata for JSON-safe plan/report discovery.
+- Focused validation passed:
+  `perl -Iperl -c t/694-serializable-plan-report-identity-metadata-contract.t && prove -l t/694-serializable-plan-report-identity-metadata-contract.t t/629-serializable-plan-report-contract.t && mdbook build docs/book`.
 ## 2026-05-09: Public report key metadata round-trips as JSON
 - Updated
   [t/654-serializable-plan-report-contract-json-roundtrip-audit.t](t/654-serializable-plan-report-contract-json-roundtrip-audit.t)
