@@ -511,6 +511,8 @@ object.
 The raw `FSM::Package::Spec` values inside that map are also per-generation
 objects for facade reuse: mutating one result's package name, symbols, or raw
 package AST does not leak into a later generation.
+The same per-generation package-spec rule applies whether the package source is
+embedded in the root file or loaded from a configured package search path.
 Composition results keep the top-level `resolved_package_imports` map and
 `source_info.resolved_package_imports` as independent mirrors down to the raw
 package-spec object graph, so annotating either mirror does not rewrite the

@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Stateful facade reuse returns fresh external package specs
+- External package imports are resolved through configured search paths, but the
+  returned raw `FSM::Package::Spec` values still need to be per-generation
+  result objects when a facade is reused.
+- The audit mutates the external package name, constant payload, and raw package
+  AST in a first result, then proves a later generation on the same facade
+  reloads the original external package spec.
 ## 2026-05-09: Stateful facade reuse returns fresh composition package specs
 - Composition results expose raw package specs in both top-level
   `resolved_package_imports` and `source_info.resolved_package_imports`. Reusing
