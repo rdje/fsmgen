@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Stateful facade reuse returns fresh module_info containers
+- `module_info` is a per-generation compatibility summary. Reusing one
+  `HDLGenerator` facade must not make later results observe caller edits to an
+  earlier result's `module_info` hash, nested `signal_analysis`, or summary
+  arrays.
+- The audit mutates scalar and nested summary fields in a first result, then
+  proves a later generation on the same facade returns clean module metadata.
 ## 2026-05-09: Stateful facade reuse returns fresh raw AST snapshots
 - The shell-only `raw_ast` result branch is a parser/debug snapshot for one
   generation. Reusing an `HDLGenerator` facade must not make later results share

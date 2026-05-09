@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Stateful module_info results are alias-audited
+- Added
+  [t/596-hdl-generator-stateful-module-info-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/596-hdl-generator-stateful-module-info-alias-boundary-audit.t)
+  to prove mutating one generation result's `module_info` summary containers
+  does not contaminate a later generation on the same reusable `HDLGenerator`
+  facade object.
+- Focused validation:
+  `perl -Iperl -c t/596-hdl-generator-stateful-module-info-alias-boundary-audit.t && prove -lv t/399-hdl-generator-facade-stateful-reuse-boundary-audit.t t/596-hdl-generator-stateful-module-info-alias-boundary-audit.t && mdbook build docs/book`
+  passed. This is `R13` runtime contract-integrity coverage only; no production
+  code, public manifest shape, user-facing generation behavior, or roadmap lane
+  status changed.
 ## 2026-05-09: Stateful raw_ast results are alias-audited
 - Added
   [t/595-hdl-generator-stateful-raw-ast-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/595-hdl-generator-stateful-raw-ast-alias-boundary-audit.t)

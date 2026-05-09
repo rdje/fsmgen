@@ -574,6 +574,9 @@ The nested `module_info` object now also has its own explicit owner through
 which is the contract to follow for `module_name`,
 `source_root_kind`, the direct-root scalar summary keys, and the
 composition-only scalar summary keys.
+Reusable `HDLGenerator` facade objects return fresh `module_info` containers per
+generation, so caller mutation of one result's module summary does not leak into
+a later result produced by the same facade object.
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded identity, summary, and composition-only
 module-info key families from one place instead of collecting those key lists

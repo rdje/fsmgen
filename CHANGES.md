@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Stateful module_info results are alias-audited
+- Added
+  [t/596-hdl-generator-stateful-module-info-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/596-hdl-generator-stateful-module-info-alias-boundary-audit.t)
+  to prove mutating one generation result's `module_info` summary containers
+  does not contaminate a later generation on the same reusable `HDLGenerator`
+  facade object.
+- This is `R13` runtime contract-integrity coverage only. No production code,
+  public manifest shape, generation behavior, or roadmap lane status changed.
 ### Stateful raw_ast results are alias-audited
 - Added
   [t/595-hdl-generator-stateful-raw-ast-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/595-hdl-generator-stateful-raw-ast-alias-boundary-audit.t)
