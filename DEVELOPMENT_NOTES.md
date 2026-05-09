@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Stateful facade reuse returns fresh standalone dt intent_hir
+- Standalone `?dt` `intent_hir` exposes the authored data-transform intent
+  summary. Reusing a facade must rebuild the semantic shell per generation.
+- The audit mutates `module_name`, nested `signal_analysis`, and `signal_names`
+  in a first `?dt` result, then proves the next generation returns the authored
+  intent shell.
 ## 2026-05-09: Stateful facade reuse returns fresh composition structural_rtl_ir
 - Composition `structural_rtl_ir` carries top ports, child instances, and
   resolved links. Reusing a facade must rebuild those structural containers per
