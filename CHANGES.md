@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Stateful composition structural_rtl_ir results are alias-audited
+- Added
+  [t/627-hdl-generator-stateful-composition-structural-rtl-ir-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/627-hdl-generator-stateful-composition-structural-rtl-ir-alias-boundary-audit.t)
+  to prove mutating one composition-generation result's `structural_rtl_ir`
+  shell does not contaminate a later generation on the same reusable
+  `HDLGenerator` facade object.
+- This is `R13` runtime contract-integrity coverage only. No production code,
+  public manifest shape, generation behavior, or roadmap lane status changed.
 ### Stateful composition lowered_rtl_ir results are alias-audited
 - Added
   [t/626-hdl-generator-stateful-composition-lowered-rtl-ir-alias-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/626-hdl-generator-stateful-composition-lowered-rtl-ir-alias-boundary-audit.t)

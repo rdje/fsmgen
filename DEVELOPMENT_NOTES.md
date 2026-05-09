@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Stateful facade reuse returns fresh composition structural_rtl_ir
+- Composition `structural_rtl_ir` carries top ports, child instances, and
+  resolved links. Reusing a facade must rebuild those structural containers per
+  generation.
+- The audit mutates `module_name`, ports, instances, and resolved links in a
+  first composition result, then proves the next generation returns the original
+  structural shell.
 ## 2026-05-09: Stateful facade reuse returns fresh composition lowered_rtl_ir
 - Composition `lowered_rtl_ir` exposes top-level lowered summaries such as
   instance names and internal net names. Reusing a facade must rebuild that

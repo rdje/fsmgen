@@ -683,6 +683,8 @@ Composition `intent_hir` shells are also audited under the same facade-reuse
 rule, including realized child summaries.
 Composition `lowered_rtl_ir` shells follow that rule for lowered instance and
 net summaries.
+Composition `structural_rtl_ir` shells follow it for top ports, child
+instances, and resolved links.
 The whole raw result hash is now runtime-audited as non-JSON-safe too:
 [t/378-hdl-generator-result-json-boundary-audit.t](/Users/richarddje/Documents/github/fsmgen/t/378-hdl-generator-result-json-boundary-audit.t)
 checks real direct and composition `HDLGenerator` results against strict JSON
