@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Manifest registry paths stay portable after serialization
+- Decoded manifest `surface_registry` paths should remain portable dotted report
+  paths in the main branch audit, matching the dedicated manifest path
+  portability coverage.
 ## 2026-05-09: Parent registry paths stay portable after serialization
 - Decoded parent `surface_registry` paths should remain portable dotted report
   paths, not absolute or machine-local paths. The main parent JSON audit now

@@ -506,7 +506,8 @@ keeps it aligned with the decoded JSON-safe surface list while keeping decoded
 registry paths portable. The capability
 manifest embeds the canonical registry, rebuilds it cleanly after caller
 mutation, preserves it across manifest JSON encode/decode, and keeps the decoded
-registry aligned with the JSON-safe surface list. Its manifest-embedded
+registry aligned with the JSON-safe surface list while keeping decoded registry
+paths portable. Its manifest-embedded
 `public_top_level_presence_keys` list also survives JSON encode/decode and still
 matches the decoded `serializable_plan_reports` payload. Embedding nested
 presence metadata advertises the registry branch for manifest consumers, and the
