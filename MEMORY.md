@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Serializable diagnostic summaries are advertised
+- Added [perl/FSM/Support/SerializableDiagnosticSummary.pm](perl/FSM/Support/SerializableDiagnosticSummary.pm)
+  and advertised `diagnostic_summary` through
+  `embedding.serializable_plan_reports`.
+- Focused validation passed:
+  `prove -l t/635-serializable-diagnostic-summary.t t/629-serializable-plan-report-contract.t`
+  and `prove -l t/297-capability-manifest.t t/321-embedding-contract.t`.
 ## 2026-05-09: Semantic snapshot failure boundary is locked
 - Added [t/634-normalized-semantic-snapshot-failure-boundary.t](t/634-normalized-semantic-snapshot-failure-boundary.t)
   to prove failed semantic JSON omits `semantic`, `generation_result_snapshot`,

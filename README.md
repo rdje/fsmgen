@@ -115,6 +115,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `perl/FSM/Support/SerializablePlanReportContract.pm` — bounded `embedding.serializable_plan_reports` contract that advertises JSON-safe plan/report surfaces and raw `HDLGenerator` shell replacement guidance for embedders.
 - `perl/FSM/Support/SerializableCompositionPlanSnapshot.pm` — JSON-safe bounded composition-plan snapshot builder/contract for embedders that need plan summaries without traversing raw `FSM::Composition::Plan` objects.
 - `perl/FSM/Support/SerializableGenerationResultSnapshot.pm` — JSON-safe bounded `HDLGenerator` result snapshot builder/contract for embedders that need result summaries without exporting raw compatibility-shell objects.
+- `perl/FSM/Support/SerializableDiagnosticSummary.pm` — JSON-safe bounded diagnostic summary builder/contract for stable diagnostic code/count inspection across public reports.
 - `perl/FSM/Support/HDLExternalValidation.pm` — optional Verilator/Yosys validation lane for generated SystemVerilog.
 - `perl/FSM/Support/HDLExternalValidationContract.pm` — bounded external validation contract advertised through the capability manifest.
 - `perl/FSM/Support/NormalizedSemanticReport.pm` — bounded normalized semantic JSON report builder for downstream tool integration.

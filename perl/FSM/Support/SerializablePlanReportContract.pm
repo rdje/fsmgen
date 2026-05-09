@@ -23,6 +23,10 @@ use FSM::Support::SerializableGenerationResultSnapshot qw(
     build_serializable_generation_result_snapshot_contract
     serializable_generation_result_snapshot_contract_source
 );
+use FSM::Support::SerializableDiagnosticSummary qw(
+    build_serializable_diagnostic_summary_contract
+    serializable_diagnostic_summary_contract_source
+);
 
 our @EXPORT_OK = qw(
     build_serializable_plan_report_contract
@@ -49,6 +53,7 @@ sub build_serializable_plan_report_contract {
         raw_shell_replacement_map => serializable_plan_report_raw_shell_replacement_map(),
         composition_plan_snapshot_contract => build_serializable_composition_plan_snapshot_contract(),
         generation_result_snapshot_contract => build_serializable_generation_result_snapshot_contract(),
+        diagnostic_summary_contract => build_serializable_diagnostic_summary_contract(),
         normalized_semantic_report_public_top_level_keys => normalized_semantic_public_top_level_keys(),
         composition_report_public_top_level_keys => composition_report_public_top_level_keys(),
         composition_report_json_fragment_path => composition_report_json_fragment_path(),
@@ -60,6 +65,7 @@ sub build_serializable_plan_report_contract {
             'Use normalized_semantic_json for module, semantic IR, structural, and composition summaries.',
             'Use composition_plan_snapshot for bounded composition-plan inspection instead of traversing FSM::Composition::Plan.',
             'Use generation_result_snapshot for bounded HDLGenerator result inspection instead of treating the raw result hash as JSON.',
+            'Use diagnostic_summary for stable diagnostic code/count inspection without copying full diagnostic payloads.',
             'Use semantic.composition.provenance_report for serializable composition provenance.',
             'Add future plan snapshots here only when their schema, contract owner, and regression coverage are explicit.',
         ],
@@ -78,6 +84,7 @@ sub serializable_plan_report_public_top_level_keys {
             raw_shell_replacement_map
             composition_plan_snapshot_contract
             generation_result_snapshot_contract
+            diagnostic_summary_contract
             current_serializable_surfaces_json_safe
             raw_hdl_generator_branches_json_safe
             guidance
@@ -91,6 +98,7 @@ sub serializable_plan_report_json_safe_surface_keys {
             normalized_semantic_json
             composition_plan_snapshot
             generation_result_snapshot
+            diagnostic_summary
             composition_provenance_report
         ),
     ];
@@ -101,6 +109,7 @@ sub serializable_plan_report_nested_contract_source_map {
         normalized_semantic_json => normalized_semantic_report_contract_source(),
         composition_plan_snapshot => serializable_composition_plan_snapshot_contract_source(),
         generation_result_snapshot => serializable_generation_result_snapshot_contract_source(),
+        diagnostic_summary => serializable_diagnostic_summary_contract_source(),
         composition_provenance_report => composition_report_contract_source(),
     };
 }

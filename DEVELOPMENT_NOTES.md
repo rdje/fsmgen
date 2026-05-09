@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Diagnostic summaries are bounded report surfaces
+- [perl/FSM/Support/SerializableDiagnosticSummary.pm](perl/FSM/Support/SerializableDiagnosticSummary.pm)
+  summarizes diagnostic arrays into counts, stable codes, severity counts, and
+  support-accounting match presence.
+- This complements the existing full diagnostic payload contracts: embedders can
+  inspect diagnostic status without copying or depending on entire diagnostic
+  objects.
 ## 2026-05-09: Snapshot reports remain success-only
 - The new `generation_result_snapshot` and composition `plan_snapshot` branches
   are success-only report surfaces. Failed semantic JSON still carries

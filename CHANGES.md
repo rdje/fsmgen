@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Serializable diagnostic summaries are advertised
+- Added
+  [perl/FSM/Support/SerializableDiagnosticSummary.pm](perl/FSM/Support/SerializableDiagnosticSummary.pm)
+  as a JSON-safe diagnostic code/count summary surface for public reports.
+- `embedding.serializable_plan_reports` now advertises `diagnostic_summary`
+  alongside the existing semantic, plan, generation-result, and provenance
+  report surfaces.
+- Added [t/635-serializable-diagnostic-summary.t](t/635-serializable-diagnostic-summary.t)
+  to prove empty success summaries and failed stable-code summaries encode as
+  bounded JSON.
 ### Semantic snapshot failure boundary is regression-locked
 - Added
   [t/634-normalized-semantic-snapshot-failure-boundary.t](t/634-normalized-semantic-snapshot-failure-boundary.t)

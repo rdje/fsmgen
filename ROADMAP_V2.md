@@ -640,6 +640,9 @@ Current direction:
   `HDLGenerator` results.
 - Public report path: successful normalized semantic JSON reports now embed that
   snapshot as top-level `generation_result_snapshot`.
+- Diagnostic report API: [perl/FSM/Support/SerializableDiagnosticSummary.pm](perl/FSM/Support/SerializableDiagnosticSummary.pm)
+  now provides a JSON-safe `diagnostic_summary` for stable diagnostic code/count
+  inspection.
 
 Expected result:
 - the project becomes a stronger platform for downstream tooling, not just a CLI.

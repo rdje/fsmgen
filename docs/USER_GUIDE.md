@@ -1823,6 +1823,10 @@ semantic JSON reports now expose that snapshot as top-level
 `generation_result_snapshot`. Failed semantic JSON reports omit these success
 snapshots, including composition `plan_snapshot`, and continue to expose only
 the bounded failure diagnostics/reporting surface.
+For tooling that only needs diagnostic status, the same manifest child now
+advertises [perl/FSM/Support/SerializableDiagnosticSummary.pm](perl/FSM/Support/SerializableDiagnosticSummary.pm)
+as `diagnostic_summary`, a JSON-safe count/code/severity summary that avoids
+binding to full diagnostic payload shapes.
 The sibling facade and debug-runtime child contracts also have direct
 self-description guards:
 [t/375-hdl-generator-facade-contract.t](t/375-hdl-generator-facade-contract.t)

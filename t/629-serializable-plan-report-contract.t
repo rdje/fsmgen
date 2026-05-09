@@ -23,6 +23,9 @@ use FSM::Support::SerializableCompositionPlanSnapshot qw(
 use FSM::Support::SerializableGenerationResultSnapshot qw(
     serializable_generation_result_snapshot_contract_source
 );
+use FSM::Support::SerializableDiagnosticSummary qw(
+    serializable_diagnostic_summary_contract_source
+);
 use FSM::Support::SerializablePlanReportContract qw(
     build_serializable_plan_report_contract
     serializable_plan_report_contract_source
@@ -71,6 +74,11 @@ subtest 'serializable plan/report contract advertises JSON-safe surface families
         $contract->{nested_contract_source_map}{generation_result_snapshot},
         serializable_generation_result_snapshot_contract_source(),
         'generation result snapshot is the serializable report snapshot contract',
+    );
+    is(
+        $contract->{nested_contract_source_map}{diagnostic_summary},
+        serializable_diagnostic_summary_contract_source(),
+        'diagnostic summary is the serializable diagnostic report contract',
     );
     is(
         $contract->{nested_contract_source_map}{composition_provenance_report},
