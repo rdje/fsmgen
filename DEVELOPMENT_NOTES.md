@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Parent source map stays aligned after serialization
+- The decoded parent `nested_contract_source_map` should cover the same surface
+  family as decoded `json_safe_surface_keys`. This catches serialized contract
+  drift between discovery keys and child owner metadata.
 ## 2026-05-09: Manifest replacement keys are in the main audit
 - The main manifest branch JSON audit now covers `raw_shell_replacement_keys`
   alongside the replacement map. Decoded manifests should expose both the map and

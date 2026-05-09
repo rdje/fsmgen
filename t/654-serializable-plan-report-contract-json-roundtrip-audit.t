@@ -84,6 +84,11 @@ subtest 'serializable plan/report contract remains plain data after JSON round t
         'round-trip contract keeps nested contract source map',
     );
     is_deeply(
+        as_set([keys %{$decoded->{nested_contract_source_map}}]),
+        as_set($decoded->{json_safe_surface_keys}),
+        'round-trip nested source map covers decoded JSON-safe surfaces',
+    );
+    is_deeply(
         $decoded->{surface_registry},
         serializable_plan_report_surface_registry(),
         'round-trip contract keeps surface registry',

@@ -1853,7 +1853,7 @@ diagnostic summary child metadata, and its entry-key list across JSON
 encode/decode. Its
 advertised public top-level key list is locked to
 the keys the parent contract emits, and its nested source map is locked against
-the embedded child contracts.
+the embedded child contracts and decoded JSON-safe surface list.
 The JSON-safety flags in that parent contract are explicit JSON booleans:
 current serializable report surfaces are marked safe, while raw `HDLGenerator`
 branches are marked non-safe interchange payloads, and those flags survive
