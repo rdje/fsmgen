@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-09
+### Composition plan snapshot defensive-copy boundary is audited
+- Added
+  [t/643-serializable-composition-plan-snapshot-defensive-copy-boundary-audit.t](t/643-serializable-composition-plan-snapshot-defensive-copy-boundary-audit.t)
+  to prove composition plan snapshot contracts and generated snapshots return
+  fresh caller-owned containers.
+- This is `R13` contract-integrity coverage for the serializable composition
+  plan snapshot surface; no public JSON shape changed.
 ### Semantic generation snapshot alias boundary is audited
 - Added
   [t/642-normalized-semantic-generation-snapshot-alias-boundary-audit.t](t/642-normalized-semantic-generation-snapshot-alias-boundary-audit.t)

@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Composition plan snapshot containers are caller-owned
+- `build_serializable_composition_plan_snapshot_contract(...)` and
+  `build_serializable_composition_plan_snapshot(...)` return fresh nested
+  containers. Callers can annotate top ports, instance summaries, resolved-link
+  summaries, or key lists without contaminating later snapshots.
 ## 2026-05-09: Semantic generation snapshots are rebuilt per report
 - Normalized semantic JSON report builders must create a fresh
   `generation_result_snapshot` per success report. Caller annotations of one

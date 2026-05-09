@@ -493,7 +493,9 @@ ports, links, resolved-link endpoints, nets, instances, auxiliary assignments,
 and shared-datapath candidates without exposing the raw
 `FSM::Composition::Plan` object graph. Successful normalized semantic JSON
 reports for composition roots now embed that same snapshot at
-`semantic.composition.plan_snapshot`.
+`semantic.composition.plan_snapshot`. Composition plan snapshot contracts and
+reports return fresh caller-owned containers, so local annotations of port,
+instance, or link summaries do not pollute later snapshot construction.
 The manifest surface also advertises
 [perl/FSM/Support/SerializableGenerationResultSnapshot.pm](perl/FSM/Support/SerializableGenerationResultSnapshot.pm)
 as `generation_result_snapshot`, a JSON-safe summary of raw `HDLGenerator`

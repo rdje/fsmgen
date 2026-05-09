@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-09: Composition plan snapshot defensive-copy boundary is audited
+- Added
+  [t/643-serializable-composition-plan-snapshot-defensive-copy-boundary-audit.t](t/643-serializable-composition-plan-snapshot-defensive-copy-boundary-audit.t)
+  to prove composition plan snapshot contract/report containers are fresh across
+  calls.
+- Focused validation passed:
+  `prove -l t/643-serializable-composition-plan-snapshot-defensive-copy-boundary-audit.t t/630-serializable-composition-plan-snapshot.t t/631-normalized-semantic-composition-plan-snapshot.t`.
 ## 2026-05-09: Semantic generation snapshot alias boundary is audited
 - Added
   [t/642-normalized-semantic-generation-snapshot-alias-boundary-audit.t](t/642-normalized-semantic-generation-snapshot-alias-boundary-audit.t)
