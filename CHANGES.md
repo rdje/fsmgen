@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Parent plan/report identity survives JSON
+- Added
+  [t/701-serializable-plan-report-identity-metadata-json-roundtrip-audit.t](t/701-serializable-plan-report-identity-metadata-json-roundtrip-audit.t)
+  to prove the standalone serializable plan/report contract's decoded identity
+  metadata still carries schema version `1`, `bounded_public` status, the
+  canonical owner, and non-empty purpose text after JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions decoded identity metadata alongside discovery lists.
 ### Parent plan/report surface keys survive JSON
 - Added
   [t/700-serializable-plan-report-surface-keys-json-roundtrip-audit.t](t/700-serializable-plan-report-surface-keys-json-roundtrip-audit.t)

@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Parent plan/report identity survives JSON
+- Added
+  [t/701-serializable-plan-report-identity-metadata-json-roundtrip-audit.t](t/701-serializable-plan-report-identity-metadata-json-roundtrip-audit.t)
+  to lock the standalone serializable plan/report contract's decoded identity
+  metadata: schema version, bounded-public status, canonical owner, and
+  non-empty purpose text.
+- This mirrors the manifest-side identity JSON guard without widening the
+  current `R13` serializable report API.
+- Focused validation passed:
+  `perl -Iperl -c t/701-serializable-plan-report-identity-metadata-json-roundtrip-audit.t && prove -l t/701-serializable-plan-report-identity-metadata-json-roundtrip-audit.t t/696-capability-manifest-plan-report-identity-metadata-json-roundtrip-audit.t t/654-serializable-plan-report-contract-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Parent plan/report surface keys survive JSON
 - Added
   [t/700-serializable-plan-report-surface-keys-json-roundtrip-audit.t](t/700-serializable-plan-report-surface-keys-json-roundtrip-audit.t)

@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Parent identity metadata stays JSON-audited
+- The standalone serializable plan/report contract now has a focused identity
+  JSON round-trip guard that mirrors the manifest-embedded branch. Decoded
+  schema version, bounded-public status, owner, and purpose text must remain
+  stable after serialization.
+- This complements the public-key and surface-key discovery guards without
+  expanding the current `R13` serializable report contract.
 ## 2026-05-10: Parent surface-key metadata stays JSON-audited
 - The standalone serializable plan/report contract now has a focused
   `json_safe_surface_keys` JSON round-trip guard that mirrors the

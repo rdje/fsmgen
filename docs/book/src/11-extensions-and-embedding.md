@@ -39,8 +39,8 @@ one place instead of collecting those compatibility field lists one by one.
 The embedding section's `serializable_plan_reports` branch also advertises
 `public_top_level_presence_keys` and `json_safe_surface_keys`; both the
 standalone parent contract and the manifest-embedded branch are JSON-round-trip
-audited so embedders can validate the bounded shell and discover the advertised
-portable report surfaces they decoded.
+audited so embedders can validate the bounded shell, confirm its identity
+metadata, and discover the advertised portable report surfaces they decoded.
 
 The public machine-JSON CLI boundary is runtime-audited too:
 [t/384-public-json-trace-stdout-boundary-audit.t](t/384-public-json-trace-stdout-boundary-audit.t)
