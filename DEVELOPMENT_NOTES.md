@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-09: Stateful facade reuse returns fresh composition specs
+- The shell-only `composition_spec` branch is a per-generation raw composition
+  object graph. Reusing a facade must not let caller edits to one result's top
+  object or package-import list affect a later result.
+- The audit mutates the raw top name and import list in a first result, then
+  proves a later generation on the same facade rebuilds a clean composition spec.
 ## 2026-05-09: Stateful facade reuse returns fresh semantic IR maps
 - The top-level `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` result
   branches are per-generation semantic projections. Reusing a facade must not

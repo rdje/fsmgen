@@ -643,7 +643,11 @@ shell-only too: they are raw `FSM::Composition::Spec` and
 which is the contract to follow for the raw composition-spec rule plus the
 sanitized composition-summary fallback surfaces. That same owner now also
 publishes a grouped `fallback_surface_map` so embedders can discover the
-bounded semantic-composition fallback families from one place. The `composition_plan` branch
+bounded semantic-composition fallback families from one place. Reusable
+`HDLGenerator` facade objects return fresh `composition_spec` objects per
+composition generation, so caller mutation of one result's raw composition
+object graph does not leak into a later result produced by the same facade
+object. The `composition_plan` branch
 now also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorCompositionPlanContract.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Support/HDLGeneratorCompositionPlanContract.pm),
 which is the contract to follow for the raw composition-plan rule plus the
