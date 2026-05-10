@@ -310,6 +310,7 @@ Manifest diagnostics section flags and guidance now rebuild cleanly after caller
 Manifest semantic-exports contract identity metadata now survives JSON round trip.
 Manifest semantic-exports contract entrypoints now survive JSON round trip.
 Manifest semantic-exports public and nested key lists now survive JSON round trip.
+Manifest semantic-exports nested maps now survive JSON round trip.
 
 ## Current Philosophy
 
