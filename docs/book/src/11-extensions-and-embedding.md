@@ -279,6 +279,7 @@ Capability manifest contract JSON-safety and nested-section advertisement flags 
 Capability manifest contract guidance now survives JSON round trip.
 Capability manifest contract identity metadata now rebuilds cleanly after caller mutation.
 Capability manifest contract entrypoint metadata now rebuilds cleanly after caller mutation.
+Capability manifest contract public top-level presence keys now rebuild cleanly after caller mutation.
 
 ## Current Philosophy
 
