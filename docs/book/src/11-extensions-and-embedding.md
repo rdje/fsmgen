@@ -329,6 +329,7 @@ Manifest backend-validation nested maps now rebuild cleanly after caller mutatio
 Manifest backend-validation flags and guidance now rebuild cleanly after caller mutation.
 Manifest language-surface contract identity metadata now survives JSON round trip.
 Manifest language-surface contract entrypoints now survive JSON round trip.
+Manifest language-surface top-level and mode key lists now survive JSON round trip.
 
 ## Current Philosophy
 

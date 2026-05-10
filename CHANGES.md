@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest language surface contract top level keys survives JSON
+- Added
+  [t/957-capability-manifest-language-surface-contract-top-level-keys-json-roundtrip-audit.t](t/957-capability-manifest-language-surface-contract-top-level-keys-json-roundtrip-audit.t)
+  to prove the capability manifest's `language_surface.surface_contract`
+  top-level and mode key lists survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  for the `R13` manifest-section contract progress entry.
 ### Manifest language surface contract entrypoints survives JSON
 - Added
   [t/956-capability-manifest-language-surface-contract-entrypoints-json-roundtrip-audit.t](t/956-capability-manifest-language-surface-contract-entrypoints-json-roundtrip-audit.t)
