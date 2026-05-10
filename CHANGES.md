@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Capability manifest full surface rebuilds cleanly
+- Added
+  [t/998-capability-manifest-full-surface-defensive-copy-audit.t](t/998-capability-manifest-full-surface-defensive-copy-audit.t)
+  to prove a fresh capability manifest build stays clean after caller mutation
+  of a previous full manifest result.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md),
+  [LIVE_ACHIEVEMENT_STATUS.md](LIVE_ACHIEVEMENT_STATUS.md), and
+  [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  for the `R13` progress entry.
 ### Capability manifest full surface survives JSON
 - Added
   [t/997-capability-manifest-full-surface-json-roundtrip-audit.t](t/997-capability-manifest-full-surface-json-roundtrip-audit.t)

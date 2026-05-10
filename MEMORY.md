@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Capability manifest full surface rebuilds cleanly
+- Added
+  [t/998-capability-manifest-full-surface-defensive-copy-audit.t](t/998-capability-manifest-full-surface-defensive-copy-audit.t)
+  to prove a fresh `build_capability_manifest()` result is clean after a caller
+  mutates a previous full manifest result.
+- This complements the full-manifest JSON round-trip audit with a full public
+  manifest defensive-copy guard.
+- Focused validation passed:
+  `perl -Iperl -c t/998-capability-manifest-full-surface-defensive-copy-audit.t && prove -l t/998-capability-manifest-full-surface-defensive-copy-audit.t t/997-capability-manifest-full-surface-json-roundtrip-audit.t t/996-capability-manifest-support-accounting-contract-full-surface-defensive-copy-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Capability manifest full surface survives JSON
 - Added
   [t/997-capability-manifest-full-surface-json-roundtrip-audit.t](t/997-capability-manifest-full-surface-json-roundtrip-audit.t)

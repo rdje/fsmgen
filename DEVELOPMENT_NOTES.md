@@ -1,5 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Capability manifest full surface rebuilds cleanly
+- The public capability manifest now has a full-surface defensive-copy audit.
+- The test mutates a full manifest result recursively and then confirms a fresh build is unchanged, guarding the embedding API against shared mutable manifest state.
 ## 2026-05-10: Capability manifest full surface survives JSON
 - The public capability manifest now has a full-surface JSON round-trip audit.
 - The test intentionally compares the decoded payload with the direct builder output, catching non-JSON-safe values or accidental manifest assembly drift that field-level probes could miss.
