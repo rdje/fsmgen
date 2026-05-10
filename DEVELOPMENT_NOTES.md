@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator composition_report shell fallback stays caller-owned
+- The bounded `HDLGenerator` result contract now has focused defensive-copy
+  coverage for `composition_report_json_fragment_path` and the grouped fallback
+  entries that point to it.
+- Mutating one built contract's composition-report fallback metadata must not
+  pollute the next build.
 ## 2026-05-10: HDLGenerator composition_plan shell surfaces stay caller-owned
 - The bounded `HDLGenerator` result contract now has focused defensive-copy
   coverage for `composition_plan_summary_surfaces` and

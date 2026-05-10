@@ -131,7 +131,7 @@ as does the `composition_spec` shell summary and fallback metadata. The
 `composition_plan` shell summary and fallback metadata is now guarded in the
 same per-branch pass with JSON and defensive-copy coverage.
 The `composition_report` sanitized JSON fragment fallback now completes that
-per-branch JSON coverage.
+per-branch JSON coverage and has matching defensive-copy coverage.
 
 ## Current Philosophy
 
