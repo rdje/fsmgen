@@ -218,6 +218,7 @@ Manifest composition-report map, ordered, and grouped presence families now rebu
 Manifest composition-report JSON-safety and sanitization flags now rebuild cleanly after caller mutation.
 Manifest composition-report `tested_by` and guidance lists now rebuild cleanly after caller mutation.
 The capability manifest now mirrors `embedding.section_contract` identity metadata through JSON round trip.
+Manifest embedding-section top-level and nested contract key lists now survive JSON round trip.
 
 ## Current Philosophy
 

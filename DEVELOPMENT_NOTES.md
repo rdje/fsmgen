@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest embedding section top level keys survives JSON
+- The manifest-embedded `embedding.section_contract` contract now has focused JSON round-trip
+  coverage for its top-level and nested contract keys.
+- This keeps public embedding consumers aligned with the direct embedding-section contract.
 ## 2026-05-10: Manifest embedding section identity survives JSON
 - The manifest-embedded `embedding.section_contract` contract now has focused JSON round-trip
   coverage for its identity metadata.
