@@ -2,12 +2,11 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
-## 2026-05-10: Manifest support accounting contract full surface rebuilds cleanly
+## 2026-05-10: Capability manifest full surface survives JSON
 - Roadmap lane: `R13` public embedding/API stabilization.
 - Completed slice:
-  [t/996-capability-manifest-support-accounting-contract-full-surface-defensive-copy-audit.t](t/996-capability-manifest-support-accounting-contract-full-surface-defensive-copy-audit.t)
-  proves a fresh capability manifest rebuild restores the embedded
-  `support_accounting.section_contract` to `build_support_accounting_contract()`
-  after caller mutation.
+  [t/997-capability-manifest-full-surface-json-roundtrip-audit.t](t/997-capability-manifest-full-surface-json-roundtrip-audit.t)
+  proves the full public capability manifest survives JSON encode/decode
+  unchanged.
 - Public behavior changed: no.
-- Next bounded slice: continue manifest section mirror audits.
+- Next bounded slice: continue manifest full-surface stability audits.

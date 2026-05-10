@@ -1,5 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Capability manifest full surface survives JSON
+- The public capability manifest now has a full-surface JSON round-trip audit.
+- The test intentionally compares the decoded payload with the direct builder output, catching non-JSON-safe values or accidental manifest assembly drift that field-level probes could miss.
 ## 2026-05-10: Manifest support accounting contract full surface rebuilds cleanly
 - `support_accounting.section_contract` now has a whole-contract defensive-copy audit in addition to the existing field-level probes.
 - The guard mutates the embedded contract from one manifest build and then compares the next build against `build_support_accounting_contract()`, keeping manifest assembly tied to the owner contract rather than to shared mutable state.

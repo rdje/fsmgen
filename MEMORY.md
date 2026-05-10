@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Capability manifest full surface survives JSON
+- Added
+  [t/997-capability-manifest-full-surface-json-roundtrip-audit.t](t/997-capability-manifest-full-surface-json-roundtrip-audit.t)
+  to prove the complete `build_capability_manifest()` result survives JSON
+  encode/decode unchanged.
+- This raises the `R13` manifest mirror audits from section-contract mirrors to
+  a full public manifest surface check.
+- Focused validation passed:
+  `perl -Iperl -c t/997-capability-manifest-full-surface-json-roundtrip-audit.t && prove -l t/997-capability-manifest-full-surface-json-roundtrip-audit.t t/995-capability-manifest-support-accounting-contract-full-surface-json-roundtrip-audit.t t/314-support-accounting-contract.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest support accounting contract full surface rebuilds cleanly
 - Added
   [t/996-capability-manifest-support-accounting-contract-full-surface-defensive-copy-audit.t](t/996-capability-manifest-support-accounting-contract-full-surface-defensive-copy-audit.t)
