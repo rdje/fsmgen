@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest HDLGenerator result fsm_module shell surfaces rebuild cleanly
+- Added
+  [t/809-capability-manifest-hdl-result-fsm-module-shell-surfaces-defensive-copy-audit.t](t/809-capability-manifest-hdl-result-fsm-module-shell-surfaces-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_result`
+  `fsm_module` shell surfaces rebuilds cleanly after caller mutation.
+- This mirrors the parent `HDLGenerator` result fsm_module shell surfaces defensive-copy
+  guard through the manifest branch without changing the manifest API.
+- Focused validation passed:
+  `perl -Iperl -c t/809-capability-manifest-hdl-result-fsm-module-shell-surfaces-defensive-copy-audit.t && prove -l t/809-capability-manifest-hdl-result-fsm-module-shell-surfaces-defensive-copy-audit.t t/305-hdl-generator-result-contract.t t/436-capability-manifest-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest HDLGenerator result shell branch metadata rebuilds cleanly
 - Added
   [t/808-capability-manifest-hdl-result-shell-branch-metadata-defensive-copy-audit.t](t/808-capability-manifest-hdl-result-shell-branch-metadata-defensive-copy-audit.t)

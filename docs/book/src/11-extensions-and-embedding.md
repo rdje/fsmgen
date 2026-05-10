@@ -181,6 +181,7 @@ Advertisement flags now rebuild cleanly after caller mutation of an embedded man
 Scalar nested contract-source fields now rebuild cleanly after caller mutation at the manifest boundary.
 The `json_safe_export_surface` pointer now rebuilds cleanly after caller mutation of a manifest result contract.
 Shell-only branch flags and raw-value or fragment descriptors now rebuild cleanly after manifest caller mutation.
+The `fsm_module` shell summary and fallback surfaces now rebuild cleanly after manifest caller mutation.
 
 ## Current Philosophy
 

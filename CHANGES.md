@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest HDLGenerator result fsm_module shell surfaces rebuild cleanly
+- Added
+  [t/809-capability-manifest-hdl-result-fsm-module-shell-surfaces-defensive-copy-audit.t](t/809-capability-manifest-hdl-result-fsm-module-shell-surfaces-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_result`
+  `fsm_module` shell surfaces rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side `HDLGenerator` result fsm_module shell surfaces copy coverage.
 ### Manifest HDLGenerator result shell branch metadata rebuilds cleanly
 - Added
   [t/808-capability-manifest-hdl-result-shell-branch-metadata-defensive-copy-audit.t](t/808-capability-manifest-hdl-result-shell-branch-metadata-defensive-copy-audit.t)
