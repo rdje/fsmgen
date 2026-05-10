@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest contract tooling section keys survives JSON
+- Added
+  [t/902-capability-manifest-contract-tooling-section-keys-json-roundtrip-audit.t](t/902-capability-manifest-contract-tooling-section-keys-json-roundtrip-audit.t)
+  to prove `manifest_contract` tooling section presence keys survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest contract tooling section keys coverage.
 ### Manifest contract core section keys survives JSON
 - Added
   [t/901-capability-manifest-contract-core-section-keys-json-roundtrip-audit.t](t/901-capability-manifest-contract-core-section-keys-json-roundtrip-audit.t)
