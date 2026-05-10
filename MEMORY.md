@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest producer section contract public keys rebuilds cleanly
+- Added
+  [t/922-capability-manifest-producer-section-contract-public-keys-defensive-copy-audit.t](t/922-capability-manifest-producer-section-contract-public-keys-defensive-copy-audit.t)
+  to prove the capability manifest's `producer.section_contract`
+  public key families rebuilds cleanly after caller mutation.
+- This keeps the manifest section aligned with its direct `FSM::Support::ProducerContract` owner.
+- Focused validation passed:
+  `perl -Iperl -c t/922-capability-manifest-producer-section-contract-public-keys-defensive-copy-audit.t && prove -l t/922-capability-manifest-producer-section-contract-public-keys-defensive-copy-audit.t t/319-producer-contract.t t/449-producer-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest producer section contract entrypoints rebuilds cleanly
 - Added
   [t/921-capability-manifest-producer-section-contract-entrypoints-defensive-copy-audit.t](t/921-capability-manifest-producer-section-contract-entrypoints-defensive-copy-audit.t)

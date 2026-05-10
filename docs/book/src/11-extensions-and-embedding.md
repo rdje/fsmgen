@@ -294,6 +294,7 @@ Manifest producer section contract presence and identity maps now survive JSON r
 Manifest producer section contract guidance now survives JSON round trip.
 Manifest producer section contract identity metadata now rebuilds cleanly after caller mutation.
 Manifest producer section contract entrypoints now rebuild cleanly after caller mutation.
+Manifest producer section contract public key families now rebuild cleanly after caller mutation.
 
 ## Current Philosophy
 

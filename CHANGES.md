@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest producer section contract public keys rebuilds cleanly
+- Added
+  [t/922-capability-manifest-producer-section-contract-public-keys-defensive-copy-audit.t](t/922-capability-manifest-producer-section-contract-public-keys-defensive-copy-audit.t)
+  to prove the capability manifest's `producer.section_contract`
+  public key families rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  for the `R13` manifest-section contract progress entry.
 ### Manifest producer section contract entrypoints rebuilds cleanly
 - Added
   [t/921-capability-manifest-producer-section-contract-entrypoints-defensive-copy-audit.t](t/921-capability-manifest-producer-section-contract-entrypoints-defensive-copy-audit.t)
