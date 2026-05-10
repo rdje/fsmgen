@@ -249,6 +249,7 @@ Manifest typed-extension guidance now rebuilds cleanly after caller mutation.
 Manifest typed-extension core nested surfaces now rebuild cleanly after caller mutation together.
 Manifest serializable-plan/report identity metadata now survives JSON round trip.
 Manifest serializable-plan/report public key list now survives JSON round trip.
+Manifest serializable-plan/report JSON-safe surface key lists now survive JSON round trip.
 
 ## Current Philosophy
 
