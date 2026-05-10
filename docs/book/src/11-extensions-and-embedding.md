@@ -372,6 +372,7 @@ Manifest support-accounting full embedded contract now rebuilds to the direct ow
 The full public capability manifest now survives JSON round trip unchanged.
 The full public capability manifest now rebuilds cleanly after caller mutation.
 The CLI `--capability-manifest` output now matches the full owner-built manifest.
+The CLI `--emit-capability-manifest` alias now matches the full owner-built manifest.
 
 ## Current Philosophy
 

@@ -1,5 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: CLI capability manifest alias matches owner full surface
+- The `--emit-capability-manifest` alias now has the same full-surface parity audit as `--capability-manifest`.
+- Keeping both spellings under an owner-builder comparison prevents one public CLI path from drifting while the other remains stable.
 ## 2026-05-10: CLI capability manifest matches owner full surface
 - The `--capability-manifest` CLI path now has a full-surface parity audit against `build_capability_manifest()`.
 - This keeps the public JSON contract tied to the single manifest owner rather than allowing the CLI boundary to drift from the embedding API contract.
