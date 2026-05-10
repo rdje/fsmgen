@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest diagnostics section contract key families survives JSON
+- Added
+  [t/926-capability-manifest-diagnostics-section-contract-key-families-json-roundtrip-audit.t](t/926-capability-manifest-diagnostics-section-contract-key-families-json-roundtrip-audit.t)
+  to prove the capability manifest's `diagnostics.section_contract`
+  public scalar list and nested key families survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  for the `R13` manifest-section contract progress entry.
 ### Manifest diagnostics section contract identity survives JSON
 - Added
   [t/925-capability-manifest-diagnostics-section-contract-identity-json-roundtrip-audit.t](t/925-capability-manifest-diagnostics-section-contract-identity-json-roundtrip-audit.t)

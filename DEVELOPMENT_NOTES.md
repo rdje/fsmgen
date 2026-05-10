@@ -1,5 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest diagnostics section contract key families survives JSON
+- The manifest `diagnostics.section_contract` now has focused JSON round-trip coverage for its public scalar list and nested key families.
+- This keeps public manifest consumers anchored to explicit section contracts.
 ## 2026-05-10: Manifest diagnostics section contract identity survives JSON
 - The manifest `diagnostics.section_contract` now has focused JSON round-trip coverage for its identity metadata.
 - This keeps public manifest consumers anchored to explicit section contracts.
