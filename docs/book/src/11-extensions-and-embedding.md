@@ -368,6 +368,7 @@ Manifest support-accounting catalog optional keys now rebuild cleanly after call
 Manifest support-accounting grouped presence key map now rebuilds cleanly after caller mutation.
 Manifest support-accounting sanitized/derived flags now rebuild cleanly after caller mutation.
 Manifest support-accounting guidance now rebuilds cleanly after caller mutation.
+Manifest support-accounting full embedded contract now rebuilds to the direct owner contract after caller mutation.
 
 ## Current Philosophy
 

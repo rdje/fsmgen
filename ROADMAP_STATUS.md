@@ -1,6 +1,7 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
+- Next decision point: [t/996-capability-manifest-support-accounting-contract-full-surface-defensive-copy-audit.t](t/996-capability-manifest-support-accounting-contract-full-surface-defensive-copy-audit.t) now proves the manifest's embedded `support_accounting.section_contract` rebuilds to the direct support-accounting owner contract after caller mutation. This changes no public shape; the next bounded `R13` slice can continue manifest section mirrors.
 - Next decision point: [t/995-capability-manifest-support-accounting-contract-full-surface-json-roundtrip-audit.t](t/995-capability-manifest-support-accounting-contract-full-surface-json-roundtrip-audit.t) now proves the manifest's embedded `support_accounting.section_contract` matches the direct support-accounting owner contract after JSON encode/decode. This changes no public shape; the next bounded `R13` slice can continue manifest section mirrors.
 - Next decision point: the session bootstrap rechecked `bin/fsmgen` and its
   transitive `FSM::...` import tree against

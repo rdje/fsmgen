@@ -1,5 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest support accounting contract full surface rebuilds cleanly
+- `support_accounting.section_contract` now has a whole-contract defensive-copy audit in addition to the existing field-level probes.
+- The guard mutates the embedded contract from one manifest build and then compares the next build against `build_support_accounting_contract()`, keeping manifest assembly tied to the owner contract rather than to shared mutable state.
 ## 2026-05-10: Manifest support accounting contract full surface survives JSON
 - `support_accounting.section_contract` now has a whole-contract JSON round-trip audit in addition to the existing field-level probes.
 - The guard compares the decoded manifest mirror directly with `build_support_accounting_contract()`, so future manifest assembly changes must preserve the owner contract exactly.

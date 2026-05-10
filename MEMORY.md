@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest support accounting contract full surface rebuilds cleanly
+- Added
+  [t/996-capability-manifest-support-accounting-contract-full-surface-defensive-copy-audit.t](t/996-capability-manifest-support-accounting-contract-full-surface-defensive-copy-audit.t)
+  to prove a fresh capability manifest rebuild restores the full
+  `support_accounting.section_contract` after a caller mutates the previous
+  embedded contract.
+- This complements the whole-contract JSON round-trip audit with the same
+  direct-owner comparison against `build_support_accounting_contract()`.
+- Focused validation passed:
+  `perl -Iperl -c t/996-capability-manifest-support-accounting-contract-full-surface-defensive-copy-audit.t && prove -l t/996-capability-manifest-support-accounting-contract-full-surface-defensive-copy-audit.t t/995-capability-manifest-support-accounting-contract-full-surface-json-roundtrip-audit.t t/314-support-accounting-contract.t t/450-support-accounting-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest support accounting contract full surface survives JSON
 - Added
   [t/995-capability-manifest-support-accounting-contract-full-surface-json-roundtrip-audit.t](t/995-capability-manifest-support-accounting-contract-full-surface-json-roundtrip-audit.t)

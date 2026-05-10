@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest support accounting contract full surface rebuilds cleanly
+- Added
+  [t/996-capability-manifest-support-accounting-contract-full-surface-defensive-copy-audit.t](t/996-capability-manifest-support-accounting-contract-full-surface-defensive-copy-audit.t)
+  to prove a fresh capability manifest rebuild restores the embedded
+  `support_accounting.section_contract` after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md),
+  [LIVE_ACHIEVEMENT_STATUS.md](LIVE_ACHIEVEMENT_STATUS.md), and
+  [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  for the `R13` progress entry.
 ### Manifest support accounting contract full surface survives JSON
 - Added
   [t/995-capability-manifest-support-accounting-contract-full-surface-json-roundtrip-audit.t](t/995-capability-manifest-support-accounting-contract-full-surface-json-roundtrip-audit.t)
