@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator shell branch metadata stays JSON-audited
+- The bounded `HDLGenerator` result contract now has focused JSON round-trip
+  coverage for shell-only branch flags and raw branch metadata.
+- Decoded metadata must keep raw object classes, raw AST shape, and raw
+  composition-report non-JSON-safe status visible to embedders.
 ## 2026-05-10: HDLGenerator JSON-safety flags stay audited
 - The bounded `HDLGenerator` result contract now has focused JSON round-trip
   coverage for advertisement flags, whole-result stability flags, and the

@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: HDLGenerator shell branch metadata survives JSON
+- Added
+  [t/750-hdl-generator-result-contract-shell-branch-metadata-json-roundtrip-audit.t](t/750-hdl-generator-result-contract-shell-branch-metadata-json-roundtrip-audit.t)
+  to prove the bounded `HDLGenerator` result contract's decoded shell-only
+  branch flags, raw value class metadata, raw AST value shape, and raw
+  composition-report JSON-safety flag survive JSON round trip.
+- This keeps shell-only branch metadata portable in serialized contract metadata
+  without changing the result contract API.
+- Focused validation passed:
+  `perl -Iperl -c t/750-hdl-generator-result-contract-shell-branch-metadata-json-roundtrip-audit.t && prove -l t/750-hdl-generator-result-contract-shell-branch-metadata-json-roundtrip-audit.t t/305-hdl-generator-result-contract.t t/438-hdl-generator-result-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: HDLGenerator JSON-safety flags survive JSON
 - Added
   [t/749-hdl-generator-result-contract-json-safety-flags-json-roundtrip-audit.t](t/749-hdl-generator-result-contract-json-safety-flags-json-roundtrip-audit.t)

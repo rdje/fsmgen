@@ -119,6 +119,9 @@ list visible without marking `hdl_code` unsanitized, and it is defensively
 rebuilt for each contract build. The result contract's JSON-safety and
 advertisement flags are JSON-audited too, including the pointer to
 `semantic_exports.normalized_semantic_json` as the sanitized export surface.
+Shell-only branch flags and raw branch metadata are JSON-audited as well, so
+serialized metadata keeps raw object classes, raw AST shape, and the raw
+composition-report non-JSON-safe status visible.
 
 ## Current Philosophy
 

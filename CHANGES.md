@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### HDLGenerator shell branch metadata survives JSON
+- Added
+  [t/750-hdl-generator-result-contract-shell-branch-metadata-json-roundtrip-audit.t](t/750-hdl-generator-result-contract-shell-branch-metadata-json-roundtrip-audit.t)
+  to prove the bounded `HDLGenerator` result contract's decoded shell-only
+  branch flags and raw branch metadata survive JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions result-contract shell metadata JSON coverage.
 ### HDLGenerator JSON-safety flags survive JSON
 - Added
   [t/749-hdl-generator-result-contract-json-safety-flags-json-roundtrip-audit.t](t/749-hdl-generator-result-contract-json-safety-flags-json-roundtrip-audit.t)
