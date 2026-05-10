@@ -213,6 +213,7 @@ Manifest composition-report count-map, example-map, ordered-list, and grouped pr
 Manifest composition-report JSON-safety and sanitization flags now survive JSON round trip.
 Manifest composition-report `tested_by` and guidance lists now survive JSON round trip.
 Manifest composition-report identity metadata now rebuilds cleanly after caller mutation.
+Manifest composition-report public, summary, and collection key families now rebuild cleanly after caller mutation.
 
 ## Current Philosophy
 
