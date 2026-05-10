@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest HDLGenerator result semantic map rebuilds cleanly
+- Added
+  [t/794-capability-manifest-hdl-result-semantic-map-defensive-copy-audit.t](t/794-capability-manifest-hdl-result-semantic-map-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_result`
+  semantic-layer presence key-family map rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side `HDLGenerator` result semantic map copy coverage.
 ### Manifest HDLGenerator result optional map rebuilds cleanly
 - Added
   [t/793-capability-manifest-hdl-result-optional-map-defensive-copy-audit.t](t/793-capability-manifest-hdl-result-optional-map-defensive-copy-audit.t)

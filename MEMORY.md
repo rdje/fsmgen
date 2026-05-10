@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest HDLGenerator result semantic map rebuilds cleanly
+- Added
+  [t/794-capability-manifest-hdl-result-semantic-map-defensive-copy-audit.t](t/794-capability-manifest-hdl-result-semantic-map-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_result`
+  semantic-layer presence key-family map rebuilds cleanly after caller mutation.
+- This mirrors the parent `HDLGenerator` result semantic map defensive-copy
+  guard through the manifest branch without changing the manifest API.
+- Focused validation passed:
+  `perl -Iperl -c t/794-capability-manifest-hdl-result-semantic-map-defensive-copy-audit.t && prove -l t/794-capability-manifest-hdl-result-semantic-map-defensive-copy-audit.t t/305-hdl-generator-result-contract.t t/436-capability-manifest-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest HDLGenerator result optional map rebuilds cleanly
 - Added
   [t/793-capability-manifest-hdl-result-optional-map-defensive-copy-audit.t](t/793-capability-manifest-hdl-result-optional-map-defensive-copy-audit.t)
