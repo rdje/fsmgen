@@ -228,6 +228,7 @@ Manifest embedding-section nested contract source map now rebuilds cleanly after
 Manifest embedding-section nested presence key map now rebuilds cleanly after caller mutation.
 Manifest embedding-section flags and guidance now rebuild cleanly after caller mutation.
 Manifest typed-extension identity metadata now survives JSON round trip.
+Manifest typed-extension tested_by and entrypoint metadata now survives JSON round trip.
 
 ## Current Philosophy
 
