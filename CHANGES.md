@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest HDLGenerator result owner map survives JSON
+- Added
+  [t/765-capability-manifest-hdl-result-owner-map-json-roundtrip-audit.t](t/765-capability-manifest-hdl-result-owner-map-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_result`
+  contract keeps its nested-contract owner map after JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side `HDLGenerator` result owner map coverage.
 ### Manifest HDLGenerator result top-level keys survive JSON
 - Added
   [t/764-capability-manifest-hdl-result-top-level-keys-json-roundtrip-audit.t](t/764-capability-manifest-hdl-result-top-level-keys-json-roundtrip-audit.t)

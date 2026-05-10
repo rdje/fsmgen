@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest HDLGenerator result owner map survives JSON
+- Added
+  [t/765-capability-manifest-hdl-result-owner-map-json-roundtrip-audit.t](t/765-capability-manifest-hdl-result-owner-map-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_result`
+  contract keeps its nested-contract owner map after JSON round trip.
+- This mirrors the parent `HDLGenerator` result owner map guard through
+  the manifest branch without changing the manifest API.
+- Focused validation passed:
+  `perl -Iperl -c t/765-capability-manifest-hdl-result-owner-map-json-roundtrip-audit.t && prove -l t/765-capability-manifest-hdl-result-owner-map-json-roundtrip-audit.t t/305-hdl-generator-result-contract.t t/763-capability-manifest-hdl-result-identity-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest HDLGenerator result top-level keys survive JSON
 - Added
   [t/764-capability-manifest-hdl-result-top-level-keys-json-roundtrip-audit.t](t/764-capability-manifest-hdl-result-top-level-keys-json-roundtrip-audit.t)
