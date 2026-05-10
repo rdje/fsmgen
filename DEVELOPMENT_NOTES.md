@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest HDLGenerator facade linked contracts rebuild cleanly
+- The manifest-embedded `embedding.hdl_generator_facade` contract now has focused defensive-copy
+  coverage for its linked contract and guidance metadata.
+- This keeps public embedding consumers aligned with the direct `HDLGenerator` facade contract.
 ## 2026-05-10: Manifest HDLGenerator facade generation boundary rebuilds cleanly
 - The manifest-embedded `embedding.hdl_generator_facade` contract now has focused defensive-copy
   coverage for its generation boundary metadata.

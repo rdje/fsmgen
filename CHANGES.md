@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest HDLGenerator facade linked contracts rebuild cleanly
+- Added
+  [t/826-capability-manifest-hdl-facade-linked-contracts-defensive-copy-audit.t](t/826-capability-manifest-hdl-facade-linked-contracts-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_facade`
+  linked contract and guidance metadata rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side facade linked contracts and guidance coverage.
 ### Manifest HDLGenerator facade generation boundary rebuilds cleanly
 - Added
   [t/825-capability-manifest-hdl-facade-generation-boundary-defensive-copy-audit.t](t/825-capability-manifest-hdl-facade-generation-boundary-defensive-copy-audit.t)
