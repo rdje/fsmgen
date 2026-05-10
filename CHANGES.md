@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest support accounting contract identity rebuilds cleanly
+- Added
+  [t/985-capability-manifest-support-accounting-contract-identity-defensive-copy-audit.t](t/985-capability-manifest-support-accounting-contract-identity-defensive-copy-audit.t)
+  to prove the capability manifest's `support_accounting.section_contract`
+  identity metadata rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md) for the `R13` progress entry.
 ### Manifest support accounting contract guidance survives JSON
 - Added
   [t/984-capability-manifest-support-accounting-contract-guidance-json-roundtrip-audit.t](t/984-capability-manifest-support-accounting-contract-guidance-json-roundtrip-audit.t)

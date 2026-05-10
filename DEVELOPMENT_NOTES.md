@@ -1,5 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest support accounting contract identity rebuilds cleanly
+- `support_accounting.section_contract` now has focused defensive-copy coverage for its identity metadata.
+- This keeps support claims discoverable through explicit, regression-backed manifest contract metadata.
 ## 2026-05-10: Manifest support accounting contract guidance survives JSON
 - `support_accounting.section_contract` now has focused JSON round-trip coverage for its guidance list.
 - This keeps support claims discoverable through explicit, regression-backed manifest contract metadata.
