@@ -174,6 +174,7 @@ Semantic scalar key lists now rebuild cleanly after caller mutation of an earlie
 The grouped shell-only fallback surface map now rebuilds cleanly after caller mutation at the manifest boundary.
 The grouped shell-only fallback surface-family map now rebuilds cleanly after caller mutation at the manifest boundary.
 The embedded result-contract guidance list now rebuilds cleanly after caller mutation of an earlier manifest.
+The embedded result-contract `tested_by` provenance list now has manifest-side defensive-copy coverage.
 
 ## Current Philosophy
 

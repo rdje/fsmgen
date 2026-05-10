@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest HDLGenerator result tested_by rebuilds cleanly
+- Added
+  [t/802-capability-manifest-hdl-result-tested-by-defensive-copy-audit.t](t/802-capability-manifest-hdl-result-tested-by-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_result`
+  `tested_by` provenance list rebuilds cleanly after caller mutation.
+- This mirrors the parent `HDLGenerator` result tested_by provenance defensive-copy
+  guard through the manifest branch without changing the manifest API.
+- Focused validation passed:
+  `perl -Iperl -c t/802-capability-manifest-hdl-result-tested-by-defensive-copy-audit.t && prove -l t/802-capability-manifest-hdl-result-tested-by-defensive-copy-audit.t t/305-hdl-generator-result-contract.t t/436-capability-manifest-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest HDLGenerator result guidance rebuilds cleanly
 - Added
   [t/801-capability-manifest-hdl-result-guidance-defensive-copy-audit.t](t/801-capability-manifest-hdl-result-guidance-defensive-copy-audit.t)
