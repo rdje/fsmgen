@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest HDLGenerator result semantic keys survive JSON
+- Added
+  [t/772-capability-manifest-hdl-result-semantic-keys-json-roundtrip-audit.t](t/772-capability-manifest-hdl-result-semantic-keys-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_result`
+  contract keeps its semantic-layer scalar key lists after JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side `HDLGenerator` result semantic scalar keys coverage.
 ### Manifest HDLGenerator result statistics keys survive JSON
 - Added
   [t/771-capability-manifest-hdl-result-statistics-keys-json-roundtrip-audit.t](t/771-capability-manifest-hdl-result-statistics-keys-json-roundtrip-audit.t)

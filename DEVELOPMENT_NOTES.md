@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest HDLGenerator result semantic keys stay JSON-audited
+- The manifest-embedded `embedding.hdl_generator_result` contract now has
+  focused JSON round-trip coverage for its semantic-layer scalar key lists.
+- This keeps the public capability manifest aligned with the parent result-contract
+  metadata that embedders use for bounded result discovery.
 ## 2026-05-10: Manifest HDLGenerator result statistics keys stay JSON-audited
 - The manifest-embedded `embedding.hdl_generator_result` contract now has
   focused JSON round-trip coverage for its statistics key lists.
