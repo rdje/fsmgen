@@ -194,6 +194,7 @@ Manifest facade constructor shape metadata now survives JSON round trip, includi
 Manifest facade generation receiver and argument boundary metadata now survives JSON round trip.
 Manifest facade linked contract sources, public booleans, and guidance now survive JSON round trip.
 Manifest facade identity metadata now rebuilds cleanly after caller mutation of an earlier manifest.
+Manifest facade public key, method, and target-language lists now rebuild cleanly after caller mutation.
 
 ## Current Philosophy
 

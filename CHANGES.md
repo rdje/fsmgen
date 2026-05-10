@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest HDLGenerator facade public keys rebuild cleanly
+- Added
+  [t/822-capability-manifest-hdl-facade-public-keys-defensive-copy-audit.t](t/822-capability-manifest-hdl-facade-public-keys-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_facade`
+  public key and method lists rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side `HDLGenerator` facade facade public keys coverage.
 ### Manifest HDLGenerator facade identity rebuilds cleanly
 - Added
   [t/821-capability-manifest-hdl-facade-identity-defensive-copy-audit.t](t/821-capability-manifest-hdl-facade-identity-defensive-copy-audit.t)
