@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest serializable plan report raw shell keys survives JSON
+- Added
+  [t/880-capability-manifest-serializable-plan-report-raw-shell-keys-json-roundtrip-audit.t](t/880-capability-manifest-serializable-plan-report-raw-shell-keys-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.serializable_plan_reports`
+  raw shell replacement keys survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side serializable plan report raw shell keys coverage.
 ### Manifest serializable plan report nested source map survives JSON
 - Added
   [t/879-capability-manifest-serializable-plan-report-nested-source-map-json-roundtrip-audit.t](t/879-capability-manifest-serializable-plan-report-nested-source-map-json-roundtrip-audit.t)
