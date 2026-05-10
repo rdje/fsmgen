@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest composition report flags rebuild cleanly
+- Added
+  [t/843-capability-manifest-composition-report-flags-defensive-copy-audit.t](t/843-capability-manifest-composition-report-flags-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.composition_report`
+  JSON-safety flags rebuilds cleanly after caller mutation.
+- This mirrors the direct composition-report contract through the manifest branch
+  without changing the manifest API.
+- Focused validation passed:
+  `perl -Iperl -c t/843-capability-manifest-composition-report-flags-defensive-copy-audit.t && prove -l t/843-capability-manifest-composition-report-flags-defensive-copy-audit.t t/307-composition-report-contract.t t/441-composition-report-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest composition report map families rebuild cleanly
 - Added
   [t/842-capability-manifest-composition-report-map-families-defensive-copy-audit.t](t/842-capability-manifest-composition-report-map-families-defensive-copy-audit.t)

@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest composition report flags rebuild cleanly
+- Added
+  [t/843-capability-manifest-composition-report-flags-defensive-copy-audit.t](t/843-capability-manifest-composition-report-flags-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.composition_report`
+  JSON-safety flags rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side composition report flags coverage.
 ### Manifest composition report map families rebuild cleanly
 - Added
   [t/842-capability-manifest-composition-report-map-families-defensive-copy-audit.t](t/842-capability-manifest-composition-report-map-families-defensive-copy-audit.t)
