@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest contract top level source map survives JSON
+- `manifest_contract` now has focused JSON round-trip coverage for its top-level contract source map.
+- This keeps manifest consumers on explicit contract metadata rather than sample
+  payload shape alone.
 ## 2026-05-10: Manifest contract public keys survives JSON
 - `manifest_contract` now has focused JSON round-trip coverage for its public top-level presence keys.
 - This keeps manifest consumers on explicit contract metadata rather than sample
