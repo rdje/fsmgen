@@ -184,6 +184,7 @@ Shell-only branch flags and raw-value or fragment descriptors now rebuild cleanl
 The `fsm_module` shell summary and fallback surfaces now rebuild cleanly after manifest caller mutation.
 The `raw_ast` shell summary and fallback surfaces now rebuild cleanly after manifest caller mutation.
 The `resolved_package_imports` shell summary and fallback surfaces now rebuild cleanly after manifest caller mutation.
+The `composition_spec` shell summary and fallback surfaces now rebuild cleanly after manifest caller mutation.
 
 ## Current Philosophy
 

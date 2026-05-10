@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest HDLGenerator result composition_spec shell surfaces rebuild cleanly
+- Added
+  [t/812-capability-manifest-hdl-result-composition-spec-shell-surfaces-defensive-copy-audit.t](t/812-capability-manifest-hdl-result-composition-spec-shell-surfaces-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_result`
+  `composition_spec` shell surfaces rebuilds cleanly after caller mutation.
+- This mirrors the parent `HDLGenerator` result composition_spec shell surfaces defensive-copy
+  guard through the manifest branch without changing the manifest API.
+- Focused validation passed:
+  `perl -Iperl -c t/812-capability-manifest-hdl-result-composition-spec-shell-surfaces-defensive-copy-audit.t && prove -l t/812-capability-manifest-hdl-result-composition-spec-shell-surfaces-defensive-copy-audit.t t/305-hdl-generator-result-contract.t t/436-capability-manifest-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest HDLGenerator result resolved packages shell surfaces rebuild cleanly
 - Added
   [t/811-capability-manifest-hdl-result-resolved-packages-shell-surfaces-defensive-copy-audit.t](t/811-capability-manifest-hdl-result-resolved-packages-shell-surfaces-defensive-copy-audit.t)
