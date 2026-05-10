@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest HDLGenerator facade generation boundary survives JSON
+- Added
+  [t/819-capability-manifest-hdl-facade-generation-boundary-json-roundtrip-audit.t](t/819-capability-manifest-hdl-facade-generation-boundary-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_facade`
+  generation boundary metadata survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side `HDLGenerator` facade facade generation boundary coverage.
 ### Manifest HDLGenerator facade constructor shapes survive JSON
 - Added
   [t/818-capability-manifest-hdl-facade-constructor-shapes-json-roundtrip-audit.t](t/818-capability-manifest-hdl-facade-constructor-shapes-json-roundtrip-audit.t)

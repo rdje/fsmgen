@@ -191,6 +191,7 @@ The capability manifest now mirrors `embedding.hdl_generator_facade` identity me
 Manifest facade public key, method, and target-language lists now survive JSON round trip.
 Manifest facade constructor option families now have JSON round-trip coverage.
 Manifest facade constructor shape metadata now survives JSON round trip, including duplicate and unknown option policies.
+Manifest facade generation receiver and argument boundary metadata now survives JSON round trip.
 
 ## Current Philosophy
 
