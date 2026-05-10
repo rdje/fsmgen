@@ -160,6 +160,7 @@ The `live_or_unsanitized_keys` list is now audited through manifest JSON, keepin
 JSON-safety and full-hash stability flags now survive the manifest JSON mirror exactly, including the intentionally false full-result promises.
 The manifest mirror now also keeps the result-contract advertisement flags JSON-audited for identity, summary, statistics, and semantic-layer surfaces.
 Scalar nested contract-source fields now have manifest JSON coverage in addition to the grouped owner map.
+Semantic-layer full-hash stability flags now have a focused manifest JSON guard, preserving the bounded-shell warning for each semantic branch.
 
 ## Current Philosophy
 

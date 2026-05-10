@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest HDLGenerator result semantic stability flags survive JSON
+- Added
+  [t/788-capability-manifest-hdl-result-semantic-stability-flags-json-roundtrip-audit.t](t/788-capability-manifest-hdl-result-semantic-stability-flags-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_result`
+  contract keeps its semantic stability flags after JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side `HDLGenerator` result semantic stability flags coverage.
 ### Manifest HDLGenerator result contract sources survive JSON
 - Added
   [t/787-capability-manifest-hdl-result-contract-sources-json-roundtrip-audit.t](t/787-capability-manifest-hdl-result-contract-sources-json-roundtrip-audit.t)
