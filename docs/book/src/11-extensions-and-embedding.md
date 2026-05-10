@@ -92,12 +92,13 @@ and matching defensive-copy coverage. The shell-only fallback surface map also
 has focused defensive-copy coverage for its grouped discovery surface.
 The shell-only fallback surface map is also JSON-audited so raw compatibility
 branches keep pointing at their advertised structured replacements, and the
-narrower fallback-family map is guarded the same way. The result contract's
-source-info identity and summary key lists are also JSON-audited, along with the
-full-hash stability flag and package-import copy-policy note. The module-info
-identity, summary, and optional-composition key lists now carry matching JSON
-coverage, including the decoded family-map mirror for optional composition. The
-statistics summary and optional-composition key lists are guarded the same way.
+narrower fallback-family map is guarded the same way and now has matching
+defensive-copy coverage. The result contract's source-info identity and summary
+key lists are also JSON-audited, along with the full-hash stability flag and
+package-import copy-policy note. The module-info identity, summary, and
+optional-composition key lists now carry matching JSON coverage, including the
+decoded family-map mirror for optional composition. The statistics summary and
+optional-composition key lists are guarded the same way.
 The scalar semantic-layer key lists for `intent_hir`, `lowered_rtl_ir`, and
 `structural_rtl_ir` now carry matching JSON coverage, including their grouped
 semantic and optional-composition family-map mirrors.
@@ -803,6 +804,9 @@ It now also publishes a grouped `shell_only_fallback_surface_family_map` so
 embedders can discover the narrower fallback-surface families those shell-only
 branches publish for themselves without reconstructing the per-branch grouping
 by hand.
+That grouped shell-only fallback family map is defensively rebuilt by the
+contract and helper, so callers can annotate one returned copy without leaking
+changes into later builds.
 The nested `source_info` object now also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorSourceInfoContract.pm](perl/FSM/Support/HDLGeneratorSourceInfoContract.pm),
 which is the contract to follow for `header`, `kind`,
