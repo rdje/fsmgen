@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest embedding section identity rebuilds cleanly
+- Added
+  [t/850-capability-manifest-embedding-section-identity-defensive-copy-audit.t](t/850-capability-manifest-embedding-section-identity-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.section_contract`
+  identity metadata rebuilds cleanly after caller mutation.
+- This mirrors the direct embedding-section contract through the manifest branch
+  without changing the manifest API.
+- Focused validation passed:
+  `perl -Iperl -c t/850-capability-manifest-embedding-section-identity-defensive-copy-audit.t && prove -l t/850-capability-manifest-embedding-section-identity-defensive-copy-audit.t t/321-embedding-contract.t t/480-embedding-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest embedding section flags guidance survives JSON
 - Added
   [t/849-capability-manifest-embedding-section-flags-guidance-json-roundtrip-audit.t](t/849-capability-manifest-embedding-section-flags-guidance-json-roundtrip-audit.t)
