@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest composition report key families survive JSON
+- Added
+  [t/836-capability-manifest-composition-report-key-families-json-roundtrip-audit.t](t/836-capability-manifest-composition-report-key-families-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.composition_report`
+  public summary and collection key families survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side composition report key families coverage.
 ### Manifest composition report identity survives JSON
 - Added
   [t/835-capability-manifest-composition-report-identity-json-roundtrip-audit.t](t/835-capability-manifest-composition-report-identity-json-roundtrip-audit.t)
