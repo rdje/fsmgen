@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator guidance stays JSON-audited
+- The bounded `HDLGenerator` result contract now has focused JSON round-trip
+  coverage for its `guidance` list.
+- Decoded guidance must remain unique and keep the two core embedder messages:
+  the full result is not stable JSON, and sanitized semantic reports are the
+  interchange path.
 ## 2026-05-10: HDLGenerator tested-by list stays caller-owned
 - The bounded `HDLGenerator` result contract now has focused defensive-copy
   coverage for its `tested_by` provenance list.

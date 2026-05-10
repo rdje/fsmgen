@@ -109,8 +109,10 @@ The scalar semantic-layer key lists for `intent_hir`, `lowered_rtl_ir`, and
 semantic and optional-composition family-map mirrors, plus focused
 defensive-copy coverage. The result contract guidance list is also defensively
 rebuilt so callers can annotate one returned copy without mutating later
-contract builds. Its `tested_by` provenance list follows the same caller-owned
-rebuild rule while retaining the core audit references.
+contract builds, and it is JSON-audited so serialized metadata retains both the
+whole-result non-stability warning and sanitized interchange recommendation. Its
+`tested_by` provenance list follows the same caller-owned rebuild rule while
+retaining the core audit references.
 
 ## Current Philosophy
 
