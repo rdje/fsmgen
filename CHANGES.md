@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest HDLGenerator result export surface rebuilds cleanly
+- Added
+  [t/807-capability-manifest-hdl-result-export-surface-defensive-copy-audit.t](t/807-capability-manifest-hdl-result-export-surface-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_result`
+  JSON-safe export surface pointer rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side `HDLGenerator` result JSON-safe export surface copy coverage.
 ### Manifest HDLGenerator result contract sources rebuild cleanly
 - Added
   [t/806-capability-manifest-hdl-result-contract-sources-defensive-copy-audit.t](t/806-capability-manifest-hdl-result-contract-sources-defensive-copy-audit.t)

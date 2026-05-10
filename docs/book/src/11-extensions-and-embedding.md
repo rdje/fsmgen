@@ -179,6 +179,7 @@ The `live_or_unsanitized_keys` list now rebuilds cleanly after caller mutation a
 JSON-safety and full-hash stability flags now rebuild cleanly after caller mutation of an embedded manifest result contract.
 Advertisement flags now rebuild cleanly after caller mutation of an embedded manifest result contract.
 Scalar nested contract-source fields now rebuild cleanly after caller mutation at the manifest boundary.
+The `json_safe_export_surface` pointer now rebuilds cleanly after caller mutation of a manifest result contract.
 
 ## Current Philosophy
 
