@@ -216,6 +216,7 @@ Manifest composition-report identity metadata now rebuilds cleanly after caller 
 Manifest composition-report public, summary, and collection key families now rebuild cleanly after caller mutation.
 Manifest composition-report map, ordered, and grouped presence families now rebuild cleanly after caller mutation.
 Manifest composition-report JSON-safety and sanitization flags now rebuild cleanly after caller mutation.
+Manifest composition-report `tested_by` and guidance lists now rebuild cleanly after caller mutation.
 
 ## Current Philosophy
 
