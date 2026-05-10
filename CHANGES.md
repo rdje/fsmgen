@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest backend validation contract entrypoints rebuilds cleanly
+- Added
+  [t/951-capability-manifest-backend-validation-contract-entrypoints-defensive-copy-audit.t](t/951-capability-manifest-backend-validation-contract-entrypoints-defensive-copy-audit.t)
+  to prove the capability manifest's `backend_validation.section_contract`
+  entrypoint metadata rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  for the `R13` manifest-section contract progress entry.
 ### Manifest backend validation contract identity rebuilds cleanly
 - Added
   [t/950-capability-manifest-backend-validation-contract-identity-defensive-copy-audit.t](t/950-capability-manifest-backend-validation-contract-identity-defensive-copy-audit.t)

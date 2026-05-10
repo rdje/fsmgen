@@ -1,5 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest backend validation contract entrypoints rebuilds cleanly
+- The manifest `backend_validation.section_contract` now has focused defensive-copy coverage for its entrypoint metadata.
+- This keeps public manifest consumers anchored to explicit section contracts.
 ## 2026-05-10: Manifest backend validation contract identity rebuilds cleanly
 - The manifest `backend_validation.section_contract` now has focused defensive-copy coverage for its identity metadata.
 - This keeps public manifest consumers anchored to explicit section contracts.
