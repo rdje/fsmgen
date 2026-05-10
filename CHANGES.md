@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest contract presence family map rebuilds cleanly
+- Added
+  [t/910-capability-manifest-contract-presence-family-map-defensive-copy-audit.t](t/910-capability-manifest-contract-presence-family-map-defensive-copy-audit.t)
+  to prove `manifest_contract` presence key family map rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest contract presence family map coverage.
 ### Manifest contract section presence map rebuilds cleanly
 - Added
   [t/909-capability-manifest-contract-section-presence-map-defensive-copy-audit.t](t/909-capability-manifest-contract-section-presence-map-defensive-copy-audit.t)
