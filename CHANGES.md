@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest support accounting contract flags rebuilds cleanly
+- Added
+  [t/993-capability-manifest-support-accounting-contract-flags-defensive-copy-audit.t](t/993-capability-manifest-support-accounting-contract-flags-defensive-copy-audit.t)
+  to prove the capability manifest's `support_accounting.section_contract`
+  derived catalog flags rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md) for the `R13` progress entry.
 ### Manifest support accounting contract presence map rebuilds cleanly
 - Added
   [t/992-capability-manifest-support-accounting-contract-presence-map-defensive-copy-audit.t](t/992-capability-manifest-support-accounting-contract-presence-map-defensive-copy-audit.t)
