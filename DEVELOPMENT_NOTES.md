@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator tested-by list stays caller-owned
+- The bounded `HDLGenerator` result contract now has focused defensive-copy
+  coverage for its `tested_by` provenance list.
+- Mutating one built contract's provenance metadata must not pollute the next
+  build, and fresh provenance must still reference the primary contract and
+  defensive-copy audits.
 ## 2026-05-10: HDLGenerator guidance stays caller-owned
 - The bounded `HDLGenerator` result contract now has focused defensive-copy
   coverage for its `guidance` list.

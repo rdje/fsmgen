@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### HDLGenerator tested-by list rebuilds cleanly
+- Added
+  [t/744-hdl-generator-result-contract-tested-by-defensive-copy-audit.t](t/744-hdl-generator-result-contract-tested-by-defensive-copy-audit.t)
+  to prove the bounded `HDLGenerator` result contract's `tested_by` provenance
+  list rebuilds cleanly after caller mutation while retaining core audit
+  references.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions result-contract provenance copy coverage.
 ### HDLGenerator guidance rebuilds cleanly
 - Added
   [t/743-hdl-generator-result-contract-guidance-defensive-copy-audit.t](t/743-hdl-generator-result-contract-guidance-defensive-copy-audit.t)
