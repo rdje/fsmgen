@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest HDLGenerator facade identity survives JSON
+- The manifest-embedded `embedding.hdl_generator_facade` contract now has
+  focused JSON round-trip coverage for its identity metadata.
+- This keeps public embedding consumers aligned with the direct facade contract
+  advertised for `FSM::Pipeline::HDLGenerator`.
 ## 2026-05-10: Manifest HDLGenerator result composition_report shell surfaces rebuild cleanly
 - The manifest-embedded `embedding.hdl_generator_result` contract now has
   focused defensive-copy coverage for its `composition_report` shell surfaces.

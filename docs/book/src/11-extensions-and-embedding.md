@@ -187,6 +187,7 @@ The `resolved_package_imports` shell summary and fallback surfaces now rebuild c
 The `composition_spec` shell summary and fallback surfaces now rebuild cleanly after manifest caller mutation.
 The `composition_plan` shell summary and fallback surfaces now rebuild cleanly after manifest caller mutation.
 The `composition_report` shell fragment metadata and fallback maps now rebuild cleanly after manifest caller mutation.
+The capability manifest now mirrors `embedding.hdl_generator_facade` identity metadata through JSON round trip.
 
 ## Current Philosophy
 

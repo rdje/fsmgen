@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest HDLGenerator facade identity survives JSON
+- Added
+  [t/815-capability-manifest-hdl-facade-identity-json-roundtrip-audit.t](t/815-capability-manifest-hdl-facade-identity-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_facade`
+  identity metadata survives JSON round trip.
+- This mirrors the direct `HDLGenerator` facade contract through the manifest
+  branch without changing the manifest API.
+- Focused validation passed:
+  `perl -Iperl -c t/815-capability-manifest-hdl-facade-identity-json-roundtrip-audit.t && prove -l t/815-capability-manifest-hdl-facade-identity-json-roundtrip-audit.t t/375-hdl-generator-facade-contract.t t/439-hdl-generator-facade-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest HDLGenerator result composition_report shell surfaces rebuild cleanly
 - Added
   [t/814-capability-manifest-hdl-result-composition-report-shell-surfaces-defensive-copy-audit.t](t/814-capability-manifest-hdl-result-composition-report-shell-surfaces-defensive-copy-audit.t)
