@@ -211,6 +211,7 @@ The capability manifest now mirrors `embedding.composition_report` identity meta
 Manifest composition-report public, summary, and collection key families now survive JSON round trip.
 Manifest composition-report count-map, example-map, ordered-list, and grouped presence families now survive JSON round trip.
 Manifest composition-report JSON-safety and sanitization flags now survive JSON round trip.
+Manifest composition-report `tested_by` and guidance lists now survive JSON round trip.
 
 ## Current Philosophy
 

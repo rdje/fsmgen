@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest composition report provenance survives JSON
+- Added
+  [t/839-capability-manifest-composition-report-provenance-json-roundtrip-audit.t](t/839-capability-manifest-composition-report-provenance-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.composition_report`
+  tested_by and guidance lists survives JSON round trip.
+- This mirrors the direct composition-report contract through the manifest branch
+  without changing the manifest API.
+- Focused validation passed:
+  `perl -Iperl -c t/839-capability-manifest-composition-report-provenance-json-roundtrip-audit.t && prove -l t/839-capability-manifest-composition-report-provenance-json-roundtrip-audit.t t/307-composition-report-contract.t t/441-composition-report-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest composition report flags survive JSON
 - Added
   [t/838-capability-manifest-composition-report-flags-json-roundtrip-audit.t](t/838-capability-manifest-composition-report-flags-json-roundtrip-audit.t)

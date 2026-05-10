@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest composition report provenance survives JSON
+- Added
+  [t/839-capability-manifest-composition-report-provenance-json-roundtrip-audit.t](t/839-capability-manifest-composition-report-provenance-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.composition_report`
+  tested_by and guidance lists survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side composition report provenance coverage.
 ### Manifest composition report flags survive JSON
 - Added
   [t/838-capability-manifest-composition-report-flags-json-roundtrip-audit.t](t/838-capability-manifest-composition-report-flags-json-roundtrip-audit.t)
