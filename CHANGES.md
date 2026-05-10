@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest HDLGenerator result optional map rebuilds cleanly
+- Added
+  [t/793-capability-manifest-hdl-result-optional-map-defensive-copy-audit.t](t/793-capability-manifest-hdl-result-optional-map-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_result`
+  optional composition key-family map rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side `HDLGenerator` result optional composition map copy coverage.
 ### Manifest HDLGenerator result stable map rebuilds cleanly
 - Added
   [t/792-capability-manifest-hdl-result-stable-map-defensive-copy-audit.t](t/792-capability-manifest-hdl-result-stable-map-defensive-copy-audit.t)
