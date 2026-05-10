@@ -269,6 +269,7 @@ Manifest serializable-plan/report public report key metadata now rebuilds cleanl
 Manifest serializable-plan/report flags and guidance now rebuild cleanly after caller mutation.
 Capability manifest contract identity metadata now survives JSON round trip.
 Capability manifest contract entrypoint metadata now survives JSON round trip.
+Capability manifest contract public top-level presence keys now survive JSON round trip.
 
 ## Current Philosophy
 

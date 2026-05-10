@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest contract public keys survives JSON
+- Added
+  [t/897-capability-manifest-contract-public-keys-json-roundtrip-audit.t](t/897-capability-manifest-contract-public-keys-json-roundtrip-audit.t)
+  to prove `manifest_contract` public top-level presence keys survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest contract public keys coverage.
 ### Manifest contract entrypoints survives JSON
 - Added
   [t/896-capability-manifest-contract-entrypoints-json-roundtrip-audit.t](t/896-capability-manifest-contract-entrypoints-json-roundtrip-audit.t)
