@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest HDLGenerator result JSON safety flags survive JSON
+- Added
+  [t/785-capability-manifest-hdl-result-json-safety-flags-json-roundtrip-audit.t](t/785-capability-manifest-hdl-result-json-safety-flags-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_result`
+  contract keeps its JSON-safety flags after JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side `HDLGenerator` result JSON safety flags coverage.
 ### Manifest HDLGenerator result live unsanitized keys survive JSON
 - Added
   [t/784-capability-manifest-hdl-result-live-unsanitized-json-roundtrip-audit.t](t/784-capability-manifest-hdl-result-live-unsanitized-json-roundtrip-audit.t)

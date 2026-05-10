@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest HDLGenerator result JSON safety flags stay JSON-audited
+- The manifest-embedded `embedding.hdl_generator_result` contract now has
+  focused JSON round-trip coverage for its JSON-safety flags.
+- This keeps the public capability manifest aligned with the parent result-contract
+  metadata that embedders use for bounded result discovery.
 ## 2026-05-10: Manifest HDLGenerator result live unsanitized keys stay JSON-audited
 - The manifest-embedded `embedding.hdl_generator_result` contract now has
   focused JSON round-trip coverage for its `live_or_unsanitized_keys` list.
