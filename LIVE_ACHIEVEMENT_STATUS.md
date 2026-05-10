@@ -2,11 +2,11 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
-## 2026-05-10: Serializable plan/report contract full surface rebuilds cleanly
+## 2026-05-10: Normalized semantic report contract full surface survives JSON
 - Roadmap lane: `R13` public embedding/API stabilization.
 - Completed slice:
-  [t/1006-serializable-plan-report-contract-full-surface-defensive-copy-audit.t](t/1006-serializable-plan-report-contract-full-surface-defensive-copy-audit.t)
-  proves a fresh serializable plan/report contract build stays clean after
-  caller mutation of a previous full contract result.
+  [t/1007-normalized-semantic-report-contract-full-surface-json-roundtrip-audit.t](t/1007-normalized-semantic-report-contract-full-surface-json-roundtrip-audit.t)
+  proves the full normalized semantic report contract owner survives JSON
+  encode/decode unchanged.
 - Public behavior changed: no.
-- Next bounded slice: continue plan/report full-surface stability audits.
+- Next bounded slice: continue semantic-report full-surface stability audits.

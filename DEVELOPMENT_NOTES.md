@@ -1,5 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Normalized semantic report contract full surface survives JSON
+- The normalized semantic report contract now has a full-surface JSON round-trip audit.
+- This catches JSON-safety or owner-assembly drift across the public semantic JSON report boundary beyond the existing direct contract tests.
 ## 2026-05-10: Serializable plan/report contract full surface rebuilds cleanly
 - The serializable plan/report contract now has a full-surface defensive-copy audit.
 - The test recursively mutates one built contract and compares the next owner build with a fresh expected result, guarding the public plan/report metadata against shared mutable state.
