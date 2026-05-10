@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest contract identity rebuilds cleanly
+- Added
+  [t/905-capability-manifest-contract-identity-defensive-copy-audit.t](t/905-capability-manifest-contract-identity-defensive-copy-audit.t)
+  to prove `manifest_contract` identity metadata rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest contract identity coverage.
 ### Manifest contract guidance survives JSON
 - Added
   [t/904-capability-manifest-contract-guidance-json-roundtrip-audit.t](t/904-capability-manifest-contract-guidance-json-roundtrip-audit.t)

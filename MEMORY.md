@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest contract identity rebuilds cleanly
+- Added
+  [t/905-capability-manifest-contract-identity-defensive-copy-audit.t](t/905-capability-manifest-contract-identity-defensive-copy-audit.t)
+  to prove `manifest_contract` identity metadata rebuilds cleanly after caller mutation.
+- This keeps the outer capability manifest shell aligned with its direct
+  `FSM::Support::CapabilityManifestContract` owner.
+- Focused validation passed:
+  `perl -Iperl -c t/905-capability-manifest-contract-identity-defensive-copy-audit.t && prove -l t/905-capability-manifest-contract-identity-defensive-copy-audit.t t/316-capability-manifest-contract.t t/479-capability-manifest-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest contract guidance survives JSON
 - Added
   [t/904-capability-manifest-contract-guidance-json-roundtrip-audit.t](t/904-capability-manifest-contract-guidance-json-roundtrip-audit.t)

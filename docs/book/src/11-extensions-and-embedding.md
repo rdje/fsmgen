@@ -277,6 +277,7 @@ Capability manifest contract core section presence keys now survive JSON round t
 Capability manifest contract tooling section presence keys now survive JSON round trip.
 Capability manifest contract JSON-safety and nested-section advertisement flags now survive JSON round trip.
 Capability manifest contract guidance now survives JSON round trip.
+Capability manifest contract identity metadata now rebuilds cleanly after caller mutation.
 
 ## Current Philosophy
 
