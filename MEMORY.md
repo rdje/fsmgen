@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest documentation contract guidance survives JSON
+- Added
+  [t/969-capability-manifest-documentation-contract-guidance-json-roundtrip-audit.t](t/969-capability-manifest-documentation-contract-guidance-json-roundtrip-audit.t)
+  to prove the capability manifest's `documentation.section_contract`
+  guidance list survives JSON round trip.
+- This keeps the manifest section aligned with its direct `FSM::Support::DocumentationContract` owner.
+- Focused validation passed:
+  `perl -Iperl -c t/969-capability-manifest-documentation-contract-guidance-json-roundtrip-audit.t && prove -l t/969-capability-manifest-documentation-contract-guidance-json-roundtrip-audit.t t/318-documentation-contract.t t/448-documentation-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest documentation contract path contracts survives JSON
 - Added
   [t/968-capability-manifest-documentation-contract-path-contracts-json-roundtrip-audit.t](t/968-capability-manifest-documentation-contract-path-contracts-json-roundtrip-audit.t)
