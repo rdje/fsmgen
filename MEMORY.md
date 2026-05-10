@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest support accounting contract full surface survives JSON
+- Added
+  [t/995-capability-manifest-support-accounting-contract-full-surface-json-roundtrip-audit.t](t/995-capability-manifest-support-accounting-contract-full-surface-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `support_accounting.section_contract`
+  matches the direct `FSM::Support::SupportAccountingContract` owner after JSON
+  encode/decode.
+- This closes a whole-contract mirror guard above the existing field-by-field
+  support-accounting manifest audits.
+- Focused validation passed:
+  `perl -Iperl -c t/995-capability-manifest-support-accounting-contract-full-surface-json-roundtrip-audit.t && prove -l t/995-capability-manifest-support-accounting-contract-full-surface-json-roundtrip-audit.t t/314-support-accounting-contract.t t/450-support-accounting-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Session bootstrap import-tree verification
 - Completed the `README.md` / `SESSION_BOOTSTRAP.md` startup pass, including
   the mandatory `COMMIT.md` workflow adoption and the `bin/fsmgen`

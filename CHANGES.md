@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest support accounting contract full surface survives JSON
+- Added
+  [t/995-capability-manifest-support-accounting-contract-full-surface-json-roundtrip-audit.t](t/995-capability-manifest-support-accounting-contract-full-surface-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `support_accounting.section_contract`
+  matches the direct `FSM::Support::SupportAccountingContract` owner after JSON
+  encode/decode.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) and
+  [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  for the `R13` progress entry.
 ### Session bootstrap import-tree verification
 - Re-ran the `README.md` / `SESSION_BOOTSTRAP.md` startup pass and verified
   the live `bin/fsmgen` transitive `FSM::...` import tree against

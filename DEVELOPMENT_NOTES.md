@@ -1,5 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest support accounting contract full surface survives JSON
+- `support_accounting.section_contract` now has a whole-contract JSON round-trip audit in addition to the existing field-level probes.
+- The guard compares the decoded manifest mirror directly with `build_support_accounting_contract()`, so future manifest assembly changes must preserve the owner contract exactly.
 ## 2026-05-10: Session bootstrap import-tree verification
 - The startup pass confirmed that [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md)
   still matches the live static `bin/fsmgen` `FSM::...` import tree.
