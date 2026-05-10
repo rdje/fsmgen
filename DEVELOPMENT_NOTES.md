@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator fsm_module shell surfaces stay JSON-audited
+- The bounded `HDLGenerator` result contract now has focused JSON round-trip
+  coverage for `fsm_module_summary_surfaces` and
+  `fsm_module_fallback_surface_map`.
+- Decoded per-branch metadata must stay canonical and aligned with the grouped
+  shell fallback maps.
 ## 2026-05-10: HDLGenerator shell branch metadata stays JSON-audited
 - The bounded `HDLGenerator` result contract now has focused JSON round-trip
   coverage for shell-only branch flags and raw branch metadata.

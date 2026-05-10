@@ -121,7 +121,9 @@ advertisement flags are JSON-audited too, including the pointer to
 `semantic_exports.normalized_semantic_json` as the sanitized export surface.
 Shell-only branch flags and raw branch metadata are JSON-audited as well, so
 serialized metadata keeps raw object classes, raw AST shape, and the raw
-composition-report non-JSON-safe status visible.
+composition-report non-JSON-safe status visible. The `fsm_module` shell summary
+and fallback surface metadata is JSON-audited against its dedicated owner and
+the grouped shell fallback maps.
 
 ## Current Philosophy
 
