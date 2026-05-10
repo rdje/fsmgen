@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Serializable plan/report contract full surface rebuilds cleanly
+- Added
+  [t/1006-serializable-plan-report-contract-full-surface-defensive-copy-audit.t](t/1006-serializable-plan-report-contract-full-surface-defensive-copy-audit.t)
+  to prove a fresh serializable plan/report contract build stays clean after
+  caller mutation of a previous full contract result.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md),
+  [LIVE_ACHIEVEMENT_STATUS.md](LIVE_ACHIEVEMENT_STATUS.md), and
+  [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  for the `R13` progress entry.
 ### Serializable plan/report contract full surface survives JSON
 - Added
   [t/1005-serializable-plan-report-contract-full-surface-json-roundtrip-audit.t](t/1005-serializable-plan-report-contract-full-surface-json-roundtrip-audit.t)

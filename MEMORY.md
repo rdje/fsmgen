@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Serializable plan/report contract full surface rebuilds cleanly
+- Added
+  [t/1006-serializable-plan-report-contract-full-surface-defensive-copy-audit.t](t/1006-serializable-plan-report-contract-full-surface-defensive-copy-audit.t)
+  to prove a fresh `build_serializable_plan_report_contract()` result is clean
+  after a caller mutates a previous full contract result.
+- This complements the plan/report full-surface JSON audit with a defensive-copy
+  guard for the embedder-facing plan/report boundary.
+- Focused validation passed:
+  `perl -Iperl -c t/1006-serializable-plan-report-contract-full-surface-defensive-copy-audit.t && prove -l t/1006-serializable-plan-report-contract-full-surface-defensive-copy-audit.t t/1005-serializable-plan-report-contract-full-surface-json-roundtrip-audit.t t/713-serializable-plan-report-guidance-defensive-copy-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Serializable plan/report contract full surface survives JSON
 - Added
   [t/1005-serializable-plan-report-contract-full-surface-json-roundtrip-audit.t](t/1005-serializable-plan-report-contract-full-surface-json-roundtrip-audit.t)
