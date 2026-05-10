@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest contract tooling section keys rebuilds cleanly
+- Added
+  [t/912-capability-manifest-contract-tooling-section-keys-defensive-copy-audit.t](t/912-capability-manifest-contract-tooling-section-keys-defensive-copy-audit.t)
+  to prove `manifest_contract` tooling section presence keys rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest contract tooling section keys coverage.
 ### Manifest contract core section keys rebuilds cleanly
 - Added
   [t/911-capability-manifest-contract-core-section-keys-defensive-copy-audit.t](t/911-capability-manifest-contract-core-section-keys-defensive-copy-audit.t)
