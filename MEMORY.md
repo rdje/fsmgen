@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest HDLGenerator result identity survives JSON
+- Added
+  [t/763-capability-manifest-hdl-result-identity-json-roundtrip-audit.t](t/763-capability-manifest-hdl-result-identity-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_result`
+  contract keeps schema version, bounded status, source owner, entrypoint, and
+  `tested_by` shape after JSON round trip.
+- This mirrors the parent `HDLGenerator` result identity guard through the
+  manifest branch without changing the manifest API.
+- Focused validation passed:
+  `perl -Iperl -c t/763-capability-manifest-hdl-result-identity-json-roundtrip-audit.t && prove -l t/763-capability-manifest-hdl-result-identity-json-roundtrip-audit.t t/305-hdl-generator-result-contract.t t/436-capability-manifest-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: HDLGenerator composition_report shell fallback rebuilds cleanly
 - Added
   [t/762-hdl-generator-result-contract-composition-report-shell-surfaces-defensive-copy-audit.t](t/762-hdl-generator-result-contract-composition-report-shell-surfaces-defensive-copy-audit.t)

@@ -132,6 +132,9 @@ as does the `composition_spec` shell summary and fallback metadata. The
 same per-branch pass with JSON and defensive-copy coverage.
 The `composition_report` sanitized JSON fragment fallback now completes that
 per-branch JSON coverage and has matching defensive-copy coverage.
+The capability manifest also mirrors the bounded `HDLGenerator` result contract:
+its embedded identity metadata is JSON-audited so manifest consumers see the
+same schema, status, owner, entrypoint, and provenance shape.
 
 ## Current Philosophy
 

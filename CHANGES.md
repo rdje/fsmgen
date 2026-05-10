@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest HDLGenerator result identity survives JSON
+- Added
+  [t/763-capability-manifest-hdl-result-identity-json-roundtrip-audit.t](t/763-capability-manifest-hdl-result-identity-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_result`
+  contract keeps identity metadata after JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side `HDLGenerator` result identity coverage.
 ### HDLGenerator composition_report shell fallback rebuilds cleanly
 - Added
   [t/762-hdl-generator-result-contract-composition-report-shell-surfaces-defensive-copy-audit.t](t/762-hdl-generator-result-contract-composition-report-shell-surfaces-defensive-copy-audit.t)

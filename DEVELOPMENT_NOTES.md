@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest HDLGenerator result identity stays JSON-audited
+- The manifest-embedded `embedding.hdl_generator_result` contract now has
+  focused JSON round-trip coverage for schema version, bounded status, source
+  owner, entrypoint, and `tested_by` shape.
+- This mirrors parent result-contract identity coverage through the public
+  capability manifest.
 ## 2026-05-10: HDLGenerator composition_report shell fallback stays caller-owned
 - The bounded `HDLGenerator` result contract now has focused defensive-copy
   coverage for `composition_report_json_fragment_path` and the grouped fallback
