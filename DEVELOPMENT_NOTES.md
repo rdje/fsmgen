@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Session bootstrap import-tree measurements refreshed
+- The bootstrap import-tree check should distinguish static reachability drift
+  from ordinary line-count drift. In this slice, reachability, direct imports,
+  and package-family counts still match the saved architecture note exactly,
+  while selected line counts moved for `EmbeddingSection`, `CheckDiagnostics`,
+  and `NormalizedSemanticReport`.
+- [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) remains the
+  authoritative maintainer-facing runtime-spine snapshot; the mdBook should
+  point to it rather than duplicating measurement tables.
 ## 2026-05-10: Check diagnostics contract full surface survives JSON
 - The check diagnostics contract now has a full-surface JSON round-trip audit.
 - This catches JSON-safety or owner-assembly drift across the bounded check-only diagnostics report boundary beyond the existing direct contract tests.

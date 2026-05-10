@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Session bootstrap import-tree measurements refreshed
+- Re-ran the `README.md` / `SESSION_BOOTSTRAP.md` startup pass and verified
+  [bin/fsmgen](bin/fsmgen) plus the project-owned transitive `FSM::...` import
+  tree against [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md).
+- Static reachability remains unchanged at `184` project files and `183` `.pm`
+  packages with matching direct imports and package-family counts.
+- Refreshed stale source-derived line-count measurements for
+  [perl/FSM/Support/EmbeddingSection.pm](perl/FSM/Support/EmbeddingSection.pm),
+  [perl/FSM/Support/CheckDiagnostics.pm](perl/FSM/Support/CheckDiagnostics.pm),
+  and [perl/FSM/Support/NormalizedSemanticReport.pm](perl/FSM/Support/NormalizedSemanticReport.pm);
+  no source behavior changed.
 ### Check diagnostics contract full surface survives JSON
 - Added
   [t/1009-check-diagnostics-contract-full-surface-json-roundtrip-audit.t](t/1009-check-diagnostics-contract-full-surface-json-roundtrip-audit.t)

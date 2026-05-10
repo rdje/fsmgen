@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Session bootstrap import-tree measurements refreshed
+- Completed the `README.md` / `SESSION_BOOTSTRAP.md` startup pass, including
+  `COMMIT.md` workflow adoption and source-level analysis of [bin/fsmgen](bin/fsmgen)
+  plus its transitive project-owned `FSM::...` import tree.
+- Verified that static reachability still matches
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md): `184`
+  reachable project files, `183` reachable `.pm` packages, matching package
+  family counts, and matching direct imports.
+- Refreshed stale selected line-count measurements in the import-tree note for
+  [perl/FSM/Support/EmbeddingSection.pm](perl/FSM/Support/EmbeddingSection.pm),
+  [perl/FSM/Support/CheckDiagnostics.pm](perl/FSM/Support/CheckDiagnostics.pm),
+  and [perl/FSM/Support/NormalizedSemanticReport.pm](perl/FSM/Support/NormalizedSemanticReport.pm).
+- The pre-existing untracked [fx](fx) directory remains untouched.
+- Focused validation for this documentation/bootstrap slice: static import-tree
+  measurement and `mdbook build docs/book`.
 ## 2026-05-10: Check diagnostics contract full surface survives JSON
 - Added
   [t/1009-check-diagnostics-contract-full-surface-json-roundtrip-audit.t](t/1009-check-diagnostics-contract-full-surface-json-roundtrip-audit.t)

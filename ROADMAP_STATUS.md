@@ -1,6 +1,13 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
+- Next decision point: the session bootstrap refreshed the saved `bin/fsmgen`
+  import-tree architecture note in
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md). Static
+  reachability still reports `184` project files and `183` `.pm` packages; only
+  selected source-derived line-count measurements drifted. This changes no
+  compiler behavior; the next bounded `R13` slice can continue check-diagnostics
+  full-surface stability audits.
 - Next decision point: [t/1009-check-diagnostics-contract-full-surface-json-roundtrip-audit.t](t/1009-check-diagnostics-contract-full-surface-json-roundtrip-audit.t) now proves the full check diagnostics contract owner survives JSON encode/decode unchanged. This changes no public shape; the next bounded `R13` slice can continue check-diagnostics full-surface stability audits.
 - Next decision point: [t/1008-normalized-semantic-report-contract-full-surface-defensive-copy-audit.t](t/1008-normalized-semantic-report-contract-full-surface-defensive-copy-audit.t) now proves a fresh normalized semantic report contract owner build stays clean after caller mutation of a previous full contract result. This changes no public shape; the next bounded `R13` slice can continue semantic-report full-surface stability audits.
 - Next decision point: [t/1007-normalized-semantic-report-contract-full-surface-json-roundtrip-audit.t](t/1007-normalized-semantic-report-contract-full-surface-json-roundtrip-audit.t) now proves the full normalized semantic report contract owner survives JSON encode/decode unchanged. This changes no public shape; the next bounded `R13` slice can continue semantic-report full-surface stability audits.

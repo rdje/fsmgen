@@ -37,6 +37,8 @@ These should stay precise and sometimes narrower than the book.
 the `bin/fsmgen` runtime spine. It is not a tutorial chapter, but it is the
 right place to verify whether the saved CLI/import-tree picture still matches
 the source at the start of an engineering session.
+Keep detailed static measurements in that focused doc; the book should point to
+the current maintainer map rather than duplicate volatile line-count tables.
 
 `COMMIT.md` is the process safety reference: every completed task, slice, lane,
 or task-scoped activity must close with that workflow before the next work
