@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest contract top level source map rebuilds cleanly
+- Added
+  [t/908-capability-manifest-contract-top-level-source-map-defensive-copy-audit.t](t/908-capability-manifest-contract-top-level-source-map-defensive-copy-audit.t)
+  to prove `manifest_contract` top-level contract source map rebuilds cleanly after caller mutation.
+- This keeps the outer capability manifest shell aligned with its direct
+  `FSM::Support::CapabilityManifestContract` owner.
+- Focused validation passed:
+  `perl -Iperl -c t/908-capability-manifest-contract-top-level-source-map-defensive-copy-audit.t && prove -l t/908-capability-manifest-contract-top-level-source-map-defensive-copy-audit.t t/316-capability-manifest-contract.t t/479-capability-manifest-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest contract public keys rebuilds cleanly
 - Added
   [t/907-capability-manifest-contract-public-keys-defensive-copy-audit.t](t/907-capability-manifest-contract-public-keys-defensive-copy-audit.t)
