@@ -246,6 +246,7 @@ Manifest typed-extension `after_parse_source` hook metadata now rebuilds cleanly
 Manifest typed-extension `after_generate_result` hook metadata now rebuilds cleanly after caller mutation.
 Manifest typed-extension stability and closure flags now rebuild cleanly after caller mutation.
 Manifest typed-extension guidance now rebuilds cleanly after caller mutation.
+Manifest typed-extension core nested surfaces now rebuild cleanly after caller mutation together.
 
 ## Current Philosophy
 
