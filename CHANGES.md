@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest contract presence family map survives JSON
+- Added
+  [t/900-capability-manifest-contract-presence-family-map-json-roundtrip-audit.t](t/900-capability-manifest-contract-presence-family-map-json-roundtrip-audit.t)
+  to prove `manifest_contract` presence key family map survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest contract presence family map coverage.
 ### Manifest contract section presence map survives JSON
 - Added
   [t/899-capability-manifest-contract-section-presence-map-json-roundtrip-audit.t](t/899-capability-manifest-contract-section-presence-map-json-roundtrip-audit.t)
