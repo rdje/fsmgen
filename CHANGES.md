@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest backend validation contract nested maps rebuilds cleanly
+- Added
+  [t/953-capability-manifest-backend-validation-contract-nested-maps-defensive-copy-audit.t](t/953-capability-manifest-backend-validation-contract-nested-maps-defensive-copy-audit.t)
+  to prove the capability manifest's `backend_validation.section_contract`
+  nested source and presence maps rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  for the `R13` manifest-section contract progress entry.
 ### Manifest backend validation contract public nested keys rebuilds cleanly
 - Added
   [t/952-capability-manifest-backend-validation-contract-public-nested-keys-defensive-copy-audit.t](t/952-capability-manifest-backend-validation-contract-public-nested-keys-defensive-copy-audit.t)

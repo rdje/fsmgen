@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest backend validation contract nested maps rebuilds cleanly
+- Added
+  [t/953-capability-manifest-backend-validation-contract-nested-maps-defensive-copy-audit.t](t/953-capability-manifest-backend-validation-contract-nested-maps-defensive-copy-audit.t)
+  to prove the capability manifest's `backend_validation.section_contract`
+  nested source and presence maps rebuilds cleanly after caller mutation.
+- This keeps the manifest section aligned with its direct `FSM::Support::BackendValidationContract` owner.
+- Focused validation passed:
+  `perl -Iperl -c t/953-capability-manifest-backend-validation-contract-nested-maps-defensive-copy-audit.t && prove -l t/953-capability-manifest-backend-validation-contract-nested-maps-defensive-copy-audit.t t/323-backend-validation-contract.t t/445-backend-validation-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest backend validation contract public nested keys rebuilds cleanly
 - Added
   [t/952-capability-manifest-backend-validation-contract-public-nested-keys-defensive-copy-audit.t](t/952-capability-manifest-backend-validation-contract-public-nested-keys-defensive-copy-audit.t)
