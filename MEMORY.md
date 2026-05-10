@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: HDLGenerator result contract full surface rebuilds cleanly
+- Added
+  [t/1004-hdl-generator-result-contract-full-surface-defensive-copy-audit.t](t/1004-hdl-generator-result-contract-full-surface-defensive-copy-audit.t)
+  to prove a fresh `build_hdl_generator_result_contract()` result is clean
+  after a caller mutates a previous full contract result.
+- This complements the full-surface JSON audit with a full defensive-copy guard
+  for the in-process result contract owner.
+- Focused validation passed:
+  `perl -Iperl -c t/1004-hdl-generator-result-contract-full-surface-defensive-copy-audit.t && prove -l t/1004-hdl-generator-result-contract-full-surface-defensive-copy-audit.t t/1003-hdl-generator-result-contract-full-surface-json-roundtrip-audit.t t/438-hdl-generator-result-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: HDLGenerator result contract full surface survives JSON
 - Added
   [t/1003-hdl-generator-result-contract-full-surface-json-roundtrip-audit.t](t/1003-hdl-generator-result-contract-full-surface-json-roundtrip-audit.t)
