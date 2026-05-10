@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest producer section contract guidance rebuilds cleanly
+- Added
+  [t/924-capability-manifest-producer-section-contract-guidance-defensive-copy-audit.t](t/924-capability-manifest-producer-section-contract-guidance-defensive-copy-audit.t)
+  to prove the capability manifest's `producer.section_contract`
+  guidance list rebuilds cleanly after caller mutation.
+- This keeps the manifest section aligned with its direct `FSM::Support::ProducerContract` owner.
+- Focused validation passed:
+  `perl -Iperl -c t/924-capability-manifest-producer-section-contract-guidance-defensive-copy-audit.t && prove -l t/924-capability-manifest-producer-section-contract-guidance-defensive-copy-audit.t t/319-producer-contract.t t/449-producer-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest producer section contract presence map rebuilds cleanly
 - Added
   [t/923-capability-manifest-producer-section-contract-presence-map-defensive-copy-audit.t](t/923-capability-manifest-producer-section-contract-presence-map-defensive-copy-audit.t)
