@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest contract core section keys survives JSON
+- `manifest_contract` now has focused JSON round-trip coverage for its core section presence keys.
+- This keeps manifest consumers on explicit contract metadata rather than sample
+  payload shape alone.
 ## 2026-05-10: Manifest contract presence family map survives JSON
 - `manifest_contract` now has focused JSON round-trip coverage for its presence key family map.
 - This keeps manifest consumers on explicit contract metadata rather than sample
