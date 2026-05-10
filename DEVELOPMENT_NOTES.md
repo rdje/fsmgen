@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator live/unsanitized keys stay caller-owned
+- The bounded `HDLGenerator` result contract now has focused defensive-copy
+  coverage for `live_or_unsanitized_keys`.
+- Mutating one built contract's raw/live branch marker list must not pollute the
+  next build, and fresh metadata must still avoid marking `hdl_code`.
 ## 2026-05-10: HDLGenerator live/unsanitized keys stay JSON-audited
 - The bounded `HDLGenerator` result contract now has focused JSON round-trip
   coverage for `live_or_unsanitized_keys`.

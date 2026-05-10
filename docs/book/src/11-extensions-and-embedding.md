@@ -115,7 +115,8 @@ whole-result non-stability warning and sanitized interchange recommendation. Its
 retaining the core audit references, and is JSON-audited so serialized metadata
 keeps those references visible. The `live_or_unsanitized_keys` list is
 JSON-audited too, so serialized metadata keeps the raw/live compatibility branch
-list visible without marking `hdl_code` unsanitized.
+list visible without marking `hdl_code` unsanitized, and it is defensively
+rebuilt for each contract build.
 
 ## Current Philosophy
 

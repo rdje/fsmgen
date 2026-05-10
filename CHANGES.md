@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### HDLGenerator live/unsanitized keys rebuild cleanly
+- Added
+  [t/748-hdl-generator-result-contract-live-unsanitized-defensive-copy-audit.t](t/748-hdl-generator-result-contract-live-unsanitized-defensive-copy-audit.t)
+  to prove the bounded `HDLGenerator` result contract's
+  `live_or_unsanitized_keys` list rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions result-contract live/unsanitized copy coverage.
 ### HDLGenerator live/unsanitized keys survive JSON
 - Added
   [t/747-hdl-generator-result-contract-live-unsanitized-json-roundtrip-audit.t](t/747-hdl-generator-result-contract-live-unsanitized-json-roundtrip-audit.t)
