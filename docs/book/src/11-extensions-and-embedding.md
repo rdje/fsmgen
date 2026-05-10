@@ -283,6 +283,7 @@ Capability manifest contract public top-level presence keys now rebuild cleanly 
 Capability manifest contract top-level source map now rebuilds cleanly after caller mutation.
 Capability manifest contract section presence map now rebuilds cleanly after caller mutation.
 Capability manifest contract grouped presence family map now rebuilds cleanly after caller mutation.
+Capability manifest contract core section presence keys now rebuild cleanly after caller mutation.
 
 ## Current Philosophy
 

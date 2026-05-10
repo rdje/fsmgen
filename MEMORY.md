@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest contract core section keys rebuilds cleanly
+- Added
+  [t/911-capability-manifest-contract-core-section-keys-defensive-copy-audit.t](t/911-capability-manifest-contract-core-section-keys-defensive-copy-audit.t)
+  to prove `manifest_contract` core section presence keys rebuilds cleanly after caller mutation.
+- This keeps the outer capability manifest shell aligned with its direct
+  `FSM::Support::CapabilityManifestContract` owner.
+- Focused validation passed:
+  `perl -Iperl -c t/911-capability-manifest-contract-core-section-keys-defensive-copy-audit.t && prove -l t/911-capability-manifest-contract-core-section-keys-defensive-copy-audit.t t/316-capability-manifest-contract.t t/479-capability-manifest-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest contract presence family map rebuilds cleanly
 - Added
   [t/910-capability-manifest-contract-presence-family-map-defensive-copy-audit.t](t/910-capability-manifest-contract-presence-family-map-defensive-copy-audit.t)
