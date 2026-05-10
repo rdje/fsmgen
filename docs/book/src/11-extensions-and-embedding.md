@@ -230,6 +230,7 @@ Manifest embedding-section flags and guidance now rebuild cleanly after caller m
 Manifest typed-extension identity metadata now survives JSON round trip.
 Manifest typed-extension tested_by and entrypoint metadata now survives JSON round trip.
 Manifest typed-extension object/loader shape metadata now survives JSON round trip.
+Manifest typed-extension context shape metadata now survives JSON round trip.
 
 ## Current Philosophy
 
