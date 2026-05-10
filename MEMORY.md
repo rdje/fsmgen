@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest typed extensions object loader shapes rebuilds cleanly
+- Added
+  [t/867-capability-manifest-typed-extensions-object-loader-shapes-defensive-copy-audit.t](t/867-capability-manifest-typed-extensions-object-loader-shapes-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.typed_extensions`
+  extension object and loader shapes rebuilds cleanly after caller mutation.
+- This keeps the public typed-extension embedding contract aligned with its direct
+  `FSM::Support::ExtensionContract` owner without changing the manifest API.
+- Focused validation passed:
+  `perl -Iperl -c t/867-capability-manifest-typed-extensions-object-loader-shapes-defensive-copy-audit.t && prove -l t/867-capability-manifest-typed-extensions-object-loader-shapes-defensive-copy-audit.t t/306-extension-contract.t t/435-typed-extension-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest typed extensions provenance entrypoints rebuilds cleanly
 - Added
   [t/866-capability-manifest-typed-extensions-provenance-entrypoints-defensive-copy-audit.t](t/866-capability-manifest-typed-extensions-provenance-entrypoints-defensive-copy-audit.t)

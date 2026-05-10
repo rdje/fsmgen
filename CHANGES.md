@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest typed extensions object loader shapes rebuilds cleanly
+- Added
+  [t/867-capability-manifest-typed-extensions-object-loader-shapes-defensive-copy-audit.t](t/867-capability-manifest-typed-extensions-object-loader-shapes-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.typed_extensions`
+  extension object and loader shapes rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side typed extensions object loader shapes coverage.
 ### Manifest typed extensions provenance entrypoints rebuilds cleanly
 - Added
   [t/866-capability-manifest-typed-extensions-provenance-entrypoints-defensive-copy-audit.t](t/866-capability-manifest-typed-extensions-provenance-entrypoints-defensive-copy-audit.t)
