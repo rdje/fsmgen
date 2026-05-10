@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest typed extensions stability flags survives JSON
+- Added
+  [t/862-capability-manifest-typed-extensions-stability-flags-json-roundtrip-audit.t](t/862-capability-manifest-typed-extensions-stability-flags-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.typed_extensions`
+  stability and closure flags survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side typed extensions stability flags coverage.
 ### Manifest typed extensions after generate hook survives JSON
 - Added
   [t/861-capability-manifest-typed-extensions-after-generate-hook-json-roundtrip-audit.t](t/861-capability-manifest-typed-extensions-after-generate-hook-json-roundtrip-audit.t)
