@@ -322,6 +322,7 @@ Manifest backend-validation contract entrypoints now survive JSON round trip.
 Manifest backend-validation public and nested key lists now survive JSON round trip.
 Manifest backend-validation nested maps now survive JSON round trip.
 Manifest backend-validation flags and guidance now survive JSON round trip.
+Manifest backend-validation contract identity metadata now rebuilds cleanly after caller mutation.
 
 ## Current Philosophy
 
