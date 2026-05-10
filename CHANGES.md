@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### HDLGenerator live/unsanitized keys survive JSON
+- Added
+  [t/747-hdl-generator-result-contract-live-unsanitized-json-roundtrip-audit.t](t/747-hdl-generator-result-contract-live-unsanitized-json-roundtrip-audit.t)
+  to prove the bounded `HDLGenerator` result contract's decoded
+  `live_or_unsanitized_keys` list keeps expected compatibility branches after
+  JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions result-contract live/unsanitized JSON coverage.
 ### HDLGenerator tested-by list survives JSON
 - Added
   [t/746-hdl-generator-result-contract-tested-by-json-roundtrip-audit.t](t/746-hdl-generator-result-contract-tested-by-json-roundtrip-audit.t)

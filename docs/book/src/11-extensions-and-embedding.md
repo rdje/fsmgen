@@ -113,7 +113,9 @@ contract builds, and it is JSON-audited so serialized metadata retains both the
 whole-result non-stability warning and sanitized interchange recommendation. Its
 `tested_by` provenance list follows the same caller-owned rebuild rule while
 retaining the core audit references, and is JSON-audited so serialized metadata
-keeps those references visible.
+keeps those references visible. The `live_or_unsanitized_keys` list is
+JSON-audited too, so serialized metadata keeps the raw/live compatibility branch
+list visible without marking `hdl_code` unsanitized.
 
 ## Current Philosophy
 

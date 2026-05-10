@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator live/unsanitized keys stay JSON-audited
+- The bounded `HDLGenerator` result contract now has focused JSON round-trip
+  coverage for `live_or_unsanitized_keys`.
+- Decoded metadata must keep the raw/live compatibility branch list visible
+  without marking `hdl_code` as unsanitized.
 ## 2026-05-10: HDLGenerator tested-by list stays JSON-audited
 - The bounded `HDLGenerator` result contract now has focused JSON round-trip
   coverage for its `tested_by` provenance list.

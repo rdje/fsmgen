@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: HDLGenerator live/unsanitized keys survive JSON
+- Added
+  [t/747-hdl-generator-result-contract-live-unsanitized-json-roundtrip-audit.t](t/747-hdl-generator-result-contract-live-unsanitized-json-roundtrip-audit.t)
+  to prove the bounded `HDLGenerator` result contract's decoded
+  `live_or_unsanitized_keys` list keeps the expected compatibility branches and
+  does not mark `hdl_code` unsanitized after JSON round trip.
+- This keeps raw/live branch discovery portable in serialized contract metadata
+  without changing the result contract API.
+- Focused validation passed:
+  `perl -Iperl -c t/747-hdl-generator-result-contract-live-unsanitized-json-roundtrip-audit.t && prove -l t/747-hdl-generator-result-contract-live-unsanitized-json-roundtrip-audit.t t/305-hdl-generator-result-contract.t t/438-hdl-generator-result-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: HDLGenerator tested-by list survives JSON
 - Added
   [t/746-hdl-generator-result-contract-tested-by-json-roundtrip-audit.t](t/746-hdl-generator-result-contract-tested-by-json-roundtrip-audit.t)
