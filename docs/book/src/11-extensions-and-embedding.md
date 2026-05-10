@@ -264,6 +264,7 @@ Manifest serializable-plan/report surface registry now rebuilds cleanly after ca
 Manifest serializable-plan/report nested contract source map now rebuilds cleanly after caller mutation.
 Manifest serializable-plan/report raw-shell replacement keys now rebuild cleanly after caller mutation.
 Manifest serializable-plan/report raw-shell replacement map now rebuilds cleanly after caller mutation.
+Manifest serializable-plan/report child contracts now rebuild cleanly after caller mutation.
 
 ## Current Philosophy
 

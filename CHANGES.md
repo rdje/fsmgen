@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest serializable plan report child contracts rebuilds cleanly
+- Added
+  [t/892-capability-manifest-serializable-plan-report-child-contracts-defensive-copy-audit.t](t/892-capability-manifest-serializable-plan-report-child-contracts-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.serializable_plan_reports`
+  embedded child contracts rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side serializable plan report child contracts coverage.
 ### Manifest serializable plan report raw shell map rebuilds cleanly
 - Added
   [t/891-capability-manifest-serializable-plan-report-raw-shell-map-defensive-copy-audit.t](t/891-capability-manifest-serializable-plan-report-raw-shell-map-defensive-copy-audit.t)
