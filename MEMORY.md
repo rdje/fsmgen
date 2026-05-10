@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest HDLGenerator result semantic map survives JSON
+- Added
+  [t/768-capability-manifest-hdl-result-semantic-map-json-roundtrip-audit.t](t/768-capability-manifest-hdl-result-semantic-map-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_result`
+  contract keeps its semantic-layer presence key-family map after JSON round trip.
+- This mirrors the parent `HDLGenerator` result semantic map guard through
+  the manifest branch without changing the manifest API.
+- Focused validation passed:
+  `perl -Iperl -c t/768-capability-manifest-hdl-result-semantic-map-json-roundtrip-audit.t && prove -l t/768-capability-manifest-hdl-result-semantic-map-json-roundtrip-audit.t t/305-hdl-generator-result-contract.t t/763-capability-manifest-hdl-result-identity-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest HDLGenerator result optional map survives JSON
 - Added
   [t/767-capability-manifest-hdl-result-optional-map-json-roundtrip-audit.t](t/767-capability-manifest-hdl-result-optional-map-json-roundtrip-audit.t)

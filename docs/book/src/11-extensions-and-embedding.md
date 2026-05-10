@@ -140,6 +140,7 @@ top-level key families through JSON round trip.
 Its nested-contract owner map is also JSON-audited at the manifest boundary, so embedders can discover each result branch owner without leaving the manifest.
 The manifest mirror keeps the grouped stable subsurface map JSON-audited too, including the source-info stable subsurface list.
 The optional composition key-family map is now checked through manifest JSON as well, matching the direct result-contract owner.
+The semantic-layer presence key-family map now has manifest-side JSON coverage, keeping intent, lowered RTL, and structural RTL discovery aligned.
 
 ## Current Philosophy
 
