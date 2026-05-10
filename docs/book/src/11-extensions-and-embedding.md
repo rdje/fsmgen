@@ -238,6 +238,7 @@ Manifest typed-extension stability and closure flags now survive JSON round trip
 Manifest typed-extension guidance now survives JSON round trip.
 Manifest typed-extension core nested surfaces now survive JSON round trip together.
 Manifest typed-extension identity metadata now rebuilds cleanly after caller mutation.
+Manifest typed-extension tested_by and entrypoint metadata now rebuilds cleanly after caller mutation.
 
 ## Current Philosophy
 
