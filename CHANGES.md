@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Check diagnostics contract full surface rebuilds cleanly
+- Added
+  [t/1010-check-diagnostics-contract-full-surface-defensive-copy-audit.t](t/1010-check-diagnostics-contract-full-surface-defensive-copy-audit.t)
+  to prove a fresh check diagnostics contract build stays clean after caller
+  mutation of a previous full contract result.
+- Updated [MEMORY.md](MEMORY.md), [ROADMAP_STATUS.md](ROADMAP_STATUS.md),
+  [LIVE_ACHIEVEMENT_STATUS.md](LIVE_ACHIEVEMENT_STATUS.md), and
+  [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  for the `R13` progress entry.
 ### Session bootstrap import-tree measurements refreshed
 - Re-ran the `README.md` / `SESSION_BOOTSTRAP.md` startup pass and verified
   [bin/fsmgen](bin/fsmgen) plus the project-owned transitive `FSM::...` import

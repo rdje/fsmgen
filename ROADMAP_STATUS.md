@@ -1,6 +1,7 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
+- Next decision point: [t/1010-check-diagnostics-contract-full-surface-defensive-copy-audit.t](t/1010-check-diagnostics-contract-full-surface-defensive-copy-audit.t) now proves a fresh check diagnostics contract owner build stays clean after caller mutation of a previous full contract result. This changes no public shape; the next bounded `R13` slice can continue public report full-surface stability audits.
 - Next decision point: the session bootstrap refreshed the saved `bin/fsmgen`
   import-tree architecture note in
   [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md). Static

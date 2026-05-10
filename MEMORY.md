@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Check diagnostics contract full surface rebuilds cleanly
+- Added
+  [t/1010-check-diagnostics-contract-full-surface-defensive-copy-audit.t](t/1010-check-diagnostics-contract-full-surface-defensive-copy-audit.t)
+  to prove a fresh `build_check_diagnostics_contract()` result stays clean
+  after a caller mutates a previous full contract result.
+- This complements the check diagnostics full-surface JSON audit with a
+  defensive-copy guard for the bounded check-only JSON diagnostics contract.
+- Focused validation passed:
+  `prove -I perl t/1009-check-diagnostics-contract-full-surface-json-roundtrip-audit.t t/1010-check-diagnostics-contract-full-surface-defensive-copy-audit.t t/1008-normalized-semantic-report-contract-full-surface-defensive-copy-audit.t`.
 ## 2026-05-10: Session bootstrap import-tree measurements refreshed
 - Completed the `README.md` / `SESSION_BOOTSTRAP.md` startup pass, including
   `COMMIT.md` workflow adoption and source-level analysis of [bin/fsmgen](bin/fsmgen)

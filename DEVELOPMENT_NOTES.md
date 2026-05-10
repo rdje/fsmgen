@@ -1,5 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Check diagnostics contract full surface rebuilds cleanly
+- The check diagnostics contract now has a full-surface defensive-copy audit.
+- The test recursively mutates one built contract and compares the next owner build with a fresh expected result, guarding check-report metadata against shared mutable state.
 ## 2026-05-10: Session bootstrap import-tree measurements refreshed
 - The bootstrap import-tree check should distinguish static reachability drift
   from ordinary line-count drift. In this slice, reachability, direct imports,

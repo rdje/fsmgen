@@ -1873,6 +1873,10 @@ The capability manifest advertises that contract so downstream tools can
 discover the common top-level keys plus the current bounded success-result and
 failure-diagnostic keys without relying only on narrative docs or reverse-
 engineering sample payloads.
+The full check-diagnostics contract owner is also full-surface audited for JSON
+round-trip stability and for clean rebuilds after caller mutation, so embedders
+can treat the advertised contract object as caller-owned metadata rather than a
+shared mutable singleton.
 
 The first bounded normalized semantic surface is now:
 
