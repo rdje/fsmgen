@@ -87,7 +87,8 @@ coverage so caller mutation of one grouped map does not pollute the next build.
 The optional composition key-family map is guarded the same way for
 composition-only discovery, and it now has matching defensive-copy coverage so
 caller mutation of one grouped map does not pollute the next build. The
-semantic-layer presence family map now has the same JSON round-trip coverage.
+semantic-layer presence family map now has the same JSON round-trip coverage
+and matching defensive-copy coverage.
 The shell-only fallback surface map is also JSON-audited so raw compatibility
 branches keep pointing at their advertised structured replacements, and the
 narrower fallback-family map is guarded the same way. The result contract's
@@ -786,6 +787,9 @@ It now also publishes a grouped `semantic_layer_presence_key_family_map` so
 embedders can discover the bounded top-level semantic-layer key families for
 `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` from one place
 instead of collecting those semantic-layer key lists separately.
+That grouped semantic-layer map is defensively rebuilt by the contract and
+helper, so callers can annotate one returned copy without leaking changes into
+later builds.
 It now also publishes a grouped `shell_only_fallback_surface_map` so embedders
 can discover, from one place, where to go instead of binding themselves to the
 raw shell-only compatibility branches such as `fsm_module`, `raw_ast`,

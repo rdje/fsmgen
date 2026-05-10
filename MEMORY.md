@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: HDLGenerator semantic layer map rebuilds cleanly
+- Added
+  [t/734-hdl-generator-result-contract-semantic-layer-map-defensive-copy-audit.t](t/734-hdl-generator-result-contract-semantic-layer-map-defensive-copy-audit.t)
+  to prove the bounded `HDLGenerator` result contract's
+  `semantic_layer_presence_key_family_map` and its helper rebuild cleanly after
+  caller mutation.
+- This keeps grouped semantic-layer discovery caller-owned without changing the
+  result contract API.
+- Focused validation passed:
+  `perl -Iperl -c t/734-hdl-generator-result-contract-semantic-layer-map-defensive-copy-audit.t && prove -l t/734-hdl-generator-result-contract-semantic-layer-map-defensive-copy-audit.t t/305-hdl-generator-result-contract.t t/438-hdl-generator-result-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: HDLGenerator optional composition map rebuilds cleanly
 - Added
   [t/733-hdl-generator-result-contract-optional-composition-map-defensive-copy-audit.t](t/733-hdl-generator-result-contract-optional-composition-map-defensive-copy-audit.t)
