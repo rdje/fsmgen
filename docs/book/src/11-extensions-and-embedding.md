@@ -93,6 +93,9 @@ full-hash stability flag and package-import copy-policy note. The module-info
 identity, summary, and optional-composition key lists now carry matching JSON
 coverage, including the decoded family-map mirror for optional composition. The
 statistics summary and optional-composition key lists are guarded the same way.
+The scalar semantic-layer key lists for `intent_hir`, `lowered_rtl_ir`, and
+`structural_rtl_ir` now carry matching JSON coverage, including their grouped
+semantic and optional-composition family-map mirrors.
 
 ## Current Philosophy
 
@@ -872,6 +875,9 @@ follow the same honesty rule: they reuse the dedicated normalized-semantic
 shell owners and their advertised shell keys, but the `HDLGenerator` result
 contract does not treat those top-level hashes as separately stabilized full
 trees beyond those shell boundaries.
+The parent result contract now JSON-audits those scalar semantic-layer key lists
+and their grouped family-map mirrors so serialized contract metadata stays in
+sync with the normalized semantic owners.
 Direct and composition generation both expose those semantic IR payloads twice:
 as convenient top-level result branches and as compatibility mirrors under
 `module_info`. Those locations should compare equal at return time, but callers

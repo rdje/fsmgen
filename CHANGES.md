@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### HDLGenerator semantic keys survive JSON
+- Added
+  [t/731-hdl-generator-result-contract-semantic-keys-json-roundtrip-audit.t](t/731-hdl-generator-result-contract-semantic-keys-json-roundtrip-audit.t)
+  to prove the bounded `HDLGenerator` result contract's decoded semantic-layer
+  key lists survive JSON round trip and still mirror their grouped family maps.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions result-contract semantic key JSON coverage.
 ### HDLGenerator statistics keys survive JSON
 - Added
   [t/730-hdl-generator-result-contract-statistics-keys-json-roundtrip-audit.t](t/730-hdl-generator-result-contract-statistics-keys-json-roundtrip-audit.t)

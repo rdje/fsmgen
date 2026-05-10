@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: HDLGenerator semantic keys survive JSON
+- Added
+  [t/731-hdl-generator-result-contract-semantic-keys-json-roundtrip-audit.t](t/731-hdl-generator-result-contract-semantic-keys-json-roundtrip-audit.t)
+  to prove the bounded `HDLGenerator` result contract's decoded `intent_hir`,
+  `lowered_rtl_ir`, and `structural_rtl_ir` semantic-layer key lists survive
+  JSON round trip.
+- The guard also keeps decoded semantic and optional-composition family maps
+  aligned with those scalar key lists and preserves the non-stable full-hash
+  flags.
+- Focused validation passed:
+  `perl -Iperl -c t/731-hdl-generator-result-contract-semantic-keys-json-roundtrip-audit.t && prove -l t/731-hdl-generator-result-contract-semantic-keys-json-roundtrip-audit.t t/305-hdl-generator-result-contract.t t/438-hdl-generator-result-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: HDLGenerator statistics keys survive JSON
 - Added
   [t/730-hdl-generator-result-contract-statistics-keys-json-roundtrip-audit.t](t/730-hdl-generator-result-contract-statistics-keys-json-roundtrip-audit.t)

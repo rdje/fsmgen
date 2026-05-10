@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator semantic keys stay JSON-audited
+- The bounded `HDLGenerator` result contract now has focused JSON round-trip
+  coverage for the scalar `intent_hir`, `lowered_rtl_ir`, and
+  `structural_rtl_ir` key lists.
+- The decoded semantic-layer and optional-composition family maps must keep
+  mirroring those scalar lists, while the top-level semantic hashes remain
+  explicitly non-stable.
 ## 2026-05-10: HDLGenerator statistics keys stay JSON-audited
 - The bounded `HDLGenerator` result contract now has focused JSON round-trip
   coverage for `statistics_summary_presence_keys` and
