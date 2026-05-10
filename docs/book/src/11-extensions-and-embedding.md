@@ -337,6 +337,7 @@ Manifest language-surface contract entrypoints now rebuild cleanly after caller 
 Manifest language-surface top-level and mode key lists now rebuild cleanly after caller mutation.
 Manifest language-surface family key lists now rebuild cleanly after caller mutation.
 Manifest language-surface nested map and guidance now rebuild cleanly after caller mutation.
+Manifest documentation contract identity metadata now survives JSON round trip.
 
 ## Current Philosophy
 
