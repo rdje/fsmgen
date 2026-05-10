@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### HDLGenerator raw_ast shell surfaces survive JSON
+- Added
+  [t/752-hdl-generator-result-contract-raw-ast-shell-surfaces-json-roundtrip-audit.t](t/752-hdl-generator-result-contract-raw-ast-shell-surfaces-json-roundtrip-audit.t)
+  to prove the bounded `HDLGenerator` result contract's decoded `raw_ast`
+  summary and fallback surfaces remain canonical and aligned with grouped shell
+  fallback maps.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions result-contract `raw_ast` shell surface JSON coverage.
 ### HDLGenerator fsm_module shell surfaces survive JSON
 - Added
   [t/751-hdl-generator-result-contract-fsm-module-shell-surfaces-json-roundtrip-audit.t](t/751-hdl-generator-result-contract-fsm-module-shell-surfaces-json-roundtrip-audit.t)

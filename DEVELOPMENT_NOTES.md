@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator raw_ast shell surfaces stay JSON-audited
+- The bounded `HDLGenerator` result contract now has focused JSON round-trip
+  coverage for `raw_ast_summary_surfaces` and `raw_ast_fallback_surface_map`.
+- Decoded per-branch metadata must stay canonical and aligned with the grouped
+  shell fallback maps.
 ## 2026-05-10: HDLGenerator fsm_module shell surfaces stay JSON-audited
 - The bounded `HDLGenerator` result contract now has focused JSON round-trip
   coverage for `fsm_module_summary_surfaces` and

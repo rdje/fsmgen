@@ -123,7 +123,8 @@ Shell-only branch flags and raw branch metadata are JSON-audited as well, so
 serialized metadata keeps raw object classes, raw AST shape, and the raw
 composition-report non-JSON-safe status visible. The `fsm_module` shell summary
 and fallback surface metadata is JSON-audited against its dedicated owner and
-the grouped shell fallback maps.
+the grouped shell fallback maps. The `raw_ast` shell summary and fallback
+surface metadata is guarded the same way.
 
 ## Current Philosophy
 
