@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest embedding section nested presence map rebuilds cleanly
+- Added
+  [t/853-capability-manifest-embedding-section-nested-presence-map-defensive-copy-audit.t](t/853-capability-manifest-embedding-section-nested-presence-map-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.section_contract`
+  nested presence key map rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side embedding section nested presence map coverage.
 ### Manifest embedding section nested source map rebuilds cleanly
 - Added
   [t/852-capability-manifest-embedding-section-nested-source-map-defensive-copy-audit.t](t/852-capability-manifest-embedding-section-nested-source-map-defensive-copy-audit.t)
