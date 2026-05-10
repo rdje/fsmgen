@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest HDLGenerator result source-info keys survive JSON
+- Added
+  [t/769-capability-manifest-hdl-result-source-info-keys-json-roundtrip-audit.t](t/769-capability-manifest-hdl-result-source-info-keys-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_result`
+  contract keeps its source-info key lists after JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side `HDLGenerator` result source-info keys coverage.
 ### Manifest HDLGenerator result semantic map survives JSON
 - Added
   [t/768-capability-manifest-hdl-result-semantic-map-json-roundtrip-audit.t](t/768-capability-manifest-hdl-result-semantic-map-json-roundtrip-audit.t)

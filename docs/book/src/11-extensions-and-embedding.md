@@ -141,6 +141,7 @@ Its nested-contract owner map is also JSON-audited at the manifest boundary, so 
 The manifest mirror keeps the grouped stable subsurface map JSON-audited too, including the source-info stable subsurface list.
 The optional composition key-family map is now checked through manifest JSON as well, matching the direct result-contract owner.
 The semantic-layer presence key-family map now has manifest-side JSON coverage, keeping intent, lowered RTL, and structural RTL discovery aligned.
+Source-info identity, summary, stable subsurface, and package-import copy-policy metadata now survive manifest JSON round trip under the same audit style.
 
 ## Current Philosophy
 
