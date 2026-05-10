@@ -190,6 +190,7 @@ The `composition_report` shell fragment metadata and fallback maps now rebuild c
 The capability manifest now mirrors `embedding.hdl_generator_facade` identity metadata through JSON round trip.
 Manifest facade public key, method, and target-language lists now survive JSON round trip.
 Manifest facade constructor option families now have JSON round-trip coverage.
+Manifest facade constructor shape metadata now survives JSON round trip, including duplicate and unknown option policies.
 
 ## Current Philosophy
 
