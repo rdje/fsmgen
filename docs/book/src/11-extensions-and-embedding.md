@@ -291,6 +291,7 @@ Manifest producer section contract identity metadata now survives JSON round tri
 Manifest producer section contract entrypoints now survive JSON round trip.
 Manifest producer section contract public key families now survive JSON round trip.
 Manifest producer section contract presence and identity maps now survive JSON round trip.
+Manifest producer section contract guidance now survives JSON round trip.
 
 ## Current Philosophy
 
