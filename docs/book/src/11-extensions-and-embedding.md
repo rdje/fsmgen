@@ -311,6 +311,7 @@ Manifest semantic-exports contract identity metadata now survives JSON round tri
 Manifest semantic-exports contract entrypoints now survive JSON round trip.
 Manifest semantic-exports public and nested key lists now survive JSON round trip.
 Manifest semantic-exports nested maps now survive JSON round trip.
+Manifest semantic-exports flags and guidance now survive JSON round trip.
 
 ## Current Philosophy
 
