@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest embedding section nested presence map survives JSON
+- Added
+  [t/848-capability-manifest-embedding-section-nested-presence-map-json-roundtrip-audit.t](t/848-capability-manifest-embedding-section-nested-presence-map-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.section_contract`
+  nested presence key map survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side embedding section nested presence map coverage.
 ### Manifest embedding section nested source map survives JSON
 - Added
   [t/847-capability-manifest-embedding-section-nested-source-map-json-roundtrip-audit.t](t/847-capability-manifest-embedding-section-nested-source-map-json-roundtrip-audit.t)

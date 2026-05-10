@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest embedding section nested presence map survives JSON
+- The manifest-embedded `embedding.section_contract` contract now has focused JSON round-trip
+  coverage for its nested presence key map.
+- This keeps public embedding consumers aligned with the direct embedding-section contract.
 ## 2026-05-10: Manifest embedding section nested source map survives JSON
 - The manifest-embedded `embedding.section_contract` contract now has focused JSON round-trip
   coverage for its nested contract source map.

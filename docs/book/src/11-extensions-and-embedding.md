@@ -220,6 +220,7 @@ Manifest composition-report `tested_by` and guidance lists now rebuild cleanly a
 The capability manifest now mirrors `embedding.section_contract` identity metadata through JSON round trip.
 Manifest embedding-section top-level and nested contract key lists now survive JSON round trip.
 Manifest embedding-section nested contract source map now survives JSON round trip.
+Manifest embedding-section nested presence key map now survives JSON round trip.
 
 ## Current Philosophy
 
