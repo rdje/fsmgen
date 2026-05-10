@@ -247,6 +247,7 @@ Manifest typed-extension `after_generate_result` hook metadata now rebuilds clea
 Manifest typed-extension stability and closure flags now rebuild cleanly after caller mutation.
 Manifest typed-extension guidance now rebuilds cleanly after caller mutation.
 Manifest typed-extension core nested surfaces now rebuild cleanly after caller mutation together.
+Manifest serializable-plan/report identity metadata now survives JSON round trip.
 
 ## Current Philosophy
 

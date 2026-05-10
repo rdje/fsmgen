@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest serializable plan report identity survives JSON
+- The manifest-embedded `embedding.serializable_plan_reports` contract now has
+  focused JSON round-trip coverage for its identity metadata.
+- This keeps embedders on the bounded JSON-safe report API rather than raw
+  in-process compatibility shells.
 ## 2026-05-10: Manifest typed extensions full surface rebuilds cleanly
 - The manifest-embedded `embedding.typed_extensions` contract now has focused defensive-copy
   coverage for its full embedded typed-extension contract.
