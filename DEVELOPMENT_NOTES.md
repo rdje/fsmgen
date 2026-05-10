@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator guidance stays caller-owned
+- The bounded `HDLGenerator` result contract now has focused defensive-copy
+  coverage for its `guidance` list.
+- Mutating one built contract's embedder guidance must not pollute the next
+  build, and fresh guidance must still warn that the whole result hash is not a
+  stable JSON document.
 ## 2026-05-10: HDLGenerator owner map stays caller-owned
 - The bounded `HDLGenerator` result contract now has focused defensive-copy
   coverage for `nested_contract_source_map`.

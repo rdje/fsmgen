@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### HDLGenerator guidance rebuilds cleanly
+- Added
+  [t/743-hdl-generator-result-contract-guidance-defensive-copy-audit.t](t/743-hdl-generator-result-contract-guidance-defensive-copy-audit.t)
+  to prove the bounded `HDLGenerator` result contract's `guidance` list rebuilds
+  cleanly after caller mutation while retaining the whole-result non-stability
+  warning.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions result-contract guidance copy coverage.
 ### HDLGenerator owner map rebuilds cleanly
 - Added
   [t/742-hdl-generator-result-contract-owner-map-defensive-copy-audit.t](t/742-hdl-generator-result-contract-owner-map-defensive-copy-audit.t)

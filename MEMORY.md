@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: HDLGenerator guidance rebuilds cleanly
+- Added
+  [t/743-hdl-generator-result-contract-guidance-defensive-copy-audit.t](t/743-hdl-generator-result-contract-guidance-defensive-copy-audit.t)
+  to prove the bounded `HDLGenerator` result contract's `guidance` list rebuilds
+  cleanly after caller mutation while remaining non-empty, unique, and anchored
+  to the whole-result non-stability warning.
+- This keeps embedder guidance caller-owned without changing the result contract
+  API.
+- Focused validation passed:
+  `perl -Iperl -c t/743-hdl-generator-result-contract-guidance-defensive-copy-audit.t && prove -l t/743-hdl-generator-result-contract-guidance-defensive-copy-audit.t t/305-hdl-generator-result-contract.t t/438-hdl-generator-result-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: HDLGenerator owner map rebuilds cleanly
 - Added
   [t/742-hdl-generator-result-contract-owner-map-defensive-copy-audit.t](t/742-hdl-generator-result-contract-owner-map-defensive-copy-audit.t)

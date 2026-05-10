@@ -107,7 +107,9 @@ the same way, including focused defensive-copy coverage.
 The scalar semantic-layer key lists for `intent_hir`, `lowered_rtl_ir`, and
 `structural_rtl_ir` now carry matching JSON coverage, including their grouped
 semantic and optional-composition family-map mirrors, plus focused
-defensive-copy coverage.
+defensive-copy coverage. The result contract guidance list is also defensively
+rebuilt so callers can annotate one returned copy without mutating later
+contract builds.
 
 ## Current Philosophy
 
