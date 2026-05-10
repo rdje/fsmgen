@@ -331,6 +331,7 @@ Manifest language-surface contract identity metadata now survives JSON round tri
 Manifest language-surface contract entrypoints now survive JSON round trip.
 Manifest language-surface top-level and mode key lists now survive JSON round trip.
 Manifest language-surface family key lists now survive JSON round trip.
+Manifest language-surface nested map and guidance now survive JSON round trip.
 
 ## Current Philosophy
 

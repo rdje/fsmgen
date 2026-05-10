@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest language surface contract nested map guidance survives JSON
+- Added
+  [t/959-capability-manifest-language-surface-contract-nested-map-guidance-json-roundtrip-audit.t](t/959-capability-manifest-language-surface-contract-nested-map-guidance-json-roundtrip-audit.t)
+  to prove the capability manifest's `language_surface.surface_contract`
+  nested map flags and guidance survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  for the `R13` manifest-section contract progress entry.
 ### Manifest language surface contract language family keys survives JSON
 - Added
   [t/958-capability-manifest-language-surface-contract-language-family-keys-json-roundtrip-audit.t](t/958-capability-manifest-language-surface-contract-language-family-keys-json-roundtrip-audit.t)
