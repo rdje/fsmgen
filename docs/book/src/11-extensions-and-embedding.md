@@ -237,6 +237,7 @@ Manifest typed-extension `after_generate_result` hook metadata now survives JSON
 Manifest typed-extension stability and closure flags now survive JSON round trip.
 Manifest typed-extension guidance now survives JSON round trip.
 Manifest typed-extension core nested surfaces now survive JSON round trip together.
+Manifest typed-extension identity metadata now rebuilds cleanly after caller mutation.
 
 ## Current Philosophy
 
