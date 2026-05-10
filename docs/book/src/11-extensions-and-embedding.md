@@ -159,6 +159,7 @@ The manifest mirror now preserves the result contract `tested_by` provenance lis
 The `live_or_unsanitized_keys` list is now audited through manifest JSON, keeping raw compatibility branches clearly marked for embedders.
 JSON-safety and full-hash stability flags now survive the manifest JSON mirror exactly, including the intentionally false full-result promises.
 The manifest mirror now also keeps the result-contract advertisement flags JSON-audited for identity, summary, statistics, and semantic-layer surfaces.
+Scalar nested contract-source fields now have manifest JSON coverage in addition to the grouped owner map.
 
 ## Current Philosophy
 
