@@ -129,7 +129,7 @@ way, including defensive-copy coverage. The `resolved_package_imports` shell
 summary and fallback metadata now has matching JSON and defensive-copy coverage,
 as does the `composition_spec` shell summary and fallback metadata. The
 `composition_plan` shell summary and fallback metadata is now guarded in the
-same per-branch pass.
+same per-branch pass with JSON and defensive-copy coverage.
 The `composition_report` sanitized JSON fragment fallback now completes that
 per-branch JSON coverage.
 

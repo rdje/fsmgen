@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator composition_plan shell surfaces stay caller-owned
+- The bounded `HDLGenerator` result contract now has focused defensive-copy
+  coverage for `composition_plan_summary_surfaces` and
+  `composition_plan_fallback_surface_map`.
+- Mutating one built contract's composition-plan shell surface metadata must not
+  pollute the next build.
 ## 2026-05-10: HDLGenerator composition_spec shell surfaces stay caller-owned
 - The bounded `HDLGenerator` result contract now has focused defensive-copy
   coverage for `composition_spec_summary_surfaces` and

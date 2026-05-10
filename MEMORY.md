@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: HDLGenerator composition_plan shell surfaces rebuild cleanly
+- Added
+  [t/761-hdl-generator-result-contract-composition-plan-shell-surfaces-defensive-copy-audit.t](t/761-hdl-generator-result-contract-composition-plan-shell-surfaces-defensive-copy-audit.t)
+  to prove the bounded `HDLGenerator` result contract's
+  `composition_plan_summary_surfaces` and `composition_plan_fallback_surface_map`
+  rebuild cleanly after caller mutation.
+- This keeps composition-plan shell fallback discovery caller-owned without
+  changing the result contract API.
+- Focused validation passed:
+  `perl -Iperl -c t/761-hdl-generator-result-contract-composition-plan-shell-surfaces-defensive-copy-audit.t && prove -l t/761-hdl-generator-result-contract-composition-plan-shell-surfaces-defensive-copy-audit.t t/305-hdl-generator-result-contract.t t/438-hdl-generator-result-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: HDLGenerator composition_spec shell surfaces rebuild cleanly
 - Added
   [t/760-hdl-generator-result-contract-composition-spec-shell-surfaces-defensive-copy-audit.t](t/760-hdl-generator-result-contract-composition-spec-shell-surfaces-defensive-copy-audit.t)

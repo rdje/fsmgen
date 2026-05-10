@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### HDLGenerator composition_plan shell surfaces rebuild cleanly
+- Added
+  [t/761-hdl-generator-result-contract-composition-plan-shell-surfaces-defensive-copy-audit.t](t/761-hdl-generator-result-contract-composition-plan-shell-surfaces-defensive-copy-audit.t)
+  to prove the bounded `HDLGenerator` result contract's `composition_plan`
+  summary and fallback surfaces rebuild cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions result-contract `composition_plan` shell surface copy coverage.
 ### HDLGenerator composition_spec shell surfaces rebuild cleanly
 - Added
   [t/760-hdl-generator-result-contract-composition-spec-shell-surfaces-defensive-copy-audit.t](t/760-hdl-generator-result-contract-composition-spec-shell-surfaces-defensive-copy-audit.t)
