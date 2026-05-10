@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest typed extensions guidance rebuilds cleanly
+- Added
+  [t/873-capability-manifest-typed-extensions-guidance-defensive-copy-audit.t](t/873-capability-manifest-typed-extensions-guidance-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.typed_extensions`
+  guidance list rebuilds cleanly after caller mutation.
+- This keeps the public typed-extension embedding contract aligned with its direct
+  `FSM::Support::ExtensionContract` owner without changing the manifest API.
+- Focused validation passed:
+  `perl -Iperl -c t/873-capability-manifest-typed-extensions-guidance-defensive-copy-audit.t && prove -l t/873-capability-manifest-typed-extensions-guidance-defensive-copy-audit.t t/306-extension-contract.t t/435-typed-extension-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest typed extensions stability flags rebuilds cleanly
 - Added
   [t/872-capability-manifest-typed-extensions-stability-flags-defensive-copy-audit.t](t/872-capability-manifest-typed-extensions-stability-flags-defensive-copy-audit.t)

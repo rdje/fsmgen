@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest typed extensions guidance rebuilds cleanly
+- Added
+  [t/873-capability-manifest-typed-extensions-guidance-defensive-copy-audit.t](t/873-capability-manifest-typed-extensions-guidance-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.typed_extensions`
+  guidance list rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side typed extensions guidance coverage.
 ### Manifest typed extensions stability flags rebuilds cleanly
 - Added
   [t/872-capability-manifest-typed-extensions-stability-flags-defensive-copy-audit.t](t/872-capability-manifest-typed-extensions-stability-flags-defensive-copy-audit.t)
