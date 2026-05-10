@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest HDLGenerator result owner map rebuilds cleanly
+- The manifest-embedded `embedding.hdl_generator_result` contract now has
+  focused defensive-copy coverage for its nested-contract owner map.
+- Mutating one built manifest must not pollute the next manifest's embedded
+  `HDLGenerator` result contract metadata.
 ## 2026-05-10: Manifest HDLGenerator result top-level keys rebuild cleanly
 - The manifest-embedded `embedding.hdl_generator_result` contract now has
   focused defensive-copy coverage for its top-level key families.
