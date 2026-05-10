@@ -148,6 +148,7 @@ The scalar semantic key lists for intent HIR, lowered RTL IR, and structural RTL
 The grouped shell-only fallback surface map is now manifest JSON-audited, including the composition-report sanitized fragment path.
 The narrower shell fallback surface-family map now has matching manifest JSON coverage for every shell-only branch.
 Shell-only branch metadata now has manifest-side JSON coverage, including branch flags and raw-value or fragment descriptors.
+The `fsm_module` shell summary and fallback surfaces are now mirrored through manifest JSON alongside their branch owner and raw-value class.
 
 ## Current Philosophy
 

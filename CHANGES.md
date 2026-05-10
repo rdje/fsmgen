@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest HDLGenerator result fsm_module shell surfaces survive JSON
+- Added
+  [t/776-capability-manifest-hdl-result-fsm-module-shell-surfaces-json-roundtrip-audit.t](t/776-capability-manifest-hdl-result-fsm-module-shell-surfaces-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_result`
+  contract keeps its `fsm_module` shell surfaces after JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side `HDLGenerator` result fsm_module shell surfaces coverage.
 ### Manifest HDLGenerator result shell branch metadata survives JSON
 - Added
   [t/775-capability-manifest-hdl-result-shell-branch-metadata-json-roundtrip-audit.t](t/775-capability-manifest-hdl-result-shell-branch-metadata-json-roundtrip-audit.t)
