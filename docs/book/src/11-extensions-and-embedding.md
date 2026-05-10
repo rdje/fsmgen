@@ -185,6 +185,7 @@ The `fsm_module` shell summary and fallback surfaces now rebuild cleanly after m
 The `raw_ast` shell summary and fallback surfaces now rebuild cleanly after manifest caller mutation.
 The `resolved_package_imports` shell summary and fallback surfaces now rebuild cleanly after manifest caller mutation.
 The `composition_spec` shell summary and fallback surfaces now rebuild cleanly after manifest caller mutation.
+The `composition_plan` shell summary and fallback surfaces now rebuild cleanly after manifest caller mutation.
 
 ## Current Philosophy
 
