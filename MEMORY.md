@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest support accounting contract guidance rebuilds cleanly
+- Added
+  [t/994-capability-manifest-support-accounting-contract-guidance-defensive-copy-audit.t](t/994-capability-manifest-support-accounting-contract-guidance-defensive-copy-audit.t)
+  to prove the capability manifest's `support_accounting.section_contract`
+  guidance list rebuilds cleanly after caller mutation.
+- This keeps support-accounting manifest metadata aligned with `FSM::Support::SupportAccountingContract`.
+- Focused validation passed:
+  `perl -Iperl -c t/994-capability-manifest-support-accounting-contract-guidance-defensive-copy-audit.t && prove -l t/994-capability-manifest-support-accounting-contract-guidance-defensive-copy-audit.t t/314-support-accounting-contract.t t/450-support-accounting-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest support accounting contract flags rebuilds cleanly
 - Added
   [t/993-capability-manifest-support-accounting-contract-flags-defensive-copy-audit.t](t/993-capability-manifest-support-accounting-contract-flags-defensive-copy-audit.t)
