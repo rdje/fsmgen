@@ -178,6 +178,7 @@ The embedded result-contract `tested_by` provenance list now has manifest-side d
 The `live_or_unsanitized_keys` list now rebuilds cleanly after caller mutation at the manifest boundary.
 JSON-safety and full-hash stability flags now rebuild cleanly after caller mutation of an embedded manifest result contract.
 Advertisement flags now rebuild cleanly after caller mutation of an embedded manifest result contract.
+Scalar nested contract-source fields now rebuild cleanly after caller mutation at the manifest boundary.
 
 ## Current Philosophy
 
