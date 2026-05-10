@@ -196,6 +196,7 @@ Manifest facade linked contract sources, public booleans, and guidance now survi
 Manifest facade identity metadata now rebuilds cleanly after caller mutation of an earlier manifest.
 Manifest facade public key, method, and target-language lists now rebuild cleanly after caller mutation.
 Manifest facade constructor option families now rebuild cleanly after caller mutation.
+Manifest facade constructor shape metadata now rebuilds cleanly after caller mutation, including option policy strings and numeric debug range.
 
 ## Current Philosophy
 

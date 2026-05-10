@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest HDLGenerator facade constructor shapes rebuild cleanly
+- Added
+  [t/824-capability-manifest-hdl-facade-constructor-shapes-defensive-copy-audit.t](t/824-capability-manifest-hdl-facade-constructor-shapes-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_facade`
+  constructor shape metadata rebuilds cleanly after caller mutation.
+- This mirrors the direct `HDLGenerator` facade contract through the manifest
+  branch without changing the manifest API.
+- Focused validation passed:
+  `perl -Iperl -c t/824-capability-manifest-hdl-facade-constructor-shapes-defensive-copy-audit.t && prove -l t/824-capability-manifest-hdl-facade-constructor-shapes-defensive-copy-audit.t t/375-hdl-generator-facade-contract.t t/439-hdl-generator-facade-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest HDLGenerator facade constructor options rebuild cleanly
 - Added
   [t/823-capability-manifest-hdl-facade-constructor-options-defensive-copy-audit.t](t/823-capability-manifest-hdl-facade-constructor-options-defensive-copy-audit.t)
