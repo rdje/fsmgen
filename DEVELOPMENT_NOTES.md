@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest HDLGenerator result composition_plan shell surfaces stay JSON-audited
+- The manifest-embedded `embedding.hdl_generator_result` contract now has
+  focused JSON round-trip coverage for its `composition_plan` shell surfaces.
+- This keeps the public capability manifest aligned with the parent result-contract
+  metadata that embedders use for bounded result discovery.
 ## 2026-05-10: Manifest HDLGenerator result composition_spec shell surfaces stay JSON-audited
 - The manifest-embedded `embedding.hdl_generator_result` contract now has
   focused JSON round-trip coverage for its `composition_spec` shell surfaces.

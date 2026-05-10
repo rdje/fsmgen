@@ -152,6 +152,7 @@ The `fsm_module` shell summary and fallback surfaces are now mirrored through ma
 The `raw_ast` shell summary and fallback metadata now has the same manifest JSON coverage as the direct result contract.
 The `resolved_package_imports` shell summary and fallback metadata now survives manifest JSON round trip with its owner and raw-value class.
 The `composition_spec` shell summary and fallback metadata is now manifest JSON-audited together with its owner, shell flag, and raw-value class.
+The `composition_plan` shell summary and fallback metadata is now manifest JSON-audited with its owner, shell flag, and raw-value class.
 
 ## Current Philosophy
 
