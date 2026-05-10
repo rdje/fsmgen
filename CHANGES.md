@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest typed extensions object loader shapes survives JSON
+- Added
+  [t/857-capability-manifest-typed-extensions-object-loader-shapes-json-roundtrip-audit.t](t/857-capability-manifest-typed-extensions-object-loader-shapes-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.typed_extensions`
+  extension object and loader shapes survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side typed extensions object loader shapes coverage.
 ### Manifest typed extensions provenance entrypoints survives JSON
 - Added
   [t/856-capability-manifest-typed-extensions-provenance-entrypoints-json-roundtrip-audit.t](t/856-capability-manifest-typed-extensions-provenance-entrypoints-json-roundtrip-audit.t)

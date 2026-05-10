@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest typed extensions object loader shapes survives JSON
+- The manifest-embedded `embedding.typed_extensions` contract now has focused JSON round-trip
+  coverage for its extension object and loader shapes.
+- This keeps embedders from relying on accidental manifest samples rather than the
+  bounded typed-extension contract owner.
 ## 2026-05-10: Manifest typed extensions provenance entrypoints survives JSON
 - The manifest-embedded `embedding.typed_extensions` contract now has focused JSON round-trip
   coverage for its tested_by and entrypoint metadata.
