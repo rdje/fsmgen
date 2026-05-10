@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest contract guidance survives JSON
+- Added
+  [t/904-capability-manifest-contract-guidance-json-roundtrip-audit.t](t/904-capability-manifest-contract-guidance-json-roundtrip-audit.t)
+  to prove `manifest_contract` guidance list survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest contract guidance coverage.
 ### Manifest contract flags survives JSON
 - Added
   [t/903-capability-manifest-contract-flags-json-roundtrip-audit.t](t/903-capability-manifest-contract-flags-json-roundtrip-audit.t)
