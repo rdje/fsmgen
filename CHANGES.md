@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest embedding section top level keys rebuilds cleanly
+- Added
+  [t/851-capability-manifest-embedding-section-top-level-keys-defensive-copy-audit.t](t/851-capability-manifest-embedding-section-top-level-keys-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.section_contract`
+  top-level and nested contract keys rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side embedding section top level keys coverage.
 ### Manifest embedding section identity rebuilds cleanly
 - Added
   [t/850-capability-manifest-embedding-section-identity-defensive-copy-audit.t](t/850-capability-manifest-embedding-section-identity-defensive-copy-audit.t)
