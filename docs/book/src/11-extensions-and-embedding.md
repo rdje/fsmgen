@@ -170,6 +170,7 @@ The semantic-layer presence map and scalar semantic key lists now have manifest-
 Source-info manifest metadata now rebuilds cleanly after caller mutation of identity, summary, and stable subsurface lists.
 Module-info manifest metadata now rebuilds cleanly after caller mutation of identity, summary, optional-composition, and stable subsurface lists.
 Statistics manifest metadata now rebuilds cleanly after caller mutation of summary, optional-composition, and stable subsurface lists.
+Semantic scalar key lists now rebuild cleanly after caller mutation of an earlier manifest build.
 
 ## Current Philosophy
 
