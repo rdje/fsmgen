@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Normalized semantic report contract full surface rebuilds cleanly
+- Added
+  [t/1008-normalized-semantic-report-contract-full-surface-defensive-copy-audit.t](t/1008-normalized-semantic-report-contract-full-surface-defensive-copy-audit.t)
+  to prove a fresh `build_normalized_semantic_report_contract()` result is clean
+  after a caller mutates a previous full contract result.
+- This complements the semantic-report full-surface JSON audit with a
+  defensive-copy guard for the public semantic JSON report boundary.
+- Focused validation passed:
+  `perl -Iperl -c t/1008-normalized-semantic-report-contract-full-surface-defensive-copy-audit.t && prove -l t/1008-normalized-semantic-report-contract-full-surface-defensive-copy-audit.t t/1007-normalized-semantic-report-contract-full-surface-json-roundtrip-audit.t t/311-normalized-semantic-report-contract.t && mdbook build docs/book`.
 ## 2026-05-10: Normalized semantic report contract full surface survives JSON
 - Added
   [t/1007-normalized-semantic-report-contract-full-surface-json-roundtrip-audit.t](t/1007-normalized-semantic-report-contract-full-surface-json-roundtrip-audit.t)

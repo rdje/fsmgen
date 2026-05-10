@@ -380,6 +380,7 @@ The full `HDLGenerator` result contract now rebuilds cleanly after caller mutati
 The full serializable plan/report contract now survives JSON round trip unchanged.
 The full serializable plan/report contract now rebuilds cleanly after caller mutation.
 The full normalized semantic report contract now survives JSON round trip unchanged.
+The full normalized semantic report contract now rebuilds cleanly after caller mutation.
 
 ## Current Philosophy
 
