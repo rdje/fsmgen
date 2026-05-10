@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest HDLGenerator facade linked contracts survive JSON
+- Added
+  [t/820-capability-manifest-hdl-facade-linked-contracts-json-roundtrip-audit.t](t/820-capability-manifest-hdl-facade-linked-contracts-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_facade`
+  linked contract and guidance metadata survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side `HDLGenerator` facade facade linked contracts and guidance coverage.
 ### Manifest HDLGenerator facade generation boundary survives JSON
 - Added
   [t/819-capability-manifest-hdl-facade-generation-boundary-json-roundtrip-audit.t](t/819-capability-manifest-hdl-facade-generation-boundary-json-roundtrip-audit.t)
