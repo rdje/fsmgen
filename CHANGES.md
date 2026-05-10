@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest support accounting contract guidance survives JSON
+- Added
+  [t/984-capability-manifest-support-accounting-contract-guidance-json-roundtrip-audit.t](t/984-capability-manifest-support-accounting-contract-guidance-json-roundtrip-audit.t)
+  to prove the capability manifest's `support_accounting.section_contract`
+  guidance list survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md) for the `R13` progress entry.
 ### Manifest support accounting contract flags survives JSON
 - Added
   [t/983-capability-manifest-support-accounting-contract-flags-json-roundtrip-audit.t](t/983-capability-manifest-support-accounting-contract-flags-json-roundtrip-audit.t)
