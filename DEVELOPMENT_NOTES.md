@@ -1,5 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest diagnostics section contract stable code metadata survives JSON
+- The manifest `diagnostics.section_contract` now has focused JSON round-trip coverage for its stable-code metadata.
+- This keeps public manifest consumers anchored to explicit section contracts.
 ## 2026-05-10: Manifest diagnostics section contract nested maps survives JSON
 - The manifest `diagnostics.section_contract` now has focused JSON round-trip coverage for its nested source and presence maps.
 - This keeps public manifest consumers anchored to explicit section contracts.

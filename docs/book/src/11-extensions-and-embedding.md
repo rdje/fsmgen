@@ -300,6 +300,7 @@ Manifest producer section contract guidance now rebuilds cleanly after caller mu
 Manifest diagnostics section contract identity metadata now survives JSON round trip.
 Manifest diagnostics section key families now survive JSON round trip.
 Manifest diagnostics section nested maps now survive JSON round trip.
+Manifest diagnostics stable-code metadata now survives JSON round trip.
 
 ## Current Philosophy
 
