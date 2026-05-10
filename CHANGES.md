@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest contract flags rebuilds cleanly
+- Added
+  [t/913-capability-manifest-contract-flags-defensive-copy-audit.t](t/913-capability-manifest-contract-flags-defensive-copy-audit.t)
+  to prove `manifest_contract` manifest safety flags rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest contract flags coverage.
 ### Manifest contract tooling section keys rebuilds cleanly
 - Added
   [t/912-capability-manifest-contract-tooling-section-keys-defensive-copy-audit.t](t/912-capability-manifest-contract-tooling-section-keys-defensive-copy-audit.t)

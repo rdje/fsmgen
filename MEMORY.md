@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest contract flags rebuilds cleanly
+- Added
+  [t/913-capability-manifest-contract-flags-defensive-copy-audit.t](t/913-capability-manifest-contract-flags-defensive-copy-audit.t)
+  to prove `manifest_contract` manifest safety flags rebuilds cleanly after caller mutation.
+- This keeps the outer capability manifest shell aligned with its direct
+  `FSM::Support::CapabilityManifestContract` owner.
+- Focused validation passed:
+  `perl -Iperl -c t/913-capability-manifest-contract-flags-defensive-copy-audit.t && prove -l t/913-capability-manifest-contract-flags-defensive-copy-audit.t t/316-capability-manifest-contract.t t/479-capability-manifest-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest contract tooling section keys rebuilds cleanly
 - Added
   [t/912-capability-manifest-contract-tooling-section-keys-defensive-copy-audit.t](t/912-capability-manifest-contract-tooling-section-keys-defensive-copy-audit.t)
