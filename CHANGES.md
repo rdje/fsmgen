@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### HDLGenerator fsm_module shell surfaces rebuild cleanly
+- Added
+  [t/757-hdl-generator-result-contract-fsm-module-shell-surfaces-defensive-copy-audit.t](t/757-hdl-generator-result-contract-fsm-module-shell-surfaces-defensive-copy-audit.t)
+  to prove the bounded `HDLGenerator` result contract's `fsm_module` summary and
+  fallback surfaces rebuild cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions result-contract `fsm_module` shell surface copy coverage.
 ### HDLGenerator composition_report shell surfaces survive JSON
 - Added
   [t/756-hdl-generator-result-contract-composition-report-shell-surfaces-json-roundtrip-audit.t](t/756-hdl-generator-result-contract-composition-report-shell-surfaces-json-roundtrip-audit.t)

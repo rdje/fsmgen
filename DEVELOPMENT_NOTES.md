@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator fsm_module shell surfaces stay caller-owned
+- The bounded `HDLGenerator` result contract now has focused defensive-copy
+  coverage for `fsm_module_summary_surfaces` and
+  `fsm_module_fallback_surface_map`.
+- Mutating one built contract's `fsm_module` shell surface metadata must not
+  pollute the next build.
 ## 2026-05-10: HDLGenerator composition_report shell surfaces stay JSON-audited
 - The bounded `HDLGenerator` result contract now has focused JSON round-trip
   coverage for `composition_report_json_fragment_path` and the grouped fallback

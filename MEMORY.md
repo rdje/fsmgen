@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: HDLGenerator fsm_module shell surfaces rebuild cleanly
+- Added
+  [t/757-hdl-generator-result-contract-fsm-module-shell-surfaces-defensive-copy-audit.t](t/757-hdl-generator-result-contract-fsm-module-shell-surfaces-defensive-copy-audit.t)
+  to prove the bounded `HDLGenerator` result contract's
+  `fsm_module_summary_surfaces` and `fsm_module_fallback_surface_map` rebuild
+  cleanly after caller mutation.
+- This keeps `fsm_module` shell fallback discovery caller-owned without changing
+  the result contract API.
+- Focused validation passed:
+  `perl -Iperl -c t/757-hdl-generator-result-contract-fsm-module-shell-surfaces-defensive-copy-audit.t && prove -l t/757-hdl-generator-result-contract-fsm-module-shell-surfaces-defensive-copy-audit.t t/305-hdl-generator-result-contract.t t/438-hdl-generator-result-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: HDLGenerator composition_report shell surfaces survive JSON
 - Added
   [t/756-hdl-generator-result-contract-composition-report-shell-surfaces-json-roundtrip-audit.t](t/756-hdl-generator-result-contract-composition-report-shell-surfaces-json-roundtrip-audit.t)

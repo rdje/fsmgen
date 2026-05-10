@@ -123,11 +123,12 @@ Shell-only branch flags and raw branch metadata are JSON-audited as well, so
 serialized metadata keeps raw object classes, raw AST shape, and the raw
 composition-report non-JSON-safe status visible. The `fsm_module` shell summary
 and fallback surface metadata is JSON-audited against its dedicated owner and
-the grouped shell fallback maps. The `raw_ast` shell summary and fallback
-surface metadata is guarded the same way. The `resolved_package_imports` shell
-summary and fallback metadata now has matching JSON coverage, as does the
-`composition_spec` shell summary and fallback metadata. The `composition_plan`
-shell summary and fallback metadata is now guarded in the same per-branch pass.
+the grouped shell fallback maps, and it has matching defensive-copy coverage.
+The `raw_ast` shell summary and fallback surface metadata is guarded the same
+way. The `resolved_package_imports` shell summary and fallback metadata now has
+matching JSON coverage, as does the `composition_spec` shell summary and
+fallback metadata. The `composition_plan` shell summary and fallback metadata is
+now guarded in the same per-branch pass.
 The `composition_report` sanitized JSON fragment fallback now completes that
 per-branch JSON coverage.
 
