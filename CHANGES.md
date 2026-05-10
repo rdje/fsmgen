@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest debug runtime helper lists survive JSON
+- Added
+  [t/829-capability-manifest-debug-runtime-helper-lists-json-roundtrip-audit.t](t/829-capability-manifest-debug-runtime-helper-lists-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.debug_runtime`
+  helper and state key lists survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side debug runtime helper lists coverage.
 ### Manifest debug runtime public keys survive JSON
 - Added
   [t/828-capability-manifest-debug-runtime-public-keys-json-roundtrip-audit.t](t/828-capability-manifest-debug-runtime-public-keys-json-roundtrip-audit.t)

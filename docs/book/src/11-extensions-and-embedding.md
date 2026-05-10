@@ -201,6 +201,7 @@ Manifest facade generation receiver and argument boundary metadata now rebuilds 
 Manifest facade linked contract sources, public booleans, and guidance now rebuild cleanly after caller mutation.
 The capability manifest now mirrors `embedding.debug_runtime` identity metadata through JSON round trip.
 Manifest debug-runtime public key lists and grouped family map now survive JSON round trip.
+Manifest debug-runtime helper and snapshot-state key lists now survive JSON round trip.
 
 ## Current Philosophy
 
