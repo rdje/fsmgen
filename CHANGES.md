@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest composition report identity rebuilds cleanly
+- Added
+  [t/840-capability-manifest-composition-report-identity-defensive-copy-audit.t](t/840-capability-manifest-composition-report-identity-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.composition_report`
+  identity metadata rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side composition report identity coverage.
 ### Manifest composition report provenance survives JSON
 - Added
   [t/839-capability-manifest-composition-report-provenance-json-roundtrip-audit.t](t/839-capability-manifest-composition-report-provenance-json-roundtrip-audit.t)
