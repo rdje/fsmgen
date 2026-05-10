@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: HDLGenerator stable subsurface map rebuilds cleanly
+- Added
+  [t/732-hdl-generator-result-contract-stable-subsurface-defensive-copy-audit.t](t/732-hdl-generator-result-contract-stable-subsurface-defensive-copy-audit.t)
+  to prove the bounded `HDLGenerator` result contract's
+  `stable_subsurface_map` and its helper rebuild cleanly after caller mutation.
+- This keeps grouped stable nested-surface discovery caller-owned without
+  changing the result contract API.
+- Focused validation passed:
+  `perl -Iperl -c t/732-hdl-generator-result-contract-stable-subsurface-defensive-copy-audit.t && prove -l t/732-hdl-generator-result-contract-stable-subsurface-defensive-copy-audit.t t/305-hdl-generator-result-contract.t t/438-hdl-generator-result-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: HDLGenerator semantic keys survive JSON
 - Added
   [t/731-hdl-generator-result-contract-semantic-keys-json-roundtrip-audit.t](t/731-hdl-generator-result-contract-semantic-keys-json-roundtrip-audit.t)

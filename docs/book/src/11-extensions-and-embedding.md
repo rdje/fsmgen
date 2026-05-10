@@ -82,9 +82,11 @@ top-level public, direct-root, and composition-root key families are now guarded
 after JSON round trip as well, along with the nested contract owner map that
 ties result branches back to their scalar owner fields. The stable subsurface map
 is also guarded after JSON round trip so grouped nested-surface discovery stays
-aligned with the scalar fields it summarizes. The optional composition
-key-family map is guarded the same way for composition-only discovery, and the
-semantic-layer presence family map now has the same JSON round-trip coverage.
+aligned with the scalar fields it summarizes, and it has focused defensive-copy
+coverage so caller mutation of one grouped map does not pollute the next build.
+The optional composition key-family map is guarded the same way for
+composition-only discovery, and the semantic-layer presence family map now has
+the same JSON round-trip coverage.
 The shell-only fallback surface map is also JSON-audited so raw compatibility
 branches keep pointing at their advertised structured replacements, and the
 narrower fallback-family map is guarded the same way. The result contract's
@@ -769,6 +771,8 @@ That same contract now also publishes a grouped `stable_subsurface_map` so
 embedders can discover those bounded nested stable slices from one place
 instead of reconstructing the map from the separate `source_info`,
 `module_info`, and `statistics` arrays.
+The grouped map is defensively rebuilt by the contract and helper, so callers
+can annotate one returned copy without leaking changes into later builds.
 It now also publishes a grouped `optional_composition_key_family_map` so
 embedders can discover the bounded composition-only key families from one
 place instead of collecting the separate `module_info`,
