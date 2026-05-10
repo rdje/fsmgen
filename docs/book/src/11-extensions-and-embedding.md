@@ -193,6 +193,7 @@ Manifest facade constructor option families now have JSON round-trip coverage.
 Manifest facade constructor shape metadata now survives JSON round trip, including duplicate and unknown option policies.
 Manifest facade generation receiver and argument boundary metadata now survives JSON round trip.
 Manifest facade linked contract sources, public booleans, and guidance now survive JSON round trip.
+Manifest facade identity metadata now rebuilds cleanly after caller mutation of an earlier manifest.
 
 ## Current Philosophy
 

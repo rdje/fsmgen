@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest HDLGenerator facade identity rebuilds cleanly
+- Added
+  [t/821-capability-manifest-hdl-facade-identity-defensive-copy-audit.t](t/821-capability-manifest-hdl-facade-identity-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_facade`
+  identity metadata rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side `HDLGenerator` facade facade identity metadata coverage.
 ### Manifest HDLGenerator facade linked contracts survive JSON
 - Added
   [t/820-capability-manifest-hdl-facade-linked-contracts-json-roundtrip-audit.t](t/820-capability-manifest-hdl-facade-linked-contracts-json-roundtrip-audit.t)
