@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### HDLGenerator tested-by list survives JSON
+- Added
+  [t/746-hdl-generator-result-contract-tested-by-json-roundtrip-audit.t](t/746-hdl-generator-result-contract-tested-by-json-roundtrip-audit.t)
+  to prove the bounded `HDLGenerator` result contract's decoded `tested_by`
+  provenance list keeps its core audit references after JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions result-contract provenance JSON coverage.
 ### HDLGenerator guidance survives JSON
 - Added
   [t/745-hdl-generator-result-contract-guidance-json-roundtrip-audit.t](t/745-hdl-generator-result-contract-guidance-json-roundtrip-audit.t)

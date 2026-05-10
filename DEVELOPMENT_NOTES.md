@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator tested-by list stays JSON-audited
+- The bounded `HDLGenerator` result contract now has focused JSON round-trip
+  coverage for its `tested_by` provenance list.
+- Decoded provenance must keep the primary contract, defensive-copy boundary, and
+  source-info package summary audit references visible.
 ## 2026-05-10: HDLGenerator guidance stays JSON-audited
 - The bounded `HDLGenerator` result contract now has focused JSON round-trip
   coverage for its `guidance` list.
