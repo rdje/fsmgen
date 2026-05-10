@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest semantic exports contract public nested keys survives JSON
+- Added
+  [t/937-capability-manifest-semantic-exports-contract-public-nested-keys-json-roundtrip-audit.t](t/937-capability-manifest-semantic-exports-contract-public-nested-keys-json-roundtrip-audit.t)
+  to prove the capability manifest's `semantic_exports.section_contract`
+  public and nested key lists survives JSON round trip.
+- This keeps the manifest section aligned with its direct `FSM::Support::SemanticExportsContract` owner.
+- Focused validation passed:
+  `perl -Iperl -c t/937-capability-manifest-semantic-exports-contract-public-nested-keys-json-roundtrip-audit.t && prove -l t/937-capability-manifest-semantic-exports-contract-public-nested-keys-json-roundtrip-audit.t t/322-semantic-exports-contract.t t/447-semantic-exports-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest semantic exports contract entrypoints survives JSON
 - Added
   [t/936-capability-manifest-semantic-exports-contract-entrypoints-json-roundtrip-audit.t](t/936-capability-manifest-semantic-exports-contract-entrypoints-json-roundtrip-audit.t)

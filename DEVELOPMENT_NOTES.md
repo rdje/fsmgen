@@ -1,5 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest semantic exports contract public nested keys survives JSON
+- The manifest `semantic_exports.section_contract` now has focused JSON round-trip coverage for its public and nested key lists.
+- This keeps public manifest consumers anchored to explicit section contracts.
 ## 2026-05-10: Manifest semantic exports contract entrypoints survives JSON
 - The manifest `semantic_exports.section_contract` now has focused JSON round-trip coverage for its entrypoint metadata.
 - This keeps public manifest consumers anchored to explicit section contracts.
