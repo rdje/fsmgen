@@ -162,6 +162,7 @@ The manifest mirror now also keeps the result-contract advertisement flags JSON-
 Scalar nested contract-source fields now have manifest JSON coverage in addition to the grouped owner map.
 Semantic-layer full-hash stability flags now have a focused manifest JSON guard, preserving the bounded-shell warning for each semantic branch.
 The `json_safe_export_surface` pointer is now manifest JSON-audited, keeping embedders directed at normalized semantic exports.
+Manifest-side defensive-copy coverage now proves mutated embedded result top-level key families do not pollute later manifest builds.
 
 ## Current Philosophy
 
