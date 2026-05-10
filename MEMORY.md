@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest debug runtime flags survive JSON
+- Added
+  [t/830-capability-manifest-debug-runtime-flags-json-roundtrip-audit.t](t/830-capability-manifest-debug-runtime-flags-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.debug_runtime`
+  flags, ranges, and guidance survives JSON round trip.
+- This mirrors the direct debug runtime contract through the manifest branch
+  without changing the manifest API.
+- Focused validation passed:
+  `perl -Iperl -c t/830-capability-manifest-debug-runtime-flags-json-roundtrip-audit.t && prove -l t/830-capability-manifest-debug-runtime-flags-json-roundtrip-audit.t t/374-debug-runtime-contract.t t/440-debug-runtime-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest debug runtime helper lists survive JSON
 - Added
   [t/829-capability-manifest-debug-runtime-helper-lists-json-roundtrip-audit.t](t/829-capability-manifest-debug-runtime-helper-lists-json-roundtrip-audit.t)

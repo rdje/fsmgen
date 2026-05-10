@@ -202,6 +202,7 @@ Manifest facade linked contract sources, public booleans, and guidance now rebui
 The capability manifest now mirrors `embedding.debug_runtime` identity metadata through JSON round trip.
 Manifest debug-runtime public key lists and grouped family map now survive JSON round trip.
 Manifest debug-runtime helper and snapshot-state key lists now survive JSON round trip.
+Manifest debug-runtime flags, named verbosity values, numeric range, and guidance now survive JSON round trip.
 
 ## Current Philosophy
 

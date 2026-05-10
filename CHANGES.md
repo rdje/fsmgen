@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest debug runtime flags survive JSON
+- Added
+  [t/830-capability-manifest-debug-runtime-flags-json-roundtrip-audit.t](t/830-capability-manifest-debug-runtime-flags-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.debug_runtime`
+  flags, ranges, and guidance survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side debug runtime flags and ranges coverage.
 ### Manifest debug runtime helper lists survive JSON
 - Added
   [t/829-capability-manifest-debug-runtime-helper-lists-json-roundtrip-audit.t](t/829-capability-manifest-debug-runtime-helper-lists-json-roundtrip-audit.t)
