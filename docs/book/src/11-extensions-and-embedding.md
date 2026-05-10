@@ -251,6 +251,7 @@ Manifest serializable-plan/report identity metadata now survives JSON round trip
 Manifest serializable-plan/report public key list now survives JSON round trip.
 Manifest serializable-plan/report JSON-safe surface key lists now survive JSON round trip.
 Manifest serializable-plan/report surface registry now survives JSON round trip.
+Manifest serializable-plan/report nested contract source map now survives JSON round trip.
 
 ## Current Philosophy
 

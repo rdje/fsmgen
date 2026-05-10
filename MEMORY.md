@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest serializable plan report nested source map survives JSON
+- Added
+  [t/879-capability-manifest-serializable-plan-report-nested-source-map-json-roundtrip-audit.t](t/879-capability-manifest-serializable-plan-report-nested-source-map-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.serializable_plan_reports`
+  nested contract source map survives JSON round trip.
+- This keeps the public serializable report embedding contract aligned with its
+  direct `FSM::Support::SerializablePlanReportContract` owner.
+- Focused validation passed:
+  `perl -Iperl -c t/879-capability-manifest-serializable-plan-report-nested-source-map-json-roundtrip-audit.t && prove -l t/879-capability-manifest-serializable-plan-report-nested-source-map-json-roundtrip-audit.t t/629-serializable-plan-report-contract.t t/645-serializable-plan-report-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest serializable plan report surface registry survives JSON
 - Added
   [t/878-capability-manifest-serializable-plan-report-surface-registry-json-roundtrip-audit.t](t/878-capability-manifest-serializable-plan-report-surface-registry-json-roundtrip-audit.t)

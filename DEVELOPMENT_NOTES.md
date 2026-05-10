@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest serializable plan report nested source map survives JSON
+- The manifest-embedded `embedding.serializable_plan_reports` contract now has
+  focused JSON round-trip coverage for its nested contract source map.
+- This keeps embedders on the bounded JSON-safe report API rather than raw
+  in-process compatibility shells.
 ## 2026-05-10: Manifest serializable plan report surface registry survives JSON
 - The manifest-embedded `embedding.serializable_plan_reports` contract now has
   focused JSON round-trip coverage for its surface registry.
