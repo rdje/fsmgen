@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator statistics keys stay JSON-audited
+- The bounded `HDLGenerator` result contract now has focused JSON round-trip
+  coverage for `statistics_summary_presence_keys` and
+  `statistics_optional_composition_keys`.
+- The decoded optional-composition family map must keep mirroring the decoded
+  statistics optional key list, while the full statistics hash remains
+  explicitly non-stable.
 ## 2026-05-10: HDLGenerator module-info keys stay JSON-audited
 - The bounded `HDLGenerator` result contract now has focused JSON round-trip
   coverage for `module_info_identity_presence_keys`,

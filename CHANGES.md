@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### HDLGenerator statistics keys survive JSON
+- Added
+  [t/730-hdl-generator-result-contract-statistics-keys-json-roundtrip-audit.t](t/730-hdl-generator-result-contract-statistics-keys-json-roundtrip-audit.t)
+  to prove the bounded `HDLGenerator` result contract's decoded
+  `statistics` summary and optional-composition key lists survive JSON round
+  trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions result-contract statistics key JSON coverage.
 ### HDLGenerator module-info keys survive JSON
 - Added
   [t/729-hdl-generator-result-contract-module-info-keys-json-roundtrip-audit.t](t/729-hdl-generator-result-contract-module-info-keys-json-roundtrip-audit.t)

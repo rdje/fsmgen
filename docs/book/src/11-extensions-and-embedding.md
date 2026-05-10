@@ -91,7 +91,8 @@ narrower fallback-family map is guarded the same way. The result contract's
 source-info identity and summary key lists are also JSON-audited, along with the
 full-hash stability flag and package-import copy-policy note. The module-info
 identity, summary, and optional-composition key lists now carry matching JSON
-coverage, including the decoded family-map mirror for optional composition.
+coverage, including the decoded family-map mirror for optional composition. The
+statistics summary and optional-composition key lists are guarded the same way.
 
 ## Current Philosophy
 
@@ -847,6 +848,9 @@ The nested `statistics` object now also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorStatisticsContract.pm](perl/FSM/Support/HDLGeneratorStatisticsContract.pm),
 which is the contract to follow for the direct-root scalar summary keys and
 the composition-only scalar summary keys.
+The parent result contract now JSON-audits those statistics summary and
+optional-composition key lists, including the grouped optional-composition
+family map mirror.
 Reusable `HDLGenerator` facade objects return fresh `statistics` containers per
 generation, so caller mutation of one result's scalar statistics or nested raw
 backend maps does not leak into a later result produced by the same facade
