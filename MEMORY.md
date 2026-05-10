@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: HDLGenerator result contract full surface survives JSON
+- Added
+  [t/1003-hdl-generator-result-contract-full-surface-json-roundtrip-audit.t](t/1003-hdl-generator-result-contract-full-surface-json-roundtrip-audit.t)
+  to prove the complete `build_hdl_generator_result_contract()` result
+  survives JSON encode/decode unchanged.
+- This extends `R13` full-surface stability auditing from the manifest shell to
+  the in-process `HDLGenerator` result contract owner.
+- Focused validation passed:
+  `perl -Iperl -c t/1003-hdl-generator-result-contract-full-surface-json-roundtrip-audit.t && prove -l t/1003-hdl-generator-result-contract-full-surface-json-roundtrip-audit.t t/720-hdl-generator-result-contract-identity-json-roundtrip-audit.t t/721-hdl-generator-result-contract-top-level-keys-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-10: CLI capability manifest uses canonical owner encoding
 - Added
   [t/1002-capability-manifest-cli-canonical-encoding-audit.t](t/1002-capability-manifest-cli-canonical-encoding-audit.t)

@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### HDLGenerator result contract full surface survives JSON
+- Added
+  [t/1003-hdl-generator-result-contract-full-surface-json-roundtrip-audit.t](t/1003-hdl-generator-result-contract-full-surface-json-roundtrip-audit.t)
+  to prove the full `HDLGenerator` result contract owner survives JSON
+  encode/decode unchanged.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md),
+  [LIVE_ACHIEVEMENT_STATUS.md](LIVE_ACHIEVEMENT_STATUS.md), and
+  [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  for the `R13` progress entry.
 ### CLI capability manifest uses canonical owner encoding
 - Added
   [t/1002-capability-manifest-cli-canonical-encoding-audit.t](t/1002-capability-manifest-cli-canonical-encoding-audit.t)
