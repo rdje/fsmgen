@@ -1,5 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Serializable plan/report contract full surface survives JSON
+- The serializable plan/report contract now has a full-surface JSON round-trip audit.
+- This catches owner-assembly or JSON-safety drift across the public plan/report boundary beyond the existing field-level probes.
 ## 2026-05-10: HDLGenerator result contract full surface rebuilds cleanly
 - The `HDLGenerator` result contract now has a full-surface defensive-copy audit.
 - The test recursively mutates one built contract and compares the next owner build with a fresh expected result, guarding the embedding contract against shared mutable metadata.

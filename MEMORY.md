@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Serializable plan/report contract full surface survives JSON
+- Added
+  [t/1005-serializable-plan-report-contract-full-surface-json-roundtrip-audit.t](t/1005-serializable-plan-report-contract-full-surface-json-roundtrip-audit.t)
+  to prove the complete `build_serializable_plan_report_contract()` result
+  survives JSON encode/decode unchanged.
+- This extends `R13` full-surface stability auditing across the advertised
+  serializable plan/report boundary for embedders.
+- Focused validation passed:
+  `perl -Iperl -c t/1005-serializable-plan-report-contract-full-surface-json-roundtrip-audit.t && prove -l t/1005-serializable-plan-report-contract-full-surface-json-roundtrip-audit.t t/701-serializable-plan-report-identity-metadata-json-roundtrip-audit.t t/699-serializable-plan-report-public-keys-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-10: HDLGenerator result contract full surface rebuilds cleanly
 - Added
   [t/1004-hdl-generator-result-contract-full-surface-defensive-copy-audit.t](t/1004-hdl-generator-result-contract-full-surface-defensive-copy-audit.t)
