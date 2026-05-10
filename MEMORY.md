@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest backend validation contract flags guidance survives JSON
+- Added
+  [t/949-capability-manifest-backend-validation-contract-flags-guidance-json-roundtrip-audit.t](t/949-capability-manifest-backend-validation-contract-flags-guidance-json-roundtrip-audit.t)
+  to prove the capability manifest's `backend_validation.section_contract`
+  advertisement flags and guidance survives JSON round trip.
+- This keeps the manifest section aligned with its direct `FSM::Support::BackendValidationContract` owner.
+- Focused validation passed:
+  `perl -Iperl -c t/949-capability-manifest-backend-validation-contract-flags-guidance-json-roundtrip-audit.t && prove -l t/949-capability-manifest-backend-validation-contract-flags-guidance-json-roundtrip-audit.t t/323-backend-validation-contract.t t/445-backend-validation-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest backend validation contract nested maps survives JSON
 - Added
   [t/948-capability-manifest-backend-validation-contract-nested-maps-json-roundtrip-audit.t](t/948-capability-manifest-backend-validation-contract-nested-maps-json-roundtrip-audit.t)
