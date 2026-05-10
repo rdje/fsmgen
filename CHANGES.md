@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest HDLGenerator result module-info keys rebuild cleanly
+- Added
+  [t/796-capability-manifest-hdl-result-module-info-keys-defensive-copy-audit.t](t/796-capability-manifest-hdl-result-module-info-keys-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_result`
+  module-info key lists rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side `HDLGenerator` result module-info keys copy coverage.
 ### Manifest HDLGenerator result source-info keys rebuild cleanly
 - Added
   [t/795-capability-manifest-hdl-result-source-info-keys-defensive-copy-audit.t](t/795-capability-manifest-hdl-result-source-info-keys-defensive-copy-audit.t)
