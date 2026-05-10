@@ -344,6 +344,7 @@ Manifest documentation path contract maps now survive JSON round trip.
 Manifest documentation guidance now survives JSON round trip.
 Manifest documentation contract identity metadata now rebuilds cleanly after caller mutation.
 Manifest documentation contract entrypoints now rebuild cleanly after caller mutation.
+Manifest documentation public and path-list keys now rebuild cleanly after caller mutation.
 
 ## Current Philosophy
 
