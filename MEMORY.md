@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest serializable plan report identity rebuilds cleanly
+- Added
+  [t/885-capability-manifest-serializable-plan-report-identity-defensive-copy-audit.t](t/885-capability-manifest-serializable-plan-report-identity-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.serializable_plan_reports`
+  identity metadata rebuilds cleanly after caller mutation.
+- This keeps the public serializable report embedding contract aligned with its
+  direct `FSM::Support::SerializablePlanReportContract` owner.
+- Focused validation passed:
+  `perl -Iperl -c t/885-capability-manifest-serializable-plan-report-identity-defensive-copy-audit.t && prove -l t/885-capability-manifest-serializable-plan-report-identity-defensive-copy-audit.t t/629-serializable-plan-report-contract.t t/645-serializable-plan-report-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest serializable plan report flags guidance survives JSON
 - Added
   [t/884-capability-manifest-serializable-plan-report-flags-guidance-json-roundtrip-audit.t](t/884-capability-manifest-serializable-plan-report-flags-guidance-json-roundtrip-audit.t)
