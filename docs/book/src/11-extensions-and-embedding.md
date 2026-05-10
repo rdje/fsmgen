@@ -355,6 +355,7 @@ Manifest support-accounting id-list presence keys now survive JSON round trip.
 Manifest support-accounting catalog required keys now survive JSON round trip.
 Manifest support-accounting catalog optional keys now survive JSON round trip.
 Manifest support-accounting grouped presence key map now survives JSON round trip.
+Manifest support-accounting sanitized/derived flags now survive JSON round trip.
 
 ## Current Philosophy
 
