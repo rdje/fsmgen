@@ -242,6 +242,7 @@ Manifest typed-extension tested_by and entrypoint metadata now rebuilds cleanly 
 Manifest typed-extension object/loader shape metadata now rebuilds cleanly after caller mutation.
 Manifest typed-extension context shape metadata now rebuilds cleanly after caller mutation.
 Manifest typed-extension public key and grouped name families now rebuild cleanly after caller mutation.
+Manifest typed-extension `after_parse_source` hook metadata now rebuilds cleanly after caller mutation.
 
 ## Current Philosophy
 
