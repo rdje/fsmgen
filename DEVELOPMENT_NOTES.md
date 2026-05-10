@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator shell fallback map stays caller-owned
+- The bounded `HDLGenerator` result contract now has focused defensive-copy
+  coverage for `shell_only_fallback_surface_map` on both the built contract and
+  helper.
+- Mutating one grouped shell-only fallback map must not pollute the next build,
+  so embedders can cache or annotate discovery metadata without hidden shared
+  containers.
 ## 2026-05-10: HDLGenerator semantic layer map stays caller-owned
 - The bounded `HDLGenerator` result contract now has focused defensive-copy
   coverage for `semantic_layer_presence_key_family_map` on both the built

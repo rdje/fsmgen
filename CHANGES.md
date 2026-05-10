@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### HDLGenerator shell fallback map rebuilds cleanly
+- Added
+  [t/735-hdl-generator-result-contract-shell-fallback-map-defensive-copy-audit.t](t/735-hdl-generator-result-contract-shell-fallback-map-defensive-copy-audit.t)
+  to prove the bounded `HDLGenerator` result contract's
+  `shell_only_fallback_surface_map` and helper rebuild cleanly after caller
+  mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions result-contract shell-fallback copy coverage.
 ### HDLGenerator semantic layer map rebuilds cleanly
 - Added
   [t/734-hdl-generator-result-contract-semantic-layer-map-defensive-copy-audit.t](t/734-hdl-generator-result-contract-semantic-layer-map-defensive-copy-audit.t)

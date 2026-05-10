@@ -88,7 +88,8 @@ The optional composition key-family map is guarded the same way for
 composition-only discovery, and it now has matching defensive-copy coverage so
 caller mutation of one grouped map does not pollute the next build. The
 semantic-layer presence family map now has the same JSON round-trip coverage
-and matching defensive-copy coverage.
+and matching defensive-copy coverage. The shell-only fallback surface map also
+has focused defensive-copy coverage for its grouped discovery surface.
 The shell-only fallback surface map is also JSON-audited so raw compatibility
 branches keep pointing at their advertised structured replacements, and the
 narrower fallback-family map is guarded the same way. The result contract's
@@ -795,6 +796,9 @@ can discover, from one place, where to go instead of binding themselves to the
 raw shell-only compatibility branches such as `fsm_module`, `raw_ast`,
 `resolved_package_imports`, `composition_spec`, `composition_plan`, and
 `composition_report`.
+That grouped shell-only fallback surface map is defensively rebuilt by the
+contract and helper, so callers can annotate one returned copy without leaking
+changes into later builds.
 It now also publishes a grouped `shell_only_fallback_surface_family_map` so
 embedders can discover the narrower fallback-surface families those shell-only
 branches publish for themselves without reconstructing the per-branch grouping
