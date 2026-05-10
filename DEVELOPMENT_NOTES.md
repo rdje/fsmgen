@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest serializable plan report public report keys rebuilds cleanly
+- The manifest-embedded `embedding.serializable_plan_reports` contract now has
+  focused defensive-copy coverage for its public report key metadata.
+- This keeps embedders on the bounded JSON-safe report API rather than raw
+  in-process compatibility shells.
 ## 2026-05-10: Manifest serializable plan report child contracts rebuilds cleanly
 - The manifest-embedded `embedding.serializable_plan_reports` contract now has
   focused defensive-copy coverage for its embedded child contracts.
