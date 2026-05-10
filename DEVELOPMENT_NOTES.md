@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest HDLGenerator result top-level keys stay JSON-audited
+- The manifest-embedded `embedding.hdl_generator_result` contract now has
+  focused JSON round-trip coverage for public, direct-root, and composition-root
+  top-level key families.
+- This keeps the manifest mirror aligned with the parent result-contract top-level
+  presence contract.
 ## 2026-05-10: Manifest HDLGenerator result identity stays JSON-audited
 - The manifest-embedded `embedding.hdl_generator_result` contract now has
   focused JSON round-trip coverage for schema version, bounded status, source

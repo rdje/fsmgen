@@ -134,7 +134,9 @@ The `composition_report` sanitized JSON fragment fallback now completes that
 per-branch JSON coverage and has matching defensive-copy coverage.
 The capability manifest also mirrors the bounded `HDLGenerator` result contract:
 its embedded identity metadata is JSON-audited so manifest consumers see the
-same schema, status, owner, entrypoint, and provenance shape.
+same schema, status, owner, entrypoint, and provenance shape. The manifest mirror
+also preserves the result contract's public, direct-root, and composition-root
+top-level key families through JSON round trip.
 
 ## Current Philosophy
 
