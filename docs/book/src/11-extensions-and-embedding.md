@@ -150,6 +150,7 @@ The narrower shell fallback surface-family map now has matching manifest JSON co
 Shell-only branch metadata now has manifest-side JSON coverage, including branch flags and raw-value or fragment descriptors.
 The `fsm_module` shell summary and fallback surfaces are now mirrored through manifest JSON alongside their branch owner and raw-value class.
 The `raw_ast` shell summary and fallback metadata now has the same manifest JSON coverage as the direct result contract.
+The `resolved_package_imports` shell summary and fallback metadata now survives manifest JSON round trip with its owner and raw-value class.
 
 ## Current Philosophy
 
