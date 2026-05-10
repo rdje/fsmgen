@@ -361,6 +361,7 @@ Manifest support-accounting contract identity metadata now rebuilds cleanly afte
 Manifest support-accounting contract entrypoints now rebuild cleanly after caller mutation.
 Manifest support-accounting public top-level presence keys now rebuild cleanly after caller mutation.
 Manifest support-accounting bucket presence keys now rebuild cleanly after caller mutation.
+Manifest support-accounting id-list presence keys now rebuild cleanly after caller mutation.
 
 ## Current Philosophy
 
