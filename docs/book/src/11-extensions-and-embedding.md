@@ -173,6 +173,7 @@ Statistics manifest metadata now rebuilds cleanly after caller mutation of summa
 Semantic scalar key lists now rebuild cleanly after caller mutation of an earlier manifest build.
 The grouped shell-only fallback surface map now rebuilds cleanly after caller mutation at the manifest boundary.
 The grouped shell-only fallback surface-family map now rebuilds cleanly after caller mutation at the manifest boundary.
+The embedded result-contract guidance list now rebuilds cleanly after caller mutation of an earlier manifest.
 
 ## Current Philosophy
 

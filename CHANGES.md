@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest HDLGenerator result guidance rebuilds cleanly
+- Added
+  [t/801-capability-manifest-hdl-result-guidance-defensive-copy-audit.t](t/801-capability-manifest-hdl-result-guidance-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_result`
+  `guidance` list rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side `HDLGenerator` result guidance list copy coverage.
 ### Manifest HDLGenerator result shell fallback family rebuilds cleanly
 - Added
   [t/800-capability-manifest-hdl-result-shell-fallback-family-defensive-copy-audit.t](t/800-capability-manifest-hdl-result-shell-fallback-family-defensive-copy-audit.t)

@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest HDLGenerator result guidance rebuilds cleanly
+- The manifest-embedded `embedding.hdl_generator_result` contract now has
+  focused defensive-copy coverage for its `guidance` list.
+- Mutating one built manifest must not pollute the next manifest's embedded
+  `HDLGenerator` result contract metadata.
 ## 2026-05-10: Manifest HDLGenerator result shell fallback family rebuilds cleanly
 - The manifest-embedded `embedding.hdl_generator_result` contract now has
   focused defensive-copy coverage for its shell-only fallback surface family map.
