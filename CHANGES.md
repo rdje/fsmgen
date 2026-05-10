@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest contract entrypoints rebuilds cleanly
+- Added
+  [t/906-capability-manifest-contract-entrypoints-defensive-copy-audit.t](t/906-capability-manifest-contract-entrypoints-defensive-copy-audit.t)
+  to prove `manifest_contract` entrypoint metadata rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest contract entrypoints coverage.
 ### Manifest contract identity rebuilds cleanly
 - Added
   [t/905-capability-manifest-contract-identity-defensive-copy-audit.t](t/905-capability-manifest-contract-identity-defensive-copy-audit.t)
