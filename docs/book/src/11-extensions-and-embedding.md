@@ -104,7 +104,8 @@ coverage. The statistics summary and optional-composition key lists are guarded
 the same way, including focused defensive-copy coverage.
 The scalar semantic-layer key lists for `intent_hir`, `lowered_rtl_ir`, and
 `structural_rtl_ir` now carry matching JSON coverage, including their grouped
-semantic and optional-composition family-map mirrors.
+semantic and optional-composition family-map mirrors, plus focused
+defensive-copy coverage.
 
 ## Current Philosophy
 
@@ -903,7 +904,8 @@ contract does not treat those top-level hashes as separately stabilized full
 trees beyond those shell boundaries.
 The parent result contract now JSON-audits those scalar semantic-layer key lists
 and their grouped family-map mirrors so serialized contract metadata stays in
-sync with the normalized semantic owners.
+sync with the normalized semantic owners. It also rebuilds those scalar key
+lists defensively for each contract build.
 Direct and composition generation both expose those semantic IR payloads twice:
 as convenient top-level result branches and as compatibility mirrors under
 `module_info`. Those locations should compare equal at return time, but callers

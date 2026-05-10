@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: HDLGenerator semantic keys rebuild cleanly
+- Added
+  [t/740-hdl-generator-result-contract-semantic-keys-defensive-copy-audit.t](t/740-hdl-generator-result-contract-semantic-keys-defensive-copy-audit.t)
+  to prove the bounded `HDLGenerator` result contract's `intent_hir`,
+  `lowered_rtl_ir`, and `structural_rtl_ir` scalar key lists rebuild cleanly
+  after caller mutation.
+- This keeps semantic-layer key-list discovery caller-owned without changing the
+  result contract API.
+- Focused validation passed:
+  `perl -Iperl -c t/740-hdl-generator-result-contract-semantic-keys-defensive-copy-audit.t && prove -l t/740-hdl-generator-result-contract-semantic-keys-defensive-copy-audit.t t/305-hdl-generator-result-contract.t t/438-hdl-generator-result-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: HDLGenerator statistics keys rebuild cleanly
 - Added
   [t/739-hdl-generator-result-contract-statistics-keys-defensive-copy-audit.t](t/739-hdl-generator-result-contract-statistics-keys-defensive-copy-audit.t)
