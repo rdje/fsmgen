@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest producer section contract identity rebuilds cleanly
+- Added
+  [t/920-capability-manifest-producer-section-contract-identity-defensive-copy-audit.t](t/920-capability-manifest-producer-section-contract-identity-defensive-copy-audit.t)
+  to prove the capability manifest's `producer.section_contract`
+  identity metadata rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  for the `R13` manifest-section contract progress entry.
 ### Manifest producer section contract guidance survives JSON
 - Added
   [t/919-capability-manifest-producer-section-contract-guidance-json-roundtrip-audit.t](t/919-capability-manifest-producer-section-contract-guidance-json-roundtrip-audit.t)

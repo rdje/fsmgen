@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest producer section contract identity rebuilds cleanly
+- Added
+  [t/920-capability-manifest-producer-section-contract-identity-defensive-copy-audit.t](t/920-capability-manifest-producer-section-contract-identity-defensive-copy-audit.t)
+  to prove the capability manifest's `producer.section_contract`
+  identity metadata rebuilds cleanly after caller mutation.
+- This keeps the manifest section aligned with its direct `FSM::Support::ProducerContract` owner.
+- Focused validation passed:
+  `perl -Iperl -c t/920-capability-manifest-producer-section-contract-identity-defensive-copy-audit.t && prove -l t/920-capability-manifest-producer-section-contract-identity-defensive-copy-audit.t t/319-producer-contract.t t/449-producer-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest producer section contract guidance survives JSON
 - Added
   [t/919-capability-manifest-producer-section-contract-guidance-json-roundtrip-audit.t](t/919-capability-manifest-producer-section-contract-guidance-json-roundtrip-audit.t)
