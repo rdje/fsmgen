@@ -1,5 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest producer section contract identity survives JSON
+- The manifest `producer.section_contract` now has focused JSON round-trip coverage for its identity metadata.
+- This keeps public manifest consumers anchored to explicit section contracts.
 ## 2026-05-10: Manifest contract guidance rebuilds cleanly
 - `manifest_contract` now has focused defensive-copy coverage for its guidance list.
 - This keeps manifest consumers on explicit contract metadata rather than sample
