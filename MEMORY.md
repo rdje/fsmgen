@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: CLI capability manifest uses canonical owner encoding
+- Added
+  [t/1002-capability-manifest-cli-canonical-encoding-audit.t](t/1002-capability-manifest-cli-canonical-encoding-audit.t)
+  to prove `--capability-manifest` stdout matches the canonical, ASCII, pretty
+  JSON encoding of `build_capability_manifest()`.
+- This pins the CLI's public JSON formatting to the same deterministic encoding
+  contract embedders can reproduce from the owner builder.
+- Focused validation passed:
+  `perl -Iperl -c t/1002-capability-manifest-cli-canonical-encoding-audit.t && prove -l t/1002-capability-manifest-cli-canonical-encoding-audit.t t/1001-capability-manifest-cli-spelling-byte-parity-audit.t t/999-capability-manifest-cli-full-surface-owner-parity-audit.t && mdbook build docs/book`.
 ## 2026-05-10: CLI capability manifest spellings emit identical bytes
 - Added
   [t/1001-capability-manifest-cli-spelling-byte-parity-audit.t](t/1001-capability-manifest-cli-spelling-byte-parity-audit.t)

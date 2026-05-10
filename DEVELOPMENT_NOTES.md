@@ -1,5 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: CLI capability manifest uses canonical owner encoding
+- The `--capability-manifest` stdout now has a byte-level audit against `JSON::PP->new->ascii->canonical->pretty->encode(build_capability_manifest())`.
+- This ties deterministic CLI formatting to the owner builder and makes output drift visible even when decoded JSON would still compare equal.
 ## 2026-05-10: CLI capability manifest spellings emit identical bytes
 - The primary and alias capability-manifest CLI spellings now have byte-for-byte stdout parity coverage.
 - This is intentionally stricter than decoded JSON equality, preserving deterministic public CLI output for downstream embedding tools that cache or compare manifest payloads.

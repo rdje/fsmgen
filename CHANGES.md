@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### CLI capability manifest uses canonical owner encoding
+- Added
+  [t/1002-capability-manifest-cli-canonical-encoding-audit.t](t/1002-capability-manifest-cli-canonical-encoding-audit.t)
+  to prove `--capability-manifest` stdout matches the canonical pretty JSON
+  encoding of `build_capability_manifest()`.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md),
+  [LIVE_ACHIEVEMENT_STATUS.md](LIVE_ACHIEVEMENT_STATUS.md), and
+  [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  for the `R13` progress entry.
 ### CLI capability manifest spellings emit identical bytes
 - Added
   [t/1001-capability-manifest-cli-spelling-byte-parity-audit.t](t/1001-capability-manifest-cli-spelling-byte-parity-audit.t)
