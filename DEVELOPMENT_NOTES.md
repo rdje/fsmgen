@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator raw_ast shell surfaces stay caller-owned
+- The bounded `HDLGenerator` result contract now has focused defensive-copy
+  coverage for `raw_ast_summary_surfaces` and `raw_ast_fallback_surface_map`.
+- Mutating one built contract's `raw_ast` shell surface metadata must not pollute
+  the next build.
 ## 2026-05-10: HDLGenerator fsm_module shell surfaces stay caller-owned
 - The bounded `HDLGenerator` result contract now has focused defensive-copy
   coverage for `fsm_module_summary_surfaces` and
