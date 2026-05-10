@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest documentation contract path contracts rebuilds cleanly
+- Added
+  [t/973-capability-manifest-documentation-contract-path-contracts-defensive-copy-audit.t](t/973-capability-manifest-documentation-contract-path-contracts-defensive-copy-audit.t)
+  to prove the capability manifest's `documentation.section_contract`
+  path contract maps rebuilds cleanly after caller mutation.
+- This keeps the manifest section aligned with its direct `FSM::Support::DocumentationContract` owner.
+- Focused validation passed:
+  `perl -Iperl -c t/973-capability-manifest-documentation-contract-path-contracts-defensive-copy-audit.t && prove -l t/973-capability-manifest-documentation-contract-path-contracts-defensive-copy-audit.t t/318-documentation-contract.t t/448-documentation-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest documentation contract public path keys rebuilds cleanly
 - Added
   [t/972-capability-manifest-documentation-contract-public-path-keys-defensive-copy-audit.t](t/972-capability-manifest-documentation-contract-public-path-keys-defensive-copy-audit.t)
