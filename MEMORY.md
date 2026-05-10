@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest typed extensions after generate hook survives JSON
+- Added
+  [t/861-capability-manifest-typed-extensions-after-generate-hook-json-roundtrip-audit.t](t/861-capability-manifest-typed-extensions-after-generate-hook-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.typed_extensions`
+  after_generate_result hook metadata survives JSON round trip.
+- This keeps the public typed-extension embedding contract aligned with its direct
+  `FSM::Support::ExtensionContract` owner without changing the manifest API.
+- Focused validation passed:
+  `perl -Iperl -c t/861-capability-manifest-typed-extensions-after-generate-hook-json-roundtrip-audit.t && prove -l t/861-capability-manifest-typed-extensions-after-generate-hook-json-roundtrip-audit.t t/306-extension-contract.t t/435-typed-extension-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest typed extensions after parse hook survives JSON
 - Added
   [t/860-capability-manifest-typed-extensions-after-parse-hook-json-roundtrip-audit.t](t/860-capability-manifest-typed-extensions-after-parse-hook-json-roundtrip-audit.t)
