@@ -308,6 +308,7 @@ Manifest diagnostics section nested maps now rebuild cleanly after caller mutati
 Manifest diagnostics stable-code metadata now rebuilds cleanly after caller mutation.
 Manifest diagnostics section flags and guidance now rebuild cleanly after caller mutation.
 Manifest semantic-exports contract identity metadata now survives JSON round trip.
+Manifest semantic-exports contract entrypoints now survive JSON round trip.
 
 ## Current Philosophy
 

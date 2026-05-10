@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest semantic exports contract entrypoints survives JSON
+- Added
+  [t/936-capability-manifest-semantic-exports-contract-entrypoints-json-roundtrip-audit.t](t/936-capability-manifest-semantic-exports-contract-entrypoints-json-roundtrip-audit.t)
+  to prove the capability manifest's `semantic_exports.section_contract`
+  entrypoint metadata survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  for the `R13` manifest-section contract progress entry.
 ### Manifest semantic exports contract identity survives JSON
 - Added
   [t/935-capability-manifest-semantic-exports-contract-identity-json-roundtrip-audit.t](t/935-capability-manifest-semantic-exports-contract-identity-json-roundtrip-audit.t)
