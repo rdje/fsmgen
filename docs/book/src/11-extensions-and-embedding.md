@@ -155,6 +155,7 @@ The `composition_spec` shell summary and fallback metadata is now manifest JSON-
 The `composition_plan` shell summary and fallback metadata is now manifest JSON-audited with its owner, shell flag, and raw-value class.
 The `composition_report` shell metadata now completes the per-branch manifest JSON pass, including the sanitized fragment path and raw-hash JSON-safety flag.
 The embedded result-contract guidance list is now JSON-audited through the manifest so consumer-facing caveats remain visible there.
+The manifest mirror now preserves the result contract `tested_by` provenance list exactly through JSON round trip.
 
 ## Current Philosophy
 
