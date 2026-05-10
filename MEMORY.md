@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest contract flags survives JSON
+- Added
+  [t/903-capability-manifest-contract-flags-json-roundtrip-audit.t](t/903-capability-manifest-contract-flags-json-roundtrip-audit.t)
+  to prove `manifest_contract` manifest safety flags survives JSON round trip.
+- This keeps the outer capability manifest shell aligned with its direct
+  `FSM::Support::CapabilityManifestContract` owner.
+- Focused validation passed:
+  `perl -Iperl -c t/903-capability-manifest-contract-flags-json-roundtrip-audit.t && prove -l t/903-capability-manifest-contract-flags-json-roundtrip-audit.t t/316-capability-manifest-contract.t t/479-capability-manifest-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest contract tooling section keys survives JSON
 - Added
   [t/902-capability-manifest-contract-tooling-section-keys-json-roundtrip-audit.t](t/902-capability-manifest-contract-tooling-section-keys-json-roundtrip-audit.t)
