@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest semantic exports contract flags guidance rebuilds cleanly
+- Added
+  [t/944-capability-manifest-semantic-exports-contract-flags-guidance-defensive-copy-audit.t](t/944-capability-manifest-semantic-exports-contract-flags-guidance-defensive-copy-audit.t)
+  to prove the capability manifest's `semantic_exports.section_contract`
+  advertisement flags and guidance rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  for the `R13` manifest-section contract progress entry.
 ### Manifest semantic exports contract nested maps rebuilds cleanly
 - Added
   [t/943-capability-manifest-semantic-exports-contract-nested-maps-defensive-copy-audit.t](t/943-capability-manifest-semantic-exports-contract-nested-maps-defensive-copy-audit.t)
