@@ -221,6 +221,7 @@ The capability manifest now mirrors `embedding.section_contract` identity metada
 Manifest embedding-section top-level and nested contract key lists now survive JSON round trip.
 Manifest embedding-section nested contract source map now survives JSON round trip.
 Manifest embedding-section nested presence key map now survives JSON round trip.
+Manifest embedding-section flags and guidance now survive JSON round trip.
 
 ## Current Philosophy
 
