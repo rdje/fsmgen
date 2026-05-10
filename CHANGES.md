@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest HDLGenerator facade constructor options survive JSON
+- Added
+  [t/817-capability-manifest-hdl-facade-constructor-options-json-roundtrip-audit.t](t/817-capability-manifest-hdl-facade-constructor-options-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_facade`
+  constructor option families survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side `HDLGenerator` facade facade constructor options coverage.
 ### Manifest HDLGenerator facade public keys survive JSON
 - Added
   [t/816-capability-manifest-hdl-facade-public-keys-json-roundtrip-audit.t](t/816-capability-manifest-hdl-facade-public-keys-json-roundtrip-audit.t)

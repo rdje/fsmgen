@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest HDLGenerator facade constructor options survive JSON
+- The manifest-embedded `embedding.hdl_generator_facade` contract now has
+  focused JSON round-trip coverage for its constructor option families.
+- This keeps public embedding consumers aligned with the direct facade contract
+  advertised for `FSM::Pipeline::HDLGenerator`.
 ## 2026-05-10: Manifest HDLGenerator facade public keys survive JSON
 - The manifest-embedded `embedding.hdl_generator_facade` contract now has
   focused JSON round-trip coverage for its public key and method lists.
