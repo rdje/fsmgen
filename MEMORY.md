@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest support accounting contract public keys rebuilds cleanly
+- Added
+  [t/987-capability-manifest-support-accounting-contract-public-keys-defensive-copy-audit.t](t/987-capability-manifest-support-accounting-contract-public-keys-defensive-copy-audit.t)
+  to prove the capability manifest's `support_accounting.section_contract`
+  public top-level presence keys rebuilds cleanly after caller mutation.
+- This keeps support-accounting manifest metadata aligned with `FSM::Support::SupportAccountingContract`.
+- Focused validation passed:
+  `perl -Iperl -c t/987-capability-manifest-support-accounting-contract-public-keys-defensive-copy-audit.t && prove -l t/987-capability-manifest-support-accounting-contract-public-keys-defensive-copy-audit.t t/314-support-accounting-contract.t t/450-support-accounting-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest support accounting contract entrypoints rebuilds cleanly
 - Added
   [t/986-capability-manifest-support-accounting-contract-entrypoints-defensive-copy-audit.t](t/986-capability-manifest-support-accounting-contract-entrypoints-defensive-copy-audit.t)
