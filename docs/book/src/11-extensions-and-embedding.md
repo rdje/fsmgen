@@ -172,6 +172,7 @@ Module-info manifest metadata now rebuilds cleanly after caller mutation of iden
 Statistics manifest metadata now rebuilds cleanly after caller mutation of summary, optional-composition, and stable subsurface lists.
 Semantic scalar key lists now rebuild cleanly after caller mutation of an earlier manifest build.
 The grouped shell-only fallback surface map now rebuilds cleanly after caller mutation at the manifest boundary.
+The grouped shell-only fallback surface-family map now rebuilds cleanly after caller mutation at the manifest boundary.
 
 ## Current Philosophy
 
