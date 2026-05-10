@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest producer section contract presence map survives JSON
+- Added
+  [t/918-capability-manifest-producer-section-contract-presence-map-json-roundtrip-audit.t](t/918-capability-manifest-producer-section-contract-presence-map-json-roundtrip-audit.t)
+  to prove the capability manifest's `producer.section_contract`
+  presence key family map survives JSON round trip.
+- This keeps the manifest section aligned with its direct `FSM::Support::ProducerContract` owner.
+- Focused validation passed:
+  `perl -Iperl -c t/918-capability-manifest-producer-section-contract-presence-map-json-roundtrip-audit.t && prove -l t/918-capability-manifest-producer-section-contract-presence-map-json-roundtrip-audit.t t/319-producer-contract.t t/449-producer-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest producer section contract public keys survives JSON
 - Added
   [t/917-capability-manifest-producer-section-contract-public-keys-json-roundtrip-audit.t](t/917-capability-manifest-producer-section-contract-public-keys-json-roundtrip-audit.t)
