@@ -1,5 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest language surface contract entrypoints survives JSON
+- The manifest `language_surface.surface_contract` now has focused JSON round-trip coverage for its entrypoint metadata.
+- This keeps public manifest consumers anchored to explicit section contracts.
 ## 2026-05-10: Manifest language surface contract identity survives JSON
 - The manifest `language_surface.surface_contract` now has focused JSON round-trip coverage for its identity metadata.
 - This keeps public manifest consumers anchored to explicit section contracts.

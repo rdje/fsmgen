@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest language surface contract entrypoints survives JSON
+- Added
+  [t/956-capability-manifest-language-surface-contract-entrypoints-json-roundtrip-audit.t](t/956-capability-manifest-language-surface-contract-entrypoints-json-roundtrip-audit.t)
+  to prove the capability manifest's `language_surface.surface_contract`
+  entrypoint metadata survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  for the `R13` manifest-section contract progress entry.
 ### Manifest language surface contract identity survives JSON
 - Added
   [t/955-capability-manifest-language-surface-contract-identity-json-roundtrip-audit.t](t/955-capability-manifest-language-surface-contract-identity-json-roundtrip-audit.t)
