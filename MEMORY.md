@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest debug runtime helper lists rebuild cleanly
+- Added
+  [t/833-capability-manifest-debug-runtime-helper-lists-defensive-copy-audit.t](t/833-capability-manifest-debug-runtime-helper-lists-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.debug_runtime`
+  helper and state key lists rebuilds cleanly after caller mutation.
+- This mirrors the direct debug runtime contract through the manifest branch
+  without changing the manifest API.
+- Focused validation passed:
+  `perl -Iperl -c t/833-capability-manifest-debug-runtime-helper-lists-defensive-copy-audit.t && prove -l t/833-capability-manifest-debug-runtime-helper-lists-defensive-copy-audit.t t/374-debug-runtime-contract.t t/440-debug-runtime-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest debug runtime public keys rebuild cleanly
 - Added
   [t/832-capability-manifest-debug-runtime-public-keys-defensive-copy-audit.t](t/832-capability-manifest-debug-runtime-public-keys-defensive-copy-audit.t)

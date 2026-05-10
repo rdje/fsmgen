@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest debug runtime helper lists rebuild cleanly
+- The manifest-embedded `embedding.debug_runtime` contract now has focused defensive-copy
+  coverage for its helper and state key lists.
+- This keeps public embedding consumers aligned with the direct debug runtime contract.
 ## 2026-05-10: Manifest debug runtime public keys rebuild cleanly
 - The manifest-embedded `embedding.debug_runtime` contract now has focused defensive-copy
   coverage for its public key and family metadata.
