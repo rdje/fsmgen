@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest documentation contract path contracts survives JSON
+- Added
+  [t/968-capability-manifest-documentation-contract-path-contracts-json-roundtrip-audit.t](t/968-capability-manifest-documentation-contract-path-contracts-json-roundtrip-audit.t)
+  to prove the capability manifest's `documentation.section_contract`
+  path contract maps survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  for the `R13` manifest-section contract progress entry.
 ### Manifest documentation contract public path keys survives JSON
 - Added
   [t/967-capability-manifest-documentation-contract-public-path-keys-json-roundtrip-audit.t](t/967-capability-manifest-documentation-contract-public-path-keys-json-roundtrip-audit.t)

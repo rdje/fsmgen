@@ -340,6 +340,7 @@ Manifest language-surface nested map and guidance now rebuild cleanly after call
 Manifest documentation contract identity metadata now survives JSON round trip.
 Manifest documentation contract entrypoints now survive JSON round trip.
 Manifest documentation public and path-list keys now survive JSON round trip.
+Manifest documentation path contract maps now survive JSON round trip.
 
 ## Current Philosophy
 
