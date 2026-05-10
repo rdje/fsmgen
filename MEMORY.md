@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest debug runtime identity survives JSON
+- Added
+  [t/827-capability-manifest-debug-runtime-identity-json-roundtrip-audit.t](t/827-capability-manifest-debug-runtime-identity-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.debug_runtime`
+  identity metadata survives JSON round trip.
+- This mirrors the direct debug runtime contract through the manifest branch without
+  changing the manifest API.
+- Focused validation passed:
+  `perl -Iperl -c t/827-capability-manifest-debug-runtime-identity-json-roundtrip-audit.t && prove -l t/827-capability-manifest-debug-runtime-identity-json-roundtrip-audit.t t/374-debug-runtime-contract.t t/440-debug-runtime-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest HDLGenerator facade linked contracts rebuild cleanly
 - Added
   [t/826-capability-manifest-hdl-facade-linked-contracts-defensive-copy-audit.t](t/826-capability-manifest-hdl-facade-linked-contracts-defensive-copy-audit.t)

@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest debug runtime identity survives JSON
+- Added
+  [t/827-capability-manifest-debug-runtime-identity-json-roundtrip-audit.t](t/827-capability-manifest-debug-runtime-identity-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.debug_runtime`
+  identity metadata survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side debug runtime identity coverage.
 ### Manifest HDLGenerator facade linked contracts rebuild cleanly
 - Added
   [t/826-capability-manifest-hdl-facade-linked-contracts-defensive-copy-audit.t](t/826-capability-manifest-hdl-facade-linked-contracts-defensive-copy-audit.t)

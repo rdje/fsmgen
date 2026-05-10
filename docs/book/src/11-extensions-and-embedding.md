@@ -199,6 +199,7 @@ Manifest facade constructor option families now rebuild cleanly after caller mut
 Manifest facade constructor shape metadata now rebuilds cleanly after caller mutation, including option policy strings and numeric debug range.
 Manifest facade generation receiver and argument boundary metadata now rebuilds cleanly after caller mutation.
 Manifest facade linked contract sources, public booleans, and guidance now rebuild cleanly after caller mutation.
+The capability manifest now mirrors `embedding.debug_runtime` identity metadata through JSON round trip.
 
 ## Current Philosophy
 
