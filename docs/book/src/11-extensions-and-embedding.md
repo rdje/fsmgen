@@ -89,7 +89,9 @@ The shell-only fallback surface map is also JSON-audited so raw compatibility
 branches keep pointing at their advertised structured replacements, and the
 narrower fallback-family map is guarded the same way. The result contract's
 source-info identity and summary key lists are also JSON-audited, along with the
-full-hash stability flag and package-import copy-policy note.
+full-hash stability flag and package-import copy-policy note. The module-info
+identity, summary, and optional-composition key lists now carry matching JSON
+coverage, including the decoded family-map mirror for optional composition.
 
 ## Current Philosophy
 
@@ -813,6 +815,9 @@ The nested `module_info` object now also has its own explicit owner through
 which is the contract to follow for `module_name`,
 `source_root_kind`, the direct-root scalar summary keys, and the
 composition-only scalar summary keys.
+The parent result contract now JSON-audits those module-info identity, summary,
+and optional-composition key lists, including the grouped optional-composition
+family map mirror.
 Reusable `HDLGenerator` facade objects return fresh `module_info` containers per
 generation, so caller mutation of one result's module summary does not leak into
 a later result produced by the same facade object.
