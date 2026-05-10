@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest typed extensions full surface survives JSON
+- Added
+  [t/864-capability-manifest-typed-extensions-full-surface-json-roundtrip-audit.t](t/864-capability-manifest-typed-extensions-full-surface-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.typed_extensions`
+  full embedded typed-extension contract survives JSON round trip.
+- This keeps the public typed-extension embedding contract aligned with its direct
+  `FSM::Support::ExtensionContract` owner without changing the manifest API.
+- Focused validation passed:
+  `perl -Iperl -c t/864-capability-manifest-typed-extensions-full-surface-json-roundtrip-audit.t && prove -l t/864-capability-manifest-typed-extensions-full-surface-json-roundtrip-audit.t t/306-extension-contract.t t/435-typed-extension-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest typed extensions guidance survives JSON
 - Added
   [t/863-capability-manifest-typed-extensions-guidance-json-roundtrip-audit.t](t/863-capability-manifest-typed-extensions-guidance-json-roundtrip-audit.t)

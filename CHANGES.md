@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest typed extensions full surface survives JSON
+- Added
+  [t/864-capability-manifest-typed-extensions-full-surface-json-roundtrip-audit.t](t/864-capability-manifest-typed-extensions-full-surface-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.typed_extensions`
+  full embedded typed-extension contract survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side typed extensions full surface coverage.
 ### Manifest typed extensions guidance survives JSON
 - Added
   [t/863-capability-manifest-typed-extensions-guidance-json-roundtrip-audit.t](t/863-capability-manifest-typed-extensions-guidance-json-roundtrip-audit.t)
