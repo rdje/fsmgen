@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Check failure diagnostic contract full surface survives JSON
+- Added
+  [t/1011-check-failure-diagnostic-contract-full-surface-json-roundtrip-audit.t](t/1011-check-failure-diagnostic-contract-full-surface-json-roundtrip-audit.t)
+  to prove the full shared failure `diagnostic` contract owner survives JSON
+  encode/decode unchanged.
+- The audit complements the existing defensive-copy guard for
+  `FSM::Support::CheckFailureDiagnosticContract` and keeps the reusable nested
+  diagnostic object stable for both public check JSON and normalized semantic
+  JSON.
+- Focused validation passed with the direct check-failure contract test, the
+  defensive-copy boundary audit, the normalized semantic full-surface JSON
+  audit, the check diagnostics full-surface JSON audit, and the new audit.
 ### Check diagnostics contract full surface rebuilds cleanly
 - Added
   [t/1010-check-diagnostics-contract-full-surface-defensive-copy-audit.t](t/1010-check-diagnostics-contract-full-surface-defensive-copy-audit.t)

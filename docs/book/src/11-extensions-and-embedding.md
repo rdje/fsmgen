@@ -382,6 +382,7 @@ The full serializable plan/report contract now rebuilds cleanly after caller mut
 The full normalized semantic report contract now survives JSON round trip unchanged.
 The full normalized semantic report contract now rebuilds cleanly after caller mutation.
 The full check diagnostics contract now survives JSON round trip unchanged.
+The full shared check failure diagnostic contract now survives JSON round trip unchanged.
 
 ## Current Philosophy
 
@@ -1333,6 +1334,9 @@ embedders can discover those bounded failure-diagnostic key families from one
 place instead of collecting the individual field-family lists separately.
 Failed public normalized semantic JSON reports now explicitly reuse that same
 bounded nested failure-diagnostic contract too.
+The shared failure-diagnostic contract owner is also full-surface JSON-round-trip
+audited, so both public report families stay tied to the same serialized nested
+`diagnostic` contract shape.
 Successful public normalized semantic JSON reports now also have one bounded
 nested-object contract for the success payload itself:
 [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](perl/FSM/Support/NormalizedSemanticPayloadContract.pm)
