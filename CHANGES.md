@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest diagnostics section contract key families rebuilds cleanly
+- Added
+  [t/931-capability-manifest-diagnostics-section-contract-key-families-defensive-copy-audit.t](t/931-capability-manifest-diagnostics-section-contract-key-families-defensive-copy-audit.t)
+  to prove the capability manifest's `diagnostics.section_contract`
+  public scalar list and nested key families rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  for the `R13` manifest-section contract progress entry.
 ### Manifest diagnostics section contract identity rebuilds cleanly
 - Added
   [t/930-capability-manifest-diagnostics-section-contract-identity-defensive-copy-audit.t](t/930-capability-manifest-diagnostics-section-contract-identity-defensive-copy-audit.t)
