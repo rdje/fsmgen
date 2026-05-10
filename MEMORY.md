@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest typed extensions after generate hook rebuilds cleanly
+- Added
+  [t/871-capability-manifest-typed-extensions-after-generate-hook-defensive-copy-audit.t](t/871-capability-manifest-typed-extensions-after-generate-hook-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.typed_extensions`
+  after_generate_result hook metadata rebuilds cleanly after caller mutation.
+- This keeps the public typed-extension embedding contract aligned with its direct
+  `FSM::Support::ExtensionContract` owner without changing the manifest API.
+- Focused validation passed:
+  `perl -Iperl -c t/871-capability-manifest-typed-extensions-after-generate-hook-defensive-copy-audit.t && prove -l t/871-capability-manifest-typed-extensions-after-generate-hook-defensive-copy-audit.t t/306-extension-contract.t t/435-typed-extension-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest typed extensions after parse hook rebuilds cleanly
 - Added
   [t/870-capability-manifest-typed-extensions-after-parse-hook-defensive-copy-audit.t](t/870-capability-manifest-typed-extensions-after-parse-hook-defensive-copy-audit.t)
