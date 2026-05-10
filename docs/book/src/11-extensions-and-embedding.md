@@ -153,6 +153,7 @@ The `raw_ast` shell summary and fallback metadata now has the same manifest JSON
 The `resolved_package_imports` shell summary and fallback metadata now survives manifest JSON round trip with its owner and raw-value class.
 The `composition_spec` shell summary and fallback metadata is now manifest JSON-audited together with its owner, shell flag, and raw-value class.
 The `composition_plan` shell summary and fallback metadata is now manifest JSON-audited with its owner, shell flag, and raw-value class.
+The `composition_report` shell metadata now completes the per-branch manifest JSON pass, including the sanitized fragment path and raw-hash JSON-safety flag.
 
 ## Current Philosophy
 
