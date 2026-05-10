@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest support accounting contract entrypoints survives JSON
+- Added
+  [t/976-capability-manifest-support-accounting-contract-entrypoints-json-roundtrip-audit.t](t/976-capability-manifest-support-accounting-contract-entrypoints-json-roundtrip-audit.t)
+  to prove the capability manifest's `support_accounting.section_contract`
+  entrypoint metadata survives JSON round trip.
+- This keeps support-accounting manifest metadata aligned with `FSM::Support::SupportAccountingContract`.
+- Focused validation passed:
+  `perl -Iperl -c t/976-capability-manifest-support-accounting-contract-entrypoints-json-roundtrip-audit.t && prove -l t/976-capability-manifest-support-accounting-contract-entrypoints-json-roundtrip-audit.t t/314-support-accounting-contract.t t/450-support-accounting-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest support accounting contract identity survives JSON
 - Added
   [t/975-capability-manifest-support-accounting-contract-identity-json-roundtrip-audit.t](t/975-capability-manifest-support-accounting-contract-identity-json-roundtrip-audit.t)

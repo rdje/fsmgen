@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest support accounting contract entrypoints survives JSON
+- Added
+  [t/976-capability-manifest-support-accounting-contract-entrypoints-json-roundtrip-audit.t](t/976-capability-manifest-support-accounting-contract-entrypoints-json-roundtrip-audit.t)
+  to prove the capability manifest's `support_accounting.section_contract`
+  entrypoint metadata survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md) for the `R13` progress entry.
 ### Manifest support accounting contract identity survives JSON
 - Added
   [t/975-capability-manifest-support-accounting-contract-identity-json-roundtrip-audit.t](t/975-capability-manifest-support-accounting-contract-identity-json-roundtrip-audit.t)
