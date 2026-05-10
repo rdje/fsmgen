@@ -304,6 +304,7 @@ Manifest diagnostics stable-code metadata now survives JSON round trip.
 Manifest diagnostics section flags and guidance now survive JSON round trip.
 Manifest diagnostics section contract identity metadata now rebuilds cleanly after caller mutation.
 Manifest diagnostics section key families now rebuild cleanly after caller mutation.
+Manifest diagnostics section nested maps now rebuild cleanly after caller mutation.
 
 ## Current Philosophy
 
