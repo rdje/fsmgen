@@ -207,6 +207,7 @@ Manifest debug-runtime identity metadata now rebuilds cleanly after caller mutat
 Manifest debug-runtime public key lists and grouped family map now rebuild cleanly after caller mutation.
 Manifest debug-runtime helper and snapshot-state key lists now rebuild cleanly after caller mutation.
 Manifest debug-runtime flags, named verbosity values, numeric range, and guidance now rebuild cleanly after caller mutation.
+The capability manifest now mirrors `embedding.composition_report` identity metadata through JSON round trip.
 
 ## Current Philosophy
 
