@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest composition report map families survive JSON
+- Added
+  [t/837-capability-manifest-composition-report-map-families-json-roundtrip-audit.t](t/837-capability-manifest-composition-report-map-families-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.composition_report`
+  map and ordered key families survives JSON round trip.
+- This mirrors the direct composition-report contract through the manifest branch
+  without changing the manifest API.
+- Focused validation passed:
+  `perl -Iperl -c t/837-capability-manifest-composition-report-map-families-json-roundtrip-audit.t && prove -l t/837-capability-manifest-composition-report-map-families-json-roundtrip-audit.t t/307-composition-report-contract.t t/441-composition-report-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest composition report key families survive JSON
 - Added
   [t/836-capability-manifest-composition-report-key-families-json-roundtrip-audit.t](t/836-capability-manifest-composition-report-key-families-json-roundtrip-audit.t)
