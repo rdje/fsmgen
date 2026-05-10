@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest HDLGenerator result export surface survives JSON
+- Added
+  [t/789-capability-manifest-hdl-result-export-surface-json-roundtrip-audit.t](t/789-capability-manifest-hdl-result-export-surface-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_result`
+  contract keeps its JSON-safe export surface pointer after JSON round trip.
+- This mirrors the parent `HDLGenerator` result JSON-safe export surface guard through
+  the manifest branch without changing the manifest API.
+- Focused validation passed:
+  `perl -Iperl -c t/789-capability-manifest-hdl-result-export-surface-json-roundtrip-audit.t && prove -l t/789-capability-manifest-hdl-result-export-surface-json-roundtrip-audit.t t/305-hdl-generator-result-contract.t t/763-capability-manifest-hdl-result-identity-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest HDLGenerator result semantic stability flags survive JSON
 - Added
   [t/788-capability-manifest-hdl-result-semantic-stability-flags-json-roundtrip-audit.t](t/788-capability-manifest-hdl-result-semantic-stability-flags-json-roundtrip-audit.t)
