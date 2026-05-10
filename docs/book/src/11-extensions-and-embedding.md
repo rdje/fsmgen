@@ -145,6 +145,7 @@ Source-info identity, summary, stable subsurface, and package-import copy-policy
 Module-info identity, summary, optional-composition, and stable subsurface metadata now has the same manifest JSON guard.
 Statistics summary, optional-composition, and stable subsurface metadata is now JSON-audited through the manifest mirror.
 The scalar semantic key lists for intent HIR, lowered RTL IR, and structural RTL IR now survive manifest JSON round trip.
+The grouped shell-only fallback surface map is now manifest JSON-audited, including the composition-report sanitized fragment path.
 
 ## Current Philosophy
 
