@@ -232,6 +232,7 @@ Manifest typed-extension tested_by and entrypoint metadata now survives JSON rou
 Manifest typed-extension object/loader shape metadata now survives JSON round trip.
 Manifest typed-extension context shape metadata now survives JSON round trip.
 Manifest typed-extension public key and grouped name families now survive JSON round trip.
+Manifest typed-extension `after_parse_source` hook metadata now survives JSON round trip.
 
 ## Current Philosophy
 

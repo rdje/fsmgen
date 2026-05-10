@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest typed extensions after parse hook survives JSON
+- Added
+  [t/860-capability-manifest-typed-extensions-after-parse-hook-json-roundtrip-audit.t](t/860-capability-manifest-typed-extensions-after-parse-hook-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.typed_extensions`
+  after_parse_source hook metadata survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side typed extensions after parse hook coverage.
 ### Manifest typed extensions public families survives JSON
 - Added
   [t/859-capability-manifest-typed-extensions-public-families-json-roundtrip-audit.t](t/859-capability-manifest-typed-extensions-public-families-json-roundtrip-audit.t)
