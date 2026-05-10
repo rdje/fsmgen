@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### HDLGenerator statistics keys rebuild cleanly
+- Added
+  [t/739-hdl-generator-result-contract-statistics-keys-defensive-copy-audit.t](t/739-hdl-generator-result-contract-statistics-keys-defensive-copy-audit.t)
+  to prove the bounded `HDLGenerator` result contract's statistics summary and
+  optional-composition key lists rebuild cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions result-contract statistics key copy coverage.
 ### HDLGenerator module-info keys rebuild cleanly
 - Added
   [t/738-hdl-generator-result-contract-module-info-keys-defensive-copy-audit.t](t/738-hdl-generator-result-contract-module-info-keys-defensive-copy-audit.t)

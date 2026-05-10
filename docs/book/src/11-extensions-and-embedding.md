@@ -101,7 +101,7 @@ identity, summary, and
 optional-composition key lists now carry matching JSON coverage, including the
 decoded family-map mirror for optional composition, plus focused defensive-copy
 coverage. The statistics summary and optional-composition key lists are guarded
-the same way.
+the same way, including focused defensive-copy coverage.
 The scalar semantic-layer key lists for `intent_hir`, `lowered_rtl_ir`, and
 `structural_rtl_ir` now carry matching JSON coverage, including their grouped
 semantic and optional-composition family-map mirrors.
@@ -878,7 +878,8 @@ which is the contract to follow for the direct-root scalar summary keys and
 the composition-only scalar summary keys.
 The parent result contract now JSON-audits those statistics summary and
 optional-composition key lists, including the grouped optional-composition
-family map mirror.
+family map mirror. It also rebuilds those scalar key lists defensively for each
+contract build.
 Reusable `HDLGenerator` facade objects return fresh `statistics` containers per
 generation, so caller mutation of one result's scalar statistics or nested raw
 backend maps does not leak into a later result produced by the same facade
