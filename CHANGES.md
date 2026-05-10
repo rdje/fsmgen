@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest typed extensions context shapes rebuilds cleanly
+- Added
+  [t/868-capability-manifest-typed-extensions-context-shapes-defensive-copy-audit.t](t/868-capability-manifest-typed-extensions-context-shapes-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.typed_extensions`
+  context constructor and accessor shapes rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side typed extensions context shapes coverage.
 ### Manifest typed extensions object loader shapes rebuilds cleanly
 - Added
   [t/867-capability-manifest-typed-extensions-object-loader-shapes-defensive-copy-audit.t](t/867-capability-manifest-typed-extensions-object-loader-shapes-defensive-copy-audit.t)

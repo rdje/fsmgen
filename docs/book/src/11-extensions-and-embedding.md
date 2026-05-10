@@ -240,6 +240,7 @@ Manifest typed-extension core nested surfaces now survive JSON round trip togeth
 Manifest typed-extension identity metadata now rebuilds cleanly after caller mutation.
 Manifest typed-extension tested_by and entrypoint metadata now rebuilds cleanly after caller mutation.
 Manifest typed-extension object/loader shape metadata now rebuilds cleanly after caller mutation.
+Manifest typed-extension context shape metadata now rebuilds cleanly after caller mutation.
 
 ## Current Philosophy
 
