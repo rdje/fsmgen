@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Check diagnostics contract full surface survives JSON
+- Added
+  [t/1009-check-diagnostics-contract-full-surface-json-roundtrip-audit.t](t/1009-check-diagnostics-contract-full-surface-json-roundtrip-audit.t)
+  to prove the complete `build_check_diagnostics_contract()` result survives
+  JSON encode/decode unchanged.
+- This extends full-surface `R13` auditing to the bounded check-only JSON
+  diagnostics contract.
+- Focused validation passed:
+  `perl -Iperl -c t/1009-check-diagnostics-contract-full-surface-json-roundtrip-audit.t && prove -I perl t/1009-check-diagnostics-contract-full-surface-json-roundtrip-audit.t t/312-check-diagnostics-contract.t t/299-check-json-diagnostics.t t/301-check-json-supported-corpus.t && mdbook build docs/book`.
+- Recovery validation also attempted the full local gate with
+  `./bin/ci-regression`; it is currently blocked outside this slice by
+  pre-existing failures in
+  [t/268-lte-dif-pmaster-consolidated-intermediate-regression.t](t/268-lte-dif-pmaster-consolidated-intermediate-regression.t),
+  [t/308-systemverilog-external-validation.t](t/308-systemverilog-external-validation.t),
+  and [t/370-capability-manifest-section-discovery-audit.t](t/370-capability-manifest-section-discovery-audit.t).
 ## 2026-05-10: Normalized semantic report contract full surface rebuilds cleanly
 - Added
   [t/1008-normalized-semantic-report-contract-full-surface-defensive-copy-audit.t](t/1008-normalized-semantic-report-contract-full-surface-defensive-copy-audit.t)

@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Check diagnostics contract full surface survives JSON
+- Added
+  [t/1009-check-diagnostics-contract-full-surface-json-roundtrip-audit.t](t/1009-check-diagnostics-contract-full-surface-json-roundtrip-audit.t)
+  to prove the full check diagnostics contract owner survives JSON
+  encode/decode unchanged.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md),
+  [LIVE_ACHIEVEMENT_STATUS.md](LIVE_ACHIEVEMENT_STATUS.md), and
+  [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  for the `R13` progress entry.
+- Focused validation passed with the recovered test, the direct diagnostics
+  contract test, the check-JSON diagnostics tests, and `mdbook build docs/book`;
+  the full `./bin/ci-regression` gate remains blocked outside this slice by
+  existing failures in `t/268`, `t/308`, and `t/370`.
 ### Normalized semantic report contract full surface rebuilds cleanly
 - Added
   [t/1008-normalized-semantic-report-contract-full-surface-defensive-copy-audit.t](t/1008-normalized-semantic-report-contract-full-surface-defensive-copy-audit.t)

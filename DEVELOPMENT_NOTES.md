@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Check diagnostics contract full surface survives JSON
+- The check diagnostics contract now has a full-surface JSON round-trip audit.
+- This catches JSON-safety or owner-assembly drift across the bounded check-only diagnostics report boundary beyond the existing direct contract tests.
+- Recovery validation should use `prove -I perl` for the related diagnostics
+  tests in this checkout; the broader local gate currently has unrelated
+  failures in the lte_dif_pmaster consolidated-intermediate regression,
+  external SystemVerilog validation, and capability-manifest section discovery
+  audit.
 ## 2026-05-10: Normalized semantic report contract full surface rebuilds cleanly
 - The normalized semantic report contract now has a full-surface defensive-copy audit.
 - The test recursively mutates one built contract and compares the next owner build with a fresh expected result, guarding semantic report metadata against shared mutable state.
