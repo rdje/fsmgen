@@ -206,6 +206,7 @@ Manifest debug-runtime flags, named verbosity values, numeric range, and guidanc
 Manifest debug-runtime identity metadata now rebuilds cleanly after caller mutation.
 Manifest debug-runtime public key lists and grouped family map now rebuild cleanly after caller mutation.
 Manifest debug-runtime helper and snapshot-state key lists now rebuild cleanly after caller mutation.
+Manifest debug-runtime flags, named verbosity values, numeric range, and guidance now rebuild cleanly after caller mutation.
 
 ## Current Philosophy
 

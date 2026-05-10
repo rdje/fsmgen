@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest debug runtime flags rebuild cleanly
+- Added
+  [t/834-capability-manifest-debug-runtime-flags-defensive-copy-audit.t](t/834-capability-manifest-debug-runtime-flags-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.debug_runtime`
+  flags, ranges, and guidance rebuilds cleanly after caller mutation.
+- This mirrors the direct debug runtime contract through the manifest branch
+  without changing the manifest API.
+- Focused validation passed:
+  `perl -Iperl -c t/834-capability-manifest-debug-runtime-flags-defensive-copy-audit.t && prove -l t/834-capability-manifest-debug-runtime-flags-defensive-copy-audit.t t/374-debug-runtime-contract.t t/440-debug-runtime-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest debug runtime helper lists rebuild cleanly
 - Added
   [t/833-capability-manifest-debug-runtime-helper-lists-defensive-copy-audit.t](t/833-capability-manifest-debug-runtime-helper-lists-defensive-copy-audit.t)
