@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator JSON-safety flags stay audited
+- The bounded `HDLGenerator` result contract now has focused JSON round-trip
+  coverage for advertisement flags, whole-result stability flags, and the
+  sanitized JSON export surface pointer.
+- Decoded metadata must keep bounded slices advertised while keeping the full
+  result explicitly non-stable and non-JSON-safe.
 ## 2026-05-10: HDLGenerator live/unsanitized keys stay caller-owned
 - The bounded `HDLGenerator` result contract now has focused defensive-copy
   coverage for `live_or_unsanitized_keys`.

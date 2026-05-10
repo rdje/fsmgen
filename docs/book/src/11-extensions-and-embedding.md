@@ -116,7 +116,9 @@ retaining the core audit references, and is JSON-audited so serialized metadata
 keeps those references visible. The `live_or_unsanitized_keys` list is
 JSON-audited too, so serialized metadata keeps the raw/live compatibility branch
 list visible without marking `hdl_code` unsanitized, and it is defensively
-rebuilt for each contract build.
+rebuilt for each contract build. The result contract's JSON-safety and
+advertisement flags are JSON-audited too, including the pointer to
+`semantic_exports.normalized_semantic_json` as the sanitized export surface.
 
 ## Current Philosophy
 
