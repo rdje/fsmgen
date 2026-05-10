@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest HDLGenerator facade public keys survive JSON
+- Added
+  [t/816-capability-manifest-hdl-facade-public-keys-json-roundtrip-audit.t](t/816-capability-manifest-hdl-facade-public-keys-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_facade`
+  public key and method lists survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side `HDLGenerator` facade facade public keys coverage.
 ### Manifest HDLGenerator facade identity survives JSON
 - Added
   [t/815-capability-manifest-hdl-facade-identity-json-roundtrip-audit.t](t/815-capability-manifest-hdl-facade-identity-json-roundtrip-audit.t)
