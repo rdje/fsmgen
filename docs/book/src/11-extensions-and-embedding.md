@@ -339,6 +339,7 @@ Manifest language-surface family key lists now rebuild cleanly after caller muta
 Manifest language-surface nested map and guidance now rebuild cleanly after caller mutation.
 Manifest documentation contract identity metadata now survives JSON round trip.
 Manifest documentation contract entrypoints now survive JSON round trip.
+Manifest documentation public and path-list keys now survive JSON round trip.
 
 ## Current Philosophy
 

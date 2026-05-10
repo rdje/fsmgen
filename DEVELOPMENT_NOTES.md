@@ -1,5 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest documentation contract public path keys survives JSON
+- The manifest `documentation.section_contract` now has focused JSON round-trip coverage for its public and path-list keys.
+- This keeps public manifest consumers anchored to explicit section contracts.
 ## 2026-05-10: Manifest documentation contract entrypoints survives JSON
 - The manifest `documentation.section_contract` now has focused JSON round-trip coverage for its entrypoint metadata.
 - This keeps public manifest consumers anchored to explicit section contracts.
