@@ -262,6 +262,7 @@ Manifest serializable-plan/report public key list now rebuilds cleanly after cal
 Manifest serializable-plan/report JSON-safe surface key lists now rebuild cleanly after caller mutation.
 Manifest serializable-plan/report surface registry now rebuilds cleanly after caller mutation.
 Manifest serializable-plan/report nested contract source map now rebuilds cleanly after caller mutation.
+Manifest serializable-plan/report raw-shell replacement keys now rebuild cleanly after caller mutation.
 
 ## Current Philosophy
 

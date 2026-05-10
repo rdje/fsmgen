@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest serializable plan report raw shell keys rebuilds cleanly
+- The manifest-embedded `embedding.serializable_plan_reports` contract now has
+  focused defensive-copy coverage for its raw shell replacement keys.
+- This keeps embedders on the bounded JSON-safe report API rather than raw
+  in-process compatibility shells.
 ## 2026-05-10: Manifest serializable plan report nested source map rebuilds cleanly
 - The manifest-embedded `embedding.serializable_plan_reports` contract now has
   focused defensive-copy coverage for its nested contract source map.
