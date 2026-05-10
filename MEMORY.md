@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest diagnostics section contract identity rebuilds cleanly
+- Added
+  [t/930-capability-manifest-diagnostics-section-contract-identity-defensive-copy-audit.t](t/930-capability-manifest-diagnostics-section-contract-identity-defensive-copy-audit.t)
+  to prove the capability manifest's `diagnostics.section_contract`
+  identity metadata rebuilds cleanly after caller mutation.
+- This keeps the manifest section aligned with its direct `FSM::Support::DiagnosticsContract` owner.
+- Focused validation passed:
+  `perl -Iperl -c t/930-capability-manifest-diagnostics-section-contract-identity-defensive-copy-audit.t && prove -l t/930-capability-manifest-diagnostics-section-contract-identity-defensive-copy-audit.t t/320-diagnostics-contract.t t/444-diagnostics-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest diagnostics section contract flags guidance survives JSON
 - Added
   [t/929-capability-manifest-diagnostics-section-contract-flags-guidance-json-roundtrip-audit.t](t/929-capability-manifest-diagnostics-section-contract-flags-guidance-json-roundtrip-audit.t)
