@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: HDLGenerator owner map rebuilds cleanly
+- Added
+  [t/742-hdl-generator-result-contract-owner-map-defensive-copy-audit.t](t/742-hdl-generator-result-contract-owner-map-defensive-copy-audit.t)
+  to prove the bounded `HDLGenerator` result contract's
+  `nested_contract_source_map` rebuilds cleanly after caller mutation while
+  preserving all advertised branch owners.
+- This keeps result-branch owner discovery caller-owned without changing the
+  result contract API.
+- Focused validation passed:
+  `perl -Iperl -c t/742-hdl-generator-result-contract-owner-map-defensive-copy-audit.t && prove -l t/742-hdl-generator-result-contract-owner-map-defensive-copy-audit.t t/305-hdl-generator-result-contract.t t/438-hdl-generator-result-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: HDLGenerator top-level keys rebuild cleanly
 - Added
   [t/741-hdl-generator-result-contract-top-level-keys-defensive-copy-audit.t](t/741-hdl-generator-result-contract-top-level-keys-defensive-copy-audit.t)

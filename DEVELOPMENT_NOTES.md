@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator owner map stays caller-owned
+- The bounded `HDLGenerator` result contract now has focused defensive-copy
+  coverage for `nested_contract_source_map`.
+- Mutating one built contract's owner map must not pollute the next build, while
+  fresh maps must still advertise every result branch owner.
 ## 2026-05-10: HDLGenerator top-level keys stay caller-owned
 - The bounded `HDLGenerator` result contract now has focused defensive-copy
   coverage for public, direct-root, and composition-root top-level key-family

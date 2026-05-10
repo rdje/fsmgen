@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### HDLGenerator owner map rebuilds cleanly
+- Added
+  [t/742-hdl-generator-result-contract-owner-map-defensive-copy-audit.t](t/742-hdl-generator-result-contract-owner-map-defensive-copy-audit.t)
+  to prove the bounded `HDLGenerator` result contract's
+  `nested_contract_source_map` rebuilds cleanly after caller mutation while
+  preserving all advertised branch owners.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions result-contract owner-map copy coverage.
 ### HDLGenerator top-level keys rebuild cleanly
 - Added
   [t/741-hdl-generator-result-contract-top-level-keys-defensive-copy-audit.t](t/741-hdl-generator-result-contract-top-level-keys-defensive-copy-audit.t)

@@ -81,7 +81,8 @@ version, bounded status, owner, entrypoint, and primary test reference. Its
 top-level public, direct-root, and composition-root key families are now guarded
 after JSON round trip and through focused defensive-copy coverage, along with
 the nested contract owner map that ties result branches back to their scalar
-owner fields. The stable subsurface map is also guarded after JSON round trip so
+owner fields and is defensively rebuilt for each contract build. The stable
+subsurface map is also guarded after JSON round trip so
 grouped nested-surface discovery stays
 aligned with the scalar fields it summarizes, and it has focused defensive-copy
 coverage so caller mutation of one grouped map does not pollute the next build.
