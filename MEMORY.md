@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest diagnostics section contract stable code metadata rebuilds cleanly
+- Added
+  [t/933-capability-manifest-diagnostics-section-contract-stable-code-metadata-defensive-copy-audit.t](t/933-capability-manifest-diagnostics-section-contract-stable-code-metadata-defensive-copy-audit.t)
+  to prove the capability manifest's `diagnostics.section_contract`
+  stable-code metadata rebuilds cleanly after caller mutation.
+- This keeps the manifest section aligned with its direct `FSM::Support::DiagnosticsContract` owner.
+- Focused validation passed:
+  `perl -Iperl -c t/933-capability-manifest-diagnostics-section-contract-stable-code-metadata-defensive-copy-audit.t && prove -l t/933-capability-manifest-diagnostics-section-contract-stable-code-metadata-defensive-copy-audit.t t/320-diagnostics-contract.t t/444-diagnostics-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest diagnostics section contract nested maps rebuilds cleanly
 - Added
   [t/932-capability-manifest-diagnostics-section-contract-nested-maps-defensive-copy-audit.t](t/932-capability-manifest-diagnostics-section-contract-nested-maps-defensive-copy-audit.t)
