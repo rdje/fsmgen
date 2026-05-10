@@ -350,6 +350,7 @@ Manifest documentation guidance now rebuilds cleanly after caller mutation.
 Manifest support-accounting contract identity metadata now survives JSON round trip.
 Manifest support-accounting contract entrypoints now survive JSON round trip.
 Manifest support-accounting public top-level presence keys now survive JSON round trip.
+Manifest support-accounting bucket presence keys now survive JSON round trip.
 
 ## Current Philosophy
 
