@@ -167,6 +167,7 @@ The manifest-embedded result nested-contract owner map is now checked as caller-
 The embedded result stable subsurface map and per-branch stable subsurface lists now have manifest-side defensive-copy coverage.
 The optional composition key-family map and its scalar key lists now rebuild cleanly after caller mutation of an earlier manifest.
 The semantic-layer presence map and scalar semantic key lists now have manifest-side defensive-copy coverage.
+Source-info manifest metadata now rebuilds cleanly after caller mutation of identity, summary, and stable subsurface lists.
 
 ## Current Philosophy
 
