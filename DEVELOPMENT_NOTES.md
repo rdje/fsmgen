@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator top-level keys stay caller-owned
+- The bounded `HDLGenerator` result contract now has focused defensive-copy
+  coverage for public, direct-root, and composition-root top-level key-family
+  lists.
+- Mutating one built contract's top-level key lists must not pollute the next
+  build, keeping the known-key helper aligned with fresh contract data.
 ## 2026-05-10: HDLGenerator semantic keys stay caller-owned
 - The bounded `HDLGenerator` result contract now has focused defensive-copy
   coverage for scalar `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir`

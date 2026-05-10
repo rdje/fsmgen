@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: HDLGenerator top-level keys rebuild cleanly
+- Added
+  [t/741-hdl-generator-result-contract-top-level-keys-defensive-copy-audit.t](t/741-hdl-generator-result-contract-top-level-keys-defensive-copy-audit.t)
+  to prove the bounded `HDLGenerator` result contract's public, direct-root, and
+  composition-root top-level key-family lists rebuild cleanly after caller
+  mutation.
+- This keeps top-level result shell discovery caller-owned while preserving the
+  known-key helper alignment.
+- Focused validation passed:
+  `perl -Iperl -c t/741-hdl-generator-result-contract-top-level-keys-defensive-copy-audit.t && prove -l t/741-hdl-generator-result-contract-top-level-keys-defensive-copy-audit.t t/305-hdl-generator-result-contract.t t/438-hdl-generator-result-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: HDLGenerator semantic keys rebuild cleanly
 - Added
   [t/740-hdl-generator-result-contract-semantic-keys-defensive-copy-audit.t](t/740-hdl-generator-result-contract-semantic-keys-defensive-copy-audit.t)
