@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest diagnostics section contract flags guidance survives JSON
+- Added
+  [t/929-capability-manifest-diagnostics-section-contract-flags-guidance-json-roundtrip-audit.t](t/929-capability-manifest-diagnostics-section-contract-flags-guidance-json-roundtrip-audit.t)
+  to prove the capability manifest's `diagnostics.section_contract`
+  advertisement flags and guidance survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  for the `R13` manifest-section contract progress entry.
 ### Manifest diagnostics section contract stable code metadata survives JSON
 - Added
   [t/928-capability-manifest-diagnostics-section-contract-stable-code-metadata-json-roundtrip-audit.t](t/928-capability-manifest-diagnostics-section-contract-stable-code-metadata-json-roundtrip-audit.t)

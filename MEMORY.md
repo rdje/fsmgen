@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest diagnostics section contract flags guidance survives JSON
+- Added
+  [t/929-capability-manifest-diagnostics-section-contract-flags-guidance-json-roundtrip-audit.t](t/929-capability-manifest-diagnostics-section-contract-flags-guidance-json-roundtrip-audit.t)
+  to prove the capability manifest's `diagnostics.section_contract`
+  advertisement flags and guidance survives JSON round trip.
+- This keeps the manifest section aligned with its direct `FSM::Support::DiagnosticsContract` owner.
+- Focused validation passed:
+  `perl -Iperl -c t/929-capability-manifest-diagnostics-section-contract-flags-guidance-json-roundtrip-audit.t && prove -l t/929-capability-manifest-diagnostics-section-contract-flags-guidance-json-roundtrip-audit.t t/320-diagnostics-contract.t t/444-diagnostics-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest diagnostics section contract stable code metadata survives JSON
 - Added
   [t/928-capability-manifest-diagnostics-section-contract-stable-code-metadata-json-roundtrip-audit.t](t/928-capability-manifest-diagnostics-section-contract-stable-code-metadata-json-roundtrip-audit.t)
