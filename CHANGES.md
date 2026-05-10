@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest support accounting contract catalog required keys rebuilds cleanly
+- Added
+  [t/990-capability-manifest-support-accounting-contract-catalog-required-keys-defensive-copy-audit.t](t/990-capability-manifest-support-accounting-contract-catalog-required-keys-defensive-copy-audit.t)
+  to prove the capability manifest's `support_accounting.section_contract`
+  catalog required keys rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md) for the `R13` progress entry.
 ### Manifest support accounting contract id list keys rebuilds cleanly
 - Added
   [t/989-capability-manifest-support-accounting-contract-id-list-keys-defensive-copy-audit.t](t/989-capability-manifest-support-accounting-contract-id-list-keys-defensive-copy-audit.t)
