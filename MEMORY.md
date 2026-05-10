@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: HDLGenerator composition_report shell surfaces survive JSON
+- Added
+  [t/756-hdl-generator-result-contract-composition-report-shell-surfaces-json-roundtrip-audit.t](t/756-hdl-generator-result-contract-composition-report-shell-surfaces-json-roundtrip-audit.t)
+  to prove the bounded `HDLGenerator` result contract's decoded
+  `composition_report_json_fragment_path` stays canonical, the grouped shell
+  fallback maps mirror it, and the raw report hash remains not JSON-safe after
+  JSON round trip.
+- This keeps composition-report shell fallback discovery portable in serialized
+  contract metadata without changing the result contract API.
+- Focused validation passed:
+  `perl -Iperl -c t/756-hdl-generator-result-contract-composition-report-shell-surfaces-json-roundtrip-audit.t && prove -l t/756-hdl-generator-result-contract-composition-report-shell-surfaces-json-roundtrip-audit.t t/305-hdl-generator-result-contract.t t/438-hdl-generator-result-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: HDLGenerator composition_plan shell surfaces survive JSON
 - Added
   [t/755-hdl-generator-result-contract-composition-plan-shell-surfaces-json-roundtrip-audit.t](t/755-hdl-generator-result-contract-composition-plan-shell-surfaces-json-roundtrip-audit.t)

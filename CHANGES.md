@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### HDLGenerator composition_report shell surfaces survive JSON
+- Added
+  [t/756-hdl-generator-result-contract-composition-report-shell-surfaces-json-roundtrip-audit.t](t/756-hdl-generator-result-contract-composition-report-shell-surfaces-json-roundtrip-audit.t)
+  to prove the bounded `HDLGenerator` result contract's decoded
+  `composition_report` JSON fragment fallback remains canonical and aligned with
+  grouped shell fallback maps.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions result-contract `composition_report` shell surface JSON coverage.
 ### HDLGenerator composition_plan shell surfaces survive JSON
 - Added
   [t/755-hdl-generator-result-contract-composition-plan-shell-surfaces-json-roundtrip-audit.t](t/755-hdl-generator-result-contract-composition-plan-shell-surfaces-json-roundtrip-audit.t)
