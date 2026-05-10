@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: HDLGenerator resolved packages shell surfaces rebuild cleanly
+- Added
+  [t/759-hdl-generator-result-contract-resolved-packages-shell-surfaces-defensive-copy-audit.t](t/759-hdl-generator-result-contract-resolved-packages-shell-surfaces-defensive-copy-audit.t)
+  to prove the bounded `HDLGenerator` result contract's
+  `resolved_package_imports_summary_surface` and
+  `resolved_package_imports_fallback_surface_map` rebuild cleanly after caller
+  mutation.
+- This keeps package-import shell fallback discovery caller-owned without
+  changing the result contract API.
+- Focused validation passed:
+  `perl -Iperl -c t/759-hdl-generator-result-contract-resolved-packages-shell-surfaces-defensive-copy-audit.t && prove -l t/759-hdl-generator-result-contract-resolved-packages-shell-surfaces-defensive-copy-audit.t t/305-hdl-generator-result-contract.t t/438-hdl-generator-result-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: HDLGenerator raw_ast shell surfaces rebuild cleanly
 - Added
   [t/758-hdl-generator-result-contract-raw-ast-shell-surfaces-defensive-copy-audit.t](t/758-hdl-generator-result-contract-raw-ast-shell-surfaces-defensive-copy-audit.t)
