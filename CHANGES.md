@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest documentation contract guidance rebuilds cleanly
+- Added
+  [t/974-capability-manifest-documentation-contract-guidance-defensive-copy-audit.t](t/974-capability-manifest-documentation-contract-guidance-defensive-copy-audit.t)
+  to prove the capability manifest's `documentation.section_contract`
+  guidance list rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  for the `R13` manifest-section contract progress entry.
 ### Manifest documentation contract path contracts rebuilds cleanly
 - Added
   [t/973-capability-manifest-documentation-contract-path-contracts-defensive-copy-audit.t](t/973-capability-manifest-documentation-contract-path-contracts-defensive-copy-audit.t)

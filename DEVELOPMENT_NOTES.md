@@ -1,5 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest documentation contract guidance rebuilds cleanly
+- The manifest `documentation.section_contract` now has focused defensive-copy coverage for its guidance list.
+- This keeps public manifest consumers anchored to explicit section contracts.
 ## 2026-05-10: Manifest documentation contract path contracts rebuilds cleanly
 - The manifest `documentation.section_contract` now has focused defensive-copy coverage for its path contract maps.
 - This keeps public manifest consumers anchored to explicit section contracts.
