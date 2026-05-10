@@ -260,6 +260,7 @@ Manifest serializable-plan/report flags and guidance now survive JSON round trip
 Manifest serializable-plan/report identity metadata now rebuilds cleanly after caller mutation.
 Manifest serializable-plan/report public key list now rebuilds cleanly after caller mutation.
 Manifest serializable-plan/report JSON-safe surface key lists now rebuild cleanly after caller mutation.
+Manifest serializable-plan/report surface registry now rebuilds cleanly after caller mutation.
 
 ## Current Philosophy
 

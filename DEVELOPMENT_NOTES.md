@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest serializable plan report surface registry rebuilds cleanly
+- The manifest-embedded `embedding.serializable_plan_reports` contract now has
+  focused defensive-copy coverage for its surface registry.
+- This keeps embedders on the bounded JSON-safe report API rather than raw
+  in-process compatibility shells.
 ## 2026-05-10: Manifest serializable plan report surface keys rebuilds cleanly
 - The manifest-embedded `embedding.serializable_plan_reports` contract now has
   focused defensive-copy coverage for its JSON-safe surface keys.
