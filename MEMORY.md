@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest language surface contract identity rebuilds cleanly
+- Added
+  [t/960-capability-manifest-language-surface-contract-identity-defensive-copy-audit.t](t/960-capability-manifest-language-surface-contract-identity-defensive-copy-audit.t)
+  to prove the capability manifest's `language_surface.surface_contract`
+  identity metadata rebuilds cleanly after caller mutation.
+- This keeps the manifest section aligned with its direct `FSM::Support::LanguageSurfaceContract` owner.
+- Focused validation passed:
+  `perl -Iperl -c t/960-capability-manifest-language-surface-contract-identity-defensive-copy-audit.t && prove -l t/960-capability-manifest-language-surface-contract-identity-defensive-copy-audit.t t/317-language-surface-contract.t t/446-language-surface-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest language surface contract nested map guidance survives JSON
 - Added
   [t/959-capability-manifest-language-surface-contract-nested-map-guidance-json-roundtrip-audit.t](t/959-capability-manifest-language-surface-contract-nested-map-guidance-json-roundtrip-audit.t)
