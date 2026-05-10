@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest HDLGenerator result JSON safety flags rebuild cleanly
+- Added
+  [t/804-capability-manifest-hdl-result-json-safety-flags-defensive-copy-audit.t](t/804-capability-manifest-hdl-result-json-safety-flags-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_result`
+  JSON-safety flags rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side `HDLGenerator` result JSON safety flags copy coverage.
 ### Manifest HDLGenerator result live unsanitized keys rebuild cleanly
 - Added
   [t/803-capability-manifest-hdl-result-live-unsanitized-defensive-copy-audit.t](t/803-capability-manifest-hdl-result-live-unsanitized-defensive-copy-audit.t)
