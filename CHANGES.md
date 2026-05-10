@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest serializable plan report public keys rebuilds cleanly
+- Added
+  [t/886-capability-manifest-serializable-plan-report-public-keys-defensive-copy-audit.t](t/886-capability-manifest-serializable-plan-report-public-keys-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.serializable_plan_reports`
+  public top-level key list rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side serializable plan report public keys coverage.
 ### Manifest serializable plan report identity rebuilds cleanly
 - Added
   [t/885-capability-manifest-serializable-plan-report-identity-defensive-copy-audit.t](t/885-capability-manifest-serializable-plan-report-identity-defensive-copy-audit.t)

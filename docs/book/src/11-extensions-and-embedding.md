@@ -258,6 +258,7 @@ Manifest serializable-plan/report child contracts now survive JSON round trip.
 Manifest serializable-plan/report public report key metadata now survives JSON round trip.
 Manifest serializable-plan/report flags and guidance now survive JSON round trip.
 Manifest serializable-plan/report identity metadata now rebuilds cleanly after caller mutation.
+Manifest serializable-plan/report public key list now rebuilds cleanly after caller mutation.
 
 ## Current Philosophy
 
