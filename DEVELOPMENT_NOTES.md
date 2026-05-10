@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest embedding section flags guidance rebuilds cleanly
+- The manifest-embedded `embedding.section_contract` contract now has focused defensive-copy
+  coverage for its flags and guidance.
+- This keeps public embedding consumers aligned with the direct embedding-section contract.
 ## 2026-05-10: Manifest embedding section nested presence map rebuilds cleanly
 - The manifest-embedded `embedding.section_contract` contract now has focused defensive-copy
   coverage for its nested presence key map.

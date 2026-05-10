@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest embedding section flags guidance rebuilds cleanly
+- Added
+  [t/854-capability-manifest-embedding-section-flags-guidance-defensive-copy-audit.t](t/854-capability-manifest-embedding-section-flags-guidance-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.section_contract`
+  flags and guidance rebuilds cleanly after caller mutation.
+- This mirrors the direct embedding-section contract through the manifest branch
+  without changing the manifest API.
+- Focused validation passed:
+  `perl -Iperl -c t/854-capability-manifest-embedding-section-flags-guidance-defensive-copy-audit.t && prove -l t/854-capability-manifest-embedding-section-flags-guidance-defensive-copy-audit.t t/321-embedding-contract.t t/480-embedding-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest embedding section nested presence map rebuilds cleanly
 - Added
   [t/853-capability-manifest-embedding-section-nested-presence-map-defensive-copy-audit.t](t/853-capability-manifest-embedding-section-nested-presence-map-defensive-copy-audit.t)

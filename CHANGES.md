@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest embedding section flags guidance rebuilds cleanly
+- Added
+  [t/854-capability-manifest-embedding-section-flags-guidance-defensive-copy-audit.t](t/854-capability-manifest-embedding-section-flags-guidance-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.section_contract`
+  flags and guidance rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side embedding section flags guidance coverage.
 ### Manifest embedding section nested presence map rebuilds cleanly
 - Added
   [t/853-capability-manifest-embedding-section-nested-presence-map-defensive-copy-audit.t](t/853-capability-manifest-embedding-section-nested-presence-map-defensive-copy-audit.t)
