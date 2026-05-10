@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest language surface contract identity survives JSON
+- Added
+  [t/955-capability-manifest-language-surface-contract-identity-json-roundtrip-audit.t](t/955-capability-manifest-language-surface-contract-identity-json-roundtrip-audit.t)
+  to prove the capability manifest's `language_surface.surface_contract`
+  identity metadata survives JSON round trip.
+- This keeps the manifest section aligned with its direct `FSM::Support::LanguageSurfaceContract` owner.
+- Focused validation passed:
+  `perl -Iperl -c t/955-capability-manifest-language-surface-contract-identity-json-roundtrip-audit.t && prove -l t/955-capability-manifest-language-surface-contract-identity-json-roundtrip-audit.t t/317-language-surface-contract.t t/446-language-surface-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest backend validation contract flags guidance rebuilds cleanly
 - Added
   [t/954-capability-manifest-backend-validation-contract-flags-guidance-defensive-copy-audit.t](t/954-capability-manifest-backend-validation-contract-flags-guidance-defensive-copy-audit.t)
