@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest support accounting contract presence map survives JSON
+- Added
+  [t/982-capability-manifest-support-accounting-contract-presence-map-json-roundtrip-audit.t](t/982-capability-manifest-support-accounting-contract-presence-map-json-roundtrip-audit.t)
+  to prove the capability manifest's `support_accounting.section_contract`
+  presence key family map survives JSON round trip.
+- This keeps support-accounting manifest metadata aligned with `FSM::Support::SupportAccountingContract`.
+- Focused validation passed:
+  `perl -Iperl -c t/982-capability-manifest-support-accounting-contract-presence-map-json-roundtrip-audit.t && prove -l t/982-capability-manifest-support-accounting-contract-presence-map-json-roundtrip-audit.t t/314-support-accounting-contract.t t/450-support-accounting-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest support accounting contract catalog optional keys survives JSON
 - Added
   [t/981-capability-manifest-support-accounting-contract-catalog-optional-keys-json-roundtrip-audit.t](t/981-capability-manifest-support-accounting-contract-catalog-optional-keys-json-roundtrip-audit.t)
