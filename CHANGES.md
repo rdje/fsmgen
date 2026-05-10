@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest debug runtime public keys rebuild cleanly
+- Added
+  [t/832-capability-manifest-debug-runtime-public-keys-defensive-copy-audit.t](t/832-capability-manifest-debug-runtime-public-keys-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.debug_runtime`
+  public key and family metadata rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side debug runtime public keys coverage.
 ### Manifest debug runtime identity rebuilds cleanly
 - Added
   [t/831-capability-manifest-debug-runtime-identity-defensive-copy-audit.t](t/831-capability-manifest-debug-runtime-identity-defensive-copy-audit.t)

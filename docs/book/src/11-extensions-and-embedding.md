@@ -204,6 +204,7 @@ Manifest debug-runtime public key lists and grouped family map now survive JSON 
 Manifest debug-runtime helper and snapshot-state key lists now survive JSON round trip.
 Manifest debug-runtime flags, named verbosity values, numeric range, and guidance now survive JSON round trip.
 Manifest debug-runtime identity metadata now rebuilds cleanly after caller mutation.
+Manifest debug-runtime public key lists and grouped family map now rebuild cleanly after caller mutation.
 
 ## Current Philosophy
 
