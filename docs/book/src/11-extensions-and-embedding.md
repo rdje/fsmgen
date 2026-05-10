@@ -319,6 +319,7 @@ Manifest semantic-exports nested maps now rebuild cleanly after caller mutation.
 Manifest semantic-exports flags and guidance now rebuild cleanly after caller mutation.
 Manifest backend-validation contract identity metadata now survives JSON round trip.
 Manifest backend-validation contract entrypoints now survive JSON round trip.
+Manifest backend-validation public and nested key lists now survive JSON round trip.
 
 ## Current Philosophy
 
