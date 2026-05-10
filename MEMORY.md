@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest semantic exports contract public nested keys rebuilds cleanly
+- Added
+  [t/942-capability-manifest-semantic-exports-contract-public-nested-keys-defensive-copy-audit.t](t/942-capability-manifest-semantic-exports-contract-public-nested-keys-defensive-copy-audit.t)
+  to prove the capability manifest's `semantic_exports.section_contract`
+  public and nested key lists rebuilds cleanly after caller mutation.
+- This keeps the manifest section aligned with its direct `FSM::Support::SemanticExportsContract` owner.
+- Focused validation passed:
+  `perl -Iperl -c t/942-capability-manifest-semantic-exports-contract-public-nested-keys-defensive-copy-audit.t && prove -l t/942-capability-manifest-semantic-exports-contract-public-nested-keys-defensive-copy-audit.t t/322-semantic-exports-contract.t t/447-semantic-exports-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest semantic exports contract entrypoints rebuilds cleanly
 - Added
   [t/941-capability-manifest-semantic-exports-contract-entrypoints-defensive-copy-audit.t](t/941-capability-manifest-semantic-exports-contract-entrypoints-defensive-copy-audit.t)
