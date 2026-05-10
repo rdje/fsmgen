@@ -317,6 +317,7 @@ Manifest semantic-exports contract entrypoints now rebuild cleanly after caller 
 Manifest semantic-exports public and nested key lists now rebuild cleanly after caller mutation.
 Manifest semantic-exports nested maps now rebuild cleanly after caller mutation.
 Manifest semantic-exports flags and guidance now rebuild cleanly after caller mutation.
+Manifest backend-validation contract identity metadata now survives JSON round trip.
 
 ## Current Philosophy
 

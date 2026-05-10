@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest backend validation contract identity survives JSON
+- Added
+  [t/945-capability-manifest-backend-validation-contract-identity-json-roundtrip-audit.t](t/945-capability-manifest-backend-validation-contract-identity-json-roundtrip-audit.t)
+  to prove the capability manifest's `backend_validation.section_contract`
+  identity metadata survives JSON round trip.
+- This keeps the manifest section aligned with its direct `FSM::Support::BackendValidationContract` owner.
+- Focused validation passed:
+  `perl -Iperl -c t/945-capability-manifest-backend-validation-contract-identity-json-roundtrip-audit.t && prove -l t/945-capability-manifest-backend-validation-contract-identity-json-roundtrip-audit.t t/323-backend-validation-contract.t t/445-backend-validation-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest semantic exports contract flags guidance rebuilds cleanly
 - Added
   [t/944-capability-manifest-semantic-exports-contract-flags-guidance-defensive-copy-audit.t](t/944-capability-manifest-semantic-exports-contract-flags-guidance-defensive-copy-audit.t)
