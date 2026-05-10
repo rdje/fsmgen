@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest HDLGenerator facade constructor options rebuild cleanly
+- Added
+  [t/823-capability-manifest-hdl-facade-constructor-options-defensive-copy-audit.t](t/823-capability-manifest-hdl-facade-constructor-options-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_facade`
+  constructor option families rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side `HDLGenerator` facade facade constructor options coverage.
 ### Manifest HDLGenerator facade public keys rebuild cleanly
 - Added
   [t/822-capability-manifest-hdl-facade-public-keys-defensive-copy-audit.t](t/822-capability-manifest-hdl-facade-public-keys-defensive-copy-audit.t)
