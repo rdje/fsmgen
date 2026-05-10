@@ -183,6 +183,7 @@ The `json_safe_export_surface` pointer now rebuilds cleanly after caller mutatio
 Shell-only branch flags and raw-value or fragment descriptors now rebuild cleanly after manifest caller mutation.
 The `fsm_module` shell summary and fallback surfaces now rebuild cleanly after manifest caller mutation.
 The `raw_ast` shell summary and fallback surfaces now rebuild cleanly after manifest caller mutation.
+The `resolved_package_imports` shell summary and fallback surfaces now rebuild cleanly after manifest caller mutation.
 
 ## Current Philosophy
 
