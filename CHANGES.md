@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest composition report flags survive JSON
+- Added
+  [t/838-capability-manifest-composition-report-flags-json-roundtrip-audit.t](t/838-capability-manifest-composition-report-flags-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.composition_report`
+  JSON-safety flags survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side composition report flags coverage.
 ### Manifest composition report map families survive JSON
 - Added
   [t/837-capability-manifest-composition-report-map-families-json-roundtrip-audit.t](t/837-capability-manifest-composition-report-map-families-json-roundtrip-audit.t)

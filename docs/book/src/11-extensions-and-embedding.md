@@ -210,6 +210,7 @@ Manifest debug-runtime flags, named verbosity values, numeric range, and guidanc
 The capability manifest now mirrors `embedding.composition_report` identity metadata through JSON round trip.
 Manifest composition-report public, summary, and collection key families now survive JSON round trip.
 Manifest composition-report count-map, example-map, ordered-list, and grouped presence families now survive JSON round trip.
+Manifest composition-report JSON-safety and sanitization flags now survive JSON round trip.
 
 ## Current Philosophy
 
