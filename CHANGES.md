@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest language surface contract entrypoints rebuilds cleanly
+- Added
+  [t/961-capability-manifest-language-surface-contract-entrypoints-defensive-copy-audit.t](t/961-capability-manifest-language-surface-contract-entrypoints-defensive-copy-audit.t)
+  to prove the capability manifest's `language_surface.surface_contract`
+  entrypoint metadata rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  for the `R13` manifest-section contract progress entry.
 ### Manifest language surface contract identity rebuilds cleanly
 - Added
   [t/960-capability-manifest-language-surface-contract-identity-defensive-copy-audit.t](t/960-capability-manifest-language-surface-contract-identity-defensive-copy-audit.t)

@@ -333,6 +333,7 @@ Manifest language-surface top-level and mode key lists now survive JSON round tr
 Manifest language-surface family key lists now survive JSON round trip.
 Manifest language-surface nested map and guidance now survive JSON round trip.
 Manifest language-surface contract identity metadata now rebuilds cleanly after caller mutation.
+Manifest language-surface contract entrypoints now rebuild cleanly after caller mutation.
 
 ## Current Philosophy
 

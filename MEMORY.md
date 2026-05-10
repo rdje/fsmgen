@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest language surface contract entrypoints rebuilds cleanly
+- Added
+  [t/961-capability-manifest-language-surface-contract-entrypoints-defensive-copy-audit.t](t/961-capability-manifest-language-surface-contract-entrypoints-defensive-copy-audit.t)
+  to prove the capability manifest's `language_surface.surface_contract`
+  entrypoint metadata rebuilds cleanly after caller mutation.
+- This keeps the manifest section aligned with its direct `FSM::Support::LanguageSurfaceContract` owner.
+- Focused validation passed:
+  `perl -Iperl -c t/961-capability-manifest-language-surface-contract-entrypoints-defensive-copy-audit.t && prove -l t/961-capability-manifest-language-surface-contract-entrypoints-defensive-copy-audit.t t/317-language-surface-contract.t t/446-language-surface-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest language surface contract identity rebuilds cleanly
 - Added
   [t/960-capability-manifest-language-surface-contract-identity-defensive-copy-audit.t](t/960-capability-manifest-language-surface-contract-identity-defensive-copy-audit.t)
