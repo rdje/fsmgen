@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest serializable plan report surface keys rebuilds cleanly
+- Added
+  [t/887-capability-manifest-serializable-plan-report-surface-keys-defensive-copy-audit.t](t/887-capability-manifest-serializable-plan-report-surface-keys-defensive-copy-audit.t)
+  to prove the capability manifest's embedded `embedding.serializable_plan_reports`
+  JSON-safe surface keys rebuilds cleanly after caller mutation.
+- This keeps the public serializable report embedding contract aligned with its
+  direct `FSM::Support::SerializablePlanReportContract` owner.
+- Focused validation passed:
+  `perl -Iperl -c t/887-capability-manifest-serializable-plan-report-surface-keys-defensive-copy-audit.t && prove -l t/887-capability-manifest-serializable-plan-report-surface-keys-defensive-copy-audit.t t/629-serializable-plan-report-contract.t t/645-serializable-plan-report-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest serializable plan report public keys rebuilds cleanly
 - Added
   [t/886-capability-manifest-serializable-plan-report-public-keys-defensive-copy-audit.t](t/886-capability-manifest-serializable-plan-report-public-keys-defensive-copy-audit.t)
