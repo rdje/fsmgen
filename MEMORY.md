@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest embedding section nested source map survives JSON
+- Added
+  [t/847-capability-manifest-embedding-section-nested-source-map-json-roundtrip-audit.t](t/847-capability-manifest-embedding-section-nested-source-map-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.section_contract`
+  nested contract source map survives JSON round trip.
+- This mirrors the direct embedding-section contract through the manifest branch
+  without changing the manifest API.
+- Focused validation passed:
+  `perl -Iperl -c t/847-capability-manifest-embedding-section-nested-source-map-json-roundtrip-audit.t && prove -l t/847-capability-manifest-embedding-section-nested-source-map-json-roundtrip-audit.t t/321-embedding-contract.t t/480-embedding-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest embedding section top level keys survives JSON
 - Added
   [t/846-capability-manifest-embedding-section-top-level-keys-json-roundtrip-audit.t](t/846-capability-manifest-embedding-section-top-level-keys-json-roundtrip-audit.t)
