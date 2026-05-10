@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest typed extensions identity survives JSON
+- The manifest-embedded `embedding.typed_extensions` contract now has focused JSON round-trip
+  coverage for its identity metadata.
+- This keeps embedders from relying on accidental manifest samples rather than the
+  bounded typed-extension contract owner.
 ## 2026-05-10: Manifest embedding section flags guidance rebuilds cleanly
 - The manifest-embedded `embedding.section_contract` contract now has focused defensive-copy
   coverage for its flags and guidance.

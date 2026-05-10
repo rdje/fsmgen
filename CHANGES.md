@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest typed extensions identity survives JSON
+- Added
+  [t/855-capability-manifest-typed-extensions-identity-json-roundtrip-audit.t](t/855-capability-manifest-typed-extensions-identity-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.typed_extensions`
+  identity metadata survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side typed extensions identity coverage.
 ### Manifest embedding section flags guidance rebuilds cleanly
 - Added
   [t/854-capability-manifest-embedding-section-flags-guidance-defensive-copy-audit.t](t/854-capability-manifest-embedding-section-flags-guidance-defensive-copy-audit.t)
