@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: CLI capability manifest matches owner full surface
+- Added
+  [t/999-capability-manifest-cli-full-surface-owner-parity-audit.t](t/999-capability-manifest-cli-full-surface-owner-parity-audit.t)
+  to prove `bin/fsmgen --capability-manifest` emits the same full manifest as
+  `build_capability_manifest()`.
+- This closes the full-surface manifest audit at the CLI boundary, where public
+  embedding tools consume the JSON payload.
+- Focused validation passed:
+  `perl -Iperl -c t/999-capability-manifest-cli-full-surface-owner-parity-audit.t && prove -l t/999-capability-manifest-cli-full-surface-owner-parity-audit.t t/997-capability-manifest-full-surface-json-roundtrip-audit.t t/998-capability-manifest-full-surface-defensive-copy-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Capability manifest full surface rebuilds cleanly
 - Added
   [t/998-capability-manifest-full-surface-defensive-copy-audit.t](t/998-capability-manifest-full-surface-defensive-copy-audit.t)

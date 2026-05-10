@@ -371,6 +371,7 @@ Manifest support-accounting guidance now rebuilds cleanly after caller mutation.
 Manifest support-accounting full embedded contract now rebuilds to the direct owner contract after caller mutation.
 The full public capability manifest now survives JSON round trip unchanged.
 The full public capability manifest now rebuilds cleanly after caller mutation.
+The CLI `--capability-manifest` output now matches the full owner-built manifest.
 
 ## Current Philosophy
 

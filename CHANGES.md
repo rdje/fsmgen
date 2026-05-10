@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### CLI capability manifest matches owner full surface
+- Added
+  [t/999-capability-manifest-cli-full-surface-owner-parity-audit.t](t/999-capability-manifest-cli-full-surface-owner-parity-audit.t)
+  to prove `bin/fsmgen --capability-manifest` emits the same full manifest as
+  `build_capability_manifest()`.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md),
+  [LIVE_ACHIEVEMENT_STATUS.md](LIVE_ACHIEVEMENT_STATUS.md), and
+  [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  for the `R13` progress entry.
 ### Capability manifest full surface rebuilds cleanly
 - Added
   [t/998-capability-manifest-full-surface-defensive-copy-audit.t](t/998-capability-manifest-full-surface-defensive-copy-audit.t)

@@ -1,5 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: CLI capability manifest matches owner full surface
+- The `--capability-manifest` CLI path now has a full-surface parity audit against `build_capability_manifest()`.
+- This keeps the public JSON contract tied to the single manifest owner rather than allowing the CLI boundary to drift from the embedding API contract.
 ## 2026-05-10: Capability manifest full surface rebuilds cleanly
 - The public capability manifest now has a full-surface defensive-copy audit.
 - The test mutates a full manifest result recursively and then confirms a fresh build is unchanged, guarding the embedding API against shared mutable manifest state.
