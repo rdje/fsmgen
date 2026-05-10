@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest diagnostics section contract flags guidance rebuilds cleanly
+- Added
+  [t/934-capability-manifest-diagnostics-section-contract-flags-guidance-defensive-copy-audit.t](t/934-capability-manifest-diagnostics-section-contract-flags-guidance-defensive-copy-audit.t)
+  to prove the capability manifest's `diagnostics.section_contract`
+  advertisement flags and guidance rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  for the `R13` manifest-section contract progress entry.
 ### Manifest diagnostics section contract stable code metadata rebuilds cleanly
 - Added
   [t/933-capability-manifest-diagnostics-section-contract-stable-code-metadata-defensive-copy-audit.t](t/933-capability-manifest-diagnostics-section-contract-stable-code-metadata-defensive-copy-audit.t)
