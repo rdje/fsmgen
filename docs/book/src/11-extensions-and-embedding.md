@@ -156,6 +156,7 @@ The `composition_plan` shell summary and fallback metadata is now manifest JSON-
 The `composition_report` shell metadata now completes the per-branch manifest JSON pass, including the sanitized fragment path and raw-hash JSON-safety flag.
 The embedded result-contract guidance list is now JSON-audited through the manifest so consumer-facing caveats remain visible there.
 The manifest mirror now preserves the result contract `tested_by` provenance list exactly through JSON round trip.
+The `live_or_unsanitized_keys` list is now audited through manifest JSON, keeping raw compatibility branches clearly marked for embedders.
 
 ## Current Philosophy
 

@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest HDLGenerator result live unsanitized keys survive JSON
+- Added
+  [t/784-capability-manifest-hdl-result-live-unsanitized-json-roundtrip-audit.t](t/784-capability-manifest-hdl-result-live-unsanitized-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_result`
+  contract keeps its `live_or_unsanitized_keys` list after JSON round trip.
+- This mirrors the parent `HDLGenerator` result live-or-unsanitized keys guard through
+  the manifest branch without changing the manifest API.
+- Focused validation passed:
+  `perl -Iperl -c t/784-capability-manifest-hdl-result-live-unsanitized-json-roundtrip-audit.t && prove -l t/784-capability-manifest-hdl-result-live-unsanitized-json-roundtrip-audit.t t/305-hdl-generator-result-contract.t t/763-capability-manifest-hdl-result-identity-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest HDLGenerator result tested_by survives JSON
 - Added
   [t/783-capability-manifest-hdl-result-tested-by-json-roundtrip-audit.t](t/783-capability-manifest-hdl-result-tested-by-json-roundtrip-audit.t)
