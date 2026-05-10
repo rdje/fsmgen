@@ -175,6 +175,7 @@ The grouped shell-only fallback surface map now rebuilds cleanly after caller mu
 The grouped shell-only fallback surface-family map now rebuilds cleanly after caller mutation at the manifest boundary.
 The embedded result-contract guidance list now rebuilds cleanly after caller mutation of an earlier manifest.
 The embedded result-contract `tested_by` provenance list now has manifest-side defensive-copy coverage.
+The `live_or_unsanitized_keys` list now rebuilds cleanly after caller mutation at the manifest boundary.
 
 ## Current Philosophy
 
