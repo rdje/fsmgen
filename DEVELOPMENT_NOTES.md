@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest contract guidance rebuilds cleanly
+- `manifest_contract` now has focused defensive-copy coverage for its guidance list.
+- This keeps manifest consumers on explicit contract metadata rather than sample
+  payload shape alone.
 ## 2026-05-10: Manifest contract flags rebuilds cleanly
 - `manifest_contract` now has focused defensive-copy coverage for its manifest safety flags.
 - This keeps manifest consumers on explicit contract metadata rather than sample
