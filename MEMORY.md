@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest HDLGenerator result advertisement flags survive JSON
+- Added
+  [t/786-capability-manifest-hdl-result-advertisement-flags-json-roundtrip-audit.t](t/786-capability-manifest-hdl-result-advertisement-flags-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_result`
+  contract keeps its advertisement flags after JSON round trip.
+- This mirrors the parent `HDLGenerator` result advertisement flags guard through
+  the manifest branch without changing the manifest API.
+- Focused validation passed:
+  `perl -Iperl -c t/786-capability-manifest-hdl-result-advertisement-flags-json-roundtrip-audit.t && prove -l t/786-capability-manifest-hdl-result-advertisement-flags-json-roundtrip-audit.t t/305-hdl-generator-result-contract.t t/763-capability-manifest-hdl-result-identity-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest HDLGenerator result JSON safety flags survive JSON
 - Added
   [t/785-capability-manifest-hdl-result-json-safety-flags-json-roundtrip-audit.t](t/785-capability-manifest-hdl-result-json-safety-flags-json-roundtrip-audit.t)

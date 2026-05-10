@@ -158,6 +158,7 @@ The embedded result-contract guidance list is now JSON-audited through the manif
 The manifest mirror now preserves the result contract `tested_by` provenance list exactly through JSON round trip.
 The `live_or_unsanitized_keys` list is now audited through manifest JSON, keeping raw compatibility branches clearly marked for embedders.
 JSON-safety and full-hash stability flags now survive the manifest JSON mirror exactly, including the intentionally false full-result promises.
+The manifest mirror now also keeps the result-contract advertisement flags JSON-audited for identity, summary, statistics, and semantic-layer surfaces.
 
 ## Current Philosophy
 
