@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest semantic exports contract identity survives JSON
+- Added
+  [t/935-capability-manifest-semantic-exports-contract-identity-json-roundtrip-audit.t](t/935-capability-manifest-semantic-exports-contract-identity-json-roundtrip-audit.t)
+  to prove the capability manifest's `semantic_exports.section_contract`
+  identity metadata survives JSON round trip.
+- This keeps the manifest section aligned with its direct `FSM::Support::SemanticExportsContract` owner.
+- Focused validation passed:
+  `perl -Iperl -c t/935-capability-manifest-semantic-exports-contract-identity-json-roundtrip-audit.t && prove -l t/935-capability-manifest-semantic-exports-contract-identity-json-roundtrip-audit.t t/322-semantic-exports-contract.t t/447-semantic-exports-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest diagnostics section contract flags guidance rebuilds cleanly
 - Added
   [t/934-capability-manifest-diagnostics-section-contract-flags-guidance-defensive-copy-audit.t](t/934-capability-manifest-diagnostics-section-contract-flags-guidance-defensive-copy-audit.t)

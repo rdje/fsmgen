@@ -1,5 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest semantic exports contract identity survives JSON
+- The manifest `semantic_exports.section_contract` now has focused JSON round-trip coverage for its identity metadata.
+- This keeps public manifest consumers anchored to explicit section contracts.
 ## 2026-05-10: Manifest diagnostics section contract flags guidance rebuilds cleanly
 - The manifest `diagnostics.section_contract` now has focused defensive-copy coverage for its advertisement flags and guidance.
 - This keeps public manifest consumers anchored to explicit section contracts.
