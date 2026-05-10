@@ -1,5 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: CLI capability manifest spellings emit identical bytes
+- The primary and alias capability-manifest CLI spellings now have byte-for-byte stdout parity coverage.
+- This is intentionally stricter than decoded JSON equality, preserving deterministic public CLI output for downstream embedding tools that cache or compare manifest payloads.
 ## 2026-05-10: CLI capability manifest alias matches owner full surface
 - The `--emit-capability-manifest` alias now has the same full-surface parity audit as `--capability-manifest`.
 - Keeping both spellings under an owner-builder comparison prevents one public CLI path from drifting while the other remains stable.

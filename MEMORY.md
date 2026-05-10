@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: CLI capability manifest spellings emit identical bytes
+- Added
+  [t/1001-capability-manifest-cli-spelling-byte-parity-audit.t](t/1001-capability-manifest-cli-spelling-byte-parity-audit.t)
+  to prove `--capability-manifest` and `--emit-capability-manifest` emit
+  identical stdout bytes and no stderr.
+- This keeps the public manifest alias behavior stable for embedding tools that
+  compare, cache, or sign the CLI JSON payload.
+- Focused validation passed:
+  `perl -Iperl -c t/1001-capability-manifest-cli-spelling-byte-parity-audit.t && prove -l t/1001-capability-manifest-cli-spelling-byte-parity-audit.t t/999-capability-manifest-cli-full-surface-owner-parity-audit.t t/1000-capability-manifest-cli-alias-full-surface-owner-parity-audit.t && mdbook build docs/book`.
 ## 2026-05-10: CLI capability manifest alias matches owner full surface
 - Added
   [t/1000-capability-manifest-cli-alias-full-surface-owner-parity-audit.t](t/1000-capability-manifest-cli-alias-full-surface-owner-parity-audit.t)

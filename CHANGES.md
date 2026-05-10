@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### CLI capability manifest spellings emit identical bytes
+- Added
+  [t/1001-capability-manifest-cli-spelling-byte-parity-audit.t](t/1001-capability-manifest-cli-spelling-byte-parity-audit.t)
+  to prove `--capability-manifest` and `--emit-capability-manifest` emit
+  identical stdout bytes with no stderr.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md),
+  [LIVE_ACHIEVEMENT_STATUS.md](LIVE_ACHIEVEMENT_STATUS.md), and
+  [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  for the `R13` progress entry.
 ### CLI capability manifest alias matches owner full surface
 - Added
   [t/1000-capability-manifest-cli-alias-full-surface-owner-parity-audit.t](t/1000-capability-manifest-cli-alias-full-surface-owner-parity-audit.t)

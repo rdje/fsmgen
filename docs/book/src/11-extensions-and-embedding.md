@@ -373,6 +373,7 @@ The full public capability manifest now survives JSON round trip unchanged.
 The full public capability manifest now rebuilds cleanly after caller mutation.
 The CLI `--capability-manifest` output now matches the full owner-built manifest.
 The CLI `--emit-capability-manifest` alias now matches the full owner-built manifest.
+Both capability-manifest CLI spellings now emit identical JSON bytes.
 
 ## Current Philosophy
 
