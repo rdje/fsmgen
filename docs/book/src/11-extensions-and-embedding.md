@@ -85,8 +85,9 @@ is also guarded after JSON round trip so grouped nested-surface discovery stays
 aligned with the scalar fields it summarizes, and it has focused defensive-copy
 coverage so caller mutation of one grouped map does not pollute the next build.
 The optional composition key-family map is guarded the same way for
-composition-only discovery, and the semantic-layer presence family map now has
-the same JSON round-trip coverage.
+composition-only discovery, and it now has matching defensive-copy coverage so
+caller mutation of one grouped map does not pollute the next build. The
+semantic-layer presence family map now has the same JSON round-trip coverage.
 The shell-only fallback surface map is also JSON-audited so raw compatibility
 branches keep pointing at their advertised structured replacements, and the
 narrower fallback-family map is guarded the same way. The result contract's
@@ -778,6 +779,9 @@ embedders can discover the bounded composition-only key families from one
 place instead of collecting the separate `module_info`,
 `statistics`, `intent_hir`, and `lowered_rtl_ir` optional-composition lists
 individually.
+That grouped optional-composition map is defensively rebuilt by the contract and
+helper, so callers can annotate one returned copy without leaking changes into
+later builds.
 It now also publishes a grouped `semantic_layer_presence_key_family_map` so
 embedders can discover the bounded top-level semantic-layer key families for
 `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` from one place

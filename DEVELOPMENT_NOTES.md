@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator optional composition map stays caller-owned
+- The bounded `HDLGenerator` result contract now has focused defensive-copy
+  coverage for `optional_composition_key_family_map` on both the built contract
+  and helper.
+- Mutating one grouped optional-composition map must not pollute the next build,
+  so embedders can cache or annotate discovery metadata without hidden shared
+  containers.
 ## 2026-05-10: HDLGenerator stable subsurface map stays caller-owned
 - The bounded `HDLGenerator` result contract now has focused defensive-copy
   coverage for `stable_subsurface_map` on both the built contract and helper.
