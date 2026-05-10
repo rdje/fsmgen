@@ -353,6 +353,7 @@ Manifest support-accounting public top-level presence keys now survive JSON roun
 Manifest support-accounting bucket presence keys now survive JSON round trip.
 Manifest support-accounting id-list presence keys now survive JSON round trip.
 Manifest support-accounting catalog required keys now survive JSON round trip.
+Manifest support-accounting catalog optional keys now survive JSON round trip.
 
 ## Current Philosophy
 
