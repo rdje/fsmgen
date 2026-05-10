@@ -138,6 +138,7 @@ same schema, status, owner, entrypoint, and provenance shape. The manifest mirro
 also preserves the result contract's public, direct-root, and composition-root
 top-level key families through JSON round trip.
 Its nested-contract owner map is also JSON-audited at the manifest boundary, so embedders can discover each result branch owner without leaving the manifest.
+The manifest mirror keeps the grouped stable subsurface map JSON-audited too, including the source-info stable subsurface list.
 
 ## Current Philosophy
 
