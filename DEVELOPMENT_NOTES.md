@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator module-info keys stay caller-owned
+- The bounded `HDLGenerator` result contract now has focused defensive-copy
+  coverage for `module_info_identity_presence_keys`,
+  `module_info_summary_presence_keys`, and
+  `module_info_optional_composition_summary_keys`.
+- Mutating one built contract's module-info key lists must not pollute the next
+  build, keeping scalar key-list discovery caller-owned.
 ## 2026-05-10: HDLGenerator source-info keys stay caller-owned
 - The bounded `HDLGenerator` result contract now has focused defensive-copy
   coverage for `source_info_identity_presence_keys` and

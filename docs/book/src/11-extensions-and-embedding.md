@@ -99,8 +99,9 @@ package-import copy-policy note; they also have focused defensive-copy coverage
 so mutations to one built contract do not pollute later builds. The module-info
 identity, summary, and
 optional-composition key lists now carry matching JSON coverage, including the
-decoded family-map mirror for optional composition. The statistics summary and
-optional-composition key lists are guarded the same way.
+decoded family-map mirror for optional composition, plus focused defensive-copy
+coverage. The statistics summary and optional-composition key lists are guarded
+the same way.
 The scalar semantic-layer key lists for `intent_hir`, `lowered_rtl_ir`, and
 `structural_rtl_ir` now carry matching JSON coverage, including their grouped
 semantic and optional-composition family-map mirrors.
@@ -844,7 +845,8 @@ which is the contract to follow for `module_name`,
 composition-only scalar summary keys.
 The parent result contract now JSON-audits those module-info identity, summary,
 and optional-composition key lists, including the grouped optional-composition
-family map mirror.
+family map mirror. It also rebuilds those scalar key lists defensively for each
+contract build.
 Reusable `HDLGenerator` facade objects return fresh `module_info` containers per
 generation, so caller mutation of one result's module summary does not leak into
 a later result produced by the same facade object.
