@@ -364,6 +364,7 @@ Manifest support-accounting bucket presence keys now rebuild cleanly after calle
 Manifest support-accounting id-list presence keys now rebuild cleanly after caller mutation.
 Manifest support-accounting catalog required keys now rebuild cleanly after caller mutation.
 Manifest support-accounting catalog optional keys now rebuild cleanly after caller mutation.
+Manifest support-accounting grouped presence key map now rebuilds cleanly after caller mutation.
 
 ## Current Philosophy
 
