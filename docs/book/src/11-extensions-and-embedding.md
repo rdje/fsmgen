@@ -271,6 +271,7 @@ Capability manifest contract identity metadata now survives JSON round trip.
 Capability manifest contract entrypoint metadata now survives JSON round trip.
 Capability manifest contract public top-level presence keys now survive JSON round trip.
 Capability manifest contract top-level source map now survives JSON round trip.
+Capability manifest contract section presence map now survives JSON round trip.
 
 ## Current Philosophy
 

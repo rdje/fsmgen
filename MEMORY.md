@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest contract section presence map survives JSON
+- Added
+  [t/899-capability-manifest-contract-section-presence-map-json-roundtrip-audit.t](t/899-capability-manifest-contract-section-presence-map-json-roundtrip-audit.t)
+  to prove `manifest_contract` top-level section presence map survives JSON round trip.
+- This keeps the outer capability manifest shell aligned with its direct
+  `FSM::Support::CapabilityManifestContract` owner.
+- Focused validation passed:
+  `perl -Iperl -c t/899-capability-manifest-contract-section-presence-map-json-roundtrip-audit.t && prove -l t/899-capability-manifest-contract-section-presence-map-json-roundtrip-audit.t t/316-capability-manifest-contract.t t/479-capability-manifest-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest contract top level source map survives JSON
 - Added
   [t/898-capability-manifest-contract-top-level-source-map-json-roundtrip-audit.t](t/898-capability-manifest-contract-top-level-source-map-json-roundtrip-audit.t)
