@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Session bootstrap import-tree verification
+- Completed the `README.md` / `SESSION_BOOTSTRAP.md` startup pass, including
+  the mandatory `COMMIT.md` workflow adoption and the `bin/fsmgen`
+  transitive import-tree check.
+- Verified that the live static `bin/fsmgen` trace still matches
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md):
+  `184` reachable project files, `183` reachable `.pm` packages, the same
+  package-family counts, and the same key line-count measurements.
+- The pre-existing untracked [fx](fx) directory remains untouched.
+- Focused validation for this documentation/bootstrap slice: static import-tree
+  measurement and key line-count verification; no source behavior changed.
 ## 2026-05-10: Manifest support accounting contract guidance rebuilds cleanly
 - Added
   [t/994-capability-manifest-support-accounting-contract-guidance-defensive-copy-audit.t](t/994-capability-manifest-support-accounting-contract-guidance-defensive-copy-audit.t)

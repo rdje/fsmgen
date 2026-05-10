@@ -1,6 +1,11 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
+- Next decision point: the session bootstrap rechecked `bin/fsmgen` and its
+  transitive `FSM::...` import tree against
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md). The saved
+  architecture note remains current; the next bounded `R13` slice can continue
+  manifest section mirrors.
 - Next decision point: [t/994-capability-manifest-support-accounting-contract-guidance-defensive-copy-audit.t](t/994-capability-manifest-support-accounting-contract-guidance-defensive-copy-audit.t) now proves `support_accounting.section_contract` guidance list rebuilds cleanly after caller mutation. This changes no public shape; the next bounded `R13` slice can continue manifest section mirrors.
 - Next decision point: [t/993-capability-manifest-support-accounting-contract-flags-defensive-copy-audit.t](t/993-capability-manifest-support-accounting-contract-flags-defensive-copy-audit.t) now proves `support_accounting.section_contract` derived catalog flags rebuilds cleanly after caller mutation. This changes no public shape; the next bounded `R13` slice can continue manifest section mirrors.
 - Next decision point: [t/992-capability-manifest-support-accounting-contract-presence-map-defensive-copy-audit.t](t/992-capability-manifest-support-accounting-contract-presence-map-defensive-copy-audit.t) now proves `support_accounting.section_contract` presence key family map rebuilds cleanly after caller mutation. This changes no public shape; the next bounded `R13` slice can continue manifest section mirrors.

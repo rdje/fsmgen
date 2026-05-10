@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Session bootstrap import-tree verification
+- The startup pass confirmed that [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md)
+  still matches the live static `bin/fsmgen` `FSM::...` import tree.
+- The current architecture picture remains unchanged: `bin/fsmgen` is a CLI and
+  reporting shell over `FSM::Pipeline::HDLGenerator`, source resolution,
+  composition failure/provenance reporting, capability/check/semantic JSON
+  reports, and optional external HDL validation.
+- Because the verified trace and hotspot measurements still match the saved
+  note, this slice records continuity rather than changing source ownership or
+  roadmap status.
 ## 2026-05-10: Manifest support accounting contract guidance rebuilds cleanly
 - `support_accounting.section_contract` now has focused defensive-copy coverage for its guidance list.
 - This keeps support claims discoverable through explicit, regression-backed manifest contract metadata.

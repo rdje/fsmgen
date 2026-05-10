@@ -12,6 +12,8 @@ Refresh this document at the start of a later session whenever the effective ent
 
 Current baseline:
 - Reviewed on `2026-05-10`.
+- Startup bootstrap rechecked on `2026-05-10`; the live static trace and key
+  line-count measurements still match this note.
 - Scope is the project-owned transitive `FSM::...` tree reachable from [bin/fsmgen](bin/fsmgen).
 - Perl core and non-project helper modules are treated as support dependencies, not as part of the architectural map.
 - Static trace from [bin/fsmgen](bin/fsmgen) currently reaches `184` project files total, `183` `.pm` packages.

@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Session bootstrap import-tree verification
+- Re-ran the `README.md` / `SESSION_BOOTSTRAP.md` startup pass and verified
+  the live `bin/fsmgen` transitive `FSM::...` import tree against
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md).
+- The saved architecture note remains current: `184` reachable project files,
+  `183` reachable `.pm` packages, matching package-family counts, and matching
+  key line-count measurements.
+- Updated continuity documentation for the bootstrap slice; no source behavior
+  changed.
 ### Manifest support accounting contract guidance rebuilds cleanly
 - Added
   [t/994-capability-manifest-support-accounting-contract-guidance-defensive-copy-audit.t](t/994-capability-manifest-support-accounting-contract-guidance-defensive-copy-audit.t)

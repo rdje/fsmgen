@@ -33,6 +33,11 @@ Some docs are intentionally still focused references:
 
 These should stay precise and sometimes narrower than the book.
 
+`BIN_FSMGEN_IMPORT_TREE.md` is the live maintainer-facing architecture map for
+the `bin/fsmgen` runtime spine. It is not a tutorial chapter, but it is the
+right place to verify whether the saved CLI/import-tree picture still matches
+the source at the start of an engineering session.
+
 `COMMIT.md` is the process safety reference: every completed task, slice, lane,
 or task-scoped activity must close with that workflow before the next work
 starts, so crash recovery and agent handoff can resume from task-scoped
