@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### HDLGenerator source-info keys rebuild cleanly
+- Added
+  [t/737-hdl-generator-result-contract-source-info-keys-defensive-copy-audit.t](t/737-hdl-generator-result-contract-source-info-keys-defensive-copy-audit.t)
+  to prove the bounded `HDLGenerator` result contract's source-info identity
+  and summary key lists rebuild cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions result-contract source-info key copy coverage.
 ### HDLGenerator shell fallback family map rebuilds cleanly
 - Added
   [t/736-hdl-generator-result-contract-shell-fallback-family-defensive-copy-audit.t](t/736-hdl-generator-result-contract-shell-fallback-family-defensive-copy-audit.t)

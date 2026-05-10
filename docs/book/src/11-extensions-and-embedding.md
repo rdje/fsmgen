@@ -95,7 +95,9 @@ branches keep pointing at their advertised structured replacements, and the
 narrower fallback-family map is guarded the same way and now has matching
 defensive-copy coverage. The result contract's source-info identity and summary
 key lists are also JSON-audited, along with the full-hash stability flag and
-package-import copy-policy note. The module-info identity, summary, and
+package-import copy-policy note; they also have focused defensive-copy coverage
+so mutations to one built contract do not pollute later builds. The module-info
+identity, summary, and
 optional-composition key lists now carry matching JSON coverage, including the
 decoded family-map mirror for optional composition. The statistics summary and
 optional-composition key lists are guarded the same way.
@@ -833,7 +835,8 @@ embedders can discover the bounded identity and summary source-info key
 families from one place instead of collecting those key lists separately. The
 parent result contract keeps JSON round-trip coverage for those two source-info
 key lists so this discovery path remains portable in serialized contract
-metadata.
+metadata. It also rebuilds those scalar key lists defensively for each contract
+build.
 The nested `module_info` object now also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorModuleInfoContract.pm](perl/FSM/Support/HDLGeneratorModuleInfoContract.pm),
 which is the contract to follow for `module_name`,

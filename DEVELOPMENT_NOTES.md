@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator source-info keys stay caller-owned
+- The bounded `HDLGenerator` result contract now has focused defensive-copy
+  coverage for `source_info_identity_presence_keys` and
+  `source_info_summary_presence_keys`.
+- Mutating one built contract's source-info key lists must not pollute the next
+  build, keeping scalar key-list discovery caller-owned.
 ## 2026-05-10: HDLGenerator shell fallback family map stays caller-owned
 - The bounded `HDLGenerator` result contract now has focused defensive-copy
   coverage for `shell_only_fallback_surface_family_map` on both the built
