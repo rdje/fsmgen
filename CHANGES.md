@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest HDLGenerator result guidance survives JSON
+- Added
+  [t/782-capability-manifest-hdl-result-guidance-json-roundtrip-audit.t](t/782-capability-manifest-hdl-result-guidance-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_result`
+  contract keeps its `guidance` list after JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest-side `HDLGenerator` result guidance list coverage.
 ### Manifest HDLGenerator result composition_report shell surfaces survive JSON
 - Added
   [t/781-capability-manifest-hdl-result-composition-report-shell-surfaces-json-roundtrip-audit.t](t/781-capability-manifest-hdl-result-composition-report-shell-surfaces-json-roundtrip-audit.t)
