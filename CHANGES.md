@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest language surface contract language family keys rebuilds cleanly
+- Added
+  [t/963-capability-manifest-language-surface-contract-language-family-keys-defensive-copy-audit.t](t/963-capability-manifest-language-surface-contract-language-family-keys-defensive-copy-audit.t)
+  to prove the capability manifest's `language_surface.surface_contract`
+  language family key lists rebuilds cleanly after caller mutation.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  for the `R13` manifest-section contract progress entry.
 ### Manifest language surface contract top level keys rebuilds cleanly
 - Added
   [t/962-capability-manifest-language-surface-contract-top-level-keys-defensive-copy-audit.t](t/962-capability-manifest-language-surface-contract-top-level-keys-defensive-copy-audit.t)

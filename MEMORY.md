@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest language surface contract language family keys rebuilds cleanly
+- Added
+  [t/963-capability-manifest-language-surface-contract-language-family-keys-defensive-copy-audit.t](t/963-capability-manifest-language-surface-contract-language-family-keys-defensive-copy-audit.t)
+  to prove the capability manifest's `language_surface.surface_contract`
+  language family key lists rebuilds cleanly after caller mutation.
+- This keeps the manifest section aligned with its direct `FSM::Support::LanguageSurfaceContract` owner.
+- Focused validation passed:
+  `perl -Iperl -c t/963-capability-manifest-language-surface-contract-language-family-keys-defensive-copy-audit.t && prove -l t/963-capability-manifest-language-surface-contract-language-family-keys-defensive-copy-audit.t t/317-language-surface-contract.t t/446-language-surface-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest language surface contract top level keys rebuilds cleanly
 - Added
   [t/962-capability-manifest-language-surface-contract-top-level-keys-defensive-copy-audit.t](t/962-capability-manifest-language-surface-contract-top-level-keys-defensive-copy-audit.t)

@@ -1,5 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest language surface contract language family keys rebuilds cleanly
+- The manifest `language_surface.surface_contract` now has focused defensive-copy coverage for its language family key lists.
+- This keeps public manifest consumers anchored to explicit section contracts.
 ## 2026-05-10: Manifest language surface contract top level keys rebuilds cleanly
 - The manifest `language_surface.surface_contract` now has focused defensive-copy coverage for its top-level and mode key lists.
 - This keeps public manifest consumers anchored to explicit section contracts.
