@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest embedding section identity survives JSON
+- Added
+  [t/845-capability-manifest-embedding-section-identity-json-roundtrip-audit.t](t/845-capability-manifest-embedding-section-identity-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.section_contract`
+  identity metadata survives JSON round trip.
+- This mirrors the direct embedding-section contract through the manifest branch
+  without changing the manifest API.
+- Focused validation passed:
+  `perl -Iperl -c t/845-capability-manifest-embedding-section-identity-json-roundtrip-audit.t && prove -l t/845-capability-manifest-embedding-section-identity-json-roundtrip-audit.t t/321-embedding-contract.t t/480-embedding-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest composition report provenance rebuilds cleanly
 - Added
   [t/844-capability-manifest-composition-report-provenance-defensive-copy-audit.t](t/844-capability-manifest-composition-report-provenance-defensive-copy-audit.t)

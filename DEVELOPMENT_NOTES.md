@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest embedding section identity survives JSON
+- The manifest-embedded `embedding.section_contract` contract now has focused JSON round-trip
+  coverage for its identity metadata.
+- This keeps public embedding consumers aligned with the direct embedding-section contract.
 ## 2026-05-10: Manifest composition report provenance rebuilds cleanly
 - The manifest-embedded `embedding.composition_report` contract now has focused defensive-copy
   coverage for its tested_by and guidance lists.
