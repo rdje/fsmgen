@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest semantic exports contract identity rebuilds cleanly
+- Added
+  [t/940-capability-manifest-semantic-exports-contract-identity-defensive-copy-audit.t](t/940-capability-manifest-semantic-exports-contract-identity-defensive-copy-audit.t)
+  to prove the capability manifest's `semantic_exports.section_contract`
+  identity metadata rebuilds cleanly after caller mutation.
+- This keeps the manifest section aligned with its direct `FSM::Support::SemanticExportsContract` owner.
+- Focused validation passed:
+  `perl -Iperl -c t/940-capability-manifest-semantic-exports-contract-identity-defensive-copy-audit.t && prove -l t/940-capability-manifest-semantic-exports-contract-identity-defensive-copy-audit.t t/322-semantic-exports-contract.t t/447-semantic-exports-contract-defensive-copy-boundary-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest semantic exports contract flags guidance survives JSON
 - Added
   [t/939-capability-manifest-semantic-exports-contract-flags-guidance-json-roundtrip-audit.t](t/939-capability-manifest-semantic-exports-contract-flags-guidance-json-roundtrip-audit.t)
