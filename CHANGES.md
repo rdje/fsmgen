@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest backend validation contract nested maps survives JSON
+- Added
+  [t/948-capability-manifest-backend-validation-contract-nested-maps-json-roundtrip-audit.t](t/948-capability-manifest-backend-validation-contract-nested-maps-json-roundtrip-audit.t)
+  to prove the capability manifest's `backend_validation.section_contract`
+  nested source and presence maps survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  for the `R13` manifest-section contract progress entry.
 ### Manifest backend validation contract public nested keys survives JSON
 - Added
   [t/947-capability-manifest-backend-validation-contract-public-nested-keys-json-roundtrip-audit.t](t/947-capability-manifest-backend-validation-contract-public-nested-keys-json-roundtrip-audit.t)
