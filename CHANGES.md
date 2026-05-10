@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-10
+### Manifest contract identity survives JSON
+- Added
+  [t/895-capability-manifest-contract-identity-json-roundtrip-audit.t](t/895-capability-manifest-contract-identity-json-roundtrip-audit.t)
+  to prove `manifest_contract` identity metadata survives JSON round trip.
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for the `R13` progress entry
+  and [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  so the live book mentions manifest contract identity coverage.
 ### Manifest serializable plan report flags guidance rebuilds cleanly
 - Added
   [t/894-capability-manifest-serializable-plan-report-flags-guidance-defensive-copy-audit.t](t/894-capability-manifest-serializable-plan-report-flags-guidance-defensive-copy-audit.t)

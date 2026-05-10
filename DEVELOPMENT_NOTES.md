@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest contract identity survives JSON
+- `manifest_contract` now has focused JSON round-trip coverage for its identity metadata.
+- This keeps manifest consumers on explicit contract metadata rather than sample
+  payload shape alone.
 ## 2026-05-10: Manifest serializable plan report flags guidance rebuilds cleanly
 - The manifest-embedded `embedding.serializable_plan_reports` contract now has
   focused defensive-copy coverage for its JSON-safety flags and guidance.
