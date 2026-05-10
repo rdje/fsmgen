@@ -186,6 +186,7 @@ The `raw_ast` shell summary and fallback surfaces now rebuild cleanly after mani
 The `resolved_package_imports` shell summary and fallback surfaces now rebuild cleanly after manifest caller mutation.
 The `composition_spec` shell summary and fallback surfaces now rebuild cleanly after manifest caller mutation.
 The `composition_plan` shell summary and fallback surfaces now rebuild cleanly after manifest caller mutation.
+The `composition_report` shell fragment metadata and fallback maps now rebuild cleanly after manifest caller mutation.
 
 ## Current Philosophy
 
