@@ -1,5 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: Manifest typed extensions stability flags rebuilds cleanly
+- The manifest-embedded `embedding.typed_extensions` contract now has focused defensive-copy
+  coverage for its stability and closure flags.
+- This keeps embedders from relying on accidental manifest samples rather than the
+  bounded typed-extension contract owner.
 ## 2026-05-10: Manifest typed extensions after generate hook rebuilds cleanly
 - The manifest-embedded `embedding.typed_extensions` contract now has focused defensive-copy
   coverage for its after_generate_result hook metadata.

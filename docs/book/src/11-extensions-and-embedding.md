@@ -244,6 +244,7 @@ Manifest typed-extension context shape metadata now rebuilds cleanly after calle
 Manifest typed-extension public key and grouped name families now rebuild cleanly after caller mutation.
 Manifest typed-extension `after_parse_source` hook metadata now rebuilds cleanly after caller mutation.
 Manifest typed-extension `after_generate_result` hook metadata now rebuilds cleanly after caller mutation.
+Manifest typed-extension stability and closure flags now rebuild cleanly after caller mutation.
 
 ## Current Philosophy
 
