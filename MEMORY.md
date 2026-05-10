@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-10: Manifest HDLGenerator result module-info keys survive JSON
+- Added
+  [t/770-capability-manifest-hdl-result-module-info-keys-json-roundtrip-audit.t](t/770-capability-manifest-hdl-result-module-info-keys-json-roundtrip-audit.t)
+  to prove the capability manifest's embedded `embedding.hdl_generator_result`
+  contract keeps its module-info key lists after JSON round trip.
+- This mirrors the parent `HDLGenerator` result module-info keys guard through
+  the manifest branch without changing the manifest API.
+- Focused validation passed:
+  `perl -Iperl -c t/770-capability-manifest-hdl-result-module-info-keys-json-roundtrip-audit.t && prove -l t/770-capability-manifest-hdl-result-module-info-keys-json-roundtrip-audit.t t/305-hdl-generator-result-contract.t t/763-capability-manifest-hdl-result-identity-json-roundtrip-audit.t && mdbook build docs/book`.
 ## 2026-05-10: Manifest HDLGenerator result source-info keys survive JSON
 - Added
   [t/769-capability-manifest-hdl-result-source-info-keys-json-roundtrip-audit.t](t/769-capability-manifest-hdl-result-source-info-keys-json-roundtrip-audit.t)
