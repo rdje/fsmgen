@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-10: HDLGenerator composition_plan shell surfaces stay JSON-audited
+- The bounded `HDLGenerator` result contract now has focused JSON round-trip
+  coverage for `composition_plan_summary_surfaces` and
+  `composition_plan_fallback_surface_map`.
+- Decoded per-branch metadata must stay canonical and aligned with the grouped
+  shell fallback maps.
 ## 2026-05-10: HDLGenerator composition_spec shell surfaces stay JSON-audited
 - The bounded `HDLGenerator` result contract now has focused JSON round-trip
   coverage for `composition_spec_summary_surfaces` and

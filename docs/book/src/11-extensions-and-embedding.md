@@ -126,7 +126,8 @@ and fallback surface metadata is JSON-audited against its dedicated owner and
 the grouped shell fallback maps. The `raw_ast` shell summary and fallback
 surface metadata is guarded the same way. The `resolved_package_imports` shell
 summary and fallback metadata now has matching JSON coverage, as does the
-`composition_spec` shell summary and fallback metadata.
+`composition_spec` shell summary and fallback metadata. The `composition_plan`
+shell summary and fallback metadata is now guarded in the same per-branch pass.
 
 ## Current Philosophy
 
