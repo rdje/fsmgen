@@ -1,6 +1,8 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### Support accounting contract full surface survives JSON
+- Added t/1037. Updated live docs for R13.
 ### Normalized semantic structural RTL IR contract full surface rebuilds cleanly
 - Added t/1036. The normalized semantic nested-contract family is now fully audited.
 - Updated live docs for R13.

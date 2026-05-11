@@ -1,5 +1,7 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-11: Support accounting contract full surface survives JSON
+- The support accounting contract now has a full-surface JSON round-trip audit.
 ## 2026-05-11: Normalized semantic structural RTL IR contract full surface rebuilds cleanly
 - The structural RTL IR contract now has a full-surface defensive-copy audit, completing the normalized semantic nested-contract family.
 ## 2026-05-11: Normalized semantic structural RTL IR contract full surface survives JSON

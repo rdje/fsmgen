@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: Support accounting contract full surface survives JSON
+- Roadmap lane: R13. Completed slice: t/1037. Public behavior changed: no.
+- Next bounded slice: continue support accounting full-surface stability audits.
+
 ## 2026-05-11: Normalized semantic structural RTL IR contract full surface rebuilds cleanly
 - Roadmap lane: R13. Completed slice: t/1036. Public behavior changed: no.
 - The normalized semantic nested-contract family (11 contracts) is now fully audited.

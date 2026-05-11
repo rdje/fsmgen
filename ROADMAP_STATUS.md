@@ -1,7 +1,8 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Next decision point: t/1036 now proves a fresh structural RTL IR contract owner build stays clean after caller mutation. The normalized semantic nested-contract family (11 contracts) is now fully audited for both JSON round-trip and defensive-copy stability. Next bounded R13 slice: continue with remaining public contract families.
+- Next decision point: t/1037 now proves the full support accounting contract owner survives JSON encode/decode unchanged. Next bounded R13 slice: support accounting full-surface stability audits.
+- Next decision point: t/1036 now proves a fresh structural RTL IR contract owner build stays clean after caller mutation. The normalized semantic nested-contract family is now fully audited. Next bounded R13 slice: continue with remaining public contract families.
 - Next decision point: t/1035 now proves the full structural RTL IR contract owner survives JSON encode/decode unchanged. Next bounded R13 slice: structural RTL IR full-surface stability audits.
 - Next decision point: t/1034 now proves a fresh lowered RTL IR contract owner build stays clean after caller mutation. Next bounded R13 slice: normalized semantic nested-contract audits.
 - Next decision point: t/1033 now proves the full lowered RTL IR contract owner survives JSON encode/decode unchanged. Next bounded R13 slice: lowered RTL IR full-surface stability audits.
