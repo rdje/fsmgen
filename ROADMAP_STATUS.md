@@ -1,6 +1,7 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
+- Next decision point: t/1058 now proves a fresh HDL external validation contract owner build stays clean after caller mutation. Next bounded R13 slice: debug runtime contract.
 - Next decision point: t/1057 now proves the full HDL external validation contract owner survives JSON. Next bounded R13 slice: HDL external validation full-surface stability audits.
 - Next decision point: t/1056 now proves a fresh extension contract owner build stays clean after caller mutation. Next bounded R13 slice: HDL external validation contract.
 - Next decision point: t/1055 now proves the full extension contract owner survives JSON. Next bounded R13 slice: extension full-surface stability audits.
