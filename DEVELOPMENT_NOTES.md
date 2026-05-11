@@ -1,6 +1,10 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
-## 2026-05-11: R14 `.isf` — latency lowering
+## 2026-05-11: R14 — IR refactor
+- `LoweringIR` is the typed middle layer. `Emitter::FSM` is a pure string emitter. Future backends hook into IR.
+## 2026-05-11: R14 `.isf` — trigger/pulse
+- Trigger lowers to transaction start signal. Pulse lowers as guarded assignment.
+## 2026-05-11: R14 `.isf` — latency
 - Comb DT increments cycle_count; done state checks min violation; max via watchdog.
 ## 2026-05-11: R14 `.isf` — rule lowering
 - Rules lowered to combinational DT blocks: `(port = signal)` or `(port = value <condition)`.

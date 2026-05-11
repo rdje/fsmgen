@@ -49,11 +49,15 @@ sub lower_rules($self, $actor) {
                 my ($kw, $port) = @$action;
                 push @lines, "    ($port = 1 <$cond)";
             }
-            elsif ($ak eq 'pulse') {
-                push @lines, "    ;; pulse — lowering deferred";
-            }
             elsif ($ak eq 'trigger') {
-                push @lines, "    ;; trigger — lowering deferred";
+                my ($kw, $tx_name) = @$action;
+                push @lines, "    (= (${tx_name}_start 1) <$cond)";
+            }
+            elsif ($ak eq 'pulse') {
+                my ($kw, $port) = @$action;
+                # Level-sensitive: port stays high while condition holds.
+                # True single-cycle pulse needs edge-triggered sequential logic (deferred).
+                push @lines, "    (= ($port 1) <$cond)";
             }
             elsif ($ak eq 'priority') {
                 push @lines, "    ;; priority — lowering deferred";

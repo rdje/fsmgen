@@ -1,7 +1,7 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R14`. Latency lowering: comb DT increments, min/max checks, 7 tests pass.
+- Active lane: `R14`. IR architecture refactored: `LoweringIR` + `Emitter::FSM`. Clean emitter separation. 7 tests pass.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.

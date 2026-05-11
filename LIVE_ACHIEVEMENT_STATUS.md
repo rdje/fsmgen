@@ -2,7 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
-## 2026-05-11: R14 `.isf` — latency lowering
+## 2026-05-11: R14 — IR refactor
+- Active: `R14`. `LoweringIR` + `Emitter::FSM` shipped. 7 tests pass.
+
+## 2026-05-11: R14 `.isf` — trigger/pulse
+- Active: `R14`. Trigger/pulse shipped. 7 tests pass.
+
+## 2026-05-11: R14 `.isf` — latency
 - Active: `R14`. Latency lowering shipped. All 3 fixtures pass, 7 tests pass.
 
 ## 2026-05-11: R14 `.isf` — rule lowering

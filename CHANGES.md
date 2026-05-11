@@ -1,6 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### R14 — LoweringIR refactor
+- `LoweringIR` + `Emitter::FSM` replace string-generating modules. Clean architecture.
+### R14 `.isf` — trigger/pulse
+- `(trigger tx)` → `(= (tx_start 1) <cond)`. `(pulse port)` → `(port = 1 <cond)`.
 ### R14 `.isf` — latency lowering
 - `(latency ...)` → comb DT + min/max checks. Synthesizable verification. 7 tests pass.
 ### R14 `.isf` — rule lowering

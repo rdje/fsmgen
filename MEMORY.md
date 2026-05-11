@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: R14 — LoweringIR architecture refactored
+- Created `FSM::Scheduler::ISF::LoweringIR` — typed IR layer between ISF AST and emitters
+- Created `FSM::Scheduler::ISF::Emitter::FSM` — pure .fsm emitter that walks the IR
+- Replaced string-generating TransactionLowering/RuleLowering with IR pipeline:
+  `ISF AST → LoweringIR → Emitter::FSM → .fsm text`
+- Architecture supports future emitters (JSON, VHDL, SV direct) from the same IR
+- 7 tests pass, all fixtures pass strict mode
 ## 2026-05-11: R14 `.isf` scheduler — latency lowering
 - `(latency (min N) (max M))` now lowers to synthesizable verification logic:
   - Comb DT `(-cc_inc)` increments `cycle_count` when `inc` asserted
