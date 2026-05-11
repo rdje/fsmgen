@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: Check failure diagnostic contract full surface rebuilds cleanly
+- Added
+  [t/1012-check-failure-diagnostic-contract-full-surface-defensive-copy-audit.t](t/1012-check-failure-diagnostic-contract-full-surface-defensive-copy-audit.t)
+  to prove a fresh `build_check_failure_diagnostic_contract()` result stays clean
+  after a caller mutates a previous full contract result.
+- This complements the check failure diagnostic full-surface JSON audit with a
+  defensive-copy guard for the shared nested failure `diagnostic` contract
+  reused by check JSON and normalized semantic JSON reports.
+- Focused validation passed:
+  `prove -I perl t/331-check-failure-diagnostic-contract.t t/457-check-failure-diagnostic-contract-defensive-copy-boundary-audit.t t/1011-check-failure-diagnostic-contract-full-surface-json-roundtrip-audit.t t/1012-check-failure-diagnostic-contract-full-surface-defensive-copy-audit.t t/1010-check-diagnostics-contract-full-surface-defensive-copy-audit.t`.
 ## 2026-05-10: Check failure diagnostic contract full surface survives JSON
 - Added
   [t/1011-check-failure-diagnostic-contract-full-surface-json-roundtrip-audit.t](t/1011-check-failure-diagnostic-contract-full-surface-json-roundtrip-audit.t)

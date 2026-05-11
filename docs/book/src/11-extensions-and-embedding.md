@@ -1335,8 +1335,10 @@ place instead of collecting the individual field-family lists separately.
 Failed public normalized semantic JSON reports now explicitly reuse that same
 bounded nested failure-diagnostic contract too.
 The shared failure-diagnostic contract owner is also full-surface JSON-round-trip
-audited, so both public report families stay tied to the same serialized nested
-`diagnostic` contract shape.
+audited and full-surface defensive-copy audited, so both public report families
+stay tied to the same serialized nested `diagnostic` contract shape and embedders
+can treat that contract object as caller-owned metadata rather than a shared
+mutable singleton.
 Successful public normalized semantic JSON reports now also have one bounded
 nested-object contract for the success payload itself:
 [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](perl/FSM/Support/NormalizedSemanticPayloadContract.pm)

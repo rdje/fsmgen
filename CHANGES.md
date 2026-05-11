@@ -1,5 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-05-11
+### Check failure diagnostic contract full surface rebuilds cleanly
+- Added
+  [t/1012-check-failure-diagnostic-contract-full-surface-defensive-copy-audit.t](t/1012-check-failure-diagnostic-contract-full-surface-defensive-copy-audit.t)
+  to prove a fresh check failure diagnostic contract build stays clean after
+  caller mutation of a previous full contract result.
+- Updated [MEMORY.md](MEMORY.md), [ROADMAP_STATUS.md](ROADMAP_STATUS.md),
+  [LIVE_ACHIEVEMENT_STATUS.md](LIVE_ACHIEVEMENT_STATUS.md), and
+  [DEVELOPMENT_NOTES.md](DEVELOPMENT_NOTES.md) for the `R13` progress entry.
 ## 2026-05-10
 ### Check failure diagnostic contract full surface survives JSON
 - Added
