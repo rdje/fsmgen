@@ -134,7 +134,13 @@ sub _parse_clock($self, $clause) {
 
 sub _parse_reset($self, $clause) {
     my $spec = $clause->[1];
-    confess "Error: (reset ...) requires (reset (name ...))\n" unless ref($spec) eq 'ARRAY';
+    # Flat form: (reset rst_n)
+    if (!ref($spec)) {
+        my $polarity = $spec =~ /_[nb]$/ ? 'active_low' : 'active_high';
+        return { name => $spec, kind => 'sync', polarity => $polarity };
+    }
+    # List form: (reset (rst_n async active_low))
+    confess "Error: (reset ...) requires a name\n" unless ref($spec) eq 'ARRAY';
     my $name = $spec->[0];
     my $kind = 'sync';
     my $polarity = $name =~ /_[nb]$/ ? 'active_low' : 'active_high';
