@@ -178,6 +178,20 @@ sub _emit_transitions($self, $state) {
         return @lines;
     }
 
+    # Branch transition: ?condition (=1 -> body) (=0 -> skip)
+    if ($state->{kind} eq 'branch') {
+        my $cond = $state->{condition};
+        my $cond_str = !ref($cond) ? $cond : join(' ', map { ref($_) ? '('.join(' ',@$_).')' : $_ } @$cond);
+        push @lines, "    (?$cond_str";
+        push @lines, "      (=1 (-> $state->{true_target}))" if $state->{true_target};
+        # =0: skip to next top-level state
+        for my $t (@$txs) {
+            push @lines, "      (=0 (-> $t->{target}))" if !$t->{condition};
+        }
+        push @lines, '    )';
+        return @lines;
+    }
+
     # Simple transitions
     for my $t (@$txs) {
         if ($t->{condition} && $t->{condition}{port}) {

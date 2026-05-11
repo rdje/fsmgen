@@ -1,0 +1,24 @@
+(actor when_test
+  (clock clk)
+  (reset (rst_n async active_low))
+  (watchdog 65536)
+
+  (interface
+    (input  start)
+    (output done)
+    (output result (width 32))
+    (input  mode))
+
+  (transaction test_tx
+    (on start)
+    (drive header
+      (result 0))
+    (when mode
+      (drive write_path
+        (result 42))
+      (drive write_done
+        (done 1)))
+    (when (= mode 0)
+      (drive read_path
+        (result 7)))
+    (complete done)))
