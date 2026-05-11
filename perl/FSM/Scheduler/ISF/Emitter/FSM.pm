@@ -178,6 +178,19 @@ sub _emit_transitions($self, $state) {
         return @lines;
     }
 
+    # Switch transition: (?signal (=val (-> body)) ...)
+    if ($state->{kind} eq 'switch') {
+        push @lines, "    (?$state->{signal}";
+        for my $br (@{$state->{branches}}) {
+            push @lines, "      (=$br->{value} (-> $br->{body_start}))";
+        }
+        for my $t (@$txs) {
+            push @lines, "      (=0 (-> $t->{target}))" if !$t->{condition};
+        }
+        push @lines, '    )';
+        return @lines;
+    }
+
     # Branch transition: ?condition (=1 -> body) (=0 -> skip)
     if ($state->{kind} eq 'branch') {
         my $cond = $state->{condition};

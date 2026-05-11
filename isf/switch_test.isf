@@ -1,0 +1,31 @@
+(actor switch_test
+  (clock clk)
+  (reset (rst_n async active_low))
+  (watchdog 65536)
+
+  (interface
+    (input  start)
+    (output done)
+    (output rdata (width 32))
+    (input  opcode (width 2)))
+
+  (drive write_res
+    (rdata 42)
+    (done 1))
+
+  (drive read_res
+    (rdata 7)
+    (done 1))
+
+  (drive err_res
+    (rdata 0)
+    (done 1))
+
+  (transaction dispatch
+    (on start
+      (sample opcode as op))
+    (switch op
+      (0 (drive write_res))
+      (1 (drive read_res))
+      (2 (drive err_res)))
+    (complete done)))
