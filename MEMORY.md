@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: Normalized semantic symbol contract full surface rebuilds cleanly
+- Added
+  [t/1024-normalized-semantic-symbol-contract-full-surface-defensive-copy-audit.t](t/1024-normalized-semantic-symbol-contract-full-surface-defensive-copy-audit.t)
+  to prove a fresh `build_normalized_semantic_symbol_contract()` result stays
+  clean after caller mutation.
+- Complements the symbol full-surface JSON audit with a defensive-copy guard.
+- Focused validation passed.
 ## 2026-05-11: Normalized semantic symbol contract full surface survives JSON
 - Added
   [t/1023-normalized-semantic-symbol-contract-full-surface-json-roundtrip-audit.t](t/1023-normalized-semantic-symbol-contract-full-surface-json-roundtrip-audit.t)

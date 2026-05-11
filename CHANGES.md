@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### Normalized semantic symbol contract full surface rebuilds cleanly
+- Added
+  [t/1024-normalized-semantic-symbol-contract-full-surface-defensive-copy-audit.t](t/1024-normalized-semantic-symbol-contract-full-surface-defensive-copy-audit.t)
+  to prove a fresh normalized semantic symbol contract build stays clean after
+  caller mutation.
+- Updated live docs for the `R13` progress entry.
 ### Normalized semantic symbol contract full surface survives JSON
 - Added
   [t/1023-normalized-semantic-symbol-contract-full-surface-json-roundtrip-audit.t](t/1023-normalized-semantic-symbol-contract-full-surface-json-roundtrip-audit.t)

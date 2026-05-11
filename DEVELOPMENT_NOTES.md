@@ -1,5 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-11: Normalized semantic symbol contract full surface rebuilds cleanly
+- The normalized semantic symbol contract now has a full-surface defensive-copy audit.
+- The test recursively mutates one built contract and compares the next owner build with a fresh expected result.
 ## 2026-05-11: Normalized semantic symbol contract full surface survives JSON
 - The normalized semantic symbol contract now has a full-surface JSON round-trip audit.
 - This guard catches JSON-safety or owner-assembly drift for the bounded symbol contract nested inside public normalized semantic JSON reports.
