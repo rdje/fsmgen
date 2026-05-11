@@ -1,6 +1,7 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
+- Next decision point: t/1066 now proves a fresh language surface contract owner build stays clean after caller mutation. Next bounded R13 slice: documentation contract.
 - Next decision point: t/1065 now proves the full language surface contract owner survives JSON. Next bounded R13 slice: language surface full-surface stability audits.
 - Next decision point: t/1064 now proves a fresh producer section contract owner build stays clean after caller mutation. Next bounded R13 slice: remaining section-level contract audits.
 - Next decision point: [t/1063-producer-contract-full-surface-json-roundtrip-audit.t](t/1063-producer-contract-full-surface-json-roundtrip-audit.t) now proves the full producer section contract owner survives JSON encode/decode unchanged. This changes no public shape; the next bounded `R13` slice can continue producer section full-surface stability audits.
