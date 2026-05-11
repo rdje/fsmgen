@@ -38,6 +38,7 @@ report.
 (actor ahb_requester
   (clock clk)
   (reset rst_n (async) (active_low))
+  (watchdog 65536)
 
   (interface
     (input  cmd_valid)
@@ -108,14 +109,19 @@ report.
 
 Default width is 1. `(width N)` is the only property currently defined.
 
-### 3.3 Clock and reset
+### 3.3 Clock, reset, and watchdog
 
 ```lisp
 (clock name)
 (reset name)
 (reset name (async))
 (reset name (async) (active_low))
+(watchdog N)
 ```
+
+`(watchdog N)` declares the default watchdog cycle count for all
+`(await ...)` in the actor. Individual `(await port (watchdog M))`
+overrides it per instance.
 
 ### 3.4 Handshake
 
@@ -157,7 +163,7 @@ it to an explicit FSM state sequence.
 |--------|---------|
 | `(drive phase_name body...)` | Named output phase. Body: `(assign ...)` forms. |
 | `(repeat count body...)` | Loop `count` times. `count` may be a literal integer, a bound name, or an arbitrary expression that evaluates to an integer. The scheduler infers a counter register — the author never declares one. |
-| `(await port)` | Stall until port is true. Port must be an input. Every `(await ...)` carries an implicit watchdog timer (default: 2^16 cycles, configurable). If the awaited condition does not hold before the watchdog expires, the transaction enters an error state and asserts a timeout indication. The exact timeout behavior (error port, abort, skip) is configurable per actor. |
+| `(await port)` | Stall until port is true. Every `(await ...)` carries an implicit watchdog timer inherited from the actor's `(watchdog N)` declaration. The timeout may be overridden per-instance: `(await port (watchdog M))`. If the awaited condition does not hold before the watchdog expires, the transaction enters an error state and asserts a timeout indication. |
 | `(sample port as name)` | Capture port value at this point. Scheduler decides storage (wire, register, mux). `name` is available for the rest of the transaction. Allowed anywhere in the transaction body: inside `(on ...)` for activation-time capture, or standalone for mid-transaction sampling (e.g. after `(await ...)`, inside `(repeat ...)`). |
 | `(assign port value)` | Drive an output port. Value: literal, bound name, or expression. |
 | `(complete port)` | Assert completion. Port is pulsed. Transaction returns to idle. |
@@ -189,14 +195,14 @@ Non-blocking fork. The calling transaction launches the spawned transaction
 and continues immediately without waiting. Multiple spawns may execute
 concurrently (the scheduler serializes them onto cycles as needed).
 
-Spawn may pass parameters to the spawned transaction:
+Spawn may pass parameters and optionally name the spawned instance:
 
 ```lisp
 (transaction scatter_read
   (on cmd (sample cmd_addr as base))
-  (spawn read_burst (addr (+ base 0)))
-  (spawn read_burst (addr (+ base 4)))
-  (spawn read_burst (addr (+ base 8)))
+  (spawn read_burst as reader_0 (addr (+ base 0)))
+  (spawn read_burst as reader_1 (addr (+ base 4)))
+  (spawn read_burst              (addr (+ base 8)))  ;; anonymous
   (await_all done)
   (complete done))
 ```
@@ -349,18 +355,21 @@ shared outputs per declared priorities.
 
 1. `(sample ... as ...)` allowed both inside `(on ...)` (activation-time capture)
    and anywhere in the transaction body (mid-transaction sampling).
-2. Every `(await ...)` carries an implicit watchdog timer (default 2^16 cycles).
-   Watchdog expiry enters an error state. Exact timeout behavior per actor TBD.
+2. Every `(await ...)` carries an implicit watchdog timer. Watchdog cycle count
+   is based on the actor's clock. A default is declared at the actor level;
+   individual `(await ...)` instances may override it.
 3. `(spawn ...)` supports parameter passing. Spawned transactions may recursively
    spawn further transactions with no explicit limit.
+4. Spawned transaction instances may be anonymous (scheduler assigns a generated
+   name like `read_burst_0`) or explicitly named by the author:
+   `(spawn read_burst as reader_0)`. Both forms are allowed; named instances
+   appear in the schedule report and debug output.
+5. Cross-transaction deadlocks are not detected at compile time for now.
+   Deadlocks are bounded by the implicit watchdog on every `(await ...)` —
+   a deadlocked transaction eventually times out rather than locking up
+   indefinitely.
 
 ## 7. Open design questions
 
 1. What is the concrete syntax for `(contract ...)` temporal assertions?
    Deferred until we define the assertion types needed.
-2. How should the scheduler detect cross-transaction deadlocks when one
-   transaction `(await ...)` on a port driven by another transaction?
-3. Should spawned transactions be named instances (for debug/schedule report)
-   or anonymous?
-4. What is the default watchdog cycle count, and how is it configured per
-   actor or per `(await ...)`?

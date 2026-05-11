@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: `.isf` specification v0.5 — watchdog, named spawn, deadlock policy
+- Revised ISF_SPEC.md to v0.5:
+  - `(watchdog N)` at actor level; `(await port (watchdog M))` per-instance override
+  - `(spawn tx as name ...)` for named instances; anonymous spawn gets generated name
+  - Cross-transaction deadlocks bounded by watchdog (not detected at compile time)
+  - 1 open question remains: `(contract ...)` temporal assertion syntax
 ## 2026-05-11: `.isf` specification v0.4 — sample everywhere, watchdog, spawn params
 - Revised [docs/ISF_SPEC.md](docs/ISF_SPEC.md) to v0.4:
   - `(sample ... as ...)` allowed anywhere in transaction body, not only inside `(on ...)`

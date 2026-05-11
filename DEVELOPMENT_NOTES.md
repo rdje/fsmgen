@@ -1,5 +1,7 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-11: `.isf` specification v0.5 — watchdog, named spawn
+- `(watchdog N)` at actor level, `(await port (watchdog M))` override. Named spawn `(spawn tx as name ...)`.
 ## 2026-05-11: `.isf` specification v0.4 — sample everywhere, watchdog
 - Universal `(sample ...)`, implicit watchdog on `(await ...)`, spawn parameters, recursive spawn.
 ## 2026-05-11: `.isf` specification v0.3 — transaction composition

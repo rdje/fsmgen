@@ -1,6 +1,9 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### `.isf` specification v0.5 — watchdog, named spawn, deadlock policy
+- Revised ISF_SPEC.md: `(watchdog N)` actor-level, per-`(await ...)` override,
+  `(spawn tx as name ...)`, deadlocks bounded by watchdog.
 ### `.isf` specification v0.4 — sample everywhere, watchdog, spawn params
 - Revised ISF_SPEC.md: universal `(sample ...)`, implicit `(await ...)` watchdog,
   spawn parameter passing, recursive spawn.
