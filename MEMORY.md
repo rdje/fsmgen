@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: Producer section contract full surface rebuilds cleanly
+- Added
+  [t/1064-producer-contract-full-surface-defensive-copy-audit.t](t/1064-producer-contract-full-surface-defensive-copy-audit.t)
+  to prove a fresh `build_producer_contract()` result stays clean after
+  caller mutation.
+- Complements t/1063 JSON roundtrip audit with a defensive-copy guard,
+  completing the producer section contract full-surface audit pair.
+- Focused validation passed:
+  `prove -I perl t/1064-producer-contract-full-surface-defensive-copy-audit.t t/1063-producer-contract-full-surface-json-roundtrip-audit.t t/319-producer-contract.t t/449-producer-contract-defensive-copy-boundary-audit.t`.
 ## 2026-05-11: Producer section contract full surface survives JSON
 - Added
   [t/1063-producer-contract-full-surface-json-roundtrip-audit.t](t/1063-producer-contract-full-surface-json-roundtrip-audit.t)

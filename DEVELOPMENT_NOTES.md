@@ -1,5 +1,7 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-11: Producer section contract full surface rebuilds cleanly
+- The producer section contract now has a full-surface defensive-copy audit, completing the producer section contract full-surface audit pair.
 ## 2026-05-11: Producer section contract full surface survives JSON
 - The producer section contract now has a full-surface JSON round-trip audit.
 - This guard catches JSON-safety or owner-assembly drift for the bounded producer section contract advertised through the capability manifest.

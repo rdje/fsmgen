@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: Producer section contract full surface rebuilds cleanly
+- Roadmap lane: `R13` public embedding/API stabilization.
+- Completed slice:
+  [t/1064-producer-contract-full-surface-defensive-copy-audit.t](t/1064-producer-contract-full-surface-defensive-copy-audit.t)
+  now proves a fresh producer section contract build stays clean after caller
+  mutation, completing the producer section contract full-surface audit pair.
+- Public behavior changed: no; this is a full-surface stability audit only.
+- Focused validation passed:
+  `prove -I perl t/1064-producer-contract-full-surface-defensive-copy-audit.t t/1063-producer-contract-full-surface-json-roundtrip-audit.t t/319-producer-contract.t t/449-producer-contract-defensive-copy-boundary-audit.t`.
+- Next bounded slice: continue remaining section-level contract full-surface audits.
+
 ## 2026-05-11: Producer section contract full surface survives JSON
 - Roadmap lane: `R13` public embedding/API stabilization.
 - Completed slice:
