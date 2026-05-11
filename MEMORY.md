@@ -1,5 +1,7 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: HDLGenerator composition spec contract full surface survives JSON
+- Added t/1081. Extends R13 auditing to the composition spec contract.
 ## 2026-05-11: HDLGenerator composition plan contract full surface rebuilds cleanly
 - Added t/1080. Complements t/1079 JSON audit.
 ## 2026-05-11: HDLGenerator composition plan contract full surface survives JSON

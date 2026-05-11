@@ -1,6 +1,8 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### HDLGenerator composition spec contract full surface survives JSON
+- Added t/1081. Updated live docs.
 ### HDLGenerator composition plan contract full surface rebuilds cleanly
 - Added t/1080. Updated live docs.
 ### HDLGenerator composition plan contract full surface survives JSON
