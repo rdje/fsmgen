@@ -2,7 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
-## 2026-05-11: R14 `.isf` scheduler — repeat, counters
+## 2026-05-11: R14 `.isf` — CLI wired
+- `bin/fsmgen` now accepts `.isf` files. Full CLI pipeline works. 7 ISF tests.
+
+## 2026-05-11: R14 `.isf` scheduler — repeat
 - Active lane: `R14`. Repeat lowering, counter inference, 7 ISF tests, both fixtures compile.
 
 ## 2026-05-11: R14 `.isf` scheduler — transaction lowering

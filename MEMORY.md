@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: R14 `.isf` wired into `bin/fsmgen` CLI
+- `bin/fsmgen` now accepts `.isf` files: parses with `FSM::Adapter::ISF`,
+  lowers with `FSM::Scheduler::ISF`, writes temp `.fsm`, feeds to normal pipeline
+- Works with `--strict`, `--check --json`, `--emit-semantic-json`
+- File resolution updated to recognize `.isf` extension
+- Both fixtures (APB requester, burst reader) verified end-to-end through CLI
+- 7 ISF tests pass
 ## 2026-05-11: R14 `.isf` scheduler — repeat lowering, counter inference
 - `TransactionLowering` now handles `(repeat N body...)`: emits counter init, inline
   body states, and counter check with `(?counter ...)` loop-back decision tree

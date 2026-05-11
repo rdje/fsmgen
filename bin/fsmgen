@@ -46,11 +46,11 @@ sub resolve_fsm_file {
     # Cases 1 & 2: No slash - search in FSMLIB paths and current directory
     my $target_filename;
     
-    # Case 1: Bare name (no .fsm extension) - append .fsm
-    if ($fsm_input !~ /\.fsm$/i) {
+    # Case 1: Bare name (no .fsm or .isf extension) - append .fsm
+    if ($fsm_input !~ /\.(fsm|isf)\$/i) {
         $target_filename = "$fsm_input.fsm";
     } else {
-        # Case 2: Already has .fsm extension
+        # Case 2: Already has .fsm or .isf extension
         $target_filename = $fsm_input;
     }
     
@@ -498,6 +498,57 @@ if ($@) {
 
 # Convert to absolute path for consistency
 $fsm_file = File::Spec->rel2abs($fsm_file);
+
+# ISF pipeline: if input is .isf, lower to .fsm first
+if ($fsm_file =~ /\.isf$/i) {
+    require FSM::Adapter::ISF;
+    require FSM::Scheduler::ISF;
+    require File::Temp;
+
+    my $adapter   = FSM::Adapter::ISF->new();
+    my $scheduler = FSM::Scheduler::ISF->new();
+    my $actor     = eval { $adapter->parse_file($fsm_file); };
+
+    if ($@) {
+        my $display_error = normalize_cli_error_text($@);
+        if ($emit_semantic_json) {
+            my $report = build_normalized_semantic_failure_report(
+                input => $fsm_input, source_file => $fsm_file,
+                target_language => $target_language, strict_mode => $strict_mode,
+                message => $display_error,
+            );
+            print JSON::PP->new->ascii->canonical->pretty->encode($report);
+            exit 1;
+        }
+        if ($check_json_mode) {
+            my $report = build_check_failure_report(
+                input => $fsm_input, source_file => $fsm_file,
+                target_language => $target_language, strict_mode => $strict_mode,
+                message => $display_error,
+            );
+            print JSON::PP->new->ascii->canonical->pretty->encode($report);
+            exit 1;
+        }
+        die $display_error;
+    }
+
+    my $fsm_source = eval { $scheduler->lower($actor); };
+    if ($@) {
+        die normalize_cli_error_text($@);
+    }
+
+    # Write generated .fsm to temp file and redirect
+    my ($fh, $tmp_path) = File::Temp::tempfile(SUFFIX => '.fsm');
+    print $fh $fsm_source;
+    close $fh;
+    $fsm_file = $tmp_path;
+
+    unless ($machine_json_mode) {
+        print "=== ISF Intent Scheduling ===\n\n";
+        print "Actor: " . $actor->{actor_name} . "\n";
+        print "Lowered to: $fsm_file\n\n" unless $quiet;
+    }
+}
 
 # Set default output file if not specified
 if (!$check_mode && !$emit_semantic_json && !$output_file) {
