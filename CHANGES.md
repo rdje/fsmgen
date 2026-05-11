@@ -1,6 +1,9 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### R14 `.isf` parser — full construct coverage, tracing
+- Added `FSM::Debug` tracing to all ISF modules. Fixture `isf/full_featured.isf`
+  covers all constructs. Test t/1093 with 50+ assertions. 3 ISF tests passing.
 ### R14 `.isf` parser — first implementation slice
 - Created `FSM::Adapter::ISF` (facade), `ISF::Parser` (validation), `ISF::LispishAdapter` (normalization).
 - Fixture: `isf/apb_requester.isf`. Tests: t/1091 (parser), t/1092 (adapter). All pass.

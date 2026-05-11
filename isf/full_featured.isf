@@ -1,0 +1,99 @@
+;; Comprehensive ISF fixture exercising all defined constructs
+(actor full_featured
+  (clock clk)
+  (reset rst_n (async) (active_low))
+  (watchdog 32768)
+
+  (interface
+    (input  start)
+    (output done)
+    (input  addr    (width 32))
+    (input  wdata   (width 32))
+    (output rdata   (width 32))
+    (input  ready)
+    (output valid)
+    (output err))
+
+  (handshake cmd
+    (valid start)
+    (ready done))
+
+  (handshake data_flow
+    (valid ready)
+    (ready valid))
+
+  ;; Transaction with sample, drive, await, complete, latency
+  (transaction main_transfer
+    (on cmd
+      (sample addr  as captured_addr)
+      (sample wdata as captured_wdata))
+    (drive setup
+      (assign valid 1)
+      (assign rdata captured_addr))
+    (await ready)
+    (sample ready as was_ready)
+    (drive finish
+      (assign err 0))
+    (complete done)
+    (latency (min 1) (max 64)))
+
+  ;; Nested composition: sequence with do
+  (transaction chained
+    (on cmd (sample addr as base))
+    (do main_transfer)
+    (do main_transfer)
+    (complete done))
+
+  ;; Parallel spawn with parameter passing and named instances
+  (transaction parallel_work
+    (on cmd (sample addr as base))
+    (spawn main_transfer as worker_0 (addr (+ base 0)))
+    (spawn main_transfer as worker_1 (addr (+ base 4)))
+    (spawn main_transfer            (addr (+ base 8)))
+    (await_all done)
+    (complete done))
+
+  ;; Rule with when, assign, trigger
+  (rule always_ready
+    (when ready)
+    (assign valid 1)
+    (trigger main_transfer))
+
+  ;; Rule with pulse and assert
+  (rule error_gate
+    (when err)
+    (pulse valid)
+    (assert err))
+
+  ;; Inline priority
+  (rule high_pri
+    (priority over always_ready)
+    (when start)
+    (assign rdata 0))
+
+  ;; Separate priority section
+  (priority main_transfer over chained)
+
+  ;; Resources
+  (resources
+    (resource shared_bus (arbiter priority))
+    (resource mem_port   (arbiter round_robin)))
+
+  ;; Phase definitions
+  (phase setup
+    (outputs valid rdata)
+    (next finish))
+
+  (phase finish
+    (await ready)
+    (on ready (next done_phase)))
+  (phase done_phase
+    (outputs done))
+
+  ;; Pipeline stage
+  (stage pass_through
+    (input  ready)
+    (output valid)
+    (latency (max 3))
+    (compute
+      (assign valid ready))))

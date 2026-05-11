@@ -2,6 +2,9 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: R14 `.isf` parser — full construct coverage
+- Active lane: `R14`. All constructs validated, tracing added, 3 passing tests. Next: scheduler.
+
 ## 2026-05-11: R14 `.isf` parser — first slice
 - Active lane: `R14`. `FSM::Adapter::ISF` with LispishAdapter, parser, fixture, 2 passing tests.
 

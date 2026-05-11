@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: R14 `.isf` parser — full construct coverage
+- Added tracing (`FSM::Debug`) to `ISF`, `ISF::Parser`, `ISF::LispishAdapter`
+- Created `isf/full_featured.isf` — exercises all defined constructs:
+  transactions (with sample/drive/await/complete/latency), composition (do/spawn/await_all),
+  rules (when/assign/trigger/pulse/assert), priority (inline + separate),
+  resources, phases, pipeline stages, handshakes, named/anonymous spawn
+- Created `t/1093-isf-parser-full-featured.t` — 50+ assertions validating all constructs
+- All 3 ISF tests pass
 ## 2026-05-11: R14 `.isf` parser — first implementation slice
 - Created `perl/FSM/Adapter/ISF.pm` — facade for `.isf` parsing
 - Created `perl/FSM/Adapter/ISF/Parser.pm` — validates `.isf` AST and produces typed actor hash

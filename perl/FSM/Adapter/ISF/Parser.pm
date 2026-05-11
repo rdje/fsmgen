@@ -10,6 +10,7 @@ no warnings 'experimental::signatures';
 use Lispish;
 use File::Slurp qw(read_file);
 use FSM::Adapter::ISF::LispishAdapter;
+use FSM::Debug;
 
 # Parses .isf source files into a structured, validated AST.
 #
@@ -37,15 +38,22 @@ sub new($class, %args) {
 }
 
 sub parse_file($self, $isf_path) {
+    fsm_trace_enter("Parser parse_file: $isf_path", 2);
     my $source_text = read_file($isf_path);
-    return $self->parse_source($source_text, $isf_path);
+    my $result = $self->parse_source($source_text, $isf_path);
+    fsm_trace_exit("Parser parse_file completed for $isf_path", 2);
+    return $result;
 }
 
 sub parse_source($self, $source_text, $source_label) {
+    fsm_trace_enter("Parser parse_source: $source_label", 2);
+
     # Stage 1: raw Lispish parse
+    fsm_debug("Raw Lispish parse", 3);
     my $raw = Lispish::multi(\$source_text);
     confess "Error: failed to parse .isf source '$source_label' with Lispish\n"
         unless defined $raw && ref($raw) eq 'ARRAY';
+    fsm_debug("Lispish produced " . scalar(@$raw) . " top-level form(s)", 3);
 
     # Stage 2: normalize through the Lispish adapter
     my $actor_ast = $self->{adapter}->find_form_by_head($raw, 'actor');
@@ -53,13 +61,24 @@ sub parse_source($self, $source_text, $source_label) {
         unless $actor_ast;
 
     # Stage 3: validate and build typed AST
-    return $self->_build_actor($actor_ast, $source_label);
+    fsm_debug("Building typed actor AST", 3);
+    my $result = $self->_build_actor($actor_ast, $source_label);
+    fsm_debug("Actor '" . $result->{actor_name} . "' parsed: "
+        . scalar(@{$result->{transactions}}) . " tx, "
+        . scalar(@{$result->{rules}}) . " rules, "
+        . scalar(@{$result->{interface}{inputs}}) . " inputs, "
+        . scalar(@{$result->{interface}{outputs}}) . " outputs", 2);
+    fsm_trace_exit("Parser parse_source completed for $source_label", 2);
+    return $result;
 }
 
 # Build the typed actor hash from the normalized actor AST.
 # The LispishAdapter has already produced canonical [actor, name, body...] form.
 sub _build_actor($self, $actor_ast, $source_label) {
+    fsm_trace_enter('Parser _build_actor', 3);
     my ($actor_head, $actor_name, @body) = @$actor_ast;
+
+    fsm_debug("Building actor '$actor_name' with " . scalar(@body) . " body clause(s)", 3);
 
     confess "Error: (actor ...) requires a name\n"
         unless defined $actor_name && !ref($actor_name);
@@ -75,6 +94,8 @@ sub _build_actor($self, $actor_ast, $source_label) {
         rules        => [],
         resources    => [],
         priorities   => [],
+        phases       => [],
+        stages       => [],
     };
 
     for my $clause (@body) {
@@ -92,12 +113,15 @@ sub _build_actor($self, $actor_ast, $source_label) {
             when ('rule')      { push @{$result->{rules}}, $self->_parse_rule($clause); }
             when ('resources') { $result->{resources} = $self->_parse_resources($clause); }
             when ('priority')  { push @{$result->{priorities}}, $self->_parse_priority($clause); }
+            when ('phase')     { push @{$result->{phases}},     $self->_parse_phase($clause); }
+            when ('stage')     { push @{$result->{stages}},     $self->_parse_stage($clause); }
             default {
                 confess "Error: unknown actor clause '$keyword' in actor '$actor_name'\n";
             }
         }
     }
 
+    fsm_trace_exit('Parser _build_actor completed', 3);
     return $result;
 }
 
@@ -224,6 +248,26 @@ sub _parse_resources($self, $clause) {
 
 sub _parse_priority($self, $clause) {
     return [ @{$clause}[1 .. $#$clause] ];
+}
+
+sub _parse_phase($self, $clause) {
+    confess "Error: (phase ...) requires a name\n" unless @$clause >= 2;
+    my $name = $clause->[1];
+    my @body;
+    for my $i (2 .. $#$clause) {
+        push @body, $clause->[$i];
+    }
+    return { name => $name, body => \@body };
+}
+
+sub _parse_stage($self, $clause) {
+    confess "Error: (stage ...) requires a name\n" unless @$clause >= 2;
+    my $name = $clause->[1];
+    my @body;
+    for my $i (2 .. $#$clause) {
+        push @body, $clause->[$i];
+    }
+    return { name => $name, body => \@body };
 }
 
 1;

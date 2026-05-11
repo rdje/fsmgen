@@ -6,6 +6,7 @@ use warnings;
 use Carp qw(confess);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
+use FSM::Debug;
 
 # Adapts raw Lispish::multi / Lispish::single output into a normalized
 # ISF AST suitable for consumption by FSM::Adapter::ISF::Parser.

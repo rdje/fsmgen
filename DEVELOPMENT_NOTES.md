@@ -1,5 +1,7 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-11: R14 `.isf` parser — full construct coverage
+- Tracing added. All defined constructs validated: transactions, rules, resources, priority, phases, stages.
 ## 2026-05-11: R14 `.isf` parser — first slice
 - ISF::LispishAdapter handles Lispish nested-head quirk. ISF::Parser validates and builds typed AST.
 ## 2026-05-11: `.isf` specification v0.5 — watchdog, named spawn
