@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: HDLGenerator composition plan contract full surface survives JSON
+- Roadmap lane: R13. Completed slice: t/1079. Public behavior changed: no.
+- Next bounded slice: continue composition plan full-surface stability audits.
+
 ## 2026-05-11: HDLGenerator statistics contract full surface rebuilds cleanly
 - Roadmap lane: R13. Completed slice: t/1078. Public behavior changed: no.
 - Next bounded slice: composition plan contract.

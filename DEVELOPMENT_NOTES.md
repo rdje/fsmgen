@@ -1,5 +1,7 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-11: HDLGenerator composition plan contract full surface survives JSON
+- The HDLGenerator composition plan contract now has a full-surface JSON round-trip audit.
 ## 2026-05-11: HDLGenerator statistics contract full surface rebuilds cleanly
 - The HDLGenerator statistics contract now has a full-surface defensive-copy audit.
 ## 2026-05-11: HDLGenerator statistics contract full surface survives JSON
