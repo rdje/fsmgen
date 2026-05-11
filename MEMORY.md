@@ -1,5 +1,7 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: Semantic exports contract full surface survives JSON
+- Added t/1071. Extends R13 auditing to the bounded semantic exports contract.
 ## 2026-05-11: Backend validation contract full surface rebuilds cleanly
 - Added t/1070. Complements t/1069 JSON audit with defensive-copy guard.
 - Completes the backend validation contract full-surface audit pair.

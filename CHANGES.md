@@ -1,6 +1,8 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### Semantic exports contract full surface survives JSON
+- Added t/1071. Updated live docs for R13.
 ### Backend validation contract full surface rebuilds cleanly
 - Added t/1070. Updated live docs for R13.
 ### Backend validation contract full surface survives JSON
