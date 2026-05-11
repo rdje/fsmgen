@@ -1,5 +1,7 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: HDL external validation contract full surface survives JSON
+- Added t/1057. Extends R13 auditing to the bounded HDL external validation contract.
 ## 2026-05-11: Extension contract full surface rebuilds cleanly
 - Added t/1056. Complements extension JSON audit with defensive-copy guard.
 ## 2026-05-11: Extension contract full surface survives JSON

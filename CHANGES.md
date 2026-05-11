@@ -1,6 +1,8 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### HDL external validation contract full surface survives JSON
+- Added t/1057. Updated live docs for R13.
 ### Extension contract full surface rebuilds cleanly
 - Added t/1056. Updated live docs for R13.
 ### Extension contract full surface survives JSON
