@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: Normalized semantic forward IR contract full surface rebuilds cleanly
+- Roadmap lane: `R13` public embedding/API stabilization.
+- Completed slice:
+  [t/1022-normalized-semantic-forward-ir-contract-full-surface-defensive-copy-audit.t](t/1022-normalized-semantic-forward-ir-contract-full-surface-defensive-copy-audit.t)
+  now proves a fresh normalized semantic forward IR contract build stays clean
+  after caller mutation.
+- Public behavior changed: no; this is a full-surface stability audit only.
+- Focused validation passed:
+  `prove -I perl t/1022-normalized-semantic-forward-ir-contract-full-surface-defensive-copy-audit.t t/1021-normalized-semantic-forward-ir-contract-full-surface-json-roundtrip-audit.t t/334-normalized-semantic-forward-ir-contract.t t/471-normalized-semantic-forward-ir-contract-defensive-copy-boundary-audit.t`.
+- Next bounded slice: continue normalized semantic nested-contract full-surface stability audits.
+
 ## 2026-05-11: Normalized semantic forward IR contract full surface survives JSON
 - Roadmap lane: `R13` public embedding/API stabilization.
 - Completed slice:
