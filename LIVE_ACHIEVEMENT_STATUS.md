@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: Normalized semantic module contract full surface rebuilds cleanly
+- Roadmap lane: `R13` public embedding/API stabilization.
+- Completed slice:
+  [t/1018-normalized-semantic-module-contract-full-surface-defensive-copy-audit.t](t/1018-normalized-semantic-module-contract-full-surface-defensive-copy-audit.t)
+  now proves a fresh normalized semantic module contract build stays clean
+  after caller mutation.
+- Public behavior changed: no; this is a full-surface stability audit only.
+- Focused validation passed:
+  `prove -I perl t/1018-normalized-semantic-module-contract-full-surface-defensive-copy-audit.t t/1017-normalized-semantic-module-contract-full-surface-json-roundtrip-audit.t t/332-normalized-semantic-module-contract.t t/469-normalized-semantic-module-contract-defensive-copy-boundary-audit.t`.
+- Next bounded slice: continue normalized semantic nested-contract full-surface stability audits.
+
 ## 2026-05-11: Normalized semantic module contract full surface survives JSON
 - Roadmap lane: `R13` public embedding/API stabilization.
 - Completed slice:
