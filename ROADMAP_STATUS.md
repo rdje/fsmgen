@@ -1,7 +1,7 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R14` — Intent Scheduling. Transaction lowering shipped: `FSM::Scheduler::ISF::TransactionLowering` converts ISF clauses to `.fsm` state DTs. Full pipeline verified: `.isf` → `.fsm` → SystemVerilog (strict-mode check passes). 6 ISF tests pass. Next: fix sample indentation, handle `(repeat ...)`, wire `bin/fsmgen` to accept `.isf` files.
+- Active lane: `R14`. Repeat lowering + counter inference shipped. 7 ISF tests. Both fixtures compile.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.

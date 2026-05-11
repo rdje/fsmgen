@@ -24,8 +24,9 @@ sub lower_transaction($self, $tx, $actor) {
 
     my $tx_name    = $tx->{name};
     my $handshakes = $actor->{handshakes};
-    my @state_specs;            # { name, kind, body_lines, samples }
+    my @state_specs;            # { name, kind, body, ... }
     my @pending_samples;
+    my @inferred_counters;      # counter names inferred from (repeat ...)
     my $idx = 0;
 
     for my $clause (@{$tx->{clauses}}) {
@@ -49,6 +50,12 @@ sub lower_transaction($self, $tx, $actor) {
         elsif ($kind eq 'complete') {
             push @state_specs, $self->_complete_clause($clause, $tx_name, $idx++);
         }
+        elsif ($kind eq 'repeat') {
+            my ($repeat_states, $counter) =
+                $self->_repeat_clause($clause, $tx_name, \$idx, \@pending_samples);
+            push @state_specs, @$repeat_states;
+            push @inferred_counters, $counter;
+        }
         elsif ($kind eq 'latency') {
             fsm_debug("Transaction '$tx_name': latency constraint recorded", 3);
         }
@@ -66,7 +73,7 @@ sub lower_transaction($self, $tx, $actor) {
     $self->_link_states(\@state_specs, $tx_name);
 
     fsm_trace_exit("TransactionLowering: $tx_name produced " . scalar(@state_specs) . " states", 3);
-    return \@state_specs;
+    return { states => \@state_specs, counters => \@inferred_counters };
 }
 
 # --- Phase 1: Collect state bodies ---
@@ -159,8 +166,65 @@ sub _placeholder_clause($self, $clause, $tx_name, $idx) {
     return {
         name => $name,
         kind => 'sequential',
-        body => ["    ;; ($kind ...) — lowering deferred"],
+        body => ["    ;; ($kind ...) \x{2014} lowering deferred"],
     };
+}
+
+sub _repeat_clause($self, $clause, $tx_name, $idx_ref, $pending) {
+    # (repeat count_expr body...)
+    # Produces: counter_init, body_states, counter_check (loop back)
+    my $count_expr = $clause->[1];
+    my $counter_name = "${tx_name}_cnt";
+    my @states;
+
+    # Init state: load counter
+    my $init_name = _state_name($tx_name, 'repeat_init', $$idx_ref++);
+    push @states, {
+        name => $init_name,
+        kind => 'sequential',
+        body => ["    (<= ($counter_name $count_expr))"],
+    };
+
+    # Body states: process clauses inside repeat as inline states
+    my @body_clauses = @{$clause}[2 .. $#$clause];
+    my @local_pending;
+
+    for my $bc (@body_clauses) {
+        next unless ref($bc) eq 'ARRAY';
+        my $bk = $bc->[0];
+
+        if ($bk eq 'await') {
+            push @states, $self->_await_clause($bc, $tx_name, $$idx_ref++);
+        }
+        elsif ($bk eq 'sample') {
+            push @local_pending, $bc;
+        }
+        elsif ($bk eq 'drive') {
+            my $samples = [splice @local_pending];
+            push @states, $self->_drive_clause($bc, $tx_name, $samples, $$idx_ref++);
+        }
+    }
+
+    # Flush any pending samples inside the repeat
+    if (@local_pending) {
+        push @states, $self->_sample_state($tx_name, \@local_pending, $$idx_ref++);
+    }
+
+    # Check state: decrement counter, loop back or exit
+    my $check_name = _state_name($tx_name, 'repeat_check', $$idx_ref++);
+    my $first_body_name = $states[0]{name};
+
+    push @states, {
+        name => $check_name,
+        kind => 'repeat_check',
+        counter => $counter_name,
+        body => [
+            "    (<- ($counter_name (- $counter_name 1)))",
+        ],
+        loop_target => $first_body_name,
+    };
+
+    return (\@states, $counter_name);
 }
 
 # --- Phase 2: Link states with transitions ---
@@ -186,11 +250,15 @@ sub _link_states($self, $state_specs, $tx_name) {
             # Return to entry (idle) state after completion
             push @{$spec->{body}}, "    (-> $entry_state)";
         }
+        elsif ($kind eq 'repeat_check') {
+            my $ctr = $spec->{counter};
+            push @{$spec->{body}}, "    (?$ctr";
+            push @{$spec->{body}}, "      (=0 (-> $next))" if $next;
+            push @{$spec->{body}}, "      (=1 (-> $spec->{loop_target}))" if $spec->{loop_target};
+            push @{$spec->{body}}, '    )';
+        }
         elsif ($kind eq 'await') {
-            my $cond = $spec->{cond_port};
-            push @{$spec->{body}}, "    (<$cond";
-            push @{$spec->{body}}, "      (-> $next)" if $next;
-            push @{$spec->{body}}, "    )";
+            push @{$spec->{body}}, "    (-> $next <$spec->{cond_port})" if $next;
         }
         elsif ($kind eq 'sequential' && $next) {
             push @{$spec->{body}}, "    (-> $next)";

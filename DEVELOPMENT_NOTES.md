@@ -1,6 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
-## 2026-05-11: R14 `.isf` scheduler — transaction lowering ships
+## 2026-05-11: R14 `.isf` scheduler — repeat, counter inference
+- Counter inferred from (repeat N ...), decremented with <-, loop-back with (?counter ...).
+## 2026-05-11: R14 `.isf` scheduler — transaction lowering
 - Full pipeline: `isf/apb_requester.isf` → scheduler → `.fsm` → strict-mode check passes → SystemVerilog.
 ## 2026-05-11: R14 `.isf` scheduler — module header
 - `ModuleEmitter` maps ISF `(clock ...)`, `(reset ...)`, `(interface ...)` to `.fsm` `+system`/`+size`.

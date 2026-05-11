@@ -2,7 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
-## 2026-05-11: R14 `.isf` scheduler — transaction lowering, full pipeline
+## 2026-05-11: R14 `.isf` scheduler — repeat, counters
+- Active lane: `R14`. Repeat lowering, counter inference, 7 ISF tests, both fixtures compile.
+
+## 2026-05-11: R14 `.isf` scheduler — transaction lowering
 - Active lane: `R14`. Transaction lowering converts ISF clauses → `.fsm` states. Full pipeline works end-to-end.
   `isf/apb_requester.isf` → `.fsm` → SystemVerilog. 6 ISF tests pass.
 

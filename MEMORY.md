@@ -1,6 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
-## 2026-05-11: R14 `.isf` scheduler — transaction lowering ships, full pipeline works
+## 2026-05-11: R14 `.isf` scheduler — repeat lowering, counter inference
+- `TransactionLowering` now handles `(repeat N body...)`: emits counter init, inline
+  body states, and counter check with `(?counter ...)` loop-back decision tree
+- Counters inferred automatically with `<-` (Q-named) decrement to avoid D-input
+  self-feedback violation
+- `ModuleEmitter` accepts inferred counters for `+size` declaration
+- Created `isf/burst_reader.isf` fixture and `t/1095-isf-scheduler-burst-reader.t`
+- Both fixtures (APB requester, burst reader) compile through strict-mode check
+- 7 ISF tests pass
+## 2026-05-11: R14 `.isf` scheduler — transaction lowering ships
 - Created `FSM::Scheduler::ISF::TransactionLowering` — converts ISF transaction
   clauses to `.fsm` state DTs: `(on ...)` → entry state, `(drive ...)` → sequential
   state, `(await ...)` → conditional state, `(sample ...)` → D-input assignment,

@@ -11,22 +11,14 @@ use FSM::Debug;
 use FSM::Scheduler::ISF::ModuleEmitter;
 use FSM::Scheduler::ISF::TransactionLowering;
 
-# ISF Scheduler — lowers a parsed .isf actor AST into explicit .fsm source.
-#
-# Pipeline:
-#   parsed ISF actor (from FSM::Adapter::ISF)
-#     -> ModuleEmitter (header, ports, system)
-#     -> TransactionLowering (state machines) [future]
-#     -> .fsm source text
-
 sub new($class, %args) {
     my $debug = $args{debug} // 0;
     fsm_trace_enter('Initialize ISF scheduler', 2);
 
     my $self = bless {
-        debug         => $debug,
+        debug          => $debug,
         module_emitter => FSM::Scheduler::ISF::ModuleEmitter->new(debug => $debug),
-        tx_lowering   => FSM::Scheduler::ISF::TransactionLowering->new(debug => $debug),
+        tx_lowering    => FSM::Scheduler::ISF::TransactionLowering->new(debug => $debug),
     }, $class;
 
     fsm_trace_exit('ISF scheduler initialized', 2);
@@ -38,24 +30,35 @@ sub lower($self, $actor) {
 
     my @lines;
 
-    # Module header
+    # Module header and system
     push @lines, $self->{module_emitter}->emit_header($actor);
     push @lines, '';
     push @lines, $self->{module_emitter}->emit_system($actor);
     push @lines, '';
-    push @lines, $self->{module_emitter}->emit_ports($actor);
+
+    # Transaction lowering — collect states and infer counters
+    my $tx_lowering = $self->{tx_lowering};
+    my %all_counters;
+    my @all_states;
+
+    for my $tx (@{$actor->{transactions}}) {
+        my $result = $tx_lowering->lower_transaction($tx, $actor);
+        push @all_states, @{$result->{states}};
+        for my $c (@{$result->{counters}}) {
+            $all_counters{$c} = 8;
+        }
+    }
+
+    # Emit ports with inferred counters
+    push @lines, $self->{module_emitter}->emit_ports($actor, \%all_counters);
     push @lines, '';
 
-    # Transaction lowering
-    my $tx_lowering = $self->{tx_lowering};
-    for my $tx (@{$actor->{transactions}}) {
-        my $states = $tx_lowering->lower_transaction($tx, $actor);
-        for my $state (@$states) {
-            push @lines, "  ($state->{name}";
-            push @lines, @{$state->{body}};
-            push @lines, '  )';
-            push @lines, '';
-        }
+    # Emit states
+    for my $state (@all_states) {
+        push @lines, "  ($state->{name}";
+        push @lines, @{$state->{body}};
+        push @lines, '  )';
+        push @lines, '';
     }
 
     push @lines, ')';

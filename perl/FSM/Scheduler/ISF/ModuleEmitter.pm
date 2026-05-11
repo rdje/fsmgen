@@ -53,7 +53,7 @@ sub emit_system($self, $actor) {
     return join("\n", @lines);
 }
 
-sub emit_ports($self, $actor) {
+sub emit_ports($self, $actor, $counters) {
     fsm_trace_enter('ModuleEmitter emit_ports', 3);
     my @lines;
     push @lines, '  (+size';
@@ -72,6 +72,13 @@ sub emit_ports($self, $actor) {
         my $name  = $port->{name};
         my $width = $port->{width} // 1;
         push @lines, "    ($name $width)";
+    }
+
+    # Inferred counters from (repeat ...)
+    if ($counters && %$counters) {
+        for my $name (sort keys %$counters) {
+            push @lines, "    ($name $counters->{$name})";
+        }
     }
 
     push @lines, '  )';

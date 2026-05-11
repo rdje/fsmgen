@@ -1,0 +1,34 @@
+;; Burst read actor exercising (repeat ...)
+(actor burst_reader
+  (clock clk)
+  (reset rst_n (async) (active_low))
+  (watchdog 65536)
+
+  (interface
+    (input  start)
+    (output done)
+    (input  addr (width 32))
+    (input  burst_len (width 8))
+    (output rdata (width 32))
+    (input  ready)
+    (output valid))
+
+  (handshake cmd
+    (valid start)
+    (ready done))
+
+  (transaction read_burst
+    (on cmd
+      (sample addr       as base_addr)
+      (sample burst_len  as beats))
+    (drive header
+      (assign valid 1)
+      (assign rdata base_addr))
+    (await ready)
+    (repeat beats
+      (await ready)
+      (sample rdata as word))
+    (drive footer
+      (assign valid 0))
+    (complete done)
+    (latency (min 2) (max 256))))

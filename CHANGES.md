@@ -1,7 +1,9 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
-### R14 `.isf` scheduler — transaction lowering, full pipeline works
+### R14 `.isf` scheduler — repeat lowering, counter inference
+- `(repeat N ...)` → counter init + loop-back with `(?counter ...)` DT. 7 ISF tests.
+### R14 `.isf` scheduler — transaction lowering, full pipeline
 - `TransactionLowering`: ISF clauses → `.fsm` states. End-to-end: `.isf` → `.fsm` → SV.
   6 ISF tests pass. Generated `.fsm` compiles through strict mode.
 ### R14 `.isf` scheduler — module header emission
