@@ -1,6 +1,7 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
+- Next decision point: t/1042 now proves a fresh diagnostic code registry contract owner build stays clean after caller mutation. Next bounded R13 slice: remaining contract families.
 - Next decision point: t/1041 now proves the full diagnostic code registry contract owner survives JSON. Next bounded R13 slice: diagnostic code registry full-surface stability audits.
 - Next decision point: t/1040 now proves a fresh match contract owner build stays clean after caller mutation. Next bounded R13 slice: remaining contract families.
 - Next decision point: t/1039 now proves the full match contract owner survives JSON encode/decode unchanged. Next bounded R13 slice: match contract full-surface stability audits.

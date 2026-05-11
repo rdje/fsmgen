@@ -1,5 +1,7 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: Diagnostic code registry contract full surface rebuilds cleanly
+- Added t/1042. Complements the diagnostic code registry JSON audit with a defensive-copy guard.
 ## 2026-05-11: Diagnostic code registry contract full surface survives JSON
 - Added t/1041. Extends R13 auditing to the bounded diagnostic code registry contract.
 ## 2026-05-11: Support accounting match contract full surface rebuilds cleanly

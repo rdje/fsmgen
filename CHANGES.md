@@ -1,6 +1,8 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### Diagnostic code registry contract full surface rebuilds cleanly
+- Added t/1042. Updated live docs for R13.
 ### Diagnostic code registry contract full surface survives JSON
 - Added t/1041. Updated live docs for R13.
 ### Support accounting match contract full surface rebuilds cleanly
