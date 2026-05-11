@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: R14 promoted — TRM / protocol-spec intent capture now active
+- Promoted H4 (TRM intent capture) to active `R14` workstream. Demoted former R14 (VHDL backend) to horizon H5.
+- R8–R13 contract-hardening lanes are complete. R13 closed with 96 full-surface audit tests.
+- Updated [ROADMAP_V2.md](ROADMAP_V2.md) with new R14 definition, sequencing, and H5 horizon entry.
+- First R14 slice: internalize the AXI case-study method, produce first bounded protocol capture worksheet.
+## 2026-05-11: R14 VHDL backend scope defined
+- Created [docs/VHDL_SCOPE.md](docs/VHDL_SCOPE.md) defining the scoped R14 VHDL backend plan.
+- First lane: single-FSM direct roots, structural SV→VHDL conversion, no composition-top yet.
+- Implementation phases: conversion scaffolding → semantic conversion → regression hardening.
+- R13 public contract full-surface audits are complete (96 tests across all Support::*Contract modules).
 ## 2026-05-11: HDLGenerator facade contract full surface rebuilds cleanly
 - Added t/1090. Complements t/1089 JSON audit.
 ## 2026-05-11: HDLGenerator facade contract full surface survives JSON

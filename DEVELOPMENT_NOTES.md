@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-11: R14 reprioritized — TRM intent capture now active
+- H4 (TRM / protocol-spec intent capture) promoted to active R14. VHDL demoted to horizon H5.
+- R8–R13 closed, R13 finalized at 96 full-surface audit tests.
+- First R14 slice follows the AXI case-study method: actor-first, dossier/catalog/sheet, explicit ambiguity reporting.
+## 2026-05-11: R14 VHDL backend scope defined
+- Created VHDL_SCOPE.md defining the scoped R14 VHDL backend plan following the existing SV→Verilog conversion pattern.
+- R13 public contract full-surface audits are complete (96 tests).
 ## 2026-05-11: HDLGenerator facade contract full surface rebuilds cleanly
 - The HDLGenerator facade contract now has a full-surface defensive-copy audit.
 ## 2026-05-11: HDLGenerator facade contract full surface survives JSON

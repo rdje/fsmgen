@@ -1,6 +1,8 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
+- Active lane: `R14` — TRM / protocol-spec intent capture. Former H4 promoted to active status on 2026-05-11. Former R14 (VHDL backend) demoted to horizon H5. First slice: read and internalize the AXI case-study method in [docs/INTENT_CAPTURE_AXI_CASE_STUDY.md](docs/INTENT_CAPTURE_AXI_CASE_STUDY.md), then produce the first bounded protocol capture worksheet for an APB requester.
+- Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
 - Next decision point: t/1090 now proves a fresh facade contract owner build stays clean. Next bounded R13 slice: continue remaining contract full-surface audits.
 - Next decision point: t/1089 now proves the full HDLGenerator facade contract owner survives JSON. Next bounded R13 slice: facade full-surface stability audits.
 - Next decision point: t/1088 now proves a fresh resolved package imports contract owner build stays clean. HDLGenerator nested family fully audited. Next bounded R13 slice: continue remaining contract audits.

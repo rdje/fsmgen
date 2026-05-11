@@ -2,6 +2,12 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: R14 reprioritized — TRM intent capture now active
+- Active lane: `R14` — TRM / protocol-spec intent capture (promoted from H4).
+- R8–R13 lanes closed. R13: 96 full-surface audits complete.
+- Former R14 (VHDL) demoted to horizon H5. VHDL_SCOPE.md preserved for future reference.
+- Next bounded slice: internalize the AXI case-study method, produce first APB requester capture worksheet.
+
 ## 2026-05-11: HDLGenerator facade contract full surface rebuilds cleanly
 - Roadmap lane: R13. Completed slice: t/1090. Public behavior changed: no.
 - Next bounded slice: continue remaining contract full-surface audits.

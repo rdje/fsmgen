@@ -23,14 +23,14 @@ Use [ROADMAP_STATUS.md](ROADMAP_STATUS.md) for:
 - scoped composition,
 - and typed extension replacement.
 
-The remaining work is no longer “finish the refactor.”
-It is “turn the modernized tool into a stricter, more explicit, more trustworthy language/tool contract.”
+The remaining work is no longer "finish the refactor."
+It is "turn the modernized tool into a stricter, more explicit, more trustworthy language/tool contract."
 
 That is what roadmap v2 is for.
 
 ## v2 principles
 - Prefer explicit language contracts over implicit parser acceptance.
-- Distinguish “implemented” from “supported”.
+- Distinguish "implemented" from "supported".
 - Make diagnostics part of the product, not just a debugging aid.
 - Grow surface area only when semantics are crisp and regression-backed.
 - Keep composition and extension growth deliberate rather than legacy-compatible by default.
@@ -113,7 +113,7 @@ Expected result:
 
 ### R9. Strict mode and support-tier enforcement
 Goal:
-- let users choose “only the supported language” explicitly.
+- let users choose "only the supported language" explicitly.
 
 Deliverable themes:
 - a strict mode in the CLI/pipeline,
@@ -203,7 +203,7 @@ Deliverable themes:
   - add `?dt:name` as the smallest standalone module description,
   - let `?dt:name` contain any number of internal general DT blocks such as `(-foo ...)`,
   - `?dt:name` may mix combinational outputs such as `(P = RHS)` and sequential outputs such as `(Q <- QRHS)` in the same standalone DT module,
-  - the semantic split from `?fsm:name` is the control model, not “combinational only” versus “sequential allowed”,
+  - the semantic split from `?fsm:name` is the control model, not "combinational only" versus "sequential allowed",
   - `?fsm:name` should implicitly declare `clk` / `rst_n`,
   - `?dt:name` should implicitly declare `clk` / `rst_n` only when at least one sequential assignment exists in that standalone DT module,
   - `?top:name` and sequential `?dt:name` should keep `rst_n` as the default async-reset convention even if the current explicit `?fsm` `+system` compatibility residue still spells `rstn`,
@@ -404,10 +404,10 @@ First shipped `R11` slice now in tree:
   - and realized composition-plan instances now also preserve those same typed nodes before structural serialization instead of forcing `StructuralRTLIR` to synthesize them late,
   - with that earlier binding normalization now owned by `FSM::Composition::RealizedInstance` itself instead of only by `HDLGenerator`,
   - and the current bounded `signal_ref` / `open` / bit-vector-literal construction, signal-name recovery, and backend-neutral text rendering for those actual-connection nodes now also live in dedicated `FSM::IR::StructuralRTLIR::ConnectionExpr` helpers instead of staying split across pipeline glue,
-  - with the remaining “effective binding expression” fallback now also centralized there, so structural serialization no longer re-synthesizes `signal_ref` nodes ad hoc from `signal_name` inside `HDLGenerator`,
+  - with the remaining "effective binding expression" fallback now also centralized there, so structural serialization no longer re-synthesizes `signal_ref` nodes ad hoc from `signal_name` inside `HDLGenerator`,
   - and the first bounded signal-ref binding constructor/update helpers now also live there, so the pipeline no longer hand-pairs `signal_name` and `connection_expr` when creating or rebinding structural instance bindings,
   - with normalized binding cloning/backfilling now also centralized there, so both `FSM::Composition::RealizedInstance` and structural instance-binding serialization consume the same bounded binding contract,
-  - and the first bounded signal-ref binding-list ensure/set operations now also live there, so `HDLGenerator` no longer owns the low-level “reuse this binding versus append/update it” rules for structural port-binding lists,
+  - and the first bounded signal-ref binding-list ensure/set operations now also live there, so `HDLGenerator` no longer owns the low-level "reuse this binding versus append/update it" rules for structural port-binding lists,
   - and explicit `?toplink` may now use `=open`, scalar `=0` / `=1`, unsized binary/decimal/signed-decimal/octal/hex direct forms such as `=0b10`, `='b10`, `=0d10`, `='d10`, `=-1`, `=0d-1`, `='sd-1`, `='sb1010`, `='so7`, `='shA`, `=0o7`, `='o7`, `=0xA`, `='hA`, `=170`, or `=A5`, underscore-separated spellings such as `=0b1010_0101`, `='b1010_0101`, `=1_70`, `='d1_70`, `=0o2_45`, `='o2_45`, `='so6_45`, `='hA_5`, and `=8'hA_5`, and exact-width `=N'b...` / `=N'sb...` / `=N'd...` / `=N'sd...` / `=N'o...` / `=N'so...` / `=N'h...` / `=N'sh...` as source actuals, with `=open` still targeting realized child inputs only while direct scalar `=0` / `=1` plus unsized binary/decimal/octal/hex direct actuals widen to the realized child-input or declared top-output target width, unsized signed decimal direct actuals plus unsized signed binary/octal/hex direct actuals widen when the signed value fits the signed range of that direct target width, exact-width literal actuals may now also drive declared top outputs, and linked planning preserves those bindings directly instead of inventing helper nets or undeclared same-name top inputs,
   - and bounded composition-root `+constants` / `+enums` symbols may now also feed those explicit `?toplink` literal-actual positions, so direct bindings and bounded concat operands can use named literal actuals such as `=RESET_BYTE`, `=BYTES[1]`, `=FRAME.flag`, or `=mode.BUSY` without opening a separate symbol-only lowering path or claiming the broader future type lane is already shipped,
   - and the semantic package/import lane now also ships one bounded whole-aggregate slice on that same literal-actual path and the direct generated-root path: `?top` may use bounded `+import` blocks, shared `?pkg:name` roots may be embedded or resolved through the normal search roots, namespaced package symbols such as `=shared.RESET_BYTE`, `=shared.mode.BUSY`, `=shared.BYTES[1]`, `=shared.FRAME.flag`, `=shared.HEADER`, or `=shared.FRAME` now resolve onto the same direct/concat structural literal path, direct `?fsm` / `?dt` roots may now also use bounded `+import` blocks whose namespaced package scalar leaves and whole aggregate roots resolve in assignment RHS expressions and guard equality conditions, and hash-like whole roots now pack authored members left to right in declaration order when every leaf is still scalar-literal-lowerable,
@@ -599,7 +599,7 @@ First bounded slice:
 - lock one composed protocol harness such as `apb_tb` so the corpus includes a real generated-child/toplink path and not only leaf modules,
 - promote that first slice into a small machine-checked corpus catalog so future support claims grow by explicit classification instead of ad hoc hardcoded test lists,
 - and widen that same first catalog beyond `supported_smoke` by proving at least one explicit compatibility-retained `legacy_out_of_scope` entry and one explicit `expected_failure` entry,
-- then prove that `expected_failure` is not just “strict-mode rejection” by adding at least one malformed-language contract entry with a normal pipeline/CLI rejection boundary,
+- then prove that `expected_failure` is not just "strict-mode rejection" by adding at least one malformed-language contract entry with a normal pipeline/CLI rejection boundary,
 - then widen the same catalog beyond root-level legacy behavior by adding at least one section-level compatibility-residue asset that is retained in default mode but intentionally rejected in strict mode,
 - then widen the same catalog again into generated-child source-root residue by adding at least one compatibility-retained child-root asset plus one strict expected-rejection child-root asset that both depend on explicit source-search-path realization,
 - then widen the same catalog again into composition-contract rejection by adding at least one composition-top expected-failure asset whose failure is neither a strict-mode cut nor a direct language-contract parse rejection,
@@ -651,17 +651,28 @@ Current direction:
 Expected result:
 - the project becomes a stronger platform for downstream tooling, not just a CLI.
 
-### R14. VHDL backend, if still wanted
+### R14. TRM / protocol-spec intent capture
 Goal:
-- implement a real VHDL backend only after the language contract is solid enough to support a second backend honestly.
+- add a bounded spec-to-`.fsm` lane that can capture executable design intent
+  from technical reference manuals, protocol specifications, and normalized
+  `Markdown` source material.
 
 Deliverable themes:
-- define the VHDL backend scope,
-- implement the single-FSM lane first,
-- then decide whether composition-top VHDL generation is still desirable.
+- begin with design/probe work and bounded capture experiments,
+- treat `PDF -> .md` normalization as a separate pre-step,
+- work actor-first instead of protocol-as-a-monolith,
+- build protocol dossier, actor catalog, actor sheets, assertion ledger,
+- keep source facts, derived machine rules, local design decisions, and
+  explicit abstractions separate,
+- emit captured `.fsm` plus a capture report distinguishing confident intent
+  from heuristic inference and unresolved ambiguity,
+- use [docs/INTENT_CAPTURE_AXI_CASE_STUDY.md](docs/INTENT_CAPTURE_AXI_CASE_STUDY.md)
+  as the current strongest concrete reference for the lane's working method.
 
 Expected result:
-- VHDL becomes a deliberate second backend, not a speculative unfinished promise.
+- a documented, repeatable intent-capture workflow that produces honest `.fsm`
+  artifacts from bounded protocol specifications with explicit ambiguity
+  reporting.
 
 ## Sequencing
 Recommended order:
@@ -678,7 +689,7 @@ Dependency logic:
 - `R10` benefits from `R8`, because better diagnostics depend on knowing the intended construct boundary.
 - `R11` should follow `R8`, because composition should grow against a stable language core.
 - `R12` should start as soon as `R8` classifications harden, because the corpus is how those claims stay honest.
-- `R14` should come last, because a second backend multiplies ambiguity if the language contract is still gray.
+- `R13` should solidify before `R14`, because the embedding/API surface is how downstream tools will consume captured `.fsm` artifacts.
 
 ## Long-term horizon (not active workstreams yet)
 These are intentional long-term goals, but they are not near-term roadmap lanes.
@@ -771,7 +782,7 @@ Expected technical pipeline:
 - and emit a recovery report alongside the recovered source.
 
 Planned IR layering:
-- do not describe the reverse-path early layer as a “non-semantic HIR”; the non-semantic layer is the parsed HDL CST/AST, and honest recovery actually needs more semantic structure rather than less,
+- do not describe the reverse-path early layer as a "non-semantic HIR"; the non-semantic layer is the parsed HDL CST/AST, and honest recovery actually needs more semantic structure rather than less,
 - the forward `.fsm` to HDL compiler should now be treated as likely converging toward `parsed .fsm AST -> semantic Intent HIR -> Lowered RTL IR -> Structural RTL IR / Connectivity IR -> backend emission`,
 - the reverse HDL-import path should converge toward `parsed HDL CST/AST -> semantic HDL HIR -> elaborated RTL IR -> Flat IR -> recovered Intent IR -> .fsm output + recovery report`,
 - the important refinement is that the current `Lowered RTL IR` should not be expected to double as the full connectivity graph forever: it can carry normalized lowering summaries and backend-relevant analysis without being the final structural object that the emitter walks,
@@ -781,7 +792,7 @@ Planned IR layering:
 - and when a connection gets too backend-specific or too awkward to keep elegant there, the healthier rule is to normalize it earlier into helper nets or auxiliary assignments and then bind the child pin to that normalized structural value,
 - one important implementation distinction is that the current `FSM::Pipeline::HDLGenerator` is still a combined compiler driver, lowering coordinator, and emitter, so any direct `Intent HIR` or `Lowered RTL IR` queries there should be treated as transitional coordinator cleanup rather than the desired final backend boundary,
 - and the convergence target is to split that combined role so orchestration may still see all three forward IRs while the pure HDL backend/emitter mostly walks `Structural RTL IR` as the last IR before HDL text,
-- and there should be no public-compatibility pretext holding that breakdown back: FSMGen is not a published public contract yet, so preserving today’s accidental monolith is less important than converging to the strongest architecture, with any internal shim accepted only when it is clearly temporary and moving toward that split,
+- and there should be no public-compatibility pretext holding that breakdown back: FSMGen is not a published public contract yet, so preserving today's accidental monolith is less important than converging to the strongest architecture, with any internal shim accepted only when it is clearly temporary and moving toward that split,
 - `Flat IR` is likely optional in the forward path at first but valuable later for deeper optimization/analysis, while it is much more likely to be necessary in the reverse path because many hardware facts only become obvious after elaboration/flattening,
 - and the reverse path therefore needs one extra semantic stage beyond the forward path: a recovered-intent layer that can preserve confidence, ambiguity, and residue instead of pretending that inference is the same thing as authored intent.
 
@@ -811,74 +822,30 @@ Prerequisite:
 - the forward `.fsm` contract, diagnostics contract, and embedding/result surfaces should already be stable enough that HDL import targets a known IR instead of a moving language boundary.
 
 ### H4. TRM / protocol-spec intent capture
+This horizon task has been promoted to the active `R14` workstream (see above).
+The detailed scope, working method, and pipeline plan now live under the active
+`R14` section of this document.
+
+### H5. VHDL backend
 Long-term goal:
-- add a bounded spec-to-`.fsm` lane that can capture executable design intent from technical reference manuals, protocol specifications, and normalized `Markdown` source material.
+- implement a real VHDL backend once a second backend is genuinely warranted.
 
 Intent:
-- treat prose/specification documents as a source of recoverable behavioral contract, role structure, timing rules, and invariants,
-- and treat spec-to-`.fsm` as intent capture rather than HDL import or exact natural-language inversion.
+- demoted from former `R14` to horizon status on 2026-05-11,
+- the scoping work already done in [docs/VHDL_SCOPE.md](docs/VHDL_SCOPE.md)
+  remains valid and should be consulted when this lane is eventually promoted.
 
-Terminology stance:
-- prefer the term `intent capture` over `intent synthesis` for this lane,
-- because the source is prose/spec text and the output should stay explicit about ambiguity, residue, and required human confirmation.
+Deliverable themes (preserved from former R14):
+- define the VHDL backend scope (done: see VHDL_SCOPE.md),
+- implement the single-FSM lane first,
+- then decide whether composition-top VHDL generation is still desirable.
 
-Primary scope boundary:
-- begin with bounded protocol and interface specifications such as `APB`, `AMBA`, `AXI`, `I2C`, and `I2S`,
-- rather than attempting arbitrary prose-heavy hardware manuals all at once.
-
-Likely output shape:
-- requester / initiator role `.fsm` roots,
-- completer / target role `.fsm` roots,
-- protocol checker / monitor assets,
-- reusable assertions and invariants,
-- and optional `.fsm` composition or testbench harnesses that exercise those roles together.
-
-Preferred execution order:
-- begin with design/probe work and bounded capture experiments before promoting this to a primary implementation lane,
-- treat `PDF -> .md` normalization as a separate pre-step rather than burying document cleanup inside the capture engine,
-- keep serious implementation behind the active forward/backend cleanup and language-contract stabilization so this lane targets steadier IR and reporting surfaces,
-- and let successful captured protocols later seed the future reusable-library lane rather than creating a separate privileged asset world.
-
-Preferred working method:
-- start from normalized `Markdown`, not directly from the source `PDF`,
-- work actor-first instead of protocol-as-a-monolith,
-- build a protocol dossier, actor catalog, actor sheet per actor, assertion ledger, abstraction/boundedness log, FSM mapping sheet, and validation log,
-- keep source facts, derived machine rules, local design decisions, and explicit abstractions separate,
-- define actor interfaces plus invariants/contracts/gates in plain English before emitting `.fsm`,
-- treat early imported fixtures such as the APB requester/completer/top and AMBA requester examples as seed corpus, not as proof that the general capture lane is already solved,
-- and use [docs/INTENT_CAPTURE_AXI_CASE_STUDY.md](docs/INTENT_CAPTURE_AXI_CASE_STUDY.md) as the current strongest concrete reference for the lane’s working method and artifact shape.
-
-Required behavior:
-- emit captured `.fsm` artifacts plus a capture report,
-- distinguish confidently captured intent from heuristic inference and unresolved ambiguity,
-- never present ambiguous prose as if it had been recovered with implementation-grade certainty,
-- and keep explicit stage contracts/gates around normalization, actor discovery, interface/phase extraction, invariant/contract/gate/assertion capture, abstraction logging, decomposition, emission, verification-asset generation, and back-annotation.
-
-Expected technical pipeline:
-- normalize `PDF` or other source documents into structured `Markdown`,
-- build a normalized spec IR over roles, transactions, timing rules, fields, and invariants,
-- recover protocol role models and reusable behavioral rules from that IR,
-- project those recovered semantics into `.fsm` roots plus optional composition/testbench harnesses,
-- emit verification-oriented artifacts such as scenario/test plans and functional-coverage plans alongside the generated sources where possible,
-- and emit a capture report alongside the generated sources.
-
-Longer-term automation target:
-- treat this lane as a future almost-fully-staged automated “executable PDF” flow for bounded protocol and RTL-block specifications,
-- where a normalized spec document can eventually yield:
-  - a set of `.fsm` role/module artifacts,
-  - a harness or testbench-ready composition surface,
-  - scenario/test intent,
-  - a verification plan,
-  - a functional-coverage plan,
-  - and an honesty-preserving capture report.
-
-Relationship to other horizon lanes:
-- keep this lane distinct from HDL import / intent recovery even if both eventually share middle-layer semantic IRs,
-- because the source evidence, ambiguity model, and validation story are materially different,
-- and use the same honesty rule in both directions: report residue explicitly instead of pretending elegance where the source does not justify it.
+Prerequisite:
+- a second backend multiplies ambiguity if the language contract is still
+  gray; promote this only after the active lanes are genuinely stable.
 
 ## Current intent
-The active immediate lane is `R11`.
+The active immediate lane is `R14` (TRM / protocol-spec intent capture).
 
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,
@@ -920,7 +887,7 @@ The first honest `R11` slices are now:
   genuinely cross-backend for constant/tie-off actuals instead of only being
   rendered for the Verilog family.
 - Forward-IR note: the structural connection-expression layer now also needs an
-  explicit `open` actual form, because “leave this formal unconnected” is real
+  explicit `open` actual form, because "leave this formal unconnected" is real
   structural semantics and should not be represented as a backend-specific text
   escape hatch.
 - Forward-IR note: that bounded `open` / literal actual family now also has its
@@ -975,7 +942,7 @@ The first honest `R11` slices are now:
   declared top outputs through that same explicit top-output assignment path;
   scalar `=0` / `=1` widen to the direct binding target width there and on
   realized child inputs, while `=open` remains the bounded child-input-only
-  sibling because “leave this output unconnected” is not honest top-boundary
+  sibling because "leave this output unconnected" is not honest top-boundary
   wiring.
 - Forward-IR note: omitted/empty-`?ports` top-boundary inference now also sees
   inferable `name[index]` / `name[msb:lsb]` operands inside those bounded
@@ -999,7 +966,7 @@ The first honest `R11` slices are now:
   current SystemVerilog/Verilog/VHDL helper path while the broader aggregate
   and type story stays deliberately bounded.
 - Forward-IR note: downstream structural consumers are now also starting to
-  split “true flat leaf carrier” from “broader dependency set,” so compatibility
+  split "true flat leaf carrier" from "broader dependency set," so compatibility
   fields like `bound_signal` do not silently misclassify richer expressions such
   as `member_access` or `index_access`.
 - Forward-IR note: shared-datapath contributor and peer-input metadata now
@@ -1034,11 +1001,11 @@ The first honest `R11` slices are now:
   `HDLGenerator` consumers no longer need to rebuild that structural summary
   ad hoc.
 - Forward-IR note: that same structural helper layer now also owns the
-  reusable “summary entry to true flat leaf carrier” rule through
+  reusable "summary entry to true flat leaf carrier" rule through
   `binding_signal_summary_leaf_signal`, so shared-datapath planning no longer
   needs a pipeline-local copy of that typed-summary leaf-selection logic.
 - Forward-IR note: that same structural helper layer now also owns the
-  reusable “summary entry to rendered binding text” rule through
+  reusable "summary entry to rendered binding text" rule through
   `binding_signal_summary_text`, so CLI/reporting consumers no longer need to
   keep their own local `bound_connection_expr`-first rendering copy.
 - Forward-IR note: that same structural helper layer now also owns the
@@ -1047,7 +1014,7 @@ The first honest `R11` slices are now:
   peer-read metadata no longer need to hand-copy `bound_signal`,
   `bound_signals`, and `bound_connection_expr` in `HDLGenerator`.
 - Forward-IR note: that same structural helper layer now also owns the
-  reusable “binding list to per-port summary index” rule through
+  reusable "binding list to per-port summary index" rule through
   `binding_signal_summaries_by_port`, so composition system-signal inference
   and shared-datapath candidate assembly no longer need to rebuild that same
   local summary map inside `HDLGenerator`.
@@ -1057,7 +1024,7 @@ The first honest `R11` slices are now:
   provenance/reporting consumers no longer need to hand-walk nested
   `instances` / `interface_ports` arrays for those endpoint-family queries.
 - Forward-IR note: that same `StructuralRTLIR` surface now also owns top-port
-  lookup and “resolved links touching endpoint X” queries through `top_port`
+  lookup and "resolved links touching endpoint X" queries through `top_port`
   and `resolved_links_touching`, so provenance/override consumers no longer
   need to rebuild those small structural queries in `HDLGenerator`.
 - Forward-IR note: `IntentHIR` now also owns semantic composition-child lookup
@@ -1087,7 +1054,7 @@ The first honest `R11` slices are now:
   coordinator cleanup while the longer-term split should leave pure HDL
   emission mostly walking `StructuralRTLIR`.
 - Forward-IR note: the saved policy is now also explicit that no unpublished
-  “compatibility” concern should preserve the current monolith; any internal
+  "compatibility" concern should preserve the current monolith; any internal
   shim is acceptable only as a clearly transitional migration aid toward a
   split compiler/orchestrator plus backend-emitter architecture.
 - Forward-IR note: the first real backend-emitter extraction slice is now
@@ -1172,12 +1139,12 @@ The first honest `R11` slices are now:
 - Forward-IR note: the first real composition-lane plan split is now active
   too: bounded single-child passthrough `C1` planning now lives in
   `FSM::Composition::C1PlanBuilder`, so `HDLGenerator` no longer owns that
-  lane’s explicit passthrough validation, implicit top-port inference, or
+  lane's explicit passthrough validation, implicit top-port inference, or
   direct passthrough link/binding assembly.
 - Forward-IR note: another real composition-plan family split is now active
   too: bounded declared connect-by-name `C4` link construction now lives in
   `FSM::Composition::DeclaredByNameLinkBuilder`, so `HDLGenerator` no longer
-  owns that family’s system-port exclusion, same-name endpoint matching,
+  owns that family's system-port exclusion, same-name endpoint matching,
   input fanout, unique-output selection, or direction/width validation.
 - Forward-IR note: `StructuralRTLIR` now also owns composition-top port
   metadata projection through `port_metadata` and `port_metadata_from_input`,
@@ -1197,12 +1164,12 @@ The first honest `R11` slices are now:
   active too: the bounded inferred same-name convention links used by the
   active `C2`/`C3` lanes now live in
   `FSM::Composition::SameNameLinkBuilder`, so `HDLGenerator` no longer owns
-  that family’s inferred top-input fanout, inferred top-output selection, or
+  that family's inferred top-input fanout, inferred top-output selection, or
   inferred internal same-name carrier rules directly.
 - Forward-IR note: another real composition-planning family split is now
   active too: generic explicit-link linked-plan assembly for the active
   `C2`/`C3`/`C4` lanes now lives in `FSM::Composition::LinkedPlanBuilder`, so
-  `HDLGenerator` no longer owns that family’s system auto-wiring, endpoint
+  `HDLGenerator` no longer owns that family's system auto-wiring, endpoint
   resolution, role/width validation, deterministic carrier-net allocation, or
   realized-child rebinding logic directly.
 - Forward-IR note: another real composition-planning family split is now
@@ -1219,7 +1186,7 @@ The first honest `R11` slices are now:
   active too: composition provenance report assembly plus override/block event
   detection and endpoint-context labeling now live in
   `FSM::Composition::ProvenanceReportBuilder`, so `HDLGenerator` no longer
-  owns that reporting family’s structural/intent projection logic directly.
+  owns that reporting family's structural/intent projection logic directly.
 - Forward-IR note: another real composition result-surface split is now
   active too: unified realized-child exports plus the narrower generated-child
   and standalone-DT export views now live in
