@@ -1,6 +1,7 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
+- Next decision point: [t/1062-embedding-contract-full-surface-defensive-copy-audit.t](t/1062-embedding-contract-full-surface-defensive-copy-audit.t) now proves a fresh embedding contract owner build stays clean after caller mutation. This changes no public shape; the next bounded `R13` slice can continue remaining contract full-surface audits.
 - Next decision point: t/1061 now proves the full embedding contract owner survives JSON. Batch completed: 25 new full-surface audits across 14 contract families (normalized semantic nested, support accounting, diagnostic code registry, diagnostics section, shared report producer/source/command/generated-output, composition report, extension, HDL external validation, debug runtime, embedding). Next bounded R13 slice: continue remaining contract full-surface audits.
 - Next decision point: t/1060 now proves a fresh debug runtime contract owner build stays clean after caller mutation. Next bounded R13 slice: embedding contract.
 - Next decision point: t/1059 now proves the full debug runtime contract owner survives JSON. Next bounded R13 slice: debug runtime full-surface stability audits.

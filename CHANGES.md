@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### Embedding contract full surface rebuilds cleanly
+- Added
+  [t/1062-embedding-contract-full-surface-defensive-copy-audit.t](t/1062-embedding-contract-full-surface-defensive-copy-audit.t)
+  to prove a fresh embedding contract build stays clean after caller mutation.
+- Completes the embedding contract full-surface audit pair.
+- Updated [MEMORY.md](MEMORY.md), [ROADMAP_STATUS.md](ROADMAP_STATUS.md),
+  [LIVE_ACHIEVEMENT_STATUS.md](LIVE_ACHIEVEMENT_STATUS.md), and
+  [DEVELOPMENT_NOTES.md](DEVELOPMENT_NOTES.md) for the `R13` progress entry.
 ### Embedding contract full surface survives JSON
 - Added t/1061. Batch of 25 full-surface audits completed across 14 contract families.
 - Updated live docs for R13.

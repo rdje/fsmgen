@@ -1729,6 +1729,10 @@ in-process and CLI manifest surfaces. That keeps the grouped
 `serializable_plan_reports`, `typed_extensions`, and `debug_runtime` child
 contracts in one place instead of leaving that public section as duplicated
 inline manifest assembly logic.
+The embedding section contract is also full-surface audited for JSON round-trip
+stability and for clean rebuilds after caller mutation, so embedders can treat
+the advertised `embedding.section_contract` object as caller-owned metadata
+rather than a shared mutable singleton.
 The `hdl_generator_facade` child also has a constructor-boundary audit in
 [t/377-hdl-generator-constructor-boundary-audit.t](t/377-hdl-generator-constructor-boundary-audit.t),
 so new constructor arguments cannot quietly appear without being classified as

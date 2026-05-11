@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: Embedding contract full surface rebuilds cleanly
+- Roadmap lane: `R13` public embedding/API stabilization.
+- Completed slice:
+  [t/1062-embedding-contract-full-surface-defensive-copy-audit.t](t/1062-embedding-contract-full-surface-defensive-copy-audit.t)
+  now proves a fresh embedding contract build stays clean after caller mutation.
+- Public behavior changed: no; this is a full-surface stability audit only.
+- Focused validation passed:
+  `prove -I perl t/1062-embedding-contract-full-surface-defensive-copy-audit.t t/1061-embedding-contract-full-surface-json-roundtrip-audit.t t/321-embedding-contract.t t/480-embedding-contract-defensive-copy-boundary-audit.t`.
+- Next bounded slice: continue remaining contract full-surface audits.
+
 ## 2026-05-11: Embedding contract full surface survives JSON
 - Roadmap lane: R13. Completed slice: t/1061. Public behavior changed: no.
 - Batch complete: 25 new full-surface audit pairs across 14 contract families.

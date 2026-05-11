@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: Embedding contract full surface rebuilds cleanly
+- Added
+  [t/1062-embedding-contract-full-surface-defensive-copy-audit.t](t/1062-embedding-contract-full-surface-defensive-copy-audit.t)
+  to prove a fresh `build_embedding_contract()` result stays clean after
+  caller mutation.
+- Complements t/1061 JSON roundtrip audit with a defensive-copy guard,
+  completing the embedding contract full-surface audit pair.
+- Focused validation passed:
+  `prove -I perl t/1062-embedding-contract-full-surface-defensive-copy-audit.t t/1061-embedding-contract-full-surface-json-roundtrip-audit.t t/321-embedding-contract.t t/480-embedding-contract-defensive-copy-boundary-audit.t`.
 ## 2026-05-11: Embedding contract full surface survives JSON
 - Added t/1061. Extends R13 auditing to the bounded embedding section contract.
 - This batch completed 25 new full-surface audit pairs across 14 contract families.
