@@ -1,5 +1,7 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-11: Normalized semantic intent HIR contract full surface survives JSON
+- The intent HIR contract now has a full-surface JSON round-trip audit.
 ## 2026-05-11: Normalized semantic signal analysis contract full surface rebuilds cleanly
 - The signal analysis contract now has a full-surface defensive-copy audit.
 ## 2026-05-11: Normalized semantic signal analysis contract full surface survives JSON
