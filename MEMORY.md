@@ -1,5 +1,7 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: Extension contract full surface rebuilds cleanly
+- Added t/1056. Complements extension JSON audit with defensive-copy guard.
 ## 2026-05-11: Extension contract full surface survives JSON
 - Added t/1055. Extends R13 auditing to the bounded extension contract.
 ## 2026-05-11: Composition report contract full surface rebuilds cleanly
