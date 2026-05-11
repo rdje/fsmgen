@@ -532,16 +532,32 @@ if ($fsm_file =~ /\.isf$/i) {
         die $display_error;
     }
 
-    my $fsm_source = eval { $scheduler->lower($actor); };
+    my $result = eval { $scheduler->lower($actor); };
     if ($@) {
         die normalize_cli_error_text($@);
     }
 
-    # Write generated .fsm to temp file and redirect
-    my ($fh, $tmp_path) = File::Temp::tempfile(SUFFIX => '.fsm');
-    print $fh $fsm_source;
-    close $fh;
-    $fsm_file = $tmp_path;
+    my $files = $result->{files};
+
+    if (scalar(keys %$files) == 1) {
+        # Single file: write to temp and feed to normal pipeline
+        my ($only_file) = values %$files;
+        my ($fh, $tmp_path) = File::Temp::tempfile(SUFFIX => '.fsm');
+        print $fh $only_file;
+        close $fh;
+        $fsm_file = $tmp_path;
+    } else {
+        # Multi-file: write each to current directory or output dir
+        my $out_dir = $output_file ? dirname($output_file) : '.';
+        for my $fname (sort keys %$files) {
+            my $path = File::Spec->catfile($out_dir, $fname);
+            open my $fh, '>', $path or die "Cannot write $path: $!\n";
+            print $fh $files->{$fname};
+            close $fh;
+        }
+        # Feed the top file (actor_name.fsm) to the normal pipeline
+        $fsm_file = File::Spec->catfile($out_dir, "$actor->{actor_name}.fsm");
+    }
 
     unless ($machine_json_mode) {
         print "=== ISF Intent Scheduling ===\n\n";

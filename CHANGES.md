@@ -1,7 +1,9 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
-### R14 — `(do ...)` composition
+### R14 — `(spawn ...)` signals
+- Spawn generates per-instance start/done signals. 7 tests pass.
+### R14 — `(do ...)`
 - `(do child)` → start/done handshake, child idle rewired, done pulses. 7 tests pass.
 ### R14 — JSON
 - `Emitter::JSON` produces machine-readable report from IR. 7 tests pass.

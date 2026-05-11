@@ -13,7 +13,8 @@ subtest 'scheduler lowers burst_reader.isf — repeat with counter inference' =>
     my $isf_file = File::Spec->catfile($FindBin::Bin, '..', 'isf', 'burst_reader.isf');
 
     my $actor = FSM::Adapter::ISF->new()->parse_file($isf_file);
-    my $fsm   = FSM::Scheduler::ISF->new()->lower($actor);
+    my $result = FSM::Scheduler::ISF->new()->lower($actor);
+    my $fsm    = $result->{files}{"burst_reader.fsm"};
 
     ok(length($fsm) > 0, 'produces non-empty output');
 

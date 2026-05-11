@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: R14 — spawn lowering (signals + instance tracking)
+- `(spawn child as name)` now generates per-instance `name_start`/`name_done`
+  signals in the parent FSM
+- `_ir_spawn` creates assertion state for each spawn call
+- Created `isf/spawn_parent.isf` fixture
+- Next: multi-file output (child `.fsm` + composition top `.fsm`)
+- 7 tests pass, all fixtures pass strict mode
 ## 2026-05-11: R14 — `(do ...)` composition lowering
 - `(do child)` now lowers to start/done handshake: parent asserts `child_start`,
   awaits `child_done`; child's idle state rewired to watch `child_start`,

@@ -33,7 +33,9 @@ sub lower($self, $actor) {
     my $fsm = $self->{fsm_emitter}->emit($ir);
 
     fsm_trace_exit("Scheduler lower completed", 2);
-    return $fsm;
+
+    # Return single-file result (for actors without spawn)
+    return { files => { "$actor->{actor_name}.fsm" => $fsm } };
 }
 
 sub report($self, $actor) {

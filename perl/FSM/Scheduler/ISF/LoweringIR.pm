@@ -61,7 +61,7 @@ sub build_module($self, $actor) {
     # Build states from transactions
     my $tx_idx = 0;
     for my $tx (@{$actor->{transactions}}) {
-        my ($tx_states, $tx_counters, $tx_dts, $do_children) =
+        my ($tx_states, $tx_counters, $tx_dts, $do_children, $spawn_children) =
             $self->_build_transaction($tx, $actor, $tx_idx++);
         push @states, @$tx_states;
         while (my ($k, $v) = each %$tx_counters) { $counters{$k} = $v; }
@@ -69,6 +69,10 @@ sub build_module($self, $actor) {
         for my $child (@$do_children) {
             $counters{"${child}_start"} = 1;
             $counters{"${child}_done"}  = 1;
+        }
+        for my $sp (@$spawn_children) {
+            $counters{"$sp->{instance}_start"} = 1;
+            $counters{"$sp->{instance}_done"}  = 1;
         }
     }
 
@@ -105,6 +109,7 @@ sub _build_transaction($self, $tx, $actor, $tx_idx) {
     my $wd_counter;
     my $latency;
     my @do_children;           # child tx names from (do ...)
+    my @spawn_children;        # { child, instance } from (spawn ...)
 
     for my $clause (@{$tx->{clauses}}) {
         next unless ref($clause) eq 'ARRAY';
@@ -140,7 +145,13 @@ sub _build_transaction($self, $tx, $actor, $tx_idx) {
             push @do_children, $child;
             push @states, $self->_ir_do($clause, $tx_name, $state_idx++);
         }
-        elsif ($kind eq 'spawn' || $kind eq 'await_all' || $kind eq 'await_any') {
+        elsif ($kind eq 'spawn') {
+            my $child = $clause->[1];
+            my $inst  = $clause->[3] || "${child}_$state_idx";  # named or auto
+            push @spawn_children, { child => $child, instance => $inst };
+            push @states, $self->_ir_spawn($clause, $tx_name, $state_idx++);
+        }
+        elsif ($kind eq 'await_all' || $kind eq 'await_any') {
             push @states, $self->_ir_placeholder($clause, $tx_name, $state_idx++);
         }
     }
@@ -169,7 +180,7 @@ sub _build_transaction($self, $tx, $actor, $tx_idx) {
     # Link transitions
     $self->_link_state_transitions(\@states, $tx_name);
 
-    return (\@states, \%counters, \@dts, \@do_children);
+    return (\@states, \%counters, \@dts, \@do_children, \@spawn_children);
 }
 
 # --- Individual clause → IR ---
@@ -265,6 +276,19 @@ sub _ir_do($self, $clause, $tx_name, $idx) {
         assignments => [{ lhs => $start, rhs => 1, op => '=' }],
         transitions => [],
         guard       => { port => $done },
+    };
+}
+
+sub _ir_spawn($self, $clause, $tx_name, $idx) {
+    my $child = $clause->[1];
+    my $inst  = $clause->[3] || "${child}_$idx";
+    my $start = "${inst}_start";
+
+    return {
+        name        => "${tx_name}_spawn_$idx",
+        kind        => 'sequential',
+        assignments => [{ lhs => $start, rhs => 1, op => '=' }],
+        transitions => [],
     };
 }
 

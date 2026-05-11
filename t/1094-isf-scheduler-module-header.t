@@ -18,7 +18,8 @@ subtest 'scheduler produces valid .fsm header from APB requester ISF' => sub {
 
     # Lower
     my $scheduler = FSM::Scheduler::ISF->new();
-    my $fsm       = $scheduler->lower($actor);
+    my $result    = $scheduler->lower($actor);
+    my $fsm       = $result->{files}{"apb_requester.fsm"};
 
     ok(length($fsm) > 0, 'produces non-empty .fsm output');
 
