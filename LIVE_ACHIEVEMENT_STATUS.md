@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: Normalized semantic symbol contract full surface survives JSON
+- Roadmap lane: `R13` public embedding/API stabilization.
+- Completed slice:
+  [t/1023-normalized-semantic-symbol-contract-full-surface-json-roundtrip-audit.t](t/1023-normalized-semantic-symbol-contract-full-surface-json-roundtrip-audit.t)
+  now proves the full normalized semantic symbol contract owner survives
+  JSON encode/decode unchanged.
+- Public behavior changed: no; this is a full-surface stability audit only.
+- Focused validation passed:
+  `prove -I perl t/1023-normalized-semantic-symbol-contract-full-surface-json-roundtrip-audit.t t/335-normalized-semantic-symbol-contract.t t/472-normalized-semantic-symbol-contract-defensive-copy-boundary-audit.t`.
+- Next bounded slice: continue normalized semantic symbol full-surface stability audits.
+
 ## 2026-05-11: Normalized semantic forward IR contract full surface rebuilds cleanly
 - Roadmap lane: `R13` public embedding/API stabilization.
 - Completed slice:

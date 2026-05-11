@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: Normalized semantic symbol contract full surface survives JSON
+- Added
+  [t/1023-normalized-semantic-symbol-contract-full-surface-json-roundtrip-audit.t](t/1023-normalized-semantic-symbol-contract-full-surface-json-roundtrip-audit.t)
+  to prove the complete `build_normalized_semantic_symbol_contract()` result
+  survives JSON encode/decode unchanged.
+- This extends full-surface `R13` auditing to the bounded normalized semantic
+  symbol contract nested inside public normalized semantic JSON reports.
+- Focused validation passed:
+  `prove -I perl t/1023-normalized-semantic-symbol-contract-full-surface-json-roundtrip-audit.t t/335-normalized-semantic-symbol-contract.t t/472-normalized-semantic-symbol-contract-defensive-copy-boundary-audit.t`.
 ## 2026-05-11: Normalized semantic forward IR contract full surface rebuilds cleanly
 - Added
   [t/1022-normalized-semantic-forward-ir-contract-full-surface-defensive-copy-audit.t](t/1022-normalized-semantic-forward-ir-contract-full-surface-defensive-copy-audit.t)
