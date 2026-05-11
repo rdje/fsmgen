@@ -1,5 +1,7 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-11: Documentation contract full surface survives JSON
+- The documentation contract now has a full-surface JSON round-trip audit.
 ## 2026-05-11: Language surface contract full surface rebuilds cleanly
 - The language surface contract now has a full-surface defensive-copy audit.
 ## 2026-05-11: Language surface contract full surface survives JSON
