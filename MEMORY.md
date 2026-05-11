@@ -1,5 +1,7 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: Composition report contract full surface rebuilds cleanly
+- Added t/1054. Complements composition report JSON audit with defensive-copy guard.
 ## 2026-05-11: Composition report contract full surface survives JSON
 - Added t/1053. Extends R13 auditing to the bounded composition report contract.
 ## 2026-05-11: Report generated output contract full surface rebuilds cleanly
