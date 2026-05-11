@@ -1,6 +1,7 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
+- Next decision point: t/1026 now proves a fresh system contract owner build stays clean after caller mutation. Next bounded R13 slice: normalized semantic nested-contract audits.
 - Next decision point: t/1025 now proves the full system contract owner survives JSON encode/decode unchanged. Next bounded R13 slice: system full-surface stability audits.
 - Next decision point: t/1024 now proves a fresh symbol contract owner build stays clean after caller mutation. Next bounded R13 slice: normalized semantic nested-contract audits.
 - Next decision point: [t/1023-normalized-semantic-symbol-contract-full-surface-json-roundtrip-audit.t](t/1023-normalized-semantic-symbol-contract-full-surface-json-roundtrip-audit.t) now proves the full normalized semantic symbol contract owner survives JSON encode/decode unchanged. This changes no public shape; the next bounded `R13` slice can continue normalized semantic symbol full-surface stability audits.
