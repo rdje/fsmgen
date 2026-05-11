@@ -1,5 +1,8 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: Normalized semantic explicit system contract full surface survives JSON
+- Added t/1027. Extends R13 auditing to the bounded explicit system contract.
+- Focused validation passed.
 ## 2026-05-11: Normalized semantic system contract full surface rebuilds cleanly
 - Added t/1026 to prove a fresh system contract build stays clean after caller mutation.
 - Complements the system full-surface JSON audit with a defensive-copy guard.
