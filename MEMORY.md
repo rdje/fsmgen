@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: Normalized semantic composition contract full surface survives JSON
+- Added
+  [t/1019-normalized-semantic-composition-contract-full-surface-json-roundtrip-audit.t](t/1019-normalized-semantic-composition-contract-full-surface-json-roundtrip-audit.t)
+  to prove the complete `build_normalized_semantic_composition_contract()` result
+  survives JSON encode/decode unchanged.
+- This extends full-surface `R13` auditing to the bounded normalized semantic
+  composition contract nested inside public normalized semantic JSON reports.
+- Focused validation passed:
+  `prove -I perl t/1019-normalized-semantic-composition-contract-full-surface-json-roundtrip-audit.t t/333-normalized-semantic-composition-contract.t t/470-normalized-semantic-composition-contract-defensive-copy-boundary-audit.t`.
 ## 2026-05-11: Normalized semantic module contract full surface rebuilds cleanly
 - Added
   [t/1018-normalized-semantic-module-contract-full-surface-defensive-copy-audit.t](t/1018-normalized-semantic-module-contract-full-surface-defensive-copy-audit.t)

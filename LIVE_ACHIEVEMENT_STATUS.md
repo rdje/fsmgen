@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: Normalized semantic composition contract full surface survives JSON
+- Roadmap lane: `R13` public embedding/API stabilization.
+- Completed slice:
+  [t/1019-normalized-semantic-composition-contract-full-surface-json-roundtrip-audit.t](t/1019-normalized-semantic-composition-contract-full-surface-json-roundtrip-audit.t)
+  now proves the full normalized semantic composition contract owner survives
+  JSON encode/decode unchanged.
+- Public behavior changed: no; this is a full-surface stability audit only.
+- Focused validation passed:
+  `prove -I perl t/1019-normalized-semantic-composition-contract-full-surface-json-roundtrip-audit.t t/333-normalized-semantic-composition-contract.t t/470-normalized-semantic-composition-contract-defensive-copy-boundary-audit.t`.
+- Next bounded slice: continue normalized semantic composition full-surface stability audits.
+
 ## 2026-05-11: Normalized semantic module contract full surface rebuilds cleanly
 - Roadmap lane: `R13` public embedding/API stabilization.
 - Completed slice:
