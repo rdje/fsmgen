@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: HDLGenerator FSM module contract full surface rebuilds cleanly
+- Roadmap lane: R13. Completed slice: t/1084. Public behavior changed: no.
+- Next bounded slice: raw AST contract.
+
 ## 2026-05-11: HDLGenerator FSM module contract full surface survives JSON
 - Roadmap lane: R13. Completed slice: t/1083. Public behavior changed: no.
 - Next bounded slice: continue FSM module full-surface stability audits.
