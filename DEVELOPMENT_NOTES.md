@@ -1,5 +1,7 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-11: Report generated output contract full surface survives JSON
+- The generated output contract now has a full-surface JSON round-trip audit.
 ## 2026-05-11: Report command contract full surface rebuilds cleanly
 - The report command contract now has a full-surface defensive-copy audit.
 ## 2026-05-11: Report command contract full surface survives JSON

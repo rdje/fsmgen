@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: Report generated output contract full surface survives JSON
+- Roadmap lane: R13. Completed slice: t/1051. Public behavior changed: no.
+- Next bounded slice: continue generated output full-surface stability audits.
+
 ## 2026-05-11: Report command contract full surface rebuilds cleanly
 - Roadmap lane: R13. Completed slice: t/1050. Public behavior changed: no.
 - Next bounded slice: continue remaining shared report contracts.
