@@ -13,12 +13,8 @@
     (input  ready)
     (output valid))
 
-  (handshake cmd
-    (valid start)
-    (ready done))
-
   (transaction read_burst
-    (on cmd
+    (on start
       (sample addr       as base_addr)
       (sample burst_len  as beats))
     (drive header

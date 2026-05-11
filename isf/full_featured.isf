@@ -14,17 +14,9 @@
     (output valid)
     (output err))
 
-  (handshake cmd
-    (valid start)
-    (ready done))
-
-  (handshake data_flow
-    (valid ready)
-    (ready valid))
-
   ;; Transaction with sample, drive, await, complete, latency
   (transaction main_transfer
-    (on cmd
+    (on start
       (sample addr  as captured_addr)
       (sample wdata as captured_wdata))
     (drive setup
@@ -39,14 +31,14 @@
 
   ;; Nested composition: sequence with do
   (transaction chained
-    (on cmd (sample addr as base))
+    (on start (sample addr as base))
     (do main_transfer)
     (do main_transfer)
     (complete done))
 
   ;; Parallel spawn with parameter passing and named instances
   (transaction parallel_work
-    (on cmd (sample addr as base))
+    (on start (sample addr as base))
     (spawn main_transfer as worker_0 (addr (+ base 0)))
     (spawn main_transfer as worker_1 (addr (+ base 4)))
     (spawn main_transfer            (addr (+ base 8)))

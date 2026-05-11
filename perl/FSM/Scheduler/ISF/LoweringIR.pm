@@ -129,7 +129,6 @@ sub _build_ports($self, $actor) {
 # --- Transaction → IR states ---
 sub _build_transaction($self, $tx, $actor, $txi) {
     my $tn  = $tx->{name};
-    my $hs  = $actor->{handshakes};
     my $wd  = $actor->{watchdog};
     my @st; my %ct; my @dt; my @ps; my @doc; my @spc; my @dps;
     my $si  = 0; my $ha = 0; my $wdc; my $lat;
@@ -137,7 +136,7 @@ sub _build_transaction($self, $tx, $actor, $txi) {
     for my $cl (@{$tx->{clauses}}) {
         next unless ref($cl) eq 'ARRAY';
         my $k = $cl->[0];
-        if    ($k eq 'on')       { push @st, _ir_on($cl, $tn, $hs, $si++); }
+        if    ($k eq 'on')       { push @st, _ir_on($cl, $tn, $si++); }
         elsif ($k eq 'drive')    { push @st, _ir_drive($cl, $tn, [splice @ps], $si++); }
         elsif ($k eq 'await')    { $ha=1; $wdc="${tn}_wd"; push @st, _ir_await($cl, $tn, $si++, $wd); }
         elsif ($k eq 'sample')   { push @ps, $cl; }
@@ -168,11 +167,13 @@ sub _build_transaction($self, $tx, $actor, $txi) {
     }
 
     _link_states(\@st, $tn);
+    $ct{can_accept} = 1;
+    for my $s (@st) { next unless $s->{kind} eq 'entry'; unshift @{$s->{assignments}}, { lhs => 'can_accept', rhs => 1, op => '=' }; }
     return (\@st, \%ct, \@dt, \@doc, \@spc);
 }
 
 # --- Individual clause → IR ---
-sub _ir_on      { my ($cl,$tn,$hs,$i)=@_; my $h=$hs->{$cl->[1]}; my @s; for my $j(2..$#$cl){my $x=$cl->[$j]; next unless ref($x)eq'ARRAY'&&$x->[0]eq'sample'; push @s,{port=>$x->[1],as_name=>$x->[3]}} {name=>"${tn}_idle_$i",kind=>'entry',guard=>{port=>$h->{valid}},samples=>\@s,assignments=>[],transitions=>[]} }
+sub _ir_on      { my ($cl,$tn,$i)=@_; my $e=$cl->[1]; my @s; for my $j(2..$#$cl){my $x=$cl->[$j]; next unless ref($x)eq'ARRAY'&&$x->[0]eq'sample'; push @s,{port=>$x->[1],as_name=>$x->[3]}} my $guard=!ref($e) ? {port=>$e} : {expr=>$e}; {name=>"${tn}_idle_$i",kind=>'entry',guard=>$guard,samples=>\@s,assignments=>[],transitions=>[]} }
 sub _ir_drive   { my ($cl,$tn,$ps,$i)=@_; my @a; for(@$ps){push @a,{lhs=>$_->[3],rhs=>$_->[1],op=>'<='}} for my $j(2..$#$cl){my$x=$cl->[$j];next unless ref($x)eq'ARRAY'&&$x->[0]eq'assign';push @a,{lhs=>$x->[1],rhs=>$x->[2],op=>'='}} {name=>"${tn}_drive_$i",kind=>'sequential',assignments=>\@a,transitions=>[]} }
 sub _ir_await   { my ($cl,$tn,$i,$wd)=@_; {name=>"${tn}_await_$i",kind=>'await',assignments=>[],transitions=>[],guard=>{port=>$cl->[1]},watchdog=>{name=>"${tn}_wd",limit=>$wd//65536}} }
 sub _ir_complete{ my ($cl,$tn,$i)=@_; {name=>"${tn}_done_$i",kind=>'terminal',assignments=>[{lhs=>$cl->[1],rhs=>1,op=>'='}],transitions=>[]} }

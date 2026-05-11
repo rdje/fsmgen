@@ -2,7 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
-## 2026-05-11: R14 — multi-file spawn
+## 2026-05-11: R14 — handshake removed
+- Active: `R14`. `(on port)` + implicit `can_accept`. 7 tests pass.
+
+## 2026-05-11: R14 — multi-file
 - Active: `R14`. Multi-file spawn + `--outdir`. 7 tests pass.
 
 ## 2026-05-11: R14 — spawn

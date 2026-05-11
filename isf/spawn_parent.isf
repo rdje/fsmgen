@@ -9,10 +9,6 @@
     (output done)
     (output rdata (width 32)))
 
-  (handshake go
-    (valid trigger)
-    (ready done))
-
   (transaction child_worker
     (sample trigger as val)
     (drive work
@@ -21,7 +17,7 @@
     (latency (min 1) (max 16)))
 
   (transaction parent_main
-    (on go)
+    (on trigger)
     (spawn child_worker as w0)
     (spawn child_worker as w1)
     (spawn child_worker as w2)

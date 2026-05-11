@@ -21,12 +21,8 @@
     (input  PRDATA  (width 32))
     (input  PSLVERR))
 
-  (handshake start_cmd
-    (valid start)
-    (ready done))
-
   (transaction apb_transfer
-    (on start_cmd
+    (on start
       (sample req_addr  as addr)
       (sample req_write as is_write)
       (sample req_wdata as wdata))

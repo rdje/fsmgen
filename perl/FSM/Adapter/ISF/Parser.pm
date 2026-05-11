@@ -108,7 +108,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
             when ('reset')     { $result->{reset}    = $self->_parse_reset($clause); }
             when ('watchdog')  { $result->{watchdog} = $self->_parse_watchdog($clause); }
             when ('interface') { $result->{interface} = $self->_parse_interface($clause); }
-            when ('handshake') { $self->_parse_handshake($clause, $result->{handshakes}); }
+            when ('handshake') { }  # deprecated, kept for backward compat
             when ('transaction') { push @{$result->{transactions}}, $self->_parse_transaction($clause); }
             when ('rule')      { push @{$result->{rules}}, $self->_parse_rule($clause); }
             when ('resources') { $result->{resources} = $self->_parse_resources($clause); }
@@ -186,7 +186,6 @@ sub _parse_handshake($self, $clause, $handshakes) {
     confess "Error: (handshake ...) requires a name\n" unless @$clause >= 2;
     my $name = $clause->[1];
     my $valid;
-    my $ready;
 
     for my $i (2 .. $#$clause) {
         my $pair = $clause->[$i];
@@ -194,10 +193,9 @@ sub _parse_handshake($self, $clause, $handshakes) {
             unless ref($pair) eq 'ARRAY';
         my $key = $pair->[0];
         if ($key eq 'valid') { $valid = $pair->[1]; }
-        if ($key eq 'ready') { $ready = $pair->[1]; }
     }
 
-    $handshakes->{$name} = { valid => $valid, ready => $ready };
+    $handshakes->{$name} = { valid => $valid };
 }
 
 sub _parse_transaction($self, $clause) {

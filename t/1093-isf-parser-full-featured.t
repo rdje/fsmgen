@@ -36,13 +36,8 @@ subtest 'parse full_featured.isf — all ISF constructs' => sub {
     my ($addr) = grep { $_->{name} eq 'addr' } @{$iface->{inputs}};
     is($addr->{width}, 32, 'addr width 32');
 
-    # Handshakes
-    my $hs = $actor->{handshakes};
-    is(scalar(keys %$hs), 2, 'two handshakes');
-    is($hs->{cmd}{valid},       'start', 'cmd valid');
-    is($hs->{cmd}{ready},       'done',  'cmd ready');
-    is($hs->{data_flow}{valid}, 'ready', 'data_flow valid');
-    is($hs->{data_flow}{ready}, 'valid', 'data_flow ready');
+    # Handshakes deprecated — no handshake declarations
+    ok(!keys %{$actor->{handshakes}}, 'no handshakes in actor');
 
     # Transactions
     my $txs = $actor->{transactions};
@@ -57,7 +52,7 @@ subtest 'parse full_featured.isf — all ISF constructs' => sub {
 
     # Check (on cmd ...)
     is($main_clauses[0][0], 'on', 'first clause: on');
-    is($main_clauses[0][1], 'cmd', 'on cmd handshake');
+    is($main_clauses[0][1], 'start', 'on port name');
 
     # Check latency
     my $lat = $main_clauses[-1];

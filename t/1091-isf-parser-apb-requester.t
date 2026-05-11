@@ -44,12 +44,6 @@ subtest 'parse minimal APB requester .isf file' => sub {
     my ($req_addr_port) = grep { $_->{name} eq 'req_addr' } @{$iface->{inputs}};
     is($req_addr_port->{width}, 32, 'req_addr width is 32');
 
-    # Handshake
-    my $hs = $actor->{handshakes}{start_cmd};
-    ok($hs, 'has start_cmd handshake');
-    is($hs->{valid}, 'start', 'handshake valid port');
-    is($hs->{ready}, 'done',  'handshake ready port');
-
     # Transaction
     is(scalar(@{$actor->{transactions}}), 1, 'one transaction');
     my $tx = $actor->{transactions}[0];
@@ -59,10 +53,10 @@ subtest 'parse minimal APB requester .isf file' => sub {
     my @clauses = @{$tx->{clauses}};
     ok(@clauses >= 5, 'transaction has multiple clauses');
 
-    # First clause should be (on start_cmd ...)
+    # First clause should be (on start ...)
     my $on_clause = $clauses[0];
     is($on_clause->[0], 'on', 'first clause is (on ...)');
-    is($on_clause->[1], 'start_cmd', 'on handshake name');
+    is($on_clause->[1], 'start', 'on port name');
 
     # Latency clause should be last
     my $last_clause = $clauses[-1];

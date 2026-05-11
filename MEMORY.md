@@ -1,5 +1,10 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: R14 — handshake removal, `(on port)` simplification
+- Removed `(handshake ...)` construct; `ready` is now always implicit `can_accept`
+- `(on port ...)` directly names the valid port; `(on expr ...)` for arbitrary expressions
+- `can_accept` auto-injected into idle states (combinational, defaults to 0 elsewhere)
+- All 4 fixtures updated; 7 tests pass
 ## 2026-05-11: R14 — multi-file spawn output
 - `(spawn child as name)` now produces separate `.fsm` files: one per child
   module + one for the parent actor

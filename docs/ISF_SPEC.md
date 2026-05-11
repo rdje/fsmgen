@@ -125,19 +125,16 @@ overrides it per instance.
 
 ### 3.4 Handshake
 
-A handshake names a valid/ready port pair. Referenced by name in `(on ...)`.
+A handshake names the valid port. The ready side is always the implicit
+`can_accept` signal (combinational, asserted in idle, 0 elsewhere).
 
 ```lisp
 (handshake name
-  (valid port_name)
-  (ready port_name))
+  (valid port_name))
 ```
 
-`(on name body...)` means: when this handshake fires (both `valid` and
-`ready` are true), execute the body and consume the handshake. The name
-resolves to the handshake declaration in scope.
-
-`valid` must be an input port. `ready` must be an output port.
+`valid` must be an input port. `(on name body...)` fires when `valid` is
+1 AND `can_accept` is 1 (the actor is idle and a request is present).
 
 ### 3.5 Transaction
 

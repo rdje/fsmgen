@@ -184,6 +184,8 @@ sub _emit_transitions($self, $state) {
             push @lines, "    (<$t->{condition}{port}";
             push @lines, "      (-> $t->{target})";
             push @lines, '    )';
+        } elsif ($t->{condition} && $t->{condition}{expr}) {
+            push @lines, "    (-> $t->{target} <$t->{condition}{expr})";
         } elsif ($t->{condition} && $t->{condition}{signal}) {
             my $c = $t->{condition};
             push @lines, "    (?$c->{signal}";

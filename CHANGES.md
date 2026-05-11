@@ -1,7 +1,9 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
-### R14 — multi-file spawn
+### R14 — handshake removed, `(on port)` + `can_accept`
+- `(handshake ...)` gone. `ready` is implicit `can_accept`. 7 tests pass.
+### R14 — multi-file
 - Separate child `.fsm` files + parent. `--outdir` CLI option. 7 tests pass.
 ### R14 — `(spawn ...)`
 - Spawn generates per-instance start/done signals. 7 tests pass.
