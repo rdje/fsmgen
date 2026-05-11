@@ -6,6 +6,7 @@ use warnings;
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 use POSIX qw(log);
+use Carp qw(confess);
 
 sub new($class, %args) { bless { debug => ($args{debug} // 0) }, $class }
 
@@ -130,6 +131,7 @@ sub _build_ports($self, $actor) {
 sub _build_transaction($self, $tx, $actor, $txi) {
     my $tn  = $tx->{name};
     my $wd  = $actor->{watchdog};
+    my $drives = $actor->{drives} || {};
     my @st; my %ct; my @dt; my @ps; my @doc; my @spc; my @dps;
     my $si  = 0; my $ha = 0; my $wdc; my $lat;
 
@@ -137,7 +139,17 @@ sub _build_transaction($self, $tx, $actor, $txi) {
         next unless ref($cl) eq 'ARRAY';
         my $k = $cl->[0];
         if    ($k eq 'on')       { push @st, _ir_on($cl, $tn, $si++); }
-        elsif ($k eq 'drive')    { push @st, _ir_drive($cl, $tn, [splice @ps], $si++); }
+        elsif ($k eq 'drive')    {
+            if (@$cl == 2) {
+                # Call: (drive name) — resolve from definition
+                my $name = $cl->[1];
+                my $def = $drives->{$name};
+                confess "Transaction '$tn': drive '$name' not defined\n" unless $def;
+                push @st, _ir_drive_call($def, $tn, [splice @ps], $si++);
+            } else {
+                push @st, _ir_drive($cl, $tn, [splice @ps], $si++);
+            }
+        }
         elsif ($k eq 'await')    { $ha=1; $wdc="${tn}_wd"; push @st, _ir_await($cl, $tn, $si++, $wd); }
         elsif ($k eq 'sample')   { push @ps, $cl; }
         elsif ($k eq 'complete') { push @st, _ir_complete($cl, $tn, $si++); }
@@ -175,6 +187,7 @@ sub _build_transaction($self, $tx, $actor, $txi) {
 # --- Individual clause → IR ---
 sub _ir_on      { my ($cl,$tn,$i)=@_; my $e=$cl->[1]; my @s; for my $j(2..$#$cl){my $x=$cl->[$j]; next unless ref($x)eq'ARRAY'&&$x->[0]eq'sample'; push @s,{port=>$x->[1],as_name=>$x->[3]}} my $guard=!ref($e) ? {port=>$e} : {expr=>$e}; {name=>"${tn}_idle_$i",kind=>'entry',guard=>$guard,samples=>\@s,assignments=>[],transitions=>[]} }
 sub _ir_drive   { my ($cl,$tn,$ps,$i)=@_; my @a; for(@$ps){push @a,{lhs=>$_->[3],rhs=>$_->[1],op=>'<='}} for my $j(2..$#$cl){my$x=$cl->[$j];next unless ref($x)eq'ARRAY'&&@$x>=2;push @a,{lhs=>$x->[0],rhs=>$x->[1],op=>'='}} {name=>"${tn}_drive_$i",kind=>'sequential',assignments=>\@a,transitions=>[]} }
+sub _ir_drive_call { my ($body,$tn,$ps,$i)=@_; my @a; for(@$ps){push @a,{lhs=>$_->[3],rhs=>$_->[1],op=>'<='}} for my $x(@$body){next unless ref($x)eq'ARRAY'&&@$x>=2;push @a,{lhs=>$x->[0],rhs=>$x->[1],op=>'='}} {name=>"${tn}_drive_$i",kind=>'sequential',assignments=>\@a,transitions=>[]} }
 sub _ir_await   { my ($cl,$tn,$i,$wd)=@_; {name=>"${tn}_await_$i",kind=>'await',assignments=>[],transitions=>[],guard=>{port=>$cl->[1]},watchdog=>{name=>"${tn}_wd",limit=>$wd//65536}} }
 sub _ir_complete{ my ($cl,$tn,$i)=@_; {name=>"${tn}_done_$i",kind=>'terminal',assignments=>[{lhs=>$cl->[1],rhs=>1,op=>'='}],transitions=>[]} }
 sub _ir_sample_state { my ($tn,$ps,$i)=@_; my @a; for(@$ps){push @a,{lhs=>$_->[3],rhs=>$_->[1],op=>'<='}} {name=>"${tn}_sample_$i",kind=>'sequential',assignments=>\@a,transitions=>[]} }

@@ -13,18 +13,22 @@
     (input  ready)
     (output valid))
 
+  (drive header
+    (valid 1)
+    (rdata base_addr))
+
+  (drive footer
+    (valid 0))
+
   (transaction read_burst
     (on start
       (sample addr       as base_addr)
       (sample burst_len  as beats))
-    (drive header
-      (valid 1)
-      (rdata base_addr))
+    (drive header)
     (await ready)
     (repeat beats
       (await ready)
       (sample rdata as word))
-    (drive footer
-      (valid 0))
+    (drive footer)
     (complete done)
     (latency (min 2) (max 256))))

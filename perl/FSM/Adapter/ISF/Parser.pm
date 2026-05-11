@@ -94,6 +94,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
         rules        => [],
         resources    => [],
         priorities   => [],
+        drives       => {},
         phases       => [],
         stages       => [],
     };
@@ -113,6 +114,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
             when ('rule')      { push @{$result->{rules}}, $self->_parse_rule($clause); }
             when ('resources') { $result->{resources} = $self->_parse_resources($clause); }
             when ('priority')  { push @{$result->{priorities}}, $self->_parse_priority($clause); }
+            when ('drive')     { $self->_parse_drive_def($clause, $result->{drives}); }
             when ('phase')     { push @{$result->{phases}},     $self->_parse_phase($clause); }
             when ('stage')     { push @{$result->{stages}},     $self->_parse_stage($clause); }
             default {
@@ -252,6 +254,13 @@ sub _parse_resources($self, $clause) {
 
 sub _parse_priority($self, $clause) {
     return [ @{$clause}[1 .. $#$clause] ];
+}
+
+sub _parse_drive_def($self, $clause, $drives) {
+    confess "Error: (drive ...) requires a name\n" unless @$clause >= 2;
+    my $name = $clause->[1];
+    my @body = @{$clause}[2 .. $#$clause];
+    $drives->{$name} = \@body;
 }
 
 sub _parse_phase($self, $clause) {

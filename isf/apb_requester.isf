@@ -1,4 +1,4 @@
-;; Minimal .isf fixture for parser testing — APB requester with one transaction
+;; APB requester with drive definitions at actor level
 (actor apb_requester
   (clock clk)
   (reset (rst_n async active_low))
@@ -21,27 +21,33 @@
     (input  PRDATA  (width 32))
     (input  PSLVERR))
 
+  (drive setup_phase
+    (PADDR addr)
+    (PWRITE is_write)
+    (PWDATA wdata)
+    (PSEL 1)
+    (PENABLE 0))
+
+  (drive access_phase
+    (PENABLE 1))
+
+  (drive done_phase
+    (done 1)
+    (PSEL 0)
+    (PENABLE 0)
+    (last_read_data rdata)
+    (last_error slverr))
+
   (transaction apb_transfer
     (on start
       (sample req_addr  as addr)
       (sample req_write as is_write)
       (sample req_wdata as wdata))
-    (drive setup_phase
-      (PADDR addr)
-      (PWRITE is_write)
-      (PWDATA wdata)
-      (PSEL 1)
-      (PENABLE 0))
-    (drive access_phase
-      (PENABLE 1))
+    (drive setup_phase)
+    (drive access_phase)
     (await PREADY)
     (sample PRDATA  as rdata)
     (sample PSLVERR as slverr)
-    (drive done_phase
-      (done 1)
-      (PSEL 0)
-      (PENABLE 0)
-      (last_read_data rdata)
-      (last_error slverr))
+    (drive done_phase)
     (complete done)
     (latency (min 2) (max 16))))
