@@ -1,5 +1,7 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: Support accounting contract full surface rebuilds cleanly
+- Added t/1038. Complements the support accounting JSON audit with a defensive-copy guard.
 ## 2026-05-11: Support accounting contract full surface survives JSON
 - Added t/1037. Extends R13 auditing to the bounded support accounting contract.
 ## 2026-05-11: Normalized semantic structural RTL IR contract full surface rebuilds cleanly
