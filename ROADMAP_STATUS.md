@@ -1,6 +1,7 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
+- Next decision point: t/1090 now proves a fresh facade contract owner build stays clean. Next bounded R13 slice: continue remaining contract full-surface audits.
 - Next decision point: t/1089 now proves the full HDLGenerator facade contract owner survives JSON. Next bounded R13 slice: facade full-surface stability audits.
 - Next decision point: t/1088 now proves a fresh resolved package imports contract owner build stays clean. HDLGenerator nested family fully audited. Next bounded R13 slice: continue remaining contract audits.
 - Next decision point: t/1087 now proves the full resolved package imports contract owner survives JSON. Next bounded R13 slice: resolved package imports full-surface stability audits.
