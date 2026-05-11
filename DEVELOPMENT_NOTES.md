@@ -1,5 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-11: Semantic exports contract full surface rebuilds cleanly
+- The semantic exports contract now has a full-surface defensive-copy audit.
+- The manifest section-level contract family is now fully audited.
 ## 2026-05-11: Semantic exports contract full surface survives JSON
 - The semantic exports contract now has a full-surface JSON round-trip audit.
 ## 2026-05-11: Backend validation contract full surface rebuilds cleanly
