@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: Normalized semantic payload contract full surface rebuilds cleanly
+- Added
+  [t/1016-normalized-semantic-payload-contract-full-surface-defensive-copy-audit.t](t/1016-normalized-semantic-payload-contract-full-surface-defensive-copy-audit.t)
+  to prove a fresh `build_normalized_semantic_payload_contract()` result stays
+  clean after caller mutation.
+- This complements the payload full-surface JSON audit with a defensive-copy guard.
+- Focused validation passed:
+  `prove -I perl t/1016-normalized-semantic-payload-contract-full-surface-defensive-copy-audit.t t/1015-normalized-semantic-payload-contract-full-surface-json-roundtrip-audit.t t/330-normalized-semantic-payload-contract.t`.
 ## 2026-05-11: Normalized semantic payload contract full surface survives JSON
 - Added
   [t/1015-normalized-semantic-payload-contract-full-surface-json-roundtrip-audit.t](t/1015-normalized-semantic-payload-contract-full-surface-json-roundtrip-audit.t)
