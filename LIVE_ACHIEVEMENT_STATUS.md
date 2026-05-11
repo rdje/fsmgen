@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: Backend validation contract full surface rebuilds cleanly
+- Roadmap lane: R13. Completed slice: t/1070. Public behavior changed: no.
+- Next bounded slice: semantic exports contract.
+
 ## 2026-05-11: Backend validation contract full surface survives JSON
 - Roadmap lane: R13. Completed slice: t/1069. Public behavior changed: no.
 - Next bounded slice: continue backend validation full-surface stability audits.

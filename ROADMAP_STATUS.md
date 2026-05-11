@@ -1,6 +1,7 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
+- Next decision point: t/1070 now proves a fresh backend validation contract owner build stays clean after caller mutation. Next bounded R13 slice: semantic exports contract.
 - Next decision point: t/1069 now proves the full backend validation contract owner survives JSON. Next bounded R13 slice: backend validation full-surface stability audits.
 - Next decision point: t/1068 now proves a fresh documentation contract owner build stays clean after caller mutation. Next bounded R13 slice: backend validation contract.
 - Next decision point: t/1067 now proves the full documentation contract owner survives JSON. Next bounded R13 slice: documentation full-surface stability audits.
