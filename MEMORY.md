@@ -1,5 +1,10 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: R14 — remove `assign` keyword; drive bodies are port-value pairs
+- `(drive name (PADDR addr) (PSEL 1) ...)` — no `assign`, just port-value pairs
+- Rule actions: `(port value)` pairs + `(trigger tx)` — no `assign`/`pulse`/`assert`
+- Updated parser, IR, emitter, all 4 fixtures, tests
+- 7 tests pass
 ## 2026-05-11: R14 — handshake removal, `(on port)` simplification
 - Removed `(handshake ...)` construct; `ready` is now always implicit `can_accept`
 - `(on port ...)` directly names the valid port; `(on expr ...)` for arbitrary expressions

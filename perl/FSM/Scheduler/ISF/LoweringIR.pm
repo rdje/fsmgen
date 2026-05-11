@@ -174,7 +174,7 @@ sub _build_transaction($self, $tx, $actor, $txi) {
 
 # --- Individual clause → IR ---
 sub _ir_on      { my ($cl,$tn,$i)=@_; my $e=$cl->[1]; my @s; for my $j(2..$#$cl){my $x=$cl->[$j]; next unless ref($x)eq'ARRAY'&&$x->[0]eq'sample'; push @s,{port=>$x->[1],as_name=>$x->[3]}} my $guard=!ref($e) ? {port=>$e} : {expr=>$e}; {name=>"${tn}_idle_$i",kind=>'entry',guard=>$guard,samples=>\@s,assignments=>[],transitions=>[]} }
-sub _ir_drive   { my ($cl,$tn,$ps,$i)=@_; my @a; for(@$ps){push @a,{lhs=>$_->[3],rhs=>$_->[1],op=>'<='}} for my $j(2..$#$cl){my$x=$cl->[$j];next unless ref($x)eq'ARRAY'&&$x->[0]eq'assign';push @a,{lhs=>$x->[1],rhs=>$x->[2],op=>'='}} {name=>"${tn}_drive_$i",kind=>'sequential',assignments=>\@a,transitions=>[]} }
+sub _ir_drive   { my ($cl,$tn,$ps,$i)=@_; my @a; for(@$ps){push @a,{lhs=>$_->[3],rhs=>$_->[1],op=>'<='}} for my $j(2..$#$cl){my$x=$cl->[$j];next unless ref($x)eq'ARRAY'&&@$x>=2;push @a,{lhs=>$x->[0],rhs=>$x->[1],op=>'='}} {name=>"${tn}_drive_$i",kind=>'sequential',assignments=>\@a,transitions=>[]} }
 sub _ir_await   { my ($cl,$tn,$i,$wd)=@_; {name=>"${tn}_await_$i",kind=>'await',assignments=>[],transitions=>[],guard=>{port=>$cl->[1]},watchdog=>{name=>"${tn}_wd",limit=>$wd//65536}} }
 sub _ir_complete{ my ($cl,$tn,$i)=@_; {name=>"${tn}_done_$i",kind=>'terminal',assignments=>[{lhs=>$cl->[1],rhs=>1,op=>'='}],transitions=>[]} }
 sub _ir_sample_state { my ($tn,$ps,$i)=@_; my @a; for(@$ps){push @a,{lhs=>$_->[3],rhs=>$_->[1],op=>'<='}} {name=>"${tn}_sample_$i",kind=>'sequential',assignments=>\@a,transitions=>[]} }
@@ -233,10 +233,10 @@ sub _inj_latency {
 sub _build_rules {
     my ($self,$actor)=@_; my @d;
     for my $r(@{$actor->{rules}||[]}){my $c=$self->_rule_cond($r->{when});my @a;
-        for my $ac(@{$r->{actions}}){next unless ref($ac)eq'ARRAY';my $ak=$ac->[0];
-            if($ak eq'assign'){push @a,{lhs=>$ac->[1],rhs=>$ac->[2],op=>'=',guard=>$c}}
-            elsif($ak eq'assert'||$ak eq'pulse'){push @a,{lhs=>$ac->[1],rhs=>1,op=>'=',guard=>$c}}
-            elsif($ak eq'trigger'){push @a,{lhs=>"$ac->[1]_start",rhs=>1,op=>'=',guard=>$c}}}
+        for my $ac(@{$r->{actions}}){next unless ref($ac)eq'ARRAY';my$a0=$ac->[0];
+            if($a0 eq'trigger'){push @a,{lhs=>"$ac->[1]_start",rhs=>1,op=>'=',guard=>$c}}
+            elsif($a0 eq'priority'){}
+            else{push @a,{lhs=>$a0,rhs=>$ac->[1],op=>'=',guard=>$c}}}
         push @d,{name=>$r->{name},kind=>'rule',assignments=>\@a}}
     return @d;
 }

@@ -18,13 +18,13 @@
       (sample addr       as base_addr)
       (sample burst_len  as beats))
     (drive header
-      (assign valid 1)
-      (assign rdata base_addr))
+      (valid 1)
+      (rdata base_addr))
     (await ready)
     (repeat beats
       (await ready)
       (sample rdata as word))
     (drive footer
-      (assign valid 0))
+      (valid 0))
     (complete done)
     (latency (min 2) (max 256))))

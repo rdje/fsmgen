@@ -85,7 +85,7 @@ sub _emit_assignments($self, $state) {
     my $kind = $state->{kind};
 
     # Watchdog decrement
-    if ($kind eq 'await' && $state->{watchdog}) {
+    if ($kind eq 'await' && $state->{watchdog} && $state->{watchdog}{name}) {
         push @lines, "    (-- $state->{watchdog}{name})";
     }
 

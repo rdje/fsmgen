@@ -20,12 +20,12 @@
       (sample addr  as captured_addr)
       (sample wdata as captured_wdata))
     (drive setup
-      (assign valid 1)
-      (assign rdata captured_addr))
+      (valid 1)
+      (rdata captured_addr))
     (await ready)
     (sample ready as was_ready)
     (drive finish
-      (assign err 0))
+      (err 0))
     (complete done)
     (latency (min 1) (max 64)))
 
@@ -45,23 +45,23 @@
     (await_all done)
     (complete done))
 
-  ;; Rule with when, assign, trigger
+  ;; Rule with when, trigger
   (rule always_ready
     (when ready)
-    (assign valid 1)
+    (valid 1)
     (trigger main_transfer))
 
-  ;; Rule with pulse and assert
+  ;; Rule error gate
   (rule error_gate
     (when err)
-    (pulse valid)
-    (assert err))
+    (valid 1)
+    (err 1))
 
   ;; Inline priority
   (rule high_pri
     (priority over always_ready)
     (when start)
-    (assign rdata 0))
+    (rdata 0))
 
   ;; Separate priority section
   (priority main_transfer over chained)
@@ -88,4 +88,4 @@
     (output valid)
     (latency (max 3))
     (compute
-      (assign valid ready))))
+      (valid ready))))

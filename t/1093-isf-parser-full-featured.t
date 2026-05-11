@@ -101,13 +101,13 @@ subtest 'parse full_featured.isf — all ISF constructs' => sub {
     # always_ready: when, assign, trigger
     my $ar = $rule_by{always_ready};
     is($ar->{when}[0], 'when', 'always_ready has when');
-    ok((grep { ref($_) eq 'ARRAY' && $_->[0] eq 'assign' }  @{$ar->{actions}}), 'always_ready has assign');
+    ok((grep { ref($_) eq 'ARRAY' && $_->[0] eq 'valid' }  @{$ar->{actions}}), 'always_ready has port-value pair');
     ok((grep { ref($_) eq 'ARRAY' && $_->[0] eq 'trigger' } @{$ar->{actions}}), 'always_ready has trigger');
 
-    # error_gate: pulse, assert
+    # error_gate: port-value pairs
     my $eg = $rule_by{error_gate};
-    ok((grep { ref($_) eq 'ARRAY' && $_->[0] eq 'pulse' }  @{$eg->{actions}}), 'error_gate has pulse');
-    ok((grep { ref($_) eq 'ARRAY' && $_->[0] eq 'assert' } @{$eg->{actions}}), 'error_gate has assert');
+    ok((grep { ref($_) eq 'ARRAY' && $_->[0] eq 'valid' }  @{$eg->{actions}}), 'error_gate has valid 1');
+    ok((grep { ref($_) eq 'ARRAY' && $_->[0] eq 'err' } @{$eg->{actions}}), 'error_gate has err 1');
 
     # high_pri: inline priority
     my $hp = $rule_by{high_pri};

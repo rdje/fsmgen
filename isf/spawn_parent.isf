@@ -12,7 +12,7 @@
   (transaction child_worker
     (sample trigger as val)
     (drive work
-      (assign rdata val))
+      (rdata val))
     (complete done)
     (latency (min 1) (max 16)))
 
