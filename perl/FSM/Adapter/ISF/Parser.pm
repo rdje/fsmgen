@@ -133,18 +133,17 @@ sub _parse_clock($self, $clause) {
 }
 
 sub _parse_reset($self, $clause) {
-    my $name = $clause->[1];
+    my $spec = $clause->[1];
+    confess "Error: (reset ...) requires (reset (name ...))\n" unless ref($spec) eq 'ARRAY';
+    my $name = $spec->[0];
     my $kind = 'sync';
     my $polarity = 'active_high';
 
-    for my $i (2 .. $#$clause) {
-        my $opt = $clause->[$i];
-        if (ref($opt) eq 'ARRAY') {
-            my $val = $opt->[0];
-            if ($val eq 'async')      { $kind = 'async'; }
-            elsif ($val eq 'active_low') { $polarity = 'active_low'; }
-            elsif ($val eq 'active_high') { $polarity = 'active_high'; }
-        }
+    for my $i (1 .. $#$spec) {
+        my $val = $spec->[$i];
+        if ($val eq 'async')      { $kind = 'async'; }
+        elsif ($val eq 'active_low')  { $polarity = 'active_low'; }
+        elsif ($val eq 'active_high') { $polarity = 'active_high'; }
     }
 
     return { name => $name, kind => $kind, polarity => $polarity };

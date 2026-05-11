@@ -1,7 +1,7 @@
 ;; Minimal .isf fixture for parser testing — APB requester with one transaction
 (actor apb_requester
   (clock clk)
-  (reset rst_n (async) (active_low))
+  (reset (rst_n async active_low))
   (watchdog 65536)
 
   (interface

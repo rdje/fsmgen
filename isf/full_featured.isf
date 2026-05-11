@@ -1,7 +1,7 @@
 ;; Comprehensive ISF fixture exercising all defined constructs
 (actor full_featured
   (clock clk)
-  (reset rst_n (async) (active_low))
+  (reset (rst_n async active_low))
   (watchdog 32768)
 
   (interface

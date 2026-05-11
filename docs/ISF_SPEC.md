@@ -37,7 +37,7 @@ report.
 ```lisp
 (actor ahb_requester
   (clock clk)
-  (reset rst_n (async) (active_low))
+  (reset (rst_n async active_low))
   (watchdog 65536)
 
   (interface
@@ -114,8 +114,8 @@ Default width is 1. `(width N)` is the only property currently defined.
 ```lisp
 (clock name)
 (reset name)
-(reset name (async))
-(reset name (async) (active_low))
+(reset (name async))
+(reset (name async active_low))
 (watchdog N)
 ```
 
