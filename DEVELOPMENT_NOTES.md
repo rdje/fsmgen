@@ -1,5 +1,7 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-11: Extension contract full surface survives JSON
+- The extension contract now has a full-surface JSON round-trip audit.
 ## 2026-05-11: Composition report contract full surface rebuilds cleanly
 - The composition report contract now has a full-surface defensive-copy audit.
 ## 2026-05-11: Composition report contract full surface survives JSON
