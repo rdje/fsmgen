@@ -32,7 +32,8 @@ subtest 'scheduler lowers burst_reader.isf — repeat with counter inference' =>
     like($fsm, qr/\(=1 \(-> read_burst_repeat_init/, 'loop back when counter nonzero');
 
     # Await uses shorthand
-    like($fsm, qr/\(-> \w+ <ready\)/, 'await uses (-> state <cond) shorthand');
+    like($fsm, qr/\(-- read_burst_wd\)/, 'await has watchdog decrement');
+    like($fsm, qr/\(=0 \(-> read_burst_timeout\)\)/, 'timeout at watchdog zero');
 
     note("Generated burst_reader.fsm:\n$fsm");
 };

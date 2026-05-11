@@ -24,9 +24,12 @@ sub lower_transaction($self, $tx, $actor) {
 
     my $tx_name    = $tx->{name};
     my $handshakes = $actor->{handshakes};
+    my $watchdog   = $actor->{watchdog};
     my @state_specs;            # { name, kind, body, ... }
     my @pending_samples;
     my @inferred_counters;      # counter names inferred from (repeat ...)
+    my $has_await;              # tracks if transaction has any (await ...)
+    my $wd_counter;             # watchdog counter name
     my $idx = 0;
 
     for my $clause (@{$tx->{clauses}}) {
@@ -42,7 +45,9 @@ sub lower_transaction($self, $tx, $actor) {
             push @state_specs, $self->_drive_clause($clause, $tx_name, $samples, $idx++);
         }
         elsif ($kind eq 'await') {
-            push @state_specs, $self->_await_clause($clause, $tx_name, $idx++);
+            $has_await = 1;
+            $wd_counter = "${tx_name}_wd";
+            push @state_specs, $self->_await_clause($clause, $tx_name, $idx++, $watchdog);
         }
         elsif ($kind eq 'sample') {
             push @pending_samples, $clause;
@@ -52,7 +57,7 @@ sub lower_transaction($self, $tx, $actor) {
         }
         elsif ($kind eq 'repeat') {
             my ($repeat_states, $counter) =
-                $self->_repeat_clause($clause, $tx_name, \$idx, \@pending_samples);
+                $self->_repeat_clause($clause, $tx_name, \$idx, \@pending_samples, $watchdog);
             push @state_specs, @$repeat_states;
             push @inferred_counters, $counter;
         }
@@ -73,7 +78,31 @@ sub lower_transaction($self, $tx, $actor) {
     $self->_link_states(\@state_specs, $tx_name);
 
     fsm_trace_exit("TransactionLowering: $tx_name produced " . scalar(@state_specs) . " states", 3);
-    return { states => \@state_specs, counters => \@inferred_counters };
+
+    my %counters;
+    for my $c (@inferred_counters) { $counters{$c} = 8; }
+
+    # Watchdog counter
+    if ($has_await && $wd_counter) {
+        my $limit = $watchdog // 65536;
+        my $wd_bits = int(log($limit) / log(2)) + 1;
+        $counters{$wd_counter} = $wd_bits;
+
+        # Reset watchdog in entry (idle) state
+        if (@state_specs && $state_specs[0]{kind} eq 'entry') {
+            unshift @{$state_specs[0]{body}}, "    (<= ($wd_counter (- $limit 1)))";
+        }
+
+        # Timeout state
+        my $timeout_name = "${tx_name}_timeout";
+        push @state_specs, {
+            name => $timeout_name,
+            kind => 'terminal',
+            body => ["    (= (done> 1))", "    (= (last_error> 1))"],
+        };
+    }
+
+    return { states => \@state_specs, counters => \%counters };
 }
 
 # --- Phase 1: Collect state bodies ---
@@ -127,15 +156,19 @@ sub _drive_clause($self, $clause, $tx_name, $samples, $idx) {
     return { name => $name, kind => 'sequential', body => \@body };
 }
 
-sub _await_clause($self, $clause, $tx_name, $idx) {
-    my $port = $clause->[1];
-    my $name = _state_name($tx_name, 'await', $idx);
+sub _await_clause($self, $clause, $tx_name, $idx, $watchdog) {
+    my $port     = $clause->[1];
+    my $name     = _state_name($tx_name, 'await', $idx);
+    my $wd_name  = "${tx_name}_wd";
+    my $wd_limit = $watchdog // 65536;
 
     return {
         name      => $name,
         kind      => 'await',
         body      => [],
         cond_port => $port,
+        wd_name   => $wd_name,
+        wd_limit  => $wd_limit,
     };
 }
 
@@ -170,7 +203,7 @@ sub _placeholder_clause($self, $clause, $tx_name, $idx) {
     };
 }
 
-sub _repeat_clause($self, $clause, $tx_name, $idx_ref, $pending) {
+sub _repeat_clause($self, $clause, $tx_name, $idx_ref, $pending, $watchdog) {
     # (repeat count_expr body...)
     # Produces: counter_init, body_states, counter_check (loop back)
     my $count_expr = $clause->[1];
@@ -194,7 +227,7 @@ sub _repeat_clause($self, $clause, $tx_name, $idx_ref, $pending) {
         my $bk = $bc->[0];
 
         if ($bk eq 'await') {
-            push @states, $self->_await_clause($bc, $tx_name, $$idx_ref++);
+            push @states, $self->_await_clause($bc, $tx_name, $$idx_ref++, $watchdog);
         }
         elsif ($bk eq 'sample') {
             push @local_pending, $bc;
@@ -258,7 +291,15 @@ sub _link_states($self, $state_specs, $tx_name) {
             push @{$spec->{body}}, '    )';
         }
         elsif ($kind eq 'await') {
-            push @{$spec->{body}}, "    (-> $next <$spec->{cond_port})" if $next;
+            my $wd = $spec->{wd_name};
+            # Decrement watchdog, check port, check timeout at zero
+            push @{$spec->{body}}, "    (-- $wd)";
+            push @{$spec->{body}}, "    (<$spec->{cond_port}";
+            push @{$spec->{body}}, "      (-> $next)" if $next;
+            push @{$spec->{body}}, '    )';
+            push @{$spec->{body}}, "    (?$wd";
+            push @{$spec->{body}}, "      (=0 (-> ${tx_name}_timeout))";
+            push @{$spec->{body}}, '    )';
         }
         elsif ($kind eq 'sequential' && $next) {
             push @{$spec->{body}}, "    (-> $next)";

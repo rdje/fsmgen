@@ -2,6 +2,9 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: R14 `.isf` — watchdog lowering
+- Active: `R14`. Watchdog shipped. 7 tests pass.
+
 ## 2026-05-11: R14 `.isf` — CLI wired
 - `bin/fsmgen` now accepts `.isf` files. Full CLI pipeline works. 7 ISF tests.
 

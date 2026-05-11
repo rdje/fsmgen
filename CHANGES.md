@@ -1,7 +1,9 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
-### R14 `.isf` wired into `bin/fsmgen` CLI
+### R14 `.isf` — watchdog lowering
+- `(await ...)` → watchdog: load max-1, decrement, timeout at zero.
+### R14 `.isf` wired into `bin/fsmgen`
 - `bin/fsmgen` accepts `.isf`, lowers to `.fsm`, feeds to normal pipeline.
 ### R14 `.isf` scheduler — repeat lowering
 - `(repeat N ...)` → counter init + loop-back with `(?counter ...)` DT. 7 ISF tests.

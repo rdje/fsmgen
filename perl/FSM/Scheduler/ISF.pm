@@ -44,8 +44,9 @@ sub lower($self, $actor) {
     for my $tx (@{$actor->{transactions}}) {
         my $result = $tx_lowering->lower_transaction($tx, $actor);
         push @all_states, @{$result->{states}};
-        for my $c (@{$result->{counters}}) {
-            $all_counters{$c} = 8;
+        my $counters = $result->{counters};
+        while (my ($name, $width) = each %$counters) {
+            $all_counters{$name} = $width;
         }
     }
 

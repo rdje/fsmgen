@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: R14 `.isf` scheduler — watchdog lowering
+- `(await port)` now generates full watchdog: counter declared in `+size`,
+  loaded with `max-1` in entry state, decremented with `(-- wd)` each cycle,
+  timeout transition at `(=0 ...)` to error state
+- Timeout state sets `done` and `last_error`
+- 7 ISF tests pass, both fixtures pass strict-mode check
 ## 2026-05-11: R14 `.isf` wired into `bin/fsmgen` CLI
 - `bin/fsmgen` now accepts `.isf` files: parses with `FSM::Adapter::ISF`,
   lowers with `FSM::Scheduler::ISF`, writes temp `.fsm`, feeds to normal pipeline
