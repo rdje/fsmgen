@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: Normalized semantic signal analysis contract full surface survives JSON
+- Roadmap lane: R13. Completed slice: t/1029. Public behavior changed: no.
+- Next bounded slice: continue signal analysis full-surface stability audits.
+
 ## 2026-05-11: Normalized semantic explicit system contract full surface rebuilds cleanly
 - Roadmap lane: R13. Completed slice: t/1028. Public behavior changed: no.
 - Next bounded slice: continue normalized semantic nested-contract audits.
