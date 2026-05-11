@@ -1,5 +1,7 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: HDLGenerator source info contract full surface rebuilds cleanly
+- Added t/1074. Complements t/1073 JSON audit with defensive-copy guard.
 ## 2026-05-11: HDLGenerator source info contract full surface survives JSON
 - Added t/1073. Extends R13 auditing to the bounded HDLGenerator source info contract.
 ## 2026-05-11: Semantic exports contract full surface rebuilds cleanly
