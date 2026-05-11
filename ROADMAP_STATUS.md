@@ -1,6 +1,7 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
+- Next decision point: t/1028 now proves a fresh explicit system contract owner build stays clean after caller mutation. Next bounded R13 slice: normalized semantic nested-contract audits.
 - Next decision point: t/1027 now proves the full explicit system contract owner survives JSON encode/decode unchanged. Next bounded R13 slice: explicit system full-surface stability audits.
 - Next decision point: t/1026 now proves a fresh system contract owner build stays clean after caller mutation. Next bounded R13 slice: normalized semantic nested-contract audits.
 - Next decision point: t/1025 now proves the full system contract owner survives JSON encode/decode unchanged. Next bounded R13 slice: system full-surface stability audits.
