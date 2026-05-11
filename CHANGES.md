@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### Normalized semantic composition contract full surface rebuilds cleanly
+- Added
+  [t/1020-normalized-semantic-composition-contract-full-surface-defensive-copy-audit.t](t/1020-normalized-semantic-composition-contract-full-surface-defensive-copy-audit.t)
+  to prove a fresh normalized semantic composition contract build stays clean
+  after caller mutation.
+- Updated [MEMORY.md](MEMORY.md), [ROADMAP_STATUS.md](ROADMAP_STATUS.md),
+  [LIVE_ACHIEVEMENT_STATUS.md](LIVE_ACHIEVEMENT_STATUS.md), and
+  [DEVELOPMENT_NOTES.md](DEVELOPMENT_NOTES.md) for the `R13` progress entry.
 ### Normalized semantic composition contract full surface survives JSON
 - Added
   [t/1019-normalized-semantic-composition-contract-full-surface-json-roundtrip-audit.t](t/1019-normalized-semantic-composition-contract-full-surface-json-roundtrip-audit.t)
