@@ -1,5 +1,8 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: Report generated output contract full surface rebuilds cleanly
+- Added t/1052. Complements the generated output JSON audit with defensive-copy guard.
+- This completes the shared public report contract family (producer, source, command, generated-output).
 ## 2026-05-11: Report generated output contract full surface survives JSON
 - Added t/1051. Extends R13 auditing to the shared generated output contract.
 ## 2026-05-11: Report command contract full surface rebuilds cleanly

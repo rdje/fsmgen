@@ -1,6 +1,8 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### Report generated output contract full surface rebuilds cleanly
+- Added t/1052. Shared public report contract family now fully audited.
 ### Report generated output contract full surface survives JSON
 - Added t/1051. Updated live docs for R13.
 ### Report command contract full surface rebuilds cleanly
