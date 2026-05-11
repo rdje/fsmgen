@@ -1,6 +1,8 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### Normalized semantic structural RTL IR contract full surface survives JSON
+- Added t/1035. Updated live docs for R13.
 ### Normalized semantic lowered RTL IR contract full surface rebuilds cleanly
 - Added t/1034. Updated live docs for R13.
 ### Normalized semantic lowered RTL IR contract full surface survives JSON

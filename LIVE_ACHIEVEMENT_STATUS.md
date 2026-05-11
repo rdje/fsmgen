@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: Normalized semantic structural RTL IR contract full surface survives JSON
+- Roadmap lane: R13. Completed slice: t/1035. Public behavior changed: no.
+- Next bounded slice: continue structural RTL IR full-surface stability audits.
+
 ## 2026-05-11: Normalized semantic lowered RTL IR contract full surface rebuilds cleanly
 - Roadmap lane: R13. Completed slice: t/1034. Public behavior changed: no.
 - Next bounded slice: continue normalized semantic nested-contract audits.

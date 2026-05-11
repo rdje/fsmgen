@@ -1,6 +1,7 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
+- Next decision point: t/1035 now proves the full structural RTL IR contract owner survives JSON encode/decode unchanged. Next bounded R13 slice: structural RTL IR full-surface stability audits.
 - Next decision point: t/1034 now proves a fresh lowered RTL IR contract owner build stays clean after caller mutation. Next bounded R13 slice: normalized semantic nested-contract audits.
 - Next decision point: t/1033 now proves the full lowered RTL IR contract owner survives JSON encode/decode unchanged. Next bounded R13 slice: lowered RTL IR full-surface stability audits.
 - Next decision point: t/1032 now proves a fresh intent HIR contract owner build stays clean after caller mutation. Next bounded R13 slice: normalized semantic nested-contract audits.
