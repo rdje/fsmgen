@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: R14 — `(do ...)` composition lowering
+- `(do child)` now lowers to start/done handshake: parent asserts `child_start`,
+  awaits `child_done`; child's idle state rewired to watch `child_start`,
+  done state pulses `child_done`
+- Same-actor children reuse one instance (sequential semantics)
+- `_wire_do_children` post-processes IR to add handshake signals
+- 7 tests pass, all fixtures pass strict mode
 ## 2026-05-11: R14 — JSON schedule report emitter
 - Created `FSM::Scheduler::ISF::Emitter::JSON` — produces machine-readable
   schedule report from the same LoweringIR used by the .fsm emitter

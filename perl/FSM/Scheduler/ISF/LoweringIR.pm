@@ -61,14 +61,22 @@ sub build_module($self, $actor) {
     # Build states from transactions
     my $tx_idx = 0;
     for my $tx (@{$actor->{transactions}}) {
-        my ($tx_states, $tx_counters, $tx_dts) = $self->_build_transaction($tx, $actor, $tx_idx++);
+        my ($tx_states, $tx_counters, $tx_dts, $do_children) =
+            $self->_build_transaction($tx, $actor, $tx_idx++);
         push @states, @$tx_states;
         while (my ($k, $v) = each %$tx_counters) { $counters{$k} = $v; }
         push @dt_blocks, @$tx_dts;
+        for my $child (@$do_children) {
+            $counters{"${child}_start"} = 1;
+            $counters{"${child}_done"}  = 1;
+        }
     }
 
     # Build DT blocks from rules
     push @dt_blocks, $self->_build_rules($actor);
+
+    # Post-process: wire do-children start/done handshake
+    $self->_wire_do_children(\@states, \%counters, $actor);
 
     return {
         actor_name => $name,
@@ -96,6 +104,7 @@ sub _build_transaction($self, $tx, $actor, $tx_idx) {
     my $has_await     = 0;
     my $wd_counter;
     my $latency;
+    my @do_children;           # child tx names from (do ...)
 
     for my $clause (@{$tx->{clauses}}) {
         next unless ref($clause) eq 'ARRAY';
@@ -126,7 +135,12 @@ sub _build_transaction($self, $tx, $actor, $tx_idx) {
         elsif ($kind eq 'latency') {
             $latency = $self->_parse_latency($clause);
         }
-        elsif ($kind eq 'do' || $kind eq 'spawn' || $kind eq 'await_all' || $kind eq 'await_any') {
+        elsif ($kind eq 'do') {
+            my $child = $clause->[1];
+            push @do_children, $child;
+            push @states, $self->_ir_do($clause, $tx_name, $state_idx++);
+        }
+        elsif ($kind eq 'spawn' || $kind eq 'await_all' || $kind eq 'await_any') {
             push @states, $self->_ir_placeholder($clause, $tx_name, $state_idx++);
         }
     }
@@ -155,7 +169,7 @@ sub _build_transaction($self, $tx, $actor, $tx_idx) {
     # Link transitions
     $self->_link_state_transitions(\@states, $tx_name);
 
-    return (\@states, \%counters, \@dts);
+    return (\@states, \%counters, \@dts, \@do_children);
 }
 
 # --- Individual clause → IR ---
@@ -237,6 +251,20 @@ sub _ir_placeholder($self, $clause, $tx_name, $idx) {
         kind        => 'sequential',
         assignments => [],
         transitions => [],
+    };
+}
+
+sub _ir_do($self, $clause, $tx_name, $idx) {
+    my $child  = $clause->[1];
+    my $start  = "${child}_start";
+    my $done   = "${child}_done";
+
+    return {
+        name        => "${tx_name}_do_$idx",
+        kind        => 'await',
+        assignments => [{ lhs => $start, rhs => 1, op => '=' }],
+        transitions => [],
+        guard       => { port => $done },
     };
 }
 
@@ -426,6 +454,44 @@ sub _parse_latency($self, $clause) {
         $r{$item->[0]} = $item->[1] if $item->[0] eq 'min' || $item->[0] eq 'max';
     }
     return \%r;
+}
+
+sub _wire_do_children($self, $states, $counters, $actor) {
+    # Collect child names that have their own transactions in this actor
+    my %child_tx = map { $_->{name} => $_ } @{$actor->{transactions}};
+
+    # Find do-children referenced by parent transactions
+    my %needs_handshake;
+    for my $tx (@{$actor->{transactions}}) {
+        for my $clause (@{$tx->{clauses}}) {
+            next unless ref($clause) eq 'ARRAY' && $clause->[0] eq 'do';
+            my $child = $clause->[1];
+            $needs_handshake{$child} = 1 if $child_tx{$child};
+        }
+    }
+
+    # For each child that needs handshake, modify its entry and done states
+    for my $child (keys %needs_handshake) {
+        my $start = "${child}_start";
+        my $done  = "${child}_done";
+
+        # Find child's entry state and change its guard to watch start
+        my ($entry) = grep { $_->{name} =~ /^${child}_idle_/ } @$states;
+        if ($entry) {
+            $entry->{guard} = { port => $start };
+            # Rebuild transitions for the new guard
+            $entry->{transitions} = [];
+            my ($next) = grep { $_->{name} =~ /^${child}_drive_/ } @$states;
+            push @{$entry->{transitions}}, { target => $next->{name}, condition => $entry->{guard} }
+                if $next;
+        }
+
+        # Find child's terminal state and add done pulse
+        my ($terminal) = grep { $_->{name} =~ /^${child}_(?:done|complete)_/ && $_->{kind} eq 'terminal' } @$states;
+        if ($terminal) {
+            unshift @{$terminal->{assignments}}, { lhs => $done, rhs => 1, op => '=' };
+        }
+    }
 }
 
 1;

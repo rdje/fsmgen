@@ -1,6 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
-## 2026-05-11: R14 — JSON schedule report
+## 2026-05-11: R14 — `(do ...)` composition
+- `(do child)` rewires child's idle guard to `child_start`, pulses `child_done` on completion.
+## 2026-05-11: R14 — JSON
 - Same IR drives both `.fsm` emitter and JSON report.
 ## 2026-05-11: R14 — IR refactor
 - `LoweringIR` is the typed middle layer. `Emitter::FSM` is a pure string emitter. Future backends hook into IR.
