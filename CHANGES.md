@@ -1,6 +1,8 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### Normalized semantic signal analysis contract full surface rebuilds cleanly
+- Added t/1030. Updated live docs for R13.
 ### Normalized semantic signal analysis contract full surface survives JSON
 - Added t/1029. Updated live docs for R13.
 ### Normalized semantic explicit system contract full surface rebuilds cleanly
