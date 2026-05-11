@@ -61,6 +61,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/INTENT_SCHEDULING_BRAINSTORM.md` — living brainstorm log for inferring/scheduling cycles from a hardware-native intent layer above explicit `.fsm`.
 - `docs/REGRESSION_CORPUS.md` — human-readable companion to the machine-checked support and regression catalog.
 - `docs/INTENT_CAPTURE_AXI_CASE_STUDY.md` — AXI intent-capture case-study notes for future high-level synthesis work.
+- `docs/VHDL_SCOPE.md` — scoped VHDL backend plan preserved for future horizon H5 reference.
 - `CHANGES.md` — persistent technical change history.
 - `DEVELOPMENT_NOTES.md` — architecture notes and engineering rationale.
 - `MEMORY.md` — live continuity context and recovery notes.
