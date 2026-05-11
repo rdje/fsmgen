@@ -137,10 +137,11 @@ sub _parse_reset($self, $clause) {
     confess "Error: (reset ...) requires (reset (name ...))\n" unless ref($spec) eq 'ARRAY';
     my $name = $spec->[0];
     my $kind = 'sync';
-    my $polarity = 'active_high';
+    my $polarity = $name =~ /_[nb]$/ ? 'active_low' : 'active_high';
 
     for my $i (1 .. $#$spec) {
         my $val = $spec->[$i];
+        next unless defined $val;
         if ($val eq 'async')      { $kind = 'async'; }
         elsif ($val eq 'active_low')  { $polarity = 'active_low'; }
         elsif ($val eq 'active_high') { $polarity = 'active_high'; }
