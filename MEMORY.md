@@ -1,5 +1,7 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: HDLGenerator statistics contract full surface survives JSON
+- Added t/1077. Extends R13 auditing to the bounded statistics contract.
 ## 2026-05-11: HDLGenerator module info contract full surface rebuilds cleanly
 - Added t/1076. Complements t/1075 JSON audit with defensive-copy guard.
 ## 2026-05-11: HDLGenerator module info contract full surface survives JSON

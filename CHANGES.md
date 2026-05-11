@@ -1,6 +1,8 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### HDLGenerator statistics contract full surface survives JSON
+- Added t/1077. Updated live docs for R13.
 ### HDLGenerator module info contract full surface rebuilds cleanly
 - Added t/1076. Updated live docs for R13.
 ### HDLGenerator module info contract full surface survives JSON
