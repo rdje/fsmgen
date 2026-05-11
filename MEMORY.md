@@ -1,5 +1,7 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: Normalized semantic lowered RTL IR contract full surface rebuilds cleanly
+- Added t/1034. Complements the lowered RTL IR JSON audit with a defensive-copy guard.
 ## 2026-05-11: Normalized semantic lowered RTL IR contract full surface survives JSON
 - Added t/1033. Extends R13 auditing to the bounded lowered RTL IR contract.
 ## 2026-05-11: Normalized semantic intent HIR contract full surface rebuilds cleanly
