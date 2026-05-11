@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### Normalized semantic forward IR contract full surface survives JSON
+- Added
+  [t/1021-normalized-semantic-forward-ir-contract-full-surface-json-roundtrip-audit.t](t/1021-normalized-semantic-forward-ir-contract-full-surface-json-roundtrip-audit.t)
+  to prove the full normalized semantic forward IR contract survives JSON
+  encode/decode unchanged.
+- Updated [MEMORY.md](MEMORY.md), [ROADMAP_STATUS.md](ROADMAP_STATUS.md),
+  [LIVE_ACHIEVEMENT_STATUS.md](LIVE_ACHIEVEMENT_STATUS.md), and
+  [DEVELOPMENT_NOTES.md](DEVELOPMENT_NOTES.md) for the `R13` progress entry.
 ### Normalized semantic composition contract full surface rebuilds cleanly
 - Added
   [t/1020-normalized-semantic-composition-contract-full-surface-defensive-copy-audit.t](t/1020-normalized-semantic-composition-contract-full-surface-defensive-copy-audit.t)

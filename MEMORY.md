@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: Normalized semantic forward IR contract full surface survives JSON
+- Added
+  [t/1021-normalized-semantic-forward-ir-contract-full-surface-json-roundtrip-audit.t](t/1021-normalized-semantic-forward-ir-contract-full-surface-json-roundtrip-audit.t)
+  to prove the complete `build_normalized_semantic_forward_ir_contract()` result
+  survives JSON encode/decode unchanged.
+- This extends full-surface `R13` auditing to the bounded normalized semantic
+  forward-IR contract nested inside public normalized semantic JSON reports.
+- Focused validation passed:
+  `prove -I perl t/1021-normalized-semantic-forward-ir-contract-full-surface-json-roundtrip-audit.t t/334-normalized-semantic-forward-ir-contract.t t/471-normalized-semantic-forward-ir-contract-defensive-copy-boundary-audit.t`.
 ## 2026-05-11: Normalized semantic composition contract full surface rebuilds cleanly
 - Added
   [t/1020-normalized-semantic-composition-contract-full-surface-defensive-copy-audit.t](t/1020-normalized-semantic-composition-contract-full-surface-defensive-copy-audit.t)
