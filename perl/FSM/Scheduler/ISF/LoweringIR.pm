@@ -234,7 +234,7 @@ sub _link_states {
         elsif($s->{kind}eq'await'&&$n){push @{$s->{transitions}},{target=>$n,condition=>$s->{guard}};push @{$s->{transitions}},{target=>"${tn}_timeout",condition=>{signal=>$s->{watchdog}{name},op=>'=',value=>0}}}
         elsif($s->{kind}eq'repeat_check'){push @{$s->{transitions}},{target=>$s->{loop_target},condition=>{signal=>$s->{counter},op=>'!=',value=>0}};push @{$s->{transitions}},{target=>$n,condition=>{signal=>$s->{counter},op=>'=',value=>0}}if$n}
         elsif($s->{kind}eq'sequential'&&$n){push @{$s->{transitions}},{target=>$n}}
-        elsif($s->{kind}eq'branch'&&$n){push @{$s->{transitions}},{target=>$n};push @{$s->{transitions}},{target=>$s->{true_target},condition=>$s->{condition}}if$s->{true_target}}
+        elsif($s->{kind}eq'branch'){my$skip=undef;for(my$j=$i+1;$j<@$st;$j++){next if$st->[$j]{name}=~/_drive_|_await_|_sample_/; $skip=$st->[$j]{name};last} push @{$s->{transitions}},{target=>$skip||$e};push @{$s->{transitions}},{target=>$s->{true_target},condition=>$s->{condition}}if$s->{true_target}}
         elsif($s->{kind}eq'sync_any'&&$n){push @{$s->{transitions}},{target=>$n}}
         elsif($s->{kind}eq'terminal'){push @{$s->{transitions}},{target=>$e}}}
 }

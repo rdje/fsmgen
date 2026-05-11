@@ -181,7 +181,7 @@ sub _emit_transitions($self, $state) {
     # Branch transition: ?condition (=1 -> body) (=0 -> skip)
     if ($state->{kind} eq 'branch') {
         my $cond = $state->{condition};
-        my $cond_str = !ref($cond) ? $cond : join(' ', map { ref($_) ? '('.join(' ',@$_).')' : $_ } @$cond);
+        my $cond_str = !ref($cond) ? $cond : _format_expr($cond);
         push @lines, "    (?$cond_str";
         push @lines, "      (=1 (-> $state->{true_target}))" if $state->{true_target};
         # =0: skip to next top-level state
@@ -234,6 +234,18 @@ sub _emit_dt_blocks($self, $ir, $outputs) {
         push @lines, '';
     }
     return @lines;
+}
+
+sub _format_expr {
+    my ($e) = @_;
+    return $e unless ref($e) eq 'ARRAY';
+    my $op = $e->[0];
+    my @args;
+    for my $i (1 .. $#$e) {
+        my $a = $e->[$i];
+        push @args, ref($a) ? _format_expr($a) : $a;
+    }
+    return "($op " . join(' ', @args) . ')';
 }
 
 1;

@@ -18,7 +18,7 @@
         (result 42))
       (drive write_done
         (done 1)))
-    (when (= mode 0)
+    (when mode
       (drive read_path
         (result 7)))
     (complete done)))
