@@ -1,5 +1,8 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: Normalized semantic structural RTL IR contract full surface rebuilds cleanly
+- Added t/1036. Complements the structural RTL IR JSON audit with a defensive-copy guard.
+- This completes the normalized semantic nested-contract family full-surface audits (11 contracts: payload, module, composition, forward-IR, symbol, system, explicit-system, signal-analysis, intent-HIR, lowered-RTL-IR, structural-RTL-IR).
 ## 2026-05-11: Normalized semantic structural RTL IR contract full surface survives JSON
 - Added t/1035. Extends R13 auditing to the bounded structural RTL IR contract.
 ## 2026-05-11: Normalized semantic lowered RTL IR contract full surface rebuilds cleanly
