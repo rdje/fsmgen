@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: Diagnostic code registry contract full surface survives JSON
+- Roadmap lane: R13. Completed slice: t/1041. Public behavior changed: no.
+- Next bounded slice: continue diagnostic code registry full-surface stability audits.
+
 ## 2026-05-11: Support accounting match contract full surface rebuilds cleanly
 - Roadmap lane: R13. Completed slice: t/1040. Public behavior changed: no.
 - Next bounded slice: continue remaining contract families.
