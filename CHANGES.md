@@ -1,6 +1,8 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### Debug runtime contract full surface rebuilds cleanly
+- Added t/1060. Updated live docs for R13.
 ### Debug runtime contract full surface survives JSON
 - Added t/1059. Updated live docs for R13.
 ### HDL external validation contract full surface rebuilds cleanly
