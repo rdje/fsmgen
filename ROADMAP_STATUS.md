@@ -1,6 +1,7 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
+- Next decision point: t/1083 now proves the full FSM module contract owner survives JSON. Next bounded R13 slice: FSM module full-surface stability audits.
 - Next decision point: t/1082 now proves a fresh composition spec contract owner build stays clean. Next bounded R13 slice: FSM module contract.
 - Next decision point: t/1081 now proves the full composition spec contract owner survives JSON. Next bounded R13 slice: composition spec full-surface stability audits.
 - Next decision point: t/1080 now proves a fresh composition plan contract owner build stays clean. Next bounded R13 slice: composition spec contract.
