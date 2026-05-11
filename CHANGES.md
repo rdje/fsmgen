@@ -1,6 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### `.isf` specification v0.2 — pure Lisp, no register leakage
+- Revised [docs/ISF_SPEC.md](docs/ISF_SPEC.md): removed `(+...)` forms, keyword
+  arguments, register vocabulary. `(sample ...)`, `(assign ...)`, `(on handshake)`,
+  `(interface ...)` now canonical. 7 open design questions.
 ### R14 `.isf` format specification v0.1
 - Created [docs/ISF_SPEC.md](docs/ISF_SPEC.md) defining the Intent Scheduling Format.
 - Covers: actor root, transactions, rules, phases, handshakes, resources,

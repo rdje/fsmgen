@@ -1,5 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-11: `.isf` specification v0.2 — pure Lisp, no register leakage
+- ISF_SPEC.md v0.2 reflects design review: no `(+...)`, no keyword args, `(sample ...)` replaces `(capture -> register)`, `(on handshake)` replaces `(accept ...)`.
+- Scheduler owns all storage decisions; author vocabulary stays at intent level.
 ## 2026-05-11: R14 `.isf` format specification v0.1
 - ISF_SPEC.md defines the .isf syntax, semantics, lowering contract, and schedule report model.
 - Derived from INTENT_SCHEDULING_BRAINSTORM.md with concrete syntax decisions and 5 open design questions.

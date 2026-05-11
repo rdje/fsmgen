@@ -1,6 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
-## 2026-05-11: R14 `.isf` format specification v0.1 created
+## 2026-05-11: `.isf` specification v0.2 — pure Lisp, no register leakage
+- Revised [docs/ISF_SPEC.md](docs/ISF_SPEC.md) to v0.2 with design review feedback:
+  - No `(+...)` forms; pure Lisp declarations throughout
+  - No keyword arguments; `(width N)` not `:width N`
+  - `(sample port as name)` replaces `(capture -> register)` — scheduler decides storage
+  - `(assign ...)` replaces `(set register)` — intent-level vocabulary
+  - `(on handshake)` replaces `(accept sig1 sig2)` — handshakes as first-class abstractions
+  - `(interface ...)` replaces `(+ports ...)` — port-level thinking
+  - `(clock ...)` / `(reset ...)` replace `(+system ...)`
+  - `(resources ...)` replaces `(+resources ...)`
+  - Added 2 open design questions (7 total)
 - Created [docs/ISF_SPEC.md](docs/ISF_SPEC.md) — the initial `.isf` Intent
   Scheduling Format specification.
 - Defines: actor root, transactions, rules, phases, handshakes, resources,

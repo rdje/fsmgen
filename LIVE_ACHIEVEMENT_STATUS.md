@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: `.isf` specification v0.2 — pure Lisp, no register leakage
+- Active lane: `R14`. [docs/ISF_SPEC.md](docs/ISF_SPEC.md) v0.2: pure Lisp, handshake-first,
+  scheduler-owns-storage. Next: first `.isf` parser or worked lowering example.
+
 ## 2026-05-11: R14 `.isf` format specification v0.1
 - Active lane: `R14` — Intent Scheduling. First slice complete: [docs/ISF_SPEC.md](docs/ISF_SPEC.md).
 - Defines `.isf` syntax, lowering contract, and schedule report model.
