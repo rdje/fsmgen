@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: Support accounting match contract full surface survives JSON
+- Roadmap lane: R13. Completed slice: t/1039. Public behavior changed: no.
+- Next bounded slice: continue match contract full-surface stability audits.
+
 ## 2026-05-11: Support accounting contract full surface rebuilds cleanly
 - Roadmap lane: R13. Completed slice: t/1038. Public behavior changed: no.
 - Next bounded slice: continue remaining contract families.

@@ -1,6 +1,8 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### Support accounting match contract full surface survives JSON
+- Added t/1039. Updated live docs for R13.
 ### Support accounting contract full surface rebuilds cleanly
 - Added t/1038. Updated live docs for R13.
 ### Support accounting contract full surface survives JSON
