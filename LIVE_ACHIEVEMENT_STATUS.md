@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: Check result contract full surface survives JSON
+- Roadmap lane: `R13` public embedding/API stabilization.
+- Completed slice:
+  [t/1013-check-result-contract-full-surface-json-roundtrip-audit.t](t/1013-check-result-contract-full-surface-json-roundtrip-audit.t)
+  now proves the full check result contract owner survives JSON encode/decode
+  unchanged.
+- Public behavior changed: no; this is a full-surface stability audit only.
+- Focused validation passed:
+  `prove -I perl t/1013-check-result-contract-full-surface-json-roundtrip-audit.t t/329-check-result-contract.t t/456-check-result-contract-defensive-copy-boundary-audit.t`.
+- Next bounded slice: continue check result full-surface stability audits.
+
 ## 2026-05-11: Check failure diagnostic contract full surface rebuilds cleanly
 - Roadmap lane: `R13` public embedding/API stabilization.
 - Completed slice:

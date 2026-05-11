@@ -1,5 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-11: Check result contract full surface survives JSON
+- The check result contract now has a full-surface JSON round-trip audit.
+- This guard compares `decode_json(encode_json(build_check_result_contract()))` with the owner build, catching JSON-safety or owner-assembly drift for the bounded check success result object reused by public check JSON reports.
 ## 2026-05-11: Check failure diagnostic contract full surface rebuilds cleanly
 - The check failure diagnostic contract now has a full-surface defensive-copy audit.
 - The test recursively mutates one built contract and compares the next owner build with a fresh expected result, guarding the shared nested failure `diagnostic` contract reused by check JSON and normalized semantic JSON reports against shared mutable state.
