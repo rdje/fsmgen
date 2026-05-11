@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### Check result contract full surface rebuilds cleanly
+- Added
+  [t/1014-check-result-contract-full-surface-defensive-copy-audit.t](t/1014-check-result-contract-full-surface-defensive-copy-audit.t)
+  to prove a fresh check result contract build stays clean after caller
+  mutation of a previous full contract result.
+- Updated [MEMORY.md](MEMORY.md), [ROADMAP_STATUS.md](ROADMAP_STATUS.md),
+  [LIVE_ACHIEVEMENT_STATUS.md](LIVE_ACHIEVEMENT_STATUS.md), and
+  [DEVELOPMENT_NOTES.md](DEVELOPMENT_NOTES.md) for the `R13` progress entry.
 ### Check result contract full surface survives JSON
 - Added
   [t/1013-check-result-contract-full-surface-json-roundtrip-audit.t](t/1013-check-result-contract-full-surface-json-roundtrip-audit.t)

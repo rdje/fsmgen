@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: Check result contract full surface rebuilds cleanly
+- Added
+  [t/1014-check-result-contract-full-surface-defensive-copy-audit.t](t/1014-check-result-contract-full-surface-defensive-copy-audit.t)
+  to prove a fresh `build_check_result_contract()` result stays clean after
+  caller mutation of a previous full contract result.
+- This complements the check result full-surface JSON audit with a
+  defensive-copy guard for the bounded check success result contract.
+- Focused validation passed:
+  `prove -I perl t/1014-check-result-contract-full-surface-defensive-copy-audit.t t/1013-check-result-contract-full-surface-json-roundtrip-audit.t t/329-check-result-contract.t t/456-check-result-contract-defensive-copy-boundary-audit.t`.
 ## 2026-05-11: Check result contract full surface survives JSON
 - Added
   [t/1013-check-result-contract-full-surface-json-roundtrip-audit.t](t/1013-check-result-contract-full-surface-json-roundtrip-audit.t)
