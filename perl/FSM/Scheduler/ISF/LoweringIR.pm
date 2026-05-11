@@ -30,16 +30,20 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
     my ($states, $ctrs, $dts) = $self->_build_transaction($tx, $actor, 0);
     $states = [@$states]; $ctrs = { %$ctrs }; $dts = [@$dts];
 
+    my $ports = $self->_build_ports($actor);
+    {
+        my %have = map { $_->{name} => 1 } @$ports;
+        push @$ports, { name => 'start',      direction => 'input',  width => 1 } unless $have{start};
+        push @$ports, { name => 'done',       direction => 'output', width => 1 } unless $have{done};
+        push @$ports, { name => 'last_error',  direction => 'output', width => 1 } unless $have{last_error};
+    }
+
     my $ir = {
         actor_name => $cname,
         clock      => $actor->{clock},
         reset      => $actor->{reset},
         watchdog   => $actor->{watchdog},
-        ports      => [
-            @{$self->_build_ports($actor)},
-            { name => 'start', direction => 'input',  width => 1 },
-            { name => 'done',  direction => 'output', width => 1 },
-        ],
+        ports      => $ports,
         states     => $states,
         dt_blocks  => $dts,
         counters   => $ctrs,
