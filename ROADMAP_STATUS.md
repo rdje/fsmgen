@@ -1,7 +1,8 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Next decision point: t/1072 now proves a fresh semantic exports contract owner build stays clean after caller mutation. The manifest section-level contract family is now fully audited. Next bounded R13 slice: HDLGenerator nested contracts.
+- Next decision point: t/1073 now proves the full HDLGenerator source info contract owner survives JSON. Next bounded R13 slice: source info full-surface stability audits.
+- Next decision point: t/1072 now proves a fresh semantic exports contract owner build stays clean after caller mutation. Manifest section-level family fully audited. Next bounded R13 slice: HDLGenerator nested contracts.
 - Next decision point: t/1071 now proves the full semantic exports contract owner survives JSON. Next bounded R13 slice: semantic exports full-surface stability audits.
 - Next decision point: t/1070 now proves a fresh backend validation contract owner build stays clean after caller mutation. Next bounded R13 slice: semantic exports contract.
 - Next decision point: t/1069 now proves the full backend validation contract owner survives JSON. Next bounded R13 slice: backend validation full-surface stability audits.

@@ -1,6 +1,8 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### HDLGenerator source info contract full surface survives JSON
+- Added t/1073. Updated live docs for R13.
 ### Semantic exports contract full surface rebuilds cleanly
 - Added t/1072. Updated live docs for R13.
 - Manifest section-level contract family now fully audited.

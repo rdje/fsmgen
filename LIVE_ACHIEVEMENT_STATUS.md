@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: HDLGenerator source info contract full surface survives JSON
+- Roadmap lane: R13. Completed slice: t/1073. Public behavior changed: no.
+- Next bounded slice: continue source info full-surface stability audits.
+
 ## 2026-05-11: Semantic exports contract full surface rebuilds cleanly
 - Roadmap lane: R13. Completed slice: t/1072. Public behavior changed: no.
 - Manifest section-level contract family now fully audited.
