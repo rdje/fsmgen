@@ -1,5 +1,7 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: HDLGenerator raw AST contract full surface survives JSON
+- Added t/1085. Extends R13 auditing to the raw AST contract.
 ## 2026-05-11: HDLGenerator FSM module contract full surface rebuilds cleanly
 - Added t/1084. Complements t/1083 JSON audit.
 ## 2026-05-11: HDLGenerator FSM module contract full surface survives JSON
