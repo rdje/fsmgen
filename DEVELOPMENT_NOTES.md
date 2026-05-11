@@ -1,6 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
-## 2026-05-11: R14 `.isf` — watchdog lowering
+## 2026-05-11: R14 `.isf` — rule lowering
+- Rules lowered to combinational DT blocks: `(port = signal)` or `(port = value <condition)`.
+## 2026-05-11: R14 `.isf` — watchdog
 - Watchdog: `(<= (wd (- max 1)))` in idle, `(-- wd)` in await, `(=0 → timeout)`.
 ## 2026-05-11: R14 `.isf` — CLI wired
 - `bin/fsmgen isf/*.isf` works end-to-end. ISF pipeline intercepts after file resolution.

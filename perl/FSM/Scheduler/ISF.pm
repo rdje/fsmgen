@@ -10,6 +10,7 @@ no warnings 'experimental::signatures';
 use FSM::Debug;
 use FSM::Scheduler::ISF::ModuleEmitter;
 use FSM::Scheduler::ISF::TransactionLowering;
+use FSM::Scheduler::ISF::RuleLowering;
 
 sub new($class, %args) {
     my $debug = $args{debug} // 0;
@@ -19,6 +20,7 @@ sub new($class, %args) {
         debug          => $debug,
         module_emitter => FSM::Scheduler::ISF::ModuleEmitter->new(debug => $debug),
         tx_lowering    => FSM::Scheduler::ISF::TransactionLowering->new(debug => $debug),
+        rule_lowering  => FSM::Scheduler::ISF::RuleLowering->new(debug => $debug),
     }, $class;
 
     fsm_trace_exit('ISF scheduler initialized', 2);
@@ -61,6 +63,10 @@ sub lower($self, $actor) {
         push @lines, '  )';
         push @lines, '';
     }
+
+    # Emit rules as combinational DT blocks
+    my $rule_blocks = $self->{rule_lowering}->lower_rules($actor);
+    push @lines, @$rule_blocks;
 
     push @lines, ')';
 

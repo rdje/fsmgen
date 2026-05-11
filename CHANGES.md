@@ -1,6 +1,8 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### R14 `.isf` — rule lowering
+- `RuleLowering`: rules → combinational DT blocks. 7 tests pass.
 ### R14 `.isf` — watchdog lowering
 - `(await ...)` → watchdog: load max-1, decrement, timeout at zero.
 ### R14 `.isf` wired into `bin/fsmgen`

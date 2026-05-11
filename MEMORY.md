@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: R14 `.isf` scheduler — rule lowering
+- Created `FSM::Scheduler::ISF::RuleLowering` — converts ISF rules to
+  combinational `.fsm` DT blocks: `(rule name (when ...) (assign ...))` →
+  `(-name (port = signal))` or `(port = value <condition)`
+- `(assign port 1)` with single-signal condition → `(port = signal)`
+- `trigger`, `pulse`, `priority` actions deferred with placeholders
+- 7 ISF tests pass
 ## 2026-05-11: R14 `.isf` scheduler — watchdog lowering
 - `(await port)` now generates full watchdog: counter declared in `+size`,
   loaded with `max-1` in entry state, decremented with `(-- wd)` each cycle,
