@@ -2,6 +2,9 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: R14 — JSON report
+- Active: `R14`. `Emitter::JSON` shipped. 7 tests pass.
+
 ## 2026-05-11: R14 — IR refactor
 - Active: `R14`. `LoweringIR` + `Emitter::FSM` shipped. 7 tests pass.
 

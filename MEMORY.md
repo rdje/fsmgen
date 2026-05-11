@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: R14 — JSON schedule report emitter
+- Created `FSM::Scheduler::ISF::Emitter::JSON` — produces machine-readable
+  schedule report from the same LoweringIR used by the .fsm emitter
+- Reports: clock, reset, watchdog, port counts, inferred storage, transaction
+  state mappings, DT block summaries, compile issues
+- Added `report()` method to `FSM::Scheduler::ISF`
+- 7 tests pass, all fixtures pass strict mode
 ## 2026-05-11: R14 — LoweringIR architecture refactored
 - Created `FSM::Scheduler::ISF::LoweringIR` — typed IR layer between ISF AST and emitters
 - Created `FSM::Scheduler::ISF::Emitter::FSM` — pure .fsm emitter that walks the IR
