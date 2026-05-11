@@ -1,5 +1,7 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: Report source contract full surface rebuilds cleanly
+- Added t/1048. Complements the report source JSON audit with defensive-copy guard.
 ## 2026-05-11: Report source contract full surface survives JSON
 - Added t/1047. Extends R13 auditing to the shared report source contract.
 ## 2026-05-11: Report producer contract full surface rebuilds cleanly
