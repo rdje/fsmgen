@@ -1,6 +1,7 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
+- Next decision point: t/1078 now proves a fresh statistics contract owner build stays clean after caller mutation. Next bounded R13 slice: composition plan contract.
 - Next decision point: t/1077 now proves the full statistics contract owner survives JSON. Next bounded R13 slice: statistics full-surface stability audits.
 - Next decision point: t/1076 now proves a fresh module info contract owner build stays clean after caller mutation. Next bounded R13 slice: statistics contract.
 - Next decision point: t/1075 now proves the full module info contract owner survives JSON. Next bounded R13 slice: module info full-surface stability audits.
