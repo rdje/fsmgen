@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: Normalized semantic module contract full surface survives JSON
+- Added
+  [t/1017-normalized-semantic-module-contract-full-surface-json-roundtrip-audit.t](t/1017-normalized-semantic-module-contract-full-surface-json-roundtrip-audit.t)
+  to prove the complete `build_normalized_semantic_module_contract()` result
+  survives JSON encode/decode unchanged.
+- This extends full-surface `R13` auditing to the bounded normalized semantic
+  module contract nested inside public normalized semantic JSON reports.
+- Focused validation passed:
+  `prove -I perl t/1017-normalized-semantic-module-contract-full-surface-json-roundtrip-audit.t t/332-normalized-semantic-module-contract.t t/469-normalized-semantic-module-contract-defensive-copy-boundary-audit.t`.
 ## 2026-05-11: Normalized semantic payload contract full surface rebuilds cleanly
 - Added
   [t/1016-normalized-semantic-payload-contract-full-surface-defensive-copy-audit.t](t/1016-normalized-semantic-payload-contract-full-surface-defensive-copy-audit.t)

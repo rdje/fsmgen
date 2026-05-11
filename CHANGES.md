@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### Normalized semantic module contract full surface survives JSON
+- Added
+  [t/1017-normalized-semantic-module-contract-full-surface-json-roundtrip-audit.t](t/1017-normalized-semantic-module-contract-full-surface-json-roundtrip-audit.t)
+  to prove the full normalized semantic module contract survives JSON
+  encode/decode unchanged.
+- Updated [MEMORY.md](MEMORY.md), [ROADMAP_STATUS.md](ROADMAP_STATUS.md),
+  [LIVE_ACHIEVEMENT_STATUS.md](LIVE_ACHIEVEMENT_STATUS.md), and
+  [DEVELOPMENT_NOTES.md](DEVELOPMENT_NOTES.md) for the `R13` progress entry.
 ### Normalized semantic payload contract full surface rebuilds cleanly
 - Added
   [t/1016-normalized-semantic-payload-contract-full-surface-defensive-copy-audit.t](t/1016-normalized-semantic-payload-contract-full-surface-defensive-copy-audit.t)
