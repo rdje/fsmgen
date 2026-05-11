@@ -1,6 +1,9 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### R14 `.isf` parser — first implementation slice
+- Created `FSM::Adapter::ISF` (facade), `ISF::Parser` (validation), `ISF::LispishAdapter` (normalization).
+- Fixture: `isf/apb_requester.isf`. Tests: t/1091 (parser), t/1092 (adapter). All pass.
 ### `.isf` specification v0.5 — watchdog, named spawn, deadlock policy
 - Revised ISF_SPEC.md: `(watchdog N)` actor-level, per-`(await ...)` override,
   `(spawn tx as name ...)`, deadlocks bounded by watchdog.

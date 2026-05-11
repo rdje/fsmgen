@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: R14 `.isf` parser — first implementation slice
+- Created `perl/FSM/Adapter/ISF.pm` — facade for `.isf` parsing
+- Created `perl/FSM/Adapter/ISF/Parser.pm` — validates `.isf` AST and produces typed actor hash
+- Created `perl/FSM/Adapter/ISF/LispishAdapter.pm` — normalizes raw Lispish AST
+  (handles Lispish nested-head convention: `(actor name body...)` → canonical `[actor, name, body...]`)
+- Created `isf/apb_requester.isf` — minimal fixture with clock, reset, watchdog,
+  interface, handshake, and one transaction
+- Created `t/1091-isf-parser-apb-requester.t` — 23 assertions parsing the fixture
+- Created `t/1092-isf-lispish-adapter.t` — 4 subtests for the Lispish adapter
+- All tests pass
 ## 2026-05-11: `.isf` specification v0.5 — watchdog, named spawn, deadlock policy
 - Revised ISF_SPEC.md to v0.5:
   - `(watchdog N)` at actor level; `(await port (watchdog M))` per-instance override

@@ -1,0 +1,51 @@
+;; Minimal .isf fixture for parser testing — APB requester with one transaction
+(actor apb_requester
+  (clock clk)
+  (reset rst_n (async) (active_low))
+  (watchdog 65536)
+
+  (interface
+    (input  start)
+    (input  req_write)
+    (input  req_addr  (width 32))
+    (input  req_wdata (width 32))
+    (output done)
+    (output last_read_data (width 32))
+    (output last_error)
+    (output PADDR   (width 32))
+    (output PWRITE)
+    (output PWDATA  (width 32))
+    (output PSEL)
+    (output PENABLE)
+    (input  PREADY)
+    (input  PRDATA  (width 32))
+    (input  PSLVERR))
+
+  (handshake start_cmd
+    (valid start)
+    (ready done))
+
+  (transaction apb_transfer
+    (on start_cmd
+      (sample req_addr  as addr)
+      (sample req_write as is_write)
+      (sample req_wdata as wdata))
+    (drive setup_phase
+      (assign PADDR  addr)
+      (assign PWRITE is_write)
+      (assign PWDATA wdata)
+      (assign PSEL   1)
+      (assign PENABLE 0))
+    (drive access_phase
+      (assign PENABLE 1))
+    (await PREADY)
+    (sample PRDATA  as rdata)
+    (sample PSLVERR as slverr)
+    (drive done_phase
+      (assign done       1)
+      (assign PSEL       0)
+      (assign PENABLE    0)
+      (assign last_read_data rdata)
+      (assign last_error     slverr))
+    (complete done)
+    (latency (min 2) (max 16))))

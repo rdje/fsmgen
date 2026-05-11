@@ -2,6 +2,9 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: R14 `.isf` parser — first slice
+- Active lane: `R14`. `FSM::Adapter::ISF` with LispishAdapter, parser, fixture, 2 passing tests.
+
 ## 2026-05-11: `.isf` specification v0.5 — watchdog, named spawn
 - Active lane: `R14`. ISF_SPEC.md v0.5: `(watchdog ...)`, `(spawn tx as name ...)`, deadlock policy. 1 open question.
 
