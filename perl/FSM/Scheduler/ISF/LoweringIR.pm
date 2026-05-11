@@ -151,12 +151,12 @@ sub _build_transaction($self, $tx, $actor, $txi) {
     if ($ha && $wdc) {
         my $lim = $wd // 65536;
         $ct{$wdc} = int(log($lim)/log(2)) + 1;
-        _inj_watchdog(\@st, $tn, $wdc, $lim);
+        _inj_watchdog(\@st, $tn, $wdc, $lim, \%ct);
     }
 
     # Latency
     if ($lat) {
-        my ($cc,$inc,$err,$cdt) = _inj_latency(\@st, $tn, $lat, $ha);
+        my ($cc,$inc,$err,$cdt) = _inj_latency(\@st, $tn, $lat, $ha, \%ct);
         $ct{$cc} = int(log($lat->{max}//256)/log(2)) + 1;
         $ct{$inc} = 1; $ct{$err} = 1;
         push @dt, $cdt;
@@ -201,13 +201,15 @@ sub _link_states {
 }
 
 sub _inj_watchdog {
-    my ($st,$tn,$wn,$lim)=@_;
+    my ($st,$tn,$wn,$lim,$ctrs)=@_;
+    $ctrs->{last_error} = 1;
     unshift @{$st->[0]{assignments}},{lhs=>$wn,rhs=>"(- $lim 1)",op=>'<='};
     push @$st,{name=>"${tn}_timeout",kind=>'terminal',assignments=>[{lhs=>'done',rhs=>1,op=>'='},{lhs=>'last_error',rhs=>1,op=>'='}],transitions=>[]};
 }
 
 sub _inj_latency {
-    my ($st,$tn,$lat,$ha)=@_; my $cc="${tn}_cc";my $inc="${tn}_inc";my $err="${tn}_lerr";my $min=$lat->{min}//1;my $max=$lat->{max}//256;
+    my ($st,$tn,$lat,$ha,$ctrs)=@_;
+    $ctrs->{last_error} = 1; my $cc="${tn}_cc";my $inc="${tn}_inc";my $err="${tn}_lerr";my $min=$lat->{min}//1;my $max=$lat->{max}//256;
     unshift @{$st->[0]{assignments}},{lhs=>$cc,rhs=>0,op=>'<-'};
     for my $s(@$st){next if $s->{kind}eq'entry'||$s->{kind}eq'terminal'||$s->{name}=~/_timeout$/;unshift @{$s->{assignments}},{lhs=>$inc,rhs=>1,op=>'='}}
     my($done)=grep{$_->{kind}eq'terminal'&&$_->{name}!~/_timeout$/}@$st;
