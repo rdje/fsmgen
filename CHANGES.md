@@ -1,6 +1,9 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### Embedding contract full surface survives JSON
+- Added t/1061. Batch of 25 full-surface audits completed across 14 contract families.
+- Updated live docs for R13.
 ### Debug runtime contract full surface rebuilds cleanly
 - Added t/1060. Updated live docs for R13.
 ### Debug runtime contract full surface survives JSON

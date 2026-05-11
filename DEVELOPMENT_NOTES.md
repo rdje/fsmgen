@@ -1,5 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-11: Embedding contract full surface survives JSON
+- The embedding contract now has a full-surface JSON round-trip audit.
+- This completes a batch of 25 new full-surface audit pairs across 14 contract families.
 ## 2026-05-11: Debug runtime contract full surface rebuilds cleanly
 - The debug runtime contract now has a full-surface defensive-copy audit.
 ## 2026-05-11: Debug runtime contract full surface survives JSON

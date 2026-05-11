@@ -2,6 +2,11 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: Embedding contract full surface survives JSON
+- Roadmap lane: R13. Completed slice: t/1061. Public behavior changed: no.
+- Batch complete: 25 new full-surface audit pairs across 14 contract families.
+- Next bounded slice: continue remaining contract full-surface audits.
+
 ## 2026-05-11: Debug runtime contract full surface rebuilds cleanly
 - Roadmap lane: R13. Completed slice: t/1060. Public behavior changed: no.
 - Next bounded slice: embedding contract.

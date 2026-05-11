@@ -1,5 +1,8 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: Embedding contract full surface survives JSON
+- Added t/1061. Extends R13 auditing to the bounded embedding section contract.
+- This batch completed 25 new full-surface audit pairs across 14 contract families.
 ## 2026-05-11: Debug runtime contract full surface rebuilds cleanly
 - Added t/1060. Complements debug runtime JSON audit with defensive-copy guard.
 ## 2026-05-11: Debug runtime contract full surface survives JSON
