@@ -1,6 +1,8 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### Report command contract full surface rebuilds cleanly
+- Added t/1050. Updated live docs for R13.
 ### Report command contract full surface survives JSON
 - Added t/1049. Updated live docs for R13.
 ### Report source contract full surface rebuilds cleanly
