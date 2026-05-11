@@ -1,6 +1,9 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### `.isf` specification v0.4 — sample everywhere, watchdog, spawn params
+- Revised ISF_SPEC.md: universal `(sample ...)`, implicit `(await ...)` watchdog,
+  spawn parameter passing, recursive spawn.
 ### `.isf` specification v0.3 — transaction composition, spawn, priority
 - Revised ISF_SPEC.md: `(actor ...)`, `(do ...)`/`(spawn ...)`, dynamic `(repeat ...)`,
   `(priority ...)` dual form, scheduler-detected compile issues.

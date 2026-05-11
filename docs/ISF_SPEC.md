@@ -157,8 +157,8 @@ it to an explicit FSM state sequence.
 |--------|---------|
 | `(drive phase_name body...)` | Named output phase. Body: `(assign ...)` forms. |
 | `(repeat count body...)` | Loop `count` times. `count` may be a literal integer, a bound name, or an arbitrary expression that evaluates to an integer. The scheduler infers a counter register — the author never declares one. |
-| `(await port)` | Stall until port is true. Port must be an input. |
-| `(sample port as name)` | Capture port value at this point. Scheduler decides storage (wire, register, mux). `name` is available for the rest of the transaction. |
+| `(await port)` | Stall until port is true. Port must be an input. Every `(await ...)` carries an implicit watchdog timer (default: 2^16 cycles, configurable). If the awaited condition does not hold before the watchdog expires, the transaction enters an error state and asserts a timeout indication. The exact timeout behavior (error port, abort, skip) is configurable per actor. |
+| `(sample port as name)` | Capture port value at this point. Scheduler decides storage (wire, register, mux). `name` is available for the rest of the transaction. Allowed anywhere in the transaction body: inside `(on ...)` for activation-time capture, or standalone for mid-transaction sampling (e.g. after `(await ...)`, inside `(repeat ...)`). |
 | `(assign port value)` | Drive an output port. Value: literal, bound name, or expression. |
 | `(complete port)` | Assert completion. Port is pulsed. Transaction returns to idle. |
 | `(latency (min N) (max M))` | Timing bounds. Scheduler fails if impossible. |
@@ -189,19 +189,23 @@ Non-blocking fork. The calling transaction launches the spawned transaction
 and continues immediately without waiting. Multiple spawns may execute
 concurrently (the scheduler serializes them onto cycles as needed).
 
+Spawn may pass parameters to the spawned transaction:
+
 ```lisp
 (transaction scatter_read
   (on cmd (sample cmd_addr as base))
-  (spawn read_burst)
-  (spawn read_burst)
-  (spawn read_burst)
-  ;; all three run concurrently
+  (spawn read_burst (addr (+ base 0)))
+  (spawn read_burst (addr (+ base 4)))
+  (spawn read_burst (addr (+ base 8)))
   (await_all done)
   (complete done))
 ```
 
 Spawn semantics:
 - Spawned transactions share the actor's interface and resources.
+- Parameters are passed positionally to the spawned transaction's bound names.
+- Spawned transactions may themselves `(spawn ...)` further transactions
+  recursively. No explicit limit — the scheduler bounds state growth naturally.
 - The scheduler resolves output conflicts through priority declarations.
 - If two spawned transactions drive the same output port without a declared
   priority, the scheduler reports an error.
@@ -339,16 +343,24 @@ shared outputs per declared priorities.
 - Speculative or out-of-order execution
 - Power/clock-gating intent
 - The `.isf` parser implementation
+- Watchdog timeout behavior per actor (error port, abort, skip)
 
-## 6. Open design questions
+## 6. Resolved design questions
+
+1. `(sample ... as ...)` allowed both inside `(on ...)` (activation-time capture)
+   and anywhere in the transaction body (mid-transaction sampling).
+2. Every `(await ...)` carries an implicit watchdog timer (default 2^16 cycles).
+   Watchdog expiry enters an error state. Exact timeout behavior per actor TBD.
+3. `(spawn ...)` supports parameter passing. Spawned transactions may recursively
+   spawn further transactions with no explicit limit.
+
+## 7. Open design questions
 
 1. What is the concrete syntax for `(contract ...)` temporal assertions?
    Deferred until we define the assertion types needed.
-2. Should `(sample ... as ...)` be allowed outside `(on handshake ...)` —
-   e.g. `(sample HRDATA as beat_data)` immediately after `(await HREADY)`?
-3. How should the scheduler detect cross-transaction deadlocks when one
+2. How should the scheduler detect cross-transaction deadlocks when one
    transaction `(await ...)` on a port driven by another transaction?
-4. Should `(spawn ...)` support parameter passing to the spawned transaction,
-   or should spawned transactions only use the actor's bound names?
-5. Can a spawned transaction itself `(spawn ...)` further transactions
-   (recursive spawn), and if so, what are the limits?
+3. Should spawned transactions be named instances (for debug/schedule report)
+   or anonymous?
+4. What is the default watchdog cycle count, and how is it configured per
+   actor or per `(await ...)`?

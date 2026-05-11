@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: `.isf` specification v0.4 — sample everywhere, watchdog, spawn params
+- Revised [docs/ISF_SPEC.md](docs/ISF_SPEC.md) to v0.4:
+  - `(sample ... as ...)` allowed anywhere in transaction body, not only inside `(on ...)`
+  - Every `(await ...)` carries implicit watchdog timer (default 2^16 cycles)
+  - `(spawn ...)` supports parameter passing; recursive spawn with no explicit limit
+  - 3 resolved questions, 4 open questions remain
 ## 2026-05-11: `.isf` specification v0.3 — transaction composition, spawn, priority
 - Revised [docs/ISF_SPEC.md](docs/ISF_SPEC.md) to v0.3:
   - `(actor name ...)` replaces `(?actor:name ...)` — no `.fsm` leakage
