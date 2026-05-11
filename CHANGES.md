@@ -1,7 +1,9 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
-### R14 — `(spawn ...)` signals
+### R14 — multi-file spawn
+- Separate child `.fsm` files + parent. `--outdir` CLI option. 7 tests pass.
+### R14 — `(spawn ...)`
 - Spawn generates per-instance start/done signals. 7 tests pass.
 ### R14 — `(do ...)`
 - `(do child)` → start/done handshake, child idle rewired, done pulses. 7 tests pass.

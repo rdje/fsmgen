@@ -1,6 +1,8 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
-## 2026-05-11: R14 — spawn signals
+## 2026-05-11: R14 — multi-file spawn
+- `--outdir` dumps child .fsm files. Child modules get start/done ports.
+## 2026-05-11: R14 — spawn
 - Spawn instance start/done signals generated. Next: multi-file composition top.
 ## 2026-05-11: R14 — `(do ...)`
 - `(do child)` rewires child's idle guard to `child_start`, pulses `child_done` on completion.

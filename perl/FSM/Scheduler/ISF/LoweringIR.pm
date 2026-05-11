@@ -5,517 +5,240 @@ use strict;
 use warnings;
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
+use POSIX qw(log);
 
-# Structured Intermediate Representation for lowered .isf actors.
-# No strings — typed objects consumed by emitters.
-
-# === IR node types ===
-#
-# Module:
-#   { actor_name, clock, reset, watchdog, ports => [...], states => [...],
-#     dt_blocks => [...], counters => {...}, extra_dts => [...] }
-#
-# Port:
-#   { name, direction => 'input'|'output', width }
-#
-# State:
-#   { name, kind => 'entry'|'sequential'|'await'|'terminal'|'repeat_check',
-#     assignments => [{ lhs, rhs, op => '='|'<-'|'<='|'<-='|'--' },
-#     guard => { port, negated },     # for entry states
-#     samples => [{ port, as_name }], # for entry/sequential
-#     transitions => [{ target, condition => undef|{port, negated}|{signal, op, value} }],
-#     loop_target,                    # for repeat_check
-#     counter,                        # for repeat_check
-#     watchdog => { name, limit },    # for await
-#   }
-#
-# DTBlock:
-#   { name, kind => 'rule'|'latency_counter',
-#     assignments => [{ lhs, rhs, op, guard => { port, negated } }],
-#   }
-#
-# Counter:
-#   { name, width }
-
-sub new($class, %args) {
-    return bless { debug => ($args{debug} // 0) }, $class;
-}
+sub new($class, %args) { bless { debug => ($args{debug} // 0) }, $class }
 
 sub build_module($self, $actor) {
-    my $name     = $actor->{actor_name};
-    my $watchdog = $actor->{watchdog};
-    my $iface    = $actor->{interface};
-    my @ports;
-    my @states;
-    my @dt_blocks;
-    my %counters;
+    my %spawned = $self->_collect_spawn_refs($actor);
 
-    # Build ports from interface
-    for my $p (@{$iface->{inputs}}) {
-        push @ports, { name => $p->{name}, direction => 'input', width => $p->{width} // 1 };
-    }
-    for my $p (@{$iface->{outputs}}) {
-        push @ports, { name => $p->{name}, direction => 'output', width => $p->{width} // 1 };
+    my %child_irs;
+    for my $cname (keys %spawned) {
+        my ($ct) = grep { $_->{name} eq $cname } @{$actor->{transactions}};
+        next unless $ct;
+        $child_irs{$cname} = $self->_build_child_ir($ct, $actor, $cname);
     }
 
-    # Build states from transactions
-    my $tx_idx = 0;
-    for my $tx (@{$actor->{transactions}}) {
-        my ($tx_states, $tx_counters, $tx_dts, $do_children, $spawn_children) =
-            $self->_build_transaction($tx, $actor, $tx_idx++);
-        push @states, @$tx_states;
-        while (my ($k, $v) = each %$tx_counters) { $counters{$k} = $v; }
-        push @dt_blocks, @$tx_dts;
-        for my $child (@$do_children) {
-            $counters{"${child}_start"} = 1;
-            $counters{"${child}_done"}  = 1;
-        }
-        for my $sp (@$spawn_children) {
-            $counters{"$sp->{instance}_start"} = 1;
-            $counters{"$sp->{instance}_done"}  = 1;
-        }
-    }
+    my $parent_ir = $self->_build_parent_ir($actor, \%spawned);
+    $parent_ir->{children} = \%child_irs;
+    return $parent_ir;
+}
 
-    # Build DT blocks from rules
-    push @dt_blocks, $self->_build_rules($actor);
+# --- Child IR (separate module) ---
 
-    # Post-process: wire do-children start/done handshake
-    $self->_wire_do_children(\@states, \%counters, $actor);
+sub _build_child_ir($self, $tx, $actor, $cname) {
+    my ($states, $ctrs, $dts) = $self->_build_transaction($tx, $actor, 0);
+    $states = [@$states]; $ctrs = { %$ctrs }; $dts = [@$dts];
 
-    return {
-        actor_name => $name,
+    my $ir = {
+        actor_name => $cname,
         clock      => $actor->{clock},
         reset      => $actor->{reset},
-        watchdog   => $watchdog,
+        watchdog   => $actor->{watchdog},
+        ports      => [
+            @{$self->_build_ports($actor)},
+            { name => 'start', direction => 'input',  width => 1 },
+            { name => 'done',  direction => 'output', width => 1 },
+        ],
+        states     => $states,
+        dt_blocks  => $dts,
+        counters   => $ctrs,
+        children   => {},
+    };
+
+    # Inject entry state if missing (spawn targets need start handshake)
+    if (!grep { $_->{kind} eq 'entry' } @{$ir->{states}}) {
+        unshift @{$ir->{states}}, {
+            name        => "${cname}_idle_0",
+            kind        => 'entry',
+            guard       => { port => 'start' },
+            assignments => [],
+            transitions => [],
+        };
+        # Link idle -> first state
+        $ir->{states}[0]{transitions} = [{ target => $ir->{states}[1]{name}, condition => $ir->{states}[0]{guard} }];
+    }
+
+    my ($entry) = grep { $_->{kind} eq 'entry' } @{$ir->{states}};
+    if ($entry) {
+        $entry->{guard} = { port => 'start' };
+        $entry->{transitions} = [];
+        my ($n) = grep { $_->{kind} ne 'entry' && $_->{name} !~ /_timeout$/ } @{$ir->{states}};
+        push @{$entry->{transitions}}, { target => $n->{name}, condition => $entry->{guard} } if $n;
+    }
+    return $ir;
+}
+
+# --- Parent IR (composition top, non-spawned transactions only) ---
+
+sub _build_parent_ir($self, $actor, $spawned) {
+    my @ports  = @{$self->_build_ports($actor)};
+    my %ctrs;
+    my @states;
+    my @dts;
+    my $ti = 0;
+
+    for my $tx (@{$actor->{transactions}}) {
+        next if $spawned->{$tx->{name}};
+        my ($ss, $cs, $ds, $do, $sp) = $self->_build_transaction($tx, $actor, $ti++);
+        push @states, @$ss;
+        while (my ($k, $v) = each %$cs) { $ctrs{$k} = $v; }
+        push @dts, @$ds;
+        for my $c (@$do)  { $ctrs{"${c}_start"} = 1; $ctrs{"${c}_done"} = 1; }
+        for my $s (@$sp)  { $ctrs{"$s->{instance}_start"} = 1; $ctrs{"$s->{instance}_done"} = 1; }
+    }
+
+    push @dts, $self->_build_rules($actor);
+    $self->_wire_do_children(\@states, \%ctrs, $actor);
+
+    return {
+        actor_name => $actor->{actor_name},
+        clock      => $actor->{clock},
+        reset      => $actor->{reset},
+        watchdog   => $actor->{watchdog},
         ports      => \@ports,
         states     => \@states,
-        dt_blocks  => \@dt_blocks,
-        counters   => \%counters,
+        dt_blocks  => \@dts,
+        counters   => \%ctrs,
+        children   => {},
     };
+}
+
+sub _collect_spawn_refs($self, $actor) {
+    my %s;
+    for my $tx (@{$actor->{transactions}}) {
+        for my $c (@{$tx->{clauses}}) {
+            next unless ref($c) eq 'ARRAY' && $c->[0] eq 'spawn';
+            $s{$c->[1]} = 1;
+        }
+    }
+    return %s;
+}
+
+sub _build_ports($self, $actor) {
+    my @p;
+    for my $i (@{$actor->{interface}{inputs}})  { push @p, { name => $i->{name}, direction => 'input',  width => $i->{width} // 1 }; }
+    for my $o (@{$actor->{interface}{outputs}}) { push @p, { name => $o->{name}, direction => 'output', width => $o->{width} // 1 }; }
+    return \@p;
 }
 
 # --- Transaction → IR states ---
+sub _build_transaction($self, $tx, $actor, $txi) {
+    my $tn  = $tx->{name};
+    my $hs  = $actor->{handshakes};
+    my $wd  = $actor->{watchdog};
+    my @st; my %ct; my @dt; my @ps; my @doc; my @spc;
+    my $si  = 0; my $ha = 0; my $wdc; my $lat;
 
-sub _build_transaction($self, $tx, $actor, $tx_idx) {
-    my $tx_name    = $tx->{name};
-    my $handshakes = $actor->{handshakes};
-    my $watchdog   = $actor->{watchdog};
-    my @states;
-    my %counters;
-    my @dts;
-    my @pending_samples;
-    my $state_idx     = 0;
-    my $has_await     = 0;
-    my $wd_counter;
-    my $latency;
-    my @do_children;           # child tx names from (do ...)
-    my @spawn_children;        # { child, instance } from (spawn ...)
-
-    for my $clause (@{$tx->{clauses}}) {
-        next unless ref($clause) eq 'ARRAY';
-        my $kind = $clause->[0];
-
-        if ($kind eq 'on') {
-            push @states, $self->_ir_on($clause, $tx_name, $handshakes, $state_idx++);
-        }
-        elsif ($kind eq 'drive') {
-            push @states, $self->_ir_drive($clause, $tx_name, [splice @pending_samples], $state_idx++);
-        }
-        elsif ($kind eq 'await') {
-            $has_await = 1;
-            $wd_counter = "${tx_name}_wd";
-            push @states, $self->_ir_await($clause, $tx_name, $state_idx++, $watchdog);
-        }
-        elsif ($kind eq 'sample') {
-            push @pending_samples, $clause;
-        }
-        elsif ($kind eq 'complete') {
-            push @states, $self->_ir_complete($clause, $tx_name, $state_idx++);
-        }
-        elsif ($kind eq 'repeat') {
-            my ($rs, $rc) = $self->_ir_repeat($clause, $tx_name, \$state_idx, \@pending_samples, $watchdog);
-            push @states, @$rs;
-            $counters{$rc} = 8;
-        }
-        elsif ($kind eq 'latency') {
-            $latency = $self->_parse_latency($clause);
-        }
-        elsif ($kind eq 'do') {
-            my $child = $clause->[1];
-            push @do_children, $child;
-            push @states, $self->_ir_do($clause, $tx_name, $state_idx++);
-        }
-        elsif ($kind eq 'spawn') {
-            my $child = $clause->[1];
-            my $inst  = $clause->[3] || "${child}_$state_idx";  # named or auto
-            push @spawn_children, { child => $child, instance => $inst };
-            push @states, $self->_ir_spawn($clause, $tx_name, $state_idx++);
-        }
-        elsif ($kind eq 'await_all' || $kind eq 'await_any') {
-            push @states, $self->_ir_placeholder($clause, $tx_name, $state_idx++);
-        }
+    for my $cl (@{$tx->{clauses}}) {
+        next unless ref($cl) eq 'ARRAY';
+        my $k = $cl->[0];
+        if    ($k eq 'on')       { push @st, _ir_on($cl, $tn, $hs, $si++); }
+        elsif ($k eq 'drive')    { push @st, _ir_drive($cl, $tn, [splice @ps], $si++); }
+        elsif ($k eq 'await')    { $ha=1; $wdc="${tn}_wd"; push @st, _ir_await($cl, $tn, $si++, $wd); }
+        elsif ($k eq 'sample')   { push @ps, $cl; }
+        elsif ($k eq 'complete') { push @st, _ir_complete($cl, $tn, $si++); }
+        elsif ($k eq 'repeat')   { my ($rs,$rc) = _ir_repeat($cl,$tn,\$si,\@ps,$wd); push @st,@$rs; $ct{$rc}=8; }
+        elsif ($k eq 'latency')  { $lat = _parse_latency($cl); }
+        elsif ($k eq 'do')       { push @doc, $cl->[1]; push @st, _ir_do($cl,$tn,$si++); }
+        elsif ($k eq 'spawn')    { push @spc, { child => $cl->[1], instance => $cl->[3] || "${tn}_${si}" }; push @st, _ir_spawn($cl,$tn,$si++); }
+        elsif ($k eq 'await_all' || $k eq 'await_any') { push @st, _ir_placeholder($cl,$tn,$si++); }
     }
 
-    if (@pending_samples) {
-        push @states, $self->_ir_sample_state($tx_name, \@pending_samples, $state_idx++);
-    }
+    if (@ps) { push @st, _ir_sample_state($tn, \@ps, $si++); }
 
     # Watchdog
-    if ($has_await && $wd_counter) {
-        my $limit = $watchdog // 65536;
-        my $wd_bits = int(log($limit) / log(2)) + 1;
-        $counters{$wd_counter} = $wd_bits;
-        $self->_inject_watchdog(\@states, $tx_name, $wd_counter, $limit);
+    if ($ha && $wdc) {
+        my $lim = $wd // 65536;
+        $ct{$wdc} = int(log($lim)/log(2)) + 1;
+        _inj_watchdog(\@st, $tn, $wdc, $lim);
     }
 
     # Latency
-    if ($latency) {
-        my ($cc, $inc, $err, $cc_dt) = $self->_inject_latency(\@states, $tx_name, $latency, $has_await);
-        $counters{$cc}  = int(log($latency->{max} // 256) / log(2)) + 1;
-        $counters{$inc} = 1;
-        $counters{$err} = 1;
-        push @dts, $cc_dt;
+    if ($lat) {
+        my ($cc,$inc,$err,$cdt) = _inj_latency(\@st, $tn, $lat, $ha);
+        $ct{$cc} = int(log($lat->{max}//256)/log(2)) + 1;
+        $ct{$inc} = 1; $ct{$err} = 1;
+        push @dt, $cdt;
     }
 
-    # Link transitions
-    $self->_link_state_transitions(\@states, $tx_name);
-
-    return (\@states, \%counters, \@dts, \@do_children, \@spawn_children);
+    _link_states(\@st, $tn);
+    return (\@st, \%ct, \@dt, \@doc, \@spc);
 }
 
 # --- Individual clause → IR ---
+sub _ir_on      { my ($cl,$tn,$hs,$i)=@_; my $h=$hs->{$cl->[1]}; my @s; for my $j(2..$#$cl){my $x=$cl->[$j]; next unless ref($x)eq'ARRAY'&&$x->[0]eq'sample'; push @s,{port=>$x->[1],as_name=>$x->[3]}} {name=>"${tn}_idle_$i",kind=>'entry',guard=>{port=>$h->{valid}},samples=>\@s,assignments=>[],transitions=>[]} }
+sub _ir_drive   { my ($cl,$tn,$ps,$i)=@_; my @a; for(@$ps){push @a,{lhs=>$_->[3],rhs=>$_->[1],op=>'<='}} for my $j(2..$#$cl){my$x=$cl->[$j];next unless ref($x)eq'ARRAY'&&$x->[0]eq'assign';push @a,{lhs=>$x->[1],rhs=>$x->[2],op=>'='}} {name=>"${tn}_drive_$i",kind=>'sequential',assignments=>\@a,transitions=>[]} }
+sub _ir_await   { my ($cl,$tn,$i,$wd)=@_; {name=>"${tn}_await_$i",kind=>'await',assignments=>[],transitions=>[],guard=>{port=>$cl->[1]},watchdog=>{name=>"${tn}_wd",limit=>$wd//65536}} }
+sub _ir_complete{ my ($cl,$tn,$i)=@_; {name=>"${tn}_done_$i",kind=>'terminal',assignments=>[{lhs=>$cl->[1],rhs=>1,op=>'='}],transitions=>[]} }
+sub _ir_sample_state { my ($tn,$ps,$i)=@_; my @a; for(@$ps){push @a,{lhs=>$_->[3],rhs=>$_->[1],op=>'<='}} {name=>"${tn}_sample_$i",kind=>'sequential',assignments=>\@a,transitions=>[]} }
+sub _ir_placeholder{ my ($cl,$tn,$i)=@_; {name=>"${tn}_$cl->[0]_$i",kind=>'sequential',assignments=>[],transitions=>[]} }
+sub _ir_do       { my ($cl,$tn,$i)=@_; my $c=$cl->[1]; {name=>"${tn}_do_$i",kind=>'await',assignments=>[{lhs=>"${c}_start",rhs=>1,op=>'='}],transitions=>[],guard=>{port=>"${c}_done"}} }
+sub _ir_spawn    { my ($cl,$tn,$i)=@_; my $inst=$cl->[3]||"${tn}_$i"; {name=>"${tn}_spawn_$i",kind=>'sequential',assignments=>[{lhs=>"${inst}_start",rhs=>1,op=>'='}],transitions=>[]} }
 
-sub _ir_on($self, $clause, $tx_name, $handshakes, $idx) {
-    my $hs_name = $clause->[1];
-    my $hs = $handshakes->{$hs_name};
-    my @samples;
-    for my $i (2 .. $#$clause) {
-        my $sub = $clause->[$i];
-        next unless ref($sub) eq 'ARRAY' && $sub->[0] eq 'sample';
-        push @samples, { port => $sub->[1], as_name => $sub->[3] };
-    }
-    return {
-        name    => "${tx_name}_idle_$idx",
-        kind    => 'entry',
-        guard   => { port => $hs->{valid} },
-        samples => \@samples,
-        assignments => [],
-        transitions => [],
-    };
-}
-
-sub _ir_drive($self, $clause, $tx_name, $samples, $idx) {
-    my @assignments;
-    for my $s (@$samples) {
-        # $s is a raw (sample port as name) clause
-        push @assignments, { lhs => $s->[3], rhs => $s->[1], op => '<=' };
-    }
-    for my $i (2 .. $#$clause) {
-        my $a = $clause->[$i];
-        next unless ref($a) eq 'ARRAY' && $a->[0] eq 'assign';
-        push @assignments, { lhs => $a->[1], rhs => $a->[2], op => '=' };
-    }
-    return {
-        name        => "${tx_name}_drive_$idx",
-        kind        => 'sequential',
-        assignments => \@assignments,
-        transitions => [],
-    };
-}
-
-sub _ir_await($self, $clause, $tx_name, $idx, $watchdog) {
-    return {
-        name        => "${tx_name}_await_$idx",
-        kind        => 'await',
-        assignments => [],
-        transitions => [],
-        guard       => { port => $clause->[1] },
-        watchdog    => { name => "${tx_name}_wd", limit => $watchdog // 65536 },
-    };
-}
-
-sub _ir_complete($self, $clause, $tx_name, $idx) {
-    return {
-        name        => "${tx_name}_done_$idx",
-        kind        => 'terminal',
-        assignments => [{ lhs => $clause->[1], rhs => 1, op => '=' }],
-        transitions => [],
-    };
-}
-
-sub _ir_sample_state($self, $tx_name, $samples, $idx) {
-    my @assignments;
-    for my $s (@$samples) {
-        push @assignments, { lhs => $s->[3], rhs => $s->[1], op => '<=' };
-    }
-    return {
-        name        => "${tx_name}_sample_$idx",
-        kind        => 'sequential',
-        assignments => \@assignments,
-        transitions => [],
-    };
-}
-
-sub _ir_placeholder($self, $clause, $tx_name, $idx) {
-    return {
-        name        => "${tx_name}_$clause->[0]_$idx",
-        kind        => 'sequential',
-        assignments => [],
-        transitions => [],
-    };
-}
-
-sub _ir_do($self, $clause, $tx_name, $idx) {
-    my $child  = $clause->[1];
-    my $start  = "${child}_start";
-    my $done   = "${child}_done";
-
-    return {
-        name        => "${tx_name}_do_$idx",
-        kind        => 'await',
-        assignments => [{ lhs => $start, rhs => 1, op => '=' }],
-        transitions => [],
-        guard       => { port => $done },
-    };
-}
-
-sub _ir_spawn($self, $clause, $tx_name, $idx) {
-    my $child = $clause->[1];
-    my $inst  = $clause->[3] || "${child}_$idx";
-    my $start = "${inst}_start";
-
-    return {
-        name        => "${tx_name}_spawn_$idx",
-        kind        => 'sequential',
-        assignments => [{ lhs => $start, rhs => 1, op => '=' }],
-        transitions => [],
-    };
-}
-
-sub _ir_repeat($self, $clause, $tx_name, $idx_ref, $pending, $watchdog) {
-    my $counter = "${tx_name}_cnt";
-    my @states;
-    my @local_pending;
-
-    # Init state
-    push @states, {
-        name        => "${tx_name}_repeat_init_" . $$idx_ref++,
-        kind        => 'sequential',
-        assignments => [{ lhs => $counter, rhs => $clause->[1], op => '<=' }],
-        transitions => [],
-    };
-
-    # Body
-    for my $bc (@{$clause}[2 .. $#$clause]) {
-        next unless ref($bc) eq 'ARRAY';
-        my $bk = $bc->[0];
-        if ($bk eq 'drive') {
-            push @states, $self->_ir_drive($bc, $tx_name, [splice @local_pending], $$idx_ref++);
-        }
-        elsif ($bk eq 'await') {
-            push @states, $self->_ir_await($bc, $tx_name, $$idx_ref++, $watchdog);
-        }
-        elsif ($bk eq 'sample') {
-            push @local_pending, $bc;
-        }
-    }
-    if (@local_pending) {
-        push @states, $self->_ir_sample_state($tx_name, \@local_pending, $$idx_ref++);
-    }
-
-    # Check state
-    my $first_body = $states[0]{name};
-    push @states, {
-        name        => "${tx_name}_repeat_check_" . $$idx_ref++,
-        kind        => 'repeat_check',
-        assignments => [{ lhs => $counter, rhs => "(- $counter 1)", op => '<-' }],
-        transitions => [],
-        loop_target => $first_body,
-        counter     => $counter,
-    };
-
-    return (\@states, $counter);
+sub _ir_repeat {
+    my ($cl,$tn,$ir,$ps,$wd)=@_; my $ctr="${tn}_cnt"; my @s; my @lp;
+    push @s, {name=>"${tn}_repeat_init_".$$ir++,kind=>'sequential',assignments=>[{lhs=>$ctr,rhs=>$cl->[1],op=>'<='}],transitions=>[]};
+    for my $bc(@{$cl}[2..$#$cl]){next unless ref($bc)eq'ARRAY';my $bk=$bc->[0];
+        if($bk eq'drive'){push @s,_ir_drive($bc,$tn,[splice @lp],$$ir++)}
+        elsif($bk eq'await'){push @s,_ir_await($bc,$tn,$$ir++,$wd)}
+        elsif($bk eq'sample'){push @lp,$bc}}
+    if(@lp){push @s,_ir_sample_state($tn,\@lp,$$ir++)}
+    my $fb=$s[0]{name};
+    push @s, {name=>"${tn}_repeat_check_".$$ir++,kind=>'repeat_check',assignments=>[{lhs=>$ctr,rhs=>"(- $ctr 1)",op=>'<-'}],transitions=>[],loop_target=>$fb,counter=>$ctr};
+    return (\@s,$ctr);
 }
 
 # --- Post-processing ---
-
-sub _link_state_transitions($self, $states, $tx_name) {
-    return unless @$states;
-    my $entry = $states->[0]{name};
-    for my $i (0 .. $#$states) {
-        my $s   = $states->[$i];
-        my $next = ($i < $#$states) ? $states->[$i+1]{name} : undef;
-
-        if ($s->{kind} eq 'entry' && $next) {
-            push @{$s->{transitions}}, { target => $next, condition => $s->{guard} };
-        }
-        elsif ($s->{kind} eq 'await' && $next) {
-            push @{$s->{transitions}}, { target => $next, condition => $s->{guard} };
-            push @{$s->{transitions}}, { target => "${tx_name}_timeout", condition => { signal => $s->{watchdog}{name}, op => '=', value => 0 } };
-        }
-        elsif ($s->{kind} eq 'repeat_check') {
-            push @{$s->{transitions}}, { target => $s->{loop_target}, condition => { signal => $s->{counter}, op => '!=', value => 0 } };
-            push @{$s->{transitions}}, { target => $next, condition => { signal => $s->{counter}, op => '=', value => 0 } } if $next;
-        }
-        elsif ($s->{kind} eq 'sequential' && $next) {
-            push @{$s->{transitions}}, { target => $next };
-        }
-        elsif ($s->{kind} eq 'terminal') {
-            push @{$s->{transitions}}, { target => $entry };
-        }
-    }
+sub _link_states {
+    my ($st,$tn)=@_; return unless @$st; my $e=$st->[0]{name};
+    for my $i(0..$#$st){my $s=$st->[$i];my $n=$i<$#$st?$st->[$i+1]{name}:undef;
+        if($s->{kind}eq'entry'&&$n){push @{$s->{transitions}},{target=>$n,condition=>$s->{guard}}}
+        elsif($s->{kind}eq'await'&&$n){push @{$s->{transitions}},{target=>$n,condition=>$s->{guard}};push @{$s->{transitions}},{target=>"${tn}_timeout",condition=>{signal=>$s->{watchdog}{name},op=>'=',value=>0}}}
+        elsif($s->{kind}eq'repeat_check'){push @{$s->{transitions}},{target=>$s->{loop_target},condition=>{signal=>$s->{counter},op=>'!=',value=>0}};push @{$s->{transitions}},{target=>$n,condition=>{signal=>$s->{counter},op=>'=',value=>0}}if$n}
+        elsif($s->{kind}eq'sequential'&&$n){push @{$s->{transitions}},{target=>$n}}
+        elsif($s->{kind}eq'terminal'){push @{$s->{transitions}},{target=>$e}}}
 }
 
-sub _inject_watchdog($self, $states, $tx_name, $wd_name, $limit) {
-    my $entry = $states->[0];
-    unshift @{$entry->{assignments}}, { lhs => $wd_name, rhs => "(- $limit 1)", op => '<=' };
-
-    push @$states, {
-        name        => "${tx_name}_timeout",
-        kind        => 'terminal',
-        assignments => [
-            { lhs => 'done', rhs => 1, op => '=' },
-            { lhs => 'last_error', rhs => 1, op => '=' },
-        ],
-        transitions => [],
-    };
+sub _inj_watchdog {
+    my ($st,$tn,$wn,$lim)=@_;
+    unshift @{$st->[0]{assignments}},{lhs=>$wn,rhs=>"(- $lim 1)",op=>'<='};
+    push @$st,{name=>"${tn}_timeout",kind=>'terminal',assignments=>[{lhs=>'done',rhs=>1,op=>'='},{lhs=>'last_error',rhs=>1,op=>'='}],transitions=>[]};
 }
 
-sub _inject_latency($self, $states, $tx_name, $latency, $has_await) {
-    my $cc  = "${tx_name}_cc";
-    my $inc = "${tx_name}_inc";
-    my $err = "${tx_name}_lerr";
-    my $min = $latency->{min} // 1;
-    my $max = $latency->{max} // 256;
-
-    # Counter reset in entry
-    unshift @{$states->[0]{assignments}}, { lhs => $cc, rhs => 0, op => '<-' };
-
-    # inc=1 in all active states
-    for my $s (@$states) {
-        next if $s->{kind} eq 'entry' || $s->{kind} eq 'terminal' || $s->{name} =~ /_timeout$/;
-        unshift @{$s->{assignments}}, { lhs => $inc, rhs => 1, op => '=' };
-    }
-
-    # Min check in non-timeout terminal
-    my ($done) = grep { $_->{kind} eq 'terminal' && $_->{name} !~ /_timeout$/ } @$states;
-    if ($done) {
-        push @{$done->{assignments}},
-            { lhs => $err, rhs => 1, op => '=', guard => { signal => $cc, op => '<', value => $min } };
-    }
-
-    # Max check if no await
-    if (!$has_await && $max) {
-        my $max_chk = "${tx_name}_max_chk";
-        push @$states, {
-            name        => $max_chk,
-            kind        => 'sequential',
-            assignments => [],
-            transitions => [{ target => "${tx_name}_timeout",
-                              condition => { signal => $cc, op => '=', value => $max } }],
-        };
-        push @$states, {
-            name        => "${tx_name}_timeout",
-            kind        => 'terminal',
-            assignments => [
-                { lhs => $err, rhs => 1, op => '=' },
-                { lhs => 'done', rhs => 1, op => '=' },
-                { lhs => 'last_error', rhs => 1, op => '=' },
-            ],
-            transitions => [],
-        };
-    }
-
-    # Comb DT for cycle counter
-    my $dt = {
-        name => "${tx_name}_cc_inc",
-        kind => 'latency_counter',
-        assignments => [{ lhs => $cc, rhs => "(+ $cc 1)", op => '<-', guard => { port => $inc } }],
-    };
-
-    return ($cc, $inc, $err, $dt);
+sub _inj_latency {
+    my ($st,$tn,$lat,$ha)=@_; my $cc="${tn}_cc";my $inc="${tn}_inc";my $err="${tn}_lerr";my $min=$lat->{min}//1;my $max=$lat->{max}//256;
+    unshift @{$st->[0]{assignments}},{lhs=>$cc,rhs=>0,op=>'<-'};
+    for my $s(@$st){next if $s->{kind}eq'entry'||$s->{kind}eq'terminal'||$s->{name}=~/_timeout$/;unshift @{$s->{assignments}},{lhs=>$inc,rhs=>1,op=>'='}}
+    my($done)=grep{$_->{kind}eq'terminal'&&$_->{name}!~/_timeout$/}@$st;
+    if($done){push @{$done->{assignments}},{lhs=>$err,rhs=>1,op=>'=',guard=>{signal=>$cc,op=>'<',value=>$min}}}
+    if(!$ha&&$max){my $mc="${tn}_max_chk";push @$st,{name=>$mc,kind=>'sequential',assignments=>[],transitions=>[{target=>"${tn}_timeout",condition=>{signal=>$cc,op=>'=',value=>$max}}]};
+        push @$st,{name=>"${tn}_timeout",kind=>'terminal',assignments=>[{lhs=>$err,rhs=>1,op=>'='},{lhs=>'done',rhs=>1,op=>'='},{lhs=>'last_error',rhs=>1,op=>'='}],transitions=>[]}}
+    my $dt={name=>"${tn}_cc_inc",kind=>'latency_counter',assignments=>[{lhs=>$cc,rhs=>"(+ $cc 1)",op=>'<-',guard=>{port=>$inc}}]};
+    return ($cc,$inc,$err,$dt);
 }
 
-# --- Rules → IR ---
-
-sub _build_rules($self, $actor) {
-    my @dts;
-    for my $rule (@{$actor->{rules} || []}) {
-        my $name    = $rule->{name};
-        my $cond    = $self->_rule_condition($rule->{when});
-        my @assignments;
-
-        for my $action (@{$rule->{actions}}) {
-            next unless ref($action) eq 'ARRAY';
-            my $ak = $action->[0];
-            if ($ak eq 'assign') {
-                my ($kw, $port, $value) = @$action;
-                push @assignments, { lhs => $port, rhs => $value, op => '=', guard => $cond };
-            }
-            elsif ($ak eq 'assert' || $ak eq 'pulse') {
-                push @assignments, { lhs => $action->[1], rhs => 1, op => '=', guard => $cond };
-            }
-            elsif ($ak eq 'trigger') {
-                push @assignments, { lhs => "$action->[1]_start", rhs => 1, op => '=', guard => $cond };
-            }
-        }
-
-        push @dts, { name => $name, kind => 'rule', assignments => \@assignments };
-    }
-    return @dts;
+sub _build_rules {
+    my ($self,$actor)=@_; my @d;
+    for my $r(@{$actor->{rules}||[]}){my $c=$self->_rule_cond($r->{when});my @a;
+        for my $ac(@{$r->{actions}}){next unless ref($ac)eq'ARRAY';my $ak=$ac->[0];
+            if($ak eq'assign'){push @a,{lhs=>$ac->[1],rhs=>$ac->[2],op=>'=',guard=>$c}}
+            elsif($ak eq'assert'||$ak eq'pulse'){push @a,{lhs=>$ac->[1],rhs=>1,op=>'=',guard=>$c}}
+            elsif($ak eq'trigger'){push @a,{lhs=>"$ac->[1]_start",rhs=>1,op=>'=',guard=>$c}}}
+        push @d,{name=>$r->{name},kind=>'rule',assignments=>\@a}}
+    return @d;
 }
+sub _rule_cond { my($self,$w)=@_; return {port=>'1'} unless $w&&ref($w)eq'ARRAY'&&@$w>=2; {port=>$w->[1]} }
+sub _parse_latency { my($self,$cl)=@_; my %r; for my $i(1..$#$cl){my $x=$cl->[$i];next unless ref($x)eq'ARRAY'&&@$x>=2;$r{$x->[0]}=$x->[1] if$x->[0]eq'min'||$x->[0]eq'max'}; \%r }
 
-sub _rule_condition($self, $when) {
-    return { port => '1' } unless $when && ref($when) eq 'ARRAY' && @$when >= 2;
-    return { port => $when->[1] };
-}
-
-sub _parse_latency($self, $clause) {
-    my %r;
-    for my $i (1 .. $#$clause) {
-        my $item = $clause->[$i];
-        next unless ref($item) eq 'ARRAY' && @$item >= 2;
-        $r{$item->[0]} = $item->[1] if $item->[0] eq 'min' || $item->[0] eq 'max';
-    }
-    return \%r;
-}
-
-sub _wire_do_children($self, $states, $counters, $actor) {
-    # Collect child names that have their own transactions in this actor
-    my %child_tx = map { $_->{name} => $_ } @{$actor->{transactions}};
-
-    # Find do-children referenced by parent transactions
-    my %needs_handshake;
-    for my $tx (@{$actor->{transactions}}) {
-        for my $clause (@{$tx->{clauses}}) {
-            next unless ref($clause) eq 'ARRAY' && $clause->[0] eq 'do';
-            my $child = $clause->[1];
-            $needs_handshake{$child} = 1 if $child_tx{$child};
-        }
-    }
-
-    # For each child that needs handshake, modify its entry and done states
-    for my $child (keys %needs_handshake) {
-        my $start = "${child}_start";
-        my $done  = "${child}_done";
-
-        # Find child's entry state and change its guard to watch start
-        my ($entry) = grep { $_->{name} =~ /^${child}_idle_/ } @$states;
-        if ($entry) {
-            $entry->{guard} = { port => $start };
-            # Rebuild transitions for the new guard
-            $entry->{transitions} = [];
-            my ($next) = grep { $_->{name} =~ /^${child}_drive_/ } @$states;
-            push @{$entry->{transitions}}, { target => $next->{name}, condition => $entry->{guard} }
-                if $next;
-        }
-
-        # Find child's terminal state and add done pulse
-        my ($terminal) = grep { $_->{name} =~ /^${child}_(?:done|complete)_/ && $_->{kind} eq 'terminal' } @$states;
-        if ($terminal) {
-            unshift @{$terminal->{assignments}}, { lhs => $done, rhs => 1, op => '=' };
-        }
-    }
+sub _wire_do_children {
+    my ($self,$st,$ctrs,$actor)=@_;
+    my %ctx = map { $_->{name} => 1 } @{$actor->{transactions}};
+    my %need;
+    for my $tx(@{$actor->{transactions}}){for my $cl(@{$tx->{clauses}}){next unless ref($cl)eq'ARRAY'&&$cl->[0]eq'do';$need{$cl->[1]}=1 if$ctx{$cl->[1]}}}
+    for my $c(keys %need){my $s="${c}_start";my $d="${c}_done";
+        my($en)=grep{$_->{name}=~/^${c}_idle_/}@$st;if($en){$en->{guard}={port=>$s};$en->{transitions}=[];my($nx)=grep{$_->{name}=~/^${c}_drive_/}@$st;push @{$en->{transitions}},{target=>$nx->{name},condition=>$en->{guard}}if$nx}
+        my($tm)=grep{$_->{name}=~/^${c}_(?:done|complete)_/&&$_->{kind}eq'terminal'}@$st;unshift @{$tm->{assignments}},{lhs=>$d,rhs=>1,op=>'='}if$tm}
 }
 
 1;

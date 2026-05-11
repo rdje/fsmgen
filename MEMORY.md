@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: R14 — multi-file spawn output
+- `(spawn child as name)` now produces separate `.fsm` files: one per child
+  module + one for the parent actor
+- Child modules get `start`/`done` ports injected; idle state rewired
+- `--outdir DIR` CLI option dumps all generated `.fsm` files
+- Tested with `isf/spawn_parent.isf` → `child_worker.fsm` + `spawn_parent.fsm`
+- 7 tests pass, all existing fixtures pass strict mode
 ## 2026-05-11: R14 — spawn lowering (signals + instance tracking)
 - `(spawn child as name)` now generates per-instance `name_start`/`name_done`
   signals in the parent FSM

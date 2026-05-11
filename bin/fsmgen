@@ -186,6 +186,7 @@ my $help = 0;
 my $quiet = 0;
 my $strict_mode = 0;
 my $output_file = "";
+my $outdir = "";
 my $target_language = "systemverilog";  # Default to SystemVerilog
 my $trace_verbosity = "";               # Named mode: none|low|medium|high|debug
 my $trace_log_path = "trace.log";       # Default trace output file path
@@ -210,6 +211,7 @@ GetOptions(
     'strict'      => \$strict_mode,
     'help|h'      => \$help,
     'output|o=s'  => \$output_file,
+    'outdir=s'    => \$outdir,
     'language|l=s' => \$target_language,
     'trace-verbosity|verbosity=s' => \$trace_verbosity,
     'trace-log:s' => \$trace_log_path,
@@ -539,24 +541,27 @@ if ($fsm_file =~ /\.isf$/i) {
 
     my $files = $result->{files};
 
-    if (scalar(keys %$files) == 1) {
-        # Single file: write to temp and feed to normal pipeline
+    my $dir = $outdir || undef;
+
+    if (!$dir && scalar(keys %$files) == 1) {
+        # Single file, no outdir: write to temp and feed to normal pipeline
         my ($only_file) = values %$files;
         my ($fh, $tmp_path) = File::Temp::tempfile(SUFFIX => '.fsm');
         print $fh $only_file;
         close $fh;
         $fsm_file = $tmp_path;
     } else {
-        # Multi-file: write each to current directory or output dir
-        my $out_dir = $output_file ? dirname($output_file) : '.';
+        # Write all files to output directory
+        $dir ||= '.';
+        mkdir $dir unless -d $dir;
         for my $fname (sort keys %$files) {
-            my $path = File::Spec->catfile($out_dir, $fname);
+            my $path = File::Spec->catfile($dir, $fname);
             open my $fh, '>', $path or die "Cannot write $path: $!\n";
             print $fh $files->{$fname};
             close $fh;
+            print "Wrote: $path\n" unless $machine_json_mode;
         }
-        # Feed the top file (actor_name.fsm) to the normal pipeline
-        $fsm_file = File::Spec->catfile($out_dir, "$actor->{actor_name}.fsm");
+        $fsm_file = File::Spec->catfile($dir, "$actor->{actor_name}.fsm");
     }
 
     unless ($machine_json_mode) {

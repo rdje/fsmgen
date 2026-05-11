@@ -2,6 +2,9 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: R14 — multi-file spawn
+- Active: `R14`. Multi-file spawn + `--outdir`. 7 tests pass.
+
 ## 2026-05-11: R14 — spawn
 - Active: `R14`. Spawn instance signals. 7 tests pass.
 

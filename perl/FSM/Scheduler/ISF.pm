@@ -29,13 +29,20 @@ sub new($class, %args) {
 sub lower($self, $actor) {
     fsm_trace_enter("Scheduler lower: $actor->{actor_name}", 2);
 
-    my $ir  = $self->{ir}->build_module($actor);
-    my $fsm = $self->{fsm_emitter}->emit($ir);
+    my $ir     = $self->{ir}->build_module($actor);
+    my %files;
+
+    # Emit parent
+    $files{"$ir->{actor_name}.fsm"} = $self->{fsm_emitter}->emit($ir);
+
+    # Emit children
+    my $children = $ir->{children} || {};
+    while (my ($cname, $cir) = each %$children) {
+        $files{"$cname.fsm"} = $self->{fsm_emitter}->emit($cir);
+    }
 
     fsm_trace_exit("Scheduler lower completed", 2);
-
-    # Return single-file result (for actors without spawn)
-    return { files => { "$actor->{actor_name}.fsm" => $fsm } };
+    return { files => \%files };
 }
 
 sub report($self, $actor) {
