@@ -2,6 +2,11 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: R14 `.isf` format specification v0.1
+- Active lane: `R14` — Intent Scheduling. First slice complete: [docs/ISF_SPEC.md](docs/ISF_SPEC.md).
+- Defines `.isf` syntax, lowering contract, and schedule report model.
+- Next slice: worked lowering example (AHB requester read burst → .fsm states).
+
 ## 2026-05-11: R14 reprioritized — Intent Scheduling `.isf` now active
 - Active lane: `R14` — Intent Scheduling (`.isf` format and lowering compiler).
 - TRM capture canceled (handled externally by SPECFORGE).

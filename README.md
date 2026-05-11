@@ -59,6 +59,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/EXTENSION_MODEL.md` — typed extension boundary for the active `R7` replacement path.
 - `docs/SPECFORGE_FEEDBACK_RESPONSE.md` — tracked FSMGen response to SPECFORGE adapter/tool-integration feedback.
 - `docs/INTENT_SCHEDULING_BRAINSTORM.md` — living brainstorm log for inferring/scheduling cycles from a hardware-native intent layer above explicit `.fsm`.
+- `docs/ISF_SPEC.md` — active R14 `.isf` Intent Scheduling Format specification (v0.1).
 - `docs/REGRESSION_CORPUS.md` — human-readable companion to the machine-checked support and regression catalog.
 - `docs/INTENT_CAPTURE_AXI_CASE_STUDY.md` — AXI intent-capture case-study notes for future high-level synthesis work.
 - `docs/VHDL_SCOPE.md` — scoped VHDL backend plan preserved for future horizon H5 reference.

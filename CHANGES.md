@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### R14 `.isf` format specification v0.1
+- Created [docs/ISF_SPEC.md](docs/ISF_SPEC.md) defining the Intent Scheduling Format.
+- Covers: actor root, transactions, rules, phases, handshakes, resources,
+  latency constraints, pipeline stages, lowering contract, schedule report shape.
+- Updated [README.md](README.md) and all live docs.
 ### R14 lane reprioritized — Intent Scheduling `.isf` now active
 - Canceled TRM capture lane (SPECFORGE). Promoted Intent Scheduling to active R14.
 - `.isf` = Intent Scheduling Format, a Lisp-ish abstraction above `.fsm`.

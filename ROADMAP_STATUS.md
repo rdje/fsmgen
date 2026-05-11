@@ -1,7 +1,8 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R14` — Intent Scheduling (`.isf` format and lowering compiler). Former TRM capture lane canceled (handled externally by SPECFORGE). First slice: formalize the `.isf` format specification from [docs/INTENT_SCHEDULING_BRAINSTORM.md](docs/INTENT_SCHEDULING_BRAINSTORM.md), defining concrete syntax for transactions, rules, handshakes, phases, and lowering contracts.
+- Active lane: `R14` — Intent Scheduling (`.isf` format and lowering compiler). First slice complete: `.isf` format specification v0.1 in [docs/ISF_SPEC.md](docs/ISF_SPEC.md). Next slice: define the lowering contract more concretely with a worked example (e.g., AHB requester read burst lowered to explicit `.fsm` states).
+- Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
 - Next decision point: t/1090 now proves a fresh facade contract owner build stays clean. Next bounded R13 slice: continue remaining contract full-surface audits.

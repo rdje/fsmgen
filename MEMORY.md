@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: R14 `.isf` format specification v0.1 created
+- Created [docs/ISF_SPEC.md](docs/ISF_SPEC.md) — the initial `.isf` Intent
+  Scheduling Format specification.
+- Defines: actor root, transactions, rules, phases, handshakes, resources,
+  latency constraints, pipeline stages, and the lowering contract to `.fsm`.
+- Specifies the schedule report shape and error/ambiguity reporting model.
+- Identifies 5 open design questions for resolution through implementation.
+- Updated [README.md](README.md) documentation index.
 ## 2026-05-11: R14 reprioritized — Intent Scheduling `.isf` now active
 - Canceled TRM capture lane (handled externally by SPECFORGE). Promoted Intent
   Scheduling from [docs/INTENT_SCHEDULING_BRAINSTORM.md](docs/INTENT_SCHEDULING_BRAINSTORM.md)
