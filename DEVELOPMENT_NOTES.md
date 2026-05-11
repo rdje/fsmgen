@@ -1,5 +1,7 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-11: HDLGenerator resolved package imports contract full surface survives JSON
+- The resolved package imports contract now has a full-surface JSON round-trip audit.
 ## 2026-05-11: HDLGenerator raw AST contract full surface rebuilds cleanly
 - The raw AST contract now has a full-surface defensive-copy audit.
 ## 2026-05-11: HDLGenerator raw AST contract full surface survives JSON
