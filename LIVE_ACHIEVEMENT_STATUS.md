@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: Debug runtime contract full surface survives JSON
+- Roadmap lane: R13. Completed slice: t/1059. Public behavior changed: no.
+- Next bounded slice: continue debug runtime full-surface stability audits.
+
 ## 2026-05-11: HDL external validation contract full surface rebuilds cleanly
 - Roadmap lane: R13. Completed slice: t/1058. Public behavior changed: no.
 - Next bounded slice: debug runtime contract.
