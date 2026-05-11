@@ -1,5 +1,8 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: Documentation contract full surface rebuilds cleanly
+- Added t/1068. Complements t/1067 JSON audit with defensive-copy guard.
+- Completes the documentation contract full-surface audit pair.
 ## 2026-05-11: Documentation contract full surface survives JSON
 - Added t/1067. Extends R13 auditing to the bounded documentation contract.
 ## 2026-05-11: Language surface contract full surface rebuilds cleanly
