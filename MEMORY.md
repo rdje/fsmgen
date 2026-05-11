@@ -1,5 +1,10 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: HDLGenerator resolved package imports contract full surface rebuilds cleanly
+- Added t/1088. Complements t/1087 JSON audit.
+- The HDLGenerator nested contract family (source-info, module-info, statistics,
+  composition-plan, composition-spec, FSM-module, raw-AST, resolved-package-imports)
+  is now fully audited.
 ## 2026-05-11: HDLGenerator resolved package imports contract full surface survives JSON
 - Added t/1087. Extends R13 auditing to the resolved package imports contract.
 ## 2026-05-11: HDLGenerator raw AST contract full surface rebuilds cleanly

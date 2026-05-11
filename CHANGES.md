@@ -1,6 +1,9 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### HDLGenerator resolved package imports contract full surface rebuilds cleanly
+- Added t/1088. HDLGenerator nested contract family (8 contracts) now fully audited.
+- Updated live docs.
 ### HDLGenerator resolved package imports contract full surface survives JSON
 - Added t/1087. Updated live docs.
 ### HDLGenerator raw AST contract full surface rebuilds cleanly

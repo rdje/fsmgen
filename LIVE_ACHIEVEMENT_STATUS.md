@@ -2,6 +2,11 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: HDLGenerator resolved package imports contract full surface rebuilds cleanly
+- Roadmap lane: R13. Completed slice: t/1088. Public behavior changed: no.
+- HDLGenerator nested contract family (8 contracts) now fully audited.
+- Next bounded slice: continue remaining contract full-surface audits.
+
 ## 2026-05-11: HDLGenerator resolved package imports contract full surface survives JSON
 - Roadmap lane: R13. Completed slice: t/1087. Public behavior changed: no.
 - Next bounded slice: continue resolved package imports full-surface stability audits.
