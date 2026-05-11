@@ -95,6 +95,7 @@ sub _build_parent_ir($self, $actor, $spawned) {
 
     push @dts, $self->_build_rules($actor);
     $self->_wire_do_children(\@states, \%ctrs, $actor);
+    $self->_build_drive_dts($actor, \@dts, \%ctrs);
 
     return {
         actor_name => $actor->{actor_name},
@@ -141,11 +142,15 @@ sub _build_transaction($self, $tx, $actor, $txi) {
         if    ($k eq 'on')       { push @st, _ir_on($cl, $tn, $si++); }
         elsif ($k eq 'drive')    {
             if (@$cl == 2) {
-                # Call: (drive name) — resolve from definition
+                # Call: (drive name) — assert start signal
                 my $name = $cl->[1];
-                my $def = $drives->{$name};
-                confess "Transaction '$tn': drive '$name' not defined\n" unless $def;
-                push @st, _ir_drive_call($def, $tn, [splice @ps], $si++);
+                confess "Transaction '$tn': drive '$name' not defined\n" unless $drives->{$name};
+                if (@st && $st[-1]{kind} eq 'sequential') {
+                    unshift @{$st[-1]{assignments}}, { lhs => "${name}_start", rhs => 1, op => '=' };
+                } else {
+                    push @st, { name => "${tn}_drive_" . $si++, kind => 'sequential',
+                        assignments => [{ lhs => "${name}_start", rhs => 1, op => '=' }], transitions => [] };
+                }
             } else {
                 push @st, _ir_drive($cl, $tn, [splice @ps], $si++);
             }
@@ -186,6 +191,7 @@ sub _build_transaction($self, $tx, $actor, $txi) {
         push @dt, $cdt;
     }
 
+    _merge_sequential(\@st) if 0;  # disabled — needs more work
     _link_states(\@st, $tn);
     $ct{can_accept} = 1;
     for my $s (@st) { next unless $s->{kind} eq 'entry'; unshift @{$s->{assignments}}, { lhs => 'can_accept', rhs => 1, op => '=' }; }
@@ -195,7 +201,7 @@ sub _build_transaction($self, $tx, $actor, $txi) {
 # --- Individual clause → IR ---
 sub _ir_on      { my ($cl,$tn,$i)=@_; my $e=$cl->[1]; my @s; for my $j(2..$#$cl){my $x=$cl->[$j]; next unless ref($x)eq'ARRAY'&&$x->[0]eq'sample'; push @s,{port=>$x->[1],as_name=>$x->[3]}} my $guard=!ref($e) ? {port=>$e} : {expr=>$e}; {name=>"${tn}_idle_$i",kind=>'entry',guard=>$guard,samples=>\@s,assignments=>[],transitions=>[]} }
 sub _ir_drive   { my ($cl,$tn,$ps,$i)=@_; my @a; for(@$ps){push @a,{lhs=>$_->[3],rhs=>$_->[1],op=>'<='}} for my $j(2..$#$cl){my$x=$cl->[$j];next unless ref($x)eq'ARRAY'&&@$x>=2;push @a,{lhs=>$x->[0],rhs=>$x->[1],op=>'='}} {name=>"${tn}_drive_$i",kind=>'sequential',assignments=>\@a,transitions=>[]} }
-sub _ir_drive_call { my ($body,$tn,$ps,$i)=@_; my @a; for(@$ps){push @a,{lhs=>$_->[3],rhs=>$_->[1],op=>'<='}} for my $x(@$body){next unless ref($x)eq'ARRAY'&&@$x>=2;push @a,{lhs=>$x->[0],rhs=>$x->[1],op=>'='}} {name=>"${tn}_drive_$i",kind=>'sequential',assignments=>\@a,transitions=>[]} }
+sub _ir_drive_call { my ($body,$tn,$ps,$i)=@_; return undef; }
 sub _ir_await   { my ($cl,$tn,$i,$wd)=@_; {name=>"${tn}_await_$i",kind=>'await',assignments=>[],transitions=>[],guard=>{port=>$cl->[1]},watchdog=>{name=>"${tn}_wd",limit=>$wd//65536}} }
 sub _ir_complete{ my ($cl,$tn,$i)=@_; {name=>"${tn}_done_$i",kind=>'terminal',assignments=>[{lhs=>$cl->[1],rhs=>1,op=>'='}],transitions=>[]} }
 sub _ir_sample_state { my ($tn,$ps,$i)=@_; my @a; for(@$ps){push @a,{lhs=>$_->[3],rhs=>$_->[1],op=>'<='}} {name=>"${tn}_sample_$i",kind=>'sequential',assignments=>\@a,transitions=>[]} }
@@ -206,7 +212,7 @@ sub _ir_when     { my ($cl,$tn,$i)=@_; {name=>"${tn}_when_$i",kind=>'branch',con
 sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd)=@_; my @s; my $bstate=_ir_when($cl,$tn,$$ir++); push @s,$bstate; my @body_states; my @lp;
     for my $bc(@{$bstate->{body_clauses}}){next unless ref($bc)eq'ARRAY';my$bk=$bc->[0];
         if($bk eq'drive'&&@$bc>=3){push @body_states,_ir_drive($bc,$tn,[splice @lp],$$ir++)}
-        elsif($bk eq'drive'){my$name=$bc->[1];my$def=$drives->{$name}||[];push @body_states,_ir_drive_call($def,$tn,[splice @lp],$$ir++)}
+        elsif($bk eq'drive'){my$n=$bc->[1];confess qq{drive $n not defined} unless$drives->{$n};my$a={lhs=>"${n}_start",rhs=>1,op=>'='};if(@body_states&&$body_states[-1]{kind}eq'sequential'){push @{$body_states[-1]{assignments}},$a}else{push @body_states,{name=>"${tn}_drive_".$$ir++,kind=>'sequential',assignments=>[$a],transitions=>[]}}}
         elsif($bk eq'await'){push @body_states,_ir_await($bc,$tn,$$ir++,$wd)}
         elsif($bk eq'sample'){push @lp,$bc}
         elsif($bk eq'complete'){push @body_states,_ir_complete($bc,$tn,$$ir++)}}
@@ -220,7 +226,7 @@ sub _expand_switch { my ($cl,$tn,$ir,$ps,$drives,$wd)=@_; my $signal=$cl->[1]; m
         confess "Switch '$tn': duplicate value '$val'\n" if$seen_val{$val}++;my@body_states;my@lp;
         for my $bc2(@bc){next unless ref($bc2)eq'ARRAY';my$bk2=$bc2->[0];
             if($bk2 eq'drive'&&@$bc2>=3){push @body_states,_ir_drive($bc2,$tn,[splice @lp],$$ir++)}
-            elsif($bk2 eq'drive'){my$n=$bc2->[1];my$d=$drives->{$n}||[];push @body_states,_ir_drive_call($d,$tn,[splice @lp],$$ir++)}
+            elsif($bk2 eq'drive'){my$n=$bc2->[1];confess qq{drive $n not defined} unless$drives->{$n};my$a={lhs=>"${n}_start",rhs=>1,op=>'='};if(@body_states&&$body_states[-1]{kind}eq'sequential'){push @{$body_states[-1]{assignments}},$a}else{push @body_states,{name=>"${tn}_drive_".$$ir++,kind=>'sequential',assignments=>[$a],transitions=>[]}}}
             elsif($bk2 eq'await'){push @body_states,_ir_await($bc2,$tn,$$ir++,$wd)}
             elsif($bk2 eq'sample'){push @lp,$bc2}}
         if(@lp||!@body_states){push @body_states,_ir_sample_state($tn,\@lp,$$ir++)if@lp;push @body_states,{name=>"${tn}_switch_${val}_" . $$ir++,kind=>'sequential',assignments=>[],transitions=>[]}unless@body_states}
@@ -289,6 +295,22 @@ sub _build_rules {
     return @d;
 }
 sub _rule_cond { my($self,$w)=@_; return {port=>'1'} unless $w&&ref($w)eq'ARRAY'&&@$w>=2; {port=>$w->[1]} }
+
+sub _build_drive_dts {
+    my ($self, $actor, $dts, $ctrs) = @_;
+    my $drives = $actor->{drives} || {};
+    for my $name (keys %$drives) {
+        my $body = $drives->{$name};
+        my @assignments;
+        for my $pair (@$body) {
+            next unless ref($pair) eq 'ARRAY' && @$pair >= 2;
+            push @assignments, { lhs => $pair->[0], rhs => $pair->[1], op => '=', guard => { port => "${name}_start" } };
+        }
+        push @$dts, { name => $name, kind => 'drive', assignments => \@assignments };
+        $ctrs->{"${name}_start"} = 1;
+    }
+}
+
 sub _parse_latency { my($self,$cl)=@_; my %r; for my $i(1..$#$cl){my $x=$cl->[$i];next unless ref($x)eq'ARRAY'&&@$x>=2;$r{$x->[0]}=$x->[1] if$x->[0]eq'min'||$x->[0]eq'max'}; \%r }
 
 sub _wire_do_children {
@@ -299,6 +321,23 @@ sub _wire_do_children {
     for my $c(keys %need){my $s="${c}_start";my $d="${c}_done";
         my($en)=grep{$_->{name}=~/^${c}_idle_/}@$st;if($en){$en->{guard}={port=>$s};$en->{transitions}=[];my($nx)=grep{$_->{name}=~/^${c}_drive_/}@$st;push @{$en->{transitions}},{target=>$nx->{name},condition=>$en->{guard}}if$nx}
         my($tm)=grep{$_->{name}=~/^${c}_(?:done|complete)_/&&$_->{kind}eq'terminal'}@$st;unshift @{$tm->{assignments}},{lhs=>$d,rhs=>1,op=>'='}if$tm}
+}
+
+sub _merge_sequential {
+    my ($st) = @_;
+    my @merged;
+    for my $s (@$st) {
+        if (@merged && $merged[-1]{kind} eq 'sequential' && $s->{kind} eq 'sequential'
+            && $merged[-1]{name} !~ /_repeat_check/ && $merged[-1]{name} !~ /_repeat_init/
+            && $s->{name} !~ /_repeat_init/) {
+            push @{$merged[-1]{assignments}}, @{$s->{assignments}};
+            $merged[-1]{transitions} = $s->{transitions};
+            $merged[-1]{name} = $s->{name};
+        } else {
+            push @merged, $s;
+        }
+    }
+    @$st = @merged;
 }
 
 1;

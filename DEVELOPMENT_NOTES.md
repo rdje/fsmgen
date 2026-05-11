@@ -1,5 +1,7 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 — drive architecture
+- Drive definitions → combinational DTs. Calls → start assertions. Merge deferred.
 ## 2026-05-11: R14 — handshake removed
 - `can_accept` auto-injected. `(on port)` directly uses the port name.
 ## 2026-05-11: R14 — multi-file

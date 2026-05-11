@@ -1,5 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-05-12
+### R14 — drive calls → start assertions + combinational DTs
+- Drive definitions become `(-name ...)` combinational DT blocks with guarded assignments.
+- `(drive name)` calls emit `(= (name_start 1))`. I2C @ 19 states, APB @ 7. 7 tests pass.
+### R14 — I2C master controller fixture
+- Real protocol test in ISF: I2C master using `(repeat 8 ...)`, `(switch ...)`, drive defs. 19 states.
+### R14 — `(switch signal (val body...) ...)` multi-way dispatch
+- `(switch op (0 (drive a)) (1 (drive b)))` emits `(?op (=0 -> a) (=1 -> b))`. 7 tests pass.
+### R14 — `(when condition body...)` inline branching
+- `(when mode body...)` emits `(?mode (=1 -> body) (=0 -> skip))`. 7 tests pass.
+### R14 — drive definitions at actor level, calls by name
+- `(drive name (port val) ...)` = definition. `(drive name)` = call. 7 tests pass.
+### R14 — reset form, name-based polarity
+- `(reset (rst_n))` infers active_low from `_n` suffix. `(reset name)` flat form valid. 7 tests pass.
+### R14 — remove `assign` keyword
+- Drive bodies are `(port value)` pairs. 7 tests pass.
 ## 2026-05-11
 ### R14 — handshake removed, `(on port)` + `can_accept`
 - `(handshake ...)` gone. `ready` is implicit `can_accept`. 7 tests pass.

@@ -1,5 +1,29 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — drive calls as start assertions + combinational DTs
+- Drive definitions become combinational DT blocks `(-name (port = val <name_start))`
+- `(drive name)` calls emit `(= (name_start 1))` in current state; `_start` signals auto-declared
+- Adjacent drive call merge (same-cycle execution) deferred
+- I2C: 19 states, APB: 7 states. All 7 tests pass.
+## 2026-05-12: R14 — I2C master controller fixture
+- Real protocol test: I2C master in ISF using `(repeat 8 ...)`, `(switch ...)`, drive definitions
+- 19 states, strict mode passes. Validates ISF expressiveness.
+## 2026-05-12: R14 — `(switch signal (val body...) ...)` multi-way dispatch
+- `(switch op (0 (drive a)) (1 (drive b)))` emits `(?op (=0 -> a) (=1 -> b))`
+- Body clauses expanded inline; duplicate value detection
+- switch_test.isf fixture; 7 tests pass
+## 2026-05-12: R14 — `(when condition body...)` inline branching
+- `(when mode body...)` emits `(?mode (=1 -> body) (=0 -> skip))`
+- Port names or expressions as conditions; body clauses expanded inline
+- when_test.isf fixture; 7 tests pass
+## 2026-05-12: R14 — drive definitions at actor level, calls by name
+- `(drive name (port val) ...)` at actor level = definition
+- `(drive name)` in transaction = call, resolves to definition
+- Updated Parser (drives hash), IR, all fixtures
+## 2026-05-12: R14 — reset form `(reset (name async active_low))`; flat `(reset name)`
+- `(reset (rst_n))` infers active_low from `_n`/`_b` suffix
+- Both `(reset rst_n)` and `(reset (rst_n async active_low))` valid
+- Updated Parser, fixtures, ISF_SPEC.md
 ## 2026-05-11: R14 — remove `assign` keyword; drive bodies are port-value pairs
 - `(drive name (PADDR addr) (PSEL 1) ...)` — no `assign`, just port-value pairs
 - Rule actions: `(port value)` pairs + `(trigger tx)` — no `assign`/`pulse`/`assert`

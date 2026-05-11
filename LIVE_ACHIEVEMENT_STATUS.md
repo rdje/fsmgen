@@ -2,6 +2,9 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — drive architecture
+- Active: `R14`. Drive calls → start assertions + combinational DTs. I2C @ 19 states. 7 tests.
+
 ## 2026-05-11: R14 — handshake removed
 - Active: `R14`. `(on port)` + implicit `can_accept`. 7 tests pass.
 
