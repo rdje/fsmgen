@@ -1,4 +1,4 @@
-;; I2C master controller — real protocol test for ISF
+;; I2C master controller — using (repeat 8 ...) for bit-banging
 (actor i2c_master
   (clock clk)
   (reset (rst_n async active_low))
@@ -16,28 +16,10 @@
     (output sda_out)
     (input  sda_in))
 
-  ;; Drive definitions for I2C phases
-  (drive start_condition
-    (sda_out 0)
-    (scl 1))
-
-  (drive stop_condition
-    (sda_out 0)
-    (scl 1))
-
-  (drive send_bit_1
-    (sda_out 1)
-    (scl 1))
-
-  (drive send_bit_0
-    (sda_out 0)
-    (scl 1))
-
-  (drive scl_low
-    (scl 0))
-
-  (drive read_bit
-    (scl 0))
+  (drive scl_hi  (scl 1))
+  (drive scl_lo  (scl 0))
+  (drive sda_hi  (sda_out 1))
+  (drive sda_lo  (sda_out 0))
 
   (transaction i2c_transfer
     (on start
@@ -46,61 +28,32 @@
       (sample reg_addr as reg)
       (sample wdata    as data))
 
-    ;; START condition
-    (drive start_condition)
-    (drive scl_low)
+    ;; START: SDA low while SCL high
+    (drive scl_hi) (drive sda_lo) (drive scl_lo)
 
-    ;; Send device address (7 bits + R/W)
-    (drive send_bit_1) (drive scl_low)
-    (drive send_bit_0) (drive scl_low)
-    (drive send_bit_0) (drive scl_low)
-    (drive send_bit_0) (drive scl_low)
-    (drive send_bit_0) (drive scl_low)
-    (drive send_bit_0) (drive scl_low)
-    (drive send_bit_0) (drive scl_low)
+    ;; Send 7-bit address + R/W
+    (repeat 7 (drive scl_hi) (drive scl_lo))
+    (drive scl_hi)
     (switch is_read
-      (1 (drive send_bit_1))
-      (0 (drive send_bit_0)))
-    (drive scl_low)
+      (1 (drive sda_hi))
+      (0 (drive sda_lo)))
+    (drive scl_lo)
 
-    ;; Wait for ACK
-    (drive read_bit) (drive scl_low)
+    ;; ACK (master reads, slave drives)
+    (drive scl_hi) (drive scl_lo)
 
-    ;; Send register address
-    (drive send_bit_0) (drive scl_low)
-    (drive send_bit_0) (drive scl_low)
-    (drive send_bit_0) (drive scl_low)
-    (drive send_bit_0) (drive scl_low)
-    (drive send_bit_0) (drive scl_low)
-    (drive send_bit_0) (drive scl_low)
-    (drive send_bit_0) (drive scl_low)
-    (drive send_bit_0) (drive scl_low)
+    ;; Send register address (8 bits)
+    (repeat 8 (drive scl_hi) (drive scl_lo))
 
-    ;; Wait for ACK
-    (drive read_bit) (drive scl_low)
+    ;; ACK
+    (drive scl_hi) (drive scl_lo)
 
+    ;; Data: read or write 8 bits
     (switch is_read
-      ;; READ: receive data
-      (1 (drive read_bit) (drive scl_low)
-         (drive read_bit) (drive scl_low)
-         (drive read_bit) (drive scl_low)
-         (drive read_bit) (drive scl_low)
-         (drive read_bit) (drive scl_low)
-         (drive read_bit) (drive scl_low)
-         (drive read_bit) (drive scl_low)
-         (drive read_bit) (drive scl_low))
-      ;; WRITE: send data
-      (0 (drive send_bit_0) (drive scl_low)
-         (drive send_bit_0) (drive scl_low)
-         (drive send_bit_0) (drive scl_low)
-         (drive send_bit_0) (drive scl_low)
-         (drive send_bit_0) (drive scl_low)
-         (drive send_bit_0) (drive scl_low)
-         (drive send_bit_0) (drive scl_low)
-         (drive send_bit_0) (drive scl_low)))
+      (1 (repeat 8 (drive scl_hi) (drive scl_lo)))
+      (0 (repeat 8 (drive scl_hi) (drive scl_lo))))
 
-    ;; STOP condition
-    (drive scl_low)
-    (drive stop_condition)
+    ;; STOP: SDA high while SCL high
+    (drive scl_lo) (drive sda_lo) (drive scl_hi) (drive sda_hi)
 
     (complete done)))
