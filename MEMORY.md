@@ -1,16 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
-## 2026-05-11: `.isf` specification v0.2 — pure Lisp, no register leakage
-- Revised [docs/ISF_SPEC.md](docs/ISF_SPEC.md) to v0.2 with design review feedback:
-  - No `(+...)` forms; pure Lisp declarations throughout
-  - No keyword arguments; `(width N)` not `:width N`
-  - `(sample port as name)` replaces `(capture -> register)` — scheduler decides storage
-  - `(assign ...)` replaces `(set register)` — intent-level vocabulary
-  - `(on handshake)` replaces `(accept sig1 sig2)` — handshakes as first-class abstractions
-  - `(interface ...)` replaces `(+ports ...)` — port-level thinking
-  - `(clock ...)` / `(reset ...)` replace `(+system ...)`
-  - `(resources ...)` replaces `(+resources ...)`
-  - Added 2 open design questions (7 total)
+## 2026-05-11: `.isf` specification v0.3 — transaction composition, spawn, priority
+- Revised [docs/ISF_SPEC.md](docs/ISF_SPEC.md) to v0.3:
+  - `(actor name ...)` replaces `(?actor:name ...)` — no `.fsm` leakage
+  - Transaction composition: `(do ...)` blocking sequence, `(spawn ...)` non-blocking parallel
+  - Sync primitives: `(await_all ...)`, `(await_any ...)`
+  - `(repeat N ...)` accepts arbitrary expressions and bound names; scheduler infers counter
+  - `(priority ...)` supported both inline (in rules) and as separate section
+  - Scheduler detects all compile-time issues: deadlocks, output conflicts, unmet latency
+  - 5 open design questions (down from 7, 2 resolved)
 - Created [docs/ISF_SPEC.md](docs/ISF_SPEC.md) — the initial `.isf` Intent
   Scheduling Format specification.
 - Defines: actor root, transactions, rules, phases, handshakes, resources,

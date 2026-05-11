@@ -1,7 +1,4 @@
-# Intent Scheduling Format (`.isf`) — Specification v0.2
-
-This is the format specification for the Intent Scheduling Format
-(`.isf`), the hardware-intent layer above cycle-accurate `.fsm`.
+# Intent Scheduling Format (`.isf`) — Specification v0.3
 
 Source material: [docs/INTENT_SCHEDULING_BRAINSTORM.md](INTENT_SCHEDULING_BRAINSTORM.md)
 
@@ -17,32 +14,28 @@ rules, constraints); the FSMGen scheduler infers when (states, cycles,
 enables, storage) and produces an explicit scheduled `.fsm` plus a schedule
 report.
 
-Cycles are not hidden. They become an inferred, scheduled, and reviewable
-compiler result. Storage (register vs wire) is also a scheduler decision —
-the `.isf` author expresses intent, not hardware.
-
 **Design principles:**
 - Pure Lisp syntax: no `(+...)` forms, no keyword arguments, no `:width`
-- Port-level thinking: the author sees the module interface, not internal
-  wires or registers
-- Handshakes as first-class named abstractions: `(on handshake)`, not
-  `(accept sig1 sig2)`
-- Intent-level vocabulary: `(assign ...)`, `(sample ...)`, `(drive ...)` —
+- Port-level thinking: the author sees the module interface
+- Handshakes as first-class named abstractions
+- Intent-level vocabulary: `(sample ...)`, `(assign ...)`, `(drive ...)` —
   never `(set register)` or `(capture -> register)`
+- Scheduler owns storage, counters, arbitration — author expresses intent
+- Every compile-time detectable issue is reported, never silently resolved
 
 ## 2. File extension and root form
 
 - Extension: `.isf`
-- Root form: `(?actor:actor_name ...)` — an actor is the top-level unit of
-  intent scheduling. One hardware agent (requester, completer, channel,
-  pipeline stage).
+- Root form: `(actor name ...)` — an actor is the top-level unit of intent
+  scheduling. One hardware agent (requester, completer, channel, pipeline
+  stage). No `?actor:name` form; that belongs to `.fsm`.
 
 ## 3. Core constructs
 
 ### 3.1 Actor declaration
 
 ```lisp
-(?actor:ahb_requester
+(actor ahb_requester
   (clock clk)
   (reset rst_n (async) (active_low))
 
@@ -62,6 +55,10 @@ the `.isf` author expresses intent, not hardware.
     (valid cmd_valid)
     (ready cmd_ready))
 
+  (handshake data_beat
+    (valid HREADY)
+    (ready HTRANS))     ;; example only — real handshake mapping deferred
+
   (transaction read_burst
     (on cmd
       (sample cmd_addr  as active_addr)
@@ -70,19 +67,36 @@ the `.isf` author expresses intent, not hardware.
       (assign HADDR  active_addr)
       (assign HWRITE 0)
       (assign HTRANS NONSEQ))
-    (repeat remaining_beats
+    (repeat beats
       (await HREADY)
       (sample HRDATA as beat_data))
     (complete done)
     (latency (min 2) (max 8)))
 
+  ;; transaction composition: sequence
+  (transaction read_then_write
+    (do read_burst)
+    (do write_burst)
+    (complete done))
+
+  ;; transaction composition: parallel spawn
+  (transaction scatter_read
+    (on cmd (sample cmd_addr as base))
+    (spawn read_burst)
+    (spawn read_burst)
+    (spawn read_burst)
+    (await_all done)
+    (complete done))
+
+  ;; resource arbitration
   (resources
-    (resource bus (arbiter priority))))
+    (resource bus (arbiter priority)))
+
+  ;; rule priority
+  (priority accept_cmd over reject_cmd))
 ```
 
 ### 3.2 Interface
-
-Ports are declared with direction, name, and optional properties.
 
 ```lisp
 (interface
@@ -92,24 +106,20 @@ Ports are declared with direction, name, and optional properties.
   (output name  (width N)))
 ```
 
-Default width is 1. The `(width N)` form is the only property currently
-defined; future properties (e.g. `(signed)`, `(enum ...)`) are deferred.
+Default width is 1. `(width N)` is the only property currently defined.
 
 ### 3.3 Clock and reset
 
 ```lisp
-(clock name)                                     ;; synchronous clock
-(reset name)                                     ;; synchronous active-high reset
-(reset name (async))                             ;; asynchronous active-high
-(reset name (async) (active_low))                ;; asynchronous active-low
+(clock name)
+(reset name)
+(reset name (async))
+(reset name (async) (active_low))
 ```
-
-Every actor must declare exactly one clock and may declare zero or one reset.
 
 ### 3.4 Handshake
 
-A handshake names a valid/ready port pair. It becomes the activation
-mechanism for transactions.
+A handshake names a valid/ready port pair. Referenced by name in `(on ...)`.
 
 ```lisp
 (handshake name
@@ -117,8 +127,11 @@ mechanism for transactions.
   (ready port_name))
 ```
 
-Only output ports may be used as `ready`. Only input ports may be used as
-`valid`. Handshakes are actor-local; cross-actor handshakes are deferred.
+`(on name body...)` means: when this handshake fires (both `valid` and
+`ready` are true), execute the body and consume the handshake. The name
+resolves to the handshake declaration in scope.
+
+`valid` must be an input port. `ready` must be an output port.
 
 ### 3.5 Transaction
 
@@ -131,42 +144,78 @@ it to an explicit FSM state sequence.
   clause...)
 ```
 
-**Transaction clauses:**
+**Activation clauses:**
 
 | Clause | Meaning |
 |--------|---------|
-| `(on handshake body...)` | Activate when handshake fires. Bind input values. |
-| `(when condition body...)` | Activate when arbitrary condition is true. No automatic value binding. |
-| `(drive phase_name body...)` | Named output phase. Body contains `(assign ...)` forms. |
-| `(repeat count body...)` | Loop `count` times. Count must be a compile-time constant. |
-| `(await port)` | Stall until port is true. Port must be an input. |
-| `(sample port as name)` | At this point in the transaction, capture the port value and make it available as `name` for the rest of the transaction. Scheduler decides storage. |
-| `(assign port value)` | Drive an output port. Value may be a literal, a bound name, or an expression. |
-| `(complete port)` | Assert completion. Port is pulsed for one cycle. Transaction returns to idle. |
-| `(latency (min N) (max M))` | Declare timing bounds. Scheduler fails if impossible. |
+| `(on handshake body...)` | Activate when handshake fires. Body typically contains `(sample ...)` to capture input values. |
+| `(when condition body...)` | Activate when condition is true. No automatic value binding. |
 
-**Example — AHB read burst:**
+**Body clauses:**
+
+| Clause | Meaning |
+|--------|---------|
+| `(drive phase_name body...)` | Named output phase. Body: `(assign ...)` forms. |
+| `(repeat count body...)` | Loop `count` times. `count` may be a literal integer, a bound name, or an arbitrary expression that evaluates to an integer. The scheduler infers a counter register — the author never declares one. |
+| `(await port)` | Stall until port is true. Port must be an input. |
+| `(sample port as name)` | Capture port value at this point. Scheduler decides storage (wire, register, mux). `name` is available for the rest of the transaction. |
+| `(assign port value)` | Drive an output port. Value: literal, bound name, or expression. |
+| `(complete port)` | Assert completion. Port is pulsed. Transaction returns to idle. |
+| `(latency (min N) (max M))` | Timing bounds. Scheduler fails if impossible. |
+
+### 3.6 Transaction composition
+
+Transactions can be composed within an actor. Three composition forms:
+
+#### 3.6.1 Sequence — `(do transaction)`
+
+Blocking call. The calling transaction waits for the called transaction
+to complete before continuing.
 
 ```lisp
-(transaction read_burst
-  (on cmd
-    (sample cmd_addr  as active_addr)
-    (sample cmd_write as active_write))
-  (drive address_phase
-    (assign HADDR  active_addr)
-    (assign HWRITE 0)
-    (assign HTRANS NONSEQ))
-  (repeat beats
-    (await HREADY)
-    (sample HRDATA as beat_data))
-  (complete done)
-  (latency (min 2) (max 8)))
+(transaction read_then_write
+  (on cmd (sample cmd_addr as addr))
+  (do read_burst)
+  (do write_burst)
+  (complete done))
 ```
 
-### 3.6 Rule
+Semantics: `read_burst` runs to `(complete ...)`, then `write_burst` runs.
+The calling transaction's state machine stalls during each `(do ...)`.
 
-A rule is an atomic guarded action. Multiple rules targeting the same
-output must be proven mutually exclusive or explicitly prioritized.
+#### 3.6.2 Parallel spawn — `(spawn transaction)`
+
+Non-blocking fork. The calling transaction launches the spawned transaction
+and continues immediately without waiting. Multiple spawns may execute
+concurrently (the scheduler serializes them onto cycles as needed).
+
+```lisp
+(transaction scatter_read
+  (on cmd (sample cmd_addr as base))
+  (spawn read_burst)
+  (spawn read_burst)
+  (spawn read_burst)
+  ;; all three run concurrently
+  (await_all done)
+  (complete done))
+```
+
+Spawn semantics:
+- Spawned transactions share the actor's interface and resources.
+- The scheduler resolves output conflicts through priority declarations.
+- If two spawned transactions drive the same output port without a declared
+  priority, the scheduler reports an error.
+
+#### 3.6.3 Sync primitives
+
+| Clause | Meaning |
+|--------|---------|
+| `(await_all port)` | Wait until every spawned transaction has completed (the named `port` has been pulsed by all of them). |
+| `(await_any port)` | Wait until at least one spawned transaction has completed. |
+
+The scheduler generates the necessary completion-tracking logic.
+
+### 3.7 Rule
 
 ```lisp
 (rule name
@@ -178,35 +227,38 @@ output must be proven mutually exclusive or explicitly prioritized.
 
 | Action | Meaning |
 |--------|---------|
-| `(assign port value)` | Drive an output when the rule fires |
-| `(trigger transaction)` | Start a transaction's state machine |
-| `(assert port)` | Drive a port combinatorially while the rule holds |
-| `(pulse port)` | Drive a port for exactly one cycle when the rule fires |
+| `(assign port value)` | Drive output when rule fires |
+| `(trigger transaction)` | Start transaction's state machine |
+| `(assert port)` | Drive combinatorially while rule holds |
+| `(pulse port)` | Drive for exactly one cycle when rule fires |
 
-Rules are evaluated continuously. The scheduler emits combinational or
-synchronous logic as needed to meet the semantics.
+### 3.8 Priority
 
-### 3.7 Phase
+Rule/transaction priority can be declared inline or as a separate section:
 
-A named phase within a transaction. Phases sequence explicitly.
+```lisp
+;; Inline — inside a rule
+(rule accept_cmd
+  (priority over reject_cmd)
+  (when (and cmd_valid cmd_ready))
+  ...)
+
+;; Separate section — references rules by name
+(priority accept_cmd over reject_cmd)
+(priority read_burst over write_burst)
+```
+
+### 3.9 Phase
+
+Named phase, optional sugar for `(drive ...)`:
 
 ```lisp
 (phase name
   (outputs port...)
   (next phase_name))
-
-(phase name
-  (await port)
-  (on port (next phase_name)))
 ```
 
-Phases are optional sugar. A transaction can use inline `(drive ...)` and
-`(await ...)` instead.
-
-### 3.8 Pipeline stage
-
-A streaming stage with implicit valid/ready handshake on its input and
-output ports.
+### 3.10 Pipeline stage
 
 ```lisp
 (stage name
@@ -217,127 +269,86 @@ output ports.
     (assign output (expression input))))
 ```
 
-The scheduler generates the full valid/ready plumbing and any pipeline
-registers needed to meet the latency constraint.
-
-### 3.9 Resources
-
-Shared hardware that only one transaction can use at a time.
+### 3.11 Resources
 
 ```lisp
 (resources
   (resource name (arbiter type)))
 ```
 
-Arbiter types: `priority`, `round_robin`. A transaction acquires a resource
-with `(request name)` inside its body. The scheduler serializes access.
+Arbiter types: `priority`, `round_robin`.
 
 ## 4. Lowering contract
 
+The scheduler detects and reports every compile-time issue: deadlocks,
+output conflicts, unmet latency constraints, direction errors, undefined
+bindings. Nothing is silently resolved.
+
 ### 4.1 Transaction → FSM
 
-The scheduler assigns one FSM state per transaction phase:
+States are named `{transaction}_{logical_phase}`:
 
 ```
-(read_burst
-  (on cmd ...)        -> state: read_burst_wait_cmd
-  (drive address ...) -> state: read_burst_address
-  (repeat N (await HREADY) (sample HRDATA ...))
-                      -> states: read_burst_data_0 .. read_burst_data_N-1
-                         + counter register: read_burst_beat_count
-  (complete done)     -> state: read_burst_done
+read_burst:
+  wait_cmd  -> address_phase  -> data_0..data_N-1  -> done
 ```
+
+`(repeat N body)` lowers to a counter register + loop-back state. The
+counter is inferred — the author never declares it.
+
+`(do sub)` lowers to a nested sub-FSM call. The scheduler flattens the
+combined state space.
+
+`(spawn sub)` lowers to independent FSM instances. The scheduler arbitrates
+shared outputs per declared priorities.
 
 ### 4.2 Storage inference
 
-`(sample port as name)` does not specify hardware. The scheduler decides:
+`(sample port as name)`: scheduler decides:
+- Same-phase only usage → wire
+- Cross-phase usage → register
+- Multiple sources → register with mux
 
-- If `name` is used only within the same phase: wire
-- If `name` is used in a later phase: register (value must persist)
-- If `name` is used in multiple phases with different sources: register
-  with muxed input
-
-The schedule report records every storage decision.
-
-### 4.3 Handshake → FSM guard
-
-`(on handshake (sample ...) ...)` lowers to a state transition guarded by
-`valid && ready`, with the bound port values sampled on that transition.
-
-### 4.4 Schedule report
-
-Every `.isf` compilation produces:
+### 4.3 Schedule report
 
 ```json
 {
   "source": "ahb_requester.isf",
-  "scheduled_fsm": "ahb_requester.fsm",
-  "transactions": [
-    {
-      "name": "read_burst",
-      "states": ["wait_cmd", "address", "data_0", "data_1", "done"],
-      "inferred_storage": {
-        "active_addr":  {"kind": "register", "width": 32},
-        "beat_data":    {"kind": "register", "width": 32},
-        "beat_count":   {"kind": "counter",  "width": 8}
-      },
-      "latency": {"min": 2, "max": 8, "met": true}
-    }
-  ],
-  "resource_arbitration": {"bus": "priority"},
-  "ambiguities": [],
-  "fidelity": "full"
+  "transactions": [{
+    "name": "read_burst",
+    "states": ["wait_cmd", "address", "data_0", "done"],
+    "inferred_storage": {
+      "active_addr": {"kind": "register", "width": 32},
+      "beat_data":   {"kind": "register", "width": 32},
+      "beat_count":  {"kind": "counter",  "width": 8}
+    },
+    "latency": {"required": [2,8], "achieved": [2,8]}
+  }],
+  "composition": {
+    "read_then_write": {"kind": "sequence", "of": ["read_burst","write_burst"]},
+    "scatter_read":    {"kind": "parallel", "of": ["read_burst","read_burst","read_burst"]}
+  },
+  "compile_issues": []
 }
 ```
 
-## 5. Error and ambiguity reporting
+## 5. What this specification does NOT yet cover
 
-| Situation | Scheduler response |
-|-----------|-------------------|
-| Two rules may fire on the same output | Report conflicting rules; suggest `(priority ...)` |
-| Latency constraint cannot be met | Report required vs computed latency |
-| Resource conflict without arbiter | Report conflict; suggest arbiter type |
-| `(sample ...)` used with no source in scope | Report undefined binding |
-| `(await ...)` on an output port | Report direction error |
-| Handshake uses wrong-direction port | Report `valid` must be input, `ready` must be output |
-
-## 6. Relationship to `.fsm`
-
-`.isf` lowers deterministically to `.fsm`. The generated `.fsm`:
-
-- Uses `?fsm:name` root form
-- Contains explicit state DTs with transitions, assignments, and enables
-- Preserves port names and widths from the `.isf` source
-- Carries provenance comments mapping `.fsm` states back to `.isf` constructs
-- Passes strict-mode compilation through the existing pipeline
-- Is human-inspectable and patchable
-
-## 7. What this specification does NOT yet cover
-
-- Multi-actor composition (multi-`.isf` to shared `.fsm` top)
-- Transaction nesting or hierarchy
-- Pipelined/concurrent transaction execution
-- `(contract ...)` temporal assertions
-- `(priority ...)` rule ordering section
+- Pipelined/concurrent execution of independent transactions within one actor
+- `(contract ...)` temporal assertions (deferred to separate design discussion)
 - Speculative or out-of-order execution
 - Power/clock-gating intent
 - The `.isf` parser implementation
 
-## 8. Open design questions
+## 6. Open design questions
 
-1. Should `(repeat ...)` support dynamic count from a bound name, or only
-   compile-time constants?
-2. How should nested transactions compose — flatten to one FSM, or generate
-   hierarchical sub-FSMs?
-3. Should `(priority ...)` be a separate section, inline in rules, or both?
-4. What is the concrete syntax for `(contract ...)` temporal assertions?
-5. How should the scheduler detect deadlocks when one transaction `(await ...)`
-   a port that is driven by another transaction's `(complete ...)`?
-6. Should `(sample ... as ...)` be allowed outside `(on handshake ...)` —
-   e.g., `(sample HRDATA as beat_data)` immediately after `(await HREADY)`?
-7. Should the scheduler infer the need for a counter from `(repeat N ...)`
-   without the author declaring it, or should the author declare the
-   counter explicitly?
-
-These will be resolved through implementation feedback and SPECFORGE
-integration requirements.
+1. What is the concrete syntax for `(contract ...)` temporal assertions?
+   Deferred until we define the assertion types needed.
+2. Should `(sample ... as ...)` be allowed outside `(on handshake ...)` —
+   e.g. `(sample HRDATA as beat_data)` immediately after `(await HREADY)`?
+3. How should the scheduler detect cross-transaction deadlocks when one
+   transaction `(await ...)` on a port driven by another transaction?
+4. Should `(spawn ...)` support parameter passing to the spawned transaction,
+   or should spawned transactions only use the actor's bound names?
+5. Can a spawned transaction itself `(spawn ...)` further transactions
+   (recursive spawn), and if so, what are the limits?

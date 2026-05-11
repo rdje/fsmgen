@@ -1,6 +1,9 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### `.isf` specification v0.3 — transaction composition, spawn, priority
+- Revised ISF_SPEC.md: `(actor ...)`, `(do ...)`/`(spawn ...)`, dynamic `(repeat ...)`,
+  `(priority ...)` dual form, scheduler-detected compile issues.
 ### `.isf` specification v0.2 — pure Lisp, no register leakage
 - Revised [docs/ISF_SPEC.md](docs/ISF_SPEC.md): removed `(+...)` forms, keyword
   arguments, register vocabulary. `(sample ...)`, `(assign ...)`, `(on handshake)`,

@@ -1,5 +1,7 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-11: `.isf` specification v0.3 — transaction composition
+- ISF_SPEC.md v0.3: `(do ...)` blocking sequence, `(spawn ...)` non-blocking fork, `(await_all ...)`/`(await_any ...)` sync, dynamic `(repeat ...)`, `(priority ...)` dual form.
 ## 2026-05-11: `.isf` specification v0.2 — pure Lisp, no register leakage
 - ISF_SPEC.md v0.2 reflects design review: no `(+...)`, no keyword args, `(sample ...)` replaces `(capture -> register)`, `(on handshake)` replaces `(accept ...)`.
 - Scheduler owns all storage decisions; author vocabulary stays at intent level.
