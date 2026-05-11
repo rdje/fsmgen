@@ -1,5 +1,7 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-11: Normalized semantic system contract full surface survives JSON
+- The normalized semantic system contract now has a full-surface JSON round-trip audit.
 ## 2026-05-11: Normalized semantic symbol contract full surface rebuilds cleanly
 - The normalized semantic symbol contract now has a full-surface defensive-copy audit.
 - The test recursively mutates one built contract and compares the next owner build with a fresh expected result.

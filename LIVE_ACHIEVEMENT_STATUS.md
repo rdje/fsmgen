@@ -2,6 +2,11 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: Normalized semantic system contract full surface survives JSON
+- Roadmap lane: R13. Completed slice: t/1025 now proves the full system contract survives JSON encode/decode unchanged.
+- Public behavior changed: no. Focused validation passed.
+- Next bounded slice: continue system full-surface stability audits.
+
 ## 2026-05-11: Normalized semantic symbol contract full surface rebuilds cleanly
 - Roadmap lane: `R13` public embedding/API stabilization.
 - Completed slice: t/1024 now proves a fresh symbol contract build stays clean after caller mutation.

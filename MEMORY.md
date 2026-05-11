@@ -1,5 +1,9 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: Normalized semantic system contract full surface survives JSON
+- Added t/1025 to prove the full system contract survives JSON encode/decode unchanged.
+- Extends full-surface R13 auditing to the bounded system contract.
+- Focused validation passed.
 ## 2026-05-11: Normalized semantic symbol contract full surface rebuilds cleanly
 - Added
   [t/1024-normalized-semantic-symbol-contract-full-surface-defensive-copy-audit.t](t/1024-normalized-semantic-symbol-contract-full-surface-defensive-copy-audit.t)

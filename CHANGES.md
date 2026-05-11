@@ -1,6 +1,9 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### Normalized semantic system contract full surface survives JSON
+- Added t/1025 to prove the full system contract survives JSON encode/decode unchanged.
+- Updated live docs for the R13 progress entry.
 ### Normalized semantic symbol contract full surface rebuilds cleanly
 - Added
   [t/1024-normalized-semantic-symbol-contract-full-surface-defensive-copy-audit.t](t/1024-normalized-semantic-symbol-contract-full-surface-defensive-copy-audit.t)
