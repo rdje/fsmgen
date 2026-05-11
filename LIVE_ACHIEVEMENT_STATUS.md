@@ -2,6 +2,12 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: R14 reprioritized — Intent Scheduling `.isf` now active
+- Active lane: `R14` — Intent Scheduling (`.isf` format and lowering compiler).
+- TRM capture canceled (handled externally by SPECFORGE).
+- R8–R13 lanes closed. R13: 96 full-surface audits complete.
+- First slice: formalize `.isf` format specification from INTENT_SCHEDULING_BRAINSTORM.md.
+
 ## 2026-05-11: R14 reprioritized — TRM intent capture now active
 - Active lane: `R14` — TRM / protocol-spec intent capture (promoted from H4).
 - R8–R13 lanes closed. R13: 96 full-surface audits complete.

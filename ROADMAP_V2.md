@@ -651,28 +651,52 @@ Current direction:
 Expected result:
 - the project becomes a stronger platform for downstream tooling, not just a CLI.
 
-### R14. TRM / protocol-spec intent capture
+### R14. Intent Scheduling — `.isf` format and lowering compiler
 Goal:
-- add a bounded spec-to-`.fsm` lane that can capture executable design intent
-  from technical reference manuals, protocol specifications, and normalized
-  `Markdown` source material.
+- design and implement a new Lisp-ish hardware-intent format (`.isf` =
+  Intent Scheduling Format) that abstracts cycle counting away from the
+  author, and build the compiler that infers/schedules cycles and lowers
+  to explicit cycle-accurate `.fsm`.
+
+Core thesis (from [docs/INTENT_SCHEDULING_BRAINSTORM.md](docs/INTENT_SCHEDULING_BRAINSTORM.md)):
+- `.fsm` is already an abstraction above SystemVerilog/VHDL, but today
+  `?fsm` authoring is still explicitly cycle-aware because state DTs
+  encode the schedule directly.
+- `.isf` lets authors describe transactions, rules, handshakes, phases,
+  resources, and constraints without choosing every state/cycle manually.
+- The compiler infers and schedules cycles, producing explicit `.fsm` plus
+  a generated schedule report.
+- Cycles do not disappear from the final semantics. They become an inferred,
+  scheduled, and reviewable compiler result.
+
+Architecture:
+- `.isf` (Intent Scheduling Format) → scheduled `.fsm` → SV/VHDL
+- SPECFORGE targets `.isf` from its IntentIR; FSMGen owns scheduling,
+  cycle inference, conflict analysis, and lowering.
+- `.fsm` remains the explicit cycle-accurate middle layer — inspectable,
+  debuggable, and patchable.
 
 Deliverable themes:
-- begin with design/probe work and bounded capture experiments,
-- treat `PDF -> .md` normalization as a separate pre-step,
-- work actor-first instead of protocol-as-a-monolith,
-- build protocol dossier, actor catalog, actor sheets, assertion ledger,
-- keep source facts, derived machine rules, local design decisions, and
-  explicit abstractions separate,
-- emit captured `.fsm` plus a capture report distinguishing confident intent
-  from heuristic inference and unresolved ambiguity,
-- use [docs/INTENT_CAPTURE_AXI_CASE_STUDY.md](docs/INTENT_CAPTURE_AXI_CASE_STUDY.md)
-  as the current strongest concrete reference for the lane's working method.
+- formalize the `.isf` syntax and semantic contract,
+- define the lowering/scheduling compiler pipeline,
+- implement the first bounded scheduler slice,
+- produce machine-readable schedule reports,
+- keep ambiguity explicit: if timing cannot be inferred safely, fail with
+  an actionable report rather than choosing a hidden schedule.
+
+Initial sub-slices:
+1. Formalize the `.isf` format specification from the brainstorm log,
+   defining concrete syntax for transactions, rules, handshakes, phases,
+   latency constraints, and resource declarations.
+2. Define the lowering contract: what `.isf` constructs map to what `.fsm`
+   patterns, and what the schedule report shape is.
+3. Implement the first bounded scheduler for a single-transaction `.isf`
+   source, producing valid `.fsm` output.
+4. Add regression coverage and schedule report validation.
 
 Expected result:
-- a documented, repeatable intent-capture workflow that produces honest `.fsm`
-  artifacts from bounded protocol specifications with explicit ambiguity
-  reporting.
+- a working `.isf` → `.fsm` lowering path that handles at least one realistic
+  transaction/rule pattern with generated schedule reporting.
 
 ## Sequencing
 Recommended order:
@@ -822,9 +846,11 @@ Prerequisite:
 - the forward `.fsm` contract, diagnostics contract, and embedding/result surfaces should already be stable enough that HDL import targets a known IR instead of a moving language boundary.
 
 ### H4. TRM / protocol-spec intent capture
-This horizon task has been promoted to the active `R14` workstream (see above).
-The detailed scope, working method, and pipeline plan now live under the active
-`R14` section of this document.
+This lane is now handled externally by the SPECFORGE project (PDF/spec →
+IntentIR → `.isf`). FSMGen captures the method reference in
+[docs/INTENT_CAPTURE_AXI_CASE_STUDY.md](docs/INTENT_CAPTURE_AXI_CASE_STUDY.md)
+and the APB worksheet in [docs/APB_REQUESTER_CAPTURE_WORKSHEET.md](docs/APB_REQUESTER_CAPTURE_WORKSHEET.md)
+as documentation artifacts, but the active implementation belongs to SPECFORGE.
 
 ### H5. VHDL backend
 Long-term goal:
@@ -845,7 +871,7 @@ Prerequisite:
   gray; promote this only after the active lanes are genuinely stable.
 
 ## Current intent
-The active immediate lane is `R14` (TRM / protocol-spec intent capture).
+The active immediate lane is `R14` (Intent Scheduling — `.isf` format and lowering compiler).
 
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,

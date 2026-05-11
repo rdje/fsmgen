@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: R14 reprioritized — Intent Scheduling `.isf` now active
+- Canceled TRM capture lane (handled externally by SPECFORGE). Promoted Intent
+  Scheduling from [docs/INTENT_SCHEDULING_BRAINSTORM.md](docs/INTENT_SCHEDULING_BRAINSTORM.md)
+  to active `R14`.
+- `.isf` = Intent Scheduling Format: a Lisp-ish hardware-intent format above
+  `.fsm` that abstracts cycle counting away from the author.
+- Architecture: `.isf` → scheduled `.fsm` → SV/VHDL.
+- SPECFORGE targets `.isf` from its IntentIR; FSMGen owns scheduling, cycle
+  inference, conflict analysis, and lowering.
+- First slice: formalize `.isf` format specification from the brainstorm log.
 ## 2026-05-11: R14 promoted — TRM / protocol-spec intent capture now active
 - Promoted H4 (TRM intent capture) to active `R14` workstream. Demoted former R14 (VHDL backend) to horizon H5.
 - R8–R13 contract-hardening lanes are complete. R13 closed with 96 full-surface audit tests.

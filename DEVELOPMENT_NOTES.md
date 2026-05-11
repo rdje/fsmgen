@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-11: R14 reprioritized — Intent Scheduling `.isf` now active
+- TRM capture canceled (SPECFORGE handles spec-to-IntentIR). Intent Scheduling promoted to R14.
+- `.isf` abstracts cycle counting; the compiler infers/schedules cycles and lowers to explicit `.fsm`.
+- The brainstorm log in INTENT_SCHEDULING_BRAINSTORM.md becomes the primary source for the format specification.
 ## 2026-05-11: R14 reprioritized — TRM intent capture now active
 - H4 (TRM / protocol-spec intent capture) promoted to active R14. VHDL demoted to horizon H5.
 - R8–R13 closed, R13 finalized at 96 full-surface audit tests.

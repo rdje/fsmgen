@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### R14 lane reprioritized — Intent Scheduling `.isf` now active
+- Canceled TRM capture lane (SPECFORGE). Promoted Intent Scheduling to active R14.
+- `.isf` = Intent Scheduling Format, a Lisp-ish abstraction above `.fsm`.
+- Architecture: `.isf` → scheduled `.fsm` → SV/VHDL.
+- Updated [ROADMAP_V2.md](ROADMAP_V2.md), [ROADMAP_STATUS.md](ROADMAP_STATUS.md), and all live docs.
 ### R14 lane reprioritized — TRM intent capture now active
 - Promoted H4 (TRM / protocol-spec intent capture) to active `R14`.
 - Demoted former R14 (VHDL backend) to horizon H5.
