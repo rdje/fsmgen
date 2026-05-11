@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: Producer section contract full surface survives JSON
+- Added
+  [t/1063-producer-contract-full-surface-json-roundtrip-audit.t](t/1063-producer-contract-full-surface-json-roundtrip-audit.t)
+  to prove the complete `build_producer_contract()` result survives JSON
+  encode/decode unchanged.
+- Extends full-surface `R13` auditing to the bounded producer section contract
+  advertised through the capability manifest.
+- Focused validation passed:
+  `prove -I perl t/1063-producer-contract-full-surface-json-roundtrip-audit.t t/319-producer-contract.t t/449-producer-contract-defensive-copy-boundary-audit.t`.
 ## 2026-05-11: Embedding contract full surface rebuilds cleanly
 - Added
   [t/1062-embedding-contract-full-surface-defensive-copy-audit.t](t/1062-embedding-contract-full-surface-defensive-copy-audit.t)
