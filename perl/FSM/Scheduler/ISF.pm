@@ -42,6 +42,7 @@ sub lower($self, $actor) {
     my $tx_lowering = $self->{tx_lowering};
     my %all_counters;
     my @all_states;
+    my @extra_dts;
 
     for my $tx (@{$actor->{transactions}}) {
         my $result = $tx_lowering->lower_transaction($tx, $actor);
@@ -50,6 +51,7 @@ sub lower($self, $actor) {
         while (my ($name, $width) = each %$counters) {
             $all_counters{$name} = $width;
         }
+        push @extra_dts, @{$result->{extra_dts}} if $result->{extra_dts};
     }
 
     # Emit ports with inferred counters
@@ -67,6 +69,9 @@ sub lower($self, $actor) {
     # Emit rules as combinational DT blocks
     my $rule_blocks = $self->{rule_lowering}->lower_rules($actor);
     push @lines, @$rule_blocks;
+
+    # Emit extra DTs from transaction lowering (latency cycle counters)
+    push @lines, @extra_dts;
 
     push @lines, ')';
 

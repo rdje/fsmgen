@@ -8,6 +8,7 @@ use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
 use FSM::Debug;
+use POSIX qw(log);
 
 # Lowers ISF transaction clauses into .fsm state decision-tree blocks.
 #
@@ -30,6 +31,7 @@ sub lower_transaction($self, $tx, $actor) {
     my @inferred_counters;      # counter names inferred from (repeat ...)
     my $has_await;              # tracks if transaction has any (await ...)
     my $wd_counter;             # watchdog counter name
+    my $latency;                # { min, max } from (latency (min N) (max M))
     my $idx = 0;
 
     for my $clause (@{$tx->{clauses}}) {
@@ -62,7 +64,8 @@ sub lower_transaction($self, $tx, $actor) {
             push @inferred_counters, $counter;
         }
         elsif ($kind eq 'latency') {
-            fsm_debug("Transaction '$tx_name': latency constraint recorded", 3);
+            $latency = $self->_parse_latency($clause);
+            fsm_debug("Transaction '$tx_name': latency min=$latency->{min} max=$latency->{max}", 3);
         }
         elsif ($kind eq 'do' || $kind eq 'spawn' || $kind eq 'await_all' || $kind eq 'await_any') {
             push @state_specs, $self->_placeholder_clause($clause, $tx_name, $idx++);
@@ -74,8 +77,8 @@ sub lower_transaction($self, $tx, $actor) {
         push @state_specs, $self->_sample_state($tx_name, \@pending_samples, $idx++);
     }
 
-    # Phase 2: link states with transitions
-    $self->_link_states(\@state_specs, $tx_name);
+    # Phase 2: link states with transitions — deferred until after all modifications
+    # (watchdog, latency) are done
 
     fsm_trace_exit("TransactionLowering: $tx_name produced " . scalar(@state_specs) . " states", 3);
 
@@ -102,7 +105,81 @@ sub lower_transaction($self, $tx, $actor) {
         };
     }
 
-    return { states => \@state_specs, counters => \%counters };
+    # Latency constraint lowering
+    my @extra_dts;
+    if ($latency) {
+        my $cc_name = "${tx_name}_cc";
+        my $inc_name = "${tx_name}_inc";
+        my $err_name = "${tx_name}_lerr";
+        my $max = $latency->{max} // 256;
+        my $min = $latency->{min} // 1;
+        my $cc_bits = int(log($max) / log(2)) + 1;
+
+        $counters{$cc_name}  = $cc_bits;
+        $counters{$inc_name} = 1;
+        $counters{$err_name} = 1;
+
+        # Reset counter in entry state
+        if (@state_specs && $state_specs[0]{kind} eq 'entry') {
+            unshift @{$state_specs[0]{body}}, "    (<- ($cc_name 0))";
+        }
+
+        # Inject inc=1 into every active state (drive, await, repeat_init, repeat_check)
+        for my $spec (@state_specs) {
+            next if $spec->{kind} eq 'entry' || $spec->{kind} eq 'terminal';
+            next if $spec->{name} =~ /_timeout\$/;
+            unshift @{$spec->{body}}, "    (= ($inc_name 1))";
+        }
+
+        # Latency check in terminal/done state: min violation
+        my ($done_state) = grep {
+            $_->{kind} eq 'terminal' && $_->{name} !~ /_timeout\$/
+        } @state_specs;
+        if ($done_state) {
+            push @{$done_state->{body}}, "    (?$cc_name";
+            push @{$done_state->{body}}, "      (<$min (= ($err_name 1)))";
+            push @{$done_state->{body}}, '    )';
+        }
+
+        # Max check via watchdog — already handled if (await) exists.
+        # If no await but latency max specified, add a max-check state.
+        if (!$has_await && $max) {
+            my $max_check = "${tx_name}_max_chk";
+            push @state_specs, {
+                name => $max_check,
+                kind => 'sequential',
+                body => [
+                    "    (?$cc_name",
+                    "      (=$max (-> ${tx_name}_timeout))",
+                    '    )',
+                ],
+            };
+
+            my $timeout_name = "${tx_name}_timeout";
+            push @state_specs, {
+                name => $timeout_name,
+                kind => 'terminal',
+                body => [
+                    "    (= ($err_name 1))",
+                    "    (= (done> 1))",
+                    "    (= (last_error> 1))",
+                ],
+            };
+        }
+
+
+        # Combinational DT for cycle counter increment
+        push @extra_dts, "  (-${tx_name}_cc_inc";
+        push @extra_dts, "    (<- ($cc_name (+ $cc_name 1)) <$inc_name)";
+        push @extra_dts, '  )';
+        push @extra_dts, '';
+    }
+
+    # Relink states after all modifications
+
+    $self->_link_states(\@state_specs, $tx_name);
+
+    return { states => \@state_specs, counters => \%counters, extra_dts => \@extra_dts };
 }
 
 # --- Phase 1: Collect state bodies ---
@@ -306,6 +383,18 @@ sub _link_states($self, $state_specs, $tx_name) {
         }
         # terminal: no transition needed
     }
+}
+
+sub _parse_latency($self, $clause) {
+    my %result;
+    for my $i (1 .. $#$clause) {
+        my $item = $clause->[$i];
+        next unless ref($item) eq 'ARRAY' && @$item >= 2;
+        my $key = $item->[0];
+        my $val = $item->[1];
+        $result{$key} = $val if $key eq 'min' || $key eq 'max';
+    }
+    return \%result;
 }
 
 1;

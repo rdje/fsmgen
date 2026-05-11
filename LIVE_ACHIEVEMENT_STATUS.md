@@ -2,6 +2,9 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: R14 `.isf` — latency lowering
+- Active: `R14`. Latency lowering shipped. All 3 fixtures pass, 7 tests pass.
+
 ## 2026-05-11: R14 `.isf` — rule lowering
 - Active: `R14`. Rules → DT blocks shipped. 7 tests pass.
 

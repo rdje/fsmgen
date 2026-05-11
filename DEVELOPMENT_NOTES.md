@@ -1,5 +1,7 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-11: R14 `.isf` — latency lowering
+- Comb DT increments cycle_count; done state checks min violation; max via watchdog.
 ## 2026-05-11: R14 `.isf` — rule lowering
 - Rules lowered to combinational DT blocks: `(port = signal)` or `(port = value <condition)`.
 ## 2026-05-11: R14 `.isf` — watchdog

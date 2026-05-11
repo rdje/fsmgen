@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: R14 `.isf` scheduler — latency lowering
+- `(latency (min N) (max M))` now lowers to synthesizable verification logic:
+  - Comb DT `(-cc_inc)` increments `cycle_count` when `inc` asserted
+  - Each active state asserts `inc=1`; entry state resets counter
+  - Done state checks `(?cc (<min (lerr = 1)))` — fires error if completed too early
+  - If no `(await ...)` exists, max-check state with `(?cc (=max (-> timeout)))`
+- Verified strict-mode passes; 7 tests pass; all 3 fixtures work
 ## 2026-05-11: R14 `.isf` scheduler — rule lowering
 - Created `FSM::Scheduler::ISF::RuleLowering` — converts ISF rules to
   combinational `.fsm` DT blocks: `(rule name (when ...) (assign ...))` →

@@ -1,6 +1,8 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### R14 `.isf` — latency lowering
+- `(latency ...)` → comb DT + min/max checks. Synthesizable verification. 7 tests pass.
 ### R14 `.isf` — rule lowering
 - `RuleLowering`: rules → combinational DT blocks. 7 tests pass.
 ### R14 `.isf` — watchdog lowering
