@@ -1,5 +1,9 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-11: R14 `.isf` scheduler — transaction lowering ships
+- Full pipeline: `isf/apb_requester.isf` → scheduler → `.fsm` → strict-mode check passes → SystemVerilog.
+## 2026-05-11: R14 `.isf` scheduler — module header
+- `ModuleEmitter` maps ISF `(clock ...)`, `(reset ...)`, `(interface ...)` to `.fsm` `+system`/`+size`.
 ## 2026-05-11: R14 `.isf` parser — full construct coverage
 - Tracing added. All defined constructs validated: transactions, rules, resources, priority, phases, stages.
 ## 2026-05-11: R14 `.isf` parser — first slice

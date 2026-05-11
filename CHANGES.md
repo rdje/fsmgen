@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-11
+### R14 `.isf` scheduler — transaction lowering, full pipeline works
+- `TransactionLowering`: ISF clauses → `.fsm` states. End-to-end: `.isf` → `.fsm` → SV.
+  6 ISF tests pass. Generated `.fsm` compiles through strict mode.
+### R14 `.isf` scheduler — module header emission
+- Created `FSM::Scheduler::ISF` + `ModuleEmitter`. Produces `.fsm` header, `+system`,
+  `+size` from ISF declarations. Test t/1094. 4 ISF tests passing.
 ### R14 `.isf` parser — full construct coverage, tracing
 - Added `FSM::Debug` tracing to all ISF modules. Fixture `isf/full_featured.isf`
   covers all constructs. Test t/1093 with 50+ assertions. 3 ISF tests passing.

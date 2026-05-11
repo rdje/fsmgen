@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: R14 `.isf` scheduler — transaction lowering ships, full pipeline works
+- Created `FSM::Scheduler::ISF::TransactionLowering` — converts ISF transaction
+  clauses to `.fsm` state DTs: `(on ...)` → entry state, `(drive ...)` → sequential
+  state, `(await ...)` → conditional state, `(sample ...)` → D-input assignment,
+  `(complete ...)` → terminal state with return-to-idle
+- Verified end-to-end: `isf/apb_requester.isf` → scheduler → `.fsm` → strict-mode
+  check passes (6 states, 15 signals) → SystemVerilog generation succeeds
+- 6 ISF tests pass
+## 2026-05-11: R14 `.isf` scheduler — first module header slice
+- Created `FSM::Scheduler::ISF` — lowers parsed ISF actor to `.fsm` source
+- Created `FSM::Scheduler::ISF::ModuleEmitter` — emits `.fsm` header, `+system`, `+size`
+  from ISF `(clock ...)`, `(reset ...)`, `(interface ...)`
+- Maps ISF reset to `.fsm` reset: `(async) (active_low)` → `(areset ...)`
+- Created `t/1094-isf-scheduler-module-header.t` — validates generated `.fsm` structure
+- 4 ISF tests pass (parser + adapter + full constructs + scheduler header)
 ## 2026-05-11: R14 `.isf` parser — full construct coverage
 - Added tracing (`FSM::Debug`) to `ISF`, `ISF::Parser`, `ISF::LispishAdapter`
 - Created `isf/full_featured.isf` — exercises all defined constructs:
