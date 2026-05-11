@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-11: Language surface contract full surface survives JSON
+- Roadmap lane: R13. Completed slice: t/1065. Public behavior changed: no.
+- Next bounded slice: continue language surface full-surface stability audits.
+
 ## 2026-05-11: Producer section contract full surface rebuilds cleanly
 - Roadmap lane: `R13` public embedding/API stabilization.
 - Completed slice:

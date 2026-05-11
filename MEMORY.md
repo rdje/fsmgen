@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: Language surface contract full surface survives JSON
+- Added
+  [t/1065-language-surface-contract-full-surface-json-roundtrip-audit.t](t/1065-language-surface-contract-full-surface-json-roundtrip-audit.t)
+  to prove `build_language_surface_contract()` survives JSON encode/decode unchanged.
+- Extends full-surface R13 auditing to the bounded language surface contract.
+- Focused validation passed.
 ## 2026-05-11: Producer section contract full surface rebuilds cleanly
 - Added
   [t/1064-producer-contract-full-surface-defensive-copy-audit.t](t/1064-producer-contract-full-surface-defensive-copy-audit.t)
