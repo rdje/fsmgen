@@ -1,5 +1,7 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-11: Normalized semantic intent HIR contract full surface rebuilds cleanly
+- Added t/1032. Complements the intent HIR JSON audit with a defensive-copy guard.
 ## 2026-05-11: Normalized semantic intent HIR contract full surface survives JSON
 - Added t/1031. Extends R13 auditing to the bounded intent HIR contract.
 - Focused validation passed.

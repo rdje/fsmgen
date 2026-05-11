@@ -1,6 +1,7 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
+- Next decision point: t/1032 now proves a fresh intent HIR contract owner build stays clean after caller mutation. Next bounded R13 slice: normalized semantic nested-contract audits.
 - Next decision point: t/1031 now proves the full intent HIR contract owner survives JSON encode/decode unchanged. Next bounded R13 slice: intent HIR full-surface stability audits.
 - Next decision point: t/1030 now proves a fresh signal analysis contract owner build stays clean after caller mutation. Next bounded R13 slice: normalized semantic nested-contract audits.
 - Next decision point: t/1029 now proves the full signal analysis contract owner survives JSON encode/decode unchanged. Next bounded R13 slice: signal analysis full-surface stability audits.
