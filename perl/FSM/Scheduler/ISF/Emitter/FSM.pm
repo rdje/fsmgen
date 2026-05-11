@@ -156,6 +156,28 @@ sub _emit_transitions($self, $state) {
         return @lines;
     }
 
+    # Sync transitions: await_all / await_any
+    if ($state->{kind} eq 'sync_all') {
+        my @ports = @{$state->{done_ports}};
+        my $target = $txs->[0]{target};
+        # Nested guards: (<p0 (<p1 (<p2 (-> target))))
+        for my $p (reverse @ports) {
+            push @lines, "    (<$p";
+        }
+        push @lines, "      (-> $target)";
+        push @lines, '    )' x scalar(@ports);
+        return @lines;
+    }
+    if ($state->{kind} eq 'sync_any') {
+        my $target = $txs->[0]{target};
+        my @ports = @{$state->{done_ports}};
+        # Single guard with OR expression if supported, else just first port
+        push @lines, "    (<$ports[0]";
+        push @lines, "      (-> $target)";
+        push @lines, '    )';
+        return @lines;
+    }
+
     # Simple transitions
     for my $t (@$txs) {
         if ($t->{condition} && $t->{condition}{port}) {

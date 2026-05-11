@@ -131,7 +131,7 @@ sub _build_transaction($self, $tx, $actor, $txi) {
     my $tn  = $tx->{name};
     my $hs  = $actor->{handshakes};
     my $wd  = $actor->{watchdog};
-    my @st; my %ct; my @dt; my @ps; my @doc; my @spc;
+    my @st; my %ct; my @dt; my @ps; my @doc; my @spc; my @dps;
     my $si  = 0; my $ha = 0; my $wdc; my $lat;
 
     for my $cl (@{$tx->{clauses}}) {
@@ -145,8 +145,9 @@ sub _build_transaction($self, $tx, $actor, $txi) {
         elsif ($k eq 'repeat')   { my ($rs,$rc) = _ir_repeat($cl,$tn,\$si,\@ps,$wd); push @st,@$rs; $ct{$rc}=8; }
         elsif ($k eq 'latency')  { $lat = _parse_latency($cl); }
         elsif ($k eq 'do')       { push @doc, $cl->[1]; push @st, _ir_do($cl,$tn,$si++); }
-        elsif ($k eq 'spawn')    { push @spc, { child => $cl->[1], instance => $cl->[3] || "${tn}_${si}" }; push @st, _ir_spawn($cl,$tn,$si++); }
-        elsif ($k eq 'await_all' || $k eq 'await_any') { push @st, _ir_placeholder($cl,$tn,$si++); }
+        elsif ($k eq 'spawn')    { push @spc, { child => $cl->[1], instance => $cl->[3] || "${tn}_${si}" }; push @dps, "$spc[-1]{instance}_done"; push @st, _ir_spawn($cl,$tn,$si++); }
+        elsif ($k eq 'await_all') { push @st, _ir_sync_all($tn,$si++,\@dps); @dps = (); }
+        elsif ($k eq 'await_any') { push @st, _ir_sync_any($tn,$si++,\@dps); @dps = (); }
     }
 
     if (@ps) { push @st, _ir_sample_state($tn, \@ps, $si++); }
@@ -179,6 +180,8 @@ sub _ir_sample_state { my ($tn,$ps,$i)=@_; my @a; for(@$ps){push @a,{lhs=>$_->[3
 sub _ir_placeholder{ my ($cl,$tn,$i)=@_; {name=>"${tn}_$cl->[0]_$i",kind=>'sequential',assignments=>[],transitions=>[]} }
 sub _ir_do       { my ($cl,$tn,$i)=@_; my $c=$cl->[1]; {name=>"${tn}_do_$i",kind=>'await',assignments=>[{lhs=>"${c}_start",rhs=>1,op=>'='}],transitions=>[],guard=>{port=>"${c}_done"}} }
 sub _ir_spawn    { my ($cl,$tn,$i)=@_; my $inst=$cl->[3]||"${tn}_$i"; {name=>"${tn}_spawn_$i",kind=>'sequential',assignments=>[{lhs=>"${inst}_start",rhs=>1,op=>'='}],transitions=>[]} }
+sub _ir_sync_all { my ($tn,$i,$dps)=@_; {name=>"${tn}_await_all_$i",kind=>'sync_all',assignments=>[],transitions=>[],done_ports=>[@$dps]} }
+sub _ir_sync_any { my ($tn,$i,$dps)=@_; {name=>"${tn}_await_any_$i",kind=>'sync_any',assignments=>[],transitions=>[],done_ports=>[@$dps]} }
 
 sub _ir_repeat {
     my ($cl,$tn,$ir,$ps,$wd)=@_; my $ctr="${tn}_cnt"; my @s; my @lp;
@@ -201,6 +204,8 @@ sub _link_states {
         elsif($s->{kind}eq'await'&&$n){push @{$s->{transitions}},{target=>$n,condition=>$s->{guard}};push @{$s->{transitions}},{target=>"${tn}_timeout",condition=>{signal=>$s->{watchdog}{name},op=>'=',value=>0}}}
         elsif($s->{kind}eq'repeat_check'){push @{$s->{transitions}},{target=>$s->{loop_target},condition=>{signal=>$s->{counter},op=>'!=',value=>0}};push @{$s->{transitions}},{target=>$n,condition=>{signal=>$s->{counter},op=>'=',value=>0}}if$n}
         elsif($s->{kind}eq'sequential'&&$n){push @{$s->{transitions}},{target=>$n}}
+        elsif($s->{kind}eq'sync_all'&&$n){push @{$s->{transitions}},{target=>$n}}
+        elsif($s->{kind}eq'sync_any'&&$n){push @{$s->{transitions}},{target=>$n}}
         elsif($s->{kind}eq'terminal'){push @{$s->{transitions}},{target=>$e}}}
 }
 
