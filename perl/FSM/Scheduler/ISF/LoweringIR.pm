@@ -14,7 +14,7 @@ sub build_module($self, $actor) {
     my %spawned = $self->_collect_spawn_refs($actor);
 
     my %child_irs;
-    for my $cname (keys %spawned) {
+    for my $cname (sort keys %spawned) {
         my ($ct) = grep { $_->{name} eq $cname } @{$actor->{transactions}};
         next unless $ct;
         $child_irs{$cname} = $self->_build_child_ir($ct, $actor, $cname);
@@ -87,7 +87,9 @@ sub _build_parent_ir($self, $actor, $spawned) {
         next if $spawned->{$tx->{name}};
         my ($ss, $cs, $ds, $do, $sp) = $self->_build_transaction($tx, $actor, $ti++);
         push @states, @$ss;
-        while (my ($k, $v) = each %$cs) { $ctrs{$k} = $v; }
+        for my $k (sort keys %$cs) {
+            $ctrs{$k} = $cs->{$k};
+        }
         push @dts, @$ds;
         for my $c (@$do)  { $ctrs{"${c}_start"} = 1; $ctrs{"${c}_done"} = 1; }
         for my $s (@$sp)  { $ctrs{"$s->{instance}_start"} = 1; $ctrs{"$s->{instance}_done"} = 1; }
@@ -607,7 +609,7 @@ sub _rule_cond { my($self,$w)=@_; return {port=>'1'} unless $w&&ref($w)eq'ARRAY'
 sub _build_drive_dts {
     my ($self, $actor, $dts, $ctrs) = @_;
     my $drives = $actor->{drives} || {};
-    for my $name (keys %$drives) {
+    for my $name (sort keys %$drives) {
         my $def = $drives->{$name};
         my $body = $def->{body};
         my @params = @{$def->{params}};
@@ -651,7 +653,7 @@ sub _wire_do_children {
     my %ctx = map { $_->{name} => 1 } @{$actor->{transactions}};
     my %need;
     for my $tx(@{$actor->{transactions}}){for my $cl(@{$tx->{clauses}}){next unless ref($cl)eq'ARRAY'&&$cl->[0]eq'do';$need{$cl->[1]}=1 if$ctx{$cl->[1]}}}
-    for my $c(keys %need){my $s="${c}_start";my $d="${c}_done";
+    for my $c (sort keys %need) {my $s="${c}_start";my $d="${c}_done";
         my($en)=grep{$_->{name}=~/^${c}_idle_/}@$st;if($en){$en->{guard}={port=>$s};$en->{transitions}=[];my($nx)=grep{$_->{name}=~/^${c}_/&&$_->{kind}ne'entry'&&$_->{name}!~/_timeout$/}@$st;push @{$en->{transitions}},{target=>$nx->{name},condition=>$en->{guard}}if$nx}
         my($tm)=grep{$_->{name}=~/^${c}_(?:done|complete)_/&&$_->{kind}eq'terminal'}@$st;unshift @{$tm->{assignments}},{lhs=>$d,rhs=>1,op=>'<-'}if$tm}
 }

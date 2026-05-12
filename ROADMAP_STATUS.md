@@ -61,6 +61,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - `t/1118` now proves the public `parse_source(...)` facade returns
   scheduler-consumable actors with the same public lower/report identities as
   `parse_file(...)` for APB.
+- `t/1119` now proves APB generated `.fsm` non-state DT block order and
+  schedule-report `dt_blocks` order are deterministic through both public
+  parser facades, with matching ordering-policy fields advertised by
+  `embedding.isf_public_interface`.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
@@ -3588,6 +3592,10 @@ Done:
 - [t/1118-isf-public-parse-source-facade-audit.t](t/1118-isf-public-parse-source-facade-audit.t)
   locks public `parse_source(...)` facade behavior through scheduler
   `lower(...)` and `report(...)` identities.
+- [t/1119-isf-deterministic-dt-block-order.t](t/1119-isf-deterministic-dt-block-order.t)
+  locks deterministic APB DT block order in generated `.fsm` text and the
+  schedule report for both public parser facades, plus the manifest-advertised
+  DT ordering policy.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

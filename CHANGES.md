@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — deterministic ISF DT block order
+- Updated [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so hash-backed scheduler walks that can influence public artifacts use
+  deterministic lexical order.
+- Added [t/1119-isf-deterministic-dt-block-order.t](t/1119-isf-deterministic-dt-block-order.t)
+  to prove APB generated `.fsm` non-state DT blocks and schedule-report
+  `dt_blocks` keep the same deterministic order through `parse_file(...)` and
+  `parse_source(...)`.
+- Extended `embedding.isf_public_interface` with explicit
+  `scheduled_fsm_dt_ordering` and `schedule_report_dt_ordering` policy fields.
 ### R14 — ISF parse_source facade audit
 - Added [t/1118-isf-public-parse-source-facade-audit.t](t/1118-isf-public-parse-source-facade-audit.t)
   to prove `FSM::Adapter::ISF->parse_source(...)` returns a

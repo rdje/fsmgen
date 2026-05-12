@@ -34,6 +34,10 @@ The `parse_source(...)` facade method is checked by
 [t/1118-isf-public-parse-source-facade-audit.t](../t/1118-isf-public-parse-source-facade-audit.t)
 to ensure in-memory source text returns a scheduler-consumable actor with the
 same public lower/report identities as `parse_file(...)` for a real fixture.
+Generated `.fsm` DT block order and schedule-report `dt_blocks` order are
+checked by
+[t/1119-isf-deterministic-dt-block-order.t](../t/1119-isf-deterministic-dt-block-order.t)
+for both `parse_file(...)` and `parse_source(...)` on the APB fixture.
 
 ## Stabilized Surface
 
@@ -108,9 +112,16 @@ transactions entries: name, states, count
 dt_blocks entries: name, kind, assignments
 ```
 
+The current lowerer emits DT summaries in deterministic lowering order:
+transaction/rule-created DTs retain their construction order, and hash-backed
+drive DTs are emitted lexically by drive name. This is a bounded review-artifact
+and schedule-report stability promise, not a promise that raw `LoweringIR`
+hashes are public. The machine-readable contract advertises the same policy in
+`scheduled_fsm_dt_ordering` and `schedule_report_dt_ordering`.
+
 The schedule report is not yet a frozen full schema. Downstream consumers should
 use the advertised contract metadata instead of assuming every current field,
-ordering detail, generated state name, or private lowering decision is permanent.
+generated state name, or private lowering decision is permanent.
 
 ## Non-Public Internals
 

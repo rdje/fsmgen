@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — deterministic ISF DT block order
+- `LoweringIR` now sorts hash-backed child discovery, counter aggregation,
+  drive DT emission, and blocking-`do` child wiring walks that can affect
+  scheduled public artifacts.
+- Added `t/1119-isf-deterministic-dt-block-order.t` to lock APB non-state DT
+  block order in both generated `.fsm` text and schedule-report `dt_blocks`
+  for `parse_file(...)` and `parse_source(...)`.
+- `embedding.isf_public_interface` now advertises matching
+  `scheduled_fsm_dt_ordering` and `schedule_report_dt_ordering` policy fields.
 ## 2026-05-12: R14 — ISF parse_source facade audit
 - Added `t/1118-isf-public-parse-source-facade-audit.t` to prove
   `FSM::Adapter::ISF->parse_source(...)` returns a scheduler-consumable actor.

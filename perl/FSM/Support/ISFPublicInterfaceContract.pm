@@ -13,6 +13,7 @@ our @EXPORT_OK = qw(
     isf_public_interface_constructor_option_names
     isf_public_interface_live_document_paths
     isf_public_interface_lower_result_presence_keys
+    isf_public_interface_dt_ordering_policy
     isf_public_interface_parser_method_names
     isf_public_interface_public_top_level_keys
     isf_public_interface_schedule_report_presence_key_family_map
@@ -68,6 +69,7 @@ sub build_isf_public_interface_contract {
         report_argument_shape => 'scheduler-consumable actor value returned by FSM::Adapter::ISF',
         lower_result_presence_keys => isf_public_interface_lower_result_presence_keys(),
         lower_result_file_map_shape => 'hash reference mapping scheduled .fsm basename to scheduled .fsm source text',
+        scheduled_fsm_dt_ordering => isf_public_interface_dt_ordering_policy(),
         schedule_report_top_level_keys => isf_public_interface_schedule_report_top_level_keys(),
         schedule_report_presence_key_family_map => isf_public_interface_schedule_report_presence_key_family_map(),
         schedule_report_reset_keys => isf_public_interface_schedule_report_reset_keys(),
@@ -75,6 +77,7 @@ sub build_isf_public_interface_contract {
         schedule_report_storage_optional_keys => isf_public_interface_schedule_report_storage_optional_keys(),
         schedule_report_transaction_keys => isf_public_interface_schedule_report_transaction_keys(),
         schedule_report_dt_keys => isf_public_interface_schedule_report_dt_keys(),
+        schedule_report_dt_ordering => isf_public_interface_dt_ordering_policy(),
         live_document_paths => isf_public_interface_live_document_paths(),
         live_contract_documentation => JSON::PP::true,
         evolves_with_isf_implementation => JSON::PP::true,
@@ -91,6 +94,7 @@ sub build_isf_public_interface_contract {
             't/1116-isf-public-schedule-report-key-family-audit.t',
             't/1117-isf-public-lower-result-files-audit.t',
             't/1118-isf-public-parse-source-facade-audit.t',
+            't/1119-isf-deterministic-dt-block-order.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -122,6 +126,7 @@ sub isf_public_interface_public_top_level_keys {
             report_argument_shape
             lower_result_presence_keys
             lower_result_file_map_shape
+            scheduled_fsm_dt_ordering
             schedule_report_top_level_keys
             schedule_report_presence_key_family_map
             schedule_report_reset_keys
@@ -129,6 +134,7 @@ sub isf_public_interface_public_top_level_keys {
             schedule_report_storage_optional_keys
             schedule_report_transaction_keys
             schedule_report_dt_keys
+            schedule_report_dt_ordering
             live_document_paths
             live_contract_documentation
             evolves_with_isf_implementation
@@ -186,6 +192,15 @@ sub isf_public_interface_lower_result_presence_keys {
             files
         ),
     ];
+}
+
+sub isf_public_interface_dt_ordering_policy {
+    return join(
+        '',
+        'deterministic_lowering_order: ',
+        'transaction_and_rule_dt_blocks_keep_construction_order; ',
+        'hash_backed_drive_dt_blocks_are_sorted_lexically_by_drive_name',
+    );
 }
 
 sub isf_public_interface_schedule_report_top_level_keys {

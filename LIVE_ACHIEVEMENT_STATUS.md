@@ -2,6 +2,12 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — deterministic ISF DT block order
+- Active: `R14`. `t/1119` proves APB generated `.fsm` DT block order and
+  schedule-report `dt_blocks` order are deterministic through `parse_file(...)`
+  and `parse_source(...)`; `embedding.isf_public_interface` advertises the
+  matching ordering policy.
+
 ## 2026-05-12: R14 — ISF parse_source facade audit
 - Active: `R14`. `t/1118` proves `parse_source(...)` is scheduler-consumable
   and matches `parse_file(...)` through public lower/report identities.

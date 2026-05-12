@@ -153,6 +153,8 @@ Current lowering:
 - The call asserts `drive_name_start`.
 - Parameterized calls also assign one inferred parameter signal per formal,
   such as `scl_val`.
+- Hash-backed drive DT emission is deterministic: drive definitions are emitted
+  lexically by drive name after transaction/rule-created DTs.
 - Drive DT assignments use flopped output assignment (`<-`) by default, so a
   drive call consumes one state and the driven port updates on the next clock.
 - DT timing is assignment-family driven: `=` assignments are combinational;
@@ -386,7 +388,12 @@ in the JSON report. Assigned scheduler counters using the generated `*_wd`,
 `*_cc`, and `*_cnt` naming families are reported as `kind: counter` with the
 width inferred by `LoweringIR`. Transaction summaries include the generated
 state families used by the current scheduler, including control-flow and
-data-operation states.
+data-operation states. DT block summaries follow deterministic lowering order:
+transaction/rule-created DTs first in construction order, then hash-backed drive
+DTs lexically by drive name.
+
+The capability-manifest ISF public contract exposes the same policy through
+`scheduled_fsm_dt_ordering` and `schedule_report_dt_ordering`.
 
 ## 11. Current Regression Fixtures
 
@@ -424,6 +431,13 @@ Focused tests:
 - [t/1110-isf-do-child-entry-rewire.t](../t/1110-isf-do-child-entry-rewire.t)
 - [t/1111-isf-sample-before-data-ops.t](../t/1111-isf-sample-before-data-ops.t)
 - [t/1112-isf-public-interface-contract.t](../t/1112-isf-public-interface-contract.t)
+- [t/1113-isf-public-interface-contract-json-roundtrip-audit.t](../t/1113-isf-public-interface-contract-json-roundtrip-audit.t)
+- [t/1114-isf-public-interface-contract-defensive-copy-audit.t](../t/1114-isf-public-interface-contract-defensive-copy-audit.t)
+- [t/1115-isf-public-interface-cli-manifest-audit.t](../t/1115-isf-public-interface-cli-manifest-audit.t)
+- [t/1116-isf-public-schedule-report-key-family-audit.t](../t/1116-isf-public-schedule-report-key-family-audit.t)
+- [t/1117-isf-public-lower-result-files-audit.t](../t/1117-isf-public-lower-result-files-audit.t)
+- [t/1118-isf-public-parse-source-facade-audit.t](../t/1118-isf-public-parse-source-facade-audit.t)
+- [t/1119-isf-deterministic-dt-block-order.t](../t/1119-isf-deterministic-dt-block-order.t)
 
 ## 12. Explicitly Deferred
 

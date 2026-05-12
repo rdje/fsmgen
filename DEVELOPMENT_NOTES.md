@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 deterministic ISF DT block order
+- The `parse_source(...)` audit deliberately avoided exact `.fsm` text
+  equality because drive DT order was inherited from Perl hash iteration.
+  That was a real public-artifact quality issue, not only a test-shape issue,
+  because generated `.fsm` text and schedule-report `dt_blocks` are consumed by
+  downstream reviewers and tools.
+- `LoweringIR` now sorts the hash-backed walks that can affect artifact order:
+  spawned child discovery, merged counter keys, drive DT emission, and
+  blocking-`do` child wiring. Transaction-built DTs and rule DTs still retain
+  their construction/source order.
+- `t/1119-isf-deterministic-dt-block-order.t` locks the APB fixture across
+  both public parser facades and both public scheduler artifacts. The ISF
+  public-interface contract carries matching ordering-policy fields so
+  downstream tools can discover the guarantee without scraping prose.
 ## 2026-05-12: R14 ISF parse_source facade audit
 - `parse_source(...)` is part of the ISF public-interface contract because
   downstream tools may hold generated or in-memory ISF text without a stable
