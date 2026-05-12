@@ -83,14 +83,16 @@ Concatenates fields into a single variable.
 
 Deconstructs `word` into named fields.
 
-**Current lowering**: one extraction state is emitted, and each field is
-assigned from a placeholder slice name. Exact field ranges remain future work.
+**Current lowering**: one extraction state is emitted. When the source word and
+destination fields have known widths, each field is assigned from an exact
+descending slice. If a width is unknown, the scheduler preserves placeholder
+slice bounds for the unproven field positions.
 
 ```lisp
 (state
-  (<= (header (slice packet header_range)))
-  (<= (payload (slice packet payload_range)))
-  (<= (crc (slice packet crc_range)))
+  (<= (header (slice packet 15 12)))
+  (<= (payload (slice packet 11 4)))
+  (<= (crc (slice packet 3 0)))
   (-> next_state))
 ```
 

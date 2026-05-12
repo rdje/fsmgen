@@ -21,6 +21,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - R14 docs and the user guide now distinguish state DT blocks from non-state DT
   blocks and make assignment families, not block spelling, the source of
   combinational vs sequential behavior.
+- `t/1101` now proves explicit `assemble ... as target` handling and
+  known-width `extract` lowering to exact descending slices, including
+  assemble-inferred word widths.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
@@ -915,6 +918,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - The R14 spec, user guide, and mdBook now use "non-state DT" for
     `(-name ...)` blocks and document that `=`, `<-`, and `<=` decide
     combinational/sequential timing inside both state and non-state DTs.
+  - [t/1101-isf-extract-slices.t](t/1101-isf-extract-slices.t) now proves
+    explicit assemble-target parsing and known-width `extract` lowering to
+    exact descending slices.
   - Next bounded `R14` slice: convert another documented scheduler limitation
     into regression-backed behavior.
 - Superseded `R13` carry-forward detail retained below this note should not be
@@ -3470,8 +3476,8 @@ Done:
 - [docs/ISF_SPEC.md](docs/ISF_SPEC.md) is synchronized to the current shipped
   parser/scheduler behavior and explicitly records the current limitations:
   deferred composition-top instantiation, unenforced resources/priorities,
-  schedule JSON as a non-stable schema, unknown-width `shift_right`, and
-  placeholder `extract` field handling.
+  schedule JSON as a non-stable schema, and unknown-width data operation
+  fallback behavior.
 - [t/1096-isf-schedule-json-report.t](t/1096-isf-schedule-json-report.t) locks
   the current APB schedule JSON report identity, counts, transaction state
   order, DT summaries, inferred storage, and empty `compile_issues`.
@@ -3488,6 +3494,9 @@ Done:
 - The R14 spec, user guide, and mdBook now distinguish state DTs from non-state
   DTs and describe combinational/sequential behavior as assignment-family
   driven.
+- [t/1101-isf-extract-slices.t](t/1101-isf-extract-slices.t) locks
+  `assemble ... as target` parsing and known-width `extract` lowering to exact
+  descending slices, including assemble-inferred word widths.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

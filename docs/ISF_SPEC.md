@@ -266,8 +266,10 @@ Current lowering:
   width; unknown-width values still fall back to the placeholder width
   expression.
 - `assemble` emits a concat expression into the target variable.
-- `extract` is parsed into an extraction state and the emitter currently uses
-  placeholder slice names; exact field slice ranges remain future work.
+- `extract` emits one extraction state. When the source word and destination
+  fields have known widths, fields are assigned exact descending slices; if a
+  width is unknown, the emitter keeps placeholder slice bounds for that field
+  and any later field whose position can no longer be proven.
 
 ## 8. Composition Between Transactions
 
@@ -378,6 +380,7 @@ Focused tests:
 - [t/1098-isf-await-any-sync.t](../t/1098-isf-await-any-sync.t)
 - [t/1099-isf-repeat-data-ops.t](../t/1099-isf-repeat-data-ops.t)
 - [t/1100-isf-sample-piggyback.t](../t/1100-isf-sample-piggyback.t)
+- [t/1101-isf-extract-slices.t](../t/1101-isf-extract-slices.t)
 
 ## 12. Explicitly Deferred
 
@@ -387,6 +390,5 @@ Focused tests:
 - Enforced resource arbitration and priority resolution.
 - Full temporal `(contract ...)` assertions.
 - Rich storage-class optimization in schedule reports.
-- Full width inference for unknown-width `shift_right` values and exact field
-  slicing for `extract`.
+- Full width inference for unknown-width `shift_right` and `extract` values.
 - Treating schedule JSON as a stable public schema.

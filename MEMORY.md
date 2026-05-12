@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — exact known-width extract slices
+- `LoweringIR` now parses `assemble ... as target` and
+  `extract word as fields...` explicitly instead of relying on loose tail
+  indexes.
+- Known-width extract lowering now emits exact descending slices such as
+  `(slice packet 15 12)`; unknown-width fields keep placeholder bounds.
+- Added `t/1101-isf-extract-slices.t`, including assemble-inferred word width
+  coverage. Exact known-width `extract` slicing is no longer a remaining R14
+  limitation.
 ## 2026-05-12: R14 — DT terminology corrected
 - R14 docs now distinguish state DT blocks `(state_name ...)` from non-state DT
   blocks `(-name ...)` without implying that every non-state DT is
@@ -22,8 +31,8 @@ This is the live continuity document for fast session recovery after crashes, re
 - Known-width `shift_right` uses interface/sample-derived width; UART
   `byte_data` now shifts with insert position `7` instead of `WIDTH`.
 - Added `t/1099-isf-repeat-data-ops.t` for UART `shift_right` and I2C
-  `shift_left` repeat bodies. Unknown-width `shift_right` and exact `extract`
-  slicing remain deferred.
+  `shift_left` repeat bodies. Later R14 work added exact known-width
+  `extract` slicing; unknown-width data widths remain deferred.
 ## 2026-05-12: R14 — `await_any` multi-done guards
 - `Emitter::FSM` now emits one guard transition per collected spawned done port
   for `await_any`, so any child done can advance the parent.
@@ -56,7 +65,8 @@ This is the live continuity document for fast session recovery after crashes, re
   and lowering reference. They now call out deferred composition-top
   instantiation, unenforced priorities/resources, placeholder `shift_right`
   width, and placeholder `extract` slices. Later R14 slices removed the
-  first-port `await_any` limit and added known-width `shift_right` lowering.
+  first-port `await_any` limit, added known-width `shift_right` lowering, and
+  added exact known-width `extract` slicing.
 - Next bounded slice: choose one documented limitation and make it
   regression-backed behavior, or broaden schedule JSON assertions over the
   current IR.

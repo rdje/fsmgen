@@ -306,8 +306,9 @@ unknown widths still fall back to the placeholder width expression.
 **Timing**: 1 cycle.
 **Implicit signals**: None.
 
-Current `extract` lowering emits placeholder slice names for each field.
-Exact bit ranges are still deferred.
+Current `extract` lowering emits exact descending slices when the source word
+and destination field widths are known. Unknown widths keep placeholder slice
+bounds for unproven field positions.
 
 ## `(latency (min N) (max M))` → Verification Logic
 

@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 exact known-width extract slices
+- `assemble` and `extract` now share explicit `as` form parsing in
+  `LoweringIR`, which fixes the old tail-index handling that could treat `as`
+  as the target variable.
+- Extract lowering computes descending field ranges from the known source word
+  width when available, or from an assemble-inferred word width when every part
+  width is known. The fallback remains placeholder slice bounds when field
+  positions cannot be proven.
+- `t/1101-isf-extract-slices.t` locks both direct 16-bit packet extraction and
+  extraction from an assembled packet width.
 ## 2026-05-12: R14 DT terminology corrected
 - R14 docs and the broad user guide now use "non-state DT" for `(-name ...)`
   blocks and reserve combinational/sequential language for assignment

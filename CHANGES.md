@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — exact known-width extract slices
+- Updated [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so `assemble ... as target` and `extract word as fields...` are parsed
+  explicitly, and known-width extracts emit exact descending slices.
+- Added [t/1101-isf-extract-slices.t](t/1101-isf-extract-slices.t) for
+  explicit assemble target handling, direct word-width extraction, and
+  assemble-inferred word-width extraction.
+- Updated [docs/ISF_SPEC.md](docs/ISF_SPEC.md) and the mdBook data-manipulation
+  references so exact known-width `extract` slicing is documented as shipped
+  behavior, with placeholder fallback retained for unknown widths.
 ### R14 — DT terminology corrected
 - Updated [docs/ISF_SPEC.md](docs/ISF_SPEC.md), [docs/USER_GUIDE.md](docs/USER_GUIDE.md),
   and the R14 mdBook chapters to distinguish state DTs like `(state_name ...)`
@@ -53,7 +63,8 @@ This is the persistent technical change history for FSMGen.
 - Tightened the mdBook R14 chapters so composition, rules, data manipulation,
   and lowering examples no longer claim enforced priorities/resources,
   composition-top spawn instantiation, exact `extract` slicing, or complete
-  child-start binding before the implementation supports them.
+  child-start binding before the implementation supports them. Later R14
+  slices added exact known-width `extract` slicing.
 ### Bootstrap — R14 onboarding/import-tree refresh
 - Refreshed README onboarding/CLI references for `.isf`, `--outdir`, and
   `--emit-schedule-json`.

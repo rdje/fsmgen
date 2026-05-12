@@ -2,6 +2,11 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — exact extract slices
+- Active: `R14`. `t/1101` proves `assemble ... as target` handling and
+  known-width `extract` lowering to exact descending slices, including
+  assemble-inferred word widths.
+
 ## 2026-05-12: R14 — DT terminology corrected
 - Active: `R14`. The spec, user guide, and mdBook now distinguish state DTs
   from non-state DTs and state that assignment operators, not DT spelling,
@@ -14,8 +19,8 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
 ## 2026-05-12: R14 — repeat drive/data ops
 - Active: `R14`. `t/1099` proves repeat bodies lower named drive calls and data
-  ops; known-width `shift_right` now uses concrete width. Remaining: resources,
-  priority, extract slices, composition-top.
+  ops; known-width `shift_right` now uses concrete width. Later slices added
+  known-width extract slices. Remaining: resources, priority, composition-top.
 
 ## 2026-05-12: R14 — `await_any` all guards
 - Active: `R14`. `t/1098` proves `await_any` watches every collected spawned
@@ -33,8 +38,9 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
 ## 2026-05-12: R14 — ISF spec synced to implementation
 - Active: `R14`. `docs/ISF_SPEC.md` + mdBook now record shipped behavior and
-  limitations: unenforced priorities/resources, placeholder data ops, deferred
-  composition-top instantiation. Later slices narrowed several limits.
+  limitations: unenforced priorities/resources, unknown-width data-op
+  fallbacks, deferred composition-top instantiation. Later slices narrowed
+  several limits.
 
 ## 2026-05-12: Bootstrap — R14 docs/import tree
 - Active: `R14`. Import tree refreshed for `.isf` pre-lowering path: 191 project

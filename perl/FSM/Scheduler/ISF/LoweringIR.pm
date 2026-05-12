@@ -134,6 +134,7 @@ sub _build_signal_width_map {
     for my $i (@{$actor->{interface}{inputs}})  { $widths{$i->{name}} = $i->{width} // 1; }
     for my $o (@{$actor->{interface}{outputs}}) { $widths{$o->{name}} = $o->{width} // 1; }
     _collect_sample_widths($tx->{clauses}, \%widths);
+    _collect_data_widths($tx->{clauses}, \%widths);
     return \%widths;
 }
 
@@ -149,6 +150,60 @@ sub _collect_sample_widths {
     for my $child (@$node) {
         _collect_sample_widths($child, $widths) if ref($child) eq 'ARRAY';
     }
+}
+
+sub _collect_data_widths {
+    my ($node, $widths) = @_;
+    return unless ref($node) eq 'ARRAY';
+
+    if (@$node >= 4 && $node->[0] eq 'assemble') {
+        my ($target, @parts) = _parse_assemble_clause($node);
+        my $total = 0;
+        for my $part (@parts) {
+            return unless exists $widths->{$part};
+            $total += $widths->{$part};
+        }
+        $widths->{$target} = $total if $total > 0;
+    }
+
+    for my $child (@$node) {
+        _collect_data_widths($child, $widths) if ref($child) eq 'ARRAY';
+    }
+}
+
+sub _as_index {
+    my ($cl, $start) = @_;
+    for my $idx ($start .. $#$cl) {
+        return $idx if defined $cl->[$idx] && !ref($cl->[$idx]) && $cl->[$idx] eq 'as';
+    }
+    return undef;
+}
+
+sub _parse_assemble_clause {
+    my ($cl) = @_;
+    my $as_idx = _as_index($cl, 2);
+    confess "assemble requires '(assemble part... as target)'\n"
+        unless defined $as_idx && $as_idx > 1 && $as_idx == $#$cl - 1;
+
+    my @parts = @{$cl}[1 .. $as_idx - 1];
+    my $target = $cl->[$as_idx + 1];
+    confess "assemble target must be a scalar name\n" if ref($target);
+    return ($target, @parts);
+}
+
+sub _parse_extract_clause {
+    my ($cl) = @_;
+    confess "extract requires '(extract word as field...)'\n"
+        unless @$cl >= 4 && defined $cl->[2] && !ref($cl->[2]) && $cl->[2] eq 'as';
+
+    my $word = $cl->[1];
+    my @fields = @{$cl}[3 .. $#$cl];
+    confess "extract word must be a scalar name\n" if ref($word);
+    confess "extract requires at least one scalar field\n" unless @fields;
+    for my $field (@fields) {
+        confess "extract field must be a scalar name\n" if ref($field);
+    }
+    return ($word, @fields);
 }
 
 # --- Transaction → IR states ---
@@ -181,7 +236,7 @@ sub _build_transaction($self, $tx, $actor, $txi) {
         elsif ($k eq 'shift_left')  { push @st, _ir_shift_left($cl,$tn,$si++); }
         elsif ($k eq 'shift_right') { push @st, _ir_shift_right($cl,$tn,$si++,$widths); }
         elsif ($k eq 'assemble')    { push @st, _ir_assemble($cl,$tn,$si++); }
-        elsif ($k eq 'extract')     { push @st, _ir_extract($cl,$tn,$si++); }
+        elsif ($k eq 'extract')     { push @st, _ir_extract($cl,$tn,$si++,$widths); }
         elsif ($k eq 'complete') { push @st, _ir_complete($cl, $tn, $si++); }
         elsif ($k eq 'when' && !@st) { push @st, _ir_when_activation($cl,$tn,$si++); }
         elsif ($k eq 'when')     {
@@ -280,7 +335,7 @@ sub _ir_when_activation {
         transitions => [],
     };
 }
-sub _ir_data_op  { my ($op,$cl,$tn,$i,$widths)=@_; $op eq'shift_left' ? _ir_shift_left($cl,$tn,$i) : $op eq'shift_right' ? _ir_shift_right($cl,$tn,$i,$widths) : $op eq'assemble' ? _ir_assemble($cl,$tn,$i) : $op eq'extract' ? _ir_extract($cl,$tn,$i) : _ir_update($cl,$tn,$i) }
+sub _ir_data_op  { my ($op,$cl,$tn,$i,$widths)=@_; $op eq'shift_left' ? _ir_shift_left($cl,$tn,$i) : $op eq'shift_right' ? _ir_shift_right($cl,$tn,$i,$widths) : $op eq'assemble' ? _ir_assemble($cl,$tn,$i) : $op eq'extract' ? _ir_extract($cl,$tn,$i,$widths) : _ir_update($cl,$tn,$i) }
 sub _ir_named_drive_call {
     my ($cl, $tn, $i, $def, $pending_samples) = @_;
     my $name = $cl->[1];
@@ -320,8 +375,47 @@ sub _ir_complete{ my ($cl,$tn,$i)=@_; {name=>"${tn}_done_$i",kind=>'terminal',as
 sub _ir_update   { my ($cl,$tn,$i)=@_; my$rhs=join(' ',@{$cl}[2..$#$cl]); {name=>"${tn}_update_$i",kind=>'sequential',assignments=>[{lhs=>$cl->[1],rhs=>$rhs,op=>'<-'}],transitions=>[]} }
 sub _ir_shift_left { my ($cl,$tn,$i)=@_; my$reg=$cl->[1];my$bit=$cl->[2]; {name=>"${tn}_shift_$i",kind=>'sequential',assignments=>[{lhs=>$reg,rhs=>"(| (<< $reg 1) $bit)",op=>'<-'}],transitions=>[]} }
 sub _ir_shift_right{ my ($cl,$tn,$i,$widths)=@_; my$reg=$cl->[1];my$bit=$cl->[2];my$insert=(defined($widths->{$reg})&&$widths->{$reg}>0)?$widths->{$reg}-1:'(- WIDTH 1)'; {name=>"${tn}_shift_$i",kind=>'sequential',assignments=>[{lhs=>$reg,rhs=>"(| (>> $reg 1) (<< $bit $insert))",op=>'<-'}],transitions=>[]} }
-sub _ir_assemble  { my ($cl,$tn,$i)=@_; my$var=$cl->[-2];my@parts=@{$cl}[1..$#$cl-2];my$rhs='(concat '.join(' ',@parts).')'; {name=>"${tn}_asm_$i",kind=>'sequential',assignments=>[{lhs=>$var,rhs=>$rhs,op=>'<-'}],transitions=>[]} }
-sub _ir_extract   { my ($cl,$tn,$i)=@_; my$word=$cl->[1];my$as_kw=$cl->[-2];my@fields=@{$cl}[2..$#$cl-2]; {name=>"${tn}_ext_$i",kind=>'sequential',assignments=>[],transitions=>[],fields=>\@fields,word=>$word} }
+sub _ir_assemble  { my ($cl,$tn,$i)=@_; my($var,@parts)=_parse_assemble_clause($cl);my$rhs='(concat '.join(' ',@parts).')'; {name=>"${tn}_asm_$i",kind=>'sequential',assignments=>[{lhs=>$var,rhs=>$rhs,op=>'<-'}],transitions=>[]} }
+sub _ir_extract {
+    my ($cl, $tn, $i, $widths) = @_;
+    my ($word, @fields) = _parse_extract_clause($cl);
+    my @assignments;
+
+    my $high;
+    if (defined($widths->{$word}) && $widths->{$word} > 0) {
+        $high = $widths->{$word} - 1;
+    } else {
+        my $total = 0;
+        for my $field (@fields) {
+            if (!defined($widths->{$field}) || $widths->{$field} <= 0) {
+                $total = undef;
+                last;
+            }
+            $total += $widths->{$field};
+        }
+        $high = $total - 1 if defined $total && $total > 0;
+    }
+
+    for my $field (@fields) {
+        my $rhs;
+        if (defined $high && defined($widths->{$field}) && $widths->{$field} > 0) {
+            my $low = $high - $widths->{$field} + 1;
+            $rhs = "(slice $word $high $low)";
+            $high = $low - 1;
+        } else {
+            $rhs = "(slice $word $field HIGH $field LOW)";
+            $high = undef;
+        }
+        push @assignments, { lhs => $field, rhs => $rhs, op => '<=' };
+    }
+
+    return {
+        name        => "${tn}_ext_$i",
+        kind        => 'sequential',
+        assignments => \@assignments,
+        transitions => [],
+    };
+}
 sub _ir_sample_state { my ($tn,$ps,$i)=@_; my @a; for(@$ps){push @a,{lhs=>$_->[3],rhs=>$_->[1],op=>'<='}} {name=>"${tn}_sample_$i",kind=>'sequential',assignments=>\@a,transitions=>[]} }
 sub _ir_phase { my ($cl,$tn,$i)=@_; my $name=$cl->[1]; {name=>"${tn}_phase_$i",kind=>'sequential',assignments=>[],transitions=>[],phase_name=>$name} }
 sub _ir_placeholder{ my ($cl,$tn,$i)=@_; {name=>"${tn}_$cl->[0]_$i",kind=>'sequential',assignments=>[],transitions=>[]} }
