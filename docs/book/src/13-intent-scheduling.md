@@ -126,7 +126,8 @@ Transaction summaries expose emitted scheduled-state names in `states`, and
 `count` equals that array length; transaction summaries are sorted lexically by
 name while each `states` array keeps scheduled `.fsm` state emission order.
 Reset summaries advertise `async`/`sync`
-kind values and `active_high`/`active_low` polarity values. Interface count
+kind values and `active_high`/`active_low` polarity values; omitted resets are
+reported as JSON null. Interface count
 summaries count input and output ports by direction, and `state_count` counts
 scheduled `.fsm` state blocks in the parent report scope. Report `source` and
 `scheduled_fsm` are actor-derived basenames, `clock` is the actor clock signal,

@@ -476,6 +476,9 @@ The reset summary's `kind` value is currently `async` or `sync`, and its
 capability-manifest ISF public contract advertises those value families through
 `schedule_report_reset_kind_values` and
 `schedule_report_reset_polarity_values`.
+Configured reset summaries are hashes with the advertised reset keys; omitted
+resets are reported as JSON null. The capability-manifest ISF public contract
+advertises this through `schedule_report_reset_shape`.
 The top-level `inputs` and `outputs` values count interface ports by direction,
 and `port_count` equals their sum. `state_count` counts scheduled `.fsm` state
 blocks in the current parent report scope. The capability-manifest ISF public
@@ -577,6 +580,7 @@ Focused tests:
 - [t/1156-isf-public-lower-result-file-shape-audit.t](../t/1156-isf-public-lower-result-file-shape-audit.t)
 - [t/1157-isf-public-report-transaction-ordering-audit.t](../t/1157-isf-public-report-transaction-ordering-audit.t)
 - [t/1158-isf-public-report-dt-kind-metadata-audit.t](../t/1158-isf-public-report-dt-kind-metadata-audit.t)
+- [t/1159-isf-public-report-reset-shape-metadata-audit.t](../t/1159-isf-public-report-reset-shape-metadata-audit.t)
 
 ## 12. Explicitly Deferred
 

@@ -101,6 +101,9 @@ The reset-summary metadata is checked by
 [t/1150-isf-public-reset-metadata-audit.t](../t/1150-isf-public-reset-metadata-audit.t)
 to keep advertised reset `kind` and `polarity` values exact across direct and
 manifest views.
+The reset container/null shape is checked by
+[t/1159-isf-public-report-reset-shape-metadata-audit.t](../t/1159-isf-public-report-reset-shape-metadata-audit.t)
+to keep configured reset summaries as hashes and omitted resets as JSON null.
 The schedule-report count metadata is checked by
 [t/1151-isf-public-report-count-metadata-audit.t](../t/1151-isf-public-report-count-metadata-audit.t)
 to keep interface and state-count semantics exact across direct and manifest
@@ -365,6 +368,9 @@ For the `reset` summary, `kind` is currently `async` or `sync`, and `polarity`
 is currently `active_high` or `active_low`. The machine-readable contract
 advertises those value families through `schedule_report_reset_kind_values` and
 `schedule_report_reset_polarity_values`.
+When reset is configured, `reset` is a hash reference with
+`schedule_report_reset_keys`. When reset is omitted, `reset` is null. The
+machine-readable contract advertises this through `schedule_report_reset_shape`.
 
 The top-level `inputs` and `outputs` values are non-negative integer counts of
 interface ports by direction, and `port_count` equals their sum. The top-level

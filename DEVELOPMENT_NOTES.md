@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF report reset-shape metadata audit
+- Reset key and enum metadata was already public, but the container/null rule
+  was still prose-only. The contract now records that configured reset is a
+  summary hash and omitted reset is JSON null.
+- `t/1159-isf-public-report-reset-shape-metadata-audit.t` locks that field
+  across direct and manifest views and checks APB plus inline no-reset reports.
 ## 2026-05-12: R14 ISF report DT kind metadata audit
 - The report already exposes `dt_blocks[*].kind`, so the value family belongs
   in the manifest beside the existing DT assignment-count shape.

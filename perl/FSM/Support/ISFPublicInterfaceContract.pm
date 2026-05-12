@@ -37,6 +37,7 @@ our @EXPORT_OK = qw(
     isf_public_interface_schedule_report_reset_kind_values
     isf_public_interface_schedule_report_reset_keys
     isf_public_interface_schedule_report_reset_polarity_values
+    isf_public_interface_schedule_report_reset_shape
     isf_public_interface_schedule_report_scheduled_fsm_shape
     isf_public_interface_schedule_report_source_shape
     isf_public_interface_schedule_report_state_count_shape
@@ -125,6 +126,7 @@ sub build_isf_public_interface_contract {
         schedule_report_interface_count_shape => isf_public_interface_schedule_report_interface_count_shape(),
         schedule_report_state_count_shape => isf_public_interface_schedule_report_state_count_shape(),
         schedule_report_presence_key_family_map => isf_public_interface_schedule_report_presence_key_family_map(),
+        schedule_report_reset_shape => isf_public_interface_schedule_report_reset_shape(),
         schedule_report_reset_keys => isf_public_interface_schedule_report_reset_keys(),
         schedule_report_reset_kind_values => isf_public_interface_schedule_report_reset_kind_values(),
         schedule_report_reset_polarity_values => isf_public_interface_schedule_report_reset_polarity_values(),
@@ -196,6 +198,7 @@ sub build_isf_public_interface_contract {
             't/1156-isf-public-lower-result-file-shape-audit.t',
             't/1157-isf-public-report-transaction-ordering-audit.t',
             't/1158-isf-public-report-dt-kind-metadata-audit.t',
+            't/1159-isf-public-report-reset-shape-metadata-audit.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -254,6 +257,7 @@ sub isf_public_interface_public_top_level_keys {
             schedule_report_interface_count_shape
             schedule_report_state_count_shape
             schedule_report_presence_key_family_map
+            schedule_report_reset_shape
             schedule_report_reset_keys
             schedule_report_reset_kind_values
             schedule_report_reset_polarity_values
@@ -454,6 +458,10 @@ sub isf_public_interface_schedule_report_reset_keys {
             polarity
         ),
     ];
+}
+
+sub isf_public_interface_schedule_report_reset_shape {
+    return 'hash reference with schedule_report_reset_keys when configured; null when omitted';
 }
 
 sub isf_public_interface_schedule_report_reset_kind_values {

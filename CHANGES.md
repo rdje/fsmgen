@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF report reset-shape metadata audit
+- Added `schedule_report_reset_shape` to `embedding.isf_public_interface` for
+  configured reset hashes and omitted reset JSON null.
+- Added [t/1159-isf-public-report-reset-shape-metadata-audit.t](t/1159-isf-public-report-reset-shape-metadata-audit.t)
+  to prove the metadata is exact and aligned with APB plus inline no-reset
+  reports.
 ### R14 — ISF report DT kind metadata audit
 - Added `schedule_report_dt_kind_values` to
   `embedding.isf_public_interface` for the current `drive`,

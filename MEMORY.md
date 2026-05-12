@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF report reset-shape metadata audit
+- Added `schedule_report_reset_shape` to `embedding.isf_public_interface`,
+  documenting configured reset summaries as hashes with advertised reset keys
+  and omitted resets as JSON null.
+- Added `t/1159-isf-public-report-reset-shape-metadata-audit.t` to prove that
+  metadata is exact across direct and manifest views and aligned with APB plus
+  inline no-reset reports.
 ## 2026-05-12: R14 — ISF report DT kind metadata audit
 - Added `schedule_report_dt_kind_values` to
   `embedding.isf_public_interface`, documenting the current schedule-report

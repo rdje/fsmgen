@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — ISF report reset-shape metadata audit
+- Active: `R14`. `t/1159` proves schedule-report reset-shape metadata is exact
+  for configured reset hashes and omitted reset JSON null.
+
 ## 2026-05-12: R14 — ISF report DT kind metadata audit
 - Active: `R14`. `t/1158` proves schedule-report DT kind metadata is exact and
   aligned with APB plus full-featured reports.

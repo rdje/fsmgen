@@ -148,6 +148,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   order.
 - `t/1158` now advertises and proves schedule-report DT kind values:
   `drive`, `latency_counter`, and `rule`.
+- `t/1159` now advertises and proves schedule-report reset shape: configured
+  reset hashes and omitted reset JSON null.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
