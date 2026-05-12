@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF CLI option metadata audit
+- Added `t/1136-isf-public-cli-option-metadata-audit.t` to prove
+  `embedding.isf_public_interface.cli_option_names` is exact and
+  duplicate-free across the direct owner, in-process capability manifest, and
+  both CLI manifest spellings.
+- The audited public ISF-specific option family remains `--emit-schedule-json`,
+  `--outdir`, and `--strict`.
 ## 2026-05-12: R14 — ISF entrypoint metadata audit
 - Added `t/1135-isf-public-entrypoint-metadata-audit.t` to prove
   `embedding.isf_public_interface.entrypoints` is exact and duplicate-free.

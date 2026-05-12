@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF CLI option metadata audit
+- Added [t/1136-isf-public-cli-option-metadata-audit.t](t/1136-isf-public-cli-option-metadata-audit.t)
+  to prove `embedding.isf_public_interface.cli_option_names` is exact and
+  duplicate-free.
+- The audit covers direct owner data, the in-process capability manifest, and
+  both CLI manifest spellings.
 ### R14 — ISF entrypoint metadata audit
 - Added [t/1135-isf-public-entrypoint-metadata-audit.t](t/1135-isf-public-entrypoint-metadata-audit.t)
   to prove `embedding.isf_public_interface.entrypoints` is exact and

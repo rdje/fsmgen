@@ -32,6 +32,9 @@ to stay unique and exact across direct, manifest, and CLI manifest views.
 The advertised entrypoint metadata is checked by
 [t/1135-isf-public-entrypoint-metadata-audit.t](../t/1135-isf-public-entrypoint-metadata-audit.t)
 to stay exact and duplicate-free across the same views.
+The advertised ISF CLI option list is checked by
+[t/1136-isf-public-cli-option-metadata-audit.t](../t/1136-isf-public-cli-option-metadata-audit.t)
+to stay exact and duplicate-free across direct and manifest views.
 The plain `file.isf` HDL-generation path is checked by
 [t/1123-isf-public-cli-hdl-generation-audit.t](../t/1123-isf-public-cli-hdl-generation-audit.t)
 to reach generated HDL with clean stderr for the APB fixture.
@@ -138,6 +141,7 @@ the full raw actor hash remains non-public.
 
 The advertised ISF-specific CLI option family is `--emit-schedule-json`,
 `--outdir`, and `--strict`.
+The `cli_option_names` list is exact discovery metadata for that option family.
 
 ## Lower Result
 

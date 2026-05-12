@@ -88,7 +88,7 @@ JSON-round-trip audited so downstream tooling can consume the manifest metadata
 as portable discovery data, and defensive-copy audited so caller mutation does
 not pollute later contract builds. Its top-level discovery list is audited as
 exact and unique across direct and manifest views, and its advertised
-entrypoint lists are audited as exact and duplicate-free. Both
+entrypoint and CLI option lists are audited as exact and duplicate-free. Both
 capability-manifest CLI spellings are audited to emit the same ISF contract
 payload. The current APB schedule report is also checked against the advertised
 public key families, and successful reports advertise and keep an empty

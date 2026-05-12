@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — ISF CLI option metadata audit
+- Active: `R14`. `t/1136` proves the ISF public CLI option list is exact and
+  duplicate-free across direct and manifest views.
+
 ## 2026-05-12: R14 — ISF entrypoint metadata audit
 - Active: `R14`. `t/1135` proves the ISF public contract entrypoint metadata
   is exact and duplicate-free across direct and manifest views.

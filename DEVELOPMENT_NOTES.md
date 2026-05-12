@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF CLI option metadata audit
+- The public ISF contract separates full entrypoint examples from the
+  ISF-specific CLI option family. Downstream tools should be able to discover
+  the exact option names without scraping prose or CLI help output.
+- `t/1136-isf-public-cli-option-metadata-audit.t` locks
+  `cli_option_names` across the direct owner, in-process capability manifest,
+  and both CLI manifest spellings, including uniqueness and long-option shape.
 ## 2026-05-12: R14 ISF entrypoint metadata audit
 - The ISF public contract advertises exact CLI and in-process entrypoints.
   Treating those lists as loose examples would weaken downstream discovery and
