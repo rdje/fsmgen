@@ -38,6 +38,10 @@ Generated `.fsm` DT block order and schedule-report `dt_blocks` order are
 checked by
 [t/1119-isf-deterministic-dt-block-order.t](../t/1119-isf-deterministic-dt-block-order.t)
 for both `parse_file(...)` and `parse_source(...)` on the APB fixture.
+The `live_document_paths` list is checked by
+[t/1120-isf-public-live-document-path-audit.t](../t/1120-isf-public-live-document-path-audit.t)
+to keep the direct owner, in-process manifest, and both CLI manifest spellings
+aligned on repo-relative Markdown paths that exist on disk.
 
 ## Stabilized Surface
 

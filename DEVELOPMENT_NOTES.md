@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF live document path audit
+- The ISF public-interface contract says the human contract documents evolve
+  with implementation slices. That is only useful to downstream consumers and
+  recovery workflows if the manifest-advertised paths are real repo-local
+  Markdown files.
+- `t/1120-isf-public-live-document-path-audit.t` mirrors the broader
+  documentation-path audit pattern for the narrower ISF contract surface:
+  direct owner, in-process manifest, and both CLI manifest spellings must agree
+  on the path list, and every listed path must be unique, relative, non-escaping,
+  Markdown-backed, and present.
 ## 2026-05-12: R14 deterministic ISF DT block order
 - The `parse_source(...)` audit deliberately avoided exact `.fsm` text
   equality because drive DT order was inherited from Perl hash iteration.

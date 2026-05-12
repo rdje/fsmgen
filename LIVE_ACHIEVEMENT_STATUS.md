@@ -2,6 +2,11 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — ISF live document path audit
+- Active: `R14`. `t/1120` proves
+  `embedding.isf_public_interface.live_document_paths` is manifest-aligned and
+  points at unique repo-local Markdown files.
+
 ## 2026-05-12: R14 — deterministic ISF DT block order
 - Active: `R14`. `t/1119` proves APB generated `.fsm` DT block order and
   schedule-report `dt_blocks` order are deterministic through `parse_file(...)`

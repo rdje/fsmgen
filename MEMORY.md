@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF live document path audit
+- Added `t/1120-isf-public-live-document-path-audit.t` to prove
+  `embedding.isf_public_interface.live_document_paths` stays identical across
+  the direct owner, in-process manifest, and both CLI manifest spellings.
+- The audit requires each advertised ISF live document path to be scalar,
+  repo-relative, unique, Markdown-backed, non-escaping, and present on disk.
 ## 2026-05-12: R14 — deterministic ISF DT block order
 - `LoweringIR` now sorts hash-backed child discovery, counter aggregation,
   drive DT emission, and blocking-`do` child wiring walks that can affect

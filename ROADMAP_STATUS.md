@@ -65,6 +65,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   schedule-report `dt_blocks` order are deterministic through both public
   parser facades, with matching ordering-policy fields advertised by
   `embedding.isf_public_interface`.
+- `t/1120` now proves `embedding.isf_public_interface.live_document_paths`
+  stays owner/manifest/CLI aligned and points only at unique repo-local Markdown
+  files.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
@@ -3596,6 +3599,9 @@ Done:
   locks deterministic APB DT block order in generated `.fsm` text and the
   schedule report for both public parser facades, plus the manifest-advertised
   DT ordering policy.
+- [t/1120-isf-public-live-document-path-audit.t](t/1120-isf-public-live-document-path-audit.t)
+  locks ISF public live-document path parity and repo-local path validity
+  across the direct owner, in-process manifest, and both CLI manifest spellings.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

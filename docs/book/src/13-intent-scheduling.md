@@ -84,9 +84,10 @@ single-file and multi-file lowering. The in-memory `parse_source(...)` facade is
 also checked against `parse_file(...)` on a real fixture. APB DT block order is
 locked across generated `.fsm` text and schedule-report `dt_blocks` so
 hash-backed drive definitions do not create review-artifact churn; the manifest
-also advertises the DT ordering policy. Transaction summaries include the
-generated state families used by the current scheduler, including control-flow
-and data-operation states.
+also advertises the DT ordering policy. The ISF live-document path list is
+audited across direct and manifest views so recovery pointers stay repo-local
+and present. Transaction summaries include the generated state families used by
+the current scheduler, including control-flow and data-operation states.
 
 ## Current Limitations
 

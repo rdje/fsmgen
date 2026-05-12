@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF live document path audit
+- Added [t/1120-isf-public-live-document-path-audit.t](t/1120-isf-public-live-document-path-audit.t)
+  to prove `embedding.isf_public_interface.live_document_paths` is identical
+  across the direct contract owner, in-process manifest, and both CLI manifest
+  spellings.
+- The audit requires advertised ISF live document paths to be repo-relative,
+  unique, Markdown files, non-escaping, and present on disk.
 ### R14 — deterministic ISF DT block order
 - Updated [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
   so hash-backed scheduler walks that can influence public artifacts use
