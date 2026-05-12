@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF facade failure diagnostic metadata audit
+- Added `facade_failure_diagnostic_shape` to `embedding.isf_public_interface`
+  for bounded constructor, parser, and scheduler facade boundary diagnostics.
+- Added [t/1161-isf-public-facade-failure-diagnostic-metadata-audit.t](t/1161-isf-public-facade-failure-diagnostic-metadata-audit.t)
+  to prove the metadata is exact and aligned with representative facade
+  failures.
 ### R14 — ISF actor-shell value-shape metadata audit
 - Added `actor_shell_value_shape` to `embedding.isf_public_interface` for the
   public parser/scheduler handoff shell.

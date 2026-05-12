@@ -168,6 +168,10 @@ The public scheduler facade method boundary is checked by
 [t/1127-isf-public-scheduler-method-boundary-audit.t](../t/1127-isf-public-scheduler-method-boundary-audit.t).
 The parser and scheduler method receiver boundary is checked by
 [t/1132-isf-public-method-receiver-boundary-audit.t](../t/1132-isf-public-method-receiver-boundary-audit.t).
+The public facade failure diagnostic metadata is checked by
+[t/1161-isf-public-facade-failure-diagnostic-metadata-audit.t](../t/1161-isf-public-facade-failure-diagnostic-metadata-audit.t)
+to keep constructor, parser, and scheduler facade boundary failures advertised
+as bounded scalar diagnostics.
 The scheduler-consumable actor shell returned by the public parser facades is
 checked by
 [t/1129-isf-public-actor-shell-contract-audit.t](../t/1129-isf-public-actor-shell-contract-audit.t).
@@ -259,6 +263,10 @@ The machine-readable contract advertises those required shell fields through
 full raw actor hash remains non-public.
 The parser/scheduler argument-shape fields and actor-shell key list are exact
 facade-shape discovery metadata.
+Public facade boundary failures produce bounded scalar diagnostics before
+object creation, private parsing, or private lowering/reporting begins. The
+machine-readable contract advertises this through
+`facade_failure_diagnostic_shape`.
 
 The advertised ISF-specific CLI option family is `--emit-schedule-json`,
 `--outdir`, and `--strict`.

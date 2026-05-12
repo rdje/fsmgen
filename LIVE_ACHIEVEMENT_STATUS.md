@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — ISF facade failure diagnostic metadata audit
+- Active: `R14`. `t/1161` proves public ISF facade failure diagnostic metadata
+  is exact and aligned with constructor, parser, and scheduler boundary checks.
+
 ## 2026-05-12: R14 — ISF actor-shell value-shape metadata audit
 - Active: `R14`. `t/1160` proves public actor-shell value-shape metadata is
   exact and aligned with parser facade APB actors.

@@ -84,7 +84,8 @@ advertises the required `actor_name`, `transactions`, and `interface` shell keys
 plus their public value shapes without freezing the full raw actor hash. The
 facade-shape metadata for those
 receiver, argument, path, and actor-shell boundaries is audited as exact across
-direct and manifest views. The manifest also advertises the public facade
+direct and manifest views, including bounded scalar diagnostics for public
+facade boundary failures. The manifest also advertises the public facade
 return containers: parser facades return scheduler-consumable actor hashes,
 `lower(...)` returns the bounded lower-result hash, and `report(...)` returns
 schedule-report JSON. Assigned scheduler counters in the

@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF facade failure diagnostic metadata audit
+- Added `facade_failure_diagnostic_shape` to `embedding.isf_public_interface`,
+  documenting public facade boundary failures as bounded scalar diagnostics
+  before object creation, private parsing, or private lowering/reporting.
+- Added `t/1161-isf-public-facade-failure-diagnostic-metadata-audit.t` to prove
+  that metadata is exact across direct and manifest views and aligned with
+  representative constructor, parser, and scheduler boundary failures.
 ## 2026-05-12: R14 — ISF actor-shell value-shape metadata audit
 - Added `actor_shell_value_shape` to `embedding.isf_public_interface`,
   documenting `actor_name` as scalar, `transactions` as an array reference, and

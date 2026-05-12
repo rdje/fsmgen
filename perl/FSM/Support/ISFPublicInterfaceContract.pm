@@ -18,6 +18,7 @@ our @EXPORT_OK = qw(
     isf_public_interface_contract_source
     isf_public_interface_constructor_option_names
     isf_public_interface_dt_assignment_operator_family_map
+    isf_public_interface_facade_failure_diagnostic_shape
     isf_public_interface_live_document_paths
     isf_public_interface_lower_return_shape
     isf_public_interface_lower_result_file_name_shape
@@ -108,6 +109,7 @@ sub build_isf_public_interface_contract {
         parse_source_return_shape => isf_public_interface_parse_source_return_shape(),
         lower_argument_shape => 'scheduler-consumable actor value returned by FSM::Adapter::ISF',
         report_argument_shape => 'scheduler-consumable actor value returned by FSM::Adapter::ISF',
+        facade_failure_diagnostic_shape => isf_public_interface_facade_failure_diagnostic_shape(),
         lower_return_shape => isf_public_interface_lower_return_shape(),
         report_return_shape => isf_public_interface_report_return_shape(),
         actor_shell_required_keys => isf_public_interface_actor_shell_required_keys(),
@@ -202,6 +204,7 @@ sub build_isf_public_interface_contract {
             't/1158-isf-public-report-dt-kind-metadata-audit.t',
             't/1159-isf-public-report-reset-shape-metadata-audit.t',
             't/1160-isf-public-actor-shell-value-shape-audit.t',
+            't/1161-isf-public-facade-failure-diagnostic-metadata-audit.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -241,6 +244,7 @@ sub isf_public_interface_public_top_level_keys {
             parse_source_return_shape
             lower_argument_shape
             report_argument_shape
+            facade_failure_diagnostic_shape
             lower_return_shape
             report_return_shape
             actor_shell_required_keys
@@ -356,6 +360,10 @@ sub isf_public_interface_actor_shell_required_keys {
 
 sub isf_public_interface_actor_shell_value_shape {
     return 'actor_name is scalar; transactions is an array reference; interface is a hash reference';
+}
+
+sub isf_public_interface_facade_failure_diagnostic_shape {
+    return 'public facade boundary failures die with bounded scalar diagnostics before object creation, private parsing, or private lowering/reporting';
 }
 
 sub isf_public_interface_parse_file_return_shape {

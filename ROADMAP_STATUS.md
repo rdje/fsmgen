@@ -152,6 +152,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   reset hashes and omitted reset JSON null.
 - `t/1160` now advertises and proves public actor-shell value shapes for
   `actor_name`, `transactions`, and `interface`.
+- `t/1161` now advertises and proves public facade boundary failures emit
+  bounded scalar diagnostics before private internals run.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.

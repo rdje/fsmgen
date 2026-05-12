@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF facade failure diagnostic metadata audit
+- Downstream consumers need to know that public facade boundary failures lead
+  with public boundary messages as scalar diagnostics, instead of relying on
+  private parser or lowering exception text.
+- `t/1161-isf-public-facade-failure-diagnostic-metadata-audit.t` locks the
+  field across direct and manifest views and checks representative constructor,
+  parser, and scheduler facade failures.
 ## 2026-05-12: R14 ISF actor-shell value-shape metadata audit
 - The actor shell is the public handoff between parser and scheduler facades;
   listing keys without value shapes still leaves consumers guessing at the

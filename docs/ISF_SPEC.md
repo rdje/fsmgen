@@ -97,6 +97,8 @@ reference with the advertised lower-result keys, and `report(...)` returns the
 schedule-report JSON string.
 The contract's facade-shape metadata for these receiver, argument, path, and
 actor-shell boundaries is audited as exact across direct and manifest views.
+Public facade boundary failures are advertised as bounded scalar diagnostics
+before object creation, private parsing, or private lowering/reporting begins.
 For multi-file lowering, the current schedule report is parent-scoped. Child
 scheduled `.fsm` text is exposed through the lower-result `files` map rather
 than folded into the report.
@@ -584,6 +586,7 @@ Focused tests:
 - [t/1158-isf-public-report-dt-kind-metadata-audit.t](../t/1158-isf-public-report-dt-kind-metadata-audit.t)
 - [t/1159-isf-public-report-reset-shape-metadata-audit.t](../t/1159-isf-public-report-reset-shape-metadata-audit.t)
 - [t/1160-isf-public-actor-shell-value-shape-audit.t](../t/1160-isf-public-actor-shell-value-shape-audit.t)
+- [t/1161-isf-public-facade-failure-diagnostic-metadata-audit.t](../t/1161-isf-public-facade-failure-diagnostic-metadata-audit.t)
 
 ## 12. Explicitly Deferred
 
