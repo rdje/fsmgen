@@ -1,5 +1,7 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 — mdBook ISF expanded + data manipulation
+- 8 ISF sub-chapters. shift, assemble, extract constructs. Switch expander handles all clause types.
 ## 2026-05-12: R14 — no merge, mdBook
 - Merge removed. Predictable: one drive = one cycle. mdBook ISF chapter added.
 ## 2026-05-12: R14 — parameterized drives

@@ -2,6 +2,9 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — mdBook ISF + data manip
+- Active: `R14`. 8 ISF sub-chapters + shift/assemble/extract. 36 states, 7 tests.
+
 ## 2026-05-12: R14 — no merge, mdBook
 - Active: `R14`. One drive = one cycle. mdBook ISF chapter 13 added. 7 tests.
 

@@ -1,7 +1,9 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
-### R14 — no merge, one drive = one cycle; mdBook
+### R14 — mdBook ISF chapter (8 sections) + data manipulation
+- 8 ISF sub-chapters. shift_left/right, assemble, extract constructs. 36 states, 7 tests.
+### R14 — no merge, mdBook
 - Every drive call = 1 state. mdBook ch.13 added. 7 tests pass.
 ### R14 — parameterized drives
 - `(drive (name p) body...)` definitions. `(drive name val)` calls wire actuals. 7 tests.

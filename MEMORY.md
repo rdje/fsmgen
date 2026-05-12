@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — mdBook ISF chapter expanded (8 sub-chapters)
+- Full ISF documentation: Actor/Interface, Transactions, Drive Blocks,
+  Control Flow, Data Manipulation, Composition, Rules/Priorities, Lowering Ref
+- Every construct documented with ISF → .fsm lowering rules and examples
+## 2026-05-12: R14 — data manipulation constructs (shift, assemble, extract)
+- `(shift_left reg bit)`, `(shift_right reg bit)`, `(assemble ...)`, `(extract ...)`
+- Added to main dispatcher, repeat body, and switch expander
+- `(update var expr)` works in all contexts
+- 36 states, all 7 tests pass
 ## 2026-05-12: R14 — no merge, one drive = one cycle; mdBook chapter
 - Removed drive call merge logic. Every `(drive ...)` call = one state = one cycle.
 - Predictable timing: concurrent actions go in the same drive definition.

@@ -114,6 +114,11 @@ sub _emit_assignments($self, $state) {
             push @lines, "    ($op ($a->{lhs} $a->{rhs})$guard_str)";
         }
     }
+    if ($state->{fields}) {
+        for my $f (@{$state->{fields}}) {
+            push @lines, "    (<= ($f (slice $state->{word} $f HIGH $f LOW)))";
+        }
+    }
     return @lines;
 }
 
