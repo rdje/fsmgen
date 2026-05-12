@@ -83,7 +83,10 @@ public actor shell before calling private LoweringIR, and the manifest
 advertises the required `actor_name`, `transactions`, and `interface` shell keys
 without freezing the full raw actor hash. The facade-shape metadata for those
 receiver, argument, path, and actor-shell boundaries is audited as exact across
-direct and manifest views. Assigned scheduler counters in the
+direct and manifest views. The manifest also advertises the public facade
+return containers: parser facades return scheduler-consumable actor hashes,
+`lower(...)` returns the bounded lower-result hash, and `report(...)` returns
+schedule-report JSON. Assigned scheduler counters in the
 `*_wd`, `*_cc`, and `*_cnt` naming families are reported as `counter` storage
 with the width inferred by the lowering IR. The advertised contract object is
 JSON-round-trip audited so downstream tooling can consume the manifest metadata

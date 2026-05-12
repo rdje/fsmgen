@@ -51,6 +51,11 @@ The advertised CLI success-shape metadata is checked by
 [t/1153-isf-public-cli-success-metadata-audit.t](../t/1153-isf-public-cli-success-metadata-audit.t)
 to keep the schedule JSON, `--outdir`, and plain HDL-generation success
 surfaces exact across direct and manifest views.
+The advertised in-process facade return-shape metadata is checked by
+[t/1154-isf-public-facade-return-metadata-audit.t](../t/1154-isf-public-facade-return-metadata-audit.t)
+to keep the `parse_file(...)`, `parse_source(...)`, `lower(...)`, and
+`report(...)` return containers exact across direct and manifest views and
+aligned with real APB facade results.
 The advertised parser and scheduler method-name lists are checked by
 [t/1137-isf-public-method-name-metadata-audit.t](../t/1137-isf-public-method-name-metadata-audit.t)
 to stay exact and duplicate-free across those views.
@@ -187,6 +192,15 @@ The advertised entrypoint lists are exact discovery metadata, not examples with
 additional unlisted public entrypoints implied.
 The `parser_method_names` and `scheduler_method_names` lists are exact
 discovery metadata for the public facade method families.
+The parser facade return-shape fields advertise that `parse_file(...)` and
+`parse_source(...)` return scheduler-consumable actor hash references with the
+advertised `actor_shell_required_keys`. The scheduler facade return-shape
+fields advertise that `lower(...)` returns a hash reference with
+`lower_result_presence_keys`, and that `report(...)` returns a JSON string
+encoding `schedule_report_top_level_keys`.
+These fields are exact return-shape metadata. They do not freeze the raw actor
+hash, the full lower-result hash, or every schedule-report field beyond the
+bounded metadata advertised by this contract.
 
 Constructors must be called with the exact public class invocants
 `FSM::Adapter::ISF` or `FSM::Scheduler::ISF`. The only public constructor

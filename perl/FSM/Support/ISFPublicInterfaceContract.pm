@@ -17,8 +17,11 @@ our @EXPORT_OK = qw(
     isf_public_interface_constructor_option_names
     isf_public_interface_dt_assignment_operator_family_map
     isf_public_interface_live_document_paths
+    isf_public_interface_lower_return_shape
     isf_public_interface_lower_result_presence_keys
     isf_public_interface_dt_ordering_policy
+    isf_public_interface_parse_file_return_shape
+    isf_public_interface_parse_source_return_shape
     isf_public_interface_parser_method_names
     isf_public_interface_public_top_level_keys
     isf_public_interface_schedule_report_compile_issues_success_shape
@@ -42,6 +45,7 @@ our @EXPORT_OK = qw(
     isf_public_interface_schedule_report_transaction_states_shape
     isf_public_interface_schedule_report_transaction_keys
     isf_public_interface_schedule_report_watchdog_shape
+    isf_public_interface_report_return_shape
     isf_public_interface_schedule_report_dt_keys
     isf_public_interface_scheduler_method_names
 );
@@ -92,8 +96,12 @@ sub build_isf_public_interface_contract {
         parse_file_argument_shape => 'exactly one scalar filesystem path to a .isf source after object invocant',
         parse_file_path_requirement => 'defined scalar path with .isf suffix naming a readable regular file before private parsing',
         parse_source_argument_shape => 'exactly two scalar arguments after object invocant: source text and source label',
+        parse_file_return_shape => isf_public_interface_parse_file_return_shape(),
+        parse_source_return_shape => isf_public_interface_parse_source_return_shape(),
         lower_argument_shape => 'scheduler-consumable actor value returned by FSM::Adapter::ISF',
         report_argument_shape => 'scheduler-consumable actor value returned by FSM::Adapter::ISF',
+        lower_return_shape => isf_public_interface_lower_return_shape(),
+        report_return_shape => isf_public_interface_report_return_shape(),
         actor_shell_required_keys => isf_public_interface_actor_shell_required_keys(),
         lower_result_presence_keys => isf_public_interface_lower_result_presence_keys(),
         lower_result_file_map_shape => 'hash reference mapping scheduled .fsm basename to scheduled .fsm source text',
@@ -173,6 +181,7 @@ sub build_isf_public_interface_contract {
             't/1151-isf-public-report-count-metadata-audit.t',
             't/1152-isf-public-report-scalar-metadata-audit.t',
             't/1153-isf-public-cli-success-metadata-audit.t',
+            't/1154-isf-public-facade-return-metadata-audit.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -207,8 +216,12 @@ sub isf_public_interface_public_top_level_keys {
             parse_file_argument_shape
             parse_file_path_requirement
             parse_source_argument_shape
+            parse_file_return_shape
+            parse_source_return_shape
             lower_argument_shape
             report_argument_shape
+            lower_return_shape
+            report_return_shape
             actor_shell_required_keys
             lower_result_presence_keys
             lower_result_file_map_shape
@@ -308,6 +321,22 @@ sub isf_public_interface_actor_shell_required_keys {
             interface
         ),
     ];
+}
+
+sub isf_public_interface_parse_file_return_shape {
+    return 'scheduler-consumable actor hash reference with actor_shell_required_keys';
+}
+
+sub isf_public_interface_parse_source_return_shape {
+    return 'scheduler-consumable actor hash reference with actor_shell_required_keys';
+}
+
+sub isf_public_interface_lower_return_shape {
+    return 'hash reference with lower_result_presence_keys; files map is the bounded public lower-result surface';
+}
+
+sub isf_public_interface_report_return_shape {
+    return 'JSON string encoding a schedule report with schedule_report_top_level_keys';
 }
 
 sub isf_public_interface_lower_result_presence_keys {

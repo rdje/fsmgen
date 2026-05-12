@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF facade return metadata audit
+- Added in-process facade return-shape metadata for `parse_file(...)`,
+  `parse_source(...)`, `lower(...)`, and `report(...)` to
+  `embedding.isf_public_interface`.
+- Added [t/1154-isf-public-facade-return-metadata-audit.t](t/1154-isf-public-facade-return-metadata-audit.t)
+  to prove the metadata is exact and the public APB facade calls return the
+  advertised actor, lower-result, and report containers.
 ### R14 — ISF CLI success metadata audit
 - Added CLI success-shape metadata for `--emit-schedule-json`, `--outdir`, and
   plain `file.isf` HDL-generation paths to `embedding.isf_public_interface`.

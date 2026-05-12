@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF facade return metadata audit
+- Downstream consumers need both call-boundary metadata and return-container
+  metadata. The contract now says which public in-process facade returns an
+  actor shell, a lower-result hash, or schedule-report JSON.
+- `t/1154-isf-public-facade-return-metadata-audit.t` locks those strings across
+  direct and manifest views and checks the APB parser/scheduler facades against
+  the advertised shapes.
 ## 2026-05-12: R14 ISF CLI success metadata audit
 - The public contract listed CLI entrypoints and option names, but downstream
   tooling also needs the success I/O shape: JSON on stdout for schedule reports,

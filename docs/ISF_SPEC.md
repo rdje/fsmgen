@@ -64,6 +64,8 @@ guidance list are audited as exact across the same views. Its `tested_by`
 provenance metadata is also audited as an exact repo-local test list.
 Its CLI success-shape metadata is audited as exact for the schedule JSON,
 `--outdir`, and plain HDL-generation paths.
+Its in-process facade return-shape metadata is audited as exact for
+`parse_file(...)`, `parse_source(...)`, `lower(...)`, and `report(...)`.
 
 The public adapter and scheduler constructors require the exact
 `FSM::Adapter::ISF` or `FSM::Scheduler::ISF` class invocant and currently
@@ -81,6 +83,10 @@ array `transactions`, and hash `interface` fields.
 The machine-readable contract publishes that required handoff shell as
 `actor_shell_required_keys`; other raw actor fields are still private parser
 output.
+The same contract publishes the public return containers: parser facades return
+scheduler-consumable actor hash references, `lower(...)` returns a hash
+reference with the advertised lower-result keys, and `report(...)` returns the
+schedule-report JSON string.
 The contract's facade-shape metadata for these receiver, argument, path, and
 actor-shell boundaries is audited as exact across direct and manifest views.
 For multi-file lowering, the current schedule report is parent-scoped. Child
@@ -553,6 +559,7 @@ Focused tests:
 - [t/1151-isf-public-report-count-metadata-audit.t](../t/1151-isf-public-report-count-metadata-audit.t)
 - [t/1152-isf-public-report-scalar-metadata-audit.t](../t/1152-isf-public-report-scalar-metadata-audit.t)
 - [t/1153-isf-public-cli-success-metadata-audit.t](../t/1153-isf-public-cli-success-metadata-audit.t)
+- [t/1154-isf-public-facade-return-metadata-audit.t](../t/1154-isf-public-facade-return-metadata-audit.t)
 
 ## 12. Explicitly Deferred
 
