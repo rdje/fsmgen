@@ -53,7 +53,7 @@
 
     ;; Data
     (switch is_read
-      (1 (repeat 8 (drive scl 1) (sample sda_in as bit) (drive scl 0)))
+      (1 (repeat 8 (drive scl 1) (sample sda_in as rdata) (drive scl 0)))
       (0 (repeat 8 (drive scl 1) (drive sda data_bit) (drive scl 0))))
 
     ;; STOP
