@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF actor-shell timing metadata audit
+- Parser-returned timing fields already drive scheduled `.fsm` and schedule
+  report output. The contract now records their bounded parser-handoff shape:
+  scalar configured clock, reset hash/null, and positive integer/null watchdog.
+- This does not require reset or watchdog in every actor. It documents the
+  current optionality and rejects malformed timing declarations before they can
+  become public actor-shell data.
+- `t/1165-isf-public-actor-shell-timing-shape-audit.t` locks the metadata
+  across direct and manifest views, checks APB timing values, checks omitted
+  reset/watchdog values, and covers malformed clock/reset/watchdog declarations.
 ## 2026-05-13: R14 ISF actor-shell actor-name metadata audit
 - Downstream consumers already receive `actor_name` from the parser facade, and
   scheduler reports derive public basenames from that identity. The contract now

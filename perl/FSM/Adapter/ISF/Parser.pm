@@ -131,6 +131,8 @@ sub _build_actor($self, $actor_ast, $source_label) {
 
 sub _parse_clock($self, $clause) {
     confess "Error: (clock ...) requires exactly one name\n" unless @$clause == 2;
+    confess "Error: (clock ...) requires a scalar name\n"
+        unless defined($clause->[1]) && !ref($clause->[1]) && length($clause->[1]);
     return $clause->[1];
 }
 
@@ -138,12 +140,16 @@ sub _parse_reset($self, $clause) {
     my $spec = $clause->[1];
     # Flat form: (reset rst_n)
     if (!ref($spec)) {
+        confess "Error: (reset ...) requires a scalar name\n"
+            unless defined($spec) && length($spec);
         my $polarity = $spec =~ /_[nb]$/ ? 'active_low' : 'active_high';
         return { name => $spec, kind => 'sync', polarity => $polarity };
     }
     # List form: (reset (rst_n async active_low))
     confess "Error: (reset ...) requires a name\n" unless ref($spec) eq 'ARRAY';
     my $name = $spec->[0];
+    confess "Error: (reset ...) requires a scalar name\n"
+        unless defined($name) && !ref($name) && length($name);
     my $kind = 'sync';
     my $polarity = $name =~ /_[nb]$/ ? 'active_low' : 'active_high';
 
@@ -160,6 +166,8 @@ sub _parse_reset($self, $clause) {
 
 sub _parse_watchdog($self, $clause) {
     confess "Error: (watchdog ...) requires a positive integer\n" unless @$clause == 2;
+    confess "Error: (watchdog ...) requires a positive integer\n"
+        unless defined($clause->[1]) && !ref($clause->[1]) && $clause->[1] =~ /\A[1-9][0-9]*\z/;
     return $clause->[1];
 }
 

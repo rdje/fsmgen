@@ -100,6 +100,10 @@ live-contract metadata for scheduler-consumable actors, not a freeze of the
 full raw actor hash or the private transaction clause payloads.
 The actor identity shape is also explicit: `actor_name` is a non-empty scalar
 identifier preserved from the ISF actor root.
+Current actor timing fields are explicit too: `clock` is a non-empty scalar
+when configured, `reset` is null when omitted or a hash with scalar `name`,
+`kind`, and `polarity`, and `watchdog` is null when omitted or a positive
+integer.
 The same contract publishes the public return containers: parser facades return
 scheduler-consumable actor hash references, `lower(...)` returns a hash
 reference with the advertised lower-result keys, and `report(...)` returns the
@@ -158,15 +162,18 @@ Deprecated compatibility:
 ```
 
 Reset rules:
+- Clock names must be scalar when a `(clock ...)` clause is present.
 - Flat `(reset name)` defaults to synchronous reset.
 - Names ending in `_n` or `_b` infer `active_low`; other names infer
   `active_high`.
 - List form may include `async`, `active_low`, or `active_high`.
+- Reset names must be scalar when a `(reset ...)` clause is present.
 - Async resets lower to `.fsm` `(areset name)`.
 - Sync resets lower to `.fsm` `(sreset name)`.
 
 Watchdog rules:
 - `(watchdog N)` is the actor default for every `(await ...)`.
+- `N` must be a positive integer.
 - `(await port (watchdog M))` overrides the default for that wait.
 - Await states decrement an inferred watchdog counter and transition to a
   timeout state at zero.
@@ -612,6 +619,7 @@ Focused tests:
 - [t/1162-isf-public-actor-shell-interface-shape-audit.t](../t/1162-isf-public-actor-shell-interface-shape-audit.t)
 - [t/1163-isf-public-actor-shell-transaction-shape-audit.t](../t/1163-isf-public-actor-shell-transaction-shape-audit.t)
 - [t/1164-isf-public-actor-shell-actor-name-shape-audit.t](../t/1164-isf-public-actor-shell-actor-name-shape-audit.t)
+- [t/1165-isf-public-actor-shell-timing-shape-audit.t](../t/1165-isf-public-actor-shell-timing-shape-audit.t)
 
 ## 12. Explicitly Deferred
 

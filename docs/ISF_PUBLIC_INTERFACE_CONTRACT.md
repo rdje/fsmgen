@@ -193,6 +193,10 @@ The actor-shell actor-name shape is checked by
 [t/1164-isf-public-actor-shell-actor-name-shape-audit.t](../t/1164-isf-public-actor-shell-actor-name-shape-audit.t)
 to keep parser-returned `actor_name` discoverable as the non-empty scalar
 identifier preserved from the ISF actor root.
+The actor-shell timing shape is checked by
+[t/1165-isf-public-actor-shell-timing-shape-audit.t](../t/1165-isf-public-actor-shell-timing-shape-audit.t)
+to keep parser-returned `clock`, `reset`, and `watchdog` timing fields
+discoverable as bounded current handoff metadata.
 The facade shape metadata that advertises those constructor, method, path, and
 actor-shell boundaries is checked by
 [t/1143-isf-public-facade-shape-metadata-audit.t](../t/1143-isf-public-facade-shape-metadata-audit.t)
@@ -293,6 +297,11 @@ The current public parser handoff also advertises the actor identity shell:
 `actor_name` is a non-empty scalar actor identifier preserved from the ISF actor
 root. The machine-readable contract advertises this through
 `actor_shell_actor_name_shape`.
+The current public parser handoff also advertises bounded actor timing fields:
+`clock` is a non-empty scalar when configured, `reset` is null when omitted or a
+hash with scalar `name`, `kind`, and `polarity`, and `watchdog` is null when
+omitted or a positive integer. The machine-readable contract advertises this
+through `actor_shell_timing_shape`.
 The parser/scheduler argument-shape fields and actor-shell key list are exact
 facade-shape discovery metadata.
 Public facade boundary failures produce bounded scalar diagnostics before

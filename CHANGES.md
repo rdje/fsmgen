@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF actor-shell timing metadata audit
+- Added `actor_shell_timing_shape` to `embedding.isf_public_interface` for the
+  parser-returned `clock`, `reset`, and `watchdog` timing handoff fields.
+- Tightened ISF timing parsing so clock/reset names must be scalar and actor
+  watchdog values must be positive integers before an actor shell is returned.
+- Added [t/1165-isf-public-actor-shell-timing-shape-audit.t](t/1165-isf-public-actor-shell-timing-shape-audit.t)
+  to prove the metadata is exact across direct and manifest views and aligned
+  with APB plus omitted reset/watchdog actors.
 ### R14 — ISF actor-shell actor-name metadata audit
 - Added `actor_shell_actor_name_shape` to
   `embedding.isf_public_interface` for the parser-returned non-empty scalar

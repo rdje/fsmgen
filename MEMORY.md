@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF actor-shell timing metadata audit
+- Added `actor_shell_timing_shape` to `embedding.isf_public_interface`,
+  documenting parser-returned `clock`, `reset`, and `watchdog` timing fields as
+  bounded current handoff metadata.
+- Tightened ISF timing parsing so clock/reset names must be scalar and actor
+  watchdog values must be positive integers before a parser facade returns an
+  actor shell.
+- Added `t/1165-isf-public-actor-shell-timing-shape-audit.t` to prove the
+  metadata is exact across direct and manifest views and aligned with APB plus
+  minimal omitted reset/watchdog actors.
 ## 2026-05-13: R14 — ISF actor-shell actor-name metadata audit
 - Added `actor_shell_actor_name_shape` to `embedding.isf_public_interface`,
   documenting parser-returned `actor_name` as the non-empty scalar identifier

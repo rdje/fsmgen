@@ -166,6 +166,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   identity shape: a non-empty scalar actor identifier preserved from the ISF
   actor root, with non-scalar actor names rejected before returning an actor
   shell.
+- `t/1165` now advertises and proves public actor timing metadata for parser
+  handoff: scalar configured clocks, reset hash/null shape, and positive
+  integer/null watchdogs, with malformed timing declarations rejected before
+  returning an actor shell.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.

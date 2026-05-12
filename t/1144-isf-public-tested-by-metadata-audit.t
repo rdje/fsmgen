@@ -69,6 +69,7 @@ my $expected_tested_by = [
     't/1162-isf-public-actor-shell-interface-shape-audit.t',
     't/1163-isf-public-actor-shell-transaction-shape-audit.t',
     't/1164-isf-public-actor-shell-actor-name-shape-audit.t',
+    't/1165-isf-public-actor-shell-timing-shape-audit.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {
