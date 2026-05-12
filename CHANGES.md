@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — size deduplication
+- Updated [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm)
+  and [perl/FSM/Scheduler/ISF/ModuleEmitter.pm](perl/FSM/Scheduler/ISF/ModuleEmitter.pm)
+  so inferred scheduler storage is not emitted twice in `+size` when the
+  interface already declares the same signal.
+- Added [t/1105-isf-size-deduplication.t](t/1105-isf-size-deduplication.t) to
+  lock APB `last_error` deduplication while preserving watchdog/latency
+  counters and timeout assignment behavior.
 ### R14 — when false exits
 - Updated [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
   so `(when ...)` lowering records body spans and links the false branch to the

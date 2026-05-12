@@ -105,6 +105,8 @@ Watchdog rules:
 ```
 
 Default width is `1`. Interface entries lower into `.fsm` `+size` entries.
+If an inferred scheduler storage name matches a declared interface port, the
+declared port entry is kept and the inferred duplicate is suppressed.
 Output ports are marked as public outputs by the `.fsm` emitter when assigned
 from drive/rule output paths.
 
@@ -391,6 +393,7 @@ Focused tests:
 - [t/1102-isf-repeat-counter-widths.t](../t/1102-isf-repeat-counter-widths.t)
 - [t/1103-isf-switch-branch-exits.t](../t/1103-isf-switch-branch-exits.t)
 - [t/1104-isf-when-branch-exits.t](../t/1104-isf-when-branch-exits.t)
+- [t/1105-isf-size-deduplication.t](../t/1105-isf-size-deduplication.t)
 
 ## 12. Explicitly Deferred
 

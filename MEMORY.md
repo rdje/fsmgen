@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — size deduplication
+- `Emitter::FSM` and the legacy `ModuleEmitter` now suppress inferred
+  counter/storage `+size` entries whose names are already declared interface
+  ports.
+- APB no longer emits two `(last_error 1)` entries while still preserving
+  watchdog/latency counter entries and timeout assignments.
+- Added `t/1105-isf-size-deduplication.t`.
 ## 2026-05-12: R14 — when false exits
 - `LoweringIR` now records `(when ...)` body spans and links the false branch
   to the first state after the whole body.

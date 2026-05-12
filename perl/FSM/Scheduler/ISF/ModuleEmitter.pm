@@ -57,6 +57,7 @@ sub emit_ports($self, $actor, $counters) {
     fsm_trace_enter('ModuleEmitter emit_ports', 3);
     my @lines;
     push @lines, '  (+size';
+    my %declared;
 
     my $iface = $actor->{interface};
 
@@ -64,6 +65,7 @@ sub emit_ports($self, $actor, $counters) {
     for my $port (@{$iface->{inputs}}) {
         my $name  = $port->{name};
         my $width = $port->{width} // 1;
+        $declared{$name} = 1;
         push @lines, "    ($name $width)";
     }
 
@@ -71,12 +73,14 @@ sub emit_ports($self, $actor, $counters) {
     for my $port (@{$iface->{outputs}}) {
         my $name  = $port->{name};
         my $width = $port->{width} // 1;
+        $declared{$name} = 1;
         push @lines, "    ($name $width)";
     }
 
     # Inferred counters from (repeat ...)
     if ($counters && %$counters) {
         for my $name (sort keys %$counters) {
+            next if $declared{$name};
             push @lines, "    ($name $counters->{$name})";
         }
     }

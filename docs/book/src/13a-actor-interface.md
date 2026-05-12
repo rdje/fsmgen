@@ -62,7 +62,8 @@ See [Transactions](13b-transactions.md) for per-await semantics.
   (output PADDR (width 32)))
 ```
 
-Ports become `.fsm` `+size` declarations and module ports.
+Ports become `.fsm` `+size` declarations and module ports. Inferred scheduler
+storage is not emitted a second time when it shares a name with a declared port.
 
 ### Complete Example — APB Interface
 

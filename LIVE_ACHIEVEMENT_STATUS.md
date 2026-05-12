@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — size deduplication
+- Active: `R14`. `t/1105` proves inferred scheduler storage no longer
+  duplicates declared interface ports in `.fsm` `+size` entries.
+
 ## 2026-05-12: R14 — when false exits
 - Active: `R14`. `t/1104` proves top-level and switch-nested `when` blocks
   emit false skip paths to the correct post-body/post-switch state.

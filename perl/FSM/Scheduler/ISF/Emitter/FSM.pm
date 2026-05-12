@@ -57,11 +57,14 @@ sub _emit_system($self, $ir) {
 sub _emit_size($self, $ir) {
     my @l;
     push @l, '  (+size';
+    my %declared;
     for my $p (@{$ir->{ports}}) {
+        $declared{$p->{name}} = 1;
         push @l, "    ($p->{name} $p->{width})";
     }
     my $ctrs = $ir->{counters} || {};
     for my $name (sort keys %$ctrs) {
+        next if $declared{$name};
         push @l, "    ($name $ctrs->{$name})";
     }
     push @l, '  )';

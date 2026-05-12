@@ -46,6 +46,10 @@ This chapter shows the exact generated `.fsm` for each construct.
   (rdata 32))
 ```
 
+Declared interface ports are emitted once. If inferred scheduler storage such
+as timeout/error bookkeeping has the same name as an interface port, the
+inferred duplicate is suppressed.
+
 ## Reset → +system
 
 | ISF | .fsm |

@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 size deduplication
+- ISF lowering uses the counter/storage map for inferred scheduler carriers,
+  but some names such as APB `last_error` can also be declared interface
+  outputs. The `.fsm` `+size` emitter now treats the interface as authoritative
+  and skips inferred duplicates.
+- The dedupe is applied in both the active `Emitter::FSM` and the older
+  `ModuleEmitter` path so the two size emitters do not diverge.
+- `t/1105-isf-size-deduplication.t` locks the APB shape: one `last_error`
+  declaration, watchdog/latency counters still emitted, timeout assignment
+  unchanged.
 ## 2026-05-12: R14 when false exits
 - `when` lowering already carried the true target on the branch state, but the
   linker had no body-span metadata for the false skip target. The branch state
