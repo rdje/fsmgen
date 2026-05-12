@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF identity/stability metadata audit
+- Added [t/1141-isf-public-identity-flags-metadata-audit.t](t/1141-isf-public-identity-flags-metadata-audit.t)
+  to prove ISF contract schema, status, owner, and stability-flag metadata are
+  exact.
+- The audit covers direct owner data, the in-process capability manifest, and
+  both CLI manifest spellings.
 ### R14 — ISF schedule-report metadata audit
 - Added [t/1140-isf-public-schedule-report-metadata-audit.t](t/1140-isf-public-schedule-report-metadata-audit.t)
   to prove the advertised schedule-report key lists, grouped family map,

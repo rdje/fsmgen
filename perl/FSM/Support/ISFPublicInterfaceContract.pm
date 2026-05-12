@@ -126,6 +126,7 @@ sub build_isf_public_interface_contract {
             't/1138-isf-public-constructor-option-metadata-audit.t',
             't/1139-isf-public-lower-result-metadata-audit.t',
             't/1140-isf-public-schedule-report-metadata-audit.t',
+            't/1141-isf-public-identity-flags-metadata-audit.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',

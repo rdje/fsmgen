@@ -52,15 +52,15 @@ schedule-report key families is
 machine-readable form is advertised through
 `--capability-manifest -> embedding.isf_public_interface`. That contract must
 evolve in the same slice as any implementation change that widens or changes
-the public ISF surface. Its `public_top_level_presence_keys` list is audited as
-the exact, unique discovery list for the contract payload across direct and
-manifest views. Its advertised entrypoint lists are also audited as exact and
-duplicate-free across those views, and its ISF-specific CLI option list is
-audited the same way. Its parser and scheduler method-name metadata is also
-audited as exact and duplicate-free, as is its public constructor option
+the public ISF surface. Its identity/stability metadata and
+`public_top_level_presence_keys` list are audited as exact discovery data across
+direct and manifest views. Its advertised entrypoint lists are also audited as
+exact and duplicate-free across those views, and its ISF-specific CLI option
+list is audited the same way. Its parser and scheduler method-name metadata is
+also audited as exact and duplicate-free, as is its public constructor option
 metadata. Its lower-result discovery metadata is audited as exact across direct
-and manifest views too. Its schedule-report metadata fields are audited as
-exact across the same views.
+and manifest views too. Its schedule-report metadata fields are audited as exact
+across the same views.
 
 The public adapter and scheduler constructors require the exact
 `FSM::Adapter::ISF` or `FSM::Scheduler::ISF` class invocant and currently
@@ -500,6 +500,7 @@ Focused tests:
 - [t/1138-isf-public-constructor-option-metadata-audit.t](../t/1138-isf-public-constructor-option-metadata-audit.t)
 - [t/1139-isf-public-lower-result-metadata-audit.t](../t/1139-isf-public-lower-result-metadata-audit.t)
 - [t/1140-isf-public-schedule-report-metadata-audit.t](../t/1140-isf-public-schedule-report-metadata-audit.t)
+- [t/1141-isf-public-identity-flags-metadata-audit.t](../t/1141-isf-public-identity-flags-metadata-audit.t)
 
 ## 12. Explicitly Deferred
 

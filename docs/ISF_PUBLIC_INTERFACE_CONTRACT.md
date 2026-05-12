@@ -23,6 +23,10 @@ Downstream tools can treat that contract metadata as JSON-safe discovery data.
 It is also defensive-copy audited by
 [t/1114-isf-public-interface-contract-defensive-copy-audit.t](../t/1114-isf-public-interface-contract-defensive-copy-audit.t),
 so callers can mutate a received copy without polluting later contract builds.
+The identity and stability metadata is checked by
+[t/1141-isf-public-identity-flags-metadata-audit.t](../t/1141-isf-public-identity-flags-metadata-audit.t)
+to keep schema version, bounded status, owner list, and stability flags exact
+across direct and manifest views.
 Both capability-manifest CLI spellings are audited by
 [t/1115-isf-public-interface-cli-manifest-audit.t](../t/1115-isf-public-interface-cli-manifest-audit.t)
 to keep the in-process contract and CLI-advertised contract aligned.
@@ -105,6 +109,8 @@ The current bounded public surface is deliberately narrow.
 The machine-readable contract's `public_top_level_presence_keys` list is the
 exact top-level discovery list for the contract payload. It is not a partial
 hint list.
+The schema/status/owner identity fields and stability flags are exact discovery
+metadata for the contract's current bounded-public stance.
 
 Supported CLI entrypoints:
 

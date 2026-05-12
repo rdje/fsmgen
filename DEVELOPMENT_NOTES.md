@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF identity/stability metadata audit
+- The ISF public contract now carries enough metadata for downstream consumers
+  to distinguish exact bounded-public promises from non-public implementation
+  internals. That metadata needs drift protection too, not only the nested key
+  families.
+- `t/1141-isf-public-identity-flags-metadata-audit.t` locks schema version,
+  status, owner list, and stability flags across the direct owner, in-process
+  capability manifest, and both CLI manifest spellings.
 ## 2026-05-12: R14 ISF schedule-report metadata audit
 - Schedule-report behavior is covered by fixture tests, but downstream manifest
   consumers also need the advertised report metadata itself to be exact across

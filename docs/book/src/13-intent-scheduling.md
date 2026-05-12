@@ -86,8 +86,9 @@ without freezing the full raw actor hash. Assigned scheduler counters in the
 with the width inferred by the lowering IR. The advertised contract object is
 JSON-round-trip audited so downstream tooling can consume the manifest metadata
 as portable discovery data, and defensive-copy audited so caller mutation does
-not pollute later contract builds. Its top-level discovery list is audited as
-exact and unique across direct and manifest views, and its advertised
+not pollute later contract builds. Its identity and stability metadata plus its
+top-level discovery list are audited as exact across direct and manifest views,
+and its advertised
 entrypoint, CLI option, method-name, and constructor-option lists are audited as
 exact and duplicate-free. Its lower-result and schedule-report discovery
 metadata are audited as exact. Both

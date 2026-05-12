@@ -1,5 +1,10 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF identity/stability metadata audit
+- Added `t/1141-isf-public-identity-flags-metadata-audit.t` to prove the ISF
+  public contract schema version, bounded status, contract source,
+  implementation owners, and stability flags are exact across the direct owner,
+  in-process capability manifest, and both CLI manifest spellings.
 ## 2026-05-12: R14 — ISF schedule-report metadata audit
 - Added `t/1140-isf-public-schedule-report-metadata-audit.t` to prove the
   advertised schedule-report key lists, grouped key-family map, successful
