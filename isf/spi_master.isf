@@ -1,0 +1,39 @@
+;; SPI master controller — mode 0 (CPOL=0, CPHA=0)
+(actor spi_master
+  (clock clk)
+  (reset (rst_n async active_low))
+  (watchdog 65536)
+
+  (interface
+    (input  start)
+    (input  tx_data (width 8))
+    (output done)
+    (output rx_data (width 8))
+    (output sclk)
+    (output mosi)
+    (input  miso)
+    (output cs))
+
+  (drive (sclk val)   (sclk val))
+  (drive (mosi val)   (mosi val))
+  (drive (cs val)     (cs val))
+
+  (transaction spi_transfer
+    (on start
+      (sample tx_data as tx_byte))
+
+    ;; Assert CS (active low)
+    (drive cs 0)
+
+    ;; 8 clock cycles: shift out tx, shift in rx
+    (repeat 8
+      (drive mosi tx_byte)           ;; drive MOSI with current MSB
+      (shift_left tx_byte 0)         ;; shift tx left, LSB=0
+      (drive sclk 1)                 ;; SCLK rising edge
+      (shift_left rx_data miso)      ;; sample MISO, shift into rx
+      (drive sclk 0))                ;; SCLK falling edge
+
+    ;; Deassert CS
+    (drive cs 1)
+
+    (complete done)))
