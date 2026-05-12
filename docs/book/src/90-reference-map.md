@@ -26,6 +26,7 @@ Some docs are intentionally still focused references:
 - [../../EXTENSION_MODEL.md](../../EXTENSION_MODEL.md)
 - [../../REGRESSION_CORPUS.md](../../REGRESSION_CORPUS.md)
 - [../../ISF_SPEC.md](../../ISF_SPEC.md)
+- [../../ISF_PUBLIC_INTERFACE_CONTRACT.md](../../ISF_PUBLIC_INTERFACE_CONTRACT.md)
 - [../../BIN_FSMGEN_IMPORT_TREE.md](../../BIN_FSMGEN_IMPORT_TREE.md)
 - [../../COMPOSITION_LEGACY_MAPPING.md](../../COMPOSITION_LEGACY_MAPPING.md)
 - [../../../ROADMAP_STATUS.md](../../../ROADMAP_STATUS.md)

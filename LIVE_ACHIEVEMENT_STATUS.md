@@ -2,6 +2,11 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — ISF public interface contract
+- Active: `R14`. `embedding.isf_public_interface` now advertises the bounded
+  live downstream-consumer contract for ISF parser/scheduler facades and
+  schedule-report key families.
+
 ## 2026-05-12: R14 — samples before data ops
 - Active: `R14`. `t/1111` proves samples are materialized before data
   operations at top level and inside `when`, `switch`, and `repeat` bodies.

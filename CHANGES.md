@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF public interface contract
+- Added [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm)
+  and advertised it through `embedding.isf_public_interface` in the capability
+  manifest.
+- Added [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md)
+  as the live downstream-consumer contract for ISF parser/scheduler facades,
+  lower-result `files`, and bounded schedule-report key families.
+- Added [t/1112-isf-public-interface-contract.t](t/1112-isf-public-interface-contract.t)
+  to lock the initial contract and manifest wiring.
 ### R14 — samples before data ops
 - Updated [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
   so pending samples materialize before data-operation states instead of after

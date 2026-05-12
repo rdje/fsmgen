@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF public interface contract
+- Added `FSM::Support::ISFPublicInterfaceContract` and advertised it through
+  `--capability-manifest -> embedding.isf_public_interface`.
+- Added `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md` as the live downstream-consumer
+  contract for ISF parser/scheduler facades, lower-result `files`, and bounded
+  schedule-report key families.
+- Added `t/1112-isf-public-interface-contract.t`; future public ISF behavior
+  changes must update this contract/doc set in the same slice.
 ## 2026-05-12: R14 — samples before data ops
 - `LoweringIR` now materializes pending samples before data-operation states
   instead of leaving the sample until after `update`, shift, assemble, or

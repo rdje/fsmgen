@@ -1719,16 +1719,16 @@ The `embedding` section now follows the same split too:
 [perl/FSM/Support/EmbeddingContract.pm](perl/FSM/Support/EmbeddingContract.pm)
 owns the published top-level and nested contract-owner map advertised through
 `embedding.section_contract`, while the narrower result, composition-report,
-serializable plan/report, facade, typed-extension, and debug-runtime contracts
-still own their deeper public promises.
+serializable plan/report, facade, ISF public-interface, typed-extension, and
+debug-runtime contracts still own their deeper public promises.
 The emitted `embedding` section itself is now built through
 [perl/FSM/Support/EmbeddingSection.pm](perl/FSM/Support/EmbeddingSection.pm)
 and runtime-locked as an exact dedicated-builder projection across both
 in-process and CLI manifest surfaces. That keeps the grouped
 `composition_report`, `hdl_generator_facade`, `hdl_generator_result`,
-`serializable_plan_reports`, `typed_extensions`, and `debug_runtime` child
-contracts in one place instead of leaving that public section as duplicated
-inline manifest assembly logic.
+`isf_public_interface`, `serializable_plan_reports`, `typed_extensions`, and
+`debug_runtime` child contracts in one place instead of leaving that public
+section as duplicated inline manifest assembly logic.
 The embedding section contract is also full-surface audited for JSON round-trip
 stability and for clean rebuilds after caller mutation, so embedders can treat
 the advertised `embedding.section_contract` object as caller-owned metadata
@@ -1741,8 +1741,8 @@ non-public extension-loading options.
 That section shell now also publishes a grouped `nested_presence_key_map` so
 downstream tools can discover the bounded child key families for
 `composition_report`, `hdl_generator_facade`, `hdl_generator_result`,
-`serializable_plan_reports`, `typed_extensions`, and `debug_runtime` from one
-place before descending into those narrower contracts.
+`isf_public_interface`, `serializable_plan_reports`, `typed_extensions`, and
+`debug_runtime` from one place before descending into those narrower contracts.
 The `diagnostics` section now follows the same split too:
 [perl/FSM/Support/DiagnosticsContract.pm](perl/FSM/Support/DiagnosticsContract.pm)
 owns the published top-level, scalar-string, and stable-code entry families

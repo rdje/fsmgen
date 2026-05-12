@@ -37,15 +37,16 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 11. `docs/SPECFORGE_FEEDBACK_RESPONSE.md`: FSMGen's tracked response and alignment plan for SPECFORGE adapter feedback.
 12. `docs/INTENT_SCHEDULING_BRAINSTORM.md`: living brainstorm log for an intent-scheduling layer above explicit cycle-authored `.fsm`.
 13. `docs/ISF_SPEC.md`: active R14 `.isf` Intent Scheduling Format specification.
-14. `docs/BIN_FSMGEN_IMPORT_TREE.md`: live `bin/fsmgen` import-tree and runtime-spine architecture snapshot.
-15. `docs/REGRESSION_CORPUS.md`: human-readable regression/support-accounting corpus companion.
-16. `docs/INTENT_CAPTURE_AXI_CASE_STUDY.md`: AXI intent-capture case-study notes for future high-level synthesis work.
-17. `CHANGES.md`: chronological technical changes.
-18. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
-19. `MEMORY.md`: continuity/handoff state.
-20. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
-21. `WARP.md`: repository-specific agent/development guidance.
-22. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
+14. `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`: live downstream-consumer API contract for ISF parser/scheduler surfaces.
+15. `docs/BIN_FSMGEN_IMPORT_TREE.md`: live `bin/fsmgen` import-tree and runtime-spine architecture snapshot.
+16. `docs/REGRESSION_CORPUS.md`: human-readable regression/support-accounting corpus companion.
+17. `docs/INTENT_CAPTURE_AXI_CASE_STUDY.md`: AXI intent-capture case-study notes for future high-level synthesis work.
+18. `CHANGES.md`: chronological technical changes.
+19. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
+20. `MEMORY.md`: continuity/handoff state.
+21. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
+22. `WARP.md`: repository-specific agent/development guidance.
+23. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
 
 ## Documentation index (all `.md` files in this repo)
 - `README.md` — single entry point and navigation hub.
@@ -62,6 +63,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/SPECFORGE_FEEDBACK_RESPONSE.md` — tracked FSMGen response to SPECFORGE adapter/tool-integration feedback.
 - `docs/INTENT_SCHEDULING_BRAINSTORM.md` — living brainstorm log for inferring/scheduling cycles from a hardware-native intent layer above explicit `.fsm`.
 - `docs/ISF_SPEC.md` — active R14 `.isf` Intent Scheduling Format specification.
+- `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md` — live downstream-consumer API contract for ISF parser/scheduler surfaces.
 - `docs/REGRESSION_CORPUS.md` — human-readable companion to the machine-checked support and regression catalog.
 - `docs/INTENT_CAPTURE_AXI_CASE_STUDY.md` — AXI intent-capture case-study notes for future high-level synthesis work.
 - `docs/VHDL_SCOPE.md` — scoped VHDL backend plan preserved for future horizon H5 reference.
@@ -120,6 +122,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `perl/FSM/Support/DebugRuntimeContract.pm` — bounded in-process debug save/restore/scoped runtime contract advertised through `embedding.debug_runtime`.
 - `perl/FSM/Support/ExtensionContract.pm` — bounded typed-extension/context contract advertised to embedders through the capability manifest.
 - `perl/FSM/Support/HDLGeneratorFacadeContract.pm` — bounded public in-process `HDLGenerator` constructor/generation facade contract advertised through `embedding.hdl_generator_facade`.
+- `perl/FSM/Support/ISFPublicInterfaceContract.pm` — bounded public ISF parser/scheduler facade and schedule-report contract advertised through `embedding.isf_public_interface`.
 - `perl/FSM/Support/HDLGeneratorModuleInfoContract.pm` — bounded nested-object contract for `HDLGenerator` `module_info` identity plus direct/composition scalar summary subsurfaces.
 - `perl/FSM/Support/HDLGeneratorCompositionPlanContract.pm` — bounded shell-only contract for the raw `HDLGenerator` `composition_plan` branch plus its sanitized composition-summary fallback surfaces.
 - `perl/FSM/Support/HDLGeneratorCompositionSpecContract.pm` — bounded shell-only contract for the raw `HDLGenerator` `composition_spec` branch plus its sanitized composition-summary fallback surfaces.
@@ -313,6 +316,8 @@ The current embedding children include
 [perl/FSM/Support/DebugRuntimeContract.pm](perl/FSM/Support/DebugRuntimeContract.pm),
 and `embedding.hdl_generator_facade`, owned by
 [perl/FSM/Support/HDLGeneratorFacadeContract.pm](perl/FSM/Support/HDLGeneratorFacadeContract.pm),
+and `embedding.isf_public_interface`, owned by
+[perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm),
 so callers can discover the shipped in-process runtime/facade boundaries from
 the manifest instead of inferring them from Perl implementation files.
 The manifest's `diagnostics` section now follows that split too:

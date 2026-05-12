@@ -46,6 +46,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   non-entry child state, not only drive-first children.
 - `t/1111` now proves pending samples materialize before data-operation states
   at top level and inside `when`, `switch`, and `repeat` bodies.
+- `t/1112` now starts the downstream ISF public-interface contract at
+  `embedding.isf_public_interface` and records its live human contract document.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
@@ -3467,6 +3469,8 @@ Deliverables:
 - Emit scheduled `.fsm` and machine-readable schedule JSON from the same IR.
 - Compile scheduled `.fsm` through the existing direct HDL pipeline.
 - Cover realistic protocol fixtures and strict-mode checks.
+- Keep the ISF downstream-consumer public interface contract live alongside the
+  implementation and widen it only with documentation plus regression coverage.
 Status: `in progress`
 Done:
 - R14 is active; the former VHDL backend lane is preserved as horizon `H5` in
@@ -3498,8 +3502,13 @@ Done:
 - [docs/ISF_SPEC.md](docs/ISF_SPEC.md) is synchronized to the current shipped
   parser/scheduler behavior and explicitly records the current limitations:
   deferred composition-top instantiation, unenforced resources/priorities,
-  schedule JSON as a non-stable schema, and unknown-width data operation
-  fallback behavior.
+  schedule JSON as a bounded-but-not-fully-frozen public shape, and
+  unknown-width data operation fallback behavior.
+- [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md)
+  and [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm)
+  start the live downstream-consumer contract for ISF CLI entrypoints,
+  `FSM::Adapter::ISF` / `FSM::Scheduler::ISF` facade methods, lower-result
+  files, and bounded schedule-report key families.
 - [t/1096-isf-schedule-json-report.t](t/1096-isf-schedule-json-report.t) locks
   the current APB schedule JSON report identity, counts, transaction state
   order, DT summaries, inferred storage, and empty `compile_issues`.
@@ -3547,15 +3556,24 @@ Done:
 - [t/1111-isf-sample-before-data-ops.t](t/1111-isf-sample-before-data-ops.t)
   locks sample materialization before data-operation states at top level and
   inside current control-flow bodies.
+- [t/1112-isf-public-interface-contract.t](t/1112-isf-public-interface-contract.t)
+  locks the first bounded ISF public-interface contract and its manifest
+  advertisement at `embedding.isf_public_interface`.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.
 - Broaden schedule-report assertions and end-to-end fixture coverage as the
   scheduler surface stabilizes.
+- Keep [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md),
+  [docs/ISF_SPEC.md](docs/ISF_SPEC.md), the mdBook, and
+  `FSM::Support::ISFPublicInterfaceContract` synchronized whenever public ISF
+  behavior changes.
 Exit criteria:
 - `.isf` has a documented, regression-backed lowering contract that can produce
   scheduled `.fsm`, schedule JSON, and generated HDL for the agreed realistic
   protocol fixture set without hidden timing choices.
+- Downstream consumers can discover the bounded ISF parser/scheduler and
+  schedule-report contract from the capability manifest and matching live docs.
 - `R11`: `StructuralRTLIR` connection expressions now cover bounded indexed and
   sliced signal forms in addition to plain `signal_ref`, including explicit
   top-link source-side top-port and child-output projection forms, with the

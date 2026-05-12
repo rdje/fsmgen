@@ -25,6 +25,10 @@ use FSM::Support::HDLGeneratorResultContract qw(
     hdl_generator_result_contract_source
     hdl_generator_result_known_top_level_keys
 );
+use FSM::Support::ISFPublicInterfaceContract qw(
+    isf_public_interface_contract_source
+    isf_public_interface_public_top_level_keys
+);
 use FSM::Support::SerializablePlanReportContract qw(
     serializable_plan_report_contract_source
     serializable_plan_report_public_top_level_keys
@@ -63,6 +67,7 @@ sub build_embedding_contract {
             composition_report => composition_report_contract_source(),
             hdl_generator_facade => hdl_generator_facade_contract_source(),
             hdl_generator_result => hdl_generator_result_contract_source(),
+            isf_public_interface => isf_public_interface_contract_source(),
             serializable_plan_reports => serializable_plan_report_contract_source(),
             typed_extensions => extension_contract_source(),
             debug_runtime => debug_runtime_contract_source(),
@@ -72,8 +77,8 @@ sub build_embedding_contract {
         full_embedding_section_stable => JSON::PP::false,
         guidance => [
             'Treat the published embedding-section top-level keys and nested contract ownership map as the bounded public manifest-facing contract for schema version 1.',
-            'Use the grouped nested_presence_key_map to discover the bounded key families for composition_report, hdl_generator_facade, hdl_generator_result, serializable_plan_reports, typed_extensions, and debug_runtime without collecting those child key lists separately.',
-            'The embedding section groups narrower in-process facade, result, composition-report, serializable plan/report, typed-extension, and debug-runtime contracts instead of turning the whole embedding tree into one flat API.',
+            'Use the grouped nested_presence_key_map to discover the bounded key families for composition_report, hdl_generator_facade, hdl_generator_result, isf_public_interface, serializable_plan_reports, typed_extensions, and debug_runtime without collecting those child key lists separately.',
+            'The embedding section groups narrower in-process facade, result, ISF public-interface, composition-report, serializable plan/report, typed-extension, and debug-runtime contracts instead of turning the whole embedding tree into one flat API.',
             'Widen the section deliberately when new embedding-facing surfaces are documented and regression-backed.',
         ],
     };
@@ -85,6 +90,7 @@ sub embedding_public_top_level_keys {
             composition_report
             hdl_generator_facade
             hdl_generator_result
+            isf_public_interface
             serializable_plan_reports
             typed_extensions
             debug_runtime
@@ -99,6 +105,7 @@ sub embedding_nested_contract_keys {
             composition_report
             hdl_generator_facade
             hdl_generator_result
+            isf_public_interface
             serializable_plan_reports
             typed_extensions
             debug_runtime
@@ -111,6 +118,7 @@ sub embedding_nested_presence_key_map {
         composition_report => composition_report_public_top_level_keys(),
         hdl_generator_facade => hdl_generator_facade_public_top_level_keys(),
         hdl_generator_result => hdl_generator_result_known_top_level_keys(),
+        isf_public_interface => isf_public_interface_public_top_level_keys(),
         serializable_plan_reports => serializable_plan_report_public_top_level_keys(),
         typed_extensions => extension_contract_public_top_level_keys(),
         debug_runtime => debug_runtime_public_top_level_keys(),

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF public interface contract
+- The existing `.fsm`/embedding stabilization work lives in R13, but ISF now
+  has enough shipped downstream-facing surface to need its own R14 contract
+  owner instead of relying on prose in `docs/ISF_SPEC.md`.
+- `FSM::Support::ISFPublicInterfaceContract` intentionally starts narrow:
+  parser/scheduler facade method families, the scheduler lower-result `files`
+  key, and bounded schedule-report key families. It does not freeze the raw
+  actor hash, `LoweringIR`, or the full schedule JSON schema.
+- `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md` is a live companion document. ISF
+  implementation slices that change public parser, scheduler, CLI,
+  lower-result, or schedule-report behavior must update the doc, mdBook,
+  manifest contract, and focused regressions in the same slice.
 ## 2026-05-12: R14 samples before data ops
 - Samples can be consumed in the same scheduled state as a following drive or
   await because those states already carry sample assignments. Data-operation

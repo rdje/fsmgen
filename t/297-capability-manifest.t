@@ -106,6 +106,14 @@ use FSM::Support::HDLGeneratorResultContract qw(
     hdl_generator_result_optional_composition_key_family_map
     hdl_generator_result_semantic_layer_presence_key_family_map
 );
+use FSM::Support::ISFPublicInterfaceContract qw(
+    isf_public_interface_contract_source
+    isf_public_interface_parser_method_names
+    isf_public_interface_public_top_level_keys
+    isf_public_interface_schedule_report_presence_key_family_map
+    isf_public_interface_schedule_report_top_level_keys
+    isf_public_interface_scheduler_method_names
+);
 use FSM::Support::DiagnosticCodes qw(diagnostic_code_ids);
 use FSM::Support::DiagnosticCodeRegistryContract qw(
     diagnostic_code_registry_contract_source
@@ -1164,6 +1172,54 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
     ok(
         !$manifest->{embedding}{hdl_generator_facade}{object_injection_args_public},
         'manifest does not claim the current owner-injection constructor args are public',
+    );
+    is(
+        $manifest->{embedding}{isf_public_interface}{schema_version},
+        1,
+        'manifest records ISF public-interface contract schema version',
+    );
+    is(
+        $manifest->{embedding}{isf_public_interface}{status},
+        'bounded_public',
+        'manifest marks the ISF public-interface seam as bounded public',
+    );
+    is(
+        $manifest->{embedding}{isf_public_interface}{contract_source},
+        isf_public_interface_contract_source(),
+        'manifest records the ISF public-interface contract owner',
+    );
+    is_deeply(
+        $manifest->{embedding}{isf_public_interface}{public_top_level_presence_keys},
+        isf_public_interface_public_top_level_keys(),
+        'manifest records the bounded ISF public-interface top-level keys',
+    );
+    is_deeply(
+        $manifest->{embedding}{isf_public_interface}{parser_method_names},
+        isf_public_interface_parser_method_names(),
+        'manifest records the bounded ISF parser method family',
+    );
+    is_deeply(
+        $manifest->{embedding}{isf_public_interface}{scheduler_method_names},
+        isf_public_interface_scheduler_method_names(),
+        'manifest records the bounded ISF scheduler method family',
+    );
+    is_deeply(
+        $manifest->{embedding}{isf_public_interface}{schedule_report_top_level_keys},
+        isf_public_interface_schedule_report_top_level_keys(),
+        'manifest records the bounded ISF schedule-report top-level keys',
+    );
+    is_deeply(
+        $manifest->{embedding}{isf_public_interface}{schedule_report_presence_key_family_map},
+        isf_public_interface_schedule_report_presence_key_family_map(),
+        'manifest records the grouped ISF schedule-report key families',
+    );
+    ok(
+        $manifest->{embedding}{isf_public_interface}{live_contract_documentation},
+        'manifest records ISF public-interface docs as live documentation',
+    );
+    ok(
+        $manifest->{embedding}{isf_public_interface}{evolves_with_isf_implementation},
+        'manifest records ISF public-interface contract evolution policy',
     );
     is(
         $manifest->{embedding}{hdl_generator_result}{status},

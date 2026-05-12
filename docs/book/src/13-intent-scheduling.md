@@ -66,8 +66,12 @@ FSM::Scheduler::ISF::LoweringIR   ← typed IR
 ```
 
 The schedule report is generated from the same IR as the `.fsm` text. The
-current APB report shape is regression-covered, but the JSON schema remains a
-current implementation surface rather than a frozen external API. Assigned
+current APB report shape is regression-covered. The bounded downstream-facing
+ISF API contract is advertised through `--capability-manifest` at
+`embedding.isf_public_interface` and described in
+[docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](../../ISF_PUBLIC_INTERFACE_CONTRACT.md).
+That contract is live documentation: it evolves in the same slice as public ISF
+parser, scheduler, CLI, lower-result, or schedule-report changes. Assigned
 scheduler counters in the `*_wd`, `*_cc`, and `*_cnt` naming families are
 reported as `counter` storage with the width inferred by the lowering IR.
 Transaction summaries include the generated state families used by the current

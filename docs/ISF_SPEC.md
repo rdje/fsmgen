@@ -2,6 +2,7 @@
 
 Source material:
 - [docs/INTENT_SCHEDULING_BRAINSTORM.md](INTENT_SCHEDULING_BRAINSTORM.md)
+- [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](ISF_PUBLIC_INTERFACE_CONTRACT.md)
 - [docs/book/src/13-intent-scheduling.md](book/src/13-intent-scheduling.md)
 - [docs/book/src/13h-lowering-reference.md](book/src/13h-lowering-reference.md)
 
@@ -37,6 +38,15 @@ Current CLI behavior:
   temporary file and fed into the normal `.fsm` pipeline.
 - If lowering produces multiple `.fsm` files, `--outdir DIR` writes every file
   there and the parent actor file is fed into the normal pipeline.
+
+The live downstream-consumer API contract for these CLI surfaces, the
+`FSM::Adapter::ISF` / `FSM::Scheduler::ISF` in-process facades, and the bounded
+schedule-report key families is
+[docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](ISF_PUBLIC_INTERFACE_CONTRACT.md). Its
+machine-readable form is advertised through
+`--capability-manifest -> embedding.isf_public_interface`. That contract must
+evolve in the same slice as any implementation change that widens or changes
+the public ISF surface.
 
 ## 3. Source Root
 
@@ -368,14 +378,15 @@ arbitration policy.
 }
 ```
 
-This is a machine-readable schedule report, not a stable public API contract
-yet. It is intentionally generated from the same lowering IR as `.fsm` output.
-Current scalar source values such as `watchdog` are preserved as parser-carried
-strings in the JSON report. Assigned scheduler counters using the generated
-`*_wd`, `*_cc`, and `*_cnt` naming families are reported as `kind: counter`
-with the width inferred by `LoweringIR`. Transaction summaries include the
-generated state families used by the current scheduler, including control-flow
-and data-operation states.
+This is a machine-readable schedule report generated from the same lowering IR
+as `.fsm` output. It now has a bounded public key-family contract through
+`embedding.isf_public_interface`, but it is not a frozen full schema. Current
+scalar source values such as `watchdog` are preserved as parser-carried strings
+in the JSON report. Assigned scheduler counters using the generated `*_wd`,
+`*_cc`, and `*_cnt` naming families are reported as `kind: counter` with the
+width inferred by `LoweringIR`. Transaction summaries include the generated
+state families used by the current scheduler, including control-flow and
+data-operation states.
 
 ## 11. Current Regression Fixtures
 
@@ -412,6 +423,7 @@ Focused tests:
 - [t/1109-isf-await-all-sync.t](../t/1109-isf-await-all-sync.t)
 - [t/1110-isf-do-child-entry-rewire.t](../t/1110-isf-do-child-entry-rewire.t)
 - [t/1111-isf-sample-before-data-ops.t](../t/1111-isf-sample-before-data-ops.t)
+- [t/1112-isf-public-interface-contract.t](../t/1112-isf-public-interface-contract.t)
 
 ## 12. Explicitly Deferred
 
@@ -422,4 +434,5 @@ Focused tests:
 - Full temporal `(contract ...)` assertions.
 - Rich storage-class optimization in schedule reports.
 - Full width inference for unknown-width `shift_right` and `extract` values.
-- Treating schedule JSON as a stable public schema.
+- Treating the schedule JSON as a fully frozen public schema beyond the bounded
+  key families advertised by `embedding.isf_public_interface`.
