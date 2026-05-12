@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — `when` body data/repeat lowering
+- `LoweringIR` now passes the transaction width map and counter accumulator
+  through `_expand_when`, matching the bounded body families already supported
+  by switch branches.
+- `(when ...)` bodies now lower nested `repeat`, `update`, `shift_left`,
+  `shift_right`, `assemble`, `extract`, and nested `when` clauses while keeping
+  existing false-skip and branch-tail exit behavior.
+- Added `t/1107-isf-when-body-ops.t`.
 ## 2026-05-12: R14 — schedule JSON counter storage
 - `Emitter::JSON` now reports assigned scheduler counters (`*_wd`, `*_cc`,
   `*_cnt`) as `kind => counter` with the width inferred in the lowering IR.

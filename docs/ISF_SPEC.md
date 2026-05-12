@@ -248,7 +248,9 @@ Current lowering:
 `(when condition body...)` creates one decision state plus body states. The
 true path enters the body, and the false path skips to the first state after
 the whole `when` body. Current body support includes drive, await, sample,
-complete, and nested state generation used by shipped fixtures.
+complete, repeat, update, shift/assemble/extract data operations, and nested
+`when`. Nested repeats inside `when` bodies register the shared transaction
+counter width like top-level and switch-nested repeats.
 
 `(switch signal (value body...)...)` creates one decision state with one branch
 per unique value. Duplicate values are rejected. Current branch-body support
@@ -397,6 +399,7 @@ Focused tests:
 - [t/1104-isf-when-branch-exits.t](../t/1104-isf-when-branch-exits.t)
 - [t/1105-isf-size-deduplication.t](../t/1105-isf-size-deduplication.t)
 - [t/1106-isf-schedule-json-counter-storage.t](../t/1106-isf-schedule-json-counter-storage.t)
+- [t/1107-isf-when-body-ops.t](../t/1107-isf-when-body-ops.t)
 
 ## 12. Explicitly Deferred
 

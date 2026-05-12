@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — `when` body data/repeat lowering
+- Active: `R14`. `t/1107` proves `when` bodies now lower data operations and
+  nested repeats with inferred counter widths while preserving false exits.
+
 ## 2026-05-12: R14 — schedule JSON counter storage
 - Active: `R14`. `t/1106` proves schedule JSON reports assigned scheduler
   counters as counters with inferred widths while preserving the current

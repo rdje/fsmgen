@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — `when` body data/repeat lowering
+- Updated [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so `_expand_when` receives the transaction width map and counter accumulator.
+- `(when ...)` bodies now lower data operations, nested repeats, and nested
+  `when` clauses while preserving existing false-skip and branch-tail exits.
+- Added [t/1107-isf-when-body-ops.t](t/1107-isf-when-body-ops.t) to lock
+  known-width `shift_right`, nested repeat body lowering, and repeat counter
+  width registration inside a `when` body.
 ### R14 — schedule JSON counter storage
 - Updated [perl/FSM/Scheduler/ISF/Emitter/JSON.pm](perl/FSM/Scheduler/ISF/Emitter/JSON.pm)
   so assigned scheduler counters such as watchdog, latency, and repeat

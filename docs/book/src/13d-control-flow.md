@@ -25,7 +25,9 @@
 ```
 
 The body tail exits to the same next top-level state, including when the
-`when` appears inside a switch branch.
+`when` appears inside a switch branch. Current body support includes drive,
+await, sample, complete, nested `when`, repeat bodies, and the shipped
+data-operation family (`update`, shifts, `assemble`, and `extract`).
 
 ## `(switch signal (value body...)...)` — Multi-Way Dispatch
 

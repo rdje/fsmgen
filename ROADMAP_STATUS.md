@@ -34,6 +34,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   duplicates for declared interface ports.
 - `t/1106` now proves schedule JSON reports assigned scheduler counters as
   counters with IR-inferred widths without broadening the storage-name set.
+- `t/1107` now proves `when` bodies lower data operations, nested repeats, and
+  repeat counter widths while preserving false-skip exits.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
@@ -3521,6 +3523,9 @@ Done:
 - [t/1106-isf-schedule-json-counter-storage.t](t/1106-isf-schedule-json-counter-storage.t)
   locks schedule JSON storage classification for assigned watchdog, latency,
   and repeat counters with their IR-inferred widths.
+- [t/1107-isf-when-body-ops.t](t/1107-isf-when-body-ops.t) locks `when` body
+  lowering for data operations, nested repeats, and repeat counter width
+  registration.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

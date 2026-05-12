@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 `when` body data/repeat lowering
+- `switch` and `repeat` body lowering already shared the transaction width map
+  for known-width data operations. `when` was the narrower path: it could lower
+  drive, await, sample, and complete, but skipped repeat/data-op clauses.
+- `_expand_when` now receives the same width and counter context as
+  `_expand_switch`, so nested repeats inside `when` bodies register the shared
+  transaction counter and data operations keep known-width behavior.
+- This is still a bounded body-support slice, not a full control-flow
+  normalization pass. Resource/priority enforcement and composition-top
+  behavior remain separate R14 decisions.
 ## 2026-05-12: R14 schedule JSON counter storage
 - The lowering IR's `counters` map is a width/source table for several
   generated carriers, not a pure storage-class oracle. Schedule JSON therefore
