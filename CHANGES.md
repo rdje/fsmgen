@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — when false exits
+- Updated [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so `(when ...)` lowering records body spans and links the false branch to the
+  first state after the whole body.
+- Switch-nested `when` blocks now inherit the enclosing switch exit when the
+  `when` is the selected branch tail.
+- Added [t/1104-isf-when-branch-exits.t](t/1104-isf-when-branch-exits.t) for
+  top-level and switch-nested `when` exits.
 ### R14 — switch branch exits
 - Updated [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
   so switch expansion records branch state spans and branch tails.

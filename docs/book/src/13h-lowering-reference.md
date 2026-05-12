@@ -250,6 +250,8 @@ current data operations.
 ```
 
 **Timing**: 1 cycle for the decision, then body cycles (if true), or skip (0 additional).
+The body tail exits to the same next state that the false path skips to,
+including when the `when` is nested inside a switch branch.
 **Implicit signals**: None (uses existing signals in condition).
 
 ## `(switch signal (val body...)...)` → Multi-Way Decision

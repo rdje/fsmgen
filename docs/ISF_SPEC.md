@@ -243,9 +243,10 @@ Current lowering:
 
 ### 7.5 Inline Control Flow
 
-`(when condition body...)` creates one decision state plus body states. Current
-body support includes drive, await, sample, complete, and nested state
-generation used by shipped fixtures.
+`(when condition body...)` creates one decision state plus body states. The
+true path enters the body, and the false path skips to the first state after
+the whole `when` body. Current body support includes drive, await, sample,
+complete, and nested state generation used by shipped fixtures.
 
 `(switch signal (value body...)...)` creates one decision state with one branch
 per unique value. Duplicate values are rejected. Current branch-body support
@@ -389,6 +390,7 @@ Focused tests:
 - [t/1101-isf-extract-slices.t](../t/1101-isf-extract-slices.t)
 - [t/1102-isf-repeat-counter-widths.t](../t/1102-isf-repeat-counter-widths.t)
 - [t/1103-isf-switch-branch-exits.t](../t/1103-isf-switch-branch-exits.t)
+- [t/1104-isf-when-branch-exits.t](../t/1104-isf-when-branch-exits.t)
 
 ## 12. Explicitly Deferred
 

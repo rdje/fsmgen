@@ -24,6 +24,9 @@
     (=0 (-> next_top_level))))     ;; false: skip body
 ```
 
+The body tail exits to the same next top-level state, including when the
+`when` appears inside a switch branch.
+
 ## `(switch signal (value body...)...)` — Multi-Way Dispatch
 
 ```lisp

@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — when false exits
+- Active: `R14`. `t/1104` proves top-level and switch-nested `when` blocks
+  emit false skip paths to the correct post-body/post-switch state.
+
 ## 2026-05-12: R14 — switch branch exits
 - Active: `R14`. `t/1103` proves multi-state switch branches and
   switch-nested repeat checks exit after the whole switch instead of falling

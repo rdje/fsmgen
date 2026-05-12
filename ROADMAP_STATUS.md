@@ -28,6 +28,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   sampled named counts, and switch-nested repeats.
 - `t/1103` now proves switch branch tails exit after the whole switch instead
   of falling through into later branch bodies, including repeat-check exits.
+- `t/1104` now proves top-level and switch-nested `when` false paths skip to
+  the correct post-body or post-switch state.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
@@ -3507,6 +3509,8 @@ Done:
 - [t/1103-isf-switch-branch-exits.t](t/1103-isf-switch-branch-exits.t) locks
   switch branch-tail exits for ordinary multi-state branches and switch-nested
   repeat checks.
+- [t/1104-isf-when-branch-exits.t](t/1104-isf-when-branch-exits.t) locks
+  top-level and switch-nested `when` false exits.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

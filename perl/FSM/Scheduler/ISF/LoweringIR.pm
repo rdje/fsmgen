@@ -462,7 +462,7 @@ sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd)=@_; my @s; my $bstate=_ir_wh
         elsif($bk eq'sample'){push @lp,$bc}
         elsif($bk eq'complete'){push @body_states,_ir_complete($bc,$tn,$$ir++)}}
     if(@lp){push @body_states,_ir_sample_state($tn,\@lp,$$ir++)}
-    if(@body_states){$bstate->{true_target}=$body_states[0]{name};push @s,@body_states}
+    if(@body_states){$bstate->{true_target}=$body_states[0]{name};$bstate->{branch_state_names}=[map { $_->{name} } @body_states];push @s,@body_states}
     return (\@s);
 }
 
@@ -529,12 +529,33 @@ sub _link_states {
         }
     }
 
+    for my $i (0 .. $#$st) {
+        my $s = $st->[$i];
+        next unless $s->{kind} eq 'branch';
+
+        my $last_branch_idx = $i;
+        for my $name (@{$s->{branch_state_names} || []}) {
+            next unless defined $idx_by_name{$name};
+            $last_branch_idx = $idx_by_name{$name} if $idx_by_name{$name} > $last_branch_idx;
+        }
+
+        my $exit_target = $last_branch_idx < $#$st ? $st->[$last_branch_idx + 1]{name} : $e;
+        if ($last_branch_idx > $i) {
+            my $body_tail = $st->[$last_branch_idx]{name};
+            $exit_target = $branch_exit_target{$body_tail} if $branch_exit_target{$body_tail};
+        } elsif ($branch_exit_target{$s->{name}}) {
+            $exit_target = $branch_exit_target{$s->{name}};
+        }
+        $s->{branch_exit_target} = $exit_target;
+    }
+
     for my $i(0..$#$st){my $s=$st->[$i];my $n=$i<$#$st?$st->[$i+1]{name}:undef;my $next=$branch_exit_target{$s->{name}}||$n;
         if($s->{kind}eq'entry'&&$n){push @{$s->{transitions}},{target=>$n,condition=>$s->{guard}}}
         elsif($s->{kind}eq'await'&&$next){push @{$s->{transitions}},{target=>$next,condition=>$s->{guard}};push @{$s->{transitions}},{target=>"${tn}_timeout",condition=>{signal=>$s->{watchdog}{name},op=>'=',value=>0}}}
         elsif($s->{kind}eq'repeat_check'){push @{$s->{transitions}},{target=>$s->{loop_target},condition=>{signal=>$s->{counter},op=>'!=',value=>0}};push @{$s->{transitions}},{target=>$next,condition=>{signal=>$s->{counter},op=>'=',value=>0}}if$next}
         elsif($s->{kind}eq'sequential'&&$next){push @{$s->{transitions}},{target=>$next}}
         elsif($s->{kind}eq'switch'){my$skip=$s->{switch_exit_target}||$n||$e;push @{$s->{transitions}},{target=>$skip};for my$br(@{$s->{branches}}){push @{$s->{transitions}},{target=>$br->{body_start},condition=>{signal=>$s->{signal},value=>$br->{value}}}}}
+        elsif($s->{kind}eq'branch'){my$skip=$s->{branch_exit_target}||$n||$e;push @{$s->{transitions}},{target=>$skip}}
         elsif($s->{kind}eq'sync_all'&&$next){push @{$s->{transitions}},{target=>$next}}
         elsif($s->{kind}eq'sync_any'&&$next){push @{$s->{transitions}},{target=>$next}}
         elsif($s->{kind}eq'terminal'){push @{$s->{transitions}},{target=>$e}}}

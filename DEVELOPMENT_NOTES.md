@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 when false exits
+- `when` lowering already carried the true target on the branch state, but the
+  linker had no body-span metadata for the false skip target. The branch state
+  now records its body state names and `_link_states` computes the post-body
+  exit target before emitting transitions.
+- A `when` nested at the tail of a switch branch uses the enclosing switch exit
+  target for its false path. That keeps the switch branch-tail invariant intact
+  for both true-body completion and false-body bypass.
+- `t/1104-isf-when-branch-exits.t` locks top-level false skips and
+  switch-nested false skips.
 ## 2026-05-12: R14 switch branch exits
 - Switch lowering keeps branch bodies linear in the IR state array, so the
   linker needs explicit branch-tail metadata to avoid ordinary sequential

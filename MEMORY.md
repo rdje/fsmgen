@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — when false exits
+- `LoweringIR` now records `(when ...)` body spans and links the false branch
+  to the first state after the whole body.
+- When a `when` appears as the tail of a switch branch, its false path exits
+  after the whole switch instead of falling into the next switch branch.
+- Added `t/1104-isf-when-branch-exits.t` for top-level and switch-nested
+  `when` exits.
 ## 2026-05-12: R14 — switch branch exits
 - `LoweringIR` now records each switch branch state span and branch tail while
   expanding `(switch ...)`.
