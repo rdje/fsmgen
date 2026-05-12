@@ -162,6 +162,7 @@ sub _build_transaction($self, $tx, $actor, $txi) {
         elsif ($k eq 'await')    { $ha=1; $wdc="${tn}_wd"; push @st, _ir_await($cl, $tn, $si++, $wd); }
         elsif ($k eq 'sample')   { push @ps, $cl; }
         elsif ($k eq 'update')      { push @st, _ir_update($cl,$tn,$si++); }
+        elsif ($k eq 'phase')       { push @st, _ir_phase($cl,$tn,$si++); }
         elsif ($k eq 'shift_left')  { push @st, _ir_shift_left($cl,$tn,$si++); }
         elsif ($k eq 'shift_right') { push @st, _ir_shift_right($cl,$tn,$si++); }
         elsif ($k eq 'assemble')    { push @st, _ir_assemble($cl,$tn,$si++); }
@@ -220,6 +221,7 @@ sub _ir_shift_right{ my ($cl,$tn,$i)=@_; my$reg=$cl->[1];my$bit=$cl->[2]; {name=
 sub _ir_assemble  { my ($cl,$tn,$i)=@_; my$var=$cl->[-2];my@parts=@{$cl}[1..$#$cl-2];my$rhs='(concat '.join(' ',@parts).')'; {name=>"${tn}_asm_$i",kind=>'sequential',assignments=>[{lhs=>$var,rhs=>$rhs,op=>'<-'}],transitions=>[]} }
 sub _ir_extract   { my ($cl,$tn,$i)=@_; my$word=$cl->[1];my$as_kw=$cl->[-2];my@fields=@{$cl}[2..$#$cl-2]; {name=>"${tn}_ext_$i",kind=>'sequential',assignments=>[],transitions=>[],fields=>\@fields,word=>$word} }
 sub _ir_sample_state { my ($tn,$ps,$i)=@_; my @a; for(@$ps){push @a,{lhs=>$_->[3],rhs=>$_->[1],op=>'<='}} {name=>"${tn}_sample_$i",kind=>'sequential',assignments=>\@a,transitions=>[]} }
+sub _ir_phase { my ($cl,$tn,$i)=@_; my $name=$cl->[1]; {name=>"${tn}_phase_$i",kind=>'sequential',assignments=>[],transitions=>[],phase_name=>$name} }
 sub _ir_placeholder{ my ($cl,$tn,$i)=@_; {name=>"${tn}_$cl->[0]_$i",kind=>'sequential',assignments=>[],transitions=>[]} }
 sub _ir_do       { my ($cl,$tn,$i)=@_; my $c=$cl->[1]; {name=>"${tn}_do_$i",kind=>'await',assignments=>[{lhs=>"_start",rhs=>1,op=>'<-'}],transitions=>[],guard=>{port=>"${c}_done"}} }
 sub _ir_spawn    { my ($cl,$tn,$i)=@_; my $inst=$cl->[3]||"${tn}_$i"; {name=>"${tn}_spawn_$i",kind=>'sequential',assignments=>[{lhs=>"_start",rhs=>1,op=>'<-'}],transitions=>[]} }

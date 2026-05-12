@@ -1,0 +1,18 @@
+(actor phase_test
+  (clock clk)
+  (reset (rst_n async active_low))
+
+  (interface
+    (input  start)
+    (output done)
+    (output rdata (width 32)))
+
+  (drive (rdata val) (rdata val))
+  (drive (done val) (done val))
+
+  (transaction t
+    (on start)
+    (phase first_phase (outputs rdata) (next second_phase))
+    (phase second_phase (outputs done) (next last_phase))
+    (phase last_phase (outputs done))
+    (complete done)))
