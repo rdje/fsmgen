@@ -1,5 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-05-13
+### R14 — ISF actor-shell interface-shape metadata audit
+- Added `actor_shell_interface_shape` to `embedding.isf_public_interface` for
+  the current parser-returned `interface` inputs/outputs arrays and public
+  port entry `name`/`width` shape.
+- Tightened ISF interface parsing so malformed directions, nested names, and
+  non-positive or non-integer widths fail before a parser facade returns a
+  malformed actor shell.
+- Added [t/1162-isf-public-actor-shell-interface-shape-audit.t](t/1162-isf-public-actor-shell-interface-shape-audit.t)
+  to prove the metadata is exact across direct and manifest views and aligned
+  with `parse_file(...)` plus `parse_source(...)` APB actors.
 ## 2026-05-12
 ### R14 — ISF facade failure diagnostic metadata audit
 - Added `facade_failure_diagnostic_shape` to `embedding.isf_public_interface`

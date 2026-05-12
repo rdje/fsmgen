@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF actor-shell interface-shape metadata audit
+- Added `actor_shell_interface_shape` to `embedding.isf_public_interface`,
+  documenting the current parser handoff `interface` subshape as `inputs` and
+  `outputs` arrays with scalar port `name` and positive integer `width`
+  entries, while keeping the raw actor hash non-public and live-evolving.
+- Tightened ISF interface parsing so malformed directions, nested port names,
+  and non-positive or non-integer widths are rejected before a parser facade
+  returns an actor shell.
+- Added `t/1162-isf-public-actor-shell-interface-shape-audit.t` to prove the
+  metadata is exact across direct and manifest views and aligned with
+  `parse_file(...)` plus `parse_source(...)` APB actors.
 ## 2026-05-12: R14 — ISF facade failure diagnostic metadata audit
 - Added `facade_failure_diagnostic_shape` to `embedding.isf_public_interface`,
   documenting public facade boundary failures as bounded scalar diagnostics

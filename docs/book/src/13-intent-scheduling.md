@@ -82,6 +82,9 @@ shape before private parsing begins; `parse_file(...)` also requires a readable
 public actor shell before calling private LoweringIR, and the manifest
 advertises the required `actor_name`, `transactions`, and `interface` shell keys
 plus their public value shapes without freezing the full raw actor hash. The
+current parser handoff also advertises a bounded `interface` subshape:
+`inputs` and `outputs` arrays whose port entries expose scalar `name` and
+positive integer `width`, with omitted source widths normalized to `1`. The
 facade-shape metadata for those
 receiver, argument, path, and actor-shell boundaries is audited as exact across
 direct and manifest views, including bounded scalar diagnostics for public

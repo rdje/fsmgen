@@ -154,6 +154,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `actor_name`, `transactions`, and `interface`.
 - `t/1161` now advertises and proves public facade boundary failures emit
   bounded scalar diagnostics before private internals run.
+- `t/1162` now advertises and proves the public actor-shell `interface`
+  subshape: `inputs`/`outputs` arrays with scalar port names and positive
+  integer widths, with parser validation rejecting malformed entries before
+  returning an actor shell.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.

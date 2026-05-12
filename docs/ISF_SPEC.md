@@ -91,6 +91,11 @@ The machine-readable contract publishes that required handoff shell as
 output.
 It also publishes the shell value shapes: scalar `actor_name`, array
 `transactions`, and hash `interface`.
+The current bounded parser handoff also advertises the `interface` subshape:
+`inputs` and `outputs` are arrays, and each public port entry has scalar `name`
+plus positive integer `width`, with omitted source widths normalized to `1`.
+That shape is live-contract metadata for scheduler-consumable actors, not a
+freeze of the full raw actor hash.
 The same contract publishes the public return containers: parser facades return
 scheduler-consumable actor hash references, `lower(...)` returns a hash
 reference with the advertised lower-result keys, and `report(...)` returns the
@@ -170,6 +175,10 @@ Watchdog rules:
 ```
 
 Default width is `1`. Interface entries lower into `.fsm` `+size` entries.
+Accepted parser output exposes the interface handoff as `inputs` and `outputs`
+arrays with scalar port `name` and positive integer `width` entries. Malformed
+directions, nested names, and non-positive or non-integer widths are rejected
+before the parser returns an actor shell.
 If an inferred scheduler storage name matches a declared interface port, the
 declared port entry is kept and the inferred duplicate is suppressed.
 Output ports are marked as public outputs by the `.fsm` emitter when assigned
@@ -587,6 +596,7 @@ Focused tests:
 - [t/1159-isf-public-report-reset-shape-metadata-audit.t](../t/1159-isf-public-report-reset-shape-metadata-audit.t)
 - [t/1160-isf-public-actor-shell-value-shape-audit.t](../t/1160-isf-public-actor-shell-value-shape-audit.t)
 - [t/1161-isf-public-facade-failure-diagnostic-metadata-audit.t](../t/1161-isf-public-facade-failure-diagnostic-metadata-audit.t)
+- [t/1162-isf-public-actor-shell-interface-shape-audit.t](../t/1162-isf-public-actor-shell-interface-shape-audit.t)
 
 ## 12. Explicitly Deferred
 

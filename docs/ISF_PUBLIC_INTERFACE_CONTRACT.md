@@ -179,6 +179,11 @@ The actor-shell value-shape metadata is checked by
 [t/1160-isf-public-actor-shell-value-shape-audit.t](../t/1160-isf-public-actor-shell-value-shape-audit.t)
 to keep the `actor_name`, `transactions`, and `interface` public handoff
 shapes exact across direct and manifest views.
+The actor-shell interface subshape is checked by
+[t/1162-isf-public-actor-shell-interface-shape-audit.t](../t/1162-isf-public-actor-shell-interface-shape-audit.t)
+to keep the parser-returned `interface` inputs/outputs arrays and public port
+entry `name`/`width` shape exact across direct and manifest views without
+freezing the rest of the raw actor hash.
 The facade shape metadata that advertises those constructor, method, path, and
 actor-shell boundaries is checked by
 [t/1143-isf-public-facade-shape-metadata-audit.t](../t/1143-isf-public-facade-shape-metadata-audit.t)
@@ -261,6 +266,14 @@ The machine-readable contract advertises those required shell fields through
 `actor_shell_required_keys` and the value shapes through
 `actor_shell_value_shape`. That promise is intentionally a shell contract: the
 full raw actor hash remains non-public.
+The current public parser handoff also advertises one bounded subshape inside
+that shell: `interface` contains `inputs` and `outputs` arrays, and each public
+port entry has scalar `name` plus positive integer `width`, with omitted source
+widths normalized to `1`. The machine-readable contract advertises this through
+`actor_shell_interface_shape`.
+This is current live-contract metadata for scheduler-consumable parser output;
+it does not make actor fields outside the advertised shell public or freeze
+future ISF interface extensions before they are documented and audited.
 The parser/scheduler argument-shape fields and actor-shell key list are exact
 facade-shape discovery metadata.
 Public facade boundary failures produce bounded scalar diagnostics before

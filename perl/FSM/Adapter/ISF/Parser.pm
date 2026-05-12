@@ -174,10 +174,20 @@ sub _parse_interface($self, $clause) {
         my $name = $port->[1];
         my $width = 1;
 
+        confess "Error: interface port direction must be input or output\n"
+            unless defined($dir) && !ref($dir) && ($dir eq 'input' || $dir eq 'output');
+        confess "Error: interface port requires a scalar name\n"
+            unless defined($name) && !ref($name);
+
         # Check for (width N) in remaining elements
         for my $j (2 .. $#$port) {
             my $prop = $port->[$j];
             if (ref($prop) eq 'ARRAY' && $prop->[0] eq 'width') {
+                confess "Error: interface port '$name' width must be a positive integer\n"
+                    unless @$prop == 2
+                        && defined($prop->[1])
+                        && !ref($prop->[1])
+                        && $prop->[1] =~ /\A[1-9][0-9]*\z/;
                 $width = $prop->[1];
             }
         }

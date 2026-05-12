@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF actor-shell interface-shape metadata audit
+- The parser/scheduler actor shell already exposed `interface` as public handoff
+  state, but downstream consumers still had to infer its useful subshape from
+  parser internals. The contract now advertises only the bounded current shape:
+  `inputs`/`outputs` arrays and port entries with scalar `name` plus positive
+  integer `width`.
+- Parser validation now rejects interface directions, names, and widths that
+  could not satisfy that advertised shell before returning an actor. This keeps
+  the public handoff honest while leaving the rest of the raw actor hash
+  explicitly non-public and live-evolving with ISF.
+- `t/1162-isf-public-actor-shell-interface-shape-audit.t` locks the metadata
+  across direct and manifest views, checks `parse_file(...)` and
+  `parse_source(...)` APB actors, and covers representative malformed interface
+  entries.
 ## 2026-05-12: R14 ISF facade failure diagnostic metadata audit
 - Downstream consumers need to know that public facade boundary failures lead
   with public boundary messages as scalar diagnostics, instead of relying on
