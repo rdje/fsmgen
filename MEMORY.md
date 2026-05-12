@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — parameterized drives `(drive (name param) body...)`
+- Drive definitions accept formal parameters: `(drive (scl val) (scl val))`
+- Calls wire actuals: `(drive scl 1)` → `(= (scl_val 1)) (= (scl_start 1))`
+- Comb DT: `(-scl (= (scl> scl_val) <scl_start))`
+- I2C reduced to 2 drive definitions (scl, sda) from 4
+- APB uses parameterized `(psel val)` and `(penable val)`
+- All 7 tests pass
 ## 2026-05-12: R14 — drive calls as start assertions + combinational DTs
 - Drive definitions become combinational DT blocks `(-name (port = val <name_start))`
 - `(drive name)` calls emit `(= (name_start 1))` in current state; `_start` signals auto-declared

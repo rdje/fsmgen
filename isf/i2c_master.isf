@@ -1,4 +1,4 @@
-;; I2C master controller — using (repeat 8 ...) for bit-banging
+;; I2C with parameterized drives
 (actor i2c_master
   (clock clk)
   (reset (rst_n async active_low))
@@ -16,10 +16,12 @@
     (output sda_out)
     (input  sda_in))
 
-  (drive scl_hi  (scl 1))
-  (drive scl_lo  (scl 0))
-  (drive sda_hi  (sda_out 1))
-  (drive sda_lo  (sda_out 0))
+  ;; Parameterized: (drive scl val) drives scl to val
+  (drive (scl val)
+    (scl val))
+
+  (drive (sda val)
+    (sda_out val))
 
   (transaction i2c_transfer
     (on start
@@ -29,31 +31,33 @@
       (sample wdata    as data))
 
     ;; START: SDA low while SCL high
-    (drive scl_hi) (drive sda_lo) (drive scl_lo)
+    (drive scl 1) (drive sda 0)
+    (drive scl 0)
 
     ;; Send 7-bit address + R/W
-    (repeat 7 (drive scl_hi) (drive scl_lo))
-    (drive scl_hi)
+    (repeat 7 (drive scl 1) (drive scl 0))
+    (drive scl 1)
     (switch is_read
-      (1 (drive sda_hi))
-      (0 (drive sda_lo)))
-    (drive scl_lo)
-
-    ;; ACK (master reads, slave drives)
-    (drive scl_hi) (drive scl_lo)
-
-    ;; Send register address (8 bits)
-    (repeat 8 (drive scl_hi) (drive scl_lo))
+      (1 (drive sda 1))
+      (0 (drive sda 0)))
+    (drive scl 0)
 
     ;; ACK
-    (drive scl_hi) (drive scl_lo)
+    (drive scl 1) (drive scl 0)
 
-    ;; Data: read or write 8 bits
+    ;; Register address
+    (repeat 8 (drive scl 1) (drive scl 0))
+
+    ;; ACK
+    (drive scl 1) (drive scl 0)
+
+    ;; Data
     (switch is_read
-      (1 (repeat 8 (drive scl_hi) (drive scl_lo)))
-      (0 (repeat 8 (drive scl_hi) (drive scl_lo))))
+      (1 (repeat 8 (drive scl 1) (drive scl 0)))
+      (0 (repeat 8 (drive scl 1) (drive scl 0))))
 
-    ;; STOP: SDA high while SCL high
-    (drive scl_lo) (drive sda_lo) (drive scl_hi) (drive sda_hi)
+    ;; STOP
+    (drive scl 0) (drive sda 0)
+    (drive scl 1) (drive sda 1)
 
     (complete done)))

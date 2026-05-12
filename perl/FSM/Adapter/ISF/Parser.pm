@@ -258,9 +258,19 @@ sub _parse_priority($self, $clause) {
 
 sub _parse_drive_def($self, $clause, $drives) {
     confess "Error: (drive ...) requires a name\n" unless @$clause >= 2;
-    my $name = $clause->[1];
+    my $spec = $clause->[1];
+    my ($name, @params);
+    if (ref($spec) eq 'ARRAY') {
+        # Parameterized: (drive (name p1 p2) body...)
+        $name = $spec->[0];
+        @params = @{$spec}[1 .. $#$spec];
+    } else {
+        # Simple: (drive name body...)
+        $name = $spec;
+        @params = ();
+    }
     my @body = @{$clause}[2 .. $#$clause];
-    $drives->{$name} = \@body;
+    $drives->{$name} = { body => \@body, params => \@params };
 }
 
 sub _parse_phase($self, $clause) {

@@ -141,15 +141,23 @@ sub _build_transaction($self, $tx, $actor, $txi) {
         my $k = $cl->[0];
         if    ($k eq 'on')       { push @st, _ir_on($cl, $tn, $si++); }
         elsif ($k eq 'drive')    {
-            if (@$cl == 2) {
-                # Call: (drive name) — assert start signal
+            if (!ref($cl->[1]) && @$cl >= 2) {
+                # Call: (drive name arg1 arg2 ...)
                 my $name = $cl->[1];
                 confess "Transaction '$tn': drive '$name' not defined\n" unless $drives->{$name};
+                my $def = $drives->{$name};
+                my @params = @{$def->{params}};
+                my @assignments = ({ lhs => "${name}_start", rhs => 1, op => '=' });
+                # Wire actual arguments to parameter signals
+                for my $i (0 .. $#params) {
+                    my $arg = $cl->[2 + $i];
+                    push @assignments, { lhs => "${name}_$params[$i]", rhs => $arg, op => '=' };
+                }
                 if (@st && $st[-1]{kind} eq 'sequential') {
-                    unshift @{$st[-1]{assignments}}, { lhs => "${name}_start", rhs => 1, op => '=' };
+                    unshift @{$st[-1]{assignments}}, @assignments;
                 } else {
                     push @st, { name => "${tn}_drive_" . $si++, kind => 'sequential',
-                        assignments => [{ lhs => "${name}_start", rhs => 1, op => '=' }], transitions => [] };
+                        assignments => \@assignments, transitions => [] };
                 }
             } else {
                 push @st, _ir_drive($cl, $tn, [splice @ps], $si++);
@@ -300,11 +308,27 @@ sub _build_drive_dts {
     my ($self, $actor, $dts, $ctrs) = @_;
     my $drives = $actor->{drives} || {};
     for my $name (keys %$drives) {
-        my $body = $drives->{$name};
+        my $def = $drives->{$name};
+        my $body = $def->{body};
+        my @params = @{$def->{params}};
         my @assignments;
+
+        # Build a map: formal param -> signal name
+        my %param_signal;
+        for my $p (@params) {
+            $param_signal{$p} = "${name}_${p}";
+            $ctrs->{$param_signal{$p}} = 1;
+        }
+
         for my $pair (@$body) {
             next unless ref($pair) eq 'ARRAY' && @$pair >= 2;
-            push @assignments, { lhs => $pair->[0], rhs => $pair->[1], op => '=', guard => { port => "${name}_start" } };
+            my $lhs = $pair->[0];
+            my $rhs = $pair->[1];
+            # Substitute formal params in RHS
+            if (exists $param_signal{$rhs}) {
+                $rhs = $param_signal{$rhs};
+            }
+            push @assignments, { lhs => $lhs, rhs => $rhs, op => '=', guard => { port => "${name}_start" } };
         }
         push @$dts, { name => $name, kind => 'drive', assignments => \@assignments };
         $ctrs->{"${name}_start"} = 1;

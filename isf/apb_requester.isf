@@ -1,4 +1,4 @@
-;; APB requester with drive definitions at actor level
+;; APB requester with parameterized drives
 (actor apb_requester
   (clock clk)
   (reset (rst_n async active_low))
@@ -21,6 +21,9 @@
     (input  PRDATA  (width 32))
     (input  PSLVERR))
 
+  (drive (psel val)   (PSEL val))
+  (drive (penable val) (PENABLE val))
+
   (drive setup_phase
     (PADDR addr)
     (PWRITE is_write)
@@ -33,8 +36,8 @@
 
   (drive done_phase
     (done 1)
-    (PSEL 0)
-    (PENABLE 0)
+    (psel 0)
+    (penable 0)
     (last_read_data rdata)
     (last_error slverr))
 

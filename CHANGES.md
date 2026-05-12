@@ -1,6 +1,8 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — parameterized drives
+- `(drive (name p) body...)` definitions. `(drive name val)` calls wire actuals. 7 tests.
 ### R14 — drive calls → start assertions + combinational DTs
 - Drive definitions become `(-name ...)` combinational DT blocks with guarded assignments.
 - `(drive name)` calls emit `(= (name_start 1))`. I2C @ 19 states, APB @ 7. 7 tests pass.
