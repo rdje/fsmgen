@@ -80,9 +80,10 @@ audited so caller mutation does not pollute later contract builds. Both
 capability-manifest CLI spellings are audited to emit the same ISF contract
 payload. The current APB schedule report is also checked against the advertised
 public key families, and the lower-result `files` map is checked for both
-single-file and multi-file lowering. Transaction summaries include the generated
-state families used by the current scheduler, including control-flow and
-data-operation states.
+single-file and multi-file lowering. The in-memory `parse_source(...)` facade is
+also checked against `parse_file(...)` on a real fixture. Transaction summaries
+include the generated state families used by the current scheduler, including
+control-flow and data-operation states.
 
 ## Current Limitations
 

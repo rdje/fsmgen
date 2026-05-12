@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — ISF parse_source facade audit
+- Active: `R14`. `t/1118` proves `parse_source(...)` is scheduler-consumable
+  and matches `parse_file(...)` through public lower/report identities.
+
 ## 2026-05-12: R14 — ISF lower result files audit
 - Active: `R14`. `t/1117` proves the public ISF lower-result `files` map for
   both single-file and multi-file lowering.

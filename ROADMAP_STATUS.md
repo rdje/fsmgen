@@ -58,6 +58,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   key families advertised by the ISF public-interface contract.
 - `t/1117` now proves the public ISF lower-result `files` map for single-file
   and multi-file lowering.
+- `t/1118` now proves the public `parse_source(...)` facade returns
+  scheduler-consumable actors with the same public lower/report identities as
+  `parse_file(...)` for APB.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
@@ -3582,6 +3585,9 @@ Done:
 - [t/1117-isf-public-lower-result-files-audit.t](t/1117-isf-public-lower-result-files-audit.t)
   locks the public lower-result `files` map for APB single-file lowering and
   `spawn_parent` parent/child multi-file lowering.
+- [t/1118-isf-public-parse-source-facade-audit.t](t/1118-isf-public-parse-source-facade-audit.t)
+  locks public `parse_source(...)` facade behavior through scheduler
+  `lower(...)` and `report(...)` identities.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

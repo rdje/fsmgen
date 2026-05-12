@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF parse_source facade audit
+- Added [t/1118-isf-public-parse-source-facade-audit.t](t/1118-isf-public-parse-source-facade-audit.t)
+  to prove `FSM::Adapter::ISF->parse_source(...)` returns a
+  scheduler-consumable actor with the same public lower/report identities as
+  `parse_file(...)` for the APB fixture.
+- Updated the ISF public-interface contract `tested_by` list and live docs to
+  record the in-memory source facade guarantee.
 ### R14 — ISF lower result files audit
 - Added [t/1117-isf-public-lower-result-files-audit.t](t/1117-isf-public-lower-result-files-audit.t)
   to lock the public `FSM::Scheduler::ISF->lower(...)` result shape.

@@ -30,6 +30,10 @@ The current APB schedule report is checked against the advertised key families
 by [t/1116-isf-public-schedule-report-key-family-audit.t](../t/1116-isf-public-schedule-report-key-family-audit.t).
 The lower-result `files` map is checked for both single-file and multi-file
 lowering by [t/1117-isf-public-lower-result-files-audit.t](../t/1117-isf-public-lower-result-files-audit.t).
+The `parse_source(...)` facade method is checked by
+[t/1118-isf-public-parse-source-facade-audit.t](../t/1118-isf-public-parse-source-facade-audit.t)
+to ensure in-memory source text returns a scheduler-consumable actor with the
+same public lower/report identities as `parse_file(...)` for a real fixture.
 
 ## Stabilized Surface
 

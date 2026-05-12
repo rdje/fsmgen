@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF parse_source facade audit
+- Added `t/1118-isf-public-parse-source-facade-audit.t` to prove
+  `FSM::Adapter::ISF->parse_source(...)` returns a scheduler-consumable actor.
+- The audit compares APB `parse_source(...)` against `parse_file(...)` through
+  public lower/report identities without freezing raw actor hashes or
+  hash-iteration-sensitive DT emission order.
 ## 2026-05-12: R14 — ISF lower result files audit
 - Added `t/1117-isf-public-lower-result-files-audit.t` to lock the public
   `FSM::Scheduler::ISF->lower(...)` result shape.

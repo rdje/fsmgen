@@ -90,6 +90,7 @@ sub build_isf_public_interface_contract {
             't/1115-isf-public-interface-cli-manifest-audit.t',
             't/1116-isf-public-schedule-report-key-family-audit.t',
             't/1117-isf-public-lower-result-files-audit.t',
+            't/1118-isf-public-parse-source-facade-audit.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',

@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF parse_source facade audit
+- `parse_source(...)` is part of the ISF public-interface contract because
+  downstream tools may hold generated or in-memory ISF text without a stable
+  file path.
+- `t/1118-isf-public-parse-source-facade-audit.t` validates the method through
+  public lower/report identities, not by asserting the raw parser actor hash or
+  hash-iteration-sensitive DT emission order. That keeps the facade stable for
+  consumers while leaving parser internals free to evolve.
 ## 2026-05-12: R14 ISF lower result files audit
 - The public in-process scheduler facade currently returns a narrow lower
   result whose useful downstream surface is `files`, a map from scheduled `.fsm`
