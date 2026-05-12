@@ -89,6 +89,10 @@ The transaction-summary metadata is checked by
 [t/1149-isf-public-transaction-metadata-audit.t](../t/1149-isf-public-transaction-metadata-audit.t)
 to keep transaction `states` and `count` shapes exact across direct and
 manifest views.
+The transaction-ordering metadata is checked by
+[t/1157-isf-public-report-transaction-ordering-audit.t](../t/1157-isf-public-report-transaction-ordering-audit.t)
+to keep transaction summaries lexically sorted by name while each
+transaction's `states` array follows scheduled `.fsm` state emission order.
 The reset-summary metadata is checked by
 [t/1150-isf-public-reset-metadata-audit.t](../t/1150-isf-public-reset-metadata-audit.t)
 to keep advertised reset `kind` and `polarity` values exact across direct and
@@ -345,6 +349,10 @@ belonging to that transaction in emitted order, and `count` is a non-negative
 integer equal to the `states` array length. The machine-readable contract
 advertises this through `schedule_report_transaction_states_shape` and
 `schedule_report_transaction_count_shape`.
+The `transactions` array itself is sorted lexically by transaction name. Each
+entry's `states` array keeps scheduled `.fsm` state emission order for that
+transaction. The machine-readable contract advertises this through
+`schedule_report_transaction_ordering`.
 
 For the `reset` summary, `kind` is currently `async` or `sync`, and `polarity`
 is currently `active_high` or `active_low`. The machine-readable contract

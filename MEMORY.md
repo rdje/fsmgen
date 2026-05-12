@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF report transaction-ordering metadata audit
+- Added `schedule_report_transaction_ordering` to
+  `embedding.isf_public_interface`, documenting lexical transaction-summary
+  ordering and emitted-order transaction state lists.
+- Added `t/1157-isf-public-report-transaction-ordering-audit.t` to prove that
+  metadata is exact across direct and manifest views and aligned with the
+  multi-transaction full-featured report.
 ## 2026-05-12: R14 — ISF lower-result file-shape metadata audit
 - Added `lower_result_file_name_shape` and `lower_result_file_text_shape` to
   `embedding.isf_public_interface`, documenting the public `files` map

@@ -64,6 +64,8 @@ guidance list are audited as exact across the same views. Its `tested_by`
 provenance metadata is also audited as an exact repo-local test list.
 Its lower-result file sub-shape metadata is audited as exact for scheduled
 `.fsm` basenames and scheduled text roots.
+Its schedule-report transaction-ordering metadata is audited as exact for the
+lexically sorted transaction list and emitted-order per-transaction states.
 Its CLI success-shape metadata is audited as exact for the schedule JSON,
 `--outdir`, and plain HDL-generation paths.
 Its strict CLI success-shape metadata is audited as exact for accepted
@@ -462,6 +464,10 @@ non-negative integer equal to that array length. The capability-manifest ISF
 public contract advertises this through
 `schedule_report_transaction_states_shape` and
 `schedule_report_transaction_count_shape`.
+The `transactions` array is sorted lexically by transaction name, and each
+transaction's `states` array keeps scheduled `.fsm` state emission order. The
+capability-manifest ISF public contract advertises this through
+`schedule_report_transaction_ordering`.
 The reset summary's `kind` value is currently `async` or `sync`, and its
 `polarity` value is currently `active_high` or `active_low`. The
 capability-manifest ISF public contract advertises those value families through
@@ -566,6 +572,7 @@ Focused tests:
 - [t/1154-isf-public-facade-return-metadata-audit.t](../t/1154-isf-public-facade-return-metadata-audit.t)
 - [t/1155-isf-public-cli-strict-success-metadata-audit.t](../t/1155-isf-public-cli-strict-success-metadata-audit.t)
 - [t/1156-isf-public-lower-result-file-shape-audit.t](../t/1156-isf-public-lower-result-file-shape-audit.t)
+- [t/1157-isf-public-report-transaction-ordering-audit.t](../t/1157-isf-public-report-transaction-ordering-audit.t)
 
 ## 12. Explicitly Deferred
 

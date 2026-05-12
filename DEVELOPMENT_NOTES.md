@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF report transaction-ordering metadata audit
+- Transaction summaries are compared by downstream tooling, so their order is a
+  public review/report stability property. The contract now records the current
+  lexical transaction-summary order and per-transaction scheduled-state order.
+- `t/1157-isf-public-report-transaction-ordering-audit.t` locks that metadata
+  across direct and manifest views and checks the full-featured
+  multi-transaction report against scheduled `.fsm` state order.
 ## 2026-05-12: R14 ISF lower-result file-shape metadata audit
 - The public lower-result `files` map is useful only if consumers can trust the
   key and value sub-shapes. The contract now makes the no-directory scheduled

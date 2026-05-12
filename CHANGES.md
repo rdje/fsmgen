@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF report transaction-ordering metadata audit
+- Added `schedule_report_transaction_ordering` to
+  `embedding.isf_public_interface` for lexical transaction-summary ordering
+  and emitted-order transaction state lists.
+- Added [t/1157-isf-public-report-transaction-ordering-audit.t](t/1157-isf-public-report-transaction-ordering-audit.t)
+  to prove the metadata is exact and aligned with the multi-transaction
+  full-featured report.
 ### R14 — ISF lower-result file-shape metadata audit
 - Added `lower_result_file_name_shape` and `lower_result_file_text_shape` to
   `embedding.isf_public_interface` for scheduled `.fsm` basename keys and

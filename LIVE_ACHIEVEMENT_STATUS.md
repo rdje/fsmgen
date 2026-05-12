@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — ISF report transaction-ordering metadata audit
+- Active: `R14`. `t/1157` proves schedule-report transaction-ordering metadata
+  is exact and aligned with the full-featured multi-transaction report.
+
 ## 2026-05-12: R14 — ISF lower-result file-shape metadata audit
 - Active: `R14`. `t/1156` proves lower-result `files` map basename and
   scheduled-text-root metadata is exact and aligned with real lowerings.
