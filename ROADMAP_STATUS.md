@@ -36,6 +36,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   counters with IR-inferred widths without broadening the storage-name set.
 - `t/1107` now proves `when` bodies lower data operations, nested repeats, and
   repeat counter widths while preserving false-skip exits.
+- `t/1108` now proves schedule JSON transaction summaries include generated
+  control/data state families such as `when`, `switch`, `update`, and `shift`.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
@@ -3526,6 +3528,9 @@ Done:
 - [t/1107-isf-when-body-ops.t](t/1107-isf-when-body-ops.t) locks `when` body
   lowering for data operations, nested repeats, and repeat counter width
   registration.
+- [t/1108-isf-schedule-json-transaction-states.t](t/1108-isf-schedule-json-transaction-states.t)
+  locks schedule JSON transaction grouping for control-flow and data-operation
+  state families.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

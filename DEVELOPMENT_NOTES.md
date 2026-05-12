@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 schedule JSON transaction states
+- The transaction summary in `Emitter::JSON` is name-family based because the
+  current lowering IR does not carry an explicit transaction owner field on
+  every state. The family list must therefore be kept in step with generated
+  state kinds.
+- Control-flow and data-op states (`when`, `switch`, `update`, `shift`, `asm`,
+  `extract`) are now included, along with composition/control families (`do`,
+  `spawn`, `phase`). Existing APB summaries stay unchanged because their state
+  families were already covered.
+- This improves the current report surface without freezing schedule JSON as a
+  stable public schema.
 ## 2026-05-12: R14 `when` body data/repeat lowering
 - `switch` and `repeat` body lowering already shared the transaction width map
   for known-width data operations. `when` was the narrower path: it could lower

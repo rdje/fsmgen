@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — schedule JSON transaction states
+- `Emitter::JSON` now groups additional generated state-name families into
+  transaction summaries, including `when`, `switch`, data-op, `do`, `spawn`,
+  and `phase` states.
+- Schedule JSON transaction `count`/`states` no longer omits those control and
+  data states while preserving the existing APB transaction report shape.
+- Added `t/1108-isf-schedule-json-transaction-states.t`.
 ## 2026-05-12: R14 — `when` body data/repeat lowering
 - `LoweringIR` now passes the transaction width map and counter accumulator
   through `_expand_when`, matching the bounded body families already supported

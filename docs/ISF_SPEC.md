@@ -367,7 +367,9 @@ yet. It is intentionally generated from the same lowering IR as `.fsm` output.
 Current scalar source values such as `watchdog` are preserved as parser-carried
 strings in the JSON report. Assigned scheduler counters using the generated
 `*_wd`, `*_cc`, and `*_cnt` naming families are reported as `kind: counter`
-with the width inferred by `LoweringIR`.
+with the width inferred by `LoweringIR`. Transaction summaries include the
+generated state families used by the current scheduler, including control-flow
+and data-operation states.
 
 ## 11. Current Regression Fixtures
 
@@ -400,6 +402,7 @@ Focused tests:
 - [t/1105-isf-size-deduplication.t](../t/1105-isf-size-deduplication.t)
 - [t/1106-isf-schedule-json-counter-storage.t](../t/1106-isf-schedule-json-counter-storage.t)
 - [t/1107-isf-when-body-ops.t](../t/1107-isf-when-body-ops.t)
+- [t/1108-isf-schedule-json-transaction-states.t](../t/1108-isf-schedule-json-transaction-states.t)
 
 ## 12. Explicitly Deferred
 

@@ -70,6 +70,8 @@ current APB report shape is regression-covered, but the JSON schema remains a
 current implementation surface rather than a frozen external API. Assigned
 scheduler counters in the `*_wd`, `*_cc`, and `*_cnt` naming families are
 reported as `counter` storage with the width inferred by the lowering IR.
+Transaction summaries include the generated state families used by the current
+scheduler, including control-flow and data-operation states.
 
 ## Current Limitations
 

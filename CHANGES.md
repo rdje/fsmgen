@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — schedule JSON transaction states
+- Updated [perl/FSM/Scheduler/ISF/Emitter/JSON.pm](perl/FSM/Scheduler/ISF/Emitter/JSON.pm)
+  so transaction summaries group generated `when`, `switch`, data-operation,
+  `do`, `spawn`, and `phase` state families in addition to the older families.
+- Added [t/1108-isf-schedule-json-transaction-states.t](t/1108-isf-schedule-json-transaction-states.t)
+  to lock transaction `count` and `states` coverage for control-flow and
+  data-operation lowering.
 ### R14 — `when` body data/repeat lowering
 - Updated [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
   so `_expand_when` receives the transaction width map and counter accumulator.
