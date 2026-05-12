@@ -18,8 +18,9 @@ explicit cycle-accurate `.fsm`.
   the actor can accept. The ready side (`can_accept`) is implicit.
 - **Variables are first-class**. `(sample ...)`, `(update ...)` — just like
   programming language variables. The scheduler handles persistence.
-- **Every compile-time issue is reported**. Deadlocks, unmet latency, port
-  conflicts — never silently resolved.
+- **Compile-time issues are explicit**. Parser and lowering failures are raised,
+  and the schedule report carries a `compile_issues` field. Broader conflict,
+  deadlock, and resource diagnostics are still being expanded.
 
 ## Quick Example
 
@@ -66,8 +67,12 @@ FSM::Scheduler::ISF::LoweringIR   ← typed IR
 
 ## Current Limitations
 
-- `(spawn ...)` generates per-instance signals; full `?top` composition
-  multi-module output is in progress
-- `(shift_right ...)` field-width parameter not yet configurable
-- `(extract ...)` field slice ranges use default widths
-- `(contract ...)` temporal assertions not implemented
+- `(do ...)` and `(spawn ...)` emit child/parent scheduling artifacts, but
+  complete child-start binding, composition-top instantiation, and spawn
+  parameter binding remain deferred.
+- `(await_any ...)` currently waits on the first collected spawned done port.
+- `(resources ...)` and `(priority ...)` are parsed but not enforced as
+  arbitration policy.
+- `(shift_right ...)` field-width parameter is not yet configurable.
+- `(extract ...)` field slice ranges are placeholder names, not exact slices.
+- `(contract ...)` temporal assertions are not implemented.

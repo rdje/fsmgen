@@ -42,20 +42,21 @@ Shifts `reg` left by 1 and ORs in `bit` at LSB.
 
 Shifts `reg` right by 1 and ORs in `bit` at MSB.
 
-**Lowering**: `(<- (reg (| (>> reg 1) (<< bit WIDTH-1))))`
+**Lowering**: `(<- (reg (| (>> reg 1) (<< bit (- WIDTH 1)))))`
 
 ```lisp
 (state
-  (<- (tx_reg (| (>> tx_reg 1) (<< msb_data 7))))
+  (<- (tx_reg (| (>> tx_reg 1) (<< msb_data (- WIDTH 1)))))
   (-> next_state))
 ```
 
-**Use case**: SPI/PISO — shifting out parallel data as serial bits.
+The current implementation still uses the placeholder `WIDTH` expression.
+Field-width inference for this operation is deferred.
 
-## `(assemble (field1 field2 ...) as var)` — Concatenation
+## `(assemble field1 field2 ... as var)` — Concatenation
 
 ```lisp
-(assemble (header payload crc) as packet)
+(assemble header payload crc as packet)
 ```
 
 Concatenates fields into a single variable.
@@ -70,25 +71,25 @@ Concatenates fields into a single variable.
 
 **Example — building a SPI frame**:
 ```lisp
-(assemble (cmd addr data) as spi_frame)
-;; spi_frame = {cmd[7:0], addr[15:0], data[31:0]} — 56 bits
+(assemble cmd addr data as spi_frame)
 ```
 
-## `(extract word as (field1 field2 ...))` — Bit Slicing
+## `(extract word as field1 field2 ...)` — Field Extraction
 
 ```lisp
-(extract packet as (header payload crc))
+(extract packet as header payload crc)
 ```
 
-Deconstructs `word` into named fields via slice operations.
+Deconstructs `word` into named fields.
 
-**Lowering**: `(<= (field (slice word hi lo)))` for each field.
+**Current lowering**: one extraction state is emitted, and each field is
+assigned from a placeholder slice name. Exact field ranges remain future work.
 
 ```lisp
 (state
-  (<= (header  (slice packet 55 48)))
-  (<= (payload (slice packet 47 16)))
-  (<= (crc     (slice packet 15 0)))
+  (<= (header (slice packet header_range)))
+  (<= (payload (slice packet payload_range)))
+  (<= (crc (slice packet crc_range)))
   (-> next_state))
 ```
 

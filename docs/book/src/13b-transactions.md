@@ -152,8 +152,10 @@ The port value changes in the NEXT cycle (flopped).
 **What happens**:
 1. `(<- (port 1))` — port becomes 1 next cycle (flopped)
 2. Transition to idle state
-3. In idle: `can_accept=1` (implicit), port defaults to 0 (not re-asserted)
-4. Net effect: port is 1 for exactly one cycle
+3. In idle: `can_accept=1` is asserted
+
+The current ISF lowering assigns the completion port but does not emit an
+explicit deassert state for that port.
 
 **Generated .fsm**:
 ```lisp

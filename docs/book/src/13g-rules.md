@@ -13,16 +13,16 @@ independent of the transaction state machine.
 ```
 
 **Actions**:
-- `(port value)` — assignment, fires when condition holds
-- `(trigger transaction)` — assert transaction's start signal
-- `(priority over other_rule)` — inline priority
+- `(port value)` — guarded assignment when the condition holds
+- `(trigger transaction)` — guarded assertion of the transaction start signal
+- `(priority over other_rule)` — parsed metadata, currently not enforced
 
-**Lowering**: Combinational DT block with guarded assignments.
+**Lowering**: Combinational DT block containing guarded flopped assignments.
 
 ```lisp
 (-always_ready
-  (= (valid> 1) <ready)
-  (= (main_transfer_start 1) <ready))
+  (<- (valid 1) <ready)
+  (<- (main_transfer_start 1) <ready))
 ```
 
 ## Rule Examples
@@ -39,11 +39,11 @@ independent of the transaction state machine.
 **DT block**:
 ```lisp
 (-error_gate
-  (= (valid> 1) <err)
-  (= (err> 1) <err))
+  (<- (valid 1) <err)
+  (<- (err 1) <err))
 ```
 
-### Priority
+### Parsed Priority
 
 ```lisp
 (rule high_pri
@@ -52,7 +52,8 @@ independent of the transaction state machine.
   (rdata 0))
 ```
 
-When both `high_pri` and `always_ready` could fire, `high_pri` wins.
+Inline priority is accepted by the parser and ignored by current lowering.
+It does not resolve conflicting drives yet.
 
 ## Priorities
 
@@ -62,8 +63,9 @@ When both `high_pri` and `always_ready` could fire, `high_pri` wins.
 (priority read_burst over write_burst)
 ```
 
-Priority is informational for the scheduler. When two rules/transactions
-could drive the same output, the higher-priority one wins.
+Priority declarations are informational in the current scheduler. When two
+rules/transactions could drive the same output, priority resolution is still
+deferred rather than enforced.
 
 ## Resources
 

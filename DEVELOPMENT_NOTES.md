@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 `.isf` spec synchronized with shipped behavior
+- `docs/ISF_SPEC.md` is now a current-contract document rather than an older
+  design proposal. It documents the post-handshake `(on port)` activation
+  model, removed `(assign ...)` syntax, actor-level drive definitions, current
+  transaction clauses, schedule JSON shape, shipped fixtures, and explicit
+  deferred work.
+- The mdBook R14 chapters were corrected where they overstated current
+  behavior: resource/priority declarations are parsed but not enforced;
+  `await_any` waits on the first collected spawned done port; `shift_right`
+  still uses a placeholder width expression; `extract` uses placeholder slice
+  names; and `do`/`spawn` child-start binding/top instantiation is not complete.
+- The most useful next implementation slice is now visible instead of hidden in
+  prose drift: either regression-lock schedule JSON more tightly or implement
+  one documented scheduler limitation, with `do`/`spawn` start binding being
+  the most behavior-critical gap.
 ## 2026-05-12: Bootstrap — R14 `.isf` pre-spine documented
 - `bin/fsmgen` now has an explicit documented pre-spine for `.isf` inputs:
   resolve source, parse with `FSM::Adapter::ISF`, lower/report with
@@ -7,9 +22,8 @@ This document captures engineering rationale, design constraints, and working de
 - The live static import trace is 191 project files / 190 `.pm` packages; the
   delta from the previous snapshot is the reachable ISF adapter/scheduler
   family.
-- The next documentation risk is the detailed `docs/ISF_SPEC.md`, which still
-  needs to be synchronized with the shipped post-handshake, post-assign-keyword
-  parser/scheduler surface.
+- The detailed `docs/ISF_SPEC.md` was the next documentation risk and is now
+  synchronized in the following R14 documentation slice.
 ## 2026-05-12: R14 — mdBook ISF expanded + data manipulation
 - 8 ISF sub-chapters. shift, assemble, extract constructs. Switch expander handles all clause types.
 ## 2026-05-12: R14 — no merge, mdBook

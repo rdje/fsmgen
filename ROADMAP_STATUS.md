@@ -2,10 +2,12 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
-- Next decision point: bootstrap/import-tree refresh records the reachable
-  `.isf` adapter/scheduler pre-lowering path and the live static trace
-  (`191` project files, `190` `.pm` packages). Next bounded R14 slice:
-  synchronize `docs/ISF_SPEC.md` with shipped parser/scheduler behavior.
+- Next decision point: `docs/ISF_SPEC.md` and the R14 mdBook chapters now
+  describe the shipped post-handshake/post-assign-keyword parser and scheduler
+  surface, including deferred `do`/`spawn` start binding, unenforced
+  resources/priorities, `await_any` first-port behavior, and data-operation
+  placeholders. Next bounded R14 slice: turn one documented limitation into
+  regression-backed behavior, starting with the most acute scheduling/JSON gap.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
@@ -878,12 +880,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - `R14` Intent Scheduling (`.isf` format and lowering compiler), backed by the
   explicit `.fsm` middle layer and the existing SystemVerilog/Verilog backend.
 - Current next decision point:
-  - The bootstrap/import-tree refresh now records that [bin/fsmgen](bin/fsmgen)
-    reaches the R14 `.isf` adapter/scheduler pre-lowering path and that the
-    live static trace is `191` project files / `190` `.pm` packages.
-  - Next bounded `R14` slice: synchronize the detailed `.isf` specification
-    with the shipped parser/scheduler surface, then continue scheduler
-    behavior work from the documented open limitations.
+  - [docs/ISF_SPEC.md](docs/ISF_SPEC.md) and the R14 mdBook chapters now match
+    the shipped parser/scheduler surface instead of the older aspirational
+    spec: deprecated `(handshake ...)` is compatibility-only, `(assign ...)`
+    remains removed, resource/priority arbitration is deferred, `await_any`
+    waits on the first collected done port, and `do`/`spawn` child-start
+    binding is documented as incomplete.
+  - Next bounded `R14` slice: convert one documented limitation into
+    regression-backed behavior or broaden schedule-report assertions against
+    the current IR, whichever is the smallest honest scheduler slice.
 - Superseded `R13` carry-forward detail retained below this note should not be
   read as the current active lane:
   - The bounded `HDLGenerator` result contract now has a dedicated JSON
@@ -3427,16 +3432,19 @@ Done:
   forms, watchdogs, transactions, `(on ...)`, `(when ...)`, `(switch ...)`,
   `(repeat ...)`, `(await ...)`, `(sample ...)`, `(complete ...)`, named and
   parameterized drive definitions/calls, `(do ...)`, `(spawn ...)`,
-  `(await_all ...)`, `(await_any ...)`, rules, trigger/pulse, latency checks,
+  `(await_all ...)`, `(await_any ...)`, rules, trigger actions, latency checks,
   and data-manipulation constructs such as `shift_left`, `shift_right`,
   `assemble`, and `extract`.
 - The mdBook now carries the R14 ISF chapter split, including the lowering
   reference.
 - The bootstrap import-tree snapshot now records the reachable ISF adapter and
   scheduler path.
+- [docs/ISF_SPEC.md](docs/ISF_SPEC.md) is synchronized to the current shipped
+  parser/scheduler behavior and explicitly records the current limitations:
+  deferred `do`/`spawn` start binding and composition-top instantiation,
+  unenforced resources/priorities, first-port `await_any`, schedule JSON as a
+  non-stable schema, and placeholder `shift_right`/`extract` field handling.
 Left:
-- Synchronize the detailed [docs/ISF_SPEC.md](docs/ISF_SPEC.md) contract with
-  the shipped parser/scheduler behavior.
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.
 - Broaden schedule-report assertions and end-to-end fixture coverage as the

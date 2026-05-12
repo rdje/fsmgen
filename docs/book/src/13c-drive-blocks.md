@@ -18,7 +18,7 @@ is asserted. One `(drive ...)` call = one cycle.
 **Definition → combinational DT**:
 ```lisp
 (-scl_hi
-  (= (scl> 1) <scl_hi_start))
+  (<- (scl 1) <scl_hi_start))
 ```
 
 **Call → one state**:
@@ -41,7 +41,7 @@ is asserted. One `(drive ...)` call = one cycle.
 **Definition → combinational DT with parameter signal**:
 ```lisp
 (-scl
-  (= (scl> scl_val) <scl_start))
+  (<- (scl scl_val) <scl_start))
 ```
 
 **Call → one state**:
@@ -68,9 +68,9 @@ This reduces two drives (`scl_hi`, `scl_lo`) into one parameterized drive.
 **DT block**:
 ```lisp
 (-start_condition
-  (= (scl> 1)       <start_condition_start)
-  (= (sda_out> 0)   <start_condition_start)
-  (= (PENABLE> 1)   <start_condition_start))
+  (<- (scl 1)       <start_condition_start)
+  (<- (sda_out 0)   <start_condition_start)
+  (<- (PENABLE 1)   <start_condition_start))
 ```
 
 ## Cycle Semantics

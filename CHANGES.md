@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF specification synchronized to shipped lowering
+- Rewrote [docs/ISF_SPEC.md](docs/ISF_SPEC.md) around the current
+  parser/scheduler contract: `.isf` CLI handling, post-handshake `(on port)`
+  activation, removed `(assign ...)`, drive definitions/calls, transaction
+  clauses, rules, schedule JSON, fixtures, and explicit deferred items.
+- Tightened the mdBook R14 chapters so composition, rules, data manipulation,
+  and lowering examples no longer claim enforced priorities/resources,
+  composition-top spawn instantiation, exact `extract` slicing, or complete
+  child-start binding before the implementation supports them.
 ### Bootstrap — R14 onboarding/import-tree refresh
 - Refreshed README onboarding/CLI references for `.isf`, `--outdir`, and
   `--emit-schedule-json`.

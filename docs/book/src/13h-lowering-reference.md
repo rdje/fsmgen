@@ -188,8 +188,7 @@ Timeout state:
 ```
 
 **Timing**: `done` becomes 1 in the cycle after this state. Next cycle: idle.
-The idle state's `can_accept=1` ensures `done` is visible externally
-for exactly one cycle (idle doesn't re-assert it).
+Current ISF lowering does not emit an explicit deassert state for `done`.
 **Cycles**: 1.
 
 ## `(repeat N body...)` → Counter Init + Body + Check
@@ -286,11 +285,11 @@ for exactly one cycle (idle doesn't re-assert it).
 **Timing**: 1 cycle. Assignment takes effect next cycle.
 **Implicit signals**: None (operates on existing variables).
 
-## `(assemble (fields) as var)` / `(extract word as (fields))` → Sequential State
+## `(assemble fields... as var)` / `(extract word as fields...)` → Sequential State
 
 **ISF**:
 ```lisp
-(assemble (header payload crc) as packet)
+(assemble header payload crc as packet)
 ```
 
 **Generated .fsm**:
@@ -302,6 +301,9 @@ for exactly one cycle (idle doesn't re-assert it).
 
 **Timing**: 1 cycle.
 **Implicit signals**: None.
+
+Current `extract` lowering emits placeholder slice names for each field.
+Exact bit ranges are still deferred.
 
 ## `(latency (min N) (max M))` → Verification Logic
 
@@ -336,14 +338,14 @@ Adds to done state:
 
 **Timing**: Counter increments each active cycle. Min violation = error if done too early.
 Max violation via watchdog timeout (if no `(await ...)` in transaction).
-**Implicit signals**: `{tx}_cc` (log2(M) bits), `{tx}_inc` (1), `{tx}_lerr` (1).
+**Implicit signals**: `{tx}_cc` (inferred), `{tx}_inc` (1), `{tx}_lerr` (1).
 
 ## `(do child)` → Handshake
 
 **In parent**:
 ```lisp
 (parent_do_1
-  (= (child_start 1))             ;; assert start
+  (<- (_start 1))                 ;; placeholder start assignment
   (<child_done                    ;; await done
     (-> parent_do_2)))
 ```
@@ -354,13 +356,20 @@ Max violation via watchdog timeout (if no `(await ...)` in transaction).
   (<child_start                   ;; now: watches parent's start
     (-> child_drive_0)))
 
-(child_done_5                     ;; terminal: pulses done
+(child_done_5                     ;; terminal: assigns done
   (<- (done 1))
   (<- (child_done 1))             ;; signal parent
   (-> child_idle_0))
 ```
 
 **Implicit signals**: `{child}_start` (1), `{child}_done` (1).
+The parent-side child-start assignment is still a shared `_start` placeholder
+in the current emitter path.
+
+Spawn lowering writes separate child `.fsm` files and a parent `.fsm` with
+per-instance start/done signals when `--outdir DIR` is used. Full composition
+top instantiation, start-signal driving, and spawn parameter binding remain
+deferred.
 
 ## Complete Example — APB Transfer
 
@@ -387,7 +396,7 @@ drive_1         ← (drive setup_phase)
 drive_2         ← (drive access_phase)
 await_3         ← (await PREADY) + watchdog
 drive_4         ← (drive done_phase) with samples
-done_5          ← (complete done): pulse done, return to idle
+done_5          ← (complete done): assign done, return to idle
 cc_inc_dt       ← latency cycle counter DT
 ```
 

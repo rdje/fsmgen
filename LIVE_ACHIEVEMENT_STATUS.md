@@ -2,10 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — ISF spec synced to implementation
+- Active: `R14`. `docs/ISF_SPEC.md` + mdBook now record shipped behavior and
+  limitations: deferred `do`/`spawn` start binding, first-port `await_any`,
+  unenforced priorities/resources, placeholder data ops. Next: behavior slice.
+
 ## 2026-05-12: Bootstrap — R14 docs/import tree
 - Active: `R14`. Import tree refreshed for `.isf` pre-lowering path: 191 project
   files, 190 `.pm` packages. README and roadmap status point to current ISF
-  CLI/options. Next: sync ISF_SPEC.
+  CLI/options. The following slice synced ISF_SPEC.
 
 ## 2026-05-12: R14 — mdBook ISF + data manip
 - Active: `R14`. 8 ISF sub-chapters + shift/assemble/extract. 36 states, 7 tests.
