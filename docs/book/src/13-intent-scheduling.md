@@ -81,7 +81,8 @@ shape before private parsing begins; `parse_file(...)` also requires a readable
 `.isf` file path. The scheduler facade validates method receivers and the
 public actor shell before calling private LoweringIR, and the manifest
 advertises the required `actor_name`, `transactions`, and `interface` shell keys
-without freezing the full raw actor hash. The facade-shape metadata for those
+plus their public value shapes without freezing the full raw actor hash. The
+facade-shape metadata for those
 receiver, argument, path, and actor-shell boundaries is audited as exact across
 direct and manifest views. The manifest also advertises the public facade
 return containers: parser facades return scheduler-consumable actor hashes,

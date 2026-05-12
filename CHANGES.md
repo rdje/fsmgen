@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF actor-shell value-shape metadata audit
+- Added `actor_shell_value_shape` to `embedding.isf_public_interface` for the
+  public parser/scheduler handoff shell.
+- Added [t/1160-isf-public-actor-shell-value-shape-audit.t](t/1160-isf-public-actor-shell-value-shape-audit.t)
+  to prove the metadata is exact and aligned with `parse_file(...)` plus
+  `parse_source(...)` APB actors.
 ### R14 — ISF report reset-shape metadata audit
 - Added `schedule_report_reset_shape` to `embedding.isf_public_interface` for
   configured reset hashes and omitted reset JSON null.

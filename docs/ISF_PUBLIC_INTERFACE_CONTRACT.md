@@ -171,6 +171,10 @@ The parser and scheduler method receiver boundary is checked by
 The scheduler-consumable actor shell returned by the public parser facades is
 checked by
 [t/1129-isf-public-actor-shell-contract-audit.t](../t/1129-isf-public-actor-shell-contract-audit.t).
+The actor-shell value-shape metadata is checked by
+[t/1160-isf-public-actor-shell-value-shape-audit.t](../t/1160-isf-public-actor-shell-value-shape-audit.t)
+to keep the `actor_name`, `transactions`, and `interface` public handoff
+shapes exact across direct and manifest views.
 The facade shape metadata that advertises those constructor, method, path, and
 actor-shell boundaries is checked by
 [t/1143-isf-public-facade-shape-metadata-audit.t](../t/1143-isf-public-facade-shape-metadata-audit.t)
@@ -250,8 +254,9 @@ and source label.
 hash reference from the ISF adapter. The current public actor shell requires
 scalar `actor_name`, array `transactions`, and hash `interface` fields.
 The machine-readable contract advertises those required shell fields through
-`actor_shell_required_keys`. That promise is intentionally a shell contract:
-the full raw actor hash remains non-public.
+`actor_shell_required_keys` and the value shapes through
+`actor_shell_value_shape`. That promise is intentionally a shell contract: the
+full raw actor hash remains non-public.
 The parser/scheduler argument-shape fields and actor-shell key list are exact
 facade-shape discovery metadata.
 

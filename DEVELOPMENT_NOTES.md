@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF actor-shell value-shape metadata audit
+- The actor shell is the public handoff between parser and scheduler facades;
+  listing keys without value shapes still leaves consumers guessing at the
+  minimum usable shell.
+- `t/1160-isf-public-actor-shell-value-shape-audit.t` locks that metadata
+  across direct and manifest views and checks APB `parse_file(...)` plus
+  `parse_source(...)` actors.
 ## 2026-05-12: R14 ISF report reset-shape metadata audit
 - Reset key and enum metadata was already public, but the container/null rule
   was still prose-only. The contract now records that configured reset is a

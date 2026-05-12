@@ -89,6 +89,8 @@ array `transactions`, and hash `interface` fields.
 The machine-readable contract publishes that required handoff shell as
 `actor_shell_required_keys`; other raw actor fields are still private parser
 output.
+It also publishes the shell value shapes: scalar `actor_name`, array
+`transactions`, and hash `interface`.
 The same contract publishes the public return containers: parser facades return
 scheduler-consumable actor hash references, `lower(...)` returns a hash
 reference with the advertised lower-result keys, and `report(...)` returns the
@@ -581,6 +583,7 @@ Focused tests:
 - [t/1157-isf-public-report-transaction-ordering-audit.t](../t/1157-isf-public-report-transaction-ordering-audit.t)
 - [t/1158-isf-public-report-dt-kind-metadata-audit.t](../t/1158-isf-public-report-dt-kind-metadata-audit.t)
 - [t/1159-isf-public-report-reset-shape-metadata-audit.t](../t/1159-isf-public-report-reset-shape-metadata-audit.t)
+- [t/1160-isf-public-actor-shell-value-shape-audit.t](../t/1160-isf-public-actor-shell-value-shape-audit.t)
 
 ## 12. Explicitly Deferred
 
