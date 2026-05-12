@@ -1,5 +1,10 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — readable `await_all` guard emission
+- `Emitter::FSM` now emits each nested `await_all` guard close on its own line
+  instead of concatenating all closing parens into one generated `.fsm` line.
+- `t/1109-isf-await-all-sync.t` now locks both the all-done guard structure and
+  the readable closing-line shape.
 ## 2026-05-12: R14 — `await_all` nested guards locked
 - Added `t/1109-isf-await-all-sync.t` to prove `await_all` emits nested guards
   for every collected spawned done signal.

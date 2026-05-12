@@ -45,6 +45,8 @@ ISF
 
     like($block, qr/\(<w2_done\s+\(<w1_done\s+\(<w0_done\s+\(-> parent_done_5\)/s,
         'await_all nests all collected done guards before advancing');
+    like($block, qr/\(-> parent_done_5\)\n    \)\n    \)\n    \)/,
+        'await_all nested guard closings are emitted one per line');
     for my $done_port (qw(w0_done w1_done w2_done)) {
         like($block, qr/<$done_port\b/, "await_all includes $done_port");
     }

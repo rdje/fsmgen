@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — readable `await_all` guard emission
+- Active: `R14`. `t/1109` now also proves nested `await_all` guard closings
+  are emitted one per generated `.fsm` line.
+
 ## 2026-05-12: R14 — `await_all` nested guard coverage
 - Active: `R14`. `t/1109` proves `await_all` waits on every collected spawned
   done signal through one nested all-guards transition.

@@ -67,7 +67,11 @@ deferred.
   (<w2_done
   (<w1_done
   (<w0_done
-    (-> parent_main_done_5)))))
+    (-> parent_main_done_5)
+  )
+  )
+  )
+)
 ```
 
 ## `(await_all port)` / `(await_any port)`

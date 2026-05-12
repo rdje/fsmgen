@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 readable `await_all` guard emission
+- `await_all` lowering emits nested guard forms because all collected done
+  signals must be true along one decision path. The old emitter appended all
+  closing parens into one string, which made the generated `.fsm` harder to
+  review even though the structure was parseable.
+- The emitter now pushes one close line per nested guard. This keeps generated
+  scheduled artifacts readable without changing synchronization semantics.
 ## 2026-05-12: R14 `await_all` nested guard coverage
 - `await_any` already had focused coverage for one guard per collected done
   signal. The companion `await_all` lowering is intentionally different: it

@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — readable `await_all` guard emission
+- Updated [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm)
+  so nested `await_all` guard closings are emitted one per generated `.fsm`
+  line.
+- Extended [t/1109-isf-await-all-sync.t](t/1109-isf-await-all-sync.t) to lock
+  the readable nested-guard closing shape.
 ### R14 — `await_all` nested guard coverage
 - Added [t/1109-isf-await-all-sync.t](t/1109-isf-await-all-sync.t) to lock
   `await_all` lowering for spawned children.

@@ -173,7 +173,7 @@ sub _emit_transitions($self, $state) {
             push @lines, "    (<$p";
         }
         push @lines, "      (-> $target)";
-        push @lines, '    )' x scalar(@ports);
+        push @lines, map { '    )' } @ports;
         return @lines;
     }
     if ($state->{kind} eq 'sync_any') {
