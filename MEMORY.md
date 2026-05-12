@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF top-level discovery audit
+- Added `t/1131-isf-public-top-level-discovery-audit.t` to prove
+  `embedding.isf_public_interface.public_top_level_presence_keys` is a unique,
+  exact discovery list for the contract payload.
+- The audit covers the direct contract owner, the embedding nested discovery
+  map, the in-process capability manifest, and both CLI manifest spellings.
 ## 2026-05-12: R14 — ISF compile_issues success-shape audit
 - `embedding.isf_public_interface` now advertises
   `schedule_report_compile_issues_success_shape`: successful schedule reports

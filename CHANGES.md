@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF top-level discovery audit
+- Added [t/1131-isf-public-top-level-discovery-audit.t](t/1131-isf-public-top-level-discovery-audit.t)
+  to prove `public_top_level_presence_keys` is unique and exactly matches the
+  `embedding.isf_public_interface` payload keys.
+- The audit covers direct owner data, embedding nested discovery metadata, the
+  in-process capability manifest, and both CLI manifest spellings.
 ### R14 — ISF compile_issues success-shape audit
 - Extended [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm)
   with `schedule_report_compile_issues_success_shape`, documenting that

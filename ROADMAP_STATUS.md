@@ -89,6 +89,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - `t/1130` now proves successful public schedule reports keep
   `compile_issues` present as an empty array and advertises that shape through
   `embedding.isf_public_interface`.
+- `t/1131` now proves the ISF public contract's top-level discovery list is
+  unique and exact across direct, manifest, and CLI manifest views.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.

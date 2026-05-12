@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF top-level discovery audit
+- Downstream tools should not need to infer whether
+  `public_top_level_presence_keys` is exhaustive. For the ISF public-interface
+  contract, it is the exact top-level discovery list, not a partial hint list.
+- `t/1131-isf-public-top-level-discovery-audit.t` locks that rule across the
+  direct owner, embedding nested discovery map, in-process capability manifest,
+  and both CLI manifest spellings. This catches accidental unadvertised fields
+  and duplicate discovery entries.
 ## 2026-05-12: R14 ISF compile_issues success-shape audit
 - `compile_issues` is already part of the bounded public schedule-report
   top-level key family. The success semantics should be discoverable too:

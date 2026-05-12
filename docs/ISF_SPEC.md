@@ -52,7 +52,9 @@ schedule-report key families is
 machine-readable form is advertised through
 `--capability-manifest -> embedding.isf_public_interface`. That contract must
 evolve in the same slice as any implementation change that widens or changes
-the public ISF surface.
+the public ISF surface. Its `public_top_level_presence_keys` list is audited as
+the exact, unique discovery list for the contract payload across direct and
+manifest views.
 
 The public adapter and scheduler constructors currently accept only the `debug`
 option. Malformed option lists and unsupported option names are rejected before
@@ -478,6 +480,7 @@ Focused tests:
 - [t/1128-isf-public-multifile-schedule-report-audit.t](../t/1128-isf-public-multifile-schedule-report-audit.t)
 - [t/1129-isf-public-actor-shell-contract-audit.t](../t/1129-isf-public-actor-shell-contract-audit.t)
 - [t/1130-isf-public-compile-issues-success-audit.t](../t/1130-isf-public-compile-issues-success-audit.t)
+- [t/1131-isf-public-top-level-discovery-audit.t](../t/1131-isf-public-top-level-discovery-audit.t)
 
 ## 12. Explicitly Deferred
 
