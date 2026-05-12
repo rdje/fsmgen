@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — samples now materialize in scheduled states
+- `LoweringIR` now lowers `(on ...)` sample clauses into guarded entry-state
+  assignments and consumes pending samples when building named drive calls and
+  await states.
+- APB lowering now captures request fields in `apb_transfer_idle_0` and
+  `PRDATA`/`PSLVERR` in `apb_transfer_drive_4`; the previous stray
+  post-terminal `apb_transfer_sample_6` state is gone.
+- Added `t/1100-isf-sample-piggyback.t` and updated the APB JSON report lock
+  in `t/1096-isf-schedule-json-report.t` to the corrected 7-state shape.
 ## 2026-05-12: R14 — repeat data ops now lower
 - `LoweringIR` now lowers named drive calls and data ops inside repeat bodies.
 - Known-width `shift_right` uses interface/sample-derived width; UART

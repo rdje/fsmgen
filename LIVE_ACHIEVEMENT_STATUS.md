@@ -2,6 +2,11 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — sample piggyback lowering
+- Active: `R14`. `t/1100` proves entry samples and pending samples before
+  named drive/await states now materialize in the scheduled state; APB is now a
+  corrected 7-state schedule with no trailing sample state.
+
 ## 2026-05-12: R14 — repeat drive/data ops
 - Active: `R14`. `t/1099` proves repeat bodies lower named drive calls and data
   ops; known-width `shift_right` now uses concrete width. Remaining: resources,

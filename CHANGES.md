@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — sample piggyback lowering
+- Updated [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so `(on ...)` samples become guarded entry-state assignments and pending
+  samples are consumed by named drive calls and await states instead of
+  drifting to a later standalone sample state.
+- Updated [t/1096-isf-schedule-json-report.t](t/1096-isf-schedule-json-report.t)
+  for the corrected 7-state APB schedule shape and added
+  [t/1100-isf-sample-piggyback.t](t/1100-isf-sample-piggyback.t) for APB,
+  await, and control-flow sample piggybacking.
 ### R14 — repeat body drive/data-op lowering
 - Updated [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
   so repeat bodies lower named drive calls with arguments and the current data

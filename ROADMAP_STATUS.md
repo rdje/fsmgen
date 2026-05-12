@@ -5,7 +5,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Next decision point: `docs/ISF_SPEC.md` and the R14 mdBook chapters now
   describe the shipped post-handshake/post-assign-keyword parser and scheduler
   surface, including unenforced resources/priorities and data-operation
-  placeholders. `t/1096` now locks the current APB schedule JSON report shape.
+  placeholders. `t/1096` now locks the corrected APB schedule JSON report
+  shape after sample piggybacking.
 - `t/1097` now removes the anonymous `_start` placeholder from `do`, `spawn`,
   and control-flow drive-call lowering by asserting concrete child, instance,
   and drive start signals. Next bounded R14 slice: turn another documented
@@ -14,6 +15,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   instead of watching only the first done signal.
 - `t/1099` now proves repeat bodies lower named drive calls and data operations,
   and known-width `shift_right` uses concrete insert positions.
+- `t/1100` now proves `(on ...)` samples materialize in entry states and
+  pending samples piggyback onto named drive/await states instead of leaking
+  into trailing sample states.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
@@ -902,6 +906,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - [t/1099-isf-repeat-data-ops.t](t/1099-isf-repeat-data-ops.t) now proves
     repeat bodies lower named drive calls and data operations, including
     known-width `shift_right`.
+  - [t/1100-isf-sample-piggyback.t](t/1100-isf-sample-piggyback.t) now proves
+    `(on ...)` samples materialize in entry states and pending samples
+    piggyback onto named drive/await states, including control-flow bodies.
   - Next bounded `R14` slice: convert another documented scheduler limitation
     into regression-backed behavior.
 - Superseded `R13` carry-forward detail retained below this note should not be
@@ -3469,6 +3476,9 @@ Done:
   multi-guard `await_any` lowering for spawned done signals.
 - [t/1099-isf-repeat-data-ops.t](t/1099-isf-repeat-data-ops.t) locks repeat
   body named-drive/data-op lowering and known-width `shift_right`.
+- [t/1100-isf-sample-piggyback.t](t/1100-isf-sample-piggyback.t) locks
+  entry-state sample materialization plus pending-sample piggybacking onto
+  named drive and await states, including control-flow body lowering.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

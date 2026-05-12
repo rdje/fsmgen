@@ -41,13 +41,13 @@ subtest 'schedule JSON report describes APB requester lowering IR' => sub {
     is($report->{port_count}, 15, 'port count');
     is($report->{inputs},      7, 'input count');
     is($report->{outputs},     8, 'output count');
-    is($report->{state_count}, 8, 'state count');
+    is($report->{state_count}, 7, 'state count');
     is_deeply($report->{compile_issues}, [], 'no compile issues reported');
 
     my $transactions = $report->{transactions};
     is(scalar(@$transactions), 1, 'one transaction summary');
     is($transactions->[0]{name},  'apb_transfer', 'transaction name');
-    is($transactions->[0]{count}, 8,              'transaction state count');
+    is($transactions->[0]{count}, 7,              'transaction state count');
     is_deeply(
         $transactions->[0]{states},
         [qw(
@@ -57,7 +57,6 @@ subtest 'schedule JSON report describes APB requester lowering IR' => sub {
           apb_transfer_await_3
           apb_transfer_drive_4
           apb_transfer_done_5
-          apb_transfer_sample_6
           apb_transfer_timeout
         )],
         'transaction state order',
@@ -81,9 +80,11 @@ subtest 'schedule JSON report describes APB requester lowering IR' => sub {
     is_deeply(
         $storage_names,
         [qw(
+          addr
           apb_transfer_cc
           apb_transfer_wd
           done
+          is_write
           last_error
           penable_start
           penable_val
@@ -91,6 +92,7 @@ subtest 'schedule JSON report describes APB requester lowering IR' => sub {
           psel_val
           rdata
           slverr
+          wdata
         )],
         'inferred storage names',
     );

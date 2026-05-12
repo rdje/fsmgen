@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 samples now piggyback through lowering
+- The old IR stored `(on ...)` samples in a `samples` side field that the `.fsm`
+  emitter never consumed. Entry samples now become guarded `<=` assignments on
+  the entry state so fixture fields such as APB `addr`, `is_write`, and
+  `wdata` are actually captured when the activation guard fires.
+- Pending samples are now consumed when lowering named drive calls and await
+  states at top level and inside current `when`/`switch`/`repeat` bodies. This
+  keeps sample timing local to the scheduled state that follows the source
+  clause instead of allowing unreachable or post-terminal sample states.
+- The APB schedule report intentionally changed from 8 states to 7 because
+  `PRDATA`/`PSLVERR` now piggyback on `apb_transfer_drive_4`; `t/1100` locks
+  the behavior and `t/1096` locks the corrected report shape.
 ## 2026-05-12: R14 repeat bodies now lower drive/data operations
 - `LoweringIR` now carries a bounded signal-width map per transaction from
   interface ports plus `(sample source as alias)` clauses.

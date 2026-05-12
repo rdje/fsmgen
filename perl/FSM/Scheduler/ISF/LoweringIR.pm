@@ -169,12 +169,12 @@ sub _build_transaction($self, $tx, $actor, $txi) {
                 # Call: (drive name arg1 arg2 ...)
                 my $name = $cl->[1];
                 confess "Transaction '$tn': drive '$name' not defined\n" unless $drives->{$name};
-                push @st, _ir_named_drive_call($cl, $tn, $si++, $drives->{$name});
+                push @st, _ir_named_drive_call($cl, $tn, $si++, $drives->{$name}, [splice @ps]);
             } else {
                 push @st, _ir_drive($cl, $tn, [splice @ps], $si++);
             }
         }
-        elsif ($k eq 'await')    { $ha=1; $wdc="${tn}_wd"; my $wd_override = _parse_await_wd($cl); push @st, _ir_await($cl, $tn, $si++, $wd_override || $wd); }
+        elsif ($k eq 'await')    { $ha=1; $wdc="${tn}_wd"; my $wd_override = _parse_await_wd($cl); push @st, _ir_await($cl, $tn, $si++, $wd_override || $wd, [splice @ps]); }
         elsif ($k eq 'sample')   { push @ps, $cl; }
         elsif ($k eq 'update')      { push @st, _ir_update($cl,$tn,$si++); }
         elsif ($k eq 'phase')       { push @st, _ir_phase($cl,$tn,$si++); }
@@ -225,14 +225,67 @@ sub _build_transaction($self, $tx, $actor, $txi) {
 }
 
 # --- Individual clause → IR ---
-sub _ir_on      { my ($cl,$tn,$i)=@_; my $e=$cl->[1]; my @s; for my $j(2..$#$cl){my $x=$cl->[$j]; next unless ref($x)eq'ARRAY'&&$x->[0]eq'sample'; push @s,{port=>$x->[1],as_name=>$x->[3]}} my $guard=!ref($e) ? {port=>$e} : {expr=>$e}; {name=>"${tn}_idle_$i",kind=>'entry',guard=>$guard,samples=>\@s,assignments=>[],transitions=>[]} }
-sub _ir_when_activation { my ($cl,$tn,$i)=@_; my $e=$cl->[1]; my @s; for my $j(2..$#$cl){my $x=$cl->[$j]; next unless ref($x)eq'ARRAY'&&$x->[0]eq'sample'; push @s,{port=>$x->[1],as_name=>$x->[3]}} my $guard=!ref($e) ? {port=>$e} : {expr=>$e}; {name=>"${tn}_idle_$i",kind=>'entry',guard=>$guard,samples=>\@s,assignments=>[],transitions=>[]} }
+sub _sample_assignments {
+    my ($samples) = @_;
+    my @assignments;
+
+    for my $sample (@$samples) {
+        next unless ref($sample) eq 'ARRAY' && @$sample >= 4;
+        next unless $sample->[0] eq 'sample' && $sample->[2] eq 'as';
+        push @assignments, { lhs => $sample->[3], rhs => $sample->[1], op => '<=' };
+    }
+
+    return @assignments;
+}
+
+sub _inline_on_samples {
+    my ($cl) = @_;
+    my @samples;
+
+    for my $j (2 .. $#$cl) {
+        my $sample = $cl->[$j];
+        next unless ref($sample) eq 'ARRAY' && $sample->[0] eq 'sample';
+        push @samples, $sample;
+    }
+
+    return _sample_assignments(\@samples);
+}
+
+sub _ir_on {
+    my ($cl, $tn, $i) = @_;
+    my $event = $cl->[1];
+    my $guard = !ref($event) ? { port => $event } : { expr => $event };
+    my @assignments = map { +{ %$_, guard => $guard } } _inline_on_samples($cl);
+
+    return {
+        name        => "${tn}_idle_$i",
+        kind        => 'entry',
+        guard       => $guard,
+        assignments => \@assignments,
+        transitions => [],
+    };
+}
+
+sub _ir_when_activation {
+    my ($cl, $tn, $i) = @_;
+    my $event = $cl->[1];
+    my $guard = !ref($event) ? { port => $event } : { expr => $event };
+    my @assignments = map { +{ %$_, guard => $guard } } _inline_on_samples($cl);
+
+    return {
+        name        => "${tn}_idle_$i",
+        kind        => 'entry',
+        guard       => $guard,
+        assignments => \@assignments,
+        transitions => [],
+    };
+}
 sub _ir_data_op  { my ($op,$cl,$tn,$i,$widths)=@_; $op eq'shift_left' ? _ir_shift_left($cl,$tn,$i) : $op eq'shift_right' ? _ir_shift_right($cl,$tn,$i,$widths) : $op eq'assemble' ? _ir_assemble($cl,$tn,$i) : $op eq'extract' ? _ir_extract($cl,$tn,$i) : _ir_update($cl,$tn,$i) }
 sub _ir_named_drive_call {
-    my ($cl, $tn, $i, $def) = @_;
+    my ($cl, $tn, $i, $def, $pending_samples) = @_;
     my $name = $cl->[1];
     my @params = @{$def->{params}};
-    my @assignments = ({ lhs => "${name}_start", rhs => 1, op => '=' });
+    my @assignments = (_sample_assignments($pending_samples || []), { lhs => "${name}_start", rhs => 1, op => '=' });
 
     for my $pi (0 .. $#params) {
         my $arg = $cl->[2 + $pi];
@@ -250,7 +303,19 @@ sub _ir_named_drive_call {
 }
 sub _ir_drive   { my ($cl,$tn,$ps,$i)=@_; my @a; for(@$ps){push @a,{lhs=>$_->[3],rhs=>$_->[1],op=>'<='}} for my $j(2..$#$cl){my$x=$cl->[$j];next unless ref($x)eq'ARRAY'&&@$x>=2;push @a,{lhs=>$x->[0],rhs=>$x->[1],op=>'='}} {name=>"${tn}_drive_$i",kind=>'sequential',assignments=>\@a,transitions=>[]} }
 sub _ir_drive_call { my ($body,$tn,$ps,$i)=@_; return undef; }
-sub _ir_await   { my ($cl,$tn,$i,$wd)=@_; {name=>"${tn}_await_$i",kind=>'await',assignments=>[],transitions=>[],guard=>{port=>$cl->[1]},watchdog=>{name=>"${tn}_wd",limit=>$wd//65536}} }
+sub _ir_await {
+    my ($cl, $tn, $i, $wd, $pending_samples) = @_;
+    my @assignments = _sample_assignments($pending_samples || []);
+
+    return {
+        name        => "${tn}_await_$i",
+        kind        => 'await',
+        assignments => \@assignments,
+        transitions => [],
+        guard       => { port => $cl->[1] },
+        watchdog    => { name => "${tn}_wd", limit => $wd // 65536 },
+    };
+}
 sub _ir_complete{ my ($cl,$tn,$i)=@_; {name=>"${tn}_done_$i",kind=>'terminal',assignments=>[{lhs=>$cl->[1],rhs=>1,op=>'<-'}],transitions=>[]} }
 sub _ir_update   { my ($cl,$tn,$i)=@_; my$rhs=join(' ',@{$cl}[2..$#$cl]); {name=>"${tn}_update_$i",kind=>'sequential',assignments=>[{lhs=>$cl->[1],rhs=>$rhs,op=>'<-'}],transitions=>[]} }
 sub _ir_shift_left { my ($cl,$tn,$i)=@_; my$reg=$cl->[1];my$bit=$cl->[2]; {name=>"${tn}_shift_$i",kind=>'sequential',assignments=>[{lhs=>$reg,rhs=>"(| (<< $reg 1) $bit)",op=>'<-'}],transitions=>[]} }
@@ -265,8 +330,8 @@ sub _ir_spawn    { my ($cl,$tn,$i)=@_; my $inst=$cl->[3]||"${tn}_$i"; {name=>"${
 sub _ir_when     { my ($cl,$tn,$i)=@_; {name=>"${tn}_when_$i",kind=>'branch',condition=>$cl->[1],body_clauses=>[@{$cl}[2..$#$cl]],assignments=>[],transitions=>[]} }
 sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd)=@_; my @s; my $bstate=_ir_when($cl,$tn,$$ir++); push @s,$bstate; my @body_states; my @lp;
     for my $bc(@{$bstate->{body_clauses}}){next unless ref($bc)eq'ARRAY';my$bk=$bc->[0];
-        if($bk eq'drive'){my$n=$bc->[1];confess qq{drive $n not defined} unless !ref($n)&&$drives->{$n};push @body_states,_ir_named_drive_call($bc,$tn,$$ir++,$drives->{$n})}
-        elsif($bk eq'await'){push @body_states,_ir_await($bc,$tn,$$ir++,$wd)}
+        if($bk eq'drive'){my$n=$bc->[1];confess qq{drive $n not defined} unless !ref($n)&&$drives->{$n};push @body_states,_ir_named_drive_call($bc,$tn,$$ir++,$drives->{$n},[splice @lp])}
+        elsif($bk eq'await'){push @body_states,_ir_await($bc,$tn,$$ir++,$wd,[splice @lp])}
         elsif($bk eq'sample'){push @lp,$bc}
         elsif($bk eq'complete'){push @body_states,_ir_complete($bc,$tn,$$ir++)}}
     if(@lp){push @body_states,_ir_sample_state($tn,\@lp,$$ir++)}
@@ -278,8 +343,8 @@ sub _expand_switch { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths)=@_; my $signal=$cl
     for my $i(2..$#$cl){my$br=$cl->[$i];next unless ref($br)eq'ARRAY'&&@$br>=2;my$val=$br->[0];my@bc=@{$br}[1..$#$br];
         confess "Switch '$tn': duplicate value '$val'\n" if$seen_val{$val}++;my@body_states;my@lp;
         for my $bc2(@bc){next unless ref($bc2)eq'ARRAY';my$bk2=$bc2->[0];
-            if($bk2 eq'drive'){my$n=$bc2->[1];confess qq{drive $n not defined} unless !ref($n)&&$drives->{$n};push @body_states,_ir_named_drive_call($bc2,$tn,$$ir++,$drives->{$n})}
-            elsif($bk2 eq'await'){push @body_states,_ir_await($bc2,$tn,$$ir++,$wd)}
+            if($bk2 eq'drive'){my$n=$bc2->[1];confess qq{drive $n not defined} unless !ref($n)&&$drives->{$n};push @body_states,_ir_named_drive_call($bc2,$tn,$$ir++,$drives->{$n},[splice @lp])}
+            elsif($bk2 eq'await'){push @body_states,_ir_await($bc2,$tn,$$ir++,$wd,[splice @lp])}
             elsif($bk2 eq'sample'){push @lp,$bc2}
             elsif($bk2 eq'repeat'){my($rs,$rc)=_ir_repeat($bc2,$tn,$ir,\@lp,$wd,$drives,$widths);push @body_states,@$rs}
             elsif($bk2 eq'update'||$bk2 eq'shift_left'||$bk2 eq'shift_right'||$bk2 eq'assemble'||$bk2 eq'extract'){push @body_states,_ir_data_op($bk2,$bc2,$tn,$$ir++,$widths)}
@@ -297,8 +362,8 @@ sub _ir_repeat {
     my ($cl,$tn,$ir,$ps,$wd,$drives,$widths)=@_; my $ctr="${tn}_cnt"; my @s; my @lp;
     push @s, {name=>"${tn}_repeat_init_".$$ir++,kind=>'sequential',assignments=>[{lhs=>$ctr,rhs=>$cl->[1],op=>'<='}],transitions=>[]};
     for my $bc(@{$cl}[2..$#$cl]){next unless ref($bc)eq'ARRAY';my $bk=$bc->[0];
-        if($bk eq'drive'){my$n=$bc->[1];if(!ref($n)&&$drives->{$n}){push @s,_ir_named_drive_call($bc,$tn,$$ir++,$drives->{$n})}else{push @s,_ir_drive($bc,$tn,[splice @lp],$$ir++)}}
-        elsif($bk eq'await'){push @s,_ir_await($bc,$tn,$$ir++,$wd)}
+        if($bk eq'drive'){my$n=$bc->[1];if(!ref($n)&&$drives->{$n}){push @s,_ir_named_drive_call($bc,$tn,$$ir++,$drives->{$n},[splice @lp])}else{push @s,_ir_drive($bc,$tn,[splice @lp],$$ir++)}}
+        elsif($bk eq'await'){push @s,_ir_await($bc,$tn,$$ir++,$wd,[splice @lp])}
         elsif($bk eq'sample'){push @lp,$bc}
         elsif($bk eq'update'||$bk eq'shift_left'||$bk eq'shift_right'||$bk eq'assemble'||$bk eq'extract'){push @s,_ir_data_op($bk,$bc,$tn,$$ir++,$widths)}}
     if(@lp){push @s,_ir_sample_state($tn,\@lp,$$ir++)}

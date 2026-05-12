@@ -389,7 +389,7 @@ All constructs together:
   (latency (min 2) (max 16)))
 ```
 
-Generates 8 states + combinational DTs + drive DTs:
+Generates 7 states + combinational DTs + drive DTs:
 
 ```
 idle_0          ← (on start ...) : guards on start, samples, can_accept
@@ -398,10 +398,11 @@ drive_2         ← (drive access_phase)
 await_3         ← (await PREADY) + watchdog
 drive_4         ← (drive done_phase) with samples
 done_5          ← (complete done): assign done, return to idle
+timeout         ← watchdog timeout
 cc_inc_dt       ← latency cycle counter DT
 ```
 
-Total: 8 states. Each `(drive ...)` is one state. `(await ...)` is one state.
+Total: 7 states. Each `(drive ...)` is one state. `(await ...)` is one state.
 `(sample ...)` piggybacks — no extra state.
 
 ## Phases and Stages

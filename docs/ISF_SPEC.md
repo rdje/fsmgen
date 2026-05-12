@@ -197,6 +197,8 @@ Current lowering:
 - Samples in `(on ...)` fire with the entry guard.
 - Samples collected before a later drive/await are piggybacked onto that next
   scheduled state.
+- Entry-state sample materialization and drive/await piggybacking are locked by
+  [t/1100-isf-sample-piggyback.t](../t/1100-isf-sample-piggyback.t).
 - The current implementation treats sampled names as inferred storage; richer
   wire-vs-register optimization is still future work.
 
@@ -372,6 +374,7 @@ Focused tests:
 - [t/1097-isf-start-signal-binding.t](../t/1097-isf-start-signal-binding.t)
 - [t/1098-isf-await-any-sync.t](../t/1098-isf-await-any-sync.t)
 - [t/1099-isf-repeat-data-ops.t](../t/1099-isf-repeat-data-ops.t)
+- [t/1100-isf-sample-piggyback.t](../t/1100-isf-sample-piggyback.t)
 
 ## 12. Explicitly Deferred
 
