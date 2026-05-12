@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF actor-shell rule metadata audit
+- Added `actor_shell_rule_shape` to `embedding.isf_public_interface`,
+  documenting parser-returned `rules` entries as scalar `name`, optional
+  `when`, and `actions` array shells while keeping rule payload contents
+  private scheduler input.
+- Tightened ISF rule parsing so nested or otherwise non-scalar rule names are
+  rejected before a parser facade returns an actor shell.
+- Added `t/1166-isf-public-actor-shell-rule-shape-audit.t` to prove the
+  metadata is exact across direct and manifest views and aligned with
+  full-featured plus rule-free parser actors.
 ## 2026-05-13: R14 — ISF actor-shell timing metadata audit
 - Added `actor_shell_timing_shape` to `embedding.isf_public_interface`,
   documenting parser-returned `clock`, `reset`, and `watchdog` timing fields as

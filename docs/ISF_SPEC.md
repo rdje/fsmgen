@@ -104,6 +104,9 @@ Current actor timing fields are explicit too: `clock` is a non-empty scalar
 when configured, `reset` is null when omitted or a hash with scalar `name`,
 `kind`, and `polarity`, and `watchdog` is null when omitted or a positive
 integer.
+Current rule entries are advertised as a bounded shell: `rules` is an array of
+entries with scalar `name`, optional `when`, and `actions` array fields. Rule
+condition/action payload contents remain private scheduler input.
 The same contract publishes the public return containers: parser facades return
 scheduler-consumable actor hash references, `lower(...)` returns a hash
 reference with the advertised lower-result keys, and `report(...)` returns the
@@ -429,6 +432,11 @@ shipped lowering contract yet.
 ```
 
 Current lowering:
+- Accepted parser output exposes rules as an array of shell entries with
+  scalar `name`, optional `when`, and `actions` array fields. Nested or
+  otherwise non-scalar rule names are rejected before the parser returns an
+  actor shell. Condition and action payload contents remain scheduler input and
+  are not frozen as a public API by the actor-shell rule-shape metadata.
 - Each rule emits one non-state DT block.
 - `(when condition)` supplies the guard. The shipped guard form is a single
   port/signal condition.
@@ -620,6 +628,7 @@ Focused tests:
 - [t/1163-isf-public-actor-shell-transaction-shape-audit.t](../t/1163-isf-public-actor-shell-transaction-shape-audit.t)
 - [t/1164-isf-public-actor-shell-actor-name-shape-audit.t](../t/1164-isf-public-actor-shell-actor-name-shape-audit.t)
 - [t/1165-isf-public-actor-shell-timing-shape-audit.t](../t/1165-isf-public-actor-shell-timing-shape-audit.t)
+- [t/1166-isf-public-actor-shell-rule-shape-audit.t](../t/1166-isf-public-actor-shell-rule-shape-audit.t)
 
 ## 12. Explicitly Deferred
 

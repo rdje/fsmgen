@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF actor-shell rule metadata audit
+- Added `actor_shell_rule_shape` to `embedding.isf_public_interface` for the
+  parser-returned rule-entry shell: scalar `name`, optional `when`, and
+  `actions` array.
+- Tightened ISF rule parsing so nested or otherwise non-scalar rule names fail
+  before a parser facade returns a malformed actor shell.
+- Added [t/1166-isf-public-actor-shell-rule-shape-audit.t](t/1166-isf-public-actor-shell-rule-shape-audit.t)
+  to prove the metadata is exact across direct and manifest views and aligned
+  with full-featured plus rule-free parser actors.
 ### R14 — ISF actor-shell timing metadata audit
 - Added `actor_shell_timing_shape` to `embedding.isf_public_interface` for the
   parser-returned `clock`, `reset`, and `watchdog` timing handoff fields.

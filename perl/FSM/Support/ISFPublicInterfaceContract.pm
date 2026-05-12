@@ -11,6 +11,7 @@ our @EXPORT_OK = qw(
     isf_public_interface_actor_shell_actor_name_shape
     isf_public_interface_actor_shell_interface_shape
     isf_public_interface_actor_shell_required_keys
+    isf_public_interface_actor_shell_rule_shape
     isf_public_interface_actor_shell_timing_shape
     isf_public_interface_actor_shell_transaction_shape
     isf_public_interface_actor_shell_value_shape
@@ -122,6 +123,7 @@ sub build_isf_public_interface_contract {
         actor_shell_timing_shape => isf_public_interface_actor_shell_timing_shape(),
         actor_shell_interface_shape => isf_public_interface_actor_shell_interface_shape(),
         actor_shell_transaction_shape => isf_public_interface_actor_shell_transaction_shape(),
+        actor_shell_rule_shape => isf_public_interface_actor_shell_rule_shape(),
         lower_result_presence_keys => isf_public_interface_lower_result_presence_keys(),
         lower_result_file_map_shape => 'hash reference mapping scheduled .fsm basename to scheduled .fsm source text',
         lower_result_file_name_shape => isf_public_interface_lower_result_file_name_shape(),
@@ -217,6 +219,7 @@ sub build_isf_public_interface_contract {
             't/1163-isf-public-actor-shell-transaction-shape-audit.t',
             't/1164-isf-public-actor-shell-actor-name-shape-audit.t',
             't/1165-isf-public-actor-shell-timing-shape-audit.t',
+            't/1166-isf-public-actor-shell-rule-shape-audit.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -265,6 +268,7 @@ sub isf_public_interface_public_top_level_keys {
             actor_shell_timing_shape
             actor_shell_interface_shape
             actor_shell_transaction_shape
+            actor_shell_rule_shape
             lower_result_presence_keys
             lower_result_file_map_shape
             lower_result_file_name_shape
@@ -392,6 +396,10 @@ sub isf_public_interface_actor_shell_interface_shape {
 
 sub isf_public_interface_actor_shell_transaction_shape {
     return 'transactions is an array of public transaction shell entries; each entry has scalar name and clauses array, while clause payload contents remain private scheduler input';
+}
+
+sub isf_public_interface_actor_shell_rule_shape {
+    return 'rules is an array of public rule shell entries; each entry has scalar name, optional when clause, and actions array, while rule payload contents remain private scheduler input';
 }
 
 sub isf_public_interface_facade_failure_diagnostic_shape {

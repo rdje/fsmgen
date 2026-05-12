@@ -241,6 +241,8 @@ sub _parse_transaction($self, $clause) {
 sub _parse_rule($self, $clause) {
     confess "Error: (rule ...) requires a name\n" unless @$clause >= 2;
     my $name = $clause->[1];
+    confess "Error: (rule ...) requires a scalar name\n"
+        unless defined($name) && !ref($name) && length($name);
     my @body;
     my $when;
     my @actions;

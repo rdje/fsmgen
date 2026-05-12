@@ -197,6 +197,11 @@ The actor-shell timing shape is checked by
 [t/1165-isf-public-actor-shell-timing-shape-audit.t](../t/1165-isf-public-actor-shell-timing-shape-audit.t)
 to keep parser-returned `clock`, `reset`, and `watchdog` timing fields
 discoverable as bounded current handoff metadata.
+The actor-shell rule shape is checked by
+[t/1166-isf-public-actor-shell-rule-shape-audit.t](../t/1166-isf-public-actor-shell-rule-shape-audit.t)
+to keep parser-returned rule entries discoverable as scalar `name`, optional
+`when`, and `actions` array shells while leaving rule payload contents private
+scheduler input.
 The facade shape metadata that advertises those constructor, method, path, and
 actor-shell boundaries is checked by
 [t/1143-isf-public-facade-shape-metadata-audit.t](../t/1143-isf-public-facade-shape-metadata-audit.t)
@@ -302,6 +307,11 @@ The current public parser handoff also advertises bounded actor timing fields:
 hash with scalar `name`, `kind`, and `polarity`, and `watchdog` is null when
 omitted or a positive integer. The machine-readable contract advertises this
 through `actor_shell_timing_shape`.
+The current public parser handoff also advertises a bounded rule-entry shell:
+`rules` is an array of entries with scalar `name`, optional `when`, and
+`actions` array fields. The machine-readable contract advertises this through
+`actor_shell_rule_shape`. Rule condition/action payload contents remain private
+scheduler input.
 The parser/scheduler argument-shape fields and actor-shell key list are exact
 facade-shape discovery metadata.
 Public facade boundary failures produce bounded scalar diagnostics before

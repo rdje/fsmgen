@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF actor-shell rule metadata audit
+- Rules are scheduler-consumable parser output, but consumers should not infer
+  their handoff shape from private parser internals. The contract now records
+  the bounded rule-entry shell: scalar `name`, optional `when`, and `actions`
+  array.
+- Rule condition/action payloads remain private scheduler input. This keeps the
+  public handoff useful while preserving room for ISF rule syntax to evolve.
+- `t/1166-isf-public-actor-shell-rule-shape-audit.t` locks the metadata across
+  direct and manifest views, checks the full-featured rule-bearing actor plus
+  the rule-free APB actor, and covers rejection of nested rule names.
 ## 2026-05-13: R14 ISF actor-shell timing metadata audit
 - Parser-returned timing fields already drive scheduled `.fsm` and schedule
   report output. The contract now records their bounded parser-handoff shape:

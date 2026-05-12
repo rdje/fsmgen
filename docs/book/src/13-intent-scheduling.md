@@ -91,7 +91,9 @@ private scheduler input. It also advertises `actor_name` as the non-empty
 scalar identifier preserved from the ISF actor root. Current actor timing
 handoff metadata is bounded too: `clock` is scalar when configured, `reset` is
 null when omitted or a scalar-field hash, and `watchdog` is null when omitted
-or a positive integer. The
+or a positive integer. Rule entries are bounded as scalar `name`, optional
+`when`, and `actions` array shells while rule payload contents remain private
+scheduler input. The
 facade-shape metadata for those
 receiver, argument, path, and actor-shell boundaries is audited as exact across
 direct and manifest views, including bounded scalar diagnostics for public

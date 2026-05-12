@@ -170,6 +170,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   handoff: scalar configured clocks, reset hash/null shape, and positive
   integer/null watchdogs, with malformed timing declarations rejected before
   returning an actor shell.
+- `t/1166` now advertises and proves the public actor-shell `rules` entry
+  shell: scalar rule names, optional `when`, and `actions` arrays, while
+  keeping rule payloads private scheduler input and rejecting non-scalar rule
+  names before returning an actor shell.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
