@@ -86,10 +86,11 @@ as portable discovery data, and defensive-copy audited so caller mutation does
 not pollute later contract builds. Both
 capability-manifest CLI spellings are audited to emit the same ISF contract
 payload. The current APB schedule report is also checked against the advertised
-public key families, and the lower-result `files` map is checked for both
-single-file and multi-file lowering. The in-memory `parse_source(...)` facade is
-also checked against `parse_file(...)` on a real fixture. APB DT block order is
-locked across generated `.fsm` text and schedule-report `dt_blocks` so
+public key families, and successful reports advertise and keep an empty
+`compile_issues` array. The lower-result `files` map is checked for both
+single-file and multi-file lowering. The in-memory `parse_source(...)` facade
+is also checked against `parse_file(...)` on a real fixture. APB DT block order
+is locked across generated `.fsm` text and schedule-report `dt_blocks` so
 hash-backed drive definitions do not create review-artifact churn; the manifest
 also advertises the DT ordering policy. The ISF live-document path list is
 audited across direct and manifest views so recovery pointers stay repo-local

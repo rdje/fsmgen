@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — ISF compile_issues success-shape audit
+- Active: `R14`. `t/1130` proves successful in-process and CLI schedule
+  reports keep `compile_issues` present as an empty array.
+
 ## 2026-05-12: R14 — ISF actor shell contract audit
 - Active: `R14`. `t/1129` proves both public parser facades return actors with
   the manifest-advertised scheduler-consumable shell keys.

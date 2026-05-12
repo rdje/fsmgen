@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF compile_issues success-shape audit
+- Extended [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm)
+  with `schedule_report_compile_issues_success_shape`, documenting that
+  successful public schedule reports keep `compile_issues` as an empty array.
+- Added [t/1130-isf-public-compile-issues-success-audit.t](t/1130-isf-public-compile-issues-success-audit.t)
+  to lock that shape for the in-process scheduler report and public
+  `--emit-schedule-json` CLI path.
 ### R14 — ISF actor shell contract audit
 - Extended [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm)
   with `actor_shell_required_keys`, making the public parser/scheduler handoff

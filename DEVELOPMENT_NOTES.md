@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF compile_issues success-shape audit
+- `compile_issues` is already part of the bounded public schedule-report
+  top-level key family. The success semantics should be discoverable too:
+  successful public reports keep the field present and empty rather than
+  omitting it.
+- `schedule_report_compile_issues_success_shape` captures that current promise
+  in `embedding.isf_public_interface`, and
+  `t/1130-isf-public-compile-issues-success-audit.t` ties it to both
+  in-process and CLI schedule-report paths.
 ## 2026-05-12: R14 ISF actor shell contract audit
 - The parser facades return richer actor hashes than downstream consumers
   should treat as public. The scheduler boundary, however, already relies on a

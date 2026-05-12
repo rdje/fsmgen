@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF compile_issues success-shape audit
+- `embedding.isf_public_interface` now advertises
+  `schedule_report_compile_issues_success_shape`: successful schedule reports
+  keep `compile_issues` present as an empty array.
+- Added `t/1130-isf-public-compile-issues-success-audit.t` to prove that shape
+  for both the in-process scheduler report and public `--emit-schedule-json`
+  CLI path.
 ## 2026-05-12: R14 — ISF actor shell contract audit
 - `embedding.isf_public_interface` now advertises
   `actor_shell_required_keys` for the scheduler-consumable parser/scheduler

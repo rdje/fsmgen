@@ -36,6 +36,9 @@ by [t/1116-isf-public-schedule-report-key-family-audit.t](../t/1116-isf-public-s
 The public `--emit-schedule-json` CLI path is checked by
 [t/1121-isf-public-cli-schedule-report-audit.t](../t/1121-isf-public-cli-schedule-report-audit.t)
 to emit clean-stderr JSON matching the in-process scheduler report.
+The successful `compile_issues` report shape is checked by
+[t/1130-isf-public-compile-issues-success-audit.t](../t/1130-isf-public-compile-issues-success-audit.t)
+for both in-process and CLI report paths.
 The lower-result `files` map is checked for both single-file and multi-file
 lowering by [t/1117-isf-public-lower-result-files-audit.t](../t/1117-isf-public-lower-result-files-audit.t).
 The public `--outdir` CLI path is checked by
@@ -150,13 +153,14 @@ dt_blocks
 compile_issues
 ```
 
-Current bounded nested summary families:
+Current bounded nested and array summary families:
 
 ```text
 reset: name, kind, polarity
 inferred_storage entries: name, kind, optional width
 transactions entries: name, states, count
 dt_blocks entries: name, kind, assignments
+compile_issues on success: empty array
 ```
 
 The current lowerer emits DT summaries in deterministic lowering order:
@@ -170,6 +174,9 @@ For multi-file lowerings, the current schedule report describes the parent
 scheduled module only. Child scheduled `.fsm` text remains available through the
 lower-result `files` map. The machine-readable contract advertises this current
 scope in `schedule_report_multi_file_scope`.
+For successful schedule reports, `compile_issues` is present as an empty array.
+The machine-readable contract advertises this current success shape in
+`schedule_report_compile_issues_success_shape`.
 
 The schedule report is not yet a frozen full schema. Downstream consumers should
 use the advertised contract metadata instead of assuming every current field,

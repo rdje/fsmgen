@@ -416,6 +416,9 @@ DTs lexically by drive name.
 
 The capability-manifest ISF public contract exposes the same policy through
 `scheduled_fsm_dt_ordering` and `schedule_report_dt_ordering`.
+Successful reports keep `compile_issues` present as an empty array; the
+capability-manifest ISF public contract advertises that success shape through
+`schedule_report_compile_issues_success_shape`.
 The CLI `--emit-schedule-json` entrypoint is expected to emit the same report as
 the in-process scheduler on stdout and keep stderr clean on success.
 For multi-file lowerings, that report currently describes the parent scheduled
@@ -474,6 +477,7 @@ Focused tests:
 - [t/1127-isf-public-scheduler-method-boundary-audit.t](../t/1127-isf-public-scheduler-method-boundary-audit.t)
 - [t/1128-isf-public-multifile-schedule-report-audit.t](../t/1128-isf-public-multifile-schedule-report-audit.t)
 - [t/1129-isf-public-actor-shell-contract-audit.t](../t/1129-isf-public-actor-shell-contract-audit.t)
+- [t/1130-isf-public-compile-issues-success-audit.t](../t/1130-isf-public-compile-issues-success-audit.t)
 
 ## 12. Explicitly Deferred
 
