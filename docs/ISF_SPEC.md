@@ -64,6 +64,8 @@ guidance list are audited as exact across the same views. Its `tested_by`
 provenance metadata is also audited as an exact repo-local test list.
 Its CLI success-shape metadata is audited as exact for the schedule JSON,
 `--outdir`, and plain HDL-generation paths.
+Its strict CLI success-shape metadata is audited as exact for accepted
+`--strict file.isf` HDL generation.
 Its in-process facade return-shape metadata is audited as exact for
 `parse_file(...)`, `parse_source(...)`, `lower(...)`, and `report(...)`.
 
@@ -560,6 +562,7 @@ Focused tests:
 - [t/1152-isf-public-report-scalar-metadata-audit.t](../t/1152-isf-public-report-scalar-metadata-audit.t)
 - [t/1153-isf-public-cli-success-metadata-audit.t](../t/1153-isf-public-cli-success-metadata-audit.t)
 - [t/1154-isf-public-facade-return-metadata-audit.t](../t/1154-isf-public-facade-return-metadata-audit.t)
+- [t/1155-isf-public-cli-strict-success-metadata-audit.t](../t/1155-isf-public-cli-strict-success-metadata-audit.t)
 
 ## 12. Explicitly Deferred
 

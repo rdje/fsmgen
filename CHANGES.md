@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF strict CLI success metadata audit
+- Added `cli_strict_hdl_generation_success_shape` to
+  `embedding.isf_public_interface` for accepted `--strict file.isf`
+  HDL-generation success behavior.
+- Added [t/1155-isf-public-cli-strict-success-metadata-audit.t](t/1155-isf-public-cli-strict-success-metadata-audit.t)
+  to prove the metadata is exact and the APB strict CLI path keeps the
+  advertised success shape.
 ### R14 — ISF facade return metadata audit
 - Added in-process facade return-shape metadata for `parse_file(...)`,
   `parse_source(...)`, `lower(...)`, and `report(...)` to

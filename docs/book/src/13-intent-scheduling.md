@@ -99,7 +99,8 @@ exact and duplicate-free. Its lower-result and schedule-report discovery
 metadata are audited as exact, as is the downstream guidance list that explains
 the current bounded-public stance. Its `tested_by` provenance list is also
 audited as exact repo-local metadata. CLI success-shape metadata is audited for
-the schedule JSON, `--outdir`, and plain HDL-generation paths. Both
+the schedule JSON, `--outdir`, plain HDL-generation, and accepted strict
+HDL-generation paths. Both
 capability-manifest CLI spellings are audited to emit the same ISF contract
 payload. The current APB schedule report is also checked against the advertised
 public key families, and successful reports advertise and keep an empty

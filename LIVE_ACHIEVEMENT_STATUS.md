@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — ISF strict CLI success metadata audit
+- Active: `R14`. `t/1155` proves accepted `--strict file.isf`
+  HDL-generation success metadata is exact and aligned with the APB CLI path.
+
 ## 2026-05-12: R14 — ISF facade return metadata audit
 - Active: `R14`. `t/1154` proves public in-process ISF facade return-shape
   metadata is exact and aligned with APB parser/scheduler facade results.

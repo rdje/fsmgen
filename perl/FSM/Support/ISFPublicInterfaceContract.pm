@@ -13,6 +13,7 @@ our @EXPORT_OK = qw(
     isf_public_interface_cli_option_names
     isf_public_interface_cli_outdir_success_shape
     isf_public_interface_cli_schedule_json_success_shape
+    isf_public_interface_cli_strict_hdl_generation_success_shape
     isf_public_interface_contract_source
     isf_public_interface_constructor_option_names
     isf_public_interface_dt_assignment_operator_family_map
@@ -89,6 +90,7 @@ sub build_isf_public_interface_contract {
         cli_schedule_json_success_shape => isf_public_interface_cli_schedule_json_success_shape(),
         cli_outdir_success_shape => isf_public_interface_cli_outdir_success_shape(),
         cli_hdl_generation_success_shape => isf_public_interface_cli_hdl_generation_success_shape(),
+        cli_strict_hdl_generation_success_shape => isf_public_interface_cli_strict_hdl_generation_success_shape(),
         constructor_receiver_shape => 'exact class invocant: FSM::Adapter::ISF or FSM::Scheduler::ISF',
         constructor_argument_shape => 'even-length option/value list after class invocant; currently only debug is public',
         parser_method_receiver_shape => 'object returned by FSM::Adapter::ISF->new(...)',
@@ -182,6 +184,7 @@ sub build_isf_public_interface_contract {
             't/1152-isf-public-report-scalar-metadata-audit.t',
             't/1153-isf-public-cli-success-metadata-audit.t',
             't/1154-isf-public-facade-return-metadata-audit.t',
+            't/1155-isf-public-cli-strict-success-metadata-audit.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -209,6 +212,7 @@ sub isf_public_interface_public_top_level_keys {
             cli_schedule_json_success_shape
             cli_outdir_success_shape
             cli_hdl_generation_success_shape
+            cli_strict_hdl_generation_success_shape
             constructor_receiver_shape
             constructor_argument_shape
             parser_method_receiver_shape
@@ -311,6 +315,10 @@ sub isf_public_interface_cli_outdir_success_shape {
 
 sub isf_public_interface_cli_hdl_generation_success_shape {
     return 'plain file.isf generation lowers through scheduled .fsm and writes requested HDL output with empty stderr on success';
+}
+
+sub isf_public_interface_cli_strict_hdl_generation_success_shape {
+    return '--strict file.isf generation follows cli_hdl_generation_success_shape for accepted ISF inputs and keeps stderr empty on success';
 }
 
 sub isf_public_interface_actor_shell_required_keys {

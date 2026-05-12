@@ -51,6 +51,10 @@ The advertised CLI success-shape metadata is checked by
 [t/1153-isf-public-cli-success-metadata-audit.t](../t/1153-isf-public-cli-success-metadata-audit.t)
 to keep the schedule JSON, `--outdir`, and plain HDL-generation success
 surfaces exact across direct and manifest views.
+The advertised `--strict` HDL-generation success metadata is checked by
+[t/1155-isf-public-cli-strict-success-metadata-audit.t](../t/1155-isf-public-cli-strict-success-metadata-audit.t)
+to keep the accepted strict `file.isf` generation shape exact across direct and
+manifest views and aligned with the APB strict CLI path.
 The advertised in-process facade return-shape metadata is checked by
 [t/1154-isf-public-facade-return-metadata-audit.t](../t/1154-isf-public-facade-return-metadata-audit.t)
 to keep the `parse_file(...)`, `parse_source(...)`, `lower(...)`, and
@@ -243,6 +247,9 @@ CLI runs: `--emit-schedule-json` writes schedule-report JSON to stdout with
 empty stderr, `--outdir DIR` writes scheduled `.fsm` files by basename into
 `DIR`, and plain `file.isf` generation lowers through scheduled `.fsm` before
 writing the requested HDL output with empty stderr.
+The strict CLI success-shape field advertises that accepted `--strict
+file.isf` generation follows the public HDL-generation success shape and keeps
+stderr empty on success.
 
 ## Lower Result
 

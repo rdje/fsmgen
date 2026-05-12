@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF strict CLI success metadata audit
+- `--strict` was already an advertised ISF CLI option and behavior-tested, but
+  its accepted HDL-generation success shape was not separately discoverable in
+  `embedding.isf_public_interface`.
+- `t/1155-isf-public-cli-strict-success-metadata-audit.t` locks that field
+  across direct and manifest views and smoke-checks strict APB generation.
 ## 2026-05-12: R14 ISF facade return metadata audit
 - Downstream consumers need both call-boundary metadata and return-container
   metadata. The contract now says which public in-process facade returns an
