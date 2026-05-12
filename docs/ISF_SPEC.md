@@ -57,6 +57,9 @@ the public ISF surface.
 The public adapter and scheduler constructors currently accept only the `debug`
 option. Malformed option lists and unsupported option names are rejected before
 object creation.
+The public parser facade methods also validate their argument shape:
+`parse_file(...)` requires one defined scalar path, and `parse_source(...)`
+requires defined scalar source text and source label values.
 
 ## 3. Source Root
 
@@ -456,6 +459,7 @@ Focused tests:
 - [t/1123-isf-public-cli-hdl-generation-audit.t](../t/1123-isf-public-cli-hdl-generation-audit.t)
 - [t/1124-isf-public-cli-strict-mode-audit.t](../t/1124-isf-public-cli-strict-mode-audit.t)
 - [t/1125-isf-public-constructor-boundary-audit.t](../t/1125-isf-public-constructor-boundary-audit.t)
+- [t/1126-isf-public-parser-method-boundary-audit.t](../t/1126-isf-public-parser-method-boundary-audit.t)
 
 ## 12. Explicitly Deferred
 

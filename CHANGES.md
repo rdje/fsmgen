@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF parser method boundary audit
+- Updated [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm) so public
+  `parse_file(...)` and `parse_source(...)` calls validate argument count and
+  defined-scalar shape before invoking the private parser.
+- Added [t/1126-isf-public-parser-method-boundary-audit.t](t/1126-isf-public-parser-method-boundary-audit.t)
+  to lock valid parser facade calls and bounded diagnostics for malformed
+  arguments.
 ### R14 — ISF constructor boundary audit
 - Updated [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm) and
   [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm) so public constructors

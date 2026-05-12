@@ -57,6 +57,8 @@ aligned on repo-relative Markdown paths that exist on disk.
 The public constructor option boundary is checked by
 [t/1125-isf-public-constructor-boundary-audit.t](../t/1125-isf-public-constructor-boundary-audit.t)
 for both adapter and scheduler facades.
+The public parser facade method boundary is checked by
+[t/1126-isf-public-parser-method-boundary-audit.t](../t/1126-isf-public-parser-method-boundary-audit.t).
 
 ## Stabilized Surface
 
@@ -83,6 +85,10 @@ my $json    = FSM::Scheduler::ISF->new(%args)->report($actor);
 The only public constructor option currently advertised for the ISF parser and
 scheduler facades is `debug`. Constructors reject odd option lists and
 unsupported option names before object creation.
+
+`parse_file(...)` requires exactly one defined scalar path argument.
+`parse_source(...)` requires exactly two defined scalar arguments: source text
+and source label.
 
 The advertised ISF-specific CLI option family is `--emit-schedule-json`,
 `--outdir`, and `--strict`.

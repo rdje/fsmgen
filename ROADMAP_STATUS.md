@@ -79,6 +79,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   for `file.isf` HDL generation with clean stderr.
 - `t/1125` now proves ISF adapter/scheduler constructors accept only the public
   `debug` option and reject malformed option lists with bounded diagnostics.
+- `t/1126` now proves `parse_file(...)` and `parse_source(...)` enforce the
+  public parser facade argument shapes with bounded diagnostics.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
@@ -3628,6 +3630,9 @@ Done:
 - [t/1125-isf-public-constructor-boundary-audit.t](t/1125-isf-public-constructor-boundary-audit.t)
   locks the public ISF constructor option boundary for adapter and scheduler
   facades.
+- [t/1126-isf-public-parser-method-boundary-audit.t](t/1126-isf-public-parser-method-boundary-audit.t)
+  locks the public parser facade method argument boundary for `parse_file(...)`
+  and `parse_source(...)`.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

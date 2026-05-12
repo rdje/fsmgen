@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF parser method boundary audit
+- The ISF public-interface contract advertises `parse_file($path)` and
+  `parse_source($source_text, $source_label)` as the parser facade. Raw Perl
+  signature errors do not communicate that contract clearly, and reference or
+  undefined values should not leak into private parser/file IO behavior.
+- `FSM::Adapter::ISF` now validates those public method arguments directly.
+  `t/1126-isf-public-parser-method-boundary-audit.t` locks the accepted forms
+  and bounded rejection of missing, extra, reference, and undefined arguments.
 ## 2026-05-12: R14 ISF constructor boundary audit
 - The ISF public-interface contract advertises an even-length constructor
   option/value list and only one public option, `debug`. Leaving that boundary

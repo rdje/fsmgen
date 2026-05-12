@@ -47,7 +47,8 @@ sub _validate_constructor_args($class, @args) {
     return %options;
 }
 
-sub parse_file($self, $isf_path) {
+sub parse_file($self, @args) {
+    my ($isf_path) = _validate_scalar_args('parse_file', 1, @args);
     fsm_trace_enter("ISF parse_file: $isf_path", 2);
     fsm_debug("Parsing .isf file: $isf_path", 3);
     my $result = $self->{parser}->parse_file($isf_path);
@@ -55,11 +56,25 @@ sub parse_file($self, $isf_path) {
     return $result;
 }
 
-sub parse_source($self, $source_text, $source_label) {
+sub parse_source($self, @args) {
+    my ($source_text, $source_label) = _validate_scalar_args('parse_source', 2, @args);
     fsm_trace_enter("ISF parse_source: $source_label", 2);
     my $result = $self->{parser}->parse_source($source_text, $source_label);
     fsm_trace_exit("ISF parse_source completed for $source_label", 2);
     return $result;
+}
+
+sub _validate_scalar_args($method, $expected, @args) {
+    confess "FSM::Adapter::ISF->$method expects exactly $expected scalar argument(s)\n"
+        unless @args == $expected;
+
+    for my $index (0 .. $#args) {
+        my $arg = $args[$index];
+        confess "FSM::Adapter::ISF->$method argument " . ($index + 1) . " must be a defined scalar\n"
+            if !defined($arg) || ref($arg);
+    }
+
+    return @args;
 }
 
 1;

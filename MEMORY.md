@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF parser method boundary audit
+- `FSM::Adapter::ISF->parse_file(...)` now validates that callers pass exactly
+  one defined scalar path, and `parse_source(...)` validates exactly two defined
+  scalar arguments before the private parser is invoked.
+- Added `t/1126-isf-public-parser-method-boundary-audit.t` to lock valid
+  `parse_file`/`parse_source` calls and bounded diagnostics for missing, extra,
+  reference, and undefined arguments.
 ## 2026-05-12: R14 — ISF constructor boundary audit
 - `FSM::Adapter::ISF->new(...)` and `FSM::Scheduler::ISF->new(...)` now
   validate constructor arguments before object creation: option lists must be
