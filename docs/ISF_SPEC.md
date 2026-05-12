@@ -62,6 +62,8 @@ metadata. Its lower-result discovery metadata is audited as exact across direct
 and manifest views too. Its schedule-report metadata fields and downstream
 guidance list are audited as exact across the same views. Its `tested_by`
 provenance metadata is also audited as an exact repo-local test list.
+Its lower-result file sub-shape metadata is audited as exact for scheduled
+`.fsm` basenames and scheduled text roots.
 Its CLI success-shape metadata is audited as exact for the schedule JSON,
 `--outdir`, and plain HDL-generation paths.
 Its strict CLI success-shape metadata is audited as exact for accepted
@@ -563,6 +565,7 @@ Focused tests:
 - [t/1153-isf-public-cli-success-metadata-audit.t](../t/1153-isf-public-cli-success-metadata-audit.t)
 - [t/1154-isf-public-facade-return-metadata-audit.t](../t/1154-isf-public-facade-return-metadata-audit.t)
 - [t/1155-isf-public-cli-strict-success-metadata-audit.t](../t/1155-isf-public-cli-strict-success-metadata-audit.t)
+- [t/1156-isf-public-lower-result-file-shape-audit.t](../t/1156-isf-public-lower-result-file-shape-audit.t)
 
 ## 12. Explicitly Deferred
 

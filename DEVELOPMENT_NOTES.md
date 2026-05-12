@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF lower-result file-shape metadata audit
+- The public lower-result `files` map is useful only if consumers can trust the
+  key and value sub-shapes. The contract now makes the no-directory scheduled
+  `.fsm` basename and matching scheduled text-root shapes explicit.
+- `t/1156-isf-public-lower-result-file-shape-audit.t` locks those fields across
+  direct and manifest views and checks APB plus spawn-parent lowerings.
 ## 2026-05-12: R14 ISF strict CLI success metadata audit
 - `--strict` was already an advertised ISF CLI option and behavior-tested, but
   its accepted HDL-generation success shape was not separately discoverable in

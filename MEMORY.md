@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF lower-result file-shape metadata audit
+- Added `lower_result_file_name_shape` and `lower_result_file_text_shape` to
+  `embedding.isf_public_interface`, documenting the public `files` map
+  basename keys and scheduled text roots.
+- Added `t/1156-isf-public-lower-result-file-shape-audit.t` to prove that
+  metadata is exact across direct and manifest views and aligned with
+  single-file plus multi-file lowerings.
 ## 2026-05-12: R14 — ISF strict CLI success metadata audit
 - Added `cli_strict_hdl_generation_success_shape` to
   `embedding.isf_public_interface`, documenting accepted `--strict file.isf`

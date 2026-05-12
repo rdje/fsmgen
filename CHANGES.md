@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF lower-result file-shape metadata audit
+- Added `lower_result_file_name_shape` and `lower_result_file_text_shape` to
+  `embedding.isf_public_interface` for scheduled `.fsm` basename keys and
+  scheduled text roots in the public `files` map.
+- Added [t/1156-isf-public-lower-result-file-shape-audit.t](t/1156-isf-public-lower-result-file-shape-audit.t)
+  to prove the metadata is exact and aligned with single-file plus multi-file
+  lowerings.
 ### R14 — ISF strict CLI success metadata audit
 - Added `cli_strict_hdl_generation_success_shape` to
   `embedding.isf_public_interface` for accepted `--strict file.isf`

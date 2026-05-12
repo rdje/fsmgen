@@ -141,6 +141,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   metadata for `parse_file`, `parse_source`, `lower`, and `report`.
 - `t/1155` now advertises and proves accepted `--strict file.isf`
   HDL-generation success-shape metadata.
+- `t/1156` now advertises and proves lower-result `files` map scheduled `.fsm`
+  basename keys and scheduled-text roots.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.

@@ -19,6 +19,8 @@ our @EXPORT_OK = qw(
     isf_public_interface_dt_assignment_operator_family_map
     isf_public_interface_live_document_paths
     isf_public_interface_lower_return_shape
+    isf_public_interface_lower_result_file_name_shape
+    isf_public_interface_lower_result_file_text_shape
     isf_public_interface_lower_result_presence_keys
     isf_public_interface_dt_ordering_policy
     isf_public_interface_parse_file_return_shape
@@ -107,6 +109,8 @@ sub build_isf_public_interface_contract {
         actor_shell_required_keys => isf_public_interface_actor_shell_required_keys(),
         lower_result_presence_keys => isf_public_interface_lower_result_presence_keys(),
         lower_result_file_map_shape => 'hash reference mapping scheduled .fsm basename to scheduled .fsm source text',
+        lower_result_file_name_shape => isf_public_interface_lower_result_file_name_shape(),
+        lower_result_file_text_shape => isf_public_interface_lower_result_file_text_shape(),
         dt_assignment_operator_family_map => isf_public_interface_dt_assignment_operator_family_map(),
         scheduled_fsm_dt_ordering => isf_public_interface_dt_ordering_policy(),
         schedule_report_top_level_keys => isf_public_interface_schedule_report_top_level_keys(),
@@ -185,6 +189,7 @@ sub build_isf_public_interface_contract {
             't/1153-isf-public-cli-success-metadata-audit.t',
             't/1154-isf-public-facade-return-metadata-audit.t',
             't/1155-isf-public-cli-strict-success-metadata-audit.t',
+            't/1156-isf-public-lower-result-file-shape-audit.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -229,6 +234,8 @@ sub isf_public_interface_public_top_level_keys {
             actor_shell_required_keys
             lower_result_presence_keys
             lower_result_file_map_shape
+            lower_result_file_name_shape
+            lower_result_file_text_shape
             dt_assignment_operator_family_map
             scheduled_fsm_dt_ordering
             schedule_report_top_level_keys
@@ -353,6 +360,14 @@ sub isf_public_interface_lower_result_presence_keys {
             files
         ),
     ];
+}
+
+sub isf_public_interface_lower_result_file_name_shape {
+    return 'scheduled .fsm basename with no directory components';
+}
+
+sub isf_public_interface_lower_result_file_text_shape {
+    return 'scheduled .fsm source text rooted at (?fsm:<basename-stem> ...)';
 }
 
 sub isf_public_interface_dt_assignment_operator_family_map {

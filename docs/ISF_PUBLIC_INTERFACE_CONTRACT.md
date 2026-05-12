@@ -113,6 +113,11 @@ The lower-result discovery metadata is checked by
 [t/1139-isf-public-lower-result-metadata-audit.t](../t/1139-isf-public-lower-result-metadata-audit.t)
 to keep `lower_result_presence_keys` and `lower_result_file_map_shape` exact
 across direct and manifest views.
+The lower-result file sub-shape metadata is checked by
+[t/1156-isf-public-lower-result-file-shape-audit.t](../t/1156-isf-public-lower-result-file-shape-audit.t)
+to keep scheduled `.fsm` basename keys and scheduled-text roots exact across
+direct and manifest views and aligned with single-file plus multi-file
+lowering.
 The public `--outdir` CLI path is checked by
 [t/1122-isf-public-cli-outdir-lowering-audit.t](../t/1122-isf-public-cli-outdir-lowering-audit.t)
 to write scheduled `.fsm` artifacts matching the in-process lower-result
@@ -264,13 +269,17 @@ files
 `.fsm` source text. The generated `.fsm` text is a reviewable compiler artifact
 and then flows through the existing `.fsm` pipeline.
 The plain `file.isf` CLI path lowers through that pipeline into generated HDL.
+Each public `files` key is a scheduled `.fsm` basename with no directory
+components. Each value is scheduled `.fsm` source text rooted at
+`(?fsm:<basename-stem> ...)`.
 
 The `--outdir` CLI path materializes the same scheduled `.fsm` basename/text
 map on disk for multi-file lowerings.
 
 The full lower-result hash is not yet a broad public API beyond the advertised
 keys.
-The `lower_result_presence_keys` and `lower_result_file_map_shape` fields are
+The `lower_result_presence_keys`, `lower_result_file_map_shape`,
+`lower_result_file_name_shape`, and `lower_result_file_text_shape` fields are
 exact lower-result discovery metadata for the currently public `files` map.
 
 ## DT Assignment Operators

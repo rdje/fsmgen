@@ -105,8 +105,9 @@ capability-manifest CLI spellings are audited to emit the same ISF contract
 payload. The current APB schedule report is also checked against the advertised
 public key families, and successful reports advertise and keep an empty
 `compile_issues` array. The lower-result `files` map is checked for both
-single-file and multi-file lowering. The in-memory `parse_source(...)` facade
-is also checked against `parse_file(...)` on a real fixture. APB DT block order
+single-file and multi-file lowering, including scheduled `.fsm` basename keys
+and matching scheduled-text roots. The in-memory `parse_source(...)` facade is
+also checked against `parse_file(...)` on a real fixture. APB DT block order
 is locked across generated `.fsm` text and schedule-report `dt_blocks` so
 hash-backed drive definitions do not create review-artifact churn; the manifest
 also advertises the DT ordering policy, and that scheduled-artifact ordering
