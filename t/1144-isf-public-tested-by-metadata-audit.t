@@ -1,0 +1,126 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use Test::More;
+use File::Spec;
+use FindBin;
+use IPC::Cmd qw(run);
+use JSON::PP qw(decode_json);
+
+use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+
+use FSM::Support::CapabilityManifest qw(build_capability_manifest);
+use FSM::Support::ISFPublicInterfaceContract qw(build_isf_public_interface_contract);
+
+my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
+
+my $expected_tested_by = [
+    't/1096-isf-schedule-json-report.t',
+    't/1112-isf-public-interface-contract.t',
+    't/1113-isf-public-interface-contract-json-roundtrip-audit.t',
+    't/1114-isf-public-interface-contract-defensive-copy-audit.t',
+    't/1115-isf-public-interface-cli-manifest-audit.t',
+    't/1116-isf-public-schedule-report-key-family-audit.t',
+    't/1117-isf-public-lower-result-files-audit.t',
+    't/1118-isf-public-parse-source-facade-audit.t',
+    't/1119-isf-deterministic-dt-block-order.t',
+    't/1120-isf-public-live-document-path-audit.t',
+    't/1121-isf-public-cli-schedule-report-audit.t',
+    't/1122-isf-public-cli-outdir-lowering-audit.t',
+    't/1123-isf-public-cli-hdl-generation-audit.t',
+    't/1124-isf-public-cli-strict-mode-audit.t',
+    't/1125-isf-public-constructor-boundary-audit.t',
+    't/1126-isf-public-parser-method-boundary-audit.t',
+    't/1127-isf-public-scheduler-method-boundary-audit.t',
+    't/1128-isf-public-multifile-schedule-report-audit.t',
+    't/1129-isf-public-actor-shell-contract-audit.t',
+    't/1130-isf-public-compile-issues-success-audit.t',
+    't/1131-isf-public-top-level-discovery-audit.t',
+    't/1132-isf-public-method-receiver-boundary-audit.t',
+    't/1133-isf-public-constructor-receiver-boundary-audit.t',
+    't/1134-isf-public-parse-file-path-boundary-audit.t',
+    't/1135-isf-public-entrypoint-metadata-audit.t',
+    't/1136-isf-public-cli-option-metadata-audit.t',
+    't/1137-isf-public-method-name-metadata-audit.t',
+    't/1138-isf-public-constructor-option-metadata-audit.t',
+    't/1139-isf-public-lower-result-metadata-audit.t',
+    't/1140-isf-public-schedule-report-metadata-audit.t',
+    't/1141-isf-public-identity-flags-metadata-audit.t',
+    't/1142-isf-public-guidance-metadata-audit.t',
+    't/1143-isf-public-facade-shape-metadata-audit.t',
+    't/1144-isf-public-tested-by-metadata-audit.t',
+];
+
+subtest 'direct ISF tested_by metadata is exact and valid' => sub {
+    assert_tested_by(
+        build_isf_public_interface_contract()->{tested_by},
+        'direct ISF public-interface contract',
+    );
+};
+
+subtest 'manifest ISF tested_by metadata is exact and valid' => sub {
+    my @views = (
+        {
+            label => 'in-process capability manifest',
+            payload => build_capability_manifest(),
+        },
+        {
+            label => 'CLI capability manifest',
+            payload => run_capability_manifest('--capability-manifest'),
+        },
+        {
+            label => 'CLI capability manifest alias',
+            payload => run_capability_manifest('--emit-capability-manifest'),
+        },
+    );
+
+    for my $view (@views) {
+        my $label = $view->{label};
+        assert_tested_by(
+            $view->{payload}{embedding}{isf_public_interface}{tested_by},
+            "$label ISF public-interface contract",
+        );
+    }
+};
+
+done_testing();
+
+sub assert_tested_by {
+    my ($tested_by, $label) = @_;
+
+    is_deeply($tested_by, $expected_tested_by, "$label tested_by list is exact");
+    assert_unique_test_paths($tested_by, "$label tested_by list");
+}
+
+sub assert_unique_test_paths {
+    my ($values, $label) = @_;
+    my %seen;
+
+    ok(ref($values) eq 'ARRAY', "$label is an array");
+    for my $value (@{$values || []}) {
+        ok(!ref($value), "$label entry '$value' is scalar");
+        next if ref($value);
+        ok(length($value), "$label entry '$value' is non-empty");
+        ok(!$seen{$value}++, "$label does not duplicate '$value'");
+        ok(!File::Spec->file_name_is_absolute($value), "$label entry '$value' is repo-relative");
+        like($value, qr{\At/[^/].*\.t\z}, "$label entry '$value' points at a test file");
+        ok(-f repo_file($value), "$label entry '$value' exists on disk");
+    }
+}
+
+sub run_capability_manifest {
+    my ($mode) = @_;
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', $mode],
+    );
+
+    ok($success, "$mode succeeds");
+    is(join('', @{$stderr_buf || []}), '', "$mode keeps stderr clean");
+
+    return decode_json(join('', @{$stdout_buf || []}));
+}
+
+sub repo_file {
+    my ($relpath) = @_;
+    return File::Spec->catfile($repo_root, split m{/}, $relpath);
+}

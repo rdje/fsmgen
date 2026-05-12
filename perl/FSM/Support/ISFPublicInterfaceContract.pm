@@ -129,6 +129,7 @@ sub build_isf_public_interface_contract {
             't/1141-isf-public-identity-flags-metadata-audit.t',
             't/1142-isf-public-guidance-metadata-audit.t',
             't/1143-isf-public-facade-shape-metadata-audit.t',
+            't/1144-isf-public-tested-by-metadata-audit.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',

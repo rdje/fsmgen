@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF tested_by metadata audit
+- Added `t/1144-isf-public-tested-by-metadata-audit.t` to prove the ISF public
+  contract `tested_by` list is exact across the direct owner, in-process
+  capability manifest, and both CLI manifest spellings.
+- The audit also keeps the list duplicate-free, repo-relative, and backed by
+  test files present on disk.
 ## 2026-05-12: R14 — ISF facade-shape metadata audit
 - Added `t/1143-isf-public-facade-shape-metadata-audit.t` to prove public ISF
   constructor, parser, scheduler, `parse_file` path, and actor-shell metadata

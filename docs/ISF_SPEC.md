@@ -60,7 +60,8 @@ list is audited the same way. Its parser and scheduler method-name metadata is
 also audited as exact and duplicate-free, as is its public constructor option
 metadata. Its lower-result discovery metadata is audited as exact across direct
 and manifest views too. Its schedule-report metadata fields and downstream
-guidance list are audited as exact across the same views.
+guidance list are audited as exact across the same views. Its `tested_by`
+provenance metadata is also audited as an exact repo-local test list.
 
 The public adapter and scheduler constructors require the exact
 `FSM::Adapter::ISF` or `FSM::Scheduler::ISF` class invocant and currently
@@ -505,6 +506,7 @@ Focused tests:
 - [t/1141-isf-public-identity-flags-metadata-audit.t](../t/1141-isf-public-identity-flags-metadata-audit.t)
 - [t/1142-isf-public-guidance-metadata-audit.t](../t/1142-isf-public-guidance-metadata-audit.t)
 - [t/1143-isf-public-facade-shape-metadata-audit.t](../t/1143-isf-public-facade-shape-metadata-audit.t)
+- [t/1144-isf-public-tested-by-metadata-audit.t](../t/1144-isf-public-tested-by-metadata-audit.t)
 
 ## 12. Explicitly Deferred
 

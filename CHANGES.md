@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF tested_by metadata audit
+- Added [t/1144-isf-public-tested-by-metadata-audit.t](t/1144-isf-public-tested-by-metadata-audit.t)
+  to prove the ISF public contract `tested_by` list is exact.
+- The audit covers direct owner data, the in-process capability manifest, and
+  both CLI manifest spellings while keeping paths duplicate-free,
+  repo-relative, and present on disk.
 ### R14 — ISF facade-shape metadata audit
 - Added [t/1143-isf-public-facade-shape-metadata-audit.t](t/1143-isf-public-facade-shape-metadata-audit.t)
   to prove the public ISF facade-shape metadata is exact.

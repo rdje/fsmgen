@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF tested_by metadata audit
+- The ISF public contract now has enough focused audits that the provenance
+  list itself is meaningful downstream metadata, not just maintenance trivia.
+- `t/1144-isf-public-tested-by-metadata-audit.t` locks the ordered ISF
+  `tested_by` list across the direct owner, in-process capability manifest,
+  and both CLI manifest spellings while rechecking repo-local path validity.
 ## 2026-05-12: R14 ISF facade-shape metadata audit
 - The receiver, argument, path, and actor-shell shape strings are part of the
   downstream discovery surface. They should drift only when the public facade

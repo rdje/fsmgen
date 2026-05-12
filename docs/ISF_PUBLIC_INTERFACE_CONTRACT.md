@@ -31,6 +31,10 @@ The downstream guidance metadata is checked by
 [t/1142-isf-public-guidance-metadata-audit.t](../t/1142-isf-public-guidance-metadata-audit.t)
 to keep the advertised consumer advice exact and duplicate-free across direct
 and manifest views.
+The ISF-specific `tested_by` provenance metadata is checked by
+[t/1144-isf-public-tested-by-metadata-audit.t](../t/1144-isf-public-tested-by-metadata-audit.t)
+to keep the advertised audit list exact, duplicate-free, repo-relative, and
+present on disk across direct and manifest views.
 Both capability-manifest CLI spellings are audited by
 [t/1115-isf-public-interface-cli-manifest-audit.t](../t/1115-isf-public-interface-cli-manifest-audit.t)
 to keep the in-process contract and CLI-advertised contract aligned.
@@ -122,6 +126,8 @@ metadata for the contract's current bounded-public stance.
 The `guidance` list is exact downstream-consumer advice for interpreting the
 current bounded contract: facade pairs are public, raw internals are not, and
 human contract documents must evolve with public ISF changes.
+The `tested_by` list is exact audit-provenance metadata for this ISF contract
+owner; every path must stay repo-relative and present on disk.
 
 Supported CLI entrypoints:
 
