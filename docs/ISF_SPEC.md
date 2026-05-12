@@ -54,7 +54,8 @@ machine-readable form is advertised through
 evolve in the same slice as any implementation change that widens or changes
 the public ISF surface. Its `public_top_level_presence_keys` list is audited as
 the exact, unique discovery list for the contract payload across direct and
-manifest views.
+manifest views. Its advertised entrypoint lists are also audited as exact and
+duplicate-free across those views.
 
 The public adapter and scheduler constructors require the exact
 `FSM::Adapter::ISF` or `FSM::Scheduler::ISF` class invocant and currently
@@ -488,6 +489,7 @@ Focused tests:
 - [t/1132-isf-public-method-receiver-boundary-audit.t](../t/1132-isf-public-method-receiver-boundary-audit.t)
 - [t/1133-isf-public-constructor-receiver-boundary-audit.t](../t/1133-isf-public-constructor-receiver-boundary-audit.t)
 - [t/1134-isf-public-parse-file-path-boundary-audit.t](../t/1134-isf-public-parse-file-path-boundary-audit.t)
+- [t/1135-isf-public-entrypoint-metadata-audit.t](../t/1135-isf-public-entrypoint-metadata-audit.t)
 
 ## 12. Explicitly Deferred
 

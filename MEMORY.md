@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF entrypoint metadata audit
+- Added `t/1135-isf-public-entrypoint-metadata-audit.t` to prove
+  `embedding.isf_public_interface.entrypoints` is exact and duplicate-free.
+- The audit covers direct owner data, the in-process capability manifest, and
+  both CLI manifest spellings for the manifest, CLI, and in-process entrypoint
+  families.
 ## 2026-05-12: R14 — ISF parse_file path boundary audit
 - `FSM::Adapter::ISF->parse_file(...)` now rejects missing paths, directories,
   and readable wrong-extension files before private `File::Slurp` IO or Lispish

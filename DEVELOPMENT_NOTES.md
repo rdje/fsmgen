@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF entrypoint metadata audit
+- The ISF public contract advertises exact CLI and in-process entrypoints.
+  Treating those lists as loose examples would weaken downstream discovery and
+  make capability-manifest drift harder to spot.
+- `t/1135-isf-public-entrypoint-metadata-audit.t` locks the manifest,
+  CLI-entrypoint, and in-process-entrypoint metadata across the direct owner,
+  in-process capability manifest, and both CLI manifest spellings.
 ## 2026-05-12: R14 ISF parse_file path boundary audit
 - `parse_file(...)` is a public parser facade, so malformed filesystem inputs
   should fail at that facade with a bounded contract diagnostic instead of

@@ -29,6 +29,9 @@ to keep the in-process contract and CLI-advertised contract aligned.
 The `public_top_level_presence_keys` discovery list is checked by
 [t/1131-isf-public-top-level-discovery-audit.t](../t/1131-isf-public-top-level-discovery-audit.t)
 to stay unique and exact across direct, manifest, and CLI manifest views.
+The advertised entrypoint metadata is checked by
+[t/1135-isf-public-entrypoint-metadata-audit.t](../t/1135-isf-public-entrypoint-metadata-audit.t)
+to stay exact and duplicate-free across the same views.
 The plain `file.isf` HDL-generation path is checked by
 [t/1123-isf-public-cli-hdl-generation-audit.t](../t/1123-isf-public-cli-hdl-generation-audit.t)
 to reach generated HDL with clean stderr for the APB fixture.
@@ -103,6 +106,9 @@ my $actor = FSM::Adapter::ISF->new(%args)->parse_source($text, $label);
 my $lowered = FSM::Scheduler::ISF->new(%args)->lower($actor);
 my $json    = FSM::Scheduler::ISF->new(%args)->report($actor);
 ```
+
+The advertised entrypoint lists are exact discovery metadata, not examples with
+additional unlisted public entrypoints implied.
 
 Constructors must be called with the exact public class invocants
 `FSM::Adapter::ISF` or `FSM::Scheduler::ISF`. The only public constructor

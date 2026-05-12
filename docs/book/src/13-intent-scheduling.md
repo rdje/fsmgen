@@ -87,9 +87,10 @@ with the width inferred by the lowering IR. The advertised contract object is
 JSON-round-trip audited so downstream tooling can consume the manifest metadata
 as portable discovery data, and defensive-copy audited so caller mutation does
 not pollute later contract builds. Its top-level discovery list is audited as
-exact and unique across direct and manifest views. Both capability-manifest CLI
-spellings are audited to emit the same ISF contract payload. The current APB
-schedule report is also checked against the advertised
+exact and unique across direct and manifest views, and its advertised
+entrypoint lists are audited as exact and duplicate-free. Both
+capability-manifest CLI spellings are audited to emit the same ISF contract
+payload. The current APB schedule report is also checked against the advertised
 public key families, and successful reports advertise and keep an empty
 `compile_issues` array. The lower-result `files` map is checked for both
 single-file and multi-file lowering. The in-memory `parse_source(...)` facade

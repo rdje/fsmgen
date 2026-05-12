@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — ISF entrypoint metadata audit
+- Active: `R14`. `t/1135` proves the ISF public contract entrypoint metadata
+  is exact and duplicate-free across direct and manifest views.
+
 ## 2026-05-12: R14 — ISF parse_file path boundary audit
 - Active: `R14`. `t/1134` proves `parse_file(...)` accepts readable `.isf`
   files and rejects missing, directory, and wrong-extension paths.

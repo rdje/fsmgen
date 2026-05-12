@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF entrypoint metadata audit
+- Added [t/1135-isf-public-entrypoint-metadata-audit.t](t/1135-isf-public-entrypoint-metadata-audit.t)
+  to prove `embedding.isf_public_interface.entrypoints` is exact and
+  duplicate-free.
+- The audit covers direct owner data, the in-process capability manifest, and
+  both CLI manifest spellings.
 ### R14 — ISF parse_file path boundary audit
 - Updated [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm) so public
   `parse_file(...)` rejects paths that do not name readable `.isf` files before
