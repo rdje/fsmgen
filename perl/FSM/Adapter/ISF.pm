@@ -18,6 +18,7 @@ use FSM::Debug;
 # the AST structure.
 
 sub new($class, @constructor_args) {
+    _validate_constructor_receiver($class);
     my %args = _validate_constructor_args($class, @constructor_args);
     my $debug = $args{debug} // 0;
 
@@ -32,6 +33,11 @@ sub new($class, @constructor_args) {
 
     fsm_trace_exit('ISF adapter facade initialized', 2);
     return $self;
+}
+
+sub _validate_constructor_receiver($class) {
+    confess "FSM::Adapter::ISF->new must be called with the FSM::Adapter::ISF class invocant\n"
+        unless defined($class) && !ref($class) && $class eq 'FSM::Adapter::ISF';
 }
 
 sub _validate_constructor_args($class, @args) {

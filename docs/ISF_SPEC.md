@@ -56,9 +56,10 @@ the public ISF surface. Its `public_top_level_presence_keys` list is audited as
 the exact, unique discovery list for the contract payload across direct and
 manifest views.
 
-The public adapter and scheduler constructors currently accept only the `debug`
-option. Malformed option lists and unsupported option names are rejected before
-object creation.
+The public adapter and scheduler constructors require the exact
+`FSM::Adapter::ISF` or `FSM::Scheduler::ISF` class invocant and currently
+accept only the `debug` option. Malformed invocants, option lists, and
+unsupported option names are rejected before object creation.
 The public parser and scheduler facade methods require object receivers returned
 by their corresponding `new(...)` constructors before private internals are
 used. The public parser facade methods also validate their argument shape:
@@ -484,6 +485,7 @@ Focused tests:
 - [t/1130-isf-public-compile-issues-success-audit.t](../t/1130-isf-public-compile-issues-success-audit.t)
 - [t/1131-isf-public-top-level-discovery-audit.t](../t/1131-isf-public-top-level-discovery-audit.t)
 - [t/1132-isf-public-method-receiver-boundary-audit.t](../t/1132-isf-public-method-receiver-boundary-audit.t)
+- [t/1133-isf-public-constructor-receiver-boundary-audit.t](../t/1133-isf-public-constructor-receiver-boundary-audit.t)
 
 ## 12. Explicitly Deferred
 

@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF constructor receiver boundary audit
+- Updated [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm) and
+  [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm) so public
+  constructors reject malformed invocants before option validation.
+- Extended [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm)
+  with `constructor_receiver_shape`, and added
+  [t/1133-isf-public-constructor-receiver-boundary-audit.t](t/1133-isf-public-constructor-receiver-boundary-audit.t).
 ### R14 — ISF method receiver boundary audit
 - Updated [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm) and
   [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm) so public facade

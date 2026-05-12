@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — ISF constructor receiver boundary audit
+- Active: `R14`. `t/1133` proves ISF adapter/scheduler constructors reject
+  malformed invocants with bounded diagnostics.
+
 ## 2026-05-12: R14 — ISF method receiver boundary audit
 - Active: `R14`. `t/1132` proves public parser/scheduler facade methods
   reject malformed receivers with bounded diagnostics.

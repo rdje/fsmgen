@@ -14,6 +14,7 @@ use FSM::Scheduler::ISF::Emitter::FSM;
 use FSM::Scheduler::ISF::Emitter::JSON;
 
 sub new($class, @constructor_args) {
+    _validate_constructor_receiver($class);
     my %args = _validate_constructor_args($class, @constructor_args);
     my $debug = $args{debug} // 0;
     fsm_trace_enter('Initialize ISF scheduler', 2);
@@ -27,6 +28,11 @@ sub new($class, @constructor_args) {
 
     fsm_trace_exit('ISF scheduler initialized', 2);
     return $self;
+}
+
+sub _validate_constructor_receiver($class) {
+    confess "FSM::Scheduler::ISF->new must be called with the FSM::Scheduler::ISF class invocant\n"
+        unless defined($class) && !ref($class) && $class eq 'FSM::Scheduler::ISF';
 }
 
 sub _validate_constructor_args($class, @args) {

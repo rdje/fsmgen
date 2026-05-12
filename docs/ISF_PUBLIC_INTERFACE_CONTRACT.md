@@ -65,6 +65,8 @@ aligned on repo-relative Markdown paths that exist on disk.
 The public constructor option boundary is checked by
 [t/1125-isf-public-constructor-boundary-audit.t](../t/1125-isf-public-constructor-boundary-audit.t)
 for both adapter and scheduler facades.
+The public constructor receiver boundary is checked by
+[t/1133-isf-public-constructor-receiver-boundary-audit.t](../t/1133-isf-public-constructor-receiver-boundary-audit.t).
 The public parser facade method boundary is checked by
 [t/1126-isf-public-parser-method-boundary-audit.t](../t/1126-isf-public-parser-method-boundary-audit.t).
 The public scheduler facade method boundary is checked by
@@ -100,9 +102,12 @@ my $lowered = FSM::Scheduler::ISF->new(%args)->lower($actor);
 my $json    = FSM::Scheduler::ISF->new(%args)->report($actor);
 ```
 
-The only public constructor option currently advertised for the ISF parser and
-scheduler facades is `debug`. Constructors reject odd option lists and
-unsupported option names before object creation.
+Constructors must be called with the exact public class invocants
+`FSM::Adapter::ISF` or `FSM::Scheduler::ISF`. The only public constructor
+option currently advertised for the ISF parser and scheduler facades is
+`debug`. Constructors reject malformed invocants, odd option lists, and
+unsupported option names before object creation. The machine-readable contract
+advertises the invocant requirement through `constructor_receiver_shape`.
 
 Parser methods must be called on an object returned by
 `FSM::Adapter::ISF->new(...)`. Scheduler methods must be called on an object

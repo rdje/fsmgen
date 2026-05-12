@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF constructor receiver boundary audit
+- Constructor option validation is only meaningful after the invocant itself is
+  known. The public ISF constructors do not promise subclass construction or
+  object-receiver cloning, so malformed invocants should fail before option
+  parsing or `bless` behavior can shape the diagnostic.
+- `FSM::Adapter::ISF` and `FSM::Scheduler::ISF` now require their exact class
+  invocants in `new(...)`. `constructor_receiver_shape` makes that rule
+  discoverable through `embedding.isf_public_interface`, and
+  `t/1133-isf-public-constructor-receiver-boundary-audit.t` locks valid and
+  rejected construction paths.
 ## 2026-05-12: R14 ISF method receiver boundary audit
 - The parser and scheduler facade methods already validated their payload
   arguments, but malformed receivers could still fall through into private hash

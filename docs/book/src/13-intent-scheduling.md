@@ -73,8 +73,9 @@ ISF API contract is advertised through `--capability-manifest` at
 That contract is live documentation: it evolves in the same slice as public ISF
 parser, scheduler, CLI, lower-result, or schedule-report changes. The public
 adapter and scheduler constructors reject malformed option lists and unsupported
-option names, and currently accept only `debug`. The parser facade validates
-method receivers before private internals are used, then validates
+option names, require exact class invocants, and currently accept only `debug`.
+The parser facade validates method receivers before private internals are used,
+then validates
 `parse_file(...)` and `parse_source(...)` argument counts and defined-scalar
 shape before private parsing begins. The scheduler facade validates method
 receivers and the public actor shell before calling private LoweringIR, and the

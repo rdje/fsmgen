@@ -65,6 +65,7 @@ sub build_isf_public_interface_contract {
         scheduler_method_names => isf_public_interface_scheduler_method_names(),
         constructor_option_names => isf_public_interface_constructor_option_names(),
         cli_option_names => isf_public_interface_cli_option_names(),
+        constructor_receiver_shape => 'exact class invocant: FSM::Adapter::ISF or FSM::Scheduler::ISF',
         constructor_argument_shape => 'even-length option/value list after class invocant; currently only debug is public',
         parser_method_receiver_shape => 'object returned by FSM::Adapter::ISF->new(...)',
         scheduler_method_receiver_shape => 'object returned by FSM::Scheduler::ISF->new(...)',
@@ -116,6 +117,7 @@ sub build_isf_public_interface_contract {
             't/1130-isf-public-compile-issues-success-audit.t',
             't/1131-isf-public-top-level-discovery-audit.t',
             't/1132-isf-public-method-receiver-boundary-audit.t',
+            't/1133-isf-public-constructor-receiver-boundary-audit.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -140,6 +142,7 @@ sub isf_public_interface_public_top_level_keys {
             scheduler_method_names
             constructor_option_names
             cli_option_names
+            constructor_receiver_shape
             constructor_argument_shape
             parser_method_receiver_shape
             scheduler_method_receiver_shape

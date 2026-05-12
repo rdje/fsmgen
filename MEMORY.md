@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF constructor receiver boundary audit
+- `FSM::Adapter::ISF->new(...)` and `FSM::Scheduler::ISF->new(...)` now reject
+  undefined, object, unblessed-hash, and wrong-class invocants before option
+  validation or object creation.
+- `embedding.isf_public_interface` now advertises `constructor_receiver_shape`,
+  and `t/1133-isf-public-constructor-receiver-boundary-audit.t` locks the
+  accepted exact class invocants plus bounded rejection diagnostics.
 ## 2026-05-12: R14 — ISF method receiver boundary audit
 - `FSM::Adapter::ISF->parse_file(...)` / `parse_source(...)` and
   `FSM::Scheduler::ISF->lower(...)` / `report(...)` now reject class-string,
