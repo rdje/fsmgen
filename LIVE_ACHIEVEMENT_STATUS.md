@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — ISF scheduler method boundary audit
+- Active: `R14`. `t/1127` proves `lower(...)` and `report(...)` enforce the
+  public scheduler actor-shell argument boundary.
+
 ## 2026-05-12: R14 — ISF parser method boundary audit
 - Active: `R14`. `t/1126` proves `parse_file(...)` and `parse_source(...)`
   enforce the public defined-scalar argument shapes.

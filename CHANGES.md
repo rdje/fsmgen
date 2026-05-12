@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF scheduler method boundary audit
+- Updated [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm) so public
+  `lower(...)` and `report(...)` calls validate actor argument count and actor
+  shell shape before touching LoweringIR.
+- Added [t/1127-isf-public-scheduler-method-boundary-audit.t](t/1127-isf-public-scheduler-method-boundary-audit.t)
+  to lock valid adapter actors and bounded diagnostics for malformed scheduler
+  facade calls.
 ### R14 — ISF parser method boundary audit
 - Updated [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm) so public
   `parse_file(...)` and `parse_source(...)` calls validate argument count and

@@ -59,6 +59,8 @@ The public constructor option boundary is checked by
 for both adapter and scheduler facades.
 The public parser facade method boundary is checked by
 [t/1126-isf-public-parser-method-boundary-audit.t](../t/1126-isf-public-parser-method-boundary-audit.t).
+The public scheduler facade method boundary is checked by
+[t/1127-isf-public-scheduler-method-boundary-audit.t](../t/1127-isf-public-scheduler-method-boundary-audit.t).
 
 ## Stabilized Surface
 
@@ -89,6 +91,9 @@ unsupported option names before object creation.
 `parse_file(...)` requires exactly one defined scalar path argument.
 `parse_source(...)` requires exactly two defined scalar arguments: source text
 and source label.
+`lower(...)` and `report(...)` require exactly one scheduler-consumable actor
+hash reference from the ISF adapter. The current public actor shell requires
+scalar `actor_name`, array `transactions`, and hash `interface` fields.
 
 The advertised ISF-specific CLI option family is `--emit-schedule-json`,
 `--outdir`, and `--strict`.

@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF scheduler method boundary audit
+- `FSM::Scheduler::ISF->lower(...)` and `report(...)` now validate that callers
+  pass exactly one scheduler-consumable actor hash reference with scalar
+  `actor_name`, array `transactions`, and hash `interface` shell fields.
+- Added `t/1127-isf-public-scheduler-method-boundary-audit.t` to lock valid
+  adapter actors plus bounded diagnostics for malformed scheduler facade calls.
 ## 2026-05-12: R14 — ISF parser method boundary audit
 - `FSM::Adapter::ISF->parse_file(...)` now validates that callers pass exactly
   one defined scalar path, and `parse_source(...)` validates exactly two defined

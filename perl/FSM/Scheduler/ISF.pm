@@ -42,7 +42,8 @@ sub _validate_constructor_args($class, @args) {
     return %options;
 }
 
-sub lower($self, $actor) {
+sub lower($self, @args) {
+    my ($actor) = _validate_actor_arg('lower', @args);
     fsm_trace_enter("Scheduler lower: $actor->{actor_name}", 2);
 
     my $ir     = $self->{ir}->build_module($actor);
@@ -61,7 +62,8 @@ sub lower($self, $actor) {
     return { files => \%files };
 }
 
-sub report($self, $actor) {
+sub report($self, @args) {
+    my ($actor) = _validate_actor_arg('report', @args);
     fsm_trace_enter("Scheduler report: $actor->{actor_name}", 2);
 
     my $ir   = $self->{ir}->build_module($actor);
@@ -69,6 +71,23 @@ sub report($self, $actor) {
 
     fsm_trace_exit("Scheduler report completed", 2);
     return $json;
+}
+
+sub _validate_actor_arg($method, @args) {
+    confess "FSM::Scheduler::ISF->$method expects exactly one scheduler-consumable actor hash reference\n"
+        unless @args == 1;
+
+    my $actor = $args[0];
+    confess "FSM::Scheduler::ISF->$method argument 1 must be a scheduler-consumable actor hash reference\n"
+        unless ref($actor) eq 'HASH';
+    confess "FSM::Scheduler::ISF->$method actor must include scalar actor_name\n"
+        unless defined($actor->{actor_name}) && !ref($actor->{actor_name});
+    confess "FSM::Scheduler::ISF->$method actor must include transactions array\n"
+        unless ref($actor->{transactions}) eq 'ARRAY';
+    confess "FSM::Scheduler::ISF->$method actor must include interface hash\n"
+        unless ref($actor->{interface}) eq 'HASH';
+
+    return ($actor);
 }
 
 1;

@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF scheduler method boundary audit
+- The scheduler facade is public, but `LoweringIR` is not. Invalid `lower(...)`
+  or `report(...)` calls should therefore fail at the facade boundary instead
+  of leaking through to private hash dereferences or emitter assumptions.
+- `FSM::Scheduler::ISF` now validates the public actor shell: exactly one hash
+  reference with scalar `actor_name`, array `transactions`, and hash
+  `interface`. `t/1127-isf-public-scheduler-method-boundary-audit.t` locks the
+  accepted adapter actor path and bounded rejection diagnostics.
 ## 2026-05-12: R14 ISF parser method boundary audit
 - The ISF public-interface contract advertises `parse_file($path)` and
   `parse_source($source_text, $source_label)` as the parser facade. Raw Perl
