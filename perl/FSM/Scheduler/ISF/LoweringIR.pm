@@ -159,7 +159,7 @@ sub _build_transaction($self, $tx, $actor, $txi) {
                 push @st, _ir_drive($cl, $tn, [splice @ps], $si++);
             }
         }
-        elsif ($k eq 'await')    { $ha=1; $wdc="${tn}_wd"; push @st, _ir_await($cl, $tn, $si++, $wd); }
+        elsif ($k eq 'await')    { $ha=1; $wdc="${tn}_wd"; my $wd_override = _parse_await_wd($cl); push @st, _ir_await($cl, $tn, $si++, $wd_override || $wd); }
         elsif ($k eq 'sample')   { push @ps, $cl; }
         elsif ($k eq 'update')      { push @st, _ir_update($cl,$tn,$si++); }
         elsif ($k eq 'phase')       { push @st, _ir_phase($cl,$tn,$si++); }
@@ -358,6 +358,7 @@ sub _build_drive_dts {
 }
 
 sub _parse_latency { my($self,$cl)=@_; my %r; for my $i(1..$#$cl){my $x=$cl->[$i];next unless ref($x)eq'ARRAY'&&@$x>=2;$r{$x->[0]}=$x->[1] if$x->[0]eq'min'||$x->[0]eq'max'}; \%r }
+sub _parse_await_wd { my($cl)=@_; for my $i(2..$#$cl){my$x=$cl->[$i];return$x->[1]if ref($x)eq'ARRAY'&&$x->[0]eq'watchdog'} undef }
 
 sub _wire_do_children {
     my ($self,$st,$ctrs,$actor)=@_;
