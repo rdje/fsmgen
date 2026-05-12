@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF facade-shape metadata audit
+- The receiver, argument, path, and actor-shell shape strings are part of the
+  downstream discovery surface. They should drift only when the public facade
+  behavior and docs change in the same slice.
+- `t/1143-isf-public-facade-shape-metadata-audit.t` locks that metadata across
+  the direct owner, in-process capability manifest, and both CLI manifest
+  spellings.
 ## 2026-05-12: R14 ISF guidance metadata audit
 - The `guidance` list is downstream-facing metadata, not casual prose. It tells
   consumers which ISF surfaces are intentionally public and which internals

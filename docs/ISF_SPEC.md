@@ -78,6 +78,8 @@ array `transactions`, and hash `interface` fields.
 The machine-readable contract publishes that required handoff shell as
 `actor_shell_required_keys`; other raw actor fields are still private parser
 output.
+The contract's facade-shape metadata for these receiver, argument, path, and
+actor-shell boundaries is audited as exact across direct and manifest views.
 For multi-file lowering, the current schedule report is parent-scoped. Child
 scheduled `.fsm` text is exposed through the lower-result `files` map rather
 than folded into the report.
@@ -502,6 +504,7 @@ Focused tests:
 - [t/1140-isf-public-schedule-report-metadata-audit.t](../t/1140-isf-public-schedule-report-metadata-audit.t)
 - [t/1141-isf-public-identity-flags-metadata-audit.t](../t/1141-isf-public-identity-flags-metadata-audit.t)
 - [t/1142-isf-public-guidance-metadata-audit.t](../t/1142-isf-public-guidance-metadata-audit.t)
+- [t/1143-isf-public-facade-shape-metadata-audit.t](../t/1143-isf-public-facade-shape-metadata-audit.t)
 
 ## 12. Explicitly Deferred
 

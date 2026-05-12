@@ -81,7 +81,9 @@ shape before private parsing begins; `parse_file(...)` also requires a readable
 `.isf` file path. The scheduler facade validates method receivers and the
 public actor shell before calling private LoweringIR, and the manifest
 advertises the required `actor_name`, `transactions`, and `interface` shell keys
-without freezing the full raw actor hash. Assigned scheduler counters in the
+without freezing the full raw actor hash. The facade-shape metadata for those
+receiver, argument, path, and actor-shell boundaries is audited as exact across
+direct and manifest views. Assigned scheduler counters in the
 `*_wd`, `*_cc`, and `*_cnt` naming families are reported as `counter` storage
 with the width inferred by the lowering IR. The advertised contract object is
 JSON-round-trip audited so downstream tooling can consume the manifest metadata

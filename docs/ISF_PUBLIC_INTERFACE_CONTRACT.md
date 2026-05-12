@@ -106,6 +106,10 @@ The parser and scheduler method receiver boundary is checked by
 The scheduler-consumable actor shell returned by the public parser facades is
 checked by
 [t/1129-isf-public-actor-shell-contract-audit.t](../t/1129-isf-public-actor-shell-contract-audit.t).
+The facade shape metadata that advertises those constructor, method, path, and
+actor-shell boundaries is checked by
+[t/1143-isf-public-facade-shape-metadata-audit.t](../t/1143-isf-public-facade-shape-metadata-audit.t)
+to stay exact across direct and manifest views.
 
 ## Stabilized Surface
 
@@ -150,12 +154,15 @@ unsupported option names before object creation. The machine-readable contract
 advertises the invocant requirement through `constructor_receiver_shape`.
 The `constructor_option_names` list is exact discovery metadata for the public
 constructor option family.
+The constructor receiver and argument-shape strings are exact discovery
+metadata for the public constructor boundary.
 
 Parser methods must be called on an object returned by
 `FSM::Adapter::ISF->new(...)`. Scheduler methods must be called on an object
 returned by `FSM::Scheduler::ISF->new(...)`. The machine-readable contract
 advertises those receiver boundaries through `parser_method_receiver_shape` and
 `scheduler_method_receiver_shape`.
+Those receiver-shape strings are exact discovery metadata.
 
 `parse_file(...)` requires exactly one defined scalar path argument, and that
 path must have a `.isf` suffix and name a readable regular file before private
@@ -169,6 +176,8 @@ scalar `actor_name`, array `transactions`, and hash `interface` fields.
 The machine-readable contract advertises those required shell fields through
 `actor_shell_required_keys`. That promise is intentionally a shell contract:
 the full raw actor hash remains non-public.
+The parser/scheduler argument-shape fields and actor-shell key list are exact
+facade-shape discovery metadata.
 
 The advertised ISF-specific CLI option family is `--emit-schedule-json`,
 `--outdir`, and `--strict`.

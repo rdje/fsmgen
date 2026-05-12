@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — ISF facade-shape metadata audit
+- Active: `R14`. `t/1143` proves public ISF facade-shape metadata is exact
+  across direct and manifest views.
+
 ## 2026-05-12: R14 — ISF guidance metadata audit
 - Active: `R14`. `t/1142` proves ISF contract guidance metadata is exact and
   duplicate-free across direct and manifest views.

@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF facade-shape metadata audit
+- Added [t/1143-isf-public-facade-shape-metadata-audit.t](t/1143-isf-public-facade-shape-metadata-audit.t)
+  to prove the public ISF facade-shape metadata is exact.
+- The audit covers constructor, parser, scheduler, `parse_file` path, and
+  actor-shell fields across direct owner data, the in-process capability
+  manifest, and both CLI manifest spellings.
 ### R14 — ISF guidance metadata audit
 - Added [t/1142-isf-public-guidance-metadata-audit.t](t/1142-isf-public-guidance-metadata-audit.t)
   to prove the ISF public contract `guidance` list is exact and

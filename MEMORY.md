@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF facade-shape metadata audit
+- Added `t/1143-isf-public-facade-shape-metadata-audit.t` to prove public ISF
+  constructor, parser, scheduler, `parse_file` path, and actor-shell metadata
+  is exact across the direct owner, in-process capability manifest, and both
+  CLI manifest spellings.
+- This keeps the manifest's boundary strings aligned with the public facade
+  validation tests instead of relying on prose-only interpretation.
 ## 2026-05-12: R14 — ISF guidance metadata audit
 - Added `t/1142-isf-public-guidance-metadata-audit.t` to prove the ISF public
   contract guidance list is exact and duplicate-free across the direct owner,
