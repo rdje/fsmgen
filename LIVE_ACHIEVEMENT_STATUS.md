@@ -2,6 +2,11 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — schedule JSON report test
+- Active: `R14`. `t/1096` locks current APB schedule JSON shape from
+  `Emitter::JSON`: identity, counts, transaction states, DTs, storage, no
+  compile issues. Next: implementation slice for a documented scheduler gap.
+
 ## 2026-05-12: R14 — ISF spec synced to implementation
 - Active: `R14`. `docs/ISF_SPEC.md` + mdBook now record shipped behavior and
   limitations: deferred `do`/`spawn` start binding, first-port `await_any`,

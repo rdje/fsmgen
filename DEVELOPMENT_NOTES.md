@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 schedule JSON APB report locked
+- Added a focused schedule-report regression for `isf/apb_requester.isf` through
+  `FSM::Scheduler::ISF->report(...)` and `JSON::PP` decode.
+- The test intentionally locks the current implementation surface without
+  promoting it to a stable public schema: source/scheduled file names,
+  clock/reset/watchdog, port counts, state count, transaction state order, DT
+  summaries, inferred-storage names, drive-start widths, and empty
+  `compile_issues`.
+- This makes the documentation claim that schedule JSON is IR-derived
+  regression-backed before widening the report or turning deferred scheduler
+  limitations into behavior.
 ## 2026-05-12: R14 `.isf` spec synchronized with shipped behavior
 - `docs/ISF_SPEC.md` is now a current-contract document rather than an older
   design proposal. It documents the post-handshake `(on port)` activation

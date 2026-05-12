@@ -6,8 +6,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   describe the shipped post-handshake/post-assign-keyword parser and scheduler
   surface, including deferred `do`/`spawn` start binding, unenforced
   resources/priorities, `await_any` first-port behavior, and data-operation
-  placeholders. Next bounded R14 slice: turn one documented limitation into
-  regression-backed behavior, starting with the most acute scheduling/JSON gap.
+  placeholders. `t/1096` now locks the current APB schedule JSON report shape.
+  Next bounded R14 slice: turn one documented scheduler limitation into
+  regression-backed behavior, starting with the most acute start-binding gap.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
@@ -886,9 +887,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
     remains removed, resource/priority arbitration is deferred, `await_any`
     waits on the first collected done port, and `do`/`spawn` child-start
     binding is documented as incomplete.
-  - Next bounded `R14` slice: convert one documented limitation into
-    regression-backed behavior or broaden schedule-report assertions against
-    the current IR, whichever is the smallest honest scheduler slice.
+  - [t/1096-isf-schedule-json-report.t](t/1096-isf-schedule-json-report.t)
+    now decodes the APB schedule report and locks the current IR-derived JSON
+    surface without promoting it to a frozen external schema.
+  - Next bounded `R14` slice: convert one documented scheduler limitation into
+    regression-backed behavior, with `do`/`spawn` start binding the most acute
+    current gap.
 - Superseded `R13` carry-forward detail retained below this note should not be
   read as the current active lane:
   - The bounded `HDLGenerator` result contract now has a dedicated JSON
@@ -3444,6 +3448,9 @@ Done:
   deferred `do`/`spawn` start binding and composition-top instantiation,
   unenforced resources/priorities, first-port `await_any`, schedule JSON as a
   non-stable schema, and placeholder `shift_right`/`extract` field handling.
+- [t/1096-isf-schedule-json-report.t](t/1096-isf-schedule-json-report.t) locks
+  the current APB schedule JSON report identity, counts, transaction state
+  order, DT summaries, inferred storage, and empty `compile_issues`.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

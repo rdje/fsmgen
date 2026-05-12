@@ -365,6 +365,7 @@ Focused tests:
 - [t/1093-isf-parser-full-featured.t](../t/1093-isf-parser-full-featured.t)
 - [t/1094-isf-scheduler-module-header.t](../t/1094-isf-scheduler-module-header.t)
 - [t/1095-isf-scheduler-burst-reader.t](../t/1095-isf-scheduler-burst-reader.t)
+- [t/1096-isf-schedule-json-report.t](../t/1096-isf-schedule-json-report.t)
 
 ## 12. Explicitly Deferred
 

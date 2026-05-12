@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — schedule JSON report regression
+- Added [t/1096-isf-schedule-json-report.t](t/1096-isf-schedule-json-report.t)
+  to decode the APB schedule report and lock the current IR-derived JSON
+  summary: identity, clock/reset/watchdog, port counts, state count,
+  transaction state order, DT summaries, inferred storage, and empty
+  `compile_issues`.
 ### R14 — ISF specification synchronized to shipped lowering
 - Rewrote [docs/ISF_SPEC.md](docs/ISF_SPEC.md) around the current
   parser/scheduler contract: `.isf` CLI handling, post-handshake `(on port)`

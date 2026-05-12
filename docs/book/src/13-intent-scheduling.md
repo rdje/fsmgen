@@ -65,6 +65,10 @@ FSM::Scheduler::ISF::LoweringIR   ← typed IR
     └──► Emitter::JSON  → schedule report
 ```
 
+The schedule report is generated from the same IR as the `.fsm` text. The
+current APB report shape is regression-covered, but the JSON schema remains a
+current implementation surface rather than a frozen external API.
+
 ## Current Limitations
 
 - `(do ...)` and `(spawn ...)` emit child/parent scheduling artifacts, but

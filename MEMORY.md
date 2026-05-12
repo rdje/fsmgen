@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — schedule JSON report regression
+- Added `t/1096-isf-schedule-json-report.t`, which decodes the APB
+  `FSM::Scheduler::ISF->report(...)` JSON and locks current identity,
+  clock/reset/watchdog, counts, transaction state order, DT summary,
+  inferred-storage, and empty `compile_issues` fields.
+- `docs/ISF_SPEC.md` now lists the JSON report test, and the mdBook ISF
+  overview records that the JSON report is IR-derived but not a frozen public
+  schema.
+- Next bounded slice remains implementation-oriented: choose one documented
+  R14 limitation, likely `do`/`spawn` start binding, and make it behavior with
+  tests.
 ## 2026-05-12: R14 — ISF spec and mdBook synchronized
 - `docs/ISF_SPEC.md` now describes the shipped parser/scheduler behavior:
   `.isf` CLI flow, `(on port)` activation, removed `(assign ...)`, current
