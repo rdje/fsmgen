@@ -23,8 +23,10 @@ our @EXPORT_OK = qw(
     isf_public_interface_schedule_report_multi_file_scope
     isf_public_interface_schedule_report_presence_key_family_map
     isf_public_interface_schedule_report_reset_keys
+    isf_public_interface_schedule_report_storage_kind_values
     isf_public_interface_schedule_report_storage_optional_keys
     isf_public_interface_schedule_report_storage_required_keys
+    isf_public_interface_schedule_report_storage_width_shape
     isf_public_interface_schedule_report_top_level_keys
     isf_public_interface_schedule_report_transaction_keys
     isf_public_interface_schedule_report_dt_keys
@@ -88,6 +90,8 @@ sub build_isf_public_interface_contract {
         schedule_report_reset_keys => isf_public_interface_schedule_report_reset_keys(),
         schedule_report_storage_required_keys => isf_public_interface_schedule_report_storage_required_keys(),
         schedule_report_storage_optional_keys => isf_public_interface_schedule_report_storage_optional_keys(),
+        schedule_report_storage_kind_values => isf_public_interface_schedule_report_storage_kind_values(),
+        schedule_report_storage_width_shape => isf_public_interface_schedule_report_storage_width_shape(),
         schedule_report_transaction_keys => isf_public_interface_schedule_report_transaction_keys(),
         schedule_report_dt_keys => isf_public_interface_schedule_report_dt_keys(),
         schedule_report_dt_assignments_shape => isf_public_interface_schedule_report_dt_assignments_shape(),
@@ -137,6 +141,7 @@ sub build_isf_public_interface_contract {
             't/1145-isf-public-scheduled-fsm-metadata-audit.t',
             't/1146-isf-public-dt-assignment-metadata-audit.t',
             't/1147-isf-public-report-dt-assignment-count-audit.t',
+            't/1148-isf-public-storage-metadata-audit.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -182,6 +187,8 @@ sub isf_public_interface_public_top_level_keys {
             schedule_report_reset_keys
             schedule_report_storage_required_keys
             schedule_report_storage_optional_keys
+            schedule_report_storage_kind_values
+            schedule_report_storage_width_shape
             schedule_report_transaction_keys
             schedule_report_dt_keys
             schedule_report_dt_assignments_shape
@@ -324,6 +331,19 @@ sub isf_public_interface_schedule_report_storage_optional_keys {
             width
         ),
     ];
+}
+
+sub isf_public_interface_schedule_report_storage_kind_values {
+    return [
+        qw(
+            counter
+            register
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_storage_width_shape {
+    return 'positive integer bit width when present; currently present for inferred scheduler counters';
 }
 
 sub isf_public_interface_schedule_report_transaction_keys {

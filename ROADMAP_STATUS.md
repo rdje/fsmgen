@@ -125,6 +125,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   combinational, while `<-` and `<=` are sequential.
 - `t/1147` now advertises and proves schedule-report DT `assignments` values
   are counts matching scheduled `.fsm` DT blocks, not assignment payload lists.
+- `t/1148` now advertises and proves schedule-report inferred-storage kind
+  values and optional width shape.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.

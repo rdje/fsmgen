@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF storage metadata audit
+- Added `schedule_report_storage_kind_values` and
+  `schedule_report_storage_width_shape` to `embedding.isf_public_interface`,
+  documenting current inferred-storage kind values and optional width shape.
+- Added `t/1148-isf-public-storage-metadata-audit.t` to prove that metadata is
+  exact across direct and manifest views and that APB inferred-storage entries
+  use only advertised kinds with positive integer counter widths.
 ## 2026-05-12: R14 — ISF report DT assignment-count audit
 - Added `schedule_report_dt_assignments_shape` to
   `embedding.isf_public_interface`, documenting `dt_blocks[*].assignments` as a

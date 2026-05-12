@@ -68,6 +68,10 @@ The schedule-report DT assignment-count shape is checked by
 [t/1147-isf-public-report-dt-assignment-count-audit.t](../t/1147-isf-public-report-dt-assignment-count-audit.t)
 to keep `dt_blocks[*].assignments` documented as a non-negative assignment
 count, not an assignment payload list.
+The inferred-storage metadata is checked by
+[t/1148-isf-public-storage-metadata-audit.t](../t/1148-isf-public-storage-metadata-audit.t)
+to keep advertised storage `kind` values and optional `width` shape exact
+across direct and manifest views.
 The public `--emit-schedule-json` CLI path is checked by
 [t/1121-isf-public-cli-schedule-report-audit.t](../t/1121-isf-public-cli-schedule-report-audit.t)
 to emit clean-stderr JSON matching the in-process scheduler report.
@@ -274,6 +278,12 @@ For each `dt_blocks` entry, `assignments` is a non-negative integer count of
 assignment forms in the matching scheduled `.fsm` DT block. It is not an
 assignment payload list. The machine-readable contract advertises this through
 `schedule_report_dt_assignments_shape`.
+
+For each `inferred_storage` entry, `kind` is currently one of `counter` or
+`register`. Optional `width` values are positive integer bit widths when
+present, and are currently present for inferred scheduler counters. The
+machine-readable contract advertises these through
+`schedule_report_storage_kind_values` and `schedule_report_storage_width_shape`.
 
 The current lowerer emits DT summaries in deterministic lowering order:
 transaction/rule-created DTs retain their construction order, and hash-backed

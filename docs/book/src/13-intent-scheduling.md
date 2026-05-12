@@ -110,7 +110,9 @@ metadata is audited as exact. DT timing remains assignment-family driven:
 state or non-state DT blocks; the manifest advertises those operator families
 through `dt_assignment_operator_family_map`. Schedule-report `dt_blocks`
 `assignments` values are assignment counts, not payload lists, and the manifest
-advertises that shape through `schedule_report_dt_assignments_shape`. The ISF
+advertises that shape through `schedule_report_dt_assignments_shape`.
+Inferred-storage `kind` values are `counter` or `register`, and optional
+positive integer `width` values currently belong to inferred counters. The ISF
 live-document path list is
 audited across direct and manifest views so recovery pointers stay repo-local
 and present. The public `--emit-schedule-json` path is audited to emit the same

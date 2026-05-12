@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF storage metadata audit
+- Added `schedule_report_storage_kind_values` and
+  `schedule_report_storage_width_shape` to `embedding.isf_public_interface`.
+- Added [t/1148-isf-public-storage-metadata-audit.t](t/1148-isf-public-storage-metadata-audit.t)
+  to prove those metadata fields are exact and APB inferred-storage entries use
+  only advertised kinds with positive integer counter widths.
 ### R14 — ISF report DT assignment-count audit
 - Added `schedule_report_dt_assignments_shape` to
   `embedding.isf_public_interface`, documenting schedule-report

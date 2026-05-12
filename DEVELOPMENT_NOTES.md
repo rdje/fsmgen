@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF storage metadata audit
+- The schedule report already exposes inferred storage summaries, but the
+  meaning of `kind` and optional `width` was only described in prose. That is
+  downstream-visible enough to belong in the machine-readable contract.
+- `t/1148-isf-public-storage-metadata-audit.t` locks the advertised storage
+  kind values and width-shape string across direct and manifest views, then
+  checks APB inferred-storage entries against those constraints.
 ## 2026-05-12: R14 ISF report DT assignment-count audit
 - The schedule report intentionally summarizes DT assignments by count today.
   Exposing that as explicit metadata prevents downstream readers from assuming
