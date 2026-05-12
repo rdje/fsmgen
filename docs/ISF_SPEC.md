@@ -62,6 +62,8 @@ metadata. Its lower-result discovery metadata is audited as exact across direct
 and manifest views too. Its schedule-report metadata fields and downstream
 guidance list are audited as exact across the same views. Its `tested_by`
 provenance metadata is also audited as an exact repo-local test list.
+Its CLI success-shape metadata is audited as exact for the schedule JSON,
+`--outdir`, and plain HDL-generation paths.
 
 The public adapter and scheduler constructors require the exact
 `FSM::Adapter::ISF` or `FSM::Scheduler::ISF` class invocant and currently
@@ -550,6 +552,7 @@ Focused tests:
 - [t/1150-isf-public-reset-metadata-audit.t](../t/1150-isf-public-reset-metadata-audit.t)
 - [t/1151-isf-public-report-count-metadata-audit.t](../t/1151-isf-public-report-count-metadata-audit.t)
 - [t/1152-isf-public-report-scalar-metadata-audit.t](../t/1152-isf-public-report-scalar-metadata-audit.t)
+- [t/1153-isf-public-cli-success-metadata-audit.t](../t/1153-isf-public-cli-success-metadata-audit.t)
 
 ## 12. Explicitly Deferred
 

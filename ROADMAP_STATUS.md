@@ -135,6 +135,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantics.
 - `t/1152` now advertises and proves schedule-report `source`, `scheduled_fsm`,
   `clock`, and `watchdog` scalar shapes.
+- `t/1153` now advertises and proves public ISF CLI success-shape metadata for
+  schedule JSON, `--outdir`, and HDL-generation paths.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.

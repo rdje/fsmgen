@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF CLI success metadata audit
+- The public contract listed CLI entrypoints and option names, but downstream
+  tooling also needs the success I/O shape: JSON on stdout for schedule reports,
+  scheduled `.fsm` files by basename for `--outdir`, and requested HDL output
+  for plain generation.
+- `t/1153-isf-public-cli-success-metadata-audit.t` locks those shape strings
+  across direct and manifest views and smoke-checks the three public CLI success
+  paths.
 ## 2026-05-12: R14 ISF report scalar metadata audit
 - The remaining top-level report scalar fields are now explicit contract
   metadata. This is especially important for `watchdog`, because omission is

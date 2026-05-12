@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF CLI success metadata audit
+- Added CLI success-shape metadata for `--emit-schedule-json`, `--outdir`, and
+  plain `file.isf` HDL-generation paths to `embedding.isf_public_interface`.
+- Added `t/1153-isf-public-cli-success-metadata-audit.t` to prove that metadata
+  is exact across direct and manifest views and that the three public CLI
+  success paths keep their advertised stdout/stderr/file effects.
 ## 2026-05-12: R14 — ISF report scalar metadata audit
 - Added schedule-report scalar shape fields for `source`, `scheduled_fsm`,
   `clock`, and `watchdog` to `embedding.isf_public_interface`.

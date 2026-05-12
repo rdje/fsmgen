@@ -47,6 +47,10 @@ to stay exact and duplicate-free across the same views.
 The advertised ISF CLI option list is checked by
 [t/1136-isf-public-cli-option-metadata-audit.t](../t/1136-isf-public-cli-option-metadata-audit.t)
 to stay exact and duplicate-free across direct and manifest views.
+The advertised CLI success-shape metadata is checked by
+[t/1153-isf-public-cli-success-metadata-audit.t](../t/1153-isf-public-cli-success-metadata-audit.t)
+to keep the schedule JSON, `--outdir`, and plain HDL-generation success
+surfaces exact across direct and manifest views.
 The advertised parser and scheduler method-name lists are checked by
 [t/1137-isf-public-method-name-metadata-audit.t](../t/1137-isf-public-method-name-metadata-audit.t)
 to stay exact and duplicate-free across those views.
@@ -220,6 +224,11 @@ facade-shape discovery metadata.
 The advertised ISF-specific CLI option family is `--emit-schedule-json`,
 `--outdir`, and `--strict`.
 The `cli_option_names` list is exact discovery metadata for that option family.
+The CLI success-shape fields are exact discovery metadata for successful public
+CLI runs: `--emit-schedule-json` writes schedule-report JSON to stdout with
+empty stderr, `--outdir DIR` writes scheduled `.fsm` files by basename into
+`DIR`, and plain `file.isf` generation lowers through scheduled `.fsm` before
+writing the requested HDL output with empty stderr.
 
 ## Lower Result
 

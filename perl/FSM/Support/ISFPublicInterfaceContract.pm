@@ -9,7 +9,10 @@ use JSON::PP ();
 our @EXPORT_OK = qw(
     build_isf_public_interface_contract
     isf_public_interface_actor_shell_required_keys
+    isf_public_interface_cli_hdl_generation_success_shape
     isf_public_interface_cli_option_names
+    isf_public_interface_cli_outdir_success_shape
+    isf_public_interface_cli_schedule_json_success_shape
     isf_public_interface_contract_source
     isf_public_interface_constructor_option_names
     isf_public_interface_dt_assignment_operator_family_map
@@ -79,6 +82,9 @@ sub build_isf_public_interface_contract {
         scheduler_method_names => isf_public_interface_scheduler_method_names(),
         constructor_option_names => isf_public_interface_constructor_option_names(),
         cli_option_names => isf_public_interface_cli_option_names(),
+        cli_schedule_json_success_shape => isf_public_interface_cli_schedule_json_success_shape(),
+        cli_outdir_success_shape => isf_public_interface_cli_outdir_success_shape(),
+        cli_hdl_generation_success_shape => isf_public_interface_cli_hdl_generation_success_shape(),
         constructor_receiver_shape => 'exact class invocant: FSM::Adapter::ISF or FSM::Scheduler::ISF',
         constructor_argument_shape => 'even-length option/value list after class invocant; currently only debug is public',
         parser_method_receiver_shape => 'object returned by FSM::Adapter::ISF->new(...)',
@@ -166,6 +172,7 @@ sub build_isf_public_interface_contract {
             't/1150-isf-public-reset-metadata-audit.t',
             't/1151-isf-public-report-count-metadata-audit.t',
             't/1152-isf-public-report-scalar-metadata-audit.t',
+            't/1153-isf-public-cli-success-metadata-audit.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -190,6 +197,9 @@ sub isf_public_interface_public_top_level_keys {
             scheduler_method_names
             constructor_option_names
             cli_option_names
+            cli_schedule_json_success_shape
+            cli_outdir_success_shape
+            cli_hdl_generation_success_shape
             constructor_receiver_shape
             constructor_argument_shape
             parser_method_receiver_shape
@@ -276,6 +286,18 @@ sub isf_public_interface_cli_option_names {
             --strict
         ),
     ];
+}
+
+sub isf_public_interface_cli_schedule_json_success_shape {
+    return '--emit-schedule-json writes schedule-report JSON to stdout and keeps stderr empty on success';
+}
+
+sub isf_public_interface_cli_outdir_success_shape {
+    return '--outdir DIR writes scheduled .fsm files by basename into DIR and keeps stderr empty on success';
+}
+
+sub isf_public_interface_cli_hdl_generation_success_shape {
+    return 'plain file.isf generation lowers through scheduled .fsm and writes requested HDL output with empty stderr on success';
 }
 
 sub isf_public_interface_actor_shell_required_keys {
