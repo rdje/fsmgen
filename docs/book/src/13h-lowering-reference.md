@@ -393,3 +393,37 @@ cc_inc_dt       ← latency cycle counter DT
 
 Total: 8 states. Each `(drive ...)` is one state. `(await ...)` is one state.
 `(sample ...)` piggybacks — no extra state.
+
+## Phases and Stages
+
+### Phases
+
+```lisp
+(phase setup (outputs valid rdata) (next finish))
+```
+
+Phases are named markers within a transaction. Currently lowered as
+pass-through sequential states. The `(outputs ...)` declaration is
+parsed but does not generate drive assignments.
+
+**Status**: Parsed, lowered as pass-through. Future: jump targets,
+conditional entry points. Needs more design discussion.
+
+### Stages
+
+```lisp
+(stage pass_through (input ready) (output valid) (latency (max 3))
+  (compute (valid ready)))
+```
+
+Pipeline stages with implicit valid/ready handshake. Parsed but **not lowered**.
+
+**Future**: Generate valid/ready plumbing with pipeline registers.
+
+### Contracts
+
+```lisp
+(contract (always request -> eventually[1..8] grant))
+```
+
+Temporal assertions. **Not implemented**. Deferred to separate design discussion.
