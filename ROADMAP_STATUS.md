@@ -77,6 +77,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   HDL for APB with clean stderr.
 - `t/1124` now proves the advertised public `--strict` option remains accepted
   for `file.isf` HDL generation with clean stderr.
+- `t/1125` now proves ISF adapter/scheduler constructors accept only the public
+  `debug` option and reject malformed option lists with bounded diagnostics.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
@@ -3623,6 +3625,9 @@ Done:
 - [t/1124-isf-public-cli-strict-mode-audit.t](t/1124-isf-public-cli-strict-mode-audit.t)
   locks clean-stderr APB HDL generation through the advertised public
   `--strict` option.
+- [t/1125-isf-public-constructor-boundary-audit.t](t/1125-isf-public-constructor-boundary-audit.t)
+  locks the public ISF constructor option boundary for adapter and scheduler
+  facades.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — ISF constructor boundary audit
+- Active: `R14`. `t/1125` proves ISF adapter/scheduler constructors accept only
+  the public `debug` option and reject malformed option lists.
+
 ## 2026-05-12: R14 — ISF CLI strict mode audit
 - Active: `R14`. `t/1124` proves `--strict` remains accepted for public
   `file.isf` HDL generation with clean stderr.

@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF constructor boundary audit
+- `FSM::Adapter::ISF->new(...)` and `FSM::Scheduler::ISF->new(...)` now
+  validate constructor arguments before object creation: option lists must be
+  even-length, and `debug` is the only supported public option.
+- Added `t/1125-isf-public-constructor-boundary-audit.t` to lock valid default
+  and `debug` construction plus bounded diagnostics for odd option lists and
+  unsupported options.
 ## 2026-05-12: R14 — ISF CLI strict mode audit
 - Added `t/1124-isf-public-cli-strict-mode-audit.t` to prove the advertised
   `--strict` option remains accepted on the public `file.isf` HDL-generation

@@ -54,6 +54,10 @@ machine-readable form is advertised through
 evolve in the same slice as any implementation change that widens or changes
 the public ISF surface.
 
+The public adapter and scheduler constructors currently accept only the `debug`
+option. Malformed option lists and unsupported option names are rejected before
+object creation.
+
 ## 3. Source Root
 
 The root form is:
@@ -451,6 +455,7 @@ Focused tests:
 - [t/1122-isf-public-cli-outdir-lowering-audit.t](../t/1122-isf-public-cli-outdir-lowering-audit.t)
 - [t/1123-isf-public-cli-hdl-generation-audit.t](../t/1123-isf-public-cli-hdl-generation-audit.t)
 - [t/1124-isf-public-cli-strict-mode-audit.t](../t/1124-isf-public-cli-strict-mode-audit.t)
+- [t/1125-isf-public-constructor-boundary-audit.t](../t/1125-isf-public-constructor-boundary-audit.t)
 
 ## 12. Explicitly Deferred
 

@@ -54,6 +54,9 @@ The `live_document_paths` list is checked by
 [t/1120-isf-public-live-document-path-audit.t](../t/1120-isf-public-live-document-path-audit.t)
 to keep the direct owner, in-process manifest, and both CLI manifest spellings
 aligned on repo-relative Markdown paths that exist on disk.
+The public constructor option boundary is checked by
+[t/1125-isf-public-constructor-boundary-audit.t](../t/1125-isf-public-constructor-boundary-audit.t)
+for both adapter and scheduler facades.
 
 ## Stabilized Surface
 
@@ -78,7 +81,8 @@ my $json    = FSM::Scheduler::ISF->new(%args)->report($actor);
 ```
 
 The only public constructor option currently advertised for the ISF parser and
-scheduler facades is `debug`.
+scheduler facades is `debug`. Constructors reject odd option lists and
+unsupported option names before object creation.
 
 The advertised ISF-specific CLI option family is `--emit-schedule-json`,
 `--outdir`, and `--strict`.

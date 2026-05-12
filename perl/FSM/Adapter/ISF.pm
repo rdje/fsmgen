@@ -16,7 +16,8 @@ use FSM::Debug;
 # Uses Lispish::multi for the raw parse, then validates and classifies
 # the AST structure.
 
-sub new($class, %args) {
+sub new($class, @constructor_args) {
+    my %args = _validate_constructor_args($class, @constructor_args);
     my $debug = $args{debug} // 0;
 
     fsm_trace_enter('Initialize ISF adapter facade', 2);
@@ -30,6 +31,20 @@ sub new($class, %args) {
 
     fsm_trace_exit('ISF adapter facade initialized', 2);
     return $self;
+}
+
+sub _validate_constructor_args($class, @args) {
+    confess "$class->new expects an even-length option/value list\n"
+        if @args % 2;
+
+    my %options = @args;
+    my %allowed = map { $_ => 1 } qw(debug);
+    for my $name (sort keys %options) {
+        confess "$class->new unsupported option '$name'; supported option: debug\n"
+            unless $allowed{$name};
+    }
+
+    return %options;
 }
 
 sub parse_file($self, $isf_path) {

@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF constructor boundary audit
+- The ISF public-interface contract advertises an even-length constructor
+  option/value list and only one public option, `debug`. Leaving that boundary
+  to Perl signature errors or silently ignored unknown keys would make the
+  contract less useful to embedders.
+- The adapter and scheduler facades now validate constructor options explicitly.
+  `t/1125-isf-public-constructor-boundary-audit.t` locks both accepted
+  construction forms and bounded rejection of odd lists and unsupported options.
 ## 2026-05-12: R14 ISF CLI strict mode audit
 - `--strict` is listed in the ISF public-interface contract's CLI option
   family. The strict flag mostly affects downstream generation checks today,

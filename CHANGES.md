@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF constructor boundary audit
+- Updated [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm) and
+  [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm) so public constructors
+  reject odd option lists and unsupported options before object creation.
+- Added [t/1125-isf-public-constructor-boundary-audit.t](t/1125-isf-public-constructor-boundary-audit.t)
+  to lock default construction, `debug => 1`, and bounded diagnostics for the
+  advertised constructor boundary.
 ### R14 — ISF CLI strict mode audit
 - Added [t/1124-isf-public-cli-strict-mode-audit.t](t/1124-isf-public-cli-strict-mode-audit.t)
   to prove the advertised `--strict` option remains accepted for the public

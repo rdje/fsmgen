@@ -71,12 +71,14 @@ ISF API contract is advertised through `--capability-manifest` at
 `embedding.isf_public_interface` and described in
 [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](../../ISF_PUBLIC_INTERFACE_CONTRACT.md).
 That contract is live documentation: it evolves in the same slice as public ISF
-parser, scheduler, CLI, lower-result, or schedule-report changes. Assigned
-scheduler counters in the `*_wd`, `*_cc`, and `*_cnt` naming families are
-reported as `counter` storage with the width inferred by the lowering IR. The
-advertised contract object is JSON-round-trip audited so downstream tooling can
-consume the manifest metadata as portable discovery data, and defensive-copy
-audited so caller mutation does not pollute later contract builds. Both
+parser, scheduler, CLI, lower-result, or schedule-report changes. The public
+adapter and scheduler constructors reject malformed option lists and unsupported
+option names, and currently accept only `debug`. Assigned scheduler counters in
+the `*_wd`, `*_cc`, and `*_cnt` naming families are reported as `counter`
+storage with the width inferred by the lowering IR. The advertised contract
+object is JSON-round-trip audited so downstream tooling can consume the manifest
+metadata as portable discovery data, and defensive-copy audited so caller
+mutation does not pollute later contract builds. Both
 capability-manifest CLI spellings are audited to emit the same ISF contract
 payload. The current APB schedule report is also checked against the advertised
 public key families, and the lower-result `files` map is checked for both
