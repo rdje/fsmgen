@@ -42,6 +42,8 @@ The public `--outdir` CLI path is checked by
 [t/1122-isf-public-cli-outdir-lowering-audit.t](../t/1122-isf-public-cli-outdir-lowering-audit.t)
 to write scheduled `.fsm` artifacts matching the in-process lower-result
 `files` map for a multi-file fixture.
+The current multi-file schedule-report scope is checked by
+[t/1128-isf-public-multifile-schedule-report-audit.t](../t/1128-isf-public-multifile-schedule-report-audit.t).
 The `parse_source(...)` facade method is checked by
 [t/1118-isf-public-parse-source-facade-audit.t](../t/1118-isf-public-parse-source-facade-audit.t)
 to ensure in-memory source text returns a scheduler-consumable actor with the
@@ -157,6 +159,11 @@ drive DTs are emitted lexically by drive name. This is a bounded review-artifact
 and schedule-report stability promise, not a promise that raw `LoweringIR`
 hashes are public. The machine-readable contract advertises the same policy in
 `scheduled_fsm_dt_ordering` and `schedule_report_dt_ordering`.
+
+For multi-file lowerings, the current schedule report describes the parent
+scheduled module only. Child scheduled `.fsm` text remains available through the
+lower-result `files` map. The machine-readable contract advertises this current
+scope in `schedule_report_multi_file_scope`.
 
 The schedule report is not yet a frozen full schema. Downstream consumers should
 use the advertised contract metadata instead of assuming every current field,

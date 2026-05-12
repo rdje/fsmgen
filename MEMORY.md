@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF multi-file schedule report audit
+- `embedding.isf_public_interface` now advertises
+  `schedule_report_multi_file_scope`: the current schedule report describes the
+  parent module only, while child scheduled `.fsm` text is available through the
+  lower-result `files` map.
+- Added `t/1128-isf-public-multifile-schedule-report-audit.t` to lock that
+  behavior for `spawn_parent.isf`.
 ## 2026-05-12: R14 — ISF scheduler method boundary audit
 - `FSM::Scheduler::ISF->lower(...)` and `report(...)` now validate that callers
   pass exactly one scheduler-consumable actor hash reference with scalar

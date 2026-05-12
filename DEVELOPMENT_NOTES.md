@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF multi-file schedule report audit
+- Multi-file lowering already exposes every scheduled artifact through
+  `lower(...)->{files}`. The schedule report, however, is still generated from
+  the parent IR returned by `LoweringIR::build_module(...)`; it is not yet an
+  aggregate parent-plus-child schedule report.
+- `schedule_report_multi_file_scope` makes that current scope discoverable in
+  `embedding.isf_public_interface`, and
+  `t/1128-isf-public-multifile-schedule-report-audit.t` locks the
+  `spawn_parent` fixture so downstream consumers do not infer child summaries
+  from the report until the contract deliberately widens.
 ## 2026-05-12: R14 ISF scheduler method boundary audit
 - The scheduler facade is public, but `LoweringIR` is not. Invalid `lower(...)`
   or `report(...)` calls should therefore fail at the facade boundary instead

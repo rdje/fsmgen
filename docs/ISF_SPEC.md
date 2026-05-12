@@ -63,6 +63,9 @@ requires defined scalar source text and source label values.
 The public scheduler facade methods validate the actor shell before lowering:
 `lower(...)` and `report(...)` require one actor hash with scalar `actor_name`,
 array `transactions`, and hash `interface` fields.
+For multi-file lowering, the current schedule report is parent-scoped. Child
+scheduled `.fsm` text is exposed through the lower-result `files` map rather
+than folded into the report.
 
 ## 3. Source Root
 
@@ -412,6 +415,8 @@ The capability-manifest ISF public contract exposes the same policy through
 `scheduled_fsm_dt_ordering` and `schedule_report_dt_ordering`.
 The CLI `--emit-schedule-json` entrypoint is expected to emit the same report as
 the in-process scheduler on stdout and keep stderr clean on success.
+For multi-file lowerings, that report currently describes the parent scheduled
+module only.
 
 ## 11. Current Regression Fixtures
 
@@ -464,6 +469,7 @@ Focused tests:
 - [t/1125-isf-public-constructor-boundary-audit.t](../t/1125-isf-public-constructor-boundary-audit.t)
 - [t/1126-isf-public-parser-method-boundary-audit.t](../t/1126-isf-public-parser-method-boundary-audit.t)
 - [t/1127-isf-public-scheduler-method-boundary-audit.t](../t/1127-isf-public-scheduler-method-boundary-audit.t)
+- [t/1128-isf-public-multifile-schedule-report-audit.t](../t/1128-isf-public-multifile-schedule-report-audit.t)
 
 ## 12. Explicitly Deferred
 

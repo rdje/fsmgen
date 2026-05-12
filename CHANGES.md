@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF multi-file schedule report audit
+- Extended [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm)
+  with `schedule_report_multi_file_scope`, documenting that current multi-file
+  reports describe the parent scheduled module only.
+- Added [t/1128-isf-public-multifile-schedule-report-audit.t](t/1128-isf-public-multifile-schedule-report-audit.t)
+  to lock `spawn_parent` lower-result file coverage plus parent-scoped
+  schedule-report summaries.
 ### R14 — ISF scheduler method boundary audit
 - Updated [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm) so public
   `lower(...)` and `report(...)` calls validate actor argument count and actor

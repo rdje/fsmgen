@@ -16,6 +16,7 @@ our @EXPORT_OK = qw(
     isf_public_interface_dt_ordering_policy
     isf_public_interface_parser_method_names
     isf_public_interface_public_top_level_keys
+    isf_public_interface_schedule_report_multi_file_scope
     isf_public_interface_schedule_report_presence_key_family_map
     isf_public_interface_schedule_report_reset_keys
     isf_public_interface_schedule_report_storage_optional_keys
@@ -71,6 +72,7 @@ sub build_isf_public_interface_contract {
         lower_result_file_map_shape => 'hash reference mapping scheduled .fsm basename to scheduled .fsm source text',
         scheduled_fsm_dt_ordering => isf_public_interface_dt_ordering_policy(),
         schedule_report_top_level_keys => isf_public_interface_schedule_report_top_level_keys(),
+        schedule_report_multi_file_scope => isf_public_interface_schedule_report_multi_file_scope(),
         schedule_report_presence_key_family_map => isf_public_interface_schedule_report_presence_key_family_map(),
         schedule_report_reset_keys => isf_public_interface_schedule_report_reset_keys(),
         schedule_report_storage_required_keys => isf_public_interface_schedule_report_storage_required_keys(),
@@ -103,6 +105,7 @@ sub build_isf_public_interface_contract {
             't/1125-isf-public-constructor-boundary-audit.t',
             't/1126-isf-public-parser-method-boundary-audit.t',
             't/1127-isf-public-scheduler-method-boundary-audit.t',
+            't/1128-isf-public-multifile-schedule-report-audit.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -136,6 +139,7 @@ sub isf_public_interface_public_top_level_keys {
             lower_result_file_map_shape
             scheduled_fsm_dt_ordering
             schedule_report_top_level_keys
+            schedule_report_multi_file_scope
             schedule_report_presence_key_family_map
             schedule_report_reset_keys
             schedule_report_storage_required_keys
@@ -229,6 +233,10 @@ sub isf_public_interface_schedule_report_top_level_keys {
             compile_issues
         ),
     ];
+}
+
+sub isf_public_interface_schedule_report_multi_file_scope {
+    return 'current_report_describes_parent_module_only; child_scheduled_fsm_texts_are_available_through_lower_result_files';
 }
 
 sub isf_public_interface_schedule_report_reset_keys {

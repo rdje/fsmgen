@@ -94,10 +94,12 @@ audited across direct and manifest views so recovery pointers stay repo-local
 and present. The public `--emit-schedule-json` path is audited to emit the same
 report as the in-process scheduler with clean stderr. The public `--outdir`
 path is audited to write multi-file scheduled `.fsm` artifacts matching the
-in-process lower-result file map. The plain `file.isf` CLI path is audited to
-reach generated HDL with clean stderr, including when the advertised `--strict`
-flag is present. Transaction summaries include the generated state families used
-by the current scheduler, including control-flow and data-operation states.
+in-process lower-result file map. Multi-file schedule reports are currently
+parent-scoped, and that scope is advertised in the manifest. The plain
+`file.isf` CLI path is audited to reach generated HDL with clean stderr,
+including when the advertised `--strict` flag is present. Transaction summaries
+include the generated state families used by the current scheduler, including
+control-flow and data-operation states.
 
 ## Current Limitations
 
