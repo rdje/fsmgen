@@ -86,8 +86,10 @@ locked across generated `.fsm` text and schedule-report `dt_blocks` so
 hash-backed drive definitions do not create review-artifact churn; the manifest
 also advertises the DT ordering policy. The ISF live-document path list is
 audited across direct and manifest views so recovery pointers stay repo-local
-and present. Transaction summaries include the generated state families used by
-the current scheduler, including control-flow and data-operation states.
+and present. The public `--emit-schedule-json` path is audited to emit the same
+report as the in-process scheduler with clean stderr. Transaction summaries
+include the generated state families used by the current scheduler, including
+control-flow and data-operation states.
 
 ## Current Limitations
 

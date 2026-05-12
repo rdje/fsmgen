@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF CLI schedule report audit
+- `FSM::Adapter::ISF::Parser` now suppresses the `experimental::smartmatch`
+  warning category used by its `given`/`when` actor-clause dispatch so public
+  ISF CLI report output keeps stderr clean.
+- Added `t/1121-isf-public-cli-schedule-report-audit.t` to prove
+  `./bin/fsmgen --emit-schedule-json isf/apb_requester.isf` succeeds with
+  clean stderr, decodes as JSON, matches the in-process scheduler report,
+  exposes the advertised top-level key family, and preserves deterministic DT
+  block order.
 ## 2026-05-12: R14 — ISF live document path audit
 - Added `t/1120-isf-public-live-document-path-audit.t` to prove
   `embedding.isf_public_interface.live_document_paths` stays identical across

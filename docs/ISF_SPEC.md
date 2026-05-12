@@ -394,6 +394,8 @@ DTs lexically by drive name.
 
 The capability-manifest ISF public contract exposes the same policy through
 `scheduled_fsm_dt_ordering` and `schedule_report_dt_ordering`.
+The CLI `--emit-schedule-json` entrypoint is expected to emit the same report as
+the in-process scheduler on stdout and keep stderr clean on success.
 
 ## 11. Current Regression Fixtures
 
@@ -439,6 +441,7 @@ Focused tests:
 - [t/1118-isf-public-parse-source-facade-audit.t](../t/1118-isf-public-parse-source-facade-audit.t)
 - [t/1119-isf-deterministic-dt-block-order.t](../t/1119-isf-deterministic-dt-block-order.t)
 - [t/1120-isf-public-live-document-path-audit.t](../t/1120-isf-public-live-document-path-audit.t)
+- [t/1121-isf-public-cli-schedule-report-audit.t](../t/1121-isf-public-cli-schedule-report-audit.t)
 
 ## 12. Explicitly Deferred
 

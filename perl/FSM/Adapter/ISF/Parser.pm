@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Carp qw(confess);
 use feature qw(signatures postderef);
-no warnings 'experimental::signatures';
+no warnings qw(experimental::signatures experimental::smartmatch);
 
 use Lispish;
 use File::Slurp qw(read_file);

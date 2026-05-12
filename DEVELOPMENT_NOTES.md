@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF CLI schedule report audit
+- `--emit-schedule-json` is an advertised ISF public CLI entrypoint. A
+  downstream JSON consumer needs stdout to be the JSON payload and stderr to be
+  clean on success.
+- Loading the ISF parser produced Perl experimental `given`/`when` warnings
+  because the parser already suppressed signature warnings but not the
+  smartmatch warning family used by that dispatch form. The parser now disables
+  that warning category explicitly.
+- `t/1121-isf-public-cli-schedule-report-audit.t` ties the CLI path back to
+  the in-process scheduler report and the advertised schedule-report key family,
+  so CLI drift cannot hide behind the lower-level report tests.
 ## 2026-05-12: R14 ISF live document path audit
 - The ISF public-interface contract says the human contract documents evolve
   with implementation slices. That is only useful to downstream consumers and

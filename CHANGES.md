@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF CLI schedule report audit
+- Updated [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
+  to suppress the `experimental::smartmatch` warnings emitted by its
+  `given`/`when` dispatch, keeping public ISF CLI JSON output clean.
+- Added [t/1121-isf-public-cli-schedule-report-audit.t](t/1121-isf-public-cli-schedule-report-audit.t)
+  to prove `--emit-schedule-json` succeeds with clean stderr, emits the same
+  APB report as `FSM::Scheduler::ISF->report(...)`, exposes the advertised
+  top-level key family, and preserves deterministic DT block order.
 ### R14 — ISF live document path audit
 - Added [t/1120-isf-public-live-document-path-audit.t](t/1120-isf-public-live-document-path-audit.t)
   to prove `embedding.isf_public_interface.live_document_paths` is identical

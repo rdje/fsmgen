@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — ISF CLI schedule report audit
+- Active: `R14`. `t/1121` proves `--emit-schedule-json` emits clean public APB
+  schedule JSON matching the in-process scheduler report.
+
 ## 2026-05-12: R14 — ISF live document path audit
 - Active: `R14`. `t/1120` proves
   `embedding.isf_public_interface.live_document_paths` is manifest-aligned and

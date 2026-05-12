@@ -28,6 +28,9 @@ Both capability-manifest CLI spellings are audited by
 to keep the in-process contract and CLI-advertised contract aligned.
 The current APB schedule report is checked against the advertised key families
 by [t/1116-isf-public-schedule-report-key-family-audit.t](../t/1116-isf-public-schedule-report-key-family-audit.t).
+The public `--emit-schedule-json` CLI path is checked by
+[t/1121-isf-public-cli-schedule-report-audit.t](../t/1121-isf-public-cli-schedule-report-audit.t)
+to emit clean-stderr JSON matching the in-process scheduler report.
 The lower-result `files` map is checked for both single-file and multi-file
 lowering by [t/1117-isf-public-lower-result-files-audit.t](../t/1117-isf-public-lower-result-files-audit.t).
 The `parse_source(...)` facade method is checked by
@@ -87,7 +90,8 @@ keys.
 ## Schedule Report
 
 `FSM::Scheduler::ISF->report($actor)` and `--emit-schedule-json` produce a
-machine-readable schedule report.
+machine-readable schedule report. On success, the CLI report path is expected
+to keep stderr clean and emit the JSON payload on stdout.
 
 The bounded public top-level key family is:
 
