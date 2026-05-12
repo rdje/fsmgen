@@ -1,5 +1,10 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — flopped outputs (`<-` default for all ports)
+- All output port assignments use `<-` (sequential) instead of `=` (combinational)
+- Better ASIC timing closure; combinational outputs by explicit request only
+- Drive DTs, complete states, timeout states all use `<-`
+- APB: 8 states, I2C: 36 states. All 7 tests pass.
 ## 2026-05-12: R14 — mdBook ISF chapter expanded (8 sub-chapters)
 - Full ISF documentation: Actor/Interface, Transactions, Drive Blocks,
   Control Flow, Data Manipulation, Composition, Rules/Priorities, Lowering Ref
