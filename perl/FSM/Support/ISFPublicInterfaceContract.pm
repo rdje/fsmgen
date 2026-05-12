@@ -88,6 +88,7 @@ sub build_isf_public_interface_contract {
             't/1113-isf-public-interface-contract-json-roundtrip-audit.t',
             't/1114-isf-public-interface-contract-defensive-copy-audit.t',
             't/1115-isf-public-interface-cli-manifest-audit.t',
+            't/1116-isf-public-schedule-report-key-family-audit.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',

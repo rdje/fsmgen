@@ -54,6 +54,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   polluted by caller mutation.
 - `t/1115` now proves both capability-manifest CLI spellings advertise the
   same `embedding.isf_public_interface` contract payload.
+- `t/1116` now proves the real APB schedule report conforms to the public
+  key families advertised by the ISF public-interface contract.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
@@ -3573,6 +3575,8 @@ Done:
 - [t/1115-isf-public-interface-cli-manifest-audit.t](t/1115-isf-public-interface-cli-manifest-audit.t)
   locks CLI capability-manifest advertisement of the ISF public-interface
   contract for both supported manifest spellings.
+- [t/1116-isf-public-schedule-report-key-family-audit.t](t/1116-isf-public-schedule-report-key-family-audit.t)
+  locks real schedule-report key-family conformance for the APB fixture.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

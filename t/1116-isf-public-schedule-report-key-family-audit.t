@@ -1,0 +1,81 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use Test::More;
+use File::Spec;
+use FindBin;
+use JSON::PP ();
+
+use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+
+use FSM::Adapter::ISF;
+use FSM::Scheduler::ISF;
+use FSM::Support::ISFPublicInterfaceContract qw(
+    isf_public_interface_schedule_report_presence_key_family_map
+    isf_public_interface_schedule_report_top_level_keys
+);
+
+subtest 'APB schedule report conforms to advertised public key families' => sub {
+    my $isf_file = File::Spec->catfile($FindBin::Bin, '..', 'isf', 'apb_requester.isf');
+    my $actor    = FSM::Adapter::ISF->new()->parse_file($isf_file);
+    my $report   = JSON::PP->new->decode(FSM::Scheduler::ISF->new()->report($actor));
+    my $families = isf_public_interface_schedule_report_presence_key_family_map();
+
+    is_deeply(
+        sorted([keys %{$report}]),
+        sorted(isf_public_interface_schedule_report_top_level_keys()),
+        'schedule report exposes exactly the advertised top-level keys',
+    );
+    is_deeply(
+        sorted([keys %{$report->{reset}}]),
+        sorted($families->{schedule_report_reset_keys}),
+        'reset summary exposes exactly the advertised keys',
+    );
+
+    for my $entry (@{$report->{inferred_storage}}) {
+        assert_required_and_optional_keys(
+            $entry,
+            $families->{schedule_report_storage_required_keys},
+            $families->{schedule_report_storage_optional_keys},
+            "storage entry $entry->{name}",
+        );
+    }
+
+    for my $entry (@{$report->{transactions}}) {
+        is_deeply(
+            sorted([keys %{$entry}]),
+            sorted($families->{schedule_report_transaction_keys}),
+            "transaction entry $entry->{name} exposes exactly the advertised keys",
+        );
+    }
+
+    for my $entry (@{$report->{dt_blocks}}) {
+        is_deeply(
+            sorted([keys %{$entry}]),
+            sorted($families->{schedule_report_dt_keys}),
+            "DT entry $entry->{name} exposes exactly the advertised keys",
+        );
+    }
+
+    is(ref($report->{compile_issues}), 'ARRAY', 'compile_issues is an array in the advertised report shell');
+};
+
+done_testing();
+
+sub assert_required_and_optional_keys {
+    my ($entry, $required, $optional, $label) = @_;
+    my %allowed = map { $_ => 1 } (@{$required || []}, @{$optional || []});
+
+    for my $key (@{$required || []}) {
+        ok(exists $entry->{$key}, "$label keeps required key $key");
+    }
+
+    for my $key (sort keys %{$entry}) {
+        ok($allowed{$key}, "$label key $key is advertised");
+    }
+}
+
+sub sorted {
+    my ($values) = @_;
+    return [sort @{$values || []}];
+}

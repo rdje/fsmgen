@@ -78,8 +78,9 @@ advertised contract object is JSON-round-trip audited so downstream tooling can
 consume the manifest metadata as portable discovery data, and defensive-copy
 audited so caller mutation does not pollute later contract builds. Both
 capability-manifest CLI spellings are audited to emit the same ISF contract
-payload. Transaction summaries include the generated state families used by the
-current scheduler, including control-flow and data-operation states.
+payload. The current APB schedule report is also checked against the advertised
+public key families. Transaction summaries include the generated state families
+used by the current scheduler, including control-flow and data-operation states.
 
 ## Current Limitations
 

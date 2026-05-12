@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — ISF schedule report key-family audit
+- Active: `R14`. `t/1116` proves the APB schedule report conforms to the
+  key families advertised by `embedding.isf_public_interface`.
+
 ## 2026-05-12: R14 — ISF public contract CLI manifest audit
 - Active: `R14`. `t/1115` proves both capability-manifest CLI spellings
   advertise the same `embedding.isf_public_interface` contract payload.

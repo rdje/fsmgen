@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF schedule report key-family audit
+- The initial ISF public-interface contract advertised schedule-report key
+  families. `t/1116-isf-public-schedule-report-key-family-audit.t` ties those
+  families back to a real APB report, so the contract is not just static
+  metadata.
+- Storage entries intentionally use required plus optional key checks because
+  `width` is only present when the current report can infer and publish it.
+  Top-level, reset, transaction, and DT summary keys are exact for the current
+  bounded public shape.
 ## 2026-05-12: R14 ISF public contract CLI manifest audit
 - Downstream consumers discover the ISF public-interface contract through the
   capability manifest, not only through direct Perl module calls. The CLI

@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF schedule report key-family audit
+- Added `t/1116-isf-public-schedule-report-key-family-audit.t` to compare the
+  real APB schedule report against the key families advertised by
+  `FSM::Support::ISFPublicInterfaceContract`.
+- The audit locks exact top-level, reset, transaction, and DT summary keys, and
+  required/optional `inferred_storage` keys.
 ## 2026-05-12: R14 — ISF public contract CLI manifest audit
 - Added `t/1115-isf-public-interface-cli-manifest-audit.t` to prove both
   `--capability-manifest` and `--emit-capability-manifest` advertise

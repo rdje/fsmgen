@@ -26,6 +26,8 @@ so callers can mutate a received copy without polluting later contract builds.
 Both capability-manifest CLI spellings are audited by
 [t/1115-isf-public-interface-cli-manifest-audit.t](../t/1115-isf-public-interface-cli-manifest-audit.t)
 to keep the in-process contract and CLI-advertised contract aligned.
+The current APB schedule report is checked against the advertised key families
+by [t/1116-isf-public-schedule-report-key-family-audit.t](../t/1116-isf-public-schedule-report-key-family-audit.t).
 
 ## Stabilized Surface
 

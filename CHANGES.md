@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF schedule report key-family audit
+- Added [t/1116-isf-public-schedule-report-key-family-audit.t](t/1116-isf-public-schedule-report-key-family-audit.t)
+  to compare the real APB schedule report against the public key families
+  advertised by `FSM::Support::ISFPublicInterfaceContract`.
+- Updated the ISF public-interface contract `tested_by` list and live docs to
+  record runtime schedule-report key-family conformance.
 ### R14 — ISF public contract CLI manifest audit
 - Added [t/1115-isf-public-interface-cli-manifest-audit.t](t/1115-isf-public-interface-cli-manifest-audit.t)
   to prove both capability-manifest CLI spellings advertise the same
