@@ -10,6 +10,7 @@ our @EXPORT_OK = qw(
     build_isf_public_interface_contract
     isf_public_interface_actor_shell_interface_shape
     isf_public_interface_actor_shell_required_keys
+    isf_public_interface_actor_shell_transaction_shape
     isf_public_interface_actor_shell_value_shape
     isf_public_interface_cli_hdl_generation_success_shape
     isf_public_interface_cli_option_names
@@ -116,6 +117,7 @@ sub build_isf_public_interface_contract {
         actor_shell_required_keys => isf_public_interface_actor_shell_required_keys(),
         actor_shell_value_shape => isf_public_interface_actor_shell_value_shape(),
         actor_shell_interface_shape => isf_public_interface_actor_shell_interface_shape(),
+        actor_shell_transaction_shape => isf_public_interface_actor_shell_transaction_shape(),
         lower_result_presence_keys => isf_public_interface_lower_result_presence_keys(),
         lower_result_file_map_shape => 'hash reference mapping scheduled .fsm basename to scheduled .fsm source text',
         lower_result_file_name_shape => isf_public_interface_lower_result_file_name_shape(),
@@ -208,6 +210,7 @@ sub build_isf_public_interface_contract {
             't/1160-isf-public-actor-shell-value-shape-audit.t',
             't/1161-isf-public-facade-failure-diagnostic-metadata-audit.t',
             't/1162-isf-public-actor-shell-interface-shape-audit.t',
+            't/1163-isf-public-actor-shell-transaction-shape-audit.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -253,6 +256,7 @@ sub isf_public_interface_public_top_level_keys {
             actor_shell_required_keys
             actor_shell_value_shape
             actor_shell_interface_shape
+            actor_shell_transaction_shape
             lower_result_presence_keys
             lower_result_file_map_shape
             lower_result_file_name_shape
@@ -368,6 +372,10 @@ sub isf_public_interface_actor_shell_value_shape {
 
 sub isf_public_interface_actor_shell_interface_shape {
     return 'interface has inputs and outputs arrays; each public port entry has scalar name and positive integer width, defaulting omitted source widths to 1';
+}
+
+sub isf_public_interface_actor_shell_transaction_shape {
+    return 'transactions is an array of public transaction shell entries; each entry has scalar name and clauses array, while clause payload contents remain private scheduler input';
 }
 
 sub isf_public_interface_facade_failure_diagnostic_shape {

@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF actor-shell transaction-shape metadata audit
+- The parser/scheduler handoff already exposes `transactions` as part of the
+  public actor shell. The contract now documents the bounded transaction-entry
+  shell downstream consumers can inspect: scalar `name` and `clauses` array.
+- Clause payloads remain private scheduler input. This slice deliberately
+  stabilizes the shell around transaction entries without freezing every
+  current clause form or lowering detail while ISF is still evolving.
+- `t/1163-isf-public-actor-shell-transaction-shape-audit.t` locks the metadata
+  across direct and manifest views, checks APB `parse_file(...)` plus
+  `parse_source(...)` actors, and covers rejection of nested transaction names.
 ## 2026-05-13: R14 ISF actor-shell interface-shape metadata audit
 - The parser/scheduler actor shell already exposed `interface` as public handoff
   state, but downstream consumers still had to infer its useful subshape from

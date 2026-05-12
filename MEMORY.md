@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF actor-shell transaction-shape metadata audit
+- Added `actor_shell_transaction_shape` to `embedding.isf_public_interface`,
+  documenting parser-returned transaction entries as scalar `name` plus
+  `clauses` array shells while keeping clause payload contents private
+  scheduler input.
+- Tightened ISF transaction parsing so nested or otherwise non-scalar
+  transaction names are rejected before a parser facade returns an actor shell.
+- Added `t/1163-isf-public-actor-shell-transaction-shape-audit.t` to prove the
+  metadata is exact across direct and manifest views and aligned with
+  `parse_file(...)` plus `parse_source(...)` APB actors.
 ## 2026-05-13: R14 — ISF actor-shell interface-shape metadata audit
 - Added `actor_shell_interface_shape` to `embedding.isf_public_interface`,
   documenting the current parser handoff `interface` subshape as `inputs` and

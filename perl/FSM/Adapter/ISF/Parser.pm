@@ -219,6 +219,8 @@ sub _parse_handshake($self, $clause, $handshakes) {
 sub _parse_transaction($self, $clause) {
     confess "Error: (transaction ...) requires a name\n" unless @$clause >= 2;
     my $name = $clause->[1];
+    confess "Error: (transaction ...) requires a scalar name\n"
+        unless defined($name) && !ref($name);
     my @clauses;
 
     for my $i (2 .. $#$clause) {

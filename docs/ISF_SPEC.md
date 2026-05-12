@@ -94,8 +94,10 @@ It also publishes the shell value shapes: scalar `actor_name`, array
 The current bounded parser handoff also advertises the `interface` subshape:
 `inputs` and `outputs` are arrays, and each public port entry has scalar `name`
 plus positive integer `width`, with omitted source widths normalized to `1`.
-That shape is live-contract metadata for scheduler-consumable actors, not a
-freeze of the full raw actor hash.
+It also advertises the transaction-entry shell: `transactions` is an array of
+entries with scalar `name` and `clauses` array fields. Those shapes are
+live-contract metadata for scheduler-consumable actors, not a freeze of the
+full raw actor hash or the private transaction clause payloads.
 The same contract publishes the public return containers: parser facades return
 scheduler-consumable actor hash references, `lower(...)` returns a hash
 reference with the advertised lower-result keys, and `report(...)` returns the
@@ -235,6 +237,12 @@ Current lowering:
 (transaction name
   clause...)
 ```
+
+Accepted parser output exposes transactions as an array of shell entries with
+scalar `name` and `clauses` array fields. Nested or otherwise non-scalar
+transaction names are rejected before the parser returns an actor shell. Clause
+payload contents remain scheduler input and are not frozen as a public API by
+the actor-shell transaction-shape metadata.
 
 Current transaction clauses:
 - `(on port body...)`
@@ -597,6 +605,7 @@ Focused tests:
 - [t/1160-isf-public-actor-shell-value-shape-audit.t](../t/1160-isf-public-actor-shell-value-shape-audit.t)
 - [t/1161-isf-public-facade-failure-diagnostic-metadata-audit.t](../t/1161-isf-public-facade-failure-diagnostic-metadata-audit.t)
 - [t/1162-isf-public-actor-shell-interface-shape-audit.t](../t/1162-isf-public-actor-shell-interface-shape-audit.t)
+- [t/1163-isf-public-actor-shell-transaction-shape-audit.t](../t/1163-isf-public-actor-shell-transaction-shape-audit.t)
 
 ## 12. Explicitly Deferred
 

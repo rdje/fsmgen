@@ -84,7 +84,10 @@ advertises the required `actor_name`, `transactions`, and `interface` shell keys
 plus their public value shapes without freezing the full raw actor hash. The
 current parser handoff also advertises a bounded `interface` subshape:
 `inputs` and `outputs` arrays whose port entries expose scalar `name` and
-positive integer `width`, with omitted source widths normalized to `1`. The
+positive integer `width`, with omitted source widths normalized to `1`. It also
+advertises a bounded transaction-entry shell: `transactions` entries expose
+scalar `name` and a `clauses` array while the clause payload contents remain
+private scheduler input. The
 facade-shape metadata for those
 receiver, argument, path, and actor-shell boundaries is audited as exact across
 direct and manifest views, including bounded scalar diagnostics for public

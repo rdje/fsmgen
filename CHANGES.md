@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF actor-shell transaction-shape metadata audit
+- Added `actor_shell_transaction_shape` to `embedding.isf_public_interface` for
+  the current parser-returned transaction-entry shell: scalar `name` plus
+  `clauses` array.
+- Tightened ISF transaction parsing so nested or otherwise non-scalar names
+  fail before a parser facade returns a malformed actor shell.
+- Added [t/1163-isf-public-actor-shell-transaction-shape-audit.t](t/1163-isf-public-actor-shell-transaction-shape-audit.t)
+  to prove the metadata is exact across direct and manifest views and aligned
+  with `parse_file(...)` plus `parse_source(...)` APB actors.
 ### R14 — ISF actor-shell interface-shape metadata audit
 - Added `actor_shell_interface_shape` to `embedding.isf_public_interface` for
   the current parser-returned `interface` inputs/outputs arrays and public

@@ -184,6 +184,11 @@ The actor-shell interface subshape is checked by
 to keep the parser-returned `interface` inputs/outputs arrays and public port
 entry `name`/`width` shape exact across direct and manifest views without
 freezing the rest of the raw actor hash.
+The actor-shell transaction subshape is checked by
+[t/1163-isf-public-actor-shell-transaction-shape-audit.t](../t/1163-isf-public-actor-shell-transaction-shape-audit.t)
+to keep parser-returned transaction entries discoverable as scalar `name` plus
+`clauses` array shells while leaving the clause payload contents private
+scheduler input.
 The facade shape metadata that advertises those constructor, method, path, and
 actor-shell boundaries is checked by
 [t/1143-isf-public-facade-shape-metadata-audit.t](../t/1143-isf-public-facade-shape-metadata-audit.t)
@@ -274,6 +279,12 @@ widths normalized to `1`. The machine-readable contract advertises this through
 This is current live-contract metadata for scheduler-consumable parser output;
 it does not make actor fields outside the advertised shell public or freeze
 future ISF interface extensions before they are documented and audited.
+The current public parser handoff also advertises a bounded transaction-entry
+shell: `transactions` is an array of entries with scalar `name` and `clauses`
+array fields. The machine-readable contract advertises this through
+`actor_shell_transaction_shape`. The `clauses` array is a scheduler-consumable
+container; its payload contents are intentionally not frozen as a public API by
+this field.
 The parser/scheduler argument-shape fields and actor-shell key list are exact
 facade-shape discovery metadata.
 Public facade boundary failures produce bounded scalar diagnostics before

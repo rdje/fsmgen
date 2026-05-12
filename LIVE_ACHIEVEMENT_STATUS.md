@@ -2,6 +2,11 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF actor-shell transaction-shape metadata audit
+- Active: `R14`. `t/1163` proves public actor-shell transaction-entry metadata
+  is exact and aligned with parser facade APB actors, while non-scalar
+  transaction names are rejected before returning an actor shell.
+
 ## 2026-05-13: R14 — ISF actor-shell interface-shape metadata audit
 - Active: `R14`. `t/1162` proves public actor-shell `interface` subshape
   metadata is exact and aligned with parser facade APB actors, while malformed
