@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF actor shell contract audit
+- Extended [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm)
+  with `actor_shell_required_keys`, making the public parser/scheduler handoff
+  shell discoverable without freezing the full raw actor hash.
+- Added [t/1129-isf-public-actor-shell-contract-audit.t](t/1129-isf-public-actor-shell-contract-audit.t)
+  to lock `parse_file(...)` and `parse_source(...)` APB actors against the
+  advertised shell and public scheduler acceptance.
 ### R14 — ISF multi-file schedule report audit
 - Extended [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm)
   with `schedule_report_multi_file_scope`, documenting that current multi-file

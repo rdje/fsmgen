@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — ISF actor shell contract audit
+- Active: `R14`. `t/1129` proves both public parser facades return actors with
+  the manifest-advertised scheduler-consumable shell keys.
+
 ## 2026-05-12: R14 — ISF multi-file schedule report audit
 - Active: `R14`. `t/1128` proves multi-file schedule reports are currently
   parent-scoped and that the manifest advertises this scope.

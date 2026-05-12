@@ -2,11 +2,9 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
-- Next decision point: `docs/ISF_SPEC.md` and the R14 mdBook chapters now
-  describe the shipped post-handshake/post-assign-keyword parser and scheduler
-  surface, including unenforced resources/priorities and data-operation
-  placeholders. `t/1096` now locks the corrected APB schedule JSON report
-  shape after sample piggybacking.
+- Next decision point: continue R14 ISF public-interface stabilization by
+  turning the next downstream-visible parser, scheduler, CLI, lower-result, or
+  schedule-report behavior into an explicit contract field plus focused audit.
 - `t/1097` now removes the anonymous `_start` placeholder from `do`, `spawn`,
   and control-flow drive-call lowering by asserting concrete child, instance,
   and drive start signals. Next bounded R14 slice: turn another documented
@@ -85,6 +83,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   scheduler actor-shell argument boundary with bounded diagnostics.
 - `t/1128` now proves current multi-file schedule reports are parent-scoped and
   advertises that scope through `embedding.isf_public_interface`.
+- `t/1129` now proves the public parser facades return actors with the
+  advertised scheduler-consumable shell keys while leaving the full raw actor
+  hash private.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.

@@ -8,6 +8,7 @@ use JSON::PP ();
 
 our @EXPORT_OK = qw(
     build_isf_public_interface_contract
+    isf_public_interface_actor_shell_required_keys
     isf_public_interface_cli_option_names
     isf_public_interface_contract_source
     isf_public_interface_constructor_option_names
@@ -68,6 +69,7 @@ sub build_isf_public_interface_contract {
         parse_source_argument_shape => 'exactly two scalar arguments after object invocant: source text and source label',
         lower_argument_shape => 'scheduler-consumable actor value returned by FSM::Adapter::ISF',
         report_argument_shape => 'scheduler-consumable actor value returned by FSM::Adapter::ISF',
+        actor_shell_required_keys => isf_public_interface_actor_shell_required_keys(),
         lower_result_presence_keys => isf_public_interface_lower_result_presence_keys(),
         lower_result_file_map_shape => 'hash reference mapping scheduled .fsm basename to scheduled .fsm source text',
         scheduled_fsm_dt_ordering => isf_public_interface_dt_ordering_policy(),
@@ -106,6 +108,7 @@ sub build_isf_public_interface_contract {
             't/1126-isf-public-parser-method-boundary-audit.t',
             't/1127-isf-public-scheduler-method-boundary-audit.t',
             't/1128-isf-public-multifile-schedule-report-audit.t',
+            't/1129-isf-public-actor-shell-contract-audit.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -135,6 +138,7 @@ sub isf_public_interface_public_top_level_keys {
             parse_source_argument_shape
             lower_argument_shape
             report_argument_shape
+            actor_shell_required_keys
             lower_result_presence_keys
             lower_result_file_map_shape
             scheduled_fsm_dt_ordering
@@ -194,6 +198,16 @@ sub isf_public_interface_cli_option_names {
             --emit-schedule-json
             --outdir
             --strict
+        ),
+    ];
+}
+
+sub isf_public_interface_actor_shell_required_keys {
+    return [
+        qw(
+            actor_name
+            transactions
+            interface
         ),
     ];
 }

@@ -76,12 +76,14 @@ adapter and scheduler constructors reject malformed option lists and unsupported
 option names, and currently accept only `debug`. The parser facade validates
 `parse_file(...)` and `parse_source(...)` argument counts and defined-scalar
 shape before private parsing begins. The scheduler facade validates the public
-actor shell before calling private LoweringIR. Assigned scheduler counters in
-the `*_wd`, `*_cc`, and `*_cnt` naming families are reported as `counter`
-storage with the width inferred by the lowering IR. The advertised contract
-object is JSON-round-trip audited so downstream tooling can consume the manifest
-metadata as portable discovery data, and defensive-copy audited so caller
-mutation does not pollute later contract builds. Both
+actor shell before calling private LoweringIR, and the manifest advertises the
+required `actor_name`, `transactions`, and `interface` shell keys without
+freezing the full raw actor hash. Assigned scheduler counters in the `*_wd`,
+`*_cc`, and `*_cnt` naming families are reported as `counter` storage with the
+width inferred by the lowering IR. The advertised contract object is
+JSON-round-trip audited so downstream tooling can consume the manifest metadata
+as portable discovery data, and defensive-copy audited so caller mutation does
+not pollute later contract builds. Both
 capability-manifest CLI spellings are audited to emit the same ISF contract
 payload. The current APB schedule report is also checked against the advertised
 public key families, and the lower-result `files` map is checked for both

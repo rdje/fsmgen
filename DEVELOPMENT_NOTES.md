@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF actor shell contract audit
+- The parser facades return richer actor hashes than downstream consumers
+  should treat as public. The scheduler boundary, however, already relies on a
+  small handoff shell: scalar `actor_name`, array `transactions`, and hash
+  `interface`.
+- `actor_shell_required_keys` makes that shell discoverable through
+  `embedding.isf_public_interface` while keeping `raw_actor_full_hash_stable`
+  false. `t/1129-isf-public-actor-shell-contract-audit.t` checks both parser
+  facades and the public scheduler handoff without snapshotting private actor
+  internals.
 ## 2026-05-12: R14 ISF multi-file schedule report audit
 - Multi-file lowering already exposes every scheduled artifact through
   `lower(...)->{files}`. The schedule report, however, is still generated from

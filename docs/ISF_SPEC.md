@@ -63,6 +63,9 @@ requires defined scalar source text and source label values.
 The public scheduler facade methods validate the actor shell before lowering:
 `lower(...)` and `report(...)` require one actor hash with scalar `actor_name`,
 array `transactions`, and hash `interface` fields.
+The machine-readable contract publishes that required handoff shell as
+`actor_shell_required_keys`; other raw actor fields are still private parser
+output.
 For multi-file lowering, the current schedule report is parent-scoped. Child
 scheduled `.fsm` text is exposed through the lower-result `files` map rather
 than folded into the report.
@@ -470,6 +473,7 @@ Focused tests:
 - [t/1126-isf-public-parser-method-boundary-audit.t](../t/1126-isf-public-parser-method-boundary-audit.t)
 - [t/1127-isf-public-scheduler-method-boundary-audit.t](../t/1127-isf-public-scheduler-method-boundary-audit.t)
 - [t/1128-isf-public-multifile-schedule-report-audit.t](../t/1128-isf-public-multifile-schedule-report-audit.t)
+- [t/1129-isf-public-actor-shell-contract-audit.t](../t/1129-isf-public-actor-shell-contract-audit.t)
 
 ## 12. Explicitly Deferred
 

@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF actor shell contract audit
+- `embedding.isf_public_interface` now advertises
+  `actor_shell_required_keys` for the scheduler-consumable parser/scheduler
+  handoff: `actor_name`, `transactions`, and `interface`.
+- Added `t/1129-isf-public-actor-shell-contract-audit.t` to prove both
+  `parse_file(...)` and `parse_source(...)` return actors with that shell and
+  still lower/report through the public scheduler facade.
 ## 2026-05-12: R14 — ISF multi-file schedule report audit
 - `embedding.isf_public_interface` now advertises
   `schedule_report_multi_file_scope`: the current schedule report describes the

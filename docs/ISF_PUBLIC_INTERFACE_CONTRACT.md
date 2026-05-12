@@ -63,6 +63,9 @@ The public parser facade method boundary is checked by
 [t/1126-isf-public-parser-method-boundary-audit.t](../t/1126-isf-public-parser-method-boundary-audit.t).
 The public scheduler facade method boundary is checked by
 [t/1127-isf-public-scheduler-method-boundary-audit.t](../t/1127-isf-public-scheduler-method-boundary-audit.t).
+The scheduler-consumable actor shell returned by the public parser facades is
+checked by
+[t/1129-isf-public-actor-shell-contract-audit.t](../t/1129-isf-public-actor-shell-contract-audit.t).
 
 ## Stabilized Surface
 
@@ -96,6 +99,9 @@ and source label.
 `lower(...)` and `report(...)` require exactly one scheduler-consumable actor
 hash reference from the ISF adapter. The current public actor shell requires
 scalar `actor_name`, array `transactions`, and hash `interface` fields.
+The machine-readable contract advertises those required shell fields through
+`actor_shell_required_keys`. That promise is intentionally a shell contract:
+the full raw actor hash remains non-public.
 
 The advertised ISF-specific CLI option family is `--emit-schedule-json`,
 `--outdir`, and `--strict`.
@@ -174,6 +180,7 @@ generated state name, or private lowering decision is permanent.
 These are not stable public interfaces yet:
 
 - The raw actor hash returned by the parser as a whole.
+- Actor fields beyond the advertised `actor_shell_required_keys`.
 - `FSM::Scheduler::ISF::LoweringIR` internals.
 - Emitter-private state objects.
 - Any unadvertised keys in the lower-result hash or schedule report.
