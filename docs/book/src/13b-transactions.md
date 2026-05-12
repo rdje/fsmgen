@@ -19,6 +19,10 @@ no merging — what you write is what you get.
 
 ## `(on port ...)` — Entry/Idle State
 
+`(on ...)` is the standard activation form. `(when ...)` can also be used
+as activation with identical semantics — useful for expression conditions:
+`(when (> counter 5) ...)`.
+
 **Timing**: 0 active cycles (waits). Fires in 1 cycle when condition is met.
 
 **Cycle-by-cycle**:
@@ -106,6 +110,11 @@ The port value changes in the NEXT cycle (flopped).
 **No implicit signals**. The variable `name` is tracked internally.
 
 ## `(await port)` — Conditional Stall
+
+```lisp
+(await PREADY)                        ;; default watchdog from actor
+(await PREADY (watchdog 100))         ;; per-await override
+```
 
 **Timing**: 1 to watchdog_limit cycles. Self-looping.
 
