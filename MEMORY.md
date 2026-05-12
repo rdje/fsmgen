@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF parse_file path boundary audit
+- `FSM::Adapter::ISF->parse_file(...)` now rejects missing paths, directories,
+  and readable wrong-extension files before private `File::Slurp` IO or Lispish
+  parsing is reached.
+- `embedding.isf_public_interface` now advertises
+  `parse_file_path_requirement`, and
+  `t/1134-isf-public-parse-file-path-boundary-audit.t` locks valid readable
+  `.isf` files plus bounded rejection diagnostics.
 ## 2026-05-12: R14 — ISF constructor receiver boundary audit
 - `FSM::Adapter::ISF->new(...)` and `FSM::Scheduler::ISF->new(...)` now reject
   undefined, object, unblessed-hash, and wrong-class invocants before option

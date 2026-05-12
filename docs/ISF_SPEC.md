@@ -63,8 +63,9 @@ unsupported option names are rejected before object creation.
 The public parser and scheduler facade methods require object receivers returned
 by their corresponding `new(...)` constructors before private internals are
 used. The public parser facade methods also validate their argument shape:
-`parse_file(...)` requires one defined scalar path, and `parse_source(...)`
-requires defined scalar source text and source label values.
+`parse_file(...)` requires one defined scalar path naming a readable `.isf`
+file, and `parse_source(...)` requires defined scalar source text and source
+label values.
 The public scheduler facade methods validate the actor shell before lowering:
 `lower(...)` and `report(...)` require one actor hash with scalar `actor_name`,
 array `transactions`, and hash `interface` fields.
@@ -486,6 +487,7 @@ Focused tests:
 - [t/1131-isf-public-top-level-discovery-audit.t](../t/1131-isf-public-top-level-discovery-audit.t)
 - [t/1132-isf-public-method-receiver-boundary-audit.t](../t/1132-isf-public-method-receiver-boundary-audit.t)
 - [t/1133-isf-public-constructor-receiver-boundary-audit.t](../t/1133-isf-public-constructor-receiver-boundary-audit.t)
+- [t/1134-isf-public-parse-file-path-boundary-audit.t](../t/1134-isf-public-parse-file-path-boundary-audit.t)
 
 ## 12. Explicitly Deferred
 

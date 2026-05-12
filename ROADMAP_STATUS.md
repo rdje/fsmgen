@@ -96,6 +96,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - `t/1133` now proves ISF adapter/scheduler constructors reject malformed
   invocants before option validation and advertises the constructor receiver
   shape.
+- `t/1134` now proves `parse_file(...)` rejects missing, directory, and
+  wrong-extension paths at the public facade and advertises the readable `.isf`
+  file requirement.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.

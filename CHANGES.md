@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF parse_file path boundary audit
+- Updated [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm) so public
+  `parse_file(...)` rejects paths that do not name readable `.isf` files before
+  private parser IO.
+- Extended [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm)
+  with `parse_file_path_requirement`, and added
+  [t/1134-isf-public-parse-file-path-boundary-audit.t](t/1134-isf-public-parse-file-path-boundary-audit.t).
 ### R14 — ISF constructor receiver boundary audit
 - Updated [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm) and
   [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm) so public

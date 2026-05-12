@@ -57,6 +57,7 @@ sub _validate_constructor_args($class, @args) {
 sub parse_file($self, @args) {
     _validate_object_receiver($self, 'parse_file');
     my ($isf_path) = _validate_scalar_args('parse_file', 1, @args);
+    _validate_parse_file_path($isf_path);
     fsm_trace_enter("ISF parse_file: $isf_path", 2);
     fsm_debug("Parsing .isf file: $isf_path", 3);
     my $result = $self->{parser}->parse_file($isf_path);
@@ -89,6 +90,11 @@ sub _validate_scalar_args($method, $expected, @args) {
     }
 
     return @args;
+}
+
+sub _validate_parse_file_path($isf_path) {
+    confess "FSM::Adapter::ISF->parse_file argument 1 must name a readable .isf file\n"
+        unless $isf_path =~ /\.isf\z/i && -f $isf_path && -r $isf_path;
 }
 
 1;

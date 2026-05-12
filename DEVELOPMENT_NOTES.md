@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF parse_file path boundary audit
+- `parse_file(...)` is a public parser facade, so malformed filesystem inputs
+  should fail at that facade with a bounded contract diagnostic instead of
+  inheriting `File::Slurp` or parser internals.
+- `FSM::Adapter::ISF` now validates that the scalar path has a `.isf` suffix
+  and names a readable regular file before private parsing. The contract
+  advertises this as `parse_file_path_requirement`, and
+  `t/1134-isf-public-parse-file-path-boundary-audit.t` locks missing-file,
+  directory, wrong-extension, and valid-file cases.
 ## 2026-05-12: R14 ISF constructor receiver boundary audit
 - Constructor option validation is only meaningful after the invocant itself is
   known. The public ISF constructors do not promise subclass construction or

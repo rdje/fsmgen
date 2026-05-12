@@ -69,6 +69,8 @@ The public constructor receiver boundary is checked by
 [t/1133-isf-public-constructor-receiver-boundary-audit.t](../t/1133-isf-public-constructor-receiver-boundary-audit.t).
 The public parser facade method boundary is checked by
 [t/1126-isf-public-parser-method-boundary-audit.t](../t/1126-isf-public-parser-method-boundary-audit.t).
+The public `parse_file(...)` path boundary is checked by
+[t/1134-isf-public-parse-file-path-boundary-audit.t](../t/1134-isf-public-parse-file-path-boundary-audit.t).
 The public scheduler facade method boundary is checked by
 [t/1127-isf-public-scheduler-method-boundary-audit.t](../t/1127-isf-public-scheduler-method-boundary-audit.t).
 The parser and scheduler method receiver boundary is checked by
@@ -115,7 +117,10 @@ returned by `FSM::Scheduler::ISF->new(...)`. The machine-readable contract
 advertises those receiver boundaries through `parser_method_receiver_shape` and
 `scheduler_method_receiver_shape`.
 
-`parse_file(...)` requires exactly one defined scalar path argument.
+`parse_file(...)` requires exactly one defined scalar path argument, and that
+path must have a `.isf` suffix and name a readable regular file before private
+parsing begins. The machine-readable contract advertises this through
+`parse_file_path_requirement`.
 `parse_source(...)` requires exactly two defined scalar arguments: source text
 and source label.
 `lower(...)` and `report(...)` require exactly one scheduler-consumable actor

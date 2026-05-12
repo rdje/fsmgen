@@ -77,13 +77,13 @@ option names, require exact class invocants, and currently accept only `debug`.
 The parser facade validates method receivers before private internals are used,
 then validates
 `parse_file(...)` and `parse_source(...)` argument counts and defined-scalar
-shape before private parsing begins. The scheduler facade validates method
-receivers and the public actor shell before calling private LoweringIR, and the
-manifest advertises the required `actor_name`, `transactions`, and `interface`
-shell keys without freezing the full raw actor hash. Assigned scheduler
-counters in the `*_wd`, `*_cc`, and `*_cnt` naming families are reported as
-`counter` storage with the width inferred by the lowering IR. The advertised
-contract object is
+shape before private parsing begins; `parse_file(...)` also requires a readable
+`.isf` file path. The scheduler facade validates method receivers and the
+public actor shell before calling private LoweringIR, and the manifest
+advertises the required `actor_name`, `transactions`, and `interface` shell keys
+without freezing the full raw actor hash. Assigned scheduler counters in the
+`*_wd`, `*_cc`, and `*_cnt` naming families are reported as `counter` storage
+with the width inferred by the lowering IR. The advertised contract object is
 JSON-round-trip audited so downstream tooling can consume the manifest metadata
 as portable discovery data, and defensive-copy audited so caller mutation does
 not pollute later contract builds. Its top-level discovery list is audited as
