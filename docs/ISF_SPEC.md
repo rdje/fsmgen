@@ -293,6 +293,8 @@ Current lowering:
 Current lowering:
 - The parent emits an await-shaped state guarded by `child_transaction_done`.
 - The child idle state is rewired to wait on `child_transaction_start`.
+- The rewired child idle state enters the first non-entry child state, so the
+  child body does not need to begin with a drive state.
 - The child's terminal state assigns `child_transaction_done`.
 - The parent `do` state asserts `child_transaction_start` directly.
 
@@ -405,6 +407,7 @@ Focused tests:
 - [t/1107-isf-when-body-ops.t](../t/1107-isf-when-body-ops.t)
 - [t/1108-isf-schedule-json-transaction-states.t](../t/1108-isf-schedule-json-transaction-states.t)
 - [t/1109-isf-await-all-sync.t](../t/1109-isf-await-all-sync.t)
+- [t/1110-isf-do-child-entry-rewire.t](../t/1110-isf-do-child-entry-rewire.t)
 
 ## 12. Explicitly Deferred
 

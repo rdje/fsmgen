@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — `do` child entry rewire
+- Active: `R14`. `t/1110` proves blocking `do` children enter the first
+  non-entry child state, including data-op-first children.
+
 ## 2026-05-12: R14 — readable `await_all` guard emission
 - Active: `R14`. `t/1109` now also proves nested `await_all` guard closings
   are emitted one per generated `.fsm` line.

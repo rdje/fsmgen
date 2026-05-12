@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — `do` child entry rewire
+- Updated [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so blocking `do` rewires the child idle state to the first non-entry child
+  state instead of assuming every child starts with a drive state.
+- Added [t/1110-isf-do-child-entry-rewire.t](t/1110-isf-do-child-entry-rewire.t)
+  for a child transaction whose first body state is `update`.
 ### R14 — readable `await_all` guard emission
 - Updated [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm)
   so nested `await_all` guard closings are emitted one per generated `.fsm`

@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — `do` child entry rewire
+- `_wire_do_children` now redirects a blocking child idle state to the first
+  non-entry child state, not only to `child_drive_*` states.
+- Blocking `do` now works when the child transaction begins with a data
+  operation such as `update`.
+- Added `t/1110-isf-do-child-entry-rewire.t`.
 ## 2026-05-12: R14 — readable `await_all` guard emission
 - `Emitter::FSM` now emits each nested `await_all` guard close on its own line
   instead of concatenating all closing parens into one generated `.fsm` line.

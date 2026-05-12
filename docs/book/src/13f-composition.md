@@ -20,6 +20,9 @@ the parent transaction.
 2. Child's idle state is rewired to watch `child_start`
 3. Child's terminal state assigns `child_done`
 
+The rewired child idle state enters the first non-entry child state; the child
+body may start with a drive, await, data operation, or other scheduled state.
+
 ```lisp
 (parent_do_1
   (= (read_phase_start 1))

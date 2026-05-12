@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 `do` child entry rewire
+- Blocking `do` reuses the child transaction states inside the parent module
+  and rewires the child's idle guard from the public activation port to
+  `{child}_start`.
+- The old rewire helper searched only for `child_drive_*`, which made
+  drive-first children work but left data-op-first or await-first children with
+  an empty idle transition list. The helper now chooses the first non-entry,
+  non-timeout state in the child prefix.
+- `t/1110-isf-do-child-entry-rewire.t` locks a data-op-first child.
 ## 2026-05-12: R14 readable `await_all` guard emission
 - `await_all` lowering emits nested guard forms because all collected done
   signals must be true along one decision path. The old emitter appended all
