@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF public contract defensive copy
+- Added `t/1114-isf-public-interface-contract-defensive-copy-audit.t` to prove
+  fresh `FSM::Support::ISFPublicInterfaceContract` builds are not polluted by
+  prior caller mutation.
+- The live ISF contract docs and `tested_by` list now advertise that
+  `embedding.isf_public_interface` can be treated as caller-owned metadata.
 ## 2026-05-12: R14 — ISF public contract JSON roundtrip
 - Added `t/1113-isf-public-interface-contract-json-roundtrip-audit.t` to prove
   the full `FSM::Support::ISFPublicInterfaceContract` payload survives JSON

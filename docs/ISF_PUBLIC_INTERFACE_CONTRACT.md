@@ -20,6 +20,9 @@ and is advertised through:
 The advertised contract object is full-surface JSON-round-trip audited by
 [t/1113-isf-public-interface-contract-json-roundtrip-audit.t](../t/1113-isf-public-interface-contract-json-roundtrip-audit.t).
 Downstream tools can treat that contract metadata as JSON-safe discovery data.
+It is also defensive-copy audited by
+[t/1114-isf-public-interface-contract-defensive-copy-audit.t](../t/1114-isf-public-interface-contract-defensive-copy-audit.t),
+so callers can mutate a received copy without polluting later contract builds.
 
 ## Stabilized Surface
 

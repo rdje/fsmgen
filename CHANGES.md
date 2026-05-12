@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF public contract defensive copy
+- Added [t/1114-isf-public-interface-contract-defensive-copy-audit.t](t/1114-isf-public-interface-contract-defensive-copy-audit.t)
+  to prove fresh ISF public-interface contract builds stay clean after caller
+  mutation.
+- Updated the ISF public-interface contract `tested_by` list and live docs to
+  advertise caller-owned contract metadata.
 ### R14 — ISF public contract JSON roundtrip
 - Added [t/1113-isf-public-interface-contract-json-roundtrip-audit.t](t/1113-isf-public-interface-contract-json-roundtrip-audit.t)
   to prove the full ISF public-interface contract survives JSON encode/decode

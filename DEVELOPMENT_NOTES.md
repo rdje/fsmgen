@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF public contract defensive copy
+- The capability manifest returns contract metadata to external consumers. That
+  metadata must behave as caller-owned data, not as a mutable singleton or
+  cached structure whose later builds can be contaminated.
+- `t/1114-isf-public-interface-contract-defensive-copy-audit.t` recursively
+  mutates one built ISF public-interface contract and then requires a fresh
+  owner build to match a clean expected build.
 ## 2026-05-12: R14 ISF public contract JSON roundtrip
 - The first ISF public-interface contract is intended for downstream discovery
   through the capability manifest, so the entire contract payload must be safe
