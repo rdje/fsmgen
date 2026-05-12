@@ -1,5 +1,9 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — deepened mdBook: cycle-by-cycle transparency
+- Transactions chapter: exact .fsm output, timing per clause, implicit signals table
+- Lowering reference chapter: every construct → exact .fsm with cycle counts
+- No hidden magic — complete transparency on what the scheduler generates
 ## 2026-05-12: R14 — flopped outputs (`<-` default for all ports)
 - All output port assignments use `<-` (sequential) instead of `=` (combinational)
 - Better ASIC timing closure; combinational outputs by explicit request only

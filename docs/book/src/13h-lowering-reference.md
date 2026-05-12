@@ -1,81 +1,395 @@
 # Lowering Reference
 
-Every ISF construct mapped to its `.fsm` equivalent.
+Every ISF construct maps to specific `.fsm` patterns.
+This chapter shows the exact generated `.fsm` for each construct.
 
-## Actor-Level Constructs
+## Actor → Module
+
+```lisp
+(actor name
+  (clock clk)
+  (reset (rst_n async active_low))
+  (watchdog 65536)
+  (interface ...)
+  (drive ...)
+  (transaction ...))
+```
+
+↓
+
+```lisp
+(?fsm:name
+  (+system (clock clk) (areset rst_n))
+  (+size ... inferred signals ...)
+  (transaction_states ...)
+  (-drive_dt_blocks ...)
+  (-can_accept_ctrl ...))
+```
+
+## Interface → +size
+
+```lisp
+(interface
+  (input  start)
+  (input  addr (width 32))
+  (output done)
+  (output rdata (width 32)))
+```
+
+↓
+
+```lisp
+(+size
+  (start 1)
+  (addr 32)
+  (done 1)
+  (rdata 32))
+```
+
+## Reset → +system
 
 | ISF | .fsm |
 |-----|------|
-| `(actor name ...)` | `(?fsm:name ...)` |
-| `(clock clk)` | `(+system (clock clk))` |
 | `(reset (rst_n async active_low))` | `(areset rst_n)` |
 | `(reset (rst async))` | `(areset rst)` |
 | `(reset rst_n)` | `(sreset rst_n)` |
-| `(watchdog N)` | watchdog counter + timeout state |
-| `(interface (input p W) ...)` | `(+size (p W) ...)` |
 
-## Transaction Clauses
+Reset name convention: `*_n` or `*_b` suffix infers `active_low`.
+Explicit `async`/`active_low`/`active_high` override.
 
-| ISF | .fsm state kind | Generated |
-|-----|----------------|-----------|
-| `(on port ...)` | `entry` | Idle state: `(<port (<= ...) (-> next))` |
-| `(sample port as name)` | piggyback | `(<= (name port))` in current/last state |
-| `(drive name args...)` | `sequential` | Assert `name_start`, wire parameter signals |
-| `(await port)` | `await` | `(-- wd) (<port (-> next)) (?wd (=0 → timeout))` |
-| `(complete port)` | `terminal` | `(= (port> 1)) (-> idle)` |
-| `(repeat N body...)` | `sequential` + `repeat_check` | Counter init → body → check with `?cnt` loop |
-| `(when cond body...)` | `branch` | `(?cond (=1 → body) (=0 → skip))` |
-| `(switch sig (v body...)...)` | `switch` | `(?sig (=v1 → b1) (=v2 → b2) ...)` |
-| `(update var expr)` | `sequential` | `(<- (var expr))` |
-| `(shift_left reg bit)` | `sequential` | `(<- (reg (| (<< reg 1) bit)))` |
-| `(shift_right reg bit)` | `sequential` | `(<- (reg (| (>> reg 1) (<< bit W-1))))` |
-| `(assemble (f1 f2) as v)` | `sequential` | `(<- (v (concat f1 f2)))` |
-| `(extract w as (f1 f2))` | `sequential` | `(<= (f1 (slice w hi lo)))` per field |
-| `(latency (min N) (max M))` | verification only | Cycle counter + comparators |
+## `(on port ...)` → Entry State
 
-## Drive Definitions
+**ISF**:
+```lisp
+(on start
+  (sample req_addr  as addr)
+  (sample req_write as is_write))
+```
 
-| ISF | .fsm |
-|-----|------|
-| `(drive (name p1 p2) (port1 p1) ...)` | `(-name (= (port1> name_p1) <name_start) ...)` |
-| `(drive name body...)` | `(-name (assignments <name_start))` |
+**Generated .fsm**:
+```lisp
+(apb_transfer_idle_0
+  (= (can_accept 1))              ;; implicit: ready signal
+  (<- (apb_transfer_wd 65535))    ;; watchdog: load max-1
+  (<start                         ;; condition guard
+    (<= (addr req_addr))          ;; sample: D-input capture
+    (<= (is_write req_write))
+    (-> apb_transfer_drive_1)))   ;; transition to first state
+```
 
-## Rules
+**Timing**: Idles until `start && can_accept`. Samples fire on the transition.
+**Cycles**: 0 active cycles (waiting). 1 cycle for transition.
 
-| ISF | .fsm |
-|-----|------|
-| `(rule name (when cond) (port val) ...)` | `(-name (= (port> val) <cond))` |
-| `(rule name (when cond) (trigger tx))` | `(-name (= (tx_start 1) <cond))` |
+**Implicit signals**: `can_accept` (1, combinational, asserted in idle).
 
-## Composition
+## `(drive name args...)` → One State + Comb DT
 
-| ISF | .fsm |
-|-----|------|
-| `(do child)` | assert `child_start`, await `child_done` |
-| `(spawn child as name)` | per-instance `name_start`/`name_done` |
-| `(await_all port)` | `(<p2 (<p1 (<p0 (-> next))))` nested guards |
-| `(await_any port)` | `(<p0 (-> next))` single guard |
+**ISF**:
+```lisp
+(drive (scl val) (scl val))        ;; definition
+(drive scl 1)                      ;; call
+```
 
-## Implicit Signals
+**Generated .fsm**:
 
-| Signal | Width | Purpose |
-|--------|-------|---------|
-| `can_accept` | 1 | Combinational ready: 1 in idle |
-| `{drive}_start` | 1 | Fires combinational drive DT |
-| `{drive}_{param}` | 1 | Per-parameter, wired to actual |
-| `{transaction}_cnt` | 8 | Repeat counter |
-| `{transaction}_wd` | log2(N) | Watchdog counter (decrements to 0) |
-| `{transaction}_cc` | log2(M) | Latency cycle counter (increments) |
-| `{transaction}_inc` | 1 | Latency increment enable |
-| `{transaction}_lerr` | 1 | Latency error flag |
-| `{child}_start` / `{child}_done` | 1 | Composition handshake |
+Comb DT block:
+```lisp
+(-scl
+  (<- (scl scl_val) <scl_start))   ;; flopped: next cycle scl = scl_val
+```
 
-## Signal Naming Convention
+Call state:
+```lisp
+(caller_state
+  (= (scl_start 1))               ;; assert DT enable (combinational)
+  (= (scl_val 1))                 ;; wire actual to parameter signal
+  (-> next_state))                ;; always proceed
+```
 
-- Drive start signals: `{drive_name}_start`
-- Drive parameters: `{drive_name}_{param_name}`
-- Repeat counters: `{transaction}_cnt`
-- Watchdog: `{transaction}_wd`
-- Latency: `{transaction}_cc`, `_inc`, `_lerr`
-- Child handshake: `{child}_start`, `{child}_done`
-- Instance signals (spawn): `{instance_name}_start`, `{instance_name}_done`
+**Timing**: The `scl_start` assertion fires the comb DT in the SAME cycle.
+The DT's `<-` assignment takes effect NEXT cycle (flopped).
+So `(drive scl 1)` → cycle N: assert start + wire value, cycle N+1: port changes.
+
+**Cycles**: 1 per call. **No automatic merging.**
+**Implicit signals**: `{name}_start` (1), `{name}_{param}` (1 per parameter).
+
+## `(sample port as name)` → D-Input Assignment
+
+**ISF**:
+```lisp
+(sample req_addr as addr)
+```
+
+**Generated .fsm**: Piggybacks on the current state — no separate state.
+```lisp
+(<= (addr req_addr))
+```
+
+Inside an `(on ...)` guard, the sample fires when the guard triggers:
+```lisp
+(<start
+  (<= (addr req_addr))
+  (-> next_state))
+```
+
+In a `(drive ...)` state, samples from preceding `(sample ...)` clauses
+appear before the drive's start assertion:
+```lisp
+(drive_state
+  (<= (val trigger))              ;; sample piggybacked
+  (= (rdata_start 1))             ;; drive start
+  (-> next_state))
+```
+
+**Timing**: Captures port value at the moment of transition.
+**Implicit signals**: None (sample creates a variable; scheduler infers register if needed).
+
+## `(await port)` → Conditional Stall + Watchdog
+
+**ISF**:
+```lisp
+(await PREADY)
+```
+
+**Generated .fsm**:
+```lisp
+(apb_transfer_await_3
+  (-- apb_transfer_wd)             ;; watchdog: decrement
+  (<PREADY                         ;; port guard
+    (-> apb_transfer_drive_4))
+  (?apb_transfer_wd                ;; timeout check
+    (=0 (-> apb_transfer_timeout))))
+```
+
+**Timing**: Self-loops until `PREADY=1`. Each loop cycle decrements watchdog.
+**Cycles**: 1 to watchdog_limit cycles (variable).
+**Implicit signals**: `{tx}_wd` (log2(N) bits), plus timeout state.
+
+Timeout state:
+```lisp
+(apb_transfer_timeout
+  (<- (done 1))
+  (<- (last_error 1))
+  (-> apb_transfer_idle_0))
+```
+
+## `(complete port)` → Terminal State
+
+**ISF**:
+```lisp
+(complete done)
+```
+
+**Generated .fsm**:
+```lisp
+(apb_transfer_done_5
+  (<- (done 1))                   ;; port assertion (flopped)
+  (-> apb_transfer_idle_0))       ;; return to idle
+```
+
+**Timing**: `done` becomes 1 in the cycle after this state. Next cycle: idle.
+The idle state's `can_accept=1` ensures `done` is visible externally
+for exactly one cycle (idle doesn't re-assert it).
+**Cycles**: 1.
+
+## `(repeat N body...)` → Counter Init + Body + Check
+
+**ISF**:
+```lisp
+(repeat 8
+  (drive scl 1)
+  (drive scl 0))
+```
+
+**Generated .fsm**:
+```lisp
+(i2c_transfer_repeat_init_2
+  (<= (i2c_transfer_cnt 8))       ;; load counter (D-input)
+  (-> i2c_transfer_drive_3))
+
+(i2c_transfer_drive_3              ;; body: first drive call
+  (= (scl_start 1))
+  (= (scl_val 1))
+  (-> i2c_transfer_drive_4))
+
+(i2c_transfer_drive_4              ;; body: second drive call
+  (= (scl_start 1))
+  (= (scl_val 0))
+  (-> i2c_transfer_repeat_check_5))
+
+(i2c_transfer_repeat_check_5       ;; check + loop
+  (<- (i2c_transfer_cnt (- i2c_transfer_cnt 1)))   ;; decrement (Q-named)
+  (?i2c_transfer_cnt
+    (=1 (-> i2c_transfer_repeat_init_2))           ;; loop back
+    (=0 (-> next_state))))                          ;; exit
+```
+
+**Timing**: `N × (body_cycles) + 2` (init + check). For `N=8` with 2 drives: `8×2+2=18` cycles.
+**Implicit signals**: `{tx}_cnt` (8 bits).
+
+## `(when condition body...)` → Decision State
+
+**ISF**:
+```lisp
+(when mode
+  (drive write_path)
+  (drive write_done))
+```
+
+**Generated .fsm**:
+```lisp
+(test_tx_when_2
+  (?mode
+    (=1 (-> write_body_states))    ;; true: execute body
+    (=0 (-> next_top_level))))     ;; false: skip body
+```
+
+**Timing**: 1 cycle for the decision, then body cycles (if true), or skip (0 additional).
+**Implicit signals**: None (uses existing signals in condition).
+
+## `(switch signal (val body...)...)` → Multi-Way Decision
+
+**ISF**:
+```lisp
+(switch opcode
+  (0 (drive read))
+  (1 (drive write)
+     (drive write_done)))
+```
+
+**Generated .fsm**:
+```lisp
+(dispatch_switch_4
+  (?opcode
+    (=0 (-> read_body_states))
+    (=1 (-> write_body_states))
+    (=0 (-> skip))))              ;; default: fallthrough
+```
+
+**Timing**: 1 cycle for decision, then body cycles of the matching branch.
+**Implicit signals**: None.
+
+## `(update var expr)` / `(shift_left reg bit)` / `(shift_right reg bit)` → Sequential State
+
+**ISF**:
+```lisp
+(shift_left rdata sda_in)
+```
+
+**Generated .fsm**:
+```lisp
+(i2c_transfer_shift_6
+  (<- (rdata (| (<< rdata 1) sda_in)))   ;; Q-named assignment
+  (-> next_state))
+```
+
+**Timing**: 1 cycle. Assignment takes effect next cycle.
+**Implicit signals**: None (operates on existing variables).
+
+## `(assemble (fields) as var)` / `(extract word as (fields))` → Sequential State
+
+**ISF**:
+```lisp
+(assemble (header payload crc) as packet)
+```
+
+**Generated .fsm**:
+```lisp
+(state
+  (<- (packet (concat header payload crc)))
+  (-> next_state))
+```
+
+**Timing**: 1 cycle.
+**Implicit signals**: None.
+
+## `(latency (min N) (max M))` → Verification Logic
+
+**ISF**:
+```lisp
+(latency (min 2) (max 16))
+```
+
+**Generated .fsm** — adds to entry state:
+```lisp
+(apb_transfer_idle_0
+  (<- (apb_transfer_cc 0))        ;; reset counter
+  ...)
+```
+
+Adds to every active state (not idle/done):
+```lisp
+(= (apb_transfer_inc 1))          ;; assert increment
+```
+
+Adds combinational DT:
+```lisp
+(-apb_transfer_cc_inc
+  (<- (apb_transfer_cc (+ apb_transfer_cc 1)) <apb_transfer_inc))
+```
+
+Adds to done state:
+```lisp
+(?apb_transfer_cc
+  (<2 (= (apb_transfer_lerr 1)))) ;; min violation check
+```
+
+**Timing**: Counter increments each active cycle. Min violation = error if done too early.
+Max violation via watchdog timeout (if no `(await ...)` in transaction).
+**Implicit signals**: `{tx}_cc` (log2(M) bits), `{tx}_inc` (1), `{tx}_lerr` (1).
+
+## `(do child)` → Handshake
+
+**In parent**:
+```lisp
+(parent_do_1
+  (= (child_start 1))             ;; assert start
+  (<child_done                    ;; await done
+    (-> parent_do_2)))
+```
+
+**In child (rewired)**:
+```lisp
+(child_idle_0                     ;; was: (<original_port ...)
+  (<child_start                   ;; now: watches parent's start
+    (-> child_drive_0)))
+
+(child_done_5                     ;; terminal: pulses done
+  (<- (done 1))
+  (<- (child_done 1))             ;; signal parent
+  (-> child_idle_0))
+```
+
+**Implicit signals**: `{child}_start` (1), `{child}_done` (1).
+
+## Complete Example — APB Transfer
+
+All constructs together:
+
+```lisp
+(transaction apb_transfer
+  (on start (sample req_addr as addr) (sample req_write as is_write)
+            (sample req_wdata as wdata))
+  (drive setup_phase)
+  (drive access_phase)
+  (await PREADY)
+  (sample PRDATA as rdata) (sample PSLVERR as slverr)
+  (drive done_phase)
+  (complete done)
+  (latency (min 2) (max 16)))
+```
+
+Generates 8 states + combinational DTs + drive DTs:
+
+```
+idle_0          ← (on start ...) : guards on start, samples, can_accept
+drive_1         ← (drive setup_phase)
+drive_2         ← (drive access_phase)
+await_3         ← (await PREADY) + watchdog
+drive_4         ← (drive done_phase) with samples
+done_5          ← (complete done): pulse done, return to idle
+cc_inc_dt       ← latency cycle counter DT
+```
+
+Total: 8 states. Each `(drive ...)` is one state. `(await ...)` is one state.
+`(sample ...)` piggybacks — no extra state.
