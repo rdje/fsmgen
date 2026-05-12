@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF DT assignment metadata audit
+- Added `dt_assignment_operator_family_map` to
+  `embedding.isf_public_interface`, advertising combinational `=` and
+  sequential `<-`/`<=` assignment families for scheduled DT blocks.
+- Added [t/1146-isf-public-dt-assignment-metadata-audit.t](t/1146-isf-public-dt-assignment-metadata-audit.t)
+  to prove the metadata is exact across direct and manifest views and aligned
+  with generated APB scheduled `.fsm` assignment operators.
 ### R14 — ISF scheduled `.fsm` metadata audit
 - Added [t/1145-isf-public-scheduled-fsm-metadata-audit.t](t/1145-isf-public-scheduled-fsm-metadata-audit.t)
   to prove scheduled `.fsm` artifact metadata is exact.

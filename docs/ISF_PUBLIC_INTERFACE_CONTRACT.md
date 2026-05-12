@@ -94,6 +94,10 @@ The scheduled `.fsm` artifact metadata is checked by
 [t/1145-isf-public-scheduled-fsm-metadata-audit.t](../t/1145-isf-public-scheduled-fsm-metadata-audit.t)
 to keep `scheduled_fsm_dt_ordering`, its paired schedule-report ordering
 policy, and the review-artifact flag exact across direct and manifest views.
+The DT assignment operator metadata is checked by
+[t/1146-isf-public-dt-assignment-metadata-audit.t](../t/1146-isf-public-dt-assignment-metadata-audit.t)
+to keep the combinational and sequential assignment families exact across
+direct and manifest views.
 The `live_document_paths` list is checked by
 [t/1120-isf-public-live-document-path-audit.t](../t/1120-isf-public-live-document-path-audit.t)
 to keep the direct owner, in-process manifest, and both CLI manifest spellings
@@ -214,6 +218,19 @@ The full lower-result hash is not yet a broad public API beyond the advertised
 keys.
 The `lower_result_presence_keys` and `lower_result_file_map_shape` fields are
 exact lower-result discovery metadata for the currently public `files` map.
+
+## DT Assignment Operators
+
+Scheduled `.fsm` text can contain assignment operators in state DT blocks and
+non-state DT blocks. The timing semantics are assignment-family driven, not
+block-spelling driven:
+
+- `=` is combinational.
+- `<-` and `<=` are sequential/flopped.
+
+A DT may therefore be combinational-only, sequential-only, or mixed depending on
+the operators it contains. The machine-readable contract advertises these
+families through `dt_assignment_operator_family_map`.
 
 ## Schedule Report
 

@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF DT assignment metadata audit
+- Added `dt_assignment_operator_family_map` to
+  `embedding.isf_public_interface`, advertising `=` as combinational and
+  `<-`/`<=` as sequential for both state and non-state DT blocks.
+- Added `t/1146-isf-public-dt-assignment-metadata-audit.t` to prove that
+  metadata is exact across direct, manifest, and CLI manifest views, and that
+  the APB scheduled `.fsm` uses only advertised assignment operators.
 ## 2026-05-12: R14 — ISF scheduled `.fsm` metadata audit
 - Added `t/1145-isf-public-scheduled-fsm-metadata-audit.t` to prove scheduled
   `.fsm` artifact metadata is exact across the direct owner, in-process

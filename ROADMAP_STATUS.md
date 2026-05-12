@@ -121,6 +121,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   direct, manifest, and CLI manifest views.
 - `t/1145` now proves scheduled `.fsm` artifact metadata is exact across
   direct, manifest, and CLI manifest views.
+- `t/1146` now advertises and proves DT assignment operator families: `=` is
+  combinational, while `<-` and `<=` are sequential.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.

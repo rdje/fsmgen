@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — ISF DT assignment metadata audit
+- Active: `R14`. `t/1146` proves public DT assignment operator metadata is
+  exact and aligned with generated scheduled `.fsm` assignment operators.
+
 ## 2026-05-12: R14 — ISF scheduled `.fsm` metadata audit
 - Active: `R14`. `t/1145` proves scheduled `.fsm` artifact metadata is exact
   across direct and manifest views.

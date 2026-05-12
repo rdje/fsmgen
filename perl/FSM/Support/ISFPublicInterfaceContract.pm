@@ -12,6 +12,7 @@ our @EXPORT_OK = qw(
     isf_public_interface_cli_option_names
     isf_public_interface_contract_source
     isf_public_interface_constructor_option_names
+    isf_public_interface_dt_assignment_operator_family_map
     isf_public_interface_live_document_paths
     isf_public_interface_lower_result_presence_keys
     isf_public_interface_dt_ordering_policy
@@ -77,6 +78,7 @@ sub build_isf_public_interface_contract {
         actor_shell_required_keys => isf_public_interface_actor_shell_required_keys(),
         lower_result_presence_keys => isf_public_interface_lower_result_presence_keys(),
         lower_result_file_map_shape => 'hash reference mapping scheduled .fsm basename to scheduled .fsm source text',
+        dt_assignment_operator_family_map => isf_public_interface_dt_assignment_operator_family_map(),
         scheduled_fsm_dt_ordering => isf_public_interface_dt_ordering_policy(),
         schedule_report_top_level_keys => isf_public_interface_schedule_report_top_level_keys(),
         schedule_report_compile_issues_success_shape => isf_public_interface_schedule_report_compile_issues_success_shape(),
@@ -131,6 +133,7 @@ sub build_isf_public_interface_contract {
             't/1143-isf-public-facade-shape-metadata-audit.t',
             't/1144-isf-public-tested-by-metadata-audit.t',
             't/1145-isf-public-scheduled-fsm-metadata-audit.t',
+            't/1146-isf-public-dt-assignment-metadata-audit.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -167,6 +170,7 @@ sub isf_public_interface_public_top_level_keys {
             actor_shell_required_keys
             lower_result_presence_keys
             lower_result_file_map_shape
+            dt_assignment_operator_family_map
             scheduled_fsm_dt_ordering
             schedule_report_top_level_keys
             schedule_report_compile_issues_success_shape
@@ -245,6 +249,13 @@ sub isf_public_interface_lower_result_presence_keys {
             files
         ),
     ];
+}
+
+sub isf_public_interface_dt_assignment_operator_family_map {
+    return {
+        combinational => ['='],
+        sequential    => ['<-', '<='],
+    };
 }
 
 sub isf_public_interface_dt_ordering_policy {

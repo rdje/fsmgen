@@ -197,6 +197,8 @@ Current lowering:
 - DT timing is assignment-family driven: `=` assignments are combinational;
   `<-` and `<=` assignments are sequential/flopped, whether they appear in a
   state DT `(state_name ...)` or a non-state DT `(-name ...)`.
+- The machine-readable ISF public contract advertises those operator families
+  through `dt_assignment_operator_family_map`.
 - Adjacent drive calls are not merged. To drive several ports in the same
   cycle, put those port-value pairs in one drive definition.
 
@@ -510,6 +512,7 @@ Focused tests:
 - [t/1143-isf-public-facade-shape-metadata-audit.t](../t/1143-isf-public-facade-shape-metadata-audit.t)
 - [t/1144-isf-public-tested-by-metadata-audit.t](../t/1144-isf-public-tested-by-metadata-audit.t)
 - [t/1145-isf-public-scheduled-fsm-metadata-audit.t](../t/1145-isf-public-scheduled-fsm-metadata-audit.t)
+- [t/1146-isf-public-dt-assignment-metadata-audit.t](../t/1146-isf-public-dt-assignment-metadata-audit.t)
 
 ## 12. Explicitly Deferred
 

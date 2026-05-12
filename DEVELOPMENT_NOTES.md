@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF DT assignment metadata audit
+- The public ISF contract now records that DT timing follows assignment
+  families, not the state/non-state block spelling. This keeps downstream
+  consumers aligned with the active `.fsm` semantics: `=` is combinational,
+  while `<-` and `<=` are sequential/flopped.
+- `t/1146-isf-public-dt-assignment-metadata-audit.t` locks that metadata across
+  direct, manifest, and CLI manifest views and checks the APB scheduled `.fsm`
+  operators against the advertised families.
 ## 2026-05-12: R14 ISF scheduled `.fsm` metadata audit
 - The scheduled `.fsm` text is a review artifact, and its DT ordering policy is
   meaningful downstream metadata because it controls artifact churn and report
