@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF CLI outdir lowering audit
+- Added [t/1122-isf-public-cli-outdir-lowering-audit.t](t/1122-isf-public-cli-outdir-lowering-audit.t)
+  to prove `--outdir` writes the scheduled `.fsm` files for the `spawn_parent`
+  multi-file fixture with clean stderr.
+- The audit compares the CLI-written `.fsm` files byte-for-byte with the
+  in-process `FSM::Scheduler::ISF->lower(...)` `files` map.
 ### R14 — ISF CLI schedule report audit
 - Updated [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
   to suppress the `experimental::smartmatch` warnings emitted by its

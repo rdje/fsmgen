@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF CLI outdir lowering audit
+- Added `t/1122-isf-public-cli-outdir-lowering-audit.t` to prove the public
+  `./bin/fsmgen --outdir DIR --output DIR/out.sv isf/spawn_parent.isf` path
+  succeeds with clean stderr.
+- The audit compares every scheduled `.fsm` file written to `--outdir` against
+  the in-process `FSM::Scheduler::ISF->lower(...)` `files` map for the same
+  multi-file fixture.
 ## 2026-05-12: R14 — ISF CLI schedule report audit
 - `FSM::Adapter::ISF::Parser` now suppresses the `experimental::smartmatch`
   warning category used by its `given`/`when` actor-clause dispatch so public

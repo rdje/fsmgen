@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — ISF CLI outdir lowering audit
+- Active: `R14`. `t/1122` proves `--outdir` writes multi-file scheduled `.fsm`
+  artifacts matching the in-process lower-result files map.
+
 ## 2026-05-12: R14 — ISF CLI schedule report audit
 - Active: `R14`. `t/1121` proves `--emit-schedule-json` emits clean public APB
   schedule JSON matching the in-process scheduler report.

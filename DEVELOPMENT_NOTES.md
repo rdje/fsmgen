@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF CLI outdir lowering audit
+- `--outdir` is advertised as an ISF public CLI entrypoint because multi-file
+  lowering needs a stable way to materialize parent and child scheduled `.fsm`
+  artifacts for review or downstream HDL generation.
+- `t/1122-isf-public-cli-outdir-lowering-audit.t` uses the `spawn_parent`
+  fixture, writes into a temporary directory, and compares each emitted `.fsm`
+  file against the in-process lower-result `files` map. The test avoids freezing
+  incidental stdout banners while still requiring clean stderr and the expected
+  output files.
 ## 2026-05-12: R14 ISF CLI schedule report audit
 - `--emit-schedule-json` is an advertised ISF public CLI entrypoint. A
   downstream JSON consumer needs stdout to be the JSON payload and stderr to be

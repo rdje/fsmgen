@@ -33,6 +33,10 @@ The public `--emit-schedule-json` CLI path is checked by
 to emit clean-stderr JSON matching the in-process scheduler report.
 The lower-result `files` map is checked for both single-file and multi-file
 lowering by [t/1117-isf-public-lower-result-files-audit.t](../t/1117-isf-public-lower-result-files-audit.t).
+The public `--outdir` CLI path is checked by
+[t/1122-isf-public-cli-outdir-lowering-audit.t](../t/1122-isf-public-cli-outdir-lowering-audit.t)
+to write scheduled `.fsm` artifacts matching the in-process lower-result
+`files` map for a multi-file fixture.
 The `parse_source(...)` facade method is checked by
 [t/1118-isf-public-parse-source-facade-audit.t](../t/1118-isf-public-parse-source-facade-audit.t)
 to ensure in-memory source text returns a scheduler-consumable actor with the
@@ -83,6 +87,9 @@ files
 `files` is a hash reference mapping scheduled `.fsm` basenames to scheduled
 `.fsm` source text. The generated `.fsm` text is a reviewable compiler artifact
 and then flows through the existing `.fsm` pipeline.
+
+The `--outdir` CLI path materializes the same scheduled `.fsm` basename/text
+map on disk for multi-file lowerings.
 
 The full lower-result hash is not yet a broad public API beyond the advertised
 keys.

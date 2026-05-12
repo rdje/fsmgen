@@ -71,6 +71,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - `t/1121` now proves the public `--emit-schedule-json` CLI path emits clean
   APB schedule JSON matching the in-process scheduler report and the advertised
   schedule-report key family.
+- `t/1122` now proves the public `--outdir` CLI path writes multi-file
+  scheduled `.fsm` artifacts matching the in-process lower-result `files` map.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
@@ -3608,6 +3610,9 @@ Done:
 - [t/1121-isf-public-cli-schedule-report-audit.t](t/1121-isf-public-cli-schedule-report-audit.t)
   locks clean-stderr `--emit-schedule-json` output, in-process report parity,
   advertised top-level keys, and deterministic DT block order for APB.
+- [t/1122-isf-public-cli-outdir-lowering-audit.t](t/1122-isf-public-cli-outdir-lowering-audit.t)
+  locks clean-stderr `--outdir` emission of multi-file scheduled `.fsm`
+  artifacts against the in-process lower-result `files` map.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

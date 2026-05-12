@@ -38,6 +38,8 @@ Current CLI behavior:
   temporary file and fed into the normal `.fsm` pipeline.
 - If lowering produces multiple `.fsm` files, `--outdir DIR` writes every file
   there and the parent actor file is fed into the normal pipeline.
+- The public `--outdir` path is expected to write scheduled `.fsm` file content
+  matching the in-process lower-result `files` map.
 
 The live downstream-consumer API contract for these CLI surfaces, the
 `FSM::Adapter::ISF` / `FSM::Scheduler::ISF` in-process facades, and the bounded
@@ -442,6 +444,7 @@ Focused tests:
 - [t/1119-isf-deterministic-dt-block-order.t](../t/1119-isf-deterministic-dt-block-order.t)
 - [t/1120-isf-public-live-document-path-audit.t](../t/1120-isf-public-live-document-path-audit.t)
 - [t/1121-isf-public-cli-schedule-report-audit.t](../t/1121-isf-public-cli-schedule-report-audit.t)
+- [t/1122-isf-public-cli-outdir-lowering-audit.t](../t/1122-isf-public-cli-outdir-lowering-audit.t)
 
 ## 12. Explicitly Deferred
 

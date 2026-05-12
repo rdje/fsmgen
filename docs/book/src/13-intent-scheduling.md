@@ -87,9 +87,11 @@ hash-backed drive definitions do not create review-artifact churn; the manifest
 also advertises the DT ordering policy. The ISF live-document path list is
 audited across direct and manifest views so recovery pointers stay repo-local
 and present. The public `--emit-schedule-json` path is audited to emit the same
-report as the in-process scheduler with clean stderr. Transaction summaries
-include the generated state families used by the current scheduler, including
-control-flow and data-operation states.
+report as the in-process scheduler with clean stderr. The public `--outdir`
+path is audited to write multi-file scheduled `.fsm` artifacts matching the
+in-process lower-result file map. Transaction summaries include the generated
+state families used by the current scheduler, including control-flow and
+data-operation states.
 
 ## Current Limitations
 
