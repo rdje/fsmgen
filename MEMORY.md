@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — inferred repeat counter widths
+- `LoweringIR` now infers `{transaction}_cnt` widths from repeat counts:
+  decimal literal counts use the minimum width that can represent the loaded
+  value, named counts use known interface/sample widths, and unknown count
+  forms keep the 8-bit fallback.
+- Switch-nested repeats now register the shared transaction counter width even
+  when no top-level repeat declares it; multiple repeats widen that counter to
+  the largest branch requirement.
+- Added `t/1102-isf-repeat-counter-widths.t` for literal, named, and
+  switch-nested repeat counter cases.
 ## 2026-05-12: R14 — exact known-width extract slices
 - `LoweringIR` now parses `assemble ... as target` and
   `extract word as fields...` explicitly instead of relying on loose tail

@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — inferred repeat counter widths
+- Updated [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so repeat counters use inferred widths: decimal literal counts use the
+  minimum width that can represent the count, named counts use known
+  interface/sample widths, and unknown count forms keep the 8-bit fallback.
+- Switch-nested repeats now register the shared transaction counter width, and
+  multiple repeats widen that counter to the largest requirement in the
+  transaction.
+- Added [t/1102-isf-repeat-counter-widths.t](t/1102-isf-repeat-counter-widths.t)
+  for literal, sampled named-count, and switch-nested repeat cases.
 ### R14 — exact known-width extract slices
 - Updated [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
   so `assemble ... as target` and `extract word as fields...` are parsed

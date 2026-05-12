@@ -224,7 +224,11 @@ Current ISF lowering does not emit an explicit deassert state for `done`.
 ```
 
 **Timing**: `N × (body_cycles) + 2` (init + check). For `N=8` with 2 drives: `8×2+2=18` cycles.
-**Implicit signals**: `{tx}_cnt` (8 bits).
+**Implicit signals**: `{tx}_cnt` (inferred width). Decimal literal counts use
+the minimum width that can represent the loaded count, named counts use their
+known interface or sample-derived width, and unknown count forms fall back to
+8 bits. Switch-nested repeats register the same transaction counter at the
+widest required branch width.
 Repeat bodies lower named drive calls, awaits, samples, updates, and the
 current data operations.
 

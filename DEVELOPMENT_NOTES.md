@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 inferred repeat counter widths
+- Repeat counter width inference stays deliberately local to the scheduler
+  width map. Literal decimal counts are sized to hold the loaded count, named
+  counts reuse interface/sample-derived widths, and anything not yet provable
+  keeps the existing 8-bit fallback.
+- The transaction still uses one `{transaction}_cnt` carrier for repeat
+  lowering, so registration widens an existing counter instead of replacing it.
+  This matters for switch branches, where either branch may contain the largest
+  literal count.
+- `t/1102-isf-repeat-counter-widths.t` locks top-level literal counts, sampled
+  named counts, and switch-nested repeats that have no top-level repeat to
+  declare the counter.
 ## 2026-05-12: R14 exact known-width extract slices
 - `assemble` and `extract` now share explicit `as` form parsing in
   `LoweringIR`, which fixes the old tail-index handling that could treat `as`

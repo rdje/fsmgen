@@ -181,7 +181,13 @@ For `(repeat 8 (drive scl 1) (drive scl 0))`:
 **Implicit signals**:
 | Signal | Width | Purpose |
 |--------|-------|---------|
-| `{tx}_cnt` | 8 | Repeat counter |
+| `{tx}_cnt` | inferred | Repeat counter |
+
+Repeat counter width is inferred from the count expression. Decimal literal
+counts use the minimum width that can represent the loaded count, named counts
+use their known interface or sample-derived width, and unknown forms fall back
+to 8 bits. Repeats nested in switch branches declare the same transaction
+counter, widened to the largest branch requirement.
 
 ## `(when condition body...)` — Decision State
 

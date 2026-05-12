@@ -24,6 +24,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - `t/1101` now proves explicit `assemble ... as target` handling and
   known-width `extract` lowering to exact descending slices, including
   assemble-inferred word widths.
+- `t/1102` now proves repeat counter width inference for decimal literals,
+  sampled named counts, and switch-nested repeats.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
@@ -3497,6 +3499,9 @@ Done:
 - [t/1101-isf-extract-slices.t](t/1101-isf-extract-slices.t) locks
   `assemble ... as target` parsing and known-width `extract` lowering to exact
   descending slices, including assemble-inferred word widths.
+- [t/1102-isf-repeat-counter-widths.t](t/1102-isf-repeat-counter-widths.t)
+  locks repeat counter width inference for decimal literals, sampled named
+  counts, and switch-nested repeats.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

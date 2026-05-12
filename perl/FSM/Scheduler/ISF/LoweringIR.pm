@@ -206,6 +206,39 @@ sub _parse_extract_clause {
     return ($word, @fields);
 }
 
+sub _register_counter_width {
+    my ($counters, $name, $width) = @_;
+    $width = 8 unless defined($width) && $width > 0;
+    $counters->{$name} = $width
+        if !defined($counters->{$name}) || $counters->{$name} < $width;
+}
+
+sub _repeat_count_width {
+    my ($count, $widths) = @_;
+    return 8 if ref($count);
+    return $widths->{$count}
+        if defined($count) && exists($widths->{$count}) && $widths->{$count} > 0;
+    if (defined($count)) {
+        my $literal_width = _literal_repeat_count_width($count);
+        return $literal_width if defined $literal_width;
+    }
+    return 8;
+}
+
+sub _literal_repeat_count_width {
+    my ($count) = @_;
+    return undef unless defined($count) && !ref($count) && $count =~ /\A(?:\+)?([0-9]+)\z/;
+
+    my $limit = 0 + $1;
+    my $width = 1;
+    my $max_value = 1;
+    while ($max_value < $limit) {
+        ++$width;
+        $max_value = (2 ** $width) - 1;
+    }
+    return $width;
+}
+
 # --- Transaction → IR states ---
 sub _build_transaction($self, $tx, $actor, $txi) {
     my $tn  = $tx->{name};
@@ -244,10 +277,10 @@ sub _build_transaction($self, $tx, $actor, $txi) {
             push @st, @$ws;
         }
         elsif ($k eq 'switch')   {
-            my ($ss) = _expand_switch($cl,$tn,\$si,\@ps,$drives,$wd,$widths);
+            my ($ss) = _expand_switch($cl,$tn,\$si,\@ps,$drives,$wd,$widths,\%ct);
             push @st, @$ss;
         }
-        elsif ($k eq 'repeat')   { my ($rs,$rc) = _ir_repeat($cl,$tn,\$si,\@ps,$wd,$drives,$widths); push @st,@$rs; $ct{$rc}=8; }
+        elsif ($k eq 'repeat')   { my ($rs,$rc,$rw) = _ir_repeat($cl,$tn,\$si,\@ps,$wd,$drives,$widths); push @st,@$rs; _register_counter_width(\%ct,$rc,$rw); }
         elsif ($k eq 'latency')  { $lat = _parse_latency($cl); }
         elsif ($k eq 'do')       { push @doc, $cl->[1]; push @st, _ir_do($cl,$tn,$si++); }
         elsif ($k eq 'spawn')    { push @spc, { child => $cl->[1], instance => $cl->[3] || "${tn}_${si}" }; push @dps, "$spc[-1]{instance}_done"; push @st, _ir_spawn($cl,$tn,$si++); }
@@ -433,14 +466,14 @@ sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd)=@_; my @s; my $bstate=_ir_wh
     return (\@s);
 }
 
-sub _expand_switch { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths)=@_; my $signal=$cl->[1]; my @branches; my %seen_val; my @s;
+sub _expand_switch { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters)=@_; my $signal=$cl->[1]; my @branches; my %seen_val; my @s;
     for my $i(2..$#$cl){my$br=$cl->[$i];next unless ref($br)eq'ARRAY'&&@$br>=2;my$val=$br->[0];my@bc=@{$br}[1..$#$br];
         confess "Switch '$tn': duplicate value '$val'\n" if$seen_val{$val}++;my@body_states;my@lp;
         for my $bc2(@bc){next unless ref($bc2)eq'ARRAY';my$bk2=$bc2->[0];
             if($bk2 eq'drive'){my$n=$bc2->[1];confess qq{drive $n not defined} unless !ref($n)&&$drives->{$n};push @body_states,_ir_named_drive_call($bc2,$tn,$$ir++,$drives->{$n},[splice @lp])}
             elsif($bk2 eq'await'){push @body_states,_ir_await($bc2,$tn,$$ir++,$wd,[splice @lp])}
             elsif($bk2 eq'sample'){push @lp,$bc2}
-            elsif($bk2 eq'repeat'){my($rs,$rc)=_ir_repeat($bc2,$tn,$ir,\@lp,$wd,$drives,$widths);push @body_states,@$rs}
+            elsif($bk2 eq'repeat'){my($rs,$rc,$rw)=_ir_repeat($bc2,$tn,$ir,\@lp,$wd,$drives,$widths);push @body_states,@$rs;_register_counter_width($counters,$rc,$rw) if $counters}
             elsif($bk2 eq'update'||$bk2 eq'shift_left'||$bk2 eq'shift_right'||$bk2 eq'assemble'||$bk2 eq'extract'){push @body_states,_ir_data_op($bk2,$bc2,$tn,$$ir++,$widths)}
             elsif($bk2 eq'when'){my($ws)=_expand_when($bc2,$tn,$ir,\@lp,$drives,$wd);push @body_states,@$ws}}
         if(@lp||!@body_states){push @body_states,_ir_sample_state($tn,\@lp,$$ir++)if@lp;push @body_states,{name=>"${tn}_switch_${val}_" . $$ir++,kind=>'sequential',assignments=>[],transitions=>[]}unless@body_states}
@@ -454,6 +487,7 @@ sub _ir_sync_any { my ($tn,$i,$dps)=@_; {name=>"${tn}_await_any_$i",kind=>'sync_
 
 sub _ir_repeat {
     my ($cl,$tn,$ir,$ps,$wd,$drives,$widths)=@_; my $ctr="${tn}_cnt"; my @s; my @lp;
+    my $width = _repeat_count_width($cl->[1], $widths);
     push @s, {name=>"${tn}_repeat_init_".$$ir++,kind=>'sequential',assignments=>[{lhs=>$ctr,rhs=>$cl->[1],op=>'<='}],transitions=>[]};
     for my $bc(@{$cl}[2..$#$cl]){next unless ref($bc)eq'ARRAY';my $bk=$bc->[0];
         if($bk eq'drive'){my$n=$bc->[1];if(!ref($n)&&$drives->{$n}){push @s,_ir_named_drive_call($bc,$tn,$$ir++,$drives->{$n},[splice @lp])}else{push @s,_ir_drive($bc,$tn,[splice @lp],$$ir++)}}
@@ -463,7 +497,7 @@ sub _ir_repeat {
     if(@lp){push @s,_ir_sample_state($tn,\@lp,$$ir++)}
     my $fb=$s[0]{name};
     push @s, {name=>"${tn}_repeat_check_".$$ir++,kind=>'repeat_check',assignments=>[{lhs=>$ctr,rhs=>"(- $ctr 1)",op=>'<-'}],transitions=>[],loop_target=>$fb,counter=>$ctr};
-    return (\@s,$ctr);
+    return (\@s,$ctr,$width);
 }
 
 # --- Post-processing ---

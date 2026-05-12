@@ -2,6 +2,11 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — repeat counter widths
+- Active: `R14`. `t/1102` proves repeat counters infer widths from decimal
+  literals and sampled named counts, and switch-nested repeats declare the
+  shared transaction counter width.
+
 ## 2026-05-12: R14 — exact extract slices
 - Active: `R14`. `t/1101` proves `assemble ... as target` handling and
   known-width `extract` lowering to exact descending slices, including

@@ -233,7 +233,11 @@ Current lowering:
 - The repeat body is expanded inline.
 - The repeat check state decrements with `<-` and loops while the counter is
   nonzero.
-- Current repeat counter width is fixed at `8`.
+- Repeat counter width is inferred. Decimal literal counts use the minimum
+  width that can represent the loaded count; named counts use the known
+  interface/sample width; unknown count forms fall back to `8`.
+- Top-level repeats and switch-nested repeats register the shared transaction
+  counter at the widest required width.
 - Repeat bodies lower named drive calls plus `await`, `sample`, `update`,
   `shift_left`, `shift_right`, `assemble`, and `extract`.
 
@@ -381,6 +385,7 @@ Focused tests:
 - [t/1099-isf-repeat-data-ops.t](../t/1099-isf-repeat-data-ops.t)
 - [t/1100-isf-sample-piggyback.t](../t/1100-isf-sample-piggyback.t)
 - [t/1101-isf-extract-slices.t](../t/1101-isf-extract-slices.t)
+- [t/1102-isf-repeat-counter-widths.t](../t/1102-isf-repeat-counter-widths.t)
 
 ## 12. Explicitly Deferred
 
