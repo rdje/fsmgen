@@ -35,6 +35,9 @@ to stay exact and duplicate-free across the same views.
 The advertised ISF CLI option list is checked by
 [t/1136-isf-public-cli-option-metadata-audit.t](../t/1136-isf-public-cli-option-metadata-audit.t)
 to stay exact and duplicate-free across direct and manifest views.
+The advertised parser and scheduler method-name lists are checked by
+[t/1137-isf-public-method-name-metadata-audit.t](../t/1137-isf-public-method-name-metadata-audit.t)
+to stay exact and duplicate-free across those views.
 The plain `file.isf` HDL-generation path is checked by
 [t/1123-isf-public-cli-hdl-generation-audit.t](../t/1123-isf-public-cli-hdl-generation-audit.t)
 to reach generated HDL with clean stderr for the APB fixture.
@@ -112,6 +115,8 @@ my $json    = FSM::Scheduler::ISF->new(%args)->report($actor);
 
 The advertised entrypoint lists are exact discovery metadata, not examples with
 additional unlisted public entrypoints implied.
+The `parser_method_names` and `scheduler_method_names` lists are exact
+discovery metadata for the public facade method families.
 
 Constructors must be called with the exact public class invocants
 `FSM::Adapter::ISF` or `FSM::Scheduler::ISF`. The only public constructor

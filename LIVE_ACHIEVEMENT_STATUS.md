@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — ISF method-name metadata audit
+- Active: `R14`. `t/1137` proves public parser/scheduler method-name metadata
+  is exact and duplicate-free across direct and manifest views.
+
 ## 2026-05-12: R14 — ISF CLI option metadata audit
 - Active: `R14`. `t/1136` proves the ISF public CLI option list is exact and
   duplicate-free across direct and manifest views.

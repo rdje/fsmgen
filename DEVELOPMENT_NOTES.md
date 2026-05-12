@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF method-name metadata audit
+- The contract advertises parser and scheduler method-name families separately
+  from entrypoint strings so downstream tools can discover callable facade
+  surfaces without parsing examples.
+- `t/1137-isf-public-method-name-metadata-audit.t` locks those lists across the
+  direct owner, in-process capability manifest, and both CLI manifest spellings,
+  including uniqueness and method-name token shape.
 ## 2026-05-12: R14 ISF CLI option metadata audit
 - The public ISF contract separates full entrypoint examples from the
   ISF-specific CLI option family. Downstream tools should be able to discover
