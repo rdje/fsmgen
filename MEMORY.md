@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF public contract CLI manifest audit
+- Added `t/1115-isf-public-interface-cli-manifest-audit.t` to prove both
+  `--capability-manifest` and `--emit-capability-manifest` advertise
+  `embedding.isf_public_interface` exactly as built by
+  `FSM::Support::ISFPublicInterfaceContract`.
+- The live ISF contract docs and `tested_by` list now record CLI manifest
+  alignment for the downstream discovery surface.
 ## 2026-05-12: R14 — ISF public contract defensive copy
 - Added `t/1114-isf-public-interface-contract-defensive-copy-audit.t` to prove
   fresh `FSM::Support::ISFPublicInterfaceContract` builds are not polluted by

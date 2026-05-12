@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF public contract CLI manifest audit
+- Downstream consumers discover the ISF public-interface contract through the
+  capability manifest, not only through direct Perl module calls. The CLI
+  manifest path is therefore part of the public discovery contract.
+- `t/1115-isf-public-interface-cli-manifest-audit.t` checks both supported
+  manifest spellings so future manifest assembly changes cannot drop or skew
+  `embedding.isf_public_interface` while the direct builder still passes.
 ## 2026-05-12: R14 ISF public contract defensive copy
 - The capability manifest returns contract metadata to external consumers. That
   metadata must behave as caller-owned data, not as a mutable singleton or

@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — ISF public contract CLI manifest audit
+- Active: `R14`. `t/1115` proves both capability-manifest CLI spellings
+  advertise the same `embedding.isf_public_interface` contract payload.
+
 ## 2026-05-12: R14 — ISF public contract defensive copy
 - Active: `R14`. `t/1114` proves fresh `embedding.isf_public_interface`
   contract builds stay clean after caller mutation.

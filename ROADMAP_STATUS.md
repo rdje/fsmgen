@@ -52,6 +52,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   JSON round-trip unchanged.
 - `t/1114` now proves fresh ISF public-interface contract builds are not
   polluted by caller mutation.
+- `t/1115` now proves both capability-manifest CLI spellings advertise the
+  same `embedding.isf_public_interface` contract payload.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
@@ -3568,6 +3570,9 @@ Done:
   discovery metadata.
 - [t/1114-isf-public-interface-contract-defensive-copy-audit.t](t/1114-isf-public-interface-contract-defensive-copy-audit.t)
   locks fresh ISF public-interface contract builds after caller mutation.
+- [t/1115-isf-public-interface-cli-manifest-audit.t](t/1115-isf-public-interface-cli-manifest-audit.t)
+  locks CLI capability-manifest advertisement of the ISF public-interface
+  contract for both supported manifest spellings.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

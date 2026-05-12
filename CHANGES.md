@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF public contract CLI manifest audit
+- Added [t/1115-isf-public-interface-cli-manifest-audit.t](t/1115-isf-public-interface-cli-manifest-audit.t)
+  to prove both capability-manifest CLI spellings advertise the same
+  `embedding.isf_public_interface` contract payload as the in-process builder.
+- Updated the ISF public-interface contract `tested_by` list and live docs to
+  record CLI manifest alignment.
 ### R14 — ISF public contract defensive copy
 - Added [t/1114-isf-public-interface-contract-defensive-copy-audit.t](t/1114-isf-public-interface-contract-defensive-copy-audit.t)
   to prove fresh ISF public-interface contract builds stay clean after caller

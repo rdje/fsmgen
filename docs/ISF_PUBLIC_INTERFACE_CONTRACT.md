@@ -23,6 +23,9 @@ Downstream tools can treat that contract metadata as JSON-safe discovery data.
 It is also defensive-copy audited by
 [t/1114-isf-public-interface-contract-defensive-copy-audit.t](../t/1114-isf-public-interface-contract-defensive-copy-audit.t),
 so callers can mutate a received copy without polluting later contract builds.
+Both capability-manifest CLI spellings are audited by
+[t/1115-isf-public-interface-cli-manifest-audit.t](../t/1115-isf-public-interface-cli-manifest-audit.t)
+to keep the in-process contract and CLI-advertised contract aligned.
 
 ## Stabilized Surface
 
