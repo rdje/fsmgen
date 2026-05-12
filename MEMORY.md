@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF actor-shell drive metadata audit
+- Added `actor_shell_drive_shape` to `embedding.isf_public_interface`,
+  documenting parser-returned `drives` as a drive-name-keyed hash whose entries
+  expose `params` and `body` arrays while keeping drive body payload contents
+  private scheduler input.
+- Tightened ISF drive parsing so nested or otherwise non-scalar drive names and
+  parameter names are rejected before a parser facade returns an actor shell.
+- Added `t/1167-isf-public-actor-shell-drive-shape-audit.t` to prove the
+  metadata is exact across direct and manifest views and aligned with APB drive
+  definitions.
 ## 2026-05-13: R14 — ISF actor-shell rule metadata audit
 - Added `actor_shell_rule_shape` to `embedding.isf_public_interface`,
   documenting parser-returned `rules` entries as scalar `name`, optional

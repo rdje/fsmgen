@@ -291,6 +291,12 @@ sub _parse_drive_def($self, $clause, $drives) {
         $name = $spec;
         @params = ();
     }
+    confess "Error: (drive ...) requires a scalar name\n"
+        unless defined($name) && !ref($name) && length($name);
+    for my $param (@params) {
+        confess "Error: drive '$name' parameter names must be scalar\n"
+            unless defined($param) && !ref($param) && length($param);
+    }
     my @body = @{$clause}[2 .. $#$clause];
     $drives->{$name} = { body => \@body, params => \@params };
 }

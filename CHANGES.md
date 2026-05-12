@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF actor-shell drive metadata audit
+- Added `actor_shell_drive_shape` to `embedding.isf_public_interface` for the
+  parser-returned drive-definition shell: drive-name-keyed entries with
+  `params` and `body` arrays.
+- Tightened ISF drive parsing so nested or otherwise non-scalar drive names and
+  parameter names fail before a parser facade returns a malformed actor shell.
+- Added [t/1167-isf-public-actor-shell-drive-shape-audit.t](t/1167-isf-public-actor-shell-drive-shape-audit.t)
+  to prove the metadata is exact across direct and manifest views and aligned
+  with APB drive definitions.
 ### R14 — ISF actor-shell rule metadata audit
 - Added `actor_shell_rule_shape` to `embedding.isf_public_interface` for the
   parser-returned rule-entry shell: scalar `name`, optional `when`, and

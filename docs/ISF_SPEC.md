@@ -107,6 +107,9 @@ integer.
 Current rule entries are advertised as a bounded shell: `rules` is an array of
 entries with scalar `name`, optional `when`, and `actions` array fields. Rule
 condition/action payload contents remain private scheduler input.
+Current actor-level drive definitions are advertised as a bounded shell:
+`drives` is a hash keyed by drive name, and each entry has `params` and `body`
+array fields. Drive body payload contents remain private scheduler input.
 The same contract publishes the public return containers: parser facades return
 scheduler-consumable actor hash references, `lower(...)` returns a hash
 reference with the advertised lower-result keys, and `report(...)` returns the
@@ -229,6 +232,12 @@ Drive call:
 ```
 
 Current lowering:
+- Accepted parser output exposes drives as a hash of shell entries keyed by
+  drive name. Each entry contains `params` and `body` arrays. Nested or
+  otherwise non-scalar drive names or parameter names are rejected before the
+  parser returns an actor shell. Drive body payload contents remain scheduler
+  input and are not frozen as a public API by the actor-shell drive-shape
+  metadata.
 - Each drive definition becomes a non-state DT block named `-drive_name`.
 - Each drive call becomes one scheduled state.
 - The call asserts `drive_name_start`.
@@ -629,6 +638,7 @@ Focused tests:
 - [t/1164-isf-public-actor-shell-actor-name-shape-audit.t](../t/1164-isf-public-actor-shell-actor-name-shape-audit.t)
 - [t/1165-isf-public-actor-shell-timing-shape-audit.t](../t/1165-isf-public-actor-shell-timing-shape-audit.t)
 - [t/1166-isf-public-actor-shell-rule-shape-audit.t](../t/1166-isf-public-actor-shell-rule-shape-audit.t)
+- [t/1167-isf-public-actor-shell-drive-shape-audit.t](../t/1167-isf-public-actor-shell-drive-shape-audit.t)
 
 ## 12. Explicitly Deferred
 

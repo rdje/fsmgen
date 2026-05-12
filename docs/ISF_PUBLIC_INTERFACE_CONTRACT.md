@@ -202,6 +202,11 @@ The actor-shell rule shape is checked by
 to keep parser-returned rule entries discoverable as scalar `name`, optional
 `when`, and `actions` array shells while leaving rule payload contents private
 scheduler input.
+The actor-shell drive shape is checked by
+[t/1167-isf-public-actor-shell-drive-shape-audit.t](../t/1167-isf-public-actor-shell-drive-shape-audit.t)
+to keep parser-returned drive definitions discoverable as a drive-name-keyed
+hash of `params` and `body` arrays while leaving drive body payload contents
+private scheduler input.
 The facade shape metadata that advertises those constructor, method, path, and
 actor-shell boundaries is checked by
 [t/1143-isf-public-facade-shape-metadata-audit.t](../t/1143-isf-public-facade-shape-metadata-audit.t)
@@ -311,6 +316,11 @@ The current public parser handoff also advertises a bounded rule-entry shell:
 `rules` is an array of entries with scalar `name`, optional `when`, and
 `actions` array fields. The machine-readable contract advertises this through
 `actor_shell_rule_shape`. Rule condition/action payload contents remain private
+scheduler input.
+The current public parser handoff also advertises a bounded drive-definition
+shell: `drives` is a hash of entries keyed by drive name, and each entry has
+`params` and `body` arrays. The machine-readable contract advertises this
+through `actor_shell_drive_shape`. Drive body payload contents remain private
 scheduler input.
 The parser/scheduler argument-shape fields and actor-shell key list are exact
 facade-shape discovery metadata.

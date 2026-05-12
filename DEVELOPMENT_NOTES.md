@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF actor-shell drive metadata audit
+- Actor-level drive definitions are scheduler-consumable parser output and now
+  have an explicit bounded shell in the ISF public contract: a drive-name-keyed
+  hash whose entries expose `params` and `body` arrays.
+- Drive body payloads remain private scheduler input. The parser validates only
+  the shell fields needed to keep drive lookup and parameter binding data
+  well-shaped for downstream consumers and lowering.
+- `t/1167-isf-public-actor-shell-drive-shape-audit.t` locks the metadata across
+  direct and manifest views, checks APB simple and parameterized drives, and
+  covers malformed drive names and parameter names.
 ## 2026-05-13: R14 ISF actor-shell rule metadata audit
 - Rules are scheduler-consumable parser output, but consumers should not infer
   their handoff shape from private parser internals. The contract now records

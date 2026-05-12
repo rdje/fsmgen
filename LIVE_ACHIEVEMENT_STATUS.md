@@ -2,6 +2,11 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF actor-shell drive metadata audit
+- Active: `R14`. `t/1167` proves public actor-shell drive metadata is exact and
+  aligned with APB drive definitions, while non-scalar drive names and params
+  are rejected before returning an actor shell.
+
 ## 2026-05-13: R14 — ISF actor-shell rule metadata audit
 - Active: `R14`. `t/1166` proves public actor-shell rule-entry metadata is
   exact and aligned with rule-bearing plus rule-free parser actors, while
