@@ -98,6 +98,8 @@ It also advertises the transaction-entry shell: `transactions` is an array of
 entries with scalar `name` and `clauses` array fields. Those shapes are
 live-contract metadata for scheduler-consumable actors, not a freeze of the
 full raw actor hash or the private transaction clause payloads.
+The actor identity shape is also explicit: `actor_name` is a non-empty scalar
+identifier preserved from the ISF actor root.
 The same contract publishes the public return containers: parser facades return
 scheduler-consumable actor hash references, `lower(...)` returns a hash
 reference with the advertised lower-result keys, and `report(...)` returns the
@@ -121,6 +123,9 @@ The root form is:
 
 The active parser accepts one actor root from the Lispish source and normalizes
 the Lispish nested-head shape into canonical `(actor name ...)`.
+Accepted parser output preserves `name` as the public actor-shell
+`actor_name`; nested or otherwise non-scalar actor names are rejected before the
+parser returns an actor shell.
 
 Supported actor clauses:
 - `(clock name)`
@@ -606,6 +611,7 @@ Focused tests:
 - [t/1161-isf-public-facade-failure-diagnostic-metadata-audit.t](../t/1161-isf-public-facade-failure-diagnostic-metadata-audit.t)
 - [t/1162-isf-public-actor-shell-interface-shape-audit.t](../t/1162-isf-public-actor-shell-interface-shape-audit.t)
 - [t/1163-isf-public-actor-shell-transaction-shape-audit.t](../t/1163-isf-public-actor-shell-transaction-shape-audit.t)
+- [t/1164-isf-public-actor-shell-actor-name-shape-audit.t](../t/1164-isf-public-actor-shell-actor-name-shape-audit.t)
 
 ## 12. Explicitly Deferred
 

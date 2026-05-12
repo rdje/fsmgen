@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF actor-shell actor-name metadata audit
+- Downstream consumers already receive `actor_name` from the parser facade, and
+  scheduler reports derive public basenames from that identity. The contract now
+  records the identity shape directly instead of relying on the broader
+  actor-shell value-shape sentence.
+- The parser now rejects non-scalar actor-root names before returning an actor
+  shell, keeping malformed identity data out of the public handoff.
+- `t/1164-isf-public-actor-shell-actor-name-shape-audit.t` locks the metadata
+  across direct and manifest views, checks APB `parse_file(...)` plus
+  `parse_source(...)` actors, and covers rejection of a nested actor name.
 ## 2026-05-13: R14 ISF actor-shell transaction-shape metadata audit
 - The parser/scheduler handoff already exposes `transactions` as part of the
   public actor shell. The contract now documents the bounded transaction-entry

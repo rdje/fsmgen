@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF actor-shell actor-name metadata audit
+- Added `actor_shell_actor_name_shape` to
+  `embedding.isf_public_interface` for the parser-returned non-empty scalar
+  `actor_name` identifier.
+- Tightened ISF actor-root parsing so nested or otherwise non-scalar actor
+  names fail before a parser facade returns a malformed actor shell.
+- Added [t/1164-isf-public-actor-shell-actor-name-shape-audit.t](t/1164-isf-public-actor-shell-actor-name-shape-audit.t)
+  to prove the metadata is exact across direct and manifest views and aligned
+  with `parse_file(...)` plus `parse_source(...)` APB actors.
 ### R14 — ISF actor-shell transaction-shape metadata audit
 - Added `actor_shell_transaction_shape` to `embedding.isf_public_interface` for
   the current parser-returned transaction-entry shell: scalar `name` plus

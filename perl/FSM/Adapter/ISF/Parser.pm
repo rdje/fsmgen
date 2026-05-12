@@ -80,8 +80,8 @@ sub _build_actor($self, $actor_ast, $source_label) {
 
     fsm_debug("Building actor '$actor_name' with " . scalar(@body) . " body clause(s)", 3);
 
-    confess "Error: (actor ...) requires a name\n"
-        unless defined $actor_name && !ref($actor_name);
+    confess "Error: (actor ...) requires a scalar name\n"
+        unless defined($actor_name) && !ref($actor_name) && length($actor_name);
 
     my $result = {
         actor_name   => $actor_name,

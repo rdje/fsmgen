@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF actor-shell actor-name metadata audit
+- Added `actor_shell_actor_name_shape` to `embedding.isf_public_interface`,
+  documenting parser-returned `actor_name` as the non-empty scalar identifier
+  preserved from the ISF actor root.
+- Tightened ISF actor-root parsing so nested or otherwise non-scalar actor
+  names are rejected before a parser facade returns an actor shell.
+- Added `t/1164-isf-public-actor-shell-actor-name-shape-audit.t` to prove the
+  metadata is exact across direct and manifest views and aligned with
+  `parse_file(...)` plus `parse_source(...)` APB actors.
 ## 2026-05-13: R14 — ISF actor-shell transaction-shape metadata audit
 - Added `actor_shell_transaction_shape` to `embedding.isf_public_interface`,
   documenting parser-returned transaction entries as scalar `name` plus
