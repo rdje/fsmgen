@@ -199,6 +199,7 @@ my $emit_capability_manifest = 0;
 my $check_mode = 0;
 my $json_output = 0;
 my $emit_semantic_json = 0;
+my $emit_schedule_json = 0;
 my $verify_hdl = 0;
 
 # Store original ARGV to check for bare flags before GetOptions processes them
@@ -227,6 +228,7 @@ GetOptions(
         $json_output = 1;
     },
     'emit-semantic-json|semantic-json|emit-normalized-json|normalized-json' => \$emit_semantic_json,
+    'emit-schedule-json' => \$emit_schedule_json,
     'verify-hdl|validate-hdl' => \$verify_hdl,
 ) or die "Error in command line arguments\n";
 
@@ -532,6 +534,13 @@ if ($fsm_file =~ /\.isf$/i) {
             exit 1;
         }
         die $display_error;
+    }
+
+    if ($emit_schedule_json) {
+        my $json = eval { $scheduler->report($actor); };
+        if ($@) { die normalize_cli_error_text($@); }
+        print $json;
+        exit 0;
     }
 
     my $result = eval { $scheduler->lower($actor); };
