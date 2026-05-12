@@ -19,7 +19,7 @@ Use it first for objective, navigation, and where to find code/docs quickly.
   local filesystem path.
 
 ## Project objective
-FSMGen compiles Lisp-like `.fsm` state machine specifications into synthesizable HDL.
+FSMGen compiles Lisp-like `.fsm` state machine specifications into synthesizable HDL, and now accepts `.isf` intent-scheduling sources that lower into explicit scheduled `.fsm` before HDL generation.
 Current primary target is SystemVerilog, with Verilog conversion support and explicit VHDL not-implemented signaling.
 The project objective is robust, traceable FSM-to-HDL generation with clear assignment semantics, optimization via AST factorization, and behavior-preserving refactoring toward a modular architecture.
 
@@ -36,14 +36,16 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 10. `docs/EXTENSION_MODEL.md`: active `R7` typed extension boundary replacing legacy `.plg` / `PPlugin` as architecture direction.
 11. `docs/SPECFORGE_FEEDBACK_RESPONSE.md`: FSMGen's tracked response and alignment plan for SPECFORGE adapter feedback.
 12. `docs/INTENT_SCHEDULING_BRAINSTORM.md`: living brainstorm log for an intent-scheduling layer above explicit cycle-authored `.fsm`.
-13. `docs/BIN_FSMGEN_IMPORT_TREE.md`: live `bin/fsmgen` import-tree and runtime-spine architecture snapshot.
-14. `docs/REGRESSION_CORPUS.md`: human-readable regression/support-accounting corpus companion.
-15. `docs/INTENT_CAPTURE_AXI_CASE_STUDY.md`: AXI intent-capture case-study notes for future high-level synthesis work.
-16. `CHANGES.md`: chronological technical changes.
-17. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
-18. `MEMORY.md`: continuity/handoff state.
-19. `WARP.md`: repository-specific agent/development guidance.
-20. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
+13. `docs/ISF_SPEC.md`: active R14 `.isf` Intent Scheduling Format specification.
+14. `docs/BIN_FSMGEN_IMPORT_TREE.md`: live `bin/fsmgen` import-tree and runtime-spine architecture snapshot.
+15. `docs/REGRESSION_CORPUS.md`: human-readable regression/support-accounting corpus companion.
+16. `docs/INTENT_CAPTURE_AXI_CASE_STUDY.md`: AXI intent-capture case-study notes for future high-level synthesis work.
+17. `CHANGES.md`: chronological technical changes.
+18. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
+19. `MEMORY.md`: continuity/handoff state.
+20. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
+21. `WARP.md`: repository-specific agent/development guidance.
+22. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
 
 ## Documentation index (all `.md` files in this repo)
 - `README.md` — single entry point and navigation hub.
@@ -59,13 +61,14 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/EXTENSION_MODEL.md` — typed extension boundary for the active `R7` replacement path.
 - `docs/SPECFORGE_FEEDBACK_RESPONSE.md` — tracked FSMGen response to SPECFORGE adapter/tool-integration feedback.
 - `docs/INTENT_SCHEDULING_BRAINSTORM.md` — living brainstorm log for inferring/scheduling cycles from a hardware-native intent layer above explicit `.fsm`.
-- `docs/ISF_SPEC.md` — active R14 `.isf` Intent Scheduling Format specification (v0.1).
+- `docs/ISF_SPEC.md` — active R14 `.isf` Intent Scheduling Format specification.
 - `docs/REGRESSION_CORPUS.md` — human-readable companion to the machine-checked support and regression catalog.
 - `docs/INTENT_CAPTURE_AXI_CASE_STUDY.md` — AXI intent-capture case-study notes for future high-level synthesis work.
 - `docs/VHDL_SCOPE.md` — scoped VHDL backend plan preserved for future horizon H5 reference.
 - `CHANGES.md` — persistent technical change history.
 - `DEVELOPMENT_NOTES.md` — architecture notes and engineering rationale.
 - `MEMORY.md` — live continuity context and recovery notes.
+- `LIVE_ACHIEVEMENT_STATUS.md` — latest completed roadmap-aligned slice for fast recovery.
 - `COMMIT.md` — canonical commit workflow specification.
 - `WARP.md` — project guidance for Warp/agent workflows.
 - `.agents/workflows/commit.md` — agent workflow definition for commit operations.
@@ -74,6 +77,11 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 ## Project file and directory map
 ### Core entrypoints and pipeline
 - `bin/fsmgen` — main CLI entrypoint.
+- `perl/FSM/Adapter/ISF.pm` — `.isf` parser facade for intent-scheduling sources.
+- `perl/FSM/Scheduler/ISF.pm` — `.isf` lowering facade that emits scheduled `.fsm` and schedule JSON reports.
+- `perl/FSM/Scheduler/ISF/LoweringIR.pm` — typed lowering IR builder for `.isf` actors, transactions, drives, control flow, and spawned children.
+- `perl/FSM/Scheduler/ISF/Emitter/FSM.pm` — scheduled `.fsm` emitter for `.isf` lowering results.
+- `perl/FSM/Scheduler/ISF/Emitter/JSON.pm` — machine-readable schedule-report emitter for `.isf` lowering results.
 - `perl/FSM/Pipeline/HDLGenerator.pm` — thin public generation facade around source/direct/composition orchestrators.
 - `perl/FSM/Composition/Net.pm` — typed internal net plan for multi-child composition wiring.
 - `perl/FSM/Composition/Parser.pm` — first typed composition parser/IR boundary.
@@ -157,6 +165,8 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 ./bin/fsmgen --output /tmp/trial_0.sv fsm/trial_0.fsm
 ./bin/fsmgen --debug=3 fsm/lte_dif_pmaster.fsm
 ./bin/fsmgen --verify-hdl --output /tmp/lte_dif_pmaster.sv fsm/lte_dif_pmaster.fsm
+./bin/fsmgen --strict isf/apb_requester.isf
+./bin/fsmgen --emit-schedule-json isf/i2c_master.isf
 ```
 
 ## Documentation quick preview
@@ -180,9 +190,10 @@ cd docs/book && mdbook serve
 
 ## CLI quick reference
 ```bash
-./bin/fsmgen [options] <fsm_file>
+./bin/fsmgen [options] <fsm_file_or_isf_file>
 ```
 - `-o, --output <file>`: explicit output path.
+- `--outdir <dir>`: write every scheduled `.fsm` file produced from a multi-file `.isf` lowering.
 - `-l, --language <systemverilog|sv|verilog|v|vhdl>`: target language.
 - `-d, --debug[=N]`: numeric debug compatibility level (`0..4`; bare `--debug` implies `4`).
 - `--trace-verbosity <none|low|medium|high|debug>`: named trace verbosity.
@@ -193,8 +204,13 @@ cd docs/book && mdbook serve
 - `--capability-manifest`: print the versioned JSON FSMGen capability manifest and exit.
 - `--check --json`: run the full pipeline as a check, emit JSON diagnostics, and do not write HDL.
 - `--emit-semantic-json`: run the full pipeline, emit bounded normalized semantic JSON, and do not write HDL.
+- `--emit-schedule-json`: for `.isf` input, emit the scheduler's JSON report and exit before HDL generation.
 - `--verify-hdl`: after writing generated SystemVerilog, run Verilator lint and ABC-free Yosys structural synthesis.
 - `-q, --quiet`: suppress informational output.
+
+Inputs ending in `.isf` are parsed by the intent scheduler, lowered to one or
+more explicit `.fsm` sources, and then fed through the normal `.fsm` pipeline
+unless `--emit-schedule-json` is requested.
 
 The bounded machine-readable surfaces are backed by support accounting:
 `--check --json` is corpus-covered across supported, strict-supported, and

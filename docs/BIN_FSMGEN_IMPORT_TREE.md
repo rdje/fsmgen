@@ -11,13 +11,19 @@ Use it to keep one current, high-signal picture of:
 Refresh this document at the start of a later session whenever the effective entrypoint/import-tree architecture has moved enough that this note is no longer honest.
 
 Current baseline:
-- Reviewed on `2026-05-10`.
-- Startup bootstrap refreshed on `2026-05-10`; the live static trace still
-  matches this note, and the selected line-count measurements below were
-  refreshed from source.
+- Reviewed on `2026-05-12`.
+- Startup bootstrap refreshed on `2026-05-12`; the live static trace now
+  includes the R14 `.isf` intent-scheduling path and the selected line-count
+  measurements below were refreshed from source.
 - Scope is the project-owned transitive `FSM::...` tree reachable from [bin/fsmgen](bin/fsmgen).
 - Perl core and non-project helper modules are treated as support dependencies, not as part of the architectural map.
-- Static trace from [bin/fsmgen](bin/fsmgen) currently reaches `184` project files total, `183` `.pm` packages.
+- Static trace from [bin/fsmgen](bin/fsmgen) currently reaches `191` project files total, `190` `.pm` packages.
+- The R14 `.isf` front door is reachable from [bin/fsmgen](bin/fsmgen)
+  through conditional runtime requires of [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm)
+  and [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm). That path lowers
+  `.isf` actors into scheduled `.fsm` text, optionally emits schedule JSON, and
+  then hands the scheduled `.fsm` source to the existing direct/composition
+  pipeline.
 - The former composition-local parameter/generic helper is now a compatibility shim; the active neutral owner is [perl/FSM/ParameterValueSupport.pm](perl/FSM/ParameterValueSupport.pm), including bounded scalar expressions and matching-shape leafwise aggregate expression folding.
 - Shared integer literal parsing is now reachable through [perl/FSM/Package/IntegerLiteralSupport.pm](perl/FSM/Package/IntegerLiteralSupport.pm), keeping common decimal, `0d`, based SystemVerilog, `0x`, `0b`, `0o`, and intent-level sized `.fsm` spellings such as `5'23`, `8'-10`, `8'-0xA`, `8'-0b1010`, and `20'x1` consistent across scalar widths, constants, and direct `+size` expression terms while normalizing to legal target-HDL literals before backend emission.
 - The top-level manifest owner [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm) is now intentionally thin: it is a small assembler over dedicated top-level public section builders in [perl/FSM/Support/ProducerSection.pm](perl/FSM/Support/ProducerSection.pm), [perl/FSM/Support/SupportAccountingSection.pm](perl/FSM/Support/SupportAccountingSection.pm), [perl/FSM/Support/DiagnosticsSection.pm](perl/FSM/Support/DiagnosticsSection.pm), [perl/FSM/Support/SemanticExportsSection.pm](perl/FSM/Support/SemanticExportsSection.pm), [perl/FSM/Support/BackendValidationSection.pm](perl/FSM/Support/BackendValidationSection.pm), [perl/FSM/Support/EmbeddingSection.pm](perl/FSM/Support/EmbeddingSection.pm), [perl/FSM/Support/LanguageSurfaceSection.pm](perl/FSM/Support/LanguageSurfaceSection.pm), and [perl/FSM/Support/DocumentationSection.pm](perl/FSM/Support/DocumentationSection.pm), while [perl/FSM/Support/CapabilityManifestContract.pm](perl/FSM/Support/CapabilityManifestContract.pm) continues to own the bounded manifest shell and grouped discovery tables.
@@ -27,7 +33,8 @@ Current baseline:
 - The embedding-facing support/API surface now also includes the bounded in-process debug-runtime child contract in [perl/FSM/Support/DebugRuntimeContract.pm](perl/FSM/Support/DebugRuntimeContract.pm) and the bounded public `HDLGenerator` facade child contract in [perl/FSM/Support/HDLGeneratorFacadeContract.pm](perl/FSM/Support/HDLGeneratorFacadeContract.pm), advertised as `embedding.debug_runtime` and `embedding.hdl_generator_facade`.
 
 ## Executive read
-[bin/fsmgen](bin/fsmgen) is a thin CLI/reporting shell.
+[bin/fsmgen](bin/fsmgen) is a thin CLI/reporting shell plus the R14 `.isf`
+pre-lowering front door.
 [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm)
 is now down to the honest facade role we wanted: shared pipeline
 configuration plus the single top-level `generate_hdl_from_file(...)`
@@ -37,6 +44,12 @@ The real coordinator gravity is now the orchestrator family beneath it:
 - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](perl/FSM/Pipeline/SourceGenerationOrchestrator.pm)
 - [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](perl/FSM/Pipeline/DirectGenerationOrchestrator.pm)
 - [perl/FSM/Composition/GenerationOrchestrator.pm](perl/FSM/Composition/GenerationOrchestrator.pm)
+
+For `.isf` inputs, [bin/fsmgen](bin/fsmgen) first asks
+[perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm) and
+[perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm) to parse, lower, and
+optionally report the schedule before the ordinary `.fsm` pipeline sees the
+generated source.
 
 The best current architecture in the tree is the newer composition/forward-IR/backend-emitter slice:
 - [perl/FSM/IR/IntentHIR.pm](perl/FSM/IR/IntentHIR.pm)
@@ -212,27 +225,36 @@ This is the current static measurement view behind the qualitative assessment
 above.
 
 Reachable package-family counts from [bin/fsmgen](bin/fsmgen):
-- total reachable project files: `184`
-- reachable `.pm` packages: `183`
+- total reachable project files: `191`
+- reachable `.pm` packages: `190`
 - `Support`: `62`
 - `Composition`: `35`
 - `HDL`: `32`
 - `Package`: `14`
 - `Synthesis`: `10`
+- `Adapter`: `8`
 - `IR`: `7`
-- `Adapter`: `5`
 - `Pipeline`: `5`
+- `Scheduler`: `4`
 - `Backend`: `3`
 - `Extension`: `3`
 - `AST`: `1`
 - singleton support surfaces: `CoreAST.pm`, `Debug.pm`, `ExpressionNamer.pm`, `ParameterValueSupport.pm`, `SourceClassifier.pm`, `SourcePathResolver.pm`
 
 Current thin-coordinator / public-surface assembler line counts:
+- [bin/fsmgen](bin/fsmgen): `1094`
 - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm): `418`
 - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](perl/FSM/Pipeline/SourceGenerationOrchestrator.pm): `174`
 - [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](perl/FSM/Pipeline/DirectGenerationOrchestrator.pm): `117`
 - [perl/FSM/Composition/GenerationOrchestrator.pm](perl/FSM/Composition/GenerationOrchestrator.pm): `172`
 - [perl/FSM/HDL/FlattenedDT.pm](perl/FSM/HDL/FlattenedDT.pm): `172`
+- [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm): `50`
+- [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm): `296`
+- [perl/FSM/Adapter/ISF/LispishAdapter.pm](perl/FSM/Adapter/ISF/LispishAdapter.pm): `99`
+- [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm): `58`
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm): `392`
+- [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm): `269`
+- [perl/FSM/Scheduler/ISF/Emitter/JSON.pm](perl/FSM/Scheduler/ISF/Emitter/JSON.pm): `108`
 - [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm): `34`
 - [perl/FSM/Support/CapabilityManifestContract.pm](perl/FSM/Support/CapabilityManifestContract.pm): `265`
 - [perl/FSM/Support/ProducerSection.pm](perl/FSM/Support/ProducerSection.pm): `62`
@@ -298,9 +320,15 @@ Interpretation:
 - [perl/FSM/Support/HDLExternalValidation.pm](perl/FSM/Support/HDLExternalValidation.pm)
 - [perl/FSM/Support/NormalizedSemanticReport.pm](perl/FSM/Support/NormalizedSemanticReport.pm)
 
+For `.isf` inputs, [bin/fsmgen](bin/fsmgen) also conditionally requires:
+- [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm)
+- [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm)
+
 It mainly owns:
 - CLI option parsing
 - source-file lookup
+- `.isf` input detection, schedule-report exit, temporary scheduled `.fsm`
+  handoff, and multi-file scheduled `.fsm` output routing
 - debug/trace routing
 - output-file writing
 - capability-manifest JSON emission
@@ -309,15 +337,31 @@ It mainly owns:
 - external HDL validation lifecycle routing
 - user-facing summaries for composition provenance, override/block events, failure summaries, generated children, and shared-datapath metadata
 
-[bin/fsmgen](bin/fsmgen) is `1013` lines today, so it is not tiny, but most of that weight is presentation/reporting rather than semantic compiler ownership.
+[bin/fsmgen](bin/fsmgen) is `1094` lines today, so it is not tiny, but most of
+that weight is presentation/reporting and `.isf` pre-lowering glue rather than
+semantic compiler ownership.
 
 It does not own the compiler architecture.
 Its only non-trivial local logic is presentation/reporting glue.
 
 ## Runtime spine
-Normal execution is best understood as two sibling spines under the same CLI and top-level facade.
+Normal execution is best understood as one optional `.isf` pre-spine feeding two
+sibling `.fsm` spines under the same CLI and top-level facade.
 
 ```text
+ISF pre-spine
+bin/fsmgen
+  -> FSM::SourcePathResolver
+  -> FSM::Adapter::ISF
+     -> FSM::Adapter::ISF::Parser
+     -> FSM::Adapter::ISF::LispishAdapter
+  -> FSM::Scheduler::ISF
+     -> FSM::Scheduler::ISF::LoweringIR
+     -> FSM::Scheduler::ISF::Emitter::FSM
+     -> FSM::Scheduler::ISF::Emitter::JSON
+  -> scheduled .fsm source
+  -> Direct-root spine below, unless --emit-schedule-json exits earlier
+
 Direct-root spine
 bin/fsmgen
   -> FSM::SourcePathResolver
@@ -409,6 +453,20 @@ Important distinction:
 - [perl/FSM/Debug.pm](perl/FSM/Debug.pm)
 - [perl/FSM/SourcePathResolver.pm](perl/FSM/SourcePathResolver.pm)
 - [perl/FSM/SourceClassifier.pm](perl/FSM/SourceClassifier.pm)
+
+### ISF intent-scheduling pre-lowering
+- [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm)
+- [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
+- [perl/FSM/Adapter/ISF/LispishAdapter.pm](perl/FSM/Adapter/ISF/LispishAdapter.pm)
+- [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm)
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+- [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm)
+- [perl/FSM/Scheduler/ISF/Emitter/JSON.pm](perl/FSM/Scheduler/ISF/Emitter/JSON.pm)
+
+This R14 layer is intentionally before the main `HDLGenerator` facade: it turns
+intent-scheduled `.isf` sources into explicit `.fsm` artifacts or a schedule
+JSON report. The generated `.fsm` then uses the ordinary direct-root pipeline,
+so `.isf` does not create a second HDL backend path.
 
 ### Support accounting, capability manifest, semantic reports, and external HDL validation
 - [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm)

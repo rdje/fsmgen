@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: Bootstrap — R14 `.isf` pre-spine documented
+- `bin/fsmgen` now has an explicit documented pre-spine for `.isf` inputs:
+  resolve source, parse with `FSM::Adapter::ISF`, lower/report with
+  `FSM::Scheduler::ISF`, then hand scheduled `.fsm` to the existing pipeline.
+- The live static import trace is 191 project files / 190 `.pm` packages; the
+  delta from the previous snapshot is the reachable ISF adapter/scheduler
+  family.
+- The next documentation risk is the detailed `docs/ISF_SPEC.md`, which still
+  needs to be synchronized with the shipped post-handshake, post-assign-keyword
+  parser/scheduler surface.
 ## 2026-05-12: R14 — mdBook ISF expanded + data manipulation
 - 8 ISF sub-chapters. shift, assemble, extract constructs. Switch expander handles all clause types.
 ## 2026-05-12: R14 — no merge, mdBook

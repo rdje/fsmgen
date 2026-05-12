@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### Bootstrap — R14 onboarding/import-tree refresh
+- Refreshed README onboarding/CLI references for `.isf`, `--outdir`, and
+  `--emit-schedule-json`.
+- Updated `docs/BIN_FSMGEN_IMPORT_TREE.md` for the reachable `.isf`
+  adapter/scheduler pre-lowering spine and the live static trace:
+  191 project files, 190 `.pm` packages.
+- Updated `ROADMAP_STATUS.md` so the current active lane and R14 workstream
+  reflect Intent Scheduling instead of stale R13/VHDL text.
 ### R14 — mdBook ISF chapter (8 sections) + data manipulation
 - 8 ISF sub-chapters. shift_left/right, assemble, extract constructs. 36 states, 7 tests.
 ### R14 — no merge, mdBook

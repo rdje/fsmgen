@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: Bootstrap — R14 import tree and onboarding docs refreshed
+- README now advertises `.isf` inputs, `--outdir`, and `--emit-schedule-json`.
+- `docs/BIN_FSMGEN_IMPORT_TREE.md` now records the R14 `.isf` pre-lowering
+  spine and the live static trace: 191 project files, 190 `.pm` packages.
+- `ROADMAP_STATUS.md` current active lane and R14 workstream now point to
+  Intent Scheduling instead of stale R13/VHDL text.
+- Next bounded slice: sync `docs/ISF_SPEC.md` with the shipped parser/scheduler
+  behavior.
 ## 2026-05-12: R14 — deepened mdBook: cycle-by-cycle transparency
 - Transactions chapter: exact .fsm output, timing per clause, implicit signals table
 - Lowering reference chapter: every construct → exact .fsm with cycle counts

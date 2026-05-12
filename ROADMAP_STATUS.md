@@ -1,7 +1,11 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R14`. mdBook ISF chapter (8 sections) + data manipulation constructs. 36 states, 7 tests.
+- Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
+- Next decision point: bootstrap/import-tree refresh records the reachable
+  `.isf` adapter/scheduler pre-lowering path and the live static trace
+  (`191` project files, `190` `.pm` packages). Next bounded R14 slice:
+  synchronize `docs/ISF_SPEC.md` with shipped parser/scheduler behavior.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
@@ -871,8 +875,17 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- `R13` Public embedding/API stabilization, backed by `R12` regression corpus and support accounting.
+- `R14` Intent Scheduling (`.isf` format and lowering compiler), backed by the
+  explicit `.fsm` middle layer and the existing SystemVerilog/Verilog backend.
 - Current next decision point:
+  - The bootstrap/import-tree refresh now records that [bin/fsmgen](bin/fsmgen)
+    reaches the R14 `.isf` adapter/scheduler pre-lowering path and that the
+    live static trace is `191` project files / `190` `.pm` packages.
+  - Next bounded `R14` slice: synchronize the detailed `.isf` specification
+    with the shipped parser/scheduler surface, then continue scheduler
+    behavior work from the documented open limitations.
+- Superseded `R13` carry-forward detail retained below this note should not be
+  read as the current active lane:
   - The bounded `HDLGenerator` result contract now has a dedicated JSON
     round-trip guard for its shell-only fallback surface family map.
     [t/727-hdl-generator-result-contract-shell-fallback-family-json-roundtrip-audit.t](t/727-hdl-generator-result-contract-shell-fallback-family-json-roundtrip-audit.t)
@@ -3380,20 +3393,58 @@ Left:
 Exit criteria:
 - Downstream tooling can embed FSMGen against a documented, intentionally stable contract.
 
-### R14. VHDL backend, if still wanted
+### R14. Intent Scheduling — `.isf` format and lowering compiler
 Description:
-- Implement a real VHDL backend only after the language contract is tight enough to support a second backend honestly.
+- Define and implement the `.isf` intent-scheduling layer above explicit
+  cycle-authored `.fsm`, so users can describe protocol transactions, rules,
+  drives, control flow, and constraints while FSMGen produces reviewable
+  scheduled `.fsm` artifacts.
 Deliverables:
-- Define the VHDL backend scope.
-- Implement the single-FSM VHDL emission lane first.
-- Decide later whether composition-top VHDL generation should also exist.
-Status: `not started`
+- Keep a written `.isf` syntax/semantic contract.
+- Parse `.isf` actors into a typed intent AST.
+- Lower that AST through `FSM::Scheduler::ISF::LoweringIR`.
+- Emit scheduled `.fsm` and machine-readable schedule JSON from the same IR.
+- Compile scheduled `.fsm` through the existing direct HDL pipeline.
+- Cover realistic protocol fixtures and strict-mode checks.
+Status: `in progress`
 Done:
-- Current code recognizes the target and fails explicitly with a not-implemented message instead of crashing.
+- R14 is active; the former VHDL backend lane is preserved as horizon `H5` in
+  [ROADMAP_V2.md](ROADMAP_V2.md) and [docs/VHDL_SCOPE.md](docs/VHDL_SCOPE.md).
+- [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm),
+  [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm), and
+  [perl/FSM/Adapter/ISF/LispishAdapter.pm](perl/FSM/Adapter/ISF/LispishAdapter.pm)
+  parse `.isf` actor sources.
+- [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm),
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm),
+  [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm),
+  and [perl/FSM/Scheduler/ISF/Emitter/JSON.pm](perl/FSM/Scheduler/ISF/Emitter/JSON.pm)
+  lower `.isf` sources to scheduled `.fsm` and schedule JSON.
+- [bin/fsmgen](bin/fsmgen) accepts `.isf` inputs, supports
+  `--emit-schedule-json`, writes multi-file scheduled `.fsm` outputs through
+  `--outdir`, and feeds single-file scheduled `.fsm` through the normal HDL
+  pipeline.
+- Current shipped constructs include actor headers, interface ports, reset
+  forms, watchdogs, transactions, `(on ...)`, `(when ...)`, `(switch ...)`,
+  `(repeat ...)`, `(await ...)`, `(sample ...)`, `(complete ...)`, named and
+  parameterized drive definitions/calls, `(do ...)`, `(spawn ...)`,
+  `(await_all ...)`, `(await_any ...)`, rules, trigger/pulse, latency checks,
+  and data-manipulation constructs such as `shift_left`, `shift_right`,
+  `assemble`, and `extract`.
+- The mdBook now carries the R14 ISF chapter split, including the lowering
+  reference.
+- The bootstrap import-tree snapshot now records the reachable ISF adapter and
+  scheduler path.
 Left:
-- Open the real backend scope, then implement and test it deliberately.
+- Synchronize the detailed [docs/ISF_SPEC.md](docs/ISF_SPEC.md) contract with
+  the shipped parser/scheduler behavior.
+- Finish or deliberately defer the documented current limitations in the
+  mdBook R14 chapters.
+- Broaden schedule-report assertions and end-to-end fixture coverage as the
+  scheduler surface stabilizes.
 Exit criteria:
-- VHDL is a real, tested backend for the agreed scope rather than a recognized-but-unimplemented target.
+- `.isf` has a documented, regression-backed lowering contract that can produce
+  scheduled `.fsm`, schedule JSON, and generated HDL for the agreed realistic
+  protocol fixture set without hidden timing choices.
 - `R11`: `StructuralRTLIR` connection expressions now cover bounded indexed and
   sliced signal forms in addition to plain `signal_ref`, including explicit
   top-link source-side top-port and child-output projection forms, with the
