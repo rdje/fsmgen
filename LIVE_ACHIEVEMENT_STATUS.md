@@ -2,6 +2,11 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — switch branch exits
+- Active: `R14`. `t/1103` proves multi-state switch branches and
+  switch-nested repeat checks exit after the whole switch instead of falling
+  into later branch bodies.
+
 ## 2026-05-12: R14 — repeat counter widths
 - Active: `R14`. `t/1102` proves repeat counters infer widths from decimal
   literals and sampled named counts, and switch-nested repeats declare the

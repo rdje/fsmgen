@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — switch branch exits
+- `LoweringIR` now records each switch branch state span and branch tail while
+  expanding `(switch ...)`.
+- The linker redirects switch branch tails to the first state after the whole
+  switch, so multi-state branches and repeat-check exits no longer fall through
+  into later branch bodies.
+- Added `t/1103-isf-switch-branch-exits.t` for ordinary multi-state branches
+  and repeat branches.
 ## 2026-05-12: R14 — inferred repeat counter widths
 - `LoweringIR` now infers `{transaction}_cnt` widths from repeat counts:
   decimal literal counts use the minimum width that can represent the loaded

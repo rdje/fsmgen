@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — switch branch exits
+- Updated [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so switch expansion records branch state spans and branch tails.
+- Switch branch tails now transition to the first state after the whole switch,
+  preventing multi-state branches and repeat checks from falling through into
+  later branch bodies.
+- Added [t/1103-isf-switch-branch-exits.t](t/1103-isf-switch-branch-exits.t)
+  for ordinary multi-state branches and switch-nested repeat branches.
 ### R14 — inferred repeat counter widths
 - Updated [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
   so repeat counters use inferred widths: decimal literal counts use the

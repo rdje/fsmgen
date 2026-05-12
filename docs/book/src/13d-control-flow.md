@@ -34,7 +34,8 @@
   (3 (drive idle_path)))
 ```
 
-Each branch value must be unique. Body clauses are expanded inline.
+Each branch value must be unique. Body clauses are expanded inline, and each
+branch tail exits to the first state after the whole switch.
 
 **Lowering**: `?signal` decision tree.
 ```lisp
@@ -104,3 +105,5 @@ Each branch value must be unique. Body clauses are expanded inline.
 
 Read branch: captures 8 bits via shift register.
 Write branch: drives 8 bits of data.
+Both branch repeats exit to the same post-switch STOP sequence when their
+repeat checks complete.

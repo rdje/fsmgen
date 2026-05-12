@@ -272,6 +272,8 @@ current data operations.
 ```
 
 **Timing**: 1 cycle for decision, then body cycles of the matching branch.
+Branch tails transition to the state after the whole switch; multi-state
+branches and repeat-check exits do not fall through into later branch bodies.
 **Implicit signals**: None.
 
 ## `(update var expr)` / `(shift_left reg bit)` / `(shift_right reg bit)` → Sequential State

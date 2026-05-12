@@ -466,7 +466,7 @@ sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd)=@_; my @s; my $bstate=_ir_wh
     return (\@s);
 }
 
-sub _expand_switch { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters)=@_; my $signal=$cl->[1]; my @branches; my %seen_val; my @s;
+sub _expand_switch { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters)=@_; my $signal=$cl->[1]; my @branches; my @branch_state_names; my @branch_end_names; my %seen_val; my @s;
     for my $i(2..$#$cl){my$br=$cl->[$i];next unless ref($br)eq'ARRAY'&&@$br>=2;my$val=$br->[0];my@bc=@{$br}[1..$#$br];
         confess "Switch '$tn': duplicate value '$val'\n" if$seen_val{$val}++;my@body_states;my@lp;
         for my $bc2(@bc){next unless ref($bc2)eq'ARRAY';my$bk2=$bc2->[0];
@@ -477,9 +477,12 @@ sub _expand_switch { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters)=@_; my $
             elsif($bk2 eq'update'||$bk2 eq'shift_left'||$bk2 eq'shift_right'||$bk2 eq'assemble'||$bk2 eq'extract'){push @body_states,_ir_data_op($bk2,$bc2,$tn,$$ir++,$widths)}
             elsif($bk2 eq'when'){my($ws)=_expand_when($bc2,$tn,$ir,\@lp,$drives,$wd);push @body_states,@$ws}}
         if(@lp||!@body_states){push @body_states,_ir_sample_state($tn,\@lp,$$ir++)if@lp;push @body_states,{name=>"${tn}_switch_${val}_" . $$ir++,kind=>'sequential',assignments=>[],transitions=>[]}unless@body_states}
-        push @branches,{value=>$val,body_start=>$body_states[0]{name}};push @s,@body_states}
+        push @branches,{value=>$val,body_start=>$body_states[0]{name}};
+        push @branch_state_names, map { $_->{name} } @body_states;
+        push @branch_end_names, $body_states[-1]{name};
+        push @s,@body_states}
     my $sw_name="${tn}_switch_" . $$ir++;
-    my $bstate={name=>$sw_name,kind=>'switch',signal=>$signal,branches=>\@branches,assignments=>[],transitions=>[]};
+    my $bstate={name=>$sw_name,kind=>'switch',signal=>$signal,branches=>\@branches,branch_state_names=>\@branch_state_names,branch_end_names=>\@branch_end_names,assignments=>[],transitions=>[]};
     unshift @s,$bstate; return (\@s);
 }
 sub _ir_sync_all { my ($tn,$i,$dps)=@_; {name=>"${tn}_await_all_$i",kind=>'sync_all',assignments=>[],transitions=>[],done_ports=>[@$dps]} }
@@ -502,15 +505,38 @@ sub _ir_repeat {
 
 # --- Post-processing ---
 sub _link_states {
-    my ($st,$tn)=@_; return unless @$st; my $e=$st->[0]{name};
-    for my $i(0..$#$st){my $s=$st->[$i];my $n=$i<$#$st?$st->[$i+1]{name}:undef;
+    my ($st,$tn)=@_;
+    return unless @$st;
+
+    my $e = $st->[0]{name};
+    my %idx_by_name = map { $st->[$_]{name} => $_ } 0 .. $#$st;
+    my %branch_exit_target;
+
+    for my $i (0 .. $#$st) {
+        my $s = $st->[$i];
+        next unless $s->{kind} eq 'switch';
+
+        my $last_branch_idx = $i;
+        for my $name (@{$s->{branch_state_names} || []}) {
+            next unless defined $idx_by_name{$name};
+            $last_branch_idx = $idx_by_name{$name} if $idx_by_name{$name} > $last_branch_idx;
+        }
+
+        my $exit_target = $last_branch_idx < $#$st ? $st->[$last_branch_idx + 1]{name} : $e;
+        $s->{switch_exit_target} = $exit_target;
+        for my $name (@{$s->{branch_end_names} || []}) {
+            $branch_exit_target{$name} = $exit_target;
+        }
+    }
+
+    for my $i(0..$#$st){my $s=$st->[$i];my $n=$i<$#$st?$st->[$i+1]{name}:undef;my $next=$branch_exit_target{$s->{name}}||$n;
         if($s->{kind}eq'entry'&&$n){push @{$s->{transitions}},{target=>$n,condition=>$s->{guard}}}
-        elsif($s->{kind}eq'await'&&$n){push @{$s->{transitions}},{target=>$n,condition=>$s->{guard}};push @{$s->{transitions}},{target=>"${tn}_timeout",condition=>{signal=>$s->{watchdog}{name},op=>'=',value=>0}}}
-        elsif($s->{kind}eq'repeat_check'){push @{$s->{transitions}},{target=>$s->{loop_target},condition=>{signal=>$s->{counter},op=>'!=',value=>0}};push @{$s->{transitions}},{target=>$n,condition=>{signal=>$s->{counter},op=>'=',value=>0}}if$n}
-        elsif($s->{kind}eq'sequential'&&$n){push @{$s->{transitions}},{target=>$n}}
-        elsif($s->{kind}eq'switch'){my$skip=undef;for(my$j=$i+1;$j<@$st;$j++){next if$st->[$j]{name}=~/_drive_|_await_|_sample_/; $skip=$st->[$j]{name};last} push @{$s->{transitions}},{target=>$skip||$e};for my$br(@{$s->{branches}}){push @{$s->{transitions}},{target=>$br->{body_start},condition=>{signal=>$s->{signal},value=>$br->{value}}}}}
-        elsif($s->{kind}eq'sync_all'&&$n){push @{$s->{transitions}},{target=>$n}}
-        elsif($s->{kind}eq'sync_any'&&$n){push @{$s->{transitions}},{target=>$n}}
+        elsif($s->{kind}eq'await'&&$next){push @{$s->{transitions}},{target=>$next,condition=>$s->{guard}};push @{$s->{transitions}},{target=>"${tn}_timeout",condition=>{signal=>$s->{watchdog}{name},op=>'=',value=>0}}}
+        elsif($s->{kind}eq'repeat_check'){push @{$s->{transitions}},{target=>$s->{loop_target},condition=>{signal=>$s->{counter},op=>'!=',value=>0}};push @{$s->{transitions}},{target=>$next,condition=>{signal=>$s->{counter},op=>'=',value=>0}}if$next}
+        elsif($s->{kind}eq'sequential'&&$next){push @{$s->{transitions}},{target=>$next}}
+        elsif($s->{kind}eq'switch'){my$skip=$s->{switch_exit_target}||$n||$e;push @{$s->{transitions}},{target=>$skip};for my$br(@{$s->{branches}}){push @{$s->{transitions}},{target=>$br->{body_start},condition=>{signal=>$s->{signal},value=>$br->{value}}}}}
+        elsif($s->{kind}eq'sync_all'&&$next){push @{$s->{transitions}},{target=>$next}}
+        elsif($s->{kind}eq'sync_any'&&$next){push @{$s->{transitions}},{target=>$next}}
         elsif($s->{kind}eq'terminal'){push @{$s->{transitions}},{target=>$e}}}
 }
 

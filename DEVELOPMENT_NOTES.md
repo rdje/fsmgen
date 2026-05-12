@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 switch branch exits
+- Switch lowering keeps branch bodies linear in the IR state array, so the
+  linker needs explicit branch-tail metadata to avoid ordinary sequential
+  linking into the next branch body.
+- `_expand_switch` now records every branch state name and each branch tail.
+  `_link_states` computes the switch exit target once and uses it for the
+  switch default path plus each branch tail's normal exit.
+- `repeat_check` states inside switch branches keep their nonzero loop edge,
+  but their zero edge now exits after the whole switch instead of falling into
+  the next branch.
 ## 2026-05-12: R14 inferred repeat counter widths
 - Repeat counter width inference stays deliberately local to the scheduler
   width map. Literal decimal counts are sized to hold the loaded count, named

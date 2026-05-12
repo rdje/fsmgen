@@ -250,7 +250,9 @@ generation used by shipped fixtures.
 `(switch signal (value body...)...)` creates one decision state with one branch
 per unique value. Duplicate values are rejected. Current branch-body support
 includes drive, await, sample, repeat, update, shift/assemble/extract data
-operations, and nested `when`.
+operations, and nested `when`. Branch bodies exit to the first state after the
+whole switch, so multi-state branches and repeat checks do not fall through
+into later branch bodies.
 
 ### 7.6 Data Manipulation
 
@@ -386,6 +388,7 @@ Focused tests:
 - [t/1100-isf-sample-piggyback.t](../t/1100-isf-sample-piggyback.t)
 - [t/1101-isf-extract-slices.t](../t/1101-isf-extract-slices.t)
 - [t/1102-isf-repeat-counter-widths.t](../t/1102-isf-repeat-counter-widths.t)
+- [t/1103-isf-switch-branch-exits.t](../t/1103-isf-switch-branch-exits.t)
 
 ## 12. Explicitly Deferred
 

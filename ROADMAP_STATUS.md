@@ -26,6 +26,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   assemble-inferred word widths.
 - `t/1102` now proves repeat counter width inference for decimal literals,
   sampled named counts, and switch-nested repeats.
+- `t/1103` now proves switch branch tails exit after the whole switch instead
+  of falling through into later branch bodies, including repeat-check exits.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
@@ -3502,6 +3504,9 @@ Done:
 - [t/1102-isf-repeat-counter-widths.t](t/1102-isf-repeat-counter-widths.t)
   locks repeat counter width inference for decimal literals, sampled named
   counts, and switch-nested repeats.
+- [t/1103-isf-switch-branch-exits.t](t/1103-isf-switch-branch-exits.t) locks
+  switch branch-tail exits for ordinary multi-state branches and switch-nested
+  repeat checks.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.
