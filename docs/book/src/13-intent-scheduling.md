@@ -104,7 +104,8 @@ single-file and multi-file lowering. The in-memory `parse_source(...)` facade
 is also checked against `parse_file(...)` on a real fixture. APB DT block order
 is locked across generated `.fsm` text and schedule-report `dt_blocks` so
 hash-backed drive definitions do not create review-artifact churn; the manifest
-also advertises the DT ordering policy. The ISF live-document path list is
+also advertises the DT ordering policy, and that scheduled-artifact ordering
+metadata is audited as exact. The ISF live-document path list is
 audited across direct and manifest views so recovery pointers stay repo-local
 and present. The public `--emit-schedule-json` path is audited to emit the same
 report as the in-process scheduler with clean stderr. The public `--outdir`

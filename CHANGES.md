@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF scheduled `.fsm` metadata audit
+- Added [t/1145-isf-public-scheduled-fsm-metadata-audit.t](t/1145-isf-public-scheduled-fsm-metadata-audit.t)
+  to prove scheduled `.fsm` artifact metadata is exact.
+- The audit covers the shared DT ordering policy and review-artifact flag across
+  direct owner data, the in-process capability manifest, and both CLI manifest
+  spellings.
 ### R14 — ISF tested_by metadata audit
 - Added [t/1144-isf-public-tested-by-metadata-audit.t](t/1144-isf-public-tested-by-metadata-audit.t)
   to prove the ISF public contract `tested_by` list is exact.

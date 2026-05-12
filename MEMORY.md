@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF scheduled `.fsm` metadata audit
+- Added `t/1145-isf-public-scheduled-fsm-metadata-audit.t` to prove scheduled
+  `.fsm` artifact metadata is exact across the direct owner, in-process
+  capability manifest, and both CLI manifest spellings.
+- The audit keeps `scheduled_fsm_dt_ordering` paired with
+  `schedule_report_dt_ordering` and preserves the review-artifact flag.
 ## 2026-05-12: R14 — ISF tested_by metadata audit
 - Added `t/1144-isf-public-tested-by-metadata-audit.t` to prove the ISF public
   contract `tested_by` list is exact across the direct owner, in-process

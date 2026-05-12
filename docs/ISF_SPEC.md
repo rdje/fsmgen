@@ -431,6 +431,8 @@ DTs lexically by drive name.
 
 The capability-manifest ISF public contract exposes the same policy through
 `scheduled_fsm_dt_ordering` and `schedule_report_dt_ordering`.
+Those ordering fields are audited as exact paired metadata across direct and
+manifest views.
 Successful reports keep `compile_issues` present as an empty array; the
 capability-manifest ISF public contract advertises that success shape through
 `schedule_report_compile_issues_success_shape`.
@@ -507,6 +509,7 @@ Focused tests:
 - [t/1142-isf-public-guidance-metadata-audit.t](../t/1142-isf-public-guidance-metadata-audit.t)
 - [t/1143-isf-public-facade-shape-metadata-audit.t](../t/1143-isf-public-facade-shape-metadata-audit.t)
 - [t/1144-isf-public-tested-by-metadata-audit.t](../t/1144-isf-public-tested-by-metadata-audit.t)
+- [t/1145-isf-public-scheduled-fsm-metadata-audit.t](../t/1145-isf-public-scheduled-fsm-metadata-audit.t)
 
 ## 12. Explicitly Deferred
 

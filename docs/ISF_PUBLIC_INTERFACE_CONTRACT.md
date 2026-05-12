@@ -90,6 +90,10 @@ Generated `.fsm` DT block order and schedule-report `dt_blocks` order are
 checked by
 [t/1119-isf-deterministic-dt-block-order.t](../t/1119-isf-deterministic-dt-block-order.t)
 for both `parse_file(...)` and `parse_source(...)` on the APB fixture.
+The scheduled `.fsm` artifact metadata is checked by
+[t/1145-isf-public-scheduled-fsm-metadata-audit.t](../t/1145-isf-public-scheduled-fsm-metadata-audit.t)
+to keep `scheduled_fsm_dt_ordering`, its paired schedule-report ordering
+policy, and the review-artifact flag exact across direct and manifest views.
 The `live_document_paths` list is checked by
 [t/1120-isf-public-live-document-path-audit.t](../t/1120-isf-public-live-document-path-audit.t)
 to keep the direct owner, in-process manifest, and both CLI manifest spellings
@@ -251,6 +255,8 @@ drive DTs are emitted lexically by drive name. This is a bounded review-artifact
 and schedule-report stability promise, not a promise that raw `LoweringIR`
 hashes are public. The machine-readable contract advertises the same policy in
 `scheduled_fsm_dt_ordering` and `schedule_report_dt_ordering`.
+Those ordering fields are exact shared-policy metadata for the current
+scheduled `.fsm` review artifact and schedule report.
 
 For multi-file lowerings, the current schedule report describes the parent
 scheduled module only. Child scheduled `.fsm` text remains available through the
