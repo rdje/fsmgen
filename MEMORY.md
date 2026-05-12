@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — `await_any` multi-done guards
+- `Emitter::FSM` now emits one guard transition per collected spawned done port
+  for `await_any`, so any child done can advance the parent.
+- Added `t/1098-isf-await-any-sync.t` with a three-spawn inline fixture.
+- Remaining composition limits: composition-top child instantiation and spawn
+  parameter binding.
 ## 2026-05-12: R14 — named start signal binding
 - `LoweringIR` no longer emits anonymous `_start` assignments for `do`,
   `spawn`, or named drive calls inside `when`/`switch`.
@@ -24,8 +30,9 @@ This is the live continuity document for fast session recovery after crashes, re
   explicit deferred items.
 - R14 mdBook chapters were tightened for composition, rules, data manipulation,
   and lowering reference. They now call out deferred composition-top
-  instantiation, unenforced priorities/resources, first-port `await_any`,
-  placeholder `shift_right` width, and placeholder `extract` slices.
+  instantiation, unenforced priorities/resources, placeholder `shift_right`
+  width, and placeholder `extract` slices. The following `await_any` slice
+  removed the first-port limitation.
 - Next bounded slice: choose one documented limitation and make it
   regression-backed behavior, or broaden schedule JSON assertions over the
   current IR.

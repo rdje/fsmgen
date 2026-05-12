@@ -288,7 +288,8 @@ Current lowering:
 - The parent declares per-instance `instance_start` and `instance_done` signals.
 - Each spawn state asserts its matching `instance_start` signal.
 - `await_all` waits for all collected spawned done ports.
-- `await_any` currently waits on the first collected done port.
+- `await_any` emits one guard per collected spawned done port and advances when
+  any one of them fires.
 
 Top-level child instantiation and spawn parameter binding are not part of the
 shipped lowering contract yet.
@@ -366,6 +367,7 @@ Focused tests:
 - [t/1095-isf-scheduler-burst-reader.t](../t/1095-isf-scheduler-burst-reader.t)
 - [t/1096-isf-schedule-json-report.t](../t/1096-isf-schedule-json-report.t)
 - [t/1097-isf-start-signal-binding.t](../t/1097-isf-start-signal-binding.t)
+- [t/1098-isf-await-any-sync.t](../t/1098-isf-await-any-sync.t)
 
 ## 12. Explicitly Deferred
 

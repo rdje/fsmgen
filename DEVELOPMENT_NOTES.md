@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 `await_any` now checks every collected done port
+- `Emitter::FSM` now lowers `sync_any` states by emitting one guard transition
+  for each collected spawned done signal, all targeting the next parent state.
+- Added `t/1098-isf-await-any-sync.t` with an inline three-spawn actor to prove
+  `w0_done`, `w1_done`, and `w2_done` are all watched.
+- This removes the previous first-port `await_any` limitation without widening
+  spawn parameter binding or composition-top instantiation.
 ## 2026-05-12: R14 start assertions now bind named signals
 - Removed the anonymous `_start` placeholder from the current ISF scheduler
   lowering paths that produce start assertions.
@@ -29,9 +36,9 @@ This document captures engineering rationale, design constraints, and working de
   deferred work.
 - The mdBook R14 chapters were corrected where they overstated current
   behavior: resource/priority declarations are parsed but not enforced;
-  `await_any` waits on the first collected spawned done port; `shift_right`
-  still uses a placeholder width expression; `extract` uses placeholder slice
-  names; and composition-top child instantiation is not complete.
+  `shift_right` still uses a placeholder width expression; `extract` uses
+  placeholder slice names; and composition-top child instantiation is not
+  complete. The following `await_any` slice removed the old first-port limit.
 - The most useful next implementation slice is now visible instead of hidden in
   prose drift: either regression-lock schedule JSON more tightly or implement
   one documented scheduler limitation. The next slices locked schedule JSON and

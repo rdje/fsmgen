@@ -176,10 +176,12 @@ sub _emit_transitions($self, $state) {
     if ($state->{kind} eq 'sync_any') {
         my $target = $txs->[0]{target};
         my @ports = @{$state->{done_ports}};
-        # Single guard with OR expression if supported, else just first port
-        push @lines, "    (<$ports[0]";
-        push @lines, "      (-> $target)";
-        push @lines, '    )';
+        for my $p (@ports) {
+            push @lines, "    (<$p";
+            push @lines, "      (-> $target)";
+            push @lines, '    )';
+        }
+        push @lines, "    (-> $target)" unless @ports;
         return @lines;
     }
 

@@ -2,6 +2,11 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — `await_any` all guards
+- Active: `R14`. `t/1098` proves `await_any` watches every collected spawned
+  done signal, not only the first. Remaining: priority/resource, data-op,
+  composition-top limits.
+
 ## 2026-05-12: R14 — named start binding
 - Active: `R14`. `t/1097` locks concrete start assertions for `do`, `spawn`,
   and control-flow drive calls. `_start` placeholder removed from those paths.
@@ -13,8 +18,8 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
 ## 2026-05-12: R14 — ISF spec synced to implementation
 - Active: `R14`. `docs/ISF_SPEC.md` + mdBook now record shipped behavior and
-  limitations: first-port `await_any`, unenforced priorities/resources,
-  placeholder data ops, deferred composition-top instantiation.
+  limitations: unenforced priorities/resources, placeholder data ops, deferred
+  composition-top instantiation.
 
 ## 2026-05-12: Bootstrap — R14 docs/import tree
 - Active: `R14`. Import tree refreshed for `.isf` pre-lowering path: 191 project

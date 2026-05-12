@@ -4,13 +4,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
 - Next decision point: `docs/ISF_SPEC.md` and the R14 mdBook chapters now
   describe the shipped post-handshake/post-assign-keyword parser and scheduler
-  surface, including unenforced resources/priorities, `await_any` first-port
-  behavior, and data-operation placeholders. `t/1096` now locks the current APB
-  schedule JSON report shape.
+  surface, including unenforced resources/priorities and data-operation
+  placeholders. `t/1096` now locks the current APB schedule JSON report shape.
 - `t/1097` now removes the anonymous `_start` placeholder from `do`, `spawn`,
   and control-flow drive-call lowering by asserting concrete child, instance,
   and drive start signals. Next bounded R14 slice: turn another documented
   scheduler limitation into regression-backed behavior.
+- `t/1098` now lowers `await_any` as one guard per collected spawned done port
+  instead of watching only the first done signal.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
@@ -886,9 +887,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - [docs/ISF_SPEC.md](docs/ISF_SPEC.md) and the R14 mdBook chapters now match
     the shipped parser/scheduler surface instead of the older aspirational
     spec: deprecated `(handshake ...)` is compatibility-only, `(assign ...)`
-    remains removed, resource/priority arbitration is deferred, `await_any`
-    waits on the first collected done port, and `do`/`spawn` child-start
-    binding is documented as incomplete.
+    remains removed, and resource/priority arbitration is deferred.
   - [t/1096-isf-schedule-json-report.t](t/1096-isf-schedule-json-report.t)
     now decodes the APB schedule report and locks the current IR-derived JSON
     surface without promoting it to a frozen external schema.
@@ -896,6 +895,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
     now locks concrete start assertions for `do`, `spawn`, and named drive
     calls inside `when`/`switch`; the anonymous `_start` placeholder is gone
     from those paths.
+  - [t/1098-isf-await-any-sync.t](t/1098-isf-await-any-sync.t) now proves
+    `await_any` emits one guard per collected spawned done signal.
   - Next bounded `R14` slice: convert another documented scheduler limitation
     into regression-backed behavior.
 - Superseded `R13` carry-forward detail retained below this note should not be
@@ -3451,14 +3452,16 @@ Done:
 - [docs/ISF_SPEC.md](docs/ISF_SPEC.md) is synchronized to the current shipped
   parser/scheduler behavior and explicitly records the current limitations:
   deferred composition-top instantiation, unenforced resources/priorities,
-  first-port `await_any`, schedule JSON as a non-stable schema, and placeholder
-  `shift_right`/`extract` field handling.
+  schedule JSON as a non-stable schema, and placeholder `shift_right`/`extract`
+  field handling.
 - [t/1096-isf-schedule-json-report.t](t/1096-isf-schedule-json-report.t) locks
   the current APB schedule JSON report identity, counts, transaction state
   order, DT summaries, inferred storage, and empty `compile_issues`.
 - [t/1097-isf-start-signal-binding.t](t/1097-isf-start-signal-binding.t) locks
   named start-signal assertions for `do`, `spawn`, and control-flow drive
   calls.
+- [t/1098-isf-await-any-sync.t](t/1098-isf-await-any-sync.t) locks
+  multi-guard `await_any` lowering for spawned done signals.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

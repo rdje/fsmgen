@@ -55,7 +55,8 @@ Non-blocking. Each spawn declares a separate intended instance.
 - Parent `.fsm` declares per-instance `name_start`/`name_done` signals
 - Each spawn state asserts its matching `name_start` signal
 - `(await_all done)` → nested guards for all done signals
-- `(await_any done)` currently waits on the first collected done signal
+- `(await_any done)` → one guard per done signal, advancing on the first one
+  that fires
 
 Full composition-top instantiation and spawn parameter binding are still
 deferred.
@@ -72,7 +73,7 @@ deferred.
 
 ```lisp
 (await_all done)     ;; wait for ALL spawned children
-(await_any done)     ;; current lowering waits for the first collected child
+(await_any done)     ;; wait for ANY spawned child
 ```
 
 ## Composition Architecture

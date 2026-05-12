@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — `await_any` watches every spawned done signal
+- Updated [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm)
+  so `await_any` emits a guard for every collected spawned done signal instead
+  of watching only the first.
+- Added [t/1098-isf-await-any-sync.t](t/1098-isf-await-any-sync.t) to lock the
+  multi-guard lowering.
 ### R14 — ISF start signal binding
 - Updated [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
   so `do`, `spawn`, and named drive calls inside `when`/`switch` assert their
