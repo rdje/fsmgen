@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF report DT assignment-count audit
+- Added `schedule_report_dt_assignments_shape` to
+  `embedding.isf_public_interface`, documenting schedule-report
+  `dt_blocks[*].assignments` as an assignment count rather than payload list.
+- Added [t/1147-isf-public-report-dt-assignment-count-audit.t](t/1147-isf-public-report-dt-assignment-count-audit.t)
+  to prove the metadata is exact and APB report counts match generated
+  scheduled `.fsm` DT blocks.
 ### R14 — ISF DT assignment metadata audit
 - Added `dt_assignment_operator_family_map` to
   `embedding.isf_public_interface`, advertising combinational `=` and

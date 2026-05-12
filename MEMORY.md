@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF report DT assignment-count audit
+- Added `schedule_report_dt_assignments_shape` to
+  `embedding.isf_public_interface`, documenting `dt_blocks[*].assignments` as a
+  non-negative count rather than an assignment payload list.
+- Added `t/1147-isf-public-report-dt-assignment-count-audit.t` to prove the
+  metadata is exact across direct and manifest views and that APB schedule
+  report counts match generated scheduled `.fsm` DT blocks.
 ## 2026-05-12: R14 — ISF DT assignment metadata audit
 - Added `dt_assignment_operator_family_map` to
   `embedding.isf_public_interface`, advertising `=` as combinational and

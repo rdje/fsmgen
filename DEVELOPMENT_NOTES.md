@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF report DT assignment-count audit
+- The schedule report intentionally summarizes DT assignments by count today.
+  Exposing that as explicit metadata prevents downstream readers from assuming
+  `dt_blocks[*].assignments` is, or will remain, a nested assignment payload.
+- `t/1147-isf-public-report-dt-assignment-count-audit.t` locks the manifest
+  shape string and cross-checks APB report counts against generated scheduled
+  `.fsm` DT blocks.
 ## 2026-05-12: R14 ISF DT assignment metadata audit
 - The public ISF contract now records that DT timing follows assignment
   families, not the state/non-state block spelling. This keeps downstream

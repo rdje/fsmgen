@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — ISF report DT assignment-count audit
+- Active: `R14`. `t/1147` proves schedule-report DT assignment counts match
+  generated scheduled `.fsm` DT blocks.
+
 ## 2026-05-12: R14 — ISF DT assignment metadata audit
 - Active: `R14`. `t/1146` proves public DT assignment operator metadata is
   exact and aligned with generated scheduled `.fsm` assignment operators.

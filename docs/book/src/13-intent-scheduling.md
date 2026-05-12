@@ -108,7 +108,10 @@ also advertises the DT ordering policy, and that scheduled-artifact ordering
 metadata is audited as exact. DT timing remains assignment-family driven:
 `=` is combinational, while `<-` and `<=` are sequential whether they appear in
 state or non-state DT blocks; the manifest advertises those operator families
-through `dt_assignment_operator_family_map`. The ISF live-document path list is
+through `dt_assignment_operator_family_map`. Schedule-report `dt_blocks`
+`assignments` values are assignment counts, not payload lists, and the manifest
+advertises that shape through `schedule_report_dt_assignments_shape`. The ISF
+live-document path list is
 audited across direct and manifest views so recovery pointers stay repo-local
 and present. The public `--emit-schedule-json` path is audited to emit the same
 report as the in-process scheduler with clean stderr. The public `--outdir`

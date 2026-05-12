@@ -64,6 +64,10 @@ The advertised schedule-report metadata itself is checked by
 [t/1140-isf-public-schedule-report-metadata-audit.t](../t/1140-isf-public-schedule-report-metadata-audit.t)
 to keep key families, grouped family maps, ordering, multi-file scope, and
 successful `compile_issues` shape exact across direct and manifest views.
+The schedule-report DT assignment-count shape is checked by
+[t/1147-isf-public-report-dt-assignment-count-audit.t](../t/1147-isf-public-report-dt-assignment-count-audit.t)
+to keep `dt_blocks[*].assignments` documented as a non-negative assignment
+count, not an assignment payload list.
 The public `--emit-schedule-json` CLI path is checked by
 [t/1121-isf-public-cli-schedule-report-audit.t](../t/1121-isf-public-cli-schedule-report-audit.t)
 to emit clean-stderr JSON matching the in-process scheduler report.
@@ -265,6 +269,11 @@ transactions entries: name, states, count
 dt_blocks entries: name, kind, assignments
 compile_issues on success: empty array
 ```
+
+For each `dt_blocks` entry, `assignments` is a non-negative integer count of
+assignment forms in the matching scheduled `.fsm` DT block. It is not an
+assignment payload list. The machine-readable contract advertises this through
+`schedule_report_dt_assignments_shape`.
 
 The current lowerer emits DT summaries in deterministic lowering order:
 transaction/rule-created DTs retain their construction order, and hash-backed

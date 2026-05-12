@@ -19,6 +19,7 @@ our @EXPORT_OK = qw(
     isf_public_interface_parser_method_names
     isf_public_interface_public_top_level_keys
     isf_public_interface_schedule_report_compile_issues_success_shape
+    isf_public_interface_schedule_report_dt_assignments_shape
     isf_public_interface_schedule_report_multi_file_scope
     isf_public_interface_schedule_report_presence_key_family_map
     isf_public_interface_schedule_report_reset_keys
@@ -89,6 +90,7 @@ sub build_isf_public_interface_contract {
         schedule_report_storage_optional_keys => isf_public_interface_schedule_report_storage_optional_keys(),
         schedule_report_transaction_keys => isf_public_interface_schedule_report_transaction_keys(),
         schedule_report_dt_keys => isf_public_interface_schedule_report_dt_keys(),
+        schedule_report_dt_assignments_shape => isf_public_interface_schedule_report_dt_assignments_shape(),
         schedule_report_dt_ordering => isf_public_interface_dt_ordering_policy(),
         live_document_paths => isf_public_interface_live_document_paths(),
         live_contract_documentation => JSON::PP::true,
@@ -134,6 +136,7 @@ sub build_isf_public_interface_contract {
             't/1144-isf-public-tested-by-metadata-audit.t',
             't/1145-isf-public-scheduled-fsm-metadata-audit.t',
             't/1146-isf-public-dt-assignment-metadata-audit.t',
+            't/1147-isf-public-report-dt-assignment-count-audit.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -181,6 +184,7 @@ sub isf_public_interface_public_top_level_keys {
             schedule_report_storage_optional_keys
             schedule_report_transaction_keys
             schedule_report_dt_keys
+            schedule_report_dt_assignments_shape
             schedule_report_dt_ordering
             live_document_paths
             live_contract_documentation
@@ -340,6 +344,10 @@ sub isf_public_interface_schedule_report_dt_keys {
             assignments
         ),
     ];
+}
+
+sub isf_public_interface_schedule_report_dt_assignments_shape {
+    return 'non-negative integer count of assignments in the matching scheduled .fsm DT block; not an assignment payload list';
 }
 
 sub isf_public_interface_schedule_report_presence_key_family_map {
