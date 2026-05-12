@@ -4,11 +4,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
 - Next decision point: `docs/ISF_SPEC.md` and the R14 mdBook chapters now
   describe the shipped post-handshake/post-assign-keyword parser and scheduler
-  surface, including deferred `do`/`spawn` start binding, unenforced
-  resources/priorities, `await_any` first-port behavior, and data-operation
-  placeholders. `t/1096` now locks the current APB schedule JSON report shape.
-  Next bounded R14 slice: turn one documented scheduler limitation into
-  regression-backed behavior, starting with the most acute start-binding gap.
+  surface, including unenforced resources/priorities, `await_any` first-port
+  behavior, and data-operation placeholders. `t/1096` now locks the current APB
+  schedule JSON report shape.
+- `t/1097` now removes the anonymous `_start` placeholder from `do`, `spawn`,
+  and control-flow drive-call lowering by asserting concrete child, instance,
+  and drive start signals. Next bounded R14 slice: turn another documented
+  scheduler limitation into regression-backed behavior.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
@@ -890,9 +892,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - [t/1096-isf-schedule-json-report.t](t/1096-isf-schedule-json-report.t)
     now decodes the APB schedule report and locks the current IR-derived JSON
     surface without promoting it to a frozen external schema.
-  - Next bounded `R14` slice: convert one documented scheduler limitation into
-    regression-backed behavior, with `do`/`spawn` start binding the most acute
-    current gap.
+  - [t/1097-isf-start-signal-binding.t](t/1097-isf-start-signal-binding.t)
+    now locks concrete start assertions for `do`, `spawn`, and named drive
+    calls inside `when`/`switch`; the anonymous `_start` placeholder is gone
+    from those paths.
+  - Next bounded `R14` slice: convert another documented scheduler limitation
+    into regression-backed behavior.
 - Superseded `R13` carry-forward detail retained below this note should not be
   read as the current active lane:
   - The bounded `HDLGenerator` result contract now has a dedicated JSON
@@ -3445,12 +3450,15 @@ Done:
   scheduler path.
 - [docs/ISF_SPEC.md](docs/ISF_SPEC.md) is synchronized to the current shipped
   parser/scheduler behavior and explicitly records the current limitations:
-  deferred `do`/`spawn` start binding and composition-top instantiation,
-  unenforced resources/priorities, first-port `await_any`, schedule JSON as a
-  non-stable schema, and placeholder `shift_right`/`extract` field handling.
+  deferred composition-top instantiation, unenforced resources/priorities,
+  first-port `await_any`, schedule JSON as a non-stable schema, and placeholder
+  `shift_right`/`extract` field handling.
 - [t/1096-isf-schedule-json-report.t](t/1096-isf-schedule-json-report.t) locks
   the current APB schedule JSON report identity, counts, transaction state
   order, DT summaries, inferred storage, and empty `compile_issues`.
+- [t/1097-isf-start-signal-binding.t](t/1097-isf-start-signal-binding.t) locks
+  named start-signal assertions for `do`, `spawn`, and control-flow drive
+  calls.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

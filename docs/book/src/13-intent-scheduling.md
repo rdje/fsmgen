@@ -71,9 +71,9 @@ current implementation surface rather than a frozen external API.
 
 ## Current Limitations
 
-- `(do ...)` and `(spawn ...)` emit child/parent scheduling artifacts, but
-  complete child-start binding, composition-top instantiation, and spawn
-  parameter binding remain deferred.
+- `(do ...)` and `(spawn ...)` bind named start/done signals in scheduled
+  `.fsm`; composition-top instantiation and spawn parameter binding remain
+  deferred.
 - `(await_any ...)` currently waits on the first collected spawned done port.
 - `(resources ...)` and `(priority ...)` are parsed but not enforced as
   arbitration policy.

@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — named start signal binding
+- `LoweringIR` no longer emits anonymous `_start` assignments for `do`,
+  `spawn`, or named drive calls inside `when`/`switch`.
+- `do` asserts `{child}_start`; spawn asserts `{instance}_start`; control-flow
+  drive calls assert `{drive}_start` and bind formal parameter signals.
+- Added `t/1097-isf-start-signal-binding.t`. Remaining composition limits:
+  composition-top child instantiation and spawn parameter binding.
 ## 2026-05-12: R14 — schedule JSON report regression
 - Added `t/1096-isf-schedule-json-report.t`, which decodes the APB
   `FSM::Scheduler::ISF->report(...)` JSON and locks current identity,
@@ -8,19 +15,17 @@ This is the live continuity document for fast session recovery after crashes, re
 - `docs/ISF_SPEC.md` now lists the JSON report test, and the mdBook ISF
   overview records that the JSON report is IR-derived but not a frozen public
   schema.
-- Next bounded slice remains implementation-oriented: choose one documented
-  R14 limitation, likely `do`/`spawn` start binding, and make it behavior with
-  tests.
+- Next bounded slice remains implementation-oriented: choose another documented
+  R14 limitation and make it behavior with tests.
 ## 2026-05-12: R14 — ISF spec and mdBook synchronized
 - `docs/ISF_SPEC.md` now describes the shipped parser/scheduler behavior:
   `.isf` CLI flow, `(on port)` activation, removed `(assign ...)`, current
   transaction clauses, drive lowering, rules, schedule JSON, fixtures, and
   explicit deferred items.
 - R14 mdBook chapters were tightened for composition, rules, data manipulation,
-  and lowering reference. They now call out deferred `do`/`spawn` start binding
-  and composition-top instantiation, unenforced priorities/resources,
-  first-port `await_any`, placeholder `shift_right` width, and placeholder
-  `extract` slices.
+  and lowering reference. They now call out deferred composition-top
+  instantiation, unenforced priorities/resources, first-port `await_any`,
+  placeholder `shift_right` width, and placeholder `extract` slices.
 - Next bounded slice: choose one documented limitation and make it
   regression-backed behavior, or broaden schedule JSON assertions over the
   current IR.

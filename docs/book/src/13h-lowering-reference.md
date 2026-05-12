@@ -345,7 +345,7 @@ Max violation via watchdog timeout (if no `(await ...)` in transaction).
 **In parent**:
 ```lisp
 (parent_do_1
-  (<- (_start 1))                 ;; placeholder start assignment
+  (= (child_start 1))             ;; assert child start
   (<child_done                    ;; await done
     (-> parent_do_2)))
 ```
@@ -363,13 +363,10 @@ Max violation via watchdog timeout (if no `(await ...)` in transaction).
 ```
 
 **Implicit signals**: `{child}_start` (1), `{child}_done` (1).
-The parent-side child-start assignment is still a shared `_start` placeholder
-in the current emitter path.
 
 Spawn lowering writes separate child `.fsm` files and a parent `.fsm` with
 per-instance start/done signals when `--outdir DIR` is used. Full composition
-top instantiation, start-signal driving, and spawn parameter binding remain
-deferred.
+top instantiation and spawn parameter binding remain deferred.
 
 ## Complete Example — APB Transfer
 

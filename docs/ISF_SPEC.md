@@ -273,9 +273,7 @@ Current lowering:
 - The parent emits an await-shaped state guarded by `child_transaction_done`.
 - The child idle state is rewired to wait on `child_transaction_start`.
 - The child's terminal state assigns `child_transaction_done`.
-- The parent-side start assignment still uses the shared internal `_start`
-  placeholder, so complete child-start binding is not part of the shipped
-  lowering contract yet.
+- The parent `do` state asserts `child_transaction_start` directly.
 
 ### 8.2 Spawn
 
@@ -288,11 +286,12 @@ Current lowering:
 - Spawned transactions are emitted as separate child `.fsm` files.
 - Each child gets `start`, `done`, and `last_error` ports if missing.
 - The parent declares per-instance `instance_start` and `instance_done` signals.
+- Each spawn state asserts its matching `instance_start` signal.
 - `await_all` waits for all collected spawned done ports.
 - `await_any` currently waits on the first collected done port.
 
-Spawn start binding, top-level child instantiation, and spawn parameter binding
-are not part of the shipped lowering contract yet.
+Top-level child instantiation and spawn parameter binding are not part of the
+shipped lowering contract yet.
 
 ## 9. Rules
 
@@ -366,13 +365,13 @@ Focused tests:
 - [t/1094-isf-scheduler-module-header.t](../t/1094-isf-scheduler-module-header.t)
 - [t/1095-isf-scheduler-burst-reader.t](../t/1095-isf-scheduler-burst-reader.t)
 - [t/1096-isf-schedule-json-report.t](../t/1096-isf-schedule-json-report.t)
+- [t/1097-isf-start-signal-binding.t](../t/1097-isf-start-signal-binding.t)
 
 ## 12. Explicitly Deferred
 
 - Old `(handshake ...)` semantics beyond ignored compatibility parsing.
 - The removed `(assign ...)` action keyword.
-- Complete `do`/`spawn` child-start binding, top-level child instantiation, and
-  spawn parameter binding.
+- Top-level child instantiation and spawn parameter binding.
 - Enforced resource arbitration and priority resolution.
 - Full temporal `(contract ...)` assertions.
 - Rich storage-class optimization in schedule reports.

@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF start signal binding
+- Updated [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so `do`, `spawn`, and named drive calls inside `when`/`switch` assert their
+  concrete `{child}_start`, `{instance}_start`, or `{drive}_start` signal
+  instead of the anonymous `_start` placeholder.
+- Added [t/1097-isf-start-signal-binding.t](t/1097-isf-start-signal-binding.t)
+  to lock spawn instance starts, `do` child starts, and control-flow drive
+  starts.
 ### R14 — schedule JSON report regression
 - Added [t/1096-isf-schedule-json-report.t](t/1096-isf-schedule-json-report.t)
   to decode the APB schedule report and lock the current IR-derived JSON

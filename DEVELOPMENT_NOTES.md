@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 start assertions now bind named signals
+- Removed the anonymous `_start` placeholder from the current ISF scheduler
+  lowering paths that produce start assertions.
+- `do` states now assert the concrete `{child}_start` signal they already wait
+  around; spawn states assert their per-instance `{name}_start` signals; named
+  drive calls inside `when` and `switch` now use the same parameter-aware drive
+  call lowering as top-level transaction clauses.
+- `t/1097-isf-start-signal-binding.t` locks the behavior for spawn, `do`, and
+  control-flow drive calls. Composition-top instantiation and spawn parameter
+  binding remain separate deferred work.
 ## 2026-05-12: R14 schedule JSON APB report locked
 - Added a focused schedule-report regression for `isf/apb_requester.isf` through
   `FSM::Scheduler::ISF->report(...)` and `JSON::PP` decode.
@@ -21,11 +31,11 @@ This document captures engineering rationale, design constraints, and working de
   behavior: resource/priority declarations are parsed but not enforced;
   `await_any` waits on the first collected spawned done port; `shift_right`
   still uses a placeholder width expression; `extract` uses placeholder slice
-  names; and `do`/`spawn` child-start binding/top instantiation is not complete.
+  names; and composition-top child instantiation is not complete.
 - The most useful next implementation slice is now visible instead of hidden in
   prose drift: either regression-lock schedule JSON more tightly or implement
-  one documented scheduler limitation, with `do`/`spawn` start binding being
-  the most behavior-critical gap.
+  one documented scheduler limitation. The next slices locked schedule JSON and
+  then landed named start-signal binding.
 ## 2026-05-12: Bootstrap — R14 `.isf` pre-spine documented
 - `bin/fsmgen` now has an explicit documented pre-spine for `.isf` inputs:
   resolve source, parse with `FSM::Adapter::ISF`, lower/report with

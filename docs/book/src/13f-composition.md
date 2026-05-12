@@ -16,14 +16,13 @@ Sequential, blocking. One instance of each child is intended to be reused by
 the parent transaction.
 
 **Current lowering**:
-1. Parent emits an await-shaped state guarded by `child_done`
+1. Parent asserts `child_start` and awaits `child_done`
 2. Child's idle state is rewired to watch `child_start`
 3. Child's terminal state assigns `child_done`
-4. Parent-side child-start binding still uses an internal `_start` placeholder
 
 ```lisp
 (parent_do_1
-  (<- (_start 1))
+  (= (read_phase_start 1))
   (<read_phase_done
     (-> parent_do_2)))
 
@@ -54,11 +53,12 @@ Non-blocking. Each spawn declares a separate intended instance.
 **Lowering**:
 - One `.fsm` per unique child module
 - Parent `.fsm` declares per-instance `name_start`/`name_done` signals
+- Each spawn state asserts its matching `name_start` signal
 - `(await_all done)` → nested guards for all done signals
 - `(await_any done)` currently waits on the first collected done signal
 
-Driving the per-instance start signals, full composition-top instantiation, and
-spawn parameter binding are still deferred.
+Full composition-top instantiation and spawn parameter binding are still
+deferred.
 
 ```lisp
 (parent_main_await_all_4
