@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — ISF schedule-report metadata audit
+- Active: `R14`. `t/1140` proves schedule-report metadata fields are exact
+  across direct and manifest views.
+
 ## 2026-05-12: R14 — ISF lower-result metadata audit
 - Active: `R14`. `t/1139` proves lower-result discovery metadata is exact
   across direct and manifest views.

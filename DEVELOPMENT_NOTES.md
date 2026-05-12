@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF schedule-report metadata audit
+- Schedule-report behavior is covered by fixture tests, but downstream manifest
+  consumers also need the advertised report metadata itself to be exact across
+  discovery paths.
+- `t/1140-isf-public-schedule-report-metadata-audit.t` locks the schedule-report
+  key lists, grouped family map, successful `compile_issues` shape, multi-file
+  scope, and DT ordering policy across the direct owner, in-process capability
+  manifest, and both CLI manifest spellings.
 ## 2026-05-12: R14 ISF lower-result metadata audit
 - The lower-result `files` map is already the bounded public lowering surface;
   its discovery metadata should be treated as exact, not illustrative prose.

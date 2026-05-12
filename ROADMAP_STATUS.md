@@ -109,6 +109,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   duplicate-free across direct, manifest, and CLI manifest views.
 - `t/1139` now proves the lower-result discovery metadata is exact across
   direct, manifest, and CLI manifest views.
+- `t/1140` now proves schedule-report metadata fields are exact across direct,
+  manifest, and CLI manifest views.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.

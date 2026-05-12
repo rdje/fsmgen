@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF schedule-report metadata audit
+- Added `t/1140-isf-public-schedule-report-metadata-audit.t` to prove the
+  advertised schedule-report key lists, grouped key-family map, successful
+  `compile_issues` shape, multi-file scope, and DT ordering policy are exact
+  across the direct owner, in-process capability manifest, and both CLI
+  manifest spellings.
 ## 2026-05-12: R14 — ISF lower-result metadata audit
 - Added `t/1139-isf-public-lower-result-metadata-audit.t` to prove
   `lower_result_presence_keys` and `lower_result_file_map_shape` are exact

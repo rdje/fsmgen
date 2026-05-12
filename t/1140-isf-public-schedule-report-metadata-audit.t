@@ -1,0 +1,142 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use Test::More;
+use File::Spec;
+use FindBin;
+use IPC::Cmd qw(run);
+use JSON::PP qw(decode_json);
+
+use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+
+use FSM::Support::CapabilityManifest qw(build_capability_manifest);
+use FSM::Support::ISFPublicInterfaceContract qw(
+    build_isf_public_interface_contract
+    isf_public_interface_dt_ordering_policy
+    isf_public_interface_schedule_report_compile_issues_success_shape
+    isf_public_interface_schedule_report_dt_keys
+    isf_public_interface_schedule_report_multi_file_scope
+    isf_public_interface_schedule_report_presence_key_family_map
+    isf_public_interface_schedule_report_reset_keys
+    isf_public_interface_schedule_report_storage_optional_keys
+    isf_public_interface_schedule_report_storage_required_keys
+    isf_public_interface_schedule_report_top_level_keys
+    isf_public_interface_schedule_report_transaction_keys
+);
+
+subtest 'direct ISF schedule-report metadata is exact and unique' => sub {
+    assert_schedule_report_metadata(
+        build_isf_public_interface_contract(),
+        'direct ISF public-interface contract',
+    );
+};
+
+subtest 'manifest ISF schedule-report metadata is exact and unique' => sub {
+    my @views = (
+        {
+            label => 'in-process capability manifest',
+            payload => build_capability_manifest(),
+        },
+        {
+            label => 'CLI capability manifest',
+            payload => run_capability_manifest('--capability-manifest'),
+        },
+        {
+            label => 'CLI capability manifest alias',
+            payload => run_capability_manifest('--emit-capability-manifest'),
+        },
+    );
+
+    for my $view (@views) {
+        my $label = $view->{label};
+        assert_schedule_report_metadata(
+            $view->{payload}{embedding}{isf_public_interface},
+            "$label ISF public-interface contract",
+        );
+    }
+};
+
+done_testing();
+
+sub assert_schedule_report_metadata {
+    my ($contract, $label) = @_;
+
+    my @list_checks = (
+        [
+            schedule_report_top_level_keys =>
+                isf_public_interface_schedule_report_top_level_keys(),
+        ],
+        [
+            schedule_report_reset_keys =>
+                isf_public_interface_schedule_report_reset_keys(),
+        ],
+        [
+            schedule_report_storage_required_keys =>
+                isf_public_interface_schedule_report_storage_required_keys(),
+        ],
+        [
+            schedule_report_storage_optional_keys =>
+                isf_public_interface_schedule_report_storage_optional_keys(),
+        ],
+        [
+            schedule_report_transaction_keys =>
+                isf_public_interface_schedule_report_transaction_keys(),
+        ],
+        [
+            schedule_report_dt_keys =>
+                isf_public_interface_schedule_report_dt_keys(),
+        ],
+    );
+
+    for my $check (@list_checks) {
+        my ($field, $expected) = @$check;
+        is_deeply($contract->{$field}, $expected, "$label $field is exact");
+        assert_unique_scalar_list($contract->{$field}, "$label $field");
+    }
+
+    is_deeply(
+        $contract->{schedule_report_presence_key_family_map},
+        isf_public_interface_schedule_report_presence_key_family_map(),
+        "$label schedule_report_presence_key_family_map is exact",
+    );
+    is(
+        $contract->{schedule_report_compile_issues_success_shape},
+        isf_public_interface_schedule_report_compile_issues_success_shape(),
+        "$label compile_issues success shape is exact",
+    );
+    is(
+        $contract->{schedule_report_multi_file_scope},
+        isf_public_interface_schedule_report_multi_file_scope(),
+        "$label multi-file schedule-report scope is exact",
+    );
+    is(
+        $contract->{schedule_report_dt_ordering},
+        isf_public_interface_dt_ordering_policy(),
+        "$label schedule report DT ordering policy is exact",
+    );
+}
+
+sub assert_unique_scalar_list {
+    my ($values, $label) = @_;
+    my %seen;
+
+    ok(ref($values) eq 'ARRAY', "$label is an array");
+    for my $value (@{$values || []}) {
+        ok(!ref($value), "$label entry '$value' is scalar");
+        next if ref($value);
+        ok(length($value), "$label entry '$value' is non-empty");
+        ok(!$seen{$value}++, "$label does not duplicate '$value'");
+    }
+}
+
+sub run_capability_manifest {
+    my ($mode) = @_;
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', $mode],
+    );
+
+    ok($success, "$mode succeeds");
+    is(join('', @{$stderr_buf || []}), '', "$mode keeps stderr clean");
+
+    return decode_json(join('', @{$stdout_buf || []}));
+}

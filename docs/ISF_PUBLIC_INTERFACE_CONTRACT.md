@@ -48,6 +48,10 @@ The advertised `--strict` option on that path is checked by
 [t/1124-isf-public-cli-strict-mode-audit.t](../t/1124-isf-public-cli-strict-mode-audit.t).
 The current APB schedule report is checked against the advertised key families
 by [t/1116-isf-public-schedule-report-key-family-audit.t](../t/1116-isf-public-schedule-report-key-family-audit.t).
+The advertised schedule-report metadata itself is checked by
+[t/1140-isf-public-schedule-report-metadata-audit.t](../t/1140-isf-public-schedule-report-metadata-audit.t)
+to keep key families, grouped family maps, ordering, multi-file scope, and
+successful `compile_issues` shape exact across direct and manifest views.
 The public `--emit-schedule-json` CLI path is checked by
 [t/1121-isf-public-cli-schedule-report-audit.t](../t/1121-isf-public-cli-schedule-report-audit.t)
 to emit clean-stderr JSON matching the in-process scheduler report.
@@ -231,6 +235,8 @@ The machine-readable contract advertises this current success shape in
 The schedule report is not yet a frozen full schema. Downstream consumers should
 use the advertised contract metadata instead of assuming every current field,
 generated state name, or private lowering decision is permanent.
+The advertised schedule-report metadata fields are exact for the bounded public
+key families and policy strings they name.
 
 ## Non-Public Internals
 
