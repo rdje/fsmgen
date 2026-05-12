@@ -42,16 +42,17 @@ Shifts `reg` left by 1 and ORs in `bit` at LSB.
 
 Shifts `reg` right by 1 and ORs in `bit` at MSB.
 
-**Lowering**: `(<- (reg (| (>> reg 1) (<< bit (- WIDTH 1)))))`
+**Lowering**: `(<- (reg (| (>> reg 1) (<< bit width-1))))`
 
 ```lisp
 (state
-  (<- (tx_reg (| (>> tx_reg 1) (<< msb_data (- WIDTH 1)))))
+  (<- (tx_reg (| (>> tx_reg 1) (<< msb_data 7))))
   (-> next_state))
 ```
 
-The current implementation still uses the placeholder `WIDTH` expression.
-Field-width inference for this operation is deferred.
+Known interface and sampled-source widths use a concrete insert position. If
+the shifted value has no known width, the current implementation falls back to
+the placeholder `WIDTH` expression.
 
 ## `(assemble field1 field2 ... as var)` — Concatenation
 

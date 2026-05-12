@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 repeat bodies now lower drive/data operations
+- `LoweringIR` now carries a bounded signal-width map per transaction from
+  interface ports plus `(sample source as alias)` clauses.
+- Repeat bodies now lower named drive calls with actual arguments and the
+  current data-op family (`update`, shifts, `assemble`, `extract`) instead of
+  silently emitting empty/partial states.
+- Known-width `shift_right` now uses a concrete insert position such as `7` for
+  UART's sampled 8-bit `byte_data`; unknown-width values still fall back to the
+  placeholder width expression. `t/1099-isf-repeat-data-ops.t` locks UART and
+  I2C repeat bodies.
 ## 2026-05-12: R14 `await_any` now checks every collected done port
 - `Emitter::FSM` now lowers `sync_any` states by emitting one guard transition
   for each collected spawned done signal, all targeting the next parent state.

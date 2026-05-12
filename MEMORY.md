@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — repeat data ops now lower
+- `LoweringIR` now lowers named drive calls and data ops inside repeat bodies.
+- Known-width `shift_right` uses interface/sample-derived width; UART
+  `byte_data` now shifts with insert position `7` instead of `WIDTH`.
+- Added `t/1099-isf-repeat-data-ops.t` for UART `shift_right` and I2C
+  `shift_left` repeat bodies. Unknown-width `shift_right` and exact `extract`
+  slicing remain deferred.
 ## 2026-05-12: R14 — `await_any` multi-done guards
 - `Emitter::FSM` now emits one guard transition per collected spawned done port
   for `await_any`, so any child done can advance the parent.
@@ -31,8 +38,8 @@ This is the live continuity document for fast session recovery after crashes, re
 - R14 mdBook chapters were tightened for composition, rules, data manipulation,
   and lowering reference. They now call out deferred composition-top
   instantiation, unenforced priorities/resources, placeholder `shift_right`
-  width, and placeholder `extract` slices. The following `await_any` slice
-  removed the first-port limitation.
+  width, and placeholder `extract` slices. Later R14 slices removed the
+  first-port `await_any` limit and added known-width `shift_right` lowering.
 - Next bounded slice: choose one documented limitation and make it
   regression-backed behavior, or broaden schedule JSON assertions over the
   current IR.

@@ -12,6 +12,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   scheduler limitation into regression-backed behavior.
 - `t/1098` now lowers `await_any` as one guard per collected spawned done port
   instead of watching only the first done signal.
+- `t/1099` now proves repeat bodies lower named drive calls and data operations,
+  and known-width `shift_right` uses concrete insert positions.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
@@ -897,6 +899,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
     from those paths.
   - [t/1098-isf-await-any-sync.t](t/1098-isf-await-any-sync.t) now proves
     `await_any` emits one guard per collected spawned done signal.
+  - [t/1099-isf-repeat-data-ops.t](t/1099-isf-repeat-data-ops.t) now proves
+    repeat bodies lower named drive calls and data operations, including
+    known-width `shift_right`.
   - Next bounded `R14` slice: convert another documented scheduler limitation
     into regression-backed behavior.
 - Superseded `R13` carry-forward detail retained below this note should not be
@@ -3452,8 +3457,8 @@ Done:
 - [docs/ISF_SPEC.md](docs/ISF_SPEC.md) is synchronized to the current shipped
   parser/scheduler behavior and explicitly records the current limitations:
   deferred composition-top instantiation, unenforced resources/priorities,
-  schedule JSON as a non-stable schema, and placeholder `shift_right`/`extract`
-  field handling.
+  schedule JSON as a non-stable schema, unknown-width `shift_right`, and
+  placeholder `extract` field handling.
 - [t/1096-isf-schedule-json-report.t](t/1096-isf-schedule-json-report.t) locks
   the current APB schedule JSON report identity, counts, transaction state
   order, DT summaries, inferred storage, and empty `compile_issues`.
@@ -3462,6 +3467,8 @@ Done:
   calls.
 - [t/1098-isf-await-any-sync.t](t/1098-isf-await-any-sync.t) locks
   multi-guard `await_any` lowering for spawned done signals.
+- [t/1099-isf-repeat-data-ops.t](t/1099-isf-repeat-data-ops.t) locks repeat
+  body named-drive/data-op lowering and known-width `shift_right`.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

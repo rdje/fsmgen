@@ -225,6 +225,8 @@ Current ISF lowering does not emit an explicit deassert state for `done`.
 
 **Timing**: `N × (body_cycles) + 2` (init + check). For `N=8` with 2 drives: `8×2+2=18` cycles.
 **Implicit signals**: `{tx}_cnt` (8 bits).
+Repeat bodies lower named drive calls, awaits, samples, updates, and the
+current data operations.
 
 ## `(when condition body...)` → Decision State
 
@@ -284,6 +286,8 @@ Current ISF lowering does not emit an explicit deassert state for `done`.
 
 **Timing**: 1 cycle. Assignment takes effect next cycle.
 **Implicit signals**: None (operates on existing variables).
+For `shift_right`, known signal widths are used for the inserted MSB position;
+unknown widths still fall back to the placeholder width expression.
 
 ## `(assemble fields... as var)` / `(extract word as fields...)` → Sequential State
 

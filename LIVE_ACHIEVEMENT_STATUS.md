@@ -2,6 +2,11 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — repeat drive/data ops
+- Active: `R14`. `t/1099` proves repeat bodies lower named drive calls and data
+  ops; known-width `shift_right` now uses concrete width. Remaining: resources,
+  priority, extract slices, composition-top.
+
 ## 2026-05-12: R14 — `await_any` all guards
 - Active: `R14`. `t/1098` proves `await_any` watches every collected spawned
   done signal, not only the first. Remaining: priority/resource, data-op,
@@ -19,7 +24,7 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 ## 2026-05-12: R14 — ISF spec synced to implementation
 - Active: `R14`. `docs/ISF_SPEC.md` + mdBook now record shipped behavior and
   limitations: unenforced priorities/resources, placeholder data ops, deferred
-  composition-top instantiation.
+  composition-top instantiation. Later slices narrowed several limits.
 
 ## 2026-05-12: Bootstrap — R14 docs/import tree
 - Active: `R14`. Import tree refreshed for `.isf` pre-lowering path: 191 project

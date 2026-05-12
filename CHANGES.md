@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — repeat body drive/data-op lowering
+- Updated [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so repeat bodies lower named drive calls with arguments and the current data
+  operations instead of silently skipping them.
+- Added sampled-source/interface width tracking for known-width `shift_right`
+  insert positions, with unknown-width fallback preserved.
+- Added [t/1099-isf-repeat-data-ops.t](t/1099-isf-repeat-data-ops.t) for UART
+  `shift_right` and I2C `shift_left` repeat bodies.
 ### R14 — `await_any` watches every spawned done signal
 - Updated [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm)
   so `await_any` emits a guard for every collected spawned done signal instead

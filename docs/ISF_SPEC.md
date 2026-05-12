@@ -229,6 +229,8 @@ Current lowering:
 - The repeat check state decrements with `<-` and loops while the counter is
   nonzero.
 - Current repeat counter width is fixed at `8`.
+- Repeat bodies lower named drive calls plus `await`, `sample`, `update`,
+  `shift_left`, `shift_right`, `assemble`, and `extract`.
 
 ### 7.5 Inline Control Flow
 
@@ -254,9 +256,10 @@ operations, and nested `when`.
 Current lowering:
 - `update` emits one flopped assignment to `var`.
 - `shift_left` emits a left shift plus inserted bit.
-- `shift_right` emits a right shift plus inserted bit using the current
-  placeholder width expression; field-width configurability remains future
-  work.
+- `shift_right` emits a right shift plus inserted bit. When the shifted signal
+  has a known interface or sampled-source width, the insert position uses that
+  width; unknown-width values still fall back to the placeholder width
+  expression.
 - `assemble` emits a concat expression into the target variable.
 - `extract` is parsed into an extraction state and the emitter currently uses
   placeholder slice names; exact field slice ranges remain future work.
@@ -368,6 +371,7 @@ Focused tests:
 - [t/1096-isf-schedule-json-report.t](../t/1096-isf-schedule-json-report.t)
 - [t/1097-isf-start-signal-binding.t](../t/1097-isf-start-signal-binding.t)
 - [t/1098-isf-await-any-sync.t](../t/1098-isf-await-any-sync.t)
+- [t/1099-isf-repeat-data-ops.t](../t/1099-isf-repeat-data-ops.t)
 
 ## 12. Explicitly Deferred
 
@@ -377,6 +381,6 @@ Focused tests:
 - Enforced resource arbitration and priority resolution.
 - Full temporal `(contract ...)` assertions.
 - Rich storage-class optimization in schedule reports.
-- Configurable field widths for `shift_right` and exact field slicing for
-  `extract`.
+- Full width inference for unknown-width `shift_right` values and exact field
+  slicing for `extract`.
 - Treating schedule JSON as a stable public schema.
