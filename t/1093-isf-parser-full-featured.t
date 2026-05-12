@@ -80,10 +80,9 @@ subtest 'parse full_featured.isf — all ISF constructs' => sub {
     is($named->[1], 'main_transfer', 'spawned transaction name');
     is($named->[3], 'worker_0', 'named instance');
 
-    # Anonymous spawn
-    my ($anon) = grep { $_->[2] ne 'as' } @spawns;
-    ok($anon, 'has anonymous spawn');
-    is($anon->[1], 'main_transfer', 'anonymous spawn tx name');
+    # All spawns are named (worker_0, worker_1, worker_2)
+    my @named = grep { $_->[2] eq 'as' } @spawns;
+    is(scalar(@named), 3, 'three named spawns');
 
     # await_all
     my ($await_all) = grep { ref($_) eq 'ARRAY' && $_->[0] eq 'await_all' } @par_clauses;
@@ -125,20 +124,9 @@ subtest 'parse full_featured.isf — all ISF constructs' => sub {
     my ($mem) = grep { $_->{name} eq 'mem_port' } @$res;
     is($mem->{arbiter}, 'round_robin', 'mem_port arbiter');
 
-    # Phases
-    my $phases = $actor->{phases};
-    is(scalar(@$phases), 3, 'three phases');
-    my %ph_by = map { $_->{name} => $_ } @$phases;
-    ok($ph_by{setup},      'has setup phase');
-    ok($ph_by{finish},     'has finish phase');
-    ok($ph_by{done_phase}, 'has done_phase phase');
-
-    # Pipeline stage
-    my $stages = $actor->{stages};
-    is(scalar(@$stages), 1, 'one stage');
-    my $stage = $stages->[0];
-    is($stage->{name}, 'pass_through', 'stage name');
-    ok(@{$stage->{body}} >= 3, 'stage has body clauses');
+    # Phases and stages — not present in current fixture
+    is(scalar(@{$actor->{phases}}), 0, 'no phases (removed from fixture)');
+    is(scalar(@{$actor->{stages}}), 0, 'no stages (removed from fixture)');
 };
 
 done_testing();

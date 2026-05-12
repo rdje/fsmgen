@@ -9,16 +9,15 @@
     (output result (width 32))
     (input  mode))
 
+  (drive (result val) (result val))
+  (drive (done val)   (done val))
+
   (transaction test_tx
     (on start)
-    (drive header
-      (result 0))
+    (drive result 0)
     (when mode
-      (drive write_path
-        (result 42))
-      (drive write_done
-        (done 1)))
+      (drive result 42)
+      (drive done 1))
     (when mode
-      (drive read_path
-        (result 7)))
+      (drive result 7))
     (complete done)))

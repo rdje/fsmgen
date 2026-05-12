@@ -221,13 +221,13 @@ sub _ir_assemble  { my ($cl,$tn,$i)=@_; my$var=$cl->[-2];my@parts=@{$cl}[1..$#$c
 sub _ir_extract   { my ($cl,$tn,$i)=@_; my$word=$cl->[1];my$as_kw=$cl->[-2];my@fields=@{$cl}[2..$#$cl-2]; {name=>"${tn}_ext_$i",kind=>'sequential',assignments=>[],transitions=>[],fields=>\@fields,word=>$word} }
 sub _ir_sample_state { my ($tn,$ps,$i)=@_; my @a; for(@$ps){push @a,{lhs=>$_->[3],rhs=>$_->[1],op=>'<='}} {name=>"${tn}_sample_$i",kind=>'sequential',assignments=>\@a,transitions=>[]} }
 sub _ir_placeholder{ my ($cl,$tn,$i)=@_; {name=>"${tn}_$cl->[0]_$i",kind=>'sequential',assignments=>[],transitions=>[]} }
-sub _ir_do       { my ($cl,$tn,$i)=@_; my $c=$cl->[1]; {name=>"${tn}_do_$i",kind=>'await',assignments=>[{lhs=>"${c}_start",rhs=>1,op=>'='}],transitions=>[],guard=>{port=>"${c}_done"}} }
-sub _ir_spawn    { my ($cl,$tn,$i)=@_; my $inst=$cl->[3]||"${tn}_$i"; {name=>"${tn}_spawn_$i",kind=>'sequential',assignments=>[{lhs=>"${inst}_start",rhs=>1,op=>'='}],transitions=>[]} }
+sub _ir_do       { my ($cl,$tn,$i)=@_; my $c=$cl->[1]; {name=>"${tn}_do_$i",kind=>'await',assignments=>[{lhs=>"_start",rhs=>1,op=>'<-'}],transitions=>[],guard=>{port=>"${c}_done"}} }
+sub _ir_spawn    { my ($cl,$tn,$i)=@_; my $inst=$cl->[3]||"${tn}_$i"; {name=>"${tn}_spawn_$i",kind=>'sequential',assignments=>[{lhs=>"_start",rhs=>1,op=>'<-'}],transitions=>[]} }
 sub _ir_when     { my ($cl,$tn,$i)=@_; {name=>"${tn}_when_$i",kind=>'branch',condition=>$cl->[1],body_clauses=>[@{$cl}[2..$#$cl]],assignments=>[],transitions=>[]} }
 sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd)=@_; my @s; my $bstate=_ir_when($cl,$tn,$$ir++); push @s,$bstate; my @body_states; my @lp;
     for my $bc(@{$bstate->{body_clauses}}){next unless ref($bc)eq'ARRAY';my$bk=$bc->[0];
         if($bk eq'drive'&&@$bc>=3){push @body_states,_ir_drive($bc,$tn,[splice @lp],$$ir++)}
-        elsif($bk eq'drive'){my$n=$bc->[1];confess qq{drive $n not defined} unless$drives->{$n};my$a={lhs=>"${n}_start",rhs=>1,op=>'='};if(@body_states&&$body_states[-1]{kind}eq'sequential'){push @{$body_states[-1]{assignments}},$a}else{push @body_states,{name=>"${tn}_drive_".$$ir++,kind=>'sequential',assignments=>[$a],transitions=>[]}}}
+        elsif($bk eq'drive'){my$n=$bc->[1];confess qq{drive $n not defined} unless$drives->{$n};my$a={lhs=>"_start",rhs=>1,op=>'<-'};if(@body_states&&$body_states[-1]{kind}eq'sequential'){push @{$body_states[-1]{assignments}},$a}else{push @body_states,{name=>"${tn}_drive_".$$ir++,kind=>'sequential',assignments=>[$a],transitions=>[]}}}
         elsif($bk eq'await'){push @body_states,_ir_await($bc,$tn,$$ir++,$wd)}
         elsif($bk eq'sample'){push @lp,$bc}
         elsif($bk eq'complete'){push @body_states,_ir_complete($bc,$tn,$$ir++)}}
@@ -241,7 +241,7 @@ sub _expand_switch { my ($cl,$tn,$ir,$ps,$drives,$wd)=@_; my $signal=$cl->[1]; m
         confess "Switch '$tn': duplicate value '$val'\n" if$seen_val{$val}++;my@body_states;my@lp;
         for my $bc2(@bc){next unless ref($bc2)eq'ARRAY';my$bk2=$bc2->[0];
             if($bk2 eq'drive'&&@$bc2>=3){push @body_states,_ir_drive($bc2,$tn,[splice @lp],$$ir++)}
-            elsif($bk2 eq'drive'){my$n=$bc2->[1];confess qq{drive $n not defined} unless$drives->{$n};my$a={lhs=>"${n}_start",rhs=>1,op=>'='};if(@body_states&&$body_states[-1]{kind}eq'sequential'){push @{$body_states[-1]{assignments}},$a}else{push @body_states,{name=>"${tn}_drive_".$$ir++,kind=>'sequential',assignments=>[$a],transitions=>[]}}}
+            elsif($bk2 eq'drive'){my$n=$bc2->[1];confess qq{drive $n not defined} unless$drives->{$n};my$a={lhs=>"_start",rhs=>1,op=>'<-'};if(@body_states&&$body_states[-1]{kind}eq'sequential'){push @{$body_states[-1]{assignments}},$a}else{push @body_states,{name=>"${tn}_drive_".$$ir++,kind=>'sequential',assignments=>[$a],transitions=>[]}}}
             elsif($bk2 eq'await'){push @body_states,_ir_await($bc2,$tn,$$ir++,$wd)}
             elsif($bk2 eq'sample'){push @lp,$bc2}
             elsif($bk2 eq'repeat'){my($rs,$rc)=_ir_repeat($bc2,$tn,$ir,\@lp,$wd);push @body_states,@$rs}
@@ -279,6 +279,7 @@ sub _link_states {
         elsif($s->{kind}eq'repeat_check'){push @{$s->{transitions}},{target=>$s->{loop_target},condition=>{signal=>$s->{counter},op=>'!=',value=>0}};push @{$s->{transitions}},{target=>$n,condition=>{signal=>$s->{counter},op=>'=',value=>0}}if$n}
         elsif($s->{kind}eq'sequential'&&$n){push @{$s->{transitions}},{target=>$n}}
         elsif($s->{kind}eq'switch'){my$skip=undef;for(my$j=$i+1;$j<@$st;$j++){next if$st->[$j]{name}=~/_drive_|_await_|_sample_/; $skip=$st->[$j]{name};last} push @{$s->{transitions}},{target=>$skip||$e};for my$br(@{$s->{branches}}){push @{$s->{transitions}},{target=>$br->{body_start},condition=>{signal=>$s->{signal},value=>$br->{value}}}}}
+        elsif($s->{kind}eq'sync_all'&&$n){push @{$s->{transitions}},{target=>$n}}
         elsif($s->{kind}eq'sync_any'&&$n){push @{$s->{transitions}},{target=>$n}}
         elsif($s->{kind}eq'terminal'){push @{$s->{transitions}},{target=>$e}}}
 }
@@ -307,9 +308,9 @@ sub _build_rules {
     my ($self,$actor)=@_; my @d;
     for my $r(@{$actor->{rules}||[]}){my $c=$self->_rule_cond($r->{when});my @a;
         for my $ac(@{$r->{actions}}){next unless ref($ac)eq'ARRAY';my$a0=$ac->[0];
-            if($a0 eq'trigger'){push @a,{lhs=>"$ac->[1]_start",rhs=>1,op=>'=',guard=>$c}}
+            if($a0 eq'trigger'){push @a,{lhs=>"$ac->[1]_start",rhs=>1,op=>'<-',guard=>$c}}
             elsif($a0 eq'priority'){}
-            else{push @a,{lhs=>$a0,rhs=>$ac->[1],op=>'=',guard=>$c}}}
+            else{push @a,{lhs=>$a0,rhs=>$ac->[1],op=>'<-',guard=>$c}}}
         push @d,{name=>$r->{name},kind=>'rule',assignments=>\@a}}
     return @d;
 }
@@ -328,7 +329,15 @@ sub _build_drive_dts {
         my %param_signal;
         for my $p (@params) {
             $param_signal{$p} = "${name}_${p}";
-            $ctrs->{$param_signal{$p}} = 1;
+            # Infer width from the port this parameter drives
+            my $w = 1;
+            for my $pair (@$body) {
+                next unless ref($pair) eq 'ARRAY' && @$pair >= 2 && $pair->[1] eq $p;
+                for my $port (@{$actor->{interface}{outputs}}) {
+                    $w = $port->{width} if $port->{name} eq $pair->[0];
+                }
+            }
+            $ctrs->{$param_signal{$p}} = $w;
         }
 
         for my $pair (@$body) {

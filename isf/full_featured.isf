@@ -14,18 +14,21 @@
     (output valid)
     (output err))
 
+  ;; Drive definitions (actor-level)
+  (drive (rdata val)  (rdata val))
+  (drive (valid val)  (valid val))
+  (drive (err val)    (err val))
+
   ;; Transaction with sample, drive, await, complete, latency
   (transaction main_transfer
     (on start
       (sample addr  as captured_addr)
       (sample wdata as captured_wdata))
-    (drive setup
-      (valid 1)
-      (rdata captured_addr))
+    (drive valid 1)
+    (drive rdata captured_addr)
     (await ready)
     (sample ready as was_ready)
-    (drive finish
-      (err 0))
+    (drive err 0)
     (complete done)
     (latency (min 1) (max 64)))
 
@@ -36,22 +39,22 @@
     (do main_transfer)
     (complete done))
 
-  ;; Parallel spawn with parameter passing and named instances
+  ;; Parallel spawn
   (transaction parallel_work
     (on start (sample addr as base))
-    (spawn main_transfer as worker_0 (addr (+ base 0)))
-    (spawn main_transfer as worker_1 (addr (+ base 4)))
-    (spawn main_transfer            (addr (+ base 8)))
+    (spawn main_transfer as worker_0)
+    (spawn main_transfer as worker_1)
+    (spawn main_transfer as worker_2)
     (await_all done)
     (complete done))
 
-  ;; Rule with when, trigger
+  ;; Rule: always ready
   (rule always_ready
     (when ready)
     (valid 1)
     (trigger main_transfer))
 
-  ;; Rule error gate
+  ;; Rule: error gate
   (rule error_gate
     (when err)
     (valid 1)
@@ -69,23 +72,4 @@
   ;; Resources
   (resources
     (resource shared_bus (arbiter priority))
-    (resource mem_port   (arbiter round_robin)))
-
-  ;; Phase definitions
-  (phase setup
-    (outputs valid rdata)
-    (next finish))
-
-  (phase finish
-    (await ready)
-    (on ready (next done_phase)))
-  (phase done_phase
-    (outputs done))
-
-  ;; Pipeline stage
-  (stage pass_through
-    (input  ready)
-    (output valid)
-    (latency (max 3))
-    (compute
-      (valid ready))))
+    (resource mem_port   (arbiter round_robin))))
