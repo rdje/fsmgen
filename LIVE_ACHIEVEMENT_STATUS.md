@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — ISF report DT kind metadata audit
+- Active: `R14`. `t/1158` proves schedule-report DT kind metadata is exact and
+  aligned with APB plus full-featured reports.
+
 ## 2026-05-12: R14 — ISF report transaction-ordering metadata audit
 - Active: `R14`. `t/1157` proves schedule-report transaction-ordering metadata
   is exact and aligned with the full-featured multi-transaction report.

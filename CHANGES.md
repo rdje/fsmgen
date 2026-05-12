@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF report DT kind metadata audit
+- Added `schedule_report_dt_kind_values` to
+  `embedding.isf_public_interface` for the current `drive`,
+  `latency_counter`, and `rule` DT kind values.
+- Added [t/1158-isf-public-report-dt-kind-metadata-audit.t](t/1158-isf-public-report-dt-kind-metadata-audit.t)
+  to prove the metadata is exact and covered by APB plus full-featured reports.
 ### R14 — ISF report transaction-ordering metadata audit
 - Added `schedule_report_transaction_ordering` to
   `embedding.isf_public_interface` for lexical transaction-summary ordering

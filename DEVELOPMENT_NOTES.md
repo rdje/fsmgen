@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF report DT kind metadata audit
+- The report already exposes `dt_blocks[*].kind`, so the value family belongs
+  in the manifest beside the existing DT assignment-count shape.
+- `t/1158-isf-public-report-dt-kind-metadata-audit.t` locks the value list
+  across direct and manifest views and checks APB plus full-featured reports
+  cover every advertised value.
 ## 2026-05-12: R14 ISF report transaction-ordering metadata audit
 - Transaction summaries are compared by downstream tooling, so their order is a
   public review/report stability property. The contract now records the current

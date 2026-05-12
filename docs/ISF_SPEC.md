@@ -453,6 +453,9 @@ Each `dt_blocks` entry's `assignments` value is a non-negative count of
 assignment forms in the matching scheduled `.fsm` DT block, not an assignment
 payload list. The capability-manifest ISF public contract advertises this shape
 through `schedule_report_dt_assignments_shape`.
+Each `dt_blocks` entry's `kind` value is currently `drive`,
+`latency_counter`, or `rule`. The capability-manifest ISF public contract
+advertises this value family through `schedule_report_dt_kind_values`.
 Each `inferred_storage` entry's `kind` value is currently `counter` or
 `register`; optional `width` values are positive integer bit widths when
 present and currently appear on inferred scheduler counters. The
@@ -573,6 +576,7 @@ Focused tests:
 - [t/1155-isf-public-cli-strict-success-metadata-audit.t](../t/1155-isf-public-cli-strict-success-metadata-audit.t)
 - [t/1156-isf-public-lower-result-file-shape-audit.t](../t/1156-isf-public-lower-result-file-shape-audit.t)
 - [t/1157-isf-public-report-transaction-ordering-audit.t](../t/1157-isf-public-report-transaction-ordering-audit.t)
+- [t/1158-isf-public-report-dt-kind-metadata-audit.t](../t/1158-isf-public-report-dt-kind-metadata-audit.t)
 
 ## 12. Explicitly Deferred
 

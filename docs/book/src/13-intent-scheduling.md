@@ -117,6 +117,9 @@ state or non-state DT blocks; the manifest advertises those operator families
 through `dt_assignment_operator_family_map`. Schedule-report `dt_blocks`
 `assignments` values are assignment counts, not payload lists, and the manifest
 advertises that shape through `schedule_report_dt_assignments_shape`.
+Schedule-report DT `kind` values are currently `drive`, `latency_counter`, and
+`rule`, and the manifest advertises that family through
+`schedule_report_dt_kind_values`.
 Inferred-storage `kind` values are `counter` or `register`, and optional
 positive integer `width` values currently belong to inferred counters.
 Transaction summaries expose emitted scheduled-state names in `states`, and

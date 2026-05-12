@@ -146,6 +146,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - `t/1157` now advertises and proves schedule-report transaction ordering:
   summaries are lexical by name and transaction states follow `.fsm` emission
   order.
+- `t/1158` now advertises and proves schedule-report DT kind values:
+  `drive`, `latency_counter`, and `rule`.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.

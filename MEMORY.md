@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF report DT kind metadata audit
+- Added `schedule_report_dt_kind_values` to
+  `embedding.isf_public_interface`, documenting the current schedule-report
+  DT kind value family: `drive`, `latency_counter`, and `rule`.
+- Added `t/1158-isf-public-report-dt-kind-metadata-audit.t` to prove that
+  metadata is exact across direct and manifest views and covered by APB plus
+  full-featured reports.
 ## 2026-05-12: R14 — ISF report transaction-ordering metadata audit
 - Added `schedule_report_transaction_ordering` to
   `embedding.isf_public_interface`, documenting lexical transaction-summary

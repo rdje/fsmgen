@@ -81,6 +81,10 @@ The schedule-report DT assignment-count shape is checked by
 [t/1147-isf-public-report-dt-assignment-count-audit.t](../t/1147-isf-public-report-dt-assignment-count-audit.t)
 to keep `dt_blocks[*].assignments` documented as a non-negative assignment
 count, not an assignment payload list.
+The schedule-report DT kind metadata is checked by
+[t/1158-isf-public-report-dt-kind-metadata-audit.t](../t/1158-isf-public-report-dt-kind-metadata-audit.t)
+to keep advertised `dt_blocks[*].kind` values exact across direct and manifest
+views and aligned with APB plus full-featured reports.
 The inferred-storage metadata is checked by
 [t/1148-isf-public-storage-metadata-audit.t](../t/1148-isf-public-storage-metadata-audit.t)
 to keep advertised storage `kind` values and optional `width` shape exact
@@ -337,6 +341,9 @@ For each `dt_blocks` entry, `assignments` is a non-negative integer count of
 assignment forms in the matching scheduled `.fsm` DT block. It is not an
 assignment payload list. The machine-readable contract advertises this through
 `schedule_report_dt_assignments_shape`.
+For each `dt_blocks` entry, `kind` is currently one of `drive`,
+`latency_counter`, or `rule`. The machine-readable contract advertises this
+through `schedule_report_dt_kind_values`.
 
 For each `inferred_storage` entry, `kind` is currently one of `counter` or
 `register`. Optional `width` values are positive integer bit widths when

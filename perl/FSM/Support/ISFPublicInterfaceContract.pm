@@ -30,6 +30,7 @@ our @EXPORT_OK = qw(
     isf_public_interface_schedule_report_compile_issues_success_shape
     isf_public_interface_schedule_report_clock_shape
     isf_public_interface_schedule_report_dt_assignments_shape
+    isf_public_interface_schedule_report_dt_kind_values
     isf_public_interface_schedule_report_multi_file_scope
     isf_public_interface_schedule_report_interface_count_shape
     isf_public_interface_schedule_report_presence_key_family_map
@@ -136,6 +137,7 @@ sub build_isf_public_interface_contract {
         schedule_report_transaction_count_shape => isf_public_interface_schedule_report_transaction_count_shape(),
         schedule_report_transaction_ordering => isf_public_interface_schedule_report_transaction_ordering(),
         schedule_report_dt_keys => isf_public_interface_schedule_report_dt_keys(),
+        schedule_report_dt_kind_values => isf_public_interface_schedule_report_dt_kind_values(),
         schedule_report_dt_assignments_shape => isf_public_interface_schedule_report_dt_assignments_shape(),
         schedule_report_dt_ordering => isf_public_interface_dt_ordering_policy(),
         live_document_paths => isf_public_interface_live_document_paths(),
@@ -193,6 +195,7 @@ sub build_isf_public_interface_contract {
             't/1155-isf-public-cli-strict-success-metadata-audit.t',
             't/1156-isf-public-lower-result-file-shape-audit.t',
             't/1157-isf-public-report-transaction-ordering-audit.t',
+            't/1158-isf-public-report-dt-kind-metadata-audit.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -263,6 +266,7 @@ sub isf_public_interface_public_top_level_keys {
             schedule_report_transaction_count_shape
             schedule_report_transaction_ordering
             schedule_report_dt_keys
+            schedule_report_dt_kind_values
             schedule_report_dt_assignments_shape
             schedule_report_dt_ordering
             live_document_paths
@@ -528,6 +532,16 @@ sub isf_public_interface_schedule_report_dt_keys {
             name
             kind
             assignments
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_dt_kind_values {
+    return [
+        qw(
+            drive
+            latency_counter
+            rule
         ),
     ];
 }
