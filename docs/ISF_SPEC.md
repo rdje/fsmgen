@@ -450,6 +450,11 @@ non-negative integer equal to that array length. The capability-manifest ISF
 public contract advertises this through
 `schedule_report_transaction_states_shape` and
 `schedule_report_transaction_count_shape`.
+The reset summary's `kind` value is currently `async` or `sync`, and its
+`polarity` value is currently `active_high` or `active_low`. The
+capability-manifest ISF public contract advertises those value families through
+`schedule_report_reset_kind_values` and
+`schedule_report_reset_polarity_values`.
 Successful reports keep `compile_issues` present as an empty array; the
 capability-manifest ISF public contract advertises that success shape through
 `schedule_report_compile_issues_success_shape`.
@@ -531,6 +536,7 @@ Focused tests:
 - [t/1147-isf-public-report-dt-assignment-count-audit.t](../t/1147-isf-public-report-dt-assignment-count-audit.t)
 - [t/1148-isf-public-storage-metadata-audit.t](../t/1148-isf-public-storage-metadata-audit.t)
 - [t/1149-isf-public-transaction-metadata-audit.t](../t/1149-isf-public-transaction-metadata-audit.t)
+- [t/1150-isf-public-reset-metadata-audit.t](../t/1150-isf-public-reset-metadata-audit.t)
 
 ## 12. Explicitly Deferred
 

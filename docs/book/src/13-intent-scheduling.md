@@ -114,7 +114,8 @@ advertises that shape through `schedule_report_dt_assignments_shape`.
 Inferred-storage `kind` values are `counter` or `register`, and optional
 positive integer `width` values currently belong to inferred counters.
 Transaction summaries expose emitted scheduled-state names in `states`, and
-`count` equals that array length. The ISF
+`count` equals that array length. Reset summaries advertise `async`/`sync`
+kind values and `active_high`/`active_low` polarity values. The ISF
 live-document path list is
 audited across direct and manifest views so recovery pointers stay repo-local
 and present. The public `--emit-schedule-json` path is audited to emit the same

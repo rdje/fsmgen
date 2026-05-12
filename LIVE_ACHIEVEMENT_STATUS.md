@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — ISF reset metadata audit
+- Active: `R14`. `t/1150` proves schedule-report reset metadata is exact and
+  aligned with reset reports.
+
 ## 2026-05-12: R14 — ISF transaction metadata audit
 - Active: `R14`. `t/1149` proves schedule-report transaction metadata is exact
   and aligned with the APB report.

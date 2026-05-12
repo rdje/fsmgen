@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF reset metadata audit
+- Added `schedule_report_reset_kind_values` and
+  `schedule_report_reset_polarity_values` to `embedding.isf_public_interface`,
+  documenting current schedule-report reset value families.
+- Added `t/1150-isf-public-reset-metadata-audit.t` to prove that metadata is
+  exact across direct and manifest views and that async active-low plus sync
+  active-high reports use advertised values.
 ## 2026-05-12: R14 — ISF transaction metadata audit
 - Added `schedule_report_transaction_states_shape` and
   `schedule_report_transaction_count_shape` to `embedding.isf_public_interface`,

@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF reset metadata audit
+- Reset summaries expose small enum-like value families. Those values are part
+  of the downstream schedule-report surface and should be discoverable from the
+  capability manifest instead of only the prose spec.
+- `t/1150-isf-public-reset-metadata-audit.t` locks reset kind and polarity
+  value families across direct and manifest views, with fixture coverage for
+  async active-low and sync active-high reports.
 ## 2026-05-12: R14 ISF transaction metadata audit
 - Transaction summaries are useful to downstream consumers only if `states` and
   `count` have explicit semantics. The contract now says `states` is the

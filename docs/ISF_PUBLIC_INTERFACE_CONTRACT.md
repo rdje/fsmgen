@@ -76,6 +76,10 @@ The transaction-summary metadata is checked by
 [t/1149-isf-public-transaction-metadata-audit.t](../t/1149-isf-public-transaction-metadata-audit.t)
 to keep transaction `states` and `count` shapes exact across direct and
 manifest views.
+The reset-summary metadata is checked by
+[t/1150-isf-public-reset-metadata-audit.t](../t/1150-isf-public-reset-metadata-audit.t)
+to keep advertised reset `kind` and `polarity` values exact across direct and
+manifest views.
 The public `--emit-schedule-json` CLI path is checked by
 [t/1121-isf-public-cli-schedule-report-audit.t](../t/1121-isf-public-cli-schedule-report-audit.t)
 to emit clean-stderr JSON matching the in-process scheduler report.
@@ -294,6 +298,11 @@ belonging to that transaction in emitted order, and `count` is a non-negative
 integer equal to the `states` array length. The machine-readable contract
 advertises this through `schedule_report_transaction_states_shape` and
 `schedule_report_transaction_count_shape`.
+
+For the `reset` summary, `kind` is currently `async` or `sync`, and `polarity`
+is currently `active_high` or `active_low`. The machine-readable contract
+advertises those value families through `schedule_report_reset_kind_values` and
+`schedule_report_reset_polarity_values`.
 
 The current lowerer emits DT summaries in deterministic lowering order:
 transaction/rule-created DTs retain their construction order, and hash-backed

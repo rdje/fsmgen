@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF reset metadata audit
+- Added `schedule_report_reset_kind_values` and
+  `schedule_report_reset_polarity_values` to `embedding.isf_public_interface`.
+- Added [t/1150-isf-public-reset-metadata-audit.t](t/1150-isf-public-reset-metadata-audit.t)
+  to prove those metadata fields are exact and reset reports use advertised
+  kind/polarity values.
 ### R14 — ISF transaction metadata audit
 - Added `schedule_report_transaction_states_shape` and
   `schedule_report_transaction_count_shape` to

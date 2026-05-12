@@ -22,7 +22,9 @@ our @EXPORT_OK = qw(
     isf_public_interface_schedule_report_dt_assignments_shape
     isf_public_interface_schedule_report_multi_file_scope
     isf_public_interface_schedule_report_presence_key_family_map
+    isf_public_interface_schedule_report_reset_kind_values
     isf_public_interface_schedule_report_reset_keys
+    isf_public_interface_schedule_report_reset_polarity_values
     isf_public_interface_schedule_report_storage_kind_values
     isf_public_interface_schedule_report_storage_optional_keys
     isf_public_interface_schedule_report_storage_required_keys
@@ -90,6 +92,8 @@ sub build_isf_public_interface_contract {
         schedule_report_multi_file_scope => isf_public_interface_schedule_report_multi_file_scope(),
         schedule_report_presence_key_family_map => isf_public_interface_schedule_report_presence_key_family_map(),
         schedule_report_reset_keys => isf_public_interface_schedule_report_reset_keys(),
+        schedule_report_reset_kind_values => isf_public_interface_schedule_report_reset_kind_values(),
+        schedule_report_reset_polarity_values => isf_public_interface_schedule_report_reset_polarity_values(),
         schedule_report_storage_required_keys => isf_public_interface_schedule_report_storage_required_keys(),
         schedule_report_storage_optional_keys => isf_public_interface_schedule_report_storage_optional_keys(),
         schedule_report_storage_kind_values => isf_public_interface_schedule_report_storage_kind_values(),
@@ -147,6 +151,7 @@ sub build_isf_public_interface_contract {
             't/1147-isf-public-report-dt-assignment-count-audit.t',
             't/1148-isf-public-storage-metadata-audit.t',
             't/1149-isf-public-transaction-metadata-audit.t',
+            't/1150-isf-public-reset-metadata-audit.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -190,6 +195,8 @@ sub isf_public_interface_public_top_level_keys {
             schedule_report_multi_file_scope
             schedule_report_presence_key_family_map
             schedule_report_reset_keys
+            schedule_report_reset_kind_values
+            schedule_report_reset_polarity_values
             schedule_report_storage_required_keys
             schedule_report_storage_optional_keys
             schedule_report_storage_kind_values
@@ -319,6 +326,24 @@ sub isf_public_interface_schedule_report_reset_keys {
             name
             kind
             polarity
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_reset_kind_values {
+    return [
+        qw(
+            async
+            sync
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_reset_polarity_values {
+    return [
+        qw(
+            active_high
+            active_low
         ),
     ];
 }

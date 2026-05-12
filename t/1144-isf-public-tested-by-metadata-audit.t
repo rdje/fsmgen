@@ -54,6 +54,7 @@ my $expected_tested_by = [
     't/1147-isf-public-report-dt-assignment-count-audit.t',
     't/1148-isf-public-storage-metadata-audit.t',
     't/1149-isf-public-transaction-metadata-audit.t',
+    't/1150-isf-public-reset-metadata-audit.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {
