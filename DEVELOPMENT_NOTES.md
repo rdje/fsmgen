@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF lower result files audit
+- The public in-process scheduler facade currently returns a narrow lower
+  result whose useful downstream surface is `files`, a map from scheduled `.fsm`
+  basename to scheduled `.fsm` source text.
+- `t/1117-isf-public-lower-result-files-audit.t` locks that shape for one
+  ordinary single-file lowering and one spawn-driven multi-file lowering. This
+  keeps the facade useful to downstream tools without freezing LoweringIR or
+  emitter internals.
 ## 2026-05-12: R14 ISF schedule report key-family audit
 - The initial ISF public-interface contract advertised schedule-report key
   families. `t/1116-isf-public-schedule-report-key-family-audit.t` ties those

@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF lower result files audit
+- Added [t/1117-isf-public-lower-result-files-audit.t](t/1117-isf-public-lower-result-files-audit.t)
+  to lock the public `FSM::Scheduler::ISF->lower(...)` result shape.
+- The regression covers the advertised `files` map for APB single-file lowering
+  and `spawn_parent` parent/child multi-file lowering.
 ### R14 — ISF schedule report key-family audit
 - Added [t/1116-isf-public-schedule-report-key-family-audit.t](t/1116-isf-public-schedule-report-key-family-audit.t)
   to compare the real APB schedule report against the public key families

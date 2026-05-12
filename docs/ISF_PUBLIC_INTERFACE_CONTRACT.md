@@ -28,6 +28,8 @@ Both capability-manifest CLI spellings are audited by
 to keep the in-process contract and CLI-advertised contract aligned.
 The current APB schedule report is checked against the advertised key families
 by [t/1116-isf-public-schedule-report-key-family-audit.t](../t/1116-isf-public-schedule-report-key-family-audit.t).
+The lower-result `files` map is checked for both single-file and multi-file
+lowering by [t/1117-isf-public-lower-result-files-audit.t](../t/1117-isf-public-lower-result-files-audit.t).
 
 ## Stabilized Surface
 

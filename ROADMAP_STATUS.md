@@ -56,6 +56,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   same `embedding.isf_public_interface` contract payload.
 - `t/1116` now proves the real APB schedule report conforms to the public
   key families advertised by the ISF public-interface contract.
+- `t/1117` now proves the public ISF lower-result `files` map for single-file
+  and multi-file lowering.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
@@ -3577,6 +3579,9 @@ Done:
   contract for both supported manifest spellings.
 - [t/1116-isf-public-schedule-report-key-family-audit.t](t/1116-isf-public-schedule-report-key-family-audit.t)
   locks real schedule-report key-family conformance for the APB fixture.
+- [t/1117-isf-public-lower-result-files-audit.t](t/1117-isf-public-lower-result-files-audit.t)
+  locks the public lower-result `files` map for APB single-file lowering and
+  `spawn_parent` parent/child multi-file lowering.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

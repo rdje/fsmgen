@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF lower result files audit
+- Added `t/1117-isf-public-lower-result-files-audit.t` to lock the public
+  `FSM::Scheduler::ISF->lower(...)` result shape.
+- The test proves the top-level lower result only exposes advertised keys and
+  that `files` maps scheduled `.fsm` basenames to text for both APB single-file
+  lowering and `spawn_parent` multi-file parent/child lowering.
 ## 2026-05-12: R14 — ISF schedule report key-family audit
 - Added `t/1116-isf-public-schedule-report-key-family-audit.t` to compare the
   real APB schedule report against the key families advertised by
