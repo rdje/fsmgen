@@ -131,6 +131,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `count` shapes.
 - `t/1150` now advertises and proves schedule-report reset kind and polarity
   value families.
+- `t/1151` now advertises and proves schedule-report interface and state-count
+  semantics.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.

@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF report count metadata audit
+- The schedule report's top-level count fields are compact summaries, but they
+  should still be machine-discoverable: input/output counts are direction
+  counts, `port_count` is their sum, and `state_count` is scoped to the current
+  parent scheduled `.fsm` report.
+- `t/1151-isf-public-report-count-metadata-audit.t` locks those metadata
+  strings and checks APB report counts against actor interface data plus
+  generated scheduled `.fsm` state blocks.
 ## 2026-05-12: R14 ISF reset metadata audit
 - Reset summaries expose small enum-like value families. Those values are part
   of the downstream schedule-report surface and should be discoverable from the

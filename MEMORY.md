@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF report count metadata audit
+- Added `schedule_report_interface_count_shape` and
+  `schedule_report_state_count_shape` to `embedding.isf_public_interface`,
+  documenting interface and state-count semantics.
+- Added `t/1151-isf-public-report-count-metadata-audit.t` to prove that
+  metadata is exact across direct and manifest views and that APB report counts
+  match actor interface counts plus generated scheduled `.fsm` state blocks.
 ## 2026-05-12: R14 — ISF reset metadata audit
 - Added `schedule_report_reset_kind_values` and
   `schedule_report_reset_polarity_values` to `embedding.isf_public_interface`,

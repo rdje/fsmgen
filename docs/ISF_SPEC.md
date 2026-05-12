@@ -455,6 +455,11 @@ The reset summary's `kind` value is currently `async` or `sync`, and its
 capability-manifest ISF public contract advertises those value families through
 `schedule_report_reset_kind_values` and
 `schedule_report_reset_polarity_values`.
+The top-level `inputs` and `outputs` values count interface ports by direction,
+and `port_count` equals their sum. `state_count` counts scheduled `.fsm` state
+blocks in the current parent report scope. The capability-manifest ISF public
+contract advertises this through `schedule_report_interface_count_shape` and
+`schedule_report_state_count_shape`.
 Successful reports keep `compile_issues` present as an empty array; the
 capability-manifest ISF public contract advertises that success shape through
 `schedule_report_compile_issues_success_shape`.
@@ -537,6 +542,7 @@ Focused tests:
 - [t/1148-isf-public-storage-metadata-audit.t](../t/1148-isf-public-storage-metadata-audit.t)
 - [t/1149-isf-public-transaction-metadata-audit.t](../t/1149-isf-public-transaction-metadata-audit.t)
 - [t/1150-isf-public-reset-metadata-audit.t](../t/1150-isf-public-reset-metadata-audit.t)
+- [t/1151-isf-public-report-count-metadata-audit.t](../t/1151-isf-public-report-count-metadata-audit.t)
 
 ## 12. Explicitly Deferred
 

@@ -80,6 +80,10 @@ The reset-summary metadata is checked by
 [t/1150-isf-public-reset-metadata-audit.t](../t/1150-isf-public-reset-metadata-audit.t)
 to keep advertised reset `kind` and `polarity` values exact across direct and
 manifest views.
+The schedule-report count metadata is checked by
+[t/1151-isf-public-report-count-metadata-audit.t](../t/1151-isf-public-report-count-metadata-audit.t)
+to keep interface and state-count semantics exact across direct and manifest
+views.
 The public `--emit-schedule-json` CLI path is checked by
 [t/1121-isf-public-cli-schedule-report-audit.t](../t/1121-isf-public-cli-schedule-report-audit.t)
 to emit clean-stderr JSON matching the in-process scheduler report.
@@ -303,6 +307,13 @@ For the `reset` summary, `kind` is currently `async` or `sync`, and `polarity`
 is currently `active_high` or `active_low`. The machine-readable contract
 advertises those value families through `schedule_report_reset_kind_values` and
 `schedule_report_reset_polarity_values`.
+
+The top-level `inputs` and `outputs` values are non-negative integer counts of
+interface ports by direction, and `port_count` equals their sum. The top-level
+`state_count` value is a non-negative integer count of scheduled `.fsm` state
+blocks in the current parent report scope. The machine-readable contract
+advertises this through `schedule_report_interface_count_shape` and
+`schedule_report_state_count_shape`.
 
 The current lowerer emits DT summaries in deterministic lowering order:
 transaction/rule-created DTs retain their construction order, and hash-backed

@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF report count metadata audit
+- Added `schedule_report_interface_count_shape` and
+  `schedule_report_state_count_shape` to `embedding.isf_public_interface`.
+- Added [t/1151-isf-public-report-count-metadata-audit.t](t/1151-isf-public-report-count-metadata-audit.t)
+  to prove those metadata fields are exact and APB report counts match actor
+  interface counts plus generated scheduled `.fsm` state blocks.
 ### R14 — ISF reset metadata audit
 - Added `schedule_report_reset_kind_values` and
   `schedule_report_reset_polarity_values` to `embedding.isf_public_interface`.
