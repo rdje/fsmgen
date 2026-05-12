@@ -44,6 +44,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   closing paren per generated `.fsm` line.
 - `t/1110` now proves blocking `do` rewires child idle states to the first
   non-entry child state, not only drive-first children.
+- `t/1111` now proves pending samples materialize before data-operation states
+  at top level and inside `when`, `switch`, and `repeat` bodies.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
@@ -3542,6 +3544,9 @@ Done:
   one-close-per-line emitted `.fsm` formatting.
 - [t/1110-isf-do-child-entry-rewire.t](t/1110-isf-do-child-entry-rewire.t)
   locks blocking `do` child entry rewiring for non-drive first body states.
+- [t/1111-isf-sample-before-data-ops.t](t/1111-isf-sample-before-data-ops.t)
+  locks sample materialization before data-operation states at top level and
+  inside current control-flow bodies.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

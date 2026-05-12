@@ -202,6 +202,9 @@ Current lowering:
 - Samples in `(on ...)` fire with the entry guard.
 - Samples collected before a later drive/await are piggybacked onto that next
   scheduled state.
+- Samples collected before a data operation materialize in a sample state
+  before the data-operation state, so the data operation reads the captured
+  value rather than the previous value.
 - Entry-state sample materialization and drive/await piggybacking are locked by
   [t/1100-isf-sample-piggyback.t](../t/1100-isf-sample-piggyback.t).
 - The current implementation treats sampled names as inferred storage; richer
@@ -408,6 +411,7 @@ Focused tests:
 - [t/1108-isf-schedule-json-transaction-states.t](../t/1108-isf-schedule-json-transaction-states.t)
 - [t/1109-isf-await-all-sync.t](../t/1109-isf-await-all-sync.t)
 - [t/1110-isf-do-child-entry-rewire.t](../t/1110-isf-do-child-entry-rewire.t)
+- [t/1111-isf-sample-before-data-ops.t](../t/1111-isf-sample-before-data-ops.t)
 
 ## 12. Explicitly Deferred
 

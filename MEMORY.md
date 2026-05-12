@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — samples before data ops
+- `LoweringIR` now materializes pending samples before data-operation states
+  instead of leaving the sample until after `update`, shift, assemble, or
+  extract states.
+- The ordering fix covers top-level clauses plus `when`, `switch`, and
+  `repeat` bodies.
+- Added `t/1111-isf-sample-before-data-ops.t`.
 ## 2026-05-12: R14 — `do` child entry rewire
 - `_wire_do_children` now redirects a blocking child idle state to the first
   non-entry child state, not only to `child_drive_*` states.

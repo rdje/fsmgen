@@ -264,12 +264,12 @@ sub _build_transaction($self, $tx, $actor, $txi) {
         }
         elsif ($k eq 'await')    { $ha=1; $wdc="${tn}_wd"; my $wd_override = _parse_await_wd($cl); push @st, _ir_await($cl, $tn, $si++, $wd_override || $wd, [splice @ps]); }
         elsif ($k eq 'sample')   { push @ps, $cl; }
-        elsif ($k eq 'update')      { push @st, _ir_update($cl,$tn,$si++); }
+        elsif ($k eq 'update')      { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_update($cl,$tn,$si++); }
         elsif ($k eq 'phase')       { push @st, _ir_phase($cl,$tn,$si++); }
-        elsif ($k eq 'shift_left')  { push @st, _ir_shift_left($cl,$tn,$si++); }
-        elsif ($k eq 'shift_right') { push @st, _ir_shift_right($cl,$tn,$si++,$widths); }
-        elsif ($k eq 'assemble')    { push @st, _ir_assemble($cl,$tn,$si++); }
-        elsif ($k eq 'extract')     { push @st, _ir_extract($cl,$tn,$si++,$widths); }
+        elsif ($k eq 'shift_left')  { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_shift_left($cl,$tn,$si++); }
+        elsif ($k eq 'shift_right') { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_shift_right($cl,$tn,$si++,$widths); }
+        elsif ($k eq 'assemble')    { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_assemble($cl,$tn,$si++); }
+        elsif ($k eq 'extract')     { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_extract($cl,$tn,$si++,$widths); }
         elsif ($k eq 'complete') { push @st, _ir_complete($cl, $tn, $si++); }
         elsif ($k eq 'when' && !@st) { push @st, _ir_when_activation($cl,$tn,$si++); }
         elsif ($k eq 'when')     {
@@ -324,6 +324,14 @@ sub _sample_assignments {
     }
 
     return @assignments;
+}
+
+sub _push_sample_state {
+    my ($states, $tn, $pending_samples, $state_index_ref) = @_;
+    return unless $pending_samples && @$pending_samples;
+    my $index = $$state_index_ref;
+    $$state_index_ref++;
+    push @$states, _ir_sample_state($tn, [splice @$pending_samples], $index);
 }
 
 sub _inline_on_samples {
@@ -462,7 +470,7 @@ sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters)=@_; my @s;
         elsif($bk eq'sample'){push @lp,$bc}
         elsif($bk eq'complete'){push @body_states,_ir_complete($bc,$tn,$$ir++)}
         elsif($bk eq'repeat'){my($rs,$rc,$rw)=_ir_repeat($bc,$tn,$ir,\@lp,$wd,$drives,$widths);push @body_states,@$rs;_register_counter_width($counters,$rc,$rw) if $counters}
-        elsif($bk eq'update'||$bk eq'shift_left'||$bk eq'shift_right'||$bk eq'assemble'||$bk eq'extract'){push @body_states,_ir_data_op($bk,$bc,$tn,$$ir++,$widths)}
+        elsif($bk eq'update'||$bk eq'shift_left'||$bk eq'shift_right'||$bk eq'assemble'||$bk eq'extract'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_data_op($bk,$bc,$tn,$$ir++,$widths)}
         elsif($bk eq'when'){my($ws)=_expand_when($bc,$tn,$ir,\@lp,$drives,$wd,$widths,$counters);push @body_states,@$ws}}
     if(@lp){push @body_states,_ir_sample_state($tn,\@lp,$$ir++)}
     if(@body_states){$bstate->{true_target}=$body_states[0]{name};$bstate->{branch_state_names}=[map { $_->{name} } @body_states];push @s,@body_states}
@@ -477,7 +485,7 @@ sub _expand_switch { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters)=@_; my $
             elsif($bk2 eq'await'){push @body_states,_ir_await($bc2,$tn,$$ir++,$wd,[splice @lp])}
             elsif($bk2 eq'sample'){push @lp,$bc2}
             elsif($bk2 eq'repeat'){my($rs,$rc,$rw)=_ir_repeat($bc2,$tn,$ir,\@lp,$wd,$drives,$widths);push @body_states,@$rs;_register_counter_width($counters,$rc,$rw) if $counters}
-            elsif($bk2 eq'update'||$bk2 eq'shift_left'||$bk2 eq'shift_right'||$bk2 eq'assemble'||$bk2 eq'extract'){push @body_states,_ir_data_op($bk2,$bc2,$tn,$$ir++,$widths)}
+            elsif($bk2 eq'update'||$bk2 eq'shift_left'||$bk2 eq'shift_right'||$bk2 eq'assemble'||$bk2 eq'extract'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_data_op($bk2,$bc2,$tn,$$ir++,$widths)}
             elsif($bk2 eq'when'){my($ws)=_expand_when($bc2,$tn,$ir,\@lp,$drives,$wd,$widths,$counters);push @body_states,@$ws}}
         if(@lp||!@body_states){push @body_states,_ir_sample_state($tn,\@lp,$$ir++)if@lp;push @body_states,{name=>"${tn}_switch_${val}_" . $$ir++,kind=>'sequential',assignments=>[],transitions=>[]}unless@body_states}
         push @branches,{value=>$val,body_start=>$body_states[0]{name}};
@@ -499,7 +507,7 @@ sub _ir_repeat {
         if($bk eq'drive'){my$n=$bc->[1];if(!ref($n)&&$drives->{$n}){push @s,_ir_named_drive_call($bc,$tn,$$ir++,$drives->{$n},[splice @lp])}else{push @s,_ir_drive($bc,$tn,[splice @lp],$$ir++)}}
         elsif($bk eq'await'){push @s,_ir_await($bc,$tn,$$ir++,$wd,[splice @lp])}
         elsif($bk eq'sample'){push @lp,$bc}
-        elsif($bk eq'update'||$bk eq'shift_left'||$bk eq'shift_right'||$bk eq'assemble'||$bk eq'extract'){push @s,_ir_data_op($bk,$bc,$tn,$$ir++,$widths)}}
+        elsif($bk eq'update'||$bk eq'shift_left'||$bk eq'shift_right'||$bk eq'assemble'||$bk eq'extract'){_push_sample_state(\@s,$tn,\@lp,$ir);push @s,_ir_data_op($bk,$bc,$tn,$$ir++,$widths)}}
     if(@lp){push @s,_ir_sample_state($tn,\@lp,$$ir++)}
     my $fb=$s[0]{name};
     push @s, {name=>"${tn}_repeat_check_".$$ir++,kind=>'repeat_check',assignments=>[{lhs=>$ctr,rhs=>"(- $ctr 1)",op=>'<-'}],transitions=>[],loop_target=>$fb,counter=>$ctr};

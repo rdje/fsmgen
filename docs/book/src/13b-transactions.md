@@ -108,6 +108,9 @@ The port value changes in the NEXT cycle (flopped).
 - Before `(drive ...)` or `(await ...)`: piggybacked onto that state.
 
 **No implicit signals**. The variable `name` is tracked internally.
+When a sample is followed by a data operation rather than a drive or await, the
+scheduler emits a sample state first so the data operation reads the captured
+value.
 
 ## `(await port)` — Conditional Stall
 

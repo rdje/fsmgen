@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — samples before data ops
+- Updated [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so pending samples materialize before data-operation states instead of after
+  them.
+- Added [t/1111-isf-sample-before-data-ops.t](t/1111-isf-sample-before-data-ops.t)
+  for top-level, `when`, `switch`, and `repeat` sample-before-data-op paths.
 ### R14 — `do` child entry rewire
 - Updated [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
   so blocking `do` rewires the child idle state to the first non-entry child

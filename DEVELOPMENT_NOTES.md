@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 samples before data ops
+- Samples can be consumed in the same scheduled state as a following drive or
+  await because those states already carry sample assignments. Data-operation
+  states read their RHS in that state, so a preceding sample must materialize in
+  an earlier state for the data op to use the captured value.
+- `LoweringIR` now flushes pending samples before data-operation states at the
+  top level and inside `when`, `switch`, and `repeat` bodies.
+- `t/1111-isf-sample-before-data-ops.t` locks the ordering without changing
+  existing drive/await piggyback behavior.
 ## 2026-05-12: R14 `do` child entry rewire
 - Blocking `do` reuses the child transaction states inside the parent module
   and rewires the child's idle guard from the public activation port to
