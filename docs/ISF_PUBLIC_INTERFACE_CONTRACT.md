@@ -84,6 +84,10 @@ The schedule-report count metadata is checked by
 [t/1151-isf-public-report-count-metadata-audit.t](../t/1151-isf-public-report-count-metadata-audit.t)
 to keep interface and state-count semantics exact across direct and manifest
 views.
+The schedule-report scalar metadata is checked by
+[t/1152-isf-public-report-scalar-metadata-audit.t](../t/1152-isf-public-report-scalar-metadata-audit.t)
+to keep `source`, `scheduled_fsm`, `clock`, and `watchdog` shapes exact across
+direct and manifest views.
 The public `--emit-schedule-json` CLI path is checked by
 [t/1121-isf-public-cli-schedule-report-audit.t](../t/1121-isf-public-cli-schedule-report-audit.t)
 to emit clean-stderr JSON matching the in-process scheduler report.
@@ -314,6 +318,14 @@ interface ports by direction, and `port_count` equals their sum. The top-level
 blocks in the current parent report scope. The machine-readable contract
 advertises this through `schedule_report_interface_count_shape` and
 `schedule_report_state_count_shape`.
+
+The top-level `source` value is an actor-derived `.isf` basename, and
+`scheduled_fsm` is the scheduled `.fsm` basename for the current parent actor
+report scope. `clock` is the scalar clock signal name from the actor
+declaration. `watchdog` is a scalar limit when configured and null when omitted.
+The machine-readable contract advertises these through
+`schedule_report_source_shape`, `schedule_report_scheduled_fsm_shape`,
+`schedule_report_clock_shape`, and `schedule_report_watchdog_shape`.
 
 The current lowerer emits DT summaries in deterministic lowering order:
 transaction/rule-created DTs retain their construction order, and hash-backed

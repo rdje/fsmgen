@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF report scalar metadata audit
+- The remaining top-level report scalar fields are now explicit contract
+  metadata. This is especially important for `watchdog`, because omission is
+  represented as JSON null rather than an absent key.
+- `t/1152-isf-public-report-scalar-metadata-audit.t` locks those shape strings
+  across direct and manifest views and checks both configured and omitted
+  watchdog reports.
 ## 2026-05-12: R14 ISF report count metadata audit
 - The schedule report's top-level count fields are compact summaries, but they
   should still be machine-discoverable: input/output counts are direction

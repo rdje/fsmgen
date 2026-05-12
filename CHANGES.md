@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF report scalar metadata audit
+- Added schedule-report scalar shape fields for `source`, `scheduled_fsm`,
+  `clock`, and `watchdog` to `embedding.isf_public_interface`.
+- Added [t/1152-isf-public-report-scalar-metadata-audit.t](t/1152-isf-public-report-scalar-metadata-audit.t)
+  to prove those metadata fields are exact and APB plus inline no-watchdog
+  reports follow the advertised shapes.
 ### R14 — ISF report count metadata audit
 - Added `schedule_report_interface_count_shape` and
   `schedule_report_state_count_shape` to `embedding.isf_public_interface`.

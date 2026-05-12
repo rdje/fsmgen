@@ -19,6 +19,7 @@ our @EXPORT_OK = qw(
     isf_public_interface_parser_method_names
     isf_public_interface_public_top_level_keys
     isf_public_interface_schedule_report_compile_issues_success_shape
+    isf_public_interface_schedule_report_clock_shape
     isf_public_interface_schedule_report_dt_assignments_shape
     isf_public_interface_schedule_report_multi_file_scope
     isf_public_interface_schedule_report_interface_count_shape
@@ -26,6 +27,8 @@ our @EXPORT_OK = qw(
     isf_public_interface_schedule_report_reset_kind_values
     isf_public_interface_schedule_report_reset_keys
     isf_public_interface_schedule_report_reset_polarity_values
+    isf_public_interface_schedule_report_scheduled_fsm_shape
+    isf_public_interface_schedule_report_source_shape
     isf_public_interface_schedule_report_state_count_shape
     isf_public_interface_schedule_report_storage_kind_values
     isf_public_interface_schedule_report_storage_optional_keys
@@ -35,6 +38,7 @@ our @EXPORT_OK = qw(
     isf_public_interface_schedule_report_transaction_count_shape
     isf_public_interface_schedule_report_transaction_states_shape
     isf_public_interface_schedule_report_transaction_keys
+    isf_public_interface_schedule_report_watchdog_shape
     isf_public_interface_schedule_report_dt_keys
     isf_public_interface_scheduler_method_names
 );
@@ -90,6 +94,10 @@ sub build_isf_public_interface_contract {
         dt_assignment_operator_family_map => isf_public_interface_dt_assignment_operator_family_map(),
         scheduled_fsm_dt_ordering => isf_public_interface_dt_ordering_policy(),
         schedule_report_top_level_keys => isf_public_interface_schedule_report_top_level_keys(),
+        schedule_report_source_shape => isf_public_interface_schedule_report_source_shape(),
+        schedule_report_scheduled_fsm_shape => isf_public_interface_schedule_report_scheduled_fsm_shape(),
+        schedule_report_clock_shape => isf_public_interface_schedule_report_clock_shape(),
+        schedule_report_watchdog_shape => isf_public_interface_schedule_report_watchdog_shape(),
         schedule_report_compile_issues_success_shape => isf_public_interface_schedule_report_compile_issues_success_shape(),
         schedule_report_multi_file_scope => isf_public_interface_schedule_report_multi_file_scope(),
         schedule_report_interface_count_shape => isf_public_interface_schedule_report_interface_count_shape(),
@@ -157,6 +165,7 @@ sub build_isf_public_interface_contract {
             't/1149-isf-public-transaction-metadata-audit.t',
             't/1150-isf-public-reset-metadata-audit.t',
             't/1151-isf-public-report-count-metadata-audit.t',
+            't/1152-isf-public-report-scalar-metadata-audit.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -196,6 +205,10 @@ sub isf_public_interface_public_top_level_keys {
             dt_assignment_operator_family_map
             scheduled_fsm_dt_ordering
             schedule_report_top_level_keys
+            schedule_report_source_shape
+            schedule_report_scheduled_fsm_shape
+            schedule_report_clock_shape
+            schedule_report_watchdog_shape
             schedule_report_compile_issues_success_shape
             schedule_report_multi_file_scope
             schedule_report_interface_count_shape
@@ -321,6 +334,22 @@ sub isf_public_interface_schedule_report_top_level_keys {
 
 sub isf_public_interface_schedule_report_compile_issues_success_shape {
     return 'array reference; empty on successful schedule reports';
+}
+
+sub isf_public_interface_schedule_report_source_shape {
+    return 'scheduled report source basename derived from the actor name with .isf suffix';
+}
+
+sub isf_public_interface_schedule_report_scheduled_fsm_shape {
+    return 'scheduled .fsm basename for the current parent actor report scope';
+}
+
+sub isf_public_interface_schedule_report_clock_shape {
+    return 'scalar clock signal name from the ISF actor clock declaration';
+}
+
+sub isf_public_interface_schedule_report_watchdog_shape {
+    return 'scalar watchdog limit when configured; null when omitted';
 }
 
 sub isf_public_interface_schedule_report_multi_file_scope {

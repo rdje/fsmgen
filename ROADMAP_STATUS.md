@@ -133,6 +133,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   value families.
 - `t/1151` now advertises and proves schedule-report interface and state-count
   semantics.
+- `t/1152` now advertises and proves schedule-report `source`, `scheduled_fsm`,
+  `clock`, and `watchdog` scalar shapes.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.

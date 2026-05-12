@@ -117,7 +117,9 @@ Transaction summaries expose emitted scheduled-state names in `states`, and
 `count` equals that array length. Reset summaries advertise `async`/`sync`
 kind values and `active_high`/`active_low` polarity values. Interface count
 summaries count input and output ports by direction, and `state_count` counts
-scheduled `.fsm` state blocks in the parent report scope. The ISF
+scheduled `.fsm` state blocks in the parent report scope. Report `source` and
+`scheduled_fsm` are actor-derived basenames, `clock` is the actor clock signal,
+and `watchdog` is scalar when configured or null when omitted. The ISF
 live-document path list is
 audited across direct and manifest views so recovery pointers stay repo-local
 and present. The public `--emit-schedule-json` path is audited to emit the same
