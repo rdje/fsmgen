@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF CLI strict mode audit
+- `--strict` is listed in the ISF public-interface contract's CLI option
+  family. The strict flag mostly affects downstream generation checks today,
+  but the ISF path still needs to accept and carry it through the scheduled
+  `.fsm` handoff without introducing stderr noise.
+- `t/1124-isf-public-cli-strict-mode-audit.t` is intentionally narrow: it
+  proves strict APB generation reaches a requested HDL file with clean stderr
+  and a recognizable module surface.
 ## 2026-05-12: R14 ISF CLI HDL generation audit
 - The simplest advertised ISF CLI entrypoint is `./bin/fsmgen path/to/file.isf`.
   The schedule-report and outdir audits cover inspection artifacts, but the

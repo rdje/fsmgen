@@ -90,9 +90,9 @@ and present. The public `--emit-schedule-json` path is audited to emit the same
 report as the in-process scheduler with clean stderr. The public `--outdir`
 path is audited to write multi-file scheduled `.fsm` artifacts matching the
 in-process lower-result file map. The plain `file.isf` CLI path is audited to
-reach generated HDL with clean stderr. Transaction summaries include the
-generated state families used by the current scheduler, including control-flow
-and data-operation states.
+reach generated HDL with clean stderr, including when the advertised `--strict`
+flag is present. Transaction summaries include the generated state families used
+by the current scheduler, including control-flow and data-operation states.
 
 ## Current Limitations
 

@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF CLI strict mode audit
+- Added [t/1124-isf-public-cli-strict-mode-audit.t](t/1124-isf-public-cli-strict-mode-audit.t)
+  to prove the advertised `--strict` option remains accepted for the public
+  `file.isf` HDL-generation path.
+- The audit checks clean stderr, requested HDL output creation, and the APB
+  module surface under strict mode.
 ### R14 — ISF CLI HDL generation audit
 - Added [t/1123-isf-public-cli-hdl-generation-audit.t](t/1123-isf-public-cli-hdl-generation-audit.t)
   to prove the public `file.isf` CLI path reaches HDL generation for the APB

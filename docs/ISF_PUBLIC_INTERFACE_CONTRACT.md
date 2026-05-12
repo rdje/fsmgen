@@ -29,6 +29,8 @@ to keep the in-process contract and CLI-advertised contract aligned.
 The plain `file.isf` HDL-generation path is checked by
 [t/1123-isf-public-cli-hdl-generation-audit.t](../t/1123-isf-public-cli-hdl-generation-audit.t)
 to reach generated HDL with clean stderr for the APB fixture.
+The advertised `--strict` option on that path is checked by
+[t/1124-isf-public-cli-strict-mode-audit.t](../t/1124-isf-public-cli-strict-mode-audit.t).
 The current APB schedule report is checked against the advertised key families
 by [t/1116-isf-public-schedule-report-key-family-audit.t](../t/1116-isf-public-schedule-report-key-family-audit.t).
 The public `--emit-schedule-json` CLI path is checked by
@@ -77,6 +79,9 @@ my $json    = FSM::Scheduler::ISF->new(%args)->report($actor);
 
 The only public constructor option currently advertised for the ISF parser and
 scheduler facades is `debug`.
+
+The advertised ISF-specific CLI option family is `--emit-schedule-json`,
+`--outdir`, and `--strict`.
 
 ## Lower Result
 

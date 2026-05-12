@@ -75,6 +75,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   scheduled `.fsm` artifacts matching the in-process lower-result `files` map.
 - `t/1123` now proves the plain public `file.isf` CLI path reaches generated
   HDL for APB with clean stderr.
+- `t/1124` now proves the advertised public `--strict` option remains accepted
+  for `file.isf` HDL generation with clean stderr.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
@@ -3618,6 +3620,9 @@ Done:
 - [t/1123-isf-public-cli-hdl-generation-audit.t](t/1123-isf-public-cli-hdl-generation-audit.t)
   locks clean-stderr APB HDL generation through the plain public `file.isf`
   CLI path without snapshotting full backend output.
+- [t/1124-isf-public-cli-strict-mode-audit.t](t/1124-isf-public-cli-strict-mode-audit.t)
+  locks clean-stderr APB HDL generation through the advertised public
+  `--strict` option.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

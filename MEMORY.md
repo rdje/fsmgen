@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF CLI strict mode audit
+- Added `t/1124-isf-public-cli-strict-mode-audit.t` to prove the advertised
+  `--strict` option remains accepted on the public `file.isf` HDL-generation
+  path.
+- The audit runs strict APB generation into a temporary HDL output file, checks
+  clean stderr, and verifies the generated module surface.
 ## 2026-05-12: R14 — ISF CLI HDL generation audit
 - Added `t/1123-isf-public-cli-hdl-generation-audit.t` to prove the public
   `./bin/fsmgen isf/apb_requester.isf` generation path succeeds with clean
