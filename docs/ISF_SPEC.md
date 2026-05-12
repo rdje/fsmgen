@@ -59,7 +59,9 @@ manifest views.
 The public adapter and scheduler constructors currently accept only the `debug`
 option. Malformed option lists and unsupported option names are rejected before
 object creation.
-The public parser facade methods also validate their argument shape:
+The public parser and scheduler facade methods require object receivers returned
+by their corresponding `new(...)` constructors before private internals are
+used. The public parser facade methods also validate their argument shape:
 `parse_file(...)` requires one defined scalar path, and `parse_source(...)`
 requires defined scalar source text and source label values.
 The public scheduler facade methods validate the actor shell before lowering:
@@ -481,6 +483,7 @@ Focused tests:
 - [t/1129-isf-public-actor-shell-contract-audit.t](../t/1129-isf-public-actor-shell-contract-audit.t)
 - [t/1130-isf-public-compile-issues-success-audit.t](../t/1130-isf-public-compile-issues-success-audit.t)
 - [t/1131-isf-public-top-level-discovery-audit.t](../t/1131-isf-public-top-level-discovery-audit.t)
+- [t/1132-isf-public-method-receiver-boundary-audit.t](../t/1132-isf-public-method-receiver-boundary-audit.t)
 
 ## 12. Explicitly Deferred
 

@@ -4,6 +4,7 @@ use v5.20;
 use strict;
 use warnings;
 use Carp qw(confess);
+use Scalar::Util qw(blessed);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
@@ -48,6 +49,7 @@ sub _validate_constructor_args($class, @args) {
 }
 
 sub parse_file($self, @args) {
+    _validate_object_receiver($self, 'parse_file');
     my ($isf_path) = _validate_scalar_args('parse_file', 1, @args);
     fsm_trace_enter("ISF parse_file: $isf_path", 2);
     fsm_debug("Parsing .isf file: $isf_path", 3);
@@ -57,11 +59,17 @@ sub parse_file($self, @args) {
 }
 
 sub parse_source($self, @args) {
+    _validate_object_receiver($self, 'parse_source');
     my ($source_text, $source_label) = _validate_scalar_args('parse_source', 2, @args);
     fsm_trace_enter("ISF parse_source: $source_label", 2);
     my $result = $self->{parser}->parse_source($source_text, $source_label);
     fsm_trace_exit("ISF parse_source completed for $source_label", 2);
     return $result;
+}
+
+sub _validate_object_receiver($self, $method) {
+    confess "FSM::Adapter::ISF->$method must be called on an FSM::Adapter::ISF object\n"
+        unless blessed($self) && $self->isa('FSM::Adapter::ISF');
 }
 
 sub _validate_scalar_args($method, $expected, @args) {

@@ -69,6 +69,8 @@ The public parser facade method boundary is checked by
 [t/1126-isf-public-parser-method-boundary-audit.t](../t/1126-isf-public-parser-method-boundary-audit.t).
 The public scheduler facade method boundary is checked by
 [t/1127-isf-public-scheduler-method-boundary-audit.t](../t/1127-isf-public-scheduler-method-boundary-audit.t).
+The parser and scheduler method receiver boundary is checked by
+[t/1132-isf-public-method-receiver-boundary-audit.t](../t/1132-isf-public-method-receiver-boundary-audit.t).
 The scheduler-consumable actor shell returned by the public parser facades is
 checked by
 [t/1129-isf-public-actor-shell-contract-audit.t](../t/1129-isf-public-actor-shell-contract-audit.t).
@@ -101,6 +103,12 @@ my $json    = FSM::Scheduler::ISF->new(%args)->report($actor);
 The only public constructor option currently advertised for the ISF parser and
 scheduler facades is `debug`. Constructors reject odd option lists and
 unsupported option names before object creation.
+
+Parser methods must be called on an object returned by
+`FSM::Adapter::ISF->new(...)`. Scheduler methods must be called on an object
+returned by `FSM::Scheduler::ISF->new(...)`. The machine-readable contract
+advertises those receiver boundaries through `parser_method_receiver_shape` and
+`scheduler_method_receiver_shape`.
 
 `parse_file(...)` requires exactly one defined scalar path argument.
 `parse_source(...)` requires exactly two defined scalar arguments: source text

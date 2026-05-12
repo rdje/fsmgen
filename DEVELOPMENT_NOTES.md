@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF method receiver boundary audit
+- The parser and scheduler facade methods already validated their payload
+  arguments, but malformed receivers could still fall through into private hash
+  dereferences. Public facade failures should be bounded at the facade, not
+  shaped by private object internals.
+- `FSM::Adapter::ISF` and `FSM::Scheduler::ISF` now validate method receivers
+  with `Scalar::Util::blessed` before parsing, lowering, or reporting.
+  `parser_method_receiver_shape` and `scheduler_method_receiver_shape` make
+  that boundary discoverable through `embedding.isf_public_interface`, and
+  `t/1132-isf-public-method-receiver-boundary-audit.t` locks the accepted and
+  rejected cases.
 ## 2026-05-12: R14 ISF top-level discovery audit
 - Downstream tools should not need to infer whether
   `public_top_level_presence_keys` is exhaustive. For the ISF public-interface

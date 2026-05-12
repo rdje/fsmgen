@@ -4,6 +4,7 @@ use v5.20;
 use strict;
 use warnings;
 use Carp qw(confess);
+use Scalar::Util qw(blessed);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
@@ -43,6 +44,7 @@ sub _validate_constructor_args($class, @args) {
 }
 
 sub lower($self, @args) {
+    _validate_object_receiver($self, 'lower');
     my ($actor) = _validate_actor_arg('lower', @args);
     fsm_trace_enter("Scheduler lower: $actor->{actor_name}", 2);
 
@@ -63,6 +65,7 @@ sub lower($self, @args) {
 }
 
 sub report($self, @args) {
+    _validate_object_receiver($self, 'report');
     my ($actor) = _validate_actor_arg('report', @args);
     fsm_trace_enter("Scheduler report: $actor->{actor_name}", 2);
 
@@ -71,6 +74,11 @@ sub report($self, @args) {
 
     fsm_trace_exit("Scheduler report completed", 2);
     return $json;
+}
+
+sub _validate_object_receiver($self, $method) {
+    confess "FSM::Scheduler::ISF->$method must be called on an FSM::Scheduler::ISF object\n"
+        unless blessed($self) && $self->isa('FSM::Scheduler::ISF');
 }
 
 sub _validate_actor_arg($method, @args) {

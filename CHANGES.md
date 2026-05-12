@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF method receiver boundary audit
+- Updated [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm) and
+  [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm) so public facade
+  methods reject malformed receivers before touching private internals.
+- Extended [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm)
+  with parser and scheduler method receiver-shape metadata, and added
+  [t/1132-isf-public-method-receiver-boundary-audit.t](t/1132-isf-public-method-receiver-boundary-audit.t).
 ### R14 — ISF top-level discovery audit
 - Added [t/1131-isf-public-top-level-discovery-audit.t](t/1131-isf-public-top-level-discovery-audit.t)
   to prove `public_top_level_presence_keys` is unique and exactly matches the

@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — ISF method receiver boundary audit
+- Active: `R14`. `t/1132` proves public parser/scheduler facade methods
+  reject malformed receivers with bounded diagnostics.
+
 ## 2026-05-12: R14 — ISF top-level discovery audit
 - Active: `R14`. `t/1131` proves the ISF public contract top-level discovery
   list is unique and exact across direct, manifest, and CLI manifest views.

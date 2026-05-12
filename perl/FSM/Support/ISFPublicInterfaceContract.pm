@@ -66,6 +66,8 @@ sub build_isf_public_interface_contract {
         constructor_option_names => isf_public_interface_constructor_option_names(),
         cli_option_names => isf_public_interface_cli_option_names(),
         constructor_argument_shape => 'even-length option/value list after class invocant; currently only debug is public',
+        parser_method_receiver_shape => 'object returned by FSM::Adapter::ISF->new(...)',
+        scheduler_method_receiver_shape => 'object returned by FSM::Scheduler::ISF->new(...)',
         parse_file_argument_shape => 'exactly one scalar filesystem path to a .isf source after object invocant',
         parse_source_argument_shape => 'exactly two scalar arguments after object invocant: source text and source label',
         lower_argument_shape => 'scheduler-consumable actor value returned by FSM::Adapter::ISF',
@@ -113,6 +115,7 @@ sub build_isf_public_interface_contract {
             't/1129-isf-public-actor-shell-contract-audit.t',
             't/1130-isf-public-compile-issues-success-audit.t',
             't/1131-isf-public-top-level-discovery-audit.t',
+            't/1132-isf-public-method-receiver-boundary-audit.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -138,6 +141,8 @@ sub isf_public_interface_public_top_level_keys {
             constructor_option_names
             cli_option_names
             constructor_argument_shape
+            parser_method_receiver_shape
+            scheduler_method_receiver_shape
             parse_file_argument_shape
             parse_source_argument_shape
             lower_argument_shape

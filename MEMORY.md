@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF method receiver boundary audit
+- `FSM::Adapter::ISF->parse_file(...)` / `parse_source(...)` and
+  `FSM::Scheduler::ISF->lower(...)` / `report(...)` now reject class-string,
+  undefined, and unblessed-hash receivers before private parser/scheduler
+  internals are touched.
+- `embedding.isf_public_interface` now advertises
+  `parser_method_receiver_shape` and `scheduler_method_receiver_shape`.
+- Added `t/1132-isf-public-method-receiver-boundary-audit.t` to lock valid
+  object calls and bounded receiver diagnostics.
 ## 2026-05-12: R14 — ISF top-level discovery audit
 - Added `t/1131-isf-public-top-level-discovery-audit.t` to prove
   `embedding.isf_public_interface.public_top_level_presence_keys` is a unique,
