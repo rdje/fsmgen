@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF lower-result metadata audit
+- The lower-result `files` map is already the bounded public lowering surface;
+  its discovery metadata should be treated as exact, not illustrative prose.
+- `t/1139-isf-public-lower-result-metadata-audit.t` locks
+  `lower_result_presence_keys` and `lower_result_file_map_shape` across the
+  direct owner, in-process capability manifest, and both CLI manifest spellings.
 ## 2026-05-12: R14 ISF constructor-option metadata audit
 - Constructor receiver and option validation are now stabilized behavior, so the
   metadata that advertises the supported constructor option family needs the

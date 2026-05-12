@@ -58,7 +58,8 @@ manifest views. Its advertised entrypoint lists are also audited as exact and
 duplicate-free across those views, and its ISF-specific CLI option list is
 audited the same way. Its parser and scheduler method-name metadata is also
 audited as exact and duplicate-free, as is its public constructor option
-metadata.
+metadata. Its lower-result discovery metadata is audited as exact across direct
+and manifest views too.
 
 The public adapter and scheduler constructors require the exact
 `FSM::Adapter::ISF` or `FSM::Scheduler::ISF` class invocant and currently
@@ -496,6 +497,7 @@ Focused tests:
 - [t/1136-isf-public-cli-option-metadata-audit.t](../t/1136-isf-public-cli-option-metadata-audit.t)
 - [t/1137-isf-public-method-name-metadata-audit.t](../t/1137-isf-public-method-name-metadata-audit.t)
 - [t/1138-isf-public-constructor-option-metadata-audit.t](../t/1138-isf-public-constructor-option-metadata-audit.t)
+- [t/1139-isf-public-lower-result-metadata-audit.t](../t/1139-isf-public-lower-result-metadata-audit.t)
 
 ## 12. Explicitly Deferred
 

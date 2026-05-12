@@ -89,7 +89,8 @@ as portable discovery data, and defensive-copy audited so caller mutation does
 not pollute later contract builds. Its top-level discovery list is audited as
 exact and unique across direct and manifest views, and its advertised
 entrypoint, CLI option, method-name, and constructor-option lists are audited as
-exact and duplicate-free. Both
+exact and duplicate-free, and its lower-result discovery metadata is audited as
+exact. Both
 capability-manifest CLI spellings are audited to emit the same ISF contract
 payload. The current APB schedule report is also checked against the advertised
 public key families, and successful reports advertise and keep an empty

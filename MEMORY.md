@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF lower-result metadata audit
+- Added `t/1139-isf-public-lower-result-metadata-audit.t` to prove
+  `lower_result_presence_keys` and `lower_result_file_map_shape` are exact
+  across the direct owner, in-process capability manifest, and both CLI
+  manifest spellings.
+- The audited public lower-result surface remains the `files` map from
+  scheduled `.fsm` basenames to scheduled `.fsm` source text.
 ## 2026-05-12: R14 — ISF constructor-option metadata audit
 - Added `t/1138-isf-public-constructor-option-metadata-audit.t` to prove
   `constructor_option_names` is exact and duplicate-free across the direct
