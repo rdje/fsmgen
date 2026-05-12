@@ -168,6 +168,7 @@ sub _build_transaction($self, $tx, $actor, $txi) {
         elsif ($k eq 'assemble')    { push @st, _ir_assemble($cl,$tn,$si++); }
         elsif ($k eq 'extract')     { push @st, _ir_extract($cl,$tn,$si++); }
         elsif ($k eq 'complete') { push @st, _ir_complete($cl, $tn, $si++); }
+        elsif ($k eq 'when' && !@st) { push @st, _ir_when_activation($cl,$tn,$si++); }
         elsif ($k eq 'when')     {
             my ($ws) = _expand_when($cl,$tn,\$si,\@ps,$drives,$wd);
             push @st, @$ws;
@@ -210,6 +211,7 @@ sub _build_transaction($self, $tx, $actor, $txi) {
 
 # --- Individual clause → IR ---
 sub _ir_on      { my ($cl,$tn,$i)=@_; my $e=$cl->[1]; my @s; for my $j(2..$#$cl){my $x=$cl->[$j]; next unless ref($x)eq'ARRAY'&&$x->[0]eq'sample'; push @s,{port=>$x->[1],as_name=>$x->[3]}} my $guard=!ref($e) ? {port=>$e} : {expr=>$e}; {name=>"${tn}_idle_$i",kind=>'entry',guard=>$guard,samples=>\@s,assignments=>[],transitions=>[]} }
+sub _ir_when_activation { my ($cl,$tn,$i)=@_; my $e=$cl->[1]; my @s; for my $j(2..$#$cl){my $x=$cl->[$j]; next unless ref($x)eq'ARRAY'&&$x->[0]eq'sample'; push @s,{port=>$x->[1],as_name=>$x->[3]}} my $guard=!ref($e) ? {port=>$e} : {expr=>$e}; {name=>"${tn}_idle_$i",kind=>'entry',guard=>$guard,samples=>\@s,assignments=>[],transitions=>[]} }
 sub _ir_data_op  { my ($op,$cl,$tn,$i)=@_; $op eq'shift_left' ? _ir_shift_left($cl,$tn,$i) : $op eq'shift_right' ? _ir_shift_right($cl,$tn,$i) : $op eq'assemble' ? _ir_assemble($cl,$tn,$i) : $op eq'extract' ? _ir_extract($cl,$tn,$i) : _ir_update($cl,$tn,$i) }
 sub _ir_drive   { my ($cl,$tn,$ps,$i)=@_; my @a; for(@$ps){push @a,{lhs=>$_->[3],rhs=>$_->[1],op=>'<='}} for my $j(2..$#$cl){my$x=$cl->[$j];next unless ref($x)eq'ARRAY'&&@$x>=2;push @a,{lhs=>$x->[0],rhs=>$x->[1],op=>'='}} {name=>"${tn}_drive_$i",kind=>'sequential',assignments=>\@a,transitions=>[]} }
 sub _ir_drive_call { my ($body,$tn,$ps,$i)=@_; return undef; }
