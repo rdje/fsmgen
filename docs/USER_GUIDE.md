@@ -126,9 +126,9 @@ Reset-state note:
 - The short and long spellings normalize to the same internal reset-state identities:
   - `-syncrst` and `-syncreset` => `syncreset`
   - `-asyncrst` and `-asyncreset` => `asyncreset`
-- These reset blocks are supported as dedicated reset-state combinational-DT blocks.
+- These reset blocks are supported as dedicated reset-state DT blocks.
 - They do not participate in regular state encoding or `current_state` comparisons.
-- Combinational DT blocks like `(-alpha_dt ...)`, `(-misc ...)`, or `(-mycombit ...)`
+- Non-state DT blocks like `(-alpha_dt ...)`, `(-misc ...)`, or `(-mycombit ...)`
 - Symbol-definition sections:
   - `(+constants ...)`
   - `(+enums ...)`
@@ -140,13 +140,14 @@ Reset-state note:
   - imported namespaced package scalar leaves such as `shared.RESET_BYTE`, `shared.mode.BUSY`, `shared.BYTES[1]`, and `shared.FRAME.flag` currently resolve as literals in direct-root assignment RHS expressions and guard equality conditions
 - Canonical top-level init/reset directives like `(:= (tester_reset 1))`
 
-Combinational DT note:
+State and non-state DT note:
 - Both syntaxes are decision trees, but they play different roles.
 - A regular named block like `(aState ...)` is an FSM-state DT for state `aState`.
-- A hyphen-prefixed top-level block like `(-foobar ...)` is a general/combinational DT block.
-- General/combinational DT names must use exactly one leading `-` plus an HDL-identifier-compatible base name, for example `-mycombDT` or `-comb_1`.
-- General/combinational DT blocks now carry an explicit internal `standalone_dt` role and use DT-style enables instead of joining the encoded `current_state` set.
-- When an FSM contains only combinational DT blocks, the active runtime treats it as DT-only generation and does not synthesize a `current_state` / `next_state` state-register plan.
+- A hyphen-prefixed top-level block like `(-foobar ...)` is a non-state DT block.
+- Non-state DT names must use exactly one leading `-` plus an HDL-identifier-compatible base name, for example `-route_dt` or `-comb_1`.
+- Non-state DT blocks now carry an explicit internal `standalone_dt` role and use DT-style enables instead of joining the encoded `current_state` set.
+- Assignment operators decide timing in either DT kind: `=` is combinational; `<-` and `<=` are sequential/flopped.
+- When an FSM contains only non-state DT blocks, the active runtime treats it as DT-only generation and does not synthesize a `current_state` / `next_state` state-register plan.
 - FSM-state DTs additionally participate in state encoding and transition planning.
 - Malformed state/DT names such as `(bad-name ...)`, `(-bad-name ...)`, or `(--bad ...)` are rejected explicitly.
 
@@ -1146,7 +1147,7 @@ Current narrow standalone-DT child example:
 
 This currently works because:
 - the child is a standalone `?dt:name` module source,
-- the combinational DT child exposes only its real user-facing ports,
+- the purely combinational standalone-DT child exposes only its real user-facing ports,
 - and the explicit top `?ports` block matches that realized child interface exactly.
 
 Current narrow multi-child example:

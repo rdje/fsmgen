@@ -82,7 +82,7 @@ Explicit `async`/`active_low`/`active_high` override.
 
 **Implicit signals**: `can_accept` (1, combinational, asserted in idle).
 
-## `(drive name args...)` → One State + Comb DT
+## `(drive name args...)` -> One State + Non-State DT
 
 **ISF**:
 ```lisp
@@ -92,7 +92,7 @@ Explicit `async`/`active_low`/`active_high` override.
 
 **Generated .fsm**:
 
-Comb DT block:
+Non-state DT block:
 ```lisp
 (-scl
   (<- (scl scl_val) <scl_start))   ;; flopped: next cycle scl = scl_val
@@ -106,7 +106,7 @@ Call state:
   (-> next_state))                ;; always proceed
 ```
 
-**Timing**: The `scl_start` assertion fires the comb DT in the SAME cycle.
+**Timing**: The `scl_start` assertion enables the non-state DT in the SAME cycle.
 The DT's `<-` assignment takes effect NEXT cycle (flopped).
 So `(drive scl 1)` → cycle N: assert start + wire value, cycle N+1: port changes.
 
@@ -328,7 +328,7 @@ Adds to every active state (not idle/done):
 (= (apb_transfer_inc 1))          ;; assert increment
 ```
 
-Adds combinational DT:
+Adds non-state DT:
 ```lisp
 (-apb_transfer_cc_inc
   (<- (apb_transfer_cc (+ apb_transfer_cc 1)) <apb_transfer_inc))
@@ -389,7 +389,7 @@ All constructs together:
   (latency (min 2) (max 16)))
 ```
 
-Generates 7 states + combinational DTs + drive DTs:
+Generates 7 state DTs + non-state DTs:
 
 ```
 idle_0          ← (on start ...) : guards on start, samples, can_accept

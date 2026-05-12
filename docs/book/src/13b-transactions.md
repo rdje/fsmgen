@@ -60,14 +60,14 @@ as activation with identical semantics — useful for expression conditions:
 The port value changes in the NEXT cycle (flopped).
 
 **Cycle-by-cycle** (for `(drive scl 1)`):
-- Cycle N: `scl_start=1`, `scl_val=1` asserted. Comb DT `(-scl)` fires.
-  The DT's `(<- (scl scl_val))` schedules `scl` to become `1`.
+- Cycle N: `scl_start=1`, `scl_val=1` asserted. Non-state DT `(-scl)` is
+  enabled. The DT's `(<- (scl scl_val))` schedules `scl` to become `1`.
 - Cycle N+1: `scl` output port = `1`. Next state executes.
 
 **What happens**:
 1. `_start` signal for the drive is asserted (=1)
 2. Parameter signals are wired to actual values
-3. The combinational DT `(-drive_name ...)` fires, doing `(<- (port param_val))`
+3. The non-state DT `(-drive_name ...)` is enabled, doing `(<- (port param_val))`
 4. Due to `<-` (flopped), the port output changes NEXT cycle
 5. State transitions to next
 
@@ -80,7 +80,7 @@ The port value changes in the NEXT cycle (flopped).
 **Generated .fsm** — Call state (once per call):
 ```lisp
 (i2c_transfer_drive_3
-  (= (scl_start 1))               ;; fire the DT
+  (= (scl_start 1))               ;; enable the DT
   (= (scl_val 1))                 ;; wire actual to parameter
   (-> i2c_transfer_drive_4))      ;; next state
 ```
@@ -95,7 +95,7 @@ The port value changes in the NEXT cycle (flopped).
 **Implicit signals per drive definition**:
 | Signal | Width | Purpose |
 |--------|-------|---------|
-| `{name}_start` | 1 | Fires combinational DT |
+| `{name}_start` | 1 | Enables the drive's non-state DT |
 | `{name}_{param}` | 1 | One per formal parameter |
 
 ## `(sample port as name)` — No State, Piggybacks
@@ -240,11 +240,11 @@ For `(repeat 8 (drive scl 1) (drive scl 0))`:
 **What happens**:
 1. Entry state: `(<- (cc 0))` — reset counter
 2. Every active state: `(= (inc 1))` — assert increment
-3. Comb DT: `(<- (cc (+ cc 1)) <inc)` — increment
+3. Non-state DT: `(<- (cc (+ cc 1)) <inc)` — increment
 4. Done state: `(?cc (<N (lerr=1)))` — min violation check
 5. Max violation: watchdog timeout
 
-**Implicit signals**: `{tx}_cc`, `{tx}_inc`, `{tx}_lerr` + comb DT `(-cc_inc)`.
+**Implicit signals**: `{tx}_cc`, `{tx}_inc`, `{tx}_lerr` + non-state DT `(-cc_inc)`.
 
 ## Timing Summary
 

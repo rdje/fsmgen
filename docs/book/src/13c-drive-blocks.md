@@ -1,7 +1,9 @@
 # Drive Blocks
 
-Drives are combinational DT blocks that fire when their `_start` signal
-is asserted. One `(drive ...)` call = one cycle.
+Drives lower to non-state DT blocks that are enabled when their `_start` signal
+is asserted. One `(drive ...)` call = one cycle. The assignment operators in
+the DT decide timing: current drive bodies use `<-`, so driven ports update on
+the next clock.
 
 ## Simple Drives
 
@@ -15,7 +17,7 @@ is asserted. One `(drive ...)` call = one cycle.
 (drive scl_hi)                 ;; call — fires in one cycle
 ```
 
-**Definition → combinational DT**:
+**Definition → non-state DT**:
 ```lisp
 (-scl_hi
   (<- (scl 1) <scl_hi_start))
@@ -24,7 +26,7 @@ is asserted. One `(drive ...)` call = one cycle.
 **Call → one state**:
 ```lisp
 (caller_state
-  (= (scl_hi_start 1))         ;; assert start → DT fires
+  (= (scl_hi_start 1))         ;; assert start -> enable DT
   (-> next_state))
 ```
 
@@ -38,7 +40,7 @@ is asserted. One `(drive ...)` call = one cycle.
 (drive scl 0)                  ;; actual = 0
 ```
 
-**Definition → combinational DT with parameter signal**:
+**Definition → non-state DT with parameter signal**:
 ```lisp
 (-scl
   (<- (scl scl_val) <scl_start))
@@ -47,7 +49,7 @@ is asserted. One `(drive ...)` call = one cycle.
 **Call → one state**:
 ```lisp
 (caller_state
-  (= (scl_start 1))            ;; fire DT
+  (= (scl_start 1))            ;; enable DT
   (= (scl_val 1))              ;; wire actual to parameter signal
   (-> next_state))
 ```

@@ -18,6 +18,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - `t/1100` now proves `(on ...)` samples materialize in entry states and
   pending samples piggyback onto named drive/await states instead of leaking
   into trailing sample states.
+- R14 docs and the user guide now distinguish state DT blocks from non-state DT
+  blocks and make assignment families, not block spelling, the source of
+  combinational vs sequential behavior.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
@@ -909,6 +912,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - [t/1100-isf-sample-piggyback.t](t/1100-isf-sample-piggyback.t) now proves
     `(on ...)` samples materialize in entry states and pending samples
     piggyback onto named drive/await states, including control-flow bodies.
+  - The R14 spec, user guide, and mdBook now use "non-state DT" for
+    `(-name ...)` blocks and document that `=`, `<-`, and `<=` decide
+    combinational/sequential timing inside both state and non-state DTs.
   - Next bounded `R14` slice: convert another documented scheduler limitation
     into regression-backed behavior.
 - Superseded `R13` carry-forward detail retained below this note should not be
@@ -1941,7 +1947,7 @@ Done:
   - single-token malformed DT actions like `(BROKEN)` no longer stay parse-only in the contract,
   - empty guarded blocks like `(<req)` are now also locked through pipeline and CLI no-output behavior,
   - and the malformed-action family now has end-to-end entrypoint coverage instead of parser-only coverage.
-- [t/48-language-contract-standalone-dt-classification.t](t/48-language-contract-standalone-dt-classification.t) now locks the general/combinational DT boundary explicitly:
+- [t/48-language-contract-standalone-dt-classification.t](t/48-language-contract-standalone-dt-classification.t) now locks the non-state DT boundary explicitly:
   - hyphen-prefixed general DT blocks now carry explicit `standalone_dt` classification in the AST,
   - they stay out of the encoded-state plan,
   - and they emit DT-style enables instead of regular `current_state` comparisons.
@@ -1951,7 +1957,7 @@ Done:
   - and malformed empty pseudo-states no longer drift through to later runtime stages.
 - [t/52-language-contract-state-name-boundary.t](t/52-language-contract-state-name-boundary.t) now locks the state/DT name boundary explicitly:
   - regular FSM-state DT names must be HDL-identifier-compatible,
-  - general/combinational DT names must use exactly one leading `-` plus an HDL-identifier-compatible base name,
+  - non-state DT names must use exactly one leading `-` plus an HDL-identifier-compatible base name,
   - and malformed names such as `bad-name`, `-bad-name`, or `--bad` now fail clearly through parser, pipeline, and CLI entry points.
 - [t/53-language-contract-transition-target-boundary.t](t/53-language-contract-transition-target-boundary.t) now locks the transition-target boundary explicitly:
   - transition targets must use HDL-identifier-compatible names,
@@ -3479,6 +3485,9 @@ Done:
 - [t/1100-isf-sample-piggyback.t](t/1100-isf-sample-piggyback.t) locks
   entry-state sample materialization plus pending-sample piggybacking onto
   named drive and await states, including control-flow body lowering.
+- The R14 spec, user guide, and mdBook now distinguish state DTs from non-state
+  DTs and describe combinational/sequential behavior as assignment-family
+  driven.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

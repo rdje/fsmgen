@@ -136,13 +136,16 @@ Drive call:
 ```
 
 Current lowering:
-- Each drive definition becomes a combinational DT block named `-drive_name`.
+- Each drive definition becomes a non-state DT block named `-drive_name`.
 - Each drive call becomes one scheduled state.
 - The call asserts `drive_name_start`.
 - Parameterized calls also assign one inferred parameter signal per formal,
   such as `scl_val`.
 - Drive DT assignments use flopped output assignment (`<-`) by default, so a
   drive call consumes one state and the driven port updates on the next clock.
+- DT timing is assignment-family driven: `=` assignments are combinational;
+  `<-` and `<=` assignments are sequential/flopped, whether they appear in a
+  state DT `(state_name ...)` or a non-state DT `(-name ...)`.
 - Adjacent drive calls are not merged. To drive several ports in the same
   cycle, put those port-value pairs in one drive definition.
 
@@ -309,7 +312,7 @@ shipped lowering contract yet.
 ```
 
 Current lowering:
-- Each rule emits one combinational DT block.
+- Each rule emits one non-state DT block.
 - `(when condition)` supplies the guard. The shipped guard form is a single
   port/signal condition.
 - `(port value)` actions lower as guarded flopped assignments to that port.

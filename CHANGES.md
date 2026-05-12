@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — DT terminology corrected
+- Updated [docs/ISF_SPEC.md](docs/ISF_SPEC.md), [docs/USER_GUIDE.md](docs/USER_GUIDE.md),
+  and the R14 mdBook chapters to distinguish state DTs like `(state_name ...)`
+  from non-state DTs like `(-name ...)` without calling every non-state DT
+  combinational.
+- Clarified that assignment operators determine timing inside either DT kind:
+  `=` is combinational, while `<-` and `<=` are sequential/flopped.
 ### R14 — sample piggyback lowering
 - Updated [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
   so `(on ...)` samples become guarded entry-state assignments and pending
@@ -61,8 +68,10 @@ This is the persistent technical change history for FSMGen.
 - Every drive call = 1 state. mdBook ch.13 added. 7 tests pass.
 ### R14 — parameterized drives
 - `(drive (name p) body...)` definitions. `(drive name val)` calls wire actuals. 7 tests.
-### R14 — drive calls → start assertions + combinational DTs
-- Drive definitions become `(-name ...)` combinational DT blocks with guarded assignments.
+### R14 — drive calls → start assertions + non-state DTs
+- Drive definitions become `(-name ...)` non-state DT blocks with guarded
+  assignments; assignment operators determine combinational vs sequential
+  behavior.
 - `(drive name)` calls emit `(= (name_start 1))`. I2C @ 19 states, APB @ 7. 7 tests pass.
 ### R14 — I2C master controller fixture
 - Real protocol test in ISF: I2C master using `(repeat 8 ...)`, `(switch ...)`, drive defs. 19 states.
@@ -92,9 +101,9 @@ This is the persistent technical change history for FSMGen.
 ### R14 `.isf` — trigger/pulse
 - `(trigger tx)` → `(= (tx_start 1) <cond)`. `(pulse port)` → `(port = 1 <cond)`.
 ### R14 `.isf` — latency lowering
-- `(latency ...)` → comb DT + min/max checks. Synthesizable verification. 7 tests pass.
+- `(latency ...)` → non-state DT + min/max checks. Synthesizable verification. 7 tests pass.
 ### R14 `.isf` — rule lowering
-- `RuleLowering`: rules → combinational DT blocks. 7 tests pass.
+- `RuleLowering`: rules → non-state DT blocks. 7 tests pass.
 ### R14 `.isf` — watchdog lowering
 - `(await ...)` → watchdog: load max-1, decrement, timeout at zero.
 ### R14 `.isf` wired into `bin/fsmgen`
@@ -10405,7 +10414,7 @@ This is the persistent technical change history for FSMGen.
 ### state and DT block names now have an explicit active boundary
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm) so state/DT names are now validated explicitly:
   - regular FSM-state DT names must be HDL-identifier-compatible,
-  - general/combinational DT names must use exactly one leading `-` plus an HDL-identifier-compatible base name,
+  - non-state DT names must use exactly one leading `-` plus an HDL-identifier-compatible base name,
   - and reset-state names remain limited to the existing supported reset spellings.
 - Added focused regression coverage in [t/52-language-contract-state-name-boundary.t](t/52-language-contract-state-name-boundary.t) for:
   - successful parsing/generation with valid regular and standalone DT names,
@@ -10452,21 +10461,21 @@ This is the persistent technical change history for FSMGen.
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm) so state/DT blocks must contain at least one real nested decision-tree body or action form instead of being accepted as empty pseudo-states.
 - Added focused regression coverage in [t/49-language-contract-state-body-boundary.t](t/49-language-contract-state-body-boundary.t) for:
   - empty FSM-state DT blocks like `(idle)`,
-  - empty general/combinational DT blocks like `(-misc)`,
+  - empty non-state DT blocks like `(-misc)`,
   - and pipeline/CLI confirmation that these malformed blocks no longer emit HDL.
 - Updated [docs/USER_GUIDE.md](docs/USER_GUIDE.md), [ROADMAP_STATUS.md](ROADMAP_STATUS.md), [MEMORY.md](MEMORY.md), and [DEVELOPMENT_NOTES.md](DEVELOPMENT_NOTES.md) so the live language contract now states that state/DT blocks need a real body.
 - Live roadmap status change:
   - no phase status changed,
   - the live roadmap snapshot is unchanged for this task,
   - `R8` remains `in progress`, but its `Done`/`Left` detail advanced materially.
-### general/combinational DT blocks now have an explicit standalone contract
+### non-state DT blocks now have an explicit standalone contract
 - Updated [perl/FSM/CoreAST.pm](perl/FSM/CoreAST.pm) so `FSM::CoreAST::State` now exposes `is_standalone_dt` and treats standalone DTs through explicit state-role semantics instead of only inferring them from the leading hyphen in the name.
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm) so hyphen-prefixed non-reset DT blocks now parse with `state_type => standalone_dt`.
 - Added focused regression coverage in [t/48-language-contract-standalone-dt-classification.t](t/48-language-contract-standalone-dt-classification.t) for:
   - explicit `standalone_dt` AST classification,
-  - exclusion of general/combinational DT blocks from the encoded-state plan,
+  - exclusion of non-state DT blocks from the encoded-state plan,
   - and DT-style enable emission for those blocks.
-- Updated [docs/USER_GUIDE.md](docs/USER_GUIDE.md), [ROADMAP_STATUS.md](ROADMAP_STATUS.md), [MEMORY.md](MEMORY.md), and [DEVELOPMENT_NOTES.md](DEVELOPMENT_NOTES.md) so the live language contract now states that general/combinational DT blocks are explicitly standalone DTs, not accidental pseudo-states.
+- Updated [docs/USER_GUIDE.md](docs/USER_GUIDE.md), [ROADMAP_STATUS.md](ROADMAP_STATUS.md), [MEMORY.md](MEMORY.md), and [DEVELOPMENT_NOTES.md](DEVELOPMENT_NOTES.md) so the live language contract now states that non-state DT blocks are explicitly standalone DTs, not accidental pseudo-states.
 - Live roadmap status change:
   - no phase status changed,
   - the live roadmap snapshot is unchanged for this task,
@@ -10503,7 +10512,7 @@ This is the persistent technical change history for FSMGen.
 - Updated [docs/USER_GUIDE.md](docs/USER_GUIDE.md) so the supported-language section now uses the more precise user-facing distinction:
   - both `(aState ...)` and `(-foobar ...)` are decision trees,
   - `(aState ...)` is an FSM-state DT,
-  - `(-foobar ...)` is a general/combinational DT block.
+  - `(-foobar ...)` is a non-state DT block.
 - Updated [DEVELOPMENT_NOTES.md](DEVELOPMENT_NOTES.md) and [MEMORY.md](MEMORY.md) so this terminology choice is preserved for future wording and roadmap work.
 - Live roadmap status change:
   - no phase status changed,

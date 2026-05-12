@@ -14,7 +14,7 @@ Use `?fsm:name` when you are modeling an actual finite-state machine with:
 - named states,
 - transitions,
 - sequential state-holding behavior,
-- and optional combinational helper DTs alongside those states.
+- and optional non-state DT blocks alongside those states.
 
 Typical ingredients:
 
@@ -28,11 +28,28 @@ Typical ingredients:
 
 Use `?dt:name` for a standalone decision tree, especially when the logic is:
 
-- combinational,
+- decision-oriented,
 - naturally described as decision-tree routing,
 - or intended to be reused as a direct child in composition.
 
 The current `?dt:name` contract is intentionally narrower than `?fsm:name`.
+
+## State DTs and Non-State DTs
+
+Inside an FSM root, a state DT is written as a normal state block such as
+`(idle ...)` or `(run ...)`. A non-state DT is written with a leading dash such
+as `(-route ...)`, `(-scl ...)`, or `(-counter_inc ...)`.
+
+The block spelling does not decide whether the assignments are combinational or
+sequential. Assignment operators do:
+
+- `(= (lhs rhs))` is combinational.
+- `(<- (lhs rhs))` is sequential/flopped with a Q/output-named LHS.
+- `(<= (lhs rhs))` is sequential/flopped with a D-input/next-value-named LHS.
+
+Therefore a state DT or a non-state DT can contain combinational assignments,
+sequential assignments, or both, subject to the same assignment-family
+validation rules described in the language basics chapter.
 
 ## Reset and Initialization
 

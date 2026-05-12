@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 DT terminology corrected
+- R14 docs and the broad user guide now use "non-state DT" for `(-name ...)`
+  blocks and reserve combinational/sequential language for assignment
+  families.
+- A DT block can contain `=`, `<-`, and/or `<=` assignments; `=` is
+  combinational, while `<-` and `<=` are sequential/flopped. That applies to
+  both state DTs like `(idle ...)` and non-state DTs like `(-scl ...)`.
+- Current ISF drive/rule/latency-generated non-state DTs mostly use `<-`
+  guarded assignments, so calling those blocks "combinational DTs" was
+  misleading even when their enable signal is asserted combinationally.
 ## 2026-05-12: R14 samples now piggyback through lowering
 - The old IR stored `(on ...)` samples in a `samples` side field that the `.fsm`
   emitter never consumed. Entry samples now become guarded `<=` assignments on
@@ -79,9 +89,9 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-05-12: R14 — no merge, mdBook
 - Merge removed. Predictable: one drive = one cycle. mdBook ISF chapter added.
 ## 2026-05-12: R14 — parameterized drives
-- `(drive (name p) body...)` → comb DT with param input signal. Calls wire actuals.
+- `(drive (name p) body...)` -> non-state DT with param input signal. Calls wire actuals.
 ## 2026-05-12: R14 — drive architecture
-- Drive definitions → combinational DTs. Calls → start assertions. Merge deferred.
+- Drive definitions -> non-state DTs. Calls -> start assertions. Merge deferred.
 ## 2026-05-11: R14 — handshake removed
 - `can_accept` auto-injected. `(on port)` directly uses the port name.
 ## 2026-05-11: R14 — multi-file
@@ -97,9 +107,9 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-05-11: R14 `.isf` — trigger/pulse
 - Trigger lowers to transaction start signal. Pulse lowers as guarded assignment.
 ## 2026-05-11: R14 `.isf` — latency
-- Comb DT increments cycle_count; done state checks min violation; max via watchdog.
+- Non-state DT increments cycle_count; done state checks min violation; max via watchdog.
 ## 2026-05-11: R14 `.isf` — rule lowering
-- Rules lowered to combinational DT blocks: `(port = signal)` or `(port = value <condition)`.
+- Rules lowered to non-state DT blocks with guarded assignments.
 ## 2026-05-11: R14 `.isf` — watchdog
 - Watchdog: `(<= (wd (- max 1)))` in idle, `(-- wd)` in await, `(=0 → timeout)`.
 ## 2026-05-11: R14 `.isf` — CLI wired
@@ -14012,7 +14022,7 @@ This document captures engineering rationale, design constraints, and working de
 - Implementation:
   - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates state/DT block names up front.
   - Regular FSM-state DT names must be HDL-identifier-compatible.
-  - General/combinational DT names must use exactly one leading `-` plus an HDL-identifier-compatible base name.
+  - Non-state DT names must use exactly one leading `-` plus an HDL-identifier-compatible base name.
   - Reset-state names remain limited to the already supported special spellings.
 - Focused regression coverage now exists in [t/52-language-contract-state-name-boundary.t](t/52-language-contract-state-name-boundary.t) for:
   - a success path with valid regular and standalone DT names,
@@ -14063,14 +14073,14 @@ This document captures engineering rationale, design constraints, and working de
   - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects state/DT blocks that do not contain at least one nested decision-tree body or action form.
 - Focused regression coverage now exists in [t/49-language-contract-state-body-boundary.t](t/49-language-contract-state-body-boundary.t) for:
   - empty FSM-state DT blocks,
-  - empty general/combinational DT blocks,
+  - empty non-state DT blocks,
   - and pipeline/CLI confirmation that those malformed blocks do not emit HDL.
 - Boundary decision:
-  - FSM-state DT blocks like `(aState ...)` and general/combinational DT blocks like `(-mycombDT ...)` must carry a real body,
+  - FSM-state DT blocks like `(aState ...)` and non-state DT blocks like `(-mycombDT ...)` must carry a real body,
   - empty block payloads are explicitly outside the active contract.
-## 2026-03-15: general/combinational DT blocks are now explicit standalone DTs
+## 2026-03-15: non-state DT blocks are now explicit standalone DTs
 - The next `R8` slice closes a terminology-versus-runtime gap around hyphen-prefixed DT blocks:
-  - user-facing wording already distinguishes `(aState ...)` as an FSM-state DT from `(-mycombDT ...)` as a general/combinational DT block,
+  - user-facing wording already distinguishes `(aState ...)` as an FSM-state DT from `(-mycombDT ...)` as a non-state DT block,
   - runtime behavior was already mostly correct,
   - but the AST contract still relied too much on the leading `-` naming convention instead of preserving that role explicitly.
 - Implementation:
@@ -14122,13 +14132,13 @@ This document captures engineering rationale, design constraints, and working de
 - User wording matters here, and the docs should reflect the language model more precisely:
   - both `(aState ...)` and `(-foobar ...)` are decision trees,
   - `(aState ...)` is an FSM-state DT attached to state `aState`,
-  - `(-foobar ...)` is a general/combinational DT block.
+  - `(-foobar ...)` is a non-state DT block.
 - This is a terminology clarification, not a behavioral change:
-  - FSM-state DTs and general/combinational DTs still share the same underlying decision-tree machinery,
+  - FSM-state DTs and non-state DTs still share the same underlying decision-tree machinery,
   - but FSM-state DTs participate in state encoding and transition planning while general DTs do not.
 - The user guide should prefer:
   - “FSM-state DT” for `(aState ...)`,
-  - and “general/combinational DT block” for `(-foobar ...)`.
+  - and “non-state DT block” for `(-foobar ...)`.
 ## 2026-03-15: reset-state spellings are now a real contract instead of an accidental name trick
 - The next `R8` slice closes a real mismatch between the docs, the corpus, and the parser/runtime boundary:
   - the shipped corpus still uses legacy reset-state spellings like `-syncreset`,

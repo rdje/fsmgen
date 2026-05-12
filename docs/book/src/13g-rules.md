@@ -1,7 +1,7 @@
 # Rules and Priorities
 
-Rules are combinational guard blocks. They fire when their condition is true,
-independent of the transaction state machine.
+Rules lower to non-state DT guard blocks. Their assignments are guarded by the
+rule condition and are independent of the transaction state machine.
 
 ## Rule Syntax
 
@@ -17,7 +17,8 @@ independent of the transaction state machine.
 - `(trigger transaction)` — guarded assertion of the transaction start signal
 - `(priority over other_rule)` — parsed metadata, currently not enforced
 
-**Lowering**: Combinational DT block containing guarded flopped assignments.
+**Lowering**: Non-state DT block containing guarded flopped assignments in the
+current scheduler.
 
 ```lisp
 (-always_ready

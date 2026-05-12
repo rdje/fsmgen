@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — DT terminology corrected
+- R14 docs now distinguish state DT blocks `(state_name ...)` from non-state DT
+  blocks `(-name ...)` without implying that every non-state DT is
+  combinational.
+- Assignment operators define timing in either block kind: `=` is
+  combinational; `<-` and `<=` are sequential/flopped.
+- Updated `docs/ISF_SPEC.md`, `docs/USER_GUIDE.md`, and mdBook R14 chapters for
+  drive, rule, latency, and lowering-reference wording.
 ## 2026-05-12: R14 — samples now materialize in scheduled states
 - `LoweringIR` now lowers `(on ...)` sample clauses into guarded entry-state
   assignments and consumes pending samples when building named drive calls and
@@ -86,12 +94,13 @@ This is the live continuity document for fast session recovery after crashes, re
 ## 2026-05-12: R14 — parameterized drives `(drive (name param) body...)`
 - Drive definitions accept formal parameters: `(drive (scl val) (scl val))`
 - Calls wire actuals: `(drive scl 1)` → `(= (scl_val 1)) (= (scl_start 1))`
-- Comb DT: `(-scl (= (scl> scl_val) <scl_start))`
+- Non-state DT: `(-scl (<- (scl scl_val) <scl_start))`
 - I2C reduced to 2 drive definitions (scl, sda) from 4
 - APB uses parameterized `(psel val)` and `(penable val)`
 - All 7 tests pass
-## 2026-05-12: R14 — drive calls as start assertions + combinational DTs
-- Drive definitions become combinational DT blocks `(-name (port = val <name_start))`
+## 2026-05-12: R14 — drive calls as start assertions + non-state DTs
+- Drive definitions become non-state DT blocks such as
+  `(-name (<- (port val) <name_start))`
 - `(drive name)` calls emit `(= (name_start 1))` in current state; `_start` signals auto-declared
 - Adjacent drive call merge (same-cycle execution) deferred
 - I2C: 19 states, APB: 7 states. All 7 tests pass.
@@ -161,7 +170,7 @@ This is the live continuity document for fast session recovery after crashes, re
 - 7 tests pass, all fixtures pass strict mode
 ## 2026-05-11: R14 `.isf` scheduler — latency lowering
 - `(latency (min N) (max M))` now lowers to synthesizable verification logic:
-  - Comb DT `(-cc_inc)` increments `cycle_count` when `inc` asserted
+  - Non-state DT `(-cc_inc)` increments `cycle_count` when `inc` asserted
   - Each active state asserts `inc=1`; entry state resets counter
   - Done state checks `(?cc (<min (lerr = 1)))` — fires error if completed too early
   - If no `(await ...)` exists, max-check state with `(?cc (=max (-> timeout)))`
@@ -15661,12 +15670,12 @@ After each completed task, always do this in order:
   - and keep moving validation closer to the source-level construct boundary.
 ## 2026-03-15: state and DT block names now fail early if malformed
 - Current worktree is the next `R8` implementation slice:
-  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates regular FSM-state DT names and general/combinational DT names explicitly,
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates regular FSM-state DT names and non-state DT names explicitly,
   - [t/52-language-contract-state-name-boundary.t](t/52-language-contract-state-name-boundary.t) now locks valid-name success plus malformed-name rejection through parser, pipeline, and CLI entry points,
   - and [docs/USER_GUIDE.md](docs/USER_GUIDE.md) now documents the naming rule directly.
 - Scope of the landed contract slice:
   - explicit support remains for regular FSM-state DT names like `state_0`,
-  - explicit support remains for general/combinational DT names like `-comb_1`,
+  - explicit support remains for non-state DT names like `-comb_1`,
   - explicit rejection now covers malformed names like `bad-name`, `-bad-name`, and `--bad`.
 - Roadmap board update:
   - no phase status changed,
@@ -15717,7 +15726,7 @@ After each completed task, always do this in order:
   - [t/49-language-contract-state-body-boundary.t](t/49-language-contract-state-body-boundary.t) now locks parser, pipeline, and CLI behavior for empty FSM-state DT blocks and empty general DT blocks,
   - and [docs/USER_GUIDE.md](docs/USER_GUIDE.md) now states that state/DT blocks must contain a real body.
 - Scope of the landed contract slice:
-  - explicit support still includes FSM-state DT blocks and general/combinational DT blocks,
+  - explicit support still includes FSM-state DT blocks and non-state DT blocks,
   - explicit rejection now covers empty blocks like `(idle)` and `(-misc)`,
   - and malformed empty pseudo-states no longer drift through to later runtime stages.
 - Roadmap board update:
@@ -15728,14 +15737,14 @@ After each completed task, always do this in order:
   - keep `R8` active,
   - continue auditing remaining parser/runtime-visible language edges,
   - and keep replacing silent fallthrough behavior with explicit contract diagnostics.
-## 2026-03-15: general/combinational DT blocks now carry explicit standalone classification
+## 2026-03-15: non-state DT blocks now carry explicit standalone classification
 - Current worktree is the next `R8` implementation slice:
-  - [perl/FSM/CoreAST.pm](perl/FSM/CoreAST.pm) now exposes `is_standalone_dt` on `FSM::CoreAST::State` and treats general/combinational DTs as an explicit state-role family,
+  - [perl/FSM/CoreAST.pm](perl/FSM/CoreAST.pm) now exposes `is_standalone_dt` on `FSM::CoreAST::State` and treats non-state DTs as an explicit state-role family,
   - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm) now classifies hyphen-prefixed non-reset DT blocks as `state_type => standalone_dt`,
   - [t/48-language-contract-standalone-dt-classification.t](t/48-language-contract-standalone-dt-classification.t) now locks AST classification plus non-encoding/DT-enable behavior,
   - and [docs/USER_GUIDE.md](docs/USER_GUIDE.md) now states the standalone DT role explicitly.
 - Scope of the landed contract slice:
-  - explicit support now includes a real AST/runtime distinction between FSM-state DTs and general/combinational standalone DT blocks,
+  - explicit support now includes a real AST/runtime distinction between FSM-state DTs and non-state standalone DT blocks,
   - standalone DT blocks now stay out of the encoded-state plan by explicit role classification, not only by name heuristics,
   - and they continue to use DT-style enables instead of joining the `current_state` family.
 - Roadmap board update:
@@ -15784,7 +15793,7 @@ After each completed task, always do this in order:
 - Current worktree is a terminology-only follow-up:
   - [docs/USER_GUIDE.md](docs/USER_GUIDE.md) now says both syntaxes are decision trees,
   - a regular named block like `(aState ...)` is an FSM-state DT,
-  - and a hyphen-prefixed top-level block like `(-foobar ...)` is a general/combinational DT block.
+  - and a hyphen-prefixed top-level block like `(-foobar ...)` is a non-state DT block.
 - Scope of the clarification:
   - no runtime behavior changed,
   - the goal is to keep user-facing wording aligned with the intended language model.

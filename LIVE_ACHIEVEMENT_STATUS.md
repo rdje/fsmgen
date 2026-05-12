@@ -2,6 +2,11 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — DT terminology corrected
+- Active: `R14`. The spec, user guide, and mdBook now distinguish state DTs
+  from non-state DTs and state that assignment operators, not DT spelling,
+  decide combinational vs sequential behavior.
+
 ## 2026-05-12: R14 — sample piggyback lowering
 - Active: `R14`. `t/1100` proves entry samples and pending samples before
   named drive/await states now materialize in the scheduled state; APB is now a
@@ -46,7 +51,7 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Active: `R14`. `(drive (name p) body...)` + `(drive name arg)`. 7 tests pass.
 
 ## 2026-05-12: R14 — drive architecture
-- Active: `R14`. Drive calls → start assertions + combinational DTs. I2C @ 19 states. 7 tests.
+- Active: `R14`. Drive calls -> start assertions + non-state DTs. I2C @ 19 states. 7 tests.
 
 ## 2026-05-11: R14 — handshake removed
 - Active: `R14`. `(on port)` + implicit `can_accept`. 7 tests pass.
