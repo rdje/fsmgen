@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF public contract JSON roundtrip
+- The first ISF public-interface contract is intended for downstream discovery
+  through the capability manifest, so the entire contract payload must be safe
+  to serialize and compare after JSON decode.
+- `t/1113-isf-public-interface-contract-json-roundtrip-audit.t` mirrors the
+  existing public-contract audit pattern used by R13 contract owners and locks
+  the initial ISF contract as JSON-safe metadata without widening the actual ISF
+  API surface.
 ## 2026-05-12: R14 ISF public interface contract
 - The existing `.fsm`/embedding stabilization work lives in R13, but ISF now
   has enough shipped downstream-facing surface to need its own R14 contract

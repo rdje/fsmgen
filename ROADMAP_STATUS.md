@@ -48,6 +48,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   at top level and inside `when`, `switch`, and `repeat` bodies.
 - `t/1112` now starts the downstream ISF public-interface contract at
   `embedding.isf_public_interface` and records its live human contract document.
+- `t/1113` now proves the full ISF public-interface contract payload survives
+  JSON round-trip unchanged.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
@@ -3559,6 +3561,9 @@ Done:
 - [t/1112-isf-public-interface-contract.t](t/1112-isf-public-interface-contract.t)
   locks the first bounded ISF public-interface contract and its manifest
   advertisement at `embedding.isf_public_interface`.
+- [t/1113-isf-public-interface-contract-json-roundtrip-audit.t](t/1113-isf-public-interface-contract-json-roundtrip-audit.t)
+  locks the full ISF public-interface contract object as JSON-round-trip-safe
+  discovery metadata.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

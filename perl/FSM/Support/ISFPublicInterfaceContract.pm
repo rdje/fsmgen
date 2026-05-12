@@ -85,6 +85,7 @@ sub build_isf_public_interface_contract {
         tested_by => [
             't/1096-isf-schedule-json-report.t',
             't/1112-isf-public-interface-contract.t',
+            't/1113-isf-public-interface-contract-json-roundtrip-audit.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',

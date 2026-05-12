@@ -17,6 +17,10 @@ and is advertised through:
   -> embedding.isf_public_interface
 ```
 
+The advertised contract object is full-surface JSON-round-trip audited by
+[t/1113-isf-public-interface-contract-json-roundtrip-audit.t](../t/1113-isf-public-interface-contract-json-roundtrip-audit.t).
+Downstream tools can treat that contract metadata as JSON-safe discovery data.
+
 ## Stabilized Surface
 
 The current bounded public surface is deliberately narrow.

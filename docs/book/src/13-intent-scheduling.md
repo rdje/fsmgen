@@ -73,9 +73,11 @@ ISF API contract is advertised through `--capability-manifest` at
 That contract is live documentation: it evolves in the same slice as public ISF
 parser, scheduler, CLI, lower-result, or schedule-report changes. Assigned
 scheduler counters in the `*_wd`, `*_cc`, and `*_cnt` naming families are
-reported as `counter` storage with the width inferred by the lowering IR.
-Transaction summaries include the generated state families used by the current
-scheduler, including control-flow and data-operation states.
+reported as `counter` storage with the width inferred by the lowering IR. The
+advertised contract object is JSON-round-trip audited so downstream tooling can
+consume the manifest metadata as portable discovery data. Transaction summaries
+include the generated state families used by the current scheduler, including
+control-flow and data-operation states.
 
 ## Current Limitations
 

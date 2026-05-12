@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — ISF public contract JSON roundtrip
+- Active: `R14`. `t/1113` proves `embedding.isf_public_interface` contract
+  metadata survives JSON encode/decode unchanged.
+
 ## 2026-05-12: R14 — ISF public interface contract
 - Active: `R14`. `embedding.isf_public_interface` now advertises the bounded
   live downstream-consumer contract for ISF parser/scheduler facades and

@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF public contract JSON roundtrip
+- Added `t/1113-isf-public-interface-contract-json-roundtrip-audit.t` to prove
+  the full `FSM::Support::ISFPublicInterfaceContract` payload survives JSON
+  encode/decode unchanged.
+- The contract's `tested_by` list and live ISF contract docs now advertise
+  that downstream tools can consume `embedding.isf_public_interface` as
+  JSON-safe discovery metadata.
 ## 2026-05-12: R14 — ISF public interface contract
 - Added `FSM::Support::ISFPublicInterfaceContract` and advertised it through
   `--capability-manifest -> embedding.isf_public_interface`.
