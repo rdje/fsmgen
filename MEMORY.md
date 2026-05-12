@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — `await_all` nested guards locked
+- Added `t/1109-isf-await-all-sync.t` to prove `await_all` emits nested guards
+  for every collected spawned done signal.
+- The test locks that all spawned `*_done` signals are present and that the
+  parent advances through one all-guards transition, complementing the existing
+  `await_any` coverage.
 ## 2026-05-12: R14 — schedule JSON transaction states
 - `Emitter::JSON` now groups additional generated state-name families into
   transaction summaries, including `when`, `switch`, data-op, `do`, `spawn`,

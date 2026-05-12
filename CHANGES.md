@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — `await_all` nested guard coverage
+- Added [t/1109-isf-await-all-sync.t](t/1109-isf-await-all-sync.t) to lock
+  `await_all` lowering for spawned children.
+- The regression proves every collected `*_done` signal is present and the
+  parent advances through one nested all-guards transition.
 ### R14 — schedule JSON transaction states
 - Updated [perl/FSM/Scheduler/ISF/Emitter/JSON.pm](perl/FSM/Scheduler/ISF/Emitter/JSON.pm)
   so transaction summaries group generated `when`, `switch`, data-operation,

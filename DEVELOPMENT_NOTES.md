@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 `await_all` nested guard coverage
+- `await_any` already had focused coverage for one guard per collected done
+  signal. The companion `await_all` lowering is intentionally different: it
+  nests guards so the parent advances only when every collected done port is
+  true in the same decision path.
+- `t/1109-isf-await-all-sync.t` locks that shape without changing lowering.
+  This is a coverage slice for the shipped spawn synchronization contract.
 ## 2026-05-12: R14 schedule JSON transaction states
 - The transaction summary in `Emitter::JSON` is name-family based because the
   current lowering IR does not carry an explicit transaction owner field on

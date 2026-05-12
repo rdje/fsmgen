@@ -38,6 +38,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   repeat counter widths while preserving false-skip exits.
 - `t/1108` now proves schedule JSON transaction summaries include generated
   control/data state families such as `when`, `switch`, `update`, and `shift`.
+- `t/1109` now proves `await_all` emits nested guards for every collected
+  spawned done signal.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
@@ -3531,6 +3533,8 @@ Done:
 - [t/1108-isf-schedule-json-transaction-states.t](t/1108-isf-schedule-json-transaction-states.t)
   locks schedule JSON transaction grouping for control-flow and data-operation
   state families.
+- [t/1109-isf-await-all-sync.t](t/1109-isf-await-all-sync.t) locks `await_all`
+  nested guards for all collected spawned done signals.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

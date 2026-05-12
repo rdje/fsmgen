@@ -57,6 +57,7 @@ Non-blocking. Each spawn declares a separate intended instance.
 - `(await_all done)` → nested guards for all done signals
 - `(await_any done)` → one guard per done signal, advancing on the first one
   that fires
+Both synchronization forms have focused regressions.
 
 Full composition-top instantiation and spawn parameter binding are still
 deferred.

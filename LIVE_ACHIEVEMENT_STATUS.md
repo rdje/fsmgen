@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — `await_all` nested guard coverage
+- Active: `R14`. `t/1109` proves `await_all` waits on every collected spawned
+  done signal through one nested all-guards transition.
+
 ## 2026-05-12: R14 — schedule JSON transaction states
 - Active: `R14`. `t/1108` proves schedule JSON transaction summaries include
   generated control-flow and data-operation states.

@@ -311,6 +311,7 @@ Current lowering:
 - `await_all` waits for all collected spawned done ports.
 - `await_any` emits one guard per collected spawned done port and advances when
   any one of them fires.
+Focused regressions cover both synchronization forms.
 
 Top-level child instantiation and spawn parameter binding are not part of the
 shipped lowering contract yet.
@@ -403,6 +404,7 @@ Focused tests:
 - [t/1106-isf-schedule-json-counter-storage.t](../t/1106-isf-schedule-json-counter-storage.t)
 - [t/1107-isf-when-body-ops.t](../t/1107-isf-when-body-ops.t)
 - [t/1108-isf-schedule-json-transaction-states.t](../t/1108-isf-schedule-json-transaction-states.t)
+- [t/1109-isf-await-all-sync.t](../t/1109-isf-await-all-sync.t)
 
 ## 12. Explicitly Deferred
 
