@@ -2,6 +2,9 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — no merge, mdBook
+- Active: `R14`. One drive = one cycle. mdBook ISF chapter 13 added. 7 tests.
+
 ## 2026-05-12: R14 — parameterized drives
 - Active: `R14`. `(drive (name p) body...)` + `(drive name arg)`. 7 tests pass.
 

@@ -13,4 +13,5 @@
 - [Errors, Strict Mode, and Troubleshooting](10-errors-strict-mode-and-troubleshooting.md)
 - [Extensions and Embedding](11-extensions-and-embedding.md)
 - [Cookbook](12-cookbook.md)
+- [Intent Scheduling (ISF)](13-intent-scheduling.md)
 - [Reference Map](90-reference-map.md)

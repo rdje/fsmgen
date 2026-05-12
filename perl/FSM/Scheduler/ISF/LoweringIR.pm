@@ -153,12 +153,8 @@ sub _build_transaction($self, $tx, $actor, $txi) {
                     my $arg = $cl->[2 + $i];
                     push @assignments, { lhs => "${name}_$params[$i]", rhs => $arg, op => '=' };
                 }
-                if (@st && $st[-1]{kind} eq 'sequential') {
-                    unshift @{$st[-1]{assignments}}, @assignments;
-                } else {
-                    push @st, { name => "${tn}_drive_" . $si++, kind => 'sequential',
-                        assignments => \@assignments, transitions => [] };
-                }
+                push @st, { name => "${tn}_drive_" . $si++, kind => 'sequential',
+                    assignments => \@assignments, transitions => [] };
             } else {
                 push @st, _ir_drive($cl, $tn, [splice @ps], $si++);
             }

@@ -1,5 +1,10 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — no merge, one drive = one cycle; mdBook chapter
+- Removed drive call merge logic. Every `(drive ...)` call = one state = one cycle.
+- Predictable timing: concurrent actions go in the same drive definition.
+- Added mdBook chapter 13: Intent Scheduling Format (ISF) overview.
+- I2C: 29 states (one per drive call). All 7 tests pass.
 ## 2026-05-12: R14 — parameterized drives `(drive (name param) body...)`
 - Drive definitions accept formal parameters: `(drive (scl val) (scl val))`
 - Calls wire actuals: `(drive scl 1)` → `(= (scl_val 1)) (= (scl_start 1))`

@@ -1,5 +1,7 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 — no merge, mdBook
+- Merge removed. Predictable: one drive = one cycle. mdBook ISF chapter added.
 ## 2026-05-12: R14 — parameterized drives
 - `(drive (name p) body...)` → comb DT with param input signal. Calls wire actuals.
 ## 2026-05-12: R14 — drive architecture
