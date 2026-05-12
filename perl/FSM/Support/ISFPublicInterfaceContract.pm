@@ -28,6 +28,8 @@ our @EXPORT_OK = qw(
     isf_public_interface_schedule_report_storage_required_keys
     isf_public_interface_schedule_report_storage_width_shape
     isf_public_interface_schedule_report_top_level_keys
+    isf_public_interface_schedule_report_transaction_count_shape
+    isf_public_interface_schedule_report_transaction_states_shape
     isf_public_interface_schedule_report_transaction_keys
     isf_public_interface_schedule_report_dt_keys
     isf_public_interface_scheduler_method_names
@@ -93,6 +95,8 @@ sub build_isf_public_interface_contract {
         schedule_report_storage_kind_values => isf_public_interface_schedule_report_storage_kind_values(),
         schedule_report_storage_width_shape => isf_public_interface_schedule_report_storage_width_shape(),
         schedule_report_transaction_keys => isf_public_interface_schedule_report_transaction_keys(),
+        schedule_report_transaction_states_shape => isf_public_interface_schedule_report_transaction_states_shape(),
+        schedule_report_transaction_count_shape => isf_public_interface_schedule_report_transaction_count_shape(),
         schedule_report_dt_keys => isf_public_interface_schedule_report_dt_keys(),
         schedule_report_dt_assignments_shape => isf_public_interface_schedule_report_dt_assignments_shape(),
         schedule_report_dt_ordering => isf_public_interface_dt_ordering_policy(),
@@ -142,6 +146,7 @@ sub build_isf_public_interface_contract {
             't/1146-isf-public-dt-assignment-metadata-audit.t',
             't/1147-isf-public-report-dt-assignment-count-audit.t',
             't/1148-isf-public-storage-metadata-audit.t',
+            't/1149-isf-public-transaction-metadata-audit.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -190,6 +195,8 @@ sub isf_public_interface_public_top_level_keys {
             schedule_report_storage_kind_values
             schedule_report_storage_width_shape
             schedule_report_transaction_keys
+            schedule_report_transaction_states_shape
+            schedule_report_transaction_count_shape
             schedule_report_dt_keys
             schedule_report_dt_assignments_shape
             schedule_report_dt_ordering
@@ -354,6 +361,14 @@ sub isf_public_interface_schedule_report_transaction_keys {
             count
         ),
     ];
+}
+
+sub isf_public_interface_schedule_report_transaction_states_shape {
+    return 'array reference of scheduled state names belonging to the transaction in emitted order';
+}
+
+sub isf_public_interface_schedule_report_transaction_count_shape {
+    return 'non-negative integer count equal to the transaction states array length';
 }
 
 sub isf_public_interface_schedule_report_dt_keys {

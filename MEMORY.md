@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF transaction metadata audit
+- Added `schedule_report_transaction_states_shape` and
+  `schedule_report_transaction_count_shape` to `embedding.isf_public_interface`,
+  documenting transaction state-list and count semantics.
+- Added `t/1149-isf-public-transaction-metadata-audit.t` to prove that metadata
+  is exact across direct and manifest views and that APB transaction summaries
+  expose emitted scheduled states with counts matching the state-list length.
 ## 2026-05-12: R14 — ISF storage metadata audit
 - Added `schedule_report_storage_kind_values` and
   `schedule_report_storage_width_shape` to `embedding.isf_public_interface`,

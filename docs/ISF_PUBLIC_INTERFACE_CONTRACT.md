@@ -72,6 +72,10 @@ The inferred-storage metadata is checked by
 [t/1148-isf-public-storage-metadata-audit.t](../t/1148-isf-public-storage-metadata-audit.t)
 to keep advertised storage `kind` values and optional `width` shape exact
 across direct and manifest views.
+The transaction-summary metadata is checked by
+[t/1149-isf-public-transaction-metadata-audit.t](../t/1149-isf-public-transaction-metadata-audit.t)
+to keep transaction `states` and `count` shapes exact across direct and
+manifest views.
 The public `--emit-schedule-json` CLI path is checked by
 [t/1121-isf-public-cli-schedule-report-audit.t](../t/1121-isf-public-cli-schedule-report-audit.t)
 to emit clean-stderr JSON matching the in-process scheduler report.
@@ -284,6 +288,12 @@ For each `inferred_storage` entry, `kind` is currently one of `counter` or
 present, and are currently present for inferred scheduler counters. The
 machine-readable contract advertises these through
 `schedule_report_storage_kind_values` and `schedule_report_storage_width_shape`.
+
+For each `transactions` entry, `states` is an array of scheduled state names
+belonging to that transaction in emitted order, and `count` is a non-negative
+integer equal to the `states` array length. The machine-readable contract
+advertises this through `schedule_report_transaction_states_shape` and
+`schedule_report_transaction_count_shape`.
 
 The current lowerer emits DT summaries in deterministic lowering order:
 transaction/rule-created DTs retain their construction order, and hash-backed

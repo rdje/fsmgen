@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF transaction metadata audit
+- Added `schedule_report_transaction_states_shape` and
+  `schedule_report_transaction_count_shape` to
+  `embedding.isf_public_interface`.
+- Added [t/1149-isf-public-transaction-metadata-audit.t](t/1149-isf-public-transaction-metadata-audit.t)
+  to prove those metadata fields are exact and APB transaction counts match
+  emitted scheduled state-list lengths.
 ### R14 — ISF storage metadata audit
 - Added `schedule_report_storage_kind_values` and
   `schedule_report_storage_width_shape` to `embedding.isf_public_interface`.

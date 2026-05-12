@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF transaction metadata audit
+- Transaction summaries are useful to downstream consumers only if `states` and
+  `count` have explicit semantics. The contract now says `states` is the
+  emitted scheduled-state list and `count` mirrors its length.
+- `t/1149-isf-public-transaction-metadata-audit.t` locks those metadata strings
+  across direct and manifest views and checks APB transaction summaries against
+  the advertised shape.
 ## 2026-05-12: R14 ISF storage metadata audit
 - The schedule report already exposes inferred storage summaries, but the
   meaning of `kind` and optional `width` was only described in prose. That is

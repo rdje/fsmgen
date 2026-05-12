@@ -444,6 +444,12 @@ Each `inferred_storage` entry's `kind` value is currently `counter` or
 present and currently appear on inferred scheduler counters. The
 capability-manifest ISF public contract advertises this through
 `schedule_report_storage_kind_values` and `schedule_report_storage_width_shape`.
+Each `transactions` entry's `states` value is an emitted-order array of
+scheduled state names belonging to that transaction, and `count` is a
+non-negative integer equal to that array length. The capability-manifest ISF
+public contract advertises this through
+`schedule_report_transaction_states_shape` and
+`schedule_report_transaction_count_shape`.
 Successful reports keep `compile_issues` present as an empty array; the
 capability-manifest ISF public contract advertises that success shape through
 `schedule_report_compile_issues_success_shape`.
@@ -524,6 +530,7 @@ Focused tests:
 - [t/1146-isf-public-dt-assignment-metadata-audit.t](../t/1146-isf-public-dt-assignment-metadata-audit.t)
 - [t/1147-isf-public-report-dt-assignment-count-audit.t](../t/1147-isf-public-report-dt-assignment-count-audit.t)
 - [t/1148-isf-public-storage-metadata-audit.t](../t/1148-isf-public-storage-metadata-audit.t)
+- [t/1149-isf-public-transaction-metadata-audit.t](../t/1149-isf-public-transaction-metadata-audit.t)
 
 ## 12. Explicitly Deferred
 
