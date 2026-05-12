@@ -2,6 +2,10 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — ISF CLI HDL generation audit
+- Active: `R14`. `t/1123` proves the plain `file.isf` CLI path reaches
+  generated HDL for APB with clean stderr.
+
 ## 2026-05-12: R14 — ISF CLI outdir lowering audit
 - Active: `R14`. `t/1122` proves `--outdir` writes multi-file scheduled `.fsm`
   artifacts matching the in-process lower-result files map.

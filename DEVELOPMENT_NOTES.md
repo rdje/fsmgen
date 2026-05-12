@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF CLI HDL generation audit
+- The simplest advertised ISF CLI entrypoint is `./bin/fsmgen path/to/file.isf`.
+  The schedule-report and outdir audits cover inspection artifacts, but the
+  plain path also needs coverage that the scheduled `.fsm` handoff reaches HDL
+  generation.
+- `t/1123-isf-public-cli-hdl-generation-audit.t` directs output into a
+  temporary file, requires clean stderr, and checks a small stable HDL surface:
+  module name, scheduled state encoding, and clock port. It deliberately does
+  not snapshot full generated HDL text.
 ## 2026-05-12: R14 ISF CLI outdir lowering audit
 - `--outdir` is advertised as an ISF public CLI entrypoint because multi-file
   lowering needs a stable way to materialize parent and child scheduled `.fsm`

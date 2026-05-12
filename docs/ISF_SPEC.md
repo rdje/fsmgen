@@ -36,6 +36,8 @@ Current CLI behavior:
   generation.
 - Without `--emit-schedule-json`, a single generated `.fsm` file is written to a
   temporary file and fed into the normal `.fsm` pipeline.
+- The plain `file.isf` path is expected to reach generated HDL with clean
+  stderr on success.
 - If lowering produces multiple `.fsm` files, `--outdir DIR` writes every file
   there and the parent actor file is fed into the normal pipeline.
 - The public `--outdir` path is expected to write scheduled `.fsm` file content
@@ -445,6 +447,7 @@ Focused tests:
 - [t/1120-isf-public-live-document-path-audit.t](../t/1120-isf-public-live-document-path-audit.t)
 - [t/1121-isf-public-cli-schedule-report-audit.t](../t/1121-isf-public-cli-schedule-report-audit.t)
 - [t/1122-isf-public-cli-outdir-lowering-audit.t](../t/1122-isf-public-cli-outdir-lowering-audit.t)
+- [t/1123-isf-public-cli-hdl-generation-audit.t](../t/1123-isf-public-cli-hdl-generation-audit.t)
 
 ## 12. Explicitly Deferred
 

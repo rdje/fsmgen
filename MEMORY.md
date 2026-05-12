@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF CLI HDL generation audit
+- Added `t/1123-isf-public-cli-hdl-generation-audit.t` to prove the public
+  `./bin/fsmgen isf/apb_requester.isf` generation path succeeds with clean
+  stderr when directed to a temporary HDL output file.
+- The audit checks that generated HDL contains the scheduled APB module, state
+  encoding, and clock port, without freezing the full backend text.
 ## 2026-05-12: R14 — ISF CLI outdir lowering audit
 - Added `t/1122-isf-public-cli-outdir-lowering-audit.t` to prove the public
   `./bin/fsmgen --outdir DIR --output DIR/out.sv isf/spawn_parent.isf` path

@@ -26,6 +26,9 @@ so callers can mutate a received copy without polluting later contract builds.
 Both capability-manifest CLI spellings are audited by
 [t/1115-isf-public-interface-cli-manifest-audit.t](../t/1115-isf-public-interface-cli-manifest-audit.t)
 to keep the in-process contract and CLI-advertised contract aligned.
+The plain `file.isf` HDL-generation path is checked by
+[t/1123-isf-public-cli-hdl-generation-audit.t](../t/1123-isf-public-cli-hdl-generation-audit.t)
+to reach generated HDL with clean stderr for the APB fixture.
 The current APB schedule report is checked against the advertised key families
 by [t/1116-isf-public-schedule-report-key-family-audit.t](../t/1116-isf-public-schedule-report-key-family-audit.t).
 The public `--emit-schedule-json` CLI path is checked by
@@ -87,6 +90,7 @@ files
 `files` is a hash reference mapping scheduled `.fsm` basenames to scheduled
 `.fsm` source text. The generated `.fsm` text is a reviewable compiler artifact
 and then flows through the existing `.fsm` pipeline.
+The plain `file.isf` CLI path lowers through that pipeline into generated HDL.
 
 The `--outdir` CLI path materializes the same scheduled `.fsm` basename/text
 map on disk for multi-file lowerings.

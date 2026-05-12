@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF CLI HDL generation audit
+- Added [t/1123-isf-public-cli-hdl-generation-audit.t](t/1123-isf-public-cli-hdl-generation-audit.t)
+  to prove the public `file.isf` CLI path reaches HDL generation for the APB
+  fixture with clean stderr.
+- The audit writes HDL to a temporary output file and checks only the expected
+  module, scheduled state encoding, and clock-port surface.
 ### R14 — ISF CLI outdir lowering audit
 - Added [t/1122-isf-public-cli-outdir-lowering-audit.t](t/1122-isf-public-cli-outdir-lowering-audit.t)
   to prove `--outdir` writes the scheduled `.fsm` files for the `spawn_parent`
