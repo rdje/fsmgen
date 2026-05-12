@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF guidance metadata audit
+- Added `t/1142-isf-public-guidance-metadata-audit.t` to prove the ISF public
+  contract guidance list is exact and duplicate-free across the direct owner,
+  in-process capability manifest, and both CLI manifest spellings.
+- The audited guidance keeps the bounded-public stance explicit for downstream
+  consumers: facade pairs are public, raw internals are not, and live human
+  contract documents must evolve with public ISF changes.
 ## 2026-05-12: R14 — ISF identity/stability metadata audit
 - Added `t/1141-isf-public-identity-flags-metadata-audit.t` to prove the ISF
   public contract schema version, bounded status, contract source,

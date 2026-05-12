@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF guidance metadata audit
+- The `guidance` list is downstream-facing metadata, not casual prose. It tells
+  consumers which ISF surfaces are intentionally public and which internals
+  remain non-public while the contract evolves.
+- `t/1142-isf-public-guidance-metadata-audit.t` locks that advice across the
+  direct owner, in-process capability manifest, and both CLI manifest spellings
+  so manifest consumers see the same bounded-public interpretation everywhere.
 ## 2026-05-12: R14 ISF identity/stability metadata audit
 - The ISF public contract now carries enough metadata for downstream consumers
   to distinguish exact bounded-public promises from non-public implementation

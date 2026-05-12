@@ -91,7 +91,8 @@ top-level discovery list are audited as exact across direct and manifest views,
 and its advertised
 entrypoint, CLI option, method-name, and constructor-option lists are audited as
 exact and duplicate-free. Its lower-result and schedule-report discovery
-metadata are audited as exact. Both
+metadata are audited as exact, as is the downstream guidance list that explains
+the current bounded-public stance. Both
 capability-manifest CLI spellings are audited to emit the same ISF contract
 payload. The current APB schedule report is also checked against the advertised
 public key families, and successful reports advertise and keep an empty

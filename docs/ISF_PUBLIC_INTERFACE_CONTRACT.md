@@ -27,6 +27,10 @@ The identity and stability metadata is checked by
 [t/1141-isf-public-identity-flags-metadata-audit.t](../t/1141-isf-public-identity-flags-metadata-audit.t)
 to keep schema version, bounded status, owner list, and stability flags exact
 across direct and manifest views.
+The downstream guidance metadata is checked by
+[t/1142-isf-public-guidance-metadata-audit.t](../t/1142-isf-public-guidance-metadata-audit.t)
+to keep the advertised consumer advice exact and duplicate-free across direct
+and manifest views.
 Both capability-manifest CLI spellings are audited by
 [t/1115-isf-public-interface-cli-manifest-audit.t](../t/1115-isf-public-interface-cli-manifest-audit.t)
 to keep the in-process contract and CLI-advertised contract aligned.
@@ -111,6 +115,9 @@ exact top-level discovery list for the contract payload. It is not a partial
 hint list.
 The schema/status/owner identity fields and stability flags are exact discovery
 metadata for the contract's current bounded-public stance.
+The `guidance` list is exact downstream-consumer advice for interpreting the
+current bounded contract: facade pairs are public, raw internals are not, and
+human contract documents must evolve with public ISF changes.
 
 Supported CLI entrypoints:
 
