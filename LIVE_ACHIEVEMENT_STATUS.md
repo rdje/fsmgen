@@ -2,6 +2,11 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-12: R14 — schedule JSON counter storage
+- Active: `R14`. `t/1106` proves schedule JSON reports assigned scheduler
+  counters as counters with inferred widths while preserving the current
+  storage-name surface.
+
 ## 2026-05-12: R14 — size deduplication
 - Active: `R14`. `t/1105` proves inferred scheduler storage no longer
   duplicates declared interface ports in `.fsm` `+size` entries.

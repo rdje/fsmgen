@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — schedule JSON counter storage
+- `Emitter::JSON` now reports assigned scheduler counters (`*_wd`, `*_cc`,
+  `*_cnt`) as `kind => counter` with the width inferred in the lowering IR.
+- The existing storage-name surface remains narrow: combinational drive enables
+  that were previously omitted from schedule JSON remain omitted, while
+  counter-table-only entries such as parameterized drive carriers stay present.
+- Added `t/1106-isf-schedule-json-counter-storage.t`.
 ## 2026-05-12: R14 — size deduplication
 - `Emitter::FSM` and the legacy `ModuleEmitter` now suppress inferred
   counter/storage `+size` entries whose names are already declared interface

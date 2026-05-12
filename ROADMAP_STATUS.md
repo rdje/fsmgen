@@ -32,6 +32,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   the correct post-body or post-switch state.
 - `t/1105` now proves `.fsm` `+size` emission suppresses inferred storage
   duplicates for declared interface ports.
+- `t/1106` now proves schedule JSON reports assigned scheduler counters as
+  counters with IR-inferred widths without broadening the storage-name set.
 - Next decision point: R13 closed (96 full-surface audits).
 - Next decision point: R13 public contract full-surface audits are complete (96 tests). R13 lane closed.
 - Next decision point: R13 public contract full-surface audits are complete (96 tests across all `FSM::Support::*Contract` modules). R13 lane is closed.
@@ -3516,6 +3518,9 @@ Done:
 - [t/1105-isf-size-deduplication.t](t/1105-isf-size-deduplication.t) locks
   `.fsm` `+size` deduplication between declared interface ports and inferred
   scheduler storage.
+- [t/1106-isf-schedule-json-counter-storage.t](t/1106-isf-schedule-json-counter-storage.t)
+  locks schedule JSON storage classification for assigned watchdog, latency,
+  and repeat counters with their IR-inferred widths.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

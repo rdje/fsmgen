@@ -363,7 +363,9 @@ arbitration policy.
 This is a machine-readable schedule report, not a stable public API contract
 yet. It is intentionally generated from the same lowering IR as `.fsm` output.
 Current scalar source values such as `watchdog` are preserved as parser-carried
-strings in the JSON report.
+strings in the JSON report. Assigned scheduler counters using the generated
+`*_wd`, `*_cc`, and `*_cnt` naming families are reported as `kind: counter`
+with the width inferred by `LoweringIR`.
 
 ## 11. Current Regression Fixtures
 
@@ -394,6 +396,7 @@ Focused tests:
 - [t/1103-isf-switch-branch-exits.t](../t/1103-isf-switch-branch-exits.t)
 - [t/1104-isf-when-branch-exits.t](../t/1104-isf-when-branch-exits.t)
 - [t/1105-isf-size-deduplication.t](../t/1105-isf-size-deduplication.t)
+- [t/1106-isf-schedule-json-counter-storage.t](../t/1106-isf-schedule-json-counter-storage.t)
 
 ## 12. Explicitly Deferred
 

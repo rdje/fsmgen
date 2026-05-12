@@ -49,11 +49,20 @@ sub _reset_summary($self, $reset) {
 sub _storage_summary($self, $ir) {
     my @storage;
     my %seen;
+    my %counter_widths = %{$ir->{counters} || {}};
 
     for my $s (@{$ir->{states}}) {
         for my $a (@{$s->{assignments}}) {
             next if $seen{$a->{lhs}}++;
             next if $a->{op} eq '=';  # combinational
+            if (_is_scheduler_counter_name($a->{lhs}) && exists $counter_widths{$a->{lhs}}) {
+                push @storage, {
+                    name  => $a->{lhs},
+                    kind  => 'counter',
+                    width => $counter_widths{$a->{lhs}},
+                };
+                next;
+            }
             push @storage, {
                 name  => $a->{lhs},
                 kind  => $a->{op} eq '<=' ? 'register' :
@@ -62,12 +71,16 @@ sub _storage_summary($self, $ir) {
         }
     }
 
-    for my $name (sort keys %{$ir->{counters} || {}}) {
+    for my $name (sort keys %counter_widths) {
         next if $seen{$name}++;
-        push @storage, { name => $name, kind => 'counter', width => $ir->{counters}{$name} };
+        push @storage, { name => $name, kind => 'counter', width => $counter_widths{$name} };
     }
 
     return \@storage;
+}
+
+sub _is_scheduler_counter_name($name) {
+    return $name =~ /_(?:cc|cnt|wd)\z/;
 }
 
 sub _transaction_summary($self, $ir) {

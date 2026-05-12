@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 schedule JSON counter storage
+- The lowering IR's `counters` map is a width/source table for several
+  generated carriers, not a pure storage-class oracle. Schedule JSON therefore
+  upgrades only the scheduler counter names that are already assigned in states
+  (`*_wd`, `*_cc`, `*_cnt`) instead of classifying every counter-table name as
+  a public counter.
+- The storage-name set is intentionally kept stable in this slice. Names hidden
+  by combinational state assignments remain hidden, while counter-table-only
+  entries such as parameterized drive carriers continue to appear exactly as
+  before.
+- `t/1106-isf-schedule-json-counter-storage.t` covers the APB watchdog and
+  latency counters, a parameterized drive carrier, and an ordinary flopped
+  output to keep those boundaries explicit.
 ## 2026-05-12: R14 size deduplication
 - ISF lowering uses the counter/storage map for inferred scheduler carriers,
   but some names such as APB `last_error` can also be declared interface

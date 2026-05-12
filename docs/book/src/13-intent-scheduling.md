@@ -67,7 +67,9 @@ FSM::Scheduler::ISF::LoweringIR   ← typed IR
 
 The schedule report is generated from the same IR as the `.fsm` text. The
 current APB report shape is regression-covered, but the JSON schema remains a
-current implementation surface rather than a frozen external API.
+current implementation surface rather than a frozen external API. Assigned
+scheduler counters in the `*_wd`, `*_cc`, and `*_cnt` naming families are
+reported as `counter` storage with the width inferred by the lowering IR.
 
 ## Current Limitations
 

@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — schedule JSON counter storage
+- Updated [perl/FSM/Scheduler/ISF/Emitter/JSON.pm](perl/FSM/Scheduler/ISF/Emitter/JSON.pm)
+  so assigned scheduler counters such as watchdog, latency, and repeat
+  counters are reported as `kind: counter` with their IR-inferred widths.
+- Added [t/1106-isf-schedule-json-counter-storage.t](t/1106-isf-schedule-json-counter-storage.t)
+  to lock APB watchdog/latency counter classification while preserving the
+  existing narrow storage-name surface.
 ### R14 — size deduplication
 - Updated [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm)
   and [perl/FSM/Scheduler/ISF/ModuleEmitter.pm](perl/FSM/Scheduler/ISF/ModuleEmitter.pm)
