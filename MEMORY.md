@@ -1,5 +1,10 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-12: R14 — ISF constructor-option metadata audit
+- Added `t/1138-isf-public-constructor-option-metadata-audit.t` to prove
+  `constructor_option_names` is exact and duplicate-free across the direct
+  owner, in-process capability manifest, and both CLI manifest spellings.
+- The audited public constructor option family remains `debug`.
 ## 2026-05-12: R14 — ISF method-name metadata audit
 - Added `t/1137-isf-public-method-name-metadata-audit.t` to prove
   `parser_method_names` and `scheduler_method_names` are exact and

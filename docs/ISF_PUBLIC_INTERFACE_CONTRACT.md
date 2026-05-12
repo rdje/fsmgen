@@ -38,6 +38,9 @@ to stay exact and duplicate-free across direct and manifest views.
 The advertised parser and scheduler method-name lists are checked by
 [t/1137-isf-public-method-name-metadata-audit.t](../t/1137-isf-public-method-name-metadata-audit.t)
 to stay exact and duplicate-free across those views.
+The advertised constructor option list is checked by
+[t/1138-isf-public-constructor-option-metadata-audit.t](../t/1138-isf-public-constructor-option-metadata-audit.t)
+to stay exact and duplicate-free across those views.
 The plain `file.isf` HDL-generation path is checked by
 [t/1123-isf-public-cli-hdl-generation-audit.t](../t/1123-isf-public-cli-hdl-generation-audit.t)
 to reach generated HDL with clean stderr for the APB fixture.
@@ -124,6 +127,8 @@ option currently advertised for the ISF parser and scheduler facades is
 `debug`. Constructors reject malformed invocants, odd option lists, and
 unsupported option names before object creation. The machine-readable contract
 advertises the invocant requirement through `constructor_receiver_shape`.
+The `constructor_option_names` list is exact discovery metadata for the public
+constructor option family.
 
 Parser methods must be called on an object returned by
 `FSM::Adapter::ISF->new(...)`. Scheduler methods must be called on an object

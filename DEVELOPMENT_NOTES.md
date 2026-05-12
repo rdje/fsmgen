@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-12: R14 ISF constructor-option metadata audit
+- Constructor receiver and option validation are now stabilized behavior, so the
+  metadata that advertises the supported constructor option family needs the
+  same exactness guard as method names and CLI options.
+- `t/1138-isf-public-constructor-option-metadata-audit.t` locks
+  `constructor_option_names` across the direct owner, in-process capability
+  manifest, and both CLI manifest spellings, including uniqueness and option
+  token shape.
 ## 2026-05-12: R14 ISF method-name metadata audit
 - The contract advertises parser and scheduler method-name families separately
   from entrypoint strings so downstream tools can discover callable facade

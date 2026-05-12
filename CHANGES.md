@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-12
+### R14 — ISF constructor-option metadata audit
+- Added [t/1138-isf-public-constructor-option-metadata-audit.t](t/1138-isf-public-constructor-option-metadata-audit.t)
+  to prove `constructor_option_names` is exact and duplicate-free.
+- The audit covers direct owner data, the in-process capability manifest, and
+  both CLI manifest spellings.
 ### R14 — ISF method-name metadata audit
 - Added [t/1137-isf-public-method-name-metadata-audit.t](t/1137-isf-public-method-name-metadata-audit.t)
   to prove `parser_method_names` and `scheduler_method_names` are exact and
