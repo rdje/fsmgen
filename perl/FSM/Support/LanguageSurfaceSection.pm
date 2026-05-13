@@ -51,6 +51,11 @@ sub build_language_surface_section {
         expressions => {
             scalar_constant_expression_operators => [qw(+ - * / % & | ^ add sub mul div mod and or xor)],
             runtime_expression_operators => [qw(+ - * / % & | ^ && || == != < <= > >= !)],
+            test_node_selectors => [
+                'explicit operator-prefixed selectors such as =0, !=8\'0, <8\'4, <=8\'3, >8\'3, and >=8\'1',
+                'single fallback selector spelled default or _',
+                'fallback selector condition is logical NOT of the OR of all explicit sibling selector predicates',
+            ],
             literal_families => [
                 'decimal',
                 '0d decimal',

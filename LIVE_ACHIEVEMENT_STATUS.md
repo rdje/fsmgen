@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — .fsm default selector and ISF switch fallback
+- Active: `R14`. `.fsm` test nodes now support `default` and `_` selectors
+  that lower as `!(OR of explicit sibling predicates)`, and ISF switch
+  fallthrough now emits that real `.fsm` default selector instead of a
+  duplicated `=0` branch.
+- Authored ISF `(default ...)`/`(_ ...)` switch branches own the fallback path,
+  suppress implicit fallthrough, and are duplicate-checked together. Focused
+  `.fsm`, ISF, capture-support, mdBook, and language-surface manifest checks
+  cover the new contract.
+
 ## 2026-05-13: R14 — ISF complete pulse lowering and traced gate fixes
 - Active: `R14`. `(complete port)` and timeout completion now lower to `<1`
   one-cycle delayed pulses; the ISF public contract, spec, mdBook, and

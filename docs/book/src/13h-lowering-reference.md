@@ -297,12 +297,18 @@ including when the `when` is nested inside a switch branch.
   (?opcode
     (=0 (-> read_body_states))
     (=1 (-> write_body_states))
-    (=0 (-> skip))))              ;; default: fallthrough
+    (default (-> skip))))         ;; default: fallthrough
 ```
 
 **Timing**: 1 cycle for decision, then body cycles of the matching branch.
 Branch tails transition to the state after the whole switch; multi-state
 branches and repeat-check exits do not fall through into later branch bodies.
+The `default` selector is the `.fsm` fallback branch. It is true exactly when
+the logical OR of all explicit sibling branch predicates is false. For this
+example it means `!(opcode == 0 || opcode == 1)`, not another `opcode == 0`
+branch. ISF authors may also write `(default body...)` or `(_ body...)` inside
+the switch; that authored branch owns the fallback path and suppresses the
+scheduler's implicit fallthrough branch.
 **Implicit signals**: None.
 
 ## `(update var expr)` / `(shift_left reg bit)` / `(shift_right reg bit)` → Sequential State

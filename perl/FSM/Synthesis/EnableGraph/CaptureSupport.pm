@@ -779,6 +779,18 @@ sub parse_test_value_selector ($self, $test_value) {
         "Active test-node selectors must use an explicit operator-prefixed token such as '=0', '=OTHER', '!=8'0', or '>8'3'";
 }
 
+=head2 is_default_test_selector
+
+Return true when one test-node selector denotes the default branch.
+
+=cut
+
+sub is_default_test_selector ($self, $test_value) {
+    return defined($test_value)
+        && !ref($test_value)
+        && ($test_value eq 'default' || $test_value eq '_');
+}
+
 =head2 build_test_condition_ast
 
 Build one AST condition from a test signal and explicit selector token.
@@ -802,6 +814,29 @@ sub build_test_condition_ast ($self, $test_signal, $test_value) {
         if $operator eq '==';
 
     return FSM::AST::BinaryOp->new($operator, $signal_ast, $value_ast);
+}
+
+=head2 build_default_test_condition_ast
+
+Build the default-branch condition for a test node.  Default means no sibling
+explicit selector predicate matched, so the condition is the logical negation
+of the OR of every non-default branch predicate.
+
+=cut
+
+sub build_default_test_condition_ast ($self, $test_signal, $test_branches) {
+    my @explicit_conditions;
+
+    for my $branch (@{$test_branches || []}) {
+        next unless ref($branch) eq 'HASH';
+        my $value = $branch->{value};
+        next if $self->is_default_test_selector($value);
+        push @explicit_conditions, $self->build_test_condition_ast($test_signal, $value);
+    }
+
+    return FSM::AST::Utils::not_op(
+        FSM::AST::Utils::or_tree(@explicit_conditions),
+    );
 }
 
 =head2 extract_rhs_capture_value

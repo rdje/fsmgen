@@ -71,6 +71,24 @@ FSM
     ok(blessed($test_condition_ast), 'capture support builds typed AST conditions for test-node selectors');
     is($test_condition_ast->to_systemverilog, "A == 1'b0", 'capture support keeps explicit test-node equality semantics stable');
 
+    ok($support->is_default_test_selector('default'), 'capture support recognizes the canonical default test selector');
+    ok($support->is_default_test_selector('_'), 'capture support recognizes the wildcard default test selector');
+
+    my $default_condition_ast = $support->build_default_test_condition_ast(
+        'A',
+        [
+            { value => '=0', actions => [] },
+            { value => '=1', actions => [] },
+            { value => 'default', actions => [] },
+        ],
+    );
+    ok(blessed($default_condition_ast), 'capture support builds typed AST conditions for default test-node selectors');
+    is(
+        $default_condition_ast->to_systemverilog,
+        "!(A == 1'b0 || A == 1'b1)",
+        'default test-node selector negates the OR of sibling explicit predicates',
+    );
+
     is(
         $support->extract_signal_name_from_ast($assignment->target),
         'OUT1',

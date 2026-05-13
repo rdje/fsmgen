@@ -39,8 +39,9 @@ data-operation family (`update`, shifts, `assemble`, and `extract`).
   (3 (drive idle_path)))
 ```
 
-Each branch value must be unique. Body clauses are expanded inline, and each
-branch tail exits to the first state after the whole switch.
+Each explicit branch value must be unique. An optional fallback can be
+written as `default` or `_`. Body clauses are expanded inline, and each branch
+tail exits to the first state after the whole switch.
 
 **Lowering**: `?signal` decision tree.
 ```lisp
@@ -50,8 +51,25 @@ branch tail exits to the first state after the whole switch.
     (=1 (-> write_body_states))
     (=2 (-> error_body_states))
     (=3 (-> idle_path_states))
-    (=0 (-> skip))))              ;; default fallthrough
+    (default (-> skip))))         ;; default fallthrough
 ```
+
+The `default` selector is semantic, not a copied literal. In `.fsm`, a
+`default` branch means "none of the explicit sibling branch predicates matched."
+For the example above, the default path is equivalent to:
+
+```lisp
+(! (| (== opcode 0)
+      (== opcode 1)
+      (== opcode 2)
+      (== opcode 3)))
+```
+
+This is deliberately the logical negation of the OR of all explicit branch
+predicates, not a repeated `=0` case. If explicit predicates overlap, the
+default branch excludes their union. If the explicit values are exhaustive for
+the signal width, the default branch is unreachable but remains a valid
+fallthrough target in the generated `.fsm`.
 
 ## Mixing Control Flow
 
@@ -68,7 +86,7 @@ branch tail exits to the first state after the whole switch.
   (switch old_val
     (0 (drive set_default))
     (255 (drive clear_flag))
-    (other (drive increment)))
+    (default (drive increment)))
 
   ;; Write back
   (drive write_cmd)

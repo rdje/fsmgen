@@ -479,9 +479,23 @@ sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters)=@_; my @s;
     return (\@s);
 }
 
+sub _is_default_switch_value {
+    my ($value) = @_;
+    return defined($value)
+        && !ref($value)
+        && ($value eq 'default' || $value eq '_');
+}
+
+sub _canonical_switch_value_key {
+    my ($value) = @_;
+    return '__default__' if _is_default_switch_value($value);
+    return defined($value) ? "$value" : '';
+}
+
 sub _expand_switch { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters)=@_; my $signal=$cl->[1]; my @branches; my @branch_state_names; my @branch_end_names; my %seen_val; my @s;
     for my $i(2..$#$cl){my$br=$cl->[$i];next unless ref($br)eq'ARRAY'&&@$br>=2;my$val=$br->[0];my@bc=@{$br}[1..$#$br];
-        confess "Switch '$tn': duplicate value '$val'\n" if$seen_val{$val}++;my@body_states;my@lp;
+        my $seen_key = _canonical_switch_value_key($val);
+        confess "Switch '$tn': duplicate value '$val'\n" if$seen_val{$seen_key}++;my@body_states;my@lp;
         for my $bc2(@bc){next unless ref($bc2)eq'ARRAY';my$bk2=$bc2->[0];
             if($bk2 eq'drive'){my$n=$bc2->[1];confess qq{drive $n not defined} unless !ref($n)&&$drives->{$n};push @body_states,_ir_named_drive_call($bc2,$tn,$$ir++,$drives->{$n},[splice @lp])}
             elsif($bk2 eq'await'){push @body_states,_ir_await($bc2,$tn,$$ir++,$wd,[splice @lp])}
@@ -495,7 +509,7 @@ sub _expand_switch { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters)=@_; my $
         push @branch_end_names, $body_states[-1]{name};
         push @s,@body_states}
     my $sw_name="${tn}_switch_" . $$ir++;
-    my $bstate={name=>$sw_name,kind=>'switch',signal=>$signal,branches=>\@branches,branch_state_names=>\@branch_state_names,branch_end_names=>\@branch_end_names,assignments=>[],transitions=>[]};
+    my $bstate={name=>$sw_name,kind=>'switch',signal=>$signal,branches=>\@branches,has_default_branch=>scalar(grep { _is_default_switch_value($_->{value}) } @branches) ? 1 : 0,branch_state_names=>\@branch_state_names,branch_end_names=>\@branch_end_names,assignments=>[],transitions=>[]};
     unshift @s,$bstate; return (\@s);
 }
 sub _ir_sync_all { my ($tn,$i,$dps)=@_; {name=>"${tn}_await_all_$i",kind=>'sync_all',assignments=>[],transitions=>[],done_ports=>[@$dps]} }
@@ -567,7 +581,7 @@ sub _link_states {
         elsif($s->{kind}eq'await'&&$next){push @{$s->{transitions}},{target=>$next,condition=>$s->{guard}};push @{$s->{transitions}},{target=>"${tn}_timeout",condition=>{signal=>$s->{watchdog}{name},op=>'=',value=>0}}}
         elsif($s->{kind}eq'repeat_check'){push @{$s->{transitions}},{target=>$s->{loop_target},condition=>{signal=>$s->{counter},op=>'!=',value=>0}};push @{$s->{transitions}},{target=>$next,condition=>{signal=>$s->{counter},op=>'=',value=>0}}if$next}
         elsif($s->{kind}eq'sequential'&&$next){push @{$s->{transitions}},{target=>$next}}
-        elsif($s->{kind}eq'switch'){my$skip=$s->{switch_exit_target}||$n||$e;push @{$s->{transitions}},{target=>$skip};for my$br(@{$s->{branches}}){push @{$s->{transitions}},{target=>$br->{body_start},condition=>{signal=>$s->{signal},value=>$br->{value}}}}}
+        elsif($s->{kind}eq'switch'){my$skip=$s->{switch_exit_target}||$n||$e;push @{$s->{transitions}},{target=>$skip} unless $s->{has_default_branch};for my$br(@{$s->{branches}}){next if _is_default_switch_value($br->{value});push @{$s->{transitions}},{target=>$br->{body_start},condition=>{signal=>$s->{signal},value=>$br->{value}}}}}
         elsif($s->{kind}eq'branch'){my$skip=$s->{branch_exit_target}||$n||$e;push @{$s->{transitions}},{target=>$skip}}
         elsif($s->{kind}eq'sync_all'&&$next){push @{$s->{transitions}},{target=>$next}}
         elsif($s->{kind}eq'sync_any'&&$next){push @{$s->{transitions}},{target=>$next}}

@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 .fsm default selector and ISF switch fallback
+- A test-node default branch must mean "no explicit sibling branch predicate
+  matched." It is not a magic case item copied from one branch and it is not
+  the responsibility of the ISF compiler to synthesize a bespoke else
+  expression. `.fsm` now owns that semantic lowering by building the OR of all
+  explicit selector predicates and negating it for `default` or `_`.
+- This rule works for equality, inequality, and relational selectors. If
+  explicit predicates overlap, the default branch excludes their union. If the
+  explicit predicates are exhaustive for the selector width, the default branch
+  remains valid but unreachable.
+- ISF switch lowering now emits `.fsm` `(default (-> next_state))` for implicit
+  fallthrough. Authored `(default body...)` and `(_ body...)` branches are
+  aliases; they suppress implicit fallthrough and are duplicate-checked
+  together so downstream `.fsm` parsing never receives two fallback branches.
+- The language-surface manifest metadata intentionally advertises the selector
+  family at the `.fsm` level. ISF stays a live evolving surface, but downstream
+  consumers can now discover that the generated `.fsm` contract includes a real
+  fallback selector.
 ## 2026-05-13: R14 ISF complete pulse lowering and traced gate fixes
 - `(complete port)` represents transaction completion, not a sticky status bit.
   Lowering it with `<-` made the authored port stay high until some later

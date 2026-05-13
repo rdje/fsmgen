@@ -2860,6 +2860,7 @@ sub parse_test_node_new_format($self, $action) {
     }
     
     my $test_node = FSM::CoreAST::TestNode->new(test_signal => $signal);
+    my $seen_default_branch = 0;
     
 	    if (ref($branches) eq 'ARRAY') {
 	        for my $branch (@$branches) {
@@ -2877,6 +2878,13 @@ sub parse_test_node_new_format($self, $action) {
 
 	            my ($test_value, @branch_actions) = @$branch;
             $self->validate_test_branch_selector($test_value);
+            if ($self->is_default_test_branch_selector($test_value)) {
+                Carp::confess
+                    "Malformed test selector '$test_value'. ".
+                    "A test node may contain at most one default selector branch, spelled 'default' or '_'. ".
+                    "See docs/USER_GUIDE.md for the current supported boundary.\n"
+                    if $seen_default_branch++;
+            }
             $self->propagate_test_selector_width_to_signal($signal, $test_value);
 	            my @parsed_actions;
 
@@ -2916,9 +2924,11 @@ sub validate_test_branch_selector($self, $test_value) {
         ? (ref($test_value) ? ref($test_value) : $test_value)
         : 'undef';
 
+    return 1 if $self->is_default_test_branch_selector($test_value);
+
     Carp::confess
         "Malformed test selector '$display'. ".
-        "Test-node branches must use an explicit selector token like '=0', '=OTHER', '!=8\\'0', or '>8\\'3'. ".
+        "Test-node branches must use an explicit selector token like '=0', '=OTHER', '!=8\\'0', or '>8\\'3', or a single default selector spelled 'default' or '_'. ".
         "See docs/USER_GUIDE.md for the current supported boundary.\n"
         unless defined($test_value)
             && !ref($test_value)
@@ -2927,9 +2937,16 @@ sub validate_test_branch_selector($self, $test_value) {
     return 1;
 }
 
+sub is_default_test_branch_selector($self, $test_value) {
+    return defined($test_value)
+        && !ref($test_value)
+        && ($test_value eq 'default' || $test_value eq '_');
+}
+
 sub propagate_test_selector_width_to_signal($self, $signal, $test_value) {
     return unless $signal && $signal->can('name');
     return unless defined($test_value) && !ref($test_value);
+    return if $self->is_default_test_branch_selector($test_value);
 
     my ($raw_value) = $test_value =~ /^(?:==|!=|<=|>=|=|<|>)(.+)$/;
     return unless defined($raw_value) && length($raw_value);

@@ -6,6 +6,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   turning the next downstream-visible parser, scheduler, CLI, lower-result, or
   schedule-report behavior into an explicit contract field plus focused audit,
   keeping the live docs synchronized as the still-new ISF surface evolves.
+- `.fsm` test-node selectors now include `default` and `_`, with fallback
+  lowering defined as the logical NOT of the OR of all explicit sibling branch
+  predicates. `t/37`, `t/42`, and `t/207` cover direct and computed selectors.
+- ISF switch lowering now emits `.fsm` `(default ...)` for implicit
+  fallthrough, supports authored `(default ...)` and `(_ ...)` fallback
+  branches, and rejects the fallback aliases as duplicates. `t/1103` covers
+  the emitted scheduled `.fsm` behavior.
 - `t/1097` now removes the anonymous `_start` placeholder from `do`, `spawn`,
   and control-flow drive-call lowering by asserting concrete child, instance,
   and drive start signals. Next bounded R14 slice: turn another documented

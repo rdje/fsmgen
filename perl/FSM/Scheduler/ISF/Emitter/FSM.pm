@@ -192,10 +192,11 @@ sub _emit_transitions($self, $state) {
     if ($state->{kind} eq 'switch') {
         push @lines, "    (?$state->{signal}";
         for my $br (@{$state->{branches}}) {
-            push @lines, "      (=$br->{value} (-> $br->{body_start}))";
+            my $selector = _is_default_selector($br->{value}) ? 'default' : "=$br->{value}";
+            push @lines, "      ($selector (-> $br->{body_start}))";
         }
         for my $t (@$txs) {
-            push @lines, "      (=0 (-> $t->{target}))" if !$t->{condition};
+            push @lines, "      (default (-> $t->{target}))" if !$t->{condition};
         }
         push @lines, '    )';
         return @lines;
@@ -269,6 +270,13 @@ sub _format_expr {
         push @args, ref($a) ? _format_expr($a) : $a;
     }
     return "($op " . join(' ', @args) . ')';
+}
+
+sub _is_default_selector {
+    my ($value) = @_;
+    return defined($value)
+        && !ref($value)
+        && ($value eq 'default' || $value eq '_');
 }
 
 1;

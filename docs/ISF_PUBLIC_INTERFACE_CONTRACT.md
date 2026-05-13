@@ -207,6 +207,11 @@ The actor-shell drive shape is checked by
 to keep parser-returned drive definitions discoverable as a drive-name-keyed
 hash of `params` and `body` arrays while leaving drive body payload contents
 private scheduler input.
+ISF switch fallback scheduling is checked by
+[t/1103-isf-switch-branch-exits.t](../t/1103-isf-switch-branch-exits.t)
+and the generated `.fsm` default selector contract is checked by
+[t/42-language-contract-test-selector-boundary.t](../t/42-language-contract-test-selector-boundary.t)
+and [t/37-language-contract-computed-test-selector.t](../t/37-language-contract-computed-test-selector.t).
 The facade shape metadata that advertises those constructor, method, path, and
 actor-shell boundaries is checked by
 [t/1143-isf-public-facade-shape-metadata-audit.t](../t/1143-isf-public-facade-shape-metadata-audit.t)
@@ -225,6 +230,16 @@ current bounded contract: facade pairs are public, raw internals are not, and
 human contract documents must evolve with public ISF changes.
 The `tested_by` list is exact audit-provenance metadata for this ISF contract
 owner; every path must stay repo-relative and present on disk.
+
+Supported ISF syntax remains a live surface. For `(switch signal ...)`, explicit
+case values remain unique branch selectors, and one fallback branch may be
+written as `(default body...)` or `(_ body...)`. Those fallback spellings are
+aliases and are rejected if both appear in the same switch. When no authored
+fallback branch is present, ISF lowering emits an implicit scheduled `.fsm`
+`(default (-> next_state))` fallthrough branch. In the downstream `.fsm`
+language, that default selector means the logical negation of the OR of every
+explicit sibling branch predicate, so the fallback path is true only when no
+explicit branch matched.
 
 Supported CLI entrypoints:
 

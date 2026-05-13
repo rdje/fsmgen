@@ -168,10 +168,12 @@ sub flatten_decision_tree ($self, $dt_name, $dt_node, $condition_stack) {
 
         my $test_branches = $dt_node->test_branches;
         for my $branch (@$test_branches) {
-            my $test_condition_ast = $capture_support->build_test_condition_ast(
-                $dt_node->test_signal,
-                $branch->{value},
-            );
+            my $test_condition_ast = $capture_support->is_default_test_selector($branch->{value})
+                ? $capture_support->build_default_test_condition_ast($dt_node->test_signal, $test_branches)
+                : $capture_support->build_test_condition_ast(
+                    $dt_node->test_signal,
+                    $branch->{value},
+                );
 
             my @test_stack = (@$condition_stack);
             push @test_stack, $test_condition_ast;

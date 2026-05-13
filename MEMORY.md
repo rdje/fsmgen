@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — .fsm default selector and ISF switch fallback
+- Added `.fsm` test-node fallback selectors spelled `default` or `_`. The
+  backend now lowers a fallback branch as the logical negation of the OR of all
+  explicit sibling branch predicates, so default means "no explicit branch
+  matched" instead of repeating one literal selector such as `=0`.
+- Updated ISF switch lowering so implicit fallthrough emits a real `.fsm`
+  `(default (-> ...))` branch, authored `(default ...)` or `(_ ...)` switch
+  branches own that fallback path, and duplicate fallback aliases are rejected
+  before scheduled `.fsm` emission.
+- Published the behavior in `docs/USER_GUIDE.md`, `docs/ISF_SPEC.md`,
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, the mdBook control-flow/lowering
+  chapters, and the language-surface capability metadata.
 ## 2026-05-13: R14 — ISF complete pulse lowering and traced gate fixes
 - Changed ISF `(complete port)` lowering from sticky sequential `<-` to the
   explicit delayed-pulse form `<1`, and applied the same completion-pulse

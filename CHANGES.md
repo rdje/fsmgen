@@ -1,6 +1,29 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — .fsm default selector and ISF switch fallback
+- Added `.fsm` test-node fallback selectors `default` and `_` in
+  [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm)
+  and lowered them through
+  [perl/FSM/Synthesis/EnableGraph/CaptureSupport.pm](perl/FSM/Synthesis/EnableGraph/CaptureSupport.pm)
+  as `!(explicit_predicate_0 || explicit_predicate_1 || ...)`.
+- Updated ISF switch lowering/emission in
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  and [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm)
+  so implicit fallthrough emits `.fsm` `(default ...)`, authored
+  `(default ...)`/`(_ ...)` branches suppress that implicit branch, and fallback
+  aliases are duplicate-checked together.
+- Added focused coverage in
+  [t/42-language-contract-test-selector-boundary.t](t/42-language-contract-test-selector-boundary.t),
+  [t/37-language-contract-computed-test-selector.t](t/37-language-contract-computed-test-selector.t),
+  [t/207-enable-graph-capture-support.t](t/207-enable-graph-capture-support.t),
+  and [t/1103-isf-switch-branch-exits.t](t/1103-isf-switch-branch-exits.t).
+- Documented the new fallback-selector contract in
+  [docs/USER_GUIDE.md](docs/USER_GUIDE.md),
+  [docs/ISF_SPEC.md](docs/ISF_SPEC.md),
+  [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md),
+  and the mdBook control-flow and lowering-reference chapters;
+  `language_surface.expressions` now advertises the selector family.
 ### R14 — ISF complete pulse lowering and traced gate fixes
 - Changed `(complete port)` and timeout `done` lowering in
   [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)

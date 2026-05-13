@@ -27,6 +27,7 @@ write_file($fsm_path, <<'FSM');
     (B 1)
     (X 1)
     (Y 1)
+    (Z 1)
   )
   (s0
     (?(| A B)
@@ -35,6 +36,9 @@ write_file($fsm_path, <<'FSM');
       )
       (=1
         (Y = 1)
+      )
+      (default
+        (Z = 1)
       )
     )
   )
@@ -73,6 +77,14 @@ is(
     'computed selector =1 branch lowers through the intermediate condition signal'
 );
 
+my ($z_assignment) = grep { $_->{dt} eq 's0' && $_->{rhs} eq '1' } @{$phase1_gen->{lhs_assignments}->{Z} || []};
+ok($z_assignment, 'captured assignments include the computed-selector default branch');
+is(
+    $z_assignment->{conditions_ast}->to_systemverilog,
+    "!($condition_signal == 1'b0 || $condition_signal == 1'b1)",
+    'computed selector default branch negates the OR of sibling selector predicates'
+);
+
 my $hdl = FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($fsm_module);
 
 like($hdl, qr/\binput\s+wire\s+A\b/, 'generated HDL exposes A as an input');
@@ -81,6 +93,7 @@ like($hdl, qr/\bwire\s+\Q$condition_signal\E\s*;/, 'generated HDL declares the c
 like($hdl, qr/\bassign\s+\Q$condition_signal\E\s*=\s*A\s*\|\s*B\s*;/, 'generated HDL drives the computed selector intermediate signal from the expression');
 like($hdl, qr/\bassign\s+s0_x_1_en\s*=\s*s0_en\s*&\s*!\Q$condition_signal\E\s*;/, 'generated HDL reuses the intermediate signal through direct negation in the =0 branch');
 like($hdl, qr/\bassign\s+s0_y_1_en\s*=\s*s0_en\s*&\s*\Q$condition_signal\E\s*;/, 'generated HDL reuses the intermediate signal directly in the =1 branch');
+like($hdl, qr/\bassign\s+s0_z_1_en\s*=/, 'generated HDL emits an enable for the computed selector default branch');
 
 done_testing();
 

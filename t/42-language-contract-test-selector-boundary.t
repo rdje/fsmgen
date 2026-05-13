@@ -106,6 +106,115 @@ FSM
     like($hdl, qr/\bMODE\s*==\s*OTHER\b/, 'generated HDL contains the =OTHER selector comparison');
 };
 
+subtest 'default selector lowers to not OR of sibling explicit predicates' => sub {
+    my $fsm_path = write_fsm('good_test_selector_default.fsm', <<'FSM');
+(?fsm:good_test_selector_default
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+size
+    (MODE 2)
+    (A 1)
+    (B 1)
+    (C 1)
+  )
+  (s0
+    (?MODE
+      (=0
+        (A = 1)
+      )
+      (=1
+        (B = 1)
+      )
+      (default
+        (C = 1)
+      )
+    )
+  )
+)
+FSM
+
+    my $raw_ast = Lispish::multi($fsm_path);
+    my $adapter = FSM::Adapter::FSMGenFull->new(debug => 0);
+    my $fsm_module = $adapter->parse_fsm($raw_ast);
+    ok($fsm_module, 'default selector parses successfully');
+
+    my $phase1_gen = FSM::HDL::FlattenedDT->new(debug => 0);
+    $phase1_gen->{enable_graph_signal_support}->set_fsm_module_reference($fsm_module);
+    $phase1_gen->{orchestrator}->flatten_all_decision_trees($fsm_module);
+
+    my ($assignment) = grep { $_->{dt} eq 's0' && $_->{rhs} eq '1' } @{$phase1_gen->{lhs_assignments}->{C} || []};
+    ok($assignment, 'captured assignments include the default selector branch');
+    is(
+        $assignment->{conditions_ast}->to_systemverilog,
+        "!(MODE == 1'b0 || MODE == 1'b1)",
+        'default selector lowers to the logical negation of all explicit sibling predicates'
+    );
+};
+
+subtest 'underscore selector is an alias for default' => sub {
+    my $fsm_path = write_fsm('good_test_selector_underscore_default.fsm', <<'FSM');
+(?fsm:good_test_selector_underscore_default
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+size
+    (MODE 2)
+    (A 1)
+  )
+  (s0
+    (?MODE
+      (_
+        (A = 1)
+      )
+    )
+  )
+)
+FSM
+
+    my $raw_ast = Lispish::multi($fsm_path);
+    my $adapter = FSM::Adapter::FSMGenFull->new(debug => 0);
+    my $fsm_module = $adapter->parse_fsm($raw_ast);
+    ok($fsm_module, 'underscore default selector parses successfully');
+
+    my $phase1_gen = FSM::HDL::FlattenedDT->new(debug => 0);
+    $phase1_gen->{enable_graph_signal_support}->set_fsm_module_reference($fsm_module);
+    $phase1_gen->{orchestrator}->flatten_all_decision_trees($fsm_module);
+
+    my ($assignment) = grep { $_->{dt} eq 's0' && $_->{rhs} eq '1' } @{$phase1_gen->{lhs_assignments}->{A} || []};
+    ok($assignment, 'captured assignments include the underscore default branch');
+    is($assignment->{conditions_ast}->to_systemverilog, "!1'b0", 'default-only selector branch is unconditional after no explicit predicates match');
+};
+
+subtest 'duplicate default selectors are rejected explicitly' => sub {
+    my $error = parse_failure(<<'FSM');
+(?fsm:bad_test_selector_duplicate_default
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+size
+    (MODE 2)
+    (A 1)
+  )
+  (s0
+    (?MODE
+      (default
+        (A = 1)
+      )
+      (_
+        (A = 0)
+      )
+    )
+  )
+)
+FSM
+
+    like($error, qr/at most one default selector branch/, 'duplicate default selectors get a targeted diagnostic');
+};
+
 done_testing();
 
 sub parse_failure {

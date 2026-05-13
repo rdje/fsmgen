@@ -158,11 +158,12 @@ State and non-state DT note:
   - target names must be HDL-identifier-compatible (`[A-Za-z_]\\w*`)
   - malformed or unknown targets such as `(-> bad-name)`, `(-> -comb)`, or `(-> missing_state)` are rejected explicitly
 - Test-node branching on a signal or computed selector, for example:
-  - `(?SIG (=0 ...) (!=8'0 ...) (>8'3 ...) (<=8'3 ...))`
-  - `(?(| A B) (=0 ...) (=1 ...))`
+  - `(?SIG (=0 ...) (!=8'0 ...) (>8'3 ...) (<=8'3 ...) (default ...))`
+  - `(?(| A B) (=0 ...) (=1 ...) (_ ...))`
   - plain `?SIG` test nodes require an HDL-identifier-compatible signal name
   - malformed plain test-node signal names such as `?bad-name` or `?0` are rejected explicitly
   - computed selectors `?(expr)` must start with a real selector expression and include at least one branch
+  - `default` and `_` are fallback selector aliases; at most one may appear in a test node
 - Canonical assignment pair forms such as `(<- (Q D))`, `(<= (D_IN NEXT_VALUE))`, `(= (A B))`, `(<-= (I J))`, `(<=+ (D_IN NEXT_VALUE))`, and `(<N (P 1))`
 - Default-mode infix assignment compatibility forms such as `(Q <- D)`, `(D_IN <= NEXT_VALUE)`, `(A = B)`, `(I <-= J)`, `(K <=+ L)`, and `(P <N 1)`
 - Explicit output exposure on the LHS, for example `(= (G> H))`, `(<= (output_data> 8'1))`, `(G> = H)`, and `(output_data> <= 8'1)`
@@ -180,7 +181,7 @@ State and non-state DT note:
   - same-context piecewise writes such as `(OUT[3:2] = HI)`, `(OUT[1] = MID)`, `(OUT[0] = LO)` are assembled into one full-width mux input
   - partial sequential writes such as `(RO[0] <- LO)` and `(RI[0] <= LO)` retain untouched bits through the appropriate feedback path instead of collapsing to raw whole-signal replacement
   - partial dual-output sequential writes such as `(ROD[3:2] <-= HI)` and `(RID[3:2] <=+ HI)` now also keep their auxiliary outputs (`next_ROD`, `RID_r`) at the full base-signal width instead of narrowing them to the written fragment
-- Condition forms that are in the active supported path: `<sig`, `<!sig`, `<sig=value`, `<sig==value`, `<sig!=value`, `<sig<value`, `<sig<=value`, `<sig>value`, `<sig>=value`, and test-node selector branches like `=0`, `!=8'0`, `<8'4`, `<=8'3`, `>8'3`, and `>=8'1`
+- Condition forms that are in the active supported path: `<sig`, `<!sig`, `<sig=value`, `<sig==value`, `<sig!=value`, `<sig<value`, `<sig<=value`, `<sig>value`, `<sig>=value`, and test-node selector branches like `=0`, `!=8'0`, `<8'4`, `<=8'3`, `>8'3`, `>=8'1`, `default`, and `_`
 - Nested guarded blocks using standalone `< ...` / `<! ...` action forms
 - Condition suffixes attached directly to assignments or transitions, for example `(A <= B <start)` and `(-> busy <!full)`
 - Compound-update shorthand forms `(++ sig)`, `(-- sig)`, `(+= sig)`, `(-= sig)`, `(+=N sig)`, `(-=N sig)`, `(+= sig N)`, and `(-= sig N)`
@@ -360,7 +361,7 @@ Package note:
   - `(-misc)`
 - Malformed test-node branches that do not carry a real branch body, for example:
   - `(?MODE (=0))`
-- Malformed test-node selectors that omit the explicit selector operator, for example:
+- Malformed test-node selectors that omit the explicit selector operator or default selector spelling, for example:
   - `(?MODE (BUSY ...))`
   - `(?MODE (0 ...))`
 - Malformed computed test selectors that omit the selector expression or all branches, for example:
@@ -510,22 +511,29 @@ Boundary note:
 - Unsupported expression operators, malformed operator arity, and guard-only tokens in ordinary RHS expression position are now rejected explicitly instead of drifting through parser fallthrough.
 
 Test nodes:
-- `(?SIG (=0 ...actions...) (!=8'0 ...actions...) (>8'3 ...actions...) ...)` is the active multi-way selector form.
+- `(?SIG (=0 ...actions...) (!=8'0 ...actions...) (>8'3 ...actions...) (default ...actions...) ...)` is the active multi-way selector form.
 - Plain `?SIG` test nodes require `SIG` to be HDL-identifier-compatible.
 - `?(expr ...)` is the active computed-selector form when the selector itself is a condition expression, for example:
-  - `(?(| A B) (=0 ...actions...) (=1 ...actions...))`
+  - `(?(| A B) (=0 ...actions...) (=1 ...actions...) (_ ...actions...))`
 - Computed selectors must start with a real selector expression and include at least one selector branch.
 - Malformed plain test-node signal names such as `?bad-name` or `?0` are rejected explicitly.
-- Each test branch must include:
-  - an explicit operator-prefixed selector token like `=0`, `=1`, `=OTHER`, `!=8'0`, `<8'4`, `<=8'3`, `>8'3`, or `>=8'1`
-  - and at least one nested action
+- Each test branch must include one supported selector and at least one nested action.
+- Supported selectors are:
+  - explicit operator-prefixed selector tokens like `=0`, `=1`, `=OTHER`, `!=8'0`, `<8'4`, `<=8'3`, `>8'3`, or `>=8'1`
+  - one fallback selector token spelled `default` or `_`
 - Bare selectors like `BUSY` or `0` are not part of the active contract.
+- A test node may contain at most one default selector; `default` and `_` are aliases.
 - Malformed empty branches such as `(?MODE (=0))` are rejected explicitly.
 - Malformed computed selectors such as `(? (=0 ...))` or `(?(| A B))` are rejected explicitly.
 - Selector meaning:
   - `=value` means equality
   - `!=value` means inequality
   - `<value`, `<=value`, `>value`, `>=value` mean the corresponding relational comparison against the test signal
+  - `default` and `_` mean the logical negation of the OR of all explicit sibling branch predicates
+- Default selector example:
+  - `(?MODE (=0 (A = 1)) (=1 (B = 1)) (default (C = 1)))` makes the `C` branch condition `!(MODE == 0 || MODE == 1)`.
+  - If explicit branch predicates overlap, the default branch excludes their union.
+  - If the explicit branch predicates are exhaustive for the selector width, the default branch is valid but unreachable.
 - Selector widths may infer the tested signal when the selector value has an
   exact width, for example `=2'3` or `!=8'0`.
 - Computed selectors may synthesize an internal intermediate signal so the expression can be reused by the branch comparisons during HDL generation.

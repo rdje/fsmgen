@@ -214,9 +214,9 @@ counter, widened to the largest branch requirement.
 **Timing**: 1 cycle. Then matching branch body cycles.
 
 **What happens**:
-1. `(?signal (=val1 → branch1) (=val2 → branch2) ... (=0 → skip))`
+1. `(?signal (=val1 -> branch1) (=val2 -> branch2) ... (default -> skip))`
 2. Each branch body is expanded inline as sequential states
-3. Default fallthrough to next clause
+3. Default fallthrough to next clause when no explicit branch predicate matches
 
 **Generated .fsm**:
 ```lisp
@@ -224,8 +224,14 @@ counter, widened to the largest branch requirement.
   (?opcode
     (=0 (-> dispatch_drive_1))
     (=1 (-> dispatch_drive_2))
-    (=0 (-> skip))))
+    (default (-> skip))))
 ```
+
+The generated `.fsm` default selector means the logical negation of the OR of
+all explicit sibling branch predicates. For the example above, the skip path is
+taken only when neither `opcode == 0` nor `opcode == 1` matched. Authored ISF
+can also provide its own fallback branch with `(default body...)` or `(_ body...)`;
+when it does, the scheduler does not add an extra implicit fallthrough branch.
 
 ## `(update var expr)` / `(shift_left ...)` / `(shift_right ...)` — Data Ops
 
@@ -266,7 +272,7 @@ counter, widened to the largest branch requirement.
 | `(complete port)` | 1 | Returns to idle |
 | `(repeat N body...)` | N×body+2 | Counter + init + check |
 | `(when cond body...)` | 1 + body | Decision + inline body |
-| `(switch sig (v b)...)` | 1 + body | Decision + inline branch |
+| `(switch sig (v b)... (default b))` | 1 + body | Decision + inline branch |
 | `(update var expr)` | 1 | Flopped assignment |
 | `(shift_left reg bit)` | 1 | Flopped assignment |
 | `(latency (min N) (max M))` | 0 | Verification logic only |

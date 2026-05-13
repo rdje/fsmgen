@@ -121,6 +121,7 @@ sub language_surface_expressions_keys {
         qw(
             scalar_constant_expression_operators
             runtime_expression_operators
+            test_node_selectors
             literal_families
         ),
     ];

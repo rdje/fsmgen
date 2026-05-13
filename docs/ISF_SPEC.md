@@ -276,7 +276,8 @@ Current transaction clauses:
 - `(await port)` and `(await port (watchdog N))`
 - `(sample port as name)`
 - `(repeat count body...)`
-- `(switch signal (value body...)...)`
+- `(switch signal (value body...)...)`, with optional `(default body...)` or
+  `(_ body...)` fallback branch
 - `(update var expr)`
 - `(shift_left reg bit)`
 - `(shift_right reg bit)`
@@ -388,11 +389,25 @@ complete, repeat, update, shift/assemble/extract data operations, and nested
 counter width like top-level and switch-nested repeats.
 
 `(switch signal (value body...)...)` creates one decision state with one branch
-per unique value. Duplicate values are rejected. Current branch-body support
-includes drive, await, sample, repeat, update, shift/assemble/extract data
-operations, and nested `when`. Branch bodies exit to the first state after the
-whole switch, so multi-state branches and repeat checks do not fall through
-into later branch bodies.
+per unique explicit value. Duplicate explicit values are rejected. A switch may
+also contain one fallback branch, spelled `(default body...)` or `(_ body...)`.
+Those spellings are aliases and are rejected if both appear in the same switch.
+If no authored fallback branch is present, the scheduler emits an implicit
+`.fsm` `(default (-> next_state))` fallthrough branch to the first state after
+the whole switch.
+
+The generated `.fsm` default selector means "no explicit sibling branch
+predicate matched." Downstream `.fsm` lowering expands it as the logical
+negation of the OR of every explicit branch predicate, such as
+`!(opcode == 0 || opcode == 1)` for a two-value switch. This preserves a real
+else/default branch without asking ISF to synthesize that Boolean expression
+itself, and it avoids the old invalid pattern of duplicating one explicit case
+such as `=0` for fallthrough.
+
+Current branch-body support includes drive, await, sample, repeat, update,
+shift/assemble/extract data operations, and nested `when`. Branch bodies exit
+to the first state after the whole switch, so multi-state branches and repeat
+checks do not fall through into later branch bodies.
 
 ### 7.6 Data Manipulation
 
