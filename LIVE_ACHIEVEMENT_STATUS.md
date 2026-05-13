@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — authoring guidelines guide-to-book migration
+- Active: `R14`. Chapter 02 now owns the practical authoring guidance for
+  assignment-operator timing intent, delayed pulses, guard readability, and
+  strict/check/trace bring-up.
+- No runtime behavior changed; this is another bounded USER_GUIDE-to-mdBook
+  migration slice.
+
 ## 2026-05-13: R14 — CLI/debug guide-to-book migration
 - Active: `R14`. Chapter 09 now owns the guide's operational CLI contract:
   common commands, option semantics, report-only JSON modes, source

@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 authoring guidelines guide-to-book migration
+- The old guide's final authoring guidelines are not a troubleshooting table;
+  they are first-principles language guidance. Chapter 02 is the right home
+  because the advice depends on the assignment operator timing model.
+- The book version adds delayed-pulse guidance explicitly because the ISF
+  discussion clarified that sticky `<-` assignments and `<1` pulse intent are
+  materially different user-facing concepts.
+- The bring-up command points at `--strict --check --json` plus the trace
+  workflow, linking the guidelines back to the operational Chapter 09 flow.
 ## 2026-05-13: R14 CLI/debug guide-to-book migration
 - The old guide's `Basic usage`, `Useful options`, `Input resolution and
   FSMLIB`, and `Debug workflow` sections are operational user material, so

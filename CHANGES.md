@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — authoring guidelines guide-to-book migration
+- Added the old guide's practical authoring guidance to
+  [docs/book/src/02-language-basics.md](docs/book/src/02-language-basics.md),
+  including assignment-operator choice, delayed pulse intent, guard
+  readability, and bring-up checks.
+- Updated the reference map and live docs so Chapter 02 owns those authoring
+  guidelines during the guide split.
 ### R14 — CLI/debug guide-to-book migration
 - Expanded [docs/book/src/09-generated-hdl-debugging-and-inspection.md](docs/book/src/09-generated-hdl-debugging-and-inspection.md)
   with the old guide's operational CLI examples, option semantics,

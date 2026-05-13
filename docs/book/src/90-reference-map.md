@@ -89,6 +89,8 @@ The migration is still ongoing:
   supported, strict-mode, and package boundaries
 - Chapter 09 now owns the operational CLI/options, report-only JSON mode,
   source-resolution, and trace/debug workflow material from the old guide
+- Chapter 02 now owns the practical authoring guidance for assignment
+  operator choice, guard readability, and bring-up checks
 - focused docs may still carry narrow maintainer or machine-contract detail
 - the old guide remains a migration checklist, not a place to leave
   user-facing contract stranded

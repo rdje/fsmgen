@@ -205,6 +205,34 @@ guard. That form creates combinational feedback in the generated next-value
 logic. Q/output-named `<-` feedback remains valid and is the preferred spelling
 for ordinary registers.
 
+## Practical Authoring Guidelines
+
+Use assignment operators according to the hardware timing you intend:
+
+- Use `=` only for true combinational outputs or combinational helper values.
+- Use `<-` for ordinary flopped state and register loopback, especially for
+  Q/output-named signals such as `addr_q`.
+- Use `<=` only when the authored LHS intentionally names the D-input or
+  next-value side of a flop. The RHS and assignment guard must not read that
+  same LHS name.
+- Use `<1`, `<2`, and other delayed-pulse forms when the intent is an explicit
+  one-cycle flopped pulse rather than a sticky register assignment.
+
+Keep conditions explicit and reviewable. Small guards are easier to read in
+the source and in the generated enable logic. When a condition grows, expect
+FSMGen to introduce factored intermediate signals in the emitted RTL.
+
+For bring-up, use strict/check/report modes before treating emitted HDL as the
+only evidence:
+
+```bash
+./bin/fsmgen --strict --check --json path/to/file.fsm
+./bin/fsmgen --trace-verbosity=debug --trace-log=trace.log --output /tmp/out.sv path/to/file.fsm
+```
+
+For the full CLI and trace workflow, see
+[Generated HDL, Debugging, and Inspection](09-generated-hdl-debugging-and-inspection.md).
+
 ## Expressions
 
 The current live expression surface includes:

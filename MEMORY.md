@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — authoring guidelines guide-to-book migration
+- Chapter 02 now carries the practical authoring guidance that was still at
+  the end of `docs/USER_GUIDE.md`: use `=` only for combinational intent,
+  `<-` for normal register loopback, `<=` only for D-input/next-value intent,
+  delayed-pulse forms for one-cycle pulses, and strict/check/trace bring-up
+  commands before relying only on emitted HDL.
 ## 2026-05-13: R14 — CLI/debug guide-to-book migration
 - Chapter 09 now carries the old guide's operational CLI material: common
   generation/report commands, full option descriptions, check-only JSON,

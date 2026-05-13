@@ -8,6 +8,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Chapter 09 now owns the operational CLI/options, report-only JSON mode,
   input-resolution, and trace/debug workflow material that had still been
   centralized in `docs/USER_GUIDE.md`.
+- Chapter 02 now owns the old guide's practical authoring guidance for
+  assignment-operator intent, delayed pulses, guard readability, and bring-up
+  checks.
 - Runtime parser/source diagnostics now use book-owned documentation hints for
   supported-boundary, strict-mode, and package-boundary failures. The old guide
   remains a migration reference, not the primary diagnostic target.
