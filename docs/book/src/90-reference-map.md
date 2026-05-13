@@ -87,6 +87,8 @@ The migration is still ongoing:
 - the book is the progressive learning surface
 - runtime diagnostics now use book-owned documentation hints for the current
   supported, strict-mode, and package boundaries
+- Chapter 09 now owns the operational CLI/options, report-only JSON mode,
+  source-resolution, and trace/debug workflow material from the old guide
 - focused docs may still carry narrow maintainer or machine-contract detail
 - the old guide remains a migration checklist, not a place to leave
   user-facing contract stranded

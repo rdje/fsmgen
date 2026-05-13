@@ -3,8 +3,11 @@ This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
 - Next decision point: continue the USER_GUIDE-to-mdBook migration by
-  dispatching the remaining broad guide contract into embedding/CLI and ISF
+  dispatching the remaining broad guide contract into embedding/API and ISF
   book chapters, with commits after each safe doc slice.
+- Chapter 09 now owns the operational CLI/options, report-only JSON mode,
+  input-resolution, and trace/debug workflow material that had still been
+  centralized in `docs/USER_GUIDE.md`.
 - Runtime parser/source diagnostics now use book-owned documentation hints for
   supported-boundary, strict-mode, and package-boundary failures. The old guide
   remains a migration reference, not the primary diagnostic target.

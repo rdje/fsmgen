@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 CLI/debug guide-to-book migration
+- The old guide's `Basic usage`, `Useful options`, `Input resolution and
+  FSMLIB`, and `Debug workflow` sections are operational user material, so
+  they belong in Chapter 09 rather than only in the monolithic guide.
+- The migration keeps the embedding/API internals in Chapter 11, but Chapter
+  09 now gives CLI users the report-only JSON commands and practical output
+  behavior they need without reading the full embedder contract chapter first.
+- This slice is docs-only and intentionally does not alter command behavior or
+  public JSON schema.
 ## 2026-05-13: R14 book-owned diagnostic documentation hints
 - After moving direct `.fsm` and composition contract into the mdBook, leaving
   runtime diagnostics pointed at `docs/USER_GUIDE.md` would keep the old guide

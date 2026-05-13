@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — CLI/debug guide-to-book migration
+- Active: `R14`. Chapter 09 now owns the guide's operational CLI contract:
+  common commands, option semantics, report-only JSON modes, source
+  resolution, and trace/debug behavior.
+- No runtime behavior changed; this slice narrows the remaining user-guide
+  migration work to deeper embedding/API and ISF material.
+
 ## 2026-05-13: R14 — book-owned diagnostic documentation hints
 - Active: `R14`. Runtime parser/source diagnostics now use centralized
   book-owned documentation hints for supported-boundary, strict-mode, and

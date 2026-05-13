@@ -19,6 +19,9 @@ Common commands:
 ./bin/fsmgen --language verilog --output /tmp/trial_0.v fsm/trial_0.fsm
 ./bin/fsmgen --debug=3 fsm/lte_dif_pmaster.fsm
 ./bin/fsmgen --verify-hdl --output /tmp/lte_dif_pmaster.sv fsm/lte_dif_pmaster.fsm
+./bin/fsmgen --capability-manifest
+./bin/fsmgen --strict --check --json fsm/apb_requester.fsm
+./bin/fsmgen --strict --emit-semantic-json fsm/apb_requester.fsm
 ```
 
 ## Output Shape
@@ -123,29 +126,46 @@ Recommended debug run:
 
 Trace behavior:
 
-- `--trace-verbosity` controls detail
-- `--trace-log` routes trace output to a file
-- trace lines carry origin metadata
+- `--trace-verbosity` accepts `none`, `low`, `medium`, `high`, and `debug`
+- `--trace-log[=FILE]` routes trace output to a file, defaulting to
+  `trace.log` when the option is present without an explicit path
+- every trace line carries origin metadata: file, function, and line number
+- trace formatting is indentation-aware and grouped by topic
 - non-quiet failures keep more composition/diagnostic context
+- report-only JSON modes keep stdout JSON-only and route trace text away from
+  stdout when tracing is enabled
 
 ## Useful Options
 
-- `-o, --output <file>`
-- `-l, --language <systemverilog|sv|verilog|v|vhdl>`
-- `-d, --debug[=N]`
-- `--trace-verbosity <none|low|medium|high|debug>`
-- `--trace-log[=FILE]`
-- `--trace-emojis` / `--notrace-emojis`
-- `--path <dir>`
-- `--extension-module <Module::Name>`
-- `--extension-config <file>`
-- `--capability-manifest`
-- `--check --json` / `--check-json`
-- `--emit-semantic-json` / `--semantic-json`
-- `--emit-normalized-json` / `--normalized-json`
-- `--verify-hdl` / `--validate-hdl`
-- `-q, --quiet`
-- `-h, --help`
+- `-o, --output <file>` writes generated HDL to the requested path.
+- `-l, --language <systemverilog|sv|verilog|v|vhdl>` selects the target
+  language. `sv` aliases SystemVerilog, `v` aliases Verilog, and VHDL is
+  recognized by the CLI while the backend remains inactive.
+- `-d, --debug[=N]` enables numeric trace compatibility levels `0..4`; a bare
+  `--debug` means level `4`.
+- `--trace-verbosity <none|low|medium|high|debug>` selects named trace detail.
+- `--trace-log[=FILE]` sends trace output to `FILE`, or to `trace.log` when no
+  path is provided.
+- `--trace-emojis` / `--notrace-emojis` enables or disables emoji trace
+  markers without changing trace content.
+- `--path <dir>` adds one source search root for bare `.fsm` names and related
+  lookup; the option may be repeated.
+- `--extension-module <Module::Name>` loads one typed extension module from
+  `@INC`; the option may be repeated.
+- `--extension-config <file>` loads typed extension modules from one config
+  file; the option may be repeated.
+- `--capability-manifest` prints the schema-versioned support/capability
+  manifest and exits without requiring an input `.fsm`.
+- `--check --json` / `--check-json` runs the full pipeline as a check, emits a
+  schema-versioned JSON report, and writes no HDL.
+- `--emit-semantic-json` / `--semantic-json` emits bounded normalized semantic
+  JSON instead of HDL.
+- `--emit-normalized-json` / `--normalized-json` are compatibility aliases for
+  the semantic JSON export while the public wording settles.
+- `--verify-hdl` / `--validate-hdl` runs external SystemVerilog validation
+  after writing generated HDL.
+- `-q, --quiet` suppresses informational messages.
+- `-h, --help` prints the full CLI help.
 
 `--capability-manifest` is different from the HDL-generation options: it emits
 schema-versioned JSON describing the current support/capability surface and
@@ -161,13 +181,62 @@ interchange surface for downstream tools that need sanitized module/system,
 signal-analysis, symbol, and forward-IR projections without depending on raw
 Perl objects.
 
+## Report-Only CLI Modes
+
+The first bounded check-only JSON surface is:
+
+```bash
+./bin/fsmgen --strict --check --json path/to/file.fsm
+```
+
+`--check-json` is an alias for the same mode. The command runs the full
+pipeline, emits JSON to stdout, exits non-zero when the check fails, and never
+writes an HDL file even if `-o` is present.
+
+Successful checks report:
+
+- `success: true`
+- an empty `diagnostics` array
+- the resolved source path
+- a small checked-result summary
+- a report-level `support_accounting` object when the source is known to the
+  support-accounting corpus
+
+Failed checks report `success: false` plus a diagnostic object. When a failure
+matches a support-accounting expected-failure entry, that diagnostic includes
+the stable `FSMGEN_*` code, severity, stability, family, source file, matched
+corpus entry, and migration-hint availability. Failures outside the current
+classifier still return JSON with a `null` code rather than pretending a stable
+diagnostic identity exists.
+
+The first bounded normalized semantic JSON surface is:
+
+```bash
+./bin/fsmgen --strict --emit-semantic-json path/to/file.fsm
+```
+
+`--semantic-json` is an alias for the same mode. Compatibility aliases
+`--emit-normalized-json` and `--normalized-json` are accepted too.
+
+Successful semantic reports use `normalized_semantic_schema_version: 1`,
+`command.mode: semantic_export`, a report-level `support_accounting` object,
+and a `semantic` payload containing bounded public projections of module/root
+summary, system/reset metadata, signal analysis, symbols when present, and the
+forward IR layers. Composition sources also include a sanitized composition
+provenance/report fragment.
+
+This is not a promise that every private pipeline object is public API. It is
+the sanitized downstream-tool projection. Failed semantic exports reuse the
+stable diagnostic-code classifier and do not expose partial semantics.
+
 ## Input Resolution
 
-FSMGen resolves source names by:
+FSMGen resolves `<fsm_file>` by shape:
 
-1. repeated `--path DIR`
-2. `FSMLIB`
-3. current directory
+1. Bare names such as `foo` or `foo.fsm` are searched in repeated
+   `--path DIR` roots, then `FSMLIB` roots, then the current directory.
+2. Relative paths such as `../fsm/foo.fsm` are used directly.
+3. Absolute paths are used directly.
 
 Example:
 

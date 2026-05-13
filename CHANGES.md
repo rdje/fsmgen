@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — CLI/debug guide-to-book migration
+- Expanded [docs/book/src/09-generated-hdl-debugging-and-inspection.md](docs/book/src/09-generated-hdl-debugging-and-inspection.md)
+  with the old guide's operational CLI examples, option semantics,
+  report-only JSON modes, input-resolution rules, and trace/debug workflow.
+- Updated the mdBook reference map so Chapter 09 is the user-facing home for
+  CLI/options/debug material during the guide split.
 ### R14 — book-owned diagnostic documentation hints
 - Added [perl/FSM/Support/DocumentationHints.pm](perl/FSM/Support/DocumentationHints.pm)
   as the central owner for runtime diagnostic documentation pointers.

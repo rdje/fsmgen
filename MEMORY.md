@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — CLI/debug guide-to-book migration
+- Chapter 09 now carries the old guide's operational CLI material: common
+  generation/report commands, full option descriptions, check-only JSON,
+  normalized semantic JSON, precise source resolution, and trace/debug
+  behavior.
+- This is a docs-only guide-to-book migration slice. Remaining guide migration
+  work should continue with deeper embedding/API details and ISF material.
 ## 2026-05-13: R14 — book-owned diagnostic documentation hints
 - Runtime diagnostics no longer send users to `docs/USER_GUIDE.md` as the
   primary supported-boundary target. `FSM::Support::DocumentationHints` now
