@@ -29,6 +29,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - ISF parameterized drive declarations now reject duplicate parameter names
   before actor-shell return. `t/1189` covers distinct parameter preservation
   plus duplicate and nested-parameter rejection.
+- ISF rule-local priority metadata now resolves `(priority over other_rule)`
+  targets against declared same-actor rules before actor-shell return. `t/1190`
+  covers forward references plus unknown priority-target rejection while
+  priority enforcement remains deferred.
 - The mdBook reference map now records those book homes explicitly: direct
   language/core concepts, composition, CLI/debug, typed extensions, legacy
   external flow, troubleshooting, and practical authoring guidance are all
@@ -1274,6 +1278,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - [t/1189-isf-drive-parameter-boundary.t](t/1189-isf-drive-parameter-boundary.t)
     now proves parameterized drive declarations reject duplicate parameter
     names before parser actor-shell return.
+  - [t/1190-isf-rule-priority-target-boundary.t](t/1190-isf-rule-priority-target-boundary.t)
+    now proves rule-local priority metadata resolves `other_rule` against
+    declared same-actor rules before parser actor-shell return.
   - Next bounded `R14` slice: convert another documented scheduler limitation
     into regression-backed behavior.
 - Superseded `R13` carry-forward detail retained below this note should not be
@@ -4036,6 +4043,10 @@ Done:
   [t/1189-isf-drive-parameter-boundary.t](t/1189-isf-drive-parameter-boundary.t),
   covering distinct parameter preservation plus duplicate and nested-parameter
   rejection before parser return.
+- Rule-local priority target validation is now regression-backed by
+  [t/1190-isf-rule-priority-target-boundary.t](t/1190-isf-rule-priority-target-boundary.t),
+  covering valid forward references plus unknown priority-target rejection
+  before parser return.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

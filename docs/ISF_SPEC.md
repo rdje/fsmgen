@@ -594,8 +594,10 @@ Multi-rule fan-in example:
 )
 ```
 
-- Inline `(priority over other_rule)` is structurally validated by the parser
-  and currently ignored by lowering.
+- Inline `(priority over other_rule)` is structurally validated by the parser,
+  and `other_rule` must name a declared rule in the same actor. Forward
+  references are accepted because the target check runs after the full actor
+  body is collected. Priority metadata is currently ignored by lowering.
 
 Separate `(priority lhs over rhs)` declarations are structurally validated by
 the parser but not currently enforced as arbitration policy.
@@ -823,6 +825,7 @@ Focused tests:
 - [t/1187-isf-drive-name-boundary.t](../t/1187-isf-drive-name-boundary.t)
 - [t/1188-isf-interface-port-boundary.t](../t/1188-isf-interface-port-boundary.t)
 - [t/1189-isf-drive-parameter-boundary.t](../t/1189-isf-drive-parameter-boundary.t)
+- [t/1190-isf-rule-priority-target-boundary.t](../t/1190-isf-rule-priority-target-boundary.t)
 
 ## 12. Explicitly Deferred
 

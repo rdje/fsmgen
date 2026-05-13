@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF rule priority target boundary
+- Rule-local priority remains metadata for a later arbitration/enforcement
+  design, but accepting a misspelled `other_rule` gives downstream consumers
+  a false relationship to reason about.
+- The parser now resolves priority targets against the full actor rule
+  namespace after all rules are collected. This keeps forward references legal
+  while making the current metadata boundary honest: structurally valid
+  priority metadata must still point at a real same-actor rule.
 ## 2026-05-13: R14 ISF drive parameter boundary
 - Parameterized drive definitions are positional at the call site, but the
   drive body refers to parameter names. Duplicate parameter names would make

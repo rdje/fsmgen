@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF rule priority target boundary
+- Tightened [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
+  so rule-local `(priority over other_rule)` metadata requires `other_rule` to
+  resolve to a declared same-actor rule before an actor shell is returned.
+- Added [t/1190-isf-rule-priority-target-boundary.t](t/1190-isf-rule-priority-target-boundary.t)
+  for valid forward references and unknown priority-target rejection.
+- Updated the ISF public-interface contract metadata, ISF spec, mdBook rules
+  chapter, and roadmap notes. Priority enforcement remains deferred.
 ### R14 — ISF drive parameter boundary
 - Tightened [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
   so parameterized drive declarations reject duplicate parameter names before

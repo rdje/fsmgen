@@ -92,6 +92,7 @@ my $expected_tested_by = [
     't/1187-isf-drive-name-boundary.t',
     't/1188-isf-interface-port-boundary.t',
     't/1189-isf-drive-parameter-boundary.t',
+    't/1190-isf-rule-priority-target-boundary.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {

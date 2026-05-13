@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF rule priority target boundary
+- Active: `R14`. Rule-local `(priority over other_rule)` metadata now requires
+  `other_rule` to resolve to a declared rule in the same actor before parser
+  actor-shell return.
+- `t/1190` covers valid forward references plus unknown priority-target
+  rejection. Priority enforcement still remains deferred.
+
 ## 2026-05-13: R14 — ISF drive parameter boundary
 - Active: `R14`. Parameterized drive declarations now require unique scalar
   parameter names before parser actor-shell return.

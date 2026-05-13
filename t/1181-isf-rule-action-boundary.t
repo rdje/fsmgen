@@ -43,10 +43,12 @@ subtest 'valid rule actions preserve the public rule shell' => sub {
   (rule always_ready ready
     (valid 1)
     (trigger main)
-    (priority over fallback)))
+    (priority over fallback))
+  (rule fallback start
+    (valid 0)))
 ISF
 
-    is(scalar(@{$actor->{rules}}), 1, 'actor has one rule');
+    is(scalar(@{$actor->{rules}}), 2, 'actor has two rules including priority target');
     is_deeply(
         $actor->{rules}[0]{actions},
         [

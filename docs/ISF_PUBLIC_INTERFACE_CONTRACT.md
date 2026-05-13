@@ -256,6 +256,10 @@ The parser boundary for resource and priority metadata is checked by
 so malformed `(resources ...)`, actor-level `(priority lhs over rhs)`, and
 rule-local `(priority over other_rule)` forms are rejected before an actor
 shell is returned. Arbitration enforcement remains deferred.
+The rule-local priority target boundary is checked by
+[t/1190-isf-rule-priority-target-boundary.t](../t/1190-isf-rule-priority-target-boundary.t)
+so `other_rule` in `(priority over other_rule)` must resolve to a declared
+same-actor rule before actor-shell return. Forward references remain accepted.
 The blocking `do` child-completion handoff is checked by
 [t/1177-isf-do-child-done-pulse.t](../t/1177-isf-do-child-done-pulse.t)
 so the generated internal `child_done` signal remains a one-cycle delayed pulse

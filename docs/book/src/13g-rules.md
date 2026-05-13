@@ -129,7 +129,9 @@ With a single rule source, the generated fan-in assigns the source directly:
 ```
 
 Inline priority is accepted and structurally validated by the parser, then
-ignored by current lowering. It does not resolve conflicting drives yet.
+ignored by current lowering. The `other_rule` target must name a declared rule
+in the same actor; forward references are accepted. It does not resolve
+conflicting drives yet.
 
 ## Priorities
 

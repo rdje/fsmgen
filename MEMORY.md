@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF rule priority target boundary
+- Rule-local `(priority over other_rule)` metadata now validates that
+  `other_rule` names a declared rule in the same actor before actor-shell
+  return.
+- Forward references remain accepted because validation runs after the full
+  actor body is collected. Priority enforcement remains deferred; this slice
+  only prevents malformed metadata references from entering the public shell.
+- Added `t/1190-isf-rule-priority-target-boundary.t` and updated the ISF
+  public contract metadata, spec, mdBook, and live roadmap notes.
 ## 2026-05-13: R14 — ISF drive parameter boundary
 - Parameterized ISF drive declarations now reject duplicate parameter names
   before actor-shell return.
