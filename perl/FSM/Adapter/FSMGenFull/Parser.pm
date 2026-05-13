@@ -21,6 +21,7 @@ use FSM::Package::SignalManagerProjectionSupport;
 use FSM::Package::Symbols;
 use FSM::ParameterValueSupport;
 use FSM::SourceClassifier;
+use FSM::Support::DocumentationHints qw(supported_boundary_hint supported_boundary_sentence);
 
 sub new($class, %args) {
     Carp::confess "Parser requires signal_manager" unless $args{signal_manager};
@@ -61,7 +62,7 @@ sub parse_fsm($self, $raw_ast) {
             "Unsupported top-level source '$header'. ".
             "The active toolchain supports '?fsm:name', '?dt:name', '?mod:name', '?module:name', and '+fsm' as single-module sources, and '?top:name' through the composition pipeline. ".
             "Other tagged source kinds such as '?define:' are out of active support. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n";
+            supported_boundary_hint();
     }
     
     if (ref($raw_ast) eq 'ARRAY') {
@@ -108,7 +109,7 @@ sub parse_fsm($self, $raw_ast) {
         "Malformed top-level source root '$root_display'. ".
         "The active single-module parser expects '?fsm:module_name', one of '?dt:module_name' / '?mod:module_name' / '?module:module_name', or the legacy '+fsm' root family at the source root. ".
         "Bare top-level forms like '(+system ...)' or '(idle ...)' must be wrapped inside a supported source root. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n";
+        supported_boundary_hint();
 }
 
 sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
@@ -150,7 +151,7 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
         Carp::confess
             "Malformed top-level " . ($root_kind eq 'dt' ? 'DT' : 'FSM') . " body item '".$self->describe_top_level_source_root([$element])."' in source '$module_name'. ".
             $top_level_forms_desc . " ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            supported_boundary_hint()
             unless ref($element) eq 'ARRAY';
 
         next unless ref($element) eq 'ARRAY';
@@ -253,7 +254,7 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
                 "Unsupported top-level form '($detail)'. ".
                 $top_level_forms_desc . " ".
                 "Future-looking bare forms such as '(lhs := value)' are not part of the active contract yet. ".
-                "See docs/USER_GUIDE.md for the current supported boundary.\n";
+                supported_boundary_hint();
         } elsif (
             $element_name =~ /^[a-zA-Z_]/
                 && ref($element->[1]) eq 'ARRAY'
@@ -266,12 +267,12 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
             Carp::confess
                 "Unsupported top-level form '($detail)'. ".
                 $top_level_forms_desc . " ".
-                "See docs/USER_GUIDE.md for the current supported boundary.\n";
+                supported_boundary_hint();
         } elsif ($element_name =~ /^\+/) {
             Carp::confess
                 "Unsupported top-level directive '$element_name'. ".
                 $supported_directives_desc . " ".
-                "See docs/USER_GUIDE.md for the current supported boundary.\n";
+                supported_boundary_hint();
         } elsif ($element_name =~ /^[a-zA-Z_]/ && $element_name !~ /^(idle|-syncrst|-syncreset|-asyncrst|-asyncreset)$/ && !ref($element->[1])) {
             my $detail = join(' ', map {
                 defined($_) ? (ref($_) ? ref($_) : $_) : 'undef'
@@ -280,7 +281,7 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
                 "Unsupported top-level form '($detail)'. ".
                 $top_level_forms_desc . " ".
                 "Future-looking bare forms such as '(lhs := value)' are not part of the active contract yet. ".
-                "See docs/USER_GUIDE.md for the current supported boundary.\n";
+                supported_boundary_hint();
         } else {
             fsm_debug("Parsing state block: $element_name", 3);
             my $state = $self->parse_state($element);
@@ -289,7 +290,7 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
                     "Unsupported top-level block '$element_name' inside '$root_contract_label'. ".
                     "The active '?dt:name' contract currently supports only general DT blocks named like '(-foo ...)' at top level. ".
                     "FSM-state blocks and dedicated reset-state blocks remain part of '?fsm:name'. ".
-                    "See docs/USER_GUIDE.md for the current supported boundary.\n"
+                    supported_boundary_hint()
                     unless $state->can('is_standalone_dt') && $state->is_standalone_dt;
             }
             $module->add_state($state) if $state;
@@ -428,7 +429,7 @@ sub validate_module_root_body($self, $module_name, $fsm_contents, $is_flat_ast =
     Carp::confess
         "Malformed top-level " . ($root_kind eq 'dt' ? 'DT' : 'FSM') . " body for source '$root_family'. ".
         $body_desc .
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless ref($fsm_contents) eq 'ARRAY' && @$fsm_contents;
 
     return 1;
@@ -459,7 +460,7 @@ sub decode_flat_fsm_structure($self, $ast_array) {
         "The active contract supports the legacy '+fsm' source family only as either ".
         "'(+fsm module_name)' followed by sibling sections/state/DT blocks, or ".
         "the nested legacy root form '(+fsm module_name ... )'. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n";
+        supported_boundary_hint();
 }
 
 sub decode_structured_module_name($self, $fsm_header, $root_kind = 'fsm') {
@@ -480,7 +481,7 @@ sub decode_structured_module_name($self, $fsm_header, $root_kind = 'fsm') {
     Carp::confess
         "Malformed top-level " . ($root_kind eq 'dt' ? 'DT' : 'FSM') . " source '$display'. ".
         "The active contract expects '$root_contract_label' with an HDL-identifier-compatible module name ([A-Za-z_]\\w*). ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n";
+        supported_boundary_hint();
 }
 
 sub root_contract_label($self, $root_kind = 'fsm') {
@@ -530,7 +531,7 @@ sub parse_constants_section($self, $constants_ast) {
     Carp::confess
         "Malformed '+constants' section. ".
         "The active contract supports '+constants' only as a non-empty list of '(NAME value)' entries where the value is either a scalar literal or a bounded aggregate list/hash payload. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless ref($constants_list) eq 'ARRAY' && @$constants_list;
 
     my @constant_entries;
@@ -538,7 +539,7 @@ sub parse_constants_section($self, $constants_ast) {
         Carp::confess
             "Malformed '+constants' entry. ".
             "Each '+constants' entry must be a pair '(NAME value)'. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            supported_boundary_hint()
             unless ref($constant_def) eq 'ARRAY' && @$constant_def == 2;
 
         my ($name, $value) = @$constant_def;
@@ -547,7 +548,7 @@ sub parse_constants_section($self, $constants_ast) {
         Carp::confess
             "Malformed '+constants' entry for constant '".$self->describe_contract_name($resolved_name)."'. ".
             "Each '+constants' entry must use an HDL-identifier-compatible name. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            supported_boundary_hint()
             unless $self->is_contract_identifier($resolved_name);
 
         $self->{signal_manager}->record_constant_definition($resolved_name);
@@ -570,7 +571,7 @@ sub parse_types_section($self, $types_ast) {
     Carp::confess
         "Malformed '+types' section. ".
         "The active contract supports '+types' only as a non-empty list of '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', '(type NAME (two_state ...))', '(type NAME (four_state ...))', '(type NAME (list ...))', '(type NAME (record (field TYPE) ...))', or '(type NAME other_type)' entries. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless ref($types_list) eq 'ARRAY' && @$types_list;
 
     my @type_entries;
@@ -578,7 +579,7 @@ sub parse_types_section($self, $types_ast) {
         Carp::confess
             "Malformed '+types' entry. ".
             "Each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', '(type NAME (two_state ...))', '(type NAME (four_state ...))', '(type NAME (list ...))', '(type NAME (record (field TYPE) ...))', or '(type NAME other_type)'. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            supported_boundary_hint()
             unless ref($type_def) eq 'ARRAY' && @$type_def >= 2;
 
         my ($keyword, $name, $spec_ast);
@@ -597,7 +598,7 @@ sub parse_types_section($self, $types_ast) {
             Carp::confess
                 "Malformed '+types' entry. ".
                 "Each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', '(type NAME (two_state ...))', '(type NAME (four_state ...))', '(type NAME (list ...))', '(type NAME (record (field TYPE) ...))', or '(type NAME other_type)'. ".
-                "See docs/USER_GUIDE.md for the current supported boundary.\n";
+                supported_boundary_hint();
         }
 
         my $resolved_keyword = $self->unwrap_scalar_token($keyword);
@@ -606,7 +607,7 @@ sub parse_types_section($self, $types_ast) {
         Carp::confess
             "Malformed '+types' entry for type '".$self->describe_contract_name($resolved_name)."'. ".
             "Each '+types' entry must begin with the literal keyword 'type' and use an HDL-identifier-compatible type name. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            supported_boundary_hint()
             unless defined($resolved_keyword)
                 && !ref($resolved_keyword)
                 && $resolved_keyword eq 'type'
@@ -635,14 +636,14 @@ sub parse_size_section($self, $size_ast) {
         "Malformed '+size' section. ".
         "The active contract supports '+size' only as a list of '(signal width)' entries, ".
         "or the legacy empty no-op form '(+size)'. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless ref($size_entries) eq 'ARRAY';
 
     for my $size_def (@$size_entries) {
         Carp::confess
             "Malformed '+size' entry. ".
             "Each '+size' entry must be a pair '(signal width_or_type)'. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            supported_boundary_hint()
             unless ref($size_def) eq 'ARRAY' && @$size_def == 2;
 
         my ($sig, $width) = @$size_def;
@@ -652,7 +653,7 @@ sub parse_size_section($self, $size_ast) {
         Carp::confess
             "Malformed '+size' entry for signal '$resolved_sig'. ".
             "Each '+size' entry must use an HDL-identifier-compatible signal name and either a positive integer width or a named scalar type. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            supported_boundary_hint()
             unless defined($resolved_sig)
                 && !ref($resolved_sig)
                 && $resolved_sig =~ /\A[A-Za-z_]\w*\z/;
@@ -711,7 +712,7 @@ sub parse_system_section($self, $system_ast) {
     Carp::confess
         "The active '+system' contract currently supports only the conventional shared system declaration ".
         "'(+system (clock clk) (sreset reset))' or '(+system (clock clk) (areset rst_n))'. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless ref($system_entries) eq 'ARRAY' && @$system_entries;
 
     my %seen;
@@ -721,7 +722,7 @@ sub parse_system_section($self, $system_ast) {
         Carp::confess
             "Unsupported '+system' entry structure. ".
             "The active contract currently supports only '(clock clk)' plus one reset declaration via '(sreset reset)' or '(areset rst_n)' inside '+system'. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            supported_boundary_hint()
             unless ref($entry) eq 'ARRAY' && @$entry == 2;
 
         my ($directive, $name) = @$entry;
@@ -730,26 +731,26 @@ sub parse_system_section($self, $system_ast) {
         Carp::confess
             "Unsupported '+system' entry '$directive'. ".
             "The active contract currently supports only '(clock clk)' plus '(sreset reset)' or '(areset rst_n)'. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            supported_boundary_hint()
             unless defined $directive && !ref($directive);
 
         Carp::confess
             "Unsupported '+system' entry structure. ".
             "The active contract currently supports only '(clock clk)' plus one reset declaration via '(sreset reset)' or '(areset rst_n)' inside '+system'. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            supported_boundary_hint()
             unless defined $resolved_name && !ref($resolved_name);
 
         Carp::confess
             "Duplicate '+system' entry '$directive'. ".
             "The active contract currently expects exactly one '(clock clk)' and one reset declaration. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            supported_boundary_hint()
             if $seen{$directive}++;
 
         if ($directive eq 'clock') {
             Carp::confess
                 "Unsupported '+system' clock name '$resolved_name'. ".
                 "The active contract currently supports only '(clock clk)'. ".
-                "See docs/USER_GUIDE.md for the current supported boundary.\n"
+                supported_boundary_hint()
                 unless defined $resolved_name && !ref($resolved_name) && $resolved_name eq 'clk';
 
             $parsed{clock} = $resolved_name;
@@ -757,13 +758,13 @@ sub parse_system_section($self, $system_ast) {
             Carp::confess
                 "Duplicate '+system' reset declaration '$directive'. ".
                 "The active contract currently expects exactly one reset declaration. ".
-                "See docs/USER_GUIDE.md for the current supported boundary.\n"
+                supported_boundary_hint()
                 if $parsed{reset};
 
             Carp::confess
                 "Unsupported '+system' reset name '$resolved_name'. ".
                 "Reset declarations must use an HDL-identifier-compatible reset signal name. ".
-                "See docs/USER_GUIDE.md for the current supported boundary.\n"
+                supported_boundary_hint()
                 unless $self->is_contract_identifier($resolved_name);
 
             $parsed{reset} = $resolved_name;
@@ -774,14 +775,14 @@ sub parse_system_section($self, $system_ast) {
             Carp::confess
                 "Unsupported '+system' entry '$directive'. ".
                 "The active contract currently supports only '(clock clk)' plus '(sreset reset)' or '(areset rst_n)'. ".
-                "See docs/USER_GUIDE.md for the current supported boundary.\n";
+                supported_boundary_hint();
         }
     }
 
     Carp::confess
         "Incomplete '+system' section. ".
         "The active contract currently expects exactly '(clock clk)' and one reset declaration. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless $parsed{clock} && $parsed{reset};
 
     my $fsm_module = $self->{fsm_module};
@@ -904,7 +905,7 @@ sub resolve_declared_width_contract($self, %args) {
         "Malformed '+size' entry for signal '$signal_name'. ".
         "Each '+size' entry must use an HDL-identifier-compatible signal name and either a positive integer width, a named type such as 'bit', 'byte', 'frame_t', or 'pkg_name.byte', or a positive integer constant expression using literals, constants, enum members, params/generics, aggregate scalar leaves, and supported Lisp-ish arithmetic/bitwise operators. ".
         $expression_detail." ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n";
+        supported_boundary_hint();
 }
 
 sub resolve_positive_width_expression($self, $width_expr, $context) {
@@ -1163,7 +1164,7 @@ sub canonicalize_scalar_type_spec($self, %args) {
     Carp::confess
         "Malformed '+types' entry for type '$type_name' in source '$module_name'. ".
         "The first active '+types' lane supports 'bit', '(bits N)', '(signed bit)', '(signed (bits N))', '(two_state ...)', '(four_state ...)', '(list ...)', '(record (field TYPE) ...)', or aliases to already-resolved local/imported types. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n";
+        supported_boundary_hint();
 }
 
 sub canonicalize_constant_literal_payload($self, %args) {
@@ -1181,7 +1182,7 @@ sub canonicalize_constant_literal_payload($self, %args) {
             "Malformed '$section_header' entry for $symbol_kind '$symbol_name' in source '$module_name' with value token '$value_token'. ".
             "Ambiguous bare integer literals are blocked because FSMGen does not guess obviously bitstring-like bare 0/1 tokens in symbol-value position. ".
             "Use '$binary_example' for intrinsic-width binary, '$exact_width_example' for exact-width binary, or '$decimal_example' if decimal was intended. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n";
+            supported_boundary_hint();
     }
 
     my $literal_expr = eval {
@@ -1192,7 +1193,7 @@ sub canonicalize_constant_literal_payload($self, %args) {
     Carp::confess
         "Malformed '$section_header' entry for $symbol_kind '$symbol_name' in source '$module_name' with value token '$value_token'. ".
         "Each '$section_header' value must resolve to a literal scalar value such as '0', '8'3', '8'hA5', or 'const_8b0'. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         if $parse_error || ref($literal_expr) ne 'FSM::CoreAST::Literal';
 
     return $literal_expr->to_systemverilog;
@@ -1220,13 +1221,13 @@ sub canonicalize_constant_payload($self, %args) {
     Carp::confess
         "Malformed '$section_header' entry for $symbol_kind '$symbol_name' in source '$module_name'. ".
         "Each '$section_header' value must be either a scalar literal, a non-empty list aggregate, or a non-empty hash-like aggregate written as '(member value)' pairs. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless ref($value_ast) eq 'ARRAY';
 
     Carp::confess
         "Malformed '$section_header' entry for $symbol_kind '$symbol_name' in source '$module_name' with an empty aggregate value. ".
         "Aggregate constant values must be non-empty lists or non-empty hash-like member sets. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless @$value_ast;
 
     my $value_items = $self->constant_value_items($value_ast);
@@ -1234,7 +1235,7 @@ sub canonicalize_constant_payload($self, %args) {
     Carp::confess
         "Malformed '$section_header' entry for $symbol_kind '$symbol_name' in source '$module_name' with an empty aggregate value. ".
         "Aggregate constant values must be non-empty lists or non-empty hash-like member sets. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless @$value_items;
 
     my $hash_like_entries = 0;
@@ -1259,7 +1260,7 @@ sub canonicalize_constant_payload($self, %args) {
             Carp::confess
                 "Malformed '$section_header' entry for $symbol_kind '$symbol_name' in source '$module_name' with duplicate member '$member_name'. ".
                 "Hash-like aggregate values must use each member name at most once so one packed aggregate order remains unambiguous. ".
-                "See docs/USER_GUIDE.md for the current supported boundary.\n"
+                supported_boundary_hint()
                 if exists $members{$member_name};
             push @member_order, $member_name;
             $members{$member_name} = $self->canonicalize_constant_payload(
@@ -1281,7 +1282,7 @@ sub canonicalize_constant_payload($self, %args) {
     Carp::confess
         "Malformed '$section_header' entry for $symbol_kind '$symbol_name' in source '$module_name' with a mixed aggregate value. ".
         "List-style and hash-style aggregate entries cannot be mixed in one constant value. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         if $hash_like_entries && $non_hash_entries;
 
     my @items;
@@ -1369,7 +1370,7 @@ sub validate_transition_targets($self, $fsm_module) {
         Carp::confess
             "Unknown transition target '$target_state'$source_desc. ".
             "State transitions must target a declared regular FSM-state DT block inside the same FSM source. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n";
+            supported_boundary_hint();
     }
 }
 
@@ -1421,7 +1422,7 @@ sub normalize_inline_compound_modifier($self, $signal_name, $compound_spec) {
     Carp::confess
         "Malformed inline compound modifier '$modifier_desc' on signal '$signal_name'. ".
         "Inline compound modifiers must use '(+=)', '(-=)', '(+= delta)', or '(-= delta)' after the RHS expression. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless $self->is_inline_compound_modifier_spec($compound_spec) && @$compound_spec <= 2;
 
     my ($compound_op, $compound_payload) = @$compound_spec;
@@ -1433,7 +1434,7 @@ sub normalize_inline_compound_modifier($self, $signal_name, $compound_spec) {
         Carp::confess
             "Malformed inline compound modifier '$modifier_desc' on signal '$signal_name'. ".
             "Inline compound modifiers must use '(+=)', '(-=)', '(+= delta)', or '(-= delta)' after the RHS expression. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            supported_boundary_hint()
             unless @$compound_payload == 1;
         $delta_spec = $compound_payload->[0];
     } else {
@@ -1449,7 +1450,7 @@ sub parse_compound_update_shorthand($self, $action) {
     Carp::confess
         "Malformed update shorthand '".$self->describe_action_for_error($action)."'. ".
         "Update shorthand must target a scalar signal name, for example '(++ counter)', '(+= counter)', '(+=4 counter)', or '(+= counter 4)'. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless ref($args) eq 'ARRAY' && @$args >= 1;
     
     my ($compound_op, $delta_spec);
@@ -1474,7 +1475,7 @@ sub parse_compound_update_shorthand($self, $action) {
     Carp::confess
         "Malformed update shorthand '".$self->describe_action_for_error($action)."'. ".
         "Update shorthand must target a scalar signal name, for example '(++ counter)', '(+= counter)', '(+=4 counter)', or '(+= counter 4)'. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless defined $signal_name && !ref($signal_name);
     
     my @remaining = @$args[1 .. $#$args];
@@ -1535,7 +1536,7 @@ sub validate_compound_update_trailing_parts($self, $action, @condition_parts) {
     Carp::confess
         "Malformed update shorthand tail '$tail_desc' in '".$self->describe_compound_update_action($action)."'. ".
         "Update shorthand supports only an optional delta plus an optional explicit guard suffix like '<start', '<!full', or '< (& req ready)'. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n";
+        supported_boundary_hint();
 }
 
 sub build_full_condition_from_parts($self, @condition_parts) {
@@ -1563,7 +1564,7 @@ sub build_full_condition_from_parts($self, @condition_parts) {
     Carp::confess
         "Unsupported bare condition suffix '$raw_suffix'. ".
         "Suffix guards must use the explicit guarded forms '<sig', '<!sig', or an explicit condition expression payload. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n";
+        supported_boundary_hint();
 }
 
 sub normalize_explicit_condition_suffix($self, $raw_suffix) {
@@ -1574,7 +1575,7 @@ sub normalize_explicit_condition_suffix($self, $raw_suffix) {
     Carp::confess
         "Unsupported bare condition suffix '$display'. ".
         "Suffix guards must use the explicit guarded forms '<sig', '<!sig', or an explicit condition expression payload. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n";
+        supported_boundary_hint();
 }
 sub reset_combinational_dependency_tracking($self) {
     $self->{combinational_dependency_graph} = {};
@@ -1692,7 +1693,7 @@ sub validate_no_register_input_self_dependency($self, $operator, $target_base_sp
             . "The $expr_role references '$source_name', which is the same D-input-named LHS. "
             . "This creates combinational feedback before HDL generation; use '<-' for Q/output-named synchronous feedback, "
             . "or use '<=+' and read the generated '<signal>_r' Q mirror when same-cycle D visibility is required. "
-            . "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            . supported_boundary_hint()
         );
     }
 }
@@ -1740,7 +1741,7 @@ sub validate_assignment_lhs_target($self, $raw_target, $target_expr) {
         "Malformed assignment target '$target_display'. ".
         "Assignment LHS forms must be writable signal references, static bit/slice references, typed aggregate leaf references, or a bounded '(concat ...)' / '(cat ...)' LHS deconstruct made only of those static lvalues. ".
         "Got '$target_type'. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n";
+        supported_boundary_hint();
 }
 
 sub is_static_assignment_lvalue($self, $target_expr) {
@@ -1756,7 +1757,7 @@ sub validate_lhs_deconstruct_target($self, $target_display, $target_expr) {
     Carp::confess
         "Malformed LHS deconstruct target '$target_display'. ".
         "LHS deconstruct requires at least two static writable operands inside '(concat ...)' or '(cat ...)'. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless @operands >= 2;
 
     my @operand_widths;
@@ -1769,14 +1770,14 @@ sub validate_lhs_deconstruct_target($self, $target_display, $target_expr) {
         Carp::confess
             "Malformed LHS deconstruct target '$target_display'. ".
             "Operand '$operand_display' is not a legal static writable LHS operand; use a signal, bit/slice, or typed aggregate leaf reference. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            supported_boundary_hint()
             unless $self->is_static_assignment_lvalue($operand);
 
         my $operand_width = $self->{expression_builder}->infer_exact_expression_width($operand);
         Carp::confess
             "Malformed LHS deconstruct target '$target_display'. ".
             "Operand '$operand_display' has no exact positive width; every deconstruct operand must be width-resolved before generation. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            supported_boundary_hint()
             unless defined($operand_width) && $operand_width > 0;
 
         my ($base_name, $high, $low) = $self->assignment_lvalue_range($operand);
@@ -1789,7 +1790,7 @@ sub validate_lhs_deconstruct_target($self, $target_display, $target_expr) {
                         "Malformed LHS deconstruct target '$target_display'. ".
                         "Operand '$operand_display' overlaps an earlier write range on '$base_name'. ".
                         "LHS deconstruct operands must not overlap or duplicate target bits. ".
-                        "See docs/USER_GUIDE.md for the current supported boundary.\n";
+                        supported_boundary_hint();
                 }
             }
             push @ranges, {
@@ -1994,7 +1995,7 @@ sub parse_enums_section($self, $enums_ast) {
     Carp::confess
         "Malformed '+enums' section. ".
         "The active contract supports '+enums' only as a non-empty list of '(enum_name (MEMBER value) ...)' definitions. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless ref($enums_list) eq 'ARRAY' && @$enums_list;
 
     my @enum_entries;
@@ -2002,7 +2003,7 @@ sub parse_enums_section($self, $enums_ast) {
         Carp::confess
             "Malformed '+enums' definition. ".
             "Each '+enums' definition must use the shape '(enum_name (MEMBER value) ...)'. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            supported_boundary_hint()
             unless ref($enum_def) eq 'ARRAY' && @$enum_def == 2;
 
         my ($enum_name, $members_list) = @$enum_def;
@@ -2011,7 +2012,7 @@ sub parse_enums_section($self, $enums_ast) {
         Carp::confess
             "Malformed '+enums' definition for enum '".$self->describe_contract_name($resolved_enum_name)."'. ".
             "Each '+enums' definition must use an HDL-identifier-compatible enum name and at least one '(MEMBER value)' entry. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            supported_boundary_hint()
             unless $self->is_contract_identifier($resolved_enum_name)
                 && ref($members_list) eq 'ARRAY'
                 && @$members_list;
@@ -2021,7 +2022,7 @@ sub parse_enums_section($self, $enums_ast) {
             Carp::confess
                 "Malformed '+enums' member for enum '$resolved_enum_name'. ".
                 "Each enum member must be a pair '(MEMBER value)'. ".
-                "See docs/USER_GUIDE.md for the current supported boundary.\n"
+                supported_boundary_hint()
                 unless ref($member_def) eq 'ARRAY' && @$member_def == 2;
 
             my ($member_name, $member_value_array) = @$member_def;
@@ -2031,7 +2032,7 @@ sub parse_enums_section($self, $enums_ast) {
             Carp::confess
                 "Malformed '+enums' member '".$self->describe_contract_name($resolved_member_name)."' for enum '$resolved_enum_name'. ".
                 "Each enum member must use an HDL-identifier-compatible member name and a scalar value token. ".
-                "See docs/USER_GUIDE.md for the current supported boundary.\n"
+                supported_boundary_hint()
                 unless $self->is_contract_identifier($resolved_member_name)
                     && defined($resolved_member_value)
                     && !ref($resolved_member_value);
@@ -2123,7 +2124,7 @@ sub resolve_pending_direct_root_symbols($self, $module_name, $constant_entries, 
                 "Malformed declarative symbol scope in source '$module_name'. ".
                 "The active '+constants'/'+enums' contract now resolves normal non-cyclic references without depending on declaration order, but symbol dependency cycles are blocked. ".
                 "Cycle: ".join(' -> ', @chain).". ".
-                "See docs/USER_GUIDE.md for the current supported boundary.\n";
+                supported_boundary_hint();
         },
     );
 
@@ -2172,7 +2173,7 @@ sub resolve_pending_direct_root_types($self, $module_name, $type_entries) {
                 "Malformed declarative type scope in source '$module_name'. ".
                 "The active '+types' contract resolves normal non-cyclic type aliases without depending on declaration order, but type dependency cycles are blocked. ".
                 "Cycle: ".join(' -> ', @chain).". ".
-                "See docs/USER_GUIDE.md for the current supported boundary.\n";
+                supported_boundary_hint();
         },
     );
 
@@ -2185,7 +2186,7 @@ sub parse_import_section($self, $module_name, $imports_ast) {
     Carp::confess
         "Malformed '+import' section in source '$module_name'. ".
         "The active contract supports '+import' only as a non-empty list of HDL-identifier-compatible package names. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless ref($imports_list) eq 'ARRAY' && @$imports_list;
 
     my $module = $self->{fsm_module};
@@ -2198,7 +2199,7 @@ sub parse_import_section($self, $module_name, $imports_ast) {
         Carp::confess
             "Malformed '+import' package name '".$self->describe_contract_name($resolved_name)."' in source '$module_name'. ".
             "The active contract expects each imported package name to be an HDL-identifier-compatible bare name. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            supported_boundary_hint()
             unless $self->is_contract_identifier($resolved_name);
 
         next if $seen{$resolved_name}++;
@@ -2214,7 +2215,7 @@ sub parse_define_directive($self, $define_ast) {
     Carp::confess
         "Malformed '+define' directive. ".
         "The active contract supports '+define' only as exactly one '(NAME scalar_value)' pair. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless ref($define_spec) eq 'ARRAY' && @$define_spec == 2;
 
     my ($name, $value) = @$define_spec;
@@ -2224,7 +2225,7 @@ sub parse_define_directive($self, $define_ast) {
     Carp::confess
         "Malformed '+define' entry for name '".$self->describe_contract_name($resolved_name)."'. ".
         "The active contract expects an HDL-identifier-compatible name and a scalar value token. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless $self->is_contract_identifier($resolved_name)
             && defined($resolved_value)
             && !ref($resolved_value);
@@ -2241,7 +2242,7 @@ sub parse_params_section($self, $params_ast) {
     Carp::confess
         "Malformed '+params' section. ".
         "The active contract supports '+params' only as a non-empty list of '(NAME value)' scalar or aggregate entries. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless ref($params_list) eq 'ARRAY' && @$params_list;
 
     my @param_entries;
@@ -2249,7 +2250,7 @@ sub parse_params_section($self, $params_ast) {
         Carp::confess
             "Malformed '+params' entry. ".
             "Each '+params' entry must be a pair '(NAME value)'. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            supported_boundary_hint()
             unless ref($param_def) eq 'ARRAY' && @$param_def == 2;
 
         my ($name, $value_array) = @$param_def;
@@ -2258,13 +2259,13 @@ sub parse_params_section($self, $params_ast) {
         Carp::confess
             "Malformed '+params' entry for parameter '".$self->describe_contract_name($resolved_name)."'. ".
             "Each '+params' entry must use an HDL-identifier-compatible name. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            supported_boundary_hint()
             unless $self->is_contract_identifier($resolved_name);
 
         Carp::confess
             "Malformed '+params' entry for parameter '".$self->describe_contract_name($resolved_name)."'. ".
             "Each '+params' entry must provide a scalar or aggregate value. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            supported_boundary_hint()
             unless defined $value_array;
 
         push @param_entries, {
@@ -2287,7 +2288,7 @@ sub resolve_pending_direct_root_params($self, $module_name, $param_entries) {
         Carp::confess
             "Malformed '+params' entry for parameter '".$self->describe_contract_name($name)."' in source '$module_name'. ".
             "Each '+params' declaration may bind a parameter/generic name at most once so one default value remains unambiguous. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            supported_boundary_hint()
             if exists $entry_by_name{$name};
         $entry_by_name{$name} = $entry;
         push @param_order, $name;
@@ -2296,7 +2297,7 @@ sub resolve_pending_direct_root_params($self, $module_name, $param_entries) {
     my %resolved;
     my %visiting;
     my @stack;
-    my $docs_hint = " See docs/USER_GUIDE.md for the current supported boundary.";
+    my $docs_hint = ' ' . supported_boundary_sentence();
 
     my $resolve_param;
     $resolve_param = sub ($name) {
@@ -2308,7 +2309,7 @@ sub resolve_pending_direct_root_params($self, $module_name, $param_entries) {
                 "Malformed '+params' dependency graph in source '$module_name'. ".
                 "The active '+params' contract resolves normal non-cyclic parameter references without depending on declaration order, but parameter dependency cycles are blocked. ".
                 "Cycle: ".join(' -> ', map { "parameter '$_'" } @cycle).". ".
-                "See docs/USER_GUIDE.md for the current supported boundary.\n";
+                supported_boundary_hint();
         }
 
         my $entry = $entry_by_name{$name}
@@ -2367,7 +2368,7 @@ sub parse_init_assignment_directive($self, $init_ast) {
         "Malformed ':=' directive payload. ".
         "The active contract supports canonical top-level init/reset directives like '(:= (signal literal))'. ".
         "Default mode also accepts legacy compact directives like '(:= signal=literal)'. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless ref($payload_list) eq 'ARRAY' && @$payload_list;
 
     my @assignments;
@@ -2385,7 +2386,7 @@ sub parse_init_assignment_directive($self, $init_ast) {
                 "Malformed ':=' directive payload. ".
                 "Multiple entries must use canonical pair payloads like '(:= (signal literal) (other value))'. ".
                 "Default-mode legacy compact entries remain single-entry only. ".
-                "See docs/USER_GUIDE.md for the current supported boundary.\n"
+                supported_boundary_hint()
                 unless ref($payload) eq 'ARRAY';
             push @assignments, $self->parse_canonical_init_assignment_payload($payload);
         }
@@ -2402,7 +2403,7 @@ sub parse_compact_init_assignment_spec($self, $init_spec) {
         "Unsupported ':=' directive '$init_spec'. ".
         "The active contract supports canonical top-level init/reset directives like '(:= (signal literal))'. ".
         "Default mode also accepts legacy compact directives like '(:= signal=literal)'. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless defined $signal_name && defined $reset_value;
 
     return {
@@ -2415,7 +2416,7 @@ sub parse_canonical_init_assignment_payload($self, $payload) {
     Carp::confess
         "Malformed ':=' directive payload. ".
         "Canonical ':=' entries must be pairs like '(signal value)'. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless ref($payload) eq 'ARRAY' && @$payload == 2;
 
     my ($signal_token, $reset_token) = @$payload;
@@ -2425,7 +2426,7 @@ sub parse_canonical_init_assignment_payload($self, $payload) {
     Carp::confess
         "Malformed ':=' directive payload. ".
         "Canonical ':=' entries must use an HDL-identifier-compatible signal name and a reset/default expression. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless defined($signal_name)
             && !ref($signal_name)
             && $signal_name =~ /\A[A-Za-z_]\w*\z/
@@ -2447,7 +2448,7 @@ sub register_init_assignment($self, %args) {
     Carp::confess
         "Unsupported ':=' reset value '$reset_value_display' for signal '$signal_name'. ".
         "The active contract currently expects a valid reset/default expression on the right-hand side. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         if $reset_expr_error || !$reset_expr;
 
     my $reset_value_text = $self->expression_to_systemverilog_text($reset_expr);
@@ -2563,7 +2564,7 @@ sub parse_state($self, $state_ast) {
         "Malformed state/DT block '$state_name'. ".
         "FSM-state DT blocks like '(aState ...)' and general/combinational DT blocks like '(-mycombDT ...)' ".
         "must contain at least one nested decision-tree body or action form. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless @trees;
     
     for my $tree (@trees) {
@@ -2577,7 +2578,7 @@ sub parse_state($self, $state_ast) {
         "Malformed state/DT block '$state_name'. ".
         "FSM-state DT blocks like '(aState ...)' and general/combinational DT blocks like '(-mycombDT ...)' ".
         "must contain at least one real nested decision-tree action. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless $state->decision_trees && @{$state->decision_trees};
     
     return $state;
@@ -2589,7 +2590,7 @@ sub classify_state_name($self, $state_name) {
         "FSM-state DT blocks must use an HDL-identifier-compatible name like 'aState'; ".
         "general/combinational DT blocks must use a single leading '-' plus an HDL-identifier-compatible name like '-mycombDT'; ".
         "and reset-state names remain limited to '-syncrst', '-syncreset', '-asyncrst', or '-asyncreset'. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless defined($state_name) && !ref($state_name);
 
     return ('sync_reset', 'syncreset')
@@ -2606,7 +2607,7 @@ sub classify_state_name($self, $state_name) {
         "FSM-state DT blocks must use an HDL-identifier-compatible name like 'aState'; ".
         "general/combinational DT blocks must use a single leading '-' plus an HDL-identifier-compatible name like '-mycombDT'; ".
         "and reset-state names remain limited to '-syncrst', '-syncreset', '-asyncrst', or '-asyncreset'. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n";
+        supported_boundary_hint();
 }
 
 sub parse_decision_tree($self, $tree_ast) {
@@ -2657,7 +2658,7 @@ sub normalize_assignment_pair_action($self, $action) {
         "Malformed assignment pair form '".$self->describe_action_for_error($action)."'. ".
         "Canonical pair assignments must use '(assign-op (lhs rhs))' or '(assign-op (lhs rhs) <cond)'. ".
         "Supported assign-op tokens are '=', '<-', '<=', '<-=', '<=+', and delayed-pulse forms such as '<1'. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless $self->is_assignment_operator_token($operator);
 
     my @payload_items = @raw_payload == 1 && ref($raw_payload[0]) eq 'ARRAY'
@@ -2668,14 +2669,14 @@ sub normalize_assignment_pair_action($self, $action) {
         "Malformed assignment pair form '".$self->describe_action_for_error($action)."'. ".
         "Canonical pair assignments must use '(assign-op (lhs rhs))' or '(assign-op (lhs rhs) <cond)'. ".
         "The first payload after the operator must be one '(lhs rhs)' pair. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless @payload_items >= 1;
 
     my $pair = $self->unwrap_scalar_token(shift @payload_items);
     Carp::confess
         "Malformed assignment pair form '".$self->describe_action_for_error($action)."'. ".
         "Canonical pair assignments must use one '(lhs rhs)' payload after the operator, for example '(= (OUT VALUE))'. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless ref($pair) eq 'ARRAY' && @$pair == 2;
 
     my ($lhs, $rhs) = @$pair;
@@ -2685,7 +2686,7 @@ sub normalize_assignment_pair_action($self, $action) {
     Carp::confess
         "Malformed assignment pair form '".$self->describe_action_for_error($action)."'. ".
         "Canonical pair assignments require both LHS and RHS payloads, for example '(= (OUT VALUE))'. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless defined($lhs) && defined($rhs);
 
     return [$lhs, [$operator, $rhs, @payload_items]];
@@ -2711,7 +2712,7 @@ sub parse_action($self, $action) {
     Carp::confess
         "Malformed action form '".$self->describe_action_for_error($action)."'. ".
         "Actions inside decision trees must use a supported transition, assignment, guarded block, test node, or update form. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless ref($action) eq 'ARRAY' && @$action >= 2;
     
     my ($action_target, $action_spec) = @$action;
@@ -2727,13 +2728,13 @@ sub parse_action($self, $action) {
             "Unsupported generic/template repeat action '$action_target'. ".
             "The active contract does not support legacy '?repeat:...' expansion forms. ".
             "Expand the template before parsing or keep it in legacy-only sources. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n";
+            supported_boundary_hint();
     } elsif (!ref($action_target) && $action_target =~ /^\?\[[^\]]+\]$/) {
         Carp::confess
             "Unsupported generic/template test selector '$action_target'. ".
             "The active contract does not support legacy placeholder selectors like '?[NAME]'. ".
             "Expand the template before parsing or keep it in legacy-only sources. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n";
+            supported_boundary_hint();
     } elsif (!ref($action_target) && $action_target =~ /^\?/) {
         return $self->parse_test_node_new_format($action);
     } elsif ($self->is_compound_update_shorthand($action_target, $action_spec)) {
@@ -2748,7 +2749,7 @@ sub parse_action($self, $action) {
         Carp::confess
             "Unsupported action form '".$self->describe_action_for_error($action)."'. ".
             "Actions inside decision trees must use a supported transition, assignment, guarded block, test node, or update form. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n";
+            supported_boundary_hint();
     }
 }
 
@@ -2762,7 +2763,7 @@ sub parse_transition_new_format($self, $action) {
         Carp::confess
             "Malformed transition target '".($self->describe_action_for_error($action))."'. ".
             "State transitions must use '(-> target_state)' or '(-> target_state <condition_suffix)'. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            supported_boundary_hint()
             unless @$target_spec >= 1;
 
         $target_state = $target_spec->[0];
@@ -2780,7 +2781,7 @@ sub parse_transition_new_format($self, $action) {
                 Carp::confess
                     "Malformed transition condition suffix '$suffix_display'. ".
                     "State transitions must use '(-> target_state)', '(-> target_state <condition_suffix)', or '(-> target_state < condition_expression)'. ".
-                    "See docs/USER_GUIDE.md for the current supported boundary.\n";
+                    supported_boundary_hint();
             }
         }
     } else {
@@ -2794,7 +2795,7 @@ sub parse_transition_new_format($self, $action) {
     Carp::confess
         "Malformed transition target '$target_display'. ".
         "State transitions must target an HDL-identifier-compatible regular FSM-state DT name like 'busy'. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless defined($target_state)
             && !ref($target_state)
             && $target_state =~ /\A[A-Za-z_]\w*\z/;
@@ -2831,7 +2832,7 @@ sub parse_test_node_new_format($self, $action) {
         Carp::confess
             "Malformed computed test selector '?'. ".
             "Computed test nodes must use '?(expr)' with a valid selector expression followed by at least one selector branch such as '(?(| A B) (=0 ...) (=1 ...))'. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            supported_boundary_hint()
             unless ref($branches) eq 'ARRAY' && @$branches >= 2;
 
         # Format: (?(| a b) (=0 x))
@@ -2844,7 +2845,7 @@ sub parse_test_node_new_format($self, $action) {
                 Carp::confess
                     "Malformed computed test selector '?'. ".
                     "Computed test nodes must start with a real selector expression before the branch list, for example '(?(| A B) (=0 ...) (=1 ...))'. ".
-                    "See docs/USER_GUIDE.md for the current supported boundary.\n";
+                    supported_boundary_hint();
             }
         }
 
@@ -2868,7 +2869,7 @@ sub parse_test_node_new_format($self, $action) {
         Carp::confess
             "Malformed test signal '$test_signal'. ".
             "Plain test nodes must use '?signal_name' with an HDL-identifier-compatible signal name, or the computed form '?(expr)'. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            supported_boundary_hint()
             unless defined($signal_name)
                 && $signal_name =~ /\A[A-Za-z_]\w*\z/;
 
@@ -2889,7 +2890,7 @@ sub parse_test_node_new_format($self, $action) {
             Carp::confess
                 "Malformed test branch '$branch_desc'. ".
                 "Test-node branches must include a value selector like '=0' plus at least one nested action. ".
-                "See docs/USER_GUIDE.md for the current supported boundary.\n"
+                supported_boundary_hint()
                 unless ref($branch) eq 'ARRAY' && @$branch >= 2;
 
 	            my ($test_value, @branch_actions) = @$branch;
@@ -2898,7 +2899,7 @@ sub parse_test_node_new_format($self, $action) {
                 Carp::confess
                     "Malformed test selector '$test_value'. ".
                     "A test node may contain at most one default selector branch, spelled 'default' or '_'. ".
-                    "See docs/USER_GUIDE.md for the current supported boundary.\n"
+                    supported_boundary_hint()
                     if $seen_default_branch++;
             }
             $self->propagate_test_selector_width_to_signal($signal, $test_value);
@@ -2908,7 +2909,7 @@ sub parse_test_node_new_format($self, $action) {
                 Carp::confess
                     "Malformed test branch '$test_value'. ".
                     "Test-node branches must include at least one real nested action after the selector. ".
-                    "See docs/USER_GUIDE.md for the current supported boundary.\n"
+                    supported_boundary_hint()
                     unless defined $branch_action;
 
                 if (ref($branch_action) eq 'ARRAY') {
@@ -2945,7 +2946,7 @@ sub validate_test_branch_selector($self, $test_value) {
     Carp::confess
         "Malformed test selector '$display'. ".
         "Test-node branches must use an explicit selector token like '=0', '=OTHER', '!=8\\'0', or '>8\\'3', or a single default selector spelled 'default' or '_'. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless defined($test_value)
             && !ref($test_value)
             && $test_value =~ /^(?:==|!=|<=|>=|=|<|>).+/;
@@ -3038,7 +3039,7 @@ sub parse_nested_condition_new_format($self, $action) {
     Carp::confess
         "Malformed guarded block '$condition_desc'. ".
         "Guarded blocks must have a valid condition and at least one nested action. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n";
+        supported_boundary_hint();
 }
 
 sub parse_signal_action($self, $action) {
@@ -3055,7 +3056,7 @@ sub parse_signal_action($self, $action) {
             Carp::confess
                 "Duplicate inline compound modifier '".$self->describe_inline_compound_modifier($tail)."' on signal '$signal_name_display'. ".
                 "Only one inline compound modifier may follow the RHS expression. ".
-                "See docs/USER_GUIDE.md for the current supported boundary.\n"
+                supported_boundary_hint()
                 if $compound_spec;
             $compound_spec = $tail;
             next;
@@ -3158,14 +3159,14 @@ sub parse_signal_action($self, $action) {
         Carp::confess
             "Malformed LHS deconstruct assignment '$signal_name_display'. ".
             "The RHS must have an exact positive width before generation so the deconstruct split is unambiguous. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            supported_boundary_hint()
             unless $rhs_explicit && defined($rhs_width) && $rhs_width > 0;
 
         Carp::confess
             "Malformed LHS deconstruct assignment '$signal_name_display'. ".
             "LHS deconstruct total width $lhs_width does not match RHS width $rhs_width. ".
             "FSMGen will not silently pad or truncate deconstruct assignments; align the RHS explicitly before generation. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            supported_boundary_hint()
             unless $lhs_width == $rhs_width;
 
         $width_contract{resolution} = 'exact_match';
@@ -3371,7 +3372,7 @@ sub parse_signal_action($self, $action) {
         Carp::confess
             "Unsupported assignment operator '$operator' for signal '$signal_name_display'. ".
             "Decision-tree assignments must use one of '=', '<-', '<-=', '<=', '<=+', or a delayed-pulse form like '<1'. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n";
+            supported_boundary_hint();
     }
     
     if (defined $full_condition) {
@@ -3461,7 +3462,7 @@ sub resolve_single_bit_logic_level($self, $source_expr, $raw_value_expr) {
             Carp::confess
                 "Malformed delayed pulse RHS '$rhs_desc'. ".
                 "Delayed pulse assignments must use '(P <N 0)' or '(P <N 1)' with a 1-bit literal RHS. ".
-                "See docs/USER_GUIDE.md for the current supported boundary.\n";
+                supported_boundary_hint();
         }
         if (defined($value) && $value =~ /^[01]$/) {
             $logic_level = int($value);
@@ -3480,7 +3481,7 @@ sub resolve_single_bit_logic_level($self, $source_expr, $raw_value_expr) {
         Carp::confess
             "Malformed delayed pulse RHS '$rhs_desc'. ".
             "Delayed pulse assignments must use '(P <N 0)' or '(P <N 1)' with a 1-bit literal RHS. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n";
+            supported_boundary_hint();
     }
     return $logic_level;
 }

@@ -7,6 +7,9 @@ Recommended entry points now are:
 
 - `docs/book/src/SUMMARY.md` for the book table of contents
 - `docs/book/src/00-introduction.md` for the conceptual starting point
+- `docs/book/src/90-reference-map.md` for the old-guide-to-book map
+- `docs/book/src/10-errors-strict-mode-and-troubleshooting.md` for runtime
+  diagnostic and strict-mode guidance
 - `docs/book/src/12-cookbook.md` for copyable patterns
 
 This file still carries the full live reference during the migration, but
@@ -14,6 +17,8 @@ contractual user-facing material should be moved into the mdBook chapter that
 owns the topic. When this guide and the book differ, treat the difference as a
 documentation bug to reconcile rather than as permission to leave normative
 language only in this monolithic guide.
+Runtime diagnostics should point at the mdBook chapter map or owning chapter,
+not at this file as the primary normative target.
 
 ## 1) What FSMGen is
 FSMGen converts Lisp-like `.fsm` state-machine descriptions into HDL.

@@ -15,6 +15,8 @@ sub build_documentation_section {
     return {
         human_contract => [
             'docs/book/src/SUMMARY.md',
+            'docs/book/src/90-reference-map.md',
+            'docs/book/src/10-errors-strict-mode-and-troubleshooting.md',
             'docs/USER_GUIDE.md',
             'docs/REGRESSION_CORPUS.md',
         ],

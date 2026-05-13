@@ -14,6 +14,7 @@ use FSM::Package::AggregatePathSupport;
 use FSM::Package::IntegerLiteralSupport;
 use FSM::Package::PayloadLiteralSupport;
 use FSM::Package::PayloadTypeSupport;
+use FSM::Support::DocumentationHints qw(supported_boundary_hint);
 
 sub new($class, %args) {
     # Requires a signal_manager
@@ -80,14 +81,14 @@ sub malformed_guard_condition_error($self, $condition_spec) {
     Carp::confess
         "Malformed guard condition payload '$condition_spec'. ".
         "Guard shorthand must use a valid signal/expression comparison such as '<foo', '<!foo', '<foo=3', or '<foo<=3'. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n";
+        supported_boundary_hint();
 }
 
 sub malformed_inline_comparison_error($self, $scalar) {
     Carp::confess
         "Malformed inline comparison expression '$scalar'. ".
         "Inline comparison tokens must use valid operands on both sides of the comparison operator. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n";
+        supported_boundary_hint();
 }
 
 sub ambiguous_bare_integer_literal_error($self, $scalar) {
@@ -98,7 +99,7 @@ sub ambiguous_bare_integer_literal_error($self, $scalar) {
         "Ambiguous bare integer literal '$scalar'. ".
         "FSMGen does not guess obviously bitstring-like bare 0/1 tokens in value or expression position. ".
         "Use '$binary_example' for intrinsic-width binary, '$exact_width_example' for exact-width binary, or '$decimal_example' if decimal was intended. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n";
+        supported_boundary_hint();
 }
 
 sub parse_legacy_condition_spec($self, $condition_spec, %options) {
@@ -263,7 +264,7 @@ sub parse_recursive_expression($self, $expr) {
     Carp::confess
         "Unsupported expression operator '$operator'. ".
         "Active expression operators currently include '!', '!&', '!|', '!^', '==', '!=', '<', '<=', '>', '>=', '+', '-', '*', '/', '%', '&', '|', '^', 'concat' and their documented aliases. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless $operator_family;
 
     fsm_debug("          Recursive expr: $operator with " . scalar(@operands) . " operands", 3);
@@ -278,7 +279,7 @@ sub parse_recursive_expression($self, $expr) {
         Carp::confess
             "Malformed expression operator '$operator' with " . scalar(@parsed_operands) . " operand(s). ".
             "This active form requires exactly 1 operand. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            supported_boundary_hint()
             unless @parsed_operands == 1;
 
         return FSM::CoreAST::UnaryOp->new(
@@ -290,7 +291,7 @@ sub parse_recursive_expression($self, $expr) {
     Carp::confess
         "Malformed expression operator '$operator' with " . scalar(@parsed_operands) . " operand(s). ".
         "This active form requires at least 2 operands. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        supported_boundary_hint()
         unless @parsed_operands >= 2;
 
     return $self->build_chained_relational_expression($normalized_operator, \@parsed_operands)
@@ -303,7 +304,7 @@ sub parse_recursive_expression($self, $expr) {
         Carp::confess
             "Malformed concat expression with " . scalar(@parsed_operands) . " operand(s). ".
             "Direct RHS concat operands must have exact widths from declared signal widths, bit/slice or aggregate leaf access, or explicitly sized literal constants before generation. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            supported_boundary_hint()
             unless defined($concat_width) && $concat_width > 0;
 
         return $concat;
@@ -389,7 +390,7 @@ sub parse_expression($self, $expr) {
         Carp::confess
             "Malformed expression list '()'. ".
             "Expressions must use a literal, signal reference, or supported operator form. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            supported_boundary_hint()
             unless @$expr;
 
         if ($self->is_recursive_expression($expr)) {
@@ -402,7 +403,7 @@ sub parse_expression($self, $expr) {
         Carp::confess
             "Unsupported expression payload type '" . ref($expr) . "'. ".
             "Expressions must use a literal, signal reference, or supported operator form. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n";
+            supported_boundary_hint();
     }
 }
 
@@ -414,7 +415,7 @@ sub parse_scalar_expression($self, $scalar) {
             "Unsupported generic/template placeholder token '$scalar'. ".
             "The active contract does not support legacy placeholder-expansion forms like '[NAME]' or '[?size: ...]'. ".
             "Expand the template before parsing or keep it in legacy-only sources. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n";
+            supported_boundary_hint();
     }
 
     my $resolved_symbol = $self->{signal_manager}->resolve_symbol($scalar);
@@ -434,7 +435,7 @@ sub parse_scalar_expression($self, $scalar) {
             "Unsupported aggregate-valued symbol '$scalar'. ".
             "The active scalar-expression lane currently requires whole aggregate roots to lower to one packed literal with scalar literal leaves. ".
             "This aggregate could not be lowered because '$reason' is outside that bounded contract. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n";
+            supported_boundary_hint();
     }
 
     my $aggregate_prefix = $self->{signal_manager}->aggregate_symbol_prefix_for($scalar);
@@ -442,7 +443,7 @@ sub parse_scalar_expression($self, $scalar) {
         Carp::confess
             "Unsupported aggregate-valued symbol '$scalar'. ".
             "The active scalar-expression lane currently requires member/index access all the way to a scalar leaf, for example '$aggregate_prefix.member' or '$aggregate_prefix\[0\]'. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n";
+            supported_boundary_hint();
     }
 
     my $typed_aggregate_ref = $self->parse_typed_aggregate_signal_reference($scalar);
@@ -490,7 +491,7 @@ sub parse_scalar_expression($self, $scalar) {
         Carp::confess
             "Unsupported expression token '$scalar'. ".
             "Active dotted package-qualified symbols must resolve to imported named scalar or enum values before expression parsing. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n";
+            supported_boundary_hint();
     } elsif ($scalar =~ /^([a-zA-Z_]\w*)(\.[a-zA-Z_]\w*)?(\[[\d:]+\])?('(\d+))?(\>)?$/) {
         my ($base_name, $member_name, $slice, $width_annotation, $width, $output_marker) = ($1, $2, $3, $4, $5, $6);
         my $full_name = $member_name ? "$base_name$member_name" : $base_name;
@@ -525,7 +526,7 @@ sub parse_scalar_expression($self, $scalar) {
             "Unsupported expression token '$scalar'. ".
             "Active expressions must use a literal, a valid signal reference, or a supported operator form. ".
             "Guard-prefixed tokens belong in condition position, not inside ordinary expressions. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n";
+            supported_boundary_hint();
     }
 }
 
@@ -820,13 +821,13 @@ sub confess_typed_aggregate_signal_path_error($self, $error, $base_name, $raw_sc
         Carp::confess
             "Unsupported typed aggregate signal access '$raw_scalar'. ".
             "The resolved aggregate leaf has no positive packed width. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n";
+            supported_boundary_hint();
     }
 
     Carp::confess
         "Malformed typed aggregate signal access '$raw_scalar'. ".
         "Aggregate path resolution failed unexpectedly. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n";
+        supported_boundary_hint();
 }
 
 sub parse_sexpr_expression($self, $sexpr) {
@@ -841,7 +842,7 @@ sub parse_sexpr_expression($self, $sexpr) {
     Carp::confess
         "Unsupported expression operator '$operator'. ".
         "Active expression operators currently include '!', '==', '!=', '<', '<=', '>', '>=', '+', '-', '*', '/', '%', '&', '|', '^', 'concat' and their documented aliases. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n";
+        supported_boundary_hint();
 }
 
 sub infer_exact_expression_width($self, $expr) {

@@ -31,6 +31,11 @@ use FSM::Package::ImportResolver;
 use FSM::Package::SignalManagerProjectionSupport;
 use FSM::SourceClassifier;
 use FSM::SourcePathResolver;
+use FSM::Support::DocumentationHints qw(
+    package_boundary_hint
+    strict_mode_boundary_hint
+    supported_boundary_hint
+);
 use Lispish;
 
 sub parse_fsm_file ($class, %args) {
@@ -288,7 +293,7 @@ sub enforce_strict_source_boundary ($class, %args) {
             "Strict mode rejects the legacy '+fsm' root family for source '$source_label'. "
           . "Use the modern '?fsm:module_name' root form instead of '+fsm', "
           . "or re-run without strict mode if you need legacy compatibility. "
-          . "See docs/USER_GUIDE.md for the current strict-mode boundary.\n";
+          . strict_mode_boundary_hint();
     }
 
     if ($header =~ /^\?module:/) {
@@ -296,7 +301,7 @@ sub enforce_strict_source_boundary ($class, %args) {
             "Strict mode rejects the legacy '?module:' direct-root alias for source '$source_label'. "
           . "Use the canonical '?mod:module_name' root form for module/entity-architecture roots, "
           . "or re-run without strict mode if you need compatibility with the current shared implementation path. "
-          . "See docs/USER_GUIDE.md for the current strict-mode boundary.\n";
+          . strict_mode_boundary_hint();
     }
 
     return if $header =~ /^\?mod:/;
@@ -313,7 +318,7 @@ sub enforce_strict_source_boundary ($class, %args) {
                 "Strict mode rejects the legacy empty '(+size)' section in source '$source_label'. "
               . "Remove the empty section or replace it with explicit '(+size (signal width) ...)' entries, "
               . "or re-run without strict mode if you need legacy compatibility. "
-              . "See docs/USER_GUIDE.md for the current strict-mode boundary.\n";
+              . strict_mode_boundary_hint();
         }
 
         for my $item (@$body_items) {
@@ -324,7 +329,7 @@ sub enforce_strict_source_boundary ($class, %args) {
                 "Strict mode rejects the legacy or misleading '$reset_issue->{form}' +system spelling in source '$source_label'. "
               . "Use '(sreset reset)' for synchronous active-high reset or '(areset rst_n)' for asynchronous active-low reset, "
               . "or re-run without strict mode if you need legacy compatibility. "
-              . "See docs/USER_GUIDE.md for the current strict-mode boundary.\n";
+              . strict_mode_boundary_hint();
         }
 
         for my $item (@$body_items) {
@@ -334,7 +339,7 @@ sub enforce_strict_source_boundary ($class, %args) {
                 "Strict mode rejects the legacy compact '(:= signal=value)' top-level directive in source '$source_label'. "
               . "Use the canonical '(:= (signal value))' form for strict-mode init/default metadata, "
               . "or re-run without strict mode if you still need the compact ':=' surface. "
-              . "See docs/USER_GUIDE.md for the current strict-mode boundary.\n";
+              . strict_mode_boundary_hint();
         }
 
         if (my $infix_issue = $class->_find_strict_infix_assignment_issue($body_items)) {
@@ -342,7 +347,7 @@ sub enforce_strict_source_boundary ($class, %args) {
                 "Strict mode rejects infix assignment '$infix_issue->{display}' in source '$source_label'. "
               . "Use the canonical pair form '$infix_issue->{canonical_hint}' for strict-mode assignment intent, "
               . "or re-run without strict mode if you still need infix assignment compatibility. "
-              . "See docs/USER_GUIDE.md for the current strict-mode boundary.\n";
+              . strict_mode_boundary_hint();
         }
     }
 }
@@ -362,7 +367,7 @@ sub enforce_strict_generated_child_source_boundary ($class, %args) {
             "Strict mode rejects the legacy '+fsm' root family as the root of '$declared_child_kind' source '$source_label'. "
           . "Use the canonical '?fsm:source_name' root form for FSM child sources, "
           . "or re-run without strict mode if you need legacy compatibility. "
-          . "See docs/USER_GUIDE.md for the current strict-mode boundary.\n";
+          . strict_mode_boundary_hint();
     }
 
     if ($declared_child_kind eq '?dtc' && $header =~ /^\?(?:mod|module):/) {
@@ -370,7 +375,7 @@ sub enforce_strict_generated_child_source_boundary ($class, %args) {
             "Strict mode rejects '$header' as the root of '$declared_child_kind' source '$source_label'. "
           . "Use the canonical '?dt:source_name' root form for standalone-DT child sources, "
           . "or re-run without strict mode if you need compatibility with the current shared implementation path. "
-          . "See docs/USER_GUIDE.md for the current strict-mode boundary.\n";
+          . strict_mode_boundary_hint();
     }
 }
 
@@ -417,7 +422,7 @@ sub create_fsm_module ($class, %args) {
                     : ''
             ),
             debug_level => $debug_level,
-            docs_hint => " See docs/USER_GUIDE.md for the current package boundary.\n",
+            docs_hint => ' ' . package_boundary_hint(),
         );
         $class->_import_package_symbols_into_signal_manager(
             signal_manager => $signal_manager,
@@ -704,7 +709,7 @@ sub _parse_direct_import_block ($class, $source_label, $imports_ast) {
     confess
         "Malformed '+import' section in source '$source_label'. "
       . "The active contract supports '+import' only as a non-empty list of HDL-identifier-compatible package names. "
-      . "See docs/USER_GUIDE.md for the current supported boundary.\n"
+      . supported_boundary_hint()
         unless ref($imports_list) eq 'ARRAY' && @$imports_list;
 
     my @package_names;
@@ -713,7 +718,7 @@ sub _parse_direct_import_block ($class, $source_label, $imports_ast) {
         confess
             "Malformed '+import' package name '$resolved_name' in source '$source_label'. "
           . "The active contract expects each imported package name to be an HDL-identifier-compatible bare name. "
-          . "See docs/USER_GUIDE.md for the current supported boundary.\n"
+          . supported_boundary_hint()
             unless defined($resolved_name) && !ref($resolved_name) && $resolved_name =~ /\A[A-Za-z_]\w*\z/;
         push @package_names, $resolved_name;
     }

@@ -5,6 +5,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Next decision point: continue the USER_GUIDE-to-mdBook migration by
   dispatching the remaining broad guide contract into embedding/CLI and ISF
   book chapters, with commits after each safe doc slice.
+- Runtime parser/source diagnostics now use book-owned documentation hints for
+  supported-boundary, strict-mode, and package-boundary failures. The old guide
+  remains a migration reference, not the primary diagnostic target.
 - The mdBook composition chapters now carry the broad `?top` composition
   boundary that had been centralized in `docs/USER_GUIDE.md`: root/body shape,
   flat top-port tokens, `=name` rules, generated-child source resolution,

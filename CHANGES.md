@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — book-owned diagnostic documentation hints
+- Added [perl/FSM/Support/DocumentationHints.pm](perl/FSM/Support/DocumentationHints.pm)
+  as the central owner for runtime diagnostic documentation pointers.
+- Replaced parser, expression-builder, source-frontend, and source-generation
+  diagnostic hints that pointed at [docs/USER_GUIDE.md](docs/USER_GUIDE.md)
+  with book-owned supported-boundary, strict-mode, and package-boundary hints.
+- Updated the mdBook, user guide preamble, documentation manifest surface, and
+  focused tests so runtime diagnostics follow the guide-to-book migration.
 ### R14 — composition guide-to-book migration
 - Migrated broad `?top` composition contract material from
   [docs/USER_GUIDE.md](docs/USER_GUIDE.md) into

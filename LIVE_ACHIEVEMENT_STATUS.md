@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — book-owned diagnostic documentation hints
+- Active: `R14`. Runtime parser/source diagnostics now use centralized
+  book-owned documentation hints for supported-boundary, strict-mode, and
+  package-boundary failures instead of pointing at `docs/USER_GUIDE.md`.
+- The mdBook troubleshooting chapter and reference map now record that
+  diagnostic hints should route users to the book while the old guide remains
+  a migration reference.
+
 ## 2026-05-13: R14 — composition guide-to-book migration
 - Active: `R14`. The mdBook composition chapters now carry the broad `?top`
   contract previously centralized in `docs/USER_GUIDE.md`, including root/body

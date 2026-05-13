@@ -27,6 +27,7 @@ use FSM::Debug;
 use FSM::Extension::Context;
 use FSM::Pipeline::DirectGenerationOrchestrator;
 use FSM::Pipeline::SourceFrontend;
+use FSM::Support::DocumentationHints qw(package_boundary_hint supported_boundary_hint);
 
 sub _with_source_file_context ($fsm_file, $code_ref) {
     my @result = eval { $code_ref->() };
@@ -72,7 +73,7 @@ sub generate_from_file ($class, %args) {
                 "Unsupported top-level source '$header'. "
               . "The active pipeline supports '?fsm:name', '?dt:name', '?mod:name', '?module:name', '+fsm', and '?top:name'. "
               . "Other tagged source kinds such as '?define:' are out of active support. "
-              . "See docs/USER_GUIDE.md for the current supported boundary.\n";
+              . supported_boundary_hint();
         }
 
         if (($source_info->{kind} // 'unknown') eq 'package') {
@@ -81,7 +82,7 @@ sub generate_from_file ($class, %args) {
                 "Package source '$header' does not generate HDL directly. "
               . "The first semantic package lane treats '?pkg:name' roots as reusable declaration containers for import into composition sources, not as standalone HDL-generation roots. "
               . "Import this package from '?top:name' with '+import', or use a direct '?fsm:name', '?dt:name', '?mod:name', '?module:name', '+fsm', or '?top:name' source when you want HDL output. "
-              . "See docs/USER_GUIDE.md for the current package boundary.\n";
+              . package_boundary_hint();
         }
 
         if ($source_info->{kind} && $source_info->{kind} eq 'composition') {

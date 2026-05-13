@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 book-owned diagnostic documentation hints
+- After moving direct `.fsm` and composition contract into the mdBook, leaving
+  runtime diagnostics pointed at `docs/USER_GUIDE.md` would keep the old guide
+  as the effective normative target for failure recovery.
+- The new `FSM::Support::DocumentationHints` module keeps diagnostic doc
+  pointers centralized while the book split continues. General supported
+  boundary diagnostics route through the reference map; strict-mode and
+  package/import diagnostics point at their owning chapters directly.
+- The old guide still remains in the documentation manifest as a migration
+  reference, but the manifest now also advertises the book reference map and
+  troubleshooting chapter for human contract discovery.
 ## 2026-05-13: R14 composition guide-to-book migration
 - The second guide-to-book slice targets `?top` composition because
   `docs/USER_GUIDE.md` still carried broad normative lists for child forms,

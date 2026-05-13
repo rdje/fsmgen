@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — book-owned diagnostic documentation hints
+- Runtime diagnostics no longer send users to `docs/USER_GUIDE.md` as the
+  primary supported-boundary target. `FSM::Support::DocumentationHints` now
+  centralizes the supported, strict-mode, and package-boundary documentation
+  sentences and points them into mdBook chapter homes.
+- Parser, expression-builder, source-frontend, and source-generation
+  diagnostics now consume those hints. The documentation manifest also lists
+  the book reference map and troubleshooting chapter as human-contract docs.
 ## 2026-05-13: R14 — composition guide-to-book migration
 - Migrated the broad `?top` composition boundary from `docs/USER_GUIDE.md`
   into the mdBook composition chapters: top-root body shape, flat `?ports`

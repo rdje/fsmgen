@@ -1877,6 +1877,11 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
 
     my %human_contract_docs = map { $_ => 1 } @{$manifest->{documentation}{human_contract} || []};
     ok($human_contract_docs{'docs/book/src/SUMMARY.md'}, 'manifest points human readers at the book summary');
+    ok($human_contract_docs{'docs/book/src/90-reference-map.md'}, 'manifest points human readers at the book reference map');
+    ok(
+        $human_contract_docs{'docs/book/src/10-errors-strict-mode-and-troubleshooting.md'},
+        'manifest points human readers at runtime diagnostic guidance',
+    );
     ok($human_contract_docs{'docs/USER_GUIDE.md'}, 'manifest points human readers at the live user guide');
 
     my %blocked = map { $_ => 1 } @{$manifest->{language_surface}{intentionally_blocked_or_not_yet_public}};

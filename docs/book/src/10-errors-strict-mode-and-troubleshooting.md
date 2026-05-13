@@ -78,6 +78,20 @@ for example:
 That is especially important in composition, where the failing surface is often
 one declared link or one inferred boundary family.
 
+## Diagnostic Documentation Hints
+
+Runtime diagnostics now point at mdBook chapters for user-facing contract
+boundaries:
+
+- the broad supported-boundary hint points at the reference map, which routes
+  readers to the owning chapter family
+- strict-mode diagnostics point at this chapter
+- package/import diagnostics point at the symbols/types and package chapters
+
+`docs/USER_GUIDE.md` remains a migration reference while the split continues,
+but diagnostics should not use it as the primary normative target for current
+language, package, strict-mode, or composition boundaries.
+
 ## Strict Mode
 
 Strict mode exists to narrow the language toward the supported intentional

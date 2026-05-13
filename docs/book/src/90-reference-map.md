@@ -85,6 +85,8 @@ The mdBook scaffold is real and buildable now.
 The migration is still ongoing:
 
 - the book is the progressive learning surface
+- runtime diagnostics now use book-owned documentation hints for the current
+  supported, strict-mode, and package boundaries
 - focused docs may still carry narrow maintainer or machine-contract detail
 - the old guide remains a migration checklist, not a place to leave
   user-facing contract stranded
