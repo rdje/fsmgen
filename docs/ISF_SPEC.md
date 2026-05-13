@@ -457,13 +457,16 @@ guard clause with no body of its own; it guards the rule actions that follow
 it. The preferred rule shorthand is `(rule name condition action...)`, which
 normalizes to the same public `when` field as the long guard spelling.
 
-`(switch signal (value body...)...)` creates one decision state with one branch
-per unique explicit value. Duplicate explicit values are rejected. A switch may
-also contain one fallback branch, spelled `(default body...)` or `(_ body...)`.
-Those spellings are aliases and are rejected if both appear in the same switch.
-If no authored fallback branch is present, the scheduler emits an implicit
-`.fsm` `(default (-> next_state))` fallthrough branch to the first state after
-the whole switch.
+`(switch signal (value body...)...)` is structurally validated with one scalar
+signal and one or more list-form branches before branch expansion. Each branch
+must provide one scalar value and at least one list-form body clause. The
+scheduler then creates one decision state with one branch per unique explicit
+value. Duplicate explicit values are rejected. A switch may also contain one
+fallback branch, spelled `(default body...)` or `(_ body...)`. Those spellings
+are aliases and are rejected if both appear in the same switch. If no authored
+fallback branch is present, the scheduler emits an implicit `.fsm`
+`(default (-> next_state))` fallthrough branch to the first state after the
+whole switch.
 
 The generated `.fsm` default selector means "no explicit sibling branch
 predicate matched." Downstream `.fsm` lowering expands it as the logical
@@ -903,6 +906,7 @@ Focused tests:
 - [t/1202-isf-repeat-clause-boundary.t](../t/1202-isf-repeat-clause-boundary.t)
 - [t/1203-isf-await-sync-clause-boundary.t](../t/1203-isf-await-sync-clause-boundary.t)
 - [t/1204-isf-child-composition-clause-boundary.t](../t/1204-isf-child-composition-clause-boundary.t)
+- [t/1205-isf-switch-clause-boundary.t](../t/1205-isf-switch-clause-boundary.t)
 
 ## 12. Explicitly Deferred
 

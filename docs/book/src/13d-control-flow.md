@@ -65,6 +65,10 @@ Each explicit branch value must be unique. An optional fallback can be
 written as `default` or `_`. Body clauses are expanded inline, and each branch
 tail exits to the first state after the whole switch.
 
+The form is exact: `(switch signal (value body...)...)`, with a scalar
+non-empty signal and one or more list-form branches. Each branch must carry a
+scalar value and at least one list-form body clause before branch expansion.
+
 **Lowering**: `?signal` decision tree.
 ```lisp
 (dispatch_switch_4

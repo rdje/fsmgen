@@ -2,6 +2,12 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF switch clause boundary
+- Active: `R14`. `(switch signal (value body...)...)` now requires a scalar
+  signal and one or more list-form branches before scheduled `.fsm` emission.
+- `t/1205` covers valid explicit/default branch lowering plus malformed switch
+  signal, branch, value, and body forms.
+
 ## 2026-05-13: R14 — ISF child composition clause boundary
 - Active: `R14`. `(do transaction)` and `(spawn transaction as instance)` now
   require exact scalar child/instance operands before scheduled `.fsm`

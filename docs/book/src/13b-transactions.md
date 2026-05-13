@@ -230,6 +230,10 @@ counter, widened to the largest branch requirement.
 
 **Timing**: 1 cycle. Then matching branch body cycles.
 
+The form is exact: `(switch signal (value body...)...)`, with a scalar signal
+and one or more list-form branches. Each branch must carry a scalar value and
+at least one list-form body clause.
+
 **What happens**:
 1. `(?signal (=val1 -> branch1) (=val2 -> branch2) ... (default -> skip))`
 2. Each branch body is expanded inline as sequential states

@@ -513,6 +513,7 @@ sub _validate_supported_transaction_clauses {
         } elsif ($keyword eq 'do' || $keyword eq 'spawn') {
             _validate_child_action_clause($clause, $tn, $label);
         } elsif ($keyword eq 'switch') {
+            _validate_switch_clause($clause, $tn, $label);
             for my $branch (@{$clause}[2 .. $#$clause]) {
                 next unless ref($branch) eq 'ARRAY';
                 _validate_supported_transaction_clauses([@{$branch}[1 .. $#$branch]], $tn, 'switch');
@@ -560,6 +561,32 @@ sub _validate_shift_clause {
             && defined($clause->[2])
             && !ref($clause->[2])
             && length($clause->[2]);
+
+    return 1;
+}
+
+sub _validate_switch_clause {
+    my ($clause, $tn, $label) = @_;
+
+    confess "Transaction '$tn': switch requires '(switch signal (value body...)...)' in $label\n"
+        unless @$clause >= 3
+            && defined($clause->[1])
+            && !ref($clause->[1])
+            && length($clause->[1]);
+
+    for my $branch (@{$clause}[2 .. $#$clause]) {
+        confess "Transaction '$tn': switch branches require '(value body...)' in $label\n"
+            unless ref($branch) eq 'ARRAY'
+                && @$branch >= 2
+                && defined($branch->[0])
+                && !ref($branch->[0])
+                && length($branch->[0]);
+
+        for my $body_clause (@{$branch}[1 .. $#$branch]) {
+            confess "Transaction '$tn': switch branches require '(value body...)' in $label\n"
+                unless ref($body_clause) eq 'ARRAY';
+        }
+    }
 
     return 1;
 }

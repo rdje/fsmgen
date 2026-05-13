@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF switch clause boundary
+- Switch lowering allocates branch body states before the switch decision state
+  is assembled. Scalar branches or malformed branch values could previously be
+  skipped or converted into placeholder branch states during expansion.
+- The lowerer now validates the switch shell before branch expansion: scalar
+  signal, at least one list-form branch, scalar branch value, and list-form
+  body clauses. Unsupported body operations still use the existing
+  switch-branch context diagnostics.
 ## 2026-05-13: R14 ISF child composition clause boundary
 - `spawn` participates in child-module collection before the parent transaction
   is expanded. Letting malformed spawn clauses reach that stage can create

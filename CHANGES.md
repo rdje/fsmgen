@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF switch clause boundary
+- Tightened [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so `(switch signal (value body...)...)` requires one scalar signal plus one
+  or more list-form branches before branch expansion.
+- Added [t/1205-isf-switch-clause-boundary.t](t/1205-isf-switch-clause-boundary.t)
+  for valid explicit/default branch lowering plus malformed switch rejection.
+- Updated the ISF public-interface contract metadata, ISF spec, mdBook
+  control-flow/transaction chapters, and roadmap notes.
 ### R14 — ISF child composition clause boundary
 - Tightened [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
   so `(do transaction)` and `(spawn transaction as instance)` require exact

@@ -361,6 +361,10 @@ The child-composition clause boundary is checked by
 so `(do transaction)` and `(spawn transaction as instance)` require exact
 scalar child/instance operands before child-target resolution or spawned-child
 collection.
+The switch-clause boundary is checked by
+[t/1205-isf-switch-clause-boundary.t](../t/1205-isf-switch-clause-boundary.t)
+so `(switch signal (value body...)...)` requires one scalar signal, one or more
+list-form branches, and scalar branch values before branch expansion.
 ISF switch fallback scheduling is checked by
 [t/1103-isf-switch-branch-exits.t](../t/1103-isf-switch-branch-exits.t)
 and the generated `.fsm` default selector contract is checked by

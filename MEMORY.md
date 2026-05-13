@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF switch clause boundary
+- ISF `(switch signal (value body...)...)` lowering now validates one scalar
+  signal plus one or more list-form branches before branch expansion.
+- Malformed missing-signal, nested-signal, missing-branch, scalar-branch,
+  nested-value, and scalar-body forms now fail before scheduled `.fsm`
+  emission.
+- Added `t/1205-isf-switch-clause-boundary.t` and updated the ISF public
+  contract metadata, spec, mdBook, and live roadmap notes.
 ## 2026-05-13: R14 — ISF child composition clause boundary
 - ISF `(do transaction)` and `(spawn transaction as instance)` lowering now
   validates exact scalar child/instance shapes before child-target resolution
