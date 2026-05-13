@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF do-child done pulse
+- Changed blocking `(do child)` lowering so the generated internal
+  `child_done` handoff uses `<1`, not `<-`, in the rewired child terminal
+  state. This matches public `(complete done)` pulse timing and prevents a
+  repeated `do` call from seeing a stale sticky child-done bit.
+- Added `t/1177-isf-do-child-done-pulse.t`, updated `t/1110`, and amended the
+  ISF spec, public-interface contract, mdBook composition/lowering chapters,
+  and live roadmap notes.
+- The full regression exposed an order-sensitive `ExpressionNamer` wire
+  declaration failure in `t/520`; `generate_wire_declarations` now computes the
+  MSB in a scalar before formatting, avoiding scalar-reference interpolation in
+  emitted wire ranges.
 ## 2026-05-13: R14 — ISF resource/priority parser boundaries
 - Tightened parser validation for resource and priority metadata. Actor-level
   resources now require `(resource name (arbiter priority|round_robin))`,

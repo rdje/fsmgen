@@ -459,7 +459,9 @@ Current lowering:
 - The child idle state is rewired to wait on `child_transaction_start`.
 - The rewired child idle state enters the first non-entry child state, so the
   child body does not need to begin with a drive state.
-- The child's terminal state assigns `child_transaction_done`.
+- The child's terminal state pulses `child_transaction_done` with `<1`, matching
+  the completion-pulse contract and avoiding sticky done bits across repeated
+  blocking calls.
 - The parent `do` state asserts `child_transaction_start` directly.
 
 ### 8.2 Spawn
@@ -766,6 +768,7 @@ Focused tests:
 - [t/1174-isf-extract-explicit-widths.t](../t/1174-isf-extract-explicit-widths.t)
 - [t/1175-isf-contract-fail-closed.t](../t/1175-isf-contract-fail-closed.t)
 - [t/1176-isf-resource-priority-boundary.t](../t/1176-isf-resource-priority-boundary.t)
+- [t/1177-isf-do-child-done-pulse.t](../t/1177-isf-do-child-done-pulse.t)
 
 ## 12. Explicitly Deferred
 

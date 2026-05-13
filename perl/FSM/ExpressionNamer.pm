@@ -1291,7 +1291,8 @@ sub generate_wire_declarations($self) {
         my $width = $def->{width};
         
         if ($width > 1) {
-            push @declarations, "wire [${\\($width-1)}:0] $signal_name;";
+            my $msb = $width - 1;
+            push @declarations, "wire [$msb:0] $signal_name;";
         } else {
             push @declarations, "wire $signal_name;";
         }

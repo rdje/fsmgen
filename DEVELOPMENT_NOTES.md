@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF do-child done pulse
+- Public `(complete done)` and rule-trigger activation had already moved to
+  pulse-shaped `<1` timing. The internal `child_done` signal generated for
+  blocking `(do child)` still used sticky `<-`, which could leave the child
+  completion visible after the terminal state and make a later `do` call
+  observe an old completion.
+- The handoff is now `<1` in the rewired child terminal state. The parent still
+  awaits the same `child_done` guard, but each invocation sees a fresh delayed
+  pulse instead of a latched status bit.
+- The first full gate for this slice also exposed a real formatting hazard in
+  `ExpressionNamer`: the wire declaration path interpolated a scalar-reference
+  expression to print `width - 1`. Computing the MSB into an ordinary scalar
+  before formatting is simpler and avoids `SCALAR(...)` text leaking into HDL
+  when that path is stressed by the defensive-copy audit.
 ## 2026-05-13: R14 ISF resource/priority parser boundaries
 - Resource arbitration and priority resolution are still larger scheduler
   design tasks, but parser-side metadata should not remain shape-loose while

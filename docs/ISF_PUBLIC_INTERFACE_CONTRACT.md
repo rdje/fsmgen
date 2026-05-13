@@ -234,6 +234,10 @@ The parser boundary for resource and priority metadata is checked by
 so malformed `(resources ...)`, actor-level `(priority lhs over rhs)`, and
 rule-local `(priority over other_rule)` forms are rejected before an actor
 shell is returned. Arbitration enforcement remains deferred.
+The blocking `do` child-completion handoff is checked by
+[t/1177-isf-do-child-done-pulse.t](../t/1177-isf-do-child-done-pulse.t)
+so the generated internal `child_done` signal remains a one-cycle delayed pulse
+through scheduled `.fsm` parsing and HDL generation.
 The actor-shell drive shape is checked by
 [t/1167-isf-public-actor-shell-drive-shape-audit.t](../t/1167-isf-public-actor-shell-drive-shape-audit.t)
 to keep parser-returned drive definitions discoverable as a drive-name-keyed
@@ -454,6 +458,11 @@ one-cycle delayed pulses rather than sticky flopped status bits. Drive phases
 that precede completion should not also assign the same completion signal with
 `<-`; the `.fsm` backend rejects mixed pulse-delayed and non-pulse sequential
 operators on one LHS.
+Blocking `(do child)` lowering also uses `<1` for the internal
+`child_transaction_done` handoff generated in the rewired child terminal state.
+That keeps each parent-visible child completion as a pulse, so repeated `do`
+calls wait for fresh child completions instead of observing a sticky
+already-done bit.
 ISF rule `(trigger transaction)` lowering also uses `<1`, not `<-`, for the
 generated `rule_transaction` trigger source. Generated combinational fan-in
 then drives `transaction_start` from every source for that transaction. This

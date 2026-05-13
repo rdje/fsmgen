@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF do-child done pulse
+- Active: `R14`. Blocking `(do child)` now pulses the generated internal
+  `child_done` handoff with `<1` instead of assigning it with sticky `<-`.
+- `t/1177` proves the scheduled `.fsm` shape through normal `.fsm` parsing and
+  HDL generation; the ISF spec, public-interface contract, and mdBook now
+  explain why repeated child calls need a fresh completion pulse.
+- Full-gate follow-up: `ExpressionNamer` wire declaration formatting now
+  computes the MSB before interpolation, keeping `t/520` stable when query-map
+  defensive-copy checks run inside the full suite.
+
 ## 2026-05-13: R14 — ISF resource/priority parser boundaries
 - Active: `R14`. Resource and priority metadata now has parser-side structural
   validation before an actor shell is returned: supported resource arbiters,

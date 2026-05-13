@@ -408,11 +408,14 @@ Max violation via watchdog timeout (if no `(await ...)` in transaction).
 
 (child_done_5                     ;; terminal: pulses done
   (<1 (done 1))
-  (<- (child_done 1))             ;; signal parent
+  (<1 (child_done 1))             ;; pulse parent-visible child completion
   (-> child_idle_0))
 ```
 
 **Implicit signals**: `{child}_start` (1), `{child}_done` (1).
+The internal `{child}_done` handoff is pulse-shaped for the same reason as the
+public completion output: a parent may call the same child again, and a sticky
+done bit would let the next `(do child)` observe an old completion.
 
 Spawn lowering writes separate child `.fsm` files and a parent `.fsm` with
 per-instance start/done signals when `--outdir DIR` is used. Full composition

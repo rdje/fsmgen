@@ -18,7 +18,7 @@ the parent transaction.
 **Current lowering**:
 1. Parent asserts `child_start` and awaits `child_done`
 2. Child's idle state is rewired to watch `child_start`
-3. Child's terminal state assigns `child_done`
+3. Child's terminal state pulses `child_done` with `<1`
 
 The rewired child idle state enters the first non-entry child state; the child
 body may start with a drive, await, data operation, or other scheduled state.
@@ -35,9 +35,14 @@ body may start with a drive, await, data operation, or other scheduled state.
 
 (read_phase_done_5
   (<1 (done 1))
-  (<- (read_phase_done 1))
+  (<1 (read_phase_done 1))
   (-> read_phase_idle_0))
 ```
+
+The internal child-done signal is a one-cycle delayed pulse. This matters when
+the parent invokes the same child more than once: each `(do child)` waits for a
+fresh completion instead of seeing a sticky done bit left from the previous
+call.
 
 ## `(spawn child as name)` — Parallel Fork
 

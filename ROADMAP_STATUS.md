@@ -77,6 +77,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   validation before actor-shell return; `t/1176` covers accepted resource/
   priority metadata plus malformed resources, arbiters, duplicate names, and
   priority forms while arbitration enforcement remains deferred.
+- ISF blocking `(do child)` now pulses the generated internal `child_done`
+  handoff with `<1`, not sticky `<-`; `t/1177` proves the scheduled `.fsm`
+  artifact through normal `.fsm` parsing and HDL generation.
+- Full-gate validation for the `do` pulse slice also hardened
+  `ExpressionNamer` wire declaration formatting so MSB values are computed
+  before interpolation, keeping the `t/520` query defensive-copy audit from
+  emitting `SCALAR(...)` wire ranges under full-suite stress.
 - The mdBook and ISF live docs now distinguish transaction
   `(when condition body...)` control flow from rule-local `(when condition)`
   guard clauses, with the rule shorthand called out as the preferred spelling.
@@ -3896,6 +3903,10 @@ Done:
   [t/1173-isf-shift-right-explicit-width.t](t/1173-isf-shift-right-explicit-width.t),
   covering concrete inserted-MSB lowering for `(width N)` and malformed width
   rejection.
+- Blocking `do` child-completion handoff timing is now regression-backed by
+  [t/1177-isf-do-child-done-pulse.t](t/1177-isf-do-child-done-pulse.t),
+  covering `<1` internal `child_done` pulses through scheduled `.fsm` parsing
+  and HDL generation.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

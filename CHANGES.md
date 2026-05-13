@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF do-child done pulse
+- Changed [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so the internal `child_done` handoff generated for blocking `(do child)`
+  uses `<1` instead of sticky `<-`.
+- Hardened [perl/FSM/ExpressionNamer.pm](perl/FSM/ExpressionNamer.pm) wire
+  declaration formatting after the full gate exposed scalar-reference
+  interpolation in `t/520`; MSB calculation now happens before string
+  formatting.
+- Added [t/1177-isf-do-child-done-pulse.t](t/1177-isf-do-child-done-pulse.t)
+  and updated [t/1110-isf-do-child-entry-rewire.t](t/1110-isf-do-child-entry-rewire.t)
+  to lock the pulse-shaped handoff through scheduled `.fsm` parsing and HDL
+  generation.
+- Updated the ISF spec, public-interface contract, mdBook composition/lowering
+  chapters, and live roadmap notes so repeated `do` calls are documented as
+  waiting for fresh child completion pulses.
 ### R14 — ISF resource/priority parser boundaries
 - Tightened [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
   so resource metadata, actor-level priorities, and rule-local priorities are

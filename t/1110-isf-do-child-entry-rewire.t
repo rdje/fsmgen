@@ -44,7 +44,8 @@ ISF
     unlike($child_idle, qr/<start\b/, 'child idle no longer watches the top-level start port');
 
     my $child_done = state_block($fsm, 'child_done_2');
-    like($child_done, qr/\(<- \(child_done 1\)\)/, 'child terminal still signals child_done');
+    like($child_done, qr/\(<1 \(child_done 1\)\)/, 'child terminal signals child_done as a one-cycle pulse');
+    unlike($child_done, qr/\(<- \(child_done 1\)\)/, 'child terminal no longer signals child_done as a sticky flopped set');
 
     my $parent_do = state_block($fsm, 'parent_do_1');
     like($parent_do, qr/\(= \(child_start 1\)\)/, 'parent do state asserts child_start');
