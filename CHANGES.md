@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF actor priority target boundary
+- Tightened [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
+  so actor-level `(priority lhs over rhs)` metadata requires both sides to
+  resolve to declared same-actor transactions or rules before an actor shell
+  is returned.
+- Added [t/1191-isf-actor-priority-target-boundary.t](t/1191-isf-actor-priority-target-boundary.t)
+  for valid forward references plus unknown lhs/rhs target rejection.
+- Updated the ISF public-interface contract metadata, ISF spec, mdBook rules
+  chapter, and roadmap notes. Arbitration enforcement remains deferred.
 ### R14 — ISF rule priority target boundary
 - Tightened [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
   so rule-local `(priority over other_rule)` metadata requires `other_rule` to

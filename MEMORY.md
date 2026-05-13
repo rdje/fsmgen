@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF actor priority target boundary
+- Actor-level `(priority lhs over rhs)` metadata now validates both sides
+  against declared same-actor transactions or rules before actor-shell return.
+- Forward references remain accepted because validation runs after the full
+  actor body is collected. Arbitration enforcement remains deferred; this
+  slice only prevents malformed priority references from entering the public
+  shell.
+- Added `t/1191-isf-actor-priority-target-boundary.t` and updated the ISF
+  public contract metadata, spec, mdBook, and live roadmap notes.
 ## 2026-05-13: R14 — ISF rule priority target boundary
 - Rule-local `(priority over other_rule)` metadata now validates that
   `other_rule` names a declared rule in the same actor before actor-shell

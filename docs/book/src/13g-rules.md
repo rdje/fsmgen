@@ -142,7 +142,9 @@ conflicting drives yet.
 ```
 
 Priority declarations are structurally validated as
-`(priority lhs over rhs)` and remain informational in the current scheduler.
+`(priority lhs over rhs)`. Both sides must name declared transactions or rules
+in the same actor; forward references are accepted. Priorities remain
+informational in the current scheduler.
 When two rules/transactions could drive the same output, priority resolution is
 still deferred rather than enforced.
 

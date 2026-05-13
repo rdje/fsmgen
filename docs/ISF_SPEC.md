@@ -600,7 +600,9 @@ Multi-rule fan-in example:
   body is collected. Priority metadata is currently ignored by lowering.
 
 Separate `(priority lhs over rhs)` declarations are structurally validated by
-the parser but not currently enforced as arbitration policy.
+the parser, and both `lhs` and `rhs` must name declared transactions or rules
+in the same actor. Forward references are accepted. Actor-level priority
+metadata is not currently enforced as arbitration policy.
 
 `(resources ...)` entries are structurally validated as
 `(resource name (arbiter priority|round_robin))`, with duplicate resource
@@ -826,6 +828,7 @@ Focused tests:
 - [t/1188-isf-interface-port-boundary.t](../t/1188-isf-interface-port-boundary.t)
 - [t/1189-isf-drive-parameter-boundary.t](../t/1189-isf-drive-parameter-boundary.t)
 - [t/1190-isf-rule-priority-target-boundary.t](../t/1190-isf-rule-priority-target-boundary.t)
+- [t/1191-isf-actor-priority-target-boundary.t](../t/1191-isf-actor-priority-target-boundary.t)
 
 ## 12. Explicitly Deferred
 

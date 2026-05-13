@@ -149,6 +149,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
 
     $self->_validate_rule_trigger_targets($result);
     $self->_validate_rule_priority_targets($result);
+    $self->_validate_actor_priority_targets($result);
 
     fsm_trace_exit('Parser _build_actor completed', 3);
     return $result;
@@ -395,6 +396,25 @@ sub _validate_rule_priority_targets($self, $actor) {
                 unless defined($target)
                     && !ref($target)
                     && $rule_names{$target};
+        }
+    }
+
+    return 1;
+}
+
+sub _validate_actor_priority_targets($self, $actor) {
+    my $actor_name = $actor->{actor_name};
+    my %names = (
+        map({ $_->{name} => 1 } @{$actor->{transactions} || []}),
+        map({ $_->{name} => 1 } @{$actor->{rules} || []}),
+    );
+
+    for my $priority (@{$actor->{priorities} || []}) {
+        for my $target ($priority->[0], $priority->[2]) {
+            confess "Error: priority target '$target' is not a declared transaction or rule in actor '$actor_name'\n"
+                unless defined($target)
+                    && !ref($target)
+                    && $names{$target};
         }
     }
 

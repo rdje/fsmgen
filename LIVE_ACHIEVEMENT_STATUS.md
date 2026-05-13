@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF actor priority target boundary
+- Active: `R14`. Actor-level `(priority lhs over rhs)` metadata now requires
+  both sides to resolve to declared same-actor transactions or rules before
+  parser actor-shell return.
+- `t/1191` covers valid forward references plus unknown lhs/rhs target
+  rejection. Arbitration enforcement still remains deferred.
+
 ## 2026-05-13: R14 — ISF rule priority target boundary
 - Active: `R14`. Rule-local `(priority over other_rule)` metadata now requires
   `other_rule` to resolve to a declared rule in the same actor before parser

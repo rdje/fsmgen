@@ -244,6 +244,7 @@ sub build_isf_public_interface_contract {
             't/1188-isf-interface-port-boundary.t',
             't/1189-isf-drive-parameter-boundary.t',
             't/1190-isf-rule-priority-target-boundary.t',
+            't/1191-isf-actor-priority-target-boundary.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',

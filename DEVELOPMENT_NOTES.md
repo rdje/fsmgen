@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF actor priority target boundary
+- Actor-level priority metadata is still informational, but unresolved lhs/rhs
+  names are not useful metadata. They create apparent arbitration relationships
+  between entities that do not exist in the actor.
+- The parser now resolves actor-level priority sides against the combined
+  transaction/rule namespace after the full actor body is collected. This keeps
+  forward references legal while making priority metadata references honest
+  before any downstream consumer sees the actor shell.
 ## 2026-05-13: R14 ISF rule priority target boundary
 - Rule-local priority remains metadata for a later arbitration/enforcement
   design, but accepting a misspelled `other_rule` gives downstream consumers
