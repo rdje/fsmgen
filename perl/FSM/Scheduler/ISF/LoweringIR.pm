@@ -479,7 +479,11 @@ sub _validate_supported_transaction_clauses {
         confess "Transaction '$tn': unsupported '($keyword ...)' clause in $label\n"
             unless $allowed->{$keyword};
 
-        if ($keyword eq 'when') {
+        if ($keyword eq 'on') {
+            _validate_on_clause($clause, $tn, $label);
+        } elsif ($keyword eq 'sample') {
+            _validate_sample_clause($clause, $tn, $label);
+        } elsif ($keyword eq 'when') {
             _validate_supported_transaction_clauses([@{$clause}[2 .. $#$clause]], $tn, 'when');
         } elsif ($keyword eq 'repeat') {
             _validate_supported_transaction_clauses([@{$clause}[2 .. $#$clause]], $tn, 'repeat');
@@ -490,6 +494,47 @@ sub _validate_supported_transaction_clauses {
             }
         }
     }
+}
+
+sub _validate_on_clause {
+    my ($clause, $tn, $label) = @_;
+
+    confess "Transaction '$tn': on requires '(on port [sample...])' in $label\n"
+        unless @$clause >= 2
+            && defined($clause->[1])
+            && !ref($clause->[1])
+            && length($clause->[1]);
+
+    for my $i (2 .. $#$clause) {
+        my $body_clause = $clause->[$i];
+        confess "Transaction '$tn': on body supports only '(sample port as name)' clauses\n"
+            unless ref($body_clause) eq 'ARRAY'
+                && @$body_clause
+                && defined($body_clause->[0])
+                && !ref($body_clause->[0])
+                && $body_clause->[0] eq 'sample';
+        _validate_sample_clause($body_clause, $tn, 'on body');
+    }
+
+    return 1;
+}
+
+sub _validate_sample_clause {
+    my ($clause, $tn, $label) = @_;
+
+    confess "Transaction '$tn': sample requires '(sample port as name)' in $label\n"
+        unless @$clause == 4
+            && defined($clause->[1])
+            && !ref($clause->[1])
+            && length($clause->[1])
+            && defined($clause->[2])
+            && !ref($clause->[2])
+            && $clause->[2] eq 'as'
+            && defined($clause->[3])
+            && !ref($clause->[3])
+            && length($clause->[3]);
+
+    return 1;
 }
 
 # --- Individual clause → IR ---

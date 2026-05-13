@@ -19,9 +19,14 @@ no merging — what you write is what you get.
 
 ## `(on port ...)` — Entry/Idle State
 
-`(on ...)` is the standard activation form. `(when ...)` can also be used
+`(on ...)` is the standard activation form. The guard must be a scalar port
+name. `(when ...)` can also be used
 as activation with identical semantics — useful for expression conditions:
 `(when (> counter 5) ...)`.
+
+The only supported inline body clauses inside `(on ...)` are
+`(sample port as name)` forms. Other body forms are rejected instead of being
+silently ignored.
 
 **Timing**: 0 active cycles (waits). Fires in 1 cycle when condition is met.
 
@@ -101,6 +106,10 @@ The port value changes in the NEXT cycle (flopped).
 ## `(sample port as name)` — No State, Piggybacks
 
 **Timing**: 0 extra cycles. Fires on the transition of the enclosing clause.
+
+The sample form is exact: `(sample port as name)`. Both `port` and `name` must
+be scalar names. Missing `as`, nested names, and extra operands are rejected
+before scheduled `.fsm` emission.
 
 **What happens**:
 - Creates a variable. The scheduler infers register if used across phases.

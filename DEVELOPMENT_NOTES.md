@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF sample clause boundary
+- Samples are zero-state semantic operations, which makes silent malformed
+  sample acceptance especially risky: an invalid sample can disappear without
+  creating an obvious missing state in the scheduled `.fsm` review artifact.
+- The lowerer now validates the exact `(sample port as name)` form before
+  state construction, including samples nested directly under `(on ...)`.
+  `(on ...)` itself is kept to scalar-port activation plus inline samples;
+  expression activation remains the job of transaction-level `(when ...)`.
 ## 2026-05-13: R14 ISF drive body parser boundary
 - Drive body entries feed directly into generated non-state drive DT
   assignments. Before this boundary, malformed entries could be skipped during

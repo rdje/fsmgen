@@ -8,6 +8,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Support workflow: [bin/ci-regression](bin/ci-regression) now supports
   explicit `quick`, `isf`, and `full` modes, plus `--list`, `--dry-run`, and
   `--no-book`. No argument still runs the historical full gate.
+- ISF sample clauses now fail malformed shapes before scheduled `.fsm`
+  emission. Standalone samples and `(on ...)` inline samples require exact
+  `(sample port as name)` scalar forms, and `(on ...)` bodies only accept
+  inline samples. `t/1195` covers valid and malformed cases.
 - ISF drive definition bodies now fail malformed entries before parser
   actor-shell return. Accepted body entries are scalar `(port value)` pairs.
   `t/1194` covers valid preservation/lowering plus scalar, nested, missing,
@@ -1309,6 +1313,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - [t/1194-isf-drive-body-boundary.t](t/1194-isf-drive-body-boundary.t)
     now proves drive definition body entries are parser-validated as scalar
     `(port value)` pairs before actor-shell return.
+  - [t/1195-isf-sample-clause-boundary.t](t/1195-isf-sample-clause-boundary.t)
+    now proves standalone samples and `(on ...)` inline samples use exact
+    scalar `(sample port as name)` form before scheduled `.fsm` emission.
   - Next bounded `R14` slice: convert another documented scheduler limitation
     into regression-backed behavior.
 - Superseded `R13` carry-forward detail retained below this note should not be
@@ -4090,6 +4097,10 @@ Done:
 - Drive body structural validation is now regression-backed by
   [t/1194-isf-drive-body-boundary.t](t/1194-isf-drive-body-boundary.t),
   covering scalar `(port value)` body entries before parser return.
+- Sample clause validation is now regression-backed by
+  [t/1195-isf-sample-clause-boundary.t](t/1195-isf-sample-clause-boundary.t),
+  covering standalone samples and `(on ...)` inline samples before scheduled
+  `.fsm` emission.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

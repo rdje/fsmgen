@@ -97,6 +97,7 @@ my $expected_tested_by = [
     't/1192-isf-singleton-actor-clause-boundary.t',
     't/1193-isf-drive-call-arity-boundary.t',
     't/1194-isf-drive-body-boundary.t',
+    't/1195-isf-sample-clause-boundary.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {

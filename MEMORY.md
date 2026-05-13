@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF sample clause boundary
+- ISF lowering now validates standalone samples and `(on ...)` inline samples
+  as exact `(sample port as name)` forms with scalar names.
+- `(on ...)` activation guards must be scalar ports, and unsupported inline
+  body forms under `(on ...)` now fail closed instead of being ignored.
+- Added `t/1195-isf-sample-clause-boundary.t` and updated the ISF public
+  contract metadata, spec, mdBook, and live roadmap notes.
 ## 2026-05-13: R14 — ISF drive body parser boundary
 - ISF drive definitions now validate each body entry before actor-shell return:
   entries must be scalar `(port value)` pairs.

@@ -316,6 +316,11 @@ The drive-call arity boundary is checked by
 so known drive calls require exactly one actual value per declared formal
 parameter. Missing actuals and extra actuals fail during lowering instead of
 emitting unbound parameter signals or ignoring author-provided values.
+The sample-clause boundary is checked by
+[t/1195-isf-sample-clause-boundary.t](../t/1195-isf-sample-clause-boundary.t)
+so standalone samples and `(on ...)` inline samples must use exactly
+`(sample port as name)` with scalar names. Unsupported `(on ...)` body forms
+fail closed instead of being ignored.
 ISF switch fallback scheduling is checked by
 [t/1103-isf-switch-branch-exits.t](../t/1103-isf-switch-branch-exits.t)
 and the generated `.fsm` default selector contract is checked by
@@ -564,14 +569,15 @@ keeps rule-driven transaction starts pulse-shaped instead of leaving a sticky
 start request active after the rule fires, while preserving per-rule trigger
 provenance in the scheduled `.fsm` artifact.
 
-ISF `(sample port as name)` lowering is a D-input contract: scheduled `.fsm`
-artifacts use `<=`, not `<-`, so the authored sampled name denotes the
-D-input/next-value side in the state where the sample appears. This preserves
-same-state visibility for sample piggybacking, especially when a drive follows
-the samples and its parameter wiring consumes a sampled alias in the same
-scheduled state. Lowering samples with `<-` would instead make the alias denote
-the previous Q/output value in that state and could require an extra state to
-avoid stale data.
+ISF `(sample port as name)` lowering is a D-input contract. The source form is
+structurally exact: `port` and `name` are scalar names, `as` is required, and
+extra operands are rejected. Scheduled `.fsm` artifacts use `<=`, not `<-`, so
+the authored sampled name denotes the D-input/next-value side in the state
+where the sample appears. This preserves same-state visibility for sample
+piggybacking, especially when a drive follows the samples and its parameter
+wiring consumes a sampled alias in the same scheduled state. Lowering samples
+with `<-` would instead make the alias denote the previous Q/output value in
+that state and could require an extra state to avoid stale data.
 
 ## Schedule Report
 

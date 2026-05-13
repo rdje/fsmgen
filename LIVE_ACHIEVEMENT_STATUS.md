@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF sample clause boundary
+- Active: `R14`. Standalone samples and `(on ...)` inline samples now require
+  exact `(sample port as name)` shape with scalar source and target names
+  before scheduled `.fsm` emission.
+- `t/1195` covers guarded entry samples, piggybacked standalone samples,
+  malformed sample shapes, nested `(on ...)` guards, and unsupported `(on ...)`
+  body forms.
+
 ## 2026-05-13: R14 — ISF drive body parser boundary
 - Active: `R14`. Drive definition body entries now fail malformed shapes before
   parser actor-shell return; accepted entries are scalar `(port value)` pairs.

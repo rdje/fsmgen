@@ -326,7 +326,10 @@ diagnostics.
 
 ### 7.1 Activation
 
-`(on port ...)` creates an entry/idle state guarded by `port`.
+`(on port ...)` creates an entry/idle state guarded by scalar `port`.
+The only supported inline body clauses inside `(on ...)` are
+`(sample port as name)` forms; other activation-body forms fail closed during
+lowering instead of being ignored.
 
 The scheduler also creates `can_accept` and asserts it in entry states. This is
 the current replacement for the old handshake-ready spelling. Deprecated
@@ -347,6 +350,10 @@ activation guard. It may also appear later as inline branching.
 ```
 
 Current lowering:
+- Sample clauses are structurally validated as exactly
+  `(sample port as name)` with scalar `port` and scalar `name`. This applies
+  both to standalone transaction-body samples and to samples nested directly in
+  `(on ...)`.
 - Samples lower to `.fsm` D-input assignments (`<=`).
 - The `<=` operator is intentional: the sampled name denotes the D-input /
   next-value side in the state where the sample is emitted. Lowering samples
@@ -850,6 +857,7 @@ Focused tests:
 - [t/1192-isf-singleton-actor-clause-boundary.t](../t/1192-isf-singleton-actor-clause-boundary.t)
 - [t/1193-isf-drive-call-arity-boundary.t](../t/1193-isf-drive-call-arity-boundary.t)
 - [t/1194-isf-drive-body-boundary.t](../t/1194-isf-drive-body-boundary.t)
+- [t/1195-isf-sample-clause-boundary.t](../t/1195-isf-sample-clause-boundary.t)
 
 ## 12. Explicitly Deferred
 

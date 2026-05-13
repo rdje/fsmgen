@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF sample clause boundary
+- Tightened [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so standalone samples and `(on ...)` inline samples must use exact
+  `(sample port as name)` forms with scalar names before scheduled `.fsm`
+  emission.
+- Added [t/1195-isf-sample-clause-boundary.t](t/1195-isf-sample-clause-boundary.t)
+  for valid guarded/piggybacked sample lowering plus malformed standalone
+  samples, malformed `(on ...)` samples, nested activation guards, and
+  unsupported `(on ...)` body forms.
+- Updated the ISF public-interface contract metadata, ISF spec, mdBook
+  transaction chapter, and roadmap notes.
 ### R14 — ISF drive body parser boundary
 - Tightened [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
   so drive definition body entries must be scalar `(port value)` pairs before
