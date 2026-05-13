@@ -16,6 +16,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - `t/1100` now proves `(on ...)` samples materialize in entry states and
   pending samples piggyback onto named drive/await states instead of leaking
   into trailing sample states.
+- The mdBook lowering reference, ISF spec, and public-interface contract now
+  explain why `(sample port as name)` lowers with `<=`: sampled aliases are
+  D-input/next-value names for same-state consumers, not previous-Q names.
 - R14 docs and the user guide now distinguish state DT blocks from non-state DT
   blocks and make assignment families, not block spelling, the source of
   combinational vs sequential behavior.
@@ -1069,6 +1072,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - [t/1100-isf-sample-piggyback.t](t/1100-isf-sample-piggyback.t) now proves
     `(on ...)` samples materialize in entry states and pending samples
     piggyback onto named drive/await states, including control-flow bodies.
+  - The mdBook lowering reference, ISF spec, and public-interface contract now
+    document the `<=` versus `<-` rationale for `(sample port as name)`: `<=`
+    preserves D-input/next-value visibility for same-state consumers, while
+    `<-` would read as the previous Q/output value.
   - The R14 spec, user guide, and mdBook now use "non-state DT" for
     `(-name ...)` blocks and document that `=`, `<-`, and `<=` decide
     combinational/sequential timing inside both state and non-state DTs.
@@ -3652,6 +3659,11 @@ Done:
 - [t/1100-isf-sample-piggyback.t](t/1100-isf-sample-piggyback.t) locks
   entry-state sample materialization plus pending-sample piggybacking onto
   named drive and await states, including control-flow body lowering.
+- [docs/book/src/13h-lowering-reference.md](docs/book/src/13h-lowering-reference.md),
+  [docs/ISF_SPEC.md](docs/ISF_SPEC.md), and
+  [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md)
+  now document why `(sample port as name)` lowers with `<=`, not `<-`: the
+  sampled alias must be a D-input/next-value name for same-state consumers.
 - The R14 spec, user guide, and mdBook now distinguish state DTs from non-state
   DTs and describe combinational/sequential behavior as assignment-family
   driven.

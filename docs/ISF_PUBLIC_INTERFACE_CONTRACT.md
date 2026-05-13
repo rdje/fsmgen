@@ -380,6 +380,15 @@ A DT may therefore be combinational-only, sequential-only, or mixed depending on
 the operators it contains. The machine-readable contract advertises these
 families through `dt_assignment_operator_family_map`.
 
+ISF `(sample port as name)` lowering is a D-input contract: scheduled `.fsm`
+artifacts use `<=`, not `<-`, so the authored sampled name denotes the
+D-input/next-value side in the state where the sample appears. This preserves
+same-state visibility for sample piggybacking, especially when a drive follows
+the samples and its parameter wiring consumes a sampled alias in the same
+scheduled state. Lowering samples with `<-` would instead make the alias denote
+the previous Q/output value in that state and could require an extra state to
+avoid stale data.
+
 ## Schedule Report
 
 `FSM::Scheduler::ISF->report($actor)` and `--emit-schedule-json` produce a

@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF sample D-input lowering clarification
+- ISF samples remain D-input/next-value assignments. The authored sampled name
+  must be visible as the sampled D-side value in the state where the sample is
+  emitted, because the scheduler can piggyback samples onto drive/await states
+  and same-state drive parameter wiring may consume the sampled alias.
+- Replacing sample lowering with `<-` would not be equivalent in the general
+  case: `<-` makes the authored LHS name the Q/output side, so same-state reads
+  would observe the previous stored value unless the scheduler inserted another
+  state. Later-state-only consumers may look equivalent, but that is not the
+  public lowering contract.
+- The mdBook lowering reference now carries this explanation under
+  `"(sample port as name) -> D-Input Assignment"`, with short mirrors in the
+  ISF spec and public-interface contract.
 ## 2026-05-13: R14 ISF actor-shell drive metadata audit
 - Actor-level drive definitions are scheduler-consumable parser output and now
   have an explicit bounded shell in the ISF public contract: a drive-name-keyed

@@ -146,6 +146,28 @@ appear before the drive's start assertion:
 ```
 
 **Timing**: Captures port value at the moment of transition.
+The generated assignment is intentionally `<=`, not `<-`. In FSMGen's `.fsm`
+assignment model, `<-` names the flop's Q/output side, while `<=` names the
+D-input/next-value side. A sample needs the authored variable name to denote the
+sampled next value in the state where the sample is emitted, even though the
+registered value is still observed after the clock edge.
+
+That distinction matters especially when a drive follows one or more samples
+and the scheduler piggybacks those samples onto the drive state. For example:
+
+```lisp
+(sample din as hold)
+(drive send hold)
+```
+
+can lower the sample and the drive parameter wiring into the same scheduled
+state. With `<=`, same-state drive wiring that reads `hold` sees the sampled
+D-side value. If the sample used `<-`, `hold` would mean the previous Q/output
+value in that state, so the drive could receive stale data unless the scheduler
+inserted an extra state. For a flow where the sampled name is consumed only in a
+later state, `<-` can look equivalent, but it is not the correct general
+contract for ISF sample lowering.
+
 **Implicit signals**: None (sample creates a variable; scheduler infers register if needed).
 
 ## `(await port)` → Conditional Stall + Watchdog

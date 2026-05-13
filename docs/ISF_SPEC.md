@@ -309,6 +309,12 @@ activation guard. It may also appear later as inline branching.
 
 Current lowering:
 - Samples lower to `.fsm` D-input assignments (`<=`).
+- The `<=` operator is intentional: the sampled name denotes the D-input /
+  next-value side in the state where the sample is emitted. Lowering samples
+  with `<-` would make that name denote the previous Q/output value for
+  same-state consumers, especially when a drive follows the samples and its
+  parameter wiring consumes a sampled alias. That would force an extra state or
+  risk stale data.
 - Samples in `(on ...)` fire with the entry guard.
 - Samples collected before a later drive/await are piggybacked onto that next
   scheduled state.

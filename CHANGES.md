@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF sample D-input lowering clarification
+- Expanded mdBook section `"(sample port as name) -> D-Input Assignment"` to
+  document why ISF samples lower to D-input assignments with `<=`, not
+  Q/output-side assignments with `<-`.
+- Updated [docs/ISF_SPEC.md](docs/ISF_SPEC.md) and
+  [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md)
+  with the same downstream-facing timing rationale: same-state consumers of a
+  piggybacked sample see the sampled D-side value, while `<-` would expose the
+  previous Q value and can force an extra state.
 ### R14 — ISF actor-shell drive metadata audit
 - Added `actor_shell_drive_shape` to `embedding.isf_public_interface` for the
   parser-returned drive-definition shell: drive-name-keyed entries with

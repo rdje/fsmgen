@@ -2,6 +2,12 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF sample D-input lowering clarification
+- Active: `R14`. The mdBook lowering reference now explains why
+  `(sample port as name)` lowers with `<=`: the sampled alias denotes the
+  D-input/next-value side for same-state consumers, while `<-` would expose the
+  previous Q/output value and can force an extra state.
+
 ## 2026-05-13: R14 — ISF actor-shell drive metadata audit
 - Active: `R14`. `t/1167` proves public actor-shell drive metadata is exact and
   aligned with APB drive definitions, while non-scalar drive names and params

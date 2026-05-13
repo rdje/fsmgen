@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF sample D-input lowering clarification
+- Clarified mdBook section `"(sample port as name) -> D-Input Assignment"` so
+  it explains why samples lower with `<=` rather than `<-`.
+- The logged rationale is that `<=` makes the sampled alias denote the
+  D-input/next-value side for same-state consumers, including piggybacked
+  drive parameter wiring; `<-` would expose the previous Q/output value in that
+  state and can require an extra state to avoid stale data.
+- Mirrored the clarification in `docs/ISF_SPEC.md` and
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`.
 ## 2026-05-13: R14 — ISF actor-shell drive metadata audit
 - Added `actor_shell_drive_shape` to `embedding.isf_public_interface`,
   documenting parser-returned `drives` as a drive-name-keyed hash whose entries
