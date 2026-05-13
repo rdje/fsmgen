@@ -504,6 +504,7 @@ sub _validate_supported_transaction_clauses {
         } elsif ($keyword eq 'when') {
             _validate_supported_transaction_clauses([@{$clause}[2 .. $#$clause]], $tn, 'when');
         } elsif ($keyword eq 'repeat') {
+            _validate_repeat_clause($clause, $tn, $label);
             _validate_supported_transaction_clauses([@{$clause}[2 .. $#$clause]], $tn, 'repeat');
         } elsif ($keyword eq 'switch') {
             for my $branch (@{$clause}[2 .. $#$clause]) {
@@ -553,6 +554,18 @@ sub _validate_shift_clause {
             && defined($clause->[2])
             && !ref($clause->[2])
             && length($clause->[2]);
+
+    return 1;
+}
+
+sub _validate_repeat_clause {
+    my ($clause, $tn, $label) = @_;
+
+    confess "Transaction '$tn': repeat requires '(repeat count body...)' in $label\n"
+        unless @$clause >= 3
+            && defined($clause->[1])
+            && !ref($clause->[1])
+            && length($clause->[1]);
 
     return 1;
 }

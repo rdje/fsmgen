@@ -10,6 +10,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `--dry-run`, and `--no-book`. `smoke` aliases the curated `quick` tier for
   fast basic-functionality checks, and no argument still runs the historical
   full gate.
+- ISF `(repeat count body...)` clauses now validate scalar non-empty counts and
+  non-empty bodies before repeat counter emission. `t/1202` covers valid repeat
+  lowering plus malformed repeat forms.
 - ISF `(extract word as field... [(widths N...)])` clauses now validate scalar
   source/field names before scheduled `.fsm` emission while preserving bounded
   explicit field widths. `t/1201` covers valid explicit-width slice lowering
@@ -1363,6 +1366,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
     now proves `(extract word as field... [(widths N...)])` scalar source/field
     validation before scheduled `.fsm` emission while preserving explicit field
     widths.
+  - [t/1202-isf-repeat-clause-boundary.t](t/1202-isf-repeat-clause-boundary.t)
+    now proves `(repeat count body...)` scalar count and non-empty body
+    validation before repeat counter emission.
   - Next bounded `R14` slice: convert another documented scheduler limitation
     into regression-backed behavior.
 - Superseded `R13` carry-forward detail retained below this note should not be

@@ -188,6 +188,10 @@ For `(repeat 8 (drive scl 1) (drive scl 0))`:
 - Body: 2 cycles per iteration (two drive calls)
 - Total: `8 × 2 + 2 = 18` cycles
 
+The form is exact: `(repeat count body...)`, with a scalar non-empty count and
+at least one body clause. Malformed missing or nested counts fail before
+counter construction.
+
 **What happens**:
 1. Init state: `(<= (cnt N))` — load counter via D-input
 2. Body states execute each iteration

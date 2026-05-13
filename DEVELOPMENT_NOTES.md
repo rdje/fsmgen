@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF repeat clause boundary
+- `repeat` allocates and wires a transaction counter before expanding its body.
+  A missing or nested count would produce malformed counter assignments or rely
+  on the old unknown-count width fallback for a shape the scheduler does not
+  actually support.
+- The lowerer now validates the shipped form before counter construction:
+  scalar non-empty count plus at least one body clause. Body clause shape still
+  flows through the existing context validator so unsupported or scalar repeat
+  body payloads keep targeted repeat-body diagnostics.
 ## 2026-05-13: Workflow quick smoke regression alias
 - The `quick` tier already provides the small basic-functionality set, but
   "smoke" is the natural term many contributors reach for when they want that

@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF repeat clause boundary
+- Tightened [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so `(repeat count body...)` requires a scalar non-empty count and at least
+  one body clause before repeat counter emission.
+- Added [t/1202-isf-repeat-clause-boundary.t](t/1202-isf-repeat-clause-boundary.t)
+  for valid repeat lowering plus missing-count, missing-body, nested-count, and
+  scalar-body rejection.
+- Updated the ISF public-interface contract metadata, ISF spec, mdBook
+  transaction/lowering-reference chapters, and roadmap notes.
 ### Workflow — quick smoke regression alias
 - Extended [bin/ci-regression](bin/ci-regression) with `smoke` as an alias for
   the existing `quick` tier, preserving the same curated direct/composition/ISF

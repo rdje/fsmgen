@@ -348,6 +348,10 @@ The extract-clause boundary is checked by
 so `(extract word as field... [(widths N...)])` requires one scalar source
 word, one or more scalar fields, and at most one ordered positive-integer
 `(widths N...)` option before scheduled `.fsm` emission.
+The repeat-clause boundary is checked by
+[t/1202-isf-repeat-clause-boundary.t](../t/1202-isf-repeat-clause-boundary.t)
+so `(repeat count body...)` requires one scalar non-empty count and at least
+one list-form body clause before repeat counter emission.
 ISF switch fallback scheduling is checked by
 [t/1103-isf-switch-branch-exits.t](../t/1103-isf-switch-branch-exits.t)
 and the generated `.fsm` default selector contract is checked by

@@ -2,6 +2,12 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF repeat clause boundary
+- Active: `R14`. `(repeat count body...)` now requires a scalar non-empty count
+  and at least one body clause before scheduled `.fsm` emission.
+- `t/1202` covers valid counter/body/check lowering plus missing count, missing
+  body, nested count, and scalar body malformed forms.
+
 ## 2026-05-13: Workflow — quick smoke regression alias
 - Active support workflow: `bin/ci-regression smoke` now aliases the curated
   `quick` tier for fast basic-functionality checks across direct `.fsm`,

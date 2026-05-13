@@ -227,6 +227,10 @@ the terminal state, and the generated HDL asserts `done` for one cycle at the
   (drive scl 0))
 ```
 
+`N` must be a scalar non-empty count token, and the body must contain at least
+one list-form operation before the scheduler builds the repeat counter and loop
+states.
+
 **Generated .fsm**:
 ```lisp
 (i2c_transfer_repeat_init_2

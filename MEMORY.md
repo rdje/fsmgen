@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF repeat clause boundary
+- ISF `(repeat count body...)` lowering now validates a scalar non-empty count
+  and at least one body clause before repeat counter construction.
+- Malformed missing-count, missing-body, nested-count, and scalar-body forms
+  now fail before scheduled `.fsm` emission.
+- Added `t/1202-isf-repeat-clause-boundary.t` and updated the ISF public
+  contract metadata, spec, mdBook, and live roadmap notes.
 ## 2026-05-13: Workflow — quick smoke regression alias
 - `bin/ci-regression smoke` is now an explicit alias for the existing `quick`
   smoke tier, matching the small basic-functionality check used for fast local

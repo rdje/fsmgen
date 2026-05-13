@@ -427,6 +427,8 @@ Current lowering:
 ```
 
 Current lowering:
+- Repeat clauses are structurally validated as `(repeat count body...)` with a
+  scalar non-empty count and at least one body clause before counter emission.
 - The scheduler creates `{transaction}_cnt`.
 - The repeat init state loads the count with `<=`.
 - The repeat body is expanded inline.
@@ -890,6 +892,7 @@ Focused tests:
 - [t/1199-isf-shift-clause-boundary.t](../t/1199-isf-shift-clause-boundary.t)
 - [t/1200-isf-assemble-clause-boundary.t](../t/1200-isf-assemble-clause-boundary.t)
 - [t/1201-isf-extract-clause-boundary.t](../t/1201-isf-extract-clause-boundary.t)
+- [t/1202-isf-repeat-clause-boundary.t](../t/1202-isf-repeat-clause-boundary.t)
 
 ## 12. Explicitly Deferred
 

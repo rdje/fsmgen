@@ -255,6 +255,7 @@ sub build_isf_public_interface_contract {
             't/1199-isf-shift-clause-boundary.t',
             't/1200-isf-assemble-clause-boundary.t',
             't/1201-isf-extract-clause-boundary.t',
+            't/1202-isf-repeat-clause-boundary.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
