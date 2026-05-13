@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF transaction name boundary
+- ISF parser transaction names now have a stricter actor-shell boundary:
+  transaction names must be non-empty scalars and unique within the actor.
+- Duplicate transaction names now fail before parser actor-shell return,
+  preventing ambiguous rule/child target resolution and generated state/DT
+  name collisions.
+- Added `t/1185-isf-transaction-name-boundary.t` and updated the ISF public
+  contract metadata, spec, mdBook, and live roadmap notes.
 ## 2026-05-13: R14 — ISF child transaction target boundary
 - ISF lowering now validates `(do child)` and `(spawn child as instance)`
   targets before scheduled `.fsm` emission. The target must name a declared

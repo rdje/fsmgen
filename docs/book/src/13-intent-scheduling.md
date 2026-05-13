@@ -86,9 +86,10 @@ current parser handoff also advertises a bounded `interface` subshape:
 `inputs` and `outputs` arrays whose port entries expose scalar `name` and
 positive integer `width`, with omitted source widths normalized to `1`. It also
 advertises a bounded transaction-entry shell: `transactions` entries expose
-scalar `name` and a `clauses` array while the clause payload contents remain
-private scheduler input. It also advertises `actor_name` as the non-empty
-scalar identifier preserved from the ISF actor root. Current actor timing
+unique non-empty scalar `name` and a `clauses` array while the clause payload
+contents remain private scheduler input. Duplicate transaction names are
+rejected before actor-shell return. It also advertises `actor_name` as the
+non-empty scalar identifier preserved from the ISF actor root. Current actor timing
 handoff metadata is bounded too: `clock` is scalar when configured, `reset` is
 null when omitted or a scalar-field hash, and `watchdog` is null when omitted
 or a positive integer. Rule entries are bounded as scalar `name`, optional

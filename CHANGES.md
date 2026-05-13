@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF transaction name boundary
+- Tightened [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
+  so transaction names must be non-empty scalars and unique within the actor
+  before an actor shell is returned.
+- Added [t/1185-isf-transaction-name-boundary.t](t/1185-isf-transaction-name-boundary.t)
+  for distinct-name preservation and duplicate-name rejection.
+- Updated the ISF public-interface contract metadata, ISF spec, mdBook
+  actor-shell text, and roadmap notes.
 ### R14 — ISF child transaction target boundary
 - Tightened [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
   so `(do child)` and `(spawn child as instance)` targets must resolve to

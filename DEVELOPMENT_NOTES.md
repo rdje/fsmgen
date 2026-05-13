@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF transaction name boundary
+- Transaction names are used as public shell identifiers, state-name prefixes,
+  child target names, rule-trigger targets, and schedule-report transaction
+  keys. Allowing duplicates would make those surfaces ambiguous and can create
+  colliding generated state/DT names.
+- The parser now rejects duplicates at actor build time after parsing each
+  transaction shell. This keeps authored order for valid sources while making
+  the same-actor transaction namespace explicit before any scheduler handoff.
 ## 2026-05-13: R14 ISF child transaction target boundary
 - `(do child)` and `(spawn child as instance)` both create start/done control
   paths during lowering. If `child` is misspelled or absent, the scheduled

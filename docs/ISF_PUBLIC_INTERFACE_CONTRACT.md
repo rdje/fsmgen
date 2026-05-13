@@ -186,9 +186,13 @@ entry `name`/`width` shape exact across direct and manifest views without
 freezing the rest of the raw actor hash.
 The actor-shell transaction subshape is checked by
 [t/1163-isf-public-actor-shell-transaction-shape-audit.t](../t/1163-isf-public-actor-shell-transaction-shape-audit.t)
-to keep parser-returned transaction entries discoverable as scalar `name` plus
-`clauses` array shells while leaving the clause payload contents private
-scheduler input.
+to keep parser-returned transaction entries discoverable as unique non-empty
+scalar `name` plus `clauses` array shells while leaving the clause payload
+contents private scheduler input.
+The transaction-name boundary is checked by
+[t/1185-isf-transaction-name-boundary.t](../t/1185-isf-transaction-name-boundary.t)
+so duplicate transaction names fail before actor-shell return and downstream
+target-resolution code sees one unambiguous same-actor transaction namespace.
 The actor-shell actor-name shape is checked by
 [t/1164-isf-public-actor-shell-actor-name-shape-audit.t](../t/1164-isf-public-actor-shell-actor-name-shape-audit.t)
 to keep parser-returned `actor_name` discoverable as the non-empty scalar
@@ -382,8 +386,8 @@ This is current live-contract metadata for scheduler-consumable parser output;
 it does not make actor fields outside the advertised shell public or freeze
 future ISF interface extensions before they are documented and audited.
 The current public parser handoff also advertises a bounded transaction-entry
-shell: `transactions` is an array of entries with scalar `name` and `clauses`
-array fields. The machine-readable contract advertises this through
+shell: `transactions` is an array of entries with unique non-empty scalar
+`name` and `clauses` array fields. The machine-readable contract advertises this through
 `actor_shell_transaction_shape`. The `clauses` array is a scheduler-consumable
 container; its payload contents are intentionally not frozen as a public API by
 this field.

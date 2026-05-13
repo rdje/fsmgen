@@ -271,10 +271,10 @@ Current lowering:
 ```
 
 Accepted parser output exposes transactions as an array of shell entries with
-scalar `name` and `clauses` array fields. Nested or otherwise non-scalar
-transaction names are rejected before the parser returns an actor shell. Clause
-payload contents remain scheduler input and are not frozen as a public API by
-the actor-shell transaction-shape metadata.
+unique non-empty scalar `name` and `clauses` array fields. Duplicate, nested,
+empty, or otherwise non-scalar transaction names are rejected before the parser
+returns an actor shell. Clause payload contents remain scheduler input and are
+not frozen as a public API by the actor-shell transaction-shape metadata.
 
 Current transaction clauses:
 - `(on port body...)`
@@ -814,6 +814,7 @@ Focused tests:
 - [t/1181-isf-rule-action-boundary.t](../t/1181-isf-rule-action-boundary.t)
 - [t/1182-isf-rule-trigger-target-boundary.t](../t/1182-isf-rule-trigger-target-boundary.t)
 - [t/1184-isf-child-transaction-target-boundary.t](../t/1184-isf-child-transaction-target-boundary.t)
+- [t/1185-isf-transaction-name-boundary.t](../t/1185-isf-transaction-name-boundary.t)
 
 ## 12. Explicitly Deferred
 

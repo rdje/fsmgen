@@ -12,6 +12,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emission when `(do child)` or `(spawn child as instance)` names an
   undeclared transaction. `t/1184` covers valid forward references plus
   unknown `do`/`spawn` targets.
+- ISF transaction names now form an explicit same-actor namespace: non-empty
+  scalar names are required and duplicates fail before actor-shell return.
+  `t/1185` covers distinct-name preservation and duplicate rejection.
 - The mdBook reference map now records those book homes explicitly: direct
   language/core concepts, composition, CLI/debug, typed extensions, legacy
   external flow, troubleshooting, and practical authoring guidance are all
@@ -1242,6 +1245,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
     now proves `(do child)` and `(spawn child as instance)` targets must
     resolve to declared same-actor transactions before scheduled `.fsm`
     emission, while preserving forward references.
+  - [t/1185-isf-transaction-name-boundary.t](t/1185-isf-transaction-name-boundary.t)
+    now proves transaction names are non-empty scalar actor-local identifiers
+    and duplicates fail before parser actor-shell return.
   - Next bounded `R14` slice: convert another documented scheduler limitation
     into regression-backed behavior.
 - Superseded `R13` carry-forward detail retained below this note should not be
@@ -3984,6 +3990,10 @@ Done:
   [t/1184-isf-child-transaction-target-boundary.t](t/1184-isf-child-transaction-target-boundary.t),
   covering valid forward references plus unknown `do` and `spawn` targets
   before scheduled `.fsm` emission.
+- Transaction name validation is now regression-backed by
+  [t/1185-isf-transaction-name-boundary.t](t/1185-isf-transaction-name-boundary.t),
+  covering distinct actor-shell transaction names and duplicate-name
+  rejection before parser return.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.
