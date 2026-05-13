@@ -8,6 +8,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Support workflow: [bin/ci-regression](bin/ci-regression) now supports
   explicit `quick`, `isf`, and `full` modes, plus `--list`, `--dry-run`, and
   `--no-book`. No argument still runs the historical full gate.
+- ISF `shift_left` and `shift_right` clauses now validate scalar register and
+  bit operands before scheduled `.fsm` emission. `t/1199` covers valid lowering
+  plus missing, nested, and extra malformed operand rejection.
 - ISF `(update var expr)` clauses now validate exact shape and format nested
   RHS expressions as `.fsm` expression text before scheduled `.fsm` emission.
   `t/1198` covers scalar/expression lowering plus malformed update rejection.
@@ -1337,6 +1340,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - [t/1198-isf-update-clause-boundary.t](t/1198-isf-update-clause-boundary.t)
     now proves `(update var expr)` exact shape and nested RHS expression
     formatting before scheduled `.fsm` emission.
+  - [t/1199-isf-shift-clause-boundary.t](t/1199-isf-shift-clause-boundary.t)
+    now proves `shift_left`/`shift_right` scalar operand validation before
+    scheduled `.fsm` emission.
   - Next bounded `R14` slice: convert another documented scheduler limitation
     into regression-backed behavior.
 - Superseded `R13` carry-forward detail retained below this note should not be
@@ -4133,6 +4139,9 @@ Done:
   [t/1198-isf-update-clause-boundary.t](t/1198-isf-update-clause-boundary.t),
   covering exact scalar target plus one expression payload before scheduled
   `.fsm` emission.
+- Shift clause validation is now regression-backed by
+  [t/1199-isf-shift-clause-boundary.t](t/1199-isf-shift-clause-boundary.t),
+  covering scalar register/bit operands before scheduled `.fsm` emission.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

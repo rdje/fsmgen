@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF shift clause boundary
+- ISF lowering now validates `shift_left` and `shift_right` operand shape
+  before scheduled `.fsm` emission.
+- `(shift_left reg bit)` and `(shift_right reg bit [(width N)])` require scalar
+  register and bit operands; malformed missing, nested, or extra operands fail
+  before shift-expression construction.
+- Added `t/1199-isf-shift-clause-boundary.t` and updated the ISF public
+  contract metadata, spec, mdBook, and live roadmap notes.
 ## 2026-05-13: R14 — ISF update clause boundary
 - ISF `(update var expr)` lowering now validates exact shape before scheduled
   `.fsm` emission: scalar target plus one scalar or list expression payload.

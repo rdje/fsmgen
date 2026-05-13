@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF shift clause boundary
+- Shift operations build `.fsm` expressions directly from the authored register
+  and bit operands. Missing or nested operands would otherwise create malformed
+  expressions or Perl reference text in scheduled artifacts.
+- The lowerer now validates the scalar operand boundary before shift
+  expression construction. Existing explicit `shift_right` width validation
+  remains responsible for the optional `(width N)` payload.
 ## 2026-05-13: R14 ISF update clause boundary
 - `update` is the general escape hatch for data expressions in ISF
   transactions. It should accept one RHS expression, not an arbitrary tail of

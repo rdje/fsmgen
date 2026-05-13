@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF shift clause boundary
+- Tightened [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so `shift_left` and `shift_right` require scalar register and bit operands
+  before scheduled `.fsm` emission.
+- Added [t/1199-isf-shift-clause-boundary.t](t/1199-isf-shift-clause-boundary.t)
+  for valid shift lowering plus missing, nested, and extra malformed operand
+  rejection.
+- Updated the ISF public-interface contract metadata, ISF spec, mdBook
+  transaction/data-manipulation chapters, and roadmap notes.
 ### R14 — ISF update clause boundary
 - Tightened [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
   so `(update var expr)` requires one scalar target and one expression payload

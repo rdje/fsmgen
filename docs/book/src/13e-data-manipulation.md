@@ -25,6 +25,7 @@ targets, and extra operands are rejected before scheduled `.fsm` emission.
 ```
 
 Shifts `reg` left by 1 and ORs in `bit` at LSB.
+The form is exact: `(shift_left reg bit)`, with scalar `reg` and scalar `bit`.
 
 **Lowering**: `(<- (reg (| (<< reg 1) bit)))`
 
@@ -44,6 +45,9 @@ Shifts `reg` left by 1 and ORs in `bit` at LSB.
 ```
 
 Shifts `reg` right by 1 and ORs in `bit` at MSB.
+The form is exact: `(shift_right reg bit)` or
+`(shift_right reg bit (width N))`, with scalar `reg`, scalar `bit`, and
+positive integer width when the option is present.
 
 **Lowering**: `(<- (reg (| (>> reg 1) (<< bit width-1))))`
 

@@ -101,6 +101,7 @@ my $expected_tested_by = [
     't/1196-isf-complete-clause-boundary.t',
     't/1197-isf-latency-clause-boundary.t',
     't/1198-isf-update-clause-boundary.t',
+    't/1199-isf-shift-clause-boundary.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {

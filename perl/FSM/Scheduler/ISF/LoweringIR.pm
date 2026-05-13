@@ -487,6 +487,8 @@ sub _validate_supported_transaction_clauses {
             _validate_sample_clause($clause, $tn, $label);
         } elsif ($keyword eq 'update') {
             _validate_update_clause($clause, $tn, $label);
+        } elsif ($keyword eq 'shift_left' || $keyword eq 'shift_right') {
+            _validate_shift_clause($clause, $tn, $label);
         } elsif ($keyword eq 'when') {
             _validate_supported_transaction_clauses([@{$clause}[2 .. $#$clause]], $tn, 'when');
         } elsif ($keyword eq 'repeat') {
@@ -519,6 +521,26 @@ sub _validate_on_clause {
                 && $body_clause->[0] eq 'sample';
         _validate_sample_clause($body_clause, $tn, 'on body');
     }
+
+    return 1;
+}
+
+sub _validate_shift_clause {
+    my ($clause, $tn, $label) = @_;
+    my $keyword = $clause->[0];
+    my $shape = $keyword eq 'shift_left'
+        ? '(shift_left reg bit)'
+        : '(shift_right reg bit [(width N)])';
+
+    confess "Transaction '$tn': $keyword requires '$shape' in $label\n"
+        unless @$clause >= 3
+            && @$clause <= ($keyword eq 'shift_right' ? 4 : 3)
+            && defined($clause->[1])
+            && !ref($clause->[1])
+            && length($clause->[1])
+            && defined($clause->[2])
+            && !ref($clause->[2])
+            && length($clause->[2]);
 
     return 1;
 }

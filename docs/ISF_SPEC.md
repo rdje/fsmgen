@@ -492,11 +492,14 @@ Current lowering:
 - `update` is structurally validated as `(update var expr)` with one scalar
   target `var` and one scalar or list expression payload. It emits one flopped
   assignment to `var`.
-- `shift_left` emits a left shift plus inserted bit.
-- `shift_right` emits a right shift plus inserted bit. When the shifted signal
-  has a known interface, sampled-source, assemble-inferred, or explicit
-  `(width N)` width, the insert position uses that width; unknown-width values
-  still fall back to the placeholder width expression.
+- `shift_left` is structurally validated as `(shift_left reg bit)` with scalar
+  `reg` and scalar `bit`, then emits a left shift plus inserted bit.
+- `shift_right` is structurally validated as
+  `(shift_right reg bit [(width N)])` with scalar `reg` and scalar `bit`, then
+  emits a right shift plus inserted bit. When the shifted signal has a known
+  interface, sampled-source, assemble-inferred, or explicit `(width N)` width,
+  the insert position uses that width; unknown-width values still fall back to
+  the placeholder width expression.
 - `assemble` emits a concat expression into the target variable.
 - `extract` emits one extraction state. When the source word and destination
   fields have known widths, or when the clause supplies an ordered
@@ -880,6 +883,7 @@ Focused tests:
 - [t/1196-isf-complete-clause-boundary.t](../t/1196-isf-complete-clause-boundary.t)
 - [t/1197-isf-latency-clause-boundary.t](../t/1197-isf-latency-clause-boundary.t)
 - [t/1198-isf-update-clause-boundary.t](../t/1198-isf-update-clause-boundary.t)
+- [t/1199-isf-shift-clause-boundary.t](../t/1199-isf-shift-clause-boundary.t)
 
 ## 12. Explicitly Deferred
 

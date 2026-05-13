@@ -2,6 +2,12 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF shift clause boundary
+- Active: `R14`. `shift_left` and `shift_right` now require scalar register and
+  bit operands before scheduled `.fsm` emission.
+- `t/1199` covers valid left/right shift lowering plus missing, nested, and
+  extra malformed operand rejection.
+
 ## 2026-05-13: R14 — ISF update clause boundary
 - Active: `R14`. `(update var expr)` now requires one scalar target and one
   scalar or list expression payload before scheduled `.fsm` emission.

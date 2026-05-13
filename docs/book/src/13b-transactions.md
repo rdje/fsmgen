@@ -252,6 +252,8 @@ when it does, the scheduler does not add an extra implicit fallthrough branch.
 
 `(update var expr)` is exact: `var` is a scalar target and `expr` is one scalar
 or list expression payload.
+Shift operations are also exact scalar forms:
+`(shift_left reg bit)` and `(shift_right reg bit [(width N)])`.
 
 **What happens**:
 1. `(<- (var expr))` — variable modified, takes effect next cycle (flopped)

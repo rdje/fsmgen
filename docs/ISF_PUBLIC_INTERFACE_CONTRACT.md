@@ -335,6 +335,10 @@ The update-clause boundary is checked by
 so `(update var expr)` has exactly one scalar target and one scalar or list
 expression payload, and nested expression payloads are formatted as `.fsm`
 expressions instead of Perl reference strings.
+The shift-clause boundary is checked by
+[t/1199-isf-shift-clause-boundary.t](../t/1199-isf-shift-clause-boundary.t)
+so `(shift_left reg bit)` and `(shift_right reg bit [(width N)])` require
+scalar register/bit operands before scheduled `.fsm` emission.
 ISF switch fallback scheduling is checked by
 [t/1103-isf-switch-branch-exits.t](../t/1103-isf-switch-branch-exits.t)
 and the generated `.fsm` default selector contract is checked by
