@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF interface port boundary
+- ISF parser interface ports now require unique non-empty scalar names across
+  both input and output directions before actor-shell return.
+- Duplicate same-direction and cross-direction port names now fail with a
+  targeted parser diagnostic instead of entering the public interface shell.
+- Added `t/1188-isf-interface-port-boundary.t` and updated the ISF public
+  contract metadata, spec, mdBook, and live roadmap notes.
 ## 2026-05-13: R14 — ISF drive name boundary
 - ISF parser drive definitions now fail duplicate drive names before
   actor-shell return instead of overwriting the earlier body in the

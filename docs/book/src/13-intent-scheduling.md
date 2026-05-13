@@ -83,8 +83,10 @@ public actor shell before calling private LoweringIR, and the manifest
 advertises the required `actor_name`, `transactions`, and `interface` shell keys
 plus their public value shapes without freezing the full raw actor hash. The
 current parser handoff also advertises a bounded `interface` subshape:
-`inputs` and `outputs` arrays whose port entries expose scalar `name` and
-positive integer `width`, with omitted source widths normalized to `1`. It also
+`inputs` and `outputs` arrays whose port entries expose unique non-empty scalar
+`name` and positive integer `width`, with omitted source widths normalized to
+`1`. Duplicate port names across either direction are rejected before
+actor-shell return. It also
 advertises a bounded transaction-entry shell: `transactions` entries expose
 unique non-empty scalar `name` and a `clauses` array while the clause payload
 contents remain private scheduler input. Duplicate transaction names are

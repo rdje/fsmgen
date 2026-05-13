@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF interface port boundary
+- Interface ports are both public API surface and width ownership inputs for
+  lowering. Allowing the same name twice, including once as input and once as
+  output, leaves direction and width ownership ambiguous for downstream
+  consumers.
+- The parser now keeps one actor-local interface port namespace across both
+  directions. This preserves author order within each direction for valid
+  shells while rejecting ambiguous duplicate names before scheduler handoff.
 ## 2026-05-13: R14 ISF drive name boundary
 - Drive definitions are exposed in the actor shell as a hash keyed by drive
   name. Without duplicate rejection, a later `(drive name ...)` silently

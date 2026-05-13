@@ -200,6 +200,7 @@ sub _parse_watchdog($self, $clause) {
 sub _parse_interface($self, $clause) {
     my @inputs;
     my @outputs;
+    my %seen_names;
 
     for my $i (1 .. $#$clause) {
         my $port = $clause->[$i];
@@ -211,7 +212,8 @@ sub _parse_interface($self, $clause) {
         confess "Error: interface port direction must be input or output\n"
             unless defined($dir) && !ref($dir) && ($dir eq 'input' || $dir eq 'output');
         confess "Error: interface port requires a scalar name\n"
-            unless defined($name) && !ref($name);
+            unless defined($name) && !ref($name) && length($name);
+        confess "Error: duplicate interface port '$name'\n" if $seen_names{$name}++;
 
         # Check for (width N) in remaining elements
         for my $j (2 .. $#$port) {

@@ -22,6 +22,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   drive-name-keyed actor shell: duplicate `(drive name ...)` definitions fail
   before actor-shell return. `t/1187` covers distinct drive-map entries and
   duplicate rejection.
+- ISF interface ports now form one explicit actor-local namespace across input
+  and output directions: duplicate port names fail before actor-shell return.
+  `t/1188` covers distinct shells plus same-direction and cross-direction
+  duplicates.
 - The mdBook reference map now records those book homes explicitly: direct
   language/core concepts, composition, CLI/debug, typed extensions, legacy
   external flow, troubleshooting, and practical authoring guidance are all
@@ -1261,6 +1265,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - [t/1187-isf-drive-name-boundary.t](t/1187-isf-drive-name-boundary.t)
     now proves duplicate drive definitions fail before parser actor-shell
     return instead of overwriting earlier drive bodies.
+  - [t/1188-isf-interface-port-boundary.t](t/1188-isf-interface-port-boundary.t)
+    now proves interface port names are unique across both input and output
+    directions before parser actor-shell return.
   - Next bounded `R14` slice: convert another documented scheduler limitation
     into regression-backed behavior.
 - Superseded `R13` carry-forward detail retained below this note should not be
@@ -4015,6 +4022,10 @@ Done:
   [t/1187-isf-drive-name-boundary.t](t/1187-isf-drive-name-boundary.t),
   covering distinct drive-map entries and duplicate-drive rejection before
   parser return.
+- Interface port validation is now regression-backed by
+  [t/1188-isf-interface-port-boundary.t](t/1188-isf-interface-port-boundary.t),
+  covering distinct input/output shells plus same-direction and
+  cross-direction duplicate port rejection before parser return.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

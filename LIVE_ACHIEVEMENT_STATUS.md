@@ -2,6 +2,12 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF interface port boundary
+- Active: `R14`. Interface port names are now parser-validated as unique
+  non-empty scalars across both input and output directions.
+- `t/1188` covers distinct input/output shells plus duplicate same-direction
+  and cross-direction port rejection before actor-shell return.
+
 ## 2026-05-13: R14 — ISF drive name boundary
 - Active: `R14`. Duplicate `(drive name ...)` definitions are now rejected
   before actor-shell return instead of overwriting an earlier drive body in

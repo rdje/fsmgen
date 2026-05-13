@@ -184,6 +184,10 @@ The actor-shell interface subshape is checked by
 to keep the parser-returned `interface` inputs/outputs arrays and public port
 entry `name`/`width` shape exact across direct and manifest views without
 freezing the rest of the raw actor hash.
+The interface-port boundary is checked by
+[t/1188-isf-interface-port-boundary.t](../t/1188-isf-interface-port-boundary.t)
+so port names are unique across both input and output directions before an
+actor shell is returned.
 The actor-shell transaction subshape is checked by
 [t/1163-isf-public-actor-shell-transaction-shape-audit.t](../t/1163-isf-public-actor-shell-transaction-shape-audit.t)
 to keep parser-returned transaction entries discoverable as unique non-empty
@@ -387,9 +391,9 @@ The machine-readable contract advertises those required shell fields through
 full raw actor hash remains non-public.
 The current public parser handoff also advertises one bounded subshape inside
 that shell: `interface` contains `inputs` and `outputs` arrays, and each public
-port entry has scalar `name` plus positive integer `width`, with omitted source
-widths normalized to `1`. The machine-readable contract advertises this through
-`actor_shell_interface_shape`.
+port entry has unique non-empty scalar `name` plus positive integer `width`,
+with omitted source widths normalized to `1`. The machine-readable contract
+advertises this through `actor_shell_interface_shape`.
 This is current live-contract metadata for scheduler-consumable parser output;
 it does not make actor fields outside the advertised shell public or freeze
 future ISF interface extensions before they are documented and audited.

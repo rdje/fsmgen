@@ -241,6 +241,7 @@ sub build_isf_public_interface_contract {
             't/1185-isf-transaction-name-boundary.t',
             't/1186-isf-rule-name-boundary.t',
             't/1187-isf-drive-name-boundary.t',
+            't/1188-isf-interface-port-boundary.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -413,7 +414,7 @@ sub isf_public_interface_actor_shell_timing_shape {
 }
 
 sub isf_public_interface_actor_shell_interface_shape {
-    return 'interface has inputs and outputs arrays; each public port entry has scalar name and positive integer width, defaulting omitted source widths to 1';
+    return 'interface has inputs and outputs arrays; each public port entry has unique non-empty scalar name and positive integer width, defaulting omitted source widths to 1';
 }
 
 sub isf_public_interface_actor_shell_transaction_shape {

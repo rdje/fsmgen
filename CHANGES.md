@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF interface port boundary
+- Tightened [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
+  so interface port names must be non-empty scalars and unique across both
+  input and output directions before an actor shell is returned.
+- Added [t/1188-isf-interface-port-boundary.t](t/1188-isf-interface-port-boundary.t)
+  for distinct port shells plus same-direction and cross-direction duplicate
+  rejection.
+- Updated the ISF public-interface contract metadata, ISF spec, mdBook
+  actor-shell text, and roadmap notes.
 ### R14 — ISF drive name boundary
 - Tightened [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
   so duplicate `(drive name ...)` definitions fail before the actor shell is
