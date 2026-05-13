@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF drive parameter boundary
+- Parameterized drive definitions are positional at the call site, but the
+  drive body refers to parameter names. Duplicate parameter names would make
+  two positional arguments bind to one local symbol and make the second
+  binding silently overwrite the first in the call-lowering map.
+- The parser now rejects duplicate parameter names while preserving the
+  declaration order for valid drive shells. This keeps the current lightweight
+  parameter model without accepting ambiguous bindings.
 ## 2026-05-13: R14 ISF interface port boundary
 - Interface ports are both public API surface and width ownership inputs for
   lowering. Allowing the same name twice, including once as input and once as

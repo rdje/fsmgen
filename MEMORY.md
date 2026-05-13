@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF drive parameter boundary
+- Parameterized ISF drive declarations now reject duplicate parameter names
+  before actor-shell return.
+- Drive parameters remain scalar names in declaration order, but each parameter
+  name must be unique so positional drive-call arguments cannot bind to one
+  ambiguous local name.
+- Added `t/1189-isf-drive-parameter-boundary.t` and updated the ISF public
+  contract metadata, spec, mdBook, and live roadmap notes.
 ## 2026-05-13: R14 — ISF interface port boundary
 - ISF parser interface ports now require unique non-empty scalar names across
   both input and output directions before actor-shell return.

@@ -443,9 +443,13 @@ transaction in the same actor. This prevents a misspelled rule trigger from
 inventing an otherwise unowned `transaction_start` fan-in path.
 The current public parser handoff also advertises a bounded drive-definition
 shell: `drives` is a hash of entries keyed by unique non-empty drive name, and
-each entry has `params` and `body` arrays. The machine-readable contract
-advertises this through `actor_shell_drive_shape`. Drive body payload contents
-remain private scheduler input.
+each entry has unique scalar `params` and `body` arrays. The machine-readable
+contract advertises this through `actor_shell_drive_shape`. Drive body payload
+contents remain private scheduler input.
+Drive parameter names are also parser-validated before actor-shell return:
+[t/1189-isf-drive-parameter-boundary.t](../t/1189-isf-drive-parameter-boundary.t)
+keeps parameterized drive declarations from reusing one parameter name for
+multiple positional arguments.
 The parser/scheduler argument-shape fields and actor-shell key list are exact
 facade-shape discovery metadata.
 Public facade boundary failures produce bounded scalar diagnostics before

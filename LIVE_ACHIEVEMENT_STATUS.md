@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF drive parameter boundary
+- Active: `R14`. Parameterized drive declarations now require unique scalar
+  parameter names before parser actor-shell return.
+- `t/1189` covers valid parameter preservation plus duplicate and nested
+  parameter rejection. This prevents one positional drive-call argument slot
+  from ambiguously sharing a local parameter name with another slot.
+
 ## 2026-05-13: R14 — ISF interface port boundary
 - Active: `R14`. Interface port names are now parser-validated as unique
   non-empty scalars across both input and output directions.

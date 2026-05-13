@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF drive parameter boundary
+- Tightened [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
+  so parameterized drive declarations reject duplicate parameter names before
+  an actor shell is returned.
+- Added [t/1189-isf-drive-parameter-boundary.t](t/1189-isf-drive-parameter-boundary.t)
+  for distinct parameter preservation plus duplicate and nested-parameter
+  rejection.
+- Updated the ISF public-interface contract metadata, ISF spec, mdBook
+  actor-shell text, and roadmap notes.
 ### R14 — ISF interface port boundary
 - Tightened [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
   so interface port names must be non-empty scalars and unique across both

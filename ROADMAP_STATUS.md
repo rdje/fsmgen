@@ -26,6 +26,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   and output directions: duplicate port names fail before actor-shell return.
   `t/1188` covers distinct shells plus same-direction and cross-direction
   duplicates.
+- ISF parameterized drive declarations now reject duplicate parameter names
+  before actor-shell return. `t/1189` covers distinct parameter preservation
+  plus duplicate and nested-parameter rejection.
 - The mdBook reference map now records those book homes explicitly: direct
   language/core concepts, composition, CLI/debug, typed extensions, legacy
   external flow, troubleshooting, and practical authoring guidance are all
@@ -1268,6 +1271,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - [t/1188-isf-interface-port-boundary.t](t/1188-isf-interface-port-boundary.t)
     now proves interface port names are unique across both input and output
     directions before parser actor-shell return.
+  - [t/1189-isf-drive-parameter-boundary.t](t/1189-isf-drive-parameter-boundary.t)
+    now proves parameterized drive declarations reject duplicate parameter
+    names before parser actor-shell return.
   - Next bounded `R14` slice: convert another documented scheduler limitation
     into regression-backed behavior.
 - Superseded `R13` carry-forward detail retained below this note should not be
@@ -4026,6 +4032,10 @@ Done:
   [t/1188-isf-interface-port-boundary.t](t/1188-isf-interface-port-boundary.t),
   covering distinct input/output shells plus same-direction and
   cross-direction duplicate port rejection before parser return.
+- Drive parameter validation is now regression-backed by
+  [t/1189-isf-drive-parameter-boundary.t](t/1189-isf-drive-parameter-boundary.t),
+  covering distinct parameter preservation plus duplicate and nested-parameter
+  rejection before parser return.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.
