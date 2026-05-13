@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF rule shorthand guard syntax
+- Added `(rule name condition actions...)` shorthand parsing in
+  [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm), normalized
+  to the same public `when` field as `(rule name (when condition) actions...)`.
+- Added [t/1169-isf-rule-shorthand-guard.t](t/1169-isf-rule-shorthand-guard.t)
+  to cover shorthand parsing, duplicate guard diagnostics, scheduled `.fsm`
+  emission, and HDL generation.
+- Converted `isf/full_featured.isf` `always_ready` to the shorthand spelling
+  while keeping long-form rule examples in the same fixture.
+- Updated [docs/book/src/13g-rules.md](docs/book/src/13g-rules.md),
+  [docs/ISF_SPEC.md](docs/ISF_SPEC.md),
+  [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md),
+  and `embedding.isf_public_interface.actor_shell_rule_shape` metadata with
+  the shorthand guard contract.
 ### R14 — ISF rule trigger pulse lowering
 - Changed rule `(trigger transaction)` lowering in
   [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)

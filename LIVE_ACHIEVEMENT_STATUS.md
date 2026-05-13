@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF rule shorthand guard syntax
+- Active: `R14`. ISF rules now accept `(rule name condition actions...)` as a
+  shorthand for `(rule name (when condition) actions...)`, with both spellings
+  normalized to the public actor-shell `when` field.
+- `t/1169` covers parser normalization, duplicate guard diagnostics, scheduled
+  `.fsm` emission, and HDL generation. The mdBook, ISF spec, public-interface
+  contract, and `full_featured.isf` fixture now show the shorthand.
+
 ## 2026-05-13: R14 — ISF rule trigger pulse lowering
 - Active: `R14`. ISF rule `(trigger transaction)` now lowers the generated
   `transaction_start` assignment with `<1`, making rule-driven transaction

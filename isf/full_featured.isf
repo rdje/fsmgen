@@ -49,8 +49,7 @@
     (complete done))
 
   ;; Rule: always ready
-  (rule always_ready
-    (when ready)
+  (rule always_ready ready
     (valid 1)
     (trigger main_transfer))
 

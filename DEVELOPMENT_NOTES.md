@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF rule shorthand guard syntax
+- ISF rules now accept `(rule name condition actions...)` as the concise
+  authoring form for a guarded rule. The parser immediately normalizes this to
+  the existing `when` actor-shell field, so downstream scheduler and public
+  interface consumers do not need a second guard representation.
+- The long `(rule name (when condition) actions...)` form remains supported for
+  compatibility and for cases where the more explicit spelling improves review.
+- The shorthand is intentionally scalar-only for this slice. The current
+  scheduled `.fsm` rule guard emitter still produces one `<condition` guard
+  block, so accepting list expressions here would advertise more rule-guard
+  semantics than lowering can honestly preserve.
 ## 2026-05-13: R14 ISF rule trigger pulse lowering
 - Rule-triggered transactions should not leave a sticky start request active
   after the rule fires. ISF rule `(trigger transaction)` therefore lowers to a

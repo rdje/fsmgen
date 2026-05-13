@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF rule shorthand guard syntax
+- Added parser support for `(rule name condition actions...)` as a shorthand
+  for `(rule name (when condition) actions...)`. The parser normalizes both
+  spellings into the public `when` field, so scheduler lowering and downstream
+  actor-shell consumers keep the same shape.
+- Kept the shorthand bounded to scalar conditions because current scheduled
+  rule guards are still single port/signal guard blocks.
+- Added `t/1169-isf-rule-shorthand-guard.t`, converted
+  `isf/full_featured.isf` `always_ready` to the shorthand spelling, and updated
+  the ISF spec, public-interface contract, and mdBook Rules chapter.
 ## 2026-05-13: R14 — ISF rule trigger pulse lowering
 - Changed ISF rule `(trigger transaction)` lowering so the generated
   `transaction_start` assignment uses `<1` instead of `<-`. Rule-triggered

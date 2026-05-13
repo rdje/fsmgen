@@ -21,6 +21,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `transaction_start` assignment with the delayed-pulse operator `<1` instead
   of sticky `<-`; `t/1168` locks the pulsed trigger shape inside the factored
   rule guard.
+- ISF rule guards now support the shorthand `(rule name condition actions...)`
+  and normalize it to the same public `when` field as the long
+  `(rule name (when condition) actions...)` form; `t/1169` covers parser,
+  scheduled `.fsm`, and HDL-generation behavior.
 - `t/1097` now removes the anonymous `_start` placeholder from `do`, `spawn`,
   and control-flow drive-call lowering by asserting concrete child, instance,
   and drive start signals. Next bounded R14 slice: turn another documented

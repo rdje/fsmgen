@@ -223,6 +223,7 @@ sub build_isf_public_interface_contract {
             't/1165-isf-public-actor-shell-timing-shape-audit.t',
             't/1166-isf-public-actor-shell-rule-shape-audit.t',
             't/1167-isf-public-actor-shell-drive-shape-audit.t',
+            't/1169-isf-rule-shorthand-guard.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -403,7 +404,7 @@ sub isf_public_interface_actor_shell_transaction_shape {
 }
 
 sub isf_public_interface_actor_shell_rule_shape {
-    return 'rules is an array of public rule shell entries; each entry has scalar name, optional when clause, and actions array, while rule payload contents remain private scheduler input';
+    return 'rules is an array of public rule shell entries; each entry has scalar name, optional normalized when clause, and actions array; shorthand rule guards normalize into when while rule payload contents remain private scheduler input';
 }
 
 sub isf_public_interface_actor_shell_drive_shape {

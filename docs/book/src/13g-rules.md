@@ -6,6 +6,14 @@ rule condition and are independent of the transaction state machine.
 ## Rule Syntax
 
 ```lisp
+(rule always_ready ready
+  (valid 1)
+  (trigger main_transfer))
+```
+
+The long form remains accepted and normalizes to the same parser output:
+
+```lisp
 (rule always_ready
   (when ready)
   (valid 1)
@@ -19,10 +27,12 @@ rule condition and are independent of the transaction state machine.
 - `(priority over other_rule)` — parsed metadata, currently not enforced
 
 **Lowering**: Non-state DT block containing one guarded action block in the
-current scheduler. The rule-level `(when ...)` guard is emitted once around the
-actions instead of being repeated on every assignment. Ordinary `(port value)`
-actions are guarded flopped assignments; `(trigger transaction)` uses `<1` so
-the transaction start is a pulse rather than a sticky request bit.
+current scheduler. The shorthand scalar guard and the long-form `(when ...)`
+guard both become the public parser `when` field. Scheduled `.fsm` emission
+renders that rule guard once around the actions instead of repeating it on
+every assignment. Ordinary `(port value)` actions are guarded flopped
+assignments; `(trigger transaction)` uses `<1` so the transaction start is a
+pulse rather than a sticky request bit.
 
 ```lisp
 (-always_ready
@@ -38,8 +48,7 @@ the transaction start is a pulse rather than a sticky request bit.
 ### Error Gate
 
 ```lisp
-(rule error_gate
-  (when err)
+(rule error_gate err
   (valid 1)
   (err 1))
 ```
@@ -57,9 +66,8 @@ the transaction start is a pulse rather than a sticky request bit.
 ### Parsed Priority
 
 ```lisp
-(rule high_pri
+(rule high_pri start
   (priority over always_ready)
-  (when start)
   (rdata 0))
 ```
 

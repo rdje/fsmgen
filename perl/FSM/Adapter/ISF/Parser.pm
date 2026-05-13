@@ -243,20 +243,36 @@ sub _parse_rule($self, $clause) {
     my $name = $clause->[1];
     confess "Error: (rule ...) requires a scalar name\n"
         unless defined($name) && !ref($name) && length($name);
-    my @body;
     my $when;
     my @actions;
+    my @body = @{$clause}[2 .. $#$clause];
 
-    for my $i (2 .. $#$clause) {
-        my $elem = $clause->[$i];
+    if (@body && defined($body[0]) && !ref($body[0])) {
+        $when = $self->_parse_rule_when(['when', shift @body], $name);
+    }
+
+    for my $elem (@body) {
         if (ref($elem) eq 'ARRAY' && $elem->[0] eq 'when') {
-            $when = $elem;
+            confess "Error: rule '$name' accepts only one guard condition\n"
+                if defined $when;
+            $when = $self->_parse_rule_when($elem, $name);
         } else {
             push @actions, $elem;
         }
     }
 
     return { name => $name, when => $when, actions => \@actions };
+}
+
+sub _parse_rule_when($self, $clause, $rule_name) {
+    confess "Error: rule '$rule_name' guard requires exactly one scalar condition\n"
+        unless ref($clause) eq 'ARRAY'
+            && @$clause == 2
+            && defined($clause->[1])
+            && !ref($clause->[1])
+            && length($clause->[1]);
+
+    return ['when', $clause->[1]];
 }
 
 sub _parse_resources($self, $clause) {

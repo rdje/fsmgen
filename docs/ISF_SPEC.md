@@ -144,7 +144,8 @@ Supported actor clauses:
 - `(interface ...)`
 - actor-level `(drive ...)` definitions
 - `(transaction name ...)`
-- `(rule name ...)`
+- `(rule name condition action...)`
+- `(rule name (when condition) action...)`
 - `(resources ...)`
 - `(priority ...)`
 
@@ -471,6 +472,14 @@ shipped lowering contract yet.
 ## 9. Rules
 
 ```lisp
+(rule always_ready ready
+  (valid 1)
+  (trigger main_transfer))
+```
+
+The long guard spelling remains accepted for compatibility and clarity:
+
+```lisp
 (rule always_ready
   (when ready)
   (valid 1)
@@ -484,8 +493,10 @@ Current lowering:
   actor shell. Condition and action payload contents remain scheduler input and
   are not frozen as a public API by the actor-shell rule-shape metadata.
 - Each rule emits one non-state DT block.
-- `(when condition)` supplies the guard. The shipped guard form is a single
-  port/signal condition.
+- A scalar condition immediately after the rule name is the preferred shorthand
+  guard. Long-form `(when condition)` supplies the same guard. The parser
+  normalizes both spellings to the same public `when` field. The shipped guard
+  form is a single port/signal condition.
 - `(port value)` actions lower as guarded flopped assignments to that port.
 - `(trigger transaction)` lowers as a guarded `<1` one-cycle delayed pulse to
   `transaction_start`, so a rule trigger is a pulse rather than a sticky
