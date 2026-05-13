@@ -30,6 +30,217 @@ Core thesis:
 - Cycles would not disappear from the final semantics. They would become an
   inferred, scheduled, and reviewable compiler result.
 
+## Design Note: 2026-05-13 Rule Trigger Fan-In
+
+Current ISF rule-trigger lowering writes the target transaction start signal
+directly:
+
+```lisp
+(-rule_a
+  (<guard_a
+    (<1 (work_start 1))
+  )
+)
+
+(-rule_b
+  (<guard_b
+    (<1 (work_start 1))
+  )
+)
+```
+
+That works for activation because the downstream `.fsm` backend consolidates
+same-LHS enables, making the generated HDL OR-equivalent. The limitation is
+observability: if both rules trigger `work` in the same cycle, the scheduled
+artifact exposes one `work_start` pulse and not distinct trigger-source pulses
+for `rule_a` and `rule_b`.
+
+The backlog keeps the more general proposal explicit until implemented. Each
+rule/transaction pair should produce a distinct one-bit trigger source, and the
+target transaction start should be driven by a generated combinational OR
+fan-in:
+
+```lisp
+(-rule_a
+  (<guard_a
+    (<1 (rule_a_work 1))
+  )
+)
+
+(-rule_b
+  (<guard_b
+    (<1 (rule_b_work 1))
+  )
+)
+
+(-work_trigger_fanin
+  (= (work_start (| rule_a_work rule_b_work)))
+)
+```
+
+The intended future behavior preserves the existing one-cycle delayed pulse
+semantics for each rule trigger and adds no extra latency on the fan-in. The
+benefit is provenance: schedule reports, debug traces, assertions, future
+arbitration, and priority/conflict policy can inspect which rule sources fired
+before they are ORed into the transaction start.
+
+## Verbatim Exchange: 2026-05-13 Rule Trigger Fan-In
+
+### User
+
+````text
+More discussion: rules are lowered as non-DTs with guard and they can trigger transactions. Now, let's say N rules trigger the same transaction at different point in time. Does the scheduler OR those triggers together to drive the transaction's start input ?
+
+This shall be considered, because such case will be very, very common.
+````
+
+### Assistant
+
+````text
+Yes, it must be considered. I checked the current implementation.
+
+Current state:
+
+- The ISF scheduler does not explicitly synthesize an OR aggregator for rule triggers.
+- It emits one rule DT per rule, each assigning the same transaction start signal:
+
+```lisp
+(-ra
+  (<a
+    (<1 (work_start 1))
+  )
+)
+
+(-rb
+  (<b
+    (<1 (work_start 1))
+  )
+)
+```
+
+- The downstream `.fsm -> .sv` backend then consolidates same-LHS enables and ORs them:
+
+```systemverilog
+assign work_start_1_en = ra_work_start_1_en | rb_work_start_1_en;
+```
+
+So the generated SV does OR them today, but that behavior is currently an implicit backend consequence, not an explicit ISF scheduler contract.
+
+My take: for ISF, this should become an explicit documented semantic guarantee:
+
+> Multiple `(trigger transaction)` actions targeting the same transaction are OR-equivalent request sources for that transaction's `transaction_start` pulse.
+
+That guarantee can be implemented either by continuing to rely on fsmgen's LHS-level enable consolidation, or by making the ISF scheduler emit a clearer canonical aggregator. For public-interface stability and readable scheduled `.fsm`, I think the better long-term shape is explicit aggregation in the ISF lowering contract, because multi-rule trigger fan-in will be common and users should not have to infer it from backend mux synthesis.
+````
+
+### User
+
+````text
+Wait, I thought each rule that triggers a transaction foo has its own trigger signal, but no, the trigger construct in the rules directly pulse the start input of the transaction.
+
+To me it shall not be that we way. Each rule R shall output a distinct trigger signal per trigered transactions. Triggered Tk transaction shall be associated with output <Rj>_<Tk> from the rule Rj. All those trigger(j, k), aka <Rj>_<Tk> shall be Ored for a given k, that is for transaction Tk, and this 1b output of the logical-or shall then drive the start input of transaction Tk.
+````
+
+### Assistant
+
+````text
+Yes. I agree with that architecture.
+
+The current lowering collapses two concepts that should be separate:
+
+1. Rule-local trigger source: "rule `Rj` requests transaction `Tk`"
+2. Transaction start input: "transaction `Tk` sees at least one active request"
+
+Those should not be the same signal.
+
+The better lowering contract is:
+
+```lisp
+(rule r0 a
+  (trigger work))
+
+(rule r1 b
+  (trigger work))
+```
+
+lowers conceptually to:
+
+```lisp
+(-r0
+  (<a
+    (<1 (r0_work 1))
+  )
+)
+
+(-r1
+  (<b
+    (<1 (r1_work 1))
+  )
+)
+
+(-work_trigger_fanin
+  (= (work_start (| r0_work r1_work)))
+)
+```
+
+Key points:
+
+- Each `(trigger Tk)` inside rule `Rj` produces a distinct 1-bit rule trigger source, e.g. `Rj_Tk`.
+- The rule trigger source should keep the current `<1` pulse semantics.
+- The transaction start input should be driven by a generated combinational OR fan-in.
+- The OR fan-in must not add another cycle of latency.
+- Rules should no longer directly assign `Tk_start`.
+
+This gives clearer generated `.fsm`, preserves provenance, makes schedule reports/debugging better, and avoids relying on backend same-LHS enable consolidation as an implicit semantic contract.
+````
+
+### User
+
+````text
+ok, my proposal is one way of doing things. but we can also stick to what is implemented today, since it also work, but we can't check multiple trigger in the same cycle to the same transaction.
+````
+
+### Assistant
+
+````text
+Correct. The current implementation is functionally enough to start the transaction because backend enable consolidation ORs the same `Tk_start` writers.
+
+But it loses observability/provenance:
+
+- You can know `Tk_start` was requested.
+- You cannot directly know which rule(s) requested it in that same cycle.
+- If `r0` and `r1` both trigger `Tk` together, the final effect is just one `Tk_start` pulse.
+- That is fine for transaction activation, but weak for debug, scheduling reports, priority handling, arbitration, assertions, and future conflict policy.
+
+So I'd frame it this way:
+
+Current contract candidate:
+
+```text
+(trigger Tk) directly contributes to Tk_start.
+Multiple contributors are OR-equivalent.
+Per-rule trigger identity is not preserved after lowering.
+```
+
+Your proposed contract:
+
+```text
+(trigger Tk) creates Rj_Tk.
+Tk_start is OR(R0_Tk, R1_Tk, ...).
+Per-rule trigger identity is preserved before fan-in.
+```
+
+I prefer your proposed shape for ISF long-term because it makes the scheduler's intent explicit and inspectable. But if we want the smaller stabilization step, we can first document the current behavior as "OR-equivalent but not provenance-preserving," then later upgrade to explicit `Rj_Tk` fan-in without changing the functional meaning.
+````
+
+### User
+
+````text
+I'm ok with your plan, provided my proposed and more general solution is explicitly part of the backlog so that we do not forget.
+
+This exchange shall also be logged in the live docs and clearly captured in the book, until my proposal is fully implemented.
+````
+
 ## Verbatim Exchange: 2026-04-18
 
 ### User

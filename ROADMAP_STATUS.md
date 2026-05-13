@@ -25,6 +25,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   and normalize it to the same public `when` field as the long
   `(rule name (when condition) actions...)` form; `t/1169` covers parser,
   scheduled `.fsm`, and HDL-generation behavior.
+- ISF rule-trigger fan-in is now explicitly documented as R14 backlog:
+  current lowering writes each rule trigger directly to `transaction_start`
+  and relies on downstream same-LHS enable consolidation for OR-equivalent
+  activation, while the desired future form preserves per-rule/per-transaction
+  trigger-source signals before a generated combinational OR.
 - `t/1097` now removes the anonymous `_start` placeholder from `do`, `spawn`,
   and control-flow drive-call lowering by asserting concrete child, instance,
   and drive start signals. Next bounded R14 slice: turn another documented
@@ -3811,9 +3816,20 @@ Done:
   `next_state` as an FSM next-state signal so it remains combinational through
   backend assignment analysis, and [bin/fsmgen](bin/fsmgen) no longer doubles
   explicit `.fsm`/`.isf` suffixes during bare-name source lookup.
+- The current ISF rule-trigger fan-in limitation is now captured in
+  [docs/ISF_SPEC.md](docs/ISF_SPEC.md),
+  [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md),
+  [docs/INTENT_SCHEDULING_BRAINSTORM.md](docs/INTENT_SCHEDULING_BRAINSTORM.md),
+  and the mdBook Rules chapter: same-transaction rule triggers are
+  OR-equivalent through direct `transaction_start` writes today, but explicit
+  per-rule/per-transaction trigger-source fan-in remains to be implemented.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.
+- Implement explicit per-rule/per-transaction trigger-source fan-in for
+  `(trigger transaction)`: each rule source should produce a distinct pulse
+  such as `rule_transaction`, and generated combinational OR fan-in should
+  drive `transaction_start` without adding a cycle.
 - Broaden schedule-report assertions and end-to-end fixture coverage as the
   scheduler surface stabilizes.
 - Keep [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md),

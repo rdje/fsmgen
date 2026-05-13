@@ -202,6 +202,10 @@ The actor-shell rule shape is checked by
 to keep parser-returned rule entries discoverable as scalar `name`, optional
 `when`, and `actions` array shells while leaving rule payload contents private
 scheduler input.
+The shorthand rule-guard parser/lowering path is checked by
+[t/1169-isf-rule-shorthand-guard.t](../t/1169-isf-rule-shorthand-guard.t)
+to keep `(rule name condition actions...)` normalized to the same public
+`when` field as `(rule name (when condition) actions...)`.
 The actor-shell drive shape is checked by
 [t/1167-isf-public-actor-shell-drive-shape-audit.t](../t/1167-isf-public-actor-shell-drive-shape-audit.t)
 to keep parser-returned drive definitions discoverable as a drive-name-keyed
@@ -344,6 +348,18 @@ Within that scheduled `.fsm` review artifact, ordinary rule `(port value)`
 actions remain guarded flopped assignments, while `(trigger transaction)`
 actions use `<1` on `transaction_start`. A rule trigger is therefore a
 one-cycle delayed pulse, not a sticky flopped request bit.
+Multiple rules may trigger the same transaction. The current scheduled `.fsm`
+artifact emits those triggers as multiple guarded `<1` assignments to the same
+`transaction_start` LHS; the downstream `.fsm` backend consolidates same-LHS
+enables, so generated HDL is OR-equivalent for activation. This current form
+does not expose per-rule trigger provenance when several rules fire in the same
+cycle.
+The tracked R14 backlog target is more explicit: each rule/transaction pair
+should produce a distinct one-bit trigger source such as `rule_transaction`,
+and generated combinational fan-in should drive `transaction_start` from the
+OR of those sources without adding latency. Until that is implemented,
+downstream consumers must not rely on separate `rule_transaction` scheduled
+signals being present.
 The current public parser handoff also advertises a bounded drive-definition
 shell: `drives` is a hash of entries keyed by drive name, and each entry has
 `params` and `body` arrays. The machine-readable contract advertises this
@@ -417,6 +433,9 @@ ISF rule `(trigger transaction)` lowering also uses `<1`, not `<-`, for the
 generated `transaction_start` signal. This keeps rule-driven transaction starts
 pulse-shaped instead of leaving a sticky start request active after the rule
 fires.
+Current trigger lowering writes `transaction_start` directly from each rule
+source; explicit per-rule trigger-source fan-in remains documented backlog, not
+part of the shipped scheduled `.fsm` shape.
 
 ISF `(sample port as name)` lowering is a D-input contract: scheduled `.fsm`
 artifacts use `<=`, not `<-`, so the authored sampled name denotes the

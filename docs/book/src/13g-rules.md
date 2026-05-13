@@ -43,6 +43,61 @@ pulse rather than a sticky request bit.
 )
 ```
 
+## Trigger Fan-In
+
+Current shipped rule-trigger lowering drives the transaction start signal
+directly. If several rules trigger the same transaction, each rule emits a
+guarded `<1` assignment to the same `transaction_start` LHS. The downstream
+`.fsm` backend consolidates same-LHS enables, so the generated HDL is
+OR-equivalent and the transaction starts when any triggering rule fires.
+
+```lisp
+(-r0
+  (<a
+    (<1 (work_start 1))
+  )
+)
+
+(-r1
+  (<b
+    (<1 (work_start 1))
+  )
+)
+```
+
+That behavior is sufficient for transaction activation, but it is not
+provenance-preserving. When two rules trigger the same transaction in the same
+cycle, the scheduled artifact exposes only the final `work_start` pulse; it
+does not expose distinct `r0_work` and `r1_work` request sources.
+
+The R14 backlog keeps the more general trigger fan-in form explicit until it
+is implemented: each rule/transaction pair should get a distinct one-bit
+trigger source, such as `r0_work` and `r1_work`, and a generated combinational
+fan-in should drive `work_start` from the OR of those sources without adding a
+cycle.
+
+```lisp
+(-r0
+  (<a
+    (<1 (r0_work 1))
+  )
+)
+
+(-r1
+  (<b
+    (<1 (r1_work 1))
+  )
+)
+
+(-work_trigger_fanin
+  (= (work_start (| r0_work r1_work)))
+)
+```
+
+Until that backlog item lands, users should treat multiple rule triggers for
+the same transaction as OR-equivalent for activation but not inspectable as
+separate scheduled `.fsm` trigger sources.
+
 ## Rule Examples
 
 ### Error Gate

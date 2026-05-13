@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF rule trigger fan-in backlog
+- Documented the current same-transaction rule-trigger behavior: multiple
+  rules can emit `<1` assignments to the same `transaction_start` LHS, and the
+  downstream `.fsm` backend makes the generated HDL OR-equivalent through
+  same-LHS enable consolidation.
+- Captured the current observability limitation: scheduled `.fsm` artifacts do
+  not expose distinct per-rule trigger sources when several rules trigger the
+  same transaction in the same cycle.
+- Added the proposed future lowering to the R14 backlog in
+  [docs/book/src/13g-rules.md](docs/book/src/13g-rules.md),
+  [docs/ISF_SPEC.md](docs/ISF_SPEC.md),
+  [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md),
+  [docs/INTENT_SCHEDULING_BRAINSTORM.md](docs/INTENT_SCHEDULING_BRAINSTORM.md),
+  and [ROADMAP_STATUS.md](ROADMAP_STATUS.md): generate a distinct
+  `rule_transaction` pulse source per rule/transaction pair, then drive
+  `transaction_start` through combinational OR fan-in.
 ### R14 — ISF rule shorthand guard syntax
 - Added `(rule name condition actions...)` shorthand parsing in
   [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm), normalized

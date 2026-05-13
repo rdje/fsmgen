@@ -501,6 +501,18 @@ Current lowering:
 - `(trigger transaction)` lowers as a guarded `<1` one-cycle delayed pulse to
   `transaction_start`, so a rule trigger is a pulse rather than a sticky
   flopped request bit.
+- If multiple rules trigger the same transaction, the current shipped
+  scheduled `.fsm` emits multiple guarded `<1` assignments to the same
+  `transaction_start` LHS. The downstream `.fsm` backend consolidates those
+  same-LHS enables, so the generated HDL is OR-equivalent for transaction
+  activation. This current form does not preserve per-rule trigger provenance
+  in the scheduled artifact when two rules fire in the same cycle.
+- The deferred general form is explicit per-rule trigger fan-in: each
+  rule/transaction pair should produce a distinct one-bit pulse source such as
+  `rule_transaction`, and a generated combinational fan-in should drive
+  `transaction_start` from the OR of those sources without adding another
+  cycle. Until that form is implemented, do not rely on separate
+  `rule_transaction` trigger-source signals being present.
 - Scheduled `.fsm` emission factors the rule guard as one DT guard block around
   all guarded actions, for example:
 
@@ -510,6 +522,42 @@ Current lowering:
     (<- (valid 1))
     (<1 (main_transfer_start 1))
   )
+)
+```
+
+Current direct-start multi-rule example:
+
+```lisp
+(-r0
+  (<a
+    (<1 (work_start 1))
+  )
+)
+
+(-r1
+  (<b
+    (<1 (work_start 1))
+  )
+)
+```
+
+Backlog explicit fan-in target:
+
+```lisp
+(-r0
+  (<a
+    (<1 (r0_work 1))
+  )
+)
+
+(-r1
+  (<b
+    (<1 (r1_work 1))
+  )
+)
+
+(-work_trigger_fanin
+  (= (work_start (| r0_work r1_work)))
 )
 ```
 
@@ -701,6 +749,7 @@ Focused tests:
 - [t/1166-isf-public-actor-shell-rule-shape-audit.t](../t/1166-isf-public-actor-shell-rule-shape-audit.t)
 - [t/1167-isf-public-actor-shell-drive-shape-audit.t](../t/1167-isf-public-actor-shell-drive-shape-audit.t)
 - [t/1168-isf-rule-guard-factoring.t](../t/1168-isf-rule-guard-factoring.t)
+- [t/1169-isf-rule-shorthand-guard.t](../t/1169-isf-rule-shorthand-guard.t)
 
 ## 12. Explicitly Deferred
 
@@ -708,6 +757,10 @@ Focused tests:
 - The removed `(assign ...)` action keyword.
 - Top-level child instantiation and spawn parameter binding.
 - Enforced resource arbitration and priority resolution.
+- Explicit per-rule/per-transaction trigger-source fan-in for rule-triggered
+  transactions. Current lowering is OR-equivalent through same-LHS enable
+  consolidation, but scheduled `.fsm` artifacts do not yet expose distinct
+  `rule_transaction` pulse sources before the transaction start OR.
 - Full temporal `(contract ...)` assertions.
 - Rich storage-class optimization in schedule reports.
 - Full width inference for unknown-width `shift_right` and `extract` values.

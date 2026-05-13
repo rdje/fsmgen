@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF rule trigger fan-in backlog
+- Logged the rule-trigger fan-in design discussion in the ISF live docs and
+  mdBook. Current shipped lowering writes each rule `(trigger transaction)`
+  directly to `transaction_start`; downstream same-LHS enable consolidation
+  makes the generated HDL OR-equivalent for activation.
+- Captured the limitation clearly: direct writes do not preserve per-rule
+  trigger provenance when multiple rules trigger the same transaction in the
+  same cycle.
+- Added the explicit backlog target: each rule/transaction pair should emit a
+  distinct one-bit pulse source such as `rule_transaction`, and generated
+  combinational fan-in should OR those sources into `transaction_start` without
+  adding a cycle.
 ## 2026-05-13: R14 — ISF rule shorthand guard syntax
 - Added parser support for `(rule name condition actions...)` as a shorthand
   for `(rule name (when condition) actions...)`. The parser normalizes both

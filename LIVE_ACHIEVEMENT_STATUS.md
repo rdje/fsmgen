@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF rule trigger fan-in backlog
+- Active: `R14`. The current rule-trigger behavior and its limitation are now
+  documented: multiple rules triggering the same transaction are
+  OR-equivalent through direct `transaction_start` writes, but the scheduled
+  `.fsm` does not preserve separate per-rule trigger provenance.
+- The R14 backlog now explicitly carries the proposed general lowering:
+  generate a distinct `rule_transaction` pulse source per rule/transaction
+  pair, then drive `transaction_start` with generated combinational OR fan-in
+  and no added cycle.
+
 ## 2026-05-13: R14 — ISF rule shorthand guard syntax
 - Active: `R14`. ISF rules now accept `(rule name condition actions...)` as a
   shorthand for `(rule name (when condition) actions...)`, with both spellings
