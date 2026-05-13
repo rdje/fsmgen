@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF unsupported transaction clauses fail closed
+- The ISF scheduler now validates supported transaction clause heads before
+  lowering. Removed or future-style transaction clauses, including
+  `(assign ...)`, fail closed with a targeted unsupported-clause diagnostic
+  instead of being silently dropped from scheduled `.fsm` output.
+- The same boundary now applies in the currently lowered nested contexts:
+  `when` bodies, `switch` branches, and `repeat` bodies. Deferred
+  transaction `(contract ...)` and `(stage ...)` clauses keep their dedicated
+  diagnostics.
+- Added `t/1180-isf-unsupported-transaction-clause-boundary.t` and updated
+  the ISF public contract, spec, mdBook, and live roadmap notes.
 ## 2026-05-13: R14 — ISF phase/stage boundary
 - Actor-level `(phase name ...)` and `(stage name ...)` metadata now has
   parser-side structural validation: names must be non-empty scalars, body

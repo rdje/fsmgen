@@ -298,6 +298,13 @@ Current transaction clauses:
 - `(complete port)`
 - `(latency (min N) (max M))`
 
+Unsupported transaction clause heads now fail closed during lowering instead
+of being silently ignored. The same applies inside currently lowered body
+contexts: `when` bodies, `switch` branches, and `repeat` bodies each have a
+bounded supported subset matching the shipped lowerer. Deferred-but-recognized
+`(contract ...)` and transaction `(stage ...)` clauses keep their more specific
+diagnostics.
+
 ### 7.1 Activation
 
 `(on port ...)` creates an entry/idle state guarded by `port`.
@@ -788,12 +795,14 @@ Focused tests:
 - [t/1177-isf-do-child-done-pulse.t](../t/1177-isf-do-child-done-pulse.t)
 - [t/1178-isf-handshake-compatibility-boundary.t](../t/1178-isf-handshake-compatibility-boundary.t)
 - [t/1179-isf-phase-stage-boundary.t](../t/1179-isf-phase-stage-boundary.t)
+- [t/1180-isf-unsupported-transaction-clause-boundary.t](../t/1180-isf-unsupported-transaction-clause-boundary.t)
 
 ## 12. Explicitly Deferred
 
 - Old `(handshake ...)` semantics beyond validated ignored compatibility
   parsing.
-- The removed `(assign ...)` action keyword.
+- The removed `(assign ...)` action keyword; authored transaction uses fail
+  closed as unsupported transaction clauses.
 - Top-level child instantiation and spawn parameter binding.
 - Enforced resource arbitration and priority resolution.
 - Full transaction `(stage ...)` valid/ready pipeline lowering. Authored

@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF unsupported transaction clauses fail closed
+- Transaction lowering had several silent-drop paths: unknown top-level
+  clauses fell through the state builder, and unsupported forms inside
+  `when`, `switch`, or `repeat` bodies could vanish during body expansion.
+- The scheduler now validates the supported clause set before width
+  collection and state expansion. This deliberately documents the current
+  nested-control subset instead of implying that every syntactically parsed
+  body form is lowered. Deferred `contract` and `stage` clauses remain
+  distinct so their diagnostics still point to the larger unimplemented
+  feature rather than the generic unsupported-clause boundary.
 ## 2026-05-13: R14 ISF phase/stage boundary
 - Phase/stage syntax had two weak edges: actor-level metadata was accepted
   without structural checks, and transaction-level `(stage ...)` could be

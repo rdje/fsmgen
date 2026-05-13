@@ -178,6 +178,9 @@ control-flow and data-operation states.
   validated and parser-carried only. Transaction `(phase ...)` lowers as a
   pass-through marker state; transaction `(stage ...)` fails closed during
   lowering until valid/ready pipeline-stage generation is implemented.
+- Unsupported transaction clause heads now fail closed during lowering instead
+  of being silently dropped. This includes the removed `(assign ...)` keyword
+  and unsupported nested body forms in `when`, `switch`, and `repeat`.
 - `(shift_right ...)` accepts an explicit `(width N)` option when the shifted
   register width is not declared elsewhere; values with no known or explicit
   width still use the placeholder `WIDTH` expression.

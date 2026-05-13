@@ -118,17 +118,17 @@ fallthrough target in the generated `.fsm`.
 
 ## Nested Control Flow
 
-`(when ...)` and `(switch ...)` can be nested:
+The shipped nested-control subset is explicit. A `switch` branch may contain a
+`when` body, a `when` body may contain another `when`, and `repeat` bodies are
+supported inside top-level `when` and `switch` bodies. Unsupported nested forms
+now fail closed during lowering instead of disappearing from scheduled `.fsm`
+output.
 
 ```lisp
 (switch opcode
   (0 (drive read)
      (when error_flag
-       (drive error_phase)))
-  (1 (drive write)
-     (switch sub_op
-       (0 (drive fast_write))
-       (1 (drive slow_write)))))
+       (drive error_phase))))
 ```
 
 ## I2C Example with Switch

@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF unsupported transaction clauses fail closed
+- Active: `R14`. Unsupported ISF transaction clause heads now fail closed
+  before lowering instead of being silently ignored, including the removed
+  `(assign ...)` keyword and unsupported nested body forms.
+- `t/1180` covers top-level and nested unsupported clauses across
+  transaction, `when`, `switch`, and `repeat` contexts, while keeping the
+  specific deferred `contract` and `stage` diagnostics intact.
+
 ## 2026-05-13: R14 — ISF phase/stage boundary
 - Active: `R14`. Actor-level phase/stage metadata and transaction
   phase/stage clauses now share a parser-enforced scalar-name plus list-body

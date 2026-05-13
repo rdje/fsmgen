@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF unsupported transaction clauses fail closed
+- Changed [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so unsupported transaction clause heads fail closed before state expansion
+  instead of being silently ignored.
+- Added [t/1180-isf-unsupported-transaction-clause-boundary.t](t/1180-isf-unsupported-transaction-clause-boundary.t)
+  for removed `(assign ...)`, unknown future-style clauses, unsupported nested
+  `when`/`switch`/`repeat` body forms, and preservation of the specific
+  deferred `contract` and `stage` diagnostics.
+- Updated the ISF public-interface contract metadata, ISF spec, mdBook
+  control-flow/current-limitation text, and roadmap notes to advertise the
+  shipped nested-body boundary.
 ### R14 — ISF phase/stage boundary
 - Tightened [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
   so actor-level phase/stage metadata and transaction phase/stage clauses

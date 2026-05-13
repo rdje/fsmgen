@@ -249,6 +249,13 @@ scalar names plus list-form body entries before an actor shell is returned.
 Transaction `(phase ...)` remains a pass-through state marker; transaction
 `(stage ...)` fails closed during lowering until valid/ready pipeline-stage
 generation is implemented.
+The unsupported transaction-clause boundary is checked by
+[t/1180-isf-unsupported-transaction-clause-boundary.t](../t/1180-isf-unsupported-transaction-clause-boundary.t)
+so removed or future transaction clause heads, including `(assign ...)`, fail
+closed instead of disappearing from scheduled `.fsm` output. The nested
+`when`, `switch`, and `repeat` body contexts use the same shipped-lowerer
+boundary, while deferred `contract` and `stage` clauses keep their dedicated
+diagnostics.
 The actor-shell drive shape is checked by
 [t/1167-isf-public-actor-shell-drive-shape-audit.t](../t/1167-isf-public-actor-shell-drive-shape-audit.t)
 to keep parser-returned drive definitions discoverable as a drive-name-keyed

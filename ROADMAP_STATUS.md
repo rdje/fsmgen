@@ -90,6 +90,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   marker, and transaction `(stage ...)` fails closed during lowering until
   valid/ready pipeline-stage generation is implemented. `t/1179` covers the
   accepted and malformed boundary cases.
+- ISF unsupported transaction clause heads now fail closed before lowering
+  instead of being silently ignored. `t/1180` covers removed `(assign ...)`,
+  unknown future-style clauses, unsupported nested `when`/`switch`/`repeat`
+  body forms, and preservation of dedicated deferred `contract`/`stage`
+  diagnostics.
 - Full-gate validation for the `do` pulse slice also hardened
   `ExpressionNamer` wire declaration formatting so MSB values are computed
   before interpolation, keeping the `t/520` query defensive-copy audit from
@@ -1204,6 +1209,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
     now proves the phase/stage boundary: actor-level metadata is validated and
     carried, transaction phases lower as pass-through markers, and transaction
     stages fail closed until pipeline-stage generation is implemented.
+  - [t/1180-isf-unsupported-transaction-clause-boundary.t](t/1180-isf-unsupported-transaction-clause-boundary.t)
+    now proves unsupported transaction clause heads fail closed before state
+    expansion, including removed `(assign ...)` and unsupported nested
+    body-context forms.
   - Next bounded `R14` slice: convert another documented scheduler limitation
     into regression-backed behavior.
 - Superseded `R13` carry-forward detail retained below this note should not be
@@ -3930,6 +3939,10 @@ Done:
   covering actor-level metadata validation/carrying, transaction phase
   pass-through lowering, transaction stage fail-closed lowering, and malformed
   phase/stage shapes.
+- Unsupported transaction clause fail-closed behavior is now regression-backed
+  by [t/1180-isf-unsupported-transaction-clause-boundary.t](t/1180-isf-unsupported-transaction-clause-boundary.t),
+  covering removed `(assign ...)`, unknown future-style clauses, unsupported
+  nested body forms, and preserved deferred `contract`/`stage` diagnostics.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

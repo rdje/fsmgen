@@ -10,6 +10,40 @@ use Carp qw(confess);
 
 sub new($class, %args) { bless { debug => ($args{debug} // 0) }, $class }
 
+my %SUPPORTED_TRANSACTION_CLAUSES = (
+    transaction => {
+        map { $_ => 1 } qw(
+            on drive await sample update phase shift_left shift_right assemble
+            extract complete when switch repeat latency do spawn await_all
+            await_any
+        )
+    },
+    when => {
+        map { $_ => 1 } qw(
+            drive await sample complete repeat update shift_left shift_right
+            assemble extract when
+        )
+    },
+    switch => {
+        map { $_ => 1 } qw(
+            drive await sample repeat update shift_left shift_right assemble
+            extract when
+        )
+    },
+    repeat => {
+        map { $_ => 1 } qw(
+            drive await sample update shift_left shift_right assemble extract
+        )
+    },
+);
+
+my %TRANSACTION_CONTEXT_LABEL = (
+    transaction => 'transaction body',
+    when        => 'when body',
+    switch      => 'switch branch',
+    repeat      => 'repeat body',
+);
+
 sub build_module($self, $actor) {
     my %spawned = $self->_collect_spawn_refs($actor);
 
@@ -328,7 +362,7 @@ sub _build_transaction($self, $tx, $actor, $txi) {
     my $tn  = $tx->{name};
     my $wd  = $actor->{watchdog};
     my $drives = $actor->{drives} || {};
-    _reject_unsupported_deferred_clauses($tx->{clauses}, $tn);
+    _validate_supported_transaction_clauses($tx->{clauses}, $tn, 'transaction');
     my $widths = _build_signal_width_map($actor, $tx);
     my @st; my %ct; my @dt; my @ps; my @doc; my @spc; my @dps;
     my $si  = 0; my $ha = 0; my $wdc; my $lat;
@@ -397,26 +431,39 @@ sub _build_transaction($self, $tx, $actor, $txi) {
     return (\@st, \%ct, \@dt, \@doc, \@spc);
 }
 
-sub _reject_unsupported_deferred_clauses {
-    my ($clauses, $tn) = @_;
+sub _validate_supported_transaction_clauses {
+    my ($clauses, $tn, $context) = @_;
     return unless ref($clauses) eq 'ARRAY';
 
+    my $allowed = $SUPPORTED_TRANSACTION_CLAUSES{$context} || {};
+    my $label = $TRANSACTION_CONTEXT_LABEL{$context} || $context;
+
     for my $clause (@$clauses) {
-        next unless ref($clause) eq 'ARRAY' && @$clause;
+        confess "Transaction '$tn': transaction clauses must be list forms in $label\n"
+            unless ref($clause) eq 'ARRAY';
+        next unless @$clause;
+
         my $keyword = $clause->[0];
+        confess "Transaction '$tn': transaction clause heads must be scalar in $label\n"
+            unless defined($keyword) && !ref($keyword) && length($keyword);
+
         if (defined($keyword) && !ref($keyword) && $keyword eq 'contract') {
             confess "Transaction '$tn': temporal '(contract ...)' clauses are parsed but not implemented by ISF lowering\n";
         }
         if (defined($keyword) && !ref($keyword) && $keyword eq 'stage') {
             confess "Transaction '$tn': pipeline '(stage ...)' clauses are parsed but not implemented by ISF lowering\n";
         }
+        confess "Transaction '$tn': unsupported '($keyword ...)' clause in $label\n"
+            unless $allowed->{$keyword};
 
-        if (defined($keyword) && !ref($keyword) && ($keyword eq 'when' || $keyword eq 'repeat')) {
-            _reject_unsupported_deferred_clauses([@{$clause}[2 .. $#$clause]], $tn);
-        } elsif (defined($keyword) && !ref($keyword) && $keyword eq 'switch') {
+        if ($keyword eq 'when') {
+            _validate_supported_transaction_clauses([@{$clause}[2 .. $#$clause]], $tn, 'when');
+        } elsif ($keyword eq 'repeat') {
+            _validate_supported_transaction_clauses([@{$clause}[2 .. $#$clause]], $tn, 'repeat');
+        } elsif ($keyword eq 'switch') {
             for my $branch (@{$clause}[2 .. $#$clause]) {
                 next unless ref($branch) eq 'ARRAY';
-                _reject_unsupported_deferred_clauses([@{$branch}[1 .. $#$branch]], $tn);
+                _validate_supported_transaction_clauses([@{$branch}[1 .. $#$branch]], $tn, 'switch');
             }
         }
     }
