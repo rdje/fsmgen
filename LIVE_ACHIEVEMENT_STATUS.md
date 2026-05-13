@@ -2,6 +2,12 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF complete clause boundary
+- Active: `R14`. `(complete port)` now requires exactly one scalar completion
+  target before scheduled `.fsm` emission.
+- `t/1196` covers valid delayed-pulse terminal lowering plus missing, nested,
+  extra-operand, and nested-body malformed complete clauses.
+
 ## 2026-05-13: R14 — ISF sample clause boundary
 - Active: `R14`. Standalone samples and `(on ...)` inline samples now require
   exact `(sample port as name)` shape with scalar source and target names

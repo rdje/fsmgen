@@ -393,6 +393,8 @@ Current lowering:
 ```
 
 Current lowering:
+- `(complete port)` is structurally validated as exactly one scalar `port`
+  target before scheduled `.fsm` emission.
 - `(complete port)` creates a terminal state that returns the transaction to
   idle.
 - The completion port assignment lowers to `(<1 (port 1))`, producing a
@@ -858,6 +860,7 @@ Focused tests:
 - [t/1193-isf-drive-call-arity-boundary.t](../t/1193-isf-drive-call-arity-boundary.t)
 - [t/1194-isf-drive-body-boundary.t](../t/1194-isf-drive-body-boundary.t)
 - [t/1195-isf-sample-clause-boundary.t](../t/1195-isf-sample-clause-boundary.t)
+- [t/1196-isf-complete-clause-boundary.t](../t/1196-isf-complete-clause-boundary.t)
 
 ## 12. Explicitly Deferred
 

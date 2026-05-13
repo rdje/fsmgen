@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF complete clause boundary
+- ISF lowering now validates `(complete port)` as an exact terminal clause with
+  one scalar completion target before scheduled `.fsm` emission.
+- Malformed missing, nested, extra-operand, and nested-body complete forms now
+  fail before terminal-state construction instead of emitting malformed
+  delayed-pulse assignments.
+- Added `t/1196-isf-complete-clause-boundary.t` and updated the ISF public
+  contract metadata, spec, mdBook, and live roadmap notes.
 ## 2026-05-13: R14 — ISF sample clause boundary
 - ISF lowering now validates standalone samples and `(on ...)` inline samples
   as exact `(sample port as name)` forms with scalar names.

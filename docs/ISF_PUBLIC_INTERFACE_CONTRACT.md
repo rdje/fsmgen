@@ -321,6 +321,10 @@ The sample-clause boundary is checked by
 so standalone samples and `(on ...)` inline samples must use exactly
 `(sample port as name)` with scalar names. Unsupported `(on ...)` body forms
 fail closed instead of being ignored.
+The complete-clause boundary is checked by
+[t/1196-isf-complete-clause-boundary.t](../t/1196-isf-complete-clause-boundary.t)
+so `(complete port)` must name exactly one scalar completion target before
+scheduled `.fsm` emission.
 ISF switch fallback scheduling is checked by
 [t/1103-isf-switch-branch-exits.t](../t/1103-isf-switch-branch-exits.t)
 and the generated `.fsm` default selector contract is checked by
@@ -548,10 +552,11 @@ the operators it contains. The machine-readable contract advertises these
 families through `dt_assignment_operator_family_map`.
 
 ISF `(complete port)` lowering uses `<1`, not `<-`, so completion outputs are
-one-cycle delayed pulses rather than sticky flopped status bits. Drive phases
-that precede completion should not also assign the same completion signal with
-`<-`; the `.fsm` backend rejects mixed pulse-delayed and non-pulse sequential
-operators on one LHS.
+one-cycle delayed pulses rather than sticky flopped status bits. The source
+form is exact and requires one scalar `port` target. Drive phases that precede
+completion should not also assign the same completion signal with `<-`; the
+`.fsm` backend rejects mixed pulse-delayed and non-pulse sequential operators
+on one LHS.
 Blocking `(do child)` lowering also uses `<1` for the internal
 `child_transaction_done` handoff generated in the rewired child terminal state.
 That keeps each parent-visible child completion as a pulse, so repeated `do`

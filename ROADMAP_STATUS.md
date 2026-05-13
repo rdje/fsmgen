@@ -8,6 +8,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Support workflow: [bin/ci-regression](bin/ci-regression) now supports
   explicit `quick`, `isf`, and `full` modes, plus `--list`, `--dry-run`, and
   `--no-book`. No argument still runs the historical full gate.
+- ISF `(complete port)` clauses now fail malformed shapes before scheduled
+  `.fsm` emission. `t/1196` covers valid delayed-pulse terminal lowering plus
+  missing, nested, extra-operand, and nested-body malformed complete clauses.
 - ISF sample clauses now fail malformed shapes before scheduled `.fsm`
   emission. Standalone samples and `(on ...)` inline samples require exact
   `(sample port as name)` scalar forms, and `(on ...)` bodies only accept
@@ -1316,6 +1319,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - [t/1195-isf-sample-clause-boundary.t](t/1195-isf-sample-clause-boundary.t)
     now proves standalone samples and `(on ...)` inline samples use exact
     scalar `(sample port as name)` form before scheduled `.fsm` emission.
+  - [t/1196-isf-complete-clause-boundary.t](t/1196-isf-complete-clause-boundary.t)
+    now proves `(complete port)` requires one scalar target before scheduled
+    `.fsm` emission.
   - Next bounded `R14` slice: convert another documented scheduler limitation
     into regression-backed behavior.
 - Superseded `R13` carry-forward detail retained below this note should not be
@@ -4101,6 +4107,9 @@ Done:
   [t/1195-isf-sample-clause-boundary.t](t/1195-isf-sample-clause-boundary.t),
   covering standalone samples and `(on ...)` inline samples before scheduled
   `.fsm` emission.
+- Complete clause validation is now regression-backed by
+  [t/1196-isf-complete-clause-boundary.t](t/1196-isf-complete-clause-boundary.t),
+  covering exact scalar completion targets before scheduled `.fsm` emission.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

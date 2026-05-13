@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF complete clause boundary
+- Completion clauses own the transaction terminal-state pulse. If a malformed
+  target reaches `_ir_complete`, the scheduled `.fsm` can contain a missing or
+  nonsensical LHS in a delayed-pulse assignment.
+- The lowerer now validates `(complete port)` before state construction in
+  every context where `complete` is currently supported. This keeps the `<1`
+  pulse contract intact and keeps malformed terminal states out of review
+  artifacts.
 ## 2026-05-13: R14 ISF sample clause boundary
 - Samples are zero-state semantic operations, which makes silent malformed
   sample acceptance especially risky: an invalid sample can disappear without

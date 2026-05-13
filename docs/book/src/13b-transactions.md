@@ -161,6 +161,10 @@ value.
 
 **Timing**: exactly 1 cycle. Returns to idle.
 
+The form is exact: `(complete port)`. The target `port` must be a scalar name.
+Missing targets, nested targets, and extra operands are rejected before
+scheduled `.fsm` emission.
+
 **What happens**:
 1. `(<1 (port 1))` — request a one-cycle delayed completion pulse
 2. Transition to idle state

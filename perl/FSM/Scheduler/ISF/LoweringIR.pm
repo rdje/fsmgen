@@ -481,6 +481,8 @@ sub _validate_supported_transaction_clauses {
 
         if ($keyword eq 'on') {
             _validate_on_clause($clause, $tn, $label);
+        } elsif ($keyword eq 'complete') {
+            _validate_complete_clause($clause, $tn, $label);
         } elsif ($keyword eq 'sample') {
             _validate_sample_clause($clause, $tn, $label);
         } elsif ($keyword eq 'when') {
@@ -515,6 +517,18 @@ sub _validate_on_clause {
                 && $body_clause->[0] eq 'sample';
         _validate_sample_clause($body_clause, $tn, 'on body');
     }
+
+    return 1;
+}
+
+sub _validate_complete_clause {
+    my ($clause, $tn, $label) = @_;
+
+    confess "Transaction '$tn': complete requires '(complete port)' in $label\n"
+        unless @$clause == 2
+            && defined($clause->[1])
+            && !ref($clause->[1])
+            && length($clause->[1]);
 
     return 1;
 }

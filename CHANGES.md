@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF complete clause boundary
+- Tightened [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so `(complete port)` requires exactly one scalar completion target before
+  scheduled `.fsm` emission.
+- Added [t/1196-isf-complete-clause-boundary.t](t/1196-isf-complete-clause-boundary.t)
+  for delayed-pulse terminal lowering plus missing, nested, extra-operand, and
+  nested-body malformed complete rejection.
+- Updated the ISF public-interface contract metadata, ISF spec, mdBook
+  transaction chapter, and roadmap notes.
 ### R14 — ISF sample clause boundary
 - Tightened [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
   so standalone samples and `(on ...)` inline samples must use exact
