@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF await sync clause boundary
+- ISF `(await_all done_port)` and `(await_any done_port)` lowering now validates
+  exactly one scalar done-port operand before sync-state emission.
+- Malformed missing, nested, and extra-operand sync forms now fail before
+  scheduled `.fsm` emission.
+- Added `t/1203-isf-await-sync-clause-boundary.t` and updated the ISF public
+  contract metadata, spec, mdBook, and live roadmap notes.
 ## 2026-05-13: R14 — ISF repeat clause boundary
 - ISF `(repeat count body...)` lowering now validates a scalar non-empty count
   and at least one body clause before repeat counter construction.

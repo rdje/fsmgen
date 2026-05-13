@@ -352,6 +352,10 @@ The repeat-clause boundary is checked by
 [t/1202-isf-repeat-clause-boundary.t](../t/1202-isf-repeat-clause-boundary.t)
 so `(repeat count body...)` requires one scalar non-empty count and at least
 one list-form body clause before repeat counter emission.
+The await-sync clause boundary is checked by
+[t/1203-isf-await-sync-clause-boundary.t](../t/1203-isf-await-sync-clause-boundary.t)
+so `(await_all done_port)` and `(await_any done_port)` require exactly one
+scalar done-port operand before sync-state emission.
 ISF switch fallback scheduling is checked by
 [t/1103-isf-switch-branch-exits.t](../t/1103-isf-switch-branch-exits.t)
 and the generated `.fsm` default selector contract is checked by

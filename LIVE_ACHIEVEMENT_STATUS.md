@@ -2,6 +2,12 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF await sync clause boundary
+- Active: `R14`. `(await_all done_port)` and `(await_any done_port)` now require
+  exactly one scalar done-port operand before scheduled `.fsm` emission.
+- `t/1203` covers valid sync-state lowering plus missing, nested, and
+  extra-operand malformed forms.
+
 ## 2026-05-13: R14 — ISF repeat clause boundary
 - Active: `R14`. `(repeat count body...)` now requires a scalar non-empty count
   and at least one body clause before scheduled `.fsm` emission.

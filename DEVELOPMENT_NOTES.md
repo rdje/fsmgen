@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF await sync clause boundary
+- `await_all` and `await_any` consume the collected spawned-instance done
+  signals for a parent transaction, but the authored clause still carries a
+  done-port token that documents synchronization intent.
+- The lowerer now validates that authored token as one scalar operand before
+  sync-state emission. This prevents malformed sync forms from producing a
+  plausible-looking state whose user-written operand was ignored.
 ## 2026-05-13: R14 ISF repeat clause boundary
 - `repeat` allocates and wires a transaction counter before expanding its body.
   A missing or nested count would produce malformed counter assignments or rely

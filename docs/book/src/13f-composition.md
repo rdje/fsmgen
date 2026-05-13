@@ -93,6 +93,10 @@ so the all-done condition is visible at the transition site.
 (await_any done)     ;; wait for ANY spawned child
 ```
 
+The forms are exact: `(await_all done_port)` and `(await_any done_port)`, with
+one scalar done-port operand. Malformed missing, nested, or extra operands fail
+before sync-state emission.
+
 ## Composition Architecture
 
 ```

@@ -551,6 +551,9 @@ Current lowering:
 - Each child gets `start`, `done`, and `last_error` ports if missing.
 - The parent declares per-instance `instance_start` and `instance_done` signals.
 - Each spawn state asserts its matching `instance_start` signal.
+- `await_all` and `await_any` are structurally validated as
+  `(await_all done_port)` and `(await_any done_port)` with one scalar done-port
+  operand before sync-state emission.
 - `await_all` waits for all collected spawned done ports using one scheduled
   transition suffix guarded by their logical AND, for example
   `(-> parent_done <(& w0_done w1_done w2_done))`.
@@ -893,6 +896,7 @@ Focused tests:
 - [t/1200-isf-assemble-clause-boundary.t](../t/1200-isf-assemble-clause-boundary.t)
 - [t/1201-isf-extract-clause-boundary.t](../t/1201-isf-extract-clause-boundary.t)
 - [t/1202-isf-repeat-clause-boundary.t](../t/1202-isf-repeat-clause-boundary.t)
+- [t/1203-isf-await-sync-clause-boundary.t](../t/1203-isf-await-sync-clause-boundary.t)
 
 ## 12. Explicitly Deferred
 

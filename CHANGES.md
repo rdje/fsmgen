@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF await sync clause boundary
+- Tightened [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so `(await_all done_port)` and `(await_any done_port)` require exactly one
+  scalar done-port operand before sync-state emission.
+- Added [t/1203-isf-await-sync-clause-boundary.t](t/1203-isf-await-sync-clause-boundary.t)
+  for valid sync lowering plus missing, nested, and extra-operand rejection.
+- Updated the ISF public-interface contract metadata, ISF spec, mdBook
+  composition chapter, and roadmap notes.
 ### R14 — ISF repeat clause boundary
 - Tightened [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
   so `(repeat count body...)` requires a scalar non-empty count and at least

@@ -506,6 +506,8 @@ sub _validate_supported_transaction_clauses {
         } elsif ($keyword eq 'repeat') {
             _validate_repeat_clause($clause, $tn, $label);
             _validate_supported_transaction_clauses([@{$clause}[2 .. $#$clause]], $tn, 'repeat');
+        } elsif ($keyword eq 'await_all' || $keyword eq 'await_any') {
+            _validate_sync_clause($clause, $tn, $label);
         } elsif ($keyword eq 'switch') {
             for my $branch (@{$clause}[2 .. $#$clause]) {
                 next unless ref($branch) eq 'ARRAY';
@@ -554,6 +556,19 @@ sub _validate_shift_clause {
             && defined($clause->[2])
             && !ref($clause->[2])
             && length($clause->[2]);
+
+    return 1;
+}
+
+sub _validate_sync_clause {
+    my ($clause, $tn, $label) = @_;
+    my $keyword = $clause->[0];
+
+    confess "Transaction '$tn': $keyword requires '($keyword done_port)' in $label\n"
+        unless @$clause == 2
+            && defined($clause->[1])
+            && !ref($clause->[1])
+            && length($clause->[1]);
 
     return 1;
 }
