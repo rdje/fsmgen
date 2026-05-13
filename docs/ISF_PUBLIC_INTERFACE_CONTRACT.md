@@ -238,6 +238,10 @@ The blocking `do` child-completion handoff is checked by
 [t/1177-isf-do-child-done-pulse.t](../t/1177-isf-do-child-done-pulse.t)
 so the generated internal `child_done` signal remains a one-cycle delayed pulse
 through scheduled `.fsm` parsing and HDL generation.
+The deprecated handshake compatibility boundary is checked by
+[t/1178-isf-handshake-compatibility-boundary.t](../t/1178-isf-handshake-compatibility-boundary.t)
+so `(handshake name (valid signal) (ready signal))` metadata is structurally
+validated before being ignored. Old handshake semantics are still not lowered.
 The actor-shell drive shape is checked by
 [t/1167-isf-public-actor-shell-drive-shape-audit.t](../t/1167-isf-public-actor-shell-drive-shape-audit.t)
 to keep parser-returned drive definitions discoverable as a drive-name-keyed

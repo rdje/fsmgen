@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF handshake compatibility boundary
+- Deprecated handshake metadata was compatibility-only but too loose: the
+  parser accepted the actor clause and then ignored it, which meant malformed
+  old syntax could enter downstream parser output without any diagnostic.
+- The parser now validates only the legacy shell shape and still discards it.
+  This keeps current direct `(on ...)` plus `can_accept` activation semantics
+  unchanged while making the compatibility boundary explicit and regression
+  backed.
 ## 2026-05-13: R14 ISF do-child done pulse
 - Public `(complete done)` and rule-trigger activation had already moved to
   pulse-shaped `<1` timing. The internal `child_done` signal generated for

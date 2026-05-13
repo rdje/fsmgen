@@ -80,6 +80,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - ISF blocking `(do child)` now pulses the generated internal `child_done`
   handoff with `<1`, not sticky `<-`; `t/1177` proves the scheduled `.fsm`
   artifact through normal `.fsm` parsing and HDL generation.
+- Deprecated ISF `(handshake name (valid signal) (ready signal))` metadata is
+  now parser-validated before being ignored; `t/1178` covers the accepted
+  compatibility shape and malformed boundary cases while old handshake
+  semantics remain deferred.
 - Full-gate validation for the `do` pulse slice also hardened
   `ExpressionNamer` wire declaration formatting so MSB values are computed
   before interpolation, keeping the `t/520` query defensive-copy audit from
@@ -3907,6 +3911,10 @@ Done:
   [t/1177-isf-do-child-done-pulse.t](t/1177-isf-do-child-done-pulse.t),
   covering `<1` internal `child_done` pulses through scheduled `.fsm` parsing
   and HDL generation.
+- Deprecated handshake compatibility parsing is now regression-backed by
+  [t/1178-isf-handshake-compatibility-boundary.t](t/1178-isf-handshake-compatibility-boundary.t),
+  covering validated-but-ignored `(handshake name (valid signal) (ready signal))`
+  metadata and malformed boundary cases.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

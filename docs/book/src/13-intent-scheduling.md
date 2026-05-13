@@ -171,6 +171,9 @@ control-flow and data-operation states.
   deferred.
 - `(resources ...)` and `(priority ...)` are structurally validated by the
   parser but not enforced as arbitration policy.
+- Deprecated `(handshake name (valid signal) (ready signal))` metadata is
+  structurally validated and then ignored; direct `(on port ...)` activation
+  plus generated `can_accept` is the current model.
 - `(shift_right ...)` accepts an explicit `(width N)` option when the shifted
   register width is not declared elsewhere; values with no known or explicit
   width still use the placeholder `WIDTH` expression.

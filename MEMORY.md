@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF handshake compatibility boundary
+- Deprecated `(handshake name (valid signal) (ready signal))` actor metadata is
+  now structurally validated before being ignored. Malformed names, missing
+  properties, unsupported property keys, duplicate properties, and nested signal
+  values fail before an actor shell is returned.
+- Added `t/1178-isf-handshake-compatibility-boundary.t` and updated the ISF
+  public-interface contract metadata, ISF spec, mdBook current limitations, and
+  live roadmap notes. Old handshake semantics remain deliberately unlowered.
 ## 2026-05-13: R14 — ISF do-child done pulse
 - Changed blocking `(do child)` lowering so the generated internal
   `child_done` handoff uses `<1`, not `<-`, in the rewired child terminal

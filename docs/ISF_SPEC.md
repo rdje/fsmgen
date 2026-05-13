@@ -156,8 +156,9 @@ Parser-carried but not currently semantically enforced by the scheduler:
 - actor-level `(priority lhs over rhs)`
 
 Deprecated compatibility:
-- `(handshake ...)` is accepted and ignored. The current activation model is
-  direct `(on port ...)` plus the scheduler-created `can_accept` signal.
+- `(handshake name (valid signal) (ready signal))` is structurally validated
+  and then ignored. The current activation model is direct `(on port ...)`
+  plus the scheduler-created `can_accept` signal.
 
 ## 4. Clock, Reset, Watchdog
 
@@ -298,7 +299,10 @@ Current transaction clauses:
 `(on port ...)` creates an entry/idle state guarded by `port`.
 
 The scheduler also creates `can_accept` and asserts it in entry states. This is
-the current replacement for the old handshake-ready spelling.
+the current replacement for the old handshake-ready spelling. Deprecated
+`(handshake name (valid signal) (ready signal))` metadata is compatibility-only:
+the parser validates its shape, but the scheduler does not lower old handshake
+semantics.
 
 Samples inside `(on ...)` lower to guarded D-input assignments (`<=`) on the
 entry transition.
@@ -769,10 +773,12 @@ Focused tests:
 - [t/1175-isf-contract-fail-closed.t](../t/1175-isf-contract-fail-closed.t)
 - [t/1176-isf-resource-priority-boundary.t](../t/1176-isf-resource-priority-boundary.t)
 - [t/1177-isf-do-child-done-pulse.t](../t/1177-isf-do-child-done-pulse.t)
+- [t/1178-isf-handshake-compatibility-boundary.t](../t/1178-isf-handshake-compatibility-boundary.t)
 
 ## 12. Explicitly Deferred
 
-- Old `(handshake ...)` semantics beyond ignored compatibility parsing.
+- Old `(handshake ...)` semantics beyond validated ignored compatibility
+  parsing.
 - The removed `(assign ...)` action keyword.
 - Top-level child instantiation and spawn parameter binding.
 - Enforced resource arbitration and priority resolution.

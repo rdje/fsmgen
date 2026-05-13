@@ -109,7 +109,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
             when ('reset')     { $result->{reset}    = $self->_parse_reset($clause); }
             when ('watchdog')  { $result->{watchdog} = $self->_parse_watchdog($clause); }
             when ('interface') { $result->{interface} = $self->_parse_interface($clause); }
-            when ('handshake') { }  # deprecated, kept for backward compat
+            when ('handshake') { $self->_parse_handshake($clause); }  # deprecated, validated then ignored
             when ('transaction') { push @{$result->{transactions}}, $self->_parse_transaction($clause); }
             when ('rule')      { push @{$result->{rules}}, $self->_parse_rule($clause); }
             when ('resources') { $result->{resources} = $self->_parse_resources($clause); }
@@ -208,20 +208,31 @@ sub _parse_interface($self, $clause) {
     return { inputs => \@inputs, outputs => \@outputs };
 }
 
-sub _parse_handshake($self, $clause, $handshakes) {
-    confess "Error: (handshake ...) requires a name\n" unless @$clause >= 2;
+sub _parse_handshake($self, $clause) {
+    confess "Error: (handshake ...) requires '(handshake name (valid signal) (ready signal))'\n"
+        unless @$clause >= 3;
     my $name = $clause->[1];
-    my $valid;
+    confess "Error: (handshake ...) requires a scalar name\n"
+        unless defined($name) && !ref($name) && length($name);
 
+    my %seen;
     for my $i (2 .. $#$clause) {
         my $pair = $clause->[$i];
-        confess "Error: handshake '$name' property must be a list\n"
-            unless ref($pair) eq 'ARRAY';
+        confess "Error: handshake '$name' properties must be '(valid signal)' or '(ready signal)'\n"
+            unless ref($pair) eq 'ARRAY'
+                && @$pair == 2
+                && defined($pair->[0])
+                && !ref($pair->[0])
+                && ($pair->[0] eq 'valid' || $pair->[0] eq 'ready')
+                && defined($pair->[1])
+                && !ref($pair->[1])
+                && length($pair->[1]);
+
         my $key = $pair->[0];
-        if ($key eq 'valid') { $valid = $pair->[1]; }
+        confess "Error: duplicate handshake '$name' property '$key'\n" if $seen{$key}++;
     }
 
-    $handshakes->{$name} = { valid => $valid };
+    return 1;
 }
 
 sub _parse_transaction($self, $clause) {

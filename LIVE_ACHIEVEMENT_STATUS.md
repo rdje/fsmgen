@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF handshake compatibility boundary
+- Active: `R14`. Deprecated `(handshake name (valid signal) (ready signal))`
+  metadata is now parser-validated before being ignored.
+- `t/1178` covers the accepted compatibility shape plus malformed names,
+  missing properties, unsupported keys, duplicate properties, and nested signal
+  values. Old handshake semantics remain deferred.
+
 ## 2026-05-13: R14 — ISF do-child done pulse
 - Active: `R14`. Blocking `(do child)` now pulses the generated internal
   `child_done` handoff with `<1` instead of assigning it with sticky `<-`.

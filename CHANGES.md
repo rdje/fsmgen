@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF handshake compatibility boundary
+- Changed [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
+  so deprecated `(handshake name (valid signal) (ready signal))` metadata is
+  structurally validated before being ignored.
+- Added [t/1178-isf-handshake-compatibility-boundary.t](t/1178-isf-handshake-compatibility-boundary.t)
+  for the accepted compatibility shape plus malformed name/property cases.
+- Updated the ISF public-interface contract metadata, ISF spec, mdBook current
+  limitations, and roadmap notes. Old handshake semantics remain unlowered.
 ### R14 — ISF do-child done pulse
 - Changed [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
   so the internal `child_done` handoff generated for blocking `(do child)`
