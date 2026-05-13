@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — guide migration coverage map
+- Tightened [docs/book/src/90-reference-map.md](docs/book/src/90-reference-map.md)
+  so the old guide's major section families are mapped to their book homes and
+  the remaining work is described as duplication reduction and drift
+  prevention.
 ### R14 — typed-extension guide-to-book migration
 - Clarified [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
   with the old guide's compact typed-extension definition, explicit non-goals,

@@ -82,9 +82,20 @@ Use it when:
 
 The mdBook scaffold is real and buildable now.
 
-The migration is still ongoing:
+The old guide's major section families now have book homes:
 
-- the book is the progressive learning surface
+- `1) What FSMGen is` -> Chapter 00
+- `2) Core concepts` and `2.1) Currently supported .fsm constructs` ->
+  Chapters 02-08 and Chapter 10
+- `3) Basic usage`, `4) Useful options`, `5) Input resolution and FSMLIB`, and
+  `6) Debug workflow` -> Chapter 09
+- `7) Typed extensions` and `8) External compatibility flow` -> Chapter 11
+- `9) Troubleshooting` -> Chapter 10
+- `10) Practical authoring guidelines` -> Chapter 02
+
+The migration discipline remains active:
+
+- the book is the progressive learning surface and primary normative target
 - runtime diagnostics now use book-owned documentation hints for the current
   supported, strict-mode, and package boundaries
 - Chapter 09 now owns the operational CLI/options, report-only JSON mode,
@@ -94,5 +105,8 @@ The migration is still ongoing:
 - Chapter 11 now explicitly owns the typed-extension definition, non-goals,
   and CLI/config loading prerequisites
 - focused docs may still carry narrow maintainer or machine-contract detail
-- the old guide remains a migration checklist, not a place to leave
-  user-facing contract stranded
+- the old guide remains a migration checklist and compatibility reference, not
+  a place to leave user-facing contract stranded or to introduce new normative
+  wording without updating the owning book chapter
+- the remaining cleanup is duplication reduction and drift prevention, not
+  finding homes for the major guide sections from scratch

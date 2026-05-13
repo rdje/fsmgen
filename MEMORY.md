@@ -1,5 +1,10 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — guide migration coverage map
+- The mdBook reference map now records book homes for every major
+  `docs/USER_GUIDE.md` section family. Remaining guide work should focus on
+  duplication reduction and drift prevention, with new normative wording going
+  into the owning book chapter first.
 ## 2026-05-13: R14 — typed-extension guide-to-book migration
 - Chapter 11 now explicitly carries the old guide's compact typed-extension
   definition and non-goals: extensions are blessed Perl objects with real

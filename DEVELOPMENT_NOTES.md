@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 guide migration coverage map
+- After the direct language, composition, CLI/debug, authoring, and
+  typed-extension slices, the useful reference-map question is no longer
+  "where should this guide section go?" for the major section families. It is
+  "which duplicate old-guide wording can be safely retired without losing
+  review context?"
+- The reference map now states that remaining migration work is duplication
+  reduction and drift prevention. That keeps future changes from re-centralizing
+  user-facing contract in `docs/USER_GUIDE.md`.
 ## 2026-05-13: R14 typed-extension guide-to-book migration
 - Chapter 11 already carried the detailed typed-extension contract, but the old
   guide had a concise "what it is / what it is not" explanation that is useful

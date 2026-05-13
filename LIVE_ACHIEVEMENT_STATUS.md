@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — guide migration coverage map
+- Active: `R14`. The mdBook reference map now records book homes for all major
+  `docs/USER_GUIDE.md` section families and states that remaining work is
+  duplication reduction and drift prevention.
+- New normative user-facing wording should land in the owning book chapter
+  first, with the old guide kept as a migration/compatibility reference.
+
 ## 2026-05-13: R14 — typed-extension guide-to-book migration
 - Active: `R14`. Chapter 11 now explicitly states the typed-extension
   definition, non-goals, blessed-object/hook validation boundary, and

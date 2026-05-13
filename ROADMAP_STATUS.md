@@ -3,8 +3,12 @@ This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
 - Next decision point: continue the USER_GUIDE-to-mdBook migration by
-  dispatching the remaining broad guide contract into embedding/API and ISF
-  book chapters, with commits after each safe doc slice.
+  reducing old-guide duplication and preventing drift now that all major guide
+  section families have book homes.
+- The mdBook reference map now records those book homes explicitly: direct
+  language/core concepts, composition, CLI/debug, typed extensions, legacy
+  external flow, troubleshooting, and practical authoring guidance are all
+  dispatched into owning chapters.
 - Chapter 09 now owns the operational CLI/options, report-only JSON mode,
   input-resolution, and trace/debug workflow material that had still been
   centralized in `docs/USER_GUIDE.md`.
