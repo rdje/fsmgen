@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — close major guide migration status
+- Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) to state that the
+  USER_GUIDE-to-mdBook major-section migration is complete at the guide level
+  and the next roadmap-aligned work should return to `R14` ISF
+  implementation/API stabilization unless a focused documentation drift audit
+  is needed.
 ### R14 — retire migrated user-guide front matter
 - Replaced the migrated `docs/USER_GUIDE.md` sections 1-2.1 with concise
   mdBook pointers for product overview, core concepts, direct `.fsm`

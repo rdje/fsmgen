@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 close major guide migration status
+- After replacing both the front and tail of `docs/USER_GUIDE.md` with chapter
+  pointers, the roadmap should not keep selecting generic guide-migration work.
+- The remaining documentation concern is drift prevention. Actual new work
+  should return to `R14` ISF implementation/API stabilization unless a specific
+  guide/book mismatch is found.
 ## 2026-05-13: R14 retire migrated user-guide front matter
 - Sections 1-2.1 were the highest-risk duplicated area because they mixed
   product overview, direct language contract, declarations/imports, aggregate

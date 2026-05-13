@@ -1,5 +1,10 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — close major guide migration status
+- `ROADMAP_STATUS.md` now marks the USER_GUIDE-to-mdBook major-section
+  migration complete at the guide level. The next PNT move should return to
+  `R14` ISF implementation/API stabilization unless a focused documentation
+  drift audit appears.
 ## 2026-05-13: R14 — retire migrated user-guide front matter
 - `docs/USER_GUIDE.md` sections 1-2.1 now point to mdBook homes instead of
   carrying duplicated migrated product, core-language, declaration/import,

@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — close major guide migration status
+- Active: `R14`. The USER_GUIDE-to-mdBook major-section migration is complete
+  at the guide level: `docs/USER_GUIDE.md` is now a compact compatibility
+  waypoint pointing at owning book chapters.
+- Next PNT work should return to ISF implementation/API stabilization unless a
+  concrete documentation drift issue is found.
+
 ## 2026-05-13: R14 — retire migrated user-guide front matter
 - Active: `R14`. `docs/USER_GUIDE.md` sections 1-2.1 now point to owning
   mdBook chapters instead of carrying duplicated migrated core/direct/
