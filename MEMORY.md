@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — retire migrated user-guide tail
+- `docs/USER_GUIDE.md` sections 3-10 now contain concise pointers to the
+  owning mdBook chapters instead of duplicated migrated prose. The removed
+  duplicate content covered CLI/options/debug, composition examples,
+  typed-extension usage, legacy external flow, troubleshooting, and practical
+  authoring guidance.
 ## 2026-05-13: R14 — guide migration coverage map
 - The mdBook reference map now records book homes for every major
   `docs/USER_GUIDE.md` section family. Remaining guide work should focus on

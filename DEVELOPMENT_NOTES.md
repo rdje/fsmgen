@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 retire migrated user-guide tail
+- With the major guide sections mapped into the book, keeping sections 3-10 as
+  full duplicate prose would invite drift. This slice converts those migrated
+  sections into compatibility waypoints that name the owning mdBook chapters.
+- The old guide still carries earlier migration-reference material for now,
+  but operational CLI/debug, extension, troubleshooting, and authoring guidance
+  should be edited in the book first.
 ## 2026-05-13: R14 guide migration coverage map
 - After the direct language, composition, CLI/debug, authoring, and
   typed-extension slices, the useful reference-map question is no longer

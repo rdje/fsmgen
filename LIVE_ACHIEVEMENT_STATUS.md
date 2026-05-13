@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — retire migrated user-guide tail
+- Active: `R14`. `docs/USER_GUIDE.md` sections 3-10 now point to owning
+  mdBook chapters instead of carrying duplicated migrated prose.
+- The old guide remains a compatibility waypoint, while the book owns CLI,
+  composition examples, typed extensions, troubleshooting, and practical
+  authoring guidance.
+
 ## 2026-05-13: R14 — guide migration coverage map
 - Active: `R14`. The mdBook reference map now records book homes for all major
   `docs/USER_GUIDE.md` section families and states that remaining work is

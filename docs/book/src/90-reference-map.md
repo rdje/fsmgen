@@ -108,5 +108,8 @@ The migration discipline remains active:
 - the old guide remains a migration checklist and compatibility reference, not
   a place to leave user-facing contract stranded or to introduce new normative
   wording without updating the owning book chapter
+- sections 3-10 of the old guide have already been reduced to chapter pointers
+  so operational and extension/troubleshooting prose does not drift in two
+  places
 - the remaining cleanup is duplication reduction and drift prevention, not
   finding homes for the major guide sections from scratch

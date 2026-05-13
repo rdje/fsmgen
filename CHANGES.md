@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — retire migrated user-guide tail
+- Replaced the migrated `docs/USER_GUIDE.md` sections 3-10 with concise
+  pointers to the owning mdBook chapters, removing duplicated CLI,
+  composition-example, extension, troubleshooting, and authoring-guideline
+  prose from the old guide.
 ### R14 — guide migration coverage map
 - Tightened [docs/book/src/90-reference-map.md](docs/book/src/90-reference-map.md)
   so the old guide's major section families are mapped to their book homes and

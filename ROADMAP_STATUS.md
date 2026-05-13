@@ -9,6 +9,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   language/core concepts, composition, CLI/debug, typed extensions, legacy
   external flow, troubleshooting, and practical authoring guidance are all
   dispatched into owning chapters.
+- `docs/USER_GUIDE.md` sections 3-10 now point to those owning book chapters
+  instead of carrying a second duplicate copy of migrated CLI/debug,
+  extension, troubleshooting, and authoring content.
 - Chapter 09 now owns the operational CLI/options, report-only JSON mode,
   input-resolution, and trace/debug workflow material that had still been
   centralized in `docs/USER_GUIDE.md`.
