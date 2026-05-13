@@ -300,12 +300,17 @@ diagnostics.
 The actor-shell drive shape is checked by
 [t/1167-isf-public-actor-shell-drive-shape-audit.t](../t/1167-isf-public-actor-shell-drive-shape-audit.t)
 to keep parser-returned drive definitions discoverable as a unique
-drive-name-keyed hash of `params` and `body` arrays while leaving drive body
-payload contents private scheduler input.
+drive-name-keyed hash of `params` and `body` arrays with body entries
+validated as scalar `(port value)` pairs while leaving richer drive semantics
+private scheduler input.
 The drive-name boundary is checked by
 [t/1187-isf-drive-name-boundary.t](../t/1187-isf-drive-name-boundary.t)
 so duplicate drive definitions fail before actor-shell return instead of
 silently overwriting an earlier drive body in the parser handoff.
+The drive-body boundary is checked by
+[t/1194-isf-drive-body-boundary.t](../t/1194-isf-drive-body-boundary.t)
+so malformed body entries fail before actor-shell return instead of being
+skipped during drive-DT construction or stringified as unsupported payloads.
 The drive-call arity boundary is checked by
 [t/1193-isf-drive-call-arity-boundary.t](../t/1193-isf-drive-call-arity-boundary.t)
 so known drive calls require exactly one actual value per declared formal
@@ -466,9 +471,10 @@ transaction in the same actor. This prevents a misspelled rule trigger from
 inventing an otherwise unowned `transaction_start` fan-in path.
 The current public parser handoff also advertises a bounded drive-definition
 shell: `drives` is a hash of entries keyed by unique non-empty drive name, and
-each entry has unique scalar `params` and `body` arrays. The machine-readable
-contract advertises this through `actor_shell_drive_shape`. Drive body payload
-contents remain private scheduler input.
+each entry has unique scalar `params` and `body` arrays. Body entries are
+parser-validated as scalar `(port value)` pairs. The machine-readable contract
+advertises this through `actor_shell_drive_shape`. Richer drive semantics
+remain private scheduler input.
 Drive parameter names are also parser-validated before actor-shell return:
 [t/1189-isf-drive-parameter-boundary.t](../t/1189-isf-drive-parameter-boundary.t)
 keeps parameterized drive declarations from reusing one parameter name for

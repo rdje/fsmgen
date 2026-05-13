@@ -515,6 +515,16 @@ sub _parse_drive_def($self, $clause, $drives) {
     }
     confess "Error: duplicate drive '$name'\n" if exists $drives->{$name};
     my @body = @{$clause}[2 .. $#$clause];
+    for my $entry (@body) {
+        confess "Error: drive '$name' body entries must be list forms\n"
+            unless ref($entry) eq 'ARRAY' && @$entry;
+        confess "Error: drive '$name' body entry heads must be scalar\n"
+            unless defined($entry->[0]) && !ref($entry->[0]) && length($entry->[0]);
+        confess "Error: drive '$name' body assignments require '(port value)'\n"
+            unless @$entry == 2
+                && defined($entry->[1])
+                && !ref($entry->[1]);
+    }
     $drives->{$name} = { body => \@body, params => \@params };
 }
 

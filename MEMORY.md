@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF drive body parser boundary
+- ISF drive definitions now validate each body entry before actor-shell return:
+  entries must be scalar `(port value)` pairs.
+- Malformed scalar body entries, nested ports, missing values, extra operands,
+  and expression-valued drive body assignments now fail in the parser instead
+  of being skipped during drive-DT construction or stringified poorly later.
+- Added `t/1194-isf-drive-body-boundary.t` and updated the ISF public contract
+  metadata, spec, mdBook, and live roadmap notes.
 ## 2026-05-13: R14 — ISF drive call arity boundary
 - ISF known drive calls now use exact positional arity during lowering: the
   number of actual values must match the drive definition's parameter count.

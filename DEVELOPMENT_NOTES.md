@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF drive body parser boundary
+- Drive body entries feed directly into generated non-state drive DT
+  assignments. Before this boundary, malformed entries could be skipped during
+  `_build_drive_dts`, and nested RHS payloads could be formatted as Perl
+  reference strings instead of valid `.fsm` expressions.
+- The parser now validates the shipped drive body form as scalar `(port value)`
+  pairs. This keeps drive body expression support deliberately deferred until
+  the scheduler has an explicit expression-formatting contract, while still
+  preserving valid scalar parameter/literal/signal bindings.
 ## 2026-05-13: R14 ISF drive call arity boundary
 - Parameterized drive definitions create one generated parameter signal per
   formal, and named drive calls wire actual values positionally into those

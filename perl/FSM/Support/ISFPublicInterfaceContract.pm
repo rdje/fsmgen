@@ -247,6 +247,7 @@ sub build_isf_public_interface_contract {
             't/1191-isf-actor-priority-target-boundary.t',
             't/1192-isf-singleton-actor-clause-boundary.t',
             't/1193-isf-drive-call-arity-boundary.t',
+            't/1194-isf-drive-body-boundary.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -431,7 +432,7 @@ sub isf_public_interface_actor_shell_rule_shape {
 }
 
 sub isf_public_interface_actor_shell_drive_shape {
-    return 'drives is a hash of public drive shell entries keyed by unique non-empty drive name; each entry has unique scalar params and body arrays, while drive body payload contents remain private scheduler input';
+    return 'drives is a hash of public drive shell entries keyed by unique non-empty drive name; each entry has unique scalar params and body arrays; body entries are scalar (port value) pairs while detailed drive semantics remain private scheduler input';
 }
 
 sub isf_public_interface_facade_failure_diagnostic_shape {

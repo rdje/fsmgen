@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF drive body parser boundary
+- Active: `R14`. Drive definition body entries now fail malformed shapes before
+  parser actor-shell return; accepted entries are scalar `(port value)` pairs.
+- `t/1194` covers valid shell/lowering behavior plus scalar body entries,
+  nested ports, missing values, extra operands, and expression-valued drive
+  body assignments.
+
 ## 2026-05-13: R14 — ISF drive call arity boundary
 - Active: `R14`. Known ISF drive calls now require exact positional arity
   during lowering: declared parameter count and actual count must match.

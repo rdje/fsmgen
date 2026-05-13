@@ -110,7 +110,8 @@ entries with scalar `name`, optional `when`, and `actions` array fields. Rule
 condition/action payload contents remain private scheduler input.
 Current actor-level drive definitions are advertised as a bounded shell:
 `drives` is a hash keyed by drive name, and each entry has `params` and `body`
-array fields. Drive body payload contents remain private scheduler input.
+array fields. Body entries are parser-validated scalar `(port value)` pairs;
+detailed drive semantics remain private scheduler input.
 The same contract publishes the public return containers: parser facades return
 scheduler-consumable actor hash references, `lower(...)` returns a hash
 reference with the advertised lower-result keys, and `report(...)` returns the
@@ -254,8 +255,9 @@ Current lowering:
   unique non-empty drive name. Each entry contains `params` and `body` arrays.
   Duplicate drive names, nested or otherwise non-scalar drive names, duplicate
   parameter names, and nested or otherwise non-scalar parameter names are
-  rejected before the parser returns an actor shell. Drive body payload
-  contents remain scheduler input and are not frozen as a public API by the
+  rejected before the parser returns an actor shell. Body entries are
+  structurally validated as scalar `(port value)` pairs before parser return;
+  richer body-expression semantics are not frozen as a public API by the
   actor-shell drive-shape metadata.
 - Each drive definition becomes a non-state DT block named `-drive_name`.
 - Each drive call becomes one scheduled state.
@@ -847,6 +849,7 @@ Focused tests:
 - [t/1191-isf-actor-priority-target-boundary.t](../t/1191-isf-actor-priority-target-boundary.t)
 - [t/1192-isf-singleton-actor-clause-boundary.t](../t/1192-isf-singleton-actor-clause-boundary.t)
 - [t/1193-isf-drive-call-arity-boundary.t](../t/1193-isf-drive-call-arity-boundary.t)
+- [t/1194-isf-drive-body-boundary.t](../t/1194-isf-drive-body-boundary.t)
 
 ## 12. Explicitly Deferred
 

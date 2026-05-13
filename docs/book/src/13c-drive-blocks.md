@@ -5,6 +5,11 @@ is asserted. One `(drive ...)` call = one cycle. The assignment operators in
 the DT decide timing: current drive bodies use `<-`, so driven ports update on
 the next clock.
 
+Drive definitions are parser-validated before lowering. Each body entry must be
+a scalar `(port value)` pair; malformed scalar body entries, nested ports,
+missing values, extra operands, and expression-valued drive body assignments
+are rejected before the actor shell is returned.
+
 ## Simple Drives
 
 ```lisp

@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF drive body parser boundary
+- Tightened [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
+  so drive definition body entries must be scalar `(port value)` pairs before
+  an actor shell is returned.
+- Added [t/1194-isf-drive-body-boundary.t](t/1194-isf-drive-body-boundary.t)
+  for valid body preservation/lowering plus scalar entry, nested lhs, missing
+  value, extra operand, and expression-valued body rejection.
+- Updated the ISF public-interface contract metadata, ISF spec, mdBook drive
+  chapter, and roadmap notes so malformed drive bodies cannot be silently
+  skipped or stringified downstream.
 ### R14 — ISF drive call arity boundary
 - Tightened [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
   so known drive calls require exactly one actual value per declared drive

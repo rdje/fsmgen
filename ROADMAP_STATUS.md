@@ -8,6 +8,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Support workflow: [bin/ci-regression](bin/ci-regression) now supports
   explicit `quick`, `isf`, and `full` modes, plus `--list`, `--dry-run`, and
   `--no-book`. No argument still runs the historical full gate.
+- ISF drive definition bodies now fail malformed entries before parser
+  actor-shell return. Accepted body entries are scalar `(port value)` pairs.
+  `t/1194` covers valid preservation/lowering plus scalar, nested, missing,
+  extra, and expression-valued malformed body entries.
 - ISF known drive calls now require exact positional arity during lowering:
   declared drive parameter count must match actual count. `t/1193` covers
   valid binding plus missing, extra, simple-drive-extra, and nested extra
@@ -1302,6 +1306,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - [t/1193-isf-drive-call-arity-boundary.t](t/1193-isf-drive-call-arity-boundary.t)
     now proves known drive calls require exact positional arity during
     lowering, including nested body contexts that use the shared lowerer.
+  - [t/1194-isf-drive-body-boundary.t](t/1194-isf-drive-body-boundary.t)
+    now proves drive definition body entries are parser-validated as scalar
+    `(port value)` pairs before actor-shell return.
   - Next bounded `R14` slice: convert another documented scheduler limitation
     into regression-backed behavior.
 - Superseded `R13` carry-forward detail retained below this note should not be
@@ -4080,6 +4087,9 @@ Done:
   [t/1193-isf-drive-call-arity-boundary.t](t/1193-isf-drive-call-arity-boundary.t),
   covering exact positional arity for parameterized and simple drive calls
   before scheduled `.fsm` emission.
+- Drive body structural validation is now regression-backed by
+  [t/1194-isf-drive-body-boundary.t](t/1194-isf-drive-body-boundary.t),
+  covering scalar `(port value)` body entries before parser return.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.
