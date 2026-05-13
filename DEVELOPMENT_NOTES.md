@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF singleton actor clause boundary
+- `clock`, `reset`, `watchdog`, `interface`, and `resources` are stored in
+  keyed actor-shell fields rather than append-only lists. Accepting a second
+  source clause makes the parser silently replace the first public value.
+- The parser now claims those clause names as singleton actor clauses while
+  building the actor shell. This keeps optional clauses optional, preserves
+  valid single-clause behavior, and fails repeated definitions before any
+  downstream parser or scheduler consumer sees overwritten timing,
+  interface, or resource metadata.
 ## 2026-05-13: R14 ISF actor priority target boundary
 - Actor-level priority metadata is still informational, but unresolved lhs/rhs
   names are not useful metadata. They create apparent arbitration relationships

@@ -8,6 +8,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Support workflow: [bin/ci-regression](bin/ci-regression) now supports
   explicit `quick`, `isf`, and `full` modes, plus `--list`, `--dry-run`, and
   `--no-book`. No argument still runs the historical full gate.
+- ISF actor-shell singleton clauses now fail closed when repeated instead of
+  silently overwriting keyed public fields. The singleton set is `(clock ...)`,
+  `(reset ...)`, `(watchdog ...)`, `(interface ...)`, and `(resources ...)`.
+  `t/1192` covers valid singleton preservation plus duplicate rejection.
 - ISF child transaction references now fail closed before scheduled `.fsm`
   emission when `(do child)` or `(spawn child as instance)` names an
   undeclared transaction. `t/1184` covers valid forward references plus
@@ -1288,6 +1292,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - [t/1191-isf-actor-priority-target-boundary.t](t/1191-isf-actor-priority-target-boundary.t)
     now proves actor-level priority metadata resolves both sides against
     declared same-actor transactions or rules before parser actor-shell return.
+  - [t/1192-isf-singleton-actor-clause-boundary.t](t/1192-isf-singleton-actor-clause-boundary.t)
+    now proves repeated actor-shell singleton clauses fail before parser
+    return instead of overwriting public timing, interface, or resource fields.
   - Next bounded `R14` slice: convert another documented scheduler limitation
     into regression-backed behavior.
 - Superseded `R13` carry-forward detail retained below this note should not be
@@ -4058,6 +4065,10 @@ Done:
   [t/1191-isf-actor-priority-target-boundary.t](t/1191-isf-actor-priority-target-boundary.t),
   covering valid forward references plus unknown lhs/rhs priority-target
   rejection before parser return.
+- Actor-shell singleton clause validation is now regression-backed by
+  [t/1192-isf-singleton-actor-clause-boundary.t](t/1192-isf-singleton-actor-clause-boundary.t),
+  covering duplicate `(clock ...)`, `(reset ...)`, `(watchdog ...)`,
+  `(interface ...)`, and `(resources ...)` rejection before parser return.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

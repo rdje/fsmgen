@@ -100,6 +100,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
     };
     my %actor_phase_names;
     my %actor_stage_names;
+    my %singleton_actor_clauses;
     my %transaction_names;
     my %rule_names;
 
@@ -109,10 +110,22 @@ sub _build_actor($self, $actor_ast, $source_label) {
 
         my $keyword = $clause->[0];
         given ($keyword) {
-            when ('clock')     { $result->{clock}    = $self->_parse_clock($clause); }
-            when ('reset')     { $result->{reset}    = $self->_parse_reset($clause); }
-            when ('watchdog')  { $result->{watchdog} = $self->_parse_watchdog($clause); }
-            when ('interface') { $result->{interface} = $self->_parse_interface($clause); }
+            when ('clock')     {
+                $self->_claim_singleton_actor_clause($actor_name, 'clock', \%singleton_actor_clauses);
+                $result->{clock} = $self->_parse_clock($clause);
+            }
+            when ('reset')     {
+                $self->_claim_singleton_actor_clause($actor_name, 'reset', \%singleton_actor_clauses);
+                $result->{reset} = $self->_parse_reset($clause);
+            }
+            when ('watchdog')  {
+                $self->_claim_singleton_actor_clause($actor_name, 'watchdog', \%singleton_actor_clauses);
+                $result->{watchdog} = $self->_parse_watchdog($clause);
+            }
+            when ('interface') {
+                $self->_claim_singleton_actor_clause($actor_name, 'interface', \%singleton_actor_clauses);
+                $result->{interface} = $self->_parse_interface($clause);
+            }
             when ('handshake') { $self->_parse_handshake($clause); }  # deprecated, validated then ignored
             when ('transaction') {
                 my $transaction = $self->_parse_transaction($clause);
@@ -126,7 +139,10 @@ sub _build_actor($self, $actor_ast, $source_label) {
                     if $rule_names{$rule->{name}}++;
                 push @{$result->{rules}}, $rule;
             }
-            when ('resources') { $result->{resources} = $self->_parse_resources($clause); }
+            when ('resources') {
+                $self->_claim_singleton_actor_clause($actor_name, 'resources', \%singleton_actor_clauses);
+                $result->{resources} = $self->_parse_resources($clause);
+            }
             when ('priority')  { push @{$result->{priorities}}, $self->_parse_priority($clause); }
             when ('drive')     { $self->_parse_drive_def($clause, $result->{drives}); }
             when ('phase')     {
@@ -156,6 +172,13 @@ sub _build_actor($self, $actor_ast, $source_label) {
 }
 
 # --- Individual clause parsers ---
+
+sub _claim_singleton_actor_clause($self, $actor_name, $keyword, $seen) {
+    confess "Error: duplicate actor clause '$keyword' in actor '$actor_name'\n"
+        if $seen->{$keyword}++;
+
+    return 1;
+}
 
 sub _parse_clock($self, $clause) {
     confess "Error: (clock ...) requires exactly one name\n" unless @$clause == 2;

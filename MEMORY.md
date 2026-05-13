@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF singleton actor clause boundary
+- ISF parser actor-shell singleton clauses now fail closed when repeated:
+  `(clock ...)`, `(reset ...)`, `(watchdog ...)`, `(interface ...)`, and
+  `(resources ...)`.
+- This preserves the existing public actor-shell fields while preventing a
+  later clause from silently overwriting an earlier clock/reset/watchdog value
+  or replacing the interface/resources block.
+- Added `t/1192-isf-singleton-actor-clause-boundary.t` and updated the ISF
+  public contract metadata, spec, mdBook, and live roadmap notes.
 ## 2026-05-13: R14 — ISF actor priority target boundary
 - Actor-level `(priority lhs over rhs)` metadata now validates both sides
   against declared same-actor transactions or rules before actor-shell return.

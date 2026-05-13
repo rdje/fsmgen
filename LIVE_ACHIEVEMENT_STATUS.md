@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF singleton actor clause boundary
+- Active: `R14`. Repeated actor-shell singleton clauses now fail before parser
+  actor-shell return. The singleton set is `(clock ...)`, `(reset ...)`,
+  `(watchdog ...)`, `(interface ...)`, and `(resources ...)`.
+- `t/1192` covers valid singleton field preservation plus duplicate rejection
+  for each singleton clause, preventing silent overwrite of public timing,
+  interface, and resource metadata.
+
 ## 2026-05-13: R14 — ISF actor priority target boundary
 - Active: `R14`. Actor-level `(priority lhs over rhs)` metadata now requires
   both sides to resolve to declared same-actor transactions or rules before

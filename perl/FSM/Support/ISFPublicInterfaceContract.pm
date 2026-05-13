@@ -245,6 +245,7 @@ sub build_isf_public_interface_contract {
             't/1189-isf-drive-parameter-boundary.t',
             't/1190-isf-rule-priority-target-boundary.t',
             't/1191-isf-actor-priority-target-boundary.t',
+            't/1192-isf-singleton-actor-clause-boundary.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -413,7 +414,7 @@ sub isf_public_interface_actor_shell_actor_name_shape {
 }
 
 sub isf_public_interface_actor_shell_timing_shape {
-    return 'clock is a non-empty scalar when configured; reset is null when omitted or a hash with scalar name, kind, and polarity; watchdog is null when omitted or a positive integer';
+    return 'clock is a non-empty scalar when configured; reset is null when omitted or a hash with scalar name, kind, and polarity; watchdog is null when omitted or a positive integer; source clock, reset, watchdog, interface, and resources clauses are singleton actor clauses';
 }
 
 sub isf_public_interface_actor_shell_interface_shape {

@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF singleton actor clause boundary
+- Tightened [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
+  so repeated singleton actor clauses fail before an actor shell is returned.
+  The singleton set is `(clock ...)`, `(reset ...)`, `(watchdog ...)`,
+  `(interface ...)`, and `(resources ...)`.
+- Added [t/1192-isf-singleton-actor-clause-boundary.t](t/1192-isf-singleton-actor-clause-boundary.t)
+  for valid singleton preservation plus duplicate clause rejection across the
+  full singleton set.
+- Updated the ISF public-interface contract metadata, ISF spec, mdBook actor/
+  rules chapters, and roadmap notes so downstream consumers know these
+  public fields cannot be silently overwritten by later clauses.
 ### R14 — ISF actor priority target boundary
 - Tightened [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
   so actor-level `(priority lhs over rhs)` metadata requires both sides to

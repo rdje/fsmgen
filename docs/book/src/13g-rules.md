@@ -160,5 +160,7 @@ Resources are shared hardware that only one transaction can use at a time.
 Arbiter types: `priority`, `round_robin`.
 
 Resource metadata is structurally validated by the parser, including supported
-arbiter names and duplicate resource rejection. Resource lowering is still
-deferred — resources are not yet enforced by the scheduler.
+arbiter names and duplicate resource rejection. `(resources ...)` is a
+singleton actor clause, so repeated resources blocks are rejected rather than
+merged or overwritten. Resource lowering is still deferred — resources are not
+yet enforced by the scheduler.

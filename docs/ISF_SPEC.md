@@ -150,6 +150,12 @@ Supported actor clauses:
 - `(resources ...)`
 - `(priority ...)`
 
+Actor-shell singleton clauses are not mergeable. At most one `(clock ...)`,
+`(reset ...)`, `(watchdog ...)`, `(interface ...)`, and `(resources ...)`
+clause may appear in an actor. Duplicate singleton clauses are rejected before
+the parser returns an actor shell instead of letting later clauses overwrite
+earlier public fields.
+
 Parser-carried but not currently semantically enforced by the scheduler:
 - actor-level `(phase name property...)`, structurally validated as a
   non-empty scalar name plus list-form body entries; duplicate actor phase
@@ -176,6 +182,8 @@ Deprecated compatibility:
 
 Reset rules:
 - Clock names must be scalar when a `(clock ...)` clause is present.
+- `(clock ...)`, `(reset ...)`, and `(watchdog ...)` are actor-level
+  singleton clauses; duplicates are rejected before actor-shell return.
 - Flat `(reset name)` defaults to synchronous reset.
 - Names ending in `_n` or `_b` infer `active_low`; other names infer
   `active_high`.
@@ -207,6 +215,8 @@ arrays with unique non-empty scalar port `name` and positive integer `width`
 entries. Malformed directions, duplicate names across either direction, nested
 names, and non-positive or non-integer widths are rejected before the parser
 returns an actor shell.
+`(interface ...)` is an actor-level singleton clause; repeated interface blocks
+are rejected instead of merged or overwritten.
 If an inferred scheduler storage name matches a declared interface port, the
 declared port entry is kept and the inferred duplicate is suppressed.
 Output ports are marked as public outputs by the `.fsm` emitter when assigned
@@ -606,8 +616,10 @@ metadata is not currently enforced as arbitration policy.
 
 `(resources ...)` entries are structurally validated as
 `(resource name (arbiter priority|round_robin))`, with duplicate resource
-names rejected before an actor shell is returned. Resource arbitration is still
-not enforced by lowering.
+names rejected before an actor shell is returned. `(resources ...)` is an
+actor-level singleton clause, so repeated resources blocks are rejected instead
+of merged or overwritten. Resource arbitration is still not enforced by
+lowering.
 
 Actor-level `(phase name property...)` and `(stage name property...)` metadata
 is structurally validated by the parser and carried in the actor shell for
@@ -829,6 +841,7 @@ Focused tests:
 - [t/1189-isf-drive-parameter-boundary.t](../t/1189-isf-drive-parameter-boundary.t)
 - [t/1190-isf-rule-priority-target-boundary.t](../t/1190-isf-rule-priority-target-boundary.t)
 - [t/1191-isf-actor-priority-target-boundary.t](../t/1191-isf-actor-priority-target-boundary.t)
+- [t/1192-isf-singleton-actor-clause-boundary.t](../t/1192-isf-singleton-actor-clause-boundary.t)
 
 ## 12. Explicitly Deferred
 

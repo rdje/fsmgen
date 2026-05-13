@@ -265,6 +265,11 @@ The actor-level priority target boundary is checked by
 so both sides of `(priority lhs over rhs)` must resolve to declared same-actor
 transactions or rules before actor-shell return. Forward references remain
 accepted.
+The singleton actor-clause boundary is checked by
+[t/1192-isf-singleton-actor-clause-boundary.t](../t/1192-isf-singleton-actor-clause-boundary.t)
+so `(clock ...)`, `(reset ...)`, `(watchdog ...)`, `(interface ...)`, and
+`(resources ...)` fail closed when repeated instead of letting later clauses
+overwrite earlier public actor-shell fields.
 The blocking `do` child-completion handoff is checked by
 [t/1177-isf-do-child-done-pulse.t](../t/1177-isf-do-child-done-pulse.t)
 so the generated internal `child_done` signal remains a one-cycle delayed pulse
@@ -421,6 +426,10 @@ The current public parser handoff also advertises bounded actor timing fields:
 hash with scalar `name`, `kind`, and `polarity`, and `watchdog` is null when
 omitted or a positive integer. The machine-readable contract advertises this
 through `actor_shell_timing_shape`.
+Those timing fields, along with `interface` and parser-carried `resources`, are
+source-level singleton actor clauses. Repeating one is a parser boundary error;
+the parser does not merge duplicate interface/resources blocks or let later
+clock/reset/watchdog clauses overwrite earlier ones.
 The current public parser handoff also advertises a bounded rule-entry shell:
 `rules` is an array of entries with unique non-empty scalar `name`, optional
 `when`, and `actions` array fields. The machine-readable contract advertises this through

@@ -13,6 +13,11 @@
 Every actor has a clock, an optional reset, and optional watchdog.
 The actor is the top-level unit — one hardware agent.
 
+The parser treats `(clock ...)`, `(reset ...)`, `(watchdog ...)`, and
+`(interface ...)` as singleton actor clauses. Each may appear at most once in
+an actor; repeated clauses are rejected before the public actor shell is
+returned rather than merged or overwritten.
+
 ## Clock
 
 ```lisp
@@ -64,6 +69,8 @@ See [Transactions](13b-transactions.md) for per-await semantics.
 
 Ports become `.fsm` `+size` declarations and module ports. Inferred scheduler
 storage is not emitted a second time when it shares a name with a declared port.
+Interface port names are unique across both input and output directions, and
+the interface block itself is a singleton actor clause.
 
 ### Complete Example — APB Interface
 
