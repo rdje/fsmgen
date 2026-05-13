@@ -29,12 +29,13 @@ unset IFS
 
 usage() {
   cat <<'USAGE'
-Usage: ./bin/ci-regression [quick|isf|full] [--no-book] [--dry-run]
+Usage: ./bin/ci-regression [quick|smoke|isf|full] [--no-book] [--dry-run]
 
 Modes:
   quick  Curated smoke set for fast turnaround across direct FSM,
          composition classification, one composition child path, ISF parse,
          ISF schedule, and the ISF public contract.
+  smoke  Alias for quick.
   isf    All ISF-focused tests in the 109x, 11xx, and 12xx numbered bands.
   full   Complete Perl regression suite. This is the default.
 
@@ -85,7 +86,7 @@ require_test_files() {
 
 while (($#)); do
   case "$1" in
-    quick|isf|full)
+    quick|smoke|isf|full)
       MODE="$1"
       ;;
     --no-book)
@@ -119,7 +120,7 @@ if (( ! DRY_RUN )); then
 fi
 
 case "$MODE" in
-  quick)
+  quick|smoke)
     require_test_files "${QUICK_TESTS[@]}"
     run_step "Perl quick smoke suite" prove -I perl "${QUICK_TESTS[@]}"
     ;;

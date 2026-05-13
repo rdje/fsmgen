@@ -6,8 +6,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   selecting another bounded documented limitation, or run a focused
   documentation drift audit only if guide/book divergence appears.
 - Support workflow: [bin/ci-regression](bin/ci-regression) now supports
-  explicit `quick`, `isf`, and `full` modes, plus `--list`, `--dry-run`, and
-  `--no-book`. No argument still runs the historical full gate.
+  explicit `quick`/`smoke`, `isf`, and `full` modes, plus `--list`,
+  `--dry-run`, and `--no-book`. `smoke` aliases the curated `quick` tier for
+  fast basic-functionality checks, and no argument still runs the historical
+  full gate.
 - ISF `(extract word as field... [(widths N...)])` clauses now validate scalar
   source/field names before scheduled `.fsm` emission while preserving bounded
   explicit field widths. `t/1201` covers valid explicit-width slice lowering
@@ -1300,10 +1302,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
     transactions before actor-shell return, while preserving forward
     references.
   - [bin/ci-regression](bin/ci-regression) now has explicit turnaround tiers:
-    `quick` for a curated direct/composition/ISF smoke set, `isf` for the
-    current 109x/11xx/12xx ISF bands, and `full` for the historical complete
-    gate. This is workflow support only; the active implementation lane
-    remains `R14`.
+    `quick`/`smoke` for a curated direct/composition/ISF smoke set, `isf` for
+    the current 109x/11xx/12xx ISF bands, and `full` for the historical
+    complete gate. This is workflow support only; the active implementation
+    lane remains `R14`.
   - [t/1184-isf-child-transaction-target-boundary.t](t/1184-isf-child-transaction-target-boundary.t)
     now proves `(do child)` and `(spawn child as instance)` targets must
     resolve to declared same-actor transactions before scheduled `.fsm`

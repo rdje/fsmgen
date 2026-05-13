@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: Workflow — quick smoke regression alias
+- Active support workflow: `bin/ci-regression smoke` now aliases the curated
+  `quick` tier for fast basic-functionality checks across direct `.fsm`,
+  composition, and ISF basics.
+- `t/1183` covers the alias dry run, shared quick test list, and `--no-book`
+  behavior.
+
 ## 2026-05-13: R14 — ISF extract clause boundary
 - Active: `R14`. `(extract word as field... [(widths N...)])` now requires a
   scalar source word and scalar destination fields before scheduled `.fsm`

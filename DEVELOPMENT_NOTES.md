@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: Workflow quick smoke regression alias
+- The `quick` tier already provides the small basic-functionality set, but
+  "smoke" is the natural term many contributors reach for when they want that
+  fast confidence check.
+- `smoke` is kept as an alias, not a separate list, so the small-set workflow
+  has one curated source of truth and cannot drift from `quick` as tests are
+  added or removed.
 ## 2026-05-13: R14 ISF extract clause boundary
 - `extract` computes slice assignments from one source word and an ordered
   field list. Nested or empty source/field payloads would imply expression

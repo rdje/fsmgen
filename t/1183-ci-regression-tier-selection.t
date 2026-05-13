@@ -52,6 +52,13 @@ subtest 'dry-run modes select the expected command families' => sub {
     like($quick->{stdout}, qr/t\/1112-isf-public-interface-contract\.t/, 'quick dry-run includes ISF public contract smoke');
     like($quick->{stdout}, qr/==> mdBook build/, 'quick dry-run builds the book by default');
 
+    my $smoke = run_ci('smoke', '--dry-run', '--no-book');
+    ok($smoke->{success}, 'smoke alias dry-run succeeds');
+    is($smoke->{stderr}, '', 'smoke alias dry-run keeps stderr clean');
+    like($smoke->{stdout}, qr/==> Perl quick smoke suite/, 'smoke alias selects quick suite');
+    like($smoke->{stdout}, qr/t\/01-regression\.t/, 'smoke alias includes basic direct regression');
+    unlike($smoke->{stdout}, qr/mdBook build/, '--no-book suppresses book build for smoke alias');
+
     my $isf = run_ci('isf', '--dry-run', '--no-book');
     ok($isf->{success}, 'ISF dry-run succeeds');
     is($isf->{stderr}, '', 'ISF dry-run keeps stderr clean');
@@ -79,6 +86,14 @@ subtest 'ISF tier remains ready for the next numbered band' => sub {
 
     like($script, qr/t\/12\[0-9\]\[0-9\]-isf\*\.t/, 'ISF tier includes the 12xx ISF band');
     like($script, qr/shopt -s nullglob/, 'unmatched future ISF bands do not produce literal paths');
+};
+
+subtest 'smoke remains an explicit alias for quick turnaround' => sub {
+    my $script = slurp($ci);
+
+    like($script, qr/quick\|smoke\|isf\|full/, 'mode parser accepts smoke beside quick');
+    like($script, qr/quick\|smoke\)\n\s+require_test_files "\$\{QUICK_TESTS\[@\]\}"/,
+        'smoke and quick use the same curated test list');
 };
 
 done_testing();

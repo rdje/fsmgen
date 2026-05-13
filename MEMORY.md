@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: Workflow — quick smoke regression alias
+- `bin/ci-regression smoke` is now an explicit alias for the existing `quick`
+  smoke tier, matching the small basic-functionality check used for fast local
+  turnaround.
+- `t/1183-ci-regression-tier-selection.t` now proves the alias selects the same
+  curated direct/composition/ISF quick test list and still honors `--no-book`.
+- Updated README, WARP, the mdBook troubleshooting chapter, and live roadmap
+  notes so the small-set workflow is discoverable as both `quick` and `smoke`.
 ## 2026-05-13: R14 — ISF extract clause boundary
 - ISF `(extract word as field... [(widths N...)])` lowering now validates the
   source word and every field as scalar names before scheduled `.fsm`

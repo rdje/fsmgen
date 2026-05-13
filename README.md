@@ -183,6 +183,7 @@ cd docs/book && mdbook serve
 ## Local CI / pre-push regression
 ```bash
 ./bin/ci-regression quick
+./bin/ci-regression smoke
 ./bin/ci-regression isf
 ./bin/ci-regression
 ./bin/ci-regression --list
@@ -193,6 +194,8 @@ cd docs/book && mdbook serve
   - `quick`: curated smoke set across direct `.fsm`, composition
     classification, one composition child path, ISF parse/schedule, and the
     ISF public contract.
+  - `smoke`: alias for `quick`, provided for the fast basic-functionality
+    check described by the tier.
   - `isf`: all ISF-focused tests in the current 109x, 11xx, and 12xx
     numbered bands.
   - `full`: the complete Perl regression suite with `prove -I perl t`.

@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### Workflow — quick smoke regression alias
+- Extended [bin/ci-regression](bin/ci-regression) with `smoke` as an alias for
+  the existing `quick` tier, preserving the same curated direct/composition/ISF
+  basic-functionality test list.
+- Updated [t/1183-ci-regression-tier-selection.t](t/1183-ci-regression-tier-selection.t)
+  to lock the alias behavior and `--no-book` handling without recursively
+  running the suite inside the selector test.
+- Updated [README.md](README.md), [WARP.md](WARP.md), the mdBook
+  troubleshooting chapter, and roadmap notes.
 ### R14 — ISF extract clause boundary
 - Tightened [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
   so `(extract word as field... [(widths N...)])` requires a scalar source word

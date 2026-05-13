@@ -234,14 +234,16 @@ Before landing behavior changes, run the local regression suite:
 
 ```bash
 ./bin/ci-regression quick
+./bin/ci-regression smoke
 ./bin/ci-regression isf
 ./bin/ci-regression
 ```
 
 Use `quick` for a small smoke set when you need fast feedback on basic direct
-`.fsm`, composition, and ISF functionality. Use `isf` for the current
-ISF-focused 109x, 11xx, and 12xx numbered bands. With no mode argument,
-`./bin/ci-regression` runs the full Perl suite and remains the pre-push gate.
+`.fsm`, composition, and ISF functionality. `smoke` is an alias for the same
+tier. Use `isf` for the current ISF-focused 109x, 11xx, and 12xx numbered
+bands. With no mode argument, `./bin/ci-regression` runs the full Perl suite
+and remains the pre-push gate.
 
 For focused work, run the nearby targeted `prove` suites first, then the
 smallest `ci-regression` tier that covers the changed surface. The gate builds
