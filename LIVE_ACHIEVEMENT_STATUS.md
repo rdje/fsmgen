@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF extract explicit field widths
+- Active: `R14`. `extract` now accepts `(widths N...)` so authors can provide
+  ordered field widths when they are not declared elsewhere, producing exact
+  descending slices instead of placeholder `field HIGH/LOW` bounds.
+- `t/1174` covers valid explicit-width extraction plus malformed count and
+  declared-width conflict rejection; the ISF spec, public-interface contract,
+  mdBook, and roadmap notes now describe the bounded option.
+
 ## 2026-05-13: R14 — ISF shift_right explicit width option
 - Active: `R14`. `shift_right` now accepts `(width N)` so authors can provide
   the shifted register width when it is not declared elsewhere, producing a

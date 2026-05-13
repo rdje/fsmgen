@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF extract explicit field widths
+- `extract` had the same practical limitation as unknown-width `shift_right`:
+  the scheduler could avoid placeholders only when declarations or earlier
+  data operations had already supplied enough width facts.
+- The ordered `(widths N...)` option is intentionally local to one extract
+  clause. It gives authors a bounded escape hatch for exact slices without
+  pretending that full width inference is solved. The option count must match
+  the field count, widths must be positive integers, and an explicit width that
+  disagrees with an already known field width is rejected rather than silently
+  producing a mismatched slice.
 ## 2026-05-13: R14 ISF shift_right explicit width option
 - The broader unknown-width data-operation limitation is not solved by one
   slice, but `shift_right` has a narrow, useful author-controlled fix: when

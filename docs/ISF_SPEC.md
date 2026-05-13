@@ -285,6 +285,7 @@ Current transaction clauses:
 - `(shift_right reg bit)`
 - `(assemble part... as var)`
 - `(extract word as field...)`
+- `(extract word as field... (widths N...))`
 - `(do transaction)`
 - `(spawn transaction as instance)`
 - `(await_all done_port)`
@@ -426,6 +427,7 @@ checks do not fall through into later branch bodies.
 (shift_right reg bit (width N))
 (assemble header payload crc as packet)
 (extract packet as header payload crc)
+(extract packet as header payload crc (widths 4 8 4))
 ```
 
 Current lowering:
@@ -437,9 +439,12 @@ Current lowering:
   still fall back to the placeholder width expression.
 - `assemble` emits a concat expression into the target variable.
 - `extract` emits one extraction state. When the source word and destination
-  fields have known widths, fields are assigned exact descending slices; if a
-  width is unknown, the emitter keeps placeholder slice bounds for that field
-  and any later field whose position can no longer be proven.
+  fields have known widths, or when the clause supplies an ordered
+  `(widths N...)` list matching the field count, fields are assigned exact
+  descending slices. If a width is unknown, the emitter keeps placeholder
+  slice bounds for that field and any later field whose position can no longer
+  be proven. Explicit widths must be positive integers and must not conflict
+  with already known field widths.
 
 ## 8. Composition Between Transactions
 
@@ -747,6 +752,7 @@ Focused tests:
 - [t/1171-isf-rule-trigger-fanin.t](../t/1171-isf-rule-trigger-fanin.t)
 - [t/1172-isf-rule-trigger-fanin-schedule-report.t](../t/1172-isf-rule-trigger-fanin-schedule-report.t)
 - [t/1173-isf-shift-right-explicit-width.t](../t/1173-isf-shift-right-explicit-width.t)
+- [t/1174-isf-extract-explicit-widths.t](../t/1174-isf-extract-explicit-widths.t)
 
 ## 12. Explicitly Deferred
 
@@ -756,7 +762,8 @@ Focused tests:
 - Enforced resource arbitration and priority resolution.
 - Full temporal `(contract ...)` assertions.
 - Rich storage-class optimization in schedule reports.
-- Full width inference for unknown-width `extract` values and `shift_right`
-  values that do not use a known signal width or explicit `(width N)` option.
+- Full width inference for `extract` values that do not use known field widths
+  or an explicit `(widths N...)` option, and `shift_right` values that do not
+  use a known signal width or explicit `(width N)` option.
 - Treating the schedule JSON as a fully frozen public schema beyond the bounded
   key families advertised by `embedding.isf_public_interface`.

@@ -77,18 +77,21 @@ Concatenates fields into a single variable.
 (assemble cmd addr data as spi_frame)
 ```
 
-## `(extract word as field1 field2 ...)` — Field Extraction
+## `(extract word as field1 field2 ... [(widths N...)])` — Field Extraction
 
 ```lisp
 (extract packet as header payload crc)
+(extract packet as header payload crc (widths 4 8 4))
 ```
 
 Deconstructs `word` into named fields.
 
 **Current lowering**: one extraction state is emitted. When the source word and
-destination fields have known widths, each field is assigned from an exact
-descending slice. If a width is unknown, the scheduler preserves placeholder
-slice bounds for the unproven field positions.
+destination fields have known widths, or when the extract clause supplies an
+ordered `(widths N...)` list matching the field count, each field is assigned
+from an exact descending slice. If a width is unknown, the scheduler preserves
+placeholder slice bounds for the unproven field positions. Explicit widths must
+be positive integers and must not conflict with already known field widths.
 
 ```lisp
 (state

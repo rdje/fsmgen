@@ -228,6 +228,7 @@ sub build_isf_public_interface_contract {
             't/1171-isf-rule-trigger-fanin.t',
             't/1172-isf-rule-trigger-fanin-schedule-report.t',
             't/1173-isf-shift-right-explicit-width.t',
+            't/1174-isf-extract-explicit-widths.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',

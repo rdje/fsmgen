@@ -221,6 +221,10 @@ The explicit-width `shift_right` data-operation path is checked by
 [t/1173-isf-shift-right-explicit-width.t](../t/1173-isf-shift-right-explicit-width.t)
 so authors can avoid the placeholder width fallback when a shifted register is
 not declared elsewhere.
+The explicit-width `extract` data-operation path is checked by
+[t/1174-isf-extract-explicit-widths.t](../t/1174-isf-extract-explicit-widths.t)
+so authors can avoid placeholder slice bounds when extract field widths are
+not declared elsewhere.
 The actor-shell drive shape is checked by
 [t/1167-isf-public-actor-shell-drive-shape-audit.t](../t/1167-isf-public-actor-shell-drive-shape-audit.t)
 to keep parser-returned drive definitions discoverable as a drive-name-keyed

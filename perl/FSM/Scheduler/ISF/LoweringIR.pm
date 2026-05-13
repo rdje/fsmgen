@@ -137,6 +137,7 @@ sub _build_signal_width_map {
     for my $o (@{$actor->{interface}{outputs}}) { $widths{$o->{name}} = $o->{width} // 1; }
     _collect_sample_widths($tx->{clauses}, \%widths);
     _collect_shift_widths($tx->{clauses}, \%widths);
+    _collect_extract_widths($tx->{clauses}, \%widths);
     _collect_data_widths($tx->{clauses}, \%widths);
     return \%widths;
 }
@@ -191,6 +192,24 @@ sub _collect_shift_widths {
     }
 }
 
+sub _collect_extract_widths {
+    my ($node, $widths) = @_;
+    return unless ref($node) eq 'ARRAY';
+
+    if (@$node >= 5 && $node->[0] eq 'extract') {
+        my ($word, $fields, $explicit_widths) = _parse_extract_clause($node);
+        for my $idx (0 .. $#$fields) {
+            next unless defined $explicit_widths->[$idx];
+            my $field = $fields->[$idx];
+            $widths->{$field} = $explicit_widths->[$idx] unless exists $widths->{$field};
+        }
+    }
+
+    for my $child (@$node) {
+        _collect_extract_widths($child, $widths) if ref($child) eq 'ARRAY';
+    }
+}
+
 sub _as_index {
     my ($cl, $start) = @_;
     for my $idx ($start .. $#$cl) {
@@ -217,13 +236,40 @@ sub _parse_extract_clause {
         unless @$cl >= 4 && defined $cl->[2] && !ref($cl->[2]) && $cl->[2] eq 'as';
 
     my $word = $cl->[1];
-    my @fields = @{$cl}[3 .. $#$cl];
+    my @items = @{$cl}[3 .. $#$cl];
+    my @fields;
+    my @explicit_widths;
+    my $saw_widths;
+
     confess "extract word must be a scalar name\n" if ref($word);
-    confess "extract requires at least one scalar field\n" unless @fields;
-    for my $field (@fields) {
-        confess "extract field must be a scalar name\n" if ref($field);
+    confess "extract requires at least one scalar field\n" unless @items;
+
+    for my $item (@items) {
+        if (ref($item) eq 'ARRAY') {
+            confess "extract accepts at most one '(widths ...)' option\n"
+                if $saw_widths;
+            confess "extract optional arguments must be '(widths N...)'\n"
+                unless @$item >= 2 && $item->[0] eq 'widths';
+            $saw_widths = 1;
+            @explicit_widths = @{$item}[1 .. $#$item];
+            for my $width (@explicit_widths) {
+                confess "extract widths must be positive integers\n"
+                    if ref($width) || $width !~ /\A[1-9][0-9]*\z/;
+                $width = 0 + $width;
+            }
+            next;
+        }
+
+        confess "extract fields must precede the '(widths ...)' option\n" if $saw_widths;
+        confess "extract field must be a scalar name\n" if ref($item);
+        push @fields, $item;
     }
-    return ($word, @fields);
+
+    confess "extract requires at least one scalar field\n" unless @fields;
+    confess "extract '(widths ...)' count must match the field count\n"
+        if @explicit_widths && @explicit_widths != @fields;
+
+    return ($word, \@fields, \@explicit_widths);
 }
 
 sub _parse_shift_right_width {
@@ -474,28 +520,45 @@ sub _ir_shift_right {
 sub _ir_assemble  { my ($cl,$tn,$i)=@_; my($var,@parts)=_parse_assemble_clause($cl);my$rhs='(concat '.join(' ',@parts).')'; {name=>"${tn}_asm_$i",kind=>'sequential',assignments=>[{lhs=>$var,rhs=>$rhs,op=>'<-'}],transitions=>[]} }
 sub _ir_extract {
     my ($cl, $tn, $i, $widths) = @_;
-    my ($word, @fields) = _parse_extract_clause($cl);
+    my ($word, $fields, $explicit_widths) = _parse_extract_clause($cl);
     my @assignments;
+    my @field_widths;
+
+    for my $idx (0 .. $#$fields) {
+        my $field = $fields->[$idx];
+        my $explicit_width = $explicit_widths->[$idx];
+        my $known_width = $widths->{$field};
+
+        confess "extract explicit width for '$field' conflicts with known width\n"
+            if defined($explicit_width)
+                && defined($known_width)
+                && $known_width > 0
+                && $explicit_width != $known_width;
+
+        $field_widths[$idx] = defined($explicit_width) ? $explicit_width : $known_width;
+    }
 
     my $high;
     if (defined($widths->{$word}) && $widths->{$word} > 0) {
         $high = $widths->{$word} - 1;
     } else {
         my $total = 0;
-        for my $field (@fields) {
-            if (!defined($widths->{$field}) || $widths->{$field} <= 0) {
+        for my $width (@field_widths) {
+            if (!defined($width) || $width <= 0) {
                 $total = undef;
                 last;
             }
-            $total += $widths->{$field};
+            $total += $width;
         }
         $high = $total - 1 if defined $total && $total > 0;
     }
 
-    for my $field (@fields) {
+    for my $idx (0 .. $#$fields) {
+        my $field = $fields->[$idx];
+        my $field_width = $field_widths[$idx];
         my $rhs;
-        if (defined $high && defined($widths->{$field}) && $widths->{$field} > 0) {
-            my $low = $high - $widths->{$field} + 1;
+        if (defined $high && defined($field_width) && $field_width > 0) {
+            my $low = $high - $field_width + 1;
             $rhs = "(slice $word $high $low)";
             $high = $low - 1;
         } else {

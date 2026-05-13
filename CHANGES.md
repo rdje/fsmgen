@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF extract explicit field widths
+- Added bounded `(extract word as field... (widths N...))` support in
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so unknown-width extract fields can still lower to exact descending slices.
+- Added [t/1174-isf-extract-explicit-widths.t](t/1174-isf-extract-explicit-widths.t)
+  for valid explicit-width extraction, width-count rejection, and conflict
+  rejection against declared field widths.
+- Updated the ISF spec, public-interface contract, mdBook, and live roadmap
+  notes for the new bounded data-operation syntax.
 ### R14 — ISF shift_right explicit width option
 - Added bounded `(shift_right reg bit (width N))` support in
   [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)

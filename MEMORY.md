@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF extract explicit field widths
+- Added a bounded `(extract word as field... (widths N...))` option. When
+  extract field widths are not declared elsewhere, the scheduler can now use
+  the ordered positive-integer field widths to emit exact descending slices
+  instead of placeholder `field HIGH/LOW` bounds.
+- Added `t/1174-isf-extract-explicit-widths.t` for successful explicit-width
+  extraction, width-count rejection, and declared-width conflict rejection;
+  updated the ISF spec, public-interface contract, mdBook, and roadmap notes.
 ## 2026-05-13: R14 — ISF shift_right explicit width option
 - Added a bounded `(shift_right reg bit (width N))` option. When `reg` has no
   declared/sample/assemble-inferred width, the scheduler now uses `N - 1` as

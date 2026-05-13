@@ -2,11 +2,9 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
-- Next decision point: the USER_GUIDE-to-mdBook major-section migration is
-  complete at the guide level; the old guide is now a compact compatibility
-  waypoint. The next roadmap-aligned move should return to `R14` ISF
-  implementation/API stabilization, or to a focused documentation drift audit
-  only if guide/book divergence appears.
+- Next decision point: continue `R14` ISF implementation/API stabilization by
+  selecting another bounded documented limitation, or run a focused
+  documentation drift audit only if guide/book divergence appears.
 - The mdBook reference map now records those book homes explicitly: direct
   language/core concepts, composition, CLI/debug, typed extensions, legacy
   external flow, troubleshooting, and practical authoring guidance are all
@@ -69,6 +67,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   shifted registers can use a concrete inserted-MSB position without relying
   on the placeholder `WIDTH` expression; `t/1173` covers valid lowering and
   malformed width rejection.
+- ISF `extract` now accepts a bounded `(widths N...)` option so fields without
+  declared widths can still lower to exact descending slices; `t/1174` covers
+  valid extraction, count mismatches, and declared-width conflicts.
 - The mdBook and ISF live docs now distinguish transaction
   `(when condition body...)` control flow from rule-local `(when condition)`
   guard clauses, with the rule shorthand called out as the preferred spelling.

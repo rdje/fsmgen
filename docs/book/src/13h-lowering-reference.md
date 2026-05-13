@@ -332,7 +332,7 @@ an explicit `(width N)` option supplies that width when the register is not
 declared elsewhere. Unknown widths still fall back to the placeholder width
 expression.
 
-## `(assemble fields... as var)` / `(extract word as fields...)` → Sequential State
+## `(assemble fields... as var)` / `(extract word as fields... [(widths N...)])` → Sequential State
 
 **ISF**:
 ```lisp
@@ -350,8 +350,10 @@ expression.
 **Implicit signals**: None.
 
 Current `extract` lowering emits exact descending slices when the source word
-and destination field widths are known. Unknown widths keep placeholder slice
-bounds for unproven field positions.
+and destination field widths are known. An ordered `(widths N...)` option can
+provide field widths for the extract clause when those fields are not declared
+elsewhere; the option count must match the field count. Unknown widths keep
+placeholder slice bounds for unproven field positions.
 
 ## `(latency (min N) (max M))` → Verification Logic
 

@@ -174,6 +174,7 @@ control-flow and data-operation states.
 - `(shift_right ...)` accepts an explicit `(width N)` option when the shifted
   register width is not declared elsewhere; values with no known or explicit
   width still use the placeholder `WIDTH` expression.
-- `(extract ...)` field slice ranges still use placeholder names when widths
-  cannot be inferred.
+- `(extract ...)` accepts an ordered `(widths N...)` option when field widths
+  are not declared elsewhere; values with no known or explicit widths still
+  use placeholder slice bounds.
 - `(contract ...)` temporal assertions are not implemented.
