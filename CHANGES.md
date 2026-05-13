@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF rule trigger fan-in schedule report audit
+- Added [t/1172-isf-rule-trigger-fanin-schedule-report.t](t/1172-isf-rule-trigger-fanin-schedule-report.t)
+  to lock schedule JSON `dt_blocks` order/kind/assignment-count projection for
+  rule-trigger fan-in and one-bit inferred-storage summaries for generated
+  trigger sources.
+- Updated [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm),
+  [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md),
+  [docs/ISF_SPEC.md](docs/ISF_SPEC.md), and the mdBook so this downstream
+  report projection is discoverable as tested public-interface coverage.
 ### R14 — ISF rule trigger fan-in implementation
 - Changed [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
   so rule `(trigger transaction)` actions pulse generated

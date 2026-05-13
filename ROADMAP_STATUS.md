@@ -62,6 +62,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - ISF rule-trigger fan-in is now implemented: same-transaction rule triggers
   emit distinct per-rule/per-transaction pulse sources before a generated
   combinational OR drives the transaction start.
+- Schedule JSON rule-trigger fan-in coverage now locks the downstream-facing
+  `dt_blocks` projection for rule DTs plus generated `rule_trigger_fanin` DTs,
+  and the one-bit inferred-storage summaries for generated trigger sources.
 - The mdBook and ISF live docs now distinguish transaction
   `(when condition body...)` control flow from rule-local `(when condition)`
   guard clauses, with the rule shorthand called out as the preferred spelling.
@@ -3873,6 +3876,10 @@ Done:
   [docs/book/src/13f-composition.md](docs/book/src/13f-composition.md),
   [docs/ISF_SPEC.md](docs/ISF_SPEC.md), and [docs/USER_GUIDE.md](docs/USER_GUIDE.md)
   document the new compact form.
+- Rule-trigger fan-in schedule-report projection is now regression-backed by
+  [t/1172-isf-rule-trigger-fanin-schedule-report.t](t/1172-isf-rule-trigger-fanin-schedule-report.t),
+  covering generated `rule_trigger_fanin` DT summaries and one-bit inferred
+  storage for generated trigger sources.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

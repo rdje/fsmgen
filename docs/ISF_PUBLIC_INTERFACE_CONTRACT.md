@@ -213,6 +213,10 @@ The rule-trigger fan-in path is checked by
 [t/1171-isf-rule-trigger-fanin.t](../t/1171-isf-rule-trigger-fanin.t)
 so multiple rule triggers for one transaction preserve distinct trigger
 sources before generated combinational fan-in.
+The schedule-report projection of that same fan-in path is checked by
+[t/1172-isf-rule-trigger-fanin-schedule-report.t](../t/1172-isf-rule-trigger-fanin-schedule-report.t)
+so downstream consumers can rely on the advertised DT kind/order and one-bit
+inferred-storage summaries for the generated trigger sources.
 The actor-shell drive shape is checked by
 [t/1167-isf-public-actor-shell-drive-shape-audit.t](../t/1167-isf-public-actor-shell-drive-shape-audit.t)
 to keep parser-returned drive definitions discoverable as a drive-name-keyed

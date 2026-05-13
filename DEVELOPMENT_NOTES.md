@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF rule trigger fan-in schedule report audit
+- After implementing rule-trigger fan-in, HDL-path coverage alone was not
+  enough for the downstream-consumer contract. The schedule report is also a
+  public bounded surface, so it needs to expose the generated fan-in DT and
+  trigger-source storage in a regression-backed way.
+- The new report audit intentionally checks the order and shape that consumers
+  would inspect: source rule DT summaries first, generated
+  `rule_trigger_fanin` summary after them, one assignment count per DT, and
+  one-bit inferred storage for the generated trigger sources and start fan-in
+  target.
 ## 2026-05-13: R14 ISF rule trigger fan-in implementation
 - The direct-start rule-trigger lowering made activation work, but it collapsed
   rule provenance and transaction activation into one `transaction_start`

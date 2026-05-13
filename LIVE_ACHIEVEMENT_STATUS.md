@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF rule trigger fan-in schedule report audit
+- Active: `R14`. The schedule JSON report now has focused coverage for the
+  shipped rule-trigger fan-in shape: rule DT order, `rule_trigger_fanin` kind,
+  assignment counts, and one-bit inferred storage for generated trigger
+  sources and `transaction_start`.
+- The ISF public-interface contract tested_by metadata, ISF spec, and mdBook
+  now advertise that downstream-facing report projection as regression-backed.
+
 ## 2026-05-13: R14 — ISF rule trigger fan-in implementation
 - Active: `R14`. ISF rule `(trigger transaction)` lowering now preserves
   per-rule/per-transaction provenance by pulsing generated `rule_transaction`

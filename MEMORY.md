@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF rule trigger fan-in schedule report audit
+- Added `t/1172-isf-rule-trigger-fanin-schedule-report.t` so the schedule JSON
+  report now explicitly covers the shipped fan-in shape: rule DTs first,
+  generated `rule_trigger_fanin` DT after them, one assignment per DT, and
+  one-bit inferred storage for each generated trigger source plus the
+  transaction start fan-in target.
+- Updated the ISF public-interface contract tested_by metadata and book/spec
+  docs so downstream consumers can discover that the fan-in schedule-report
+  projection is regression-backed.
 ## 2026-05-13: R14 — ISF rule trigger fan-in implementation
 - Rule `(trigger transaction)` lowering now emits a distinct one-bit
   `rule_transaction` pulse source for each rule/transaction pair instead of

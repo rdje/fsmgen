@@ -127,7 +127,10 @@ also checked against `parse_file(...)` on a real fixture. APB DT block order
 is locked across generated `.fsm` text and schedule-report `dt_blocks` so
 hash-backed drive definitions do not create review-artifact churn; the manifest
 also advertises the DT ordering policy, and that scheduled-artifact ordering
-metadata is audited as exact. DT timing remains assignment-family driven:
+metadata is audited as exact. Rule-trigger fan-in schedule reports are also
+covered so generated `rule_trigger_fanin` DTs and one-bit trigger-source
+storage stay visible to downstream consumers. DT timing remains
+assignment-family driven:
 `=` is combinational, `<-` and `<=` are sequential, and `<1` is a one-cycle
 delayed pulse whether they appear in state or non-state DT blocks; the manifest
 advertises those operator families through `dt_assignment_operator_family_map`.

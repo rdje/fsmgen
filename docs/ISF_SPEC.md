@@ -744,6 +744,7 @@ Focused tests:
 - [t/1168-isf-rule-guard-factoring.t](../t/1168-isf-rule-guard-factoring.t)
 - [t/1169-isf-rule-shorthand-guard.t](../t/1169-isf-rule-shorthand-guard.t)
 - [t/1171-isf-rule-trigger-fanin.t](../t/1171-isf-rule-trigger-fanin.t)
+- [t/1172-isf-rule-trigger-fanin-schedule-report.t](../t/1172-isf-rule-trigger-fanin-schedule-report.t)
 
 ## 12. Explicitly Deferred
 
