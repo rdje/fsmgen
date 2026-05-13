@@ -27,8 +27,8 @@ body-bearing `(when condition body...)` form is only described in
 
 **Actions**:
 - `(port value)` — guarded assignment when the condition holds
-- `(trigger transaction)` — guarded one-cycle delayed pulse on the transaction
-  start signal
+- `(trigger transaction)` — guarded one-cycle delayed pulse on a per-rule
+  trigger source; generated fan-in drives the transaction start signal
 - `(priority over other_rule)` — parsed metadata, currently not enforced
 
 **Lowering**: Non-state DT block containing one guarded action block in the
@@ -36,50 +36,35 @@ current scheduler. The shorthand scalar guard and the long-form `(when ...)`
 guard both become the public parser `when` field. Scheduled `.fsm` emission
 renders that rule guard once around the actions instead of repeating it on
 every assignment. Ordinary `(port value)` actions are guarded flopped
-assignments; `(trigger transaction)` uses `<1` so the transaction start is a
-pulse rather than a sticky request bit.
+assignments. `(trigger transaction)` uses `<1` on a generated
+`rule_transaction` source so the request remains pulse-shaped, and a generated
+combinational fan-in DT drives `transaction_start` without adding another
+cycle.
 
 ```lisp
 (-always_ready
   (<ready
     (<- (valid 1))
-    (<1 (main_transfer_start 1))
+    (<1 (always_ready_main_transfer 1))
   )
+)
+
+(-main_transfer_trigger_fanin
+  (= (main_transfer_start always_ready_main_transfer))
 )
 ```
 
 ## Trigger Fan-In
 
-Current shipped rule-trigger lowering drives the transaction start signal
-directly. If several rules trigger the same transaction, each rule emits a
-guarded `<1` assignment to the same `transaction_start` LHS. The downstream
-`.fsm` backend consolidates same-LHS enables, so the generated HDL is
-OR-equivalent and the transaction starts when any triggering rule fires.
+Shipped rule-trigger lowering preserves trigger provenance before transaction
+activation. If rule `Rj` triggers transaction `Tk`, the rule DT emits a `<1`
+pulse on the generated one-bit source `Rj_Tk`. For each triggered transaction,
+the scheduler emits one combinational `Tk_trigger_fanin` DT that drives
+`Tk_start` from the OR of all rule sources for `Tk`.
 
-```lisp
-(-r0
-  (<a
-    (<1 (work_start 1))
-  )
-)
-
-(-r1
-  (<b
-    (<1 (work_start 1))
-  )
-)
-```
-
-That behavior is sufficient for transaction activation, but it is not
-provenance-preserving. When two rules trigger the same transaction in the same
-cycle, the scheduled artifact exposes only the final `work_start` pulse; it
-does not expose distinct `r0_work` and `r1_work` request sources.
-
-The R14 backlog keeps the more general trigger fan-in form explicit until it
-is implemented: each rule/transaction pair should get a distinct one-bit
-trigger source, such as `r0_work` and `r1_work`, and a generated combinational
-fan-in should drive `work_start` from the OR of those sources without adding a
-cycle.
+The fan-in is combinational on purpose. It does not add a cycle after the
+per-rule `<1` pulse appears; it only separates "which rule requested the
+transaction" from "the transaction sees at least one request."
 
 ```lisp
 (-r0
@@ -99,9 +84,13 @@ cycle.
 )
 ```
 
-Until that backlog item lands, users should treat multiple rule triggers for
-the same transaction as OR-equivalent for activation but not inspectable as
-separate scheduled `.fsm` trigger sources.
+With a single rule source, the generated fan-in assigns the source directly:
+
+```lisp
+(-main_transfer_trigger_fanin
+  (= (main_transfer_start always_ready_main_transfer))
+)
+```
 
 ## Rule Examples
 

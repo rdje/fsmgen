@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF rule trigger fan-in implementation
+- Rule `(trigger transaction)` lowering now emits a distinct one-bit
+  `rule_transaction` pulse source for each rule/transaction pair instead of
+  assigning `transaction_start` directly from every rule.
+- The scheduler appends generated `transaction_trigger_fanin` non-state DTs
+  after rule DTs; each fan-in DT combinationally drives `transaction_start`
+  from one source or the OR of all sources, preserving activation timing while
+  making per-rule trigger provenance inspectable.
+- `t/1168`, `t/1169`, and new `t/1171` cover factored guards, shorthand rule
+  guards, multi-rule fan-in, normal `.fsm` parsing, and HDL generation.
 ## 2026-05-13: R14 — close major guide migration status
 - `ROADMAP_STATUS.md` now marks the USER_GUIDE-to-mdBook major-section
   migration complete at the guide level. The next PNT move should return to
@@ -92,17 +102,12 @@ This is the live continuity document for fast session recovery after crashes, re
   ISF spec/public-interface contract with the same distinction, including the
   preferred rule shorthand `(rule name condition actions...)`.
 ## 2026-05-13: R14 — ISF rule trigger fan-in backlog
-- Logged the rule-trigger fan-in design discussion in the ISF live docs and
-  mdBook. Current shipped lowering writes each rule `(trigger transaction)`
-  directly to `transaction_start`; downstream same-LHS enable consolidation
-  makes the generated HDL OR-equivalent for activation.
-- Captured the limitation clearly: direct writes do not preserve per-rule
-  trigger provenance when multiple rules trigger the same transaction in the
-  same cycle.
-- Added the explicit backlog target: each rule/transaction pair should emit a
-  distinct one-bit pulse source such as `rule_transaction`, and generated
-  combinational fan-in should OR those sources into `transaction_start` without
-  adding a cycle.
+- This entry originally logged the rule-trigger fan-in design discussion and
+  backlog target. The later `R14 — ISF rule trigger fan-in implementation`
+  slice shipped the target behavior.
+- The retained rule is that each rule/transaction pair emits a distinct
+  one-bit pulse source such as `rule_transaction`, and generated combinational
+  fan-in ORs those sources into `transaction_start` without adding a cycle.
 ## 2026-05-13: R14 — ISF rule shorthand guard syntax
 - Added parser support for `(rule name condition actions...)` as a shorthand
   for `(rule name (when condition) actions...)`. The parser normalizes both

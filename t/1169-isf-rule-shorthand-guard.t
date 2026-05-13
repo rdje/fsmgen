@@ -61,8 +61,13 @@ my $fsm = $result->{files}{'rule_shorthand.fsm'};
 
 like(
     $fsm,
-    qr/\(-always_ready\s+\(<ready\s+\(<- \(valid 1\)\)\s+\(<1 \(main_transfer_start 1\)\)\s+\)\s+\)/s,
+    qr/\(-always_ready\s+\(<ready\s+\(<- \(valid 1\)\)\s+\(<1 \(always_ready_main_transfer 1\)\)\s+\)\s+\)/s,
     'shorthand guarded rule lowers to the same factored guard block',
+);
+like(
+    $fsm,
+    qr/\(-main_transfer_trigger_fanin\s+\(= \(main_transfer_start always_ready_main_transfer\)\)\s+\)/s,
+    'shorthand guarded rule trigger contributes through generated fan-in',
 );
 like(
     $fsm,

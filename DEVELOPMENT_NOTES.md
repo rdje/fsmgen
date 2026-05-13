@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF rule trigger fan-in implementation
+- The direct-start rule-trigger lowering made activation work, but it collapsed
+  rule provenance and transaction activation into one `transaction_start`
+  signal. That was sufficient for OR-equivalent HDL but weak for review,
+  schedule reports, assertions, and future arbitration.
+- The scheduler now emits a distinct `rule_transaction` delayed-pulse source
+  for each rule/transaction pair and a generated combinational fan-in DT per
+  target transaction. The fan-in is intentionally combinational so the target
+  transaction sees the same-cycle result of the delayed pulse source and no
+  extra activation cycle is introduced.
+- Generated fan-in DTs are appended after rule DTs and before lexically sorted
+  drive DTs. The public ISF contract now advertises the new
+  `rule_trigger_fanin` DT kind and the updated deterministic ordering policy.
 ## 2026-05-13: R14 close major guide migration status
 - After replacing both the front and tail of `docs/USER_GUIDE.md` with chapter
   pointers, the roadmap should not keep selecting generic guide-migration work.
@@ -118,24 +131,14 @@ This document captures engineering rationale, design constraints, and working de
   transaction-local control flow and points to the Rules chapter for the
   guard-only rule form.
 ## 2026-05-13: R14 ISF rule trigger fan-in backlog
-- The current ISF rule-trigger implementation is functionally correct for
-  transaction activation: multiple rule DTs can write the same
-  `transaction_start` LHS with `<1`, and the downstream `.fsm` backend ORs the
-  same-LHS enable sources.
-- That direct-start shape is not provenance-preserving. If two rules trigger
-  the same transaction in the same cycle, the review artifact exposes a single
-  `transaction_start` pulse rather than separate rule-source pulses.
-- The preferred future design is to split rule-local trigger sources from the
-  transaction start input. Each `(trigger Tk)` inside rule `Rj` should create a
-  distinct one-bit pulse source such as `Rj_Tk`; a generated combinational DT
-  should then drive `Tk_start` from the OR of all sources for `Tk`.
-- The fan-in must not add another cycle. The per-rule sources keep the existing
-  `<1` delayed-pulse semantics, and the generated fan-in is purely
-  combinational so activation timing remains OR-equivalent to the current
-  direct-start behavior.
-- This is now documented backlog, not shipped lowering. Until implemented,
-  downstream users should not expect `Rj_Tk` trigger-source signals in
-  scheduled `.fsm` artifacts.
+- This entry originally captured the direct-start limitation and proposed
+  provenance-preserving fan-in. The later `R14 ISF rule trigger fan-in
+  implementation` slice shipped that design.
+- The retained design rule is that rule-local trigger sources and transaction
+  start inputs are separate concepts. Each `(trigger Tk)` inside rule `Rj`
+  creates a distinct one-bit `<1` pulse source such as `Rj_Tk`; a generated
+  combinational DT drives `Tk_start` from the OR of all sources for `Tk`
+  without adding another cycle.
 ## 2026-05-13: R14 ISF rule shorthand guard syntax
 - ISF rules now accept `(rule name condition actions...)` as the concise
   authoring form for a guarded rule. The parser immediately normalizes this to

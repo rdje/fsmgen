@@ -223,7 +223,9 @@ sub build_isf_public_interface_contract {
             't/1165-isf-public-actor-shell-timing-shape-audit.t',
             't/1166-isf-public-actor-shell-rule-shape-audit.t',
             't/1167-isf-public-actor-shell-drive-shape-audit.t',
+            't/1168-isf-rule-guard-factoring.t',
             't/1169-isf-rule-shorthand-guard.t',
+            't/1171-isf-rule-trigger-fanin.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -459,6 +461,7 @@ sub isf_public_interface_dt_ordering_policy {
         '',
         'deterministic_lowering_order: ',
         'transaction_and_rule_dt_blocks_keep_construction_order; ',
+        'generated_rule_trigger_fanin_dt_blocks_follow_rule_dt_blocks_by_transaction_name; ',
         'hash_backed_drive_dt_blocks_are_sorted_lexically_by_drive_name',
     );
 }
@@ -615,6 +618,7 @@ sub isf_public_interface_schedule_report_dt_kind_values {
             drive
             latency_counter
             rule
+            rule_trigger_fanin
         ),
     ];
 }

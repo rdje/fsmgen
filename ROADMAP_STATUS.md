@@ -51,19 +51,17 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `.fsm` guarded block around the lowered actions instead of repeating the
   guard suffix on every assignment. `t/1168` covers the scheduled text and
   parse-to-HDL path.
-- ISF rule `(trigger transaction)` actions now lower the generated
-  `transaction_start` assignment with the delayed-pulse operator `<1` instead
-  of sticky `<-`; `t/1168` locks the pulsed trigger shape inside the factored
-  rule guard.
+- ISF rule `(trigger transaction)` actions now lower to generated
+  `rule_transaction` delayed-pulse sources, and generated combinational
+  fan-in drives `transaction_start`; `t/1168` and `t/1171` lock the
+  provenance-preserving pulsed shape through HDL generation.
 - ISF rule guards now support the shorthand `(rule name condition actions...)`
   and normalize it to the same public `when` field as the long
   `(rule name (when condition) actions...)` form; `t/1169` covers parser,
   scheduled `.fsm`, and HDL-generation behavior.
-- ISF rule-trigger fan-in is now explicitly documented as R14 backlog:
-  current lowering writes each rule trigger directly to `transaction_start`
-  and relies on downstream same-LHS enable consolidation for OR-equivalent
-  activation, while the desired future form preserves per-rule/per-transaction
-  trigger-source signals before a generated combinational OR.
+- ISF rule-trigger fan-in is now implemented: same-transaction rule triggers
+  emit distinct per-rule/per-transaction pulse sources before a generated
+  combinational OR drives the transaction start.
 - The mdBook and ISF live docs now distinguish transaction
   `(when condition body...)` control flow from rule-local `(when condition)`
   guard clauses, with the rule shorthand called out as the preferred spelling.
@@ -3856,13 +3854,14 @@ Done:
   `next_state` as an FSM next-state signal so it remains combinational through
   backend assignment analysis, and [bin/fsmgen](bin/fsmgen) no longer doubles
   explicit `.fsm`/`.isf` suffixes during bare-name source lookup.
-- The current ISF rule-trigger fan-in limitation is now captured in
+- The former ISF rule-trigger fan-in limitation is now implemented and
+  documented in
   [docs/ISF_SPEC.md](docs/ISF_SPEC.md),
   [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md),
   [docs/INTENT_SCHEDULING_BRAINSTORM.md](docs/INTENT_SCHEDULING_BRAINSTORM.md),
-  and the mdBook Rules chapter: same-transaction rule triggers are
-  OR-equivalent through direct `transaction_start` writes today, but explicit
-  per-rule/per-transaction trigger-source fan-in remains to be implemented.
+  and the mdBook Rules chapter: same-transaction rule triggers now expose
+  distinct `rule_transaction` pulse sources, and generated combinational
+  fan-in drives `transaction_start` without adding a cycle.
 - The mdBook Control Flow chapter now explicitly scopes
   `(when condition body...)` to transaction-local conditional scheduling and
   cross-references the guard-only rule form `(rule name (when condition)
@@ -3877,10 +3876,6 @@ Done:
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.
-- Implement explicit per-rule/per-transaction trigger-source fan-in for
-  `(trigger transaction)`: each rule source should produce a distinct pulse
-  such as `rule_transaction`, and generated combinational OR fan-in should
-  drive `transaction_start` without adding a cycle.
 - Broaden schedule-report assertions and end-to-end fixture coverage as the
   scheduler surface stabilizes.
 - Keep [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md),

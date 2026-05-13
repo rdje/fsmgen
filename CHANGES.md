@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF rule trigger fan-in implementation
+- Changed [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so rule `(trigger transaction)` actions pulse generated
+  `rule_transaction` sources and generated `transaction_trigger_fanin` DTs
+  combinationally drive `transaction_start`.
+- Updated [t/1168-isf-rule-guard-factoring.t](t/1168-isf-rule-guard-factoring.t)
+  and [t/1169-isf-rule-shorthand-guard.t](t/1169-isf-rule-shorthand-guard.t),
+  and added [t/1171-isf-rule-trigger-fanin.t](t/1171-isf-rule-trigger-fanin.t)
+  for multi-rule fan-in through normal `.fsm` parsing and HDL generation.
+- Updated the ISF spec, public-interface contract, mdBook, brainstorm log, and
+  roadmap status so the former fan-in backlog is now shipped behavior.
 ### R14 — close major guide migration status
 - Updated [ROADMAP_STATUS.md](ROADMAP_STATUS.md) to state that the
   USER_GUIDE-to-mdBook major-section migration is complete at the guide level

@@ -95,7 +95,7 @@ sub _build_parent_ir($self, $actor, $spawned) {
         for my $s (@$sp)  { $ctrs{"$s->{instance}_start"} = 1; $ctrs{"$s->{instance}_done"} = 1; }
     }
 
-    push @dts, $self->_build_rules($actor);
+    push @dts, $self->_build_rules($actor, \%ctrs);
     $self->_wire_do_children(\@states, \%ctrs, $actor);
     $self->_build_drive_dts($actor, \@dts, \%ctrs);
 
@@ -609,15 +609,50 @@ sub _inj_latency {
 }
 
 sub _build_rules {
-    my ($self,$actor)=@_; my @d;
-    for my $r(@{$actor->{rules}||[]}){my $c=$self->_rule_cond($r->{when});my @a;
-        for my $ac(@{$r->{actions}}){next unless ref($ac)eq'ARRAY';my$a0=$ac->[0];
-            if($a0 eq'trigger'){push @a,{lhs=>"$ac->[1]_start",rhs=>1,op=>'<1',guard=>$c}}
-            elsif($a0 eq'priority'){}
-            else{push @a,{lhs=>$a0,rhs=>$ac->[1],op=>'<-',guard=>$c}}}
-        push @d,{name=>$r->{name},kind=>'rule',assignments=>\@a}}
+    my ($self, $actor, $ctrs) = @_;
+    my @d;
+    my %fanin_by_transaction;
+    my %seen_fanin_source;
+
+    for my $r (@{$actor->{rules} || []}) {
+        my $c = $self->_rule_cond($r->{when});
+        my @a;
+
+        for my $ac (@{$r->{actions}}) {
+            next unless ref($ac) eq 'ARRAY';
+            my $a0 = $ac->[0];
+
+            if ($a0 eq 'trigger') {
+                my $target = $ac->[1];
+                my $source = _rule_trigger_source_name($r->{name}, $target);
+                push @a, { lhs => $source, rhs => 1, op => '<1', guard => $c };
+                $ctrs->{$source} = 1 if $ctrs;
+                $ctrs->{"${target}_start"} = 1 if $ctrs;
+                push @{$fanin_by_transaction{$target}}, $source
+                    unless $seen_fanin_source{"$target\0$source"}++;
+            } elsif ($a0 eq 'priority') {
+                # Parsed metadata; arbitration enforcement is a later slice.
+            } else {
+                push @a, { lhs => $a0, rhs => $ac->[1], op => '<-', guard => $c };
+            }
+        }
+
+        push @d, { name => $r->{name}, kind => 'rule', assignments => \@a };
+    }
+
+    for my $target (sort keys %fanin_by_transaction) {
+        my @sources = @{$fanin_by_transaction{$target}};
+        my $rhs = @sources == 1 ? $sources[0] : '(| ' . join(' ', @sources) . ')';
+        push @d, {
+            name        => "${target}_trigger_fanin",
+            kind        => 'rule_trigger_fanin',
+            assignments => [{ lhs => "${target}_start", rhs => $rhs, op => '=' }],
+        };
+    }
+
     return @d;
 }
+sub _rule_trigger_source_name { my ($rule, $target) = @_; "${rule}_${target}" }
 sub _rule_cond { my($self,$w)=@_; return {port=>'1'} unless $w&&ref($w)eq'ARRAY'&&@$w>=2; {port=>$w->[1]} }
 
 sub _build_drive_dts {

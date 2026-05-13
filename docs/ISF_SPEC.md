@@ -245,7 +245,8 @@ Current lowering:
 - Parameterized calls also assign one inferred parameter signal per formal,
   such as `scl_val`.
 - Hash-backed drive DT emission is deterministic: drive definitions are emitted
-  lexically by drive name after transaction/rule-created DTs.
+  lexically by drive name after transaction/rule-created DTs and any generated
+  rule-trigger fan-in DTs.
 - Drive DT assignments use flopped output assignment (`<-`) by default, so a
   drive call consumes one state and the driven port updates on the next clock.
 - DT timing is assignment-family driven: `=` assignments are combinational,
@@ -508,21 +509,13 @@ Current lowering:
   the transaction control-flow form; it has no body and guards the rule actions
   that follow it.
 - `(port value)` actions lower as guarded flopped assignments to that port.
-- `(trigger transaction)` lowers as a guarded `<1` one-cycle delayed pulse to
-  `transaction_start`, so a rule trigger is a pulse rather than a sticky
-  flopped request bit.
-- If multiple rules trigger the same transaction, the current shipped
-  scheduled `.fsm` emits multiple guarded `<1` assignments to the same
-  `transaction_start` LHS. The downstream `.fsm` backend consolidates those
-  same-LHS enables, so the generated HDL is OR-equivalent for transaction
-  activation. This current form does not preserve per-rule trigger provenance
-  in the scheduled artifact when two rules fire in the same cycle.
-- The deferred general form is explicit per-rule trigger fan-in: each
-  rule/transaction pair should produce a distinct one-bit pulse source such as
-  `rule_transaction`, and a generated combinational fan-in should drive
-  `transaction_start` from the OR of those sources without adding another
-  cycle. Until that form is implemented, do not rely on separate
-  `rule_transaction` trigger-source signals being present.
+- `(trigger transaction)` lowers as a guarded `<1` one-cycle delayed pulse to a
+  generated per-rule/per-transaction source named `rule_transaction`, so a rule
+  trigger is a pulse rather than a sticky flopped request bit.
+- If multiple rules trigger the same transaction, the scheduled `.fsm` exposes
+  each rule source separately and emits one generated combinational fan-in DT
+  per target transaction. That DT drives `transaction_start` from the OR of the
+  rule sources without adding another cycle.
 - Scheduled `.fsm` emission factors the rule guard as one DT guard block around
   all guarded actions, for example:
 
@@ -530,28 +523,16 @@ Current lowering:
 (-always_ready
   (<ready
     (<- (valid 1))
-    (<1 (main_transfer_start 1))
+    (<1 (always_ready_main_transfer 1))
   )
+)
+
+(-main_transfer_trigger_fanin
+  (= (main_transfer_start always_ready_main_transfer))
 )
 ```
 
-Current direct-start multi-rule example:
-
-```lisp
-(-r0
-  (<a
-    (<1 (work_start 1))
-  )
-)
-
-(-r1
-  (<b
-    (<1 (work_start 1))
-  )
-)
-```
-
-Backlog explicit fan-in target:
+Multi-rule fan-in example:
 
 ```lisp
 (-r0
@@ -611,8 +592,9 @@ in the JSON report. Assigned scheduler counters using the generated `*_wd`,
 width inferred by `LoweringIR`. Transaction summaries include the generated
 state families used by the current scheduler, including control-flow and
 data-operation states. DT block summaries follow deterministic lowering order:
-transaction/rule-created DTs first in construction order, then hash-backed drive
-DTs lexically by drive name.
+transaction/rule-created DTs first in construction order, generated
+rule-trigger fan-in DTs by transaction name, then hash-backed drive DTs
+lexically by drive name.
 
 The capability-manifest ISF public contract exposes the same policy through
 `scheduled_fsm_dt_ordering` and `schedule_report_dt_ordering`.
@@ -623,8 +605,9 @@ assignment forms in the matching scheduled `.fsm` DT block, not an assignment
 payload list. The capability-manifest ISF public contract advertises this shape
 through `schedule_report_dt_assignments_shape`.
 Each `dt_blocks` entry's `kind` value is currently `drive`,
-`latency_counter`, or `rule`. The capability-manifest ISF public contract
-advertises this value family through `schedule_report_dt_kind_values`.
+`latency_counter`, `rule`, or `rule_trigger_fanin`. The capability-manifest ISF
+public contract advertises this value family through
+`schedule_report_dt_kind_values`.
 Each `inferred_storage` entry's `kind` value is currently `counter` or
 `register`; optional `width` values are positive integer bit widths when
 present and currently appear on inferred scheduler counters. The
@@ -760,6 +743,7 @@ Focused tests:
 - [t/1167-isf-public-actor-shell-drive-shape-audit.t](../t/1167-isf-public-actor-shell-drive-shape-audit.t)
 - [t/1168-isf-rule-guard-factoring.t](../t/1168-isf-rule-guard-factoring.t)
 - [t/1169-isf-rule-shorthand-guard.t](../t/1169-isf-rule-shorthand-guard.t)
+- [t/1171-isf-rule-trigger-fanin.t](../t/1171-isf-rule-trigger-fanin.t)
 
 ## 12. Explicitly Deferred
 
@@ -767,10 +751,6 @@ Focused tests:
 - The removed `(assign ...)` action keyword.
 - Top-level child instantiation and spawn parameter binding.
 - Enforced resource arbitration and priority resolution.
-- Explicit per-rule/per-transaction trigger-source fan-in for rule-triggered
-  transactions. Current lowering is OR-equivalent through same-LHS enable
-  consolidation, but scheduled `.fsm` artifacts do not yet expose distinct
-  `rule_transaction` pulse sources before the transaction start OR.
 - Full temporal `(contract ...)` assertions.
 - Rich storage-class optimization in schedule reports.
 - Full width inference for unknown-width `shift_right` and `extract` values.

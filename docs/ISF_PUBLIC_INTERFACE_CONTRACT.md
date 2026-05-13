@@ -202,10 +202,17 @@ The actor-shell rule shape is checked by
 to keep parser-returned rule entries discoverable as scalar `name`, optional
 `when`, and `actions` array shells while leaving rule payload contents private
 scheduler input.
+The factored rule-guard scheduled `.fsm` shape is checked by
+[t/1168-isf-rule-guard-factoring.t](../t/1168-isf-rule-guard-factoring.t)
+so rule actions remain grouped under one guard block in review artifacts.
 The shorthand rule-guard parser/lowering path is checked by
 [t/1169-isf-rule-shorthand-guard.t](../t/1169-isf-rule-shorthand-guard.t)
 to keep `(rule name condition actions...)` normalized to the same public
 `when` field as `(rule name (when condition) actions...)`.
+The rule-trigger fan-in path is checked by
+[t/1171-isf-rule-trigger-fanin.t](../t/1171-isf-rule-trigger-fanin.t)
+so multiple rule triggers for one transaction preserve distinct trigger
+sources before generated combinational fan-in.
 The actor-shell drive shape is checked by
 [t/1167-isf-public-actor-shell-drive-shape-audit.t](../t/1167-isf-public-actor-shell-drive-shape-audit.t)
 to keep parser-returned drive definitions discoverable as a drive-name-keyed
@@ -348,20 +355,15 @@ generated text aligned with the source rule structure without widening the
 actor-shell rule payload contract.
 Within that scheduled `.fsm` review artifact, ordinary rule `(port value)`
 actions remain guarded flopped assignments, while `(trigger transaction)`
-actions use `<1` on `transaction_start`. A rule trigger is therefore a
-one-cycle delayed pulse, not a sticky flopped request bit.
+actions use `<1` on a generated `rule_transaction` trigger source. A rule
+trigger is therefore a one-cycle delayed pulse, not a sticky flopped request
+bit.
 Multiple rules may trigger the same transaction. The current scheduled `.fsm`
-artifact emits those triggers as multiple guarded `<1` assignments to the same
-`transaction_start` LHS; the downstream `.fsm` backend consolidates same-LHS
-enables, so generated HDL is OR-equivalent for activation. This current form
-does not expose per-rule trigger provenance when several rules fire in the same
-cycle.
-The tracked R14 backlog target is more explicit: each rule/transaction pair
-should produce a distinct one-bit trigger source such as `rule_transaction`,
-and generated combinational fan-in should drive `transaction_start` from the
-OR of those sources without adding latency. Until that is implemented,
-downstream consumers must not rely on separate `rule_transaction` scheduled
-signals being present.
+artifact exposes those triggers as distinct one-bit `rule_transaction` sources
+and emits a generated combinational `transaction_trigger_fanin` DT for each
+triggered transaction. The fan-in drives `transaction_start` from the OR of the
+rule sources without adding latency, so downstream consumers can inspect
+per-rule trigger provenance before the transaction start OR.
 The current public parser handoff also advertises a bounded drive-definition
 shell: `drives` is a hash of entries keyed by drive name, and each entry has
 `params` and `body` arrays. The machine-readable contract advertises this
@@ -432,12 +434,11 @@ that precede completion should not also assign the same completion signal with
 `<-`; the `.fsm` backend rejects mixed pulse-delayed and non-pulse sequential
 operators on one LHS.
 ISF rule `(trigger transaction)` lowering also uses `<1`, not `<-`, for the
-generated `transaction_start` signal. This keeps rule-driven transaction starts
-pulse-shaped instead of leaving a sticky start request active after the rule
-fires.
-Current trigger lowering writes `transaction_start` directly from each rule
-source; explicit per-rule trigger-source fan-in remains documented backlog, not
-part of the shipped scheduled `.fsm` shape.
+generated `rule_transaction` trigger source. Generated combinational fan-in
+then drives `transaction_start` from every source for that transaction. This
+keeps rule-driven transaction starts pulse-shaped instead of leaving a sticky
+start request active after the rule fires, while preserving per-rule trigger
+provenance in the scheduled `.fsm` artifact.
 
 ISF `(sample port as name)` lowering is a D-input contract: scheduled `.fsm`
 artifacts use `<=`, not `<-`, so the authored sampled name denotes the
@@ -487,8 +488,8 @@ assignment forms in the matching scheduled `.fsm` DT block. It is not an
 assignment payload list. The machine-readable contract advertises this through
 `schedule_report_dt_assignments_shape`.
 For each `dt_blocks` entry, `kind` is currently one of `drive`,
-`latency_counter`, or `rule`. The machine-readable contract advertises this
-through `schedule_report_dt_kind_values`.
+`latency_counter`, `rule`, or `rule_trigger_fanin`. The machine-readable
+contract advertises this through `schedule_report_dt_kind_values`.
 
 For each `inferred_storage` entry, `kind` is currently one of `counter` or
 `register`. Optional `width` values are positive integer bit widths when
@@ -530,11 +531,12 @@ The machine-readable contract advertises these through
 `schedule_report_clock_shape`, and `schedule_report_watchdog_shape`.
 
 The current lowerer emits DT summaries in deterministic lowering order:
-transaction/rule-created DTs retain their construction order, and hash-backed
-drive DTs are emitted lexically by drive name. This is a bounded review-artifact
-and schedule-report stability promise, not a promise that raw `LoweringIR`
-hashes are public. The machine-readable contract advertises the same policy in
-`scheduled_fsm_dt_ordering` and `schedule_report_dt_ordering`.
+transaction/rule-created DTs retain their construction order, generated
+rule-trigger fan-in DTs follow rule DTs by transaction name, and hash-backed
+drive DTs are emitted lexically by drive name. This is a bounded
+review-artifact and schedule-report stability promise, not a promise that raw
+`LoweringIR` hashes are public. The machine-readable contract advertises the
+same policy in `scheduled_fsm_dt_ordering` and `schedule_report_dt_ordering`.
 Those ordering fields are exact shared-policy metadata for the current
 scheduled `.fsm` review artifact and schedule report.
 

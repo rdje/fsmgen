@@ -36,8 +36,13 @@ my $fsm = $result->{files}{'rule_guard_factoring.fsm'};
 
 like(
     $fsm,
-    qr/\(-always_ready\s+\(<ready\s+\(<- \(valid 1\)\)\s+\(<1 \(main_transfer_start 1\)\)\s+\)\s+\)/s,
-    'rule DT emits one factored guard block with delayed-pulse trigger assignment',
+    qr/\(-always_ready\s+\(<ready\s+\(<- \(valid 1\)\)\s+\(<1 \(always_ready_main_transfer 1\)\)\s+\)\s+\)/s,
+    'rule DT emits one factored guard block with delayed-pulse trigger source assignment',
+);
+like(
+    $fsm,
+    qr/\(-main_transfer_trigger_fanin\s+\(= \(main_transfer_start always_ready_main_transfer\)\)\s+\)/s,
+    'generated fan-in DT drives transaction start from the rule trigger source',
 );
 unlike(
     $fsm,
@@ -46,8 +51,8 @@ unlike(
 );
 unlike(
     $fsm,
-    qr/\(<1 \(main_transfer_start 1\) <ready\)/,
-    'rule trigger pulse also lives under the factored guard block',
+    qr/\(<1 \(main_transfer_start 1\)/,
+    'rule trigger no longer assigns the transaction start signal directly',
 );
 unlike(
     $fsm,

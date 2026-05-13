@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF rule trigger fan-in implementation
+- Active: `R14`. ISF rule `(trigger transaction)` lowering now preserves
+  per-rule/per-transaction provenance by pulsing generated `rule_transaction`
+  sources and driving `transaction_start` through a generated combinational
+  fan-in DT.
+- This closes the documented rule-trigger fan-in backlog item. `t/1171` covers
+  multi-rule fan-in through scheduled `.fsm` parsing and HDL generation, while
+  `t/1168` and `t/1169` now cover the single-source fan-in shape.
+
 ## 2026-05-13: R14 — close major guide migration status
 - Active: `R14`. The USER_GUIDE-to-mdBook major-section migration is complete
   at the guide level: `docs/USER_GUIDE.md` is now a compact compatibility
@@ -96,14 +105,12 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   actions...)` remains the preferred shorthand.
 
 ## 2026-05-13: R14 — ISF rule trigger fan-in backlog
-- Active: `R14`. The current rule-trigger behavior and its limitation are now
-  documented: multiple rules triggering the same transaction are
-  OR-equivalent through direct `transaction_start` writes, but the scheduled
-  `.fsm` does not preserve separate per-rule trigger provenance.
-- The R14 backlog now explicitly carries the proposed general lowering:
-  generate a distinct `rule_transaction` pulse source per rule/transaction
-  pair, then drive `transaction_start` with generated combinational OR fan-in
-  and no added cycle.
+- Active: `R14`. This entry originally documented the direct-start limitation
+  and the proposed fan-in design. The later `ISF rule trigger fan-in
+  implementation` slice shipped that design.
+- The retained contract is that each rule/transaction pair generates a
+  distinct `rule_transaction` pulse source, then generated combinational fan-in
+  drives `transaction_start` with no added cycle.
 
 ## 2026-05-13: R14 — ISF rule shorthand guard syntax
 - Active: `R14`. ISF rules now accept `(rule name condition actions...)` as a

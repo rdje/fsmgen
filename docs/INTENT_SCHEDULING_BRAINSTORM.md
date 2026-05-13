@@ -32,8 +32,8 @@ Core thesis:
 
 ## Design Note: 2026-05-13 Rule Trigger Fan-In
 
-Current ISF rule-trigger lowering writes the target transaction start signal
-directly:
+ISF rule-trigger lowering now preserves rule-source provenance before driving
+the target transaction start signal. The earlier direct-start shape was:
 
 ```lisp
 (-rule_a
@@ -49,16 +49,15 @@ directly:
 )
 ```
 
-That works for activation because the downstream `.fsm` backend consolidates
-same-LHS enables, making the generated HDL OR-equivalent. The limitation is
-observability: if both rules trigger `work` in the same cycle, the scheduled
-artifact exposes one `work_start` pulse and not distinct trigger-source pulses
+That worked for activation because the downstream `.fsm` backend consolidated
+same-LHS enables, making the generated HDL OR-equivalent. The limitation was
+observability: if both rules triggered `work` in the same cycle, the scheduled
+artifact exposed one `work_start` pulse and not distinct trigger-source pulses
 for `rule_a` and `rule_b`.
 
-The backlog keeps the more general proposal explicit until implemented. Each
-rule/transaction pair should produce a distinct one-bit trigger source, and the
-target transaction start should be driven by a generated combinational OR
-fan-in:
+The shipped scheduler now implements the more general proposal. Each
+rule/transaction pair produces a distinct one-bit trigger source, and the
+target transaction start is driven by a generated combinational OR fan-in:
 
 ```lisp
 (-rule_a
@@ -78,7 +77,7 @@ fan-in:
 )
 ```
 
-The intended future behavior preserves the existing one-cycle delayed pulse
+The implemented behavior preserves the existing one-cycle delayed pulse
 semantics for each rule trigger and adds no extra latency on the fan-in. The
 benefit is provenance: schedule reports, debug traces, assertions, future
 arbitration, and priority/conflict policy can inspect which rule sources fired
