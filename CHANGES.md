@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — APB done ownership cleanup
+- Removed `(done 1)` from [isf/apb_requester.isf](isf/apb_requester.isf)
+  `done_phase` so the drive phase no longer owns the transaction completion
+  signal.
+- Added a focused [t/1100-isf-sample-piggyback.t](t/1100-isf-sample-piggyback.t)
+  assertion that APB `done_phase` does not drive `done`.
+- Updated the mdBook lowering reference to state that APB `done_phase` owns
+  protocol cleanup/publication while `(complete done)` owns transaction
+  completion.
 ### R14 — ISF sample D-input lowering clarification
 - Expanded mdBook section `"(sample port as name) -> D-Input Assignment"` to
   document why ISF samples lower to D-input assignments with `<=`, not

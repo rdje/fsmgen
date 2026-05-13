@@ -2,6 +2,11 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — APB done ownership cleanup
+- Active: `R14`. `isf/apb_requester.isf` no longer drives transaction `done`
+  from `done_phase`; `t/1100` now locks that APB protocol cleanup and
+  transaction completion are owned separately.
+
 ## 2026-05-13: R14 — ISF sample D-input lowering clarification
 - Active: `R14`. The mdBook lowering reference now explains why
   `(sample port as name)` lowers with `<=`: the sampled alias denotes the

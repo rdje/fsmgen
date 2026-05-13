@@ -16,6 +16,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - `t/1100` now proves `(on ...)` samples materialize in entry states and
   pending samples piggyback onto named drive/await states instead of leaking
   into trailing sample states.
+- `isf/apb_requester.isf` now keeps APB `done_phase` from driving transaction
+  `done`; `t/1100` locks that `(complete done)` owns APB transaction
+  completion while `done_phase` owns protocol cleanup/publication.
 - The mdBook lowering reference, ISF spec, and public-interface contract now
   explain why `(sample port as name)` lowers with `<=`: sampled aliases are
   D-input/next-value names for same-state consumers, not previous-Q names.
@@ -1072,6 +1075,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - [t/1100-isf-sample-piggyback.t](t/1100-isf-sample-piggyback.t) now proves
     `(on ...)` samples materialize in entry states and pending samples
     piggyback onto named drive/await states, including control-flow bodies.
+  - [isf/apb_requester.isf](isf/apb_requester.isf) now keeps `done_phase`
+    scoped to APB cleanup/publication instead of driving transaction `done`;
+    [t/1100-isf-sample-piggyback.t](t/1100-isf-sample-piggyback.t) locks that
+    `(complete done)` owns APB transaction completion.
   - The mdBook lowering reference, ISF spec, and public-interface contract now
     document the `<=` versus `<-` rationale for `(sample port as name)`: `<=`
     preserves D-input/next-value visibility for same-state consumers, while
@@ -3658,7 +3665,8 @@ Done:
   body named-drive/data-op lowering and known-width `shift_right`.
 - [t/1100-isf-sample-piggyback.t](t/1100-isf-sample-piggyback.t) locks
   entry-state sample materialization plus pending-sample piggybacking onto
-  named drive and await states, including control-flow body lowering.
+  named drive and await states, including control-flow body lowering; it also
+  locks that APB `done_phase` does not drive transaction `done`.
 - [docs/book/src/13h-lowering-reference.md](docs/book/src/13h-lowering-reference.md),
   [docs/ISF_SPEC.md](docs/ISF_SPEC.md), and
   [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md)

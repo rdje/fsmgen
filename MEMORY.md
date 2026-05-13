@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — APB done ownership cleanup
+- Removed `(done 1)` from `isf/apb_requester.isf` `done_phase`; `done_phase`
+  now owns APB-side cleanup/publication only, while `(complete done)` remains
+  the transaction completion owner.
+- Added a focused `t/1100` assertion that APB `done_phase` no longer drives
+  transaction `done`, preventing mixed completion ownership when `complete`
+  pulse semantics are reviewed separately.
+- Updated the mdBook lowering reference APB example with the same ownership
+  rationale: `done` is not an APB bus signal.
 ## 2026-05-13: R14 — ISF sample D-input lowering clarification
 - Clarified mdBook section `"(sample port as name) -> D-Input Assignment"` so
   it explains why samples lower with `<=` rather than `<-`.

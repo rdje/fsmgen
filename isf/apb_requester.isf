@@ -35,7 +35,6 @@
     (PENABLE 1))
 
   (drive done_phase
-    (done 1)
     (psel 0)
     (penable 0)
     (last_read_data rdata)

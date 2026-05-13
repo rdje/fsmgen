@@ -437,6 +437,11 @@ timeout         ← watchdog timeout
 cc_inc_dt       ← latency cycle counter DT
 ```
 
+In the APB requester fixture, `done_phase` owns protocol cleanup and sampled
+response publication; it does not drive transaction `done`. The completion
+signal is owned by `(complete done)`, because `done` is the scheduler-visible
+transaction completion event rather than an APB bus signal.
+
 Total: 7 states. Each `(drive ...)` is one state. `(await ...)` is one state.
 `(sample ...)` piggybacks — no extra state.
 

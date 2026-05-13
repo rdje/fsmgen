@@ -43,6 +43,9 @@ subtest 'APB entry and named drive samples lower into their scheduled states' =>
     like($done_drive, qr/\(<= \(slverr PSLVERR\)\)/,    'done drive captures error sample');
     like($done_drive, qr/\(= \(done_phase_start 1\)\)/, 'done drive still asserts named drive start');
 
+    my $done_phase = state_block($fsm, '-done_phase');
+    unlike($done_phase, qr/\(done 1\)/, 'APB done_phase does not drive transaction done');
+
     unlike($fsm, qr/\bapb_transfer_sample_6\b/, 'post-terminal sample state is not emitted');
 };
 

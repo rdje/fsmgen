@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 APB done ownership cleanup
+- The APB requester fixture was assigning `done` in `done_phase` and then
+  using `(complete done)`. That confused protocol-output ownership with
+  transaction-completion ownership.
+- `done` is not an APB bus signal. `done_phase` now performs APB-side cleanup
+  and response publication only; `(complete done)` remains the construct that
+  marks transaction completion.
+- This keeps the fixture from mixing future pulse-oriented `complete`
+  semantics with drive-body ownership of the same `done` LHS.
 ## 2026-05-13: R14 ISF sample D-input lowering clarification
 - ISF samples remain D-input/next-value assignments. The authored sampled name
   must be visible as the sampled D-side value in the state where the sample is
