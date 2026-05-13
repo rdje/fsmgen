@@ -443,6 +443,7 @@ sub _parse_drive_def($self, $clause, $drives) {
         confess "Error: drive '$name' parameter names must be scalar\n"
             unless defined($param) && !ref($param) && length($param);
     }
+    confess "Error: duplicate drive '$name'\n" if exists $drives->{$name};
     my @body = @{$clause}[2 .. $#$clause];
     $drives->{$name} = { body => \@body, params => \@params };
 }

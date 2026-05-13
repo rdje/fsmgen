@@ -18,6 +18,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - ISF rule names now form an explicit same-actor namespace: non-empty scalar
   names are required and duplicates fail before actor-shell return. `t/1186`
   covers distinct-name preservation and duplicate rejection.
+- ISF drive names now form an explicit same-actor namespace for the
+  drive-name-keyed actor shell: duplicate `(drive name ...)` definitions fail
+  before actor-shell return. `t/1187` covers distinct drive-map entries and
+  duplicate rejection.
 - The mdBook reference map now records those book homes explicitly: direct
   language/core concepts, composition, CLI/debug, typed extensions, legacy
   external flow, troubleshooting, and practical authoring guidance are all
@@ -1254,6 +1258,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - [t/1186-isf-rule-name-boundary.t](t/1186-isf-rule-name-boundary.t)
     now proves rule names are non-empty scalar actor-local identifiers and
     duplicates fail before parser actor-shell return.
+  - [t/1187-isf-drive-name-boundary.t](t/1187-isf-drive-name-boundary.t)
+    now proves duplicate drive definitions fail before parser actor-shell
+    return instead of overwriting earlier drive bodies.
   - Next bounded `R14` slice: convert another documented scheduler limitation
     into regression-backed behavior.
 - Superseded `R13` carry-forward detail retained below this note should not be
@@ -4003,6 +4010,10 @@ Done:
 - Rule name validation is now regression-backed by
   [t/1186-isf-rule-name-boundary.t](t/1186-isf-rule-name-boundary.t),
   covering distinct actor-shell rule names and duplicate-name rejection before
+  parser return.
+- Drive name validation is now regression-backed by
+  [t/1187-isf-drive-name-boundary.t](t/1187-isf-drive-name-boundary.t),
+  covering distinct drive-map entries and duplicate-drive rejection before
   parser return.
 Left:
 - Finish or deliberately defer the documented current limitations in the

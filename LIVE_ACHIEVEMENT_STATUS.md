@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF drive name boundary
+- Active: `R14`. Duplicate `(drive name ...)` definitions are now rejected
+  before actor-shell return instead of overwriting an earlier drive body in
+  the drive-name-keyed hash.
+- `t/1187` covers distinct drive-map entries and duplicate-drive rejection.
+  The public drive shell remains hash-backed, but each drive key is now an
+  explicit unique non-empty name.
+
 ## 2026-05-13: R14 — ISF rule name boundary
 - Active: `R14`. Rule names are now parser-validated as non-empty scalars that
   are unique within the actor.

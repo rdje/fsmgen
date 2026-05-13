@@ -281,9 +281,13 @@ boundary, while deferred `contract` and `stage` clauses keep their dedicated
 diagnostics.
 The actor-shell drive shape is checked by
 [t/1167-isf-public-actor-shell-drive-shape-audit.t](../t/1167-isf-public-actor-shell-drive-shape-audit.t)
-to keep parser-returned drive definitions discoverable as a drive-name-keyed
-hash of `params` and `body` arrays while leaving drive body payload contents
-private scheduler input.
+to keep parser-returned drive definitions discoverable as a unique
+drive-name-keyed hash of `params` and `body` arrays while leaving drive body
+payload contents private scheduler input.
+The drive-name boundary is checked by
+[t/1187-isf-drive-name-boundary.t](../t/1187-isf-drive-name-boundary.t)
+so duplicate drive definitions fail before actor-shell return instead of
+silently overwriting an earlier drive body in the parser handoff.
 ISF switch fallback scheduling is checked by
 [t/1103-isf-switch-branch-exits.t](../t/1103-isf-switch-branch-exits.t)
 and the generated `.fsm` default selector contract is checked by
@@ -434,10 +438,10 @@ Parser handoff now requires each rule trigger target to resolve to a declared
 transaction in the same actor. This prevents a misspelled rule trigger from
 inventing an otherwise unowned `transaction_start` fan-in path.
 The current public parser handoff also advertises a bounded drive-definition
-shell: `drives` is a hash of entries keyed by drive name, and each entry has
-`params` and `body` arrays. The machine-readable contract advertises this
-through `actor_shell_drive_shape`. Drive body payload contents remain private
-scheduler input.
+shell: `drives` is a hash of entries keyed by unique non-empty drive name, and
+each entry has `params` and `body` arrays. The machine-readable contract
+advertises this through `actor_shell_drive_shape`. Drive body payload contents
+remain private scheduler input.
 The parser/scheduler argument-shape fields and actor-shell key list are exact
 facade-shape discovery metadata.
 Public facade boundary failures produce bounded scalar diagnostics before

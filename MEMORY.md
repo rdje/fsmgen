@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF drive name boundary
+- ISF parser drive definitions now fail duplicate drive names before
+  actor-shell return instead of overwriting the earlier body in the
+  drive-name-keyed hash.
+- This preserves the existing public drive shell while making the authored
+  drive namespace explicit: each drive key is a unique non-empty scalar name.
+- Added `t/1187-isf-drive-name-boundary.t` and updated the ISF public contract
+  metadata, spec, mdBook, and live roadmap notes.
 ## 2026-05-13: R14 — ISF rule name boundary
 - ISF parser rule names now have a stricter actor-shell boundary: rule names
   must be non-empty scalars and unique within the actor.

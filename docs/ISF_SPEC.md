@@ -239,11 +239,11 @@ Drive call:
 
 Current lowering:
 - Accepted parser output exposes drives as a hash of shell entries keyed by
-  drive name. Each entry contains `params` and `body` arrays. Nested or
-  otherwise non-scalar drive names or parameter names are rejected before the
-  parser returns an actor shell. Drive body payload contents remain scheduler
-  input and are not frozen as a public API by the actor-shell drive-shape
-  metadata.
+  unique non-empty drive name. Each entry contains `params` and `body` arrays.
+  Duplicate drive names, nested or otherwise non-scalar drive names, and
+  nested or otherwise non-scalar parameter names are rejected before the parser
+  returns an actor shell. Drive body payload contents remain scheduler input
+  and are not frozen as a public API by the actor-shell drive-shape metadata.
 - Each drive definition becomes a non-state DT block named `-drive_name`.
 - Each drive call becomes one scheduled state.
 - The call asserts `drive_name_start`.
@@ -817,6 +817,7 @@ Focused tests:
 - [t/1184-isf-child-transaction-target-boundary.t](../t/1184-isf-child-transaction-target-boundary.t)
 - [t/1185-isf-transaction-name-boundary.t](../t/1185-isf-transaction-name-boundary.t)
 - [t/1186-isf-rule-name-boundary.t](../t/1186-isf-rule-name-boundary.t)
+- [t/1187-isf-drive-name-boundary.t](../t/1187-isf-drive-name-boundary.t)
 
 ## 12. Explicitly Deferred
 

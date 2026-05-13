@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF drive name boundary
+- Tightened [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
+  so duplicate `(drive name ...)` definitions fail before the actor shell is
+  returned instead of overwriting an earlier drive body.
+- Added [t/1187-isf-drive-name-boundary.t](t/1187-isf-drive-name-boundary.t)
+  for distinct drive-map entries and duplicate-name rejection.
+- Updated the ISF public-interface contract metadata, ISF spec, mdBook
+  actor-shell text, and roadmap notes.
 ### R14 — ISF rule name boundary
 - Tightened [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
   so rule names must be non-empty scalars and unique within the actor before

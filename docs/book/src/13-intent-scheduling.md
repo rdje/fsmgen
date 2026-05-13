@@ -97,7 +97,8 @@ or a positive integer. Rule entries are bounded as unique non-empty scalar
 remain private scheduler input. Duplicate rule names are rejected before
 actor-shell return. Drive definitions are bounded as a drive-name-keyed hash whose
 entries carry `params` and `body` arrays while drive body payload contents
-remain private scheduler input. The
+remain private scheduler input. Duplicate drive names are rejected before
+actor-shell return instead of overwriting an earlier drive body. The
 facade-shape metadata for those
 receiver, argument, path, and actor-shell boundaries is audited as exact across
 direct and manifest views, including bounded scalar diagnostics for public

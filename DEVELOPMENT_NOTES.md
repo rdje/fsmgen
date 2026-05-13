@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF drive name boundary
+- Drive definitions are exposed in the actor shell as a hash keyed by drive
+  name. Without duplicate rejection, a later `(drive name ...)` silently
+  replaces the earlier body before lowering, which is an unsafe public-handoff
+  behavior.
+- The parser now rejects duplicate drive names at definition time. That keeps
+  the current hash-backed public shape while making overwrite behavior
+  impossible and keeping scheduled drive DT emission deterministic.
 ## 2026-05-13: R14 ISF rule name boundary
 - Rule names become generated non-state DT names, rule-trigger source prefixes,
   and human review anchors in scheduled `.fsm` artifacts. Duplicate rule names
