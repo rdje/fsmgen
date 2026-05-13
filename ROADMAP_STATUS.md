@@ -2,10 +2,14 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
-- Next decision point: continue R14 ISF public-interface stabilization by
-  turning the next downstream-visible parser, scheduler, CLI, lower-result, or
-  schedule-report behavior into an explicit contract field plus focused audit,
-  keeping the live docs synchronized as the still-new ISF surface evolves.
+- Next decision point: continue the USER_GUIDE-to-mdBook migration by
+  dispatching the remaining broad guide contract into composition,
+  embedding/CLI, and ISF book chapters, with commits after each safe doc slice.
+- The mdBook now carries the core direct `.fsm` language contract that had
+  been stranded in `docs/USER_GUIDE.md`: guarded blocks, condition suffixes,
+  test-node defaults, update shorthand, direct-root families, state/non-state
+  DT boundaries, transition suffixes, declaration shapes, CLI report options,
+  and explicit out-of-support examples.
 - `.fsm` test-node selectors now include `default` and `_`, with fallback
   lowering defined as the logical NOT of the OR of all explicit sibling branch
   predicates. `t/37`, `t/42`, and `t/207` cover direct and computed selectors.

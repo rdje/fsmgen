@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — direct .fsm guide-to-book migration
+- Active: `R14`. The mdBook now carries the core direct `.fsm` contract that
+  had still been centralized in `docs/USER_GUIDE.md`, including guard/suffix,
+  selector/default, update-shorthand, root-kind, DT-kind, declaration-shape,
+  CLI-report, and unsupported-syntax boundaries.
+- The old guide now explicitly points back to the book migration rule: if the
+  guide and book differ on contractual user-facing material, that is a
+  documentation bug to reconcile, not a reason to leave the contract only in
+  the guide.
+
 ## 2026-05-13: R14 — compact ISF await_all transition guard
 - Active: `R14`. ISF `await_all` scheduled `.fsm` emission now uses one
   transition suffix guarded by the AND of all collected done ports, e.g.

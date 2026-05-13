@@ -157,6 +157,39 @@ Current backend truth:
 So a VHDL request currently failing is not a mystery bug. It is the honest
 current boundary.
 
+## Explicitly Out Of Active Support
+
+FSMGen should fail closed when a source uses syntax outside the active
+contract. Current out-of-support examples include:
+
+- non-conventional `+system` sections, including alternate clock names,
+  duplicate clock/reset entries, malformed reset identifiers, and incomplete
+  system declarations
+- unsupported top-level directive sections such as `(+clock clk)`,
+  `(+areset rst_n)`, or `(+bogus ...)`
+- unsupported tagged wrappers such as `?define:legacy_template` and other
+  template roots outside the active `?fsm`, `?dt`, `?mod`, `?module`, and
+  `?top` families
+- bare top-level FSM content without a supported source root
+- bare condition suffixes such as `(A <= B start)` and `(-> busy full)`
+- empty guarded blocks such as `(<req)` or malformed action-only forms such as
+  `(BROKEN)`
+- malformed state/DT blocks that carry no real body, such as `(idle)` or
+  `(-misc)`
+- malformed selector branches without actions, such as `(?MODE (=0))`
+- bare selector labels such as `(?MODE (BUSY ...))` or `(?MODE (0 ...))`
+- computed test nodes without a selector expression or without branches, such
+  as `(? (=0 ...))` or `(?(| A B))`
+- unsupported expression operators, malformed operator arity, or guard-only
+  tokens in ordinary RHS expression position
+- legacy composition/template forms such as `?&...`, nested `?top`, nested
+  `?ports` mapping directives, nested `?toplink`, multi-source `?fsmc`,
+  placeholder selectors, repeat macros, and placeholder tokens
+
+This list is not a replacement for the exact diagnostic text. It is the book
+home for the active rejection policy: unsupported syntax should be rejected
+with local context instead of being interpreted opportunistically.
+
 ## Practical Debug Checklist
 
 1. Re-run with trace enabled.

@@ -63,7 +63,8 @@ This book is now the progressive learning surface.
 
 The repository still keeps a few focused technical references:
 
-- `docs/USER_GUIDE.md`: broad reference during the migration
+- `docs/USER_GUIDE.md`: broad migration reference during guide-to-book
+  transfer
 - `docs/COMPOSITION_SCOPE.md`: precise composition support boundary
 - `docs/EXTENSION_MODEL.md`: typed extension boundary
 - `ROADMAP_STATUS.md`: live roadmap and current implementation lane for the

@@ -49,12 +49,14 @@ commits instead of a dirty worktree.
 
 ## What The Old User Guide Still Does
 
-[../../USER_GUIDE.md](../../USER_GUIDE.md) still remains the broad live
-reference during the migration.
+[../../USER_GUIDE.md](../../USER_GUIDE.md) still remains the broad migration
+reference during the migration, but it should no longer be the only home for
+normative user-facing contract. When the guide contains contractual language,
+that language should be dispatched into the chapter that owns the topic.
 
 Use it when:
 
-- a detail has not been fully split into the book yet
+- checking whether a detail still needs to be split into the book
 - you want the current monolithic reference section
 - you are comparing older sections against the new chapter layout
 
@@ -83,5 +85,6 @@ The mdBook scaffold is real and buildable now.
 The migration is still ongoing:
 
 - the book is the progressive learning surface
-- focused docs still carry some of the most exact normative boundaries
-- the old guide remains authoritative when a topic has not been fully split yet
+- focused docs may still carry narrow maintainer or machine-contract detail
+- the old guide remains a migration checklist, not a place to leave
+  user-facing contract stranded

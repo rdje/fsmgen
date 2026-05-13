@@ -13,6 +13,42 @@ The current canonical intent-level families are:
 Compatibility families such as `+define` and `+params` still exist in the live
 tree, but they are not the long-term center of gravity for the language.
 
+## Declaration Shape Contract
+
+These declaration sections are parsed as semantic source forms, not as loose
+lists for the backend to guess later. Malformed section shapes fail explicitly.
+
+Current accepted families are:
+
+- `(+size (signal width_or_type) ...)`
+- `(+constants (NAME value) ...)`
+- `(+define (NAME scalar_value))`
+- `(+params (NAME value) ...)`
+- `(+enums (enum_name (MEMBER value) ...) ...)`
+- `(+types (type NAME type_spec) ...)`
+- `(+import package_name ...)`
+
+Important boundary rules:
+
+- `+size` entries require one signal name plus one positive width expression or
+  named type.
+- The legacy empty `(+size)` no-op remains default-mode compatibility residue;
+  strict mode rejects it.
+- `+constants`, `+params`, `+enums`, `+types`, and `+import` require non-empty
+  payloads.
+- `+define` carries exactly one `(NAME value)` pair in the current active
+  contract.
+- `+import` is a flat list of HDL-identifier-compatible package names.
+- Whole aggregate roots are not scalar width expressions. Use a scalar leaf
+  such as `LANES[1]`, or a named aggregate type alias when the target is typed
+  aggregate storage.
+- Dependency cycles in constants, params, and types are rejected before HDL
+  emission.
+
+Those constraints are part of the public language boundary. They keep invalid
+declarations from falling through to Perl list-unpacking errors, raw backend
+warnings, or accidental target-HDL behavior.
+
 ## Parameters
 
 Use `+params` for direct-root parameter values when the source is describing a

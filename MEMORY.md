@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — direct .fsm guide-to-book migration
+- Began the USER_GUIDE-to-mdBook migration requested by the user. The book now
+  owns the core direct `.fsm` contract for guarded blocks, condition suffixes,
+  test-node fallback semantics, update shorthand, direct root families,
+  state/non-state DT boundaries, transition suffixes, declaration shapes,
+  CLI report options, and explicit out-of-support examples.
+- Updated `docs/USER_GUIDE.md` and the mdBook reference map so the guide is
+  treated as a migration reference/checklist; normative user-facing details
+  should be dispatched into the owning book chapter instead of remaining only
+  in the monolithic guide.
+- Next migration slices should continue with composition, embedding/CLI, and
+  ISF contract material from `docs/USER_GUIDE.md`, committing after each safe
+  chapter-family migration.
 ## 2026-05-13: R14 — compact ISF await_all transition guard
 - Changed ISF `await_all` scheduled `.fsm` emission from nested done-port guard
   blocks to one transition suffix guarded by a compound AND, for example

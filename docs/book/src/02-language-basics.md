@@ -267,21 +267,81 @@ Examples:
 
 ## Guards, Tests, and Updates
 
-Common authoring shapes:
+This section carries the everyday active contract for guards, selector tests,
+condition suffixes, and update shorthand. These forms are not just examples;
+they are the regression-backed authoring surface.
+
+### Guarded Blocks
+
+Guarded blocks execute their nested actions only when the guard condition is
+true:
 
 ```lisp
 (<start
   (A = 1)
 )
+```
 
+The negated form executes when the guard condition is false:
+
+```lisp
+(<!full
+  (-> busy)
+)
+```
+
+Guarded blocks must contain at least one action. Nested guards are allowed, and
+their conditions compose by logical `AND`.
+
+Active shorthand meanings are:
+
+- `(<foo ...)` means `foo != 0`
+- `(<!foo ...)` means `foo == 0`
+- `(<foo=value ...)` and `(<foo==value ...)` mean equality
+- `(<foo!=value ...)`, `(<foo<value ...)`, `(<foo<=value ...)`,
+  `(<foo>value ...)`, and `(<foo>=value ...)` mean the corresponding
+  comparison
+- `(<(& req start !full) ...)` uses the normal expression language and means
+  the compound predicate is true
+
+### Condition Suffixes
+
+A condition suffix is the single-action form of a guarded block. It must use an
+explicit guard marker such as `<...` or `<!...`; bare suffixes like
+`(A <= B start)` or `(-> busy full)` are outside the active contract.
+
+Examples:
+
+```lisp
+(A <= B <start)                         ;; same as: (<start (A <= B))
+(-> busy <!full)                        ;; same as: (<!full (-> busy))
+(OUT = IN <mode==1)                     ;; same as: (<mode==1 (OUT = IN))
+(-> special <count<=3)                  ;; same as: (<count<=3 (-> special))
+(-> joined <(& a_done b_done c_done))   ;; compound transition suffix
+(= (OUT (+ A B)) <(& valid ready))      ;; pair-form assignment suffix
+```
+
+The suffix is action metadata, not part of an assignment RHS expression and not
+part of a transition target name.
+
+### Test Nodes
+
+Computed-selector test nodes use a selector expression:
+
+```lisp
 (?(| A B)
   (=0 (FLAG = 0))
   (=1 (FLAG = 1))
 )
+```
 
-(++ counter)
-(+= count 4)
-(-= retries)
+Plain-selector test nodes use a compact `?SIG` header:
+
+```lisp
+(?MODE
+  (=0 (A = 1))
+  (!=8'0 (B = 1))
+  (default (C = 1)))
 ```
 
 Selectors with exact-width values can infer the selector signal:
@@ -293,10 +353,60 @@ Selectors with exact-width values can infer the selector signal:
 )
 ```
 
+Supported branch selectors are explicit operator-prefixed tokens such as
+`=0`, `=1`, `=OTHER`, `!=8'0`, `<8'4`, `<=8'3`, `>8'3`, and `>=8'1`, plus one
+fallback selector spelled `default` or `_`. Bare branch selectors like `BUSY`
+or `0` are outside the active contract. A branch must contain at least one
+action, and a test node may contain at most one fallback branch.
+
+The fallback selector means the logical negation of the OR of all explicit
+sibling predicates. For example:
+
+```lisp
+(?MODE
+  (=0 (A = 1))
+  (=1 (B = 1))
+  (default (C = 1)))
+```
+
+The `C` branch condition is `!(MODE == 0 || MODE == 1)`. If explicit
+predicates overlap, the fallback excludes their union. If the explicit
+predicates are exhaustive for the selector width, the fallback is valid but
+unreachable.
+
+### Update Shorthand
+
+Update shorthand targets a scalar signal and expands to the matching increment
+or decrement assignment intent:
+
+```lisp
+(++ counter)       ;; increment by 1
+(-- retries)       ;; decrement by 1
+(+= count)         ;; increment by 1
+(-= retries)       ;; decrement by 1
+(+=4 byte_count)   ;; increment by 4
+(-=1 remaining)    ;; decrement by 1
+(+= count 4)       ;; increment by 4
+(-= remaining 3)   ;; decrement by 3
+```
+
+After the optional delta, update shorthand accepts only an explicit condition
+suffix such as `<start`, `<!full`, or `<(& req ready)`.
+
+Inline modifiers keep the surrounding assignment family:
+
+```lisp
+(ACC <- SRC (+=))
+(ACC <- SRC (+= 2))
+(COMB = SRC (-=))
+(COMB = SRC (-= 1))
+```
+
 ## Current Boundary
 
 This chapter is about the everyday surface.
 
-For the exact live support line, the broad reference still lives in
-`docs/USER_GUIDE.md`, especially the “Currently supported .fsm constructs”
-section. The goal is to migrate that material fully into this book over time.
+The active direct-language boundary above is migrated from the live guide into
+the book. `docs/USER_GUIDE.md` remains a broad migration reference, but
+normative `.fsm` syntax found there should have a chapter home here rather than
+remaining only in the monolithic guide.

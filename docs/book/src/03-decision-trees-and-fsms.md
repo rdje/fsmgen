@@ -7,6 +7,45 @@ FSMGen has two main direct authored roots:
 
 They are related, but not interchangeable.
 
+## Direct Root Boundary
+
+The active direct source roots are:
+
+- `(?fsm:module_name ...)` for encoded FSMs
+- `(?dt:module_name ...)` for standalone decision-tree modules
+- `(?mod:module_name ...)` and `(?module:module_name ...)` as currently
+  accepted direct single-module roots on the shared implementation path
+
+Root names must be HDL-identifier-compatible. Names such as `?fsm:bad-name`,
+`?dt:0bad`, or `?top:bad-name` are rejected as source-shape errors rather than
+silently truncated to a valid prefix.
+
+Default mode also accepts the legacy `+fsm` root family:
+
+```lisp
+(+fsm my_module)
+(+system (clock clk) (sreset reset))
+(idle ...)
+```
+
+and the nested legacy form:
+
+```lisp
+(+fsm my_module
+  (+system (clock clk) (sreset reset))
+  (idle ...))
+```
+
+Those legacy forms are compatibility residue. Strict mode rejects legacy
+`+fsm` roots and requires `?fsm:module_name`. Strict mode also rejects the long
+direct-root alias `?module:` and requires canonical `?mod:` for the current
+module/entity-architecture root family.
+
+Files that start directly with FSM content such as `(+system ...)` or
+`(idle ...)` must be wrapped in a supported root. Unsupported tagged wrappers,
+including old template-like roots, do not become valid just because they contain
+a supported root inside them.
+
 ## `?fsm:name`
 
 Use `?fsm:name` when you are modeling an actual finite-state machine with:
@@ -34,6 +73,18 @@ Use `?dt:name` for a standalone decision tree, especially when the logic is:
 
 The current `?dt:name` contract is intentionally narrower than `?fsm:name`.
 
+Accepted top-level content for `?dt:name` currently includes conventional
+`+system`, `+size`, `+constants`, `+enums`, `+define`, `+params`, bounded
+`+types`, bounded `+import`, canonical `(:= (signal value))` directives, and
+general non-state DT blocks such as `(-route ...)`. Regular FSM-state blocks
+such as `(idle ...)` and dedicated reset-state blocks are rejected inside
+standalone-DT roots.
+
+Without explicit `+system`, a purely combinational standalone `?dt` exposes no
+implicit system ports. If any sequential assignment appears and no `+system`
+is authored, the current generator exposes implicit `clk` and asynchronous
+active-low `rst_n`.
+
 ## State DTs and Non-State DTs
 
 Inside an FSM root, a state DT is written as a normal state block such as
@@ -50,6 +101,19 @@ sequential. Assignment operators do:
 Therefore a state DT or a non-state DT can contain combinational assignments,
 sequential assignments, or both, subject to the same assignment-family
 validation rules described in the language basics chapter.
+
+Non-state DT names must use exactly one leading dash plus an
+HDL-identifier-compatible base name, for example `-route_dt` or `-comb_1`.
+Malformed block names such as `(bad-name ...)`, `(-bad-name ...)`, and
+`(--bad ...)` are rejected explicitly.
+
+Dedicated reset-state DT blocks are the short and long reset spellings:
+
+- `-syncrst` and `-syncreset`, both normalized to `syncreset`
+- `-asyncrst` and `-asyncreset`, both normalized to `asyncreset`
+
+They are reset-state DT blocks, not regular encoded states. They do not
+participate in normal state encoding or `current_state` comparisons.
 
 ## Reset and Initialization
 
@@ -79,6 +143,11 @@ reference docs.
 ## State Transitions
 
 Transitions target named FSM states in the same root.
+Targets must be declared regular FSM-state DT blocks and must be
+HDL-identifier-compatible. A transition to `bad-name`, `-comb`, or an unknown
+state is rejected before generation.
+
+Transitions can be unconditional or guarded:
 
 Example:
 
@@ -95,6 +164,19 @@ Example:
   )
 )
 ```
+
+The suffix form is the single-action equivalent of wrapping the transition in a
+guard:
+
+```lisp
+(-> active <start)
+(-> idle <!busy)
+(-> joined <(& w0_done w1_done w2_done))
+```
+
+The compound suffix form is useful when a transition depends on several done or
+ready signals and the source should show the conjunction at the transition
+site.
 
 ## Future Feature: Advanced DT Enable Control
 

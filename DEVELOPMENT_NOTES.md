@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 direct .fsm guide-to-book migration
+- The user clarified that almost all of `docs/USER_GUIDE.md` should land in
+  the mdBook, with content dispatched to the correct chapters/sections rather
+  than preserved as one monolithic reference.
+- The first safe migration slice targets the direct `.fsm` language surface.
+  That material belongs in Language Basics, Decision Trees and FSMs, Symbols
+  and Imports, Generated HDL/Inspection, and Errors/Troubleshooting rather than
+  only in the old guide.
+- The reference map now treats `USER_GUIDE.md` as a migration checklist instead
+  of an acceptable permanent home for normative user-facing contract. Remaining
+  work should proceed by chapter family so each slice stays reviewable and can
+  close with the commit workflow.
 ## 2026-05-13: R14 compact ISF await_all transition guard
 - `await_all` is logically one transition guarded by the conjunction of all
   collected spawned done ports. The previous nested-guard scheduled `.fsm`

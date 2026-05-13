@@ -135,13 +135,17 @@ Trace behavior:
 - `-d, --debug[=N]`
 - `--trace-verbosity <none|low|medium|high|debug>`
 - `--trace-log[=FILE]`
+- `--trace-emojis` / `--notrace-emojis`
 - `--path <dir>`
 - `--extension-module <Module::Name>`
 - `--extension-config <file>`
 - `--capability-manifest`
-- `--check --json`
-- `--verify-hdl`
+- `--check --json` / `--check-json`
+- `--emit-semantic-json` / `--semantic-json`
+- `--emit-normalized-json` / `--normalized-json`
+- `--verify-hdl` / `--validate-hdl`
 - `-q, --quiet`
+- `-h, --help`
 
 `--capability-manifest` is different from the HDL-generation options: it emits
 schema-versioned JSON describing the current support/capability surface and
@@ -150,6 +154,12 @@ exits without requiring an input `.fsm`.
 `--check --json` is also different from HDL generation: it still runs the full
 pipeline, but it writes no HDL file. It emits a schema-versioned JSON check
 report to stdout and exits non-zero when the check fails.
+
+`--emit-semantic-json` runs the full pipeline and emits the bounded normalized
+semantic JSON report instead of writing HDL. It is the preferred CLI
+interchange surface for downstream tools that need sanitized module/system,
+signal-analysis, symbol, and forward-IR projections without depending on raw
+Perl objects.
 
 ## Input Resolution
 

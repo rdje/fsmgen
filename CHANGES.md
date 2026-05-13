@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — direct .fsm guide-to-book migration
+- Migrated core direct `.fsm` contract material from
+  [docs/USER_GUIDE.md](docs/USER_GUIDE.md) into mdBook chapter homes:
+  guards, condition suffixes, selector defaults, update shorthand, direct root
+  families, state/non-state DT rules, transition suffixes, declaration shapes,
+  CLI report options, and explicit unsupported syntax examples.
+- Updated [docs/book/src/00-introduction.md](docs/book/src/00-introduction.md),
+  [docs/book/src/02-language-basics.md](docs/book/src/02-language-basics.md),
+  [docs/book/src/03-decision-trees-and-fsms.md](docs/book/src/03-decision-trees-and-fsms.md),
+  [docs/book/src/04-symbols-types-and-imports.md](docs/book/src/04-symbols-types-and-imports.md),
+  [docs/book/src/09-generated-hdl-debugging-and-inspection.md](docs/book/src/09-generated-hdl-debugging-and-inspection.md),
+  [docs/book/src/10-errors-strict-mode-and-troubleshooting.md](docs/book/src/10-errors-strict-mode-and-troubleshooting.md),
+  and [docs/book/src/90-reference-map.md](docs/book/src/90-reference-map.md).
+- Clarified [docs/USER_GUIDE.md](docs/USER_GUIDE.md) so guide/book
+  mismatches are treated as documentation bugs and normative material should
+  continue moving into the book.
 ### R14 — compact ISF await_all transition guard
 - Updated [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm)
   so `await_all` scheduled `.fsm` states emit one transition suffix guarded by
