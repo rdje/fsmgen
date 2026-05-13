@@ -136,11 +136,12 @@ hash-backed drive definitions do not create review-artifact churn; the manifest
 also advertises the DT ordering policy, and that scheduled-artifact ordering
 metadata is audited as exact. Rule-trigger fan-in schedule reports are also
 covered so generated `rule_trigger_fanin` DTs and one-bit trigger-source
-storage stay visible to downstream consumers. DT timing remains
-assignment-family driven:
-`=` is combinational, `<-` and `<=` are sequential, and `<1` is a one-cycle
-delayed pulse whether they appear in state or non-state DT blocks; the manifest
-advertises those operator families through `dt_assignment_operator_family_map`.
+storage stay visible to downstream consumers. DT selector logic remains
+combinational; assignment families decide the selected target behavior:
+`=` drives combinational mux outputs, `<-` and `<=` drive sequential/flopped
+targets, and `<1` requests a one-cycle delayed pulse whether they appear in
+state or non-state DT blocks. The manifest advertises those operator families
+through `dt_assignment_operator_family_map`.
 Schedule-report `dt_blocks`
 `assignments` values are assignment counts, not payload lists, and the manifest
 advertises that shape through `schedule_report_dt_assignments_shape`.

@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14/R8 — DT selector model and await watchdog lowering
+- Active: `R14`, with `.fsm` language-contract documentation touchpoints.
+  The book now defines DTs as combinational selector logic with conceptual
+  `DTE` gating and target mux semantics.
+- ISF await watchdog lowering now emits `?wd (=0 timeout) (>0 (-- wd))`, so
+  the scheduled `.fsm` review form does not suggest that decrement executes
+  before the zero test.
+
 ## 2026-05-13: R14 — ISF when clause boundary
 - Active: `R14`. `(when condition body...)` now requires a scalar or list-form
   condition and at least one list-form body clause before scheduled `.fsm`

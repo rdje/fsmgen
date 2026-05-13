@@ -5,6 +5,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Next decision point: continue `R14` ISF implementation/API stabilization by
   selecting another bounded documented limitation, or run a focused
   documentation drift audit only if guide/book divergence appears.
+- DT semantics are now documented in the book as combinational selector logic:
+  conceptual `DTE` gating controls one-bit `EN`/`WEN` terms, assignment
+  families describe target mux/storage behavior, and the tree syntax is not
+  procedural execution.
+- ISF await watchdog lowering now emits the watchdog zero test and nonzero
+  decrement under the same `?wd` test node (`=0` timeout, `>0 (-- wd)`), so
+  generated scheduled `.fsm` reflects current-Q testing and next-value
+  selection without a misleading decrement-before-test order.
 - Support workflow: [bin/ci-regression](bin/ci-regression) now supports
   explicit `quick`/`smoke`, `isf`, and `full` modes, plus `--list`,
   `--dry-run`, and `--no-book`. `smoke` aliases the curated `quick` tier for

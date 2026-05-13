@@ -584,16 +584,16 @@ exact lower-result discovery metadata for the currently public `files` map.
 ## DT Assignment Operators
 
 Scheduled `.fsm` text can contain assignment operators in state DT blocks and
-non-state DT blocks. The timing semantics are assignment-family driven, not
-block-spelling driven:
+non-state DT blocks. DT selector logic is combinational; the assignment
+family decides what kind of target the selected value drives, not whether the
+DT itself is combinational or sequential:
 
-- `=` is combinational.
-- `<-` and `<=` are sequential/flopped.
-- `<1` is a one-cycle delayed pulse.
+- `=` drives a combinational target mux output.
+- `<-` and `<=` drive sequential/flopped targets.
+- `<1` requests a one-cycle delayed pulse.
 
-A DT may therefore be combinational-only, sequential-only, or mixed depending on
-the operators it contains. The machine-readable contract advertises these
-families through `dt_assignment_operator_family_map`.
+The machine-readable contract advertises these target-behavior families through
+`dt_assignment_operator_family_map`.
 
 ISF `(complete port)` lowering uses `<1`, not `<-`, so completion outputs are
 one-cycle delayed pulses rather than sticky flopped status bits. The source

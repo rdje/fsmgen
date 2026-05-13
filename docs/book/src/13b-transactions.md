@@ -131,31 +131,41 @@ value.
 **Timing**: 1 to watchdog_limit cycles. Self-looping.
 
 **Cycle-by-cycle**:
-- Cycle N: decrement watchdog `(-- wd)`, check `port`
+- Cycle N: check `port` and the current watchdog Q value
 - If `port=1`: transition to next state
 - If `port=0`: self-loop, repeat
 - If `wd=0`: timeout → error state
+- If `wd>0`: schedule the watchdog decrement for the next value
 
 **What happens**:
-1. Watchdog counter decremented each cycle
+1. The await DT computes port, timeout, and decrement enables in the same cycle
 2. Guard `(<port ...)` fires when port is true
-3. Watchdog check `(?wd (=0 (-> timeout)))` handles timeout
-4. On timeout: `done=1`, `last_error=1`, return to idle
+3. Watchdog check `(?wd (=0 ...) (>0 ...))` reads the current watchdog Q value
+4. On timeout: request the delayed `done` pulse, set `last_error=1`, return
+   to idle
 
 **Generated .fsm**:
 ```lisp
 (apb_transfer_await_3
-  (-- apb_transfer_wd)
   (<PREADY
     (-> apb_transfer_drive_4))
   (?apb_transfer_wd
-    (=0 (-> apb_transfer_timeout))))
+    (=0 (-> apb_transfer_timeout))
+    (>0 (-- apb_transfer_wd))))
 
 (apb_transfer_timeout
   (<1 (done 1))
   (<- (last_error 1))
   (-> apb_transfer_idle_0))
 ```
+
+The ordering in the source is not procedural. The `?apb_transfer_wd` selector
+tests the current counter value in that cycle; `(-- apb_transfer_wd)` selects
+the next D value for the counter only on the `>0` branch. The guard also avoids
+describing a zero-to-all-ones next-value underflow for the watchdog. Timeout
+normally exits the await state, so that old side effect does not necessarily
+escape as a system-level failure, but the scheduled artifact should still not
+ask the counter to decrement at zero.
 
 ## `(complete port)` — Terminal State
 

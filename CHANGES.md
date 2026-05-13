@@ -1,5 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-05-14
+### R14/R8 — DT selector model and await watchdog lowering
+- Updated [docs/book/src/03-decision-trees-and-fsms.md](docs/book/src/03-decision-trees-and-fsms.md)
+  to define DTs as combinational selector networks with conceptual `DTE`
+  gating, one-bit value predicates, and target mux selection semantics.
+- Revised the ISF docs and public contract language so assignment families
+  describe the selected target behavior rather than making the DT itself
+  combinational, sequential, or mixed.
+- Updated [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm)
+  so await watchdog lowering emits `?wd` branches for `=0` timeout and `>0`
+  decrement, matching the non-procedural DT reading and avoiding a
+  zero-watchdog underflow next-value selection.
+- Adjusted [t/1095-isf-scheduler-burst-reader.t](t/1095-isf-scheduler-burst-reader.t)
+  to lock the new scheduled `.fsm` await shape.
 ## 2026-05-13
 ### R14 — ISF when clause boundary
 - Tightened [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)

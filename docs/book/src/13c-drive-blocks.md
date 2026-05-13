@@ -1,9 +1,10 @@
 # Drive Blocks
 
 Drives lower to non-state DT blocks that are enabled when their `_start` signal
-is asserted. One `(drive ...)` call = one cycle. The assignment operators in
-the DT decide timing: current drive bodies use `<-`, so driven ports update on
-the next clock.
+is asserted. One `(drive ...)` call = one cycle. The DT computes
+combinational selector enables; the assignment operators decide the selected
+target behavior. Current drive bodies use `<-`, so driven ports update on the
+next clock.
 
 Drive definitions are parser-validated before lowering. Each body entry must be
 a scalar `(port value)` pair; malformed scalar body entries, nested ports,

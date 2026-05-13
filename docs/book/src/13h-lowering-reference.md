@@ -180,14 +180,21 @@ contract for ISF sample lowering.
 **Generated .fsm**:
 ```lisp
 (apb_transfer_await_3
-  (-- apb_transfer_wd)             ;; watchdog: decrement
   (<PREADY                         ;; port guard
     (-> apb_transfer_drive_4))
   (?apb_transfer_wd                ;; timeout check
-    (=0 (-> apb_transfer_timeout))))
+    (=0 (-> apb_transfer_timeout))
+    (>0 (-- apb_transfer_wd))))    ;; watchdog: decrement next value
 ```
 
-**Timing**: Self-loops until `PREADY=1`. Each loop cycle decrements watchdog.
+**Timing**: Self-loops until `PREADY=1`. Each loop cycle checks the current
+watchdog Q value and, when it is greater than zero, schedules the watchdog
+decrement for the next value. The test-node branches are same-cycle selector
+equations, not procedural statements executed top to bottom. The decrement is
+guarded by `>0`, so the scheduled artifact does not describe a zero watchdog
+underflowing to all ones. Timeout normally exits the await state, but the
+lowering still keeps the counter's next-value selection aligned with the
+current-Q test.
 **Cycles**: 1 to watchdog_limit cycles (variable).
 **Implicit signals**: `{tx}_wd` (log2(N) bits), plus timeout state.
 

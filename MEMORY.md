@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: R14/R8 — DT selector model and await watchdog lowering
+- The mdBook now defines a decision tree as pure combinational selector logic
+  with a conceptual one-bit `DTE`, one-bit value-selection predicates, and
+  gated `EN`/`WEN` terms that drive target mux selection.
+- The old mental model that a DT can be combinational/sequential/mixed has
+  been replaced: assignment families choose the target mux/storage timing, but
+  the DT selector network itself remains combinational.
+- ISF await lowering now emits the watchdog timeout and decrement in one
+  `?wd` test node, using `=0` for timeout and `>0` for `(-- wd)`, so the
+  scheduled `.fsm` no longer implies a procedural decrement-before-test order
+  or describes a zero-watchdog decrement into an all-ones next value.
 ## 2026-05-13: R14 — ISF when clause boundary
 - ISF `(when condition body...)` lowering now validates a scalar or list-form
   condition plus at least one list-form body clause before branch expansion.

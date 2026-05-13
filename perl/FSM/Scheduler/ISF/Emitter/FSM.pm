@@ -85,12 +85,6 @@ sub _emit_states($self, $ir, $outputs) {
 
 sub _emit_assignments($self, $state) {
     my @lines;
-    my $kind = $state->{kind};
-
-    # Watchdog decrement
-    if ($kind eq 'await' && $state->{watchdog} && $state->{watchdog}{name}) {
-        push @lines, "    (-- $state->{watchdog}{name})";
-    }
 
     for my $a (@{$state->{assignments}}) {
         my $guard_str = '';
@@ -155,9 +149,10 @@ sub _emit_transitions($self, $state) {
                 push @lines, "      (-> $t->{target})";
                 push @lines, '    )';
             } elsif ($c->{signal}) {
-                # Watchdog: (?wd (=0 (-> timeout)))
+                # Watchdog: zero test and nonzero decrement both read current Q.
                 push @lines, "    (?$c->{signal}";
                 push @lines, "      (=0 (-> $t->{target}))";
+                push @lines, "      (>0 (-- $c->{signal}))";
                 push @lines, '    )';
             }
         }

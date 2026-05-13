@@ -273,10 +273,11 @@ Current lowering:
   rule-trigger fan-in DTs.
 - Drive DT assignments use flopped output assignment (`<-`) by default, so a
   drive call consumes one state and the driven port updates on the next clock.
-- DT timing is assignment-family driven: `=` assignments are combinational,
-  `<-` and `<=` assignments are sequential/flopped, and `<1` assignments are
-  one-cycle delayed pulses whether they appear in a state DT `(state_name ...)`
-  or a non-state DT `(-name ...)`.
+- DT selector logic is combinational. Assignment families decide the target
+  behavior selected by that logic: `=` assignments drive combinational mux
+  outputs, `<-` and `<=` assignments drive sequential/flopped targets, and
+  `<1` assignments request one-cycle delayed pulses whether they appear in a
+  state DT `(state_name ...)` or a non-state DT `(-name ...)`.
 - The machine-readable ISF public contract advertises those operator families
   through `dt_assignment_operator_family_map`.
 - Adjacent drive calls are not merged. To drive several ports in the same
@@ -380,9 +381,14 @@ Current lowering:
 ```
 
 Current lowering:
-- The await state decrements `{transaction}_wd`.
+- The await state tests the current `{transaction}_wd` Q value.
 - The normal transition fires when the awaited port is true.
 - A timeout transition fires when the watchdog counter is zero.
+- A `>0` watchdog branch schedules the watchdog decrement for the next counter
+  value. The zero test and decrement branch are same-cycle DT selector
+  equations, not procedural statements. The `>0` guard also avoids describing
+  a zero-watchdog decrement to all ones; timeout normally exits the await state,
+  but the emitted next-value selection stays blocked at zero.
 - Timeout states assign `done` with a one-cycle delayed pulse (`<1`) and
   `last_error` with a flopped output assignment (`<-`).
 

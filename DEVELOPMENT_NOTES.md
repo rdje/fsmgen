@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: DT selector model and await watchdog lowering
+- A DT should be explained as combinational glue that computes one-bit mux
+  selection predicates, with conceptual `DTE` gating applied to the emitted
+  `EN`/`WEN` terms. The authored tree is a compact equation notation, not
+  procedural code and not storage.
+- Assignment families still matter, but they identify what the selected value
+  drives: a combinational mux output, a flop D input for a Q/output-named LHS,
+  a D/next-value-named target, or a delayed pulse request. They do not make the
+  DT itself sequential.
+- Await watchdog lowering now keeps the zero test and nonzero decrement under
+  the same `?wd` test node. Both branches read the current watchdog Q value in
+  the same cycle; the `>0 (-- wd)` branch only selects the counter's next
+  value. This avoids describing an unconditional zero-to-all-ones decrement
+  even though the timeout transition normally leaves the await state.
 ## 2026-05-13: R14 ISF when clause boundary
 - `when` is used both as activation and inline control flow. Inline lowering
   constructs body states before the branch state can be linked to its true and
