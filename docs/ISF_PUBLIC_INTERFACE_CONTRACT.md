@@ -248,6 +248,11 @@ The blocking `do` child-completion handoff is checked by
 [t/1177-isf-do-child-done-pulse.t](../t/1177-isf-do-child-done-pulse.t)
 so the generated internal `child_done` signal remains a one-cycle delayed pulse
 through scheduled `.fsm` parsing and HDL generation.
+The child transaction target boundary is checked by
+[t/1184-isf-child-transaction-target-boundary.t](../t/1184-isf-child-transaction-target-boundary.t)
+so `(do child)` and `(spawn child as instance)` must resolve `child` to a
+declared same-actor transaction before scheduled `.fsm` emission, while
+forward references remain accepted.
 The deprecated handshake compatibility boundary is checked by
 [t/1178-isf-handshake-compatibility-boundary.t](../t/1178-isf-handshake-compatibility-boundary.t)
 so `(handshake name (valid signal) (ready signal))` metadata is structurally
@@ -494,6 +499,11 @@ Blocking `(do child)` lowering also uses `<1` for the internal
 That keeps each parent-visible child completion as a pulse, so repeated `do`
 calls wait for fresh child completions instead of observing a sticky
 already-done bit.
+Blocking `(do child)` and parallel `(spawn child as instance)` lowering now
+also require the child target to resolve to a declared transaction in the same
+actor before scheduled `.fsm` text is emitted. Forward references are accepted,
+but missing child targets fail closed so they cannot synthesize dead
+`child_start`/`child_done` or `instance_start`/`instance_done` paths.
 ISF rule `(trigger transaction)` lowering also uses `<1`, not `<-`, for the
 generated `rule_transaction` trigger source. Generated combinational fan-in
 then drives `transaction_start` from every source for that transaction. This

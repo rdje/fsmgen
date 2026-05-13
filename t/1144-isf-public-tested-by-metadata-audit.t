@@ -86,6 +86,7 @@ my $expected_tested_by = [
     't/1180-isf-unsupported-transaction-clause-boundary.t',
     't/1181-isf-rule-action-boundary.t',
     't/1182-isf-rule-trigger-target-boundary.t',
+    't/1184-isf-child-transaction-target-boundary.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {

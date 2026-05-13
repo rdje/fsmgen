@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF child transaction target boundary
+- ISF lowering now validates `(do child)` and `(spawn child as instance)`
+  targets before scheduled `.fsm` emission. The target must name a declared
+  transaction in the same actor.
+- Forward references remain accepted because validation sees the full actor
+  shell. Unknown child targets now fail closed instead of synthesizing dead
+  `child_start`/`child_done` or `instance_start`/`instance_done` paths.
+- Added `t/1184-isf-child-transaction-target-boundary.t` and updated the ISF
+  public contract metadata, spec, mdBook, and live roadmap notes.
 ## 2026-05-13: Workflow — tiered local regression gate
 - `bin/ci-regression` now supports explicit `quick`, `isf`, and `full` modes.
   No argument still means `full`, preserving the historical pre-push gate.

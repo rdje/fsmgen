@@ -45,6 +45,7 @@ my %TRANSACTION_CONTEXT_LABEL = (
 );
 
 sub build_module($self, $actor) {
+    $self->_validate_child_transaction_refs($actor);
     my %spawned = $self->_collect_spawn_refs($actor);
 
     my %child_irs;
@@ -155,6 +156,28 @@ sub _collect_spawn_refs($self, $actor) {
         }
     }
     return %s;
+}
+
+sub _validate_child_transaction_refs($self, $actor) {
+    my %transactions = map { $_->{name} => 1 } @{$actor->{transactions} || []};
+
+    for my $tx (@{$actor->{transactions} || []}) {
+        my $tx_name = $tx->{name};
+        for my $clause (@{$tx->{clauses} || []}) {
+            next unless ref($clause) eq 'ARRAY' && @$clause;
+            my $keyword = $clause->[0];
+            next unless defined($keyword) && !ref($keyword);
+            next unless $keyword eq 'do' || $keyword eq 'spawn';
+
+            my $target = $clause->[1];
+            confess "Transaction '$tx_name': $keyword target must be a scalar transaction name\n"
+                unless defined($target) && !ref($target) && length($target);
+            confess "Transaction '$tx_name': $keyword target '$target' is not a declared transaction\n"
+                unless $transactions{$target};
+        }
+    }
+
+    return 1;
 }
 
 sub _build_ports($self, $actor) {

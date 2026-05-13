@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF child transaction target boundary
+- `(do child)` and `(spawn child as instance)` both create start/done control
+  paths during lowering. If `child` is misspelled or absent, the scheduled
+  artifact can look structurally plausible while the generated start/done
+  signals are not connected to a real transaction body.
+- The validation runs at lowering entry because it belongs to scheduler
+  composition semantics rather than raw parser shell shape. Running it before
+  any state/file emission keeps forward references legal while failing missing
+  targets before dead handshake paths can enter review artifacts.
 ## 2026-05-13: Workflow tiered local regression gate
 - The full regression gate has grown to more than a thousand test files and is
   still the right pre-push/release confidence check, but using it for every

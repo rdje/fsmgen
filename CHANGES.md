@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF child transaction target boundary
+- Tightened [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so `(do child)` and `(spawn child as instance)` targets must resolve to
+  declared same-actor transactions before scheduled `.fsm` emission.
+- Added [t/1184-isf-child-transaction-target-boundary.t](t/1184-isf-child-transaction-target-boundary.t)
+  for valid forward references plus unknown `do` and `spawn` target
+  rejection.
+- Updated the ISF public-interface contract metadata, ISF spec, mdBook
+  composition/current-limitation text, and roadmap notes.
 ### Workflow — tiered local regression gate
 - Extended [bin/ci-regression](bin/ci-regression) with explicit `quick`, `isf`,
   and `full` modes. The no-argument default remains `full`.

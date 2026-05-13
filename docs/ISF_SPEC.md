@@ -472,6 +472,9 @@ Current lowering:
 Current lowering:
 - The parent emits an await-shaped state guarded by `child_transaction_done`.
 - The child idle state is rewired to wait on `child_transaction_start`.
+- The `child_transaction` target must name a declared transaction in the same
+  actor. Forward references are accepted; missing targets fail before
+  scheduled `.fsm` emission.
 - The rewired child idle state enters the first non-entry child state, so the
   child body does not need to begin with a drive state.
 - The child's terminal state pulses `child_transaction_done` with `<1`, matching
@@ -488,6 +491,9 @@ Current lowering:
 
 Current lowering:
 - Spawned transactions are emitted as separate child `.fsm` files.
+- The spawned transaction target must name a declared transaction in the same
+  actor. Forward references are accepted; missing targets fail before
+  scheduled `.fsm` emission.
 - Each child gets `start`, `done`, and `last_error` ports if missing.
 - The parent declares per-instance `instance_start` and `instance_done` signals.
 - Each spawn state asserts its matching `instance_start` signal.
@@ -807,6 +813,7 @@ Focused tests:
 - [t/1180-isf-unsupported-transaction-clause-boundary.t](../t/1180-isf-unsupported-transaction-clause-boundary.t)
 - [t/1181-isf-rule-action-boundary.t](../t/1181-isf-rule-action-boundary.t)
 - [t/1182-isf-rule-trigger-target-boundary.t](../t/1182-isf-rule-trigger-target-boundary.t)
+- [t/1184-isf-child-transaction-target-boundary.t](../t/1184-isf-child-transaction-target-boundary.t)
 
 ## 12. Explicitly Deferred
 

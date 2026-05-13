@@ -166,9 +166,10 @@ control-flow and data-operation states.
 
 ## Current Limitations
 
-- `(do ...)` and `(spawn ...)` bind named start/done signals in scheduled
-  `.fsm`; composition-top instantiation and spawn parameter binding remain
-  deferred.
+- `(do ...)` and `(spawn ...)` targets must resolve to declared same-actor
+  transactions before scheduled `.fsm` emission. They bind named start/done
+  signals in scheduled `.fsm`; composition-top instantiation and spawn
+  parameter binding remain deferred.
 - `(resources ...)` and `(priority ...)` are structurally validated by the
   parser but not enforced as arbitration policy.
 - Deprecated `(handshake name (valid signal) (ready signal))` metadata is

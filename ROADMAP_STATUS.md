@@ -8,6 +8,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Support workflow: [bin/ci-regression](bin/ci-regression) now supports
   explicit `quick`, `isf`, and `full` modes, plus `--list`, `--dry-run`, and
   `--no-book`. No argument still runs the historical full gate.
+- ISF child transaction references now fail closed before scheduled `.fsm`
+  emission when `(do child)` or `(spawn child as instance)` names an
+  undeclared transaction. `t/1184` covers valid forward references plus
+  unknown `do`/`spawn` targets.
 - The mdBook reference map now records those book homes explicitly: direct
   language/core concepts, composition, CLI/debug, typed extensions, legacy
   external flow, troubleshooting, and practical authoring guidance are all
@@ -1234,6 +1238,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
     `quick` for a curated direct/composition/ISF smoke set, `isf` for the
     current ISF band, and `full` for the historical complete gate. This is
     workflow support only; the active implementation lane remains `R14`.
+  - [t/1184-isf-child-transaction-target-boundary.t](t/1184-isf-child-transaction-target-boundary.t)
+    now proves `(do child)` and `(spawn child as instance)` targets must
+    resolve to declared same-actor transactions before scheduled `.fsm`
+    emission, while preserving forward references.
   - Next bounded `R14` slice: convert another documented scheduler limitation
     into regression-backed behavior.
 - Superseded `R13` carry-forward detail retained below this note should not be
@@ -3972,6 +3980,10 @@ Done:
   [t/1182-isf-rule-trigger-target-boundary.t](t/1182-isf-rule-trigger-target-boundary.t),
   covering valid forward references plus unknown-target rejection before the
   parser returns an actor shell.
+- Child transaction target validation is now regression-backed by
+  [t/1184-isf-child-transaction-target-boundary.t](t/1184-isf-child-transaction-target-boundary.t),
+  covering valid forward references plus unknown `do` and `spawn` targets
+  before scheduled `.fsm` emission.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

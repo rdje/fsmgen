@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF child transaction target boundary
+- Active: `R14`. `(do child)` and `(spawn child as instance)` lowering now
+  requires `child` to be a declared transaction in the same actor before
+  scheduled `.fsm` emission.
+- `t/1184` covers valid forward references plus unknown `do` and `spawn`
+  targets. Missing child references now fail closed instead of producing dead
+  start/done handshake signals.
+
 ## 2026-05-13: Workflow — tiered local regression gate
 - Active support workflow: `bin/ci-regression` now has explicit `quick`, `isf`,
   and `full` modes, with no argument still running the historical full gate.

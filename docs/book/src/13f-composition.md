@@ -20,6 +20,10 @@ the parent transaction.
 2. Child's idle state is rewired to watch `child_start`
 3. Child's terminal state pulses `child_done` with `<1`
 
+The child target must name a declared transaction in the same actor. Forward
+references are accepted because lowering validates after the full actor body
+is parsed; missing targets fail before scheduled `.fsm` emission.
+
 The rewired child idle state enters the first non-entry child state; the child
 body may start with a drive, await, data operation, or other scheduled state.
 
@@ -60,6 +64,7 @@ Non-blocking. Each spawn declares a separate intended instance.
 
 **Lowering**:
 - One `.fsm` per unique child module
+- Spawn targets must name declared transactions in the same actor
 - Parent `.fsm` declares per-instance `name_start`/`name_done` signals
 - Each spawn state asserts its matching `name_start` signal
 - `(await_all done)` → one transition guarded by the logical AND of all done
