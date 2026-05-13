@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF update clause boundary
+- Tightened [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so `(update var expr)` requires one scalar target and one expression payload
+  before scheduled `.fsm` emission.
+- Nested update RHS list payloads are now formatted as `.fsm` expressions
+  instead of Perl reference strings.
+- Added [t/1198-isf-update-clause-boundary.t](t/1198-isf-update-clause-boundary.t)
+  for scalar/expression update lowering plus missing, nested-target,
+  extra-operand, and nested-body malformed update rejection.
+- Updated the ISF public-interface contract metadata, ISF spec, mdBook
+  transaction/data-manipulation chapters, and roadmap notes.
 ### R14 — ISF latency clause boundary
 - Tightened [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
   so transaction `(latency ...)` options are validated before latency counter

@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF update clause boundary
+- ISF `(update var expr)` lowering now validates exact shape before scheduled
+  `.fsm` emission: scalar target plus one scalar or list expression payload.
+- Nested expression payloads are now formatted as `.fsm` expressions instead
+  of Perl reference strings; extra operands and malformed targets fail closed.
+- Added `t/1198-isf-update-clause-boundary.t` and updated the ISF public
+  contract metadata, spec, mdBook, and live roadmap notes.
 ## 2026-05-13: R14 — ISF latency clause boundary
 - ISF transaction `(latency ...)` lowering now validates `(min N)` and
   `(max N)` options as positive integers with no duplicates.

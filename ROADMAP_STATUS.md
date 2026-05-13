@@ -8,6 +8,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Support workflow: [bin/ci-regression](bin/ci-regression) now supports
   explicit `quick`, `isf`, and `full` modes, plus `--list`, `--dry-run`, and
   `--no-book`. No argument still runs the historical full gate.
+- ISF `(update var expr)` clauses now validate exact shape and format nested
+  RHS expressions as `.fsm` expression text before scheduled `.fsm` emission.
+  `t/1198` covers scalar/expression lowering plus malformed update rejection.
 - ISF transaction `(latency ...)` clauses now validate `(min N)` and
   `(max N)` options as unique positive integers before latency counter
   emission, and valid `max` bounds now drive the generated counter width/max
@@ -1331,6 +1334,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
     now proves `(latency ...)` accepts only unique positive-integer `min`/`max`
     options with `min <= max` before counter emission, and the existing storage
     tests now lock explicit max-bound counter width.
+  - [t/1198-isf-update-clause-boundary.t](t/1198-isf-update-clause-boundary.t)
+    now proves `(update var expr)` exact shape and nested RHS expression
+    formatting before scheduled `.fsm` emission.
   - Next bounded `R14` slice: convert another documented scheduler limitation
     into regression-backed behavior.
 - Superseded `R13` carry-forward detail retained below this note should not be
@@ -4123,6 +4129,10 @@ Done:
   [t/1197-isf-latency-clause-boundary.t](t/1197-isf-latency-clause-boundary.t),
   covering positive-integer `min`/`max` options before latency counter
   emission plus max-bound counter-width behavior.
+- Update clause validation is now regression-backed by
+  [t/1198-isf-update-clause-boundary.t](t/1198-isf-update-clause-boundary.t),
+  covering exact scalar target plus one expression payload before scheduled
+  `.fsm` emission.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

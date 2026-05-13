@@ -485,6 +485,8 @@ sub _validate_supported_transaction_clauses {
             _validate_complete_clause($clause, $tn, $label);
         } elsif ($keyword eq 'sample') {
             _validate_sample_clause($clause, $tn, $label);
+        } elsif ($keyword eq 'update') {
+            _validate_update_clause($clause, $tn, $label);
         } elsif ($keyword eq 'when') {
             _validate_supported_transaction_clauses([@{$clause}[2 .. $#$clause]], $tn, 'when');
         } elsif ($keyword eq 'repeat') {
@@ -517,6 +519,19 @@ sub _validate_on_clause {
                 && $body_clause->[0] eq 'sample';
         _validate_sample_clause($body_clause, $tn, 'on body');
     }
+
+    return 1;
+}
+
+sub _validate_update_clause {
+    my ($clause, $tn, $label) = @_;
+
+    confess "Transaction '$tn': update requires '(update var expr)' in $label\n"
+        unless @$clause == 3
+            && defined($clause->[1])
+            && !ref($clause->[1])
+            && length($clause->[1])
+            && defined($clause->[2]);
 
     return 1;
 }
@@ -656,7 +671,7 @@ sub _ir_await {
     };
 }
 sub _ir_complete{ my ($cl,$tn,$i)=@_; {name=>"${tn}_done_$i",kind=>'terminal',assignments=>[{lhs=>$cl->[1],rhs=>1,op=>'<1'}],transitions=>[]} }
-sub _ir_update   { my ($cl,$tn,$i)=@_; my$rhs=join(' ',@{$cl}[2..$#$cl]); {name=>"${tn}_update_$i",kind=>'sequential',assignments=>[{lhs=>$cl->[1],rhs=>$rhs,op=>'<-'}],transitions=>[]} }
+sub _ir_update   { my ($cl,$tn,$i)=@_; my$rhs=_format_isf_expr($cl->[2]); {name=>"${tn}_update_$i",kind=>'sequential',assignments=>[{lhs=>$cl->[1],rhs=>$rhs,op=>'<-'}],transitions=>[]} }
 sub _ir_shift_left { my ($cl,$tn,$i)=@_; my$reg=$cl->[1];my$bit=$cl->[2]; {name=>"${tn}_shift_$i",kind=>'sequential',assignments=>[{lhs=>$reg,rhs=>"(| (<< $reg 1) $bit)",op=>'<-'}],transitions=>[]} }
 sub _ir_shift_right {
     my ($cl, $tn, $i, $widths) = @_;
@@ -733,6 +748,11 @@ sub _ir_extract {
         assignments => \@assignments,
         transitions => [],
     };
+}
+sub _format_isf_expr {
+    my ($expr) = @_;
+    return $expr unless ref($expr) eq 'ARRAY';
+    return '(' . join(' ', map { _format_isf_expr($_) } @$expr) . ')';
 }
 sub _ir_sample_state { my ($tn,$ps,$i)=@_; my @a; for(@$ps){push @a,{lhs=>$_->[3],rhs=>$_->[1],op=>'<='}} {name=>"${tn}_sample_$i",kind=>'sequential',assignments=>\@a,transitions=>[]} }
 sub _ir_phase { my ($cl,$tn,$i)=@_; my $name=$cl->[1]; {name=>"${tn}_phase_$i",kind=>'sequential',assignments=>[],transitions=>[],phase_name=>$name} }

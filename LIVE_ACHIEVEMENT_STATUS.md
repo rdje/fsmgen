@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF update clause boundary
+- Active: `R14`. `(update var expr)` now requires one scalar target and one
+  scalar or list expression payload before scheduled `.fsm` emission.
+- `t/1198` covers scalar and nested-expression update lowering plus missing
+  RHS, nested target, extra operand, and nested-body malformed update
+  rejection.
+
 ## 2026-05-13: R14 — ISF latency clause boundary
 - Active: `R14`. Transaction `(latency ...)` clauses now validate `(min N)`
   and `(max N)` as unique positive-integer options before latency counter

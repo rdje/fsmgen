@@ -330,6 +330,11 @@ The latency-clause boundary is checked by
 so `(latency ...)` accepts only positive-integer `(min N)` and `(max N)`
 options, rejects duplicates, requires `min <= max` when both are present, and
 uses valid explicit `max` bounds for the generated counter width/max check.
+The update-clause boundary is checked by
+[t/1198-isf-update-clause-boundary.t](../t/1198-isf-update-clause-boundary.t)
+so `(update var expr)` has exactly one scalar target and one scalar or list
+expression payload, and nested expression payloads are formatted as `.fsm`
+expressions instead of Perl reference strings.
 ISF switch fallback scheduling is checked by
 [t/1103-isf-switch-branch-exits.t](../t/1103-isf-switch-branch-exits.t)
 and the generated `.fsm` default selector contract is checked by

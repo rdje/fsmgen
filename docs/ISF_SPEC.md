@@ -489,7 +489,9 @@ checks do not fall through into later branch bodies.
 ```
 
 Current lowering:
-- `update` emits one flopped assignment to `var`.
+- `update` is structurally validated as `(update var expr)` with one scalar
+  target `var` and one scalar or list expression payload. It emits one flopped
+  assignment to `var`.
 - `shift_left` emits a left shift plus inserted bit.
 - `shift_right` emits a right shift plus inserted bit. When the shifted signal
   has a known interface, sampled-source, assemble-inferred, or explicit
@@ -876,6 +878,8 @@ Focused tests:
 - [t/1194-isf-drive-body-boundary.t](../t/1194-isf-drive-body-boundary.t)
 - [t/1195-isf-sample-clause-boundary.t](../t/1195-isf-sample-clause-boundary.t)
 - [t/1196-isf-complete-clause-boundary.t](../t/1196-isf-complete-clause-boundary.t)
+- [t/1197-isf-latency-clause-boundary.t](../t/1197-isf-latency-clause-boundary.t)
+- [t/1198-isf-update-clause-boundary.t](../t/1198-isf-update-clause-boundary.t)
 
 ## 12. Explicitly Deferred
 

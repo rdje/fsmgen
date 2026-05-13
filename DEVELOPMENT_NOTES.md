@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF update clause boundary
+- `update` is the general escape hatch for data expressions in ISF
+  transactions. It should accept one RHS expression, not an arbitrary tail of
+  operands joined with spaces.
+- The lowerer now validates exact `(update var expr)` shape and formats nested
+  list expressions recursively. This keeps expression-valued updates aligned
+  with the documented `.fsm` expression surface while rejecting malformed
+  targets and accidental extra operands.
 ## 2026-05-13: R14 ISF latency clause boundary
 - Latency metadata feeds generated counter and error-check wiring. The previous
   parser accepted unknown options by ignoring them and accepted duplicates by

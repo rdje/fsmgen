@@ -250,6 +250,9 @@ when it does, the scheduler does not add an extra implicit fallthrough branch.
 
 **Timing**: exactly 1 cycle each.
 
+`(update var expr)` is exact: `var` is a scalar target and `expr` is one scalar
+or list expression payload.
+
 **What happens**:
 1. `(<- (var expr))` — variable modified, takes effect next cycle (flopped)
 2. Expression passes through to `.fsm` directly

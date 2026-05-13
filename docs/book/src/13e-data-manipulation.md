@@ -12,7 +12,9 @@ lowers to appropriate `.fsm` expressions.
 ```
 
 General-purpose variable assignment. The expression is any `.fsm`-compatible
-expression.
+expression, supplied as one scalar or list expression payload. The form is
+exact: `(update var expr)`, with scalar `var`. Missing expressions, nested
+targets, and extra operands are rejected before scheduled `.fsm` emission.
 
 **Lowering**: `(<- (var expr))` — sequential Q-named assignment.
 
