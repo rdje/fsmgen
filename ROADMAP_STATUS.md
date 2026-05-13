@@ -11,6 +11,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Chapter 02 now owns the old guide's practical authoring guidance for
   assignment-operator intent, delayed pulses, guard readability, and bring-up
   checks.
+- Chapter 11 now owns the old guide's typed-extension definition, non-goals,
+  blessed-object/hook validation boundary, and CLI/config loading
+  prerequisites.
 - Runtime parser/source diagnostics now use book-owned documentation hints for
   supported-boundary, strict-mode, and package-boundary failures. The old guide
   remains a migration reference, not the primary diagnostic target.

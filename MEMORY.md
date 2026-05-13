@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — typed-extension guide-to-book migration
+- Chapter 11 now explicitly carries the old guide's compact typed-extension
+  definition and non-goals: extensions are blessed Perl objects with real
+  supported hook methods and typed context objects; `.plg` scanning, string
+  hook lookup, `AUTOLOAD`, and implicit CLI plugin discovery remain outside the
+  shipped boundary.
+- The CLI/config loading section now states that modules must already be in
+  `@INC` and provide real `new()` constructors.
 ## 2026-05-13: R14 — authoring guidelines guide-to-book migration
 - Chapter 02 now carries the practical authoring guidance that was still at
   the end of `docs/USER_GUIDE.md`: use `=` only for combinational intent,

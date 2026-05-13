@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — typed-extension guide-to-book migration
+- Clarified [docs/book/src/11-extensions-and-embedding.md](docs/book/src/11-extensions-and-embedding.md)
+  with the old guide's compact typed-extension definition, explicit non-goals,
+  blessed-object/hook validation rule, and CLI/config loading prerequisites.
+- Updated the reference map and live docs so Chapter 11 owns that
+  typed-extension author-facing contract.
 ### R14 — authoring guidelines guide-to-book migration
 - Added the old guide's practical authoring guidance to
   [docs/book/src/02-language-basics.md](docs/book/src/02-language-basics.md),

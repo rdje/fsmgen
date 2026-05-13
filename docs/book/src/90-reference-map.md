@@ -91,6 +91,8 @@ The migration is still ongoing:
   source-resolution, and trace/debug workflow material from the old guide
 - Chapter 02 now owns the practical authoring guidance for assignment
   operator choice, guard readability, and bring-up checks
+- Chapter 11 now explicitly owns the typed-extension definition, non-goals,
+  and CLI/config loading prerequisites
 - focused docs may still carry narrow maintainer or machine-contract detail
 - the old guide remains a migration checklist, not a place to leave
   user-facing contract stranded

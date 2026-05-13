@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 typed-extension guide-to-book migration
+- Chapter 11 already carried the detailed typed-extension contract, but the old
+  guide had a concise "what it is / what it is not" explanation that is useful
+  for first-time extension authors.
+- This slice keeps behavior unchanged and moves that author-facing definition
+  into the book: explicit blessed objects, explicit hook methods, typed
+  context objects, no `.plg` scanning, no `AUTOLOAD`, and no implicit CLI
+  plugin discovery.
+- The CLI loading section now makes the `@INC`/`PERL5LIB` and real-`new()`
+  prerequisites visible next to the examples.
 ## 2026-05-13: R14 authoring guidelines guide-to-book migration
 - The old guide's final authoring guidelines are not a troubleshooting table;
   they are first-principles language guidance. Chapter 02 is the right home

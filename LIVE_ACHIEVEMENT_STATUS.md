@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — typed-extension guide-to-book migration
+- Active: `R14`. Chapter 11 now explicitly states the typed-extension
+  definition, non-goals, blessed-object/hook validation boundary, and
+  CLI/config loading prerequisites from the old guide.
+- No runtime behavior changed; this is a bounded USER_GUIDE-to-mdBook
+  migration slice.
+
 ## 2026-05-13: R14 — authoring guidelines guide-to-book migration
 - Active: `R14`. Chapter 02 now owns the practical authoring guidance for
   assignment-operator timing intent, delayed pulses, guard readability, and

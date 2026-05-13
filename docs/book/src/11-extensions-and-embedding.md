@@ -388,17 +388,26 @@ The full shared check failure diagnostic contract now survives JSON round trip u
 
 The active extension model is typed and explicit.
 
+A typed extension is a normal blessed Perl object with explicit hook methods.
+The hook receives a typed context object with named accessors such as
+`source_info`, `target_language`, `raw_ast`, and `result`. Before dispatch, the
+active pipeline validates that configured extension entries are blessed objects
+with at least one real supported hook method.
+
 It is not:
 
 - legacy `.plg` discovery
 - implicit hook-name lookup
 - stringly plugin callbacks
+- `AUTOLOAD` hook discovery
+- implicit CLI plugin discovery
 
 It is:
 
 - explicit Perl modules
 - explicit hook methods
 - typed context objects
+- explicit programmatic or CLI loading
 
 ## Typed Extensions
 
@@ -775,6 +784,9 @@ than a thread-local debug context.
 
 ## CLI Loading
 
+For CLI loading, the module must already be available in Perl's `@INC`, for
+example through `PERL5LIB`, and it must provide a real `new()` constructor.
+
 ```bash
 PERL5LIB=./my_extensions ./bin/fsmgen \
   --extension-module My::ResultMarker \
@@ -782,7 +794,9 @@ PERL5LIB=./my_extensions ./bin/fsmgen \
   fsm/trial_0.fsm
 ```
 
-Or via config file:
+Config-file loading is also explicit. The config file lists module names, and
+those modules must also already be available in `@INC` with real `new()`
+constructors:
 
 ```text
 module My::ResultMarker
