@@ -111,5 +111,8 @@ The migration discipline remains active:
 - sections 3-10 of the old guide have already been reduced to chapter pointers
   so operational and extension/troubleshooting prose does not drift in two
   places
+- sections 1-2.1 of the old guide have also been reduced to chapter pointers
+  so product, direct-language, declaration/import, aggregate, composition, and
+  diagnostic contract prose does not drift in two places
 - the remaining cleanup is duplication reduction and drift prevention, not
   finding homes for the major guide sections from scratch

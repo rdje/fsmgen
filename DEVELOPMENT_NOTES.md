@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 retire migrated user-guide front matter
+- Sections 1-2.1 were the highest-risk duplicated area because they mixed
+  product overview, direct language contract, declarations/imports, aggregate
+  data, composition, diagnostics, and backend boundaries in one monolithic
+  stream. Those topics now have explicit mdBook chapter homes.
+- The old guide now functions as an index/compatibility waypoint. New
+  normative language belongs in the owning book chapter and the guide should
+  only point there.
 ## 2026-05-13: R14 retire migrated user-guide tail
 - With the major guide sections mapped into the book, keeping sections 3-10 as
   full duplicate prose would invite drift. This slice converts those migrated

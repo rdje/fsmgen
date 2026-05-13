@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — retire migrated user-guide front matter
+- Active: `R14`. `docs/USER_GUIDE.md` sections 1-2.1 now point to owning
+  mdBook chapters instead of carrying duplicated migrated core/direct/
+  composition contract prose.
+- The guide is now explicitly a compatibility waypoint and migration
+  reference; the book is the normative user-facing surface.
+
 ## 2026-05-13: R14 — retire migrated user-guide tail
 - Active: `R14`. `docs/USER_GUIDE.md` sections 3-10 now point to owning
   mdBook chapters instead of carrying duplicated migrated prose.

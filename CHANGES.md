@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — retire migrated user-guide front matter
+- Replaced the migrated `docs/USER_GUIDE.md` sections 1-2.1 with concise
+  mdBook pointers for product overview, core concepts, direct `.fsm`
+  language, declarations/imports, aggregate data, composition, strict mode,
+  diagnostics, and backend expectations.
+- Reworded the guide preamble so the file is a compatibility waypoint and
+  migration reference rather than a second full live reference.
 ### R14 — retire migrated user-guide tail
 - Replaced the migrated `docs/USER_GUIDE.md` sections 3-10 with concise
   pointers to the owning mdBook chapters, removing duplicated CLI,

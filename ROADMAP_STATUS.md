@@ -12,6 +12,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - `docs/USER_GUIDE.md` sections 3-10 now point to those owning book chapters
   instead of carrying a second duplicate copy of migrated CLI/debug,
   extension, troubleshooting, and authoring content.
+- `docs/USER_GUIDE.md` sections 1-2.1 now also point to their owning book
+  chapters instead of carrying a second duplicate copy of migrated product,
+  core-language, direct `.fsm`, declaration/import, aggregate, composition,
+  strict-mode, diagnostic, and backend-boundary content.
 - Chapter 09 now owns the operational CLI/options, report-only JSON mode,
   input-resolution, and trace/debug workflow material that had still been
   centralized in `docs/USER_GUIDE.md`.

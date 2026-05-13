@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — retire migrated user-guide front matter
+- `docs/USER_GUIDE.md` sections 1-2.1 now point to mdBook homes instead of
+  carrying duplicated migrated product, core-language, declaration/import,
+  aggregate, composition, strict-mode, diagnostic, and backend-boundary prose.
+- The guide preamble now calls the file a compatibility waypoint and migration
+  reference, not the full live reference.
 ## 2026-05-13: R14 — retire migrated user-guide tail
 - `docs/USER_GUIDE.md` sections 3-10 now contain concise pointers to the
   owning mdBook chapters instead of duplicated migrated prose. The removed
