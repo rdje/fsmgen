@@ -128,9 +128,10 @@ is locked across generated `.fsm` text and schedule-report `dt_blocks` so
 hash-backed drive definitions do not create review-artifact churn; the manifest
 also advertises the DT ordering policy, and that scheduled-artifact ordering
 metadata is audited as exact. DT timing remains assignment-family driven:
-`=` is combinational, while `<-` and `<=` are sequential whether they appear in
-state or non-state DT blocks; the manifest advertises those operator families
-through `dt_assignment_operator_family_map`. Schedule-report `dt_blocks`
+`=` is combinational, `<-` and `<=` are sequential, and `<1` is a one-cycle
+delayed pulse whether they appear in state or non-state DT blocks; the manifest
+advertises those operator families through `dt_assignment_operator_family_map`.
+Schedule-report `dt_blocks`
 `assignments` values are assignment counts, not payload lists, and the manifest
 advertises that shape through `schedule_report_dt_assignments_shape`.
 Schedule-report DT `kind` values are currently `drive`, `latency_counter`, and

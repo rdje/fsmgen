@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF complete pulse lowering and traced gate fixes
+- Active: `R14`. `(complete port)` and timeout completion now lower to `<1`
+  one-cycle delayed pulses; the ISF public contract, spec, mdBook, and
+  schedule-report tests now advertise that pulse semantics and classify
+  completion `done` as register-backed storage.
+- Validation also fixed two full-gate blockers found during this slice:
+  traced `next_state` transition captures now stay combinational instead of
+  producing a 1-bit `next_state_next` flop helper, and explicit `.fsm`/`.isf`
+  lookup names no longer get doubled during `--path`/`FSMLIB` resolution.
+
 ## 2026-05-13: R14 — APB done ownership cleanup
 - Active: `R14`. `isf/apb_requester.isf` no longer drives transaction `done`
   from `done_phase`; `t/1100` now locks that APB protocol cleanup and

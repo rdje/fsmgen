@@ -47,7 +47,7 @@ sub resolve_fsm_file {
     my $target_filename;
     
     # Case 1: Bare name (no .fsm or .isf extension) - append .fsm
-    if ($fsm_input !~ /\.(fsm|isf)\$/i) {
+    if ($fsm_input !~ /\.(?:fsm|isf)\z/i) {
         $target_filename = "$fsm_input.fsm";
     } else {
         # Case 2: Already has .fsm or .isf extension

@@ -34,7 +34,7 @@ body may start with a drive, await, data operation, or other scheduled state.
     (-> read_phase_drive_0)))
 
 (read_phase_done_5
-  (<- (done 1))
+  (<1 (done 1))
   (<- (read_phase_done 1))
   (-> read_phase_idle_0))
 ```

@@ -122,6 +122,11 @@ FSM
         "A != 1'b0",
         'capture support keeps transition guards as typed AST nodes',
     );
+    ok(
+        $prepared_backend->{lhs_ast_map}{next_state}->can('is_fsm_state_next')
+            && $prepared_backend->{lhs_ast_map}{next_state}->is_fsm_state_next,
+        'capture support marks next_state as the dedicated FSM next-state signal',
+    );
 };
 
 done_testing();

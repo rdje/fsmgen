@@ -144,7 +144,10 @@ sub register_transition_capture ($self, %args) {
     };
 
     $ctx->{all_lhs}->{next_state} = 1;
-    $ctx->{lhs_ast_map}->{next_state} //= FSM::AST::Utils::signal_ref('next_state');
+    $ctx->{lhs_ast_map}->{next_state} = FSM::AST::Utils::signal_ref(
+        'next_state',
+        is_fsm_state_next => 1,
+    );
 
     return $state_value;
 }

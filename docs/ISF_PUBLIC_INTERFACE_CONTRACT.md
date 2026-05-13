@@ -375,10 +375,17 @@ block-spelling driven:
 
 - `=` is combinational.
 - `<-` and `<=` are sequential/flopped.
+- `<1` is a one-cycle delayed pulse.
 
 A DT may therefore be combinational-only, sequential-only, or mixed depending on
 the operators it contains. The machine-readable contract advertises these
 families through `dt_assignment_operator_family_map`.
+
+ISF `(complete port)` lowering uses `<1`, not `<-`, so completion outputs are
+one-cycle delayed pulses rather than sticky flopped status bits. Drive phases
+that precede completion should not also assign the same completion signal with
+`<-`; the `.fsm` backend rejects mixed pulse-delayed and non-pulse sequential
+operators on one LHS.
 
 ISF `(sample port as name)` lowering is a D-input contract: scheduled `.fsm`
 artifacts use `<=`, not `<-`, so the authored sampled name denotes the

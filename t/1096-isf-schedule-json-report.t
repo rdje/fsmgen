@@ -100,6 +100,9 @@ subtest 'schedule JSON report describes APB requester lowering IR' => sub {
     my $penable_start = entry_by_name($report->{inferred_storage}, 'penable_start');
     is($penable_start->{kind},  'counter', 'drive start is reported as counter storage');
     is($penable_start->{width}, 1,         'drive start width');
+
+    my $done = entry_by_name($report->{inferred_storage}, 'done');
+    is($done->{kind}, 'register', 'completion pulse storage is reported as register storage');
 };
 
 done_testing();

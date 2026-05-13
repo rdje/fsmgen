@@ -121,6 +121,11 @@ is(
     'state_transition',
     'captured transition stores state-transition assignment metadata',
 );
+ok(
+    $phase1_gen->{lhs_ast_map}->{next_state}->can('is_fsm_state_next')
+        && $phase1_gen->{lhs_ast_map}->{next_state}->is_fsm_state_next,
+    'captured transition marks next_state as the dedicated FSM next-state signal',
+);
 
 ok(
     exists $phase1_gen->{all_lhs}->{OUT},

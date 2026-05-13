@@ -10,14 +10,13 @@
     (input  mode))
 
   (drive (result val) (result val))
-  (drive (done val)   (done val))
 
   (transaction test_tx
     (on start)
     (drive result 0)
     (when mode
       (drive result 42)
-      (drive done 1))
+      (drive result 1))
     (when mode
       (drive result 7))
     (complete done)))

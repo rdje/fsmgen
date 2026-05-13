@@ -37,7 +37,7 @@ subtest 'top-level when false path skips the whole body' => sub {
   (drive second
     (flag 0))
   (drive after
-    (done 1))
+    (flag 1))
   (transaction main
     (on start)
     (when cond
@@ -75,7 +75,7 @@ subtest 'switch-nested when false path exits the selected branch' => sub {
   (drive alt
     (flag mode))
   (drive after
-    (done 1))
+    (flag 1))
   (transaction main
     (on start)
     (switch mode

@@ -85,7 +85,7 @@ sub dt_assignment_counts_from_fsm {
 
     while ($fsm_text =~ /^  \(-([A-Za-z_][A-Za-z0-9_]*)\n(.*?^  \)\n)/msg) {
         my ($name, $body) = ($1, $2);
-        my @assignments = $body =~ /^\s+\((?:=|<-|<=)\s+\(/gm;
+        my @assignments = $body =~ /^\s+\((?:=|<-|<=|<[0-9]+)\s+\(/gm;
         $counts{$name} = scalar(@assignments);
     }
 

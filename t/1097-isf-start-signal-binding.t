@@ -72,7 +72,7 @@ subtest 'named drive calls inside control flow assert drive start signals' => su
     my $switch_fsm = lower_file('switch_test.isf', 'switch_test.fsm');
 
     like($when_fsm, qr/\(= \(result_start 1\)\)/, 'when body asserts result_start');
-    like($when_fsm, qr/\(= \(done_start 1\)\)/,   'when body asserts done_start');
+    unlike($when_fsm, qr/\(= \(done_start 1\)\)/, 'when body does not drive transaction done through a drive');
     unlike($when_fsm, qr/\(_start\b/, 'when lowering does not emit anonymous _start');
 
     like($switch_fsm, qr/\(= \(write_res_start 1\)\)/, 'switch branch asserts write_res_start');

@@ -143,7 +143,7 @@ value.
     (=0 (-> apb_transfer_timeout))))
 
 (apb_transfer_timeout
-  (<- (done 1))
+  (<1 (done 1))
   (<- (last_error 1))
   (-> apb_transfer_idle_0))
 ```
@@ -153,17 +153,17 @@ value.
 **Timing**: exactly 1 cycle. Returns to idle.
 
 **What happens**:
-1. `(<- (port 1))` — port becomes 1 next cycle (flopped)
+1. `(<1 (port 1))` — request a one-cycle delayed completion pulse
 2. Transition to idle state
 3. In idle: `can_accept=1` is asserted
 
-The current ISF lowering assigns the completion port but does not emit an
-explicit deassert state for that port.
+The current ISF lowering uses the `.fsm` delayed-pulse operator so the
+completion port rests low except for the generated one-cycle pulse.
 
 **Generated .fsm**:
 ```lisp
 (apb_transfer_done_5
-  (<- (done 1))
+  (<1 (done 1))
   (-> apb_transfer_idle_0))
 ```
 

@@ -64,7 +64,7 @@ subtest 'scheduled .fsm assignment operators stay within the advertised families
     }
 
     my %seen = map { $_ => 1 } @operators;
-    for my $operator (qw(= <- <=)) {
+    for my $operator (qw(= <- <= <1)) {
         ok($seen{$operator}, "APB scheduled .fsm includes advertised operator '$operator'");
     }
 };
@@ -99,7 +99,7 @@ sub assert_operator_family {
 
 sub assignment_operators_from_fsm {
     my ($fsm_text) = @_;
-    return $fsm_text =~ /^\s+\((=|<-|<=)\s+\(/gm;
+    return $fsm_text =~ /^\s+\((=|<-|<=|<[0-9]+)\s+\(/gm;
 }
 
 sub advertised_assignment_operators {

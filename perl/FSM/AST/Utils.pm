@@ -44,8 +44,8 @@ Create a signal reference AST node.
 
 =cut
 
-sub signal_ref ($signal_name) {
-    return FSM::AST::Node::SignalRef->new($signal_name);
+sub signal_ref ($signal_name, %args) {
+    return FSM::AST::SignalRef->new($signal_name, %args);
 }
 
 =head2 literal

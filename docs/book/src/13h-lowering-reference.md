@@ -194,7 +194,7 @@ contract for ISF sample lowering.
 Timeout state:
 ```lisp
 (apb_transfer_timeout
-  (<- (done 1))
+  (<1 (done 1))
   (<- (last_error 1))
   (-> apb_transfer_idle_0))
 ```
@@ -209,12 +209,13 @@ Timeout state:
 **Generated .fsm**:
 ```lisp
 (apb_transfer_done_5
-  (<- (done 1))                   ;; port assertion (flopped)
+  (<1 (done 1))                   ;; one-cycle delayed completion pulse
   (-> apb_transfer_idle_0))       ;; return to idle
 ```
 
-**Timing**: `done` becomes 1 in the cycle after this state. Next cycle: idle.
-Current ISF lowering does not emit an explicit deassert state for `done`.
+**Timing**: `done` is a one-cycle delayed pulse. The pulse request is made in
+the terminal state, and the generated HDL asserts `done` for one cycle at the
+`<1` timing point after that request, resting low otherwise. Next cycle: idle.
 **Cycles**: 1.
 
 ## `(repeat N body...)` → Counter Init + Body + Check
@@ -395,8 +396,8 @@ Max violation via watchdog timeout (if no `(await ...)` in transaction).
   (<child_start                   ;; now: watches parent's start
     (-> child_drive_0)))
 
-(child_done_5                     ;; terminal: assigns done
-  (<- (done 1))
+(child_done_5                     ;; terminal: pulses done
+  (<1 (done 1))
   (<- (child_done 1))             ;; signal parent
   (-> child_idle_0))
 ```
@@ -432,7 +433,7 @@ drive_1         ← (drive setup_phase)
 drive_2         ← (drive access_phase)
 await_3         ← (await PREADY) + watchdog
 drive_4         ← (drive done_phase) with samples
-done_5          ← (complete done): assign done, return to idle
+done_5          ← (complete done): request one-cycle done pulse, return to idle
 timeout         ← watchdog timeout
 cc_inc_dt       ← latency cycle counter DT
 ```

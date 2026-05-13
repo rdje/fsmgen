@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF complete pulse lowering and traced gate fixes
+- Changed ISF `(complete port)` lowering from sticky sequential `<-` to the
+  explicit delayed-pulse form `<1`, and applied the same completion-pulse
+  ownership to watchdog/latency timeout `done` lowering while leaving error
+  state capture as ordinary sequential state.
+- Updated the ISF public contract, spec, mdBook, and focused tests so delayed
+  pulse operators are advertised as sequential assignment-family members and
+  schedule JSON reports completion `done` as register-backed storage.
+- Kept transaction completion ownership out of drive phases in the APB,
+  `when_test`, and `switch_test` fixtures so `(complete done)` is the single
+  public completion owner.
+- Used `--trace` on the full-regression LTE PMASTER failure and fixed the
+  backend root cause: transition capture now marks `next_state` signal refs as
+  FSM next-state values, preventing assignment analysis from synthesizing a
+  spurious 1-bit `next_state_next` flop helper.
+- Fixed CLI source resolution so an explicit bare lookup name ending in `.fsm`
+  or `.isf` is preserved instead of being searched as `name.fsm.fsm` under
+  `--path`/`FSMLIB` lookup.
 ## 2026-05-13: R14 — APB done ownership cleanup
 - Removed `(done 1)` from `isf/apb_requester.isf` `done_phase`; `done_phase`
   now owns APB-side cleanup/publication only, while `(complete done)` remains

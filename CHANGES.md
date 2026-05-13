@@ -1,6 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF complete pulse lowering and traced gate fixes
+- Changed `(complete port)` and timeout `done` lowering in
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  to emit `<1` delayed-pulse assignments instead of sticky `<-` assignments.
+- Updated [docs/book/src/13h-lowering-reference.md](docs/book/src/13h-lowering-reference.md),
+  [docs/book/src/13b-transactions.md](docs/book/src/13b-transactions.md),
+  [docs/book/src/13f-composition.md](docs/book/src/13f-composition.md),
+  [docs/book/src/13-intent-scheduling.md](docs/book/src/13-intent-scheduling.md),
+  [docs/ISF_SPEC.md](docs/ISF_SPEC.md), and
+  [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md)
+  so ISF completion is documented as a one-cycle delayed pulse.
+- Expanded `embedding.isf_public_interface` DT assignment metadata so `<1`
+  is advertised and tested as a sequential assignment-family operator.
+- Updated schedule-report storage classification so delayed-pulse completion
+  outputs such as APB `done` are reported as register-backed storage rather
+  than counters.
+- Used traced LTE PMASTER generation to fix backend state-transition capture:
+  `next_state` captures now carry an FSM-next-state marker through CoreAST
+  signal refs, preventing a spurious 1-bit `next_state_next` helper and the
+  associated external SystemVerilog validation width warnings.
+- Fixed [bin/fsmgen](bin/fsmgen) bare-name suffix detection so explicit
+  `.fsm`/`.isf` lookup names are not doubled under `--path` or `FSMLIB`.
 ### R14 — APB done ownership cleanup
 - Removed `(done 1)` from [isf/apb_requester.isf](isf/apb_requester.isf)
   `done_phase` so the drive phase no longer owns the transaction completion

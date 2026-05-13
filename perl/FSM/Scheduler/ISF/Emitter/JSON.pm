@@ -65,8 +65,7 @@ sub _storage_summary($self, $ir) {
             }
             push @storage, {
                 name  => $a->{lhs},
-                kind  => $a->{op} eq '<=' ? 'register' :
-                         $a->{op} eq '<-' ? 'register' : 'counter',
+                kind  => _is_clocked_register_op($a->{op}) ? 'register' : 'counter',
             };
         }
     }
@@ -81,6 +80,10 @@ sub _storage_summary($self, $ir) {
 
 sub _is_scheduler_counter_name($name) {
     return $name =~ /_(?:cc|cnt|wd)\z/;
+}
+
+sub _is_clocked_register_op($op) {
+    return $op eq '<=' || $op eq '<-' || $op =~ /^<\d+\z/;
 }
 
 sub _transaction_summary($self, $ir) {

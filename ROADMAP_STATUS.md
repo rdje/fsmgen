@@ -4,7 +4,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
 - Next decision point: continue R14 ISF public-interface stabilization by
   turning the next downstream-visible parser, scheduler, CLI, lower-result, or
-  schedule-report behavior into an explicit contract field plus focused audit.
+  schedule-report behavior into an explicit contract field plus focused audit,
+  keeping the live docs synchronized as the still-new ISF surface evolves.
 - `t/1097` now removes the anonymous `_start` placeholder from `do`, `spawn`,
   and control-flow drive-call lowering by asserting concrete child, instance,
   and drive start signals. Next bounded R14 slice: turn another documented
@@ -19,6 +20,21 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - `isf/apb_requester.isf` now keeps APB `done_phase` from driving transaction
   `done`; `t/1100` locks that `(complete done)` owns APB transaction
   completion while `done_phase` owns protocol cleanup/publication.
+- `(complete port)` and timeout completion now lower to the `.fsm` delayed
+  pulse form `<1`, not sticky `<-`; the mdBook, ISF spec, public-interface
+  contract, and focused tests now describe completion as a one-cycle delayed
+  pulse.
+- `t/1096`, `t/1100`, `t/1146`, `t/1147`, and `t/1148` now cover the updated
+  completion surface: `<1` is an advertised sequential assignment-family
+  operator, schedule-report assignment counts accept delayed-pulse operators,
+  and APB `done` is reported as register-backed storage.
+- Full-regression validation used `--trace` to root-cause the LTE PMASTER
+  backend failure: transition capture now marks `next_state` refs as FSM
+  next-state values, preventing a spurious one-bit `next_state_next` flop
+  helper and the resulting external SystemVerilog width warnings.
+- `bin/fsmgen` now preserves explicit `.fsm`/`.isf` bare lookup names under
+  `--path` and `FSMLIB` instead of searching for doubled names such as
+  `name.fsm.fsm`; `t/83` and `t/395` cover the resolver boundary.
 - The mdBook lowering reference, ISF spec, and public-interface contract now
   explain why `(sample port as name)` lowers with `<=`: sampled aliases are
   D-input/next-value names for same-state consumers, not previous-Q names.
@@ -128,11 +144,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - `t/1145` now proves scheduled `.fsm` artifact metadata is exact across
   direct, manifest, and CLI manifest views.
 - `t/1146` now advertises and proves DT assignment operator families: `=` is
-  combinational, while `<-` and `<=` are sequential.
+  combinational, while `<-`, `<=`, and `<1` are sequential.
 - `t/1147` now advertises and proves schedule-report DT `assignments` values
   are counts matching scheduled `.fsm` DT blocks, not assignment payload lists.
 - `t/1148` now advertises and proves schedule-report inferred-storage kind
-  values and optional width shape.
+  values and optional width shape, including completion `done` as
+  register-backed storage.
 - `t/1149` now advertises and proves schedule-report transaction `states` and
   `count` shapes.
 - `t/1150` now advertises and proves schedule-report reset kind and polarity
@@ -3667,6 +3684,10 @@ Done:
   entry-state sample materialization plus pending-sample piggybacking onto
   named drive and await states, including control-flow body lowering; it also
   locks that APB `done_phase` does not drive transaction `done`.
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now lowers `(complete port)` and timeout completion `done` outputs to `<1`
+  delayed-pulse assignments, giving completion a one-cycle delayed pulse
+  contract instead of sticky `<-` state.
 - [docs/book/src/13h-lowering-reference.md](docs/book/src/13h-lowering-reference.md),
   [docs/ISF_SPEC.md](docs/ISF_SPEC.md), and
   [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md)
@@ -3756,6 +3777,21 @@ Done:
 - [t/1128-isf-public-multifile-schedule-report-audit.t](t/1128-isf-public-multifile-schedule-report-audit.t)
   locks current parent-scoped multi-file schedule reports and the manifest
   field that advertises that scope.
+- Public ISF contract stabilization now covers the focused audit band through
+  [t/1167-isf-public-actor-shell-drive-shape-audit.t](t/1167-isf-public-actor-shell-drive-shape-audit.t),
+  including facade boundaries, lower-result files, CLI success paths,
+  schedule-report metadata, actor-shell subshapes, and DT assignment families.
+- [t/1146-isf-public-dt-assignment-metadata-audit.t](t/1146-isf-public-dt-assignment-metadata-audit.t),
+  [t/1147-isf-public-report-dt-assignment-count-audit.t](t/1147-isf-public-report-dt-assignment-count-audit.t),
+  [t/1148-isf-public-storage-metadata-audit.t](t/1148-isf-public-storage-metadata-audit.t),
+  and [t/1096-isf-schedule-json-report.t](t/1096-isf-schedule-json-report.t)
+  now cover delayed-pulse completion as an advertised sequential assignment
+  family, counted DT assignment form, and register-backed storage summary.
+- Full-gate validation for this R14 slice also fixed two supporting root
+  causes outside the ISF scheduler: traced transition captures now mark
+  `next_state` as an FSM next-state signal so it remains combinational through
+  backend assignment analysis, and [bin/fsmgen](bin/fsmgen) no longer doubles
+  explicit `.fsm`/`.isf` suffixes during bare-name source lookup.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

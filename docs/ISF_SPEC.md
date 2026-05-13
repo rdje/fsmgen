@@ -247,9 +247,10 @@ Current lowering:
   lexically by drive name after transaction/rule-created DTs.
 - Drive DT assignments use flopped output assignment (`<-`) by default, so a
   drive call consumes one state and the driven port updates on the next clock.
-- DT timing is assignment-family driven: `=` assignments are combinational;
-  `<-` and `<=` assignments are sequential/flopped, whether they appear in a
-  state DT `(state_name ...)` or a non-state DT `(-name ...)`.
+- DT timing is assignment-family driven: `=` assignments are combinational,
+  `<-` and `<=` assignments are sequential/flopped, and `<1` assignments are
+  one-cycle delayed pulses whether they appear in a state DT `(state_name ...)`
+  or a non-state DT `(-name ...)`.
 - The machine-readable ISF public contract advertises those operator families
   through `dt_assignment_operator_family_map`.
 - Adjacent drive calls are not merged. To drive several ports in the same
@@ -337,10 +338,25 @@ Current lowering:
 - The await state decrements `{transaction}_wd`.
 - The normal transition fires when the awaited port is true.
 - A timeout transition fires when the watchdog counter is zero.
-- Timeout states assign `done` and `last_error` with flopped output
-  assignments.
+- Timeout states assign `done` with a one-cycle delayed pulse (`<1`) and
+  `last_error` with a flopped output assignment (`<-`).
 
-### 7.4 Repeat
+### 7.4 Completion
+
+```lisp
+(complete done)
+```
+
+Current lowering:
+- `(complete port)` creates a terminal state that returns the transaction to
+  idle.
+- The completion port assignment lowers to `(<1 (port 1))`, producing a
+  one-cycle delayed pulse rather than a sticky flopped status bit.
+- Protocol/output drive phases should not also drive the same completion
+  signal with `<-`, because the `.fsm` backend rejects mixed pulse-delayed and
+  non-pulse sequential operators on one LHS.
+
+### 7.5 Repeat
 
 ```lisp
 (repeat beats
@@ -362,7 +378,7 @@ Current lowering:
 - Repeat bodies lower named drive calls plus `await`, `sample`, `update`,
   `shift_left`, `shift_right`, `assemble`, and `extract`.
 
-### 7.5 Inline Control Flow
+### 7.6 Inline Control Flow
 
 `(when condition body...)` creates one decision state plus body states. The
 true path enters the body, and the false path skips to the first state after

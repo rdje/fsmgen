@@ -10,16 +10,13 @@
     (input  opcode (width 2)))
 
   (drive write_res
-    (rdata 42)
-    (done 1))
+    (rdata 42))
 
   (drive read_res
-    (rdata 7)
-    (done 1))
+    (rdata 7))
 
   (drive err_res
-    (rdata 0)
-    (done 1))
+    (rdata 0))
 
   (transaction dispatch
     (on start

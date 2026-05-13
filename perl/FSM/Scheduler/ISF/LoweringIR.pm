@@ -414,7 +414,7 @@ sub _ir_await {
         watchdog    => { name => "${tn}_wd", limit => $wd // 65536 },
     };
 }
-sub _ir_complete{ my ($cl,$tn,$i)=@_; {name=>"${tn}_done_$i",kind=>'terminal',assignments=>[{lhs=>$cl->[1],rhs=>1,op=>'<-'}],transitions=>[]} }
+sub _ir_complete{ my ($cl,$tn,$i)=@_; {name=>"${tn}_done_$i",kind=>'terminal',assignments=>[{lhs=>$cl->[1],rhs=>1,op=>'<1'}],transitions=>[]} }
 sub _ir_update   { my ($cl,$tn,$i)=@_; my$rhs=join(' ',@{$cl}[2..$#$cl]); {name=>"${tn}_update_$i",kind=>'sequential',assignments=>[{lhs=>$cl->[1],rhs=>$rhs,op=>'<-'}],transitions=>[]} }
 sub _ir_shift_left { my ($cl,$tn,$i)=@_; my$reg=$cl->[1];my$bit=$cl->[2]; {name=>"${tn}_shift_$i",kind=>'sequential',assignments=>[{lhs=>$reg,rhs=>"(| (<< $reg 1) $bit)",op=>'<-'}],transitions=>[]} }
 sub _ir_shift_right{ my ($cl,$tn,$i,$widths)=@_; my$reg=$cl->[1];my$bit=$cl->[2];my$insert=(defined($widths->{$reg})&&$widths->{$reg}>0)?$widths->{$reg}-1:'(- WIDTH 1)'; {name=>"${tn}_shift_$i",kind=>'sequential',assignments=>[{lhs=>$reg,rhs=>"(| (>> $reg 1) (<< $bit $insert))",op=>'<-'}],transitions=>[]} }
@@ -578,7 +578,7 @@ sub _inj_watchdog {
     my ($st,$tn,$wn,$lim,$ctrs)=@_;
     $ctrs->{last_error} = 1;
     unshift @{$st->[0]{assignments}},{lhs=>$wn,rhs=>"(- $lim 1)",op=>'<='};
-    push @$st,{name=>"${tn}_timeout",kind=>'terminal',assignments=>[{lhs=>'done',rhs=>1,op=>'<-'},{lhs=>'last_error',rhs=>1,op=>'<-'}],transitions=>[]};
+    push @$st,{name=>"${tn}_timeout",kind=>'terminal',assignments=>[{lhs=>'done',rhs=>1,op=>'<1'},{lhs=>'last_error',rhs=>1,op=>'<-'}],transitions=>[]};
 }
 
 sub _inj_latency {
@@ -589,7 +589,7 @@ sub _inj_latency {
     my($done)=grep{$_->{kind}eq'terminal'&&$_->{name}!~/_timeout$/}@$st;
     if($done){push @{$done->{assignments}},{lhs=>$err,rhs=>1,op=>'=',guard=>{signal=>$cc,op=>'<',value=>$min}}}
     if(!$ha&&$max){my $mc="${tn}_max_chk";push @$st,{name=>$mc,kind=>'sequential',assignments=>[],transitions=>[{target=>"${tn}_timeout",condition=>{signal=>$cc,op=>'=',value=>$max}}]};
-        push @$st,{name=>"${tn}_timeout",kind=>'terminal',assignments=>[{lhs=>$err,rhs=>1,op=>'='},{lhs=>'done',rhs=>1,op=>'<-'},{lhs=>'last_error',rhs=>1,op=>'<-'}],transitions=>[]}}
+        push @$st,{name=>"${tn}_timeout",kind=>'terminal',assignments=>[{lhs=>$err,rhs=>1,op=>'='},{lhs=>'done',rhs=>1,op=>'<1'},{lhs=>'last_error',rhs=>1,op=>'<-'}],transitions=>[]}}
     my $dt={name=>"${tn}_cc_inc",kind=>'latency_counter',assignments=>[{lhs=>$cc,rhs=>"(+ $cc 1)",op=>'<-',guard=>{port=>$inc}}]};
     return ($cc,$inc,$err,$dt);
 }

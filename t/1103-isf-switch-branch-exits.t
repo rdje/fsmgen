@@ -39,7 +39,7 @@ subtest 'multi-state switch branches exit after the whole switch' => sub {
   (drive alt
     (flag mode))
   (drive after
-    (done 1))
+    (flag 1))
   (transaction main
     (on start)
     (switch mode
@@ -75,7 +75,7 @@ subtest 'repeat checks in switch branches exit after the whole switch' => sub {
   (drive alt
     (flag 0))
   (drive after
-    (done 1))
+    (flag 1))
   (transaction main
     (on start)
     (switch mode

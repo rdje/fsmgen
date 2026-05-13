@@ -46,6 +46,12 @@ subtest 'APB entry and named drive samples lower into their scheduled states' =>
     my $done_phase = state_block($fsm, '-done_phase');
     unlike($done_phase, qr/\(done 1\)/, 'APB done_phase does not drive transaction done');
 
+    my $complete = state_block($fsm, 'apb_transfer_done_5');
+    like($complete, qr/\(<1 \(done 1\)\)/, 'complete emits a one-cycle delayed done pulse');
+
+    my $timeout = state_block($fsm, 'apb_transfer_timeout');
+    like($timeout, qr/\(<1 \(done 1\)\)/, 'timeout emits a one-cycle delayed done pulse');
+
     unlike($fsm, qr/\bapb_transfer_sample_6\b/, 'post-terminal sample state is not emitted');
 };
 

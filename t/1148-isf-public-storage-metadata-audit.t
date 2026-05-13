@@ -67,6 +67,11 @@ subtest 'APB schedule report inferred storage follows advertised metadata' => su
         }
     }
 
+    my ($done) = grep { $_->{name} eq 'done' } @{$report->{inferred_storage} || []};
+    ok($done, 'APB report exposes completion done storage');
+    is($done->{kind}, 'register', 'completion pulse storage is reported through the register kind')
+        if $done;
+
     ok($width_entries > 0, 'APB report includes width-bearing inferred counters');
 };
 

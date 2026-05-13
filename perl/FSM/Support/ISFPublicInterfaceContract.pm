@@ -449,7 +449,7 @@ sub isf_public_interface_lower_result_file_text_shape {
 sub isf_public_interface_dt_assignment_operator_family_map {
     return {
         combinational => ['='],
-        sequential    => ['<-', '<='],
+        sequential    => ['<-', '<=', '<1'],
     };
 }
 

@@ -90,6 +90,42 @@ FSM
     unlike($hdl, qr/\bmodule\s+from_env_root\b/s, 'FSMLIB fallback does not override an explicit --path root');
 };
 
+subtest 'explicit .fsm suffix is preserved during --path and FSMLIB lookup' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $explicit_dir = File::Spec->catdir($tempdir, 'explicit_root');
+    my $env_dir = File::Spec->catdir($tempdir, 'env_root');
+    mkdir $explicit_dir or die "Cannot create $explicit_dir: $!";
+    mkdir $env_dir or die "Cannot create $env_dir: $!";
+
+    write_file(
+        File::Spec->catfile($explicit_dir, 'suffix_lookup.fsm'),
+        <<'FSM'
+(?dt:suffix_lookup_mod
+  (+size
+    (OUT 1)
+  )
+  (-drive
+    (OUT = 1)
+  )
+)
+FSM
+    );
+
+    my $output_path = File::Spec->catfile($tempdir, 'suffix_lookup.sv');
+    local $ENV{FSMLIB} = $env_dir;
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--path', $explicit_dir, '-o', $output_path, 'suffix_lookup.fsm'],
+    );
+
+    ok($success, 'CLI succeeds when an explicit .fsm source name is supplied through --path');
+    diag(buffer_text($full_buf)) unless $success;
+    ok(-e $output_path, 'CLI writes HDL output for the explicit .fsm source name');
+
+    my $hdl = slurp($output_path);
+    like($hdl, qr/\bmodule\s+suffix_lookup_mod\b/s, 'explicit .fsm source name resolves without appending a second suffix');
+};
+
 subtest '--path roots also feed external RTL interface metadata lookup' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $metadata_dir = File::Spec->catdir($tempdir, 'rtlif_lib');
@@ -169,4 +205,11 @@ sub slurp {
     my $content = <$fh>;
     close $fh or die "Cannot close $path: $!";
     return $content;
+}
+
+sub buffer_text {
+    my ($buffer) = @_;
+    return '' unless defined $buffer;
+    return join('', @{$buffer}) if ref($buffer) eq 'ARRAY';
+    return "$buffer";
 }

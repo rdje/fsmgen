@@ -1,5 +1,30 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF complete pulse lowering and traced gate fixes
+- `(complete port)` represents transaction completion, not a sticky status bit.
+  Lowering it with `<-` made the authored port stay high until some later
+  assignment cleared it. The scheduler now lowers completion and timeout `done`
+  outputs with `<1`, which is the explicit one-cycle delayed pulse operator in
+  the `.fsm` language.
+- Drive bodies should not also own a transaction completion LHS. The APB,
+  `when_test`, and `switch_test` fixtures now keep completion ownership on
+  `(complete done)` and use separate drive-owned signals where a drive body
+  needs ordinary publication.
+- Delayed-pulse operators are register-backed for storage-summary purposes,
+  but they are not counters. `Emitter::JSON` now classifies `<N` operators as
+  clocked register-style storage so downstream schedule-report consumers see
+  completion ports as register-backed.
+- The full regression exposed an unrelated but real backend bug while this
+  slice was being validated. With `--trace`, LTE PMASTER showed transition
+  capture storing `next_state` as a generic signal ref; assignment analysis
+  then treated a `<-` transition capture as a normal flop and emitted a
+  one-bit `next_state_next` helper. Transition capture now marks `next_state`
+  refs as FSM next-state values, and the mux/classification path keeps
+  `next_state` combinational.
+- The same full gate also exposed a source-resolution boundary bug:
+  `bin/fsmgen` was checking the `.fsm`/`.isf` suffix against a literal dollar
+  sign and could turn explicit bare lookup names such as `foo.fsm` into
+  `foo.fsm.fsm`. The suffix check now anchors at the real end of the string.
 ## 2026-05-13: R14 APB done ownership cleanup
 - The APB requester fixture was assigning `done` in `done_phase` and then
   using `(complete done)`. That confused protocol-output ownership with

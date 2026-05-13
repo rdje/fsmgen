@@ -88,6 +88,14 @@ sub name ($self) {
     return $self->{signal_name};
 }
 
+sub is_fsm_state_next ($self) {
+    return $self->{is_fsm_state_next} ? 1 : 0;
+}
+
+sub is_fsm_state_register ($self) {
+    return $self->{is_fsm_state_register} ? 1 : 0;
+}
+
 sub to_systemverilog ($self) {
     return $self->{signal_name};
 }
@@ -294,8 +302,8 @@ sub equals ($self, $other) {
 package FSM::AST::Utils;
 
 # Create common AST nodes with convenience functions
-sub signal_ref ($signal_name) {
-    return FSM::AST::SignalRef->new($signal_name);
+sub signal_ref ($signal_name, %args) {
+    return FSM::AST::SignalRef->new($signal_name, %args);
 }
 
 sub literal ($value) {
