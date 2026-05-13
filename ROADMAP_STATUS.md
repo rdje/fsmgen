@@ -5,6 +5,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Next decision point: continue `R14` ISF implementation/API stabilization by
   selecting another bounded documented limitation, or run a focused
   documentation drift audit only if guide/book divergence appears.
+- Support workflow: [bin/ci-regression](bin/ci-regression) now supports
+  explicit `quick`, `isf`, and `full` modes, plus `--list`, `--dry-run`, and
+  `--no-book`. No argument still runs the historical full gate.
 - The mdBook reference map now records those book homes explicitly: direct
   language/core concepts, composition, CLI/debug, typed extensions, legacy
   external flow, troubleshooting, and practical authoring guidance are all
@@ -1227,6 +1230,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
     now proves rule trigger targets resolve to declared same-actor
     transactions before actor-shell return, while preserving forward
     references.
+  - [bin/ci-regression](bin/ci-regression) now has explicit turnaround tiers:
+    `quick` for a curated direct/composition/ISF smoke set, `isf` for the
+    current ISF band, and `full` for the historical complete gate. This is
+    workflow support only; the active implementation lane remains `R14`.
   - Next bounded `R14` slice: convert another documented scheduler limitation
     into regression-backed behavior.
 - Superseded `R13` carry-forward detail retained below this note should not be

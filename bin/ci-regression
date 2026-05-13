@@ -6,6 +6,51 @@ REPO_ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
 
 cd "$REPO_ROOT"
 
+MODE="full"
+RUN_BOOK=1
+DRY_RUN=0
+
+QUICK_TESTS=(
+  t/01-regression.t
+  t/03-assignment-intent-metadata.t
+  t/13-composition-source-classification.t
+  t/29-language-contract-core-forms.t
+  t/84-composition-external-fsm-child-sources.t
+  t/1091-isf-parser-apb-requester.t
+  t/1094-isf-scheduler-module-header.t
+  t/1112-isf-public-interface-contract.t
+)
+
+ISF_TESTS=(t/109[1-9]-isf*.t t/11[0-9][0-9]-isf*.t)
+IFS=$'\n' ISF_TESTS=($(printf '%s\n' "${ISF_TESTS[@]}" | sort))
+unset IFS
+
+usage() {
+  cat <<'USAGE'
+Usage: ./bin/ci-regression [quick|isf|full] [--no-book] [--dry-run]
+
+Modes:
+  quick  Curated smoke set for fast turnaround across direct FSM,
+         composition classification, one composition child path, ISF parse,
+         ISF schedule, and the ISF public contract.
+  isf    All ISF-focused tests in the 109x and 11xx numbered bands.
+  full   Complete Perl regression suite. This is the default.
+
+Options:
+  --no-book  Skip mdBook build for this invocation.
+  --dry-run  Print selected steps without executing them.
+  --list     Print the concrete quick and ISF test lists.
+  --help     Show this help text.
+USAGE
+}
+
+list_modes() {
+  printf 'quick tests:\n'
+  printf '  %s\n' "${QUICK_TESTS[@]}"
+  printf 'isf tests:\n'
+  printf '  %s\n' "${ISF_TESTS[@]}"
+}
+
 require_tool() {
   local tool="$1"
   if ! command -v "$tool" >/dev/null 2>&1; then
@@ -18,11 +63,73 @@ run_step() {
   local label="$1"
   shift
   printf '==> %s\n' "$label"
+  if (( DRY_RUN )); then
+    printf '    %q' "$@"
+    printf '\n'
+    return 0
+  fi
   "$@"
 }
 
-require_tool prove
-require_tool mdbook
+require_test_files() {
+  local test_file
+  for test_file in "$@"; do
+    if [[ ! -f "$test_file" ]]; then
+      printf 'ci-regression: selected test file does not exist: %s\n' "$test_file" >&2
+      exit 1
+    fi
+  done
+}
 
-run_step "Perl regression suite" prove -I perl t
-run_step "mdBook build" mdbook build docs/book
+while (($#)); do
+  case "$1" in
+    quick|isf|full)
+      MODE="$1"
+      ;;
+    --no-book)
+      RUN_BOOK=0
+      ;;
+    --dry-run)
+      DRY_RUN=1
+      ;;
+    --list)
+      list_modes
+      exit 0
+      ;;
+    --help|-h)
+      usage
+      exit 0
+      ;;
+    *)
+      printf 'ci-regression: unknown argument: %s\n' "$1" >&2
+      usage >&2
+      exit 2
+      ;;
+  esac
+  shift
+done
+
+if (( ! DRY_RUN )); then
+  require_tool prove
+  if (( RUN_BOOK )); then
+    require_tool mdbook
+  fi
+fi
+
+case "$MODE" in
+  quick)
+    require_test_files "${QUICK_TESTS[@]}"
+    run_step "Perl quick smoke suite" prove -I perl "${QUICK_TESTS[@]}"
+    ;;
+  isf)
+    require_test_files "${ISF_TESTS[@]}"
+    run_step "Perl ISF regression suite" prove -I perl "${ISF_TESTS[@]}"
+    ;;
+  full)
+    run_step "Perl regression suite" prove -I perl t
+    ;;
+esac
+
+if (( RUN_BOOK )); then
+  run_step "mdBook build" mdbook build docs/book
+fi

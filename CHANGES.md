@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### Workflow — tiered local regression gate
+- Extended [bin/ci-regression](bin/ci-regression) with explicit `quick`, `isf`,
+  and `full` modes. The no-argument default remains `full`.
+- Added `--list`, `--dry-run`, and `--no-book` so turnaround tiers are
+  discoverable and script behavior can be tested without recursively running
+  long regressions.
+- Added [t/1183-ci-regression-tier-selection.t](t/1183-ci-regression-tier-selection.t)
+  and updated [README.md](README.md), [WARP.md](WARP.md), the mdBook
+  troubleshooting chapter, and roadmap notes.
 ### R14 — ISF rule trigger target boundary
 - Tightened [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
   so rule `(trigger transaction)` actions must resolve to a declared

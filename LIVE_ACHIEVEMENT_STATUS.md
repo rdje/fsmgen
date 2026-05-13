@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: Workflow — tiered local regression gate
+- Active support workflow: `bin/ci-regression` now has explicit `quick`, `isf`,
+  and `full` modes, with no argument still running the historical full gate.
+- `t/1183` covers `--list`, dry-run command selection, `--no-book`, and
+  unknown-mode diagnostics. The quick tier is a smoke set for fast feedback,
+  not a replacement for focused tests or the full pre-push gate.
+
 ## 2026-05-13: R14 — ISF rule trigger target boundary
 - Active: `R14`. Rule `(trigger transaction)` actions now require the target
   transaction to be declared in the same actor before parser handoff returns.

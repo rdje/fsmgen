@@ -233,13 +233,21 @@ with local context instead of being interpreted opportunistically.
 Before landing behavior changes, run the local regression suite:
 
 ```bash
+./bin/ci-regression quick
+./bin/ci-regression isf
 ./bin/ci-regression
 ```
 
-For focused work, run the nearby targeted `prove` suites first, then the full
-regression.
-That gate now also builds the mdBook, so generated docs and runtime behavior
-stay under the same local quality check.
+Use `quick` for a small smoke set when you need fast feedback on basic direct
+`.fsm`, composition, and ISF functionality. Use `isf` for the current
+ISF-focused band. With no mode argument, `./bin/ci-regression` runs the full
+Perl suite and remains the pre-push gate.
+
+For focused work, run the nearby targeted `prove` suites first, then the
+smallest `ci-regression` tier that covers the changed surface. The gate builds
+the mdBook by default, so generated docs and runtime behavior stay under the
+same local quality check. Use `--list` to inspect the concrete quick/ISF test
+sets and `--no-book` only for a deliberately code-only turnaround check.
 GitHub Actions is intentionally parked right now under
 [.github/workflows-disabled/README.md](.github/workflows-disabled/README.md),
 so this local repo-owned gate is the currently active regression entrypoint.

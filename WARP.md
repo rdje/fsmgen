@@ -27,6 +27,15 @@ FSMGen is a sophisticated finite state machine (FSM) HDL generator that converts
 ### Development Testing
 
 ```bash
+# Fast turnaround smoke across direct FSM, composition, and ISF basics
+./bin/ci-regression quick
+
+# Current ISF-focused band
+./bin/ci-regression isf
+
+# Full local gate; default mode if no argument is supplied
+./bin/ci-regression
+
 # Test with known-good FSM files
 ./bin/fsmgen fsm/trial_0.fsm
 ./bin/fsmgen fsm/lte_dif_pmaster.fsm

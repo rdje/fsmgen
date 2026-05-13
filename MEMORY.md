@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: Workflow — tiered local regression gate
+- `bin/ci-regression` now supports explicit `quick`, `isf`, and `full` modes.
+  No argument still means `full`, preserving the historical pre-push gate.
+- `quick` runs a curated smoke set across direct `.fsm`, composition
+  classification, one composition child path, ISF parse/schedule, and the ISF
+  public contract. `isf` runs the current ISF-focused 109x/11xx band.
+- Added `--list`, `--dry-run`, and `--no-book`, plus
+  `t/1183-ci-regression-tier-selection.t`. README, WARP, the mdBook
+  troubleshooting chapter, and the roadmap now describe the tier policy.
 ## 2026-05-13: R14 — ISF rule trigger target boundary
 - Rule `(trigger transaction)` actions now validate that `transaction` names a
   declared transaction in the same actor before the parser returns an actor

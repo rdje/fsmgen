@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: Workflow tiered local regression gate
+- The full regression gate has grown to more than a thousand test files and is
+  still the right pre-push/release confidence check, but using it for every
+  small edit creates poor local turnaround.
+- The tiered `ci-regression` interface keeps the old no-argument full behavior
+  intact while making smaller coverage sets explicit and reproducible.
+  `quick` is intentionally a smoke set, not a substitute for focused tests on
+  the changed surface or for `full` before broad integration.
+- `--dry-run` and `--list` exist so the selected tiers can be audited quickly
+  and regression-tested without embedding a recursive long-running gate inside
+  a unit test.
 ## 2026-05-13: R14 ISF rule trigger target boundary
 - Rule-trigger fan-in deliberately creates generated `rule_transaction`
   sources and `transaction_start` fan-in DTs. Without a target-existence check,

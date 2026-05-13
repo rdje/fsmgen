@@ -182,12 +182,24 @@ cd docs/book && mdbook serve
 
 ## Local CI / pre-push regression
 ```bash
+./bin/ci-regression quick
+./bin/ci-regression isf
 ./bin/ci-regression
+./bin/ci-regression --list
 ```
 - `bin/ci-regression` is the repo-owned local regression entrypoint.
 - The script resolves the repository root itself, so you can invoke it without depending on your current working directory.
-- It runs the full Perl regression suite with `prove -I perl t`.
-- It also builds the mdBook with `mdbook build docs/book`, so the user-facing book stays under the same local quality gate.
+- It supports explicit turnaround tiers:
+  - `quick`: curated smoke set across direct `.fsm`, composition
+    classification, one composition child path, ISF parse/schedule, and the
+    ISF public contract.
+  - `isf`: all ISF-focused tests in the current 109x/11xx numbered bands.
+  - `full`: the complete Perl regression suite with `prove -I perl t`.
+- With no mode argument it runs `full`, preserving the historical pre-push
+  gate behavior.
+- It also builds the mdBook with `mdbook build docs/book` by default, so the
+  user-facing book stays under the same local quality gate; use `--no-book`
+  only for a deliberately code-only local turnaround check.
 - When `verilator` and `yosys` are installed, the external SystemVerilog validation smoke runs too; otherwise that test is skipped.
 - GitHub Actions is intentionally parked right now under [.github/workflows-disabled/README.md](.github/workflows-disabled/README.md), so this local gate is currently the canonical actively used regression entrypoint.
 
