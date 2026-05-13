@@ -2763,10 +2763,26 @@ sub parse_transition_new_format($self, $action) {
             "Malformed transition target '".($self->describe_action_for_error($action))."'. ".
             "State transitions must use '(-> target_state)' or '(-> target_state <condition_suffix)'. ".
             "See docs/USER_GUIDE.md for the current supported boundary.\n"
-            unless @$target_spec >= 1 && @$target_spec <= 2;
+            unless @$target_spec >= 1;
 
         $target_state = $target_spec->[0];
-        $condition_suffix = $target_spec->[1] if @$target_spec > 1;
+        my @condition_parts = @$target_spec[1 .. $#$target_spec];
+        if (@condition_parts) {
+            if (@condition_parts == 1) {
+                $condition_suffix = $self->build_full_condition_from_parts(@condition_parts);
+            } elsif (@condition_parts == 2
+                && !ref($condition_parts[0])
+                && ($condition_parts[0] eq '<' || $condition_parts[0] eq '<!')
+                && defined $condition_parts[1]) {
+                $condition_suffix = $self->build_full_condition_from_parts(@condition_parts);
+            } else {
+                my $suffix_display = join(', ', map { ref($_) ? ref($_) : $_ } @condition_parts);
+                Carp::confess
+                    "Malformed transition condition suffix '$suffix_display'. ".
+                    "State transitions must use '(-> target_state)', '(-> target_state <condition_suffix)', or '(-> target_state < condition_expression)'. ".
+                    "See docs/USER_GUIDE.md for the current supported boundary.\n";
+            }
+        }
     } else {
         $target_state = $target_spec;
     }

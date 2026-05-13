@@ -57,7 +57,8 @@ Non-blocking. Each spawn declares a separate intended instance.
 - One `.fsm` per unique child module
 - Parent `.fsm` declares per-instance `name_start`/`name_done` signals
 - Each spawn state asserts its matching `name_start` signal
-- `(await_all done)` → nested guards for all done signals
+- `(await_all done)` → one transition guarded by the logical AND of all done
+  signals
 - `(await_any done)` → one guard per done signal, advancing on the first one
   that fires
 Both synchronization forms have focused regressions.
@@ -67,15 +68,13 @@ deferred.
 
 ```lisp
 (parent_main_await_all_4
-  (<w2_done
-  (<w1_done
-  (<w0_done
-    (-> parent_main_done_5)
-  )
-  )
-  )
+  (-> parent_main_done_5 <(& w0_done w1_done w2_done))
 )
 ```
+
+The compact transition suffix above is equivalent to nested guards over the
+same done ports, but the scheduled `.fsm` artifact uses the direct conjunction
+so the all-done condition is visible at the transition site.
 
 ## `(await_all port)` / `(await_any port)`
 

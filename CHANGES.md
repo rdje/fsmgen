@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — compact ISF await_all transition guard
+- Updated [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm)
+  so `await_all` scheduled `.fsm` states emit one transition suffix guarded by
+  the AND of all collected done ports, e.g.
+  `(-> parent_done <(& w0_done w1_done w2_done))`, instead of nested guard
+  blocks.
+- Widened [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm)
+  so transition suffix guards accept explicit condition-expression payloads
+  such as `<(& a_done b_done c_done)` while preserving existing bare-suffix
+  rejection.
+- Updated [t/1109-isf-await-all-sync.t](t/1109-isf-await-all-sync.t) and
+  [t/29-language-contract-core-forms.t](t/29-language-contract-core-forms.t)
+  to cover the compact emitted shape, parser support, and HDL path.
+- Documented the new shape in [docs/book/src/13f-composition.md](docs/book/src/13f-composition.md),
+  [docs/ISF_SPEC.md](docs/ISF_SPEC.md), and [docs/USER_GUIDE.md](docs/USER_GUIDE.md).
 ### R14 — ISF when-form scope clarification
 - Clarified [docs/book/src/13d-control-flow.md](docs/book/src/13d-control-flow.md)
   so the body-bearing `(when condition body...)` form is explicitly scoped to

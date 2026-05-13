@@ -183,7 +183,9 @@ State and non-state DT note:
   - partial dual-output sequential writes such as `(ROD[3:2] <-= HI)` and `(RID[3:2] <=+ HI)` now also keep their auxiliary outputs (`next_ROD`, `RID_r`) at the full base-signal width instead of narrowing them to the written fragment
 - Condition forms that are in the active supported path: `<sig`, `<!sig`, `<sig=value`, `<sig==value`, `<sig!=value`, `<sig<value`, `<sig<=value`, `<sig>value`, `<sig>=value`, and test-node selector branches like `=0`, `!=8'0`, `<8'4`, `<=8'3`, `>8'3`, `>=8'1`, `default`, and `_`
 - Nested guarded blocks using standalone `< ...` / `<! ...` action forms
-- Condition suffixes attached directly to assignments or transitions, for example `(A <= B <start)` and `(-> busy <!full)`
+- Condition suffixes attached directly to assignments or transitions, for
+  example `(A <= B <start)`, `(-> busy <!full)`, and
+  `(-> joined <(& a_done b_done c_done))`
 - Compound-update shorthand forms `(++ sig)`, `(-- sig)`, `(+= sig)`, `(-= sig)`, `(+=N sig)`, `(-=N sig)`, `(+= sig N)`, and `(-= sig N)`
   - malformed update-shorthand targets such as `(++ (counter))` or `(+= (byte_count) 4)` are rejected explicitly
   - malformed extra positional tails such as `(+= counter 4 3)` are rejected explicitly
@@ -406,6 +408,8 @@ Condition suffixes:
   - `(-> busy <!full)` is the single-action guarded form of `(<!full (-> busy))`
   - `(OUT = IN <mode==1)` is the single-action guarded form of `(<mode==1 (OUT = IN))`
   - `(-> special <count<=3)` is the single-action guarded form of `(<count<=3 (-> special))`
+  - `(-> joined <(& a_done b_done c_done))` is the single-action guarded form
+    of `(<(& a_done b_done c_done) (-> joined))`
 
 Update shorthand:
 - `(++ counter)` means increment `counter` by `1`

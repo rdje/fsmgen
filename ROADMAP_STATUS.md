@@ -33,6 +33,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - The mdBook and ISF live docs now distinguish transaction
   `(when condition body...)` control flow from rule-local `(when condition)`
   guard clauses, with the rule shorthand called out as the preferred spelling.
+- ISF `await_all` scheduled `.fsm` emission now uses a compact compound
+  transition suffix such as `(-> parent_done <(& w0_done w1_done w2_done))`
+  instead of nested done-port guard blocks; `.fsm` transition suffix parsing
+  now accepts explicit condition-expression payloads for that form.
 - `t/1097` now removes the anonymous `_start` placeholder from `do`, `spawn`,
   and control-flow drive-call lowering by asserting concrete child, instance,
   and drive start signals. Next bounded R14 slice: turn another documented
@@ -85,10 +89,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   repeat counter widths while preserving false-skip exits.
 - `t/1108` now proves schedule JSON transaction summaries include generated
   control/data state families such as `when`, `switch`, `update`, and `shift`.
-- `t/1109` now proves `await_all` emits nested guards for every collected
-  spawned done signal.
-- `t/1109` also locks readable `await_all` nested-guard emission with one
-  closing paren per generated `.fsm` line.
+- `t/1109` now proves `await_all` emits one compound transition suffix over
+  every collected spawned done signal and that the scheduled `.fsm` parses
+  through the normal frontend to HDL.
 - `t/1110` now proves blocking `do` rewires child idle states to the first
   non-entry child state, not only drive-first children.
 - `t/1111` now proves pending samples materialize before data-operation states
@@ -3747,8 +3750,8 @@ Done:
   locks schedule JSON transaction grouping for control-flow and data-operation
   state families.
 - [t/1109-isf-await-all-sync.t](t/1109-isf-await-all-sync.t) locks `await_all`
-  nested guards for all collected spawned done signals, including readable
-  one-close-per-line emitted `.fsm` formatting.
+  compound transition suffix guards over all collected spawned done signals and
+  proves the emitted `.fsm` parses through the normal frontend to HDL.
 - [t/1110-isf-do-child-entry-rewire.t](t/1110-isf-do-child-entry-rewire.t)
   locks blocking `do` child entry rewiring for non-drive first body states.
 - [t/1111-isf-sample-before-data-ops.t](t/1111-isf-sample-before-data-ops.t)
@@ -3832,6 +3835,11 @@ Done:
   actions...)`; [docs/ISF_SPEC.md](docs/ISF_SPEC.md) and
   [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md)
   carry the same distinction.
+- `await_all` scheduled `.fsm` review artifacts now use one compound
+  transition suffix over collected done ports instead of nested guard blocks;
+  [docs/book/src/13f-composition.md](docs/book/src/13f-composition.md),
+  [docs/ISF_SPEC.md](docs/ISF_SPEC.md), and [docs/USER_GUIDE.md](docs/USER_GUIDE.md)
+  document the new compact form.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

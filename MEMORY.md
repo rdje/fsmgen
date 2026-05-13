@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — compact ISF await_all transition guard
+- Changed ISF `await_all` scheduled `.fsm` emission from nested done-port guard
+  blocks to one transition suffix guarded by a compound AND, for example
+  `(-> parent_done <(& w0_done w1_done w2_done))`.
+- Widened the `.fsm` transition suffix parser to accept explicit condition
+  expression payloads such as `<(& a_done b_done c_done)` while preserving the
+  existing rejection and diagnostics for bare suffixes like `(-> busy full)`.
+- Updated `t/1109` and `t/29`, plus the mdBook Composition chapter, ISF spec,
+  and user guide, so the compact transition guard is the documented scheduled
+  artifact shape.
 ## 2026-05-13: R14 — ISF when-form scope clarification
 - Clarified the mdBook Control Flow chapter so `(when condition body...)` is
   explicitly transaction-local control flow, while rule-local `(when condition)`

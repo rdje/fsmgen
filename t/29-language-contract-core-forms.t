@@ -44,6 +44,7 @@ subtest 'guarded blocks and suffix guards are regression-backed' => sub {
     )
     (A <= C <start)
     (-> busy <!full)
+    (-> busy <(& req start !full))
   )
   (busy
     (A <= B)
@@ -52,7 +53,7 @@ subtest 'guarded blocks and suffix guards are regression-backed' => sub {
 FSM
 
     my $idle_elements = state_elements($fsm_module, 'idle');
-    is(scalar(@$idle_elements), 4, 'idle state has the expected top-level guarded/suffixed elements');
+    is(scalar(@$idle_elements), 5, 'idle state has the expected top-level guarded/suffixed elements');
 
     my $outer_guard = $idle_elements->[0];
     ok($outer_guard->isa('FSM::CoreAST::ConditionalBranch'), 'simple guarded block parses as ConditionalBranch');
@@ -102,6 +103,19 @@ FSM
     is($transition_suffix->condition->operator, '==', 'transition suffix guard uses == comparison');
     is($transition_suffix->condition->left->signal->name, 'full', 'transition suffix guard compares full on the left');
     is($transition_suffix->condition->right->to_systemverilog, '0', 'transition suffix guard compares against zero');
+
+    my $compound_transition_suffix = $idle_elements->[4];
+    ok($compound_transition_suffix->isa('FSM::CoreAST::ConditionalBranch'), 'compound transition suffix guard lowers to ConditionalBranch');
+    ok($compound_transition_suffix->branches->[0]{actions}[0]->isa('FSM::CoreAST::StateTransition'), 'compound transition suffix guard keeps transition action');
+    ok($compound_transition_suffix->condition->isa('FSM::CoreAST::SignalRef'), 'compound transition suffix lowers through an intermediate signal');
+    my $compound_transition_ast = $compound_transition_suffix->condition->signal->driving_ast;
+    ok($compound_transition_ast && $compound_transition_ast->isa('FSM::CoreAST::BinaryOp'), 'compound transition suffix keeps a driving AST on the intermediate');
+    assert_left_associative_binary_tree(
+        $compound_transition_ast,
+        '&',
+        ['req', 'start', '!full'],
+        'compound transition suffix condition tree'
+    );
 
     my $hdl = FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($fsm_module);
     like($hdl, qr/module\s+guard_contract\b/s, 'guard-contract FSM still generates HDL through the active backend');

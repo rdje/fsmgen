@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 compact ISF await_all transition guard
+- `await_all` is logically one transition guarded by the conjunction of all
+  collected spawned done ports. The previous nested-guard scheduled `.fsm`
+  artifact was semantically correct but made the all-done predicate harder to
+  read and created unnecessary indentation noise.
+- The scheduler now emits the conjunction at the transition site:
+  `(-> target <(& w0_done w1_done w2_done))`. This preserves the same
+  activation timing while making the synchronization predicate reviewable as
+  one expression.
+- The `.fsm` parser already supported compound guarded blocks. This slice
+  extends transition suffix parsing to accept the same explicit condition
+  payload style, while keeping bare suffixes rejected so `(-> busy full)` does
+  not become ambiguous source.
 ## 2026-05-13: R14 ISF when-form scope clarification
 - ISF currently uses the word `when` in two source contexts. In transactions,
   `(when condition body...)` is a scheduled control-flow form that creates a

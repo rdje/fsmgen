@@ -467,7 +467,9 @@ Current lowering:
 - Each child gets `start`, `done`, and `last_error` ports if missing.
 - The parent declares per-instance `instance_start` and `instance_done` signals.
 - Each spawn state asserts its matching `instance_start` signal.
-- `await_all` waits for all collected spawned done ports.
+- `await_all` waits for all collected spawned done ports using one scheduled
+  transition suffix guarded by their logical AND, for example
+  `(-> parent_done <(& w0_done w1_done w2_done))`.
 - `await_any` emits one guard per collected spawned done port and advances when
   any one of them fires.
 Focused regressions cover both synchronization forms.

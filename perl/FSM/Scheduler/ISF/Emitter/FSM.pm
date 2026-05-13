@@ -168,12 +168,13 @@ sub _emit_transitions($self, $state) {
     if ($state->{kind} eq 'sync_all') {
         my @ports = @{$state->{done_ports}};
         my $target = $txs->[0]{target};
-        # Nested guards: (<p0 (<p1 (<p2 (-> target))))
-        for my $p (reverse @ports) {
-            push @lines, "    (<$p";
+        if (!@ports) {
+            push @lines, "    (-> $target)";
+        } elsif (@ports == 1) {
+            push @lines, "    (-> $target <$ports[0])";
+        } else {
+            push @lines, "    (-> $target <(& " . join(' ', @ports) . '))';
         }
-        push @lines, "      (-> $target)";
-        push @lines, map { '    )' } @ports;
         return @lines;
     }
     if ($state->{kind} eq 'sync_any') {

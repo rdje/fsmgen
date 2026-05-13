@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — compact ISF await_all transition guard
+- Active: `R14`. ISF `await_all` scheduled `.fsm` emission now uses one
+  transition suffix guarded by the AND of all collected done ports, e.g.
+  `(-> parent_done <(& w0_done w1_done w2_done))`, instead of nested guard
+  blocks.
+- The `.fsm` transition suffix parser now accepts explicit condition
+  expression payloads such as `<(& a_done b_done c_done)`, and focused tests
+  cover parser, scheduled `.fsm`, and HDL behavior.
+
 ## 2026-05-13: R14 — ISF when-form scope clarification
 - Active: `R14`. The mdBook Control Flow chapter now makes clear that
   `(when condition body...)` is transaction-local control flow, not the
