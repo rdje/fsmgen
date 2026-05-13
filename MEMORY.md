@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF rule action parser boundary
+- Rule actions are now structurally validated before the parser returns an
+  actor shell. Accepted forms are `(port value)`, `(trigger transaction)`, and
+  `(priority over other_rule)`.
+- Malformed scalar actions, nested action heads, malformed trigger arity, and
+  missing or expression-valued assignment payloads now fail with targeted
+  parser diagnostics. Expression-valued rule assignments remain deferred until
+  the rule lowerer has an expression path.
+- Added `t/1181-isf-rule-action-boundary.t` and updated the ISF public
+  contract, spec, mdBook, and live roadmap notes.
 ## 2026-05-13: R14 — ISF unsupported transaction clauses fail closed
 - The ISF scheduler now validates supported transaction clause heads before
   lowering. Removed or future-style transaction clauses, including

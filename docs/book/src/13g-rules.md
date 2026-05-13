@@ -32,6 +32,11 @@ body-bearing `(when condition body...)` form is only described in
 - `(priority over other_rule)` — structurally validated metadata, currently
   not enforced
 
+Rule actions are structurally validated before the actor shell is returned.
+The current `(port value)` action accepts scalar values only; expression-valued
+rule assignments are deferred until the rule lowerer has a real expression
+path.
+
 **Lowering**: Non-state DT block containing one guarded action block in the
 current scheduler. The shorthand scalar guard and the long-form `(when ...)`
 guard both become the public parser `when` field. Scheduled `.fsm` emission

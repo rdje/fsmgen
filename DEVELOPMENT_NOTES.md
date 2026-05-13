@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF rule action parser boundary
+- Rule action payloads feed directly into generated non-state DT assignments.
+  Before this slice, a scalar rule action could be skipped and malformed
+  `(trigger ...)` or assignment actions could reach lowering with missing or
+  reference-valued operands.
+- The parser now enforces the three shipped action shapes. This keeps the
+  actor-shell handoff honest while deliberately deferring expression-valued
+  rule assignments until the rule lowerer has expression formatting and width
+  behavior that matches transaction data operations.
 ## 2026-05-13: R14 ISF unsupported transaction clauses fail closed
 - Transaction lowering had several silent-drop paths: unknown top-level
   clauses fell through the state builder, and unsupported forms inside

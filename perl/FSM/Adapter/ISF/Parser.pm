@@ -276,13 +276,12 @@ sub _parse_rule($self, $clause) {
     }
 
     for my $elem (@body) {
-        if (ref($elem) eq 'ARRAY' && $elem->[0] eq 'when') {
+        if (ref($elem) eq 'ARRAY' && defined($elem->[0]) && !ref($elem->[0]) && $elem->[0] eq 'when') {
             confess "Error: rule '$name' accepts only one guard condition\n"
                 if defined $when;
             $when = $self->_parse_rule_when($elem, $name);
         } else {
-            $self->_parse_rule_priority($elem, $name)
-                if ref($elem) eq 'ARRAY' && defined($elem->[0]) && $elem->[0] eq 'priority';
+            $self->_parse_rule_action($elem, $name);
             push @actions, $elem;
         }
     }
@@ -311,6 +310,34 @@ sub _parse_rule_priority($self, $clause, $rule_name) {
             && defined($clause->[2])
             && !ref($clause->[2])
             && length($clause->[2]);
+
+    return 1;
+}
+
+sub _parse_rule_action($self, $action, $rule_name) {
+    confess "Error: rule '$rule_name' actions must be list forms\n"
+        unless ref($action) eq 'ARRAY' && @$action;
+
+    my $keyword = $action->[0];
+    confess "Error: rule '$rule_name' action heads must be scalar\n"
+        unless defined($keyword) && !ref($keyword) && length($keyword);
+
+    if ($keyword eq 'trigger') {
+        confess "Error: rule '$rule_name' trigger requires '(trigger transaction)'\n"
+            unless @$action == 2
+                && defined($action->[1])
+                && !ref($action->[1])
+                && length($action->[1]);
+        return 1;
+    }
+    if ($keyword eq 'priority') {
+        return $self->_parse_rule_priority($action, $rule_name);
+    }
+
+    confess "Error: rule '$rule_name' assignment actions require '(port value)'\n"
+        unless @$action == 2
+            && defined($action->[1])
+            && !ref($action->[1]);
 
     return 1;
 }

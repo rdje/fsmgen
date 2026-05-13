@@ -95,6 +95,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   unknown future-style clauses, unsupported nested `when`/`switch`/`repeat`
   body forms, and preservation of dedicated deferred `contract`/`stage`
   diagnostics.
+- ISF rule actions now have a parser-side structural boundary. `t/1181`
+  covers accepted `(port value)`, `(trigger transaction)`, and
+  `(priority over other_rule)` actions plus malformed scalar, nested-head,
+  trigger-arity, missing-value, and expression-valued assignment cases.
 - Full-gate validation for the `do` pulse slice also hardened
   `ExpressionNamer` wire declaration formatting so MSB values are computed
   before interpolation, keeping the `t/520` query defensive-copy audit from
@@ -1213,6 +1217,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
     now proves unsupported transaction clause heads fail closed before state
     expansion, including removed `(assign ...)` and unsupported nested
     body-context forms.
+  - [t/1181-isf-rule-action-boundary.t](t/1181-isf-rule-action-boundary.t)
+    now proves rule actions are structurally validated before actor-shell
+    return, while expression-valued rule assignments remain deferred.
   - Next bounded `R14` slice: convert another documented scheduler limitation
     into regression-backed behavior.
 - Superseded `R13` carry-forward detail retained below this note should not be
@@ -3943,6 +3950,10 @@ Done:
   by [t/1180-isf-unsupported-transaction-clause-boundary.t](t/1180-isf-unsupported-transaction-clause-boundary.t),
   covering removed `(assign ...)`, unknown future-style clauses, unsupported
   nested body forms, and preserved deferred `contract`/`stage` diagnostics.
+- Rule-action structural validation is now regression-backed by
+  [t/1181-isf-rule-action-boundary.t](t/1181-isf-rule-action-boundary.t),
+  covering accepted rule action forms and malformed scalar, nested-head,
+  trigger-arity, missing-value, and expression-valued assignment cases.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

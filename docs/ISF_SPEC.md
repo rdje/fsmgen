@@ -524,6 +524,11 @@ Current lowering:
   otherwise non-scalar rule names are rejected before the parser returns an
   actor shell. Condition and action payload contents remain scheduler input and
   are not frozen as a public API by the actor-shell rule-shape metadata.
+- Rule actions are structurally validated before the actor shell is returned.
+  Supported action shapes are `(port value)`, `(trigger transaction)`, and
+  `(priority over other_rule)`. Today, `(port value)` and trigger targets use
+  scalar payloads because the rule lowerer does not implement expression-valued
+  rule assignments.
 - Each rule emits one non-state DT block.
 - A scalar condition immediately after the rule name is the preferred shorthand
   guard. Long-form `(when condition)` supplies the same guard. The parser
@@ -796,6 +801,7 @@ Focused tests:
 - [t/1178-isf-handshake-compatibility-boundary.t](../t/1178-isf-handshake-compatibility-boundary.t)
 - [t/1179-isf-phase-stage-boundary.t](../t/1179-isf-phase-stage-boundary.t)
 - [t/1180-isf-unsupported-transaction-clause-boundary.t](../t/1180-isf-unsupported-transaction-clause-boundary.t)
+- [t/1181-isf-rule-action-boundary.t](../t/1181-isf-rule-action-boundary.t)
 
 ## 12. Explicitly Deferred
 
@@ -805,6 +811,7 @@ Focused tests:
   closed as unsupported transaction clauses.
 - Top-level child instantiation and spawn parameter binding.
 - Enforced resource arbitration and priority resolution.
+- Expression-valued rule assignment actions beyond scalar `(port value)`.
 - Full transaction `(stage ...)` valid/ready pipeline lowering. Authored
   transaction stage clauses currently fail closed during lowering.
 - Full temporal `(contract ...)` assertion lowering. Authored transaction

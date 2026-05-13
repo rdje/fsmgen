@@ -202,6 +202,11 @@ The actor-shell rule shape is checked by
 to keep parser-returned rule entries discoverable as scalar `name`, optional
 `when`, and `actions` array shells while leaving rule payload contents private
 scheduler input.
+The rule-action parser boundary is checked by
+[t/1181-isf-rule-action-boundary.t](../t/1181-isf-rule-action-boundary.t)
+so accepted rule actions have explicit `(port value)`,
+`(trigger transaction)`, or `(priority over other_rule)` shapes before a rule
+enters the actor shell. Expression-valued rule assignments remain deferred.
 The factored rule-guard scheduled `.fsm` shape is checked by
 [t/1168-isf-rule-guard-factoring.t](../t/1168-isf-rule-guard-factoring.t)
 so rule actions remain grouped under one guard block in review artifacts.

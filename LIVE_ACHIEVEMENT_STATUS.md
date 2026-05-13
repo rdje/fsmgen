@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF rule action parser boundary
+- Active: `R14`. Rule actions now fail malformed shapes at parse time before
+  actor-shell return. Accepted actions are `(port value)`,
+  `(trigger transaction)`, and `(priority over other_rule)`.
+- `t/1181` covers the accepted rule action shell and malformed scalar,
+  nested-head, trigger-arity, missing-value, and expression-valued assignment
+  cases. Expression-valued rule assignment remains deferred.
+
 ## 2026-05-13: R14 — ISF unsupported transaction clauses fail closed
 - Active: `R14`. Unsupported ISF transaction clause heads now fail closed
   before lowering instead of being silently ignored, including the removed

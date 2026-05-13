@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF rule action parser boundary
+- Tightened [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
+  so rule actions must be structurally valid before an actor shell is returned.
+- Added [t/1181-isf-rule-action-boundary.t](t/1181-isf-rule-action-boundary.t)
+  for accepted `(port value)`, `(trigger transaction)`, and
+  `(priority over other_rule)` actions plus malformed scalar actions, nested
+  heads, trigger arity, missing values, and expression-valued assignment
+  payloads.
+- Updated the ISF public-interface contract metadata, ISF spec, mdBook, and
+  roadmap notes. Expression-valued rule assignments remain deferred.
 ### R14 — ISF unsupported transaction clauses fail closed
 - Changed [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
   so unsupported transaction clause heads fail closed before state expansion
