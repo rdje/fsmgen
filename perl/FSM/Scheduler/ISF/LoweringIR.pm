@@ -328,7 +328,7 @@ sub _build_transaction($self, $tx, $actor, $txi) {
     my $tn  = $tx->{name};
     my $wd  = $actor->{watchdog};
     my $drives = $actor->{drives} || {};
-    _reject_unsupported_contract_clauses($tx->{clauses}, $tn);
+    _reject_unsupported_deferred_clauses($tx->{clauses}, $tn);
     my $widths = _build_signal_width_map($actor, $tx);
     my @st; my %ct; my @dt; my @ps; my @doc; my @spc; my @dps;
     my $si  = 0; my $ha = 0; my $wdc; my $lat;
@@ -397,7 +397,7 @@ sub _build_transaction($self, $tx, $actor, $txi) {
     return (\@st, \%ct, \@dt, \@doc, \@spc);
 }
 
-sub _reject_unsupported_contract_clauses {
+sub _reject_unsupported_deferred_clauses {
     my ($clauses, $tn) = @_;
     return unless ref($clauses) eq 'ARRAY';
 
@@ -407,13 +407,16 @@ sub _reject_unsupported_contract_clauses {
         if (defined($keyword) && !ref($keyword) && $keyword eq 'contract') {
             confess "Transaction '$tn': temporal '(contract ...)' clauses are parsed but not implemented by ISF lowering\n";
         }
+        if (defined($keyword) && !ref($keyword) && $keyword eq 'stage') {
+            confess "Transaction '$tn': pipeline '(stage ...)' clauses are parsed but not implemented by ISF lowering\n";
+        }
 
         if (defined($keyword) && !ref($keyword) && ($keyword eq 'when' || $keyword eq 'repeat')) {
-            _reject_unsupported_contract_clauses([@{$clause}[2 .. $#$clause]], $tn);
+            _reject_unsupported_deferred_clauses([@{$clause}[2 .. $#$clause]], $tn);
         } elsif (defined($keyword) && !ref($keyword) && $keyword eq 'switch') {
             for my $branch (@{$clause}[2 .. $#$clause]) {
                 next unless ref($branch) eq 'ARRAY';
-                _reject_unsupported_contract_clauses([@{$branch}[1 .. $#$branch]], $tn);
+                _reject_unsupported_deferred_clauses([@{$branch}[1 .. $#$branch]], $tn);
             }
         }
     }

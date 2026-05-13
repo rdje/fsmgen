@@ -150,8 +150,12 @@ Supported actor clauses:
 - `(priority ...)`
 
 Parser-carried but not currently semantically enforced by the scheduler:
-- actor-level `(phase ...)`
-- actor-level `(stage ...)`
+- actor-level `(phase name property...)`, structurally validated as a
+  non-empty scalar name plus list-form body entries; duplicate actor phase
+  names are rejected.
+- actor-level `(stage name property...)`, structurally validated as a
+  non-empty scalar name plus list-form body entries; duplicate actor stage
+  names are rejected.
 - `(resources ...)`, structurally validated as `(resource name (arbiter priority|round_robin))`
 - actor-level `(priority lhs over rhs)`
 
@@ -575,6 +579,15 @@ the parser but not currently enforced as arbitration policy.
 names rejected before an actor shell is returned. Resource arbitration is still
 not enforced by lowering.
 
+Actor-level `(phase name property...)` and `(stage name property...)` metadata
+is structurally validated by the parser and carried in the actor shell for
+downstream consumers, but the scheduler does not enforce actor-level phase or
+stage semantics yet. Transaction-level `(phase name property...)` remains the
+current pass-through state marker lowering. Transaction-level
+`(stage name property...)` is structurally validated, but lowering rejects it
+with a targeted diagnostic because implicit valid/ready pipeline-stage
+generation is still deferred.
+
 Authored transaction `(contract ...)` temporal assertion clauses are not lowered
 yet. The scheduler rejects them with a targeted diagnostic instead of silently
 dropping them from the scheduled `.fsm`; this applies at top level and inside
@@ -774,6 +787,7 @@ Focused tests:
 - [t/1176-isf-resource-priority-boundary.t](../t/1176-isf-resource-priority-boundary.t)
 - [t/1177-isf-do-child-done-pulse.t](../t/1177-isf-do-child-done-pulse.t)
 - [t/1178-isf-handshake-compatibility-boundary.t](../t/1178-isf-handshake-compatibility-boundary.t)
+- [t/1179-isf-phase-stage-boundary.t](../t/1179-isf-phase-stage-boundary.t)
 
 ## 12. Explicitly Deferred
 
@@ -782,6 +796,8 @@ Focused tests:
 - The removed `(assign ...)` action keyword.
 - Top-level child instantiation and spawn parameter binding.
 - Enforced resource arbitration and priority resolution.
+- Full transaction `(stage ...)` valid/ready pipeline lowering. Authored
+  transaction stage clauses currently fail closed during lowering.
 - Full temporal `(contract ...)` assertion lowering. Authored transaction
   contract clauses currently fail closed during lowering.
 - Rich storage-class optimization in schedule reports.

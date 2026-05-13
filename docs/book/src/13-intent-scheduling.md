@@ -174,6 +174,10 @@ control-flow and data-operation states.
 - Deprecated `(handshake name (valid signal) (ready signal))` metadata is
   structurally validated and then ignored; direct `(on port ...)` activation
   plus generated `can_accept` is the current model.
+- Actor-level `(phase ...)` and `(stage ...)` metadata is structurally
+  validated and parser-carried only. Transaction `(phase ...)` lowers as a
+  pass-through marker state; transaction `(stage ...)` fails closed during
+  lowering until valid/ready pipeline-stage generation is implemented.
 - `(shift_right ...)` accepts an explicit `(width N)` option when the shifted
   register width is not declared elsewhere; values with no known or explicit
   width still use the placeholder `WIDTH` expression.

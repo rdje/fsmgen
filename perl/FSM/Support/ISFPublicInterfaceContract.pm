@@ -233,6 +233,7 @@ sub build_isf_public_interface_contract {
             't/1176-isf-resource-priority-boundary.t',
             't/1177-isf-do-child-done-pulse.t',
             't/1178-isf-handshake-compatibility-boundary.t',
+            't/1179-isf-phase-stage-boundary.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',

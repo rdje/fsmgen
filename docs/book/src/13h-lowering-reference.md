@@ -469,7 +469,8 @@ Total: 7 states. Each `(drive ...)` is one state. `(await ...)` is one state.
 
 Phases are named markers within a transaction. Currently lowered as
 pass-through sequential states. The `(outputs ...)` declaration is
-parsed but does not generate drive assignments.
+parsed but does not generate drive assignments. Phase names must be scalar,
+and phase body entries must be list forms before an actor shell is returned.
 
 **Status**: Parsed, lowered as pass-through. Future: jump targets,
 conditional entry points. Needs more design discussion.
@@ -481,7 +482,15 @@ conditional entry points. Needs more design discussion.
   (compute (valid ready)))
 ```
 
-Pipeline stages with implicit valid/ready handshake. Parsed but **not lowered**.
+Pipeline stages with implicit valid/ready handshake. Stage names must be scalar,
+and stage body entries must be list forms before an actor shell is returned.
+Transaction-level stages are parsed but **not lowered**: the scheduler rejects
+authored `(stage ...)` transaction clauses with a targeted diagnostic instead
+of silently dropping them from the scheduled `.fsm`.
+
+Actor-level `(phase ...)` and `(stage ...)` metadata uses the same scalar-name
+and list-body structural boundary, is carried in the parser actor shell for
+downstream consumers, and is not semantically enforced by the scheduler yet.
 
 **Future**: Generate valid/ready plumbing with pipeline registers.
 

@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF phase/stage boundary
+- Active: `R14`. Actor-level phase/stage metadata and transaction
+  phase/stage clauses now share a parser-enforced scalar-name plus list-body
+  structural boundary.
+- `t/1179` covers carried actor-level metadata, pass-through transaction
+  phase lowering, transaction stage fail-closed lowering, and malformed
+  phase/stage shape rejection. Full transaction stage pipeline lowering
+  remains deferred.
+
 ## 2026-05-13: R14 — ISF handshake compatibility boundary
 - Active: `R14`. Deprecated `(handshake name (valid signal) (ready signal))`
   metadata is now parser-validated before being ignored.

@@ -242,6 +242,13 @@ The deprecated handshake compatibility boundary is checked by
 [t/1178-isf-handshake-compatibility-boundary.t](../t/1178-isf-handshake-compatibility-boundary.t)
 so `(handshake name (valid signal) (ready signal))` metadata is structurally
 validated before being ignored. Old handshake semantics are still not lowered.
+The phase/stage boundary is checked by
+[t/1179-isf-phase-stage-boundary.t](../t/1179-isf-phase-stage-boundary.t)
+so actor-level phase/stage metadata and transaction phase/stage clauses have
+scalar names plus list-form body entries before an actor shell is returned.
+Transaction `(phase ...)` remains a pass-through state marker; transaction
+`(stage ...)` fails closed during lowering until valid/ready pipeline-stage
+generation is implemented.
 The actor-shell drive shape is checked by
 [t/1167-isf-public-actor-shell-drive-shape-audit.t](../t/1167-isf-public-actor-shell-drive-shape-audit.t)
 to keep parser-returned drive definitions discoverable as a drive-name-keyed

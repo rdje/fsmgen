@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF phase/stage boundary
+- Tightened [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
+  so actor-level phase/stage metadata and transaction phase/stage clauses
+  require scalar names plus list-form body entries; duplicate actor-level
+  phase/stage names are rejected.
+- Changed [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so transaction `(stage ...)` clauses fail closed during lowering instead of
+  being silently dropped while valid/ready pipeline-stage lowering remains
+  deferred.
+- Added [t/1179-isf-phase-stage-boundary.t](t/1179-isf-phase-stage-boundary.t)
+  and updated the ISF public-interface contract metadata, ISF spec, mdBook,
+  and roadmap notes. Transaction `(phase ...)` still lowers as a pass-through
+  marker state.
 ### R14 — ISF handshake compatibility boundary
 - Changed [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
   so deprecated `(handshake name (valid signal) (ready signal))` metadata is

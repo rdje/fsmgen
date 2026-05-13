@@ -82,6 +82,7 @@ my $expected_tested_by = [
     't/1176-isf-resource-priority-boundary.t',
     't/1177-isf-do-child-done-pulse.t',
     't/1178-isf-handshake-compatibility-boundary.t',
+    't/1179-isf-phase-stage-boundary.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {

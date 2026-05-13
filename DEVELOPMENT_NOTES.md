@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF phase/stage boundary
+- Phase/stage syntax had two weak edges: actor-level metadata was accepted
+  without structural checks, and transaction-level `(stage ...)` could be
+  parsed but silently disappear because pipeline lowering is not implemented.
+- The parser now validates the shared named-body shape for actor metadata and
+  transaction clauses. Lowering keeps the existing transaction `(phase ...)`
+  pass-through behavior, but transaction `(stage ...)` fails closed so an
+  authored pipeline-stage intent cannot be mistaken for generated valid/ready
+  plumbing.
 ## 2026-05-13: R14 ISF handshake compatibility boundary
 - Deprecated handshake metadata was compatibility-only but too loose: the
   parser accepted the actor clause and then ignored it, which meant malformed

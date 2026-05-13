@@ -98,6 +98,8 @@ sub _build_actor($self, $actor_ast, $source_label) {
         phases       => [],
         stages       => [],
     };
+    my %actor_phase_names;
+    my %actor_stage_names;
 
     for my $clause (@body) {
         confess "Error: expected list, got " . (ref($clause) || 'scalar') . " in actor body\n"
@@ -115,8 +117,18 @@ sub _build_actor($self, $actor_ast, $source_label) {
             when ('resources') { $result->{resources} = $self->_parse_resources($clause); }
             when ('priority')  { push @{$result->{priorities}}, $self->_parse_priority($clause); }
             when ('drive')     { $self->_parse_drive_def($clause, $result->{drives}); }
-            when ('phase')     { push @{$result->{phases}},     $self->_parse_phase($clause); }
-            when ('stage')     { push @{$result->{stages}},     $self->_parse_stage($clause); }
+            when ('phase')     {
+                my $phase = $self->_parse_phase($clause);
+                confess "Error: duplicate actor phase '$phase->{name}'\n"
+                    if $actor_phase_names{$phase->{name}}++;
+                push @{$result->{phases}}, $phase;
+            }
+            when ('stage')     {
+                my $stage = $self->_parse_stage($clause);
+                confess "Error: duplicate actor stage '$stage->{name}'\n"
+                    if $actor_stage_names{$stage->{name}}++;
+                push @{$result->{stages}}, $stage;
+            }
             default {
                 confess "Error: unknown actor clause '$keyword' in actor '$actor_name'\n";
             }
@@ -245,6 +257,7 @@ sub _parse_transaction($self, $clause) {
     for my $i (2 .. $#$clause) {
         push @clauses, $clause->[$i];
     }
+    $self->_validate_transaction_phase_stage_clauses(\@clauses);
 
     return { name => $name, clauses => \@clauses };
 }
@@ -373,22 +386,52 @@ sub _parse_drive_def($self, $clause, $drives) {
 }
 
 sub _parse_phase($self, $clause) {
-    confess "Error: (phase ...) requires a name\n" unless @$clause >= 2;
-    my $name = $clause->[1];
-    my @body;
-    for my $i (2 .. $#$clause) {
-        push @body, $clause->[$i];
-    }
-    return { name => $name, body => \@body };
+    return $self->_parse_named_body_clause($clause, 'phase');
 }
 
 sub _parse_stage($self, $clause) {
-    confess "Error: (stage ...) requires a name\n" unless @$clause >= 2;
+    return $self->_parse_named_body_clause($clause, 'stage');
+}
+
+sub _validate_transaction_phase_stage_clauses($self, $clauses) {
+    return unless ref($clauses) eq 'ARRAY';
+
+    for my $clause (@$clauses) {
+        next unless ref($clause) eq 'ARRAY' && @$clause;
+        my $keyword = $clause->[0];
+        next unless defined($keyword) && !ref($keyword);
+
+        if ($keyword eq 'phase' || $keyword eq 'stage') {
+            $self->_parse_named_body_clause($clause, $keyword);
+        }
+
+        if ($keyword eq 'when' || $keyword eq 'repeat') {
+            $self->_validate_transaction_phase_stage_clauses([@{$clause}[2 .. $#$clause]]);
+        } elsif ($keyword eq 'switch') {
+            for my $branch (@{$clause}[2 .. $#$clause]) {
+                next unless ref($branch) eq 'ARRAY';
+                $self->_validate_transaction_phase_stage_clauses([@{$branch}[1 .. $#$branch]]);
+            }
+        }
+    }
+}
+
+sub _parse_named_body_clause($self, $clause, $kind) {
+    confess "Error: ($kind ...) requires a name\n" unless @$clause >= 2;
     my $name = $clause->[1];
+    confess "Error: ($kind ...) requires a scalar name\n"
+        unless defined($name) && !ref($name) && length($name);
+
     my @body;
     for my $i (2 .. $#$clause) {
-        push @body, $clause->[$i];
+        my $entry = $clause->[$i];
+        confess "Error: $kind '$name' body entries must be list forms\n"
+            unless ref($entry) eq 'ARRAY' && @$entry;
+        confess "Error: $kind '$name' body entry heads must be scalar\n"
+            unless defined($entry->[0]) && !ref($entry->[0]) && length($entry->[0]);
+        push @body, $entry;
     }
+
     return { name => $name, body => \@body };
 }
 

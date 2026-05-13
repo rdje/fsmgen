@@ -84,6 +84,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   now parser-validated before being ignored; `t/1178` covers the accepted
   compatibility shape and malformed boundary cases while old handshake
   semantics remain deferred.
+- ISF phase/stage handling now has an explicit boundary: actor-level
+  `(phase ...)` and `(stage ...)` metadata is structurally validated and
+  parser-carried, transaction `(phase ...)` remains a pass-through state
+  marker, and transaction `(stage ...)` fails closed during lowering until
+  valid/ready pipeline-stage generation is implemented. `t/1179` covers the
+  accepted and malformed boundary cases.
 - Full-gate validation for the `do` pulse slice also hardened
   `ExpressionNamer` wire declaration formatting so MSB values are computed
   before interpolation, keeping the `t/520` query defensive-copy audit from
@@ -1194,6 +1200,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - [t/1101-isf-extract-slices.t](t/1101-isf-extract-slices.t) now proves
     explicit assemble-target parsing and known-width `extract` lowering to
     exact descending slices.
+  - [t/1179-isf-phase-stage-boundary.t](t/1179-isf-phase-stage-boundary.t)
+    now proves the phase/stage boundary: actor-level metadata is validated and
+    carried, transaction phases lower as pass-through markers, and transaction
+    stages fail closed until pipeline-stage generation is implemented.
   - Next bounded `R14` slice: convert another documented scheduler limitation
     into regression-backed behavior.
 - Superseded `R13` carry-forward detail retained below this note should not be
@@ -3915,6 +3925,11 @@ Done:
   [t/1178-isf-handshake-compatibility-boundary.t](t/1178-isf-handshake-compatibility-boundary.t),
   covering validated-but-ignored `(handshake name (valid signal) (ready signal))`
   metadata and malformed boundary cases.
+- Phase/stage parser and lowering boundaries are now regression-backed by
+  [t/1179-isf-phase-stage-boundary.t](t/1179-isf-phase-stage-boundary.t),
+  covering actor-level metadata validation/carrying, transaction phase
+  pass-through lowering, transaction stage fail-closed lowering, and malformed
+  phase/stage shapes.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

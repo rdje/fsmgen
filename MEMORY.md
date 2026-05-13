@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF phase/stage boundary
+- Actor-level `(phase name ...)` and `(stage name ...)` metadata now has
+  parser-side structural validation: names must be non-empty scalars, body
+  entries must be list forms with scalar heads, and duplicate actor-level
+  phase/stage names are rejected before an actor shell is returned.
+- Transaction `(phase ...)` remains the documented pass-through state marker.
+  Transaction `(stage ...)` is structurally validated but now fails closed
+  during lowering with a targeted diagnostic until valid/ready pipeline-stage
+  generation is implemented.
+- Added `t/1179-isf-phase-stage-boundary.t` and updated the ISF public
+  contract, spec, mdBook, and live roadmap notes.
 ## 2026-05-13: R14 — ISF handshake compatibility boundary
 - Deprecated `(handshake name (valid signal) (ready signal))` actor metadata is
   now structurally validated before being ignored. Malformed names, missing
