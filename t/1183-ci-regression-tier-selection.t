@@ -23,6 +23,14 @@ sub run_ci {
     };
 }
 
+sub slurp {
+    my ($path) = @_;
+    open my $fh, '<', $path or die "cannot read $path: $!";
+    my $text = do { local $/; <$fh> };
+    close $fh or die "cannot close $path: $!";
+    return $text;
+}
+
 subtest 'list mode advertises concrete quick and ISF test tiers' => sub {
     my $result = run_ci('--list');
 
@@ -33,7 +41,7 @@ subtest 'list mode advertises concrete quick and ISF test tiers' => sub {
     like($result->{stdout}, qr/t\/13-composition-source-classification\.t/, 'quick tier includes composition classification');
     like($result->{stdout}, qr/t\/1091-isf-parser-apb-requester\.t/, 'quick tier includes ISF parsing smoke');
     like($result->{stdout}, qr/isf tests:\n/, '--list includes ISF tier');
-    like($result->{stdout}, qr/t\/1182-isf-rule-trigger-target-boundary\.t/, 'ISF tier includes the latest ISF boundary test');
+    like($result->{stdout}, qr/t\/1199-isf-shift-clause-boundary\.t/, 'ISF tier includes the latest ISF boundary test');
 };
 
 subtest 'dry-run modes select the expected command families' => sub {
@@ -48,7 +56,7 @@ subtest 'dry-run modes select the expected command families' => sub {
     ok($isf->{success}, 'ISF dry-run succeeds');
     is($isf->{stderr}, '', 'ISF dry-run keeps stderr clean');
     like($isf->{stdout}, qr/==> Perl ISF regression suite/, 'ISF dry-run selects ISF suite');
-    like($isf->{stdout}, qr/t\/1182-isf-rule-trigger-target-boundary\.t/, 'ISF dry-run includes latest ISF test');
+    like($isf->{stdout}, qr/t\/1199-isf-shift-clause-boundary\.t/, 'ISF dry-run includes latest ISF test');
     unlike($isf->{stdout}, qr/mdBook build/, '--no-book suppresses book build');
 
     my $full = run_ci('full', '--dry-run');
@@ -64,6 +72,13 @@ subtest 'unknown modes fail with usage' => sub {
     ok(!$result->{success}, 'unknown mode fails');
     like($result->{stderr}, qr/ci-regression: unknown argument: fast/, 'unknown mode diagnostic names the argument');
     like($result->{stderr}, qr/Usage: \.\/bin\/ci-regression/, 'unknown mode prints usage');
+};
+
+subtest 'ISF tier remains ready for the next numbered band' => sub {
+    my $script = slurp($ci);
+
+    like($script, qr/t\/12\[0-9\]\[0-9\]-isf\*\.t/, 'ISF tier includes the 12xx ISF band');
+    like($script, qr/shopt -s nullglob/, 'unmatched future ISF bands do not produce literal paths');
 };
 
 done_testing();

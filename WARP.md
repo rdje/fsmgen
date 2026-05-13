@@ -30,7 +30,7 @@ FSMGen is a sophisticated finite state machine (FSM) HDL generator that converts
 # Fast turnaround smoke across direct FSM, composition, and ISF basics
 ./bin/ci-regression quick
 
-# Current ISF-focused band
+# Current ISF-focused 109x/11xx/12xx bands
 ./bin/ci-regression isf
 
 # Full local gate; default mode if no argument is supplied

@@ -8,6 +8,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Support workflow: [bin/ci-regression](bin/ci-regression) now supports
   explicit `quick`, `isf`, and `full` modes, plus `--list`, `--dry-run`, and
   `--no-book`. No argument still runs the historical full gate.
+- The `isf` tier now includes the future `12xx` ISF numbered band with
+  `nullglob` handling so the tier keeps working before the first `12xx-isf`
+  file exists.
 - ISF `shift_left` and `shift_right` clauses now validate scalar register and
   bit operands before scheduled `.fsm` emission. `t/1199` covers valid lowering
   plus missing, nested, and extra malformed operand rejection.
@@ -1291,8 +1294,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
     references.
   - [bin/ci-regression](bin/ci-regression) now has explicit turnaround tiers:
     `quick` for a curated direct/composition/ISF smoke set, `isf` for the
-    current ISF band, and `full` for the historical complete gate. This is
-    workflow support only; the active implementation lane remains `R14`.
+    current 109x/11xx/12xx ISF bands, and `full` for the historical complete
+    gate. This is workflow support only; the active implementation lane
+    remains `R14`.
   - [t/1184-isf-child-transaction-target-boundary.t](t/1184-isf-child-transaction-target-boundary.t)
     now proves `(do child)` and `(spawn child as instance)` targets must
     resolve to declared same-actor transactions before scheduled `.fsm`

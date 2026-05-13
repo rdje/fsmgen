@@ -193,7 +193,8 @@ cd docs/book && mdbook serve
   - `quick`: curated smoke set across direct `.fsm`, composition
     classification, one composition child path, ISF parse/schedule, and the
     ISF public contract.
-  - `isf`: all ISF-focused tests in the current 109x/11xx numbered bands.
+  - `isf`: all ISF-focused tests in the current 109x, 11xx, and 12xx
+    numbered bands.
   - `full`: the complete Perl regression suite with `prove -I perl t`.
 - With no mode argument it runs `full`, preserving the historical pre-push
   gate behavior.

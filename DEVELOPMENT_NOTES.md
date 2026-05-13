@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: Workflow ISF regression tier 12xx readiness
+- The ISF boundary suite reached `t/1199`, so the next numbered ISF test will
+  naturally move into the `12xx` band. Leaving `bin/ci-regression isf` capped
+  at 11xx would make the local ISF tier silently incomplete.
+- The tier now globs 109x, 11xx, and 12xx ISF tests with `nullglob` enabled.
+  That keeps the command ready for the next band without breaking while the
+  12xx band is still empty.
 ## 2026-05-13: R14 ISF shift clause boundary
 - Shift operations build `.fsm` expressions directly from the authored register
   and bit operands. Missing or nested operands would otherwise create malformed

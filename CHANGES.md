@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### Workflow — ISF regression tier 12xx readiness
+- Extended [bin/ci-regression](bin/ci-regression) so `isf` mode includes
+  future `t/12xx-isf*.t` tests as well as the current 109x/11xx ISF bands.
+- Wrapped the ISF glob expansion with `nullglob` so the tier remains runnable
+  before the first 12xx ISF test file exists.
+- Updated [t/1183-ci-regression-tier-selection.t](t/1183-ci-regression-tier-selection.t),
+  [README.md](README.md), [WARP.md](WARP.md), the mdBook troubleshooting
+  chapter, and roadmap notes.
 ### R14 — ISF shift clause boundary
 - Tightened [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
   so `shift_left` and `shift_right` require scalar register and bit operands

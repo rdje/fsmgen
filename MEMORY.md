@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: Workflow — ISF regression tier 12xx readiness
+- `bin/ci-regression isf` now includes the future `t/12xx-isf*.t` numbered
+  band in addition to the existing 109x/11xx ISF bands.
+- The script enables `nullglob` around the ISF glob expansion so the future
+  band does not leave a literal unmatched path before the first 12xx ISF test
+  exists.
+- Updated `t/1183-ci-regression-tier-selection.t`, README, WARP, the mdBook
+  troubleshooting chapter, and roadmap notes.
 ## 2026-05-13: R14 — ISF shift clause boundary
 - ISF lowering now validates `shift_left` and `shift_right` operand shape
   before scheduled `.fsm` emission.

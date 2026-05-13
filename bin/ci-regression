@@ -21,7 +21,9 @@ QUICK_TESTS=(
   t/1112-isf-public-interface-contract.t
 )
 
-ISF_TESTS=(t/109[1-9]-isf*.t t/11[0-9][0-9]-isf*.t)
+shopt -s nullglob
+ISF_TESTS=(t/109[1-9]-isf*.t t/11[0-9][0-9]-isf*.t t/12[0-9][0-9]-isf*.t)
+shopt -u nullglob
 IFS=$'\n' ISF_TESTS=($(printf '%s\n' "${ISF_TESTS[@]}" | sort))
 unset IFS
 
@@ -33,7 +35,7 @@ Modes:
   quick  Curated smoke set for fast turnaround across direct FSM,
          composition classification, one composition child path, ISF parse,
          ISF schedule, and the ISF public contract.
-  isf    All ISF-focused tests in the 109x and 11xx numbered bands.
+  isf    All ISF-focused tests in the 109x, 11xx, and 12xx numbered bands.
   full   Complete Perl regression suite. This is the default.
 
 Options:

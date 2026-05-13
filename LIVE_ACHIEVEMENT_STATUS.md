@@ -2,6 +2,12 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: Workflow — ISF regression tier 12xx readiness
+- Active support workflow: `bin/ci-regression isf` now includes the future
+  `t/12xx-isf*.t` numbered band while preserving the existing 109x/11xx bands.
+- `t/1183` now checks both the latest visible ISF test and the 12xx/nullglob
+  selector boundary.
+
 ## 2026-05-13: R14 — ISF shift clause boundary
 - Active: `R14`. `shift_left` and `shift_right` now require scalar register and
   bit operands before scheduled `.fsm` emission.
