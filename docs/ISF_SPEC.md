@@ -389,6 +389,12 @@ complete, repeat, update, shift/assemble/extract data operations, and nested
 `when`. Nested repeats inside `when` bodies register the shared transaction
 counter width like top-level and switch-nested repeats.
 
+This transaction clause is distinct from the rule guard spelling
+`(rule name (when condition) action...)`. In a rule, `(when condition)` is a
+guard clause with no body of its own; it guards the rule actions that follow
+it. The preferred rule shorthand is `(rule name condition action...)`, which
+normalizes to the same public `when` field as the long guard spelling.
+
 `(switch signal (value body...)...)` creates one decision state with one branch
 per unique explicit value. Duplicate explicit values are rejected. A switch may
 also contain one fallback branch, spelled `(default body...)` or `(_ body...)`.
@@ -496,7 +502,9 @@ Current lowering:
 - A scalar condition immediately after the rule name is the preferred shorthand
   guard. Long-form `(when condition)` supplies the same guard. The parser
   normalizes both spellings to the same public `when` field. The shipped guard
-  form is a single port/signal condition.
+  form is a single port/signal condition. Rule-local `(when condition)` is not
+  the transaction control-flow form; it has no body and guards the rule actions
+  that follow it.
 - `(port value)` actions lower as guarded flopped assignments to that port.
 - `(trigger transaction)` lowers as a guarded `<1` one-cycle delayed pulse to
   `transaction_start`, so a rule trigger is a pulse rather than a sticky

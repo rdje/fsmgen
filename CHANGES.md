@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF when-form scope clarification
+- Clarified [docs/book/src/13d-control-flow.md](docs/book/src/13d-control-flow.md)
+  so the body-bearing `(when condition body...)` form is explicitly scoped to
+  transaction-local control flow.
+- Added matching notes in [docs/book/src/13g-rules.md](docs/book/src/13g-rules.md),
+  [docs/ISF_SPEC.md](docs/ISF_SPEC.md), and
+  [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md)
+  that rule-local `(when condition)` is a guard-only clause, while
+  `(rule name condition actions...)` remains the preferred rule shorthand.
 ### R14 — ISF rule trigger fan-in backlog
 - Documented the current same-transaction rule-trigger behavior: multiple
   rules can emit `<1` assignments to the same `transaction_start` LHS, and the

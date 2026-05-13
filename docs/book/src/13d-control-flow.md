@@ -1,5 +1,27 @@
 # Control Flow
 
+This chapter describes transaction-local control flow. In this context,
+`(when condition body...)` always carries a body and lowers to scheduled
+conditional states.
+
+Rules use a related but different guard form:
+
+```lisp
+(rule always_ready
+  (when ready)
+  (valid 1))
+```
+
+In a rule, `(when condition)` is a guard clause for the rule's actions; it is
+not a body-bearing control-flow form. The preferred rule shorthand is:
+
+```lisp
+(rule always_ready ready
+  (valid 1))
+```
+
+See [Rules and Priorities](13g-rules.md) for rule guard lowering.
+
 ## `(when condition body...)` — Inline Branching
 
 ```lisp

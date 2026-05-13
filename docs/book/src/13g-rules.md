@@ -20,6 +20,11 @@ The long form remains accepted and normalizes to the same parser output:
   (trigger main_transfer))
 ```
 
+This rule-local `(when ready)` is a guard clause, not transaction control flow.
+It has no body of its own; it guards the rule actions that follow it. The
+body-bearing `(when condition body...)` form is only described in
+[Control Flow](13d-control-flow.md) because it is a transaction clause.
+
 **Actions**:
 - `(port value)` — guarded assignment when the condition holds
 - `(trigger transaction)` — guarded one-cycle delayed pulse on the transaction

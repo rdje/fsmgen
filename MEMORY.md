@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF when-form scope clarification
+- Clarified the mdBook Control Flow chapter so `(when condition body...)` is
+  explicitly transaction-local control flow, while rule-local `(when condition)`
+  is a guard-only clause with no body of its own.
+- Cross-linked the mdBook Rules chapter back to Control Flow and updated the
+  ISF spec/public-interface contract with the same distinction, including the
+  preferred rule shorthand `(rule name condition actions...)`.
 ## 2026-05-13: R14 — ISF rule trigger fan-in backlog
 - Logged the rule-trigger fan-in design discussion in the ISF live docs and
   mdBook. Current shipped lowering writes each rule `(trigger transaction)`

@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF when-form scope clarification
+- ISF currently uses the word `when` in two source contexts. In transactions,
+  `(when condition body...)` is a scheduled control-flow form that creates a
+  decision state plus body states. In rules, `(when condition)` is a guard
+  clause that has no body and guards the subsequent rule actions.
+- The rule shorthand `(rule name condition actions...)` reduces that ambiguity
+  for new authors, but the long guard spelling remains supported and must be
+  documented where readers encounter either spelling.
+- The mdBook Control Flow chapter now states that it only describes
+  transaction-local control flow and points to the Rules chapter for the
+  guard-only rule form.
 ## 2026-05-13: R14 ISF rule trigger fan-in backlog
 - The current ISF rule-trigger implementation is functionally correct for
   transaction activation: multiple rule DTs can write the same

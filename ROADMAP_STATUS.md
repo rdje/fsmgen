@@ -30,6 +30,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   and relies on downstream same-LHS enable consolidation for OR-equivalent
   activation, while the desired future form preserves per-rule/per-transaction
   trigger-source signals before a generated combinational OR.
+- The mdBook and ISF live docs now distinguish transaction
+  `(when condition body...)` control flow from rule-local `(when condition)`
+  guard clauses, with the rule shorthand called out as the preferred spelling.
 - `t/1097` now removes the anonymous `_start` placeholder from `do`, `spawn`,
   and control-flow drive-call lowering by asserting concrete child, instance,
   and drive start signals. Next bounded R14 slice: turn another documented
@@ -3823,6 +3826,12 @@ Done:
   and the mdBook Rules chapter: same-transaction rule triggers are
   OR-equivalent through direct `transaction_start` writes today, but explicit
   per-rule/per-transaction trigger-source fan-in remains to be implemented.
+- The mdBook Control Flow chapter now explicitly scopes
+  `(when condition body...)` to transaction-local conditional scheduling and
+  cross-references the guard-only rule form `(rule name (when condition)
+  actions...)`; [docs/ISF_SPEC.md](docs/ISF_SPEC.md) and
+  [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md)
+  carry the same distinction.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

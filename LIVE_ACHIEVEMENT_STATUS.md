@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF when-form scope clarification
+- Active: `R14`. The mdBook Control Flow chapter now makes clear that
+  `(when condition body...)` is transaction-local control flow, not the
+  rule-local guard form.
+- The Rules chapter, ISF spec, and public-interface contract now state that
+  rule `(when condition)` is guard-only and that `(rule name condition
+  actions...)` remains the preferred shorthand.
+
 ## 2026-05-13: R14 — ISF rule trigger fan-in backlog
 - Active: `R14`. The current rule-trigger behavior and its limitation are now
   documented: multiple rules triggering the same transaction are

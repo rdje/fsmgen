@@ -339,7 +339,9 @@ scheduler input.
 Authored `(rule name condition actions...)` shorthand and long-form
 `(rule name (when condition) actions...)` normalize to the same public `when`
 field. The current shorthand guard is scalar because scheduled rule guards are
-still single port/signal conditions.
+still single port/signal conditions. Rule-local `(when condition)` is a
+guard-only clause; it is not the transaction `(when condition body...)`
+control-flow construct.
 Current scheduled `.fsm` review artifacts emit a rule's `when` guard as one
 factored DT guard block around that rule's lowered actions. This keeps the
 generated text aligned with the source rule structure without widening the
