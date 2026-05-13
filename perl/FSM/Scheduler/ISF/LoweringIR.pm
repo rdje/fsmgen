@@ -169,6 +169,8 @@ sub _validate_child_transaction_refs($self, $actor) {
             next unless defined($keyword) && !ref($keyword);
             next unless $keyword eq 'do' || $keyword eq 'spawn';
 
+            _validate_child_action_clause($clause, $tx_name, 'transaction body');
+
             my $target = $clause->[1];
             confess "Transaction '$tx_name': $keyword target must be a scalar transaction name\n"
                 unless defined($target) && !ref($target) && length($target);
@@ -508,6 +510,8 @@ sub _validate_supported_transaction_clauses {
             _validate_supported_transaction_clauses([@{$clause}[2 .. $#$clause]], $tn, 'repeat');
         } elsif ($keyword eq 'await_all' || $keyword eq 'await_any') {
             _validate_sync_clause($clause, $tn, $label);
+        } elsif ($keyword eq 'do' || $keyword eq 'spawn') {
+            _validate_child_action_clause($clause, $tn, $label);
         } elsif ($keyword eq 'switch') {
             for my $branch (@{$clause}[2 .. $#$clause]) {
                 next unless ref($branch) eq 'ARRAY';
@@ -556,6 +560,34 @@ sub _validate_shift_clause {
             && defined($clause->[2])
             && !ref($clause->[2])
             && length($clause->[2]);
+
+    return 1;
+}
+
+sub _validate_child_action_clause {
+    my ($clause, $tn, $label) = @_;
+    my $keyword = $clause->[0];
+
+    if ($keyword eq 'do') {
+        confess "Transaction '$tn': do requires '(do transaction)' in $label\n"
+            unless @$clause == 2
+                && defined($clause->[1])
+                && !ref($clause->[1])
+                && length($clause->[1]);
+        return 1;
+    }
+
+    confess "Transaction '$tn': spawn requires '(spawn transaction as instance)' in $label\n"
+        unless @$clause == 4
+            && defined($clause->[1])
+            && !ref($clause->[1])
+            && length($clause->[1])
+            && defined($clause->[2])
+            && !ref($clause->[2])
+            && $clause->[2] eq 'as'
+            && defined($clause->[3])
+            && !ref($clause->[3])
+            && length($clause->[3]);
 
     return 1;
 }

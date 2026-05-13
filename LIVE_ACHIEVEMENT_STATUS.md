@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF child composition clause boundary
+- Active: `R14`. `(do transaction)` and `(spawn transaction as instance)` now
+  require exact scalar child/instance operands before scheduled `.fsm`
+  emission.
+- `t/1204` covers valid child handshake lowering plus malformed `do` and
+  `spawn` forms.
+
 ## 2026-05-13: R14 — ISF await sync clause boundary
 - Active: `R14`. `(await_all done_port)` and `(await_any done_port)` now require
   exactly one scalar done-port operand before scheduled `.fsm` emission.

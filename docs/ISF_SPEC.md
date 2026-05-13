@@ -526,6 +526,8 @@ Current lowering:
 Current lowering:
 - The parent emits an await-shaped state guarded by `child_transaction_done`.
 - The child idle state is rewired to wait on `child_transaction_start`.
+- `do` is structurally validated as `(do transaction)` with one scalar child
+  transaction operand before child-target resolution.
 - The `child_transaction` target must name a declared transaction in the same
   actor. Forward references are accepted; missing targets fail before
   scheduled `.fsm` emission.
@@ -545,6 +547,9 @@ Current lowering:
 
 Current lowering:
 - Spawned transactions are emitted as separate child `.fsm` files.
+- `spawn` is structurally validated as `(spawn transaction as instance)` with
+  one scalar child transaction and one scalar instance name before spawned
+  child collection.
 - The spawned transaction target must name a declared transaction in the same
   actor. Forward references are accepted; missing targets fail before
   scheduled `.fsm` emission.
@@ -897,6 +902,7 @@ Focused tests:
 - [t/1201-isf-extract-clause-boundary.t](../t/1201-isf-extract-clause-boundary.t)
 - [t/1202-isf-repeat-clause-boundary.t](../t/1202-isf-repeat-clause-boundary.t)
 - [t/1203-isf-await-sync-clause-boundary.t](../t/1203-isf-await-sync-clause-boundary.t)
+- [t/1204-isf-child-composition-clause-boundary.t](../t/1204-isf-child-composition-clause-boundary.t)
 
 ## 12. Explicitly Deferred
 

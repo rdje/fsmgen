@@ -356,6 +356,11 @@ The await-sync clause boundary is checked by
 [t/1203-isf-await-sync-clause-boundary.t](../t/1203-isf-await-sync-clause-boundary.t)
 so `(await_all done_port)` and `(await_any done_port)` require exactly one
 scalar done-port operand before sync-state emission.
+The child-composition clause boundary is checked by
+[t/1204-isf-child-composition-clause-boundary.t](../t/1204-isf-child-composition-clause-boundary.t)
+so `(do transaction)` and `(spawn transaction as instance)` require exact
+scalar child/instance operands before child-target resolution or spawned-child
+collection.
 ISF switch fallback scheduling is checked by
 [t/1103-isf-switch-branch-exits.t](../t/1103-isf-switch-branch-exits.t)
 and the generated `.fsm` default selector contract is checked by

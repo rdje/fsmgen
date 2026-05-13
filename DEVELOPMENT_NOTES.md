@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF child composition clause boundary
+- `spawn` participates in child-module collection before the parent transaction
+  is expanded. Letting malformed spawn clauses reach that stage can create
+  default instance names or child files from an invalid authoring form.
+- The lowerer now validates `do` and `spawn` shape before target lookup and
+  collection: `do` has one scalar child transaction, and `spawn` has scalar
+  child/instance operands separated by literal `as`.
 ## 2026-05-13: R14 ISF await sync clause boundary
 - `await_all` and `await_any` consume the collected spawned-instance done
   signals for a parent transaction, but the authored clause still carries a

@@ -15,6 +15,10 @@ Composition lets transactions call other transactions.
 Sequential, blocking. One instance of each child is intended to be reused by
 the parent transaction.
 
+The form is exact: `(do child)`, with one scalar child transaction operand.
+Malformed missing, nested, or extra operands fail before child-target
+resolution.
+
 **Current lowering**:
 1. Parent asserts `child_start` and awaits `child_done`
 2. Child's idle state is rewired to watch `child_start`
@@ -61,6 +65,11 @@ call.
 ```
 
 Non-blocking. Each spawn declares a separate intended instance.
+
+The form is exact: `(spawn child as name)`, with scalar child and instance
+names and a literal `as` separator. Malformed spawn forms fail before spawned
+child collection, so the scheduler does not invent a default instance name for
+an invalid clause.
 
 **Lowering**:
 - One `.fsm` per unique child module

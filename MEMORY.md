@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF child composition clause boundary
+- ISF `(do transaction)` and `(spawn transaction as instance)` lowering now
+  validates exact scalar child/instance shapes before child-target resolution
+  or spawned-child collection.
+- Malformed missing, nested, wrong-separator, and extra-operand forms now fail
+  before scheduled `.fsm` emission.
+- Added `t/1204-isf-child-composition-clause-boundary.t` and updated the ISF
+  public contract metadata, spec, mdBook, and live roadmap notes.
 ## 2026-05-13: R14 — ISF await sync clause boundary
 - ISF `(await_all done_port)` and `(await_any done_port)` lowering now validates
   exactly one scalar done-port operand before sync-state emission.

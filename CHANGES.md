@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF child composition clause boundary
+- Tightened [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so `(do transaction)` and `(spawn transaction as instance)` require exact
+  scalar child/instance operands before child-target resolution or spawned-child
+  collection.
+- Added [t/1204-isf-child-composition-clause-boundary.t](t/1204-isf-child-composition-clause-boundary.t)
+  for valid child handshake lowering plus malformed `do` and `spawn` rejection.
+- Updated the ISF public-interface contract metadata, ISF spec, mdBook
+  composition chapter, and roadmap notes.
 ### R14 — ISF await sync clause boundary
 - Tightened [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
   so `(await_all done_port)` and `(await_any done_port)` require exactly one
