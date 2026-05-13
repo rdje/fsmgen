@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF rule trigger target boundary
+- Rule-trigger fan-in deliberately creates generated `rule_transaction`
+  sources and `transaction_start` fan-in DTs. Without a target-existence check,
+  a misspelled trigger target could create a plausible but unowned start path
+  for a transaction that was never declared.
+- The validation belongs at the parser actor-handoff boundary because it needs
+  whole-actor knowledge but should still fail before downstream consumers see
+  an accepted actor shell. This keeps authoring order flexible: a rule may
+  trigger a transaction declared later in the actor body.
 ## 2026-05-13: R14 ISF rule action parser boundary
 - Rule action payloads feed directly into generated non-state DT assignments.
   Before this slice, a scalar rule action could be skipped and malformed

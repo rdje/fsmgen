@@ -529,6 +529,10 @@ Current lowering:
   `(priority over other_rule)`. Today, `(port value)` and trigger targets use
   scalar payloads because the rule lowerer does not implement expression-valued
   rule assignments.
+- `(trigger transaction)` targets must name a declared transaction in the same
+  actor. Forward references are accepted because the parser validates trigger
+  targets after the full actor body is collected; missing targets fail before
+  an actor shell is returned.
 - Each rule emits one non-state DT block.
 - A scalar condition immediately after the rule name is the preferred shorthand
   guard. Long-form `(when condition)` supplies the same guard. The parser
@@ -802,6 +806,7 @@ Focused tests:
 - [t/1179-isf-phase-stage-boundary.t](../t/1179-isf-phase-stage-boundary.t)
 - [t/1180-isf-unsupported-transaction-clause-boundary.t](../t/1180-isf-unsupported-transaction-clause-boundary.t)
 - [t/1181-isf-rule-action-boundary.t](../t/1181-isf-rule-action-boundary.t)
+- [t/1182-isf-rule-trigger-target-boundary.t](../t/1182-isf-rule-trigger-target-boundary.t)
 
 ## 12. Explicitly Deferred
 

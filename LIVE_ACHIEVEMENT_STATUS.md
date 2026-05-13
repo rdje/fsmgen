@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF rule trigger target boundary
+- Active: `R14`. Rule `(trigger transaction)` actions now require the target
+  transaction to be declared in the same actor before parser handoff returns.
+- `t/1182` covers valid forward references plus unknown-target rejection with
+  a diagnostic naming the rule, target, and actor. This prevents misspelled
+  triggers from synthesizing unowned `transaction_start` fan-in paths.
+
 ## 2026-05-13: R14 — ISF rule action parser boundary
 - Active: `R14`. Rule actions now fail malformed shapes at parse time before
   actor-shell return. Accepted actions are `(port value)`,

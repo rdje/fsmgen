@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF rule trigger target boundary
+- Tightened [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
+  so rule `(trigger transaction)` actions must resolve to a declared
+  transaction in the same actor before parser handoff returns.
+- Added [t/1182-isf-rule-trigger-target-boundary.t](t/1182-isf-rule-trigger-target-boundary.t)
+  for valid forward references and unknown-target rejection with a targeted
+  diagnostic.
+- Updated the ISF public-interface contract metadata, ISF spec, mdBook, and
+  roadmap notes so trigger references are part of the documented parser
+  boundary.
 ### R14 — ISF rule action parser boundary
 - Tightened [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
   so rule actions must be structurally valid before an actor shell is returned.

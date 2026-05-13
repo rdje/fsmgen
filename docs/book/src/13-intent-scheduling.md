@@ -183,7 +183,8 @@ control-flow and data-operation states.
   and unsupported nested body forms in `when`, `switch`, and `repeat`.
 - Rule actions are structurally validated as `(port value)`,
   `(trigger transaction)`, or `(priority over other_rule)`. Expression-valued
-  rule assignments remain deferred.
+  rule assignments remain deferred. Rule trigger targets must resolve to a
+  declared transaction in the same actor before parser handoff returns.
 - `(shift_right ...)` accepts an explicit `(width N)` option when the shifted
   register width is not declared elsewhere; values with no known or explicit
   width still use the placeholder `WIDTH` expression.

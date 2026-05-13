@@ -99,6 +99,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   covers accepted `(port value)`, `(trigger transaction)`, and
   `(priority over other_rule)` actions plus malformed scalar, nested-head,
   trigger-arity, missing-value, and expression-valued assignment cases.
+- ISF rule trigger targets now resolve against declared transactions before
+  actor-shell return. `t/1182` covers forward references and unknown-target
+  rejection so misspelled triggers cannot synthesize unowned start fan-in.
 - Full-gate validation for the `do` pulse slice also hardened
   `ExpressionNamer` wire declaration formatting so MSB values are computed
   before interpolation, keeping the `t/520` query defensive-copy audit from
@@ -1220,6 +1223,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - [t/1181-isf-rule-action-boundary.t](t/1181-isf-rule-action-boundary.t)
     now proves rule actions are structurally validated before actor-shell
     return, while expression-valued rule assignments remain deferred.
+  - [t/1182-isf-rule-trigger-target-boundary.t](t/1182-isf-rule-trigger-target-boundary.t)
+    now proves rule trigger targets resolve to declared same-actor
+    transactions before actor-shell return, while preserving forward
+    references.
   - Next bounded `R14` slice: convert another documented scheduler limitation
     into regression-backed behavior.
 - Superseded `R13` carry-forward detail retained below this note should not be
@@ -3954,6 +3961,10 @@ Done:
   [t/1181-isf-rule-action-boundary.t](t/1181-isf-rule-action-boundary.t),
   covering accepted rule action forms and malformed scalar, nested-head,
   trigger-arity, missing-value, and expression-valued assignment cases.
+- Rule-trigger target validation is now regression-backed by
+  [t/1182-isf-rule-trigger-target-boundary.t](t/1182-isf-rule-trigger-target-boundary.t),
+  covering valid forward references plus unknown-target rejection before the
+  parser returns an actor shell.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

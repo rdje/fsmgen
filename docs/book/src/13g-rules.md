@@ -35,7 +35,9 @@ body-bearing `(when condition body...)` form is only described in
 Rule actions are structurally validated before the actor shell is returned.
 The current `(port value)` action accepts scalar values only; expression-valued
 rule assignments are deferred until the rule lowerer has a real expression
-path.
+path. `(trigger transaction)` must name a declared transaction in the same
+actor; forward references are accepted because validation happens after the
+full actor body is collected.
 
 **Lowering**: Non-state DT block containing one guarded action block in the
 current scheduler. The shorthand scalar guard and the long-form `(when ...)`

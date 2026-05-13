@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF rule trigger target boundary
+- Rule `(trigger transaction)` actions now validate that `transaction` names a
+  declared transaction in the same actor before the parser returns an actor
+  shell.
+- Forward references are accepted because validation runs after the full actor
+  body is collected. Misspelled or missing trigger targets now fail with a
+  diagnostic that names the rule, target, and actor instead of synthesizing an
+  unowned `transaction_start` fan-in path.
+- Added `t/1182-isf-rule-trigger-target-boundary.t` and updated the ISF public
+  contract metadata, spec, mdBook, and live roadmap notes.
 ## 2026-05-13: R14 — ISF rule action parser boundary
 - Rule actions are now structurally validated before the parser returns an
   actor shell. Accepted forms are `(port value)`, `(trigger transaction)`, and

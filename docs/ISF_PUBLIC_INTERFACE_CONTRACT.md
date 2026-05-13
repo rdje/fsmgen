@@ -207,6 +207,11 @@ The rule-action parser boundary is checked by
 so accepted rule actions have explicit `(port value)`,
 `(trigger transaction)`, or `(priority over other_rule)` shapes before a rule
 enters the actor shell. Expression-valued rule assignments remain deferred.
+The rule-trigger target boundary is checked by
+[t/1182-isf-rule-trigger-target-boundary.t](../t/1182-isf-rule-trigger-target-boundary.t)
+so `(trigger transaction)` must name a declared transaction in the same actor.
+Forward references are accepted because validation runs after the full actor
+body is collected; missing targets fail before actor-shell return.
 The factored rule-guard scheduled `.fsm` shape is checked by
 [t/1168-isf-rule-guard-factoring.t](../t/1168-isf-rule-guard-factoring.t)
 so rule actions remain grouped under one guard block in review artifacts.
@@ -412,6 +417,9 @@ and emits a generated combinational `transaction_trigger_fanin` DT for each
 triggered transaction. The fan-in drives `transaction_start` from the OR of the
 rule sources without adding latency, so downstream consumers can inspect
 per-rule trigger provenance before the transaction start OR.
+Parser handoff now requires each rule trigger target to resolve to a declared
+transaction in the same actor. This prevents a misspelled rule trigger from
+inventing an otherwise unowned `transaction_start` fan-in path.
 The current public parser handoff also advertises a bounded drive-definition
 shell: `drives` is a hash of entries keyed by drive name, and each entry has
 `params` and `body` arrays. The machine-readable contract advertises this

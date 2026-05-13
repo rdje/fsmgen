@@ -135,6 +135,8 @@ sub _build_actor($self, $actor_ast, $source_label) {
         }
     }
 
+    $self->_validate_rule_trigger_targets($result);
+
     fsm_trace_exit('Parser _build_actor completed', 3);
     return $result;
 }
@@ -338,6 +340,27 @@ sub _parse_rule_action($self, $action, $rule_name) {
         unless @$action == 2
             && defined($action->[1])
             && !ref($action->[1]);
+
+    return 1;
+}
+
+sub _validate_rule_trigger_targets($self, $actor) {
+    my $actor_name = $actor->{actor_name};
+    my %transaction_names = map { $_->{name} => 1 } @{$actor->{transactions} || []};
+
+    for my $rule (@{$actor->{rules} || []}) {
+        my $rule_name = $rule->{name};
+        for my $action (@{$rule->{actions} || []}) {
+            next unless ref($action) eq 'ARRAY' && @$action;
+            next unless defined($action->[0]) && !ref($action->[0]) && $action->[0] eq 'trigger';
+
+            my $target = $action->[1];
+            confess "Error: rule '$rule_name' triggers unknown transaction '$target' in actor '$actor_name'\n"
+                unless defined($target)
+                    && !ref($target)
+                    && $transaction_names{$target};
+        }
+    }
 
     return 1;
 }
