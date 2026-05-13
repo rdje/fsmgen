@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 composition guide-to-book migration
+- The second guide-to-book slice targets `?top` composition because
+  `docs/USER_GUIDE.md` still carried broad normative lists for child forms,
+  top-port tokens, `.rtlif`, source resolution, structural actuals, and
+  composition diagnostics.
+- The mdBook already had tutorial coverage for many examples, but it still
+  deferred too much exact boundary detail to `COMPOSITION_SCOPE.md` and the old
+  guide. This slice keeps `COMPOSITION_SCOPE.md` as maintainer scope mapping
+  while making the book the user-facing contract home.
+- The migration deliberately separates basic composition shape in Chapter 05
+  from source expressions/actuals/type-aware planning in Chapter 06 and failure
+  context in Chapter 10.
 ## 2026-05-13: R14 direct .fsm guide-to-book migration
 - The user clarified that almost all of `docs/USER_GUIDE.md` should land in
   the mdBook, with content dispatched to the correct chapters/sections rather

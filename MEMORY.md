@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — composition guide-to-book migration
+- Migrated the broad `?top` composition boundary from `docs/USER_GUIDE.md`
+  into the mdBook composition chapters: top-root body shape, flat `?ports`
+  tokens, declared `=name` rules, generated-child source resolution,
+  strict-mode child-root expectations, embedded/sidecar `.rtlif` metadata,
+  C1-C6 lane summary, structural actual constraints, concat operand families,
+  inferred internal carrier re-export policy, and composition failure context.
+- The composition chapters now state that user-facing composition contract
+  belongs in the book, while `docs/COMPOSITION_SCOPE.md` remains a
+  maintainer-side scope map during the migration.
 ## 2026-05-13: R14 — direct .fsm guide-to-book migration
 - Began the USER_GUIDE-to-mdBook migration requested by the user. The book now
   owns the core direct `.fsm` contract for guarded blocks, condition suffixes,

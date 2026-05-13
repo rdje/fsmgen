@@ -3,8 +3,13 @@ This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
 - Next decision point: continue the USER_GUIDE-to-mdBook migration by
-  dispatching the remaining broad guide contract into composition,
-  embedding/CLI, and ISF book chapters, with commits after each safe doc slice.
+  dispatching the remaining broad guide contract into embedding/CLI and ISF
+  book chapters, with commits after each safe doc slice.
+- The mdBook composition chapters now carry the broad `?top` composition
+  boundary that had been centralized in `docs/USER_GUIDE.md`: root/body shape,
+  flat top-port tokens, `=name` rules, generated-child source resolution,
+  `.rtlif` metadata, C1-C6 lane summary, structural actual constraints,
+  concat operands, inferred internal carriers, and composition failure context.
 - The mdBook now carries the core direct `.fsm` language contract that had
   been stranded in `docs/USER_GUIDE.md`: guarded blocks, condition suffixes,
   test-node defaults, update shorthand, direct-root families, state/non-state

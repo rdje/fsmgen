@@ -9,6 +9,26 @@ Current child kinds are:
 - `?dtc` for generated standalone-DT children
 - `?rtl` for external RTL children
 
+## Top Root Shape
+
+A composition source uses one `?top:name` root with an
+HDL-identifier-compatible top name.
+
+The current active top-root body can contain:
+
+- zero or more declaration sections such as `+constants`, `+enums`, bounded
+  `+types`, and bounded `+import`
+- zero or one flat `?ports` block
+- one or more child instances
+- zero or more explicit `?toplink` wiring blocks
+- embedded generated child roots, embedded `?pkg` package roots, or embedded
+  `?rtlif` metadata roots as companion source material
+
+Malformed top names, duplicate child declarations, duplicate top ports, several
+`?ports` blocks, empty child lists, malformed child entries, malformed port
+tokens, and malformed toplink tokens are rejected at the composition boundary
+rather than being left for HDL emission.
+
 ## The Minimal Shape
 
 ```lisp
@@ -38,12 +58,34 @@ Common forms:
 - `data_out>8`
 - `=status>`
 
+Plain direction tokens are:
+
+- no suffix: one-bit input by default, often used for shared system inputs such
+  as `clk` and `rst_n`
+- `<` or `<N`: input, optionally with width
+- `>` or `>N`: output, optionally with width
+- named type or scalar width tokens such as `payload<frame_t` or
+  `payload<BYTE_W`
+
 The plain forms are ordinary explicit ports.
 
 The `=name` forms are declared same-name connect-by-name ports. They mean:
 
 - “this top port must bind by the same name”
 - not “infer whatever seems convenient”
+
+Practical rules for declared same-name ports:
+
+- do not use `=clk`, `=rst_n`, or similar system ports; those already use the
+  shared system-input contract
+- a top-output match is valid only when exactly one compatible child output has
+  the same name
+- a top-input match is valid when one or more compatible child inputs have the
+  same name
+- compatibility requires direction, width, and preserved declared type contract
+  to agree
+- use explicit `?toplink` when you need renaming, remapping, or non-system
+  child-to-child wiring
 
 ## Inference-First Top Boundaries
 
@@ -95,6 +137,12 @@ Generated-child example:
 ```
 
 This works because the top can honestly expose the realized child interface.
+
+Generated child source roots can be embedded in the same file or resolved from
+external `.fsm` sources. Resolution searches repeated `--path DIR` roots, then
+`FSMLIB`, then the local directory context. Strict mode requires canonical
+`?fsm:name` roots for `?fsmc` children and canonical `?dt:name` roots for
+`?dtc` children.
 
 Generated children can also be parameterized semantically. Declare the
 supported names in the child source with `(+params ...)`, then override those
@@ -222,6 +270,14 @@ With metadata:
 )
 ```
 
+External RTL metadata can be sidecar `<module>.rtlif` or an embedded
+`(?rtlif:module ...)` companion root. Embedded metadata for the requested
+module takes precedence over sidecar metadata. Metadata roots are flat port
+contracts plus an optional semantic `(params (NAME default_value) ...)` block.
+Port categories are currently `data`, `clock`, and `reset`; typed clock/reset
+ports are system-input roles and output-direction clock/reset tokens are
+rejected.
+
 If you need two instances of the same external RTL module, keep one interface
 contract and give each `?rtl` child its own instance name:
 
@@ -277,9 +333,15 @@ cover:
 - `C2` explicit-link composition with generated children
 - `C3` explicit-link composition with at least one external RTL child
 - `C4` declared connect-by-name through `=name`
+- `C5` diagnostics for duplicate drivers, width mismatches, ambiguous or
+  missing connect-by-name matches, unknown endpoints, malformed child/source
+  metadata, and blocked inference
+- `C6` scoped rejection of older out-of-support composition/template forms
 
-For the precise normative boundary, keep
-[COMPOSITION_SCOPE.md](../../COMPOSITION_SCOPE.md) open beside this chapter.
+The normative composition boundary now lives in these composition chapters. The
+focused [COMPOSITION_SCOPE.md](../../COMPOSITION_SCOPE.md) document remains a
+maintainer-side scope map while the book continues absorbing the old guide's
+user-facing detail.
 
 For expressions, structural actuals, concat/repeat sources, inferred carriers,
 and type-aware link validation, continue with

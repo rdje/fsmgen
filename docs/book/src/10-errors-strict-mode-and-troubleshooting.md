@@ -33,6 +33,17 @@ Typical causes:
 - ambiguous connect-by-name
 - blocked omitted-`?ports` inference
 - incompatible declared type contracts
+- unsupported explicit-link topology
+- malformed `?ports`, `?toplink`, `?fsmc`, `?dtc`, `?rtl`, or `.rtlif`
+  structure
+
+Composition failures try to preserve artifact context. Depending on the failing
+surface, non-quiet CLI output may include a lane, construct, child source file,
+expected child source file, expected RTL metadata file, resolved RTL metadata
+file, search roots, endpoint, actual source, top expression, child expression,
+or blocked reason. That context is part of the public user experience: a
+composition failure should identify the boundary that could not be planned
+instead of emitting only a low-level parser or backend exception.
 
 ### Direct Generation Errors
 
@@ -185,6 +196,10 @@ contract. Current out-of-support examples include:
 - legacy composition/template forms such as `?&...`, nested `?top`, nested
   `?ports` mapping directives, nested `?toplink`, multi-source `?fsmc`,
   placeholder selectors, repeat macros, and placeholder tokens
+- composition requests with no child instances, malformed child payloads,
+  duplicate child names, unsupported child kinds, or external RTL metadata that
+  is missing, non-flat, empty, duplicated, wrongly typed, or system-output
+  directed
 
 This list is not a replacement for the exact diagnostic text. It is the book
 home for the active rejection policy: unsupported syntax should be rejected

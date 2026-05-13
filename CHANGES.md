@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — composition guide-to-book migration
+- Migrated broad `?top` composition contract material from
+  [docs/USER_GUIDE.md](docs/USER_GUIDE.md) into
+  [docs/book/src/05-composition-basics.md](docs/book/src/05-composition-basics.md),
+  [docs/book/src/06-composition-advanced.md](docs/book/src/06-composition-advanced.md),
+  and [docs/book/src/10-errors-strict-mode-and-troubleshooting.md](docs/book/src/10-errors-strict-mode-and-troubleshooting.md).
+- Added book coverage for top-root body shape, flat `?ports` tokens, declared
+  same-name port rules, generated-child source resolution, strict-mode
+  generated-child root expectations, embedded/sidecar `.rtlif` metadata,
+  C1-C6 lane summary, structural actual constraints, concat operand families,
+  inferred internal-carrier re-export policy, and composition failure context.
+- Clarified that [docs/COMPOSITION_SCOPE.md](docs/COMPOSITION_SCOPE.md)
+  remains a maintainer-side scope map while user-facing composition contract
+  continues migrating into the book.
 ### R14 — direct .fsm guide-to-book migration
 - Migrated core direct `.fsm` contract material from
   [docs/USER_GUIDE.md](docs/USER_GUIDE.md) into mdBook chapter homes:

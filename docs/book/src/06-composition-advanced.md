@@ -48,6 +48,11 @@ projected-child-source rule: it creates one typed carrier for the whole child
 output, binds the child output to that carrier, and then applies member/item
 access to the carrier for each target.
 
+Source-side expressions may target realized child inputs or declared top
+outputs where the current typed structural path supports that binding. If an
+expression targets a typed aggregate port, the expression must carry one
+compatible aggregate contract; matching by packed width alone is not enough.
+
 ## Structural Actuals
 
 The live explicit-actual family is intentionally broad but typed.
@@ -75,6 +80,13 @@ Current rule of thumb:
 - exact-width literals stay exact-width contracts
 - FSMGen intent-sized exact-width literals such as `=5'23`, `=8'-10`, `=8'-0xA`, `=8'-0b1010`, or `=20'x1` are accepted on both direct-actual and concat-operand lanes
 - obviously bitstring-like bare `0/1` actuals such as `=00001110` or `=10000000` are rejected instead of guessed; use `=0b...`, `=N'b...`, or `=0d...`
+- `=open` is currently valid only for realized child input ports
+- fixed-width binary/octal/hex actuals must match the direct target width
+  exactly
+- decimal actuals must fit the target width as numeric values
+- unsized signed actuals must fit the signed range of the direct target width
+- whole aggregate actual roots such as `=FRAME` or `=shared.FRAME` must lower
+  to scalar leaves and must match any preserved target aggregate type contract
 
 Concrete example:
 
@@ -140,15 +152,21 @@ Concat operands may currently include:
 - top-port bit/slice forms
 - declared aggregate top-port member/item forms such as `in_frame.tag`
 - child-output operands
-- scalar actuals
-- intrinsic-width unsized based literals
-- intrinsic-width unsized decimal and signed-decimal literals
-- exact-width signed and unsigned literals
-- named literal actuals
+- scalar actuals `=0` and `=1`
+- intrinsic-width unsized based literals such as `=0b10`, `='b10`, `=0o7`,
+  `='o7`, `=0xA5`, `='hA5`, or `=A5`
+- intrinsic-width unsized decimal and signed-decimal literals such as `=170`,
+  `=0d170`, `='d170`, `=-1`, `=0d-1`, or `='sd-1`
+- exact-width signed and unsigned binary/decimal/octal/hex literals
+- named literal actuals from top-root constants/enums or imported packages
 - repeat groups
 
 The same ambiguity hardening applies here too: bare `=00001110`-style
 payloads are not guessed as decimal or binary.
+
+Nested brace groups are source-side concat grouping, not target-HDL text pasted
+through unchecked. The source frontend preserves those groups so the structural
+path can validate width/type evidence before the emitter renders HDL.
 
 ## Repeat Groups
 
@@ -211,9 +229,16 @@ The explicit-link boundary can now also:
 - fan one child output out to multiple top outputs
 - drive one or more top outputs directly from a declared top input
 - drive declared top outputs from top expressions or literal actuals
+- infer same-name internal carriers when one unique child output and one or
+  more child inputs share a compatible name family and no explicit link already
+  owns that family
 
 This matters because the top boundary should not force needless helper nets
 when the intended wiring is already explicit.
+
+Inferred internal carriers stay internal by default. A declared compatible top
+output may explicitly re-export one of them through the same-name convention,
+but FSMGen does not silently publish internal carriers as top outputs.
 
 ## Declared Type Compatibility
 
@@ -498,5 +523,6 @@ This advanced lane is deliberately rich but still bounded:
 - inference is allowed only when one honest answer exists
 - explicit mismatches fail before emission
 
-For the exact accepted families, keep
-[COMPOSITION_SCOPE.md](../../COMPOSITION_SCOPE.md) beside this chapter.
+For implementation scoping and historical mapping details, keep
+[COMPOSITION_SCOPE.md](../../COMPOSITION_SCOPE.md) beside this chapter, but the
+user-facing accepted families above belong in the book.

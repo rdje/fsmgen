@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — composition guide-to-book migration
+- Active: `R14`. The mdBook composition chapters now carry the broad `?top`
+  contract previously centralized in `docs/USER_GUIDE.md`, including root/body
+  shape, port tokens, child source resolution, `.rtlif`, C1-C6 lane summary,
+  structural actuals, concat operands, inferred internal carriers, and failure
+  context.
+- `docs/COMPOSITION_SCOPE.md` remains a focused maintainer-side scope map while
+  user-facing composition rules continue moving into the book.
+
 ## 2026-05-13: R14 — direct .fsm guide-to-book migration
 - Active: `R14`. The mdBook now carries the core direct `.fsm` contract that
   had still been centralized in `docs/USER_GUIDE.md`, including guard/suffix,
