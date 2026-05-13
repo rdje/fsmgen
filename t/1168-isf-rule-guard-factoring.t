@@ -36,8 +36,8 @@ my $fsm = $result->{files}{'rule_guard_factoring.fsm'};
 
 like(
     $fsm,
-    qr/\(-always_ready\s+\(<ready\s+\(<- \(valid 1\)\)\s+\(<- \(main_transfer_start 1\)\)\s+\)\s+\)/s,
-    'rule DT emits one factored guard block for guarded assignments',
+    qr/\(-always_ready\s+\(<ready\s+\(<- \(valid 1\)\)\s+\(<1 \(main_transfer_start 1\)\)\s+\)\s+\)/s,
+    'rule DT emits one factored guard block with delayed-pulse trigger assignment',
 );
 unlike(
     $fsm,
@@ -46,8 +46,13 @@ unlike(
 );
 unlike(
     $fsm,
-    qr/\(<- \(main_transfer_start 1\) <ready\)/,
-    'rule trigger assignment also lives under the factored guard block',
+    qr/\(<1 \(main_transfer_start 1\) <ready\)/,
+    'rule trigger pulse also lives under the factored guard block',
+);
+unlike(
+    $fsm,
+    qr/\(<- \(main_transfer_start 1\)\)/,
+    'rule trigger no longer lowers as a sticky flopped assignment',
 );
 
 my $tempdir = tempdir(CLEANUP => 1);

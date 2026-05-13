@@ -14,18 +14,21 @@ rule condition and are independent of the transaction state machine.
 
 **Actions**:
 - `(port value)` — guarded assignment when the condition holds
-- `(trigger transaction)` — guarded assertion of the transaction start signal
+- `(trigger transaction)` — guarded one-cycle delayed pulse on the transaction
+  start signal
 - `(priority over other_rule)` — parsed metadata, currently not enforced
 
 **Lowering**: Non-state DT block containing one guarded action block in the
 current scheduler. The rule-level `(when ...)` guard is emitted once around the
-actions instead of being repeated on every assignment.
+actions instead of being repeated on every assignment. Ordinary `(port value)`
+actions are guarded flopped assignments; `(trigger transaction)` uses `<1` so
+the transaction start is a pulse rather than a sticky request bit.
 
 ```lisp
 (-always_ready
   (<ready
     (<- (valid 1))
-    (<- (main_transfer_start 1))
+    (<1 (main_transfer_start 1))
   )
 )
 ```

@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF rule trigger pulse lowering
+- Changed rule `(trigger transaction)` lowering in
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so generated `transaction_start` assignments use `<1` one-cycle delayed
+  pulses instead of sticky `<-` flopped assignments.
+- Extended [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm)
+  so scheduled non-state DT text emits delayed-pulse operators such as `<1`
+  correctly inside factored rule guard blocks.
+- Updated [t/1168-isf-rule-guard-factoring.t](t/1168-isf-rule-guard-factoring.t)
+  to lock the pulsed rule-trigger shape and keep the parse-to-HDL coverage.
+- Documented the rule-trigger pulse contract in
+  [docs/book/src/13g-rules.md](docs/book/src/13g-rules.md),
+  [docs/ISF_SPEC.md](docs/ISF_SPEC.md), and
+  [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md).
 ### R14 — ISF rule guard factoring
 - Updated [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm)
   so rule non-state DT blocks emit one factored guard block for the rule's

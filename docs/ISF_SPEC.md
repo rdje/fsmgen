@@ -487,8 +487,9 @@ Current lowering:
 - `(when condition)` supplies the guard. The shipped guard form is a single
   port/signal condition.
 - `(port value)` actions lower as guarded flopped assignments to that port.
-- `(trigger transaction)` lowers as a guarded flopped assignment to
-  `transaction_start`.
+- `(trigger transaction)` lowers as a guarded `<1` one-cycle delayed pulse to
+  `transaction_start`, so a rule trigger is a pulse rather than a sticky
+  flopped request bit.
 - Scheduled `.fsm` emission factors the rule guard as one DT guard block around
   all guarded actions, for example:
 
@@ -496,7 +497,7 @@ Current lowering:
 (-always_ready
   (<ready
     (<- (valid 1))
-    (<- (main_transfer_start 1))
+    (<1 (main_transfer_start 1))
   )
 )
 ```

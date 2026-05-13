@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF rule trigger pulse lowering
+- Changed ISF rule `(trigger transaction)` lowering so the generated
+  `transaction_start` assignment uses `<1` instead of `<-`. Rule-triggered
+  transactions now receive a one-cycle delayed start pulse rather than a sticky
+  flopped request bit.
+- Extended scheduled `.fsm` DT formatting to emit delayed-pulse operators such
+  as `<1` correctly inside non-state DT blocks, including factored rule guard
+  blocks.
+- Updated `t/1168-isf-rule-guard-factoring.t`, the mdBook Rules and
+  Priorities chapter, `docs/ISF_SPEC.md`, and
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md` to lock and document the pulsed
+  trigger contract.
 ## 2026-05-13: R14 — ISF rule guard factoring
 - Changed scheduled `.fsm` emission for ISF rule DT blocks so a rule-level
   `(when ...)` guard is emitted once as a factored DT guard block around the

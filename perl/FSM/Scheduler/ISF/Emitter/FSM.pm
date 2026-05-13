@@ -292,6 +292,8 @@ sub _format_dt_assignment($self, $assignment, $indent, %options) {
         return "$padding(<- ($assignment->{lhs} $assignment->{rhs})$guard)";
     } elsif ($op eq '<=') {
         return "$padding(<= ($assignment->{lhs} $assignment->{rhs})$guard)";
+    } elsif ($op =~ /^<[0-9]+$/) {
+        return "$padding($op ($assignment->{lhs} $assignment->{rhs})$guard)";
     }
 
     return "$padding($assignment->{lhs} = $assignment->{rhs})$guard";

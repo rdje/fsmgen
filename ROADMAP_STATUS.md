@@ -17,6 +17,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `.fsm` guarded block around the lowered actions instead of repeating the
   guard suffix on every assignment. `t/1168` covers the scheduled text and
   parse-to-HDL path.
+- ISF rule `(trigger transaction)` actions now lower the generated
+  `transaction_start` assignment with the delayed-pulse operator `<1` instead
+  of sticky `<-`; `t/1168` locks the pulsed trigger shape inside the factored
+  rule guard.
 - `t/1097` now removes the anonymous `_start` placeholder from `do`, `spawn`,
   and control-flow drive-call lowering by asserting concrete child, instance,
   and drive start signals. Next bounded R14 slice: turn another documented

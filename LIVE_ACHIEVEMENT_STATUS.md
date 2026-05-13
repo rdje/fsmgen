@@ -2,10 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF rule trigger pulse lowering
+- Active: `R14`. ISF rule `(trigger transaction)` now lowers the generated
+  `transaction_start` assignment with `<1`, making rule-driven transaction
+  starts one-cycle delayed pulses instead of sticky flopped request bits.
+- `t/1168` now locks the pulsed trigger shape inside the factored rule guard
+  and still proves the scheduled `.fsm` parses through the ordinary frontend
+  and reaches HDL generation.
+
 ## 2026-05-13: R14 — ISF rule guard factoring
 - Active: `R14`. ISF rule DT emission now renders `(when ...)` once as a
   factored `.fsm` guard block around lowered actions, improving scheduled
-  `.fsm` readability while preserving existing guarded flopped assignment
+  `.fsm` readability while preserving ordinary rule port-assignment
   behavior.
 - `t/1168` covers the generated text shape and proves the factored block parses
   through the ordinary `.fsm` frontend and reaches HDL generation.

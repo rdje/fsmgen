@@ -612,7 +612,7 @@ sub _build_rules {
     my ($self,$actor)=@_; my @d;
     for my $r(@{$actor->{rules}||[]}){my $c=$self->_rule_cond($r->{when});my @a;
         for my $ac(@{$r->{actions}}){next unless ref($ac)eq'ARRAY';my$a0=$ac->[0];
-            if($a0 eq'trigger'){push @a,{lhs=>"$ac->[1]_start",rhs=>1,op=>'<-',guard=>$c}}
+            if($a0 eq'trigger'){push @a,{lhs=>"$ac->[1]_start",rhs=>1,op=>'<1',guard=>$c}}
             elsif($a0 eq'priority'){}
             else{push @a,{lhs=>$a0,rhs=>$ac->[1],op=>'<-',guard=>$c}}}
         push @d,{name=>$r->{name},kind=>'rule',assignments=>\@a}}

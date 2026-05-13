@@ -336,6 +336,10 @@ Current scheduled `.fsm` review artifacts emit a rule's `when` guard as one
 factored DT guard block around that rule's lowered actions. This keeps the
 generated text aligned with the source rule structure without widening the
 actor-shell rule payload contract.
+Within that scheduled `.fsm` review artifact, ordinary rule `(port value)`
+actions remain guarded flopped assignments, while `(trigger transaction)`
+actions use `<1` on `transaction_start`. A rule trigger is therefore a
+one-cycle delayed pulse, not a sticky flopped request bit.
 The current public parser handoff also advertises a bounded drive-definition
 shell: `drives` is a hash of entries keyed by drive name, and each entry has
 `params` and `body` arrays. The machine-readable contract advertises this
@@ -405,6 +409,10 @@ one-cycle delayed pulses rather than sticky flopped status bits. Drive phases
 that precede completion should not also assign the same completion signal with
 `<-`; the `.fsm` backend rejects mixed pulse-delayed and non-pulse sequential
 operators on one LHS.
+ISF rule `(trigger transaction)` lowering also uses `<1`, not `<-`, for the
+generated `transaction_start` signal. This keeps rule-driven transaction starts
+pulse-shaped instead of leaving a sticky start request active after the rule
+fires.
 
 ISF `(sample port as name)` lowering is a D-input contract: scheduled `.fsm`
 artifacts use `<=`, not `<-`, so the authored sampled name denotes the
