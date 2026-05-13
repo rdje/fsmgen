@@ -8,6 +8,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Support workflow: [bin/ci-regression](bin/ci-regression) now supports
   explicit `quick`, `isf`, and `full` modes, plus `--list`, `--dry-run`, and
   `--no-book`. No argument still runs the historical full gate.
+- ISF `(extract word as field... [(widths N...)])` clauses now validate scalar
+  source/field names before scheduled `.fsm` emission while preserving bounded
+  explicit field widths. `t/1201` covers valid explicit-width slice lowering
+  plus malformed extract forms.
 - ISF `(assemble part... as target)` clauses now validate one or more scalar
   parts plus one scalar target before scheduled `.fsm` emission. `t/1200`
   covers valid concat lowering plus malformed assemble forms.
@@ -1353,6 +1357,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - [t/1200-isf-assemble-clause-boundary.t](t/1200-isf-assemble-clause-boundary.t)
     now proves `(assemble part... as target)` scalar part/target validation
     before scheduled `.fsm` emission.
+  - [t/1201-isf-extract-clause-boundary.t](t/1201-isf-extract-clause-boundary.t)
+    now proves `(extract word as field... [(widths N...)])` scalar source/field
+    validation before scheduled `.fsm` emission while preserving explicit field
+    widths.
   - Next bounded `R14` slice: convert another documented scheduler limitation
     into regression-backed behavior.
 - Superseded `R13` carry-forward detail retained below this note should not be

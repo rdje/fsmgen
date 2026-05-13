@@ -503,13 +503,15 @@ Current lowering:
 - `assemble` is structurally validated as `(assemble part... as target)` with
   one or more scalar parts and one scalar target, then emits a concat
   expression into the target variable.
-- `extract` emits one extraction state. When the source word and destination
-  fields have known widths, or when the clause supplies an ordered
-  `(widths N...)` list matching the field count, fields are assigned exact
-  descending slices. If a width is unknown, the emitter keeps placeholder
-  slice bounds for that field and any later field whose position can no longer
-  be proven. Explicit widths must be positive integers and must not conflict
-  with already known field widths.
+- `extract` is structurally validated as
+  `(extract word as field... [(widths N...)])` with one scalar source word and
+  one or more scalar destination fields. It emits one extraction state. When
+  the source word and destination fields have known widths, or when the clause
+  supplies an ordered `(widths N...)` list matching the field count, fields are
+  assigned exact descending slices. If a width is unknown, the emitter keeps
+  placeholder slice bounds for that field and any later field whose position
+  can no longer be proven. Explicit widths must be positive integers and must
+  not conflict with already known field widths.
 
 ## 8. Composition Between Transactions
 
@@ -887,6 +889,7 @@ Focused tests:
 - [t/1198-isf-update-clause-boundary.t](../t/1198-isf-update-clause-boundary.t)
 - [t/1199-isf-shift-clause-boundary.t](../t/1199-isf-shift-clause-boundary.t)
 - [t/1200-isf-assemble-clause-boundary.t](../t/1200-isf-assemble-clause-boundary.t)
+- [t/1201-isf-extract-clause-boundary.t](../t/1201-isf-extract-clause-boundary.t)
 
 ## 12. Explicitly Deferred
 

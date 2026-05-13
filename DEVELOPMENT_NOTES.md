@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF extract clause boundary
+- `extract` computes slice assignments from one source word and an ordered
+  field list. Nested or empty source/field payloads would imply expression
+  support that the current slicer does not implement and can produce malformed
+  scheduled `.fsm` output.
+- The lowerer now validates the shipped scalar-name boundary while preserving
+  the explicit `(widths N...)` option for field widths that are not declared
+  elsewhere. Wider expression-valued extraction remains deferred until it has a
+  deliberate expression contract.
 ## 2026-05-13: R14 ISF assemble clause boundary
 - `assemble` builds a concat RHS directly from authored part names. Nested
   part payloads or extra operands would stringify poorly or imply expression

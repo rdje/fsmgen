@@ -303,27 +303,34 @@ sub _parse_extract_clause {
     my @explicit_widths;
     my $saw_widths;
 
-    confess "extract word must be a scalar name\n" if ref($word);
+    confess "extract word must be a scalar name\n"
+        if !defined($word) || ref($word) || !length($word);
     confess "extract requires at least one scalar field\n" unless @items;
 
     for my $item (@items) {
         if (ref($item) eq 'ARRAY') {
+            confess "extract field must be a scalar name\n"
+                if @$item == 1 || grep { !defined($_) || ref($_) } @$item;
             confess "extract accepts at most one '(widths ...)' option\n"
                 if $saw_widths;
             confess "extract optional arguments must be '(widths N...)'\n"
-                unless @$item >= 2 && $item->[0] eq 'widths';
+                unless @$item >= 2
+                    && defined($item->[0])
+                    && !ref($item->[0])
+                    && $item->[0] eq 'widths';
             $saw_widths = 1;
             @explicit_widths = @{$item}[1 .. $#$item];
             for my $width (@explicit_widths) {
                 confess "extract widths must be positive integers\n"
-                    if ref($width) || $width !~ /\A[1-9][0-9]*\z/;
+                    if !defined($width) || ref($width) || $width !~ /\A[1-9][0-9]*\z/;
                 $width = 0 + $width;
             }
             next;
         }
 
         confess "extract fields must precede the '(widths ...)' option\n" if $saw_widths;
-        confess "extract field must be a scalar name\n" if ref($item);
+        confess "extract field must be a scalar name\n"
+            if !defined($item) || ref($item) || !length($item);
         push @fields, $item;
     }
 

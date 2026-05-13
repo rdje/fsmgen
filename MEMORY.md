@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF extract clause boundary
+- ISF `(extract word as field... [(widths N...)])` lowering now validates the
+  source word and every field as scalar names before scheduled `.fsm`
+  emission.
+- The existing explicit-width path remains bounded to one ordered
+  positive-integer `(widths N...)` option that must appear after all fields.
+- Added `t/1201-isf-extract-clause-boundary.t` and updated the ISF public
+  contract metadata, spec, mdBook, and live roadmap notes.
 ## 2026-05-13: R14 — ISF assemble clause boundary
 - ISF `(assemble part... as target)` lowering now validates one or more scalar
   parts plus one scalar target before scheduled `.fsm` emission.

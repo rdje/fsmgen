@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF extract clause boundary
+- Active: `R14`. `(extract word as field... [(widths N...)])` now requires a
+  scalar source word and scalar destination fields before scheduled `.fsm`
+  emission.
+- `t/1201` covers valid explicit-width slice lowering plus nested word, nested
+  field, unknown option, and field-after-widths malformed forms.
+
 ## 2026-05-13: R14 — ISF assemble clause boundary
 - Active: `R14`. `(assemble part... as target)` now requires one or more
   scalar parts and one scalar target before scheduled `.fsm` emission.

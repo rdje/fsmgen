@@ -92,7 +92,10 @@ and scalar target `var`.
 (extract packet as header payload crc (widths 4 8 4))
 ```
 
-Deconstructs `word` into named fields.
+Deconstructs `word` into named fields. The form is exact:
+`(extract word as field... [(widths N...)])`, with one scalar source word and
+one or more scalar destination fields. The optional `(widths N...)` payload
+must contain one positive integer width per field.
 
 **Current lowering**: one extraction state is emitted. When the source word and
 destination fields have known widths, or when the extract clause supplies an
