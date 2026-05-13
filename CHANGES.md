@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF contract clauses fail closed
+- Changed [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so transaction `(contract ...)` temporal assertion clauses fail closed during
+  lowering instead of being silently ignored.
+- Added [t/1175-isf-contract-fail-closed.t](t/1175-isf-contract-fail-closed.t)
+  for top-level contracts and contracts nested inside `when`, `switch`, and
+  `repeat` bodies.
+- Updated the ISF spec, public-interface contract, mdBook, and live roadmap
+  notes to document the fail-closed boundary while full temporal assertion
+  lowering remains deferred.
 ### R14 — ISF extract explicit field widths
 - Added bounded `(extract word as field... (widths N...))` support in
   [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)

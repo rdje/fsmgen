@@ -489,3 +489,6 @@ Pipeline stages with implicit valid/ready handshake. Parsed but **not lowered**.
 ```
 
 Temporal assertions. **Not implemented**. Deferred to separate design discussion.
+Authored transaction contract clauses currently fail closed during ISF lowering
+instead of being emitted as scheduled `.fsm` or silently ignored; this includes
+clauses nested inside `when`, `switch`, and `repeat` bodies.

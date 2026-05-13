@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF contract clauses fail closed
+- Transaction `(contract ...)` temporal assertions remain unimplemented, but
+  they are no longer silently ignored by lowering. The scheduler now rejects
+  authored contract clauses with a targeted diagnostic at top level and inside
+  `when`, `switch`, and `repeat` bodies.
+- Added `t/1175-isf-contract-fail-closed.t` and updated the ISF spec,
+  public-interface contract, mdBook, and roadmap notes to document the
+  fail-closed boundary until temporal assertion lowering is designed.
 ## 2026-05-13: R14 — ISF extract explicit field widths
 - Added a bounded `(extract word as field... (widths N...))` option. When
   extract field widths are not declared elsewhere, the scheduler can now use

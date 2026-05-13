@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF contract clauses fail closed
+- Active: `R14`. Transaction `(contract ...)` temporal assertions still remain
+  deferred, but authored contract clauses now fail closed during lowering
+  instead of being silently dropped from scheduled `.fsm` output.
+- `t/1175` covers top-level and nested contract clauses in `when`, `switch`,
+  and `repeat` bodies; the ISF spec, public-interface contract, mdBook, and
+  roadmap notes now document the boundary.
+
 ## 2026-05-13: R14 — ISF extract explicit field widths
 - Active: `R14`. `extract` now accepts `(widths N...)` so authors can provide
   ordered field widths when they are not declared elsewhere, producing exact

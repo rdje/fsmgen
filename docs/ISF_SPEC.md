@@ -563,6 +563,11 @@ Multi-rule fan-in example:
 Separate `(priority ...)` declarations are parsed but not currently enforced as
 arbitration policy.
 
+Authored transaction `(contract ...)` temporal assertion clauses are not lowered
+yet. The scheduler rejects them with a targeted diagnostic instead of silently
+dropping them from the scheduled `.fsm`; this applies at top level and inside
+`when`, `switch`, and `repeat` bodies.
+
 ## 10. Schedule JSON Report
 
 `--emit-schedule-json` emits the current `Emitter::JSON` surface:
@@ -753,6 +758,7 @@ Focused tests:
 - [t/1172-isf-rule-trigger-fanin-schedule-report.t](../t/1172-isf-rule-trigger-fanin-schedule-report.t)
 - [t/1173-isf-shift-right-explicit-width.t](../t/1173-isf-shift-right-explicit-width.t)
 - [t/1174-isf-extract-explicit-widths.t](../t/1174-isf-extract-explicit-widths.t)
+- [t/1175-isf-contract-fail-closed.t](../t/1175-isf-contract-fail-closed.t)
 
 ## 12. Explicitly Deferred
 
@@ -760,7 +766,8 @@ Focused tests:
 - The removed `(assign ...)` action keyword.
 - Top-level child instantiation and spawn parameter binding.
 - Enforced resource arbitration and priority resolution.
-- Full temporal `(contract ...)` assertions.
+- Full temporal `(contract ...)` assertion lowering. Authored transaction
+  contract clauses currently fail closed during lowering.
 - Rich storage-class optimization in schedule reports.
 - Full width inference for `extract` values that do not use known field widths
   or an explicit `(widths N...)` option, and `shift_right` values that do not

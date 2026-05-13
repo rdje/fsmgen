@@ -177,4 +177,6 @@ control-flow and data-operation states.
 - `(extract ...)` accepts an ordered `(widths N...)` option when field widths
   are not declared elsewhere; values with no known or explicit widths still
   use placeholder slice bounds.
-- `(contract ...)` temporal assertions are not implemented.
+- `(contract ...)` temporal assertions are not implemented; authored
+  transaction contract clauses currently fail closed during lowering instead of
+  being dropped from the scheduled `.fsm`.

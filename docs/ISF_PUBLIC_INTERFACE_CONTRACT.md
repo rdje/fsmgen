@@ -225,6 +225,10 @@ The explicit-width `extract` data-operation path is checked by
 [t/1174-isf-extract-explicit-widths.t](../t/1174-isf-extract-explicit-widths.t)
 so authors can avoid placeholder slice bounds when extract field widths are
 not declared elsewhere.
+The temporal-contract lowering boundary is checked by
+[t/1175-isf-contract-fail-closed.t](../t/1175-isf-contract-fail-closed.t)
+so authored transaction `(contract ...)` clauses fail closed with a targeted
+diagnostic until temporal assertion lowering is implemented.
 The actor-shell drive shape is checked by
 [t/1167-isf-public-actor-shell-drive-shape-audit.t](../t/1167-isf-public-actor-shell-drive-shape-audit.t)
 to keep parser-returned drive definitions discoverable as a drive-name-keyed

@@ -78,6 +78,7 @@ my $expected_tested_by = [
     't/1172-isf-rule-trigger-fanin-schedule-report.t',
     't/1173-isf-shift-right-explicit-width.t',
     't/1174-isf-extract-explicit-widths.t',
+    't/1175-isf-contract-fail-closed.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {

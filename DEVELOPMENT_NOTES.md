@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF contract clauses fail closed
+- Temporal assertion lowering is still not designed, but silently ignoring
+  authored `(contract ...)` clauses is worse than an explicit unsupported
+  boundary: it can make a reviewed `.isf` source look constrained while the
+  generated `.fsm` has no corresponding assertion or monitor.
+- The scheduler now rejects transaction contract clauses before width
+  collection and state emission. The detection is scoped to transaction
+  clause positions and nested `when`/`switch`/`repeat` bodies so ordinary data
+  forms are not over-scanned.
 ## 2026-05-13: R14 ISF extract explicit field widths
 - `extract` had the same practical limitation as unknown-width `shift_right`:
   the scheduler could avoid placeholders only when declarations or earlier
