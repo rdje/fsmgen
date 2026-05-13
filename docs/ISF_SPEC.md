@@ -526,10 +526,11 @@ The long guard spelling remains accepted for compatibility and clarity:
 
 Current lowering:
 - Accepted parser output exposes rules as an array of shell entries with
-  scalar `name`, optional `when`, and `actions` array fields. Nested or
-  otherwise non-scalar rule names are rejected before the parser returns an
-  actor shell. Condition and action payload contents remain scheduler input and
-  are not frozen as a public API by the actor-shell rule-shape metadata.
+  unique non-empty scalar `name`, optional `when`, and `actions` array fields.
+  Duplicate, nested, empty, or otherwise non-scalar rule names are rejected
+  before the parser returns an actor shell. Condition and action payload
+  contents remain scheduler input and are not frozen as a public API by the
+  actor-shell rule-shape metadata.
 - Rule actions are structurally validated before the actor shell is returned.
   Supported action shapes are `(port value)`, `(trigger transaction)`, and
   `(priority over other_rule)`. Today, `(port value)` and trigger targets use
@@ -815,6 +816,7 @@ Focused tests:
 - [t/1182-isf-rule-trigger-target-boundary.t](../t/1182-isf-rule-trigger-target-boundary.t)
 - [t/1184-isf-child-transaction-target-boundary.t](../t/1184-isf-child-transaction-target-boundary.t)
 - [t/1185-isf-transaction-name-boundary.t](../t/1185-isf-transaction-name-boundary.t)
+- [t/1186-isf-rule-name-boundary.t](../t/1186-isf-rule-name-boundary.t)
 
 ## 12. Explicitly Deferred
 

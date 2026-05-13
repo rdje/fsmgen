@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF rule name boundary
+- Tightened [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
+  so rule names must be non-empty scalars and unique within the actor before
+  an actor shell is returned.
+- Added [t/1186-isf-rule-name-boundary.t](t/1186-isf-rule-name-boundary.t)
+  for distinct-name preservation and duplicate-name rejection.
+- Updated the ISF public-interface contract metadata, ISF spec, mdBook
+  actor-shell text, and roadmap notes.
 ### R14 — ISF transaction name boundary
 - Tightened [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
   so transaction names must be non-empty scalars and unique within the actor

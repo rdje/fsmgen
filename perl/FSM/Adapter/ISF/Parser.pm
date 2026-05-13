@@ -101,6 +101,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
     my %actor_phase_names;
     my %actor_stage_names;
     my %transaction_names;
+    my %rule_names;
 
     for my $clause (@body) {
         confess "Error: expected list, got " . (ref($clause) || 'scalar') . " in actor body\n"
@@ -119,7 +120,12 @@ sub _build_actor($self, $actor_ast, $source_label) {
                     if $transaction_names{$transaction->{name}}++;
                 push @{$result->{transactions}}, $transaction;
             }
-            when ('rule')      { push @{$result->{rules}}, $self->_parse_rule($clause); }
+            when ('rule')      {
+                my $rule = $self->_parse_rule($clause);
+                confess "Error: duplicate rule '$rule->{name}' in actor '$actor_name'\n"
+                    if $rule_names{$rule->{name}}++;
+                push @{$result->{rules}}, $rule;
+            }
             when ('resources') { $result->{resources} = $self->_parse_resources($clause); }
             when ('priority')  { push @{$result->{priorities}}, $self->_parse_priority($clause); }
             when ('drive')     { $self->_parse_drive_def($clause, $result->{drives}); }

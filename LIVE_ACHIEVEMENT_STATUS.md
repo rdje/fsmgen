@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF rule name boundary
+- Active: `R14`. Rule names are now parser-validated as non-empty scalars that
+  are unique within the actor.
+- `t/1186` covers valid distinct rule names and duplicate-name rejection before
+  actor-shell return. This keeps generated rule DTs and trigger-source prefixes
+  unambiguous.
+
 ## 2026-05-13: R14 — ISF transaction name boundary
 - Active: `R14`. Transaction names are now parser-validated as non-empty
   scalars that are unique within the actor.

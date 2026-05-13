@@ -239,6 +239,7 @@ sub build_isf_public_interface_contract {
             't/1182-isf-rule-trigger-target-boundary.t',
             't/1184-isf-child-transaction-target-boundary.t',
             't/1185-isf-transaction-name-boundary.t',
+            't/1186-isf-rule-name-boundary.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -419,7 +420,7 @@ sub isf_public_interface_actor_shell_transaction_shape {
 }
 
 sub isf_public_interface_actor_shell_rule_shape {
-    return 'rules is an array of public rule shell entries; each entry has scalar name, optional normalized when clause, and actions array; shorthand rule guards normalize into when while rule payload contents remain private scheduler input';
+    return 'rules is an array of public rule shell entries; each entry has unique non-empty scalar name, optional normalized when clause, and actions array; shorthand rule guards normalize into when while rule payload contents remain private scheduler input';
 }
 
 sub isf_public_interface_actor_shell_drive_shape {

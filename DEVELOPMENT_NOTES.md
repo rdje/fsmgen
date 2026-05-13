@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF rule name boundary
+- Rule names become generated non-state DT names, rule-trigger source prefixes,
+  and human review anchors in scheduled `.fsm` artifacts. Duplicate rule names
+  would make those artifacts ambiguous even if the individual rule payloads
+  were otherwise valid.
+- The parser now treats the actor's rule namespace like the transaction
+  namespace: names are non-empty scalar shell identifiers and duplicates fail
+  before downstream scheduler handoff.
 ## 2026-05-13: R14 ISF transaction name boundary
 - Transaction names are used as public shell identifiers, state-name prefixes,
   child target names, rule-trigger targets, and schedule-report transaction

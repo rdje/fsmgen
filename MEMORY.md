@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF rule name boundary
+- ISF parser rule names now have a stricter actor-shell boundary: rule names
+  must be non-empty scalars and unique within the actor.
+- Duplicate rule names now fail before parser actor-shell return, preventing
+  generated rule DT name collisions and ambiguous rule-trigger source prefixes.
+- Added `t/1186-isf-rule-name-boundary.t` and updated the ISF public contract
+  metadata, spec, mdBook, and live roadmap notes.
 ## 2026-05-13: R14 — ISF transaction name boundary
 - ISF parser transaction names now have a stricter actor-shell boundary:
   transaction names must be non-empty scalars and unique within the actor.

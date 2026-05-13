@@ -203,9 +203,13 @@ to keep parser-returned `clock`, `reset`, and `watchdog` timing fields
 discoverable as bounded current handoff metadata.
 The actor-shell rule shape is checked by
 [t/1166-isf-public-actor-shell-rule-shape-audit.t](../t/1166-isf-public-actor-shell-rule-shape-audit.t)
-to keep parser-returned rule entries discoverable as scalar `name`, optional
-`when`, and `actions` array shells while leaving rule payload contents private
-scheduler input.
+to keep parser-returned rule entries discoverable as unique non-empty scalar
+`name`, optional `when`, and `actions` array shells while leaving rule payload
+contents private scheduler input.
+The rule-name boundary is checked by
+[t/1186-isf-rule-name-boundary.t](../t/1186-isf-rule-name-boundary.t)
+so duplicate rule names fail before actor-shell return and generated rule DTs
+plus rule-trigger source prefixes remain unambiguous.
 The rule-action parser boundary is checked by
 [t/1181-isf-rule-action-boundary.t](../t/1181-isf-rule-action-boundary.t)
 so accepted rule actions have explicit `(port value)`,
@@ -401,8 +405,8 @@ hash with scalar `name`, `kind`, and `polarity`, and `watchdog` is null when
 omitted or a positive integer. The machine-readable contract advertises this
 through `actor_shell_timing_shape`.
 The current public parser handoff also advertises a bounded rule-entry shell:
-`rules` is an array of entries with scalar `name`, optional `when`, and
-`actions` array fields. The machine-readable contract advertises this through
+`rules` is an array of entries with unique non-empty scalar `name`, optional
+`when`, and `actions` array fields. The machine-readable contract advertises this through
 `actor_shell_rule_shape`. Rule condition/action payload contents remain private
 scheduler input.
 Authored `(rule name condition actions...)` shorthand and long-form

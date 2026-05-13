@@ -92,9 +92,10 @@ rejected before actor-shell return. It also advertises `actor_name` as the
 non-empty scalar identifier preserved from the ISF actor root. Current actor timing
 handoff metadata is bounded too: `clock` is scalar when configured, `reset` is
 null when omitted or a scalar-field hash, and `watchdog` is null when omitted
-or a positive integer. Rule entries are bounded as scalar `name`, optional
-`when`, and `actions` array shells while rule payload contents remain private
-scheduler input. Drive definitions are bounded as a drive-name-keyed hash whose
+or a positive integer. Rule entries are bounded as unique non-empty scalar
+`name`, optional `when`, and `actions` array shells while rule payload contents
+remain private scheduler input. Duplicate rule names are rejected before
+actor-shell return. Drive definitions are bounded as a drive-name-keyed hash whose
 entries carry `params` and `body` arrays while drive body payload contents
 remain private scheduler input. The
 facade-shape metadata for those

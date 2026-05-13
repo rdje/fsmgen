@@ -15,6 +15,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - ISF transaction names now form an explicit same-actor namespace: non-empty
   scalar names are required and duplicates fail before actor-shell return.
   `t/1185` covers distinct-name preservation and duplicate rejection.
+- ISF rule names now form an explicit same-actor namespace: non-empty scalar
+  names are required and duplicates fail before actor-shell return. `t/1186`
+  covers distinct-name preservation and duplicate rejection.
 - The mdBook reference map now records those book homes explicitly: direct
   language/core concepts, composition, CLI/debug, typed extensions, legacy
   external flow, troubleshooting, and practical authoring guidance are all
@@ -1248,6 +1251,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - [t/1185-isf-transaction-name-boundary.t](t/1185-isf-transaction-name-boundary.t)
     now proves transaction names are non-empty scalar actor-local identifiers
     and duplicates fail before parser actor-shell return.
+  - [t/1186-isf-rule-name-boundary.t](t/1186-isf-rule-name-boundary.t)
+    now proves rule names are non-empty scalar actor-local identifiers and
+    duplicates fail before parser actor-shell return.
   - Next bounded `R14` slice: convert another documented scheduler limitation
     into regression-backed behavior.
 - Superseded `R13` carry-forward detail retained below this note should not be
@@ -3994,6 +4000,10 @@ Done:
   [t/1185-isf-transaction-name-boundary.t](t/1185-isf-transaction-name-boundary.t),
   covering distinct actor-shell transaction names and duplicate-name
   rejection before parser return.
+- Rule name validation is now regression-backed by
+  [t/1186-isf-rule-name-boundary.t](t/1186-isf-rule-name-boundary.t),
+  covering distinct actor-shell rule names and duplicate-name rejection before
+  parser return.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.
