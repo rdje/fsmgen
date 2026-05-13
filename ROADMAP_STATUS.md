@@ -8,6 +8,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Support workflow: [bin/ci-regression](bin/ci-regression) now supports
   explicit `quick`, `isf`, and `full` modes, plus `--list`, `--dry-run`, and
   `--no-book`. No argument still runs the historical full gate.
+- ISF known drive calls now require exact positional arity during lowering:
+  declared drive parameter count must match actual count. `t/1193` covers
+  valid binding plus missing, extra, simple-drive-extra, and nested extra
+  actual rejection.
 - ISF actor-shell singleton clauses now fail closed when repeated instead of
   silently overwriting keyed public fields. The singleton set is `(clock ...)`,
   `(reset ...)`, `(watchdog ...)`, `(interface ...)`, and `(resources ...)`.
@@ -1295,6 +1299,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - [t/1192-isf-singleton-actor-clause-boundary.t](t/1192-isf-singleton-actor-clause-boundary.t)
     now proves repeated actor-shell singleton clauses fail before parser
     return instead of overwriting public timing, interface, or resource fields.
+  - [t/1193-isf-drive-call-arity-boundary.t](t/1193-isf-drive-call-arity-boundary.t)
+    now proves known drive calls require exact positional arity during
+    lowering, including nested body contexts that use the shared lowerer.
   - Next bounded `R14` slice: convert another documented scheduler limitation
     into regression-backed behavior.
 - Superseded `R13` carry-forward detail retained below this note should not be
@@ -4069,6 +4076,10 @@ Done:
   [t/1192-isf-singleton-actor-clause-boundary.t](t/1192-isf-singleton-actor-clause-boundary.t),
   covering duplicate `(clock ...)`, `(reset ...)`, `(watchdog ...)`,
   `(interface ...)`, and `(resources ...)` rejection before parser return.
+- Known drive-call arity validation is now regression-backed by
+  [t/1193-isf-drive-call-arity-boundary.t](t/1193-isf-drive-call-arity-boundary.t),
+  covering exact positional arity for parameterized and simple drive calls
+  before scheduled `.fsm` emission.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

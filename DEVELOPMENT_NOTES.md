@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF drive call arity boundary
+- Parameterized drive definitions create one generated parameter signal per
+  formal, and named drive calls wire actual values positionally into those
+  signals. Missing actuals were already rejected, but extra actuals were
+  ignored because only the declared formal slots were consumed.
+- The lowerer now treats known drive calls as exact-arity calls. That keeps
+  simple drives from accepting meaningless actuals and keeps parameterized
+  drives from discarding author intent silently. The check lives in the shared
+  named-drive-call lowering helper so top-level and nested `when`/`switch`/
+  `repeat` calls follow the same boundary.
 ## 2026-05-13: R14 ISF singleton actor clause boundary
 - `clock`, `reset`, `watchdog`, `interface`, and `resources` are stored in
   keyed actor-shell fields rather than append-only lists. Accepting a second

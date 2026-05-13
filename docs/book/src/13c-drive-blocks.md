@@ -56,6 +56,10 @@ the next clock.
 
 This reduces two drives (`scl_hi`, `scl_lo`) into one parameterized drive.
 
+Known drive calls use exact positional arity. A drive declared with `N`
+formal parameters must be called with exactly `N` actual values. Missing
+actuals and extra actuals are lowering errors; extra values are not ignored.
+
 ## Multi-Assignment Drives
 
 ```lisp

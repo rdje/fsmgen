@@ -262,6 +262,10 @@ Current lowering:
 - The call asserts `drive_name_start`.
 - Parameterized calls also assign one inferred parameter signal per formal,
   such as `scl_val`.
+- Named drive calls use exact positional arity: a drive with `N` formal
+  parameters requires exactly `N` actual values at every known drive call.
+  Missing actuals and extra actuals fail closed during lowering instead of
+  leaving parameter signals unbound or silently ignoring values.
 - Hash-backed drive DT emission is deterministic: drive definitions are emitted
   lexically by drive name after transaction/rule-created DTs and any generated
   rule-trigger fan-in DTs.
@@ -842,6 +846,7 @@ Focused tests:
 - [t/1190-isf-rule-priority-target-boundary.t](../t/1190-isf-rule-priority-target-boundary.t)
 - [t/1191-isf-actor-priority-target-boundary.t](../t/1191-isf-actor-priority-target-boundary.t)
 - [t/1192-isf-singleton-actor-clause-boundary.t](../t/1192-isf-singleton-actor-clause-boundary.t)
+- [t/1193-isf-drive-call-arity-boundary.t](../t/1193-isf-drive-call-arity-boundary.t)
 
 ## 12. Explicitly Deferred
 

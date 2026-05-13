@@ -561,10 +561,14 @@ sub _ir_named_drive_call {
     my ($cl, $tn, $i, $def, $pending_samples) = @_;
     my $name = $cl->[1];
     my @params = @{$def->{params}};
+    my @actuals = @{$cl}[2 .. $#$cl];
     my @assignments = (_sample_assignments($pending_samples || []), { lhs => "${name}_start", rhs => 1, op => '=' });
 
+    confess "Transaction '$tn': drive '$name' expects " . scalar(@params) . " actual(s), got " . scalar(@actuals) . "\n"
+        if @actuals > @params;
+
     for my $pi (0 .. $#params) {
-        my $arg = $cl->[2 + $pi];
+        my $arg = $actuals[$pi];
         confess "Transaction '$tn': drive '$name' missing actual for '$params[$pi]'\n"
             unless defined $arg;
         push @assignments, { lhs => "${name}_$params[$pi]", rhs => $arg, op => '=' };

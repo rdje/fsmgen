@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF drive call arity boundary
+- ISF known drive calls now use exact positional arity during lowering: the
+  number of actual values must match the drive definition's parameter count.
+- Missing actuals keep the existing targeted missing-parameter diagnostic, and
+  extra actuals now fail closed instead of being silently ignored. This applies
+  through the shared named-drive-call lowerer used by top-level and nested
+  transaction body contexts.
+- Added `t/1193-isf-drive-call-arity-boundary.t` and updated the ISF public
+  contract metadata, spec, mdBook, and live roadmap notes.
 ## 2026-05-13: R14 — ISF singleton actor clause boundary
 - ISF parser actor-shell singleton clauses now fail closed when repeated:
   `(clock ...)`, `(reset ...)`, `(watchdog ...)`, `(interface ...)`, and

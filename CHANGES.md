@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF drive call arity boundary
+- Tightened [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so known drive calls require exactly one actual value per declared drive
+  parameter during lowering.
+- Added [t/1193-isf-drive-call-arity-boundary.t](t/1193-isf-drive-call-arity-boundary.t)
+  for valid parameter binding plus missing, extra, simple-drive-extra, and
+  nested extra-actual rejection.
+- Updated the ISF public-interface contract metadata, ISF spec, mdBook drive
+  chapter, and roadmap notes so downstream consumers know extra drive-call
+  actuals cannot be silently discarded.
 ### R14 — ISF singleton actor clause boundary
 - Tightened [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
   so repeated singleton actor clauses fail before an actor shell is returned.

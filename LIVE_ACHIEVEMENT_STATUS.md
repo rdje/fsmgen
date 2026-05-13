@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF drive call arity boundary
+- Active: `R14`. Known ISF drive calls now require exact positional arity
+  during lowering: declared parameter count and actual count must match.
+- `t/1193` covers valid parameter binding plus missing actuals, extra actuals,
+  extra actuals on simple drives, and nested extra actual rejection through the
+  shared named-drive-call lowerer.
+
 ## 2026-05-13: R14 — ISF singleton actor clause boundary
 - Active: `R14`. Repeated actor-shell singleton clauses now fail before parser
   actor-shell return. The singleton set is `(clock ...)`, `(reset ...)`,

@@ -306,6 +306,11 @@ The drive-name boundary is checked by
 [t/1187-isf-drive-name-boundary.t](../t/1187-isf-drive-name-boundary.t)
 so duplicate drive definitions fail before actor-shell return instead of
 silently overwriting an earlier drive body in the parser handoff.
+The drive-call arity boundary is checked by
+[t/1193-isf-drive-call-arity-boundary.t](../t/1193-isf-drive-call-arity-boundary.t)
+so known drive calls require exactly one actual value per declared formal
+parameter. Missing actuals and extra actuals fail during lowering instead of
+emitting unbound parameter signals or ignoring author-provided values.
 ISF switch fallback scheduling is checked by
 [t/1103-isf-switch-branch-exits.t](../t/1103-isf-switch-branch-exits.t)
 and the generated `.fsm` default selector contract is checked by
@@ -468,6 +473,10 @@ Drive parameter names are also parser-validated before actor-shell return:
 [t/1189-isf-drive-parameter-boundary.t](../t/1189-isf-drive-parameter-boundary.t)
 keeps parameterized drive declarations from reusing one parameter name for
 multiple positional arguments.
+Known drive calls are exact-arity calls: the number of actual values must match
+the drive's declared parameter count. Extra actuals are rejected during
+lowering rather than silently discarded, and missing actuals keep the existing
+targeted missing-parameter diagnostic.
 The parser/scheduler argument-shape fields and actor-shell key list are exact
 facade-shape discovery metadata.
 Public facade boundary failures produce bounded scalar diagnostics before
