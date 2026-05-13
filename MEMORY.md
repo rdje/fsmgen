@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF shift_right explicit width option
+- Added a bounded `(shift_right reg bit (width N))` option. When `reg` has no
+  declared/sample/assemble-inferred width, the scheduler now uses `N - 1` as
+  the inserted-MSB position instead of falling back to the placeholder
+  `WIDTH` expression.
+- Added `t/1173-isf-shift-right-explicit-width.t` for successful explicit
+  width lowering and malformed width rejection, and updated the ISF spec,
+  public-interface contract, mdBook data-manipulation/lowering docs, and live
+  roadmap notes.
 ## 2026-05-13: R14 — ISF rule trigger fan-in schedule report audit
 - Added `t/1172-isf-rule-trigger-fanin-schedule-report.t` so the schedule JSON
   report now explicitly covers the shipped fan-in shape: rule DTs first,

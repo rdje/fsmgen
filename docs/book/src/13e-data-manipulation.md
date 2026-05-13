@@ -34,10 +34,11 @@ Shifts `reg` left by 1 and ORs in `bit` at LSB.
 
 **Use case**: I2C/SIPO — capturing serial bits into a parallel register.
 
-## `(shift_right reg bit)` — Shift Register (Right)
+## `(shift_right reg bit [(width N)])` — Shift Register (Right)
 
 ```lisp
 (shift_right tx_reg msb_data)
+(shift_right tx_reg msb_data (width 8))
 ```
 
 Shifts `reg` right by 1 and ORs in `bit` at MSB.
@@ -50,9 +51,10 @@ Shifts `reg` right by 1 and ORs in `bit` at MSB.
   (-> next_state))
 ```
 
-Known interface and sampled-source widths use a concrete insert position. If
-the shifted value has no known width, the current implementation falls back to
-the placeholder `WIDTH` expression.
+Known interface, sampled-source, assemble-inferred, and explicit `(width N)`
+widths use a concrete insert position. If the shifted value has no known width
+and no explicit width option, the current implementation falls back to the
+placeholder `WIDTH` expression.
 
 ## `(assemble field1 field2 ... as var)` — Concatenation
 

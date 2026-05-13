@@ -227,6 +227,7 @@ sub build_isf_public_interface_contract {
             't/1169-isf-rule-shorthand-guard.t',
             't/1171-isf-rule-trigger-fanin.t',
             't/1172-isf-rule-trigger-fanin-schedule-report.t',
+            't/1173-isf-shift-right-explicit-width.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',

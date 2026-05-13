@@ -311,7 +311,7 @@ the switch; that authored branch owns the fallback path and suppresses the
 scheduler's implicit fallthrough branch.
 **Implicit signals**: None.
 
-## `(update var expr)` / `(shift_left reg bit)` / `(shift_right reg bit)` → Sequential State
+## `(update var expr)` / `(shift_left reg bit)` / `(shift_right reg bit [(width N)])` → Sequential State
 
 **ISF**:
 ```lisp
@@ -328,7 +328,9 @@ scheduler's implicit fallthrough branch.
 **Timing**: 1 cycle. Assignment takes effect next cycle.
 **Implicit signals**: None (operates on existing variables).
 For `shift_right`, known signal widths are used for the inserted MSB position;
-unknown widths still fall back to the placeholder width expression.
+an explicit `(width N)` option supplies that width when the register is not
+declared elsewhere. Unknown widths still fall back to the placeholder width
+expression.
 
 ## `(assemble fields... as var)` / `(extract word as fields...)` → Sequential State
 

@@ -65,6 +65,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Schedule JSON rule-trigger fan-in coverage now locks the downstream-facing
   `dt_blocks` projection for rule DTs plus generated `rule_trigger_fanin` DTs,
   and the one-bit inferred-storage summaries for generated trigger sources.
+- ISF `shift_right` now accepts a bounded `(width N)` option so unknown-width
+  shifted registers can use a concrete inserted-MSB position without relying
+  on the placeholder `WIDTH` expression; `t/1173` covers valid lowering and
+  malformed width rejection.
 - The mdBook and ISF live docs now distinguish transaction
   `(when condition body...)` control flow from rule-local `(when condition)`
   guard clauses, with the rule shorthand called out as the preferred spelling.
@@ -3880,6 +3884,10 @@ Done:
   [t/1172-isf-rule-trigger-fanin-schedule-report.t](t/1172-isf-rule-trigger-fanin-schedule-report.t),
   covering generated `rule_trigger_fanin` DT summaries and one-bit inferred
   storage for generated trigger sources.
+- `shift_right` explicit width syntax is now regression-backed by
+  [t/1173-isf-shift-right-explicit-width.t](t/1173-isf-shift-right-explicit-width.t),
+  covering concrete inserted-MSB lowering for `(width N)` and malformed width
+  rejection.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

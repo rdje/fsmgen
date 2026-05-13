@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF shift_right explicit width option
+- The broader unknown-width data-operation limitation is not solved by one
+  slice, but `shift_right` has a narrow, useful author-controlled fix: when
+  the shifted register width is not declared elsewhere, `(width N)` can supply
+  the exact width needed to place the inserted MSB.
+- The option is deliberately bounded to positive integer widths. Known
+  interface/sample/assemble-inferred widths continue to work as before, and
+  values with neither known nor explicit width still use the placeholder
+  `WIDTH` fallback until broader inference work is tackled.
 ## 2026-05-13: R14 ISF rule trigger fan-in schedule report audit
 - After implementing rule-trigger fan-in, HDL-path coverage alone was not
   enough for the downstream-consumer contract. The schedule report is also a

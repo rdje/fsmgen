@@ -217,6 +217,10 @@ The schedule-report projection of that same fan-in path is checked by
 [t/1172-isf-rule-trigger-fanin-schedule-report.t](../t/1172-isf-rule-trigger-fanin-schedule-report.t)
 so downstream consumers can rely on the advertised DT kind/order and one-bit
 inferred-storage summaries for the generated trigger sources.
+The explicit-width `shift_right` data-operation path is checked by
+[t/1173-isf-shift-right-explicit-width.t](../t/1173-isf-shift-right-explicit-width.t)
+so authors can avoid the placeholder width fallback when a shifted register is
+not declared elsewhere.
 The actor-shell drive shape is checked by
 [t/1167-isf-public-actor-shell-drive-shape-audit.t](../t/1167-isf-public-actor-shell-drive-shape-audit.t)
 to keep parser-returned drive definitions discoverable as a drive-name-keyed

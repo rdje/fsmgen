@@ -136,6 +136,7 @@ sub _build_signal_width_map {
     for my $i (@{$actor->{interface}{inputs}})  { $widths{$i->{name}} = $i->{width} // 1; }
     for my $o (@{$actor->{interface}{outputs}}) { $widths{$o->{name}} = $o->{width} // 1; }
     _collect_sample_widths($tx->{clauses}, \%widths);
+    _collect_shift_widths($tx->{clauses}, \%widths);
     _collect_data_widths($tx->{clauses}, \%widths);
     return \%widths;
 }
@@ -173,6 +174,23 @@ sub _collect_data_widths {
     }
 }
 
+sub _collect_shift_widths {
+    my ($node, $widths) = @_;
+    return unless ref($node) eq 'ARRAY';
+
+    if (@$node >= 4 && $node->[0] eq 'shift_right') {
+        my $explicit_width = _parse_shift_right_width($node);
+        my $target = $node->[1];
+        if (defined($explicit_width) && defined($target) && !ref($target) && !exists $widths->{$target}) {
+            $widths->{$target} = $explicit_width;
+        }
+    }
+
+    for my $child (@$node) {
+        _collect_shift_widths($child, $widths) if ref($child) eq 'ARRAY';
+    }
+}
+
 sub _as_index {
     my ($cl, $start) = @_;
     for my $idx ($start .. $#$cl) {
@@ -206,6 +224,24 @@ sub _parse_extract_clause {
         confess "extract field must be a scalar name\n" if ref($field);
     }
     return ($word, @fields);
+}
+
+sub _parse_shift_right_width {
+    my ($cl) = @_;
+    my $width;
+
+    for my $idx (3 .. $#$cl) {
+        my $option = $cl->[$idx];
+        confess "shift_right optional arguments must be '(width N)'\n"
+            unless ref($option) eq 'ARRAY' && @$option == 2 && $option->[0] eq 'width';
+        confess "shift_right accepts at most one '(width N)' option\n"
+            if defined $width;
+        confess "shift_right width must be a positive integer\n"
+            if ref($option->[1]) || $option->[1] !~ /\A[1-9][0-9]*\z/;
+        $width = 0 + $option->[1];
+    }
+
+    return $width;
 }
 
 sub _register_counter_width {
@@ -417,7 +453,24 @@ sub _ir_await {
 sub _ir_complete{ my ($cl,$tn,$i)=@_; {name=>"${tn}_done_$i",kind=>'terminal',assignments=>[{lhs=>$cl->[1],rhs=>1,op=>'<1'}],transitions=>[]} }
 sub _ir_update   { my ($cl,$tn,$i)=@_; my$rhs=join(' ',@{$cl}[2..$#$cl]); {name=>"${tn}_update_$i",kind=>'sequential',assignments=>[{lhs=>$cl->[1],rhs=>$rhs,op=>'<-'}],transitions=>[]} }
 sub _ir_shift_left { my ($cl,$tn,$i)=@_; my$reg=$cl->[1];my$bit=$cl->[2]; {name=>"${tn}_shift_$i",kind=>'sequential',assignments=>[{lhs=>$reg,rhs=>"(| (<< $reg 1) $bit)",op=>'<-'}],transitions=>[]} }
-sub _ir_shift_right{ my ($cl,$tn,$i,$widths)=@_; my$reg=$cl->[1];my$bit=$cl->[2];my$insert=(defined($widths->{$reg})&&$widths->{$reg}>0)?$widths->{$reg}-1:'(- WIDTH 1)'; {name=>"${tn}_shift_$i",kind=>'sequential',assignments=>[{lhs=>$reg,rhs=>"(| (>> $reg 1) (<< $bit $insert))",op=>'<-'}],transitions=>[]} }
+sub _ir_shift_right {
+    my ($cl, $tn, $i, $widths) = @_;
+    my $reg = $cl->[1];
+    my $bit = $cl->[2];
+    my $explicit_width = _parse_shift_right_width($cl);
+    my $insert = defined($explicit_width)
+        ? $explicit_width - 1
+        : (defined($widths->{$reg}) && $widths->{$reg} > 0)
+            ? $widths->{$reg} - 1
+            : '(- WIDTH 1)';
+
+    return {
+        name        => "${tn}_shift_$i",
+        kind        => 'sequential',
+        assignments => [{ lhs => $reg, rhs => "(| (>> $reg 1) (<< $bit $insert))", op => '<-' }],
+        transitions => [],
+    };
+}
 sub _ir_assemble  { my ($cl,$tn,$i)=@_; my($var,@parts)=_parse_assemble_clause($cl);my$rhs='(concat '.join(' ',@parts).')'; {name=>"${tn}_asm_$i",kind=>'sequential',assignments=>[{lhs=>$var,rhs=>$rhs,op=>'<-'}],transitions=>[]} }
 sub _ir_extract {
     my ($cl, $tn, $i, $widths) = @_;

@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF shift_right explicit width option
+- Active: `R14`. `shift_right` now accepts `(width N)` so authors can provide
+  the shifted register width when it is not declared elsewhere, producing a
+  concrete inserted-MSB position instead of the placeholder `WIDTH` fallback.
+- `t/1173` covers valid explicit-width lowering and malformed width rejection;
+  the ISF spec, public-interface contract, mdBook, and roadmap notes now
+  describe the bounded option.
+
 ## 2026-05-13: R14 — ISF rule trigger fan-in schedule report audit
 - Active: `R14`. The schedule JSON report now has focused coverage for the
   shipped rule-trigger fan-in shape: rule DT order, `rule_trigger_fanin` kind,

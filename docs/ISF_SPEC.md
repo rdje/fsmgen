@@ -423,6 +423,7 @@ checks do not fall through into later branch bodies.
 (update var expr)
 (shift_left reg bit)
 (shift_right reg bit)
+(shift_right reg bit (width N))
 (assemble header payload crc as packet)
 (extract packet as header payload crc)
 ```
@@ -431,9 +432,9 @@ Current lowering:
 - `update` emits one flopped assignment to `var`.
 - `shift_left` emits a left shift plus inserted bit.
 - `shift_right` emits a right shift plus inserted bit. When the shifted signal
-  has a known interface or sampled-source width, the insert position uses that
-  width; unknown-width values still fall back to the placeholder width
-  expression.
+  has a known interface, sampled-source, assemble-inferred, or explicit
+  `(width N)` width, the insert position uses that width; unknown-width values
+  still fall back to the placeholder width expression.
 - `assemble` emits a concat expression into the target variable.
 - `extract` emits one extraction state. When the source word and destination
   fields have known widths, fields are assigned exact descending slices; if a
@@ -745,6 +746,7 @@ Focused tests:
 - [t/1169-isf-rule-shorthand-guard.t](../t/1169-isf-rule-shorthand-guard.t)
 - [t/1171-isf-rule-trigger-fanin.t](../t/1171-isf-rule-trigger-fanin.t)
 - [t/1172-isf-rule-trigger-fanin-schedule-report.t](../t/1172-isf-rule-trigger-fanin-schedule-report.t)
+- [t/1173-isf-shift-right-explicit-width.t](../t/1173-isf-shift-right-explicit-width.t)
 
 ## 12. Explicitly Deferred
 
@@ -754,6 +756,7 @@ Focused tests:
 - Enforced resource arbitration and priority resolution.
 - Full temporal `(contract ...)` assertions.
 - Rich storage-class optimization in schedule reports.
-- Full width inference for unknown-width `shift_right` and `extract` values.
+- Full width inference for unknown-width `extract` values and `shift_right`
+  values that do not use a known signal width or explicit `(width N)` option.
 - Treating the schedule JSON as a fully frozen public schema beyond the bounded
   key families advertised by `embedding.isf_public_interface`.

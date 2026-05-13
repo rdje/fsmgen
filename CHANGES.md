@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF shift_right explicit width option
+- Added bounded `(shift_right reg bit (width N))` support in
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so unknown-width right shifts can use a concrete inserted-MSB position.
+- Added [t/1173-isf-shift-right-explicit-width.t](t/1173-isf-shift-right-explicit-width.t)
+  for valid explicit-width lowering and malformed width rejection.
+- Updated the ISF spec, public-interface contract, mdBook, and live roadmap
+  notes for the new bounded data-operation syntax.
 ### R14 — ISF rule trigger fan-in schedule report audit
 - Added [t/1172-isf-rule-trigger-fanin-schedule-report.t](t/1172-isf-rule-trigger-fanin-schedule-report.t)
   to lock schedule JSON `dt_blocks` order/kind/assignment-count projection for

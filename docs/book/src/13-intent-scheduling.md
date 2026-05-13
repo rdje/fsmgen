@@ -171,6 +171,9 @@ control-flow and data-operation states.
   deferred.
 - `(resources ...)` and `(priority ...)` are parsed but not enforced as
   arbitration policy.
-- `(shift_right ...)` field-width parameter is not yet configurable.
-- `(extract ...)` field slice ranges are placeholder names, not exact slices.
+- `(shift_right ...)` accepts an explicit `(width N)` option when the shifted
+  register width is not declared elsewhere; values with no known or explicit
+  width still use the placeholder `WIDTH` expression.
+- `(extract ...)` field slice ranges still use placeholder names when widths
+  cannot be inferred.
 - `(contract ...)` temporal assertions are not implemented.
