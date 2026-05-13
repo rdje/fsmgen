@@ -230,6 +230,7 @@ sub build_isf_public_interface_contract {
             't/1173-isf-shift-right-explicit-width.t',
             't/1174-isf-extract-explicit-widths.t',
             't/1175-isf-contract-fail-closed.t',
+            't/1176-isf-resource-priority-boundary.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',

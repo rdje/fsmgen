@@ -152,8 +152,8 @@ Supported actor clauses:
 Parser-carried but not currently semantically enforced by the scheduler:
 - actor-level `(phase ...)`
 - actor-level `(stage ...)`
-- `(resources ...)`
-- `(priority ...)`
+- `(resources ...)`, structurally validated as `(resource name (arbiter priority|round_robin))`
+- actor-level `(priority lhs over rhs)`
 
 Deprecated compatibility:
 - `(handshake ...)` is accepted and ignored. The current activation model is
@@ -558,10 +558,16 @@ Multi-rule fan-in example:
 )
 ```
 
-- Inline `(priority ...)` is parsed and currently ignored by lowering.
+- Inline `(priority over other_rule)` is structurally validated by the parser
+  and currently ignored by lowering.
 
-Separate `(priority ...)` declarations are parsed but not currently enforced as
-arbitration policy.
+Separate `(priority lhs over rhs)` declarations are structurally validated by
+the parser but not currently enforced as arbitration policy.
+
+`(resources ...)` entries are structurally validated as
+`(resource name (arbiter priority|round_robin))`, with duplicate resource
+names rejected before an actor shell is returned. Resource arbitration is still
+not enforced by lowering.
 
 Authored transaction `(contract ...)` temporal assertion clauses are not lowered
 yet. The scheduler rejects them with a targeted diagnostic instead of silently
@@ -759,6 +765,7 @@ Focused tests:
 - [t/1173-isf-shift-right-explicit-width.t](../t/1173-isf-shift-right-explicit-width.t)
 - [t/1174-isf-extract-explicit-widths.t](../t/1174-isf-extract-explicit-widths.t)
 - [t/1175-isf-contract-fail-closed.t](../t/1175-isf-contract-fail-closed.t)
+- [t/1176-isf-resource-priority-boundary.t](../t/1176-isf-resource-priority-boundary.t)
 
 ## 12. Explicitly Deferred
 

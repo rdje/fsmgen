@@ -169,8 +169,8 @@ control-flow and data-operation states.
 - `(do ...)` and `(spawn ...)` bind named start/done signals in scheduled
   `.fsm`; composition-top instantiation and spawn parameter binding remain
   deferred.
-- `(resources ...)` and `(priority ...)` are parsed but not enforced as
-  arbitration policy.
+- `(resources ...)` and `(priority ...)` are structurally validated by the
+  parser but not enforced as arbitration policy.
 - `(shift_right ...)` accepts an explicit `(width N)` option when the shifted
   register width is not declared elsewhere; values with no known or explicit
   width still use the placeholder `WIDTH` expression.

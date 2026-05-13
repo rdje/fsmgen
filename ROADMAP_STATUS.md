@@ -73,6 +73,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - ISF transaction `(contract ...)` temporal assertions now fail closed during
   lowering instead of being silently ignored; `t/1175` covers top-level and
   nested contract clauses while full assertion lowering remains deferred.
+- ISF resource and priority metadata now has parser-side structural
+  validation before actor-shell return; `t/1176` covers accepted resource/
+  priority metadata plus malformed resources, arbiters, duplicate names, and
+  priority forms while arbitration enforcement remains deferred.
 - The mdBook and ISF live docs now distinguish transaction
   `(when condition body...)` control flow from rule-local `(when condition)`
   guard clauses, with the rule shorthand called out as the preferred spelling.

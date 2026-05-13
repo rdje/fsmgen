@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF resource/priority parser boundaries
+- Resource arbitration and priority resolution are still larger scheduler
+  design tasks, but parser-side metadata should not remain shape-loose while
+  the public ISF surface is stabilizing.
+- This slice keeps the enforcement boundary honest: accepted resource and
+  priority forms now have exact structural contracts, while the docs still say
+  arbitration is not implemented. That gives downstream consumers predictable
+  metadata without pretending the scheduler uses it for conflicts yet.
 ## 2026-05-13: R14 ISF contract clauses fail closed
 - Temporal assertion lowering is still not designed, but silently ignoring
   authored `(contract ...)` clauses is worse than an explicit unsupported

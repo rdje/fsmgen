@@ -229,6 +229,11 @@ The temporal-contract lowering boundary is checked by
 [t/1175-isf-contract-fail-closed.t](../t/1175-isf-contract-fail-closed.t)
 so authored transaction `(contract ...)` clauses fail closed with a targeted
 diagnostic until temporal assertion lowering is implemented.
+The parser boundary for resource and priority metadata is checked by
+[t/1176-isf-resource-priority-boundary.t](../t/1176-isf-resource-priority-boundary.t)
+so malformed `(resources ...)`, actor-level `(priority lhs over rhs)`, and
+rule-local `(priority over other_rule)` forms are rejected before an actor
+shell is returned. Arbitration enforcement remains deferred.
 The actor-shell drive shape is checked by
 [t/1167-isf-public-actor-shell-drive-shape-audit.t](../t/1167-isf-public-actor-shell-drive-shape-audit.t)
 to keep parser-returned drive definitions discoverable as a drive-name-keyed

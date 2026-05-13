@@ -257,6 +257,8 @@ sub _parse_rule($self, $clause) {
                 if defined $when;
             $when = $self->_parse_rule_when($elem, $name);
         } else {
+            $self->_parse_rule_priority($elem, $name)
+                if ref($elem) eq 'ARRAY' && defined($elem->[0]) && $elem->[0] eq 'priority';
             push @actions, $elem;
         }
     }
@@ -275,22 +277,64 @@ sub _parse_rule_when($self, $clause, $rule_name) {
     return ['when', $clause->[1]];
 }
 
+sub _parse_rule_priority($self, $clause, $rule_name) {
+    confess "Error: rule '$rule_name' priority requires '(priority over other_rule)'\n"
+        unless ref($clause) eq 'ARRAY'
+            && @$clause == 3
+            && defined($clause->[1])
+            && !ref($clause->[1])
+            && $clause->[1] eq 'over'
+            && defined($clause->[2])
+            && !ref($clause->[2])
+            && length($clause->[2]);
+
+    return 1;
+}
+
 sub _parse_resources($self, $clause) {
     my @resources;
+    my %seen;
+
     for my $i (1 .. $#$clause) {
         my $res = $clause->[$i];
         confess "Error: resource must be a list\n" unless ref($res) eq 'ARRAY';
         my ($kw, $name, $arbiter_form) = @$res;
-        my $arbiter_type;
-        if (ref($arbiter_form) eq 'ARRAY' && $arbiter_form->[0] eq 'arbiter') {
-            $arbiter_type = $arbiter_form->[1];
-        }
-        push @resources, { name => $name, arbiter => $arbiter_type };
+        confess "Error: resource entries require '(resource name (arbiter priority|round_robin))'\n"
+            unless @$res == 3
+                && defined($kw)
+                && !ref($kw)
+                && $kw eq 'resource'
+                && defined($name)
+                && !ref($name)
+                && length($name)
+                && ref($arbiter_form) eq 'ARRAY'
+                && @$arbiter_form == 2
+                && defined($arbiter_form->[0])
+                && !ref($arbiter_form->[0])
+                && $arbiter_form->[0] eq 'arbiter'
+                && defined($arbiter_form->[1])
+                && !ref($arbiter_form->[1])
+                && ($arbiter_form->[1] eq 'priority' || $arbiter_form->[1] eq 'round_robin');
+
+        confess "Error: duplicate resource '$name'\n" if $seen{$name}++;
+        push @resources, { name => $name, arbiter => $arbiter_form->[1] };
     }
     return \@resources;
 }
 
 sub _parse_priority($self, $clause) {
+    confess "Error: (priority ...) requires '(priority lhs over rhs)'\n"
+        unless @$clause == 4
+            && defined($clause->[1])
+            && !ref($clause->[1])
+            && length($clause->[1])
+            && defined($clause->[2])
+            && !ref($clause->[2])
+            && $clause->[2] eq 'over'
+            && defined($clause->[3])
+            && !ref($clause->[3])
+            && length($clause->[3]);
+
     return [ @{$clause}[1 .. $#$clause] ];
 }
 

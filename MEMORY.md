@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF resource/priority parser boundaries
+- Tightened parser validation for resource and priority metadata. Actor-level
+  resources now require `(resource name (arbiter priority|round_robin))`,
+  duplicate resource names are rejected, actor-level priority requires
+  `(priority lhs over rhs)`, and rule-local priority requires
+  `(priority over other_rule)`.
+- Added `t/1176-isf-resource-priority-boundary.t` and updated the ISF spec,
+  public-interface contract, mdBook, and roadmap notes. Arbitration
+  enforcement remains deferred; this slice only prevents malformed metadata
+  from entering the scheduler-consumable actor shell.
 ## 2026-05-13: R14 — ISF contract clauses fail closed
 - Transaction `(contract ...)` temporal assertions remain unimplemented, but
   they are no longer silently ignored by lowering. The scheduler now rejects

@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF resource/priority parser boundaries
+- Active: `R14`. Resource and priority metadata now has parser-side structural
+  validation before an actor shell is returned: supported resource arbiters,
+  duplicate resource rejection, actor-level `(priority lhs over rhs)`, and
+  rule-local `(priority over other_rule)`.
+- `t/1176` covers the accepted full-featured fixture plus malformed resources
+  and priorities. Arbitration enforcement remains deferred.
+
 ## 2026-05-13: R14 — ISF contract clauses fail closed
 - Active: `R14`. Transaction `(contract ...)` temporal assertions still remain
   deferred, but authored contract clauses now fail closed during lowering

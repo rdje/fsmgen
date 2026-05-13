@@ -29,7 +29,8 @@ body-bearing `(when condition body...)` form is only described in
 - `(port value)` — guarded assignment when the condition holds
 - `(trigger transaction)` — guarded one-cycle delayed pulse on a per-rule
   trigger source; generated fan-in drives the transaction start signal
-- `(priority over other_rule)` — parsed metadata, currently not enforced
+- `(priority over other_rule)` — structurally validated metadata, currently
+  not enforced
 
 **Lowering**: Non-state DT block containing one guarded action block in the
 current scheduler. The shorthand scalar guard and the long-form `(when ...)`
@@ -120,8 +121,8 @@ With a single rule source, the generated fan-in assigns the source directly:
   (rdata 0))
 ```
 
-Inline priority is accepted by the parser and ignored by current lowering.
-It does not resolve conflicting drives yet.
+Inline priority is accepted and structurally validated by the parser, then
+ignored by current lowering. It does not resolve conflicting drives yet.
 
 ## Priorities
 
@@ -131,9 +132,10 @@ It does not resolve conflicting drives yet.
 (priority read_burst over write_burst)
 ```
 
-Priority declarations are informational in the current scheduler. When two
-rules/transactions could drive the same output, priority resolution is still
-deferred rather than enforced.
+Priority declarations are structurally validated as
+`(priority lhs over rhs)` and remain informational in the current scheduler.
+When two rules/transactions could drive the same output, priority resolution is
+still deferred rather than enforced.
 
 ## Resources
 
@@ -146,5 +148,6 @@ deferred rather than enforced.
 Resources are shared hardware that only one transaction can use at a time.
 Arbiter types: `priority`, `round_robin`.
 
-Resource lowering is deferred — resources are parsed but not yet enforced
-by the scheduler.
+Resource metadata is structurally validated by the parser, including supported
+arbiter names and duplicate resource rejection. Resource lowering is still
+deferred — resources are not yet enforced by the scheduler.

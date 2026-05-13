@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF resource/priority parser boundaries
+- Tightened [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
+  so resource metadata, actor-level priorities, and rule-local priorities are
+  structurally validated before parser facades return an actor shell.
+- Added [t/1176-isf-resource-priority-boundary.t](t/1176-isf-resource-priority-boundary.t)
+  for the accepted full-featured fixture plus malformed resource, arbiter,
+  duplicate-resource, actor-priority, and rule-priority forms.
+- Updated the ISF spec, public-interface contract, mdBook, and live roadmap
+  notes; arbitration enforcement remains deferred.
 ### R14 — ISF contract clauses fail closed
 - Changed [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
   so transaction `(contract ...)` temporal assertion clauses fail closed during
