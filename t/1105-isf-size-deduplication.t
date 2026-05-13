@@ -30,7 +30,7 @@ subtest 'inferred storage does not duplicate declared interface ports in +size' 
     my @last_error_entries = ($size =~ /\(last_error 1\)/g);
     is(scalar(@last_error_entries), 1, 'declared last_error appears once in +size');
     like($size, qr/\(apb_transfer_wd 17\)/, 'watchdog counter is still emitted');
-    like($size, qr/\(apb_transfer_cc 9\)/,  'latency counter is still emitted');
+    like($size, qr/\(apb_transfer_cc 5\)/,  'latency counter is still emitted with max-bound width');
     like($fsm, qr/\(<- \(last_error 1\)\)/, 'timeout assignment to last_error is preserved');
 };
 

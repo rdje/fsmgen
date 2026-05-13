@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF latency clause boundary
+- ISF transaction `(latency ...)` lowering now validates `(min N)` and
+  `(max N)` options as positive integers with no duplicates.
+- Valid latency bounds now feed the generated latency counter and max check,
+  so explicit `(max N)` no longer falls back to the old default width.
+- Empty latency clauses, unknown options, non-integer values, duplicate
+  options, and `min > max` now fail before latency counter emission instead of
+  being ignored or overwritten.
+- Added `t/1197-isf-latency-clause-boundary.t` and updated the ISF public
+  contract metadata, spec, mdBook, and live roadmap notes.
 ## 2026-05-13: R14 — ISF complete clause boundary
 - ISF lowering now validates `(complete port)` as an exact terminal clause with
   one scalar completion target before scheduled `.fsm` emission.

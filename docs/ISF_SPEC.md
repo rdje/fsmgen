@@ -403,7 +403,22 @@ Current lowering:
   signal with `<-`, because the `.fsm` backend rejects mixed pulse-delayed and
   non-pulse sequential operators on one LHS.
 
-### 7.5 Repeat
+### 7.5 Latency
+
+```lisp
+(latency (min 1) (max 64))
+```
+
+Current lowering:
+- Latency metadata accepts one or both `(min N)` and `(max N)` options.
+- `N` must be a positive integer, each option may appear at most once, and
+  `min` must be less than or equal to `max` when both are present.
+- The scheduler creates a transaction cycle counter, an increment source, and
+  latency error wiring without adding an authored transaction state.
+- A valid explicit `max` bound drives the generated counter width and max
+  violation check; omitted bounds use the scheduler defaults.
+
+### 7.6 Repeat
 
 ```lisp
 (repeat beats
@@ -425,7 +440,7 @@ Current lowering:
 - Repeat bodies lower named drive calls plus `await`, `sample`, `update`,
   `shift_left`, `shift_right`, `assemble`, and `extract`.
 
-### 7.6 Inline Control Flow
+### 7.7 Inline Control Flow
 
 `(when condition body...)` creates one decision state plus body states. The
 true path enters the body, and the false path skips to the first state after
@@ -461,7 +476,7 @@ shift/assemble/extract data operations, and nested `when`. Branch bodies exit
 to the first state after the whole switch, so multi-state branches and repeat
 checks do not fall through into later branch bodies.
 
-### 7.6 Data Manipulation
+### 7.8 Data Manipulation
 
 ```lisp
 (update var expr)

@@ -250,6 +250,7 @@ sub build_isf_public_interface_contract {
             't/1194-isf-drive-body-boundary.t',
             't/1195-isf-sample-clause-boundary.t',
             't/1196-isf-complete-clause-boundary.t',
+            't/1197-isf-latency-clause-boundary.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',

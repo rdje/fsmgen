@@ -30,7 +30,7 @@ subtest 'schedule JSON reports assigned counters with inferred widths' => sub {
 
     my $latency_counter = entry_by_name($storage, 'apb_transfer_cc');
     is($latency_counter->{kind},  'counter', 'latency storage is classified as a counter');
-    is($latency_counter->{width}, 9,         'latency storage keeps the inferred width');
+    is($latency_counter->{width}, 5,         'latency storage keeps the max-bound inferred width');
 
     my $drive_start = entry_by_name($storage, 'penable_start');
     is($drive_start->{kind},  'counter', 'combinational drive start still comes from the counter table');

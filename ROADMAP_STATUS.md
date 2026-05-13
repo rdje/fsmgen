@@ -8,6 +8,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Support workflow: [bin/ci-regression](bin/ci-regression) now supports
   explicit `quick`, `isf`, and `full` modes, plus `--list`, `--dry-run`, and
   `--no-book`. No argument still runs the historical full gate.
+- ISF transaction `(latency ...)` clauses now validate `(min N)` and
+  `(max N)` options as unique positive integers before latency counter
+  emission, and valid `max` bounds now drive the generated counter width/max
+  check. `t/1197` covers valid counter support plus empty, unknown-option,
+  non-integer, duplicate-option, and `min > max` rejection.
 - ISF `(complete port)` clauses now fail malformed shapes before scheduled
   `.fsm` emission. `t/1196` covers valid delayed-pulse terminal lowering plus
   missing, nested, extra-operand, and nested-body malformed complete clauses.
@@ -1322,6 +1327,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - [t/1196-isf-complete-clause-boundary.t](t/1196-isf-complete-clause-boundary.t)
     now proves `(complete port)` requires one scalar target before scheduled
     `.fsm` emission.
+  - [t/1197-isf-latency-clause-boundary.t](t/1197-isf-latency-clause-boundary.t)
+    now proves `(latency ...)` accepts only unique positive-integer `min`/`max`
+    options with `min <= max` before counter emission, and the existing storage
+    tests now lock explicit max-bound counter width.
   - Next bounded `R14` slice: convert another documented scheduler limitation
     into regression-backed behavior.
 - Superseded `R13` carry-forward detail retained below this note should not be
@@ -4110,6 +4119,10 @@ Done:
 - Complete clause validation is now regression-backed by
   [t/1196-isf-complete-clause-boundary.t](t/1196-isf-complete-clause-boundary.t),
   covering exact scalar completion targets before scheduled `.fsm` emission.
+- Latency clause validation is now regression-backed by
+  [t/1197-isf-latency-clause-boundary.t](t/1197-isf-latency-clause-boundary.t),
+  covering positive-integer `min`/`max` options before latency counter
+  emission plus max-bound counter-width behavior.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

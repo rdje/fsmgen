@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF latency clause boundary
+- Tightened [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so transaction `(latency ...)` options are validated before latency counter
+  emission, and valid `max` bounds feed the generated counter width/max check
+  instead of falling back to the old default.
+- Added [t/1197-isf-latency-clause-boundary.t](t/1197-isf-latency-clause-boundary.t)
+  for valid counter support plus empty, unknown-option, non-integer,
+  duplicate-option, and `min > max` rejection.
+- Updated [t/1105-isf-size-deduplication.t](t/1105-isf-size-deduplication.t)
+  and [t/1106-isf-schedule-json-counter-storage.t](t/1106-isf-schedule-json-counter-storage.t)
+  to lock the explicit max-bound latency counter width.
+- Updated the ISF public-interface contract metadata, ISF spec, mdBook
+  transaction chapter, and roadmap notes.
 ### R14 — ISF complete clause boundary
 - Tightened [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
   so `(complete port)` requires exactly one scalar completion target before

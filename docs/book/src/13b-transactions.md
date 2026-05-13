@@ -265,6 +265,12 @@ when it does, the scheduler does not add an extra implicit fallthrough branch.
 
 **Timing**: no extra states. Adds counter + comparators.
 
+The latency clause accepts one or both `(min N)` and `(max N)` options. `N`
+must be a positive integer, each option may appear at most once, and `min`
+must be less than or equal to `max` when both are present. A valid explicit
+`max` bound drives the generated counter width and max violation check; omitted
+bounds use scheduler defaults.
+
 **What happens**:
 1. Entry state: `(<- (cc 0))` — reset counter
 2. Every active state: `(= (inc 1))` — assert increment

@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF latency clause boundary
+- Active: `R14`. Transaction `(latency ...)` clauses now validate `(min N)`
+  and `(max N)` as unique positive-integer options before latency counter
+  emission, and valid `max` bounds now drive the latency counter width/max
+  check.
+- `t/1197` covers valid counter support plus empty clauses, unknown options,
+  non-integer values, duplicate options, and `min > max`.
+
 ## 2026-05-13: R14 — ISF complete clause boundary
 - Active: `R14`. `(complete port)` now requires exactly one scalar completion
   target before scheduled `.fsm` emission.

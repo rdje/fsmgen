@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF latency clause boundary
+- Latency metadata feeds generated counter and error-check wiring. The previous
+  parser accepted unknown options by ignoring them and accepted duplicates by
+  letting the later value overwrite the earlier one.
+- The lowerer now treats latency metadata as a bounded option set: positive
+  integer `min`/`max`, no duplicate keys, and an ordered range when both are
+  present. Valid explicit bounds now feed the generated latency counter and max
+  check, while omitted bounds keep the existing defaults. This prevents
+  ambiguous or misspelled verification intent.
 ## 2026-05-13: R14 ISF complete clause boundary
 - Completion clauses own the transaction terminal-state pulse. If a malformed
   target reaches `_ir_complete`, the scheduled `.fsm` can contain a missing or

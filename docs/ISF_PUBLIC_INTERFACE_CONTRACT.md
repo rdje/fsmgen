@@ -325,6 +325,11 @@ The complete-clause boundary is checked by
 [t/1196-isf-complete-clause-boundary.t](../t/1196-isf-complete-clause-boundary.t)
 so `(complete port)` must name exactly one scalar completion target before
 scheduled `.fsm` emission.
+The latency-clause boundary is checked by
+[t/1197-isf-latency-clause-boundary.t](../t/1197-isf-latency-clause-boundary.t)
+so `(latency ...)` accepts only positive-integer `(min N)` and `(max N)`
+options, rejects duplicates, requires `min <= max` when both are present, and
+uses valid explicit `max` bounds for the generated counter width/max check.
 ISF switch fallback scheduling is checked by
 [t/1103-isf-switch-branch-exits.t](../t/1103-isf-switch-branch-exits.t)
 and the generated `.fsm` default selector contract is checked by

@@ -423,7 +423,7 @@ sub _build_transaction($self, $tx, $actor, $txi) {
             push @st, @$ss;
         }
         elsif ($k eq 'repeat')   { my ($rs,$rc,$rw) = _ir_repeat($cl,$tn,\$si,\@ps,$wd,$drives,$widths); push @st,@$rs; _register_counter_width(\%ct,$rc,$rw); }
-        elsif ($k eq 'latency')  { $lat = _parse_latency($cl); }
+        elsif ($k eq 'latency')  { $lat = _parse_latency($cl, $tn); }
         elsif ($k eq 'do')       { push @doc, $cl->[1]; push @st, _ir_do($cl,$tn,$si++); }
         elsif ($k eq 'spawn')    { push @spc, { child => $cl->[1], instance => $cl->[3] || "${tn}_${si}" }; push @dps, "$spc[-1]{instance}_done"; push @st, _ir_spawn($cl,$tn,$si++); }
         elsif ($k eq 'await_all') { push @st, _ir_sync_all($tn,$si++,\@dps); @dps = (); }
@@ -969,7 +969,37 @@ sub _build_drive_dts {
     }
 }
 
-sub _parse_latency { my($self,$cl)=@_; my %r; for my $i(1..$#$cl){my $x=$cl->[$i];next unless ref($x)eq'ARRAY'&&@$x>=2;$r{$x->[0]}=$x->[1] if$x->[0]eq'min'||$x->[0]eq'max'}; \%r }
+sub _parse_latency {
+    my ($cl, $tn) = @_;
+    my %result;
+
+    my @options = grep { defined } @{$cl}[1 .. $#$cl];
+
+    confess "Transaction '$tn': latency requires '(latency (min N) (max M))'\n"
+        unless @options;
+
+    for my $option (@options) {
+        confess "Transaction '$tn': latency options must be '(min N)' or '(max N)'\n"
+            unless ref($option) eq 'ARRAY'
+                && @$option == 2
+                && defined($option->[0])
+                && !ref($option->[0])
+                && ($option->[0] eq 'min' || $option->[0] eq 'max')
+                && defined($option->[1])
+                && !ref($option->[1])
+                && $option->[1] =~ /\A[1-9][0-9]*\z/;
+
+        my $key = $option->[0];
+        confess "Transaction '$tn': duplicate latency '$key' option\n"
+            if exists $result{$key};
+        $result{$key} = $option->[1];
+    }
+
+    confess "Transaction '$tn': latency min must be less than or equal to max\n"
+        if exists($result{min}) && exists($result{max}) && $result{min} > $result{max};
+
+    return \%result;
+}
 sub _parse_await_wd { my($cl)=@_; for my $i(2..$#$cl){my$x=$cl->[$i];return$x->[1]if ref($x)eq'ARRAY'&&$x->[0]eq'watchdog'} undef }
 
 sub _wire_do_children {
