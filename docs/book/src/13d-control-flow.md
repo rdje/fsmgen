@@ -38,6 +38,9 @@ See [Rules and Priorities](13g-rules.md) for rule guard lowering.
 
 **Condition**: port name, or any `.fsm` expression.
 
+The form is exact: `(when condition body...)`, with a scalar or list-form
+condition and at least one list-form body clause before branch expansion.
+
 **Lowering**: `?condition` decision state.
 ```lisp
 (test_tx_when_2

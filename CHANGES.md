@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF when clause boundary
+- Tightened [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so `(when condition body...)` requires a scalar or list-form condition plus
+  at least one list-form body clause before branch expansion.
+- Added [t/1206-isf-when-clause-boundary.t](t/1206-isf-when-clause-boundary.t)
+  for scalar/expression condition lowering plus malformed when rejection.
+- Updated the ISF public-interface contract metadata, ISF spec, mdBook
+  control-flow/transaction chapters, and roadmap notes.
 ### R14 — ISF switch clause boundary
 - Tightened [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
   so `(switch signal (value body...)...)` requires one scalar signal plus one

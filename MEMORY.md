@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF when clause boundary
+- ISF `(when condition body...)` lowering now validates a scalar or list-form
+  condition plus at least one list-form body clause before branch expansion.
+- Malformed missing-condition, missing-body, scalar-body, and nested scalar-body
+  forms now fail before scheduled `.fsm` emission.
+- Added `t/1206-isf-when-clause-boundary.t` and updated the ISF public contract
+  metadata, spec, mdBook, and live roadmap notes.
 ## 2026-05-13: R14 — ISF switch clause boundary
 - ISF `(switch signal (value body...)...)` lowering now validates one scalar
   signal plus one or more list-form branches before branch expansion.

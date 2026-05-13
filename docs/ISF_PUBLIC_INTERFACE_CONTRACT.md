@@ -365,6 +365,10 @@ The switch-clause boundary is checked by
 [t/1205-isf-switch-clause-boundary.t](../t/1205-isf-switch-clause-boundary.t)
 so `(switch signal (value body...)...)` requires one scalar signal, one or more
 list-form branches, and scalar branch values before branch expansion.
+The when-clause boundary is checked by
+[t/1206-isf-when-clause-boundary.t](../t/1206-isf-when-clause-boundary.t)
+so `(when condition body...)` requires one scalar or list-form condition and at
+least one list-form body clause before branch expansion.
 ISF switch fallback scheduling is checked by
 [t/1103-isf-switch-branch-exits.t](../t/1103-isf-switch-branch-exits.t)
 and the generated `.fsm` default selector contract is checked by

@@ -504,6 +504,7 @@ sub _validate_supported_transaction_clauses {
         } elsif ($keyword eq 'shift_left' || $keyword eq 'shift_right') {
             _validate_shift_clause($clause, $tn, $label);
         } elsif ($keyword eq 'when') {
+            _validate_when_clause($clause, $tn, $label);
             _validate_supported_transaction_clauses([@{$clause}[2 .. $#$clause]], $tn, 'when');
         } elsif ($keyword eq 'repeat') {
             _validate_repeat_clause($clause, $tn, $label);
@@ -561,6 +562,25 @@ sub _validate_shift_clause {
             && defined($clause->[2])
             && !ref($clause->[2])
             && length($clause->[2]);
+
+    return 1;
+}
+
+sub _validate_when_clause {
+    my ($clause, $tn, $label) = @_;
+
+    confess "Transaction '$tn': when requires '(when condition body...)' in $label\n"
+        unless @$clause >= 3
+            && defined($clause->[1])
+            && (
+                (ref($clause->[1]) eq 'ARRAY' && @{$clause->[1]})
+                || (!ref($clause->[1]) && length($clause->[1]))
+            );
+
+    for my $body_clause (@{$clause}[2 .. $#$clause]) {
+        confess "Transaction '$tn': when body clauses must be list forms in $label\n"
+            unless ref($body_clause) eq 'ARRAY';
+    }
 
     return 1;
 }

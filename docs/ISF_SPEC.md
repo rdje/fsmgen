@@ -444,12 +444,14 @@ Current lowering:
 
 ### 7.7 Inline Control Flow
 
-`(when condition body...)` creates one decision state plus body states. The
-true path enters the body, and the false path skips to the first state after
-the whole `when` body. Current body support includes drive, await, sample,
-complete, repeat, update, shift/assemble/extract data operations, and nested
-`when`. Nested repeats inside `when` bodies register the shared transaction
-counter width like top-level and switch-nested repeats.
+`(when condition body...)` is structurally validated with one scalar or
+list-form condition and at least one list-form body clause before branch
+expansion. It creates one decision state plus body states. The true path enters
+the body, and the false path skips to the first state after the whole `when`
+body. Current body support includes drive, await, sample, complete, repeat,
+update, shift/assemble/extract data operations, and nested `when`. Nested
+repeats inside `when` bodies register the shared transaction counter width like
+top-level and switch-nested repeats.
 
 This transaction clause is distinct from the rule guard spelling
 `(rule name (when condition) action...)`. In a rule, `(when condition)` is a
@@ -907,6 +909,7 @@ Focused tests:
 - [t/1203-isf-await-sync-clause-boundary.t](../t/1203-isf-await-sync-clause-boundary.t)
 - [t/1204-isf-child-composition-clause-boundary.t](../t/1204-isf-child-composition-clause-boundary.t)
 - [t/1205-isf-switch-clause-boundary.t](../t/1205-isf-switch-clause-boundary.t)
+- [t/1206-isf-when-clause-boundary.t](../t/1206-isf-when-clause-boundary.t)
 
 ## 12. Explicitly Deferred
 

@@ -213,6 +213,9 @@ counter, widened to the largest branch requirement.
 
 **Timing**: 1 cycle. If true, body cycles follow. If false, skip to next clause.
 
+The form is exact: `(when condition body...)`, with a scalar or list-form
+condition and at least one list-form body clause.
+
 **What happens**:
 1. `(?condition (=1 → body_start) (=0 → skip_target))`
 2. Body states execute if true

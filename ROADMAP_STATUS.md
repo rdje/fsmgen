@@ -23,6 +23,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - ISF `(switch signal (value body...)...)` clauses now validate scalar signals
   and list-form branches before branch expansion. `t/1205` covers valid
   explicit/default branch lowering plus malformed switch forms.
+- ISF `(when condition body...)` clauses now validate scalar/list-form
+  conditions and non-empty list-form bodies before branch expansion. `t/1206`
+  covers scalar/expression conditions plus malformed when forms.
 - ISF `(extract word as field... [(widths N...)])` clauses now validate scalar
   source/field names before scheduled `.fsm` emission while preserving bounded
   explicit field widths. `t/1201` covers valid explicit-width slice lowering
@@ -1389,6 +1392,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - [t/1205-isf-switch-clause-boundary.t](t/1205-isf-switch-clause-boundary.t)
     now proves `(switch signal (value body...)...)` scalar signal and
     list-form branch validation before branch expansion.
+  - [t/1206-isf-when-clause-boundary.t](t/1206-isf-when-clause-boundary.t)
+    now proves `(when condition body...)` scalar/list-form condition and
+    list-form body validation before branch expansion.
   - Next bounded `R14` slice: convert another documented scheduler limitation
     into regression-backed behavior.
 - Superseded `R13` carry-forward detail retained below this note should not be

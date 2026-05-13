@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF when clause boundary
+- Active: `R14`. `(when condition body...)` now requires a scalar or list-form
+  condition and at least one list-form body clause before scheduled `.fsm`
+  emission.
+- `t/1206` covers scalar and expression conditions plus missing condition,
+  missing body, scalar body, and nested scalar body malformed forms.
+
 ## 2026-05-13: R14 — ISF switch clause boundary
 - Active: `R14`. `(switch signal (value body...)...)` now requires a scalar
   signal and one or more list-form branches before scheduled `.fsm` emission.

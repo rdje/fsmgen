@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF when clause boundary
+- `when` is used both as activation and inline control flow. Inline lowering
+  constructs body states before the branch state can be linked to its true and
+  false exits.
+- The lowerer now validates the inline branch shell before expansion while
+  preserving expression-valued conditions: the condition may be scalar or
+  list-form, but the body must be present and list-formed.
 ## 2026-05-13: R14 ISF switch clause boundary
 - Switch lowering allocates branch body states before the switch decision state
   is assembled. Scalar branches or malformed branch values could previously be
