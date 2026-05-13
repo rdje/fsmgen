@@ -489,6 +489,18 @@ Current lowering:
 - `(port value)` actions lower as guarded flopped assignments to that port.
 - `(trigger transaction)` lowers as a guarded flopped assignment to
   `transaction_start`.
+- Scheduled `.fsm` emission factors the rule guard as one DT guard block around
+  all guarded actions, for example:
+
+```lisp
+(-always_ready
+  (<ready
+    (<- (valid 1))
+    (<- (main_transfer_start 1))
+  )
+)
+```
+
 - Inline `(priority ...)` is parsed and currently ignored by lowering.
 
 Separate `(priority ...)` declarations are parsed but not currently enforced as
@@ -676,6 +688,7 @@ Focused tests:
 - [t/1165-isf-public-actor-shell-timing-shape-audit.t](../t/1165-isf-public-actor-shell-timing-shape-audit.t)
 - [t/1166-isf-public-actor-shell-rule-shape-audit.t](../t/1166-isf-public-actor-shell-rule-shape-audit.t)
 - [t/1167-isf-public-actor-shell-drive-shape-audit.t](../t/1167-isf-public-actor-shell-drive-shape-audit.t)
+- [t/1168-isf-rule-guard-factoring.t](../t/1168-isf-rule-guard-factoring.t)
 
 ## 12. Explicitly Deferred
 

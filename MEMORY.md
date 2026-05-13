@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF rule guard factoring
+- Changed scheduled `.fsm` emission for ISF rule DT blocks so a rule-level
+  `(when ...)` guard is emitted once as a factored DT guard block around the
+  lowered actions, instead of repeating the same guard suffix on every rule
+  assignment.
+- Added `t/1168-isf-rule-guard-factoring.t` to prove the generated `.fsm`
+  shape and that the factored guarded block parses back through the normal
+  `.fsm` frontend and reaches HDL generation.
+- Updated the mdBook Rules and Priorities section plus `docs/ISF_SPEC.md` and
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md` to describe the review-artifact
+  shape.
 ## 2026-05-13: R14 — .fsm default selector and ISF switch fallback
 - Added `.fsm` test-node fallback selectors spelled `default` or `_`. The
   backend now lowers a fallback branch as the logical negation of the OR of all

@@ -332,6 +332,10 @@ The current public parser handoff also advertises a bounded rule-entry shell:
 `actions` array fields. The machine-readable contract advertises this through
 `actor_shell_rule_shape`. Rule condition/action payload contents remain private
 scheduler input.
+Current scheduled `.fsm` review artifacts emit a rule's `when` guard as one
+factored DT guard block around that rule's lowered actions. This keeps the
+generated text aligned with the source rule structure without widening the
+actor-shell rule payload contract.
 The current public parser handoff also advertises a bounded drive-definition
 shell: `drives` is a hash of entries keyed by drive name, and each entry has
 `params` and `body` arrays. The machine-readable contract advertises this

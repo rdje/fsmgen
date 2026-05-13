@@ -13,6 +13,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   fallthrough, supports authored `(default ...)` and `(_ ...)` fallback
   branches, and rejects the fallback aliases as duplicates. `t/1103` covers
   the emitted scheduled `.fsm` behavior.
+- ISF rule DT emission now factors each rule's `(when ...)` condition into one
+  `.fsm` guarded block around the lowered actions instead of repeating the
+  guard suffix on every assignment. `t/1168` covers the scheduled text and
+  parse-to-HDL path.
 - `t/1097` now removes the anonymous `_start` placeholder from `do`, `spawn`,
   and control-flow drive-call lowering by asserting concrete child, instance,
   and drive start signals. Next bounded R14 slice: turn another documented

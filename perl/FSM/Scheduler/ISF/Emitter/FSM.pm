@@ -240,24 +240,68 @@ sub _emit_dt_blocks($self, $ir, $outputs) {
     my @lines;
     for my $dt (@{$ir->{dt_blocks}}) {
         push @lines, "  (-$dt->{name}";
-        for my $a (@{$dt->{assignments}}) {
-            my $guard = $a->{guard} ? " <$a->{guard}{port}" : '';
-            my $op = $a->{op};
-            if ($op eq '=') {
-                my $port_suffix = $self->{outputs}{$a->{lhs}} ? '>' : '';
-                push @lines, "    (= ($a->{lhs}$port_suffix $a->{rhs})$guard)";
-            } elsif ($op eq '<-') {
-                push @lines, "    (<- ($a->{lhs} $a->{rhs})$guard)";
-            } elsif ($op eq '<=') {
-                push @lines, "    (<= ($a->{lhs} $a->{rhs})$guard)";
-            } else {
-                push @lines, "    ($a->{lhs} = $a->{rhs})$guard";
-            }
-        }
+        push @lines,
+            $dt->{kind} eq 'rule'
+                ? $self->_emit_rule_dt_assignments($dt)
+                : $self->_emit_plain_dt_assignments($dt);
         push @lines, '  )';
         push @lines, '';
     }
     return @lines;
+}
+
+sub _emit_plain_dt_assignments($self, $dt) {
+    return map { $self->_format_dt_assignment($_, 4) } @{$dt->{assignments}};
+}
+
+sub _emit_rule_dt_assignments($self, $dt) {
+    my @lines;
+    my @guard_order;
+    my %by_guard;
+
+    for my $assignment (@{$dt->{assignments}}) {
+        my $guard_key = _rule_guard_key($assignment->{guard});
+        push @guard_order, $guard_key unless exists $by_guard{$guard_key};
+        push @{$by_guard{$guard_key}}, $assignment;
+    }
+
+    for my $guard_key (@guard_order) {
+        my $assignments = $by_guard{$guard_key};
+        if ($guard_key eq '') {
+            push @lines, map { $self->_format_dt_assignment($_, 4) } @$assignments;
+            next;
+        }
+
+        push @lines, "    (<$guard_key";
+        push @lines, map { $self->_format_dt_assignment($_, 6, no_guard => 1) } @$assignments;
+        push @lines, '    )';
+    }
+
+    return @lines;
+}
+
+sub _format_dt_assignment($self, $assignment, $indent, %options) {
+    my $padding = ' ' x $indent;
+    my $guard = !$options{no_guard} && $assignment->{guard} ? " <$assignment->{guard}{port}" : '';
+    my $op = $assignment->{op};
+
+    if ($op eq '=') {
+        my $port_suffix = $self->{outputs}{$assignment->{lhs}} ? '>' : '';
+        return "$padding(= ($assignment->{lhs}$port_suffix $assignment->{rhs})$guard)";
+    } elsif ($op eq '<-') {
+        return "$padding(<- ($assignment->{lhs} $assignment->{rhs})$guard)";
+    } elsif ($op eq '<=') {
+        return "$padding(<= ($assignment->{lhs} $assignment->{rhs})$guard)";
+    }
+
+    return "$padding($assignment->{lhs} = $assignment->{rhs})$guard";
+}
+
+sub _rule_guard_key {
+    my ($guard) = @_;
+    return '' unless $guard && ref($guard) eq 'HASH';
+    return '' if defined($guard->{port}) && $guard->{port} eq '1';
+    return $guard->{port} // '';
 }
 
 sub _format_expr {

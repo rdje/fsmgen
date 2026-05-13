@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF rule guard factoring
+- Active: `R14`. ISF rule DT emission now renders `(when ...)` once as a
+  factored `.fsm` guard block around lowered actions, improving scheduled
+  `.fsm` readability while preserving existing guarded flopped assignment
+  behavior.
+- `t/1168` covers the generated text shape and proves the factored block parses
+  through the ordinary `.fsm` frontend and reaches HDL generation.
+
 ## 2026-05-13: R14 — .fsm default selector and ISF switch fallback
 - Active: `R14`. `.fsm` test nodes now support `default` and `_` selectors
   that lower as `!(OR of explicit sibling predicates)`, and ISF switch

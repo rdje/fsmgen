@@ -17,13 +17,17 @@ rule condition and are independent of the transaction state machine.
 - `(trigger transaction)` — guarded assertion of the transaction start signal
 - `(priority over other_rule)` — parsed metadata, currently not enforced
 
-**Lowering**: Non-state DT block containing guarded flopped assignments in the
-current scheduler.
+**Lowering**: Non-state DT block containing one guarded action block in the
+current scheduler. The rule-level `(when ...)` guard is emitted once around the
+actions instead of being repeated on every assignment.
 
 ```lisp
 (-always_ready
-  (<- (valid 1) <ready)
-  (<- (main_transfer_start 1) <ready))
+  (<ready
+    (<- (valid 1))
+    (<- (main_transfer_start 1))
+  )
+)
 ```
 
 ## Rule Examples
@@ -40,8 +44,11 @@ current scheduler.
 **DT block**:
 ```lisp
 (-error_gate
-  (<- (valid 1) <err)
-  (<- (err 1) <err))
+  (<err
+    (<- (valid 1))
+    (<- (err 1))
+  )
+)
 ```
 
 ### Parsed Priority

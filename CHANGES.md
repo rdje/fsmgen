@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF rule guard factoring
+- Updated [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm)
+  so rule non-state DT blocks emit one factored guard block for the rule's
+  `(when ...)` condition instead of repeating the same guard suffix on every
+  lowered rule action.
+- Added [t/1168-isf-rule-guard-factoring.t](t/1168-isf-rule-guard-factoring.t)
+  to lock the scheduled `.fsm` text shape and prove the factored guarded block
+  parses and reaches HDL generation through the normal `.fsm` path.
+- Updated [docs/book/src/13g-rules.md](docs/book/src/13g-rules.md),
+  [docs/ISF_SPEC.md](docs/ISF_SPEC.md), and
+  [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md)
+  with the factored rule-guard lowering form.
 ### R14 — .fsm default selector and ISF switch fallback
 - Added `.fsm` test-node fallback selectors `default` and `_` in
   [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm)

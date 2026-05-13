@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF rule guard factoring
+- Rule lowering already has a single source-level guard: `(when condition)`.
+  Repeating that guard as a suffix on every lowered assignment made the
+  generated `.fsm` harder to review and obscured the source structure.
+- The LoweringIR stays unchanged: each rule action still carries the guard for
+  simple downstream processing. The scheduled `.fsm` emitter is responsible for
+  review-quality formatting and now groups rule assignments with the same guard
+  under one DT guard block.
+- Rule DTs with no effective guard still emit direct assignments. Guarded rule
+  DTs now render as `(<ready ...actions...)`, which is parsed by the normal
+  `.fsm` frontend and preserves the existing flopped assignment semantics.
 ## 2026-05-13: R14 .fsm default selector and ISF switch fallback
 - A test-node default branch must mean "no explicit sibling branch predicate
   matched." It is not a magic case item copied from one branch and it is not
