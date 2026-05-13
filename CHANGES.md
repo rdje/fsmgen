@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-13
+### R14 — ISF assemble clause boundary
+- Tightened [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so `(assemble part... as target)` requires one or more scalar parts and one
+  scalar target before scheduled `.fsm` emission.
+- Added [t/1200-isf-assemble-clause-boundary.t](t/1200-isf-assemble-clause-boundary.t)
+  for valid concat lowering plus missing-part, missing-`as`, nested-part,
+  nested-target, and extra-operand rejection.
+- Updated the ISF public-interface contract metadata, ISF spec, mdBook
+  data-manipulation chapter, and roadmap notes.
 ### Workflow — ISF regression tier 12xx readiness
 - Extended [bin/ci-regression](bin/ci-regression) so `isf` mode includes
   future `t/12xx-isf*.t` tests as well as the current 109x/11xx ISF bands.

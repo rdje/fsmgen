@@ -8,6 +8,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Support workflow: [bin/ci-regression](bin/ci-regression) now supports
   explicit `quick`, `isf`, and `full` modes, plus `--list`, `--dry-run`, and
   `--no-book`. No argument still runs the historical full gate.
+- ISF `(assemble part... as target)` clauses now validate one or more scalar
+  parts plus one scalar target before scheduled `.fsm` emission. `t/1200`
+  covers valid concat lowering plus malformed assemble forms.
 - The `isf` tier now includes the future `12xx` ISF numbered band with
   `nullglob` handling so the tier keeps working before the first `12xx-isf`
   file exists.
@@ -1347,6 +1350,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - [t/1199-isf-shift-clause-boundary.t](t/1199-isf-shift-clause-boundary.t)
     now proves `shift_left`/`shift_right` scalar operand validation before
     scheduled `.fsm` emission.
+  - [t/1200-isf-assemble-clause-boundary.t](t/1200-isf-assemble-clause-boundary.t)
+    now proves `(assemble part... as target)` scalar part/target validation
+    before scheduled `.fsm` emission.
   - Next bounded `R14` slice: convert another documented scheduler limitation
     into regression-backed behavior.
 - Superseded `R13` carry-forward detail retained below this note should not be
@@ -4146,6 +4152,9 @@ Done:
 - Shift clause validation is now regression-backed by
   [t/1199-isf-shift-clause-boundary.t](t/1199-isf-shift-clause-boundary.t),
   covering scalar register/bit operands before scheduled `.fsm` emission.
+- Assemble clause validation is now regression-backed by
+  [t/1200-isf-assemble-clause-boundary.t](t/1200-isf-assemble-clause-boundary.t),
+  covering scalar concat parts and target before scheduled `.fsm` emission.
 Left:
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters.

@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-13: R14 — ISF assemble clause boundary
+- ISF `(assemble part... as target)` lowering now validates one or more scalar
+  parts plus one scalar target before scheduled `.fsm` emission.
+- Malformed missing-part, missing-`as`, nested-part, nested-target, and
+  extra-operand forms now fail before concat expression construction.
+- Added `t/1200-isf-assemble-clause-boundary.t` and updated the ISF public
+  contract metadata, spec, mdBook, and live roadmap notes.
 ## 2026-05-13: Workflow — ISF regression tier 12xx readiness
 - `bin/ci-regression isf` now includes the future `t/12xx-isf*.t` numbered
   band in addition to the existing 109x/11xx ISF bands.

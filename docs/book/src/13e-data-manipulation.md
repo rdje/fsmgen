@@ -69,6 +69,8 @@ placeholder `WIDTH` expression.
 ```
 
 Concatenates fields into a single variable.
+The form is exact: `(assemble part... as var)`, with one or more scalar parts
+and scalar target `var`.
 
 **Lowering**: `(<- (var (concat field1 field2 ...)))`
 

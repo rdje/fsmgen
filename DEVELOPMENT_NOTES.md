@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-13: R14 ISF assemble clause boundary
+- `assemble` builds a concat RHS directly from authored part names. Nested
+  part payloads or extra operands would stringify poorly or imply expression
+  support that the current concat lowerer does not implement.
+- The lowerer now validates the shipped shape: at least one scalar part, a
+  literal `as`, and one scalar target. Richer expression-valued concat parts
+  remain deferred until the data-operation surface has an explicit expression
+  contract.
 ## 2026-05-13: Workflow ISF regression tier 12xx readiness
 - The ISF boundary suite reached `t/1199`, so the next numbered ISF test will
   naturally move into the `12xx` band. Leaving `bin/ci-regression isf` capped

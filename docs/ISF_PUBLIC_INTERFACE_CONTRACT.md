@@ -339,6 +339,10 @@ The shift-clause boundary is checked by
 [t/1199-isf-shift-clause-boundary.t](../t/1199-isf-shift-clause-boundary.t)
 so `(shift_left reg bit)` and `(shift_right reg bit [(width N)])` require
 scalar register/bit operands before scheduled `.fsm` emission.
+The assemble-clause boundary is checked by
+[t/1200-isf-assemble-clause-boundary.t](../t/1200-isf-assemble-clause-boundary.t)
+so `(assemble part... as target)` requires one or more scalar parts and one
+scalar target before scheduled `.fsm` emission.
 ISF switch fallback scheduling is checked by
 [t/1103-isf-switch-branch-exits.t](../t/1103-isf-switch-branch-exits.t)
 and the generated `.fsm` default selector contract is checked by

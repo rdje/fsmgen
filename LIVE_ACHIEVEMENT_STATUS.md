@@ -2,6 +2,12 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-13: R14 — ISF assemble clause boundary
+- Active: `R14`. `(assemble part... as target)` now requires one or more
+  scalar parts and one scalar target before scheduled `.fsm` emission.
+- `t/1200` covers valid concat lowering plus missing-part, missing-`as`,
+  nested-part, nested-target, and extra-operand malformed forms.
+
 ## 2026-05-13: Workflow — ISF regression tier 12xx readiness
 - Active support workflow: `bin/ci-regression isf` now includes the future
   `t/12xx-isf*.t` numbered band while preserving the existing 109x/11xx bands.

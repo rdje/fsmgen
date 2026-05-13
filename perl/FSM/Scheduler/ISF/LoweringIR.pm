@@ -283,7 +283,12 @@ sub _parse_assemble_clause {
 
     my @parts = @{$cl}[1 .. $as_idx - 1];
     my $target = $cl->[$as_idx + 1];
-    confess "assemble target must be a scalar name\n" if ref($target);
+    for my $part (@parts) {
+        confess "assemble parts must be scalar names\n"
+            if !defined($part) || ref($part) || !length($part);
+    }
+    confess "assemble target must be a scalar name\n"
+        if !defined($target) || ref($target) || !length($target);
     return ($target, @parts);
 }
 

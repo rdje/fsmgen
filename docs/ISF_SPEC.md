@@ -500,7 +500,9 @@ Current lowering:
   interface, sampled-source, assemble-inferred, or explicit `(width N)` width,
   the insert position uses that width; unknown-width values still fall back to
   the placeholder width expression.
-- `assemble` emits a concat expression into the target variable.
+- `assemble` is structurally validated as `(assemble part... as target)` with
+  one or more scalar parts and one scalar target, then emits a concat
+  expression into the target variable.
 - `extract` emits one extraction state. When the source word and destination
   fields have known widths, or when the clause supplies an ordered
   `(widths N...)` list matching the field count, fields are assigned exact
@@ -884,6 +886,7 @@ Focused tests:
 - [t/1197-isf-latency-clause-boundary.t](../t/1197-isf-latency-clause-boundary.t)
 - [t/1198-isf-update-clause-boundary.t](../t/1198-isf-update-clause-boundary.t)
 - [t/1199-isf-shift-clause-boundary.t](../t/1199-isf-shift-clause-boundary.t)
+- [t/1200-isf-assemble-clause-boundary.t](../t/1200-isf-assemble-clause-boundary.t)
 
 ## 12. Explicitly Deferred
 
