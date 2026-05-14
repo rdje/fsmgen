@@ -250,6 +250,11 @@ The rule-priority conflict-resolution path is checked by
 [t/1210-isf-priority-conflict-resolution.t](../t/1210-isf-priority-conflict-resolution.t)
 so rule-local and actor-level rule priorities can suppress lower-priority
 same-target rule assignments, while priority cycles fail closed.
+The verification-only runtime selector instrumentation path is checked by
+[t/1211-isf-runtime-selector-conflict-instrumentation.t](../t/1211-isf-runtime-selector-conflict-instrumentation.t)
+so same-value source selector checks, whole-mux value selector checks, and the
+Verilog no-assertion boundary remain regression-backed after ISF lowers through
+scheduled `.fsm` into HDL.
 The explicit-width `shift_right` data-operation path is checked by
 [t/1173-isf-shift-right-explicit-width.t](../t/1173-isf-shift-right-explicit-width.t)
 so authors can avoid the placeholder width fallback when a shifted register is
@@ -542,6 +547,14 @@ For same-target rule/rule data conflicts, rule-local and actor-level priority
 edges can now select a target-local winner by guarding the lower-priority
 assignment with the inverse higher-priority rule condition. This changes the
 scheduled `.fsm` review artifact, not the successful schedule-report schema.
+After scheduled `.fsm` reaches the HDL backend, generated SystemVerilog now
+adds verification-only selector assertions derived from backend assignment
+analysis. Same-value source selectors for one `LHS`/`VAL` selector and
+different-value selectors for one `LHS` mux are checked with `$onehot0` under
+`` `ifndef SYNTHESIS``. Verilog emission remains free of those assertions.
+This does not widen the successful public ISF schedule-report schema; the
+selector metadata lives in the downstream HDL-generation/lowered-RTL result
+surface, whose full hash remains outside the ISF public contract.
 The current public parser handoff also advertises a bounded drive-definition
 shell: `drives` is a hash of entries keyed by unique non-empty drive name, and
 each entry has unique scalar `params` and `body` arrays. Body entries are

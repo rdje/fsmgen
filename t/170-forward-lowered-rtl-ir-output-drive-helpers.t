@@ -114,4 +114,95 @@ subtest 'LoweredRTLIR class-level output-drive helpers also accept partial lower
     );
 };
 
+subtest 'LoweredRTLIR selector-conflict helpers provide cloned lookup by signal name' => sub {
+    my $lowered_rtl_ir = FSM::IR::LoweredRTLIR->new(
+        module_name => 'lowered_selector_helper_top',
+        source_root_kind => 'fsm',
+        selector_conflict_targets => [
+            {
+                signal_name => 'valid',
+                multi_value_assertion => {
+                    input_enable_signals => ['valid_0_en', 'valid_1_en'],
+                },
+            },
+            {
+                signal_name => 'next_state',
+                multi_value_assertion => {
+                    input_enable_signals => ['next_idle_en', 'next_done_en'],
+                },
+            },
+        ],
+    );
+
+    my $targets_by_signal = $lowered_rtl_ir->selector_conflict_targets_by_signal;
+    is_deeply(
+        [sort keys %$targets_by_signal],
+        ['next_state', 'valid'],
+        'selector_conflict_targets_by_signal indexes lowered selector targets by signal name',
+    );
+    is_deeply(
+        $lowered_rtl_ir->selector_conflict_target('valid')->{multi_value_assertion}{input_enable_signals},
+        ['valid_0_en', 'valid_1_en'],
+        'selector_conflict_target returns one lowered selector target by signal name',
+    );
+
+    $targets_by_signal->{valid}{multi_value_assertion}{input_enable_signals}[0] = 'mutated_after_lookup';
+    my $fresh_valid_target = $lowered_rtl_ir->selector_conflict_target('valid');
+
+    is(
+        $fresh_valid_target->{multi_value_assertion}{input_enable_signals}[0],
+        'valid_0_en',
+        'selector_conflict_targets_by_signal clones the indexed payload instead of aliasing caller-owned state',
+    );
+    ok(
+        !defined($lowered_rtl_ir->selector_conflict_target('missing_signal')),
+        'selector_conflict_target returns undef for unknown lowered signal names',
+    );
+};
+
+subtest 'LoweredRTLIR class-level selector-conflict helpers also accept partial lowered hashes' => sub {
+    my $lowered_rtl_ir_hash = {
+        selector_conflict_targets => [
+            {
+                signal_name => 'valid',
+                multi_value_assertion => {
+                    input_enable_signals => ['valid_0_en', 'valid_1_en'],
+                },
+            },
+        ],
+    };
+
+    my $targets = FSM::IR::LoweredRTLIR->selector_conflict_targets_from_input($lowered_rtl_ir_hash);
+    is_deeply(
+        $targets,
+        [
+            {
+                signal_name => 'valid',
+                multi_value_assertion => {
+                    input_enable_signals => ['valid_0_en', 'valid_1_en'],
+                },
+            },
+        ],
+        'selector_conflict_targets_from_input accepts partial lowered hashes without requiring module_name',
+    );
+
+    my $targets_by_signal = FSM::IR::LoweredRTLIR->selector_conflict_targets_by_signal_from_input($lowered_rtl_ir_hash);
+    is_deeply(
+        [sort keys %$targets_by_signal],
+        ['valid'],
+        'selector_conflict_targets_by_signal_from_input indexes partial lowered hashes too',
+    );
+    is_deeply(
+        FSM::IR::LoweredRTLIR->selector_conflict_target_from_input($lowered_rtl_ir_hash, 'valid')
+            ->{multi_value_assertion}{input_enable_signals},
+        ['valid_0_en', 'valid_1_en'],
+        'selector_conflict_target_from_input returns one target from a partial lowered hash too',
+    );
+
+    ok(
+        !defined(FSM::IR::LoweredRTLIR->selector_conflict_target_from_input($lowered_rtl_ir_hash, 'missing')),
+        'selector_conflict_target_from_input returns undef for unknown signals in partial lowered hashes too',
+    );
+};
+
 done_testing();

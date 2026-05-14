@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF runtime selector conflict instrumentation
+- Completed `ISF-CONFLICTS.4.5` by adding generated-module
+  verification-only runtime selector assertions after ISF lowers through
+  scheduled `.fsm`.
+- `FSM::IR::LoweredRTLIRBuilder` now derives `selector_conflict_targets` from
+  backend assignment analysis for all analyzed muxes, including internal muxes
+  such as `next_state`.
+- `FSM::Backend::GeneratedModuleEmitter` now emits SystemVerilog-only
+  `$onehot0` checks for same-value source selectors and whole-mux value
+  selectors under `` `ifndef SYNTHESIS``; Verilog stays assertion-free.
+- Added [t/1211-isf-runtime-selector-conflict-instrumentation.t](t/1211-isf-runtime-selector-conflict-instrumentation.t)
+  for same-value source selector checks, priority-resolved multi-value selector
+  checks, and Verilog no-assertion behavior.
+- Advanced the active `ISF-CONFLICTS` frontier from `ISF-CONFLICTS.4.5` to
+  `ISF-CONFLICTS.5`.
 ### R14 — ISF rule priority conflict resolution
 - Completed `ISF-CONFLICTS.4.4` by applying target-local priority resolution
   to same-target rule/rule data conflicts in

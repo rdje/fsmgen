@@ -636,6 +636,15 @@ Current lowering:
   higher-priority rule condition. Priority cycles fail closed with
   `isf_priority_cycle_conflict`; incomparable rules still fail closed through
   the ordinary conflict diagnostic.
+- Generated SystemVerilog includes verification-only selector assertions for
+  analyzed muxes after ISF lowers through scheduled `.fsm`. Same-value
+  `LHS`/`VAL` source selectors and whole-`LHS` value selectors are checked
+  with `$onehot0` under `` `ifndef SYNTHESIS``; Verilog emission stays free of
+  SystemVerilog assertions. The checks are derived from backend assignment
+  analysis, so they cover internal generated muxes such as `next_state` as
+  well as ISF-authored data targets. Standalone DT roots keep their existing
+  standalone-DT multi-drive assertions rather than receiving duplicate
+  selector blocks.
 - `(trigger transaction)` lowers as a `<1` one-cycle delayed pulse inside the
   guarded non-state DT to a generated per-rule/per-transaction source named
   `rule_transaction`, so a rule trigger is a pulse rather than a sticky
@@ -931,6 +940,7 @@ Focused tests:
 - [t/1206-isf-when-clause-boundary.t](../t/1206-isf-when-clause-boundary.t)
 - [t/1209-isf-static-conflict-detection.t](../t/1209-isf-static-conflict-detection.t)
 - [t/1210-isf-priority-conflict-resolution.t](../t/1210-isf-priority-conflict-resolution.t)
+- [t/1211-isf-runtime-selector-conflict-instrumentation.t](../t/1211-isf-runtime-selector-conflict-instrumentation.t)
 
 ## 12. Explicitly Deferred
 

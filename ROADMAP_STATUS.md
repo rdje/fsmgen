@@ -13,8 +13,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree remains
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md),
-  whose current frontier is `ISF-CONFLICTS.4.5` after adding target-local
-  priority resolution for same-target rule/rule data conflicts.
+  whose current frontier is `ISF-CONFLICTS.5` after adding verification-only
+  runtime selector assertions for mux selector conflicts.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
   guide for installing the same task-tree tracking workflow in another
   project.
@@ -4348,17 +4348,23 @@ Done:
   [docs/tasks/ISF-FIXTURE-COVERAGE.md](docs/tasks/ISF-FIXTURE-COVERAGE.md),
   [docs/tasks/ISF-COMPATIBILITY-SURFACE.md](docs/tasks/ISF-COMPATIBILITY-SURFACE.md),
   and [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md).
+- `ISF-CONFLICTS.4.5` now emits verification-only SystemVerilog selector
+  assertions from backend assignment analysis after ISF lowers through
+  scheduled `.fsm`: same-value source selectors and whole-mux value selectors
+  are checked with `$onehot0`, Verilog stays assertion-free, and standalone DT
+  roots keep the existing standalone-DT assertion path.
 Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the `ISF-CONFLICTS` task tree when selecting the ISF conflict-resolution
-  feature path; the current frontier is `ISF-CONFLICTS.4.5`, which adds
-  verification-only runtime selector conflict instrumentation.
+  feature path; the current frontier is `ISF-CONFLICTS.5`, which adds targeted
+  diagnostics and schedule-report projection for accepted/rejected conflict
+  cases.
 - ISF conflict detection policy is now split: compile-time proof is
-  best-effort and must flag cases where proof is not doable, while
-  verification-only runtime selector conflict instrumentation is tracked as a
-  later `ISF-CONFLICTS.4.5` leaf.
+  best-effort and must flag cases where proof is not doable, while generated
+  verification HDL now checks mux selectors at runtime for same-value source
+  conflicts and multi-value mux conflicts.
 - Before any future ISF implementation, diagnostics, fixture, contract, or
   documentation slice, attach the work to the relevant active ISF objective
   tree or create a new tree under `docs/tasks/` if a new objective family is

@@ -262,6 +262,7 @@ sub build_isf_public_interface_contract {
             't/1206-isf-when-clause-boundary.t',
             't/1209-isf-static-conflict-detection.t',
             't/1210-isf-priority-conflict-resolution.t',
+            't/1211-isf-runtime-selector-conflict-instrumentation.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',

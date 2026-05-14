@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF runtime selector conflict instrumentation
+- Completed `ISF-CONFLICTS.4.5` in
+  [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md).
+- `LoweredRTLIR` now carries generated mux-selector conflict metadata derived
+  from backend assignment analysis, including same-value source selectors and
+  whole-mux value selectors.
+- Generated SystemVerilog now emits verification-only `$onehot0` assertions
+  under `` `ifndef SYNTHESIS`` for those selector conflicts; Verilog remains
+  assertion-free.
+- The checks cover ISF-lowered muxes after scheduled `.fsm` reaches the HDL
+  backend, including internal generated muxes such as `next_state`. Standalone
+  DT roots keep their existing standalone-DT multi-drive assertion path.
+- The active `ISF-CONFLICTS` frontier is now `ISF-CONFLICTS.5` for diagnostics
+  and schedule-report projection.
 ## 2026-05-14: ISF rule priority conflict resolution
 - Completed `ISF-CONFLICTS.4.4` in
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md).

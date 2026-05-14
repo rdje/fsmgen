@@ -280,7 +280,7 @@ sub _realize_generated_child ($class, %args) {
                 target_language => ($pipeline->{target_language} // 'systemverilog'),
             );
             $child_module_info->{structural_rtl_ir} = $child_structural_rtl_ir->as_hashref;
-            my $child_hdl_code = FSM::Backend::GeneratedModuleEmitter->augment_with_standalone_dt_assertions(
+            my $child_hdl_code = FSM::Backend::GeneratedModuleEmitter->augment_with_runtime_assertions(
                 hdl_code => $backend_result->{hdl_code},
                 module_info => $child_module_info,
                 target_language => ($pipeline->{target_language} // 'systemverilog'),

@@ -72,7 +72,7 @@ sub generate_from_source ($class, %args) {
         target_language => ($pipeline->{target_language} // 'systemverilog'),
     );
     $module_info->{structural_rtl_ir} = $structural_rtl_ir->as_hashref;
-    my $hdl_code = FSM::Backend::GeneratedModuleEmitter->augment_with_standalone_dt_assertions(
+    my $hdl_code = FSM::Backend::GeneratedModuleEmitter->augment_with_runtime_assertions(
         hdl_code => $backend_result->{hdl_code},
         module_info => $module_info,
         target_language => ($pipeline->{target_language} // 'systemverilog'),

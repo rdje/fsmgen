@@ -75,7 +75,7 @@ transaction start input.
   Commit: `ISF-CONFLICTS.3: specify conflict priority policy`
 
 - ID: `ISF-CONFLICTS.4`
-  Status: `active`
+  Status: `done`
   Goal: `Implement scheduler/emitter conflict tracking.`
   Children: `ISF-CONFLICTS.4.1`, `ISF-CONFLICTS.4.2`,
   `ISF-CONFLICTS.4.3`, `ISF-CONFLICTS.4.4`,
@@ -83,8 +83,8 @@ transaction start input.
   Acceptance: `The implementation can distinguish compatible fan-in from
   incompatible same-cycle drive conflicts without relying on text-order
   accidents in emitted `.fsm`.`
-  Verification: `split into executable leaves`
-  Commit: `pending container completion`
+  Verification: `all executable leaves complete through runtime selector instrumentation`
+  Commit: `completed by ISF-CONFLICTS.4.5`
 
 - ID: `ISF-CONFLICTS.4.1`
   Status: `done`
@@ -126,14 +126,14 @@ transaction start input.
   Commit: `ISF-CONFLICTS.4.4: apply ISF rule priority resolution`
 
 - ID: `ISF-CONFLICTS.4.5`
-  Status: `pending`
+  Status: `done`
   Goal: `Add verification-only runtime selector conflict instrumentation.`
   Acceptance: `The implementation can emit verification-only logic that checks
   mux selector conflicts at runtime: multi-hit source selectors for the same
   LHS/VAL selector when requested, and two or more different VAL selectors
   active for the same LHS mux in the same cycle.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `prove -l t/1144-isf-public-tested-by-metadata-audit.t t/1209-isf-static-conflict-detection.t t/1210-isf-priority-conflict-resolution.t t/1211-isf-runtime-selector-conflict-instrumentation.t t/154-standalone-dt-assertion-runtime-hdl.t t/156-forward-lowered-rtl-ir-surface.t t/170-forward-lowered-rtl-ir-output-drive-helpers.t t/190-pipeline-direct-generation-orchestrator.t t/194-generated-module-emitter.t t/305-hdl-generator-result-contract.t t/340-normalized-semantic-lowered-rtl-ir-contract.t t/343-hdl-generator-module-info-contract.t t/497-lowered-rtl-ir-accessor-defensive-copy-boundary-audit.t t/590-direct-generation-module-info-lowered-ir-alias-boundary-audit.t; bin/ci-regression isf --no-book; mdbook build docs/book; git diff --check`
+  Commit: `ISF-CONFLICTS.4.5: add runtime selector assertions`
 
 - ID: `ISF-CONFLICTS.5`
   Status: `pending`
@@ -166,7 +166,7 @@ transaction start input.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-CONFLICTS.4.5` | `pending` | Priority resolution now covers same-target rule/rule data conflicts; the next executable slice adds verification-only runtime selector conflict instrumentation. |
+| 1 | `ISF-CONFLICTS.5` | `pending` | Runtime selector instrumentation is shipped; the next slice projects useful conflict/fan-in diagnostics into targeted reports. |
 
 ## Current Behavior Inventory
 
@@ -546,6 +546,28 @@ conflicts:
   but does not widen successful schedule-report JSON; `compile_issues` remains
   an empty array on success.
 
+## Runtime Selector Instrumentation
+
+`ISF-CONFLICTS.4.5` ships verification-only runtime checks from the
+post-lowering `.fsm` HDL backend:
+
+- `LoweredRTLIR` now records generated mux-selector conflict targets from
+  backend assignment analysis, not just public output-drive families.
+- Same-value source selectors are checked with `$onehot0` over the per-DT or
+  per-rule source enables that feed one `LHS`/`VAL` selector.
+- Whole-mux value selectors are checked with `$onehot0` over the LHS-level
+  value selector signals for one target mux.
+- The emitted checks are SystemVerilog-only and wrapped in
+  `` `ifndef SYNTHESIS``. Verilog output remains assertion-free.
+- Standalone DT roots keep the earlier standalone-DT multi-drive assertion
+  path rather than receiving a duplicate generic selector block.
+- The metadata is generated from backend assignment analysis, so internal muxes
+  such as `next_state` are covered along with ISF-authored data targets.
+
+This leaf does not widen the successful public ISF schedule-report schema.
+Report projection of conflict/fan-in metadata remains assigned to
+`ISF-CONFLICTS.5`.
+
 ## Decisions
 
 - `2026-05-14`: The conflict-resolution work will be tracked as a task tree
@@ -589,6 +611,10 @@ conflicts:
   to same-target rule/rule data conflicts by guarding lower-priority
   assignments with the inverse higher-priority rule condition. Priority cycles
   fail closed.
+- `2026-05-14`: `ISF-CONFLICTS.4.5` implements verification-only selector
+  checks in the generated-module HDL path rather than the ISF scheduler. That
+  keeps checks tied to the actual mux selector signals after all backend
+  factoring and LHS-level selector generation are complete.
 
 ## Open Questions
 
@@ -632,6 +658,13 @@ conflicts:
 | `2026-05-14` | `ISF-CONFLICTS.4.4` | `bin/ci-regression isf --no-book` | `passed` |
 | `2026-05-14` | `ISF-CONFLICTS.4.4` | `mdbook build docs/book` | `passed` |
 | `2026-05-14` | `ISF-CONFLICTS.4.4` | `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.4.5` | `prove -l t/1211-isf-runtime-selector-conflict-instrumentation.t` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.4.5` | `prove -l t/154-standalone-dt-assertion-runtime-hdl.t t/156-forward-lowered-rtl-ir-surface.t t/170-forward-lowered-rtl-ir-output-drive-helpers.t t/194-generated-module-emitter.t t/497-lowered-rtl-ir-accessor-defensive-copy-boundary-audit.t t/590-direct-generation-module-info-lowered-ir-alias-boundary-audit.t` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.4.5` | `prove -l t/1144-isf-public-tested-by-metadata-audit.t t/1209-isf-static-conflict-detection.t t/1210-isf-priority-conflict-resolution.t t/1211-isf-runtime-selector-conflict-instrumentation.t t/154-standalone-dt-assertion-runtime-hdl.t t/156-forward-lowered-rtl-ir-surface.t t/170-forward-lowered-rtl-ir-output-drive-helpers.t t/194-generated-module-emitter.t t/497-lowered-rtl-ir-accessor-defensive-copy-boundary-audit.t t/590-direct-generation-module-info-lowered-ir-alias-boundary-audit.t` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.4.5` | `prove -l t/305-hdl-generator-result-contract.t t/340-normalized-semantic-lowered-rtl-ir-contract.t t/343-hdl-generator-module-info-contract.t t/190-pipeline-direct-generation-orchestrator.t` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.4.5` | `bin/ci-regression isf --no-book` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.4.5` | `mdbook build docs/book` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.4.5` | `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -646,6 +679,7 @@ conflicts:
 | `ISF-CONFLICTS.4.2` | `ISF-CONFLICTS.4.2: classify ISF fan-in groups` | Adds internal compatible fan-in group classification from assignment provenance. |
 | `ISF-CONFLICTS.4.3` | `ISF-CONFLICTS.4.3: add ISF static conflict checks` | Adds internal best-effort conflict issues, rule/rule rejection, and rule/drive `not_doable` flags. |
 | `ISF-CONFLICTS.4.4` | `ISF-CONFLICTS.4.4: apply ISF rule priority resolution` | Adds target-local rule-priority suppression for same-target rule/rule data conflicts. |
+| `ISF-CONFLICTS.4.5` | `ISF-CONFLICTS.4.5: add runtime selector assertions` | Adds verification-only SystemVerilog selector assertions from backend assignment analysis. |
 
 ## Changelog
 
@@ -670,3 +704,5 @@ conflicts:
 - `2026-05-14`: Completed `ISF-CONFLICTS.4.4`; current frontier moves to
   `ISF-CONFLICTS.4.5` for verification-only runtime selector conflict
   instrumentation.
+- `2026-05-14`: Completed `ISF-CONFLICTS.4.5`; current frontier moves to
+  `ISF-CONFLICTS.5` for diagnostics and schedule-report projection.

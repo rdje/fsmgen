@@ -10,8 +10,8 @@ Owns the bounded direct generated-module backend path that still serves
 direct-root FSM/DT generation and realized generated children. This package
 drives the existing C<FSM::HDL::FlattenedDT> backend family, exposes the
 target-language backend selection rule, collects backend statistics, and owns
-the standalone-DT assertion postprocessing that augments generated HDL after
-lowered analysis is available.
+the verification-only assertion postprocessing that augments generated HDL
+after lowered analysis is available.
 
 =cut
 
@@ -152,6 +152,56 @@ sub standalone_dt_assertion_runtime_lines ($class, %args) {
     );
 }
 
+sub selector_conflict_assertion_runtime_lines ($class, %args) {
+    my $target_language = $args{target_language} // 'systemverilog';
+    my $module_info = $args{module_info};
+
+    return () unless $target_language =~ /^(?:systemverilog|sv)$/;
+    return () unless ref($module_info) eq 'HASH';
+    return () if ($module_info->{source_root_kind} || '') eq 'dt';
+
+    my @assertion_lines;
+    for my $target (@{$module_info->{selector_conflict_targets} || []}) {
+        next unless ref($target) eq 'HASH';
+        my $target_signal = $target->{signal_name} || 'unknown_signal';
+        my $escaped_target = _sv_message_fragment($target_signal);
+
+        for my $family (@{$target->{rhs_enable_families} || []}) {
+            next unless ref($family) eq 'HASH';
+            my $assertion = $family->{same_value_assertion} || {};
+            next unless ($assertion->{input_count} || 0) > 1;
+
+            my @inputs = @{$assertion->{input_enable_signals} || []};
+            next unless @inputs;
+
+            my $rhs_value = _sv_message_fragment($family->{rhs_value} // $assertion->{rhs_value} // 'unknown_value');
+            push @assertion_lines,
+                "    assert (\$onehot0({" . join(', ', @inputs) . "}))"
+                    . qq{ else \$error("selector same-value conflict: $escaped_target $rhs_value");};
+        }
+
+        my $multi_value_assertion = $target->{multi_value_assertion} || {};
+        next unless ($multi_value_assertion->{input_count} || 0) > 1;
+
+        my @inputs = @{$multi_value_assertion->{input_enable_signals} || []};
+        next unless @inputs;
+
+        push @assertion_lines,
+            "    assert (\$onehot0({" . join(', ', @inputs) . "}))"
+                . qq{ else \$error("selector multi-value conflict: $escaped_target");};
+    }
+
+    return () unless @assertion_lines;
+
+    return (
+        "  `ifndef SYNTHESIS",
+        "  always_comb begin",
+        @assertion_lines,
+        "  end",
+        "  `endif",
+    );
+}
+
 sub augment_with_standalone_dt_assertions ($class, %args) {
     my $hdl_code = $args{hdl_code};
     my $module_info = $args{module_info};
@@ -173,10 +223,51 @@ sub augment_with_standalone_dt_assertions ($class, %args) {
     return $hdl_code . "\n$assertion_block\n";
 }
 
+sub augment_with_selector_conflict_assertions ($class, %args) {
+    my $hdl_code = $args{hdl_code};
+    my $module_info = $args{module_info};
+    my $target_language = $args{target_language} // 'systemverilog';
+
+    return $hdl_code unless defined($hdl_code) && length($hdl_code);
+
+    my @assertion_lines = $class->selector_conflict_assertion_runtime_lines(
+        module_info => $module_info,
+        target_language => $target_language,
+    );
+    return $hdl_code unless @assertion_lines;
+
+    my $assertion_block = join("\n", '', @assertion_lines);
+    if ($hdl_code =~ s/\nendmodule\s*\z/\n$assertion_block\nendmodule/s) {
+        return $hdl_code;
+    }
+
+    return $hdl_code . "\n$assertion_block\n";
+}
+
+sub augment_with_runtime_assertions ($class, %args) {
+    my $hdl_code = $args{hdl_code};
+
+    $hdl_code = $class->augment_with_selector_conflict_assertions(
+        %args,
+        hdl_code => $hdl_code,
+    );
+    return $class->augment_with_standalone_dt_assertions(
+        %args,
+        hdl_code => $hdl_code,
+    );
+}
+
 sub _clone ($value) {
     return undef unless defined $value;
     return { map { $_ => _clone($value->{$_}) } keys %$value } if ref($value) eq 'HASH';
     return [ map { _clone($_) } @$value ] if ref($value) eq 'ARRAY';
+    return $value;
+}
+
+sub _sv_message_fragment ($value) {
+    $value //= '';
+    $value =~ s/\\/\\\\/g;
+    $value =~ s/"/\\"/g;
     return $value;
 }
 
@@ -207,9 +298,24 @@ backend instance.
 Builds the post-lowering standalone-DT assertion block lines for one generated
 module when the current backend target supports those assertions.
 
+=head2 selector_conflict_assertion_runtime_lines
+
+Builds the post-lowering mux-selector assertion block lines for one generated
+module when the current backend target supports those assertions.
+
 =head2 augment_with_standalone_dt_assertions
 
 Injects the standalone-DT assertion block into emitted generated HDL when the
 lowered module metadata exposes grouped multi-drive targets.
+
+=head2 augment_with_selector_conflict_assertions
+
+Injects the generated mux-selector assertion block into emitted generated HDL
+when lowered module metadata exposes runtime selector conflict targets.
+
+=head2 augment_with_runtime_assertions
+
+Applies all generated-module verification-only assertion augmentations in the
+stable post-lowering order.
 
 =cut

@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF runtime selector conflict instrumentation
+- Runtime selector checks are implemented at the generated-module HDL layer,
+  not directly in the ISF scheduler, because that is where the final per-source
+  and per-value mux selector signals exist after backend assignment analysis.
+- The metadata intentionally covers every analyzed mux that has a meaningful
+  selector conflict check, including generated internals such as `next_state`.
+  That matches the hardware rule: conflicts are properties of mux selectors,
+  not only public outputs.
+- The emitted assertions are verification-only SystemVerilog under
+  `` `ifndef SYNTHESIS``. Verilog output remains assertion-free, and standalone
+  DT roots keep the existing standalone-DT multi-drive assertion path to avoid
+  duplicate generic selector blocks.
+- This slice does not make the ISF schedule-report schema wider. Public
+  projection belongs to the next conflict tree leaf, where diagnostics and
+  report fields can be designed together.
 ## 2026-05-14: ISF rule priority conflict resolution
 - Priority resolution is intentionally target-local in its first shipped form.
   A priority edge suppresses the lower-priority assignment that conflicts on a

@@ -36,7 +36,7 @@ FSM
     my $result = generate_result($fsm_path);
     my $module_info = $result->{module_info};
 
-    for my $key (qw(output_drive_families standalone_dt_multi_drive_targets)) {
+    for my $key (qw(output_drive_families selector_conflict_targets standalone_dt_multi_drive_targets)) {
         is_deeply(
             $module_info->{$key},
             $module_info->{lowered_rtl_ir}{$key},
@@ -53,6 +53,9 @@ FSM
     push @{$module_info->{standalone_dt_multi_drive_targets}}, {
         signal_name => 'mutated_summary_dt_target',
     };
+    push @{$module_info->{selector_conflict_targets}}, {
+        signal_name => 'mutated_summary_selector_target',
+    };
 
     is(
         $module_info->{lowered_rtl_ir}{output_drive_families}[0]{signal_name},
@@ -64,12 +67,20 @@ FSM
         [],
         'mutating module_info standalone_dt_multi_drive_targets summary does not contaminate embedded lowered_rtl_ir targets',
     );
+    is_deeply(
+        $module_info->{lowered_rtl_ir}{selector_conflict_targets},
+        [],
+        'mutating module_info selector_conflict_targets summary does not contaminate embedded lowered_rtl_ir targets',
+    );
 
     my $second_result = generate_result($fsm_path);
     my $second_module_info = $second_result->{module_info};
     $second_module_info->{lowered_rtl_ir}{output_drive_families}[0]{signal_name} = 'mutated_embedded_output';
     push @{$second_module_info->{lowered_rtl_ir}{standalone_dt_multi_drive_targets}}, {
         signal_name => 'mutated_embedded_dt_target',
+    };
+    push @{$second_module_info->{lowered_rtl_ir}{selector_conflict_targets}}, {
+        signal_name => 'mutated_embedded_selector_target',
     };
 
     is(
@@ -81,6 +92,11 @@ FSM
         $second_module_info->{standalone_dt_multi_drive_targets},
         [],
         'mutating embedded lowered_rtl_ir standalone_dt_multi_drive_targets does not contaminate module_info summary targets',
+    );
+    is_deeply(
+        $second_module_info->{selector_conflict_targets},
+        [],
+        'mutating embedded lowered_rtl_ir selector_conflict_targets does not contaminate module_info summary targets',
     );
 };
 

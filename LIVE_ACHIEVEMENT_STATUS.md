@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF runtime selector conflict instrumentation
+- Active R14 task-tree slice: `ISF-CONFLICTS.4.5` is complete.
+- Generated SystemVerilog now emits verification-only `$onehot0` selector
+  assertions for same-value source selector conflicts and whole-mux value
+  selector conflicts after ISF lowers through scheduled `.fsm`.
+- Lowered RTL metadata now exposes `selector_conflict_targets` from backend
+  assignment analysis; Verilog remains assertion-free and standalone DT roots
+  keep the existing standalone-DT assertion path.
+- The next frontier is `ISF-CONFLICTS.5`.
+
 ## 2026-05-14: R14 — ISF rule priority conflict resolution
 - Active R14 task-tree slice: `ISF-CONFLICTS.4.4` is complete.
 - Rule-local and actor-level rule priorities now resolve same-target rule/rule

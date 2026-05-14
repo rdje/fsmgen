@@ -7,9 +7,10 @@ FSM::IR::LoweredRTLIR - Explicit forward lowered RTL summary for C<.fsm> generat
 =head1 DESCRIPTION
 
 Represents the normalized lowered RTL layer in the forward compiler. This
-package owns generated output-drive families, standalone-DT grouped multi-drive
-targets, bounded composition shared-datapath summaries, and a few structural
-accounting facts that later structural lowering and reporting consume.
+package owns generated output-drive families, generated mux-selector conflict
+targets, standalone-DT grouped multi-drive targets, bounded composition
+shared-datapath summaries, and a few structural accounting facts that later
+structural lowering and reporting consume.
 
 =cut
 
@@ -30,6 +31,7 @@ sub new ($class, %args) {
         source_root_kind => $args{source_root_kind} // 'fsm',
         target_language => $args{target_language} // 'systemverilog',
         output_drive_families => _clone($args{output_drive_families} || []),
+        selector_conflict_targets => _clone($args{selector_conflict_targets} || []),
         standalone_dt_multi_drive_targets => _clone($args{standalone_dt_multi_drive_targets} || []),
         composition_shared_datapath_candidates => _clone($args{composition_shared_datapath_candidates}),
         internal_net_names => _clone($args{internal_net_names}),
@@ -42,6 +44,7 @@ sub module_name ($self) { return $self->{module_name} }
 sub source_root_kind ($self) { return $self->{source_root_kind} }
 sub target_language ($self) { return $self->{target_language} }
 sub output_drive_families ($self) { return _clone($self->{output_drive_families}) }
+sub selector_conflict_targets ($self) { return _clone($self->{selector_conflict_targets}) }
 sub standalone_dt_multi_drive_targets ($self) { return _clone($self->{standalone_dt_multi_drive_targets}) }
 sub composition_shared_datapath_candidates ($self) { return _clone($self->{composition_shared_datapath_candidates}) }
 sub internal_net_names ($self) { return _clone($self->{internal_net_names}) }
@@ -97,6 +100,55 @@ sub output_drive_family_from_input ($class, $lowered_rtl_ir, $signal_name) {
     return _clone($families_by_signal->{$signal_name});
 }
 
+sub selector_conflict_targets_from_input ($class, $lowered_rtl_ir) {
+    my $targets = (
+        blessed($lowered_rtl_ir) && $lowered_rtl_ir->can('selector_conflict_targets')
+            ? $lowered_rtl_ir->selector_conflict_targets
+            : ref($lowered_rtl_ir) eq 'HASH'
+                ? $lowered_rtl_ir->{selector_conflict_targets}
+                : undef
+    );
+
+    return [] unless ref($targets) eq 'ARRAY';
+    return _clone($targets);
+}
+
+sub selector_conflict_targets_by_signal ($self) {
+    my %targets_by_signal;
+
+    for my $target (@{$self->selector_conflict_targets || []}) {
+        next unless ref($target) eq 'HASH';
+        my $signal_name = $target->{signal_name} || next;
+        $targets_by_signal{$signal_name} = _clone($target);
+    }
+
+    return \%targets_by_signal;
+}
+
+sub selector_conflict_targets_by_signal_from_input ($class, $lowered_rtl_ir) {
+    my $targets = $class->selector_conflict_targets_from_input($lowered_rtl_ir);
+    my %targets_by_signal;
+
+    for my $target (@$targets) {
+        next unless ref($target) eq 'HASH';
+        my $signal_name = $target->{signal_name} || next;
+        $targets_by_signal{$signal_name} = _clone($target);
+    }
+
+    return \%targets_by_signal;
+}
+
+sub selector_conflict_target ($self, $signal_name) {
+    return undef unless defined($signal_name) && length($signal_name);
+    return _clone($self->selector_conflict_targets_by_signal->{$signal_name});
+}
+
+sub selector_conflict_target_from_input ($class, $lowered_rtl_ir, $signal_name) {
+    return undef unless defined($signal_name) && length($signal_name);
+    my $targets_by_signal = $class->selector_conflict_targets_by_signal_from_input($lowered_rtl_ir);
+    return _clone($targets_by_signal->{$signal_name});
+}
+
 sub standalone_dt_multi_drive_targets_from_input ($class, $lowered_rtl_ir) {
     my $targets = (
         blessed($lowered_rtl_ir) && $lowered_rtl_ir->can('standalone_dt_multi_drive_targets')
@@ -148,6 +200,7 @@ sub standalone_dt_multi_drive_target_from_input ($class, $lowered_rtl_ir, $signa
 
 sub as_hashref ($self) {
     my $output_drive_families = _clone($self->output_drive_families || []);
+    my $selector_conflict_targets = _clone($self->selector_conflict_targets || []);
     my $standalone_dt_multi_drive_targets = _clone($self->standalone_dt_multi_drive_targets || []);
     my $composition_shared_datapath_candidates = _clone($self->composition_shared_datapath_candidates);
     my $internal_net_names = _clone($self->internal_net_names);
@@ -159,6 +212,8 @@ sub as_hashref ($self) {
         target_language => $self->target_language,
         output_drive_family_count => scalar(@$output_drive_families),
         output_drive_families => $output_drive_families,
+        selector_conflict_target_count => scalar(@$selector_conflict_targets),
+        selector_conflict_targets => $selector_conflict_targets,
         standalone_dt_multi_drive_target_count => scalar(@$standalone_dt_multi_drive_targets),
         standalone_dt_multi_drive_targets => $standalone_dt_multi_drive_targets,
     };
@@ -228,6 +283,10 @@ Returns the active backend target language attached to the lowered layer.
 
 Returns the normalized generated output-drive family list.
 
+=head2 selector_conflict_targets
+
+Returns the normalized generated mux-selector conflict target list.
+
 =head2 standalone_dt_multi_drive_targets
 
 Returns the normalized standalone-DT grouped multi-drive target list.
@@ -271,6 +330,29 @@ Returns one output-drive family entry by signal name.
 
 Extracts one output-drive family entry by signal name from a lowered object or
 lowered-style hash payload.
+
+=head2 selector_conflict_targets_from_input
+
+Extracts the generated mux-selector conflict target list from a lowered object
+or lowered-style hash payload.
+
+=head2 selector_conflict_targets_by_signal
+
+Returns the generated mux-selector conflict target list indexed by signal name.
+
+=head2 selector_conflict_targets_by_signal_from_input
+
+Extracts a signal-indexed generated mux-selector conflict target map from a
+lowered object or lowered-style hash payload.
+
+=head2 selector_conflict_target
+
+Returns one generated mux-selector conflict target entry by signal name.
+
+=head2 selector_conflict_target_from_input
+
+Extracts one generated mux-selector conflict target entry by signal name from a
+lowered object or lowered-style hash payload.
 
 =head2 standalone_dt_multi_drive_targets_from_input
 

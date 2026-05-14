@@ -36,6 +36,10 @@ sub build_from_generated_module_info ($class, %args) {
         module_info => $module_info,
         hdl_generator => $args{hdl_generator},
     );
+    my $selector_conflict_targets = $class->build_selector_conflict_target_metadata(
+        module_info => $module_info,
+        hdl_generator => $args{hdl_generator},
+    );
 
     my @standalone_dt_multi_drive_targets = map {
         +{
@@ -62,6 +66,7 @@ sub build_from_generated_module_info ($class, %args) {
         ),
         target_language => $target_language,
         output_drive_families => $output_drive_families,
+        selector_conflict_targets => $selector_conflict_targets,
         standalone_dt_multi_drive_targets => (
             $fsm_module && $fsm_module->can('is_dt_root') && $fsm_module->is_dt_root
                 ? \@standalone_dt_multi_drive_targets
@@ -105,6 +110,7 @@ sub build_from_composition_plan ($class, %args) {
         source_root_kind => 'top',
         target_language => $target_language,
         output_drive_families => [],
+        selector_conflict_targets => [],
         standalone_dt_multi_drive_targets => [],
         composition_shared_datapath_candidates => $shared_datapath_candidates,
         internal_net_names => $internal_net_names,
@@ -206,6 +212,74 @@ sub build_output_drive_family_metadata ($class, %args) {
     return \@drive_families;
 }
 
+sub build_selector_conflict_target_metadata ($class, %args) {
+    my $hdl_generator = $args{hdl_generator};
+    my $assignment_analysis = $hdl_generator ? ($hdl_generator->{assignment_analysis} || {}) : {};
+    my @targets;
+
+    for my $lhs (sort keys %$assignment_analysis) {
+        my $lhs_analysis = $assignment_analysis->{$lhs};
+        next unless ref($lhs_analysis) eq 'HASH';
+
+        my @rhs_values;
+        my @family_enable_signals;
+        my @rhs_enable_families;
+
+        for my $rhs (sort keys %{ $lhs_analysis->{rhs_groups} || {} }) {
+            my $rhs_group = $lhs_analysis->{rhs_groups}{$rhs};
+            next unless ref($rhs_group) eq 'HASH';
+
+            my $lhs_level_enable = $rhs_group->{lhs_level_enable};
+            my $family_enable_signal = (
+                ref($lhs_level_enable) eq 'HASH' && defined $lhs_level_enable->{name}
+                    ? $lhs_level_enable->{name}
+                    : undef
+            );
+            my @driver_enable_signals = sort grep {
+                defined($_) && length($_)
+            } map {
+                ref($_) eq 'HASH' ? $_->{enable_name} : undef
+            } @{ $rhs_group->{dt_specific_enables} || [] };
+
+            push @rhs_values, $rhs;
+            push @family_enable_signals, $family_enable_signal
+                if defined($family_enable_signal) && length($family_enable_signal);
+            push @rhs_enable_families, {
+                rhs_value => $rhs,
+                family_enable_signal => $family_enable_signal,
+                driver_enable_signals => \@driver_enable_signals,
+                same_value_assertion => $class->selector_conflict_assertion_metadata(
+                    target_signal => $lhs,
+                    rhs_value => $rhs,
+                    input_enable_signals => \@driver_enable_signals,
+                ),
+            };
+        }
+
+        my @same_value_families = grep {
+            (($_->{same_value_assertion} || {})->{input_count} || 0) > 1
+        } @rhs_enable_families;
+        my $multi_value_assertion = $class->selector_conflict_assertion_metadata(
+            target_signal => $lhs,
+            input_enable_signals => \@family_enable_signals,
+        );
+        my $has_multi_value_assertion = ($multi_value_assertion->{input_count} || 0) > 1 ? 1 : 0;
+
+        next unless @same_value_families || $has_multi_value_assertion;
+
+        push @targets, {
+            signal_name => $lhs,
+            multiplexer_type => ($lhs_analysis->{multiplexer}{type} // 'unknown'),
+            rhs_values => \@rhs_values,
+            family_enable_signals => \@family_enable_signals,
+            rhs_enable_families => \@rhs_enable_families,
+            multi_value_assertion => $multi_value_assertion,
+        };
+    }
+
+    return \@targets;
+}
+
 sub standalone_dt_assertion_metadata ($class, $signal_name, $input_enable_signals) {
     my @inputs = grep {
         defined($_) && length($_)
@@ -217,6 +291,24 @@ sub standalone_dt_assertion_metadata ($class, $signal_name, $input_enable_signal
         input_count => scalar(@inputs),
         input_enable_signals => \@inputs,
     };
+}
+
+sub selector_conflict_assertion_metadata ($class, %args) {
+    my @inputs = grep {
+        defined($_) && length($_)
+    } @{$args{input_enable_signals} || []};
+
+    my $metadata = {
+        kind => 'onehot0',
+        target_signal => ($args{target_signal} // ''),
+        input_count => scalar(@inputs),
+        input_enable_signals => \@inputs,
+    };
+
+    $metadata->{rhs_value} = $args{rhs_value}
+        if exists $args{rhs_value};
+
+    return $metadata;
 }
 
 1;
@@ -241,9 +333,21 @@ and shared-datapath inputs.
 Builds the direct-root output-drive family summary from generated-module
 analysis plus the active direct HDL backend analysis state.
 
+=head2 build_selector_conflict_target_metadata
+
+Builds the generated-module mux-selector conflict summary from backend
+assignment analysis. This covers every analyzed LHS mux, not just public
+outputs, and records both same-value source selectors and whole-target value
+selectors.
+
 =head2 standalone_dt_assertion_metadata
 
 Builds the bounded onehot-style multi-drive assertion metadata attached to
 direct-root standalone-DT lowered targets.
+
+=head2 selector_conflict_assertion_metadata
+
+Builds the bounded onehot-style runtime selector assertion metadata used by
+generated-module verification-only instrumentation.
 
 =cut

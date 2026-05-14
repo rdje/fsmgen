@@ -88,6 +88,9 @@ sub enrich_with_generated_analysis ($class, %args) {
 
     $module_info->{output_drive_family_count} = $lowered_rtl_ir_hash->{output_drive_family_count};
     $module_info->{output_drive_families} = _clone_structured_value($lowered_rtl_ir_hash->{output_drive_families});
+    $module_info->{selector_conflict_target_count} = $lowered_rtl_ir_hash->{selector_conflict_target_count};
+    $module_info->{selector_conflict_targets}
+        = _clone_structured_value($lowered_rtl_ir_hash->{selector_conflict_targets});
     $module_info->{standalone_dt_multi_drive_target_count} = $lowered_rtl_ir_hash->{standalone_dt_multi_drive_target_count};
     $module_info->{standalone_dt_multi_drive_targets}
         = _clone_structured_value($lowered_rtl_ir_hash->{standalone_dt_multi_drive_targets});
@@ -106,6 +109,19 @@ sub output_drive_families_from_module_info ($class, $module_info) {
     }
 
     return _clone_structured_value($module_info->{output_drive_families} || []);
+}
+
+sub selector_conflict_targets_from_module_info ($class, $module_info) {
+    return [] unless ref($module_info) eq 'HASH';
+
+    my $selector_conflict_targets = FSM::IR::LoweredRTLIR->selector_conflict_targets_from_input(
+        $module_info->{lowered_rtl_ir}
+    );
+    if (@$selector_conflict_targets) {
+        return $selector_conflict_targets;
+    }
+
+    return _clone_structured_value($module_info->{selector_conflict_targets} || []);
 }
 
 sub intent_hir_from_module_info ($class, $module_info) {
@@ -172,6 +188,11 @@ analysis such as output-drive-family and standalone-DT grouped-target data.
 
 Returns the normalized output-drive-family view from one generated-module
 C<module_info> surface.
+
+=head2 selector_conflict_targets_from_module_info
+
+Returns the normalized generated mux-selector conflict target view from one
+generated-module C<module_info> surface.
 
 =head2 intent_hir_from_module_info
 
