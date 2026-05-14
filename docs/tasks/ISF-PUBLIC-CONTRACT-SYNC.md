@@ -42,7 +42,8 @@ primary R14 focus.
   Status: `active`
   Goal: `Keep ISF specs, book, public contract, manifest, and tests synchronized.`
   Children: `ISF-PUBLIC-CONTRACT.1`, `ISF-PUBLIC-CONTRACT.2`,
-  `ISF-PUBLIC-CONTRACT.3`, `ISF-PUBLIC-CONTRACT.4`
+  `ISF-PUBLIC-CONTRACT.3`, `ISF-PUBLIC-CONTRACT.4`,
+  `ISF-PUBLIC-CONTRACT.5`
 
 - ID: `ISF-PUBLIC-CONTRACT.1`
   Status: `pending`
@@ -77,6 +78,16 @@ primary R14 focus.
   Verification: `pending`
   Commit: `pending`
 
+- ID: `ISF-PUBLIC-CONTRACT.5`
+  Status: `done`
+  Goal: `Record the construct shipping invariant.`
+  Acceptance: `The ISF book, spec, and public contract state that every
+  current or future construct needs an explicit source shape, lowering path,
+  runtime semantic, diagnostics boundary, downstream visibility contract, and
+  regression evidence before it is considered shipped.`
+  Verification: `mdbook build docs/book; git diff --check`
+  Commit: `ISF-PUBLIC-CONTRACT.5: document construct semantics invariant`
+
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
@@ -88,6 +99,9 @@ primary R14 focus.
 - `2026-05-14`: This tree is cross-cutting and feature-driven. It should not
   displace public-facing ISF feature work unless the selected feature changes a
   public surface.
+- `2026-05-14`: Parser acceptance is not a support claim for ISF. A construct
+  is shipped only when source shape, lowering, runtime semantics, diagnostics,
+  downstream visibility, and regression evidence are all explicit.
 
 ## Open Questions
 
@@ -105,13 +119,18 @@ primary R14 focus.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-14` | `ISF-PUBLIC-CONTRACT` | `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-PUBLIC-CONTRACT.5` | `mdbook build docs/book` | `passed` |
+| `2026-05-14` | `ISF-PUBLIC-CONTRACT.5` | `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-PUBLIC-CONTRACT` | `R14: map ISF objectives to task trees` | Initial tree creation belongs to the ISF objective task-tree coverage slice. |
+| `ISF-PUBLIC-CONTRACT.5` | `ISF-PUBLIC-CONTRACT.5: document construct semantics invariant` | Records that every shipped ISF construct must have explicit source, lowering, runtime, diagnostic, visibility, and regression semantics. |
 
 ## Changelog
 
 - `2026-05-14`: Created the active ISF public-contract synchronization task tree.
+- `2026-05-14`: Completed `ISF-PUBLIC-CONTRACT.5` as a documentation-only
+  invariant; current frontier remains `ISF-PUBLIC-CONTRACT.1`.

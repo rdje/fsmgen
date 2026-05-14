@@ -8,6 +8,14 @@ supported ISF syntax, CLI behavior, public in-process facade behavior, scheduled
 `.fsm` result shape, or schedule-report shape must update this file in the same
 commit.
 
+Parser acceptance is not sufficient to make an ISF construct public or
+supported. A shipped construct must have an explicit accepted source shape,
+fail-closed malformed-form diagnostics, a documented lowering path into
+scheduled `.fsm` or an intentional diagnostic before emission, a runtime
+semantic in terms of cycles/activation/storage/conflicts/completion, and
+focused regression coverage. Constructs without that full chain remain deferred,
+backlog, or validated compatibility input.
+
 Machine-readable discovery lives in
 [perl/FSM/Support/ISFPublicInterfaceContract.pm](../perl/FSM/Support/ISFPublicInterfaceContract.pm)
 and is advertised through:

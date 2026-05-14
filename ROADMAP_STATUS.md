@@ -21,6 +21,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - All `R14` / ISF work is now task-tree-managed by default: every ISF task,
   slice, or PNT-selected activity must be attached to an existing active ISF
   task tree or create a new `docs/tasks/*.md` tree before implementation.
+- ISF construct support now has a normative rule: parser acceptance is not a
+  support claim. Every current or future shipped ISF construct must have an
+  explicit accepted source shape, lowering path or fail-closed diagnostic,
+  runtime semantics, downstream visibility contract, and regression evidence.
 - Architecture backlog: [docs/tasks/FSMGEN-IR-AUDIT.md](docs/tasks/FSMGEN-IR-AUDIT.md)
   now records the proposed audit of current IR structures and consolidation
   policy. It is not the active PNT lane while `R14` ISF feature delivery

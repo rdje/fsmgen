@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF construct semantics invariant
+- Completed documentation-only `ISF-PUBLIC-CONTRACT.5` by making the ISF
+  construct shipping rule explicit in the book, spec, public contract, and
+  public-contract task tree.
+- Parser acceptance is now documented as insufficient for support. A shipped
+  ISF construct must have an accepted source shape, lowering path or
+  fail-closed diagnostic, runtime meaning, downstream visibility contract, and
+  regression evidence.
+- Constructs missing that full chain remain deferred, backlog, or validated
+  compatibility input rather than shipped ISF features.
+- The active R14 composition frontier remains `ISF-COMPOSITION.5`.
 ### R14 — ISF spawn/repeat lifetime clarification
 - Completed documentation-only `ISF-COMPOSITION.7` by recording the HDL
   lifetime contract for spawned ISF children.

@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF construct semantics invariant
+- Completed documentation-only `ISF-PUBLIC-CONTRACT.5` in
+  [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md).
+- The ISF book, spec, and public contract now state that parser acceptance is
+  not a support claim. A shipped ISF construct needs explicit accepted source
+  shape, lowering path or fail-closed diagnostic, runtime semantics, downstream
+  visibility, and regression evidence.
+- This invariant applies to current and future ISF constructs. If that full
+  chain is not ready, the construct remains deferred, backlog, or validated
+  compatibility input rather than a shipped feature.
+- The active R14 composition frontier remains `ISF-COMPOSITION.5`; the
+  `ISF-PUBLIC-CONTRACT` frontier remains `ISF-PUBLIC-CONTRACT.1`.
 ## 2026-05-14: ISF spawn/repeat lifetime clarification
 - Completed documentation-only `ISF-COMPOSITION.7` in
   [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md).

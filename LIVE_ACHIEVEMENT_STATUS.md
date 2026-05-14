@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF construct semantics invariant
+- Active R14 task-tree slice: documentation-only `ISF-PUBLIC-CONTRACT.5` is
+  complete.
+- The ISF book, spec, and public contract now state that every shipped
+  construct needs explicit source shape, lowering path, runtime semantics,
+  diagnostics boundary, downstream visibility, and regression evidence.
+- Parser acceptance alone is not a support claim; incomplete constructs remain
+  deferred, backlog, or validated compatibility input.
+- The active R14 composition frontier remains `ISF-COMPOSITION.5`.
+
 ## 2026-05-14: R14 — ISF spawn/repeat lifetime clarification
 - Active R14 task-tree slice: documentation-only `ISF-COMPOSITION.7` is
   complete.

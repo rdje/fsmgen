@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF construct semantics invariant
+- ISF should not accumulate parser-visible syntax that lacks a real hardware
+  meaning. A construct is only useful when users can predict its scheduled
+  `.fsm` form and its runtime behavior.
+- The invariant is intentionally stricter than "the parser accepts it": every
+  construct needs source-shape validation, a lowering path or targeted
+  fail-closed diagnostic, cycle/activation/storage/conflict/completion
+  semantics, downstream visibility where relevant, and focused regression
+  evidence.
+- This rule is especially important while brainstorming new ISF features. It
+  keeps feature discovery productive without letting half-defined syntax become
+  accidental public contract.
 ## 2026-05-14: ISF spawn/repeat lifetime clarification
 - Hardware instance lifetime is structural, not procedural. A `spawn` clause
   can therefore only describe a static child instance plus a runtime start

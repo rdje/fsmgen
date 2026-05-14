@@ -18,6 +18,11 @@ explicit cycle-accurate `.fsm`.
   the actor can accept. The ready side (`can_accept`) is implicit.
 - **Variables are first-class**. `(sample ...)`, `(update ...)` — just like
   programming language variables. The scheduler handles persistence.
+- **Every construct has semantics**. A construct is not considered shipped just
+  because the parser accepts it. It needs a documented lowering path into
+  scheduled `.fsm`, a runtime meaning in terms of cycles, activation, storage,
+  and conflicts, targeted diagnostics for unsupported forms, and regression
+  coverage for the accepted behavior.
 - **Compile-time issues are explicit**. Parser and lowering failures are raised,
   and the schedule report carries a `compile_issues` field. Broader conflict,
   deadlock, and resource diagnostics are still being expanded.

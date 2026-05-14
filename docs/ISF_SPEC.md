@@ -20,6 +20,24 @@ then uses the ordinary `.fsm` pipeline for HDL generation.
 Cycles are not hidden. They are inferred into a generated `.fsm` artifact and a
 schedule JSON report that can be reviewed.
 
+## 1.1 Construct Shipping Rule
+
+An ISF construct is shipped only when its syntax, lowering, and runtime
+semantics are all explicit. Parser acceptance alone is not support.
+
+For every current or future construct, the public contract must answer:
+- what source shape is accepted and what malformed shape fails closed;
+- what scheduled `.fsm` artifact is emitted, or which targeted diagnostic is
+  raised before emission;
+- what the runtime behavior means in cycles, activation, storage, handshakes,
+  conflicts, and completion;
+- what schedule-report or review-artifact visibility downstream consumers can
+  rely on; and
+- what focused regression or fixture proves the behavior.
+
+If one of those answers is not ready, the construct remains deferred, backlog,
+or fail-closed compatibility input rather than a shipped ISF feature.
+
 ## 2. CLI Contract
 
 `bin/fsmgen` accepts `.isf` inputs anywhere it accepts a source path:
