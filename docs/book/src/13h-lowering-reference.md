@@ -536,10 +536,13 @@ is driven combinationally high with `=`, and the state advances only when
 `ready` is true in the same cycle. If `ready` is false, the FSM remains in the
 stage state and keeps `valid` asserted. Pending samples immediately before the
 stage materialize before the stage so a stall does not resample every cycle.
+Schedule reports expose this shipped subset through `transaction_stages`
+entries with the authored transaction/stage names, `kind =
+ready_valid_barrier`, generated state, ready input, and valid output.
 Nested stages, stage-local `(latency ...)`, `(compute ...)`, embedded
 transaction actions, multiple ready/valid endpoints, registered-valid variants,
 and skid-buffer behavior remain separate backlog features until their
-generated-state and report semantics are explicit.
+generated-state and runtime semantics are explicit.
 
 **Future**: Grow toward richer pipeline registers only after the shipped
 ready/valid barrier report contract is complete.
@@ -570,9 +573,12 @@ The reviewable artifact is not SVA-only. The scheduled `.fsm` contains one arm
 state plus an always-on monitor DT with pending, age, and fail storage. The
 monitor DT is the source of truth; schedule reports classify it as
 `temporal_contract_monitor` and report pending/fail as registers and age as a
-counter. Generated SystemVerilog assertion text from the fail bit remains
-deferred until the public check/report surface is specified. Unsupported
-bodies and nested contracts fail closed. Global
+counter. They also expose bounded `temporal_contracts` entries with the public
+trigger state, observed signal, cycle bound, generated pending/counter/fail
+signal names, reset policy, overlap policy, and assertion projection status.
+Generated SystemVerilog assertion text from the fail bit remains deferred;
+the current assertion projection status is `none`. Unsupported bodies and
+nested contracts fail closed. Global
 `always` implication forms, min/max windows, dynamic bounds, same-cycle
 windows, expression operands, and multiple outstanding obligations remain
 deferred.

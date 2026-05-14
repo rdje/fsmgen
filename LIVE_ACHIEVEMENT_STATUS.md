@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF stage/contract schedule-report closure
+- Active R14 task-tree slice: `ISF-STAGES-CONTRACTS.6` is complete, and the
+  `ISF-STAGES-CONTRACTS` tree is closed.
+- Successful schedule reports now expose `transaction_stages` for shipped
+  ready/valid barriers and `temporal_contracts` for shipped bounded eventual
+  monitors.
+- The public contract advertises the new report key/value families, and the
+  new regression covers both in-process and CLI JSON report paths.
+- The next active R14 frontier is `ISF-DATA-WIDTHS.1`.
+
 ## 2026-05-14: R14 — ISF bounded contract lowering
 - Active R14 task-tree slice: `ISF-STAGES-CONTRACTS.5` is complete.
 - Top-level `(contract name (eventually signal (within cycles)))` now lowers

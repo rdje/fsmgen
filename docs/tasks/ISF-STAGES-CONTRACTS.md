@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-STAGES-CONTRACTS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-14`
 - Last updated: `2026-05-14`
@@ -39,7 +39,7 @@ covered stage and temporal-check domains.
 ## Task Tree
 
 - ID: `ISF-STAGES-CONTRACTS`
-  Status: `active`
+  Status: `done`
   Goal: `Ship bounded transaction stage and temporal contract lowering.`
   Children: `ISF-STAGES-CONTRACTS.1`, `ISF-STAGES-CONTRACTS.2`,
   `ISF-STAGES-CONTRACTS.3`, `ISF-STAGES-CONTRACTS.4`,
@@ -94,18 +94,20 @@ covered stage and temporal-check domains.
   Commit: `ISF-STAGES-CONTRACTS.5: implement bounded contract lowering`
 
 - ID: `ISF-STAGES-CONTRACTS.6`
-  Status: `pending`
+  Status: `done`
   Goal: `Add reports, tests, and synchronized docs.`
   Acceptance: `Schedule reports, regressions, ISF spec, public contract,
   mdBook, and live docs describe the shipped stage/contract behavior.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `prove -l t/1225-isf-stage-contract-schedule-report.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`;
+  `./bin/ci-regression isf --no-book`; `mdbook build docs/book`;
+  `git diff --check`
+  Commit: `ISF-STAGES-CONTRACTS.6: report stage contract metadata`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-STAGES-CONTRACTS.6` | `pending` | Stage and contract lowering now need bounded schedule-report projection and final synchronized docs. |
+| 1 | `closed` | `done` | All stage/contract leaves are complete; PNT continues with `ISF-DATA-WIDTHS.1`. |
 
 ## ISF-STAGES-CONTRACTS.1 Inventory
 
@@ -366,7 +368,6 @@ Shipped behavior:
 
 Deferred to later leaves or backlog:
 
-- Schedule-report stage metadata is deferred to `ISF-STAGES-CONTRACTS.6`.
 - Stage-local latency, compute/action bodies, multiple endpoints,
   registered-valid variants, skid buffers, and nested stages remain backlog
   until their runtime and report contracts are specified.
@@ -403,14 +404,44 @@ Shipped behavior:
 
 Deferred to later leaves or backlog:
 
-- Schedule-report `temporal_contracts` projection is deferred to
-  `ISF-STAGES-CONTRACTS.6`.
 - Verification-only SystemVerilog assertion text from the sticky fail bit is
   deferred until the report/check-artifact surface is explicit.
 - Global implication forms, min/max windows, same-cycle checks, dynamic
   bounds, expression operands, nested contracts, and multiple outstanding
   obligation queues remain backlog until their runtime and diagnostic
   contracts are specified.
+
+## ISF-STAGES-CONTRACTS.6 Report And Docs Closure
+
+Shipped report behavior:
+
+- Successful schedule reports now always include `transaction_stages` and
+  `temporal_contracts` top-level arrays. Actors that do not use those shipped
+  constructs report empty arrays, preserving a stable top-level shell.
+- `transaction_stages` entries summarize the first shipped stage subset:
+  authored transaction name, authored stage name, `kind =
+  ready_valid_barrier`, generated stage state, ready input, and valid output.
+- `temporal_contracts` entries summarize the first shipped bounded eventual
+  contract subset: authored transaction and contract names, `kind =
+  bounded_eventually`, generated trigger state, observed signal, cycle bound,
+  pending/counter/fail signal names, `overlap_policy = fail`, actor reset
+  policy, and `assertion_projection = none`.
+- Raw monitor equations, internal arm request names, and backend assertion
+  text are deliberately not part of the public contract summary. The scheduled
+  `.fsm` monitor remains the reviewable source of truth.
+- The public-interface contract now advertises the stage and contract report
+  key/value families, and the CLI `--emit-schedule-json` path is checked
+  against the in-process scheduler for these projections.
+
+Closure result:
+
+- `ISF-STAGES-CONTRACTS` is now complete. The shipped surface covers
+  inventory, semantics, lowering, schedule-report projection, tests, public
+  contract metadata, ISF spec, mdBook, roadmap, and live-doc synchronization.
+- Remaining stage/contract ideas are backlog work under future task trees:
+  nested stages/contracts, richer stage bodies, multiple ready/valid endpoints,
+  registered-valid or skid-buffer behavior, broader temporal grammars, dynamic
+  windows, multiple outstanding obligations, and backend assertion text.
 
 ## Decisions
 
@@ -424,9 +455,7 @@ Deferred to later leaves or backlog:
 
 ## Open Questions
 
-- None for the current frontier. `ISF-STAGES-CONTRACTS.6` must still define
-  the bounded schedule-report projection for shipped stage and contract
-  metadata.
+- None for this closed tree.
 
 ## Blockers
 
@@ -442,6 +471,7 @@ Deferred to later leaves or backlog:
 | `2026-05-14` | `ISF-STAGES-CONTRACTS.3` | `prove -l t/1175-isf-contract-fail-closed.t t/1180-isf-unsupported-transaction-clause-boundary.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-STAGES-CONTRACTS.4` | `prove -l t/1179-isf-phase-stage-boundary.t t/1180-isf-unsupported-transaction-clause-boundary.t t/1223-isf-stage-lowering.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-STAGES-CONTRACTS.5` | `prove -l t/1175-isf-contract-fail-closed.t t/1180-isf-unsupported-transaction-clause-boundary.t t/1224-isf-contract-lowering.t t/1158-isf-public-report-dt-kind-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-STAGES-CONTRACTS.6` | `prove -l t/1225-isf-stage-contract-schedule-report.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -453,6 +483,7 @@ Deferred to later leaves or backlog:
 | `ISF-STAGES-CONTRACTS.3` | `ISF-STAGES-CONTRACTS.3: specify bounded contract semantics` | First bounded temporal-contract semantics. |
 | `ISF-STAGES-CONTRACTS.4` | `ISF-STAGES-CONTRACTS.4: implement bounded stage lowering` | First bounded transaction-stage lowering. |
 | `ISF-STAGES-CONTRACTS.5` | `ISF-STAGES-CONTRACTS.5: implement bounded contract lowering` | First bounded temporal-contract monitor lowering. |
+| `ISF-STAGES-CONTRACTS.6` | `ISF-STAGES-CONTRACTS.6: report stage contract metadata` | Stage/contract schedule-report projection and tree closure. |
 
 ## Changelog
 
@@ -470,3 +501,6 @@ Deferred to later leaves or backlog:
   and advanced the frontier to `ISF-STAGES-CONTRACTS.5`.
 - `2026-05-14`: Implemented the first bounded temporal-contract monitor
   lowering path and advanced the frontier to `ISF-STAGES-CONTRACTS.6`.
+- `2026-05-14`: Added stage/contract schedule-report projection, synchronized
+  public docs and contract metadata, closed the tree, and moved PNT to
+  `ISF-DATA-WIDTHS.1`.

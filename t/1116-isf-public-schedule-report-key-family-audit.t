@@ -49,6 +49,11 @@ subtest 'APB schedule report conforms to advertised public key families' => sub 
         );
     }
 
+    is(ref($report->{transaction_stages}), 'ARRAY', 'transaction_stages is an array in the advertised report shell');
+    is(ref($report->{temporal_contracts}), 'ARRAY', 'temporal_contracts is an array in the advertised report shell');
+    is(scalar(@{$report->{transaction_stages}}), 0, 'APB report has no transaction stage summaries');
+    is(scalar(@{$report->{temporal_contracts}}), 0, 'APB report has no temporal contract summaries');
+
     for my $entry (@{$report->{dt_blocks}}) {
         is_deeply(
             sorted([keys %{$entry}]),

@@ -125,6 +125,7 @@ my $expected_tested_by = [
     't/1222-isf-rule-expression-conflict-report.t',
     't/1223-isf-stage-lowering.t',
     't/1224-isf-contract-lowering.t',
+    't/1225-isf-stage-contract-schedule-report.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {

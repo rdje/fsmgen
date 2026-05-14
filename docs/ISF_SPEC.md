@@ -948,7 +948,10 @@ actor output. It lowers to one transaction state that drives
 the stage materialize before the stage so a stall does not resample every
 cycle. Nested stages, stage-local `(latency ...)`, `(compute ...)`, arbitrary
 stage body actions, multiple ready/valid endpoints, registered-valid variants,
-and skid-buffer behavior remain fail-closed/deferred.
+and skid-buffer behavior remain fail-closed/deferred. Schedule reports expose
+shipped transaction stages through `transaction_stages` entries containing the
+authored transaction and stage names, `kind = ready_valid_barrier`, generated
+state name, ready input, and valid output.
 
 Transaction-level `(contract name (eventually signal (within cycles)))` is the
 first shipped temporal-contract subset. It is supported only as a top-level
@@ -962,12 +965,16 @@ and sticky-fail storage. Actor reset clears the monitor storage. Seeing
 same contract while pending sets the sticky fail bit. Schedule-report
 `dt_blocks` classify the generated monitor as `temporal_contract_monitor`, and
 `inferred_storage` reports pending/fail as registers and age as a counter.
-The richer `temporal_contracts` projection remains deferred until the report
-surface is specified in the next slice. SystemVerilog assertion text under
-`` `ifndef SYNTHESIS`` also remains deferred; the scheduled monitor is already
-the source of truth. Historical/free-form contract bodies, global `always`
-implication forms, min/max windows, dynamic bounds, same-cycle checks, nested
-contracts, expression operands, and multiple outstanding obligations remain
+Schedule reports also expose shipped contracts through `temporal_contracts`
+entries containing the authored transaction and contract names, `kind =
+bounded_eventually`, trigger state, observed signal, cycle bound, pending,
+counter, and fail signal names, overlap policy, reset policy, and assertion
+projection status. Raw monitor equations and backend assertion text are not
+schedule-report payloads. SystemVerilog assertion text under `` `ifndef
+SYNTHESIS`` remains deferred; the scheduled monitor is already the source of
+truth. Historical/free-form contract bodies, global `always` implication
+forms, min/max windows, dynamic bounds, same-cycle checks, nested contracts,
+expression operands, and multiple outstanding obligations remain
 fail-closed/deferred.
 
 ## 10. Schedule JSON Report
@@ -991,6 +998,8 @@ fail-closed/deferred.
   "state_count": 0,
   "inferred_storage": [],
   "transactions": [],
+  "transaction_stages": [],
+  "temporal_contracts": [],
   "dt_blocks": [],
   "generated_composition": null,
   "compatible_fanin_groups": [],
@@ -1040,6 +1049,22 @@ The `transactions` array is sorted lexically by transaction name, and each
 transaction's `states` array keeps scheduled `.fsm` state emission order. The
 capability-manifest ISF public contract advertises this through
 `schedule_report_transaction_ordering`.
+The `transaction_stages` array reports the shipped ready/valid stage subset.
+Each entry has `transaction`, authored stage `name`, `kind =
+ready_valid_barrier`, generated `state`, `ready` input, and `valid` output.
+The capability-manifest ISF public contract advertises the keys and kind
+values through `schedule_report_transaction_stage_keys` and
+`schedule_report_transaction_stage_kind_values`.
+The `temporal_contracts` array reports the shipped bounded eventual contract
+subset. Each entry has `transaction`, authored contract `name`, `kind =
+bounded_eventually`, `trigger`, observed `signal`, `within_cycles`,
+`pending_signal`, `counter_signal`, `fail_signal`, `overlap_policy`,
+`reset_policy`, and `assertion_projection`. The current `overlap_policy` is
+`fail`, and the current assertion projection value is `none`; monitor logic
+exists in scheduled `.fsm`, but no backend assertion text is emitted yet. The
+capability-manifest ISF public contract advertises the keys, kind values,
+overlap values, assertion-projection values, and reset-policy shape through the
+matching `schedule_report_temporal_contract_*` metadata fields.
 The reset summary's `kind` value is currently `async` or `sync`, and its
 `polarity` value is currently `active_high` or `active_low`. The
 capability-manifest ISF public contract advertises those value families through
@@ -1240,6 +1265,7 @@ Focused tests:
 - [t/1222-isf-rule-expression-conflict-report.t](../t/1222-isf-rule-expression-conflict-report.t)
 - [t/1223-isf-stage-lowering.t](../t/1223-isf-stage-lowering.t)
 - [t/1224-isf-contract-lowering.t](../t/1224-isf-contract-lowering.t)
+- [t/1225-isf-stage-contract-schedule-report.t](../t/1225-isf-stage-contract-schedule-report.t)
 
 ## 12. Explicitly Deferred
 
@@ -1262,11 +1288,9 @@ Focused tests:
 - Expression-valued rule guards and alternate rule assignment operators.
 - Transaction `(stage ...)` forms beyond the shipped top-level ready/valid
   barrier: nested stages, stage-local latency/compute bodies, multiple
-  endpoints, registered-valid variants, skid buffers, and stage report
-  projection remain deferred.
+  endpoints, registered-valid variants, and skid buffers remain deferred.
 - Temporal `(contract ...)` forms beyond the shipped top-level bounded
-  eventual subset. Schedule-report projection for shipped temporal contracts
-  is tracked by `ISF-STAGES-CONTRACTS.6`.
+  eventual subset.
 - Rich storage-class optimization in schedule reports.
 - Full width inference for `extract` values that do not use known field widths
   or an explicit `(widths N...)` option, and `shift_right` values that do not

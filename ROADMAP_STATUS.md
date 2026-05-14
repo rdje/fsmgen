@@ -12,9 +12,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   frontier. The ongoing/unresolved R14 ISF objective families are now covered
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
-  [docs/tasks/ISF-STAGES-CONTRACTS.md](docs/tasks/ISF-STAGES-CONTRACTS.md),
-  whose current frontier is `ISF-STAGES-CONTRACTS.6`. The completed
-  `ISF-RULE-ACTIONS`, `ISF-RESOURCE-CATALOG`,
+  [docs/tasks/ISF-DATA-WIDTHS.md](docs/tasks/ISF-DATA-WIDTHS.md),
+  whose current frontier is `ISF-DATA-WIDTHS.1`. The completed
+  `ISF-STAGES-CONTRACTS`, `ISF-RULE-ACTIONS`, `ISF-RESOURCE-CATALOG`,
   `ISF-RESOURCE-PRIORITY`, `ISF-CONFLICTS`, and `ISF-COMPOSITION` trees are
   listed in the task-tree completed table.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
@@ -131,6 +131,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   proves scheduled `.fsm` parsing plus SystemVerilog generation. The active
   frontier advances to `ISF-STAGES-CONTRACTS.6` for bounded schedule-report
   projection and final docs.
+- `ISF-STAGES-CONTRACTS.6` is complete and the tree is closed. Successful
+  schedule reports now expose shipped stage summaries through
+  `transaction_stages` and shipped bounded eventual contract summaries through
+  `temporal_contracts`. The public contract advertises the new key/value
+  families, the CLI and in-process report paths are regression-covered, and
+  the active PNT frontier moves to `ISF-DATA-WIDTHS.1`.
 - ISF construct support now has a normative rule: parser acceptance is not a
   support claim. Every current or future shipped ISF construct must have an
   explicit accepted source shape, lowering path or fail-closed diagnostic,

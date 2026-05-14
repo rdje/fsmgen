@@ -28,6 +28,8 @@ sub emit($self, $ir) {
         state_count    => scalar(@{$ir->{states}}),
         inferred_storage => $self->_storage_summary($ir),
         transactions   => $self->_transaction_summary($ir),
+        transaction_stages => $self->_transaction_stage_summary($ir),
+        temporal_contracts => $self->_temporal_contract_summary($ir),
         dt_blocks      => $self->_dt_summary($ir),
         generated_composition => $self->_generated_composition_summary($ir),
         compatible_fanin_groups => $self->_compatible_fanin_group_summary($ir),
@@ -124,6 +126,48 @@ sub _transaction_summary($self, $ir) {
     }
 
     return \@txs;
+}
+
+sub _transaction_stage_summary($self, $ir) {
+    my @stages;
+
+    for my $state (@{$ir->{states}}) {
+        next unless ($state->{kind} // '') eq 'stage';
+        my ($transaction) = ($state->{name} =~ /\A(.+)_stage_[0-9]+\z/);
+        push @stages, {
+            transaction => $transaction,
+            name        => $state->{stage_name},
+            kind        => 'ready_valid_barrier',
+            state       => $state->{name},
+            ready       => $state->{ready},
+            valid       => $state->{valid},
+        };
+    }
+
+    return \@stages;
+}
+
+sub _temporal_contract_summary($self, $ir) {
+    my @contracts;
+
+    for my $contract (@{$ir->{temporal_contracts} || []}) {
+        push @contracts, {
+            transaction          => $contract->{transaction},
+            name                 => $contract->{name},
+            kind                 => $contract->{kind},
+            trigger              => $contract->{trigger},
+            signal               => $contract->{signal},
+            within_cycles        => $contract->{within_cycles},
+            pending_signal       => $contract->{pending_signal},
+            counter_signal       => $contract->{counter_signal},
+            fail_signal          => $contract->{fail_signal},
+            overlap_policy       => $contract->{overlap_policy},
+            reset_policy         => $self->_reset_summary($ir->{reset}),
+            assertion_projection => 'none',
+        };
+    }
+
+    return \@contracts;
 }
 
 sub _dt_summary($self, $ir) {

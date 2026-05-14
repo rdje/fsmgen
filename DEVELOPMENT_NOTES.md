@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF stage/contract schedule reports
+- The stage projection is intentionally a summary of the shipped runtime
+  contract, not a stage-state dump. Downstream consumers need the authored
+  stage name, generated state, and ready/valid endpoints; they do not need
+  private state objects.
+- The contract projection links to the public trigger, observed signal, cycle
+  bound, generated storage names, reset policy, overlap policy, and assertion
+  projection status. It deliberately omits raw monitor equations and the
+  internal arm request name.
+- `assertion_projection = none` records the current backend boundary: the
+  scheduled `.fsm` monitor exists and is the source of truth, but no
+  verification-only assertion text is emitted yet.
 ## 2026-05-14: ISF bounded contract lowering
 - The implementation keeps the scheduled `.fsm` monitor as the source of
   truth. The arm state is ordinary transaction scheduling, and the monitor DT

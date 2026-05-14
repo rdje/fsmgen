@@ -265,7 +265,7 @@ composition tops, or HDL.
 
 Remaining backlog: nested stages, stage-local latency, compute/action bodies,
 multiple ready/valid endpoints, registered-valid variants, skid-buffer
-behavior, and bounded schedule-report projection for stage metadata.
+behavior, and richer stage report families for future stage kinds.
 
 ### Temporal Contract Lowering
 
@@ -281,11 +281,10 @@ pending/age/fail storage, clears on actor reset, and sets a sticky fail bit if
 the signal is not seen within the window or if the same contract is armed
 again while pending.
 
-Remaining backlog: bounded schedule-report projection, optional
-verification-only SystemVerilog assertion text from the sticky fail bit,
-global `always` implication forms, min/max windows, dynamic bounds,
-same-cycle checks, nested contracts, expression operands, and multiple
-outstanding obligations.
+Remaining backlog: optional verification-only SystemVerilog assertion text
+from the sticky fail bit, global `always` implication forms, min/max windows,
+dynamic bounds, same-cycle checks, nested contracts, expression operands, and
+multiple outstanding obligations.
 
 ### Legacy Handshake Semantics
 
@@ -340,7 +339,9 @@ defined. Nonfatal conflict issues project into `compile_issues`, and accepted
 fan-in groups project into `compatible_fanin_groups`, both with bounded
 summary shapes. Successful priority/resource decisions project into
 `priority_resolutions` and `resource_arbitration` as bounded static lowering
-summaries.
+summaries. Shipped transaction stages and bounded eventual contracts project
+into `transaction_stages` and `temporal_contracts` with bounded public
+summary shapes.
 
 ## Backends And Validation
 

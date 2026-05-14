@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF stage/contract schedule-report closure
+- Completed `ISF-STAGES-CONTRACTS.6` and closed
+  [docs/tasks/ISF-STAGES-CONTRACTS.md](docs/tasks/ISF-STAGES-CONTRACTS.md).
+- Schedule reports now include `transaction_stages` and `temporal_contracts`
+  arrays. The stage projection reports the shipped ready/valid barrier
+  metadata, and the contract projection reports the shipped bounded eventual
+  metadata without exposing raw monitor equations.
+- [t/1225-isf-stage-contract-schedule-report.t](t/1225-isf-stage-contract-schedule-report.t)
+  covers the in-process and CLI JSON paths. The next active R14 frontier is
+  `ISF-DATA-WIDTHS.1`.
 ## 2026-05-14: ISF bounded contract lowering
 - Completed `ISF-STAGES-CONTRACTS.5` in
   [docs/tasks/ISF-STAGES-CONTRACTS.md](docs/tasks/ISF-STAGES-CONTRACTS.md).

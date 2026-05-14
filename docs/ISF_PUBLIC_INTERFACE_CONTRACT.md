@@ -92,6 +92,8 @@ The advertised `--strict` option on that path is checked by
 [t/1124-isf-public-cli-strict-mode-audit.t](../t/1124-isf-public-cli-strict-mode-audit.t).
 The current APB schedule report is checked against the advertised key families
 by [t/1116-isf-public-schedule-report-key-family-audit.t](../t/1116-isf-public-schedule-report-key-family-audit.t).
+The shipped stage/contract report projection is checked by
+[t/1225-isf-stage-contract-schedule-report.t](../t/1225-isf-stage-contract-schedule-report.t).
 The advertised schedule-report metadata itself is checked by
 [t/1140-isf-public-schedule-report-metadata-audit.t](../t/1140-isf-public-schedule-report-metadata-audit.t)
 to keep key families, grouped family maps, ordering, multi-file scope, and
@@ -104,6 +106,8 @@ The schedule-report DT kind metadata is checked by
 [t/1158-isf-public-report-dt-kind-metadata-audit.t](../t/1158-isf-public-report-dt-kind-metadata-audit.t)
 to keep advertised `dt_blocks[*].kind` values exact across direct and manifest
 views and aligned with APB, full-featured, and temporal-contract reports.
+Stage and contract schedule-report key/value families are audited across
+direct and manifest views and checked against generated JSON.
 The inferred-storage metadata is checked by
 [t/1148-isf-public-storage-metadata-audit.t](../t/1148-isf-public-storage-metadata-audit.t)
 to keep advertised storage `kind` values and optional `width` shape exact
@@ -326,9 +330,11 @@ The shipped subset is the top-level transaction form
 state plus an always-on monitor DT with pending, age, and sticky-fail storage.
 Schedule reports classify that DT as `temporal_contract_monitor` and classify
 the generated pending/fail storage as registers and age storage as a counter.
+The bounded `temporal_contracts` summary projection reports the public trigger,
+observed signal, cycle bound, generated storage names, reset policy, overlap
+policy, and assertion projection status for downstream consumers.
 Unsupported top-level bodies and nested contracts still fail closed with
-targeted diagnostics. The bounded `temporal_contracts` summary projection and
-any verification-only assertion text are not advertised yet.
+targeted diagnostics. Verification-only assertion text is not advertised yet.
 The parser boundary for resource and priority metadata is checked by
 [t/1176-isf-resource-priority-boundary.t](../t/1176-isf-resource-priority-boundary.t)
 so malformed `(resources ...)`, actor-level `(priority lhs over rhs)`, and
@@ -808,6 +814,8 @@ outputs
 state_count
 inferred_storage
 transactions
+transaction_stages
+temporal_contracts
 dt_blocks
 generated_composition
 compatible_fanin_groups
@@ -822,6 +830,8 @@ Current bounded nested and array summary families:
 reset: name, kind, polarity
 inferred_storage entries: name, kind, optional width
 transactions entries: name, states, count
+transaction_stages entries: transaction, name, kind, state, ready, valid
+temporal_contracts entries: transaction, name, kind, trigger, signal, within_cycles, pending_signal, counter_signal, fail_signal, overlap_policy, reset_policy, assertion_projection
 dt_blocks entries: name, kind, assignments
 compile_issues entries: code, severity, target, domain, proof_status, reason, sources
 compile_issues source entries: owner, owner_kind, source_kind, target, operator, rhs, domain
@@ -856,6 +866,28 @@ The `transactions` array itself is sorted lexically by transaction name. Each
 entry's `states` array keeps scheduled `.fsm` state emission order for that
 transaction. The machine-readable contract advertises this through
 `schedule_report_transaction_ordering`.
+
+For each `transaction_stages` entry, `kind` is currently
+`ready_valid_barrier`. The entry preserves the authored transaction/stage
+names and reports the generated stage state plus the ready input and valid
+output. The machine-readable contract advertises these through
+`schedule_report_transaction_stage_keys` and
+`schedule_report_transaction_stage_kind_values`.
+
+For each `temporal_contracts` entry, `kind` is currently
+`bounded_eventually`, `overlap_policy` is currently `fail`, and
+`assertion_projection` is currently `none`. The entry reports the generated
+trigger state, observed signal, positive cycle bound, generated pending,
+counter, and fail signal names, and reset policy. `reset_policy` uses the same
+bounded shape as the top-level reset summary when reset is configured and is
+null when the actor omits reset. The machine-readable contract advertises
+these through `schedule_report_temporal_contract_keys`,
+`schedule_report_temporal_contract_kind_values`,
+`schedule_report_temporal_contract_overlap_policy_values`,
+`schedule_report_temporal_contract_assertion_projection_values`, and
+`schedule_report_temporal_contract_reset_policy_shape`.
+Raw monitor equations, internal arm request names, and backend assertion text
+are not part of the public temporal-contract report entry.
 
 For the `reset` summary, `kind` is currently `async` or `sync`, and `polarity`
 is currently `active_high` or `active_low`. The machine-readable contract

@@ -162,7 +162,13 @@ Accepted fan-in groups now project as bounded `compatible_fanin_groups`
 entries. Successful priority and resource arbitration decisions now project as
 bounded `priority_resolutions` and `resource_arbitration` entries that describe
 static lowering decisions, not per-cycle runtime traces. Raw assignment
-provenance and activation proof internals remain private. The lower-result
+provenance and activation proof internals remain private. Shipped transaction
+stages now project into `transaction_stages` with authored names, generated
+state, and ready/valid endpoints. Shipped bounded eventual contracts project
+into `temporal_contracts` with trigger state, observed signal, cycle bound,
+generated storage signal names, reset policy, overlap policy, and assertion
+projection status; monitor equations and backend assertion text remain
+private or deferred. The lower-result
 `files` map is checked for both
 single-file and multi-file lowering, including scheduled `.fsm` basename keys
 and matching scheduled-text roots. The in-memory `parse_source(...)` facade is
@@ -192,6 +198,10 @@ positive integer `width` values currently belong to inferred counters.
 Transaction summaries expose emitted scheduled-state names in `states`, and
 `count` equals that array length; transaction summaries are sorted lexically by
 name while each `states` array keeps scheduled `.fsm` state emission order.
+Transaction stage summaries advertise `ready_valid_barrier` as their current
+kind, and temporal contract summaries advertise `bounded_eventually`, `fail`
+overlap policy, and `none` assertion projection as their current value
+families.
 Reset summaries advertise `async`/`sync`
 kind values and `active_high`/`active_low` polarity values; omitted resets are
 reported as JSON null. Interface count

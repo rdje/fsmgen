@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF stage and contract schedule reports
+- Completed `ISF-STAGES-CONTRACTS.6` and closed the stage/contract task tree.
+- Successful schedule reports now expose shipped ready/valid stages through
+  `transaction_stages` and shipped bounded eventual contracts through
+  `temporal_contracts`.
+- Added [t/1225-isf-stage-contract-schedule-report.t](t/1225-isf-stage-contract-schedule-report.t)
+  for in-process and CLI schedule-report projection coverage, and advertised
+  the new report key/value families in the ISF public-interface contract.
+- Moved the active PNT frontier to `ISF-DATA-WIDTHS.1`.
 ### R14 — ISF bounded contract lowering
 - Completed `ISF-STAGES-CONTRACTS.5` by implementing the shipped top-level
   transaction contract subset
