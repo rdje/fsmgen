@@ -252,7 +252,12 @@ subclauses, duplicate users, and known `rule_slot` users. `(resources ...)` is
 a singleton actor clause, so repeated resources blocks are rejected rather
 than merged or overwritten.
 
-The current shareable resource kind catalog is deliberately small:
+The table below is the current public registry of things ISF can name as
+shareable resources. It deliberately starts small. A new kind should enter the
+registry only when its authoring shape, lowering path, runtime semantics,
+diagnostics, report surface, and tests are explicit.
+
+Current shareable resource registry:
 
 | Kind | Status | Meaning |
 | --- | --- | --- |

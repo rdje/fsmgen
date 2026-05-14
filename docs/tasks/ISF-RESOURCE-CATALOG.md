@@ -38,7 +38,7 @@ backlog resource categories.
 - ID: `ISF-RESOURCE-CATALOG`
   Status: `done`
   Goal: `Publish the shareable resource kind registry.`
-  Children: `ISF-RESOURCE-CATALOG.1`
+  Children: `ISF-RESOURCE-CATALOG.1`, `ISF-RESOURCE-CATALOG.2`
 
 - ID: `ISF-RESOURCE-CATALOG.1`
   Status: `done`
@@ -48,11 +48,21 @@ backlog resource categories.
   Verification: `prove -l t/1176-isf-resource-priority-boundary.t t/1218-isf-rule-slot-resource-arbitration.t`; `mdbook build docs/book`; `git diff --check`
   Commit: `ISF-RESOURCE-CATALOG.1: publish resource kind catalog`
 
+- ID: `ISF-RESOURCE-CATALOG.2`
+  Status: `done`
+  Goal: `Clarify that the catalog is the public growable registry of shareable resources.`
+  Acceptance: `The spec, mdBook rules chapter, public contract, and backlog
+  explicitly describe the table as the current public registry, distinguish
+  resource names from resource kinds, and preserve the shipped/backlog
+  boundary.`
+  Verification: `prove -l t/1176-isf-resource-priority-boundary.t t/1218-isf-rule-slot-resource-arbitration.t`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-RESOURCE-CATALOG.2: clarify shareable resource registry`
+
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| - | - | `closed` | `ISF-RESOURCE-CATALOG.1` completed the requested catalog publication. |
+| - | - | `closed` | `ISF-RESOURCE-CATALOG.2` completed the requested registry clarification. |
 
 ## Decisions
 
@@ -62,6 +72,10 @@ backlog resource categories.
   diagnostics, report surface, and tests.
 - `2026-05-14`: The catalog belongs in the spec, book, public contract, and
   backlog. The completed resource/priority implementation tree remains closed.
+- `2026-05-14`: The resource table is the public growable registry of
+  shareable resource kinds. Resource names remain author-defined instance
+  handles; resource kinds are the registry entries that say what class of
+  hardware or scheduler-controlled ownership domain is being shared.
 
 ## Open Questions
 
@@ -76,14 +90,18 @@ backlog resource categories.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-14` | `ISF-RESOURCE-CATALOG.1` | `prove -l t/1176-isf-resource-priority-boundary.t t/1218-isf-rule-slot-resource-arbitration.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-RESOURCE-CATALOG.2` | `prove -l t/1176-isf-resource-priority-boundary.t t/1218-isf-rule-slot-resource-arbitration.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-RESOURCE-CATALOG.1` | `ISF-RESOURCE-CATALOG.1: publish resource kind catalog` | Documentation-only registry slice. |
+| `ISF-RESOURCE-CATALOG.2` | `ISF-RESOURCE-CATALOG.2: clarify shareable resource registry` | Documentation-only clarification that the catalog is the public growable registry. |
 
 ## Changelog
 
 - `2026-05-14`: Created and completed the documentation-only resource-kind
   catalog tree.
+- `2026-05-14`: Clarified the catalog as the public growable registry of ISF
+  shareable resource kinds.

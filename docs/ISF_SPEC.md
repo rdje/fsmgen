@@ -927,9 +927,12 @@ emission. `(resources ...)` is an actor-level singleton clause, so repeated
 resources blocks are rejected instead of merged or overwritten. Resource
 semantics use a growable catalog of shareable resource kinds. The resource name
 is the author-defined instance handle; the kind says what is being shared; the
-`arbiter` says how requesters are selected.
+`arbiter` says how requesters are selected. The table below is the current
+public registry of things ISF can name as shareable resources. It deliberately
+starts small and grows only when a kind has a clear lowering path, runtime
+semantics, diagnostics, report surface, and regression coverage.
 
-Current shareable resource kind catalog:
+Current shareable resource registry:
 
 | Kind | Status | Meaning |
 | --- | --- | --- |

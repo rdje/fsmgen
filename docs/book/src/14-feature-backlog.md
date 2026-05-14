@@ -189,7 +189,7 @@ rule requests when its guard is true, the priority graph chooses a unique
 active winner, and the generated grant gates the whole rule DT DTE without
 adding a cycle.
 
-Current resource kind catalog:
+Current shareable resource registry:
 
 | Kind | Status | Meaning |
 | --- | --- | --- |

@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF shareable resource registry clarification
+- Completed `ISF-RESOURCE-CATALOG.2` by tightening the public wording around
+  the growable ISF shareable-resource registry.
+- The spec, mdBook rules chapter, public contract, and feature backlog now
+  make the resource-name/resource-kind split explicit: names are author-owned
+  instances, while kinds are registry entries that say what class of shareable
+  resource is being modeled.
+- The shipped support boundary did not change. `rule_slot` under `priority`
+  arbitration remains the only runtime-backed kind today; the other registry
+  names remain backlog entries.
 ### R14 — ISF extract width enforcement
 - Completed `ISF-DATA-WIDTHS.3` by migrating `extract` to the new
   no-placeholder width policy.

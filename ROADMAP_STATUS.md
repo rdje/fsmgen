@@ -64,6 +64,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `output_bundle`, `interface_bundle`, `named_drive`, `transaction_start`,
   `child_instance`, and `storage_port` remain backlog catalog names until
   their lowering contracts ship.
+- `ISF-RESOURCE-CATALOG.2` is complete. The same public surfaces now call the
+  table the current shareable resource registry, explicitly separate
+  author-defined resource names from registry resource kinds, and preserve the
+  shipped/backlog boundary. This does not change the active R14 frontier,
+  which remains `ISF-DATA-WIDTHS.4`.
 - `ISF-RULE-ACTIONS.1` is complete. The rule-action task tree now inventories
   the current scalar-only parser surface, malformed diagnostics, lowering
   behavior, schedule-report/storage metadata, and conflict touchpoints. The

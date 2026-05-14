@@ -340,9 +340,12 @@ The parser boundary for resource and priority metadata is checked by
 so malformed `(resources ...)`, actor-level `(priority lhs over rhs)`, and
 rule-local `(priority over other_rule)` forms are rejected before an actor
 shell is returned. Current parser metadata carries resource names, arbiter
-strings, and optional resource-kind/user metadata. The first enforced resource
-kind is `rule_slot`, a one-cycle mutual-exclusion slot for rule users under
-the `priority` arbiter. The current shareable resource kind catalog is:
+strings, and optional resource-kind/user metadata. A resource name is the
+author-defined instance handle; the resource kind is the public registry entry
+that says what type of shareable thing the instance represents. The first
+enforced resource kind is `rule_slot`, a one-cycle mutual-exclusion slot for
+rule users under the `priority` arbiter. The current shareable resource
+registry is:
 `rule_slot` (shipped for `priority` arbitration), `output_bundle`,
 `interface_bundle`, `named_drive`, `transaction_start`, `child_instance`, and
 `storage_port`. The non-`rule_slot` kinds are public catalog/backlog names,

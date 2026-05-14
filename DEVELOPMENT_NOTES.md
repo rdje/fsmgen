@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF shareable resource registry clarification
+- The resource catalog should read as a public registry, not as a loose list of
+  examples. That makes future additions reviewable: adding a kind is a public
+  surface decision that needs semantics, lowering, diagnostics, reports, and
+  tests.
+- Keeping resource names and resource kinds distinct matters for downstream
+  consumers. A resource name is the author's instance handle; a kind is the
+  stable class of shareable thing the scheduler can reason about.
+- This clarification does not widen runtime behavior. Parser-recognized
+  backlog kinds still fail closed when used with bound users until their
+  implementation contracts ship.
 ## 2026-05-14: ISF extract width enforcement
 - `extract` is now a clean first application of the width policy: if slice
   positions cannot be proven, the lowerer rejects the source instead of

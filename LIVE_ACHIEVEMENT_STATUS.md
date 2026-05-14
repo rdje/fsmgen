@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF shareable resource registry clarification
+- Active R14 task-tree slice: `ISF-RESOURCE-CATALOG.2` is complete.
+- The ISF resource catalog is now described as the public growable registry of
+  shareable resource kinds, with resource names as author-defined instance
+  handles and resource kinds as the stable class of shareable thing.
+- Runtime behavior is unchanged: `rule_slot` with `priority` arbitration is
+  the only shipped enforced kind today. The next active R14 frontier remains
+  `ISF-DATA-WIDTHS.4`.
+
 ## 2026-05-14: R14 — ISF extract width enforcement
 - Active R14 task-tree slice: `ISF-DATA-WIDTHS.3` is complete.
 - `extract` now follows the no-placeholder width policy: accepted source emits

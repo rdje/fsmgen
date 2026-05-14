@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF shareable resource registry clarification
+- Completed `ISF-RESOURCE-CATALOG.2` in
+  [docs/tasks/ISF-RESOURCE-CATALOG.md](docs/tasks/ISF-RESOURCE-CATALOG.md).
+- The ISF resource table is now described as the public growable registry of
+  shareable resource kinds. Resource names are author-defined instance
+  handles; resource kinds identify what type of hardware or scheduler-owned
+  domain is being shared.
+- The runtime boundary is unchanged: `rule_slot` with `priority` arbitration
+  is still the only shipped enforced kind, and the next active R14 frontier
+  remains `ISF-DATA-WIDTHS.4`.
 ## 2026-05-14: ISF extract width enforcement
 - Completed `ISF-DATA-WIDTHS.3` in
   [docs/tasks/ISF-DATA-WIDTHS.md](docs/tasks/ISF-DATA-WIDTHS.md).
