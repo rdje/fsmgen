@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: Book feature backlog consolidation
+- Added [docs/book/src/14-feature-backlog.md](docs/book/src/14-feature-backlog.md)
+  as the canonical mdBook list for user-visible features discussed as future
+  work, deferred, not fully shipped, or not yet fully frozen.
+- Added [docs/FEATURE_BACKLOG.md](docs/FEATURE_BACKLOG.md) as the repo-level
+  navigation pointer to that book chapter.
+- Updated the book summary, introduction, reference map, and local caveat
+  sections so scattered "not fully shipped yet" prose points back to the
+  consolidated backlog.
+- Maintenance rule: any new book/live-doc caveat of this kind must also add or
+  update the corresponding entry in the feature backlog chapter.
 ## 2026-05-14: R14 — feature-first ISF focus
 - R14 remains the active lane, but the near-term focus is now public-facing ISF
   feature addition rather than standalone public-interface stabilization.

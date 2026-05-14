@@ -181,7 +181,8 @@ Current backend truth:
 - VHDL: recognized by the CLI, but explicitly not implemented as a full backend
 
 So a VHDL request currently failing is not a mystery bug. It is the honest
-current boundary.
+current boundary. Full VHDL support is tracked in
+[Feature Backlog](14-feature-backlog.md).
 
 ## Explicitly Out Of Active Support
 

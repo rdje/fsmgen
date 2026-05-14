@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: feature backlog chapter
+- The book now has one canonical backlog chapter for deferred or not-fully
+  shipped user-visible features. This avoids the old pattern where limitation
+  notes were only embedded in local prose and easy to miss during planning.
+- Local chapters may still explain a limitation in context, but the backlog
+  chapter is the review surface for the whole set.
+- [docs/FEATURE_BACKLOG.md](docs/FEATURE_BACKLOG.md) intentionally stays a
+  pointer rather than a duplicate list; the mdBook chapter is the list to keep
+  current.
+- This supports the feature-first R14 direction: PNT can pick from an explicit
+  user-facing backlog while still preserving exact local semantics in the
+  owning chapters.
 ## 2026-05-14: R14 feature-first focus
 - ISF is now shifting from public-interface stabilization as the main activity
   to user-visible feature delivery as the main activity.

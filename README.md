@@ -41,12 +41,13 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 15. `docs/BIN_FSMGEN_IMPORT_TREE.md`: live `bin/fsmgen` import-tree and runtime-spine architecture snapshot.
 16. `docs/REGRESSION_CORPUS.md`: human-readable regression/support-accounting corpus companion.
 17. `docs/INTENT_CAPTURE_AXI_CASE_STUDY.md`: AXI intent-capture case-study notes for future high-level synthesis work.
-18. `CHANGES.md`: chronological technical changes.
-19. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
-20. `MEMORY.md`: continuity/handoff state.
-21. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
-22. `WARP.md`: repository-specific agent/development guidance.
-23. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
+18. `docs/FEATURE_BACKLOG.md`: pointer to the canonical mdBook feature backlog for deferred/not-fully-shipped user-visible work.
+19. `CHANGES.md`: chronological technical changes.
+20. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
+21. `MEMORY.md`: continuity/handoff state.
+22. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
+23. `WARP.md`: repository-specific agent/development guidance.
+24. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
 
 ## Documentation index (all `.md` files in this repo)
 - `README.md` — single entry point and navigation hub.
@@ -66,6 +67,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md` — live downstream-consumer API contract for ISF parser/scheduler surfaces.
 - `docs/REGRESSION_CORPUS.md` — human-readable companion to the machine-checked support and regression catalog.
 - `docs/INTENT_CAPTURE_AXI_CASE_STUDY.md` — AXI intent-capture case-study notes for future high-level synthesis work.
+- `docs/FEATURE_BACKLOG.md` — repo-level pointer to the canonical mdBook backlog for deferred/not-fully-shipped user-visible features.
 - `docs/VHDL_SCOPE.md` — scoped VHDL backend plan preserved for future horizon H5 reference.
 - `CHANGES.md` — persistent technical change history.
 - `DEVELOPMENT_NOTES.md` — architecture notes and engineering rationale.

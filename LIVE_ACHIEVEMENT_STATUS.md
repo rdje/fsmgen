@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: Book — feature backlog consolidation
+- Active docs slice: not-fully-shipped, deferred, future-work, and not-yet
+  frozen user-visible items now have one mdBook home:
+  [docs/book/src/14-feature-backlog.md](docs/book/src/14-feature-backlog.md).
+- [docs/FEATURE_BACKLOG.md](docs/FEATURE_BACKLOG.md) is the repo-level pointer
+  to that canonical book chapter.
+- Local caveat sections now point to the backlog, and future caveats of this
+  kind should update the backlog at the same time.
+
 ## 2026-05-14: R14 — feature-first ISF focus
 - Active roadmap direction changed: R14 should now prioritize public-facing
   ISF feature additions over standalone public-interface stabilization work.

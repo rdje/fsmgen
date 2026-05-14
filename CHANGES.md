@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### Book — feature backlog consolidation
+- Added a canonical mdBook feature backlog chapter for user-visible items
+  described elsewhere as future work, deferred, not fully shipped, or not yet
+  fully frozen.
+- Added a repo-level [docs/FEATURE_BACKLOG.md](docs/FEATURE_BACKLOG.md)
+  pointer and linked the backlog from the book summary, introduction,
+  reference map, and local caveat sections.
+- Captured the maintenance rule that future limitation prose in the book/live
+  docs must also be reflected in the backlog chapter.
 ### R14 — feature-first ISF focus
 - Updated the live R14 direction so public-facing ISF feature delivery is the
   primary near-term focus.

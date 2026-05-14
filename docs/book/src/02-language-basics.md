@@ -293,7 +293,8 @@ Constant-expression slots such as `+size`, `+params`, init/default metadata,
 and parameter/generic overrides fold before HDL generation. In those domains,
 division or modulo by zero is rejected before emission. Runtime RHS
 expressions with dynamic divisors are still emitted as AST/HDL expressions; the
-tool does not yet prove that every dynamic divisor is nonzero.
+tool does not yet prove that every dynamic divisor is nonzero. That analysis is
+tracked in [Feature Backlog](14-feature-backlog.md).
 
 Width inference tries to use exact evidence that is already present in the
 source. A slice such as `fifout[31:24]` proves that `fifout` is at least 32

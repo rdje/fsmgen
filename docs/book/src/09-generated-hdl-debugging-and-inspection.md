@@ -76,7 +76,8 @@ belong to a later dedicated hardening lane rather than this garbage-code gate.
 VHDL validation with GHDL is intentionally deferred until FSMGen has an active
 VHDL backend. The current regression gate is a focused SystemVerilog smoke,
 not yet a claim that every historical sample in `fsm/` is externally
-warning-clean.
+warning-clean. Both deferred items are tracked in
+[Feature Backlog](14-feature-backlog.md).
 
 The focused smoke currently includes `fsm/lte_dif_pmaster.fsm`, the MIPI
 byte-serial/timer examples that rely on inferred widths from slices,
@@ -288,4 +289,5 @@ The default emitted HDL story is still:
 - strong pre-generation validation
 
 The future structured/non-flattened generation discussion is real, but it is
-not the shipped default path today.
+not the shipped default path today. It is tracked in
+[Feature Backlog](14-feature-backlog.md).

@@ -3,7 +3,8 @@
 FSMGen compiles Lisp-like `.fsm` sources into synthesizable HDL.
 
 Today, the primary backend is SystemVerilog. Verilog compatibility exists, and
-explicit VHDL support is still intentionally not implemented yet.
+explicit VHDL support is still intentionally not implemented yet. That backend
+work is tracked in [Feature Backlog](14-feature-backlog.md).
 
 This book is the progressive front door for FSMGen:
 
@@ -111,4 +112,6 @@ The active `.fsm` surface already covers:
 - and typed extensions for explicit embedding hooks.
 
 Not every future direction is complete yet. When this book says “current
-support boundary,” it means the shipped, regression-backed boundary.
+support boundary,” it means the shipped, regression-backed boundary. The
+consolidated list of user-visible items that are future work, deferred, or not
+fully shipped is maintained in [Feature Backlog](14-feature-backlog.md).

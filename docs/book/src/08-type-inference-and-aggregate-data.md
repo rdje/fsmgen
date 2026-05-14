@@ -30,7 +30,8 @@ What is shipped today:
 - declared-type preservation through the live pipeline
 - aggregate-aware compatibility checks on the current live paths
 
-What is not fully shipped yet:
+The consolidated backlog for the following not-fully-shipped items is
+[Feature Backlog](14-feature-backlog.md). The type/aggregate highlights are:
 
 - “never declare scalar types unless you want to” across the whole language
 - broad automatic aggregate type growth from arbitrary usage
@@ -143,7 +144,8 @@ shape-incompatible writes fail before HDL emission.
 
 This is still deliberate and bounded. Broader inference-first aggregate growth
 without explicit declared anchors remains future work; the backend should
-never pretend a richer type surface is stable before it really is.
+never pretend a richer type surface is stable before it really is. The
+widening is tracked in [Feature Backlog](14-feature-backlog.md).
 
 ## SystemVerilog And VHDL Intent
 

@@ -22,4 +22,5 @@
   - [Composition](13f-composition.md)
   - [Rules and Priorities](13g-rules.md)
   - [Lowering Reference](13h-lowering-reference.md)
+- [Feature Backlog](14-feature-backlog.md)
 - [Reference Map](90-reference-map.md)

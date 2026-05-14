@@ -426,7 +426,8 @@ after package import resolution and before planning or HDL emission. Validated
 values survive into the composition plan and structural RTL IR, and the current
 Verilog-family backend lowers them to SystemVerilog `#(...)` instance
 parameters by packing aggregates into one literal. VHDL generic-map lowering is
-still a future backend follow-up.
+still a future backend follow-up tracked in
+[Feature Backlog](14-feature-backlog.md).
 
 Parameter/generic values on this path may also use bounded operator
 expressions such as `(+ WIDTH 1)`, `(* COUNT 2)`, or `(and MASK 8'hF0)`. Those
@@ -447,7 +448,8 @@ leaf widths must match, division or modulo by zero is rejected, and
 overflow/underflow outside that leaf width aborts before generation. Richer
 aggregate operators remain future work until the specific operator is defined
 for the operand aggregate types/shapes and the result can be validated before
-generation.
+generation. That widening is tracked in
+[Feature Backlog](14-feature-backlog.md).
 
 Generated `?fsmc` and `?dtc` children now use the same semantic override
 surface, but the declaration contract lives in the realized child source's

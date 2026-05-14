@@ -1558,7 +1558,9 @@ That means:
 - not yet promised as a permanently stable contract forever
 
 The active `R13` lane is where that public stabilization work is being
-graduated from useful internal seams into deliberate public contracts.
+graduated from useful internal seams into deliberate public contracts. The
+fully frozen embedding API item is tracked in
+[Feature Backlog](14-feature-backlog.md).
 
 The capability manifest's `semantic_exports` section now has that same
 bounded split too:
@@ -1618,6 +1620,8 @@ manifest now advertises supported-smoke, strict-supported, and expected-failure
 coverage for the bounded normalized semantic JSON surface. It also advertises
 the bounded typed-extension/context contract, the bounded sanitized composition
 report contract, and the bounded `HDLGenerator` result contract for in-process
+embedders. The full normalized semantic export remains tracked in
+[Feature Backlog](14-feature-backlog.md).
 embedders, while making clear that the raw result hash is not JSON-safe as a
 whole. It also advertises the optional external SystemVerilog validation lane:
 `--verify-hdl` / `--validate-hdl` writes generated `.sv` and then runs

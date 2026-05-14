@@ -113,7 +113,8 @@ leaf-by-leaf into one aggregate value before backend lowering. Arithmetic leaves
 are unsigned and fixed-width: each leaf width must match, division or modulo by
 zero is rejected, and overflow/underflow outside that leaf width aborts before
 generation. Richer aggregate operators remain future work until their
-type/shape/result contracts are explicit enough to validate before generation.
+type/shape/result contracts are explicit enough to validate before generation;
+that widening is tracked in [Feature Backlog](14-feature-backlog.md).
 
 Direct-root `+params` values may also reuse resolved semantic symbols:
 same-root constants, whole aggregate constant roots, enum members such as
@@ -481,7 +482,8 @@ What is shipped today:
 - direct-root typed aggregate signal member/list-item access in expressions
   and partial aggregate LHS writes on the SystemVerilog path
 
-What is still future work:
+These items are also tracked in the consolidated
+[Feature Backlog](14-feature-backlog.md):
 
 - broader inference-first typing so users need fewer explicit anchors
 - broader inference-first aggregate member/index typing without explicit

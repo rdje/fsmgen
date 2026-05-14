@@ -83,7 +83,7 @@ an invalid clause.
 Both synchronization forms have focused regressions.
 
 Full composition-top instantiation and spawn parameter binding are still
-deferred.
+deferred and tracked in [Feature Backlog](14-feature-backlog.md).
 
 ```lisp
 (parent_main_await_all_4

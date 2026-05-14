@@ -6,6 +6,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   feature from the documented limitation/backlog set. Standalone public
   interface stabilization/audit work is on hold for now; keep the public
   contract synchronized only as part of shipping each feature.
+- User-visible deferred/not-fully-shipped feature items now have a canonical
+  mdBook backlog at [docs/book/src/14-feature-backlog.md](docs/book/src/14-feature-backlog.md),
+  with [docs/FEATURE_BACKLOG.md](docs/FEATURE_BACKLOG.md) as the repo-level
+  pointer. New caveats of that kind should update the backlog chapter.
 - State-DT SystemVerilog output enables now apply the state DTE as a final
   boundary gate: selector predicates are factored without state decode, and
   emitted state-DT ENs are `state_en & selector_predicate` just before leaving
@@ -2642,6 +2646,9 @@ Done:
   - and [t/82-language-contract-state-dt-dte-guards.t](t/82-language-contract-state-dt-dte-guards.t)
     plus [t/206-enable-graph-enable-support.t](t/206-enable-graph-enable-support.t)
     prove repeated guards such as `<mode=3` are emitted once and reused.
+- The book now has a consolidated feature backlog chapter for not-fully
+  shipped/deferred user-visible work, and local caveat sections link back to
+  that chapter instead of leaving future-work lists stranded only in prose.
 Left:
 - Resolve the remaining gray-zone families, especially:
   - any remaining parser-accepted legacy constructs not yet cleanly bucketed.

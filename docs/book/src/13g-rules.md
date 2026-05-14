@@ -35,9 +35,10 @@ body-bearing `(when condition body...)` form is only described in
 Rule actions are structurally validated before the actor shell is returned.
 The current `(port value)` action accepts scalar values only; expression-valued
 rule assignments are deferred until the rule lowerer has a real expression
-path. `(trigger transaction)` must name a declared transaction in the same
-actor; forward references are accepted because validation happens after the
-full actor body is collected.
+path. That widening is tracked in [Feature Backlog](14-feature-backlog.md).
+`(trigger transaction)` must name a declared transaction in the same actor;
+forward references are accepted because validation happens after the full actor
+body is collected.
 
 **Lowering**: Non-state DT block with the rule guard emitted as the DT header
 DTE. The shorthand scalar guard and the long-form `(when ...)` guard both
@@ -139,7 +140,8 @@ Priority declarations are structurally validated as
 in the same actor; forward references are accepted. Priorities remain
 informational in the current scheduler.
 When two rules/transactions could drive the same output, priority resolution is
-still deferred rather than enforced.
+still deferred rather than enforced. The deferred enforcement work is tracked
+in [Feature Backlog](14-feature-backlog.md).
 
 ## Resources
 
@@ -156,4 +158,5 @@ Resource metadata is structurally validated by the parser, including supported
 arbiter names and duplicate resource rejection. `(resources ...)` is a
 singleton actor clause, so repeated resources blocks are rejected rather than
 merged or overwritten. Resource lowering is still deferred — resources are not
-yet enforced by the scheduler.
+yet enforced by the scheduler. The scheduler-enforced resource work is tracked
+in [Feature Backlog](14-feature-backlog.md).

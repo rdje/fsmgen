@@ -177,6 +177,10 @@ control-flow and data-operation states.
 
 ## Current Limitations
 
+The consolidated backlog for deferred user-visible work is
+[Feature Backlog](14-feature-backlog.md). The ISF-specific current
+limitations are:
+
 - `(do ...)` and `(spawn ...)` targets must resolve to declared same-actor
   transactions before scheduled `.fsm` emission. They bind named start/done
   signals in scheduled `.fsm`; composition-top instantiation and spawn
