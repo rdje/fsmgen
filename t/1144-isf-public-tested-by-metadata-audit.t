@@ -110,6 +110,7 @@ my $expected_tested_by = [
     't/1205-isf-switch-clause-boundary.t',
     't/1206-isf-when-clause-boundary.t',
     't/1209-isf-static-conflict-detection.t',
+    't/1210-isf-priority-conflict-resolution.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {

@@ -76,6 +76,26 @@ not prove that the rule guard and generated drive-start guard can or cannot be
 active together. Runtime selector conflict instrumentation is tracked as later
 verification work.
 
+Rule priority can resolve the supported rule/rule data-conflict case. If
+`high` has priority over `low` and both rules drive the same target to
+different values, the lowerer keeps `high` unchanged and suppresses `low`'s
+assignment whenever `high`'s rule condition is active:
+
+```lisp
+(-high <a
+  (<- (valid 1))
+)
+
+(-low <b
+  (<- (valid 0) <(! a))
+)
+```
+
+Priority is target-local here: it gates the conflicting assignment, not the
+whole lower-priority rule. Priority cycles fail closed with
+`isf_priority_cycle_conflict`, and incomparable conflicting rules still fail
+closed instead of being ordered by source text.
+
 ## Trigger Fan-In
 
 Shipped rule-trigger lowering preserves trigger provenance before transaction
@@ -137,10 +157,9 @@ With a single rule source, the generated fan-in assigns the source directly:
 ```
 
 Inline priority is accepted and structurally validated by the parser, then
-ignored by current lowering. The `other_rule` target must name a declared rule
-in the same actor; forward references are accepted. It does not resolve
-conflicting drives yet; unprioritized provable rule/rule data conflicts fail
-closed instead of being arbitrated by source order.
+used by current lowering for same-target rule/rule data conflicts. The
+`other_rule` target must name a declared rule in the same actor; forward
+references are accepted. It does not resolve rule/drive conflicts yet.
 
 ## Priorities
 
@@ -152,12 +171,11 @@ closed instead of being arbitrated by source order.
 
 Priority declarations are structurally validated as
 `(priority lhs over rhs)`. Both sides must name declared transactions or rules
-in the same actor; forward references are accepted. Priorities remain
-informational in the current scheduler.
-When two rules/transactions could drive the same output, priority resolution is
-still deferred rather than enforced; provable unprioritized rule/rule data
-conflicts fail closed. The deferred enforcement work is tracked in
-[Feature Backlog](14-feature-backlog.md).
+in the same actor; forward references are accepted. When both sides are rules,
+the edge can resolve same-target rule/rule data conflicts by suppressing the
+lower-priority assignment under the higher-priority rule condition.
+Transaction priority and broader resource arbitration are still deferred. The
+remaining enforcement work is tracked in [Feature Backlog](14-feature-backlog.md).
 
 ## Resources
 

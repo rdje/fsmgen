@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF rule priority conflict resolution
+- Completed `ISF-CONFLICTS.4.4` in
+  [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md).
+- Same-target rule/rule data conflicts can now be resolved by rule-local
+  `(priority over other_rule)` or actor-level `(priority high over low)` when
+  both endpoints are rules.
+- The lowerer suppresses the lower-priority assignment with the inverse
+  higher-priority rule condition, keeping priority target-local rather than
+  disabling the whole lower-priority rule.
+- Priority cycles fail closed with `isf_priority_cycle_conflict`; incomparable
+  conflicting rules still fail closed through the ordinary conflict diagnostic.
+- Public schedule-report JSON is unchanged. The active frontier is now
+  `ISF-CONFLICTS.4.5`.
 ## 2026-05-14: ISF static conflict checks
 - Completed `ISF-CONFLICTS.4.3` in
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md).

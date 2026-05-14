@@ -141,17 +141,19 @@ not yet enforce resources.
 
 ### Priority Resolution
 
-Status: backlog.
+Status: partially shipped; broader cases remain backlog.
 
 Goal: enforce actor-level and rule-local priorities when multiple rules or
 transactions conflict.
 
 Current boundary: priority declarations are structurally validated and targets
-must resolve to declared rules or transactions. Priority remains informational
-and is not yet enforced as arbitration policy. Provable unprioritized
-rule/rule data conflicts now fail closed, while rule/drive overlap is tracked
-because compile-time proof is not doable until priority, resource arbitration,
-or runtime selector instrumentation covers it.
+must resolve to declared rules or transactions. Same-target rule/rule data
+conflicts can now be resolved by rule-local or actor-level rule priority, with
+the lower-priority assignment guarded off by the higher-priority rule
+condition. Priority cycles and incomparable rule conflicts fail closed.
+Rule/drive overlap is still tracked because compile-time proof is not doable
+until priority/resource policy or runtime selector instrumentation covers it.
+Transaction priority and broader resource arbitration remain backlog items.
 
 ### Expression-Valued Rule Assignments
 

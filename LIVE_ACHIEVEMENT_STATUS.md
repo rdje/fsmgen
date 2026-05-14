@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF rule priority conflict resolution
+- Active R14 task-tree slice: `ISF-CONFLICTS.4.4` is complete.
+- Rule-local and actor-level rule priorities now resolve same-target rule/rule
+  data conflicts by guarding the lower-priority assignment with the inverse
+  higher-priority rule condition.
+- Priority cycles fail closed; incomparable rule/rule conflicts remain
+  rejected. Public schedule-report JSON is unchanged.
+- The next frontier is `ISF-CONFLICTS.4.5`.
+
 ## 2026-05-14: R14 — ISF static conflict checks
 - Active R14 task-tree slice: `ISF-CONFLICTS.4.3` is complete.
 - `LoweringIR` now derives internal `conflict_issues` from assignment

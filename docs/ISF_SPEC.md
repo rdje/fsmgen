@@ -629,6 +629,13 @@ Current lowering:
   remain accepted. Rule/drive overlap is tracked internally as
   `isf_unproven_rule_drive_overlap` with `proof_status => not_doable` because
   that compile-time proof is not doable in the current analysis.
+- Rule-local `(priority over other_rule)` and actor-level
+  `(priority high over low)` can resolve same-target rule/rule data conflicts
+  when the priority graph selects one winner for that target. The lowerer
+  suppresses the lower-priority rule assignment with the inverse of the
+  higher-priority rule condition. Priority cycles fail closed with
+  `isf_priority_cycle_conflict`; incomparable rules still fail closed through
+  the ordinary conflict diagnostic.
 - `(trigger transaction)` lowers as a `<1` one-cycle delayed pulse inside the
   guarded non-state DT to a generated per-rule/per-transaction source named
   `rule_transaction`, so a rule trigger is a pulse rather than a sticky
@@ -670,12 +677,15 @@ Multi-rule fan-in example:
 - Inline `(priority over other_rule)` is structurally validated by the parser,
   and `other_rule` must name a declared rule in the same actor. Forward
   references are accepted because the target check runs after the full actor
-  body is collected. Priority metadata is currently ignored by lowering.
+  body is collected. For same-target rule/rule data conflicts, lowering uses
+  this edge as target-local priority metadata.
 
 Separate `(priority lhs over rhs)` declarations are structurally validated by
 the parser, and both `lhs` and `rhs` must name declared transactions or rules
 in the same actor. Forward references are accepted. Actor-level priority
-metadata is not currently enforced as arbitration policy.
+metadata is enforced only for same-target rule/rule data conflicts when both
+targets are rules. Transaction priority and broader resource arbitration remain
+deferred.
 
 `(resources ...)` entries are structurally validated as
 `(resource name (arbiter priority|round_robin))`, with duplicate resource
@@ -920,6 +930,7 @@ Focused tests:
 - [t/1205-isf-switch-clause-boundary.t](../t/1205-isf-switch-clause-boundary.t)
 - [t/1206-isf-when-clause-boundary.t](../t/1206-isf-when-clause-boundary.t)
 - [t/1209-isf-static-conflict-detection.t](../t/1209-isf-static-conflict-detection.t)
+- [t/1210-isf-priority-conflict-resolution.t](../t/1210-isf-priority-conflict-resolution.t)
 
 ## 12. Explicitly Deferred
 
@@ -928,7 +939,8 @@ Focused tests:
 - The removed `(assign ...)` action keyword; authored transaction uses fail
   closed as unsupported transaction clauses.
 - Top-level child instantiation and spawn parameter binding.
-- Enforced resource arbitration and priority resolution.
+- Enforced resource arbitration and priority resolution beyond the currently
+  shipped same-target rule/rule data-conflict case.
 - Expression-valued rule assignment actions beyond scalar `(port value)`.
 - Full transaction `(stage ...)` valid/ready pipeline lowering. Authored
   transaction stage clauses currently fail closed during lowering.

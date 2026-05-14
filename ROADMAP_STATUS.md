@@ -13,9 +13,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree remains
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md),
-  whose current frontier is `ISF-CONFLICTS.4.4` after adding internal
-  best-effort conflict checks for provable rule/rule data conflicts and
-  rule/drive `not_doable` proof-status flags.
+  whose current frontier is `ISF-CONFLICTS.4.5` after adding target-local
+  priority resolution for same-target rule/rule data conflicts.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
   guide for installing the same task-tree tracking workflow in another
   project.
@@ -4354,8 +4353,8 @@ Left:
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the `ISF-CONFLICTS` task tree when selecting the ISF conflict-resolution
-  feature path; the current frontier is `ISF-CONFLICTS.4.4`, which applies
-  target-local priority resolution to supported conflict sets.
+  feature path; the current frontier is `ISF-CONFLICTS.4.5`, which adds
+  verification-only runtime selector conflict instrumentation.
 - ISF conflict detection policy is now split: compile-time proof is
   best-effort and must flag cases where proof is not doable, while
   verification-only runtime selector conflict instrumentation is tracked as a

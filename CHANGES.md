@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF rule priority conflict resolution
+- Completed `ISF-CONFLICTS.4.4` by applying target-local priority resolution
+  to same-target rule/rule data conflicts in
+  `FSM::Scheduler::ISF::LoweringIR`.
+- Rule-local and actor-level rule-priority edges now suppress lower-priority
+  conflicting assignments with the inverse higher-priority rule condition.
+- Priority cycles fail closed with `isf_priority_cycle_conflict`; incomparable
+  rule/rule conflicts still fail closed through `isf_conflicting_rule_writes`.
+- Added [t/1210-isf-priority-conflict-resolution.t](t/1210-isf-priority-conflict-resolution.t)
+  for rule-local priority, actor-level priority, scheduled `.fsm`/HDL
+  reachability, and cycle rejection.
+- Advanced the active `ISF-CONFLICTS` frontier from `ISF-CONFLICTS.4.4` to
+  `ISF-CONFLICTS.4.5`.
 ### R14 — ISF static conflict checks
 - Completed `ISF-CONFLICTS.4.3` by deriving internal `conflict_issues` from
   ISF assignment provenance in `FSM::Scheduler::ISF::LoweringIR`.

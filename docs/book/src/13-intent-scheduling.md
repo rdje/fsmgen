@@ -185,8 +185,10 @@ limitations are:
   transactions before scheduled `.fsm` emission. They bind named start/done
   signals in scheduled `.fsm`; composition-top instantiation and spawn
   parameter binding remain deferred.
-- `(resources ...)` and `(priority ...)` are structurally validated by the
-  parser but not enforced as arbitration policy.
+- `(resources ...)` is structurally validated by the parser but not enforced as
+  arbitration policy. `(priority ...)` is structurally validated and currently
+  enforced only for same-target rule/rule data conflicts; broader transaction
+  and resource arbitration remains deferred.
 - Deprecated `(handshake name (valid signal) (ready signal))` metadata is
   structurally validated and then ignored; direct `(on port ...)` activation
   plus generated `can_accept` is the current model.

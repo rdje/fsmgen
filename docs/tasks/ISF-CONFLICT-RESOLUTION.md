@@ -117,13 +117,13 @@ transaction start input.
   Commit: `ISF-CONFLICTS.4.3: add ISF static conflict checks`
 
 - ID: `ISF-CONFLICTS.4.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Apply target-local priority resolution for implemented conflict sets.`
   Acceptance: `Declared rule/actor priority can select one unique winner for a
   supported same-domain data conflict, while cycles, incomparable winners, and
   mixed timing operators fail closed.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `prove -l t/1144-isf-public-tested-by-metadata-audit.t t/1210-isf-priority-conflict-resolution.t; prove -l t/1209-isf-static-conflict-detection.t t/1210-isf-priority-conflict-resolution.t; bin/ci-regression isf --no-book; mdbook build docs/book; git diff --check`
+  Commit: `ISF-CONFLICTS.4.4: apply ISF rule priority resolution`
 
 - ID: `ISF-CONFLICTS.4.5`
   Status: `pending`
@@ -166,7 +166,7 @@ transaction start input.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-CONFLICTS.4.4` | `pending` | Static conflict detection now exists; the next executable slice applies declared target-local priority to supported conflict sets. |
+| 1 | `ISF-CONFLICTS.4.5` | `pending` | Priority resolution now covers same-target rule/rule data conflicts; the next executable slice adds verification-only runtime selector conflict instrumentation. |
 
 ## Current Behavior Inventory
 
@@ -524,6 +524,28 @@ The public schedule report still exposes successful `compile_issues` as an
 empty array. Public projection of conflict diagnostics belongs to
 `ISF-CONFLICTS.5`.
 
+## Target-Local Priority Resolution
+
+`ISF-CONFLICTS.4.4` ships the first enforced priority behavior for ISF
+conflicts:
+
+- Supported scope is same-target rule/rule data conflicts. Rule/drive,
+  transaction/transaction, resource, and mixed-domain arbitration remain
+  outside this leaf.
+- Rule-local `(priority over other_rule)` and actor-level
+  `(priority high over low)` both contribute rule-priority edges when both
+  endpoints are rules.
+- A higher-priority rule suppresses the lower-priority rule's conflicting
+  assignment by adding an assignment guard that negates the higher-priority
+  rule condition. The priority is target-local: unrelated assignments in the
+  lower-priority rule are not disabled.
+- Priority cycles fail closed with `isf_priority_cycle_conflict`.
+  Incomparable rule/rule conflicts still fail closed through the ordinary
+  `isf_conflicting_rule_writes` diagnostic.
+- Successful priority resolution changes the scheduled `.fsm` review artifact
+  but does not widen successful schedule-report JSON; `compile_issues` remains
+  an empty array on success.
+
 ## Decisions
 
 - `2026-05-14`: The conflict-resolution work will be tracked as a task tree
@@ -563,6 +585,10 @@ empty array. Public projection of conflict diagnostics belongs to
   `conflict_issues`: provable rule/rule data conflicts fail closed, while
   rule/drive overlap is flagged as `not_doable` until a later slice can prove
   or instrument it.
+- `2026-05-14`: `ISF-CONFLICTS.4.4` applies target-local priority resolution
+  to same-target rule/rule data conflicts by guarding lower-priority
+  assignments with the inverse higher-priority rule condition. Priority cycles
+  fail closed.
 
 ## Open Questions
 
@@ -601,6 +627,11 @@ empty array. Public projection of conflict diagnostics belongs to
 | `2026-05-14` | `ISF-CONFLICTS.4.3` | `prove -l t/1144-isf-public-tested-by-metadata-audit.t t/1209-isf-static-conflict-detection.t` | `passed` |
 | `2026-05-14` | `ISF-CONFLICTS.4.3` | `mdbook build docs/book` | `passed` |
 | `2026-05-14` | `ISF-CONFLICTS.4.3` | `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.4.4` | `prove -l t/1144-isf-public-tested-by-metadata-audit.t t/1207-isf-assignment-provenance-inventory.t t/1208-isf-compatible-fanin-classification.t t/1209-isf-static-conflict-detection.t t/1210-isf-priority-conflict-resolution.t` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.4.4` | `prove -l t/1209-isf-static-conflict-detection.t t/1210-isf-priority-conflict-resolution.t` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.4.4` | `bin/ci-regression isf --no-book` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.4.4` | `mdbook build docs/book` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.4.4` | `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -614,6 +645,7 @@ empty array. Public projection of conflict diagnostics belongs to
 | `ISF-CONFLICTS.4.1` | `ISF-CONFLICTS.4.1: add ISF assignment provenance` | Adds internal `LoweringIR` assignment provenance records and focused regression coverage. |
 | `ISF-CONFLICTS.4.2` | `ISF-CONFLICTS.4.2: classify ISF fan-in groups` | Adds internal compatible fan-in group classification from assignment provenance. |
 | `ISF-CONFLICTS.4.3` | `ISF-CONFLICTS.4.3: add ISF static conflict checks` | Adds internal best-effort conflict issues, rule/rule rejection, and rule/drive `not_doable` flags. |
+| `ISF-CONFLICTS.4.4` | `ISF-CONFLICTS.4.4: apply ISF rule priority resolution` | Adds target-local rule-priority suppression for same-target rule/rule data conflicts. |
 
 ## Changelog
 
@@ -635,3 +667,6 @@ empty array. Public projection of conflict diagnostics belongs to
   flags for cases where proof is not doable.
 - `2026-05-14`: Completed `ISF-CONFLICTS.4.3`; current frontier moves to
   `ISF-CONFLICTS.4.4` for target-local priority resolution.
+- `2026-05-14`: Completed `ISF-CONFLICTS.4.4`; current frontier moves to
+  `ISF-CONFLICTS.4.5` for verification-only runtime selector conflict
+  instrumentation.

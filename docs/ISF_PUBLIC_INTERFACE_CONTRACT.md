@@ -246,6 +246,10 @@ so provable incompatible rule/rule data writes fail closed, compatible
 same-value rule writes remain accepted, rule/drive overlap is flagged
 internally as `proof_status => not_doable`, and ordinary transaction state
 mux behavior remains accepted.
+The rule-priority conflict-resolution path is checked by
+[t/1210-isf-priority-conflict-resolution.t](../t/1210-isf-priority-conflict-resolution.t)
+so rule-local and actor-level rule priorities can suppress lower-priority
+same-target rule assignments, while priority cycles fail closed.
 The explicit-width `shift_right` data-operation path is checked by
 [t/1173-isf-shift-right-explicit-width.t](../t/1173-isf-shift-right-explicit-width.t)
 so authors can avoid the placeholder width fallback when a shifted register is
@@ -534,6 +538,10 @@ provable incompatible rule/rule writes to the same target fail closed, while
 rule/drive same-target overlap is marked internally because compile-time proof
 is not doable in that case. The successful public schedule-report shape is
 unchanged; `compile_issues` remains an empty array on success.
+For same-target rule/rule data conflicts, rule-local and actor-level priority
+edges can now select a target-local winner by guarding the lower-priority
+assignment with the inverse higher-priority rule condition. This changes the
+scheduled `.fsm` review artifact, not the successful schedule-report schema.
 The current public parser handoff also advertises a bounded drive-definition
 shell: `drives` is a hash of entries keyed by unique non-empty drive name, and
 each entry has unique scalar `params` and `body` arrays. Body entries are

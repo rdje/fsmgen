@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF rule priority conflict resolution
+- Priority resolution is intentionally target-local in its first shipped form.
+  A priority edge suppresses the lower-priority assignment that conflicts on a
+  target; it does not disable unrelated actions in the same lower-priority
+  rule.
+- The emitted scheduled `.fsm` expresses this as an assignment guard on the
+  lower-priority rule action, such as `<(! high_condition)`, while the rule's
+  own guard remains the non-state DT DTE.
+- Actor-level priority participates only when both endpoints are rules.
+  Transaction priorities and resource arbitration still need separate
+  semantics before they can rewrite scheduling.
+- Cycles are rejected before falling back to source order because a cycle means
+  the priority graph did not select a unique winner. Incomparable conflicting
+  rules remain fail-closed.
 ## 2026-05-14: ISF static conflict checks
 - Static conflict detection now consumes the same assignment provenance used
   for compatible fan-in classification. This keeps detection tied to emitted
