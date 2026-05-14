@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF schedule-report contract inventory
+- Active R14 task-tree slice: `ISF-SCHEDULE-REPORTS.1` is complete.
+- The schedule-report task tree now records the current bounded public report
+  shape, feature-owned branches, storage metadata, multi-file scope, and
+  non-frozen schema boundaries.
+- The next active R14 frontier is `ISF-SCHEDULE-REPORTS.2`.
+
 ## 2026-05-14: R14 — ISF data-width schedule-report closure
 - Active R14 task-tree slice: `ISF-DATA-WIDTHS.5` is complete, and the
   `ISF-DATA-WIDTHS` tree is closed.

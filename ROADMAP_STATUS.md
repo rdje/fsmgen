@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-SCHEDULE-REPORTS.md](docs/tasks/ISF-SCHEDULE-REPORTS.md),
-  whose current frontier is `ISF-SCHEDULE-REPORTS.1`. The completed
+  whose current frontier is `ISF-SCHEDULE-REPORTS.2`. The completed
   `ISF-DATA-WIDTHS`, `ISF-STAGES-CONTRACTS`, `ISF-RULE-ACTIONS`,
   `ISF-RESOURCE-CATALOG`, `ISF-RESOURCE-PRIORITY`, `ISF-CONFLICTS`, and
   `ISF-COMPOSITION` trees are listed in the task-tree completed table.
@@ -171,6 +171,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   and register storage with known ISF width evidence. The public contract,
   spec, mdBook, task tree, and focused storage-width regressions are
   synchronized. The active PNT frontier moves to `ISF-SCHEDULE-REPORTS.1`.
+- `ISF-SCHEDULE-REPORTS.1` is complete. The task tree now inventories the
+  current bounded schedule-report contract: top-level keys, nested key
+  families, storage metadata, feature-owned report branches, scalar/count
+  policies, multi-file scope, and non-frozen branches. The active frontier
+  advances to `ISF-SCHEDULE-REPORTS.2`.
 - ISF construct support now has a normative rule: parser acceptance is not a
   support claim. Every current or future shipped ISF construct must have an
   explicit accepted source shape, lowering path or fail-closed diagnostic,

@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF schedule-report contract inventory
+- Completed `ISF-SCHEDULE-REPORTS.1` by inventorying the current bounded
+  schedule-report contract before adding richer storage classes.
+- The task tree now records top-level keys, nested key families, current
+  storage metadata, feature-owned report branches, scalar/count policies,
+  parent-only multi-file scope, and branches that are bounded but not fully
+  frozen.
+- Advanced the active `ISF-SCHEDULE-REPORTS` frontier to
+  `ISF-SCHEDULE-REPORTS.2`.
 ### R14 — ISF data-width schedule-report closure
 - Completed `ISF-DATA-WIDTHS.5` and closed the data-width task tree.
 - Schedule reports now attach positive integer `width` metadata to inferred

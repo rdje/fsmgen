@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF schedule-report contract inventory
+- The schedule report is useful to downstream tools today, but the project
+  still treats it as bounded key families rather than a fully frozen schema.
+  The inventory makes that boundary explicit before richer storage classes
+  widen the report surface.
+- Feature-owned branches should stay tied to their originating semantics. This
+  tree can act as the schema index, but stage, contract, composition,
+  conflict, priority, and resource reports still need feature-local owners.
+- The next storage-class slice should avoid inventing classes from names alone.
+  Each richer class needs scheduler evidence, compatibility rules, and tests.
 ## 2026-05-14: ISF data-width schedule-report closure
 - Carrying `signal_widths` in LoweringIR keeps the schedule report tied to the
   same width facts used for lowering. The report does not recompute widths

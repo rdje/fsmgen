@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF schedule-report contract inventory
+- Completed `ISF-SCHEDULE-REPORTS.1` in
+  [docs/tasks/ISF-SCHEDULE-REPORTS.md](docs/tasks/ISF-SCHEDULE-REPORTS.md).
+- The task tree now inventories the current bounded schedule-report contract:
+  top-level keys, nested key families, storage metadata, feature-owned report
+  branches, scalar/count policies, multi-file scope, and non-frozen branches.
+- The next active R14 frontier is `ISF-SCHEDULE-REPORTS.2`.
 ## 2026-05-14: ISF data-width schedule-report closure
 - Completed `ISF-DATA-WIDTHS.5` and closed
   [docs/tasks/ISF-DATA-WIDTHS.md](docs/tasks/ISF-DATA-WIDTHS.md).
