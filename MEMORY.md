@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF shift/assemble width alignment
+- Completed `ISF-DATA-WIDTHS.4` in
+  [docs/tasks/ISF-DATA-WIDTHS.md](docs/tasks/ISF-DATA-WIDTHS.md).
+- `shift_right` now fails closed when register width evidence is missing or
+  conflicts with explicit `(width N)`; accepted shifts always use a concrete
+  inserted-bit position instead of a placeholder `WIDTH` expression.
+- `assemble` now rejects known target-width mismatches and uses fully known
+  part-width sums only as evidence. The next active R14 frontier is
+  `ISF-DATA-WIDTHS.5`.
 ## 2026-05-14: ISF shareable resource registry clarification
 - Completed `ISF-RESOURCE-CATALOG.2` in
   [docs/tasks/ISF-RESOURCE-CATALOG.md](docs/tasks/ISF-RESOURCE-CATALOG.md).

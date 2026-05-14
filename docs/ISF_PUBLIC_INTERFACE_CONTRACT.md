@@ -316,8 +316,10 @@ Verilog no-assertion boundary remain regression-backed after ISF lowers through
 scheduled `.fsm` into HDL.
 The explicit-width `shift_right` data-operation path is checked by
 [t/1173-isf-shift-right-explicit-width.t](../t/1173-isf-shift-right-explicit-width.t)
-so authors can avoid the placeholder width fallback when a shifted register is
-not declared elsewhere.
+so explicit `(width N)` fills otherwise missing register-width evidence,
+known-width shifts do not need the option, conflicting explicit widths fail
+closed, and accepted `shift_right` source no longer emits placeholder `WIDTH`
+terms.
 The explicit-width `extract` data-operation path is checked by
 [t/1174-isf-extract-explicit-widths.t](../t/1174-isf-extract-explicit-widths.t)
 so authors can avoid placeholder slice bounds when extract field widths are
@@ -458,7 +460,9 @@ scalar register/bit operands before scheduled `.fsm` emission.
 The assemble-clause boundary is checked by
 [t/1200-isf-assemble-clause-boundary.t](../t/1200-isf-assemble-clause-boundary.t)
 so `(assemble part... as target)` requires one or more scalar parts and one
-scalar target before scheduled `.fsm` emission.
+scalar target before scheduled `.fsm` emission. The same regression covers the
+width-evidence boundary: when all part widths are known, the derived sum must
+match any already-known target width.
 The extract-clause boundary is checked by
 [t/1201-isf-extract-clause-boundary.t](../t/1201-isf-extract-clause-boundary.t)
 so `(extract word as field... [(widths N...)])` requires one scalar source

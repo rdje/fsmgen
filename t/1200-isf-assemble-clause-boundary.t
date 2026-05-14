@@ -50,6 +50,23 @@ ISF
     like($fsm, qr/\(<- \(packet> \(concat header payload\)\)\)/, 'assemble lowers to concat assignment');
 };
 
+subtest 'assemble rejects target width mismatch when part widths are known' => sub {
+    assert_lower_rejected(<<'ISF', 'assemble target width mismatch', qr/assemble part widths sum 12 conflicts with known width 13 for 'packet'/);
+(actor assemble_width_mismatch
+  (clock clk)
+  (interface
+    (input start)
+    (input header (width 4))
+    (input payload (width 8))
+    (output packet (width 13))
+    (output done))
+  (transaction main
+    (on start)
+    (assemble header payload as packet)
+    (complete done)))
+ISF
+};
+
 subtest 'malformed assemble clauses fail before scheduled emission' => sub {
     assert_lower_rejected(<<'ISF', 'assemble without parts', qr/\Aassemble requires '\(assemble part\.\.\. as target\)'/);
 (actor assemble_without_parts

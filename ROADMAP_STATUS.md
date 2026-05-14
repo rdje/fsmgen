@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-DATA-WIDTHS.md](docs/tasks/ISF-DATA-WIDTHS.md),
-  whose current frontier is `ISF-DATA-WIDTHS.4`. The completed
+  whose current frontier is `ISF-DATA-WIDTHS.5`. The completed
   `ISF-STAGES-CONTRACTS`, `ISF-RULE-ACTIONS`, `ISF-RESOURCE-CATALOG`,
   `ISF-RESOURCE-PRIORITY`, `ISF-CONFLICTS`, and `ISF-COMPOSITION` trees are
   listed in the task-tree completed table.
@@ -68,7 +68,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   table the current shareable resource registry, explicitly separate
   author-defined resource names from registry resource kinds, and preserve the
   shipped/backlog boundary. This does not change the active R14 frontier,
-  which remains `ISF-DATA-WIDTHS.4`.
+  which is now `ISF-DATA-WIDTHS.5` after the data-width implementation slice.
 - `ISF-RULE-ACTIONS.1` is complete. The rule-action task tree now inventories
   the current scalar-only parser surface, malformed diagnostics, lowering
   behavior, schedule-report/storage metadata, and conflict touchpoints. The
@@ -160,6 +160,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   source/field width-total disagreement, and keeps existing explicit width
   conflict checks. The active frontier advances to `ISF-DATA-WIDTHS.4` to
   align the remaining covered data-operation families.
+- `ISF-DATA-WIDTHS.4` is complete. `shift_right` now uses known or explicit
+  width evidence as an assertion, fails closed when width evidence is missing
+  or contradictory, and no longer emits placeholder `WIDTH` terms for accepted
+  source. `assemble` now rejects known target-width mismatches while leaving
+  unknown part widths as non-evidence concat operands. The active frontier
+  advances to `ISF-DATA-WIDTHS.5`.
 - ISF construct support now has a normative rule: parser acceptance is not a
   support claim. Every current or future shipped ISF construct must have an
   explicit accepted source shape, lowering path or fail-closed diagnostic,

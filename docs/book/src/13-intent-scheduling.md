@@ -264,8 +264,13 @@ limitations are:
   targets must resolve to a declared transaction in the same actor before
   parser handoff returns.
 - `(shift_right ...)` accepts an explicit `(width N)` option when the shifted
-  register width is not declared elsewhere; values with no known or explicit
-  width still use the placeholder `WIDTH` expression.
+  register width is not declared elsewhere. The option is an assertion and
+  must agree with any known register width. Values with no known or explicit
+  width now fail closed instead of emitting a placeholder `WIDTH` expression.
+- `(assemble ...)` derives target width only when every part width is known
+  and rejects disagreement with an already-known target width. Unknown part
+  widths may still lower as a reviewable concat expression, but they are not
+  used as target-width evidence.
 - `(extract ...)` accepts an ordered `(widths N...)` option when field widths
   are not declared elsewhere. Accepted `extract` source now emits exact
   descending slices only; unknown field widths or source/field width

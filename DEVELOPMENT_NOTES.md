@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF shift and assemble width alignment
+- Removing the `shift_right` placeholder is a behavioral cleanup, not just a
+  cosmetic one. A generated `(- WIDTH 1)` term leaves the scheduled `.fsm`
+  underconstrained; failing at ISF lowering forces the author to provide an
+  interface width or an explicit assertion.
+- `assemble` target-width checking follows the same no-silent-override rule as
+  the other width evidence paths. A known target width and a known part-width
+  sum are both static facts; disagreement is a design inconsistency.
+- Unknown `assemble` part widths remain accepted because the emitted concat is
+  still reviewable and does not need slice positions. Those unknown parts are
+  deliberately not promoted to target-width evidence.
 ## 2026-05-14: ISF shareable resource registry clarification
 - The resource catalog should read as a public registry, not as a loose list of
   examples. That makes future additions reviewable: adding a kind is a public

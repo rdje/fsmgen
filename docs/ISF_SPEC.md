@@ -567,15 +567,17 @@ Current lowering:
   `(shift_right reg bit [(width N)])` with scalar `reg` and scalar `bit`, then
   emits a right shift plus inserted bit. When the shifted signal has a known
   interface, sampled-source, assemble-inferred, or explicit `(width N)` width,
-  the insert position uses that width; unknown-width values still fall back to
-  the placeholder width expression. The current explicit option is a local
-  lowering override; conflict policy with an already-known register width is
-  deferred.
+  the insert position uses that width. Unknown-width values now fail closed
+  before scheduled `.fsm` emission instead of emitting a placeholder `WIDTH`
+  expression. Explicit `(width N)` is an assertion: it may fill missing width
+  evidence, but it must match any already-known width for the shifted register.
 - `assemble` is structurally validated as `(assemble part... as target)` with
   one or more scalar parts and one scalar target, then emits a concat
   expression into the target variable. The private width map infers the target
-  width as the sum of known part widths, but today it does not reject a
-  mismatch with an already-known target width.
+  width as the sum of known part widths. When every part width is known and
+  the target already has a known width, the sum must match the target width or
+  lowering fails closed. Unknown part widths may still be accepted for the
+  reviewable concat expression, but they are not used as width evidence.
 - `extract` is structurally validated as
   `(extract word as field... [(widths N...)])` with one scalar source word and
   one or more scalar destination fields. It emits one extraction state. When
@@ -604,13 +606,14 @@ already-known facts for the same name. Once an operation family is migrated by
 the data-width tree, that family must fail closed instead of emitting
 `WIDTH`, `HIGH`, or `LOW` placeholders for accepted source.
 
-The first migrated family is `extract`: exact slice lowering is accepted only
-when all field positions can be proven from source-word width, field widths,
-explicit `(widths N...)`, or inherited width facts. It fails when a field
-width remains unknown, when explicit field widths conflict with known facts, or
-when the sum of field widths disagrees with a known source word width.
-`shift_right` and `assemble` remain to be aligned to the same
-explicit-width-as-assertion and no-silent-override policy.
+The migrated data-operation families now follow that rule. `extract` accepts
+only exact descending slices and fails when field widths are unknown, explicit
+field widths conflict with known facts, or the sum of field widths disagrees
+with a known source word width. `shift_right` uses a concrete insert position
+from known or explicit width evidence and fails when width evidence is missing
+or contradictory. `assemble` derives a target width only from fully known part
+widths and rejects known target-width mismatches. `shift_left` does not need
+separate width evidence for its insertion position.
 
 ## 8. Composition Between Transactions
 
@@ -1325,8 +1328,7 @@ Focused tests:
 - Temporal `(contract ...)` forms beyond the shipped top-level bounded
   eventual subset.
 - Rich storage-class optimization in schedule reports.
-- Remaining data-width work for `shift_right` values that do not use a known
-  signal width or explicit `(width N)`, plus `assemble` target-width conflict
-  diagnostics and public data-register width reporting.
+- Public data-register width reporting in schedule JSON for ordinary
+  data-operation targets.
 - Treating the schedule JSON as a fully frozen public schema beyond the bounded
   key families advertised by `embedding.isf_public_interface`.

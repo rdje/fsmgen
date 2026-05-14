@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF shift and assemble width alignment
+- Active R14 task-tree slice: `ISF-DATA-WIDTHS.4` is complete.
+- `shift_right` now uses known or explicit width evidence and fails closed for
+  missing or contradictory width facts instead of emitting placeholder
+  `WIDTH` expressions.
+- `assemble` now rejects known target-width mismatches while allowing unknown
+  part widths only as non-evidence concat operands.
+- The next active R14 frontier is `ISF-DATA-WIDTHS.5`.
+
 ## 2026-05-14: R14 — ISF shareable resource registry clarification
 - Active R14 task-tree slice: `ISF-RESOURCE-CATALOG.2` is complete.
 - The ISF resource catalog is now described as the public growable registry of

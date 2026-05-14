@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF shift and assemble width alignment
+- Completed `ISF-DATA-WIDTHS.4` by migrating `shift_right` away from the
+  placeholder `WIDTH` fallback and adding `assemble` target-width conflict
+  checks.
+- `shift_right` now treats explicit `(width N)` as an assertion, rejects
+  conflicts with known register width, and fails closed when neither known nor
+  explicit width evidence exists.
+- `assemble` now derives target width only from fully known part widths and
+  rejects disagreement with an already-known target width. `shift_left`
+  remains aligned without additional code because it does not need insertion
+  position width evidence.
 ### R14 — ISF shareable resource registry clarification
 - Completed `ISF-RESOURCE-CATALOG.2` by tightening the public wording around
   the growable ISF shareable-resource registry.

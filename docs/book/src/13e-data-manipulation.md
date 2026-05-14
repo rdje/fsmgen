@@ -60,10 +60,10 @@ positive integer width when the option is present.
 
 Known interface, sampled-source, assemble-inferred, and explicit `(width N)`
 widths use a concrete insert position. If the shifted value has no known width
-and no explicit width option, the current implementation falls back to the
-placeholder `WIDTH` expression. An explicit `(width N)` is used by the local
-`shift_right` expression; conflict policy with an already-known register width
-is still backlog work.
+and no explicit width option, lowering fails before scheduled `.fsm` emission
+instead of emitting a placeholder `WIDTH` expression. An explicit `(width N)`
+is an assertion: it may fill missing width evidence, but it must match any
+already-known width for the shifted register.
 
 ## `(assemble field1 field2 ... as var)` — Concatenation
 
@@ -87,6 +87,11 @@ and scalar target `var`.
 ```lisp
 (assemble cmd addr data as spi_frame)
 ```
+
+When every part width is known, `assemble` derives the target width from the
+part-width sum. If the target already has a known width, the sum must match it.
+Unknown part widths may still lower to the reviewable concat expression, but
+they are not used as target-width evidence.
 
 ## `(extract word as field1 field2 ... [(widths N...)])` — Field Extraction
 
@@ -127,7 +132,7 @@ known. This is type/shape evidence, not cycle-value evidence, so it is not
 source-order-sensitive inside the transaction.
 
 Today this evidence is used to avoid `WIDTH`, `HIGH`, and `LOW` placeholders
-where the existing rules can prove positions. It is not yet a public
+for accepted migrated data operations. It is not yet a public
 data-register width report: schedule reports still classify ordinary
 data-operation targets as `register` storage without a `width` field.
 
@@ -138,11 +143,11 @@ counter families. Explicit width options are assertions, not silent casts: they
 may fill an unknown width, but they must agree with any existing width fact for
 the same name.
 
-As each operation family is migrated, accepted source should not emit
-`WIDTH`, `HIGH`, or `LOW` placeholders. `extract` is the first migrated family:
-unknown field positions and source/field width disagreement now produce
-targeted diagnostics before scheduled `.fsm` emission. The remaining
-shift/assemble cases still need to be aligned to the same policy.
+Accepted migrated operation families do not emit `WIDTH`, `HIGH`, or `LOW`
+placeholders. `extract` fails when field positions cannot be proven.
+`shift_right` fails when the shifted register width is missing or
+contradictory. `assemble` rejects known target-width mismatches. `shift_left`
+does not need separate insertion-position width evidence.
 
 ## I2C Shift Register — Complete Example
 

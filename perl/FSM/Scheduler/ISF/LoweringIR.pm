@@ -473,9 +473,12 @@ sub _collect_data_widths {
         my ($target, @parts) = _parse_assemble_clause($node);
         my $total = 0;
         for my $part (@parts) {
-            return unless exists $widths->{$part};
+            return unless exists($widths->{$part}) && $widths->{$part} > 0;
             $total += $widths->{$part};
         }
+        my $known_width = $widths->{$target};
+        confess "assemble part widths sum $total conflicts with known width $known_width for '$target'\n"
+            if defined($known_width) && $known_width > 0 && $known_width != $total;
         $widths->{$target} = $total if $total > 0;
     }
 
@@ -491,8 +494,11 @@ sub _collect_shift_widths {
     if (@$node >= 4 && $node->[0] eq 'shift_right') {
         my $explicit_width = _parse_shift_right_width($node);
         my $target = $node->[1];
-        if (defined($explicit_width) && defined($target) && !ref($target) && !exists $widths->{$target}) {
-            $widths->{$target} = $explicit_width;
+        if (defined($explicit_width) && defined($target) && !ref($target)) {
+            my $known_width = $widths->{$target};
+            confess "shift_right explicit width $explicit_width conflicts with known width $known_width for '$target'\n"
+                if defined($known_width) && $known_width > 0 && $known_width != $explicit_width;
+            $widths->{$target} = $explicit_width unless defined($known_width) && $known_width > 0;
         }
     }
 
@@ -1326,11 +1332,19 @@ sub _ir_shift_right {
     my $reg = $cl->[1];
     my $bit = $cl->[2];
     my $explicit_width = _parse_shift_right_width($cl);
-    my $insert = defined($explicit_width)
-        ? $explicit_width - 1
-        : (defined($widths->{$reg}) && $widths->{$reg} > 0)
-            ? $widths->{$reg} - 1
-            : '(- WIDTH 1)';
+    my $known_width = $widths->{$reg};
+
+    confess "shift_right explicit width $explicit_width conflicts with known width $known_width for '$reg'\n"
+        if defined($explicit_width)
+            && defined($known_width)
+            && $known_width > 0
+            && $explicit_width != $known_width;
+
+    my $width = defined($explicit_width) ? $explicit_width : $known_width;
+    confess "shift_right width for '$reg' is unknown; add an interface width or '(width N)' option\n"
+        unless defined($width) && $width > 0;
+
+    my $insert = $width - 1;
 
     return {
         name        => "${tn}_shift_$i",

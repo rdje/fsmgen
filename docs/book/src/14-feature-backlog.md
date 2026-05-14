@@ -310,14 +310,16 @@ Current boundary: authored uses fail closed as unsupported transaction clauses.
 
 Status: backlog.
 
-Goal: infer widths for `extract` and `shift_right` in more cases without
-requiring explicit width options.
+Goal: infer widths for data operations in more cases without requiring
+explicit width options, and keep accepted lowering free of width placeholders.
 
 Current boundary: `shift_right` accepts `(width N)` and `extract` accepts
-`(widths N...)` as explicit anchors. `extract` now fails closed instead of
+`(widths N...)` as explicit assertions. `extract` now fails closed instead of
 emitting placeholder slice bounds when field positions cannot be proven or
-field totals conflict with known source width. Unknown-width `shift_right`
-still uses the placeholder width expression until that family is migrated.
+field totals conflict with known source width. `shift_right` now fails closed
+when width evidence is missing or conflicts with an explicit option.
+`assemble` now rejects known target-width mismatches, while unknown part
+widths remain accepted only as non-evidence concat operands.
 
 ### Richer Schedule-Report Storage Classes
 

@@ -349,8 +349,9 @@ scheduler's implicit fallthrough branch.
 **Implicit signals**: None (operates on existing variables).
 For `shift_right`, known signal widths are used for the inserted MSB position;
 an explicit `(width N)` option supplies that width when the register is not
-declared elsewhere. Unknown widths still fall back to the placeholder width
-expression.
+declared elsewhere. The option is an assertion and must agree with any known
+register width. Unknown widths fail closed instead of emitting the placeholder
+`WIDTH` expression.
 
 ## `(assemble fields... as var)` / `(extract word as fields... [(widths N...)])` → Sequential State
 
@@ -368,6 +369,11 @@ expression.
 
 **Timing**: 1 cycle.
 **Implicit signals**: None.
+
+When all `assemble` part widths are known, the target width is derived from
+their sum. If the target already has a known width, the sum must match it.
+Unknown part widths may still lower as a reviewable concat expression, but
+they do not become target-width evidence.
 
 Current `extract` lowering emits exact descending slices when the source word
 and destination field widths are known. An ordered `(widths N...)` option can

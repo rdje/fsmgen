@@ -75,12 +75,15 @@ neighboring operations.
   Commit: `ISF-DATA-WIDTHS.3: enforce exact extract widths`
 
 - ID: `ISF-DATA-WIDTHS.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Extend inference across remaining covered data operations.`
   Acceptance: `The agreed extract, shift_right, shift_left, and assemble
   cases share the documented width-evidence model.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`;
+  `prove -l t/1173-isf-shift-right-explicit-width.t t/1200-isf-assemble-clause-boundary.t t/1099-isf-repeat-data-ops.t t/1199-isf-shift-clause-boundary.t`;
+  `./bin/ci-regression isf --no-book`; `mdbook build docs/book`;
+  `git diff --check`
+  Commit: `ISF-DATA-WIDTHS.4: align shift and assemble widths`
 
 - ID: `ISF-DATA-WIDTHS.5`
   Status: `pending`
@@ -94,7 +97,7 @@ neighboring operations.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-DATA-WIDTHS.4` | `pending` | Remaining covered operation families should now be aligned to the same width-evidence policy. |
+| 1 | `ISF-DATA-WIDTHS.5` | `pending` | Schedule-report storage metadata and synchronized docs should close the data-width tree. |
 
 ## ISF-DATA-WIDTHS.1 Inventory
 
@@ -221,9 +224,10 @@ Failure and fallback policy:
   sources when practical.
 - Explicit width options are not force-casts. They document author intent and
   fill gaps, but they do not silently override declarations or derived facts.
-- Compatibility placeholder behavior may remain temporarily for operation
-  families that have not yet been migrated by `ISF-DATA-WIDTHS.3` or
-  `ISF-DATA-WIDTHS.4`, but that boundary must stay documented until removed.
+- The covered data-operation families migrated by `ISF-DATA-WIDTHS.3` and
+  `ISF-DATA-WIDTHS.4` no longer emit `WIDTH`, `HIGH`, or `LOW` placeholders
+  for accepted source. Any future compatibility placeholder must be attached
+  to a named deferred subcase before it is allowed.
 
 Operation-specific policy:
 
@@ -236,11 +240,11 @@ Operation-specific policy:
 - `extract` must fail when a known source word width disagrees with the sum of
   field widths, when any field width remains unknown after the evidence pass,
   or when explicit field widths conflict with known facts.
-- `shift_right` should later use the same explicit-width-as-assertion policy:
-  explicit `(width N)` can fill an unknown register width, but must not
-  disagree with known register width. Unknown register width without explicit
-  width should fail after the family is migrated.
-- `assemble` should derive target width only when all part widths are known.
+- `shift_right` uses the same explicit-width-as-assertion policy: explicit
+  `(width N)` can fill an unknown register width, but must not disagree with
+  known register width. Unknown register width without explicit width now
+  fails closed.
+- `assemble` derives target width only when all part widths are known.
   If target width is already known, the part sum must match it. Unknown part
   widths may remain deferred if the emitted concat can still be reviewed, but
   they cannot be used as evidence for neighboring operations.
@@ -278,10 +282,29 @@ Shipped behavior:
 
 Deferred to later leaves or backlog:
 
-- `shift_right` still needs the explicit-width-as-assertion policy and
-  unknown-width fail-closed behavior.
-- `assemble` still needs target-width conflict detection and clearer policy
-  for unknown part widths.
+- Public schedule-report width metadata for ordinary data registers remains
+  deferred to `ISF-DATA-WIDTHS.5`.
+
+## ISF-DATA-WIDTHS.4 Shift/Assemble Implementation
+
+Shipped behavior:
+
+- `shift_right` now uses the same explicit-width-as-assertion policy as
+  `extract`: `(width N)` may fill missing register-width evidence, but it must
+  match any already-known register width.
+- Accepted `shift_right` source always emits a concrete inserted-bit position.
+  Unknown register width now fails closed with a targeted diagnostic instead
+  of emitting `(- WIDTH 1)`.
+- `assemble` now derives its target width only when every part width is known.
+  If the target already has a known width, the part-width sum must match it.
+- Unknown `assemble` part widths can still lower to the reviewable concat
+  expression, but they are not used as target-width evidence.
+- `shift_left` remains aligned by construction: it does not need a width fact
+  to choose an insertion position and keeps using the existing shifted
+  expression shape.
+
+Deferred to later leaves or backlog:
+
 - Public schedule-report width metadata for ordinary data registers remains
   deferred to `ISF-DATA-WIDTHS.5`.
 
@@ -295,11 +318,16 @@ Deferred to later leaves or backlog:
 - `2026-05-14`: `extract` is the first implementation family because it owns
   the most visible placeholder fallback (`HIGH`/`LOW`) and already has
   explicit width validation hooks.
+- `2026-05-14`: `shift_right` should fail closed instead of preserving the
+  placeholder `WIDTH` fallback once the family is migrated. `assemble` should
+  reject known target-width mismatch but still allow reviewable concat lowering
+  when part widths are genuinely unknown and not used as evidence.
 
 ## Open Questions
 
-- None for the current frontier. `ISF-DATA-WIDTHS.3` should implement the
-  `extract` policy above before widening to other operation families.
+- None for the current frontier. `ISF-DATA-WIDTHS.5` should add public
+  schedule-report storage width metadata and close the tree if no new
+  implementation gaps are discovered.
 
 ## Blockers
 
@@ -313,6 +341,7 @@ Deferred to later leaves or backlog:
 | `2026-05-14` | `ISF-DATA-WIDTHS.1` | `prove -l t/1099-isf-repeat-data-ops.t t/1101-isf-extract-slices.t t/1111-isf-sample-before-data-ops.t t/1173-isf-shift-right-explicit-width.t t/1174-isf-extract-explicit-widths.t t/1199-isf-shift-clause-boundary.t t/1200-isf-assemble-clause-boundary.t t/1201-isf-extract-clause-boundary.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-DATA-WIDTHS.2` | `prove -l t/1099-isf-repeat-data-ops.t t/1101-isf-extract-slices.t t/1111-isf-sample-before-data-ops.t t/1173-isf-shift-right-explicit-width.t t/1174-isf-extract-explicit-widths.t t/1199-isf-shift-clause-boundary.t t/1200-isf-assemble-clause-boundary.t t/1201-isf-extract-clause-boundary.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-DATA-WIDTHS.3` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -l t/1101-isf-extract-slices.t t/1111-isf-sample-before-data-ops.t t/1174-isf-extract-explicit-widths.t t/1201-isf-extract-clause-boundary.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-DATA-WIDTHS.4` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -l t/1173-isf-shift-right-explicit-width.t t/1200-isf-assemble-clause-boundary.t t/1099-isf-repeat-data-ops.t t/1199-isf-shift-clause-boundary.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -322,6 +351,7 @@ Deferred to later leaves or backlog:
 | `ISF-DATA-WIDTHS.1` | `ISF-DATA-WIDTHS.1: inventory data width behavior` | Current width sources, fallbacks, and report effects. |
 | `ISF-DATA-WIDTHS.2` | `ISF-DATA-WIDTHS.2: specify width evidence policy` | Width precedence and first implementation target. |
 | `ISF-DATA-WIDTHS.3` | `ISF-DATA-WIDTHS.3: enforce exact extract widths` | First migrated data-operation family. |
+| `ISF-DATA-WIDTHS.4` | `ISF-DATA-WIDTHS.4: align shift and assemble widths` | Remaining covered data-operation families aligned to the width policy. |
 
 ## Changelog
 
@@ -334,3 +364,7 @@ Deferred to later leaves or backlog:
 - `2026-05-14`: Implemented exact-width `extract` lowering and fail-closed
   diagnostics for unknown field widths and source/field width mismatches;
   advanced the frontier to `ISF-DATA-WIDTHS.4`.
+- `2026-05-14`: Migrated `shift_right` away from placeholder `WIDTH`
+  fallback, added explicit-width conflict diagnostics, added `assemble`
+  target-width mismatch diagnostics, and advanced the frontier to
+  `ISF-DATA-WIDTHS.5`.
