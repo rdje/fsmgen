@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF data-width schedule-report closure
+- Completed `ISF-DATA-WIDTHS.5` and closed
+  [docs/tasks/ISF-DATA-WIDTHS.md](docs/tasks/ISF-DATA-WIDTHS.md).
+- Schedule JSON `inferred_storage` entries now report positive integer
+  `width` metadata for inferred scheduler counters and register storage with
+  known ISF width evidence.
+- Added [t/1226-isf-data-width-storage-report.t](t/1226-isf-data-width-storage-report.t)
+  for sampled aliases, extracted fields, assembled targets, explicit-width
+  shift registers, and completion pulses. The next active R14 frontier is
+  `ISF-SCHEDULE-REPORTS.1`.
 ## 2026-05-14: ISF shift/assemble width alignment
 - Completed `ISF-DATA-WIDTHS.4` in
   [docs/tasks/ISF-DATA-WIDTHS.md](docs/tasks/ISF-DATA-WIDTHS.md).

@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-DATA-WIDTHS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-14`
 - Last updated: `2026-05-14`
@@ -39,7 +39,7 @@ neighboring operations.
 ## Task Tree
 
 - ID: `ISF-DATA-WIDTHS`
-  Status: `active`
+  Status: `done`
   Goal: `Ship safer and broader ISF data-operation width inference.`
   Children: `ISF-DATA-WIDTHS.1`, `ISF-DATA-WIDTHS.2`,
   `ISF-DATA-WIDTHS.3`, `ISF-DATA-WIDTHS.4`, `ISF-DATA-WIDTHS.5`
@@ -86,18 +86,23 @@ neighboring operations.
   Commit: `ISF-DATA-WIDTHS.4: align shift and assemble widths`
 
 - ID: `ISF-DATA-WIDTHS.5`
-  Status: `pending`
+  Status: `done`
   Goal: `Add reports, tests, and synchronized docs.`
   Acceptance: `Schedule-report storage, focused regressions, ISF spec, public
   contract, mdBook, and live docs describe the shipped width behavior.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`;
+  `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`;
+  `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`;
+  `prove -l t/1106-isf-schedule-json-counter-storage.t t/1148-isf-public-storage-metadata-audit.t t/1226-isf-data-width-storage-report.t t/1116-isf-public-schedule-report-key-family-audit.t t/1144-isf-public-tested-by-metadata-audit.t`;
+  `./bin/ci-regression isf --no-book`; `mdbook build docs/book`;
+  `git diff --check`
+  Commit: `ISF-DATA-WIDTHS.5: report data storage widths`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-DATA-WIDTHS.5` | `pending` | Schedule-report storage metadata and synchronized docs should close the data-width tree. |
+| - | - | `closed` | `ISF-DATA-WIDTHS.5` completed the schedule-report width metadata slice and closed the tree. |
 
 ## ISF-DATA-WIDTHS.1 Inventory
 
@@ -179,7 +184,7 @@ Current fallback and underconstrained behavior:
 - `assemble` does not currently reject a concat part-total width that
   disagrees with an already-known or declared target width.
 
-Current schedule-report storage effects:
+Historical schedule-report storage effects before `ISF-DATA-WIDTHS.5`:
 
 - Data-operation targets appear in `inferred_storage` when their emitted
   assignment is sequential (`<-`, `<=`, or `<1`).
@@ -189,7 +194,8 @@ Current schedule-report storage effects:
   target also belongs to a generated scheduler counter family.
 - Generated repeat/watchdog/counter families still report widths through the
   existing counter-width path; this tree should avoid conflating that shipped
-  counter reporting with future data-register width reporting.
+  counter reporting with the later `ISF-DATA-WIDTHS.5` data-register width
+  reporting surface.
 
 ## ISF-DATA-WIDTHS.2 Width Policy
 
@@ -211,7 +217,7 @@ Precedence and conflict policy:
 | 2 | Operation-local explicit option | Author assertion for that operation, such as `shift_right (width N)` or `extract (widths N...)`. It may fill an unknown width, but it must match any existing fact for the same named signal. |
 | 3 | Alias propagation | `(sample source as alias)` copies `source` width to `alias` when known. It must not override an existing different `alias` width. |
 | 4 | Structural derivation | `assemble` part sums and `extract` field/source sums can derive missing widths only when all required operands are known. They must agree with already-known facts. |
-| 5 | Generated scheduler storage | Repeat/watchdog/contract counters keep their existing generated-width path. This is not a reason to expose ordinary data-register widths until `ISF-DATA-WIDTHS.5`. |
+| 5 | Generated scheduler storage | Repeat/watchdog/contract counters keep their existing generated-width path. Ordinary register storage also reports a width once a migrated ISF width fact is known. |
 
 Failure and fallback policy:
 
@@ -257,9 +263,10 @@ Deferred policy details:
 - Broad aggregate/record width inference remains outside this tree.
 - Signedness, truncation, extension, and explicit cast semantics remain
   separate language-surface work.
-- Public schedule-report width metadata for ordinary data registers is
-  deferred to `ISF-DATA-WIDTHS.5` after implementation proves which width facts
-  are stable enough to advertise.
+- Public schedule-report width metadata for ordinary data registers is now
+  shipped for known ISF width facts. Richer storage classes, broad aggregate
+  inference, signedness, truncation, extension, and explicit cast semantics
+  remain separate work.
 
 ## ISF-DATA-WIDTHS.3 Extract Implementation
 
@@ -282,8 +289,8 @@ Shipped behavior:
 
 Deferred to later leaves or backlog:
 
-- Public schedule-report width metadata for ordinary data registers remains
-  deferred to `ISF-DATA-WIDTHS.5`.
+- Richer storage classes beyond `counter` and `register` remain outside this
+  data-width tree.
 
 ## ISF-DATA-WIDTHS.4 Shift/Assemble Implementation
 
@@ -305,8 +312,30 @@ Shipped behavior:
 
 Deferred to later leaves or backlog:
 
-- Public schedule-report width metadata for ordinary data registers remains
-  deferred to `ISF-DATA-WIDTHS.5`.
+- Richer storage classes beyond `counter` and `register` remain outside this
+  data-width tree.
+
+## ISF-DATA-WIDTHS.5 Report Width Metadata
+
+Shipped behavior:
+
+- Lowering IR now carries the transaction-local width evidence map into the
+  module IR as `signal_widths`, merging non-spawned parent transactions and
+  preserving child transaction widths for generated child modules.
+- Schedule JSON `inferred_storage` entries now attach positive integer
+  `width` metadata to inferred scheduler counters and to register storage with
+  known ISF width evidence.
+- Data-operation storage widths are regression-covered for sampled aliases,
+  extracted fields, assembled targets, explicit-width shift registers, and
+  completion pulses.
+- The report transaction grouper now recognizes `_ext_` extract state names,
+  avoiding unclassified transaction states in extract-bearing schedule reports.
+
+Deferred to later leaves or backlog:
+
+- Richer storage classes beyond `counter` and `register` remain backlog.
+- The schedule JSON still advertises bounded key families rather than a fully
+  frozen schema.
 
 ## Decisions
 
@@ -322,12 +351,13 @@ Deferred to later leaves or backlog:
   placeholder `WIDTH` fallback once the family is migrated. `assemble` should
   reject known target-width mismatch but still allow reviewable concat lowering
   when part widths are genuinely unknown and not used as evidence.
+- `2026-05-14`: `inferred_storage.width` is now public for register storage
+  only when ISF has a positive known width fact. The report still keeps
+  storage kind bounded to `counter` and `register`.
 
 ## Open Questions
 
-- None for the current frontier. `ISF-DATA-WIDTHS.5` should add public
-  schedule-report storage width metadata and close the tree if no new
-  implementation gaps are discovered.
+- None. The tree is closed.
 
 ## Blockers
 
@@ -342,6 +372,7 @@ Deferred to later leaves or backlog:
 | `2026-05-14` | `ISF-DATA-WIDTHS.2` | `prove -l t/1099-isf-repeat-data-ops.t t/1101-isf-extract-slices.t t/1111-isf-sample-before-data-ops.t t/1173-isf-shift-right-explicit-width.t t/1174-isf-extract-explicit-widths.t t/1199-isf-shift-clause-boundary.t t/1200-isf-assemble-clause-boundary.t t/1201-isf-extract-clause-boundary.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-DATA-WIDTHS.3` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -l t/1101-isf-extract-slices.t t/1111-isf-sample-before-data-ops.t t/1174-isf-extract-explicit-widths.t t/1201-isf-extract-clause-boundary.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-DATA-WIDTHS.4` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -l t/1173-isf-shift-right-explicit-width.t t/1200-isf-assemble-clause-boundary.t t/1099-isf-repeat-data-ops.t t/1199-isf-shift-clause-boundary.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-DATA-WIDTHS.5` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -l t/1106-isf-schedule-json-counter-storage.t t/1148-isf-public-storage-metadata-audit.t t/1226-isf-data-width-storage-report.t t/1116-isf-public-schedule-report-key-family-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -352,6 +383,7 @@ Deferred to later leaves or backlog:
 | `ISF-DATA-WIDTHS.2` | `ISF-DATA-WIDTHS.2: specify width evidence policy` | Width precedence and first implementation target. |
 | `ISF-DATA-WIDTHS.3` | `ISF-DATA-WIDTHS.3: enforce exact extract widths` | First migrated data-operation family. |
 | `ISF-DATA-WIDTHS.4` | `ISF-DATA-WIDTHS.4: align shift and assemble widths` | Remaining covered data-operation families aligned to the width policy. |
+| `ISF-DATA-WIDTHS.5` | `ISF-DATA-WIDTHS.5: report data storage widths` | Public schedule-report width metadata for known ordinary register storage. |
 
 ## Changelog
 
@@ -368,3 +400,6 @@ Deferred to later leaves or backlog:
   fallback, added explicit-width conflict diagnostics, added `assemble`
   target-width mismatch diagnostics, and advanced the frontier to
   `ISF-DATA-WIDTHS.5`.
+- `2026-05-14`: Added schedule-report width metadata for register storage with
+  known ISF width evidence, synchronized the public contract/book/spec/live
+  docs, and closed the tree.

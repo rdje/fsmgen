@@ -12,11 +12,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   frontier. The ongoing/unresolved R14 ISF objective families are now covered
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
-  [docs/tasks/ISF-DATA-WIDTHS.md](docs/tasks/ISF-DATA-WIDTHS.md),
-  whose current frontier is `ISF-DATA-WIDTHS.5`. The completed
-  `ISF-STAGES-CONTRACTS`, `ISF-RULE-ACTIONS`, `ISF-RESOURCE-CATALOG`,
-  `ISF-RESOURCE-PRIORITY`, `ISF-CONFLICTS`, and `ISF-COMPOSITION` trees are
-  listed in the task-tree completed table.
+  [docs/tasks/ISF-SCHEDULE-REPORTS.md](docs/tasks/ISF-SCHEDULE-REPORTS.md),
+  whose current frontier is `ISF-SCHEDULE-REPORTS.1`. The completed
+  `ISF-DATA-WIDTHS`, `ISF-STAGES-CONTRACTS`, `ISF-RULE-ACTIONS`,
+  `ISF-RESOURCE-CATALOG`, `ISF-RESOURCE-PRIORITY`, `ISF-CONFLICTS`, and
+  `ISF-COMPOSITION` trees are listed in the task-tree completed table.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
   guide for installing the same task-tree tracking workflow in another
   project.
@@ -68,7 +68,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   table the current shareable resource registry, explicitly separate
   author-defined resource names from registry resource kinds, and preserve the
   shipped/backlog boundary. This does not change the active R14 frontier,
-  which is now `ISF-DATA-WIDTHS.5` after the data-width implementation slice.
+  which is now `ISF-SCHEDULE-REPORTS.1` after the data-width tree closure.
 - `ISF-RULE-ACTIONS.1` is complete. The rule-action task tree now inventories
   the current scalar-only parser surface, malformed diagnostics, lowering
   behavior, schedule-report/storage metadata, and conflict touchpoints. The
@@ -166,6 +166,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   source. `assemble` now rejects known target-width mismatches while leaving
   unknown part widths as non-evidence concat operands. The active frontier
   advances to `ISF-DATA-WIDTHS.5`.
+- `ISF-DATA-WIDTHS.5` is complete and the tree is closed. Schedule reports
+  now attach positive integer `width` metadata to inferred scheduler counters
+  and register storage with known ISF width evidence. The public contract,
+  spec, mdBook, task tree, and focused storage-width regressions are
+  synchronized. The active PNT frontier moves to `ISF-SCHEDULE-REPORTS.1`.
 - ISF construct support now has a normative rule: parser acceptance is not a
   support claim. Every current or future shipped ISF construct must have an
   explicit accepted source shape, lowering path or fail-closed diagnostic,

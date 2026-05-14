@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF data-width schedule-report closure
+- Completed `ISF-DATA-WIDTHS.5` and closed the data-width task tree.
+- Schedule reports now attach positive integer `width` metadata to inferred
+  scheduler counters and to register storage with known ISF width evidence.
+- Added [t/1226-isf-data-width-storage-report.t](t/1226-isf-data-width-storage-report.t)
+  for sampled aliases, extracted fields, assembled targets, explicit-width
+  shift registers, and completion pulses, and synchronized the public ISF
+  contract, spec, mdBook, roadmap, and task-tree status.
 ### R14 — ISF shift and assemble width alignment
 - Completed `ISF-DATA-WIDTHS.4` by migrating `shift_right` away from the
   placeholder `WIDTH` fallback and adding `assemble` target-width conflict

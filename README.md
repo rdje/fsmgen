@@ -68,7 +68,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-RESOURCE-CATALOG.md` — completed `R14` task tree for the shareable resource kind registry.
 - `docs/tasks/ISF-RULE-ACTIONS.md` — completed `R14` task tree for expression-valued rule assignments.
 - `docs/tasks/ISF-STAGES-CONTRACTS.md` — completed `R14` task tree for transaction stages and temporal contracts.
-- `docs/tasks/ISF-DATA-WIDTHS.md` — active `R14` task tree for data-operation width inference.
+- `docs/tasks/ISF-DATA-WIDTHS.md` — completed `R14` task tree for data-operation width inference.
 - `docs/tasks/ISF-SCHEDULE-REPORTS.md` — active `R14` task tree for schedule-report storage classes and schema stabilization.
 - `docs/tasks/ISF-FIXTURE-COVERAGE.md` — active `R14` task tree for realistic fixtures and strict-mode coverage.
 - `docs/tasks/ISF-COMPATIBILITY-SURFACE.md` — active `R14` task tree for legacy handshake and removed assign compatibility policy.

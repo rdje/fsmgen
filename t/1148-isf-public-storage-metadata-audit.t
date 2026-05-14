@@ -62,7 +62,6 @@ subtest 'APB schedule report inferred storage follows advertised metadata' => su
         ok($kind{$entry->{kind}}, "storage '$entry->{name}' kind '$entry->{kind}' is advertised");
         if (exists $entry->{width}) {
             $width_entries++;
-            is($entry->{kind}, 'counter', "storage '$entry->{name}' width currently belongs to a counter");
             like($entry->{width}, qr/\A[1-9][0-9]*\z/, "storage '$entry->{name}' width is a positive integer");
         }
     }
@@ -71,8 +70,10 @@ subtest 'APB schedule report inferred storage follows advertised metadata' => su
     ok($done, 'APB report exposes completion done storage');
     is($done->{kind}, 'register', 'completion pulse storage is reported through the register kind')
         if $done;
+    is($done->{width}, 1, 'completion pulse storage reports its known one-bit width')
+        if $done;
 
-    ok($width_entries > 0, 'APB report includes width-bearing inferred counters');
+    ok($width_entries > 0, 'APB report includes width-bearing inferred storage entries');
 };
 
 done_testing();

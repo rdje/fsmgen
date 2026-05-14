@@ -111,7 +111,10 @@ direct and manifest views and checked against generated JSON.
 The inferred-storage metadata is checked by
 [t/1148-isf-public-storage-metadata-audit.t](../t/1148-isf-public-storage-metadata-audit.t)
 to keep advertised storage `kind` values and optional `width` shape exact
-across direct and manifest views.
+across direct and manifest views. Data-operation storage widths are checked by
+[t/1226-isf-data-width-storage-report.t](../t/1226-isf-data-width-storage-report.t)
+for sampled aliases, extracted fields, assembled targets, explicit-width
+shift registers, and completion pulses.
 The transaction-summary metadata is checked by
 [t/1149-isf-public-transaction-metadata-audit.t](../t/1149-isf-public-transaction-metadata-audit.t)
 to keep transaction `states` and `count` shapes exact across direct and
@@ -865,8 +868,9 @@ through `schedule_report_dt_kind_values`.
 
 For each `inferred_storage` entry, `kind` is currently one of `counter` or
 `register`. Optional `width` values are positive integer bit widths when
-present, and are currently present for inferred scheduler counters. The
-machine-readable contract advertises these through
+present, and are currently present for inferred scheduler counters plus
+register storage with known ISF width evidence. The machine-readable contract
+advertises these through
 `schedule_report_storage_kind_values` and `schedule_report_storage_width_shape`.
 
 For each `transactions` entry, `states` is an array of scheduled state names

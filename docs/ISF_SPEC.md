@@ -593,9 +593,9 @@ declarations seed it, sampled aliases inherit known source widths, explicit
 `shift_right` and `extract` options add local evidence, and `assemble` can
 infer target width from known parts. The evidence is collected from the whole
 transaction clause tree before scheduled state emission, so it is not
-source-order-sensitive. Schedule reports do not yet expose ordinary
-data-operation target widths; those targets are reported as register storage
-without a `width` field unless they also belong to a generated counter family.
+source-order-sensitive. Schedule reports expose positive integer `width`
+metadata for inferred scheduler counters and for register storage whose ISF
+width evidence is known.
 
 Planned width-evidence precedence for this tree is: actor interface
 declaration, operation-local explicit option, sampled-alias propagation,
@@ -1328,7 +1328,7 @@ Focused tests:
 - Temporal `(contract ...)` forms beyond the shipped top-level bounded
   eventual subset.
 - Rich storage-class optimization in schedule reports.
-- Public data-register width reporting in schedule JSON for ordinary
-  data-operation targets.
+- Broad aggregate/record width inference beyond the explicitly documented ISF
+  data-operation evidence model.
 - Treating the schedule JSON as a fully frozen public schema beyond the bounded
   key families advertised by `embedding.isf_public_interface`.

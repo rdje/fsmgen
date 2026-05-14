@@ -56,6 +56,7 @@ sub _storage_summary($self, $ir) {
     my @storage;
     my %seen;
     my %counter_widths = %{$ir->{counters} || {}};
+    my %signal_widths = %{$ir->{signal_widths} || {}};
 
     for my $s (@{$ir->{states}}) {
         for my $a (@{$s->{assignments}}) {
@@ -69,10 +70,15 @@ sub _storage_summary($self, $ir) {
                 };
                 next;
             }
-            push @storage, {
+            my %entry = (
                 name  => $a->{lhs},
                 kind  => _is_clocked_register_op($a->{op}) ? 'register' : 'counter',
-            };
+            );
+            $entry{width} = $signal_widths{$a->{lhs}}
+                if $entry{kind} eq 'register'
+                    && exists($signal_widths{$a->{lhs}})
+                    && $signal_widths{$a->{lhs}} > 0;
+            push @storage, \%entry;
         }
     }
 
@@ -83,7 +89,8 @@ sub _storage_summary($self, $ir) {
 
         my $kind = $contract_kind // 'counter';
         my %entry = (name => $name, kind => $kind);
-        $entry{width} = $counter_widths{$name} if $kind eq 'counter';
+        $entry{width} = $counter_widths{$name}
+            if defined($counter_widths{$name}) && $counter_widths{$name} > 0;
         push @storage, \%entry;
     }
 
@@ -111,7 +118,7 @@ sub _transaction_summary($self, $ir) {
 
     # Group states by transaction prefix
     for my $s (@{$ir->{states}}) {
-        my ($tx_name) = ($s->{name} =~ /^(\w+?)_(?:idle|drive|await|done|repeat|sample|max_chk|when|switch|update|shift|asm|extract|do|spawn|phase|stage|contract)_/);
+        my ($tx_name) = ($s->{name} =~ /^(\w+?)_(?:idle|drive|await|done|repeat|sample|max_chk|when|switch|update|shift|asm|ext|extract|do|spawn|phase|stage|contract)_/);
         ($tx_name) = ($s->{name} =~ /^(\w+)_timeout$/) unless $tx_name;
         push @{$tx_states{$tx_name}}, $s->{name};
     }

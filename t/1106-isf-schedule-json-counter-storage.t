@@ -38,7 +38,7 @@ subtest 'schedule JSON reports assigned counters with inferred widths' => sub {
 
     my $last_error = entry_by_name($storage, 'last_error');
     is($last_error->{kind}, 'register', 'ordinary flopped output remains register storage');
-    ok(!exists $last_error->{width}, 'ordinary register storage does not borrow a counter width');
+    is($last_error->{width}, 1, 'ordinary register storage reports its known width');
 };
 
 done_testing();

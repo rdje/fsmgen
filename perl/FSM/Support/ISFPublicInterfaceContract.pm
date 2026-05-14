@@ -329,6 +329,7 @@ sub build_isf_public_interface_contract {
             't/1223-isf-stage-lowering.t',
             't/1224-isf-contract-lowering.t',
             't/1225-isf-stage-contract-schedule-report.t',
+            't/1226-isf-data-width-storage-report.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -918,7 +919,7 @@ sub isf_public_interface_schedule_report_storage_kind_values {
 }
 
 sub isf_public_interface_schedule_report_storage_width_shape {
-    return 'positive integer bit width when present; currently present for inferred scheduler counters';
+    return 'positive integer bit width when present; currently present for inferred scheduler counters and register storage with known ISF width evidence';
 }
 
 sub isf_public_interface_schedule_report_transaction_keys {

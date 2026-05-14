@@ -320,6 +320,8 @@ field totals conflict with known source width. `shift_right` now fails closed
 when width evidence is missing or conflicts with an explicit option.
 `assemble` now rejects known target-width mismatches, while unknown part
 widths remain accepted only as non-evidence concat operands.
+Schedule reports now expose positive integer `width` metadata for inferred
+scheduler counters and register storage with known ISF width evidence.
 
 ### Richer Schedule-Report Storage Classes
 
@@ -327,8 +329,10 @@ Status: backlog.
 
 Goal: classify inferred storage more precisely in schedule reports.
 
-Current boundary: schedule reports expose bounded storage metadata, but rich
-storage-class optimization is not shipped.
+Current boundary: schedule reports expose bounded storage metadata with
+optional positive integer widths when width evidence is known. Richer
+storage-class optimization, such as more precise classes than `counter` and
+`register`, is not shipped.
 
 ### Fully Frozen Schedule JSON Schema
 

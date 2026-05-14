@@ -64,7 +64,7 @@ sub build_module($self, $actor) {
 # --- Child IR (separate module) ---
 
 sub _build_child_ir($self, $tx, $actor, $cname) {
-    my ($states, $ctrs, $dts, $do_children, $spawn_refs, $contracts) =
+    my ($states, $ctrs, $dts, $do_children, $spawn_refs, $contracts, $signal_widths) =
         $self->_build_transaction($tx, $actor, 0);
     $states = [@$states]; $ctrs = { %$ctrs }; $dts = [@$dts];
 
@@ -83,6 +83,7 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
         states     => $states,
         dt_blocks  => $dts,
         counters   => $ctrs,
+        signal_widths => { %{$signal_widths || {}} },
         children   => {},
         temporal_contracts => $contracts,
     };
@@ -125,6 +126,7 @@ sub _build_parent_ir($self, $actor, $spawned) {
     my @dts;
     my @spawn_instances;
     my @temporal_contracts;
+    my %signal_widths;
     my %local_drive_uses;
     my %spawn_drive_sources;
     my %transaction_by_name = map { $_->{name} => $_ } @{$actor->{transactions} || []};
@@ -132,7 +134,8 @@ sub _build_parent_ir($self, $actor, $spawned) {
 
     for my $tx (@{$actor->{transactions}}) {
         next if $spawned->{$tx->{name}};
-        my ($ss, $cs, $ds, $do, $sp, $contracts) = $self->_build_transaction($tx, $actor, $ti++);
+        my ($ss, $cs, $ds, $do, $sp, $contracts, $widths) = $self->_build_transaction($tx, $actor, $ti++);
+        _merge_signal_widths(\%signal_widths, $widths, $tx->{name});
         my %tx_drive_uses = _collect_named_drive_call_names($tx->{clauses}, $actor->{drives} || {});
         $local_drive_uses{$_} = 1 for keys %tx_drive_uses;
         push @states, @$ss;
@@ -225,6 +228,7 @@ sub _build_parent_ir($self, $actor, $spawned) {
         states     => \@states,
         dt_blocks  => \@dts,
         counters   => \%ctrs,
+        signal_widths => \%signal_widths,
         children   => {},
         spawn_instances => \@spawn_instances,
         temporal_contracts => \@temporal_contracts,
@@ -740,7 +744,20 @@ sub _build_transaction($self, $tx, $actor, $txi) {
     _link_states(\@st, $tn);
     $ct{can_accept} = 1;
     for my $s (@st) { next unless $s->{kind} eq 'entry'; unshift @{$s->{assignments}}, { lhs => 'can_accept', rhs => 1, op => '=' }; }
-    return (\@st, \%ct, \@dt, \@doc, \@spc, \@contracts);
+    return (\@st, \%ct, \@dt, \@doc, \@spc, \@contracts, { %{$widths || {}} });
+}
+
+sub _merge_signal_widths {
+    my ($merged, $widths, $transaction) = @_;
+    return unless ref($widths) eq 'HASH';
+
+    for my $name (sort keys %$widths) {
+        my $width = $widths->{$name};
+        next unless defined($width) && $width > 0;
+        confess "signal width for '$name' conflicts across transactions while merging '$transaction'\n"
+            if defined($merged->{$name}) && $merged->{$name} > 0 && $merged->{$name} != $width;
+        $merged->{$name} = $width;
+    }
 }
 
 sub _validate_supported_transaction_clauses {

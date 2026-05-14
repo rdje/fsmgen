@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF data-width schedule-report closure
+- Carrying `signal_widths` in LoweringIR keeps the schedule report tied to the
+  same width facts used for lowering. The report does not recompute widths
+  from emitted `.fsm` text.
+- Register `width` remains optional because not every register-like storage
+  name has stable ISF width evidence yet. When the evidence exists, publishing
+  it is useful for downstream consumers and consistent with existing counter
+  width reporting.
+- The storage kind vocabulary remains deliberately small: `counter` and
+  `register`. Richer storage classes are separate schedule-report work, not a
+  reason to keep known widths private.
 ## 2026-05-14: ISF shift and assemble width alignment
 - Removing the `shift_right` placeholder is a behavioral cleanup, not just a
   cosmetic one. A generated `(- WIDTH 1)` term leaves the scheduled `.fsm`

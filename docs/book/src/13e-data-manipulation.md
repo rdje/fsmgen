@@ -132,9 +132,9 @@ known. This is type/shape evidence, not cycle-value evidence, so it is not
 source-order-sensitive inside the transaction.
 
 Today this evidence is used to avoid `WIDTH`, `HIGH`, and `LOW` placeholders
-for accepted migrated data operations. It is not yet a public
-data-register width report: schedule reports still classify ordinary
-data-operation targets as `register` storage without a `width` field.
+for accepted migrated data operations. Schedule reports expose positive
+integer `width` metadata for inferred scheduler counters and for register
+storage whose ISF width evidence is known.
 
 The planned precedence for this tree is declaration first, then explicit
 operation-local width options, sampled-alias propagation, structural derivation

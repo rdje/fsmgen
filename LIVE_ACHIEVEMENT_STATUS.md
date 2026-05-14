@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF data-width schedule-report closure
+- Active R14 task-tree slice: `ISF-DATA-WIDTHS.5` is complete, and the
+  `ISF-DATA-WIDTHS` tree is closed.
+- Schedule JSON `inferred_storage` now reports positive integer `width`
+  metadata for inferred scheduler counters and register storage with known ISF
+  width evidence.
+- The new storage-width regression covers sampled aliases, extracted fields,
+  assembled targets, explicit-width shift registers, and completion pulses.
+- The next active R14 frontier is `ISF-SCHEDULE-REPORTS.1`.
+
 ## 2026-05-14: R14 — ISF shift and assemble width alignment
 - Active R14 task-tree slice: `ISF-DATA-WIDTHS.4` is complete.
 - `shift_right` now uses known or explicit width evidence and fails closed for
