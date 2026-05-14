@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF task-tree requirement
+- Updated [docs/TASK_TREE.md](docs/TASK_TREE.md) so all `R14` / ISF work is
+  task-tree-managed by default.
+- Recorded that every ISF task, slice, or PNT-selected activity must attach to
+  an active ISF task tree or create a new `docs/tasks/*.md` tree before
+  implementation, including small documentation-only or diagnostics-only
+  changes.
+- Reflected the requirement in [ROADMAP_STATUS.md](ROADMAP_STATUS.md),
+  [COMMIT.md](COMMIT.md), [MEMORY.md](MEMORY.md),
+  [DEVELOPMENT_NOTES.md](DEVELOPMENT_NOTES.md), and
+  [LIVE_ACHIEVEMENT_STATUS.md](LIVE_ACHIEVEMENT_STATUS.md).
 ### Workflow — repo-local task tree formalization
 - Added [docs/TASK_TREE.md](docs/TASK_TREE.md) as the canonical repo-local
   task-tree workflow, including stable ID rules, status vocabulary,

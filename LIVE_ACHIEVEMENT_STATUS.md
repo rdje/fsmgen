@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF task-tree requirement
+- Active R14 workflow rule: every ISF task, slice, or PNT-selected activity
+  must be sliced and logged in a task tree before implementation.
+- Existing ISF trees should be reused when they own the topic; otherwise create
+  a new `docs/tasks/*.md` tree from [docs/tasks/TEMPLATE.md](docs/tasks/TEMPLATE.md).
+- This applies to implementation, diagnostics, fixtures, contracts, and
+  documentation-only ISF changes.
+
 ## 2026-05-14: Workflow — repo-local task tree formalization
 - Active workflow slice: broad tasks can now be tracked as repo-local task
   trees with stable node IDs, current-frontier leaf selection, blocker rules,

@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: R14 ISF task-tree requirement
+- [docs/TASK_TREE.md](docs/TASK_TREE.md) now states that all `R14` / ISF work
+  is task-tree-managed by default.
+- Every ISF task, slice, or PNT-selected activity must be attached to an
+  existing active ISF task tree or create a new `docs/tasks/*.md` tree before
+  implementation.
+- Small ISF documentation-only or diagnostics-only changes still need a tree
+  entry; a one-leaf tree is acceptable when the work is truly small.
+- [COMMIT.md](COMMIT.md) now treats missing task-tree ownership for new ISF
+  work as a stop condition before implementation.
 ## 2026-05-14: Repo-local task tree workflow
 - Added [docs/TASK_TREE.md](docs/TASK_TREE.md) as the repo-local workflow for
   tracking broad tasks as recursive task trees with stable IDs, explicit

@@ -22,6 +22,27 @@ evidence for one top-level task.
 | --- | --- | --- | --- | --- |
 | `ISF-CONFLICTS` | `active` | `R14` | `ISF-CONFLICTS.1` | [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md) |
 
+## ISF Task-Tree Rule
+
+All ISF work under `R14` is task-tree-managed by default.
+
+Before implementing any ISF task, slice, or PNT-selected activity:
+
+- Attach it to an existing active ISF task tree, or create a new
+  `docs/tasks/*.md` tree from [docs/tasks/TEMPLATE.md](docs/tasks/TEMPLATE.md).
+- Slice the work into executable leaf nodes before changing scheduler,
+  parser, emitter, contract, fixture, or book content.
+- Put only executable leaf nodes in the tree's current frontier.
+- Implement one frontier leaf at a time.
+- Update the owning task file when the leaf status, blocker, decision,
+  validation evidence, or completion evidence changes.
+- Run the full [COMMIT.md](COMMIT.md) workflow after each completed leaf before
+  selecting another ISF leaf.
+
+Small ISF documentation-only or diagnostics-only changes still need a tree
+entry. If the change is genuinely small, the tree can contain one leaf, but the
+task must still be visible in the task-tree ledger before implementation.
+
 ## Directory Layout
 
 ```text

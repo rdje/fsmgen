@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF work is task-tree-managed
+- `R14` is still new enough that apparently small requests often expose
+  policy, lowering, diagnostics, public-contract, fixture, and book follow-up
+  work. Treating every ISF task as task-tree-managed keeps those branches
+  visible before implementation starts.
+- The rule applies even to small ISF doc or diagnostic changes. If the change
+  is one honest slice, the owning task tree can have one executable leaf, but
+  the work should not be invisible to the tree ledger.
+- This does not mean every ISF task needs a large plan. It means every ISF
+  task needs a stable ID, an owning task file, a current-frontier leaf, and
+  completion evidence tied to the commit workflow.
 ## 2026-05-14: repo-local task tree workflow
 - Broad feature work needs a durable tree, not only a flat backlog entry,
   because many `R14` items branch into policy, implementation, diagnostics,

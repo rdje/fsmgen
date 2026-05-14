@@ -12,6 +12,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   frontier. The first active tree is
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md),
   whose current frontier is `ISF-CONFLICTS.1`.
+- All `R14` / ISF work is now task-tree-managed by default: every ISF task,
+  slice, or PNT-selected activity must be attached to an existing active ISF
+  task tree or create a new `docs/tasks/*.md` tree before implementation.
 - User-visible deferred/not-fully-shipped feature items now have a canonical
   mdBook backlog at [docs/book/src/14-feature-backlog.md](docs/book/src/14-feature-backlog.md),
   with [docs/FEATURE_BACKLOG.md](docs/FEATURE_BACKLOG.md) as the repo-level
@@ -2204,6 +2207,9 @@ Done:
   workflow for broad tasks that need recursive subtasks, current-frontier
   leaves, blocker tracking, validation evidence, and task-ID commit
   traceability.
+- [docs/TASK_TREE.md](docs/TASK_TREE.md) now also makes `R14` / ISF work
+  task-tree-managed by default, including small documentation-only or
+  diagnostics-only ISF changes.
 - [docs/tasks/TEMPLATE.md](docs/tasks/TEMPLATE.md) provides the reusable
   top-level task-tree template, and
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md)
@@ -4324,6 +4330,10 @@ Left:
   feature path; the current frontier is `ISF-CONFLICTS.1`, which inventories
   current behavior and names conflict domains before policy or implementation
   work starts.
+- Before any future ISF implementation, diagnostics, fixture, contract, or
+  documentation slice, either attach the work to an active ISF task tree or
+  create a new one under `docs/tasks/`; do not run ad hoc ISF slices outside
+  the task-tree ledger.
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters through feature-delivery slices, not standalone
   contract-audit sweeps.

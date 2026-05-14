@@ -88,6 +88,7 @@ Ignoring it is not a style issue; it is a project-safety failure.
 - If `git status --short` shows older unfinished work from another slice, do not start a fresh implementation task until that state is understood and resolved.
 - If you accidentally completed work without committing it, the immediate next task is recovery: document it, validate it, split it into honest task-scoped commits, and only then resume feature work.
 - If the worktree contains unrelated untracked material, leave it alone unless the user explicitly asked for it.
+- If the next task is `R14` / ISF work and no task-tree leaf owns it yet, do not start implementation until the work is attached to an existing active ISF task tree or a new `docs/tasks/*.md` tree is created from `docs/tasks/TEMPLATE.md`.
 
 ## Safety and consistency rules
 - Keep commits task-scoped (only files relevant to the completed task).
