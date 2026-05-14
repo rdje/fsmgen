@@ -95,13 +95,14 @@ reusable ISF design intent, not only scalar constants or types.
 
 - ID: `ISF-LIBRARIES.4`
   Status: `active`
-  Goal: `Ship the first reusable FIFO library fixture.`
-  Acceptance: `A parameterized FIFO actor library fixture can be imported,
-  specialized, lowered to scheduled `.fsm`, and generated to HDL with focused
-  assertions for storage, enqueue/dequeue behavior, full/empty flags, and
-  reset behavior.`
+  Goal: `Ship the first real reusable FIFO library actor.`
+  Acceptance: `A parameterized 4-entry FIFO actor library fixture can be
+  imported, specialized, lowered to scheduled `.fsm`, and
+  generated to HDL with focused assertions for storage, concurrent push/pop
+  behavior, full/empty flags, and reset behavior.`
   Children: `ISF-LIBRARIES.4.1`, `ISF-LIBRARIES.4.2`,
-  `ISF-LIBRARIES.4.3`
+  `ISF-LIBRARIES.4.3`, `ISF-LIBRARIES.4.4`, `ISF-LIBRARIES.4.5`,
+  `ISF-LIBRARIES.4.6`
   Verification: `pending; see child leaves`
   Commit: `pending; see child leaves`
 
@@ -125,20 +126,54 @@ reusable ISF design intent, not only scalar constants or types.
   Commit: `ISF-LIBRARIES.4.1: wire library generated tops`
 
 - ID: `ISF-LIBRARIES.4.2`
+  Status: `done`
+  Goal: `Formalize real FIFO requirements before authoring the fixture.`
+  Acceptance: `The task tree, live docs, and mdBook reject a depth-1
+  placeholder as a FIFO, define the required two-sided same-cycle push/pop
+  semantics, explain why transaction '(when ...)' sequencing is not enough for
+  FIFO port concurrency, and split the missing ISF expressiveness into
+  follow-up leaves.`
+  Verification: `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-LIBRARIES.4.2: specify real FIFO requirements`
+
+- ID: `ISF-LIBRARIES.4.3`
   Status: `pending`
-  Goal: `Author the first reusable FIFO actor library fixture.`
-  Acceptance: `The repo contains an importable FIFO actor library fixture with
-  explicit shipped parameters, bindings, reset behavior, and documented
-  limitations that match current ISF expressiveness.`
+  Goal: `Specify and implement FIFO actor-owned storage primitives.`
+  Acceptance: `ISF can declare reusable actor-owned fixed-depth storage needed
+  by the first 4-entry FIFO, including data storage and pointer/occupancy
+  state, with deterministic scheduled `.fsm` and HDL lowering or targeted
+  fail-closed diagnostics for unsupported shapes.`
   Verification: `pending`
   Commit: `pending`
 
-- ID: `ISF-LIBRARIES.4.3`
+- ID: `ISF-LIBRARIES.4.4`
+  Status: `pending`
+  Goal: `Specify and implement same-cycle FIFO read/write update semantics.`
+  Acceptance: `A FIFO actor can evaluate write and read requests in the same
+  cycle, derive write_fire/read_fire with full/empty policy, update storage,
+  pointers, occupancy, and flags atomically for all push/pop combinations, and
+  avoid modeling port concurrency as a sequential chain of blocking
+  transaction branches.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-LIBRARIES.4.5`
+  Status: `pending`
+  Goal: `Author the first real reusable FIFO actor library fixture.`
+  Acceptance: `The repo contains an importable 4-entry FIFO actor library
+  fixture with explicit shipped parameters, bindings, reset
+  behavior, concurrent push/pop semantics, and documented limitations that
+  match the implemented ISF FIFO surface.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-LIBRARIES.4.6`
   Status: `pending`
   Goal: `Prove FIFO fixture lowering and HDL generation.`
   Acceptance: `The FIFO fixture lowers through library import, generated top,
   scheduled `.fsm`, schedule report, and SystemVerilog generation with focused
-  checks for the behavior that current ISF can express.`
+  checks for multi-entry storage, push/pop behavior, full/empty flags, reset,
+  and same-cycle read/write behavior.`
   Verification: `pending`
   Commit: `pending`
 
@@ -155,7 +190,7 @@ reusable ISF design intent, not only scalar constants or types.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-LIBRARIES.4.2` | `pending` | Library actor instances now reach generated top/HDL; the next slice should author the reusable FIFO fixture within the current ISF expressiveness boundary. |
+| 1 | `ISF-LIBRARIES.4.3` | `pending` | A real FIFO fixture needs actor-owned multi-entry storage before it can be authored honestly. |
 
 ## Design Notes
 
@@ -163,6 +198,24 @@ reusable ISF design intent, not only scalar constants or types.
   cycles: storage array, write pointer, read pointer, occupancy, flags, and
   reset behavior. Enqueue, dequeue, flush, or status-probe behaviors may be
   transactions or callable operations on that actor.
+- For the reusable library catalog, a depth-1 placeholder is not considered a
+  FIFO. It may be useful as a register slice or skid/holding element, but the
+  first FIFO fixture must be a 4-entry FIFO and cover the associated pointer
+  and occupancy behavior.
+- A FIFO has independent write/push and read/pop sides. If write and read
+  requests are true in the same clock cycle, the actor must evaluate both
+  sides against the same current state and update storage, pointers,
+  occupancy, and flags atomically for that cycle.
+- The real FIFO semantic matrix has four top-level request cases every cycle:
+  no request, push without pop, pop without push, and push with pop. The
+  library fixture and lowering must model all four explicitly. Push-only is
+  accepted when the FIFO is not full, pop-only is accepted when the FIFO is not
+  empty, simultaneous push+pop must derive both fire predicates from the same
+  pre-cycle full/empty/occupancy snapshot, and idle must preserve state.
+- The first shipped FIFO fixture target uses `DEPTH=4`. That gives a concrete
+  review target for storage indexing, 2-bit read/write pointer wrap, occupancy
+  values 0 through 4, full/empty flag derivation, and same-cycle push/pop
+  updates without waiting for arbitrary-depth parameter elaboration.
 - A library should be reusable source intent, not generated HDL pasted into a
   design. The imported definition should still lower through scheduled `.fsm`
   so users can inspect the exact cycle-level artifact.
@@ -224,7 +277,7 @@ Planned import/use shape:
     (library common.fifo as fifo_lib))
 
   (use fifo_lib.fifo as rx_fifo
-    (params (WIDTH 32) (DEPTH 16))
+    (params (WIDTH 32) (DEPTH 4))
     (bind
       (clock clk)
       (reset rst)
@@ -302,7 +355,7 @@ Actor parameter declarations:
 (actor fifo
   (params
     (WIDTH 8)
-    (DEPTH 16))
+    (DEPTH 4))
   ...)
 ```
 
@@ -463,11 +516,15 @@ Remaining boundary:
 - Library actor instances are resolved, emitted as reviewable scheduled child
   `.fsm` artifacts, wired into generated tops, and reachable through
   SystemVerilog generation when system clock/reset names match.
+- No FIFO fixture is shipped yet. The attempted depth-1 placeholder was
+  rejected because it does not meet this project's FIFO definition and because
+  it would hide the real two-port concurrency requirement.
 - Standalone transaction and drive exports still fail closed.
 - Symbolic parameter values and derived parameter expressions remain deferred.
-- The first FIFO fixture remains under `ISF-LIBRARIES.4`; it must stay inside
-  current ISF expressiveness or explicitly log any missing FIFO language
-  features as follow-up leaves.
+- Memory-backed 4-entry FIFO storage, indexed data storage,
+  pointer/occupancy state, parameter-driven interface widths, non-zero reset
+  values, and same-cycle push/pop policy/lowering remain follow-up FIFO
+  language and lowering work.
 - Library actor system clock/reset name remapping remains deferred; the
   current generated-top path requires same-name system ports.
 
@@ -491,6 +548,23 @@ Remaining boundary:
   clock/reset/interface bindings are explicit, generated names use the
   `<importing_actor>__<instance>` shape, and successful reports should expose
   bounded `library_uses` provenance.
+- `2026-05-14`: The FIFO fixture must be a real multi-entry FIFO. A depth-1
+  element is not acceptable as the reusable FIFO fixture in this project.
+- `2026-05-14`: The first real FIFO fixture will use `DEPTH=4`. Arbitrary
+  depth remains a later generalization; depth 4 is the concrete target for the
+  first storage/concurrency implementation and regression fixture.
+- `2026-05-14`: Transaction `(when condition body...)` is a control-flow
+  branch. It schedules a decision state and, when true, enters body states
+  before continuing. That is useful for ordered transaction flow, but it is not
+  the right model for same-cycle FIFO push/pop port concurrency.
+- `2026-05-14`: Same-cycle FIFO push/pop must be represented as concurrent
+  next-state selection from one current-state snapshot. The implementation
+  needs combined predicates such as write-fire and read-fire, not a sequential
+  chain where a write branch observes or updates state before a read branch.
+- `2026-05-14`: FIFO modeling must cover push-only, pop-only, simultaneous
+  push+pop, and idle cycles as distinct real-world request cases. Any ISF
+  fixture that only exercises one side, or treats simultaneous requests as an
+  artifact of branch order, is not acceptable.
 
 ## Open Questions
 
@@ -504,9 +578,11 @@ Remaining boundary:
 
 ## Blockers
 
-- No known design blocker remains for authoring the first FIFO fixture, but
-  the fixture must respect the current same-name system-port boundary and the
-  current lack of broad memory/array FIFO primitives.
+- The real FIFO fixture is blocked on missing ISF expressiveness: actor-owned
+  indexed storage, pointer/occupancy state for the first `DEPTH=4` target,
+  parameter-driven widths/depths beyond that bounded literal target,
+  non-zero reset-value policy, and same-cycle
+  two-port update lowering.
 
 ## Verification Log
 
@@ -521,6 +597,7 @@ Remaining boundary:
 | `2026-05-14` | `ISF-LIBRARIES.4.1` | `prove -l t/1231-isf-library-generated-top.t t/1230-isf-library-import-resolution.t t/1216-isf-generated-composition-top.t t/1217-isf-generated-composition-schedule-report.t t/1122-isf-public-cli-outdir-lowering-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t` | `passed; 7 files, 18 tests` |
 | `2026-05-14` | `ISF-LIBRARIES.4.1` | `./bin/ci-regression isf --no-book` | `passed; 139 files, 472 tests` |
 | `2026-05-14` | `ISF-LIBRARIES.4.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-LIBRARIES.4.2` | `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -531,6 +608,7 @@ Remaining boundary:
 | `ISF-LIBRARIES.2` | `ISF-LIBRARIES.2: specify library binding model` | Actor parameter declarations, use-site overrides, clock/reset/interface binding, generated names, report provenance, and rejected cases. |
 | `ISF-LIBRARIES.3` | `ISF-LIBRARIES.3: implement library import resolution` | Parser/lowerer resolve exported library actors from source-dir/FSMLIB/cwd roots, emit specialized child scheduled `.fsm`, and project `library_uses` report metadata. |
 | `ISF-LIBRARIES.4.1` | `ISF-LIBRARIES.4.1: wire library generated tops` | Generated top wiring for resolved library actor instances; same-name system ports use auto-wiring and remapping fails closed. |
+| `ISF-LIBRARIES.4.2` | `ISF-LIBRARIES.4.2: specify real FIFO requirements` | Rejected a depth-1 placeholder as a FIFO, captured same-cycle push/pop semantics, and split missing storage/concurrency support into follow-up leaves. |
 
 ## Changelog
 
@@ -544,3 +622,7 @@ Remaining boundary:
   specialized scheduled child artifacts, and bounded `library_uses` reports.
 - `2026-05-14`: Implemented generated top wiring for resolved library actor
   instances and proved CLI SystemVerilog generation for the wrapper path.
+- `2026-05-14`: Corrected the FIFO fixture plan: depth 1 is not a FIFO here,
+  transaction `when` is blocking control flow rather than same-cycle port
+  concurrency, and the real fixture is blocked on storage and concurrent
+  update support.

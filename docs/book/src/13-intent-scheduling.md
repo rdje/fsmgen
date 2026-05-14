@@ -248,8 +248,17 @@ limitations are:
   actor-scoped `(imports ...)`, `(use ...)`, exported actor resolution,
   use-site parameter and binding validation, specialized child scheduled
   `.fsm` artifacts, generated top wiring for same-name system ports, HDL
-  reachability, and bounded `library_uses` report metadata. The reusable FIFO
-  fixture, standalone transaction/drive exports, symbolic constants, derived
+  reachability for the covered generated-top path, and bounded `library_uses`
+  report metadata. A FIFO fixture is not shipped yet: a depth-1 placeholder is
+  not treated as a FIFO in this project, and transaction `(when ...)` control
+  flow is not enough to model the independent write/read sides of a real FIFO.
+  The first real fixture target is a 4-entry FIFO. It must cover push-only,
+  pop-only, simultaneous push+pop, and idle cycles with fire predicates
+  derived from the same pre-cycle state. Depth 4 is the concrete review target
+  for indexed storage, 2-bit pointer wrap, occupancy values 0 through 4, and
+  full/empty derivation. Parameter-driven interface widths, arbitrary-depth
+  generation beyond the first `DEPTH=4` fixture, automatic non-zero reset
+  values, standalone transaction/drive exports, symbolic constants, derived
   parameter expressions, and clock/reset name remapping remain backlog work.
 - `(do ...)` and `(spawn ...)` targets must resolve to declared same-actor
   transactions before scheduled `.fsm` emission. They bind named start/done

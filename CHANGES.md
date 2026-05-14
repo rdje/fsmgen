@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF real FIFO requirements
+- Completed `ISF-LIBRARIES.4.2` by formalizing what the reusable FIFO fixture
+  must actually model before source is shipped.
+- Rejected a depth-1 placeholder as the FIFO fixture; for this project it is a
+  register/holding element, not a reusable FIFO.
+- Captured the required four-case FIFO request matrix: idle, push-only,
+  pop-only, and simultaneous push+pop.
+- Set the first real reusable FIFO fixture target to `DEPTH=4`, giving the
+  implementation concrete storage indices, 2-bit pointer wrap, occupancy
+  values 0 through 4, and full/empty checks before arbitrary-depth
+  generalization.
+- Documented that simultaneous push+pop must derive write-fire and read-fire
+  from the same pre-cycle state and update storage, pointers, occupancy, and
+  flags atomically.
+- Documented that transaction `(when ...)` is ordered control flow and should
+  not be used to fake same-cycle FIFO port concurrency.
+- The active R14 PNT frontier advances to `ISF-LIBRARIES.4.3`.
 ### R14 — ISF library generated top wiring
 - Completed `ISF-LIBRARIES.4.1` by wiring resolved library actor instances
   into generated composition tops.

@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF real FIFO requirements
+- The reusable FIFO fixture must be a real FIFO actor. The first target is
+  `DEPTH=4`; a depth-1 element does not exercise FIFO storage, pointer,
+  occupancy, or full/empty behavior and should not be labeled as the library
+  FIFO.
+- FIFO write and read sides are independent hardware ports. Push-only,
+  pop-only, simultaneous push+pop, and idle cycles need separate semantic
+  coverage.
+- Same-cycle push+pop is a concurrent next-state problem. Write-fire and
+  read-fire must be computed from the same current-state snapshot before any
+  pointer, occupancy, storage, or flag update is selected.
+- Transaction `(when condition body...)` emits ordered control flow states. It
+  is useful for transaction sequencing, but it is the wrong abstraction for
+  modeling two FIFO ports that act in the same clock cycle.
+- The next FIFO implementation work should add the missing ISF surfaces first:
+  actor-owned indexed storage for four entries, 2-bit pointer wrap,
+  occupancy state for values 0 through 4, reset values, and same-cycle
+  multi-update lowering.
 ## 2026-05-14: ISF library generated top wiring
 - Library actor instances now use the same generated-top composition route as
   spawned children instead of inventing a separate HDL path. That keeps review

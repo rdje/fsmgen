@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF real FIFO requirements
+- Active R14 task-tree slice: `ISF-LIBRARIES.4.2` is complete.
+- A depth-1 placeholder has been rejected as the reusable FIFO fixture.
+- The first real FIFO fixture target is `DEPTH=4`, with four storage entries,
+  pointer wrap, occupancy values 0 through 4, and full/empty derivation.
+- FIFO modeling must cover idle, push-only, pop-only, and simultaneous
+  push+pop cycles, with fire predicates derived from the same pre-cycle state.
+- Transaction `(when ...)` is ordered control flow and is not sufficient to
+  model same-cycle FIFO write/read port concurrency.
+- The next active R14 frontier is `ISF-LIBRARIES.4.3`, adding the storage
+  primitives needed before a real FIFO library can be authored.
+
 ## 2026-05-14: R14 — ISF library generated top wiring
 - Active R14 task-tree slice: `ISF-LIBRARIES.4.1` is complete.
 - Resolved library actor uses now emit generated composition tops and reach

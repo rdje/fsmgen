@@ -439,12 +439,13 @@ be able to contain reusable ISF actors, transactions, drives, and associated
 constraints when those surfaces are specified.
 
 Current boundary: the first reusable ISF library import and same-name
-generated-top slices have shipped. Actor roots may import library roots, use
-an exported actor, validate use-site parameters and explicit bindings, emit a
-specialized child scheduled `.fsm` artifact, wire the library actor through a
-generated top, reach SystemVerilog generation, and project bounded
-`library_uses` schedule-report metadata. The reusable FIFO fixture remains
-backlog, and clock/reset name remapping remains fail-closed.
+generated-top slices have shipped. Actor roots may
+import library roots, use an exported actor, validate use-site parameters and
+explicit bindings, emit a specialized child scheduled `.fsm` artifact, wire
+the library actor through a generated top, reach SystemVerilog generation for
+the covered generated-top path, project bounded `library_uses`
+schedule-report metadata, and record real FIFO requirements. No FIFO fixture
+is shipped yet. Clock/reset name remapping remains fail-closed.
 
 Shipped source model for actor exports:
 
@@ -465,7 +466,7 @@ Shipped use model for actor exports:
     (library common.fifo as fifo_lib))
 
   (use fifo_lib.fifo as rx_fifo
-    (params (WIDTH 32) (DEPTH 16))
+    (params (WIDTH 32) (DEPTH 4))
     (bind
       (clock clk)
       (reset rst)
@@ -489,7 +490,7 @@ Shipped specialization and binding model:
 (actor fifo
   (params
     (WIDTH 8)
-    (DEPTH 16))
+    (DEPTH 4))
   ...)
 
 (actor top
@@ -499,7 +500,7 @@ Shipped specialization and binding model:
   (use fifo_lib.fifo as rx_fifo
     (params
       (WIDTH 32)
-      (DEPTH 16))
+      (DEPTH 4))
     (bind
       (clock clk)
       (reset rst)
@@ -540,8 +541,8 @@ and the current directory. For a dotted namespace such as `common.fifo`, both
 `common.fifo.isf` and `common/fifo.isf` are candidate file names. `parse_source`
 can use same-source library roots but cannot resolve external files without a
 real source path. Standalone transaction/drive exports, symbolic parameter
-values, derived parameter expressions, clock/reset name remapping, and the
-FIFO library fixture are still deferred.
+values, derived parameter expressions, and clock/reset name remapping are
+still deferred.
 
 FIFO modeling rule: a FIFO should be modeled primarily as an actor because it
 owns persistent storage, pointers, occupancy, full/empty flags, reset behavior,
@@ -549,10 +550,21 @@ and interface timing across cycles. Enqueue, dequeue, flush, or status-probe
 behaviors can be transactions or callable operations inside or against that
 actor, but a transaction alone should not own the FIFO's persistent state.
 
-The first useful shipped fixture for this feature should be a parameterized
-FIFO actor library that can be imported, specialized for width/depth/reset and
-interface binding, lowered to reviewable scheduled `.fsm`, and generated to
-HDL with focused checks for storage, flags, push/pop behavior, and reset.
+The first FIFO fixture must be a real FIFO actor, not a depth-1 placeholder.
+A depth-1 element may be useful as a register slice or holding element, but it
+does not exercise FIFO depth, pointers, or occupancy semantics. The first
+fixture uses `DEPTH=4`. It must explicitly model the four request cases: no
+request, push without pop, pop without push, and push with pop. Push-only
+updates storage and occupancy when not full; pop-only updates read state and
+occupancy when not empty; simultaneous push+pop derives write-fire and
+read-fire from the same pre-cycle state and updates both sides atomically;
+idle preserves state. Depth 4 gives the initial implementation concrete
+storage indices, 2-bit pointer wrap, occupancy values 0 through 4, and
+full/empty flag checks before arbitrary-depth elaboration is generalized.
+Transaction `(when condition body...)` is ordered control flow, so using a
+chain of `when` branches to model FIFO ports would be misleading. The next
+FIFO slices must first ship actor-owned indexed storage and same-cycle
+two-port update semantics, then author and prove the reusable FIFO library.
 
 ## Backends And Validation
 

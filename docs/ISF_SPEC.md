@@ -327,13 +327,33 @@ with `library`, `alias`, `export`, `kind`, `instance`, `module`,
 `library_name`, `parent_name`, and `width`; clock/reset bindings use JSON null
 for `library_name`, and reset/clock width is `1`.
 
-Current boundary: `ISF-LIBRARIES.4.1` resolves reusable actors, validates
+Current boundary: `ISF-LIBRARIES.4.2` resolves reusable actors, validates
 parameters and bindings, emits child scheduled `.fsm` artifacts, wires library
 actor instances into generated tops for same-name system ports, reaches
-SystemVerilog generation, and reports bounded provenance. The reusable FIFO
-fixture, standalone transaction/drive exports, symbolic constants, derived
-parameter expressions, clock/reset name remapping, and library actors that
-import other libraries remain deferred.
+SystemVerilog generation for the covered generated-top path, reports bounded
+provenance, and records the real FIFO requirements before any FIFO fixture is
+shipped.
+
+No FIFO library fixture is shipped yet. A depth-1 element is not considered a
+FIFO for this library catalog; it is a register/holding element and would hide
+the real storage and concurrency requirements. The first reusable FIFO actor
+target is a 4-entry FIFO. It must have actor-owned storage, read and write
+pointers or equivalent occupancy state, reset behavior for those state
+elements, and first-class handling of the four request cases every cycle: no
+request, push without pop, pop without push, and push with pop. Push-only must
+be accepted when the FIFO is not full, pop-only must be accepted when the FIFO
+is not empty, simultaneous push+pop must derive its read-fire and write-fire
+predicates from the same pre-cycle occupancy/full/empty snapshot, and idle
+must preserve state. Depth 4 gives the first fixture concrete review points:
+four storage entries, 2-bit pointer wrap, occupancy values 0 through 4, and
+full/empty derivation. Transaction `(when condition body...)` remains ordered
+control flow; it must not be used to pretend FIFO ports are concurrent when a
+push and pop request arrive in the same cycle. Parameter-driven interface
+widths, arbitrary-depth memory-backed FIFO generation beyond the first
+`DEPTH=4` fixture, automatic non-zero reset values such as empty=1, reusable
+FIFO library source, standalone transaction/drive exports, symbolic constants,
+derived parameter expressions, clock/reset name remapping, and library actors
+that import other libraries remain deferred.
 
 ## 4. Clock, Reset, Watchdog
 
@@ -1495,8 +1515,8 @@ Focused tests:
 ## 12. Explicitly Deferred
 
 - Reusable ISF library behavior beyond the shipped resolver/review-artifact
-  and same-name generated-top slice: the reusable FIFO fixture, standalone
-  transaction/drive exports, symbolic constants, derived parameter
+  and same-name generated-top slices: the real reusable FIFO actor fixture,
+  standalone transaction/drive exports, symbolic constants, derived parameter
   expressions, clock/reset name remapping, and library actors that import
   other libraries.
 - Old `(handshake ...)` semantics beyond validated ignored compatibility

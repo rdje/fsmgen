@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF real FIFO requirements
+- Completing `ISF-LIBRARIES.4.2` in
+  [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md).
+- A depth-1 placeholder is not accepted as the reusable FIFO fixture. It is a
+  register/holding element, not a FIFO for this project.
+- FIFO modeling must cover the four real cycle cases: idle, push-only,
+  pop-only, and simultaneous push+pop. Fire predicates for simultaneous
+  requests must be derived from the same pre-cycle state.
+- Transaction `(when condition body...)` is ordered control flow, so a chain of
+  `when` branches is not an acceptable model for same-cycle FIFO write/read
+  port concurrency.
+- The first real FIFO fixture target is `DEPTH=4`. That makes the immediate
+  storage target four entries, 2-bit read/write pointer wrap, occupancy values
+  0 through 4, full/empty derivation, and same-cycle two-port update lowering.
+- Arbitrary depth and parameter-driven depth elaboration remain later
+  generalizations after the 4-entry fixture is correct.
+- The next active R14 frontier is `ISF-LIBRARIES.4.3`, specifying and
+  implementing FIFO actor-owned storage primitives.
 ## 2026-05-14: ISF library generated top wiring
 - Completed `ISF-LIBRARIES.4.1` in
   [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md).
