@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF stage/contract behavior inventory
+- Completed `ISF-STAGES-CONTRACTS.1` by inventorying current parser,
+  preservation, diagnostic, and missing-lowering-hook behavior for transaction
+  stages and temporal contracts.
+- Clarified in the ISF spec, public contract, and mdBook that actor-level
+  phase/stage metadata is parser-carried only, transaction phases lower as
+  pass-through state markers, transaction stages fail closed before IR
+  lowering, and contracts have no payload/check IR yet.
+- Advanced the active `ISF-STAGES-CONTRACTS` frontier from
+  `ISF-STAGES-CONTRACTS.1` to `ISF-STAGES-CONTRACTS.2`.
 ### R14 — ISF rule-action tree closure
 - Completed `ISF-RULE-ACTIONS.5` and closed the expression-valued rule action
   task tree.

@@ -204,7 +204,9 @@ Additional actor clauses with mixed parser/scheduler behavior:
   names are rejected.
 - actor-level `(stage name property...)`, structurally validated as a
   non-empty scalar name plus list-form body entries; duplicate actor stage
-  names are rejected.
+  names are rejected. This metadata is parser-carried for downstream
+  inspection only today; it is not copied into `LoweringIR`, schedule JSON,
+  generated `.fsm`, generated composition tops, or HDL.
 - `(resources ...)`, structurally validated as resource entries with
   `(arbiter priority|round_robin)` plus optional `(kind ...)` and
   `(users ...)`; `rule_slot` + `priority` resources are scheduler-enforced.
@@ -933,16 +935,22 @@ semantics remain deferred.
 Actor-level `(phase name property...)` and `(stage name property...)` metadata
 is structurally validated by the parser and carried in the actor shell for
 downstream consumers, but the scheduler does not enforce actor-level phase or
-stage semantics yet. Transaction-level `(phase name property...)` remains the
+stage semantics yet. That actor-level metadata is not copied into `LoweringIR`,
+schedule JSON, generated `.fsm`, generated composition tops, or HDL today.
+Transaction-level `(phase name property...)` remains the
 current pass-through state marker lowering. Transaction-level
 `(stage name property...)` is structurally validated, but lowering rejects it
 with a targeted diagnostic because implicit valid/ready pipeline-stage
-generation is still deferred.
+generation is still deferred. The same fail-closed stage boundary applies at
+top level and inside transaction `when`, `switch`, and `repeat` bodies.
 
 Authored transaction `(contract ...)` temporal assertion clauses are not lowered
 yet. The scheduler rejects them with a targeted diagnostic instead of silently
 dropping them from the scheduled `.fsm`; this applies at top level and inside
-`when`, `switch`, and `repeat` bodies.
+`when`, `switch`, and `repeat` bodies. The current parser carries the raw
+contract clause list to the scheduler boundary; it does not yet define a
+contract payload grammar, check IR, reset/disable policy, generated assertion
+artifact, or schedule-report summary.
 
 ## 10. Schedule JSON Report
 

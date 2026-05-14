@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF stage/contract inventory
+- `ISF-STAGES-CONTRACTS.1` deliberately landed as an inventory slice before
+  choosing new semantics. The current code has three distinct surfaces:
+  parser-carried actor phase/stage metadata, transaction phase pass-through
+  states, and fail-closed transaction stage/contract clauses.
+- That split matters for the next design slices. A transaction stage needs a
+  scheduling model with explicit valid/ready timing and report metadata, while
+  a contract needs a payload grammar, check IR, reset/disable policy, and
+  generated artifact strategy. Neither should be inferred from parser
+  acceptance alone.
 ## 2026-05-14: ISF rule-action tree closure
 - The expression-valued rule assignment surface is now shipped for ordinary
   flopped rule assignments. The implementation intentionally stays inside the

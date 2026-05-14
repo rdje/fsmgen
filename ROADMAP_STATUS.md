@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-STAGES-CONTRACTS.md](docs/tasks/ISF-STAGES-CONTRACTS.md),
-  whose current frontier is `ISF-STAGES-CONTRACTS.1`. The completed
+  whose current frontier is `ISF-STAGES-CONTRACTS.2`. The completed
   `ISF-RULE-ACTIONS`, `ISF-RESOURCE-CATALOG`,
   `ISF-RESOURCE-PRIORITY`, `ISF-CONFLICTS`, and `ISF-COMPOSITION` trees are
   listed in the task-tree completed table.
@@ -94,6 +94,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   diagnostics, priority-resolution reports, public contract provenance,
   mdBook/spec/contract docs, and regression evidence synchronized. PNT
   continues with `ISF-STAGES-CONTRACTS.1`.
+- `ISF-STAGES-CONTRACTS.1` is complete. The current inventory records that
+  actor-level phases/stages are parser-carried metadata only, transaction
+  phases lower as pass-through states, transaction stages are structurally
+  parsed but fail closed before IR lowering, and transaction contracts are raw
+  carried clauses that fail closed before any temporal-check IR exists. The
+  active frontier advances to `ISF-STAGES-CONTRACTS.2`.
 - ISF construct support now has a normative rule: parser acceptance is not a
   support claim. Every current or future shipped ISF construct must have an
   explicit accepted source shape, lowering path or fail-closed diagnostic,

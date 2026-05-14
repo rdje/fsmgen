@@ -46,12 +46,13 @@ covered stage and temporal-check domains.
   `ISF-STAGES-CONTRACTS.5`, `ISF-STAGES-CONTRACTS.6`
 
 - ID: `ISF-STAGES-CONTRACTS.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Inventory current stage/contract parse and fail-closed behavior.`
   Acceptance: `The task file lists accepted parsed forms, preservation points,
   current diagnostics, and the exact missing lowering hooks.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `prove -l t/1175-isf-contract-fail-closed.t t/1179-isf-phase-stage-boundary.t t/1180-isf-unsupported-transaction-clause-boundary.t`;
+  `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-STAGES-CONTRACTS.1: inventory stage contract boundary`
 
 - ID: `ISF-STAGES-CONTRACTS.2`
   Status: `pending`
@@ -98,7 +99,89 @@ covered stage and temporal-check domains.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-STAGES-CONTRACTS.1` | `pending` | Current fail-closed behavior must be inventoried before bounded semantics are selected. |
+| 1 | `ISF-STAGES-CONTRACTS.2` | `pending` | Stage syntax and runtime semantics must be bounded before lowering code is added. |
+
+## ISF-STAGES-CONTRACTS.1 Inventory
+
+Current implementation points:
+
+- Parser owner: `perl/FSM/Adapter/ISF/Parser.pm`.
+- Lowering owner: `perl/FSM/Scheduler/ISF/LoweringIR.pm`.
+- Schedule JSON owner: `perl/FSM/Scheduler/ISF/Emitter/JSON.pm`.
+- Regression anchors: `t/1175-isf-contract-fail-closed.t`,
+  `t/1179-isf-phase-stage-boundary.t`, and
+  `t/1180-isf-unsupported-transaction-clause-boundary.t`.
+
+Accepted parsed forms today:
+
+- Actor-level `(phase name property...)` is accepted when `name` is a
+  non-empty scalar and every property is a non-empty list form with a scalar
+  head. Duplicate actor phase names fail before actor-shell return.
+- Actor-level `(stage name property...)` uses the same named-body parser
+  boundary as actor phases. It is accepted as metadata only; duplicate actor
+  stage names fail before actor-shell return.
+- Transaction-level `(phase name property...)` uses the same structural
+  parser boundary and remains accepted in transaction bodies. It lowers as a
+  pass-through sequential state marker.
+- Transaction-level `(stage name property...)` uses the same structural parser
+  boundary, including inside nested `when`, `switch`, and `repeat` bodies, but
+  it is not lowered yet.
+- Transaction-level `(contract payload...)` is accepted by the raw Lispish
+  parser and carried as a transaction clause, including inside nested `when`,
+  `switch`, and `repeat` bodies. It has no structural payload validation yet
+  beyond list-form transaction-clause handling.
+
+Preservation points:
+
+- Actor phases are preserved as `$actor->{phases}` entries with `{ name, body }`.
+- Actor stages are preserved as `$actor->{stages}` entries with `{ name, body }`.
+- Transaction phases, stages, and contracts remain in each transaction's
+  `clauses` array until the scheduler validates supported transaction clauses.
+- Actor-level phase/stage metadata is not copied into `LoweringIR`, schedule
+  JSON, generated `.fsm`, generated composition tops, or HDL today.
+- Transaction contract clauses are not copied into `LoweringIR`, schedule JSON,
+  generated `.fsm`, generated checks, or HDL today.
+- Transaction stage clauses are not copied into `LoweringIR`, schedule JSON,
+  generated `.fsm`, generated pipeline state, generated checks, or HDL today.
+- Transaction phase clauses do reach `LoweringIR` as states named
+  `<transaction>_phase_<index>` with `kind => sequential`, no assignments, and
+  the usual fall-through transition.
+
+Current diagnostics:
+
+- Malformed actor/transaction phase or stage names fail with
+  `Error: (phase ...) requires a scalar name` or
+  `Error: (stage ...) requires a scalar name`.
+- Malformed phase/stage body entries fail with
+  `Error: phase '<name>' body entries must be list forms` or
+  `Error: stage '<name>' body entries must be list forms`.
+- Duplicate actor phases/stages fail with
+  `Error: duplicate actor phase '<name>'` or
+  `Error: duplicate actor stage '<name>'`.
+- Transaction `(stage ...)` fails closed during scheduler validation with
+  `Transaction '<tx>': pipeline '(stage ...)' clauses are parsed but not
+  implemented by ISF lowering`.
+- Transaction `(contract ...)` fails closed during scheduler validation with
+  `Transaction '<tx>': temporal '(contract ...)' clauses are parsed but not
+  implemented by ISF lowering`.
+- Other unsupported transaction heads still use the generic
+  `unsupported '(<head> ...)' clause` diagnostic; `stage` and `contract` keep
+  the more specific diagnostics above.
+
+Missing lowering hooks:
+
+- There is no `stage` entry in `%SUPPORTED_TRANSACTION_CLAUSES`, and the
+  scheduler rejects the head before `_build_transaction` can dispatch it.
+- There is no `_ir_stage` builder, no valid/ready stage-state expansion, no
+  stage-local storage/enable model, and no stage summary in `Emitter::JSON`.
+- There is no `contract` entry in `%SUPPORTED_TRANSACTION_CLAUSES`, and the
+  scheduler rejects the head before `_build_transaction` can dispatch it.
+- There is no contract parser payload model, no temporal-check IR node, no
+  generated assertion/check emitter, no reset/disable policy for checks, and
+  no contract summary in `Emitter::JSON`.
+- Actor-level phase/stage metadata is parser-carried only. Any future semantic
+  use needs an explicit bridge from actor-shell metadata into LoweringIR and
+  schedule-report metadata before generated artifacts depend on it.
 
 ## Decisions
 
@@ -122,13 +205,18 @@ covered stage and temporal-check domains.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-14` | `ISF-STAGES-CONTRACTS` | `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-STAGES-CONTRACTS.1` | `prove -l t/1175-isf-contract-fail-closed.t t/1179-isf-phase-stage-boundary.t t/1180-isf-unsupported-transaction-clause-boundary.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-STAGES-CONTRACTS` | `R14: map ISF objectives to task trees` | Initial tree creation belongs to the ISF objective task-tree coverage slice. |
+| `ISF-STAGES-CONTRACTS.1` | `ISF-STAGES-CONTRACTS.1: inventory stage contract boundary` | Stage/contract parse and fail-closed inventory. |
 
 ## Changelog
 
 - `2026-05-14`: Created the active ISF stage/contract task tree.
+- `2026-05-14`: Completed the current stage/contract parser, preservation,
+  diagnostic, and missing-lowering-hook inventory; advanced the frontier to
+  `ISF-STAGES-CONTRACTS.2`.

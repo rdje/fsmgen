@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF stage/contract inventory
+- Completed `ISF-STAGES-CONTRACTS.1` in
+  [docs/tasks/ISF-STAGES-CONTRACTS.md](docs/tasks/ISF-STAGES-CONTRACTS.md).
+- The task tree now records accepted parsed forms, preservation points,
+  targeted diagnostics, and missing lowering hooks for actor phase/stage
+  metadata, transaction phase pass-through states, transaction stage
+  fail-closed behavior, and transaction contract fail-closed behavior.
+- The next active R14 frontier is `ISF-STAGES-CONTRACTS.2`, which should
+  specify the first bounded transaction stage semantics before implementation.
 ## 2026-05-14: ISF rule-action tree closure
 - Completed `ISF-RULE-ACTIONS.5` and closed
   [docs/tasks/ISF-RULE-ACTIONS.md](docs/tasks/ISF-RULE-ACTIONS.md).

@@ -257,7 +257,9 @@ Goal: lower transaction `(stage ...)` clauses into valid/ready pipeline-stage
 logic.
 
 Current boundary: transaction stage clauses are parsed and fail closed during
-lowering with a targeted diagnostic.
+lowering with a targeted diagnostic. Actor-level stage metadata is
+parser-carried only; it does not reach `LoweringIR`, schedule JSON, scheduled
+`.fsm`, generated composition tops, or HDL.
 
 ### Temporal Contract Lowering
 
@@ -267,7 +269,10 @@ Goal: lower transaction `(contract ...)` temporal assertions into generated
 checks or equivalent scheduled artifacts.
 
 Current boundary: authored transaction contract clauses fail closed during
-lowering instead of being silently dropped.
+lowering instead of being silently dropped. The parser currently carries the
+raw contract clause to the scheduler boundary; there is no public payload
+grammar, check IR, reset/disable policy, generated check artifact, or
+schedule-report summary yet.
 
 ### Legacy Handshake Semantics
 

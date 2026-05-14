@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF stage/contract inventory
+- Active R14 task-tree slice: `ISF-STAGES-CONTRACTS.1` is complete.
+- The task tree now inventories current parsed forms, preservation points,
+  diagnostics, and missing lowering hooks for transaction stages and temporal
+  contracts.
+- The ISF spec, public contract, and mdBook now clarify that actor-level
+  phase/stage metadata is parser-carried only, transaction phases lower as
+  pass-through states, transaction stages fail closed before IR lowering, and
+  contracts have no payload/check IR yet.
+- The next active R14 frontier is `ISF-STAGES-CONTRACTS.2`.
+
 ## 2026-05-14: R14 — ISF rule-action tree closure
 - Active R14 task-tree slice: `ISF-RULE-ACTIONS.5` is complete.
 - The `ISF-RULE-ACTIONS` task tree is closed and moved to the completed

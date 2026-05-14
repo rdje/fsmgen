@@ -321,7 +321,10 @@ not declared elsewhere.
 The temporal-contract lowering boundary is checked by
 [t/1175-isf-contract-fail-closed.t](../t/1175-isf-contract-fail-closed.t)
 so authored transaction `(contract ...)` clauses fail closed with a targeted
-diagnostic until temporal assertion lowering is implemented.
+diagnostic until temporal assertion lowering is implemented. The current
+parser carries the raw contract clause to this scheduler boundary; it does not
+advertise a frozen contract payload grammar, check IR, reset/disable policy,
+generated assertion artifact, or schedule-report summary yet.
 The parser boundary for resource and priority metadata is checked by
 [t/1176-isf-resource-priority-boundary.t](../t/1176-isf-resource-priority-boundary.t)
 so malformed `(resources ...)`, actor-level `(priority lhs over rhs)`, and
@@ -381,7 +384,9 @@ so actor-level phase/stage metadata and transaction phase/stage clauses have
 scalar names plus list-form body entries before an actor shell is returned.
 Transaction `(phase ...)` remains a pass-through state marker; transaction
 `(stage ...)` fails closed during lowering until valid/ready pipeline-stage
-generation is implemented.
+generation is implemented. Actor-level phase/stage metadata is parser-carried
+only today and is not copied into `LoweringIR`, schedule JSON, generated
+`.fsm`, generated composition tops, or HDL.
 The unsupported transaction-clause boundary is checked by
 [t/1180-isf-unsupported-transaction-clause-boundary.t](../t/1180-isf-unsupported-transaction-clause-boundary.t)
 so removed or future transaction clause heads, including `(assign ...)`, fail

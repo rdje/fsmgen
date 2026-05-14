@@ -517,11 +517,15 @@ Pipeline stages with implicit valid/ready handshake. Stage names must be scalar,
 and stage body entries must be list forms before an actor shell is returned.
 Transaction-level stages are parsed but **not lowered**: the scheduler rejects
 authored `(stage ...)` transaction clauses with a targeted diagnostic instead
-of silently dropping them from the scheduled `.fsm`.
+of silently dropping them from the scheduled `.fsm`. This fail-closed boundary
+also applies when a transaction stage appears inside a nested `when`, `switch`,
+or `repeat` body.
 
 Actor-level `(phase ...)` and `(stage ...)` metadata uses the same scalar-name
 and list-body structural boundary, is carried in the parser actor shell for
 downstream consumers, and is not semantically enforced by the scheduler yet.
+That actor-level metadata is not copied into the scheduling IR, schedule JSON,
+generated `.fsm`, generated composition top, or HDL today.
 
 **Future**: Generate valid/ready plumbing with pipeline registers.
 
@@ -534,4 +538,8 @@ downstream consumers, and is not semantically enforced by the scheduler yet.
 Temporal assertions. **Not implemented**. Deferred to separate design discussion.
 Authored transaction contract clauses currently fail closed during ISF lowering
 instead of being emitted as scheduled `.fsm` or silently ignored; this includes
-clauses nested inside `when`, `switch`, and `repeat` bodies.
+clauses nested inside `when`, `switch`, and `repeat` bodies. The current parser
+does not define a contract payload language beyond carrying the raw clause list
+to the scheduler boundary; the missing implementation pieces are a bounded
+payload model, a check IR, reset/disable semantics, generated check artifacts,
+and schedule-report metadata.
