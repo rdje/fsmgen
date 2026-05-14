@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF schedule-report storage role taxonomy
+- Active R14 task-tree slice: `ISF-SCHEDULE-REPORTS.2` is complete.
+- Richer storage classification is specified as optional
+  `inferred_storage[].role`, while `kind` remains the coarse
+  `counter`/`register` category.
+- The next active R14 frontier is `ISF-SCHEDULE-REPORTS.3`.
+
 ## 2026-05-14: R14 — ISF schedule-report contract inventory
 - Active R14 task-tree slice: `ISF-SCHEDULE-REPORTS.1` is complete.
 - The schedule-report task tree now records the current bounded public report

@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF schedule-report storage role taxonomy
+- Completed `ISF-SCHEDULE-REPORTS.2` by specifying richer storage
+  classification as an additive optional `inferred_storage[].role` key.
+- The planned taxonomy preserves `kind = counter|register` as the coarse
+  storage category and reserves `role` for evidence-backed scheduler purpose.
+- The next implementation slice targets roles for generated scheduler
+  counters, named-drive request/payload storage, samples, data operations, and
+  completion pulses.
 ### R14 — ISF schedule-report contract inventory
 - Completed `ISF-SCHEDULE-REPORTS.1` by inventorying the current bounded
   schedule-report contract before adding richer storage classes.

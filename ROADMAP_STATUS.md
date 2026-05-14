@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-SCHEDULE-REPORTS.md](docs/tasks/ISF-SCHEDULE-REPORTS.md),
-  whose current frontier is `ISF-SCHEDULE-REPORTS.2`. The completed
+  whose current frontier is `ISF-SCHEDULE-REPORTS.3`. The completed
   `ISF-DATA-WIDTHS`, `ISF-STAGES-CONTRACTS`, `ISF-RULE-ACTIONS`,
   `ISF-RESOURCE-CATALOG`, `ISF-RESOURCE-PRIORITY`, `ISF-CONFLICTS`, and
   `ISF-COMPOSITION` trees are listed in the task-tree completed table.
@@ -176,6 +176,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   families, storage metadata, feature-owned report branches, scalar/count
   policies, multi-file scope, and non-frozen branches. The active frontier
   advances to `ISF-SCHEDULE-REPORTS.2`.
+- `ISF-SCHEDULE-REPORTS.2` is complete. Richer storage classification is now
+  specified as an additive optional `inferred_storage[].role` key while
+  preserving `kind = counter|register` as the coarse storage category. The
+  first implementation slice will add evidence-backed roles for scheduler
+  counters, named-drive request/payload storage, samples, data operations, and
+  completion pulses. The active frontier advances to
+  `ISF-SCHEDULE-REPORTS.3`.
 - ISF construct support now has a normative rule: parser acceptance is not a
   support claim. Every current or future shipped ISF construct must have an
   explicit accepted source shape, lowering path or fail-closed diagnostic,

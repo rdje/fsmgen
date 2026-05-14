@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF schedule-report storage role taxonomy
+- Keeping `kind` coarse avoids breaking downstream consumers that only need to
+  know whether a storage entry is register-like or counter-like.
+- A separate optional `role` gives downstream users a stable purpose label
+  without pretending every storage name can be classified perfectly today.
+- The role taxonomy is intentionally evidence-driven. Generated-name families
+  can be used only when they are scheduler-owned; authored or ambiguous names
+  need source-kind metadata before the report can classify them.
 ## 2026-05-14: ISF schedule-report contract inventory
 - The schedule report is useful to downstream tools today, but the project
   still treats it as bounded key families rather than a fully frozen schema.

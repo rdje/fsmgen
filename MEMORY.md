@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF schedule-report storage role taxonomy
+- Completed `ISF-SCHEDULE-REPORTS.2` in
+  [docs/tasks/ISF-SCHEDULE-REPORTS.md](docs/tasks/ISF-SCHEDULE-REPORTS.md).
+- The richer storage taxonomy is specified as an additive optional
+  `inferred_storage[].role` field. `kind` remains the coarse storage category
+  with current values `counter` and `register`.
+- The first implementation slice should add evidence-backed roles for
+  scheduler counters, drive request/payload storage, sample/data-operation
+  registers, and completion pulses. The next active R14 frontier is
+  `ISF-SCHEDULE-REPORTS.3`.
 ## 2026-05-14: ISF schedule-report contract inventory
 - Completed `ISF-SCHEDULE-REPORTS.1` in
   [docs/tasks/ISF-SCHEDULE-REPORTS.md](docs/tasks/ISF-SCHEDULE-REPORTS.md).

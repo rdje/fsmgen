@@ -334,6 +334,13 @@ optional positive integer widths when width evidence is known. Richer
 storage-class optimization, such as more precise classes than `counter` and
 `register`, is not shipped.
 
+Planned direction: keep `inferred_storage[].kind` as the coarse storage
+category (`counter` or `register`) and add an optional
+`inferred_storage[].role` for scheduler purpose once each role has stable
+evidence, compatibility rules, public contract metadata, and tests. Candidate
+roles include watchdog, latency, repeat, named-drive request/payload,
+sample-alias, extract-field, data-register, and completion-pulse roles.
+
 ### Fully Frozen Schedule JSON Schema
 
 Status: backlog.
