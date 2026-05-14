@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF SPI-like fixture coverage
+- Completed `ISF-FIXTURES.3` by promoting `isf/spi_master.isf` into a
+  file-backed SPI-like mode-0 serial-transfer regression.
+- Fixed the downstream `.fsm` expression bug exposed by the fixture: raw
+  `<<`, `>>`, `<<<`, and `>>>` plus `shl`, `shr`, `sal`, and `sar` aliases
+  now parse as binary expressions and reach SystemVerilog generation.
+- Corrected the fixture to drive one-bit `mosi` from `tx_byte[7]` instead of
+  relying on implicit truncation from the sampled transmit byte.
+- Added [t/1228-isf-spi-fixture-coverage.t](t/1228-isf-spi-fixture-coverage.t)
+  for schedule JSON, scheduled `.fsm`, plain HDL, and strict HDL coverage, and
+  [t/271-systemverilog-shift-expression-generation.t](t/271-systemverilog-shift-expression-generation.t)
+  for direct `.fsm` shift-expression coverage.
+- The active `ISF-FIXTURES` frontier advances to `ISF-FIXTURES.4`.
 ### R14 — ISF fixture coverage matrix
 - Completed `ISF-FIXTURES.2` by defining the realistic fixture coverage
   matrix across feature families, schedule-report assertions, generated `.fsm`

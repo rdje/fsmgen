@@ -27,7 +27,7 @@
 
     ;; 8 clock cycles: shift out tx, shift in rx
     (repeat 8
-      (drive mosi tx_byte)           ;; drive MOSI with current MSB
+      (drive mosi tx_byte[7])        ;; drive MOSI with current MSB
       (shift_left tx_byte 0)         ;; shift tx left, LSB=0
       (drive sclk 1)                 ;; SCLK rising edge
       (shift_left rx_data miso)      ;; sample MISO, shift into rx

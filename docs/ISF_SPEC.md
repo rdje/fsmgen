@@ -590,6 +590,13 @@ Current lowering:
   integers and must not conflict with already known field widths. When the
   source word width is known, the sum of field widths must match it.
 
+The emitted shift expressions use the normal `.fsm` expression surface. Raw
+`<<` and `>>`, plus `shl` and `shr` aliases, are accepted as binary operators
+through SystemVerilog generation, so accepted ISF shift source is not merely a
+schedule-text feature. Width alignment still matters at the surrounding
+assignment boundary: a 1-bit drive actual should select a 1-bit expression such
+as `tx_byte[7]` rather than relying on implicit truncation from an 8-bit word.
+
 Width evidence is transaction-local and private to lowering today. Interface
 declarations seed it, sampled aliases inherit known source widths, explicit
 `shift_right` and `extract` options add local evidence, and `assemble` can
@@ -1204,11 +1211,10 @@ Representative shipped fixtures:
 The active realistic fixture matrix is tracked in
 [docs/tasks/ISF-FIXTURE-COVERAGE.md](tasks/ISF-FIXTURE-COVERAGE.md). That
 matrix separates baseline APB quick coverage from broader `isf`-tier fixture
-coverage, records which feature families each fixture owns, and currently
-selects [isf/spi_master.isf](../isf/spi_master.isf) as the next compact
-file-backed schedule/HDL/strict coverage target. That fixture is scoped as an
-SPI-like mode-0 serial-transfer example, not as a complete SPI protocol
-compliance suite.
+coverage and records which feature families each fixture owns. The
+[isf/spi_master.isf](../isf/spi_master.isf) fixture now has file-backed
+schedule/HDL/strict coverage as a compact SPI-like mode-0 serial-transfer
+example, not as a complete SPI protocol compliance suite.
 
 Focused tests:
 - [t/1091-isf-parser-apb-requester.t](../t/1091-isf-parser-apb-requester.t)
@@ -1344,6 +1350,7 @@ Focused tests:
 - [t/1225-isf-stage-contract-schedule-report.t](../t/1225-isf-stage-contract-schedule-report.t)
 - [t/1226-isf-data-width-storage-report.t](../t/1226-isf-data-width-storage-report.t)
 - [t/1227-isf-schedule-report-freeze-boundary.t](../t/1227-isf-schedule-report-freeze-boundary.t)
+- [t/1228-isf-spi-fixture-coverage.t](../t/1228-isf-spi-fixture-coverage.t)
 
 ## 12. Explicitly Deferred
 

@@ -347,6 +347,9 @@ scheduler's implicit fallthrough branch.
 
 **Timing**: 1 cycle. Assignment takes effect next cycle.
 **Implicit signals**: None (operates on existing variables).
+The generated shift expressions are ordinary `.fsm` expressions. Raw `<<` and
+`>>`, plus the `shl` and `shr` aliases, pass through the downstream
+SystemVerilog path as binary operators rather than schedule-only placeholders.
 For `shift_right`, known signal widths are used for the inserted MSB position;
 an explicit `(width N)` option supplies that width when the register is not
 declared elsewhere. The option is an assertion and must agree with any known

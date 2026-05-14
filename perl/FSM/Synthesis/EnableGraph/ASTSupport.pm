@@ -148,7 +148,7 @@ sub is_arithmetic_operation ($self, $ast) {
     return 0 unless $ast->can('operator');
 
     my $op = $ast->operator || '';
-    return $op =~ /^[\+\-\*\/\%\<<\>>]$/;
+    return $op =~ /^(?:\+|-|\*|\/|%|<<|>>|<<<|>>>)$/;
 }
 
 =head2 is_logical_operation

@@ -58,13 +58,13 @@ and generated HDL paths that prove user-facing ISF features work together.
   Commit: `ISF-FIXTURES.2: define fixture coverage matrix`
 
 - ID: `ISF-FIXTURES.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Add the next realistic fixture slice.`
   Acceptance: `One selected fixture exercises a documented feature
   interaction through scheduled `.fsm`, schedule JSON, strict mode where
   relevant, and HDL generation.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: syntax checks for changed Perl modules and new tests; `prove -l t/271-systemverilog-shift-expression-generation.t t/1099-isf-repeat-data-ops.t t/1173-isf-shift-right-explicit-width.t t/1228-isf-spi-fixture-coverage.t t/1112-isf-public-interface-contract.t t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-FIXTURES.3: cover SPI-like fixture path`
 
 - ID: `ISF-FIXTURES.4`
   Status: `pending`
@@ -86,7 +86,7 @@ and generated HDL paths that prove user-facing ISF features work together.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-FIXTURES.3` | `pending` | The matrix selects `isf/spi_master.isf` as the next compact SPI-like fixture slice. |
+| 1 | `ISF-FIXTURES.4` | `pending` | SPI-like fixture coverage is in the `isf` tier; the next slice should decide whether any fixture coverage belongs in quick/support-accounting paths. |
 
 ## ISF-FIXTURES.1 Inventory
 
@@ -99,7 +99,7 @@ Current checked-in ISF fixtures:
 | `isf/full_featured.isf` | Broad parser/public-shell fixture. | Rules, triggers, priorities, resources, `do`, `spawn`, named drives, transaction ordering. | `t/1093`, `t/1157`, `t/1158`, `t/1166`, `t/1176`. | Good metadata/parser breadth; not a realistic protocol. |
 | `isf/i2c_master.isf` | I2C-like serial transaction. | Parameterized drives, repeats, switch, shift-left, nested repeat in switch branches. | `t/1099-isf-repeat-data-ops.t`. | Needs schedule-report/HDL/strict fixture assertions before it can be a realistic signoff fixture. |
 | `isf/spi_master.isf` | SPI-like mode-0 style serial transfer. | Parameterized drives, repeat, shift-left, sampled transmit byte. | No dedicated file-backed ISF regression found in the current inventory. | Candidate for next bounded serial-transfer fixture slice. |
-| `isf/uart_tx.isf` | UART transmit byte flow. | Parameterized drives, repeat, shift-right. | `t/1099-isf-repeat-data-ops.t`. | Needs explicit-width `shift_right` fixture refresh or strict/HDL coverage if promoted. |
+| `isf/uart_tx.isf` | UART transmit byte flow. | Parameterized drives, repeat, shift-right. | `t/1099-isf-repeat-data-ops.t`. | Needs explicit-width `shift_right` fixture refresh and explicit serial-bit drive selection before strict/HDL promotion. |
 | `isf/spawn_parent.isf` | Parent/child generated-composition fixture. | Spawned child module, generated top, start/done handoff, named-drive handoff, outdir lowering. | `t/1097`, `t/1117`, `t/1122`, `t/1128`, `t/1153`, `t/1156`, `t/1216`, `t/1217`. | Strong composition fixture; realistic protocol semantics are intentionally small. |
 | `isf/switch_test.isf` | Simple switch dispatch fixture. | `switch` branch lowering and implicit fallthrough smoke. | `t/1097`; richer switch behavior is covered by inline sources in `t/1103` and `t/1205`. | File-backed schedule/HDL assertions are minimal. |
 | `isf/when_test.isf` | Simple conditional body fixture. | `when` body lowering and repeated `when` smoke. | `t/1097`; richer `when` behavior is covered by inline sources in `t/1104`, `t/1107`, and `t/1206`. | File-backed schedule/HDL assertions are minimal. |
@@ -111,8 +111,8 @@ Current ISF regression tier:
   `t/109[1-9]-isf*.t`, `t/11[0-9][0-9]-isf*.t`, and
   `t/12[0-9][0-9]-isf*.t`, sorted with unmatched future bands ignored by
   `nullglob`.
-- Current count: `135` ISF-tier tests: `9` in the `109x` band, `98` in the
-  `11xx` band, and `28` in the `12xx` band.
+- Current count: `136` ISF-tier tests: `9` in the `109x` band, `98` in the
+  `11xx` band, and `29` in the `12xx` band.
 - The tier covers parser/lowering smoke, public interface contract audits,
   malformed-boundary tests, feature-specific lowering/report tests, generated
   composition, arbitration, data widths, storage roles, and the explicit
@@ -184,10 +184,10 @@ Matrix rules:
 | Fixture / target | Matrix role | Feature families to own | Schedule-report assertions | Scheduled `.fsm` / HDL assertions | Tier placement | Next action |
 | --- | --- | --- | --- | --- | --- | --- |
 | `isf/apb_requester.isf` | Current baseline realistic fixture. | Interface widths, async active-low reset metadata, watchdog, named/parameterized drives, samples, await, latency, complete pulse, storage roles. | Reset shape, transaction order/states/counts, DT kinds/counts, inferred storage kind/role/width where available, schedule JSON CLI parity. | Scheduled module header, plain HDL generation, strict HDL generation, clean stderr. | `quick` for parse/header/contract only; broader APB assertions in `isf`. | Maintain as baseline; do not add more APB-only quick tests unless a new public contract needs it. |
-| `isf/spi_master.isf` | Next compact SPI-like mode-0 serial-transfer implementation target. | Parameterized drives, active-low `cs`, `sclk` toggling, `mosi` drive, `miso` sampling, fixed 8-cycle repeat loop, sampled transmit byte, shift-left data movement. | Transaction state list/count, repeat counter storage, data-register storage/width where evidence is available, DT kind coverage for drive and transaction body. | File-backed scheduled `.fsm` structure, generated HDL reachability, strict-mode accepted-source path if the fixture is forward-contract clean. | `isf`; not `quick` initially. | `ISF-FIXTURES.3` should add dedicated file-backed schedule JSON, strict/HDL, and stable scheduled `.fsm` assertions without claiming complete SPI protocol compliance. |
+| `isf/spi_master.isf` | Compact SPI-like mode-0 serial-transfer fixture. | Parameterized drives, active-low `cs`, `sclk` toggling, explicit `mosi` bit-select drive, `miso` sampling, fixed 8-cycle repeat loop, sampled transmit byte, shift-left data movement. | Transaction state list/count, repeat counter storage, data-register storage/width, DT kind coverage for drive blocks, compatible request fan-in for repeated drive starts. | File-backed scheduled `.fsm` structure, generated HDL reachability, strict-mode accepted-source path, direct shift-expression HDL support. | `isf`; not `quick` initially. | Covered by `ISF-FIXTURES.3`; maintain as bounded SPI-like fixture, not full SPI compliance. |
 | `isf/i2c_master.isf` | Second serial-protocol promotion target. | Parameterized drives, nested repeat, switch branches, shift-left, branch-specific serial behavior. | Transaction states, repeat counters, switch branch state coverage, storage width/role where known. | Generated HDL reachability and strict-mode acceptance after SPI proves the pattern. | `isf`; no quick promotion planned. | Follow SPI with a narrower I2C schedule/HDL slice if runtime cost stays acceptable. |
 | `isf/burst_reader.isf` | Burst/wait-loop realism target. | Dynamic repeat count, sampled aliases, await, watchdog, latency, completion pulse. | Repeat/latency/watchdog storage roles, transaction state count/order, completion pulse storage. | Generated HDL reachability; strict mode only after the fixture is checked as forward-contract clean. | `isf`. | Refresh after serial fixtures to improve wait-loop/report assertions. |
-| `isf/uart_tx.isf` | Data-width and shift-right realism target. | Parameterized drives, repeat, explicit-width `shift_right`, serial transmit framing. | Data register width evidence, transaction states, repeat counter storage. | Generated HDL reachability; strict mode if the fixture is promoted as a forward-contract example. | `isf`. | Use only if it adds width/shift-right signal beyond existing focused tests. |
+| `isf/uart_tx.isf` | Data-width and shift-right realism target. | Parameterized drives, repeat, explicit-width `shift_right`, serial transmit framing. | Data register width evidence, transaction states, repeat counter storage. | Generated HDL reachability; strict mode if the fixture is promoted as a forward-contract example. | `isf`. | Use only if it adds width/shift-right signal beyond existing focused tests; it needs explicit serial-bit drive selection before strict/HDL promotion. |
 | `isf/spawn_parent.isf` | Composition realism baseline. | Spawned child module, generated top, start/done handoff, named-drive handoff, parameter overrides, outdir lowering. | `generated_composition` summary, child/instance/link/binding keys, parent-only report scope. | Multi-file lower result, generated top reachability, `--outdir` behavior. | `isf`; not quick. | Maintain existing coverage; expand only when generated-child public surface widens. |
 | `isf/full_featured.isf` | Parser/public-shell breadth fixture, not a realism signoff fixture. | Rules, triggers, priorities, resources, `do`, `spawn`, named drives, ordering metadata. | Actor-shell metadata and parser-carried resource/priority/stage/phase surfaces. | No strict/HDL promotion requirement because the source intentionally exercises breadth, not protocol realism. | `isf` parser/public contract tests. | Keep for parser breadth; do not use as proof of protocol behavior. |
 | Future `isf/rule_resource_arbiter.isf` | Future rule/resource realism fixture. | Multiple rules sharing a `rule_slot`, priority arbitration, rule-trigger fan-in, conflict suppression. | `priority_resolutions`, `resource_arbitration`, compatible fan-in groups, compile-issue absence on the accepted path. | Generated HDL reachability for grant-gated rule DTs. | `isf`; no quick promotion. | Add only after a concrete protocol-like owner exists; focused tests already own mechanics. |
@@ -196,13 +196,36 @@ Matrix rules:
 
 Immediate next slice:
 
-- `ISF-FIXTURES.3` should use `isf/spi_master.isf` as a bounded SPI-like
-  mode-0 serial-transfer fixture, not as a full SPI compliance target.
-- The expected new regression should be file-backed and should check schedule
-  JSON, generated scheduled `.fsm` text, plain HDL generation, and strict HDL
-  generation if the existing source is already forward-contract clean.
-- Do not add SPI to `quick` in the first slice. The first pass belongs in the
-  `isf` tier so quick turnaround stays stable.
+- `ISF-FIXTURES.4` should decide whether any of the new SPI-like coverage
+  belongs in quick/support-accounting paths. The current answer is likely no:
+  the fixture is valuable realistic coverage, but it is broader than the
+  deliberately tiny quick tier.
+
+## ISF-FIXTURES.3 SPI-Like Fixture Coverage
+
+`ISF-FIXTURES.3` promotes `isf/spi_master.isf` into a file-backed
+SPI-like mode-0 serial-transfer regression without claiming complete SPI
+protocol compliance.
+
+Implementation notes:
+
+- `spi_master.isf` now drives one-bit `mosi` from `tx_byte[7]` before shifting
+  `tx_byte` left. The previous full-byte drive was not width-aligned and the
+  backend correctly rejected it as implicit truncation.
+- The downstream `.fsm` expression pipeline now accepts raw `<<`, `>>`,
+  `<<<`, and `>>>` plus `shl`, `shr`, `sal`, and `sar` aliases as binary
+  expression operators through SystemVerilog generation. This closes the bug
+  where ISF `shift_left` produced scheduled `.fsm` text that the HDL path then
+  rejected.
+- `t/1228-isf-spi-fixture-coverage.t` proves schedule JSON, scheduled `.fsm`
+  structure, strict schedule JSON parity, plain HDL generation, and strict HDL
+  generation for the SPI-like fixture.
+- `t/271-systemverilog-shift-expression-generation.t` proves the underlying
+  `.fsm` shift-expression contract directly, including targeted rejection of
+  malformed n-ary shift expressions.
+
+The fixture remains in the `isf` regression tier, not `quick`, so fast
+turnaround remains APB-centered.
 
 ## Decisions
 
@@ -216,6 +239,10 @@ Immediate next slice:
   protocol compliance. SPI behavior is device- and mode-specific, so this
   fixture is scoped to the authored mode-0-style serial transfer behavior in
   the file.
+- `2026-05-14`: ISF shift operations are an end-to-end support claim only when
+  the generated `.fsm` shift expressions also pass the downstream HDL path.
+  Raw and aliased shift operators are now accepted by `.fsm` expression
+  parsing and SystemVerilog generation as binary operators.
 
 ## Open Questions
 
@@ -232,6 +259,7 @@ Immediate next slice:
 | --- | --- | --- | --- |
 | `2026-05-14` | `ISF-FIXTURES` | `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-FIXTURES.2` | `prove -l t/1183-ci-regression-tier-selection.t`; `./bin/ci-regression --list`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-FIXTURES.3` | Syntax checks for changed Perl modules and new tests; `prove -l t/271-systemverilog-shift-expression-generation.t t/1099-isf-repeat-data-ops.t t/1173-isf-shift-right-explicit-width.t t/1228-isf-spi-fixture-coverage.t t/1112-isf-public-interface-contract.t t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t`; `./bin/ci-regression isf --no-book` (`136` files, `464` tests); `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -240,9 +268,12 @@ Immediate next slice:
 | `ISF-FIXTURES` | `R14: map ISF objectives to task trees` | Initial tree creation belongs to the ISF objective task-tree coverage slice. |
 | `ISF-FIXTURES.1` | `ISF-FIXTURES.1: inventory fixture coverage` | Inventory of current fixtures, tiers, strict coverage, and gaps. |
 | `ISF-FIXTURES.2` | `ISF-FIXTURES.2: define fixture coverage matrix` | Matrix defining fixture ownership, tier placement, and SPI-like mode-0 target scope. |
+| `ISF-FIXTURES.3` | `ISF-FIXTURES.3: cover SPI-like fixture path` | SPI-like fixture coverage plus downstream `.fsm` shift-expression HDL support. |
 
 ## Changelog
 
 - `2026-05-14`: Created the active ISF fixture-coverage task tree.
 - `2026-05-14`: Added the realistic fixture coverage matrix and selected SPI
   as the next implementation fixture.
+- `2026-05-14`: Added SPI-like fixture coverage and closed the downstream
+  shift-expression HDL generation gap exposed by that fixture.

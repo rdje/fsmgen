@@ -90,6 +90,11 @@ The plain `file.isf` HDL-generation path is checked by
 to reach generated HDL with clean stderr for the APB fixture.
 The advertised `--strict` option on that path is checked by
 [t/1124-isf-public-cli-strict-mode-audit.t](../t/1124-isf-public-cli-strict-mode-audit.t).
+The compact SPI-like serial fixture is checked by
+[t/1228-isf-spi-fixture-coverage.t](../t/1228-isf-spi-fixture-coverage.t)
+to keep file-backed schedule JSON, scheduled `.fsm`, plain HDL generation,
+strict HDL generation, explicit MOSI bit selection, and ISF shift handoff
+covered without claiming full external SPI protocol compliance.
 The current APB schedule report is checked against the advertised key families
 by [t/1116-isf-public-schedule-report-key-family-audit.t](../t/1116-isf-public-schedule-report-key-family-audit.t).
 The shipped stage/contract report projection is checked by

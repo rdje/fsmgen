@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF SPI-like fixture coverage
+- The SPI-like fixture exposed a real support-boundary bug: ISF `shift_left`
+  lowering emitted `<<` in scheduled `.fsm`, but the downstream expression
+  builder rejected shift operators before HDL generation. A book example that
+  shows emitted shift expressions must be backed by the `.fsm` HDL path, not
+  only by schedule text.
+- Shift operators are now binary expression forms rather than n-ary arithmetic
+  forms. Accepting `(<< value amount extra)` would hide author error, so the
+  parser rejects malformed shift arity with a targeted diagnostic.
+- The fixture also caught an authored width mismatch. A serial `mosi` line is
+  one bit; driving it from the full sampled byte would rely on implicit
+  truncation. The fixture now selects `tx_byte[7]` explicitly before shifting
+  the byte left.
+- The fixture stays scoped as SPI-like mode-0 serial transfer. It proves
+  FSMGen feature interaction and HDL reachability, not complete device-level
+  SPI protocol compliance.
 ## 2026-05-14: ISF fixture coverage matrix
 - The matrix keeps `quick` intentionally APB-centered for now. Realistic
   fixture breadth belongs in the `isf` tier until a new fixture proves enough

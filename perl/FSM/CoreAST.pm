@@ -848,20 +848,40 @@ package FSM::CoreAST::BinaryOp;
             verilog_precedence => 5, vhdl_precedence => 5, systemverilog_precedence => 5,
             associative => 0, commutative => 0 
         },
+        '<<' => {
+            verilog => '<<', vhdl => 'sll',
+            verilog_precedence => 5, vhdl_precedence => 5, systemverilog_precedence => 5,
+            associative => 0, commutative => 0
+        },
         'shr' => { 
             verilog => '>>', vhdl => 'srl', 
             verilog_precedence => 5, vhdl_precedence => 5, systemverilog_precedence => 5,
             associative => 0, commutative => 0 
+        },
+        '>>' => {
+            verilog => '>>', vhdl => 'srl',
+            verilog_precedence => 5, vhdl_precedence => 5, systemverilog_precedence => 5,
+            associative => 0, commutative => 0
         },
         'sal' => { 
             verilog => '<<<', vhdl => 'sla', 
             verilog_precedence => 5, vhdl_precedence => 5, systemverilog_precedence => 5,
             associative => 0, commutative => 0 
         },
+        '<<<' => {
+            verilog => '<<<', vhdl => 'sla',
+            verilog_precedence => 5, vhdl_precedence => 5, systemverilog_precedence => 5,
+            associative => 0, commutative => 0
+        },
         'sar' => { 
             verilog => '>>>', vhdl => 'sra', 
             verilog_precedence => 5, vhdl_precedence => 5, systemverilog_precedence => 5,
             associative => 0, commutative => 0 
+        },
+        '>>>' => {
+            verilog => '>>>', vhdl => 'sra',
+            verilog_precedence => 5, vhdl_precedence => 5, systemverilog_precedence => 5,
+            associative => 0, commutative => 0
         },
         
         # Bitwise concatenation

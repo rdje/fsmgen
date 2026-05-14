@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF SPI-like fixture coverage
+- Completed `ISF-FIXTURES.3` in
+  [docs/tasks/ISF-FIXTURE-COVERAGE.md](docs/tasks/ISF-FIXTURE-COVERAGE.md).
+- `isf/spi_master.isf` now has file-backed coverage for scheduled `.fsm`
+  structure, schedule JSON, plain HDL generation, and strict HDL generation.
+- The fixture drives `mosi` from `tx_byte[7]`, and `.fsm` expression parsing
+  now accepts raw and aliased shift operators through SystemVerilog
+  generation.
+- The next active R14 frontier is `ISF-FIXTURES.4`.
 ## 2026-05-14: ISF fixture coverage matrix
 - Completed `ISF-FIXTURES.2` in
   [docs/tasks/ISF-FIXTURE-COVERAGE.md](docs/tasks/ISF-FIXTURE-COVERAGE.md).
@@ -20,7 +29,7 @@ This is the live continuity document for fast session recovery after crashes, re
 ## 2026-05-14: ISF fixture coverage inventory
 - Completed `ISF-FIXTURES.1` in
   [docs/tasks/ISF-FIXTURE-COVERAGE.md](docs/tasks/ISF-FIXTURE-COVERAGE.md).
-- Current inventory: 10 checked-in `.isf` fixtures, 135 ISF-tier tests, APB
+- Current inventory: 10 checked-in `.isf` fixtures, 136 ISF-tier tests, APB
   coverage in quick/smoke, and APB-only strict accepted-source coverage.
 - The next active R14 frontier is `ISF-FIXTURES.2`.
 ## 2026-05-14: ISF schedule-report tree closure

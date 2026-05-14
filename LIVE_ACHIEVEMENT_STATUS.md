@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF SPI-like fixture coverage
+- Active R14 task-tree slice: `ISF-FIXTURES.3` is complete.
+- `isf/spi_master.isf` is now covered through schedule JSON, scheduled `.fsm`,
+  plain HDL generation, and strict HDL generation as a bounded SPI-like
+  mode-0 serial-transfer fixture.
+- The downstream `.fsm` expression path now accepts shift operators through
+  SystemVerilog generation, and the fixture uses explicit `tx_byte[7]` MOSI
+  bit selection.
+- The next active R14 frontier is `ISF-FIXTURES.4`.
+
 ## 2026-05-14: R14 — ISF fixture coverage matrix
 - Active R14 task-tree slice: `ISF-FIXTURES.2` is complete.
 - The matrix selects `isf/spi_master.isf` as the next compact SPI-like

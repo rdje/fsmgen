@@ -36,6 +36,13 @@ declared output port.
   (-> next_state))
 ```
 
+The emitted `.fsm` uses the normal expression surface: `<<` and `>>` are
+supported binary operators through SystemVerilog generation, with `shl` and
+`shr` as word aliases. When the shifted value is later used to drive a 1-bit
+serial output, select the intended bit explicitly, for example
+`(drive mosi tx_byte[7])`; FSMGen does not silently truncate an 8-bit word into
+a 1-bit line.
+
 **Use case**: I2C/SIPO — capturing serial bits into a parallel register.
 
 ## `(shift_right reg bit [(width N)])` — Shift Register (Right)

@@ -182,10 +182,14 @@ sub normalize_expression_operator($self, $operator) {
         ge  => '>=',
         not => '!',
         cat => 'concat',
+        shl => '<<',
+        shr => '>>',
+        sal => '<<<',
+        sar => '>>>',
     );
 
     my $normalized = $operator_aliases{$operator} // $operator;
-    my %supported = map { $_ => 1 } qw(! !& !| !^ == != < <= > >= & | ^ + - * / % concat);
+    my %supported = map { $_ => 1 } qw(! !& !| !^ == != < <= > >= & | ^ + - * / % << >> <<< >>> concat);
     return $supported{$normalized} ? $normalized : undef;
 }
 
@@ -196,6 +200,8 @@ sub operator_family_for($self, $normalized_operator) {
     return 'comparison'
         if defined $normalized_operator && $normalized_operator =~ /^(?:==|!=|<|<=|>|>=)$/;
     return 'concat' if defined $normalized_operator && $normalized_operator eq 'concat';
+    return 'binary'
+        if defined $normalized_operator && $normalized_operator =~ /^(?:<<|>>|<<<|>>>)$/;
     return 'nary'
         if defined $normalized_operator && $normalized_operator =~ /^(?:&|\||\^|\+|-|\*|\/|%)$/;
     return undef;
@@ -263,7 +269,7 @@ sub parse_recursive_expression($self, $expr) {
 
     Carp::confess
         "Unsupported expression operator '$operator'. ".
-        "Active expression operators currently include '!', '!&', '!|', '!^', '==', '!=', '<', '<=', '>', '>=', '+', '-', '*', '/', '%', '&', '|', '^', 'concat' and their documented aliases. ".
+        "Active expression operators currently include '!', '!&', '!|', '!^', '==', '!=', '<', '<=', '>', '>=', '+', '-', '*', '/', '%', '<<', '>>', '<<<', '>>>', '&', '|', '^', 'concat' and their documented aliases. ".
         supported_boundary_hint()
         unless $operator_family;
 
@@ -308,6 +314,20 @@ sub parse_recursive_expression($self, $expr) {
             unless defined($concat_width) && $concat_width > 0;
 
         return $concat;
+    }
+
+    if ($operator_family eq 'binary') {
+        Carp::confess
+            "Malformed expression operator '$operator' with " . scalar(@parsed_operands) . " operand(s). ".
+            "This active form requires exactly 2 operands. ".
+            supported_boundary_hint()
+            unless @parsed_operands == 2;
+
+        return FSM::CoreAST::BinaryOp->new(
+            $normalized_operator,
+            $parsed_operands[0],
+            $parsed_operands[1],
+        );
     }
 
     if ($operator_family eq 'negated_nary') {
@@ -841,7 +861,7 @@ sub parse_sexpr_expression($self, $sexpr) {
     
     Carp::confess
         "Unsupported expression operator '$operator'. ".
-        "Active expression operators currently include '!', '==', '!=', '<', '<=', '>', '>=', '+', '-', '*', '/', '%', '&', '|', '^', 'concat' and their documented aliases. ".
+        "Active expression operators currently include '!', '==', '!=', '<', '<=', '>', '>=', '+', '-', '*', '/', '%', '<<', '>>', '<<<', '>>>', '&', '|', '^', 'concat' and their documented aliases. ".
         supported_boundary_hint();
 }
 

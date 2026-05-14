@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-FIXTURE-COVERAGE.md](docs/tasks/ISF-FIXTURE-COVERAGE.md),
-  whose current frontier is `ISF-FIXTURES.3`. The completed
+  whose current frontier is `ISF-FIXTURES.4`. The completed
   `ISF-SCHEDULE-REPORTS`, `ISF-DATA-WIDTHS`, `ISF-STAGES-CONTRACTS`,
   `ISF-RULE-ACTIONS`, `ISF-RESOURCE-CATALOG`, `ISF-RESOURCE-PRIORITY`,
   `ISF-CONFLICTS`, and `ISF-COMPOSITION` trees are listed in the task-tree
@@ -211,7 +211,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   keeps `schedule_report_presence_key_family_map` scoped to key families. The
   active PNT frontier moves to `ISF-FIXTURES.1`.
 - `ISF-FIXTURES.1` is complete. The fixture tree now inventories 10 checked-in
-  `.isf` fixtures, the 135-test ISF regression tier, quick/smoke tier content,
+  `.isf` fixtures, the 136-test ISF regression tier, quick/smoke tier content,
   strict-mode APB coverage, and current fixture gaps. SPI, I2C/UART
   schedule/HDL/strict coverage, direct `phase_test.isf` coverage, and non-APB
   strict-mode coverage are candidates for the fixture matrix. The active
@@ -224,6 +224,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   implementation slice, scoped to SPI-like mode-0 serial-transfer behavior
   rather than full SPI protocol compliance. The active frontier advances to
   `ISF-FIXTURES.3`.
+- `ISF-FIXTURES.3` is complete. The SPI-like fixture now has file-backed
+  schedule JSON, scheduled `.fsm`, plain HDL, and strict HDL coverage. The
+  fixture drives `mosi` from `tx_byte[7]` rather than relying on implicit
+  vector-to-bit truncation, and the downstream `.fsm` expression path now
+  accepts raw and aliased shift operators through SystemVerilog generation.
+  The active frontier advances to `ISF-FIXTURES.4`.
 - ISF construct support now has a normative rule: parser acceptance is not a
   support claim. Every current or future shipped ISF construct must have an
   explicit accepted source shape, lowering path or fail-closed diagnostic,

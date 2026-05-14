@@ -275,15 +275,19 @@ The current live expression surface includes:
 - unary `!`
 - negated n-ary bitwise/logical-style forms `!&`, `!|`, and `!^`
 - comparison operators such as `==`, `!=`, `<`, `<=`, `>`, `>=`
-- arithmetic and bitwise operators such as `+`, `-`, `*`, `/`, `%`, `&`, `|`, `^`
+- arithmetic, shift, and bitwise operators such as `+`, `-`, `*`, `/`, `%`,
+  `<<`, `>>`, `<<<`, `>>>`, `&`, `|`, and `^`
 - word aliases such as `not`, `eq`, `ne`, `lt`, `le`, `gt`, `ge`, `add`,
-  `sub`, `mul`, `div`, `mod`, `and`, `nand`, `or`, `nor`, `xor`, and `xnor`
+  `sub`, `mul`, `div`, `mod`, `shl`, `shr`, `sal`, `sar`, `and`, `nand`,
+  `or`, `nor`, `xor`, and `xnor`
 - RHS pack expressions with `(concat ...)` or the shorter `(cat ...)` alias
 
-The arithmetic/bitwise expression families are n-ary. Operators such as `+`,
-`*`, `&`, `|`, and `^` combine all operands; `-`, `/`, and `%` are
-left-associative, so `(/ a b c)` means `((a / b) / c)` and `(% a b c)` means
-`((a % b) % c)`.
+The arithmetic/bitwise expression families are n-ary except for shifts.
+Operators such as `+`, `*`, `&`, `|`, and `^` combine all operands; `-`, `/`,
+and `%` are left-associative, so `(/ a b c)` means `((a / b) / c)` and
+`(% a b c)` means `((a % b) % c)`. Shift operators are exact binary forms:
+`(<< value amount)` and `(>> value amount)` each require exactly two operands,
+with `shl`/`shr` as word aliases and `sal`/`sar` for arithmetic shifts.
 
 The negated n-ary forms lower as ordinary AST composition, not as a special
 late renderer trick. `(!& A B C)` becomes `!(A & B & C)`, `(!| A B)` becomes

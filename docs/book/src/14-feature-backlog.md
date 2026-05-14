@@ -389,12 +389,12 @@ artifacts, and generated HDL reachability.
 Current boundary: APB remains the quick/smoke ISF baseline for parse, scheduled
 `.fsm` header, and public-contract checks. Broader realistic fixture coverage
 belongs in the `isf` regression tier. The active matrix in
-[ISF-FIXTURE-COVERAGE](../../tasks/ISF-FIXTURE-COVERAGE.md) selects
-`isf/spi_master.isf` as the next compact implementation target because it is a
-bounded SPI-like mode-0 serial-transfer fixture with no dedicated file-backed
-schedule/HDL/strict regression today. It is not a complete SPI protocol
-compliance suite. Future fixture promotions should add stable structural
-assertions rather than full HDL or full schedule JSON snapshots.
+[ISF-FIXTURE-COVERAGE](../../tasks/ISF-FIXTURE-COVERAGE.md) now covers
+`isf/spi_master.isf` as a bounded SPI-like mode-0 serial-transfer fixture
+through file-backed schedule JSON, scheduled `.fsm`, plain HDL, and strict HDL
+checks. It is not a complete SPI protocol compliance suite. Future fixture
+promotions should add stable structural assertions rather than full HDL or full
+schedule JSON snapshots.
 
 ## Backends And Validation
 
