@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF rule/transaction priority resolution
+- Active R14 task-tree slice: `ISF-RESOURCE-PRIORITY.4` is complete.
+- Actor-level rule-over-transaction priority now resolves the covered
+  same-target data conflict by guarding the transaction-state assignment with
+  the inverse active rule condition.
+- Unordered rule/transaction conflicts, priority cycles, mixed timing
+  conflicts, and transaction-over-rule priority fail closed.
+- The next active R14 frontier is `ISF-RESOURCE-PRIORITY.5`.
+
 ## 2026-05-14: R14 — ISF rule-slot resource enforcement
 - Active R14 task-tree slice: `ISF-RESOURCE-PRIORITY.3` is complete.
 - ISF now enforces priority-arbitrated `rule_slot` resources by gating bound

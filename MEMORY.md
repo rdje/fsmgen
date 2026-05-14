@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF rule/transaction priority resolution
+- Completed `ISF-RESOURCE-PRIORITY.4` in
+  [docs/tasks/ISF-RESOURCE-PRIORITY.md](docs/tasks/ISF-RESOURCE-PRIORITY.md).
+- The scheduler now enforces actor-level rule-over-transaction priority for
+  same-target data conflicts with matching timing operators. The transaction
+  assignment is guarded with the inverse active rule condition, while the
+  winning rule assignment remains in the rule DT.
+- Unordered rule/transaction conflicts fail with
+  `isf_conflicting_rule_transaction_writes`; priority cycles fail with
+  `isf_priority_cycle_conflict`; transaction-over-rule priority fails with
+  `isf_priority_transaction_winner_unsupported` until state-active rule guards
+  have a public lowering contract. The active frontier is now
+  `ISF-RESOURCE-PRIORITY.5`.
 ## 2026-05-14: ISF rule-slot resource enforcement
 - Completed `ISF-RESOURCE-PRIORITY.3` in
   [docs/tasks/ISF-RESOURCE-PRIORITY.md](docs/tasks/ISF-RESOURCE-PRIORITY.md).

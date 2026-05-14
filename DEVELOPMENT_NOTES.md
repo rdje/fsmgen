@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF rule/transaction priority resolution
+- The lowerable rule/transaction target-local priority direction is
+  rule-over-transaction. A rule's active condition is already expressible as a
+  normal scheduled `.fsm` guard, so the transaction-state assignment can be
+  disabled while the winning rule assignment is active.
+- The reverse direction is deliberately fail-closed for now. A transaction
+  assignment is active because a state DT is active, but the current scheduled
+  `.fsm` review artifact does not expose a state-active predicate that can be
+  used to guard a non-state rule DT assignment. Inventing that condition
+  implicitly would make the review artifact misleading.
+- This priority remains target-local. It suppresses the conflicting
+  assignment only; owner-wide exclusion continues to belong to resource
+  arbitration such as `rule_slot`.
 ## 2026-05-14: ISF rule-slot resource enforcement
 - `rule_slot` maps cleanly to existing non-state rule DTs: the resource grant
   is just an additional DTE condition, so enforcement does not add a cycle or

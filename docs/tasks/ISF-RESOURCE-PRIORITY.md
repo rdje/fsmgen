@@ -74,12 +74,12 @@ diagnostics for unresolved arbitration.
   Commit: `ISF-RESOURCE-PRIORITY.3: enforce rule-slot resources`
 
 - ID: `ISF-RESOURCE-PRIORITY.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement priority resolution for covered rule/transaction conflicts.`
   Acceptance: `Actor-level and rule-local priority declarations affect the
   covered scheduler decisions and reject unresolved or cyclic cases.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -l t/1144-isf-public-tested-by-metadata-audit.t t/1176-isf-resource-priority-boundary.t t/1190-isf-rule-priority-target-boundary.t t/1191-isf-actor-priority-target-boundary.t t/1209-isf-static-conflict-detection.t t/1210-isf-priority-conflict-resolution.t t/1218-isf-rule-slot-resource-arbitration.t t/1219-isf-rule-transaction-priority.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-RESOURCE-PRIORITY.4: resolve rule-transaction priority`
 
 - ID: `ISF-RESOURCE-PRIORITY.5`
   Status: `pending`
@@ -101,7 +101,7 @@ diagnostics for unresolved arbitration.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-RESOURCE-PRIORITY.4` | `pending` | Rule-slot resource arbitration is implemented; the remaining priority leaf can decide whether additional rule/transaction conflict cases need implementation or can be narrowed/deferred. |
+| 1 | `ISF-RESOURCE-PRIORITY.5` | `pending` | Rule-slot resource arbitration and the first rule/transaction priority case are implemented; the next slice should expose accepted arbitration decisions and rejected/unsupported cases in bounded report metadata where appropriate. |
 
 ## ISF-RESOURCE-PRIORITY.1 Inventory
 
@@ -476,6 +476,43 @@ This slice ships the first enforceable resource kind: priority-arbitrated
   now includes the resource-arbitration regression in the ISF public-interface
   contract's live `tested_by` list.
 
+## ISF-RESOURCE-PRIORITY.4 Implementation
+
+This slice ships the first target-local priority path that involves a
+transaction owner: actor-level rule-over-transaction priority for same-target
+data assignments with matching timing operators.
+
+### Lowering Surface
+
+- Rule-over-transaction priority is lowerable because the winning rule's
+  active condition is already expressible as a scheduled `.fsm` guard.
+- The lowerer suppresses the transaction-state assignment by adding the
+  inverse active rule condition to that assignment. The winning rule assignment
+  remains in the rule's non-state DT.
+- The suppression is target-local. It affects only the conflicting assignment,
+  not every action owned by the lower-priority transaction.
+- Unordered rule/transaction data conflicts fail closed with
+  `isf_conflicting_rule_transaction_writes`.
+- Priority cycles fail closed with `isf_priority_cycle_conflict`.
+- Mixed timing operators continue to fail closed with
+  `isf_priority_mixed_timing_conflict`; priority does not make different
+  hardware timing contracts interchangeable.
+- Transaction-over-rule priority fails with
+  `isf_priority_transaction_winner_unsupported`. The current scheduled `.fsm`
+  review artifact does not expose a state-active predicate that can safely
+  guard a non-state rule DT assignment. That direction needs an explicit
+  public lowering contract before it can ship.
+
+### Regression Evidence
+
+- [t/1219-isf-rule-transaction-priority.t](../../t/1219-isf-rule-transaction-priority.t)
+  covers accepted rule-over-transaction suppression, scheduled `.fsm` guard
+  output, HDL handoff, unordered conflict rejection, cycle rejection, and
+  transaction-over-rule fail-closed diagnostics.
+- [t/1144-isf-public-tested-by-metadata-audit.t](../../t/1144-isf-public-tested-by-metadata-audit.t)
+  now includes the rule/transaction priority regression in the ISF
+  public-interface contract's live `tested_by` list.
+
 ## Decisions
 
 - `2026-05-14`: Resource and priority enforcement is tracked separately from
@@ -506,6 +543,11 @@ This slice ships the first enforceable resource kind: priority-arbitrated
 - `2026-05-14`: Resource grant provenance remains internal for now.
   Successful schedule-report projection is left to `ISF-RESOURCE-PRIORITY.5`
   so the public JSON surface can be specified and audited as its own slice.
+- `2026-05-14`: The first rule/transaction priority implementation is
+  intentionally one-way: rule-over-transaction is lowerable as an ordinary
+  assignment guard on the transaction-state assignment; transaction-over-rule
+  remains fail-closed until state-active predicates have a documented lowering
+  surface for non-state rule DT guards.
 
 ## Open Questions
 
@@ -524,6 +566,7 @@ This slice ships the first enforceable resource kind: priority-arbitrated
 | `2026-05-14` | `ISF-RESOURCE-PRIORITY.1` | `prove -l t/1176-isf-resource-priority-boundary.t t/1190-isf-rule-priority-target-boundary.t t/1191-isf-actor-priority-target-boundary.t t/1210-isf-priority-conflict-resolution.t`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-RESOURCE-PRIORITY.2` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-RESOURCE-PRIORITY.3` | `perl -I perl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -l t/1112-isf-public-interface-contract.t t/1144-isf-public-tested-by-metadata-audit.t t/1176-isf-resource-priority-boundary.t t/1190-isf-rule-priority-target-boundary.t t/1191-isf-actor-priority-target-boundary.t t/1210-isf-priority-conflict-resolution.t t/1218-isf-rule-slot-resource-arbitration.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-RESOURCE-PRIORITY.4` | `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -l t/1144-isf-public-tested-by-metadata-audit.t t/1176-isf-resource-priority-boundary.t t/1190-isf-rule-priority-target-boundary.t t/1191-isf-actor-priority-target-boundary.t t/1209-isf-static-conflict-detection.t t/1210-isf-priority-conflict-resolution.t t/1218-isf-rule-slot-resource-arbitration.t t/1219-isf-rule-transaction-priority.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -533,6 +576,7 @@ This slice ships the first enforceable resource kind: priority-arbitrated
 | `ISF-RESOURCE-PRIORITY.1` | `ISF-RESOURCE-PRIORITY.1: inventory metadata behavior` | Records accepted resource/priority forms, existing validation, current enforcement, schedule-report exposure gaps, and implementation gaps. |
 | `ISF-RESOURCE-PRIORITY.2` | `ISF-RESOURCE-PRIORITY.2: specify arbitration semantics` | Defines the shareable resource-kind catalog, first-pass `(kind rule_slot)` plus `(users ...)` binding, priority-arbitrated rule-user grants, tie/cycle behavior, and unsupported cases. |
 | `ISF-RESOURCE-PRIORITY.3` | `ISF-RESOURCE-PRIORITY.3: enforce rule-slot resources` | Adds parser/lowering support for priority-arbitrated `rule_slot` resources and fail-closed unsupported cases. |
+| `ISF-RESOURCE-PRIORITY.4` | `ISF-RESOURCE-PRIORITY.4: resolve rule-transaction priority` | Adds target-local rule-over-transaction priority suppression and fail-closed diagnostics for unordered, cyclic, mixed-timing, and transaction-over-rule cases. |
 
 ## Changelog
 
@@ -543,3 +587,5 @@ This slice ships the first enforceable resource kind: priority-arbitrated
   the frontier to `ISF-RESOURCE-PRIORITY.3`.
 - `2026-05-14`: Implemented priority-arbitrated `rule_slot` resource
   enforcement and moved the frontier to `ISF-RESOURCE-PRIORITY.4`.
+- `2026-05-14`: Implemented the first rule/transaction priority path and
+  moved the frontier to `ISF-RESOURCE-PRIORITY.5`.

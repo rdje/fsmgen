@@ -327,6 +327,10 @@ The first resource-arbitration path is checked by
 [t/1218-isf-rule-slot-resource-arbitration.t](../t/1218-isf-rule-slot-resource-arbitration.t)
 for parser metadata, scheduled `.fsm` DTE gating, HDL handoff, and
 fail-closed unsupported arbitration cases.
+The first rule/transaction priority path is checked by
+[t/1219-isf-rule-transaction-priority.t](../t/1219-isf-rule-transaction-priority.t)
+for accepted rule-over-transaction suppression, unordered conflict rejection,
+cycle rejection, and transaction-over-rule fail-closed diagnostics.
 The rule-local priority target boundary is checked by
 [t/1190-isf-rule-priority-target-boundary.t](../t/1190-isf-rule-priority-target-boundary.t)
 so `other_rule` in `(priority over other_rule)` must resolve to a declared
@@ -618,6 +622,14 @@ For same-target rule/rule data conflicts, rule-local and actor-level priority
 edges can now select a target-local winner by guarding the lower-priority
 assignment with the inverse higher-priority rule condition. This changes the
 scheduled `.fsm` review artifact and does not itself add a compile issue.
+Actor-level rule-over-transaction priority is also enforced for the covered
+same-target data case when both assignments use the same timing operator: the
+transaction-state assignment is guarded with the inverse active rule
+condition. Unordered rule/transaction conflicts, priority cycles, mixed timing
+operators, and transaction-over-rule priority all fail closed.
+Transaction-over-rule is not lowered yet because scheduled `.fsm` review text
+does not expose a state-active predicate that can safely guard a non-state
+rule DT assignment.
 After scheduled `.fsm` reaches the HDL backend, generated SystemVerilog now
 adds verification-only selector assertions derived from backend assignment
 analysis. Same-value source selectors for one `LHS`/`VAL` selector and

@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF rule/transaction priority resolution
+- Completed `ISF-RESOURCE-PRIORITY.4` by adding the first lowerable
+  rule/transaction priority case.
+- Actor-level rule-over-transaction priority now resolves same-target data
+  conflicts with matching timing operators by guarding the transaction-state
+  assignment with the inverse active rule condition.
+- Unordered rule/transaction data conflicts, priority cycles, mixed timing
+  conflicts, and transaction-over-rule priority fail closed with targeted
+  diagnostics. Added
+  [t/1219-isf-rule-transaction-priority.t](t/1219-isf-rule-transaction-priority.t).
+- Advanced the active `ISF-RESOURCE-PRIORITY` frontier from
+  `ISF-RESOURCE-PRIORITY.4` to `ISF-RESOURCE-PRIORITY.5`.
 ### R14 — ISF rule-slot resource enforcement
 - Completed `ISF-RESOURCE-PRIORITY.3` by implementing the first enforced
   resource kind: priority-arbitrated `rule_slot`.

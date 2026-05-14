@@ -225,7 +225,10 @@ sub _build_parent_ir($self, $actor, $spawned) {
         spawn_instances => \@spawn_instances,
     };
     $ir->{resource_arbitration} = _apply_rule_slot_resource_arbitration($ir, $actor);
-    $ir->{priority_resolution} = _apply_rule_priority_resolution($ir, $actor);
+    $ir->{priority_resolution} = _merge_priority_resolution(
+        _apply_rule_priority_resolution($ir, $actor),
+        _apply_rule_transaction_priority_resolution($ir, $actor),
+    );
     _finalize_ir($ir);
     return $ir;
 }
@@ -1531,15 +1534,122 @@ sub _apply_rule_priority_resolution {
                 }
 
                 if ($left_over_right) {
-                    _suppress_rule_assignment($right, $left, \@resolutions);
+                    _suppress_priority_assignment($right, $left, \@resolutions);
                 } elsif ($right_over_left) {
-                    _suppress_rule_assignment($left, $right, \@resolutions);
+                    _suppress_priority_assignment($left, $right, \@resolutions);
                 }
             }
         }
     }
 
     _apply_rule_assignment_suppressions(\@records);
+
+    return {
+        resolutions => \@resolutions,
+        issues      => \@issues,
+    };
+}
+
+sub _apply_rule_transaction_priority_resolution {
+    my ($ir, $actor) = @_;
+    my $model = _build_owner_priority_model($actor);
+    my @records = (_rule_data_assignment_refs($ir), _transaction_data_assignment_refs($ir));
+    my %by_target;
+    my @issues;
+    my @resolutions;
+
+    for my $record (@records) {
+        push @{$by_target{$record->{target}}}, $record;
+    }
+
+    for my $target (sort keys %by_target) {
+        my $target_records = $by_target{$target};
+        next unless @$target_records > 1;
+
+        for my $left_idx (0 .. $#$target_records) {
+            my $left = $target_records->[$left_idx];
+            for my $right_idx ($left_idx + 1 .. $#$target_records) {
+                my $right = $target_records->[$right_idx];
+                next unless _owner_kind_pair($left, $right, 'rule', 'transaction');
+                next if _rule_assignment_pair_compatible($left, $right);
+
+                if (($left->{operator} // '') ne ($right->{operator} // '')) {
+                    push @issues, _priority_conflict_issue(
+                        code         => 'isf_priority_mixed_timing_conflict',
+                        proof_status => 'mixed_timing',
+                        target       => $target,
+                        reason       => 'priority cannot resolve mixed timing operators',
+                        left         => $left,
+                        right        => $right,
+                    );
+                    next;
+                }
+
+                my $left_owner = _priority_record_owner($left);
+                my $right_owner = _priority_record_owner($right);
+                my $left_over_right = _priority_dominates($model, $left_owner, $right_owner);
+                my $right_over_left = _priority_dominates($model, $right_owner, $left_owner);
+
+                if ($left_over_right && $right_over_left) {
+                    push @issues, _priority_conflict_issue(
+                        code         => 'isf_priority_cycle_conflict',
+                        proof_status => 'priority_cycle',
+                        target       => $target,
+                        reason       => 'priority cycle leaves no unique winner',
+                        left         => $left,
+                        right        => $right,
+                    );
+                    next;
+                }
+
+                if (!$left_over_right && !$right_over_left) {
+                    push @issues, _priority_conflict_issue(
+                        code         => 'isf_conflicting_rule_transaction_writes',
+                        proof_status => 'proved_conflict',
+                        target       => $target,
+                        reason       => 'overlapping rule/transaction data writes need actor-level priority',
+                        left         => $left,
+                        right        => $right,
+                    );
+                    next;
+                }
+
+                my ($winner, $loser) = $left_over_right ? ($left, $right) : ($right, $left);
+                if (($winner->{owner_kind} // '') eq 'transaction' && ($loser->{owner_kind} // '') eq 'rule') {
+                    push @issues, _priority_conflict_issue(
+                        code         => 'isf_priority_transaction_winner_unsupported',
+                        proof_status => 'not_doable',
+                        target       => $target,
+                        reason       => 'transaction-over-rule priority needs state-active guards before non-state rule suppression can be lowered',
+                        left         => $winner,
+                        right        => $loser,
+                    );
+                    next;
+                }
+
+                _suppress_priority_assignment($loser, $winner, \@resolutions);
+            }
+        }
+    }
+
+    _apply_rule_assignment_suppressions(\@records);
+
+    return {
+        resolutions => \@resolutions,
+        issues      => \@issues,
+    };
+}
+
+sub _merge_priority_resolution {
+    my @results = @_;
+    my @resolutions;
+    my @issues;
+
+    for my $result (@results) {
+        next unless ref($result) eq 'HASH';
+        push @resolutions, @{$result->{resolutions} || []};
+        push @issues, @{$result->{issues} || []};
+    }
 
     return {
         resolutions => \@resolutions,
@@ -1574,6 +1684,37 @@ sub _build_rule_priority_model {
     return { edges => \%edges };
 }
 
+sub _build_owner_priority_model {
+    my ($actor) = @_;
+    my %owners = (
+        map({ $_->{name} => 1 } @{$actor->{rules} || []}),
+        map({ $_->{name} => 1 } @{$actor->{transactions} || []}),
+    );
+    my %rules = map { $_->{name} => 1 } @{$actor->{rules} || []};
+    my %edges;
+
+    for my $priority (@{$actor->{priorities} || []}) {
+        my ($higher, undef, $lower) = @$priority;
+        next unless $owners{$higher} && $owners{$lower};
+        $edges{$higher}{$lower} = 1;
+    }
+
+    for my $rule (@{$actor->{rules} || []}) {
+        my $higher = $rule->{name};
+        for my $action (@{$rule->{actions} || []}) {
+            next unless ref($action) eq 'ARRAY'
+                && defined($action->[0])
+                && !ref($action->[0])
+                && $action->[0] eq 'priority';
+            my $lower = $action->[2];
+            next unless $rules{$higher} && $rules{$lower};
+            $edges{$higher}{$lower} = 1;
+        }
+    }
+
+    return { edges => \%edges };
+}
+
 sub _rule_data_assignment_refs {
     my ($ir) = @_;
     my @records;
@@ -1581,19 +1722,63 @@ sub _rule_data_assignment_refs {
     for my $dt (@{$ir->{dt_blocks} || []}) {
         next unless ($dt->{kind} // '') eq 'rule';
         my $assignment_index = 0;
+        my $rule_condition = _guard_condition_expr($dt->{dte_guard}) // '1';
         for my $assignment (@{$dt->{assignments} || []}) {
             if (($assignment->{source_kind} // '') eq 'rule_action' && defined $assignment->{lhs}) {
+                my $activation_condition = _combine_condition_exprs(
+                    $rule_condition,
+                    _guard_condition_expr($assignment->{guard}),
+                );
                 push @records, {
                     rule             => $dt->{name},
+                    owner            => $dt->{name},
+                    owner_kind       => 'rule',
+                    source_kind      => 'rule_action',
                     target           => $assignment->{lhs},
                     operator         => $assignment->{op},
                     rhs              => $assignment->{rhs},
                     assignment       => $assignment,
-                    rule_condition   => _guard_condition_expr($dt->{dte_guard}) // '1',
+                    rule_condition   => $activation_condition,
+                    owner_condition  => $activation_condition,
                     assignment_index => $assignment_index,
                 };
             }
             $assignment_index++;
+        }
+    }
+
+    return @records;
+}
+
+sub _transaction_data_assignment_refs {
+    my ($ir) = @_;
+    my @records;
+
+    for my $state (@{$ir->{states} || []}) {
+        my $transaction = _transaction_owner_from_state_name($state->{name});
+        next unless defined($transaction) && length($transaction);
+
+        my $assignment_index = 0;
+        for my $assignment (@{$state->{assignments} || []}) {
+            my $current_index = $assignment_index++;
+            my $source_kind = _state_assignment_source_kind($state, $assignment);
+            next unless _assignment_domain_hint($assignment, $source_kind) eq 'data';
+            next unless defined $assignment->{lhs};
+
+            push @records, {
+                transaction      => $transaction,
+                owner            => $transaction,
+                owner_kind       => 'transaction',
+                source_kind      => $source_kind,
+                target           => $assignment->{lhs},
+                operator         => $assignment->{op},
+                rhs              => $assignment->{rhs},
+                assignment       => $assignment,
+                state            => $state->{name},
+                state_kind       => $state->{kind},
+                owner_condition  => _guard_condition_expr($assignment->{guard}) // '1',
+                assignment_index => $current_index,
+            };
         }
     }
 
@@ -1630,13 +1815,17 @@ sub _priority_dominates_walk {
     return 0;
 }
 
-sub _suppress_rule_assignment {
+sub _suppress_priority_assignment {
     my ($lower, $higher, $resolutions) = @_;
-    $lower->{suppressed_by}{$higher->{rule}} = $higher->{rule_condition};
+    my $higher_owner = _priority_record_owner($higher);
+    my $lower_owner = _priority_record_owner($lower);
+    $lower->{suppressed_by}{$higher_owner} = _priority_record_condition($higher);
     push @$resolutions, {
-        target => $lower->{target},
-        winner => $higher->{rule},
-        loser  => $lower->{rule},
+        target      => $lower->{target},
+        winner      => $higher_owner,
+        winner_kind => $higher->{owner_kind} // 'rule',
+        loser       => $lower_owner,
+        loser_kind  => $lower->{owner_kind} // 'rule',
     };
 }
 
@@ -1649,12 +1838,31 @@ sub _apply_rule_assignment_suppressions {
         next unless @higher_rules;
 
         my $assignment = $record->{assignment};
-        $assignment->{priority_suppressed_by} = \@higher_rules;
+        my %merged = map { $_ => 1 } @{$assignment->{priority_suppressed_by} || []};
+        $merged{$_} = 1 for @higher_rules;
+        $assignment->{priority_suppressed_by} = [sort keys %merged];
         $assignment->{guard} = _combine_assignment_guard_with_priority_suppressors(
             $assignment->{guard},
             [ map { $suppressed_by->{$_} } @higher_rules ],
         );
     }
+}
+
+sub _priority_record_owner {
+    my ($record) = @_;
+    return $record->{owner} if defined($record->{owner}) && length($record->{owner});
+    return $record->{rule} if defined($record->{rule}) && length($record->{rule});
+    return $record->{transaction} if defined($record->{transaction}) && length($record->{transaction});
+    return '';
+}
+
+sub _priority_record_condition {
+    my ($record) = @_;
+    return $record->{owner_condition}
+        if defined($record->{owner_condition}) && length($record->{owner_condition});
+    return $record->{rule_condition}
+        if defined($record->{rule_condition}) && length($record->{rule_condition});
+    return '1';
 }
 
 sub _combine_assignment_guard_with_priority_suppressors {
@@ -1667,6 +1875,16 @@ sub _combine_assignment_guard_with_priority_suppressors {
     return undef unless @terms;
     return { expr => $terms[0] } if @terms == 1;
     return { expr => '(& ' . join(' ', @terms) . ')' };
+}
+
+sub _combine_condition_exprs {
+    my @conditions = grep {
+        defined($_) && length($_) && $_ ne '1'
+    } @_;
+
+    return '1' unless @conditions;
+    return $conditions[0] if @conditions == 1;
+    return '(& ' . join(' ', @conditions) . ')';
 }
 
 sub _guard_condition_expr {
@@ -1706,9 +1924,9 @@ sub _priority_conflict_issue {
 sub _priority_source_summary {
     my ($record) = @_;
     return {
-        owner            => $record->{rule},
-        owner_kind       => 'rule',
-        source_kind      => 'rule_action',
+        owner            => _priority_record_owner($record),
+        owner_kind       => $record->{owner_kind} // 'rule',
+        source_kind      => $record->{source_kind} // 'rule_action',
         target           => $record->{target},
         operator         => $record->{operator},
         rhs              => $record->{rhs},
@@ -2136,10 +2354,16 @@ sub _compatible_record_pair {
 
 sub _priority_resolved_record_pair {
     my ($left, $right) = @_;
-    return 0 unless _both_owner_kind($left, $right, 'rule');
+    return 0 unless _priority_resolvable_owner_pair($left, $right);
     return 1 if _record_priority_suppressed_by($left, $right->{owner});
     return 1 if _record_priority_suppressed_by($right, $left->{owner});
     return 0;
+}
+
+sub _priority_resolvable_owner_pair {
+    my ($left, $right) = @_;
+    my %allowed = map { $_ => 1 } qw(rule transaction);
+    return $allowed{$left->{owner_kind} // ''} && $allowed{$right->{owner_kind} // ''};
 }
 
 sub _resource_resolved_record_pair {

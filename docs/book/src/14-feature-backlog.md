@@ -207,13 +207,17 @@ Current boundary: priority declarations are structurally validated and targets
 must resolve to declared rules or transactions. Same-target rule/rule data
 conflicts can now be resolved by rule-local or actor-level rule priority, with
 the lower-priority assignment guarded off by the higher-priority rule
-condition. Priority cycles and incomparable rule conflicts fail closed.
+condition. Actor-level rule-over-transaction priority can now resolve the
+covered same-target data case by guarding the transaction-state assignment
+with the inverse active rule condition. Priority cycles, incomparable rule
+conflicts, unordered rule/transaction conflicts, and mixed timing conflicts
+fail closed.
 Rule/drive overlap is still tracked because compile-time proof is not doable.
 Generated SystemVerilog now includes verification-only selector assertions
 derived from backend assignment analysis: same-value source selectors and
 whole-mux value selectors are checked with `$onehot0` under
-`` `ifndef SYNTHESIS``. Transaction priority, drive/rule arbitration policy,
-and broader resource arbitration remain backlog items.
+`` `ifndef SYNTHESIS``. Transaction-over-rule priority, drive/rule arbitration
+policy, and broader resource arbitration remain backlog items.
 
 ### Expression-Valued Rule Assignments
 

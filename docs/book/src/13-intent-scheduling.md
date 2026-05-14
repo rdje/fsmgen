@@ -228,9 +228,11 @@ limitations are:
   `child_instance`, and `storage_port` remain backlog until their lowering
   contracts are explicit. The accepted `round_robin` value remains parser
   metadata until round-robin lowering ships. `(priority ...)` is structurally
-  validated and currently enforced for same-target rule/rule data conflicts
-  and priority-arbitrated `rule_slot` resources; broader transaction and
-  resource arbitration remains deferred.
+  validated and currently enforced for same-target rule/rule data conflicts,
+  priority-arbitrated `rule_slot` resources, and the lowerable
+  rule-over-transaction same-target data case. Transaction-over-rule priority
+  remains deferred because scheduled `.fsm` review text does not yet expose a
+  state-active predicate that can safely guard a non-state rule DT assignment.
 - Deprecated `(handshake name (valid signal) (ready signal))` metadata is
   structurally validated and then ignored; direct `(on port ...)` activation
   plus generated `can_accept` is the current model.

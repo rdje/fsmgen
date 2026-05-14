@@ -304,6 +304,7 @@ sub build_isf_public_interface_contract {
             't/1216-isf-generated-composition-top.t',
             't/1217-isf-generated-composition-schedule-report.t',
             't/1218-isf-rule-slot-resource-arbitration.t',
+            't/1219-isf-rule-transaction-priority.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',

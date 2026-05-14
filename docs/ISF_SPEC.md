@@ -811,6 +811,17 @@ Current lowering:
   higher-priority rule condition. Priority cycles fail closed with
   `isf_priority_cycle_conflict`; incomparable rules still fail closed through
   the ordinary conflict diagnostic.
+- Actor-level rule-over-transaction priority can resolve the covered
+  same-target data case when the rule assignment and transaction-state
+  assignment use the same timing operator. The lowerer keeps the winning rule
+  assignment in its guarded non-state DT and adds the inverse active rule
+  condition to the transaction-state assignment. Unordered rule/transaction
+  conflicts fail closed with `isf_conflicting_rule_transaction_writes`.
+  Priority cycles still fail with `isf_priority_cycle_conflict`. If the
+  transaction is declared higher priority than the rule, lowering fails with
+  `isf_priority_transaction_winner_unsupported` because the scheduled `.fsm`
+  review artifact does not yet expose state-active predicates that can safely
+  guard non-state rule DT assignments.
 - Generated SystemVerilog includes verification-only selector assertions for
   analyzed muxes after ISF lowers through scheduled `.fsm`. Same-value
   `LHS`/`VAL` source selectors and whole-`LHS` value selectors are checked
@@ -867,9 +878,12 @@ Multi-rule fan-in example:
 Separate `(priority lhs over rhs)` declarations are structurally validated by
 the parser, and both `lhs` and `rhs` must name declared transactions or rules
 in the same actor. Forward references are accepted. Actor-level priority
-metadata is enforced only for same-target rule/rule data conflicts when both
-targets are rules. Transaction priority and broader resource arbitration remain
-deferred.
+metadata is enforced for same-target rule/rule data conflicts when both
+targets are rules, for priority-arbitrated `rule_slot` resources when the
+endpoints are bound rules of the same resource, and for the lowerable
+rule-over-transaction same-target data case. Transaction-over-rule priority,
+transaction/transaction priority beyond ordinary state mutual exclusion, and
+broader resource arbitration remain deferred.
 
 `(resources ...)` entries are structurally validated as resource entries with
 non-empty scalar names, an `(arbiter priority|round_robin)` subclause, and
@@ -1168,6 +1182,7 @@ Focused tests:
 - [t/1216-isf-generated-composition-top.t](../t/1216-isf-generated-composition-top.t)
 - [t/1217-isf-generated-composition-schedule-report.t](../t/1217-isf-generated-composition-schedule-report.t)
 - [t/1218-isf-rule-slot-resource-arbitration.t](../t/1218-isf-rule-slot-resource-arbitration.t)
+- [t/1219-isf-rule-transaction-priority.t](../t/1219-isf-rule-transaction-priority.t)
 
 ## 12. Explicitly Deferred
 
@@ -1185,7 +1200,8 @@ Focused tests:
   multi-capacity resources, dynamic resource names, and transaction lifetime
   ownership remain deferred.
 - Priority resolution beyond the currently shipped same-target rule/rule
-  data-conflict case and the resource-level bound-rule grant case.
+  data-conflict case, rule-over-transaction data-conflict case, and
+  resource-level bound-rule grant case.
 - Expression-valued rule assignment actions beyond scalar `(port value)`.
 - Full transaction `(stage ...)` valid/ready pipeline lowering. Authored
   transaction stage clauses currently fail closed during lowering.
