@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF composition tree closure
+- `ISF-COMPOSITION.6` closes the generated-child composition objective by
+  checking the realistic `spawn_parent.isf` schedule-report projection through
+  the CLI, not only the in-process scheduler. This matters because downstream
+  consumers often discover ISF behavior through `--emit-schedule-json`.
+- The tree can now move to completed status without leaving report metadata,
+  generated-top handoff, diagnostics, or live docs in separate unfinished
+  slices.
 ## 2026-05-14: ISF composition report/diagnostic closure
 - Closing `ISF-COMPOSITION.5` as a documentation slice keeps the task tree
   honest: the schema, implementation, diagnostics, and regression evidence

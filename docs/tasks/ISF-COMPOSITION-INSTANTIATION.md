@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-COMPOSITION`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-14`
 - Last updated: `2026-05-14`
@@ -44,7 +44,7 @@ bind through validated public semantics instead of remaining deferred.
 ## Task Tree
 
 - ID: `ISF-COMPOSITION`
-  Status: `active`
+  Status: `done`
   Goal: `Ship generated child instantiation and spawn parameter binding for ISF.`
   Children: `ISF-COMPOSITION.1`, `ISF-COMPOSITION.2`,
   `ISF-COMPOSITION.3`, `ISF-COMPOSITION.4`, `ISF-COMPOSITION.5`,
@@ -133,12 +133,12 @@ bind through validated public semantics instead of remaining deferred.
   Commit: `ISF-COMPOSITION.5.4: close report diagnostic lane`
 
 - ID: `ISF-COMPOSITION.6`
-  Status: `pending`
+  Status: `done`
   Goal: `Add focused regressions, realistic fixture coverage, and docs.`
   Acceptance: `Tests cover valid binding, invalid binding, generated top
   handoff, schedule-report metadata, CLI behavior, and synchronized docs.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax checks; focused multi-file report/top/report tests; ci-regression isf --no-book; mdbook build docs/book; git diff --check`
+  Commit: `ISF-COMPOSITION.6: close composition fixture coverage`
 
 - ID: `ISF-COMPOSITION.7`
   Status: `done`
@@ -155,7 +155,7 @@ bind through validated public semantics instead of remaining deferred.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-COMPOSITION.6` | `pending` | Generated top, parameters, reports, and targeted handoff diagnostics are shipped; the next step is the broader fixture/regression/docs consolidation leaf. |
+| 1 | `closed` | `done` | All ISF-COMPOSITION leaves are complete. PNT should continue with the next active R14 tree. |
 
 ## ISF-COMPOSITION.1 Inventory
 
@@ -613,6 +613,33 @@ documentation.
   [ROADMAP_STATUS.md](../../ROADMAP_STATUS.md), and this task tree now agree
   that the ISF API contract remains live rather than frozen.
 
+## ISF-COMPOSITION.6 Fixture/Regression Closure
+
+`ISF-COMPOSITION.6` closes the top-level generated-child composition tree by
+tying the realistic fixture coverage to both the in-process and CLI surfaces.
+
+### Shipped Coverage
+
+- [t/1215-isf-spawn-parameter-binding.t](../../t/1215-isf-spawn-parameter-binding.t)
+  covers valid spawn parameter binding and malformed binding diagnostics.
+- [t/1216-isf-generated-composition-top.t](../../t/1216-isf-generated-composition-top.t)
+  covers generated-top wiring, named-drive handoffs, CLI HDL generation, and
+  contextual generated handoff diagnostics.
+- [t/1217-isf-generated-composition-schedule-report.t](../../t/1217-isf-generated-composition-schedule-report.t)
+  covers the bounded generated-composition report projection and null case.
+- [t/1128-isf-public-multifile-schedule-report-audit.t](../../t/1128-isf-public-multifile-schedule-report-audit.t)
+  now proves the realistic `isf/spawn_parent.isf` multi-file fixture exposes
+  the same generated-composition metadata through in-process and CLI
+  `--emit-schedule-json` paths.
+- The ISF spec, public contract, mdBook, roadmap, task-tree index, and live
+  recovery docs now all point to the same shipped behavior and the same next
+  R14 frontier.
+
+The top-level `ISF-COMPOSITION` objective is complete. Remaining work around
+resource priority, rule action widening, stages/contracts, data widths,
+schedule-report storage classes, additional fixtures, compatibility, and public
+contract synchronization belongs to the other active R14 task trees.
+
 ## Decisions
 
 - `2026-05-14`: This tree owns the ISF-specific generated-child top and spawn
@@ -658,13 +685,16 @@ documentation.
 - `2026-05-14`: `ISF-COMPOSITION.5.4` closes the generated-composition
   report/diagnostic sub-tree. The report field, handoff diagnostics, public
   contract, mdBook, spec, roadmap, and live docs now agree on shipped behavior.
+- `2026-05-14`: `ISF-COMPOSITION.6` closes the top-level
+  `ISF-COMPOSITION` tree after adding realistic CLI schedule-report coverage
+  for the spawned-child fixture.
 
 ## Open Questions
 
 - Future symbolic constant support for ISF spawn parameters waits for an
   explicit ISF constant/symbol surface.
-- Broader fixture/regression/docs consolidation remains in
-  `ISF-COMPOSITION.6`.
+- No open item remains in `ISF-COMPOSITION`; follow-on R14 work belongs to the
+  next active task tree.
 
 ## Blockers
 
@@ -716,6 +746,11 @@ documentation.
 | `2026-05-14` | `ISF-COMPOSITION.5.3` | `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-COMPOSITION.5.4` | `mdbook build docs/book` | `passed` |
 | `2026-05-14` | `ISF-COMPOSITION.5.4` | `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-COMPOSITION.6` | `perl -Iperl -c t/1128-isf-public-multifile-schedule-report-audit.t` | `passed` |
+| `2026-05-14` | `ISF-COMPOSITION.6` | `prove -l t/1128-isf-public-multifile-schedule-report-audit.t t/1216-isf-generated-composition-top.t t/1217-isf-generated-composition-schedule-report.t` | `passed; 3 files, 6 tests` |
+| `2026-05-14` | `ISF-COMPOSITION.6` | `./bin/ci-regression isf --no-book` | `passed; 125 files, 422 tests` |
+| `2026-05-14` | `ISF-COMPOSITION.6` | `mdbook build docs/book` | `passed` |
+| `2026-05-14` | `ISF-COMPOSITION.6` | `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -732,6 +767,7 @@ documentation.
 | `ISF-COMPOSITION.5.2` | `ISF-COMPOSITION.5.2: project composition report metadata` | Emits bounded generated-composition schedule-report metadata and advertises its key families through the live ISF public contract. |
 | `ISF-COMPOSITION.5.3` | `ISF-COMPOSITION.5.3: contextualize handoff diagnostics` | Adds transaction, spawn instance, named-drive, and payload context to generated handoff port conflict diagnostics. |
 | `ISF-COMPOSITION.5.4` | `ISF-COMPOSITION.5.4: close report diagnostic lane` | Closes the generated-composition report/diagnostic subtree and moves the frontier to broader fixture/regression consolidation. |
+| `ISF-COMPOSITION.6` | `ISF-COMPOSITION.6: close composition fixture coverage` | Adds realistic CLI schedule-report fixture coverage and closes the top-level composition tree. |
 
 ## Changelog
 
@@ -757,3 +793,5 @@ documentation.
   `ISF-COMPOSITION.5.4`.
 - `2026-05-14`: Completed `ISF-COMPOSITION.5.4`; current frontier moves to
   `ISF-COMPOSITION.6`.
+- `2026-05-14`: Completed `ISF-COMPOSITION.6`; `ISF-COMPOSITION` is closed
+  and the next active R14 frontier is `ISF-RESOURCE-PRIORITY.1`.

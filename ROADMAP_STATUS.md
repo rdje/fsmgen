@@ -12,9 +12,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   frontier. The ongoing/unresolved R14 ISF objective families are now covered
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
-  [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md),
-  whose current frontier is `ISF-COMPOSITION.6`. The completed
-  `ISF-CONFLICTS` tree is listed in the task-tree completed table.
+  [docs/tasks/ISF-RESOURCE-PRIORITY.md](docs/tasks/ISF-RESOURCE-PRIORITY.md),
+  whose current frontier is `ISF-RESOURCE-PRIORITY.1`. The completed
+  `ISF-CONFLICTS` and `ISF-COMPOSITION` trees are listed in the task-tree
+  completed table.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
   guide for installing the same task-tree tracking workflow in another
   project.
@@ -105,8 +106,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - ISF generated-composition report/diagnostic work is now split under
   `ISF-COMPOSITION.5`: schema definition, schedule-report projection,
   targeted diagnostics, and synchronized regression/docs closure. This
-  sub-tree is complete; the current implementation frontier is
-  `ISF-COMPOSITION.6`.
+  sub-tree is complete.
+- The `ISF-COMPOSITION` task tree is complete. Spawned-child lowering now has
+  validated spawn parameter binding, generated-top handoff, named-drive
+  handoff wiring, bounded schedule-report projection, contextual handoff
+  diagnostics, realistic fixture coverage, CLI schedule-report coverage, and
+  synchronized book/spec/live docs.
 - ISF generated-composition schedule reports now emit the live
   `generated_composition` discovery field: non-generated-top reports use null,
   while spawned-child reports expose bounded generated top, parent, child,

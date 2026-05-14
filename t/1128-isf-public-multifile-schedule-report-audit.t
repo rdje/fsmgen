@@ -4,6 +4,7 @@ use warnings;
 use Test::More;
 use File::Spec;
 use FindBin;
+use IPC::Cmd qw(run);
 use JSON::PP ();
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
@@ -60,6 +61,13 @@ subtest 'multi-file ISF report is parent-scoped with generated composition metad
         'report exposes spawned instance summaries',
     );
 
+    my $cli_report = run_schedule_json($path);
+    is_deeply(
+        $cli_report->{generated_composition},
+        $report->{generated_composition},
+        'CLI multi-file schedule report exposes the same generated composition metadata',
+    );
+
     my $contract = build_isf_public_interface_contract();
     is(
         $contract->{schedule_report_multi_file_scope},
@@ -73,4 +81,16 @@ done_testing();
 sub sorted {
     my ($values) = @_;
     return [sort @{$values || []}];
+}
+
+sub run_schedule_json {
+    my ($path) = @_;
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', $path],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for the multi-file fixture');
+    is(join('', @{$stderr_buf || []}), '', '--emit-schedule-json keeps stderr clean');
+
+    return JSON::PP->new->decode(join('', @{$stdout_buf || []}));
 }

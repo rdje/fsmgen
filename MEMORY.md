@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF composition tree closure
+- Completed `ISF-COMPOSITION.6` and closed
+  [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md).
+- The spawned-child composition objective now has validated spawn parameter
+  binding, generated-top handoff, named-drive handoff wiring, bounded
+  schedule-report projection, contextual handoff diagnostics, realistic
+  fixture coverage, CLI schedule-report coverage, and synchronized docs.
+- [t/1128-isf-public-multifile-schedule-report-audit.t](t/1128-isf-public-multifile-schedule-report-audit.t)
+  now proves the `isf/spawn_parent.isf` generated-composition metadata matches
+  between in-process and CLI `--emit-schedule-json` paths.
+- The next active R14 tree is
+  [docs/tasks/ISF-RESOURCE-PRIORITY.md](docs/tasks/ISF-RESOURCE-PRIORITY.md)
+  at `ISF-RESOURCE-PRIORITY.1`.
 ## 2026-05-14: ISF composition report/diagnostic closure
 - Completed documentation-only `ISF-COMPOSITION.5.4` in
   [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md).
@@ -10,7 +23,7 @@ This is the live continuity document for fast session recovery after crashes, re
 - The ISF API contract remains live and evolves alongside FSMGen; exact audits
   prove the currently advertised surface rather than freezing the full future
   API.
-- The active frontier is now `ISF-COMPOSITION.6`.
+- At completion time, the active frontier moved to `ISF-COMPOSITION.6`.
 ## 2026-05-14: ISF generated handoff diagnostics
 - Completed `ISF-COMPOSITION.5.3` in
   [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md).

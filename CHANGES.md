@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF composition tree closure
+- Completed `ISF-COMPOSITION.6` and closed the top-level
+  `ISF-COMPOSITION` task tree.
+- Added CLI schedule-report coverage to
+  [t/1128-isf-public-multifile-schedule-report-audit.t](t/1128-isf-public-multifile-schedule-report-audit.t)
+  so the realistic `isf/spawn_parent.isf` fixture proves generated-composition
+  metadata matches between in-process and `--emit-schedule-json` paths.
+- Moved [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md)
+  to the completed task-tree table and advanced the next active R14 frontier
+  to `ISF-RESOURCE-PRIORITY.1`.
 ### R14 — ISF composition report/diagnostic closure
 - Completed documentation-only `ISF-COMPOSITION.5.4` by closing the
   generated-composition report/diagnostic sub-tree.

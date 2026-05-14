@@ -2,12 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF composition tree closure
+- Active R14 task-tree slice: `ISF-COMPOSITION.6` is complete.
+- The `ISF-COMPOSITION` tree is now closed and moved to the completed
+  task-tree table.
+- The realistic `isf/spawn_parent.isf` fixture now covers generated-composition
+  metadata through both in-process and CLI schedule-report paths.
+- The next active R14 frontier is `ISF-RESOURCE-PRIORITY.1`.
+
 ## 2026-05-14: R14 — ISF composition report/diagnostic closure
 - Active R14 task-tree slice: `ISF-COMPOSITION.5.4` is complete.
 - The generated-composition report/diagnostic sub-tree is closed with schema,
   projection, contextual handoff diagnostics, tests, contract docs, mdBook,
   roadmap, and live docs aligned.
-- The next frontier is `ISF-COMPOSITION.6`.
+- At completion time, the next frontier moved to `ISF-COMPOSITION.6`.
 
 ## 2026-05-14: R14 — ISF generated handoff diagnostics
 - Active R14 task-tree slice: `ISF-COMPOSITION.5.3` is complete.
