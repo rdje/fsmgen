@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF bounded stage semantics
+- Completed `ISF-STAGES-CONTRACTS.2` in
+  [docs/tasks/ISF-STAGES-CONTRACTS.md](docs/tasks/ISF-STAGES-CONTRACTS.md).
+- The first planned transaction-stage subset is
+  `(stage name (input ready_signal) (output valid_signal))`, supported only as
+  a top-level transaction clause. It lowers to one state, drives
+  `valid_signal = 1` while active, and advances only when `ready_signal` is
+  true.
+- Deferred stage features remain nested stages, stage-local latency/compute
+  bodies, embedded actions, multiple endpoints, registered-valid variants, and
+  skid-buffer behavior. The next active R14 frontier is
+  `ISF-STAGES-CONTRACTS.3`.
 ## 2026-05-14: ISF stage/contract inventory
 - Completed `ISF-STAGES-CONTRACTS.1` in
   [docs/tasks/ISF-STAGES-CONTRACTS.md](docs/tasks/ISF-STAGES-CONTRACTS.md).

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF bounded stage semantics
+- The first transaction-stage semantics are intentionally a one-state
+  ready/valid barrier. That is the smallest useful HDL behavior that explains
+  when the transaction advances, when `valid` is visible, and how stalls behave
+  without hiding pipeline buffering behind a broad `(stage ...)` form.
+- `valid` is specified as a combinational `=` assignment while the stage state
+  is active. Using a sticky flopped assignment would require a separate clear
+  rule, while `<1` would make the valid indication happen in a later cycle.
+- Pending samples immediately before a stage must materialize before the stage
+  state. Otherwise a stalled stage would keep recapturing source ports every
+  cycle, which would make stage stalls observably different from ordinary
+  transaction ordering.
 ## 2026-05-14: ISF stage/contract inventory
 - `ISF-STAGES-CONTRACTS.1` deliberately landed as an inventory slice before
   choosing new semantics. The current code has three distinct surfaces:

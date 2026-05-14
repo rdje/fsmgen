@@ -943,6 +943,15 @@ current pass-through state marker lowering. Transaction-level
 with a targeted diagnostic because implicit valid/ready pipeline-stage
 generation is still deferred. The same fail-closed stage boundary applies at
 top level and inside transaction `when`, `switch`, and `repeat` bodies.
+The first planned shipped transaction-stage subset is a top-level transaction
+clause of the form `(stage name (input ready_signal) (output valid_signal))`.
+It will lower to one transaction state that drives `valid_signal = 1` while the
+state is active and advances only when `ready_signal` is true in that same
+cycle. Pending samples immediately before the stage must materialize before
+the stage so a stall does not resample every cycle. Nested stages, stage-local
+`(latency ...)`, `(compute ...)`, arbitrary stage body actions, multiple
+ready/valid endpoints, registered-valid variants, and skid-buffer behavior
+remain deferred.
 
 Authored transaction `(contract ...)` temporal assertion clauses are not lowered
 yet. The scheduler rejects them with a targeted diagnostic instead of silently

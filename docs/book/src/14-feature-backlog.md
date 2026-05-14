@@ -261,6 +261,13 @@ lowering with a targeted diagnostic. Actor-level stage metadata is
 parser-carried only; it does not reach `LoweringIR`, schedule JSON, scheduled
 `.fsm`, generated composition tops, or HDL.
 
+First planned shipped subset: a top-level transaction stage of the form
+`(stage name (input ready_signal) (output valid_signal))`. It lowers to one
+state that drives `valid_signal = 1` while active and advances only when
+`ready_signal` is true. Nested stages, stage-local latency, compute/action
+bodies, multiple ready/valid endpoints, registered-valid variants, and
+skid-buffer behavior remain deferred.
+
 ### Temporal Contract Lowering
 
 Status: backlog.

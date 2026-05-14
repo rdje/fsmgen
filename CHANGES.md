@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF bounded stage semantics
+- Completed `ISF-STAGES-CONTRACTS.2` by specifying the first transaction
+  stage model as a top-level ready/valid handshake barrier.
+- The planned source subset is `(stage name (input ready_signal) (output
+  valid_signal))`; it lowers to one state, drives `valid_signal = 1` while
+  active, and advances only when `ready_signal` is true.
+- Nested stages, stage-local latency/compute/action bodies, multiple
+  endpoints, registered-valid variants, and skid-buffer behavior remain
+  deferred.
+- Advanced the active `ISF-STAGES-CONTRACTS` frontier from
+  `ISF-STAGES-CONTRACTS.2` to `ISF-STAGES-CONTRACTS.3`.
 ### R14 — ISF stage/contract behavior inventory
 - Completed `ISF-STAGES-CONTRACTS.1` by inventorying current parser,
   preservation, diagnostic, and missing-lowering-hook behavior for transaction

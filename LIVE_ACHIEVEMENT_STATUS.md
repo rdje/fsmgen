@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF bounded stage semantics
+- Active R14 task-tree slice: `ISF-STAGES-CONTRACTS.2` is complete.
+- The first planned transaction-stage model is a top-level ready/valid
+  handshake barrier with the source shape
+  `(stage name (input ready_signal) (output valid_signal))`.
+- The planned lowering is one state that drives `valid_signal = 1` while
+  active and advances only when `ready_signal` is true. Nested stages,
+  stage-local latency/compute/action bodies, multiple endpoints,
+  registered-valid variants, and skid-buffer behavior remain deferred.
+- The next active R14 frontier is `ISF-STAGES-CONTRACTS.3`.
+
 ## 2026-05-14: R14 — ISF stage/contract inventory
 - Active R14 task-tree slice: `ISF-STAGES-CONTRACTS.1` is complete.
 - The task tree now inventories current parsed forms, preservation points,

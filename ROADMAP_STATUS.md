@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-STAGES-CONTRACTS.md](docs/tasks/ISF-STAGES-CONTRACTS.md),
-  whose current frontier is `ISF-STAGES-CONTRACTS.2`. The completed
+  whose current frontier is `ISF-STAGES-CONTRACTS.3`. The completed
   `ISF-RULE-ACTIONS`, `ISF-RESOURCE-CATALOG`,
   `ISF-RESOURCE-PRIORITY`, `ISF-CONFLICTS`, and `ISF-COMPOSITION` trees are
   listed in the task-tree completed table.
@@ -100,6 +100,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   parsed but fail closed before IR lowering, and transaction contracts are raw
   carried clauses that fail closed before any temporal-check IR exists. The
   active frontier advances to `ISF-STAGES-CONTRACTS.2`.
+- `ISF-STAGES-CONTRACTS.2` is complete. The first planned transaction stage
+  model is now bounded as a top-level ready/valid handshake barrier:
+  `(stage name (input ready_signal) (output valid_signal))` lowers to one
+  state, drives `valid_signal = 1` while active, and advances only when
+  `ready_signal` is true. Nested stages, stage-local latency/compute/action
+  bodies, multiple endpoints, registered-valid variants, and skid-buffer
+  behavior remain deferred. The active frontier advances to
+  `ISF-STAGES-CONTRACTS.3`.
 - ISF construct support now has a normative rule: parser acceptance is not a
   support claim. Every current or future shipped ISF construct must have an
   explicit accepted source shape, lowering path or fail-closed diagnostic,

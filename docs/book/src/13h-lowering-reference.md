@@ -527,7 +527,28 @@ downstream consumers, and is not semantically enforced by the scheduler yet.
 That actor-level metadata is not copied into the scheduling IR, schedule JSON,
 generated `.fsm`, generated composition top, or HDL today.
 
-**Future**: Generate valid/ready plumbing with pipeline registers.
+The first planned lowered transaction-stage model is intentionally smaller
+than the historical free-form examples: a top-level transaction clause with
+one ready input and one valid output.
+
+```lisp
+(stage accept
+  (input ready)
+  (output valid))
+```
+
+That stage will lower to one transaction state. While the state is active,
+`valid` is driven combinationally high with `=`, and the state advances only
+when `ready` is true in the same cycle. If `ready` is false, the FSM remains
+in the stage state and keeps `valid` asserted. Pending samples immediately
+before the stage must materialize before the stage so a stall does not
+resample every cycle. Nested stages, stage-local `(latency ...)`,
+`(compute ...)`, embedded transaction actions, multiple ready/valid endpoints,
+registered-valid variants, and skid-buffer behavior remain separate backlog
+features until their generated-state and report semantics are explicit.
+
+**Future**: Implement the first ready/valid barrier, then grow toward richer
+pipeline registers only after the handoff and report contract are shipped.
 
 ### Contracts
 
