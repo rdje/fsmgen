@@ -118,6 +118,9 @@ to emit clean-stderr JSON matching the in-process scheduler report.
 The successful `compile_issues` report shape is checked by
 [t/1130-isf-public-compile-issues-success-audit.t](../t/1130-isf-public-compile-issues-success-audit.t)
 for both in-process and CLI report paths.
+The nonfatal `compile_issues` projection is checked by
+[t/1212-isf-schedule-report-compile-issues-projection.t](../t/1212-isf-schedule-report-compile-issues-projection.t)
+for both in-process and CLI report paths.
 The lower-result `files` map is checked for both single-file and multi-file
 lowering by [t/1117-isf-public-lower-result-files-audit.t](../t/1117-isf-public-lower-result-files-audit.t).
 The lower-result discovery metadata is checked by
@@ -541,12 +544,13 @@ inventing an otherwise unowned `transaction_start` fan-in path.
 Lowering also performs best-effort static conflict checks for rule data writes:
 provable incompatible rule/rule writes to the same target fail closed, while
 rule/drive same-target overlap is marked internally because compile-time proof
-is not doable in that case. The successful public schedule-report shape is
-unchanged; `compile_issues` remains an empty array on success.
+is not doable in that case. Nonfatal rule/drive overlap is now projected into
+successful schedule-report `compile_issues`; reports with no nonfatal issues
+still keep that array empty.
 For same-target rule/rule data conflicts, rule-local and actor-level priority
 edges can now select a target-local winner by guarding the lower-priority
 assignment with the inverse higher-priority rule condition. This changes the
-scheduled `.fsm` review artifact, not the successful schedule-report schema.
+scheduled `.fsm` review artifact and does not itself add a compile issue.
 After scheduled `.fsm` reaches the HDL backend, generated SystemVerilog now
 adds verification-only selector assertions derived from backend assignment
 analysis. Same-value source selectors for one `LHS`/`VAL` selector and
@@ -692,7 +696,9 @@ reset: name, kind, polarity
 inferred_storage entries: name, kind, optional width
 transactions entries: name, states, count
 dt_blocks entries: name, kind, assignments
-compile_issues on success: empty array
+compile_issues entries: code, severity, target, domain, proof_status, reason, sources
+compile_issues source entries: owner, owner_kind, source_kind, target, operator, rhs, domain
+compile_issues with no nonfatal issues: empty array
 ```
 
 For each `dt_blocks` entry, `assignments` is a non-negative integer count of
@@ -756,18 +762,22 @@ For multi-file lowerings, the current schedule report describes the parent
 scheduled module only. Child scheduled `.fsm` text remains available through the
 lower-result `files` map. The machine-readable contract advertises this current
 scope in `schedule_report_multi_file_scope`.
-For successful schedule reports, `compile_issues` is present as an empty array.
-The machine-readable contract advertises this current success shape in
+For successful schedule reports, `compile_issues` is present as an array. It is
+empty when the successful report has no nonfatal compile issues. The
+machine-readable contract advertises that no-issue success shape in
 `schedule_report_compile_issues_success_shape`.
-The conflict/report projection boundary is defined, but the machine-readable
-schedule-report contract is not widened until the corresponding emitter slices
-ship. Planned nonfatal conflict issue entries in `compile_issues` are bounded
-to stable `code`, `severity`, `target`, `domain`, `proof_status`, diagnostic
-`reason`, and capped `sources` summaries. The current proof-status value that
-matters for nonfatal conflict reporting is `not_doable`: it means the lowerer
-is explicitly flagging that compile-time proof is NOT doable for that case,
-instead of silently treating the design as conflict-free. Fail-closed conflict
-cases remain targeted diagnostics, not successful schedule-report entries.
+Nonfatal conflict issue entries in `compile_issues` are bounded to stable
+`code`, `severity`, `target`, `domain`, `proof_status`, diagnostic `reason`,
+and capped `sources` summaries. The machine-readable contract advertises the
+bounded issue keys in `schedule_report_compile_issue_keys`, source-summary keys
+in `schedule_report_compile_issue_source_keys`, current severity values in
+`schedule_report_compile_issue_severity_values`, and current proof-status
+values in `schedule_report_compile_issue_proof_status_values`.
+The current proof-status value that matters for nonfatal conflict reporting is
+`not_doable`: it means the lowerer is explicitly flagging that compile-time
+proof is NOT doable for that case, instead of silently treating the design as
+conflict-free. Fail-closed conflict cases remain targeted diagnostics, not
+successful schedule-report entries.
 Planned accepted fan-in metadata uses a top-level
 `compatible_fanin_groups` array with bounded `kind`, `domain`, target/value
 facts, and the same capped source summaries. Raw `assignment_provenance`,

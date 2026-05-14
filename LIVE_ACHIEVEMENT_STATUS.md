@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF compile issues projection
+- Active R14 task-tree slice: `ISF-CONFLICTS.5.2` is complete.
+- Schedule-report `compile_issues` now carries warning-level conflict issues
+  using bounded issue/source summaries.
+- Fail-closed errors still stop lowering through targeted diagnostics; this
+  slice only projects nonfatal issues in successful reports.
+- The next frontier is `ISF-CONFLICTS.5.3`.
+
 ## 2026-05-14: R14 — ISF conflict report projection schema
 - Active R14 task-tree slice: `ISF-CONFLICTS.5.1` is complete.
 - The bounded schedule-report projection boundary is documented for later

@@ -156,13 +156,13 @@ transaction start input.
   Commit: `ISF-CONFLICTS.5.1: define report projection schema`
 
 - ID: `ISF-CONFLICTS.5.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Project nonfatal conflict issues into schedule-report compile_issues.`
   Acceptance: `Warning-level conflict issues such as rule/drive overlap are
   emitted in schedule JSON with bounded code, severity, proof status, target,
   and source-owner summaries without changing fail-closed diagnostics.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `prove -l t/1212-isf-schedule-report-compile-issues-projection.t; prove -l t/1130-isf-public-compile-issues-success-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t; prove -l t/1116-isf-public-schedule-report-key-family-audit.t t/1121-isf-public-cli-schedule-report-audit.t t/1172-isf-rule-trigger-fanin-schedule-report.t t/1209-isf-static-conflict-detection.t; bin/ci-regression isf --no-book; mdbook build docs/book; git diff --check`
+  Commit: `ISF-CONFLICTS.5.2: project compile issues`
 
 - ID: `ISF-CONFLICTS.5.3`
   Status: `pending`
@@ -204,7 +204,7 @@ transaction start input.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-CONFLICTS.5.2` | `pending` | The projection schema is documented; the next slice can emit nonfatal conflict issues into `compile_issues`. |
+| 1 | `ISF-CONFLICTS.5.3` | `pending` | Nonfatal conflict issues are projected; the next slice can expose accepted compatible fan-in groups. |
 
 ## Current Behavior Inventory
 
@@ -558,9 +558,9 @@ bounded candidate set for compile-time conflict detection and diagnostics.
   not treat different transaction states as same-cycle conflicts merely because
   they assign different values to the same target.
 
-The public schedule report still exposes successful `compile_issues` as an
-empty array. Public projection of conflict diagnostics belongs to
-`ISF-CONFLICTS.5`.
+At the time of `ISF-CONFLICTS.4.3`, the public schedule report still exposed
+successful `compile_issues` as an empty array. `ISF-CONFLICTS.5.2` now projects
+nonfatal conflict diagnostics into that array.
 
 ## Target-Local Priority Resolution
 
@@ -580,9 +580,9 @@ conflicts:
 - Priority cycles fail closed with `isf_priority_cycle_conflict`.
   Incomparable rule/rule conflicts still fail closed through the ordinary
   `isf_conflicting_rule_writes` diagnostic.
-- Successful priority resolution changes the scheduled `.fsm` review artifact
-  but does not widen successful schedule-report JSON; `compile_issues` remains
-  an empty array on success.
+- Successful priority resolution changes the scheduled `.fsm` review artifact.
+  It does not itself add compile issues; reports with no nonfatal issues still
+  keep `compile_issues` empty.
 
 ## Runtime Selector Instrumentation
 
@@ -610,15 +610,14 @@ Report projection of conflict/fan-in metadata remains assigned to
 
 `ISF-CONFLICTS.5.1` defines the public projection boundary for the later
 diagnostics/report leaves. It does not change emitted JSON yet.
-`compile_issues` remains an empty array in successful schedule reports until
-`ISF-CONFLICTS.5.2`, and `compatible_fanin_groups` remains absent until
-`ISF-CONFLICTS.5.3`.
+At that point, `compile_issues` still remained empty in successful schedule
+reports and `compatible_fanin_groups` remained absent.
 
-The planned `compile_issues` projection is for nonfatal issues that can appear
-in a successful schedule report. Fail-closed conflicts still surface as
-targeted diagnostics instead of producing a successful report, unless a future
-explicit error-report mode is designed. Each projected conflict issue must use
-a bounded object shape:
+`ISF-CONFLICTS.5.2` now ships the `compile_issues` part of that boundary.
+Nonfatal issues can appear in a successful schedule report. Fail-closed
+conflicts still surface as targeted diagnostics instead of producing a
+successful report, unless a future explicit error-report mode is designed.
+Each projected conflict issue uses this bounded object shape:
 
 - `code`: stable scalar diagnostic code, such as
   `isf_unproven_rule_drive_overlap`.
@@ -659,6 +658,32 @@ This projection is deliberately narrower than the internal classification
 objects. It gives downstream consumers enough information to explain why a
 multi-source case was accepted without freezing raw lowerer hashes, activation
 proof internals, or future arbitration machinery as public API.
+
+## Nonfatal Compile Issues Projection
+
+`ISF-CONFLICTS.5.2` projects warning-level `conflict_issues` into schedule JSON
+without changing fail-closed behavior. The current shipped case is
+`isf_unproven_rule_drive_overlap`: a rule action and a generated drive body can
+target the same data output, and the scheduler records that proving overlap or
+mutual exclusion is `not_doable` in the current compile-time analysis.
+
+The JSON emitter filters out `severity => error` issues. Those errors still
+belong to the lowering diagnostic path, where they stop generation. Warnings
+are emitted as bounded `compile_issues` entries, preserving only the fields
+documented above plus bounded source summaries. Source activation trees,
+assignment indexes, and priority-suppression metadata remain private even
+though they exist internally.
+
+The public contract metadata now advertises:
+
+- `schedule_report_compile_issue_keys`
+- `schedule_report_compile_issue_source_keys`
+- `schedule_report_compile_issue_severity_values`
+- `schedule_report_compile_issue_proof_status_values`
+
+Successful reports with no nonfatal issues continue to expose
+`compile_issues: []`, preserving the existing no-issue success shape for APB
+and other ordinary fixtures.
 
 ## Decisions
 
@@ -718,6 +743,9 @@ proof internals, or future arbitration machinery as public API.
   groups will expose only group kind/domain, target/value facts, and the same
   capped source summaries. Raw provenance and activation proof internals remain
   private.
+- `2026-05-14`: `ISF-CONFLICTS.5.2` ships the nonfatal `compile_issues`
+  projection for successful schedule reports. Warning issues are projected with
+  bounded issue/source keys; error issues remain fail-closed diagnostics.
 
 ## Open Questions
 
@@ -771,6 +799,12 @@ proof internals, or future arbitration machinery as public API.
 | `2026-05-14` | `ISF-CONFLICTS.5.1` | Bounded schedule-report projection schema documented in the task tree, ISF spec, public contract, and mdBook | `passed` |
 | `2026-05-14` | `ISF-CONFLICTS.5.1` | `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-CONFLICTS.5.1` | `mdbook build docs/book` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.5.2` | `prove -l t/1212-isf-schedule-report-compile-issues-projection.t` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.5.2` | `prove -l t/1130-isf-public-compile-issues-success-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.5.2` | `prove -l t/1116-isf-public-schedule-report-key-family-audit.t t/1121-isf-public-cli-schedule-report-audit.t t/1172-isf-rule-trigger-fanin-schedule-report.t t/1209-isf-static-conflict-detection.t` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.5.2` | `bin/ci-regression isf --no-book` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.5.2` | `mdbook build docs/book` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.5.2` | `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -788,6 +822,7 @@ proof internals, or future arbitration machinery as public API.
 | `ISF-CONFLICTS.4.5` | `ISF-CONFLICTS.4.5: add runtime selector assertions` | Adds verification-only SystemVerilog selector assertions from backend assignment analysis. |
 | `ISF-CONFLICTS.5` | `ISF-CONFLICTS.5: split diagnostics projection` | Splits diagnostics/report projection into schema, compile-issues, fan-in, and rejected-diagnostic leaves. |
 | `ISF-CONFLICTS.5.1` | `ISF-CONFLICTS.5.1: define report projection schema` | Defines the bounded public shape for planned nonfatal `compile_issues` entries and compatible fan-in group summaries. |
+| `ISF-CONFLICTS.5.2` | `ISF-CONFLICTS.5.2: project compile issues` | Emits warning-level conflict issues in schedule-report `compile_issues` using bounded issue/source summaries. |
 
 ## Changelog
 
@@ -820,3 +855,5 @@ proof internals, or future arbitration machinery as public API.
 - `2026-05-14`: Completed `ISF-CONFLICTS.5.1`; current frontier moves to
   `ISF-CONFLICTS.5.2` for nonfatal conflict issue projection into
   `compile_issues`.
+- `2026-05-14`: Completed `ISF-CONFLICTS.5.2`; current frontier moves to
+  `ISF-CONFLICTS.5.3` for compatible fan-in group projection.

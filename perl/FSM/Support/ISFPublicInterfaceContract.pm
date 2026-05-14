@@ -37,6 +37,10 @@ our @EXPORT_OK = qw(
     isf_public_interface_public_top_level_keys
     isf_public_interface_schedule_report_compile_issues_success_shape
     isf_public_interface_schedule_report_clock_shape
+    isf_public_interface_schedule_report_compile_issue_keys
+    isf_public_interface_schedule_report_compile_issue_proof_status_values
+    isf_public_interface_schedule_report_compile_issue_severity_values
+    isf_public_interface_schedule_report_compile_issue_source_keys
     isf_public_interface_schedule_report_dt_assignments_shape
     isf_public_interface_schedule_report_dt_kind_values
     isf_public_interface_schedule_report_multi_file_scope
@@ -138,6 +142,10 @@ sub build_isf_public_interface_contract {
         schedule_report_clock_shape => isf_public_interface_schedule_report_clock_shape(),
         schedule_report_watchdog_shape => isf_public_interface_schedule_report_watchdog_shape(),
         schedule_report_compile_issues_success_shape => isf_public_interface_schedule_report_compile_issues_success_shape(),
+        schedule_report_compile_issue_keys => isf_public_interface_schedule_report_compile_issue_keys(),
+        schedule_report_compile_issue_source_keys => isf_public_interface_schedule_report_compile_issue_source_keys(),
+        schedule_report_compile_issue_severity_values => isf_public_interface_schedule_report_compile_issue_severity_values(),
+        schedule_report_compile_issue_proof_status_values => isf_public_interface_schedule_report_compile_issue_proof_status_values(),
         schedule_report_multi_file_scope => isf_public_interface_schedule_report_multi_file_scope(),
         schedule_report_interface_count_shape => isf_public_interface_schedule_report_interface_count_shape(),
         schedule_report_state_count_shape => isf_public_interface_schedule_report_state_count_shape(),
@@ -263,6 +271,7 @@ sub build_isf_public_interface_contract {
             't/1209-isf-static-conflict-detection.t',
             't/1210-isf-priority-conflict-resolution.t',
             't/1211-isf-runtime-selector-conflict-instrumentation.t',
+            't/1212-isf-schedule-report-compile-issues-projection.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -325,6 +334,10 @@ sub isf_public_interface_public_top_level_keys {
             schedule_report_clock_shape
             schedule_report_watchdog_shape
             schedule_report_compile_issues_success_shape
+            schedule_report_compile_issue_keys
+            schedule_report_compile_issue_source_keys
+            schedule_report_compile_issue_severity_values
+            schedule_report_compile_issue_proof_status_values
             schedule_report_multi_file_scope
             schedule_report_interface_count_shape
             schedule_report_state_count_shape
@@ -524,7 +537,51 @@ sub isf_public_interface_schedule_report_top_level_keys {
 }
 
 sub isf_public_interface_schedule_report_compile_issues_success_shape {
-    return 'array reference; empty on successful schedule reports';
+    return 'array reference; empty when a successful schedule report has no nonfatal compile issues';
+}
+
+sub isf_public_interface_schedule_report_compile_issue_keys {
+    return [
+        qw(
+            code
+            severity
+            target
+            domain
+            proof_status
+            reason
+            sources
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_compile_issue_source_keys {
+    return [
+        qw(
+            owner
+            owner_kind
+            source_kind
+            target
+            operator
+            rhs
+            domain
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_compile_issue_severity_values {
+    return [
+        qw(
+            warning
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_compile_issue_proof_status_values {
+    return [
+        qw(
+            not_doable
+        ),
+    ];
 }
 
 sub isf_public_interface_schedule_report_source_shape {
@@ -672,6 +729,8 @@ sub isf_public_interface_schedule_report_presence_key_family_map {
         schedule_report_storage_optional_keys => isf_public_interface_schedule_report_storage_optional_keys(),
         schedule_report_transaction_keys => isf_public_interface_schedule_report_transaction_keys(),
         schedule_report_dt_keys => isf_public_interface_schedule_report_dt_keys(),
+        schedule_report_compile_issue_keys => isf_public_interface_schedule_report_compile_issue_keys(),
+        schedule_report_compile_issue_source_keys => isf_public_interface_schedule_report_compile_issue_source_keys(),
     };
 }
 

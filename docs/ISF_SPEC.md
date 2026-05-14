@@ -802,17 +802,18 @@ clock signal name, and `watchdog` is a scalar limit when configured or null when
 omitted. The capability-manifest ISF public contract advertises this through
 `schedule_report_source_shape`, `schedule_report_scheduled_fsm_shape`,
 `schedule_report_clock_shape`, and `schedule_report_watchdog_shape`.
-Successful reports keep `compile_issues` present as an empty array; the
-capability-manifest ISF public contract advertises that success shape through
+Successful reports keep `compile_issues` present as an array. Reports with no
+nonfatal compile issues keep it empty; the capability-manifest ISF public
+contract advertises that no-issue success shape through
 `schedule_report_compile_issues_success_shape`.
-The conflict-report projection is now defined before the emitter widens this
-JSON shape. The next report slice may project nonfatal conflict issues into
-`compile_issues` as bounded objects with stable `code`, `severity`, `target`,
-`domain`, `proof_status`, human-readable `reason`, and capped `sources`
-summaries. The important current proof status is `not_doable`, used when the
-scheduler is explicitly flagging that a compile-time proof is NOT doable for a
-case such as rule/drive overlap. Fail-closed conflicts still produce targeted
-diagnostics instead of successful schedule reports.
+Nonfatal conflict issues are projected into `compile_issues` as bounded objects
+with stable `code`, `severity`, `target`, `domain`, `proof_status`,
+human-readable `reason`, and capped `sources` summaries. The important current
+proof status is `not_doable`, used when the scheduler is explicitly flagging
+that a compile-time proof is NOT doable for a case such as rule/drive overlap.
+The public contract advertises the bounded issue keys, source-summary keys,
+severity values, and proof-status values. Fail-closed conflicts still produce
+targeted diagnostics instead of successful schedule reports.
 Accepted compatible fan-in metadata is planned as a top-level
 `compatible_fanin_groups` array once that emitter slice lands. Each group is
 bounded to classifier `kind`, `domain`, target/value facts, and source
@@ -955,6 +956,7 @@ Focused tests:
 - [t/1209-isf-static-conflict-detection.t](../t/1209-isf-static-conflict-detection.t)
 - [t/1210-isf-priority-conflict-resolution.t](../t/1210-isf-priority-conflict-resolution.t)
 - [t/1211-isf-runtime-selector-conflict-instrumentation.t](../t/1211-isf-runtime-selector-conflict-instrumentation.t)
+- [t/1212-isf-schedule-report-compile-issues-projection.t](../t/1212-isf-schedule-report-compile-issues-projection.t)
 
 ## 12. Explicitly Deferred
 

@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF compile issues projection
+- Nonfatal conflict projection is owned by the schedule JSON emitter rather
+  than by string-parsing scheduled `.fsm` output. The emitter already consumes
+  `LoweringIR`, so it can project the internal `conflict_issues` records
+  directly.
+- The projection filters out `severity => error`. Those cases are still
+  fail-closed lowerer diagnostics, not successful reports with embedded
+  errors.
+- Public issue source summaries deliberately omit activation, assignment index,
+  and priority-suppression internals. Those fields are useful for analysis but
+  not needed for the first downstream-facing warning report.
+- The no-issue APB success case still emits `compile_issues: []`, so existing
+  consumers that only checked the empty successful shape keep working until
+  they opt into warning handling.
 ## 2026-05-14: ISF conflict report projection schema
 - The schedule-report projection is intentionally bounded before implementation
   changes. The next leaves can add fields without exposing raw

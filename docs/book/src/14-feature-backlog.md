@@ -238,8 +238,9 @@ Goal: freeze the whole schedule JSON schema as a public contract.
 Current boundary: schedule JSON is public only through bounded key families
 advertised by `embedding.isf_public_interface`. The whole JSON tree is not yet
 promised as permanently frozen. The conflict/fan-in projection boundary is now
-defined for future emitter slices, but successful reports still keep
-`compile_issues` empty and do not yet emit `compatible_fanin_groups`.
+defined. Nonfatal conflict issues now project into `compile_issues` with a
+bounded issue/source shape, but reports do not yet emit
+`compatible_fanin_groups`.
 
 ## Backends And Validation
 

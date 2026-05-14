@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF compile issues schedule-report projection
+- Completed `ISF-CONFLICTS.5.2` in
+  [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md).
+- `FSM::Scheduler::ISF::Emitter::JSON` now projects warning-level
+  `conflict_issues` into schedule-report `compile_issues`.
+- The shipped public issue shape includes stable `code`, `severity`, `target`,
+  `domain`, `proof_status`, `reason`, and bounded `sources`; source summaries
+  expose ownership and target/operator/value facts without activation or
+  priority internals.
+- `t/1212-isf-schedule-report-compile-issues-projection.t` covers in-process
+  and CLI reports for the current `isf_unproven_rule_drive_overlap` warning.
+- The active `ISF-CONFLICTS` frontier is now `ISF-CONFLICTS.5.3`.
 ## 2026-05-14: ISF conflict report projection schema
 - Completed `ISF-CONFLICTS.5.1` in
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md).

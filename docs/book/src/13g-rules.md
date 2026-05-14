@@ -93,10 +93,11 @@ assignment whenever `high`'s rule condition is active:
 ```
 
 The schedule-report projection for these conflict facts is being widened in
-bounded slices. Successful reports currently keep `compile_issues` as an empty
-array. The planned nonfatal issue entries expose only stable issue code,
-severity, target/domain, `proof_status`, human-readable reason text, and capped
-source summaries. Accepted compatible fan-in groups are planned as bounded
+bounded slices. Successful reports with no nonfatal issues keep
+`compile_issues` as an empty array. Nonfatal issue entries now expose only
+stable issue code, severity, target/domain, `proof_status`, human-readable
+reason text, and capped source summaries. Accepted compatible fan-in groups are
+planned as bounded
 `compatible_fanin_groups` entries with classifier kind/domain, target/value
 facts, and the same source-summary shape. Raw assignment provenance, activation
 proof context, and priority-suppression bookkeeping remain lowerer internals.

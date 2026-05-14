@@ -13,8 +13,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree remains
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md),
-  whose current frontier is `ISF-CONFLICTS.5.2` after defining the bounded
-  conflict/fan-in schedule-report projection schema.
+  whose current frontier is `ISF-CONFLICTS.5.3` after projecting nonfatal
+  conflict issues into schedule-report `compile_issues`.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
   guide for installing the same task-tree tracking workflow in another
   project.
@@ -4360,13 +4360,16 @@ Done:
   later schedule-report conflict/fan-in metadata: nonfatal compile issues get
   capped issue/source fields, accepted fan-in groups get capped target/value
   summaries, and raw lowerer provenance stays private.
+- `ISF-CONFLICTS.5.2` now emits warning-level conflict issues into
+  schedule-report `compile_issues` with bounded issue/source keys while keeping
+  fail-closed conflict errors on the diagnostic path.
 Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the `ISF-CONFLICTS` task tree when selecting the ISF conflict-resolution
-  feature path; the current frontier is `ISF-CONFLICTS.5.2`, which projects
-  nonfatal conflict issues into `compile_issues`.
+  feature path; the current frontier is `ISF-CONFLICTS.5.3`, which projects
+  accepted compatible fan-in groups into schedule-report metadata.
 - ISF conflict detection policy is now split: compile-time proof is
   best-effort and must flag cases where proof is not doable, while generated
   verification HDL now checks mux selectors at runtime for same-value source

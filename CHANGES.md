@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF compile issues projection
+- Completed `ISF-CONFLICTS.5.2` by projecting warning-level scheduler
+  conflict issues into schedule-report `compile_issues`.
+- `FSM::Scheduler::ISF::Emitter::JSON` now emits bounded issue entries with
+  stable issue code, severity, target/domain, proof status, reason, and capped
+  source summaries.
+- `FSM::Support::ISFPublicInterfaceContract` now advertises compile-issue
+  entry keys, source-summary keys, severity values, and proof-status values.
+- Added [t/1212-isf-schedule-report-compile-issues-projection.t](t/1212-isf-schedule-report-compile-issues-projection.t)
+  for in-process and CLI projection of `isf_unproven_rule_drive_overlap`.
+- Advanced the active `ISF-CONFLICTS` frontier from `ISF-CONFLICTS.5.2` to
+  `ISF-CONFLICTS.5.3`.
 ### R14 — ISF conflict report projection schema
 - Completed `ISF-CONFLICTS.5.1` by defining the bounded public projection
   boundary for planned conflict/fan-in schedule-report metadata.

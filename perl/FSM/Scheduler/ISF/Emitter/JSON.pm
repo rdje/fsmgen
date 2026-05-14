@@ -29,7 +29,7 @@ sub emit($self, $ir) {
         inferred_storage => $self->_storage_summary($ir),
         transactions   => $self->_transaction_summary($ir),
         dt_blocks      => $self->_dt_summary($ir),
-        compile_issues => [],
+        compile_issues => $self->_compile_issue_summary($ir),
     };
 
     my $json = JSON::PP->new->ascii->canonical->pretty->encode($report);
@@ -119,6 +119,39 @@ sub _dt_summary($self, $ir) {
         };
     }
     return \@dts;
+}
+
+sub _compile_issue_summary($self, $ir) {
+    my @issues;
+
+    for my $issue (@{$ir->{conflict_issues} || []}) {
+        next if ($issue->{severity} // '') eq 'error';
+        push @issues, {
+            code         => $issue->{code},
+            severity     => $issue->{severity},
+            target       => $issue->{target},
+            domain       => $issue->{domain},
+            proof_status => $issue->{proof_status},
+            reason       => $issue->{reason},
+            sources      => [
+                map { _compile_issue_source_summary($_) } @{$issue->{sources} || []}
+            ],
+        };
+    }
+
+    return \@issues;
+}
+
+sub _compile_issue_source_summary($source) {
+    return {
+        owner       => $source->{owner},
+        owner_kind  => $source->{owner_kind},
+        source_kind => $source->{source_kind},
+        target      => $source->{target},
+        operator    => $source->{operator},
+        rhs         => $source->{rhs},
+        domain      => $source->{domain},
+    };
 }
 
 1;

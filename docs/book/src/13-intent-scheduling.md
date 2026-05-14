@@ -127,13 +127,12 @@ HDL-generation paths. Both
 capability-manifest CLI spellings are audited to emit the same ISF contract
 payload. The current APB schedule report is also checked against the advertised
 public key families, and successful reports advertise and keep an empty
-`compile_issues` array. The conflict-report projection boundary is defined for
-the next schedule-report slices: nonfatal `compile_issues` entries are planned
-as bounded objects with stable code/severity, target/domain, `proof_status`,
-reason text, and capped source summaries, while accepted fan-in groups are
-planned as bounded `compatible_fanin_groups` entries. Raw assignment
-provenance and activation proof internals remain private. The lower-result
-`files` map is checked for both
+`compile_issues` array when no nonfatal issues exist. Nonfatal conflict issues
+now project into `compile_issues` as bounded objects with stable code/severity,
+target/domain, `proof_status`, reason text, and capped source summaries.
+Accepted fan-in groups are planned as bounded `compatible_fanin_groups`
+entries. Raw assignment provenance and activation proof internals remain
+private. The lower-result `files` map is checked for both
 single-file and multi-file lowering, including scheduled `.fsm` basename keys
 and matching scheduled-text roots. The in-memory `parse_source(...)` facade is
 also checked against `parse_file(...)` on a real fixture. APB DT block order
