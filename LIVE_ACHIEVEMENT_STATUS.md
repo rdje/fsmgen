@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF rule-action behavior inventory
+- Active R14 task-tree slice: `ISF-RULE-ACTIONS.1` is complete.
+- The task tree now inventories current rule guard/action parsing,
+  malformed-boundary diagnostics, scalar-only limits, lowering behavior,
+  schedule-report/storage metadata, and conflict touchpoints.
+- The mdBook rule/backlog text now reflects that rule-local priority feeds the
+  covered priority/resource paths.
+- The next active R14 frontier is `ISF-RULE-ACTIONS.2`.
+
 ## 2026-05-14: R14 — ISF shareable resource kind catalog
 - Active R14 task-tree slice: `ISF-RESOURCE-CATALOG.1` is complete.
 - Public ISF documentation now lists the growable shareable resource kind

@@ -45,13 +45,13 @@ current rule guard, delayed trigger, and conflict semantics.
   `ISF-RULE-ACTIONS.3`, `ISF-RULE-ACTIONS.4`, `ISF-RULE-ACTIONS.5`
 
 - ID: `ISF-RULE-ACTIONS.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Inventory current rule action parser/lowering/report behavior.`
   Acceptance: `The task file lists accepted rule actions, malformed rule
   action diagnostics, scalar-only limits, storage/report metadata, and conflict
   touchpoints.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `prove -l t/1168-isf-rule-guard-factoring.t t/1169-isf-rule-shorthand-guard.t t/1171-isf-rule-trigger-fanin.t t/1172-isf-rule-trigger-fanin-schedule-report.t t/1181-isf-rule-action-boundary.t t/1190-isf-rule-priority-target-boundary.t t/1209-isf-static-conflict-detection.t t/1210-isf-priority-conflict-resolution.t`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-RULE-ACTIONS.1: inventory rule action behavior`
 
 - ID: `ISF-RULE-ACTIONS.2`
   Status: `pending`
@@ -90,13 +90,129 @@ current rule guard, delayed trigger, and conflict semantics.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-RULE-ACTIONS.1` | `pending` | The existing scalar-only rule action boundary must be inventoried before widening it. |
+| 1 | `ISF-RULE-ACTIONS.2` | `pending` | The existing scalar-only boundary is now inventoried; the next leaf can specify the expression-valued syntax and semantics. |
+
+## ISF-RULE-ACTIONS.1 Inventory
+
+This inventory records the shipped rule-action surface before expression-valued
+rule assignments are widened. It is a current-behavior record, not a frozen
+API promise.
+
+### Accepted Rule Guard Forms
+
+- `(rule name action...)` is accepted. With no guard, the lowerer uses a
+  constant `1` rule DTE.
+- `(rule name condition action...)` is the preferred shorthand guard form.
+  `condition` must be a scalar token. The parser normalizes it to the public
+  `when => ['when', condition]` field.
+- `(rule name (when condition) action...)` remains accepted and normalizes to
+  the same public `when` field.
+- A rule accepts at most one guard. Mixing shorthand and long-form guards, or
+  repeating long-form guards, fails before actor-shell return.
+- Rule-local `(when condition)` has no body. Body-bearing transaction
+  `(when condition body...)` syntax is not accepted in a rule.
+
+### Accepted Rule Action Forms
+
+- `(port value)` is the current assignment action. `port` is any non-empty
+  scalar action head other than reserved `trigger` and `priority`; `value`
+  must be a scalar. The parser does not accept expression/list RHS values yet.
+- `(trigger transaction)` requests a transaction. The target must be a
+  non-empty scalar name resolving to a declared same-actor transaction.
+  Forward references are accepted because validation runs after the full
+  actor body is collected.
+- `(priority over other_rule)` declares a rule-local priority edge. The target
+  must be a non-empty scalar name resolving to a declared same-actor rule.
+  Forward references are accepted.
+- Unknown two-item list actions are treated as `(port value)` assignments
+  unless their head is one of the reserved action heads above.
+
+### Malformed Boundary Diagnostics
+
+- A scalar action fails with
+  `Error: rule '<name>' actions must be list forms`.
+- A list action with a nested/non-scalar head fails with
+  `Error: rule '<name>' action heads must be scalar`.
+- Malformed triggers fail with
+  `Error: rule '<name>' trigger requires '(trigger transaction)'`.
+- Malformed rule-local priorities fail with
+  `Error: rule '<name>' priority requires '(priority over other_rule)'`.
+- Assignment actions with missing values, extra structure, or list RHS values
+  fail with `Error: rule '<name>' assignment actions require '(port value)'`.
+- Unknown trigger targets fail with
+  `Error: rule '<name>' triggers unknown transaction '<target>' in actor '<actor>'`.
+- Unknown priority targets fail with
+  `Error: rule '<name>' priority targets unknown rule '<target>' in actor '<actor>'`.
+- Duplicate guards fail with
+  `Error: rule '<name>' accepts only one guard condition`.
+- Malformed guards fail with
+  `Error: rule '<name>' guard requires exactly one scalar condition`.
+
+### Lowering Behavior
+
+- Each rule lowers to one non-state DT with `kind => 'rule'`.
+- The rule guard lowers to the DT header DTE. The lowerer emits the guard once
+  as the DT enable instead of repeating it on every action.
+- `(port value)` lowers to a flopped assignment with `op => '<-'` and
+  `source_kind => 'rule_action'`.
+- `(trigger transaction)` lowers to a one-cycle delayed pulse with
+  `op => '<1'` on a generated per-rule source named
+  `<rule>_<transaction>`, with `source_kind => 'rule_trigger_source'`.
+- For each triggered transaction, the scheduler emits one generated
+  `<transaction>_trigger_fanin` non-state DT. It drives
+  `<transaction>_start` combinationally from the single source or the OR of
+  all per-rule sources.
+- `(priority over other_rule)` does not emit an assignment. The priority edge
+  participates in the rule priority model used by covered conflict and
+  resource-arbitration paths.
+
+### Schedule Report And Storage Metadata
+
+- Schedule reports expose rule DTs through `dt_blocks` entries with
+  `kind => 'rule'` and an assignment count. They do not expose raw rule action
+  payloads.
+- Generated trigger fan-in DTs appear in `dt_blocks` with
+  `kind => 'rule_trigger_fanin'`.
+- Rule trigger source signals and generated transaction start signals are
+  reported as one-bit scheduler-inferred storage in `inferred_storage`.
+- Ordinary rule-action LHS storage is not itemized as a dedicated schedule
+  report storage entry today; downstream users should rely on scheduled
+  `.fsm`/HDL output, not the storage summary, for those rule-action registers.
+- Successful priority/resource decisions project through
+  `priority_resolutions` and `resource_arbitration`. Raw suppression
+  bookkeeping remains internal.
+
+### Conflict Touchpoints
+
+- Rule assignment records use `source_kind => 'rule_action'` and participate
+  in static data-conflict analysis.
+- Same-target rule/rule assignments with the same operator and RHS are treated
+  as compatible fan-in.
+- Same-target rule/rule assignments with incompatible RHS values fail closed
+  with `isf_conflicting_rule_writes` unless covered priority or resource
+  arbitration resolves the overlap.
+- Rule-local priority and actor-level rule priority can suppress the
+  lower-priority assignment in the covered rule/rule data-conflict case.
+- Actor-level rule-over-transaction priority can suppress the covered
+  transaction assignment in the current lowerable direction.
+- Priority-arbitrated `rule_slot` resources can suppress a whole lower-priority
+  rule DT by gating its DTE.
+- Rule/drive same-target overlap is reported as
+  `isf_unproven_rule_drive_overlap` with `proof_status => not_doable` because
+  the current analysis does not prove that overlap statically.
+- Rule trigger pulses are request-domain sources. Multiple rules triggering
+  the same transaction are resolved by generated OR fan-in, not by data
+  conflict arbitration.
 
 ## Decisions
 
 - `2026-05-14`: Rule action widening is tracked independently from legacy
   transaction `assign` compatibility so the supported rule surface can move
   without reviving removed syntax accidentally.
+- `2026-05-14`: The inventory confirms that the current widening point is the
+  scalar RHS of `(port value)`. Rule guards, trigger targets, and priority
+  targets are also scalar-only today, but this tree focuses first on
+  expression-valued assignment RHS lowering.
 
 ## Open Questions
 
@@ -114,13 +230,17 @@ current rule guard, delayed trigger, and conflict semantics.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-14` | `ISF-RULE-ACTIONS` | `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-RULE-ACTIONS.1` | `prove -l t/1168-isf-rule-guard-factoring.t t/1169-isf-rule-shorthand-guard.t t/1171-isf-rule-trigger-fanin.t t/1172-isf-rule-trigger-fanin-schedule-report.t t/1181-isf-rule-action-boundary.t t/1190-isf-rule-priority-target-boundary.t t/1209-isf-static-conflict-detection.t t/1210-isf-priority-conflict-resolution.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-RULE-ACTIONS` | `R14: map ISF objectives to task trees` | Initial tree creation belongs to the ISF objective task-tree coverage slice. |
+| `ISF-RULE-ACTIONS.1` | `ISF-RULE-ACTIONS.1: inventory rule action behavior` | Current scalar-only boundary and report/conflict touchpoints inventoried. |
 
 ## Changelog
 
+- `2026-05-14`: Completed `ISF-RULE-ACTIONS.1` by inventorying current rule
+  action parser, lowering, schedule-report, storage, and conflict behavior.
 - `2026-05-14`: Created the active ISF rule-action task tree.

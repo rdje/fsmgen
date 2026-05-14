@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF rule-action behavior inventory
+- Completed `ISF-RULE-ACTIONS.1` in
+  [docs/tasks/ISF-RULE-ACTIONS.md](docs/tasks/ISF-RULE-ACTIONS.md).
+- The task tree now records accepted rule guard/action shapes, malformed
+  diagnostics, scalar-only limits, lowering behavior, schedule-report/storage
+  metadata, and conflict touchpoints.
+- The next active R14 frontier is `ISF-RULE-ACTIONS.2`, which should specify
+  expression-valued assignment RHS syntax and semantics before implementation.
 ## 2026-05-14: ISF shareable resource kind catalog
 - Completed `ISF-RESOURCE-CATALOG.1` in
   [docs/tasks/ISF-RESOURCE-CATALOG.md](docs/tasks/ISF-RESOURCE-CATALOG.md).

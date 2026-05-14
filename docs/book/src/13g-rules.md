@@ -29,8 +29,8 @@ body-bearing `(when condition body...)` form is only described in
 - `(port value)` — guarded assignment when the condition holds
 - `(trigger transaction)` — guarded one-cycle delayed pulse on a per-rule
   trigger source; generated fan-in drives the transaction start signal
-- `(priority over other_rule)` — structurally validated metadata, currently
-  not enforced
+- `(priority over other_rule)` — a rule-local priority edge used by the
+  covered priority and resource-arbitration paths
 
 Rule actions are structurally validated before the actor shell is returned.
 The current `(port value)` action accepts scalar values only; expression-valued
@@ -38,7 +38,8 @@ rule assignments are deferred until the rule lowerer has a real expression
 path. That widening is tracked in [Feature Backlog](14-feature-backlog.md).
 `(trigger transaction)` must name a declared transaction in the same actor;
 forward references are accepted because validation happens after the full actor
-body is collected.
+body is collected. `(priority over other_rule)` must name a declared rule in
+the same actor.
 
 **Lowering**: Non-state DT block with the rule guard emitted as the DT header
 DTE. The shorthand scalar guard and the long-form `(when ...)` guard both

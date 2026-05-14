@@ -236,9 +236,14 @@ Status: backlog.
 Goal: allow rule actions to assign expression values, not only scalar
 `(port value)` pairs.
 
-Current boundary: rule actions accept `(port value)`, `(trigger transaction)`,
-and `(priority over other_rule)`. Expression-valued rule assignments are
-deferred.
+Current boundary: rule actions accept scalar `(port value)` assignments,
+`(trigger transaction)`, and `(priority over other_rule)`. Rule guards,
+assignment values, trigger targets, and priority targets are scalar-only
+today. `(port value)` lowers as a flopped `<-` rule assignment under the rule
+DT DTE; `(trigger transaction)` lowers through a generated one-cycle source
+and transaction start fan-in; `(priority over other_rule)` feeds the covered
+priority/resource arbitration paths. Expression-valued rule assignment RHS
+lowering is deferred.
 
 ### Transaction Stage Lowering
 

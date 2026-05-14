@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF rule-action behavior inventory
+- Completed `ISF-RULE-ACTIONS.1` by inventorying current rule guard/action
+  parser behavior, malformed diagnostics, scalar-only limits, lowering,
+  schedule-report/storage metadata, and conflict touchpoints.
+- Updated the mdBook rule/backlog wording so rule-local priority is described
+  as participating in the covered priority/resource paths instead of inert
+  metadata.
+- Advanced the active `ISF-RULE-ACTIONS` frontier from
+  `ISF-RULE-ACTIONS.1` to `ISF-RULE-ACTIONS.2`.
 ### R14 — ISF shareable resource kind catalog
 - Completed `ISF-RESOURCE-CATALOG.1` by publishing the current growable
   shareable-resource kind catalog in the ISF spec, mdBook, public contract,

@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF rule-action behavior inventory
+- The widening point for this tree is the RHS of `(port value)`. Today that
+  value must be scalar and lowers directly as a flopped `<-` rule assignment.
+  Supporting list expressions should therefore be a real expression-lowering
+  change, not a parser-only relaxation.
+- Rule triggers already have a distinct, stable lowering path: a per-rule
+  `<1` pulse source plus generated OR fan-in into the transaction start. That
+  path should remain separate from expression-valued data assignments.
+- Schedule reports expose rule action behavior mostly by DT kind/count and
+  bounded conflict/arbitration summaries. Raw rule actions and ordinary
+  rule-action register storage are not broad public report payloads today.
 ## 2026-05-14: ISF shareable resource kind catalog
 - The resource list is now treated as a growable public registry. It starts
   small on purpose: a kind should enter shipped runtime behavior only when it
