@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF fixture tree closure
+- Completed `ISF-FIXTURES.5` and closed
+  [docs/tasks/ISF-FIXTURE-COVERAGE.md](docs/tasks/ISF-FIXTURE-COVERAGE.md).
+- The fixture matrix now states that APB remains the quick/smoke baseline and
+  the SPI-like serial-transfer fixture is covered in the `isf` tier through
+  schedule JSON, scheduled `.fsm`, plain HDL, and strict HDL.
+- Remaining unclaimed realistic fixture areas are I2C, UART, burst, phase,
+  rule/resource arbitration, and stage/contract compositions.
+- The ISF arity policy is now documented: variadic forms are appropriate only
+  for natural list-like or associative constructs with clear lowering,
+  diagnostics, tests, and docs; fixed-role forms keep exact arity.
+- The next active R14 frontier is `ISF-COMPATIBILITY.1`.
 ## 2026-05-14: ISF fixture tier placement
 - Completed `ISF-FIXTURES.4` in
   [docs/tasks/ISF-FIXTURE-COVERAGE.md](docs/tasks/ISF-FIXTURE-COVERAGE.md).

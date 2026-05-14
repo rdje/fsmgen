@@ -12,12 +12,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   frontier. The ongoing/unresolved R14 ISF objective families are now covered
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
-  [docs/tasks/ISF-FIXTURE-COVERAGE.md](docs/tasks/ISF-FIXTURE-COVERAGE.md),
-  whose current frontier is `ISF-FIXTURES.5`. The completed
+  [docs/tasks/ISF-COMPATIBILITY-SURFACE.md](docs/tasks/ISF-COMPATIBILITY-SURFACE.md),
+  whose current frontier is `ISF-COMPATIBILITY.1`. The completed
   `ISF-SCHEDULE-REPORTS`, `ISF-DATA-WIDTHS`, `ISF-STAGES-CONTRACTS`,
   `ISF-RULE-ACTIONS`, `ISF-RESOURCE-CATALOG`, `ISF-RESOURCE-PRIORITY`,
-  `ISF-CONFLICTS`, and `ISF-COMPOSITION` trees are listed in the task-tree
-  completed table.
+  `ISF-CONFLICTS`, `ISF-COMPOSITION`, and `ISF-FIXTURES` trees are listed in
+  the task-tree completed table.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
   guide for installing the same task-tree tracking workflow in another
   project.
@@ -239,6 +239,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   call actuals now preserve composed expression forms, so Lisp-like
   argument-level composition lowers to scheduled `.fsm` instead of
   `ARRAY(...)` strings. The active frontier advances to `ISF-FIXTURES.5`.
+- `ISF-FIXTURES.5` is complete and the fixture tree is closed. The live
+  fixture matrix now says APB remains the quick/smoke baseline, the SPI-like
+  serial-transfer fixture is covered in the `isf` tier through schedule JSON,
+  scheduled `.fsm`, plain HDL, and strict HDL, and I2C/UART/burst/phase plus
+  rule-resource and stage-contract realism remain future fixture candidates.
+  The ISF expressiveness policy now records that variadic forms are acceptable
+  for natural list-like or associative constructs only when lowering,
+  diagnostics, tests, and docs ship with the construct. The active PNT
+  frontier moves to `ISF-COMPATIBILITY.1`.
 - ISF construct support now has a normative rule: parser acceptance is not a
   support claim. Every current or future shipped ISF construct must have an
   explicit accepted source shape, lowering path or fail-closed diagnostic,
@@ -4677,12 +4686,12 @@ Left:
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the first active tree in [docs/TASK_TREE.md](docs/TASK_TREE.md) when
-  selecting the next PNT slice; after closing `ISF-CONFLICTS`, that frontier is
-  `ISF-COMPOSITION.4` in
-  [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md).
-- Implement the generated top/composition handoff that consumes the preserved
-  spawn-instance metadata, wires parent/child start-done ports, and applies
-  per-instance parameter overrides.
+  selecting the next PNT slice; after closing `ISF-FIXTURES`, that frontier is
+  `ISF-COMPATIBILITY.1` in
+  [docs/tasks/ISF-COMPATIBILITY-SURFACE.md](docs/tasks/ISF-COMPATIBILITY-SURFACE.md).
+- Keep public-facing ISF feature additions as the main focus; public contract
+  synchronization should happen as part of each shipped feature slice rather
+  than as a standalone stabilization lane.
 - ISF conflict detection policy is now split: compile-time proof is
   best-effort and must flag cases where proof is not doable, while generated
   verification HDL now checks mux selectors at runtime for same-value source

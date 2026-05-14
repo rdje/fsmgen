@@ -23,7 +23,6 @@ evidence for one top-level task.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-FIXTURES` | `active` | `R14` | `ISF-FIXTURES.5` | [docs/tasks/ISF-FIXTURE-COVERAGE.md](docs/tasks/ISF-FIXTURE-COVERAGE.md) |
 | `ISF-COMPATIBILITY` | `active` | `R14` | `ISF-COMPATIBILITY.1` | [docs/tasks/ISF-COMPATIBILITY-SURFACE.md](docs/tasks/ISF-COMPATIBILITY-SURFACE.md) |
 | `ISF-PUBLIC-CONTRACT` | `active` | `R14` | `ISF-PUBLIC-CONTRACT.1` | [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md) |
 
@@ -48,6 +47,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 | `ISF-RESOURCE-PRIORITY` | `done` | `R14` | `closed` | [docs/tasks/ISF-RESOURCE-PRIORITY.md](docs/tasks/ISF-RESOURCE-PRIORITY.md) |
 | `ISF-CONFLICTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md) |
 | `ISF-COMPOSITION` | `done` | `R14` | `closed` | [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md) |
+| `ISF-FIXTURES` | `done` | `R14` | `closed` | [docs/tasks/ISF-FIXTURE-COVERAGE.md](docs/tasks/ISF-FIXTURE-COVERAGE.md) |
 
 ## R14 ISF Objective Coverage
 

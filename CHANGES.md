@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF fixture tree closure
+- Completed `ISF-FIXTURES.5` and closed the fixture coverage task tree.
+- The fixture docs now distinguish shipped fixture-backed claims from
+  remaining unclaimed realism targets: APB stays the quick/smoke baseline,
+  `isf/spi_master.isf` owns bounded SPI-like serial-transfer coverage in the
+  `isf` tier, and I2C/UART/burst/phase plus rule/resource and stage/contract
+  realism remain future candidates.
+- The ISF spec and mdBook now record the arity policy for future constructs:
+  exact arity for fixed-role hardware forms, variadic arity only for natural
+  list-like or associative semantics with deterministic lowering,
+  malformed-boundary diagnostics, tests, and public docs.
+- The active R14 PNT frontier moves to `ISF-COMPATIBILITY.1`.
 ### R14 — ISF fixture tier placement
 - Completed `ISF-FIXTURES.4` by making the SPI-like fixture's regression-tier
   placement explicit.

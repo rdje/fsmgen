@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF fixture tree closure
+- Closing the fixture tree does not mean fixture work is finished forever. It
+  means the current cross-feature fixture pass has synchronized its shipped
+  claims and explicit gaps. New ISF features should still add realistic
+  fixtures when focused tests do not prove feature interaction well enough.
+- APB remains the quick baseline because it exercises the public shell cheaply.
+  The SPI-like fixture belongs in `isf` because it intentionally crosses
+  schedule JSON, scheduled `.fsm`, strict mode, and HDL generation.
+- Variadic syntax should be treated as a semantic design choice, not a parser
+  convenience. It is useful for natural list-like or associative intent, but
+  exact arity is still better for forms whose operands have named hardware
+  roles.
 ## 2026-05-14: ISF fixture tier placement
 - The SPI-like fixture remains in `isf`, not `quick`, because it is realistic
   cross-feature coverage rather than a minimal smoke. Quick turnaround should

@@ -1212,7 +1212,7 @@ Representative shipped fixtures:
 - [isf/when_test.isf](../isf/when_test.isf)
 - [isf/switch_test.isf](../isf/switch_test.isf)
 
-The active realistic fixture matrix is tracked in
+The current realistic fixture matrix is tracked in
 [docs/tasks/ISF-FIXTURE-COVERAGE.md](tasks/ISF-FIXTURE-COVERAGE.md). That
 matrix separates baseline APB quick coverage from broader `isf`-tier fixture
 coverage and records which feature families each fixture owns. The
@@ -1225,6 +1225,16 @@ Realistic fixtures should use documented ISF constructs. If writing a fixture
 requires an awkward workaround for ordinary hardware intent, treat that as a
 language-expressiveness signal: either rewrite the fixture with a documented
 construct or track the missing construct in the task tree/backlog.
+
+ISF arity policy follows the same rule. Constructs with fixed hardware roles
+should keep exact arity so malformed intent is rejected early. Examples include
+`(sample port as name)`, `(complete port)`, `(spawn child as instance)`, and
+known drive calls whose formal list defines positional actuals. Constructs
+whose semantics are naturally list-like or associative may be variadic when
+that makes the source clearer, but the construct must still have deterministic
+lowering, malformed-boundary diagnostics, focused or fixture coverage, and
+public documentation in the same slice. Lisp-like syntax alone is not a support
+claim for arbitrary argument counts.
 
 Focused tests:
 - [t/1091-isf-parser-apb-requester.t](../t/1091-isf-parser-apb-requester.t)

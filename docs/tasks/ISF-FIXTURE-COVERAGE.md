@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-FIXTURES`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-14`
 - Last updated: `2026-05-14`
@@ -36,7 +36,7 @@ and generated HDL paths that prove user-facing ISF features work together.
 ## Task Tree
 
 - ID: `ISF-FIXTURES`
-  Status: `active`
+  Status: `done`
   Goal: `Expand realistic ISF fixture and strict-mode coverage.`
   Children: `ISF-FIXTURES.1`, `ISF-FIXTURES.2`, `ISF-FIXTURES.3`,
   `ISF-FIXTURES.4`, `ISF-FIXTURES.5`
@@ -75,18 +75,18 @@ and generated HDL paths that prove user-facing ISF features work together.
   Commit: `ISF-FIXTURES.4: lock fixture tiers and expression actuals`
 
 - ID: `ISF-FIXTURES.5`
-  Status: `pending`
+  Status: `done`
   Goal: `Synchronize fixture documentation and close covered gaps.`
   Acceptance: `Docs and live status describe what realistic ISF behavior is
   fixture-backed and which feature interactions remain unclaimed.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `prove -l t/1183-ci-regression-tier-selection.t t/1193-isf-drive-call-arity-boundary.t`; `./bin/ci-regression --list`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-FIXTURES.5: close fixture coverage tree`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-FIXTURES.5` | `pending` | The remaining slice should synchronize final fixture documentation and decide whether any listed gaps can be closed or should remain explicit. |
+| 1 | `closed` | `done` | All known fixture-coverage leaves are complete. Future fixture work should open or extend a task tree with a new executable leaf. |
 
 ## ISF-FIXTURES.1 Inventory
 
@@ -98,7 +98,7 @@ Current checked-in ISF fixtures:
 | `isf/burst_reader.isf` | Burst read transaction with repeated await loop. | Dynamic repeat count, sampled aliases, await, watchdog, latency, completion pulse. | `t/1095-isf-scheduler-burst-reader.t`. | Schedule-report and HDL assertions are narrow. |
 | `isf/full_featured.isf` | Broad parser/public-shell fixture. | Rules, triggers, priorities, resources, `do`, `spawn`, named drives, transaction ordering. | `t/1093`, `t/1157`, `t/1158`, `t/1166`, `t/1176`. | Good metadata/parser breadth; not a realistic protocol. |
 | `isf/i2c_master.isf` | I2C-like serial transaction. | Parameterized drives, repeats, switch, shift-left, nested repeat in switch branches. | `t/1099-isf-repeat-data-ops.t`. | Needs schedule-report/HDL/strict fixture assertions before it can be a realistic signoff fixture. |
-| `isf/spi_master.isf` | SPI-like mode-0 style serial transfer. | Parameterized drives, repeat, shift-left, sampled transmit byte. | No dedicated file-backed ISF regression found in the current inventory. | Candidate for next bounded serial-transfer fixture slice. |
+| `isf/spi_master.isf` | SPI-like mode-0 style serial transfer. | Parameterized drives, repeat, shift-left, sampled transmit byte, explicit serial bit drive, strict schedule/HDL path. | `t/1228-isf-spi-fixture-coverage.t` plus downstream `.fsm` shift-expression coverage in `t/271-systemverilog-shift-expression-generation.t`. | Covered as a bounded SPI-like mode-0 fixture, not as full SPI protocol compliance. |
 | `isf/uart_tx.isf` | UART transmit byte flow. | Parameterized drives, repeat, shift-right. | `t/1099-isf-repeat-data-ops.t`. | Needs explicit-width `shift_right` fixture refresh and explicit serial-bit drive selection before strict/HDL promotion. |
 | `isf/spawn_parent.isf` | Parent/child generated-composition fixture. | Spawned child module, generated top, start/done handoff, named-drive handoff, outdir lowering. | `t/1097`, `t/1117`, `t/1122`, `t/1128`, `t/1153`, `t/1156`, `t/1216`, `t/1217`. | Strong composition fixture; realistic protocol semantics are intentionally small. |
 | `isf/switch_test.isf` | Simple switch dispatch fixture. | `switch` branch lowering and implicit fallthrough smoke. | `t/1097`; richer switch behavior is covered by inline sources in `t/1103` and `t/1205`. | File-backed schedule/HDL assertions are minimal. |
@@ -145,24 +145,24 @@ Current strict-mode ISF coverage:
   stderr clean, and writes the requested HDL.
 - `t/1155-isf-public-cli-strict-success-metadata-audit.t` proves strict CLI
   success metadata and the APB strict HDL path.
-- No current strict-mode fixture regression targets I2C, SPI, UART, burst,
+- `t/1228-isf-spi-fixture-coverage.t` proves strict schedule JSON parity and
+  strict HDL generation for the SPI-like fixture.
+- No current strict-mode fixture regression targets I2C, UART, burst,
   switch/when, phase, or generated-composition sources.
 
-Inventory gaps to feed `ISF-FIXTURES.2`:
+Remaining inventory gaps after `ISF-FIXTURES.5`:
 
-- SPI has no dedicated file-backed ISF regression despite being a realistic
-  protocol-style fixture.
 - I2C and UART are covered through repeat/data-op lowering but not through
   schedule JSON, strict mode, or generated HDL assertions.
 - `phase_test.isf` is listed as a fixture but lacks direct file-backed
   coverage; inline tests cover the semantics.
 - Quick/smoke currently exercises only APB for ISF; that is intentional for
-  turnaround, but the matrix should decide whether one additional compact
-  fixture belongs there.
-- Strict-mode accepted-source coverage is APB-only.
-- No fixture matrix currently records which realistic protocols own coverage
-  for storage roles, conflict/fan-in reports, rule/resource arbitration, or
-  stage/contract features.
+  turnaround. The SPI-like fixture stays in `isf`, not `quick`.
+- Strict-mode accepted-source fixture coverage is APB plus the bounded
+  SPI-like serial-transfer fixture.
+- I2C, UART, burst, rule/resource arbitration, and stage/contract realism
+  fixtures remain future coverage candidates when those interactions need a
+  protocol-like owner.
 
 ## ISF-FIXTURES.2 Realistic Fixture Matrix
 
@@ -194,12 +194,14 @@ Matrix rules:
 | Future `isf/stream_stage_contract.isf` | Future stage/contract realism fixture. | Ready/valid transaction stage, bounded eventual contract monitor, reset policy, generated monitor storage. | `transaction_stages`, `temporal_contracts`, monitor storage kind/role/width where available. | Generated HDL reachability for stage and monitor states/DTs. | `isf`; no quick promotion. | Add after stage/contract syntax stabilizes enough to be a user-facing example. |
 | `isf/switch_test.isf`, `isf/when_test.isf`, `isf/phase_test.isf` | Small construct smoke fixtures. | Switch, when, and transaction-phase pass-through behavior. | Minimal unless promoted or merged into a realistic fixture. | No dedicated strict/HDL requirement today. | `isf` focused/smoke only. | Keep small; promote only if a realistic fixture needs the construct in context. |
 
-Immediate next slice:
+Closure state:
 
-- `ISF-FIXTURES.4` should decide whether any of the new SPI-like coverage
-  belongs in quick/support-accounting paths. The current answer is likely no:
-  the fixture is valuable realistic coverage, but it is broader than the
-  deliberately tiny quick tier.
+- `ISF-FIXTURES.5` closes this tree. The shipped realistic fixture surface is
+  now APB as the quick/smoke baseline plus the SPI-like serial-transfer fixture
+  in the broader `isf` tier.
+- Future fixture work should be opened as a new leaf under the relevant
+  feature tree, or as a new fixture-focused tree if it cuts across several
+  feature families.
 
 ## ISF-FIXTURES.3 SPI-Like Fixture Coverage
 
@@ -266,6 +268,48 @@ Fixture authoring policy:
 - Because ISF is Lisp-like, composed argument expressions such as
   `(& tx_byte[7] shift_enable)` should be supported directly when the target
   construct accepts an expression-valued actual.
+- Variadic forms are appropriate when they model natural list-like or
+  associative hardware intent and have an unambiguous lowering. Examples
+  include logical expression forms and future list-style coordination
+  constructs. Exact arity remains the correct contract for forms with fixed
+  semantic roles, such as `(sample port as name)`, `(complete port)`,
+  `(spawn child as instance)`, and known drive calls whose formal list defines
+  their positional contract.
+- A new variadic surface is not accepted just because the syntax can parse an
+  arbitrary list. It needs deterministic lowering, malformed-boundary
+  diagnostics, fixture or focused coverage, and public documentation in the
+  same slice.
+
+## ISF-FIXTURES.5 Final Synchronization
+
+The fixture tree closes with these current fixture-backed claims:
+
+- APB remains the fast-turnaround ISF baseline through parser, scheduled
+  `.fsm` header, public-contract, schedule-report, strict CLI, and HDL
+  generation coverage.
+- `isf/spi_master.isf` is a bounded SPI-like mode-0 serial-transfer fixture
+  with file-backed schedule JSON, scheduled `.fsm`, plain HDL, and strict HDL
+  coverage.
+- Spawned-child composition has generated-top and multi-file handoff coverage,
+  but it is not treated as a realistic protocol fixture.
+- `full_featured.isf` remains parser/public-shell breadth coverage, not
+  protocol signoff coverage.
+
+The following interactions remain unclaimed by a realistic fixture:
+
+- I2C and UART schedule JSON, strict mode, and generated HDL fixture paths.
+- Burst/wait-loop strict-mode and generated-HDL fixture paths beyond the
+  current focused burst scheduler coverage.
+- Direct file-backed `phase_test.isf` coverage, if that fixture remains a
+  representative public fixture.
+- Rule/resource arbitration and stage/contract protocol-like realism fixtures.
+- Any future resource-sharing or conflict-runtime verification fixture whose
+  semantics need more than focused tests.
+
+This is a closure of the known fixture-coverage tree, not a promise that no
+additional fixtures are needed. New ISF features should add a fixture when a
+focused regression would not prove the construct working in realistic
+composition.
 
 ## Decisions
 
@@ -287,6 +331,10 @@ Fixture authoring policy:
   expressiveness. Workarounds should not be normalized in tests; they should
   be converted into documented constructs or tracked as missing language
   features.
+- `2026-05-14`: ISF may use variadic forms for constructs whose semantics are
+  naturally list-like or associative, provided the lowering path, diagnostics,
+  tests, and public documentation are shipped with the construct. Constructs
+  with fixed hardware roles should keep exact arity.
 
 ## Open Questions
 
@@ -305,6 +353,7 @@ Fixture authoring policy:
 | `2026-05-14` | `ISF-FIXTURES.2` | `prove -l t/1183-ci-regression-tier-selection.t`; `./bin/ci-regression --list`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-FIXTURES.3` | Syntax checks for changed Perl modules and new tests; `prove -l t/271-systemverilog-shift-expression-generation.t t/1099-isf-repeat-data-ops.t t/1173-isf-shift-right-explicit-width.t t/1228-isf-spi-fixture-coverage.t t/1112-isf-public-interface-contract.t t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t`; `./bin/ci-regression isf --no-book` (`136` files, `464` tests); `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-FIXTURES.4` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm t/1183-ci-regression-tier-selection.t t/1193-isf-drive-call-arity-boundary.t`; `prove -l t/1183-ci-regression-tier-selection.t t/1193-isf-drive-call-arity-boundary.t`; `./bin/ci-regression --list`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-FIXTURES.5` | `prove -l t/1183-ci-regression-tier-selection.t t/1193-isf-drive-call-arity-boundary.t`; `./bin/ci-regression --list`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -315,6 +364,7 @@ Fixture authoring policy:
 | `ISF-FIXTURES.2` | `ISF-FIXTURES.2: define fixture coverage matrix` | Matrix defining fixture ownership, tier placement, and SPI-like mode-0 target scope. |
 | `ISF-FIXTURES.3` | `ISF-FIXTURES.3: cover SPI-like fixture path` | SPI-like fixture coverage plus downstream `.fsm` shift-expression HDL support. |
 | `ISF-FIXTURES.4` | `ISF-FIXTURES.4: lock fixture tiers and expression actuals` | SPI-like fixture stays in `isf`, not quick; drive actuals preserve composed expressions; no support-accounting corpus expansion yet. |
+| `ISF-FIXTURES.5` | `ISF-FIXTURES.5: close fixture coverage tree` | Final fixture matrix sync, remaining unclaimed interactions, and ISF variadic expressiveness policy. |
 
 ## Changelog
 
@@ -326,3 +376,5 @@ Fixture authoring policy:
 - `2026-05-14`: Locked the SPI-like fixture into the `isf` tier, left it out
   of quick, recorded the fixture-authoring expressiveness policy, and fixed
   composed drive-call actual lowering.
+- `2026-05-14`: Closed the fixture tree with synchronized shipped/remaining
+  fixture claims and the ISF arity policy for future variadic constructs.

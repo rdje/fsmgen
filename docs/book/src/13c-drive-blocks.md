@@ -65,6 +65,9 @@ This reduces two drives (`scl_hi`, `scl_lo`) into one parameterized drive.
 Known drive calls use exact positional arity. A drive declared with `N`
 formal parameters must be called with exactly `N` actual values. Missing
 actuals and extra actuals are lowering errors; extra values are not ignored.
+This is deliberate: the drive declaration defines fixed hardware roles for its
+actuals. Variadic arity belongs only on constructs whose runtime meaning is
+list-like or associative and whose lowering contract explicitly says so.
 
 Actual values may be scalar tokens or composed `.fsm` expression forms. This
 keeps parameterized drives useful inside realistic fixtures without requiring

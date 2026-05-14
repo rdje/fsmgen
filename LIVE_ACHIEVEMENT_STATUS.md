@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF fixture tree closure
+- Active R14 task-tree slice: `ISF-FIXTURES.5` is complete, and the
+  `ISF-FIXTURES` tree is closed.
+- APB remains the quick/smoke fixture baseline; the SPI-like serial-transfer
+  fixture is covered in the broader `isf` tier through schedule JSON,
+  scheduled `.fsm`, plain HDL, and strict HDL.
+- The docs now list the remaining unclaimed realistic fixture targets and
+  record the ISF arity policy for future variadic constructs.
+- The next active R14 frontier is `ISF-COMPATIBILITY.1`.
+
 ## 2026-05-14: R14 — ISF fixture tier placement
 - Active R14 task-tree slice: `ISF-FIXTURES.4` is complete.
 - The SPI-like fixture test is explicitly kept in the `isf` tier and out of

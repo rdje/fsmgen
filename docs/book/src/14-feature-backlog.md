@@ -380,7 +380,7 @@ and keep a golden fixture matrix for every advertised branch.
 
 ### ISF Realistic Fixture Matrix
 
-Status: active coverage work.
+Status: current coverage boundary with future promotion candidates.
 
 Goal: keep realistic protocol fixtures aligned with shipped ISF behavior,
 strict-mode expectations, schedule JSON assertions, scheduled `.fsm` review
@@ -401,6 +401,15 @@ Fixture authoring policy: realistic fixtures should use documented ISF
 constructs. If a fixture needs an awkward workaround to express a normal
 hardware intent, treat that as an ISF expressiveness gap and track the missing
 construct instead of hiding the workaround inside the test.
+
+ISF expressiveness policy: Lisp-like syntax makes argument-level composition
+and variadic constructs natural, but arity is part of the public contract.
+Constructs with fixed hardware roles should keep exact arity. Constructs whose
+meaning is naturally list-like or associative may accept an arbitrary number of
+arguments when that keeps the source clear and the lowering remains
+deterministic. Each new variadic surface needs targeted malformed-arity
+diagnostics, focused or fixture coverage, and book/spec updates in the same
+slice.
 
 ## Backends And Validation
 

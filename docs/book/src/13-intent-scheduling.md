@@ -44,6 +44,11 @@ clear lower-layer mapping, and clear runtime behavior.
   scheduled `.fsm`, a runtime meaning in terms of cycles, activation, storage,
   and conflicts, targeted diagnostics for unsupported forms, and regression
   coverage for the accepted behavior.
+- **Arity follows intent**. Forms with fixed hardware roles keep exact arity so
+  malformed source fails early. Forms whose meaning is naturally list-like or
+  associative may be variadic when that improves expressiveness, but only with
+  deterministic lowering, malformed-boundary diagnostics, tests, and public
+  documentation.
 - **Compile-time issues are explicit**. Parser and lowering failures are raised,
   and the schedule report carries a `compile_issues` field. Broader conflict,
   deadlock, and resource diagnostics are still being expanded.
