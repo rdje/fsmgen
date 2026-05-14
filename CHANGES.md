@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF library binding model
+- Completed `ISF-LIBRARIES.2` by specifying the reusable-actor
+  specialization and binding model.
+- The first reusable-definition specialization target is exported actors with
+  actor-local `(params ...)` defaults, instance-local use-site overrides,
+  explicit clock/reset binding, and exact interface binding after parameter
+  specialization.
+- Deterministic generated child artifact names are planned as
+  `<importing_actor>__<instance>` and
+  `<importing_actor>__<instance>.fsm`.
+- Planned successful schedule reports should expose bounded `library_uses`
+  provenance without exposing raw parser, resolver, lowerer, or generated-top
+  internals.
+- The active R14 PNT frontier advances to `ISF-LIBRARIES.3`.
 ### R14 — ISF library import model
 - Completed `ISF-LIBRARIES.1` by activating the reusable-library tree and
   specifying the first public library/import model.

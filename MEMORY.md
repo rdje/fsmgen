@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF library binding model
+- Completed `ISF-LIBRARIES.2` in
+  [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md).
+- The first specialization target is exported actors. Standalone reusable
+  transaction and drive exports stay deferred until their owning-context
+  binding rules are specified.
+- Reusable actor parameters use actor-local `(params ...)` declarations with
+  defaults, and use-site overrides are instance-local.
+- Library actor use requires explicit clock/reset bindings and exact
+  interface-port bindings after parameter specialization; the binder should not
+  silently truncate, extend, slice, or alter reset policy.
+- The planned generated artifact names use
+  `<importing_actor>__<instance>` and reports should expose bounded
+  `library_uses` provenance when the feature ships.
+- The next active R14 frontier is `ISF-LIBRARIES.3`.
 ## 2026-05-14: ISF library import model
 - Completed `ISF-LIBRARIES.1` in
   [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md).

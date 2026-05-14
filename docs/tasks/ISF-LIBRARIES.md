@@ -63,13 +63,13 @@ reusable ISF design intent, not only scalar constants or types.
   Commit: `ISF-LIBRARIES.1: specify library import model`
 
 - ID: `ISF-LIBRARIES.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Specify specialization and binding for reusable ISF definitions.`
   Acceptance: `Widths, depths, reset policy, interface mapping, parameter
   override domains, generated names, and report provenance have a bounded
   public contract.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-LIBRARIES.2: specify library binding model`
 
 - ID: `ISF-LIBRARIES.3`
   Status: `pending`
@@ -103,7 +103,7 @@ reusable ISF design intent, not only scalar constants or types.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-LIBRARIES.2` | `pending` | The public source model is selected; specialization and binding must be bounded before parser/lowerer implementation starts. |
+| 1 | `ISF-LIBRARIES.3` | `pending` | The public source model plus specialization/binding model are selected; import resolution can now be implemented against that boundary. |
 
 ## Design Notes
 
@@ -229,6 +229,153 @@ FIFO modeling rule:
   specialization, scheduled `.fsm` review, schedule report visibility, strict
   HDL generation, and reset/full/empty/push/pop behavior assertions.
 
+## ISF-LIBRARIES.2 Specialization / Binding Model
+
+First shipped specialization target:
+
+- The first concrete reusable definition kind is an exported `actor`.
+- `(use alias.actor as instance ...)` creates one specialized actor instance in
+  the importing actor.
+- The exported library actor remains immutable. Parameter overrides and
+  bindings are instance-local; two uses of the same exported actor may use
+  different parameters and different parent signals.
+- Standalone exported `transaction` and `drive` definitions remain planned but
+  deferred. They need an owning actor, storage, reset, interface, and conflict
+  context before their specialization can be public.
+
+Actor parameter declarations:
+
+```lisp
+(actor fifo
+  (params
+    (WIDTH 8)
+    (DEPTH 16))
+  ...)
+```
+
+Rules:
+
+- Reusable actor parameters use one optional actor-local `(params ...)` clause.
+- Parameter names must be non-empty scalar HDL-identifier-compatible names and
+  unique within the actor.
+- The first model requires a default value for every actor parameter.
+- Use-site overrides use at most one nested `(params (NAME value) ...)` block.
+  Override names must be unique and must match declared actor parameters.
+- Missing overrides use actor defaults. Unknown overrides, duplicate overrides,
+  duplicate declarations, malformed declarations, malformed override blocks,
+  and multiple `params` blocks fail closed before scheduled `.fsm` emission.
+- The first value domain matches the shipped spawn-parameter boundary: scalar
+  decimal literals, exact-width numeric literals, and aggregate/list literals
+  when the formal default is also aggregate/list-shaped. Symbolic constants are
+  rejected until ISF has an explicit constant/symbol surface for library use.
+
+Parameter use:
+
+- Parameters may drive compile-time library specialization slots: interface
+  widths, storage depths, watchdogs, repeat counts that must be static, and
+  generated child `+params`.
+- If a parameter appears in a context the lowerer cannot prove static or cannot
+  carry to scheduled `.fsm`, lowering fails with a diagnostic naming the
+  parameter and use-site instance.
+- Derived widths should be authored explicitly until ISF has a shipped derived
+  parameter expression surface. For example, a FIFO library may expose
+  `PTR_WIDTH` rather than relying on an unshipped `clog2(DEPTH)` form.
+
+Clock and reset binding:
+
+```lisp
+(use fifo_lib.fifo as rx_fifo
+  (bind
+    (clock clk)
+    (reset rst_n)))
+```
+
+Rules:
+
+- If the reusable actor declares `(clock name)`, the use site must bind that
+  clock with one `(clock parent_signal)` entry.
+- If the reusable actor declares `(reset ...)`, the use site must bind that
+  reset with one `(reset parent_signal)` entry.
+- The reusable actor owns reset kind and polarity. A later overrideable reset
+  policy can be added as a distinct feature, but first-shipped library use
+  should not silently change sync/async or active-low/active-high behavior.
+- Missing required clock/reset bindings, duplicate clock/reset bindings, and
+  reset-policy override attempts fail closed before scheduled `.fsm` emission.
+
+Interface binding:
+
+```lisp
+(use fifo_lib.fifo as rx_fifo
+  (bind
+    (input push push_i)
+    (input pop pop_i)
+    (input data_in data_i)
+    (output data_out data_o)
+    (output full full_o)
+    (output empty empty_o)))
+```
+
+Rules:
+
+- Every public interface port on the exported actor must be bound exactly once
+  in the first shipped model.
+- Binding entries use `(direction library_port parent_signal)`.
+- `direction` must match the exported actor interface direction.
+- `library_port` must name a public port declared by the exported actor.
+- `parent_signal` must name a visible importing-actor interface signal or a
+  later explicitly declared local signal surface. Until such a local signal
+  surface ships, first implementation should require importing-actor interface
+  signals.
+- Widths are checked after parameter overrides are applied. Known widths must
+  match exactly; no implicit truncation, extension, or slicing is performed by
+  the library binder.
+- Duplicate bindings, unbound ports, unknown ports, direction mismatches,
+  unknown parent signals, and width mismatches fail closed.
+
+Generated names:
+
+- The authored instance name is the stable logical identity in diagnostics and
+  reports.
+- Instance names are actor-local and must be unique across all library uses and
+  any other generated-child instance namespace that shares the generated top.
+- The first deterministic specialized child module name should be
+  `<importing_actor>__<instance>`.
+- The first deterministic specialized child scheduled `.fsm` basename should be
+  `<importing_actor>__<instance>.fsm`.
+- Library namespaces containing dots are sanitized only for generated artifact
+  names; diagnostics and reports should preserve the authored library/export
+  names.
+- A generated name collision, after sanitization, must fail closed rather than
+  silently renaming the instance.
+
+Schedule report provenance:
+
+- Successful reports should expose a bounded `library_uses` array once the
+  feature ships.
+- Each entry should expose `library`, `alias`, `export`, `kind`, `instance`,
+  `module`, `scheduled_fsm`, `parameters`, and `bindings`.
+- Parameter entries should expose `name`, `source` (`default` or `override`),
+  and stringified `value`.
+- Binding entries should expose `role` (`clock`, `reset`, `input`, or
+  `output`), `library_name`, and `parent_name`; interface bindings should also
+  expose `width` after specialization.
+- The report must not expose raw parser nodes, raw library resolver state, raw
+  LoweringIR internals, or private generated-top planning objects.
+
+Rejected cases:
+
+- malformed actor-local parameter declarations or use-site override blocks;
+- duplicate actor parameter declarations or duplicate use-site overrides;
+- unknown override names or unsupported value shapes;
+- parameter use in unsupported non-static contexts;
+- missing, duplicate, or policy-changing clock/reset bindings;
+- missing, duplicate, unknown, or direction-mismatched interface bindings;
+- width mismatches after parameter specialization;
+- duplicate instance names or sanitized generated-name collisions;
+- unknown parent binding signals; and
+- attempts to use standalone transaction/drive exports before their binding
+  model ships.
+
 ## Decisions
 
 - `2026-05-14`: Use **library** as the user-facing term for reusable ISF
@@ -244,6 +391,11 @@ FIFO modeling rule:
   actor-scoped `(imports (library name as alias))`, and `(use alias.actor as
   instance ...)` for imported actor use. Namespaced imports are the default;
   aliases do not create unqualified symbol pollution.
+- `2026-05-14`: The first reusable-definition specialization model targets
+  exported actors. Use-site `(params ...)` overrides are instance-local,
+  clock/reset/interface bindings are explicit, generated names use the
+  `<importing_actor>__<instance>` shape, and successful reports should expose
+  bounded `library_uses` provenance.
 
 ## Open Questions
 
@@ -257,9 +409,10 @@ FIFO modeling rule:
 
 ## Blockers
 
-- Implementation is blocked until `ISF-LIBRARIES.2` specifies specialization
-  and binding details for parameters, clocks/resets, interfaces, generated
-  names, and report provenance.
+- No known design blocker remains for the next import-resolution implementation
+  slice. `ISF-LIBRARIES.3` must keep parser acceptance fail-closed until the
+  resolver, binder, scheduled artifacts, diagnostics, and tests honor the
+  `ISF-LIBRARIES.1` and `ISF-LIBRARIES.2` boundaries.
 
 ## Verification Log
 
@@ -267,6 +420,7 @@ FIFO modeling rule:
 | --- | --- | --- | --- |
 | `2026-05-14` | `ISF-LIBRARIES` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-LIBRARIES.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-LIBRARIES.2` | `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -274,9 +428,12 @@ FIFO modeling rule:
 | --- | --- | --- |
 | `ISF-LIBRARIES` | `R14: log proposed ISF library support` | Proposed tree created from the FIFO/library design discussion. |
 | `ISF-LIBRARIES.1` | `ISF-LIBRARIES.1: specify library import model` | Public library terminology, source roots, import/use shape, namespaces, export kinds, and diagnostics boundary. |
+| `ISF-LIBRARIES.2` | `ISF-LIBRARIES.2: specify library binding model` | Actor parameter declarations, use-site overrides, clock/reset/interface binding, generated names, report provenance, and rejected cases. |
 
 ## Changelog
 
 - `2026-05-14`: Created the proposed ISF libraries/imports task tree.
 - `2026-05-14`: Activated the ISF library tree and specified the first public
   library/import model.
+- `2026-05-14`: Specified the first specialization and binding model for
+  imported reusable actor definitions.

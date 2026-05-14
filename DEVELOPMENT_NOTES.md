@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF library binding model
+- Exported actors are the right first specialization target because they own a
+  complete hardware context: clock/reset policy, interface, storage, and
+  conflict domains. Standalone reusable transactions and drives are still
+  plausible, but they need explicit owner/binding semantics before they are
+  safe to ship.
+- Library parameter binding should reuse the conservative spawn-parameter value
+  boundary first. Symbolic constants and derived expressions are useful, but
+  they need a real ISF constant/expression surface instead of ad hoc resolver
+  behavior in the library path.
+- Reset policy belongs to the reusable actor in the first model. Letting a use
+  site silently change sync/async or active-low/high behavior would make a
+  tested library actor less testable and less reusable.
+- Exact interface-width matching is intentional. If a caller wants slicing,
+  widening, or truncation, that should be an explicit authored adapter rather
+  than hidden library-binder behavior.
+- Deterministic `<importing_actor>__<instance>` names favor reviewability and
+  crash recovery over deduplicating identical specializations. Deduplication
+  can be a later optimization after provenance and diagnostics are stable.
 ## 2026-05-14: ISF library import model
 - "Library" should stay the public word for reusable ISF design intent. It
   matches how users think about tested reusable actors and transaction

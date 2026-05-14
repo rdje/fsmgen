@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF library binding model
+- Active R14 task-tree slice: `ISF-LIBRARIES.2` is complete.
+- The first reusable-library specialization target is exported actors with
+  instance-local parameter overrides and explicit clock/reset/interface
+  binding.
+- Generated child artifact names are planned as
+  `<importing_actor>__<instance>` and
+  `<importing_actor>__<instance>.fsm`.
+- Successful reports should expose bounded `library_uses` provenance once the
+  feature ships.
+- The next active R14 frontier is `ISF-LIBRARIES.3`.
+
 ## 2026-05-14: R14 — ISF library import model
 - Active R14 task-tree slice: `ISF-LIBRARIES.1` is complete.
 - The `ISF-LIBRARIES` tree is active with frontier `ISF-LIBRARIES.2`.

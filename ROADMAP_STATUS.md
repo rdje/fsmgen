@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md), whose current
-  frontier is `ISF-LIBRARIES.2`. The public-contract tree remains
+  frontier is `ISF-LIBRARIES.3`. The public-contract tree remains
   cross-cutting and should not displace feature delivery unless the selected
   feature changes a public surface. The completed
   `ISF-SCHEDULE-REPORTS`, `ISF-DATA-WIDTHS`, `ISF-STAGES-CONTRACTS`,
@@ -82,6 +82,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   as the first shipped definition kind. FIFO remains actor-first because it
   owns storage, pointers, occupancy, flags, reset behavior, and interface
   timing. The active frontier advances to `ISF-LIBRARIES.2`.
+- `ISF-LIBRARIES.2` is complete. The first specialization/binding model
+  targets exported actors: actor-local `(params ...)` declarations with
+  instance-local use-site overrides, explicit clock/reset bindings, exact
+  interface-port bindings after parameter specialization, deterministic
+  `<importing_actor>__<instance>` generated child artifact names, and bounded
+  `library_uses` schedule-report provenance. Standalone transaction/drive
+  exports remain deferred until their owning-context binding rules are
+  specified. The active frontier advances to `ISF-LIBRARIES.3`.
 - `ISF-RESOURCE-PRIORITY.1` is complete. The current inventory records that
   `(resources ...)` is validated metadata only, accepted arbiters are
   `priority` and `round_robin`, and successful resource arbitration is not yet
@@ -4746,7 +4754,7 @@ Left:
 - Use the first active tree in [docs/TASK_TREE.md](docs/TASK_TREE.md) when
   selecting the next PNT slice. The current first active tree is
   [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md), whose frontier
-  is `ISF-LIBRARIES.2`.
+  is `ISF-LIBRARIES.3`.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

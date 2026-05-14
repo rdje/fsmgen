@@ -480,6 +480,56 @@ unqualified symbol pollution. The first shipped export target should be
 reusable actors. Standalone transaction templates and standalone drive helpers
 need their own binding rules before they become public library exports.
 
+Planned specialization and binding model:
+
+```lisp
+(actor fifo
+  (params
+    (WIDTH 8)
+    (DEPTH 16))
+  ...)
+
+(actor top
+  (imports
+    (library common.fifo as fifo_lib))
+
+  (use fifo_lib.fifo as rx_fifo
+    (params
+      (WIDTH 32)
+      (DEPTH 16))
+    (bind
+      (clock clk)
+      (reset rst)
+      (input push push_i)
+      (input pop pop_i)
+      (input data_in data_i)
+      (output data_out data_o)
+      (output full full_o)
+      (output empty empty_o))))
+```
+
+Actor-library parameters use unique HDL-identifier-compatible names and a
+default value. Use-site overrides are instance-local and should reuse the
+spawn-parameter value boundary first: scalar decimal literals, exact-width
+numeric literals, and compatible aggregate/list literals. Missing overrides use
+defaults; duplicate parameters, unknown overrides, unsupported symbolic values,
+and unsupported non-static parameter use fail closed.
+
+Binding is explicit. A reusable actor with a clock or reset must bind it at the
+use site. Reset kind and polarity belong to the reusable actor for the first
+ship; the use site should not silently change sync/async or active-high/low
+semantics. Every exported actor interface port must be bound exactly once with
+matching direction and matching specialized width. No implicit truncation,
+extension, or slicing is performed by the binder.
+
+Generated names should be deterministic: the authored instance name remains
+the stable diagnostic/report identity, while the first specialized child module
+and scheduled `.fsm` basename should use `<importing_actor>__<instance>` and
+`<importing_actor>__<instance>.fsm`. Successful reports should eventually
+expose a bounded `library_uses` array with library/export/instance identity,
+parameter source/value summaries, binding summaries, and generated artifact
+names without exposing raw resolver or lowerer internals.
+
 FIFO modeling rule: a FIFO should be modeled primarily as an actor because it
 owns persistent storage, pointers, occupancy, full/empty flags, reset behavior,
 and interface timing across cycles. Enqueue, dequeue, flush, or status-probe
