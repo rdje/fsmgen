@@ -50,12 +50,12 @@ keyword, so compatibility behavior remains intentional rather than accidental.
   Commit: `ISF-COMPATIBILITY.1: inventory legacy surfaces`
 
 - ID: `ISF-COMPATIBILITY.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Decide legacy handshake policy.`
   Acceptance: `The tree records whether the handshake metadata remains ignored,
   gains semantics, becomes rejected, or gets a migration path, with rationale.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-COMPATIBILITY.2: decide handshake policy`
 
 - ID: `ISF-COMPATIBILITY.3`
   Status: `pending`
@@ -85,7 +85,7 @@ keyword, so compatibility behavior remains intentional rather than accidental.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-COMPATIBILITY.2` | `pending` | The inventory shows handshake metadata is validated then ignored; the next slice should decide whether that remains intentional. |
+| 1 | `ISF-COMPATIBILITY.3` | `pending` | Handshake policy is now set; the next slice should decide whether removed transaction `assign` stays rejected and what migration guidance should say. |
 
 ## ISF-COMPATIBILITY.1 Inventory
 
@@ -188,6 +188,65 @@ Current docs and contract:
   regression, but the public contract does not advertise a replacement
   construct for the old keyword.
 
+## ISF-COMPATIBILITY.2 Legacy Handshake Policy
+
+Decision: keep actor-level `(handshake ...)` as deprecated compatibility input
+for now, but keep it explicitly non-semantic.
+
+Selected policy:
+
+- Do not add old handshake lowering semantics. Direct `(on port ...)`
+  activation plus scheduler-generated `can_accept` remains the current
+  transaction activation model.
+- Do not copy old handshake metadata into `LoweringIR`, schedule JSON,
+  generated `.fsm`, generated composition tops, or HDL.
+- Keep accepted default behavior for well-formed legacy source so existing
+  compatibility inputs continue to parse and lower.
+- Tighten the accepted shape during the implementation leaf: a retained
+  compatibility handshake clause should require exactly one scalar `valid`
+  property and exactly one scalar `ready` property, and duplicate handshake
+  names should fail before actor-shell return.
+- Leave the actor-shell `handshakes` value as an empty compatibility
+  placeholder. A populated public handshake metadata shape is not part of the
+  current public contract.
+- Keep current ISF strict-mode behavior aligned with default source acceptance
+  until an explicit ISF source-strictness policy exists. A future strict-source
+  mode may choose to reject deprecated handshakes, but this tree will not make
+  that broader strictness change.
+
+Rationale:
+
+- Reintroducing old handshake semantics would duplicate newer, clearer ISF
+  constructs without a fresh runtime contract. A ready/valid barrier already
+  has an explicit shipped subset through transaction `(stage name (input
+  ready_signal) (output valid_signal))`.
+- Silently accepting incomplete or duplicate ignored metadata is not useful
+  compatibility. If the source is deprecated but still accepted, the accepted
+  shape should be exact and diagnosable.
+- Keeping the metadata ignored avoids adding new schedule-report and HDL
+  surface area for a compatibility feature whose forward replacement is already
+  clearer.
+
+Migration guidance:
+
+- Use `(on port ...)` for transaction activation.
+- Use generated `can_accept` as the scheduler-created acceptance signal
+  rather than authoring a legacy handshake-ready binding.
+- Use transaction `(stage name (input ready_signal) (output valid_signal))`
+  when the intended behavior is a ready/valid barrier.
+- Use rules, drives, or explicit transaction clauses for protocol-valid output
+  behavior instead of expecting `(handshake ...)` to drive signals.
+
+Implementation work left for `ISF-COMPATIBILITY.4`:
+
+- Require both `valid` and `ready` properties in `_parse_handshake`.
+- Reject duplicate handshake names before actor-shell return while still
+  leaving `actor->{handshakes}` empty.
+- Add migration guidance to malformed-handshake diagnostics where it helps
+  without making error strings noisy.
+- Add CLI/strict parity coverage in the final test/docs leaf if the current
+  CLI behavior remains accepted.
+
 ## Decisions
 
 - `2026-05-14`: Legacy handshake and removed transaction `assign` are tracked
@@ -197,11 +256,13 @@ Current docs and contract:
   handshake is currently validated-ignored compatibility input and `assign`
   is currently a fail-closed scheduler rejection, with both decisions left for
   the next policy leaves.
+- `2026-05-14`: Legacy `(handshake ...)` remains accepted but ignored
+  compatibility input. It will not gain lowering semantics; implementation
+  should tighten shape validation and diagnostics while leaving the public
+  actor-shell handshake metadata unpopulated.
 
 ## Open Questions
 
-- Is keeping `(handshake ...)` as validated ignored metadata still useful, or
-  should it become a strict rejection with migration guidance?
 - Should transaction `(assign ...)` remain removed permanently, or should a
   new explicit construct replace its original intent?
 
@@ -215,6 +276,7 @@ Current docs and contract:
 | --- | --- | --- | --- |
 | `2026-05-14` | `ISF-COMPATIBILITY` | `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-COMPATIBILITY.1` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `prove -l t/1178-isf-handshake-compatibility-boundary.t t/1180-isf-unsupported-transaction-clause-boundary.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-COMPATIBILITY.2` | `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -222,9 +284,11 @@ Current docs and contract:
 | --- | --- | --- |
 | `ISF-COMPATIBILITY` | `R14: map ISF objectives to task trees` | Initial tree creation belongs to the ISF objective task-tree coverage slice. |
 | `ISF-COMPATIBILITY.1` | `ISF-COMPATIBILITY.1: inventory legacy surfaces` | Inventory of deprecated handshake validation/ignored behavior and removed assign fail-closed lowering. |
+| `ISF-COMPATIBILITY.2` | `ISF-COMPATIBILITY.2: decide handshake policy` | Keep handshake as accepted ignored compatibility input, tighten validation, and point authors to `on`, `can_accept`, and transaction stages. |
 
 ## Changelog
 
 - `2026-05-14`: Created the active ISF compatibility-surface task tree.
 - `2026-05-14`: Added the current legacy handshake and removed assign
   behavior inventory.
+- `2026-05-14`: Decided the legacy handshake policy.

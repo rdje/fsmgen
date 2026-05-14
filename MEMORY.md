@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF handshake compatibility policy
+- Completed `ISF-COMPATIBILITY.2` in
+  [docs/tasks/ISF-COMPATIBILITY-SURFACE.md](docs/tasks/ISF-COMPATIBILITY-SURFACE.md).
+- Legacy `(handshake ...)` remains accepted but ignored compatibility input
+  and will not gain scheduled `.fsm`, schedule JSON, HDL, or public
+  actor-shell metadata semantics.
+- The implementation follow-up should tighten validation to require exactly
+  one scalar `valid` and one scalar `ready`, reject duplicate handshake names,
+  and guide authors toward `(on ...)`, generated `can_accept`, or transaction
+  `(stage ...)`.
+- The next active R14 frontier is `ISF-COMPATIBILITY.3`.
 ## 2026-05-14: ISF compatibility inventory
 - Completed `ISF-COMPATIBILITY.1` in
   [docs/tasks/ISF-COMPATIBILITY-SURFACE.md](docs/tasks/ISF-COMPATIBILITY-SURFACE.md).

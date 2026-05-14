@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF handshake compatibility policy
+- Keeping legacy handshake accepted but ignored is the least disruptive policy
+  while ISF feature work continues. Giving it semantics would create a second
+  ready/valid model beside the shipped transaction stage subset.
+- The useful improvement is stricter validation, not lowering. Accepted legacy
+  source should be complete enough to diagnose mistakes, even though the
+  metadata remains non-semantic.
+- Migration guidance should point to existing forward constructs: `(on ...)`
+  for activation, generated `can_accept` for acceptance, and transaction
+  `(stage ...)` for a real ready/valid barrier.
 ## 2026-05-14: ISF compatibility inventory
 - The deprecated handshake surface is more compatibility residue than a
   dormant feature. It validates basic shape, discards the result, and does not

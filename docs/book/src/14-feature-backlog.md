@@ -292,18 +292,21 @@ multiple outstanding obligations.
 
 ### Legacy Handshake Semantics
 
-Status: backlog or removal candidate.
+Status: deprecated compatibility input; validation tightening pending.
 
-Goal: decide whether old `(handshake ...)` metadata should gain real lowering
-semantics or remain validated ignored compatibility input only.
+Goal: keep old `(handshake ...)` source intentional without giving it new
+runtime semantics.
 
 Current boundary: deprecated handshake metadata is structurally validated and
 ignored. The parser accepts a scalar handshake name plus scalar `valid`/`ready`
 property entries and leaves the actor-shell handshake placeholder empty. Direct
 `(on port ...)` activation plus generated `can_accept` is the current model.
-The next policy decision is whether to keep that validated-ignored behavior,
-tighten validation before ignoring, or reject the old form with migration
-guidance.
+Policy: keep well-formed legacy handshakes accepted and ignored for
+compatibility, do not lower them into scheduled `.fsm`, schedule JSON, or HDL,
+and tighten validation so accepted legacy forms require one `valid` and one
+`ready` property with no duplicate handshake names. Use `(on ...)` for
+activation and transaction `(stage name (input ready_signal) (output
+valid_signal))` for ready/valid barriers.
 
 ### Removed Assign Keyword
 

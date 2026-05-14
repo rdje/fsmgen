@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF handshake compatibility policy
+- Active R14 task-tree slice: `ISF-COMPATIBILITY.2` is complete.
+- Legacy `(handshake ...)` stays accepted but ignored; it will not gain
+  scheduled `.fsm`, schedule JSON, HDL, or public actor-shell metadata
+  semantics.
+- Validation tightening and migration diagnostics are left for the
+  implementation leaf.
+- The next active R14 frontier is `ISF-COMPATIBILITY.3`.
+
 ## 2026-05-14: R14 — ISF compatibility inventory
 - Active R14 task-tree slice: `ISF-COMPATIBILITY.1` is complete.
 - Deprecated `(handshake ...)` is parser-validated then ignored; it does not

@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF handshake compatibility policy
+- Completed `ISF-COMPATIBILITY.2` by deciding the legacy handshake policy.
+- Legacy `(handshake ...)` remains accepted but ignored compatibility input;
+  it will not gain scheduled `.fsm`, schedule JSON, generated HDL, or public
+  actor-shell metadata semantics.
+- The implementation follow-up should tighten parser validation to require one
+  scalar `valid` property and one scalar `ready` property, reject duplicate
+  handshake names, and add migration guidance pointing to `(on ...)`,
+  generated `can_accept`, and transaction `(stage ...)`.
+- The active `ISF-COMPATIBILITY` frontier advances to
+  `ISF-COMPATIBILITY.3`.
 ### R14 — ISF compatibility inventory
 - Completed `ISF-COMPATIBILITY.1` by inventorying the current behavior of
   deprecated handshake metadata and the removed transaction `assign` keyword.
