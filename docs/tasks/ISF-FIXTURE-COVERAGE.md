@@ -67,12 +67,12 @@ and generated HDL paths that prove user-facing ISF features work together.
   Commit: `ISF-FIXTURES.3: cover SPI-like fixture path`
 
 - ID: `ISF-FIXTURES.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Broaden regression-tier and support-accounting coverage where warranted.`
   Acceptance: `The selected fixture coverage is placed in the appropriate
   quick/isf/full tier without making fast turnaround noisy.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm t/1183-ci-regression-tier-selection.t t/1193-isf-drive-call-arity-boundary.t`; `prove -l t/1183-ci-regression-tier-selection.t t/1193-isf-drive-call-arity-boundary.t`; `./bin/ci-regression --list`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-FIXTURES.4: lock fixture tiers and expression actuals`
 
 - ID: `ISF-FIXTURES.5`
   Status: `pending`
@@ -86,7 +86,7 @@ and generated HDL paths that prove user-facing ISF features work together.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-FIXTURES.4` | `pending` | SPI-like fixture coverage is in the `isf` tier; the next slice should decide whether any fixture coverage belongs in quick/support-accounting paths. |
+| 1 | `ISF-FIXTURES.5` | `pending` | The remaining slice should synchronize final fixture documentation and decide whether any listed gaps can be closed or should remain explicit. |
 
 ## ISF-FIXTURES.1 Inventory
 
@@ -227,6 +227,46 @@ Implementation notes:
 The fixture remains in the `isf` regression tier, not `quick`, so fast
 turnaround remains APB-centered.
 
+## ISF-FIXTURES.4 Regression Tier Placement
+
+`ISF-FIXTURES.4` keeps the SPI-like fixture in the `isf` regression tier and
+out of the curated quick/smoke tier.
+
+Decision:
+
+- `quick` stays limited to fast APB parse/header/contract coverage plus the
+  existing direct/composition smoke set.
+- `t/1228-isf-spi-fixture-coverage.t` belongs in `isf` because it runs
+  schedule JSON, scheduled `.fsm`, plain HDL, and strict HDL checks for a
+  realistic fixture.
+- Named drive call actuals now preserve composed expression forms instead of
+  stringifying nested list actuals as Perl array references. That keeps
+  argument-level composition available where ISF authors naturally need it.
+- The direct `.fsm` shift-expression regression,
+  `t/271-systemverilog-shift-expression-generation.t`, belongs to the full
+  suite rather than the ISF tier because it is a downstream expression/backend
+  contract, not an ISF parser/scheduler test.
+- No additional support-accounting corpus entry is warranted in this slice:
+  the accepted SPI-like path is already covered by the ISF public
+  `tested_by` provenance and by the `isf` regression tier. Future
+  support-accounting expansion should happen only when the machine-readable
+  support corpus needs to advertise this specific fixture as a public source
+  capability example.
+
+Fixture authoring policy:
+
+- Realistic fixtures must be written with documented ISF constructs, not test
+  hacks.
+- If a fixture needs an awkward workaround, treat that as a language
+  expressiveness signal: either rewrite the fixture using a documented
+  construct, or add a backlog/task-tree item for the missing construct.
+- Explicit bit selection such as `tx_byte[7]` is acceptable because it is a
+  documented `.fsm` expression surface used directly in an ISF drive actual.
+  Silent truncation from `tx_byte` to a 1-bit serial line is not acceptable.
+- Because ISF is Lisp-like, composed argument expressions such as
+  `(& tx_byte[7] shift_enable)` should be supported directly when the target
+  construct accepts an expression-valued actual.
+
 ## Decisions
 
 - `2026-05-14`: Fixture expansion is tracked separately so feature trees can
@@ -243,6 +283,10 @@ turnaround remains APB-centered.
   the generated `.fsm` shift expressions also pass the downstream HDL path.
   Raw and aliased shift operators are now accepted by `.fsm` expression
   parsing and SystemVerilog generation as binary operators.
+- `2026-05-14`: Realistic fixtures are allowed to expose missing ISF
+  expressiveness. Workarounds should not be normalized in tests; they should
+  be converted into documented constructs or tracked as missing language
+  features.
 
 ## Open Questions
 
@@ -260,6 +304,7 @@ turnaround remains APB-centered.
 | `2026-05-14` | `ISF-FIXTURES` | `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-FIXTURES.2` | `prove -l t/1183-ci-regression-tier-selection.t`; `./bin/ci-regression --list`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-FIXTURES.3` | Syntax checks for changed Perl modules and new tests; `prove -l t/271-systemverilog-shift-expression-generation.t t/1099-isf-repeat-data-ops.t t/1173-isf-shift-right-explicit-width.t t/1228-isf-spi-fixture-coverage.t t/1112-isf-public-interface-contract.t t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t`; `./bin/ci-regression isf --no-book` (`136` files, `464` tests); `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-FIXTURES.4` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm t/1183-ci-regression-tier-selection.t t/1193-isf-drive-call-arity-boundary.t`; `prove -l t/1183-ci-regression-tier-selection.t t/1193-isf-drive-call-arity-boundary.t`; `./bin/ci-regression --list`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -269,6 +314,7 @@ turnaround remains APB-centered.
 | `ISF-FIXTURES.1` | `ISF-FIXTURES.1: inventory fixture coverage` | Inventory of current fixtures, tiers, strict coverage, and gaps. |
 | `ISF-FIXTURES.2` | `ISF-FIXTURES.2: define fixture coverage matrix` | Matrix defining fixture ownership, tier placement, and SPI-like mode-0 target scope. |
 | `ISF-FIXTURES.3` | `ISF-FIXTURES.3: cover SPI-like fixture path` | SPI-like fixture coverage plus downstream `.fsm` shift-expression HDL support. |
+| `ISF-FIXTURES.4` | `ISF-FIXTURES.4: lock fixture tiers and expression actuals` | SPI-like fixture stays in `isf`, not quick; drive actuals preserve composed expressions; no support-accounting corpus expansion yet. |
 
 ## Changelog
 
@@ -277,3 +323,6 @@ turnaround remains APB-centered.
   as the next implementation fixture.
 - `2026-05-14`: Added SPI-like fixture coverage and closed the downstream
   shift-expression HDL generation gap exposed by that fixture.
+- `2026-05-14`: Locked the SPI-like fixture into the `isf` tier, left it out
+  of quick, recorded the fixture-authoring expressiveness policy, and fixed
+  composed drive-call actual lowering.

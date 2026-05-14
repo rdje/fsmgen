@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-FIXTURE-COVERAGE.md](docs/tasks/ISF-FIXTURE-COVERAGE.md),
-  whose current frontier is `ISF-FIXTURES.4`. The completed
+  whose current frontier is `ISF-FIXTURES.5`. The completed
   `ISF-SCHEDULE-REPORTS`, `ISF-DATA-WIDTHS`, `ISF-STAGES-CONTRACTS`,
   `ISF-RULE-ACTIONS`, `ISF-RESOURCE-CATALOG`, `ISF-RESOURCE-PRIORITY`,
   `ISF-CONFLICTS`, and `ISF-COMPOSITION` trees are listed in the task-tree
@@ -230,6 +230,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   vector-to-bit truncation, and the downstream `.fsm` expression path now
   accepts raw and aliased shift operators through SystemVerilog generation.
   The active frontier advances to `ISF-FIXTURES.4`.
+- `ISF-FIXTURES.4` is complete. Tier selection tests now explicitly keep the
+  SPI-like fixture in the `isf` regression tier and out of the quick/smoke
+  tier. No support-accounting corpus expansion is warranted yet; the fixture
+  is covered by public `tested_by` provenance and the ISF tier. The task tree
+  now records the fixture-authoring policy that awkward test workarounds
+  should be treated as ISF expressiveness gaps, not normalized. Named drive
+  call actuals now preserve composed expression forms, so Lisp-like
+  argument-level composition lowers to scheduled `.fsm` instead of
+  `ARRAY(...)` strings. The active frontier advances to `ISF-FIXTURES.5`.
 - ISF construct support now has a normative rule: parser acceptance is not a
   support claim. Every current or future shipped ISF construct must have an
   explicit accepted source shape, lowering path or fail-closed diagnostic,

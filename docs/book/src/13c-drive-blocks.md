@@ -66,6 +66,17 @@ Known drive calls use exact positional arity. A drive declared with `N`
 formal parameters must be called with exactly `N` actual values. Missing
 actuals and extra actuals are lowering errors; extra values are not ignored.
 
+Actual values may be scalar tokens or composed `.fsm` expression forms. This
+keeps parameterized drives useful inside realistic fixtures without requiring
+temporary variables for simple argument-level composition:
+
+```lisp
+(drive (mosi val)
+  (mosi val))
+
+(drive mosi (& tx_byte[7] shift_enable))
+```
+
 ## Multi-Assignment Drives
 
 ```lisp

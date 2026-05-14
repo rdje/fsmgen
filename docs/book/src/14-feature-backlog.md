@@ -394,7 +394,13 @@ belongs in the `isf` regression tier. The active matrix in
 through file-backed schedule JSON, scheduled `.fsm`, plain HDL, and strict HDL
 checks. It is not a complete SPI protocol compliance suite. Future fixture
 promotions should add stable structural assertions rather than full HDL or full
-schedule JSON snapshots.
+schedule JSON snapshots. The SPI-like fixture intentionally stays out of the
+quick/smoke tier for now; `quick` remains APB-centered for fast turnaround.
+
+Fixture authoring policy: realistic fixtures should use documented ISF
+constructs. If a fixture needs an awkward workaround to express a normal
+hardware intent, treat that as an ISF expressiveness gap and track the missing
+construct instead of hiding the workaround inside the test.
 
 ## Backends And Validation
 

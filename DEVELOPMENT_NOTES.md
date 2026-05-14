@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF fixture tier placement
+- The SPI-like fixture remains in `isf`, not `quick`, because it is realistic
+  cross-feature coverage rather than a minimal smoke. Quick turnaround should
+  stay APB-centered until a broader fixture proves both high signal and
+  negligible runtime cost.
+- No new support-accounting corpus entry was added. The support corpus should
+  grow when a source needs to be advertised as machine-readable capability
+  evidence, not just because a regression test exists.
+- Fixture authoring is also a language-design feedback loop. If an ISF fixture
+  requires an unnatural workaround, that is evidence of missing expressiveness
+  and should become a documented construct or tracked backlog item.
+- Because ISF is Lisp-like, expression composition should work at argument
+  boundaries when the construct accepts an expression-valued actual. Named
+  drive call parameters are one such boundary; preserving nested actual forms
+  avoids forcing authors to introduce throwaway temporaries.
 ## 2026-05-14: ISF SPI-like fixture coverage
 - The SPI-like fixture exposed a real support-boundary bug: ISF `shift_left`
   lowering emitted `<<` in scheduled `.fsm`, but the downstream expression

@@ -1342,7 +1342,7 @@ sub _ir_named_drive_call {
         my $arg = $actuals[$pi];
         confess "Transaction '$tn': drive '$name' missing actual for '$params[$pi]'\n"
             unless defined $arg;
-        push @assignments, { lhs => "${name}_$params[$pi]", rhs => $arg, op => '=', source_kind => 'drive_call_param' };
+        push @assignments, { lhs => "${name}_$params[$pi]", rhs => _format_isf_expr($arg), op => '=', source_kind => 'drive_call_param' };
     }
 
     return {

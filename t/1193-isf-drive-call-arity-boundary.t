@@ -51,6 +51,32 @@ ISF
     like($fsm, qr/\(= \(set_out_val 1\)\)/, 'drive call binds the declared parameter actual');
 };
 
+subtest 'named drive call actuals may be composed expressions' => sub {
+    my $result = lower_source(<<'ISF');
+(actor drive_call_expression_actual
+  (clock clk)
+  (interface
+    (input start)
+    (input bus (width 8))
+    (output out)
+    (output done))
+  (drive (set_out val)
+    (out val))
+  (transaction main
+    (on start)
+    (drive set_out (& bus[7] start))
+    (complete done)))
+ISF
+
+    my $fsm = $result->{files}{'drive_call_expression_actual.fsm'};
+    like(
+        $fsm,
+        qr/\(= \(set_out_val \(& bus\[7\] start\)\)\)/,
+        'drive call expression actual is emitted as a composed .fsm expression',
+    );
+    unlike($fsm, qr/ARRAY\(/, 'drive call expression actual is not stringified as a Perl array reference');
+};
+
 subtest 'malformed named drive call arity fails closed' => sub {
     assert_lower_rejected(<<'ISF', 'missing parameterized-drive actual', qr/\ATransaction 'main': drive 'set_out' missing actual for 'val'/);
 (actor missing_drive_actual

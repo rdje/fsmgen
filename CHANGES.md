@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF fixture tier placement
+- Completed `ISF-FIXTURES.4` by making the SPI-like fixture's regression-tier
+  placement explicit.
+- `t/1183-ci-regression-tier-selection.t` now proves
+  [t/1228-isf-spi-fixture-coverage.t](t/1228-isf-spi-fixture-coverage.t)
+  is selected by the `isf` tier and intentionally absent from the curated
+  quick/smoke tier.
+- The task tree, spec, and mdBook now record the fixture-authoring policy:
+  realistic fixtures should use documented ISF constructs, and awkward
+  workarounds should become explicit language-expressiveness backlog items.
+- Named drive call actuals now preserve composed expression forms such as
+  `(& bus[7] start)` instead of stringifying nested list actuals as
+  `ARRAY(...)`, so argument-level composition works for drive parameters.
+- No support-accounting corpus expansion was added in this slice because the
+  fixture is already covered by the ISF tier and public `tested_by`
+  provenance.
+- The active `ISF-FIXTURES` frontier advances to `ISF-FIXTURES.5`.
 ### R14 — ISF SPI-like fixture coverage
 - Completed `ISF-FIXTURES.3` by promoting `isf/spi_master.isf` into a
   file-backed SPI-like mode-0 serial-transfer regression.

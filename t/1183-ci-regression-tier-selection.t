@@ -42,6 +42,11 @@ subtest 'list mode advertises concrete quick and ISF test tiers' => sub {
     like($result->{stdout}, qr/t\/1091-isf-parser-apb-requester\.t/, 'quick tier includes ISF parsing smoke');
     like($result->{stdout}, qr/isf tests:\n/, '--list includes ISF tier');
     like($result->{stdout}, qr/t\/1199-isf-shift-clause-boundary\.t/, 'ISF tier includes the latest ISF boundary test');
+
+    my ($quick_block) = $result->{stdout} =~ /\Aquick tests:\n(.*?)isf tests:\n/s;
+    my ($isf_block) = $result->{stdout} =~ /isf tests:\n(.*)\z/s;
+    unlike($quick_block || '', qr/t\/1228-isf-spi-fixture-coverage\.t/, 'quick tier does not include the broader SPI-like fixture');
+    like($isf_block || '', qr/t\/1228-isf-spi-fixture-coverage\.t/, 'ISF tier includes the SPI-like fixture coverage');
 };
 
 subtest 'dry-run modes select the expected command families' => sub {
@@ -64,6 +69,7 @@ subtest 'dry-run modes select the expected command families' => sub {
     is($isf->{stderr}, '', 'ISF dry-run keeps stderr clean');
     like($isf->{stdout}, qr/==> Perl ISF regression suite/, 'ISF dry-run selects ISF suite');
     like($isf->{stdout}, qr/t\/1199-isf-shift-clause-boundary\.t/, 'ISF dry-run includes latest ISF test');
+    like($isf->{stdout}, qr/t\/1228-isf-spi-fixture-coverage\.t/, 'ISF dry-run includes SPI-like fixture coverage');
     unlike($isf->{stdout}, qr/mdBook build/, '--no-book suppresses book build');
 
     my $full = run_ci('full', '--dry-run');

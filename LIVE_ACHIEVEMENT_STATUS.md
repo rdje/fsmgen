@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF fixture tier placement
+- Active R14 task-tree slice: `ISF-FIXTURES.4` is complete.
+- The SPI-like fixture test is explicitly kept in the `isf` tier and out of
+  quick/smoke.
+- The fixture tree records the expressiveness policy: realistic fixtures
+  should use documented ISF constructs, and awkward workarounds should become
+  tracked missing-language items.
+- Named drive call actuals now keep composed expression forms, so Lisp-like
+  argument-level composition works for drive parameters.
+- The next active R14 frontier is `ISF-FIXTURES.5`.
+
 ## 2026-05-14: R14 — ISF SPI-like fixture coverage
 - Active R14 task-tree slice: `ISF-FIXTURES.3` is complete.
 - `isf/spi_master.isf` is now covered through schedule JSON, scheduled `.fsm`,

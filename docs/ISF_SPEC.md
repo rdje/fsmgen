@@ -315,6 +315,10 @@ Current lowering:
   parameters requires exactly `N` actual values at every known drive call.
   Missing actuals and extra actuals fail closed during lowering instead of
   leaving parameter signals unbound or silently ignoring values.
+- Drive-call actuals may be scalar tokens or composed `.fsm` expression forms.
+  Argument-level composition is part of the Lisp-like ISF surface, so a call
+  such as `(drive mosi (& tx_byte[7] shift_enable))` lowers to a composed
+  scheduled `.fsm` expression instead of requiring a temporary variable.
 - Hash-backed drive DT emission is deterministic: drive definitions are emitted
   lexically by drive name after transaction/rule-created DTs and any generated
   rule-trigger fan-in DTs.
@@ -1214,7 +1218,13 @@ matrix separates baseline APB quick coverage from broader `isf`-tier fixture
 coverage and records which feature families each fixture owns. The
 [isf/spi_master.isf](../isf/spi_master.isf) fixture now has file-backed
 schedule/HDL/strict coverage as a compact SPI-like mode-0 serial-transfer
-example, not as a complete SPI protocol compliance suite.
+example, not as a complete SPI protocol compliance suite. It stays in the
+`isf` regression tier rather than the curated quick/smoke tier.
+
+Realistic fixtures should use documented ISF constructs. If writing a fixture
+requires an awkward workaround for ordinary hardware intent, treat that as a
+language-expressiveness signal: either rewrite the fixture with a documented
+construct or track the missing construct in the task tree/backlog.
 
 Focused tests:
 - [t/1091-isf-parser-apb-requester.t](../t/1091-isf-parser-apb-requester.t)

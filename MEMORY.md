@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF fixture tier placement
+- Completed `ISF-FIXTURES.4` in
+  [docs/tasks/ISF-FIXTURE-COVERAGE.md](docs/tasks/ISF-FIXTURE-COVERAGE.md).
+- `t/1183-ci-regression-tier-selection.t` now proves the SPI-like fixture test
+  belongs to the `isf` tier and not the quick/smoke tier.
+- The task tree/spec/book now record that awkward fixture workarounds should
+  be treated as ISF expressiveness gaps and tracked instead of hidden.
+- Named drive call actuals now preserve composed expression forms for
+  argument-level composition.
+- The next active R14 frontier is `ISF-FIXTURES.5`.
 ## 2026-05-14: ISF SPI-like fixture coverage
 - Completed `ISF-FIXTURES.3` in
   [docs/tasks/ISF-FIXTURE-COVERAGE.md](docs/tasks/ISF-FIXTURE-COVERAGE.md).

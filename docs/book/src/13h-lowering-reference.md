@@ -112,6 +112,10 @@ Call state:
   (-> next_state))                ;; always proceed
 ```
 
+Actuals can be composed expression forms. For example,
+`(drive scl (& bit_a bit_b))` lowers the parameter assignment as
+`(= (scl_val (& bit_a bit_b)))`.
+
 **Timing**: The `scl_start` assertion enables the non-state DT in the SAME cycle.
 The DT's `<-` assignment takes effect NEXT cycle (flopped).
 So `(drive scl 1)` → cycle N: assert start + wire value, cycle N+1: port changes.
