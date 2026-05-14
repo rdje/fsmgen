@@ -64,13 +64,14 @@ covered stage and temporal-check domains.
   Commit: `ISF-STAGES-CONTRACTS.2: specify bounded stage semantics`
 
 - ID: `ISF-STAGES-CONTRACTS.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Specify first bounded temporal contract semantics.`
   Acceptance: `The tree records supported temporal assertions/checks,
   generated artifact shape, reset behavior, report metadata, and rejected
   contract forms.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `prove -l t/1175-isf-contract-fail-closed.t t/1180-isf-unsupported-transaction-clause-boundary.t`;
+  `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-STAGES-CONTRACTS.3: specify bounded contract semantics`
 
 - ID: `ISF-STAGES-CONTRACTS.4`
   Status: `pending`
@@ -100,7 +101,7 @@ covered stage and temporal-check domains.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-STAGES-CONTRACTS.3` | `pending` | Temporal contract semantics must be bounded before the contract lowering path is implemented. |
+| 1 | `ISF-STAGES-CONTRACTS.4` | `pending` | The stage model is specified and can now be lowered into scheduled `.fsm`. |
 
 ## ISF-STAGES-CONTRACTS.1 Inventory
 
@@ -255,6 +256,90 @@ Deferred stage features:
   back-pressure propagation to earlier states, registered-valid variants, and
   multi-stage resource ownership are deferred.
 
+## ISF-STAGES-CONTRACTS.3 Contract Semantics
+
+The first planned temporal-contract model is a transaction-local bounded
+eventual check. It is intentionally smaller than a full temporal assertion
+language and is designed to lower into reviewable scheduled `.fsm` before any
+backend assertion emission happens.
+
+Supported source shape for the first implementation:
+
+```lisp
+(contract name
+  (eventually signal (within cycles)))
+```
+
+Rules:
+
+- `contract` is supported only as a top-level transaction clause in the first
+  lowering slice. Contracts nested inside `when`, `switch`, or `repeat` remain
+  fail-closed until those control-flow compositions are specified.
+- `name` must be a non-empty scalar contract name and must be unique within
+  its transaction.
+- `signal` must be a scalar actor interface input or output in the first
+  implementation. Broader internal/inferred signal references are deferred
+  until the signal-resolution contract is explicit.
+- `cycles` must be a positive integer literal. Dynamic bounds and min/max
+  windows are deferred.
+- The contract is armed when the transaction reaches the contract clause. It
+  is not a global `always` property and it does not inspect cycles before the
+  arm state.
+- The checked window starts on the cycle after the arm state and ends after
+  `cycles` checked cycles. The signal may satisfy the obligation in any checked
+  cycle up to and including the final cycle.
+
+Generated scheduled-artifact shape:
+
+- The contract clause lowers to one transaction state at its source position.
+  That state emits a one-cycle internal arm request and falls through to the
+  next scheduled transaction state.
+- A generated always-on non-state monitor DT owns the contract storage. The
+  monitor has a pending bit, an age counter wide enough for `cycles`, and a
+  sticky fail bit.
+- When the arm request is observed while no obligation is pending, the monitor
+  sets pending and clears the age counter.
+- While pending, seeing `signal` clear the obligation. If the final checked
+  cycle expires without `signal`, the monitor sets the sticky fail bit.
+- If a new arm request arrives while the same contract is still pending, the
+  monitor sets the same sticky fail bit. This is the first overlap policy:
+  one outstanding obligation per contract instance.
+- The sticky fail bit remains set until actor reset. It is a verification
+  status signal, not a transaction completion signal.
+
+Reset and HDL check policy:
+
+- Actor reset disables the monitor and clears pending, age, and fail storage.
+  The reset polarity and sync/async behavior follow the actor's existing reset
+  lowering.
+- Generated SystemVerilog may add a verification-only assertion under
+  `` `ifndef SYNTHESIS`` that checks the sticky fail bit remains zero. Verilog
+  emission may keep only the generated monitor storage without an assertion.
+- The scheduled `.fsm` monitor remains the source of truth. Backend assertions
+  are a projection of that monitor, not an alternate SVA-only lowering path.
+
+Planned schedule-report metadata:
+
+- Successful reports should include a bounded `temporal_contracts` array.
+- Each entry should include: `transaction`, `name`, `kind` =
+  `bounded_eventually`, `trigger` = `contract_state`, `signal`,
+  `within_cycles`, `pending_signal`, `counter_signal`, `fail_signal`,
+  `overlap_policy` = `fail`, `reset_policy`, and `assertion_projection`.
+- Raw monitor equations, raw `LoweringIR`, and backend assertion text are not
+  public schedule-report payloads.
+
+Rejected or deferred contract forms:
+
+- Historical/free-form examples such as
+  `(contract (always request -> eventually[1..8] grant))` remain fail-closed
+  until a real temporal grammar is specified for them.
+- Antecedent/consequent implication forms, global `always` monitoring,
+  same-cycle windows, min/max windows, unbounded liveness, dynamic bounds,
+  overlapping-obligation queues, multiple consequent signals, expression
+  operands, nested contracts, and contract actions are deferred.
+- Contracts that would collide with generated monitor names fail before
+  scheduled artifact emission.
+
 ## Decisions
 
 - `2026-05-14`: Stage lowering and temporal contract lowering are tracked in
@@ -279,6 +364,7 @@ Deferred stage features:
 | `2026-05-14` | `ISF-STAGES-CONTRACTS` | `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-STAGES-CONTRACTS.1` | `prove -l t/1175-isf-contract-fail-closed.t t/1179-isf-phase-stage-boundary.t t/1180-isf-unsupported-transaction-clause-boundary.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-STAGES-CONTRACTS.2` | `prove -l t/1179-isf-phase-stage-boundary.t t/1180-isf-unsupported-transaction-clause-boundary.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-STAGES-CONTRACTS.3` | `prove -l t/1175-isf-contract-fail-closed.t t/1180-isf-unsupported-transaction-clause-boundary.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -287,6 +373,7 @@ Deferred stage features:
 | `ISF-STAGES-CONTRACTS` | `R14: map ISF objectives to task trees` | Initial tree creation belongs to the ISF objective task-tree coverage slice. |
 | `ISF-STAGES-CONTRACTS.1` | `ISF-STAGES-CONTRACTS.1: inventory stage contract boundary` | Stage/contract parse and fail-closed inventory. |
 | `ISF-STAGES-CONTRACTS.2` | `ISF-STAGES-CONTRACTS.2: specify bounded stage semantics` | First bounded transaction-stage semantics. |
+| `ISF-STAGES-CONTRACTS.3` | `ISF-STAGES-CONTRACTS.3: specify bounded contract semantics` | First bounded temporal-contract semantics. |
 
 ## Changelog
 
@@ -297,3 +384,6 @@ Deferred stage features:
 - `2026-05-14`: Specified the first bounded transaction stage model as a
   top-level ready/valid handshake barrier and advanced the frontier to
   `ISF-STAGES-CONTRACTS.3`.
+- `2026-05-14`: Specified the first bounded temporal contract model as a
+  transaction-local bounded eventual monitor and advanced the frontier to
+  `ISF-STAGES-CONTRACTS.4`.

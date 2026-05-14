@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-STAGES-CONTRACTS.md](docs/tasks/ISF-STAGES-CONTRACTS.md),
-  whose current frontier is `ISF-STAGES-CONTRACTS.3`. The completed
+  whose current frontier is `ISF-STAGES-CONTRACTS.4`. The completed
   `ISF-RULE-ACTIONS`, `ISF-RESOURCE-CATALOG`,
   `ISF-RESOURCE-PRIORITY`, `ISF-CONFLICTS`, and `ISF-COMPOSITION` trees are
   listed in the task-tree completed table.
@@ -108,6 +108,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   bodies, multiple endpoints, registered-valid variants, and skid-buffer
   behavior remain deferred. The active frontier advances to
   `ISF-STAGES-CONTRACTS.3`.
+- `ISF-STAGES-CONTRACTS.3` is complete. The first planned temporal contract
+  model is now bounded as a top-level transaction-local eventual monitor:
+  `(contract name (eventually signal (within cycles)))` arms one obligation
+  when reached, checks the signal in the following bounded window, clears on
+  actor reset or success, and sets a sticky fail bit on timeout or overlap.
+  The planned scheduled `.fsm` artifact owns the monitor; SystemVerilog may
+  project it into a verification-only assertion. The active frontier advances
+  to `ISF-STAGES-CONTRACTS.4`.
 - ISF construct support now has a normative rule: parser acceptance is not a
   support claim. Every current or future shipped ISF construct must have an
   explicit accepted source shape, lowering path or fail-closed diagnostic,

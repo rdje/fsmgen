@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF bounded contract semantics
+- Completed `ISF-STAGES-CONTRACTS.3` in
+  [docs/tasks/ISF-STAGES-CONTRACTS.md](docs/tasks/ISF-STAGES-CONTRACTS.md).
+- The first planned temporal contract subset is
+  `(contract name (eventually signal (within cycles)))`, supported only as a
+  top-level transaction clause. Reaching the clause arms one bounded
+  obligation; success clears it, timeout or overlap sets a sticky fail bit,
+  and actor reset clears the monitor.
+- The planned artifact is scheduled `.fsm` monitor logic first, with any
+  SystemVerilog assertion as a projection of that monitor. The next active
+  R14 frontier is `ISF-STAGES-CONTRACTS.4`.
 ## 2026-05-14: ISF bounded stage semantics
 - Completed `ISF-STAGES-CONTRACTS.2` in
   [docs/tasks/ISF-STAGES-CONTRACTS.md](docs/tasks/ISF-STAGES-CONTRACTS.md).

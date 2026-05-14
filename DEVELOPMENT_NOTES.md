@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF bounded contract semantics
+- The first temporal contract is transaction-local and bounded because it can
+  be represented as ordinary scheduled hardware: an arm state plus an
+  always-on monitor DT with pending, age, and fail storage. That keeps the
+  scheduled `.fsm` artifact reviewable instead of jumping straight to an
+  SVA-only backend feature.
+- The source shape intentionally starts with `eventually signal within N`.
+  Full `always request -> eventually grant` semantics require a separate
+  trigger/antecedent model and a policy for overlapping obligations.
+- Overlap is fail-closed at runtime in the first model. Supporting queues or
+  multiple outstanding obligations would require explicit resource and width
+  contracts for the monitor state.
 ## 2026-05-14: ISF bounded stage semantics
 - The first transaction-stage semantics are intentionally a one-state
   ready/valid barrier. That is the smallest useful HDL behavior that explains

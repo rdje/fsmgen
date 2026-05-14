@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF bounded contract semantics
+- Active R14 task-tree slice: `ISF-STAGES-CONTRACTS.3` is complete.
+- The first planned temporal-contract model is a top-level transaction-local
+  bounded eventual monitor with source shape
+  `(contract name (eventually signal (within cycles)))`.
+- The planned lowering uses a scheduled `.fsm` arm state plus monitor DT with
+  pending, age, and sticky-fail storage. Actor reset clears it; success clears
+  the pending obligation; timeout or overlap sets fail.
+- The next active R14 frontier is `ISF-STAGES-CONTRACTS.4`.
+
 ## 2026-05-14: R14 — ISF bounded stage semantics
 - Active R14 task-tree slice: `ISF-STAGES-CONTRACTS.2` is complete.
 - The first planned transaction-stage model is a top-level ready/valid

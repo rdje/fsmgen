@@ -23,7 +23,7 @@ evidence for one top-level task.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-STAGES-CONTRACTS` | `active` | `R14` | `ISF-STAGES-CONTRACTS.3` | [docs/tasks/ISF-STAGES-CONTRACTS.md](docs/tasks/ISF-STAGES-CONTRACTS.md) |
+| `ISF-STAGES-CONTRACTS` | `active` | `R14` | `ISF-STAGES-CONTRACTS.4` | [docs/tasks/ISF-STAGES-CONTRACTS.md](docs/tasks/ISF-STAGES-CONTRACTS.md) |
 | `ISF-DATA-WIDTHS` | `active` | `R14` | `ISF-DATA-WIDTHS.1` | [docs/tasks/ISF-DATA-WIDTHS.md](docs/tasks/ISF-DATA-WIDTHS.md) |
 | `ISF-SCHEDULE-REPORTS` | `active` | `R14` | `ISF-SCHEDULE-REPORTS.1` | [docs/tasks/ISF-SCHEDULE-REPORTS.md](docs/tasks/ISF-SCHEDULE-REPORTS.md) |
 | `ISF-FIXTURES` | `active` | `R14` | `ISF-FIXTURES.1` | [docs/tasks/ISF-FIXTURE-COVERAGE.md](docs/tasks/ISF-FIXTURE-COVERAGE.md) |

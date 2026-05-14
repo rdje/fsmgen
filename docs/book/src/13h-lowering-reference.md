@@ -564,3 +564,26 @@ does not define a contract payload language beyond carrying the raw clause list
 to the scheduler boundary; the missing implementation pieces are a bounded
 payload model, a check IR, reset/disable semantics, generated check artifacts,
 and schedule-report metadata.
+
+The first planned lowered contract model is a transaction-local bounded
+eventual check:
+
+```lisp
+(contract response_seen
+  (eventually done (within 8)))
+```
+
+When the transaction reaches the contract clause, lowering will arm one
+obligation. The checked window starts on the next cycle and lasts for the
+specified positive integer number of cycles. If `done` is seen before the
+window expires, the obligation clears. If the window expires first, or if the
+same contract is armed again while an obligation is still pending, a generated
+sticky fail bit is set until actor reset.
+
+The planned reviewable artifact is not SVA-only. The scheduled `.fsm` should
+contain one arm state plus an always-on monitor DT with a pending bit, an age
+counter, and a fail bit. Generated SystemVerilog may project that fail bit into
+a verification-only assertion under `` `ifndef SYNTHESIS``; Verilog may keep
+only the monitor storage. Global `always` implication forms, min/max windows,
+dynamic bounds, same-cycle windows, nested contracts, expression operands, and
+multiple outstanding obligations remain deferred.

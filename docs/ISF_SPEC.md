@@ -960,6 +960,20 @@ dropping them from the scheduled `.fsm`; this applies at top level and inside
 contract clause list to the scheduler boundary; it does not yet define a
 contract payload grammar, check IR, reset/disable policy, generated assertion
 artifact, or schedule-report summary.
+The first planned shipped temporal-contract subset is a top-level transaction
+clause of the form `(contract name (eventually signal (within cycles)))`.
+Reaching that clause arms one bounded eventual obligation; the checked window
+starts on the next cycle and lasts for the positive integer `cycles` bound. The
+planned scheduled `.fsm` artifact contains an arm state plus an always-on
+monitor DT with pending, age, and sticky-fail storage. Actor reset clears the
+monitor. Seeing `signal` while pending clears the obligation; window expiry or
+re-arming the same contract while pending sets the sticky fail bit. Schedule
+reports should expose bounded contract summaries through `temporal_contracts`
+without exposing raw monitor equations. SystemVerilog may project the fail bit
+into a verification-only assertion under `` `ifndef SYNTHESIS``; the scheduled
+monitor remains the source of truth. Global `always` implication forms,
+min/max windows, dynamic bounds, same-cycle checks, nested contracts,
+expression operands, and multiple outstanding obligations remain deferred.
 
 ## 10. Schedule JSON Report
 

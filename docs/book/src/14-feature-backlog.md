@@ -281,6 +281,16 @@ raw contract clause to the scheduler boundary; there is no public payload
 grammar, check IR, reset/disable policy, generated check artifact, or
 schedule-report summary yet.
 
+First planned shipped subset: a top-level transaction contract of the form
+`(contract name (eventually signal (within cycles)))`. Reaching the clause
+arms one bounded eventual obligation; the generated scheduled `.fsm` monitor
+tracks pending/age/fail storage, clears on actor reset, and sets a sticky fail
+bit if the signal is not seen within the window or if the same contract is
+armed again while pending. A later SystemVerilog projection may assert that
+fail bit under `` `ifndef SYNTHESIS``. Global `always` implication forms,
+min/max windows, dynamic bounds, same-cycle checks, nested contracts, and
+multiple outstanding obligations remain deferred.
+
 ### Legacy Handshake Semantics
 
 Status: backlog or removal candidate.

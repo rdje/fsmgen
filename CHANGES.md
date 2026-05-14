@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF bounded contract semantics
+- Completed `ISF-STAGES-CONTRACTS.3` by specifying the first temporal
+  contract model as a transaction-local bounded eventual monitor.
+- The planned source subset is
+  `(contract name (eventually signal (within cycles)))`; reaching the clause
+  arms one obligation, success clears it, timeout or overlap sets a sticky
+  fail bit, and actor reset clears the monitor.
+- The planned generated artifact is a scheduled `.fsm` arm state plus monitor
+  DT, with optional SystemVerilog assertion projection from the monitor fail
+  bit.
+- Advanced the active `ISF-STAGES-CONTRACTS` frontier from
+  `ISF-STAGES-CONTRACTS.3` to `ISF-STAGES-CONTRACTS.4`.
 ### R14 — ISF bounded stage semantics
 - Completed `ISF-STAGES-CONTRACTS.2` by specifying the first transaction
   stage model as a top-level ready/valid handshake barrier.
