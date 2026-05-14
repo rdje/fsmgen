@@ -1,7 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R8 — State DT DTE header activation
+- Extended optional DT header guards from non-state DTs to regular state DTs.
+  Authored forms such as `(idle <entry_event ...)` now preserve the header
+  guard as CoreAST state metadata.
+- Changed regular state-enable construction so guarded state DTs emit
+  `(current_state == STATE) || lowered(header_guard)`, while unguarded state
+  DTs keep the ordinary state-decode-only DTE.
+- Added state-enable prescan coverage so expression-valued state header guards
+  keep parser-created intermediates declared and assigned.
+- Updated the mdBook and language-surface manifest wording to document
+  whole-DT activation clearly, including that transitions inside a guarded
+  state DT can participate when the external activation condition is true.
+- Made non-state DT behavior uniform for DTE header activation and `?dt` root
+  eligibility; the docs now also state that DT logic is not an asynchronous
+  reset-tree glue mechanism.
 ### R14/R8 — Guarded non-state DT DTE headers
+- Superseded by the broader regular-state support above: DT header guards now
+  cover regular state DTs and non-state DTs, while ISF rules continue using
+  the non-state form.
 - Added optional non-state DT DTE guards to the `.fsm` parser, preserving the
   authored guard as CoreAST state metadata and accepting the existing guard
   grammar in headers such as `(-route <req ...)`, `(-neg <!hold ...)`,

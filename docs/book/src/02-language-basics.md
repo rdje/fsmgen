@@ -365,9 +365,9 @@ Active shorthand meanings are:
   the compound predicate is true
 
 The compact comparison family is the existing `name<op>value` grammar. The
-same guard grammar is reused by condition suffixes and by non-state DT DTE
-headers such as `(-route <req ...)`, `(-mode_hit <mode=3 ...)`, and
-`(-both_ready <(& req ready) ...)`.
+same guard grammar is reused by condition suffixes and by DT DTE headers such
+as `(idle <entry_event ...)`, `(-route <req ...)`, `(-mode_hit <mode=3 ...)`,
+and `(-both_ready <(& req ready) ...)`.
 
 ### Condition Suffixes
 

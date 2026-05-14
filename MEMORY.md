@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: R8 — State DT DTE header activation
+- Regular state DTs now accept the same optional DTE header guard surface as
+  non-state DTs, for example `(idle <entry_event ...)` or
+  `(active <(& req ready) ...)`.
+- State DT DTE lowering is additive: `state_en = (current_state == STATE) ||
+  lowered(header_guard)`. The header activation does not replace state decode.
+- The generated state DT DTE gates all DT-specific output enables at the
+  boundary, including `next_state` transition enables, so a guarded state DT
+  can drive transitions when externally activated.
+- Non-state DTs now use the same header-activation surface everywhere they are
+  accepted; DT activation is not an async reset-tree glue mechanism.
+- `t/82-language-contract-state-dt-dte-guards.t` covers scalar and expression
+  activation guards, including backed intermediates and transition gating.
 ## 2026-05-14: R14/R8 — Guarded non-state DT DTE headers
 - `.fsm` non-state DTs now accept an optional leading DTE guard after the DT
   name, for example `(-route <req ...)`, `(-mode_hit <mode=3 ...)`, and

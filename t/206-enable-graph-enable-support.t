@@ -25,10 +25,11 @@ subtest 'enable-graph enable support rebuilds top-level enable initialization, W
   )
   (+size
     (A 1)
+    (EXTRA 1)
     (OUT1 1)
     (WATCH 1)
   )
-  (idle
+  (idle <EXTRA
     (<A
       (OUT1 <= 1)
     )
@@ -51,8 +52,8 @@ FSM
     );
     is(
         $prepared_backend->{state_enables}{idle}->to_systemverilog,
-        'current_state == IDLE',
-        'enable support keeps the regular-state enable AST contract',
+        '(current_state == IDLE || EXTRA != 0)',
+        'enable support keeps the guarded regular-state enable AST contract',
     );
     ok(
         blessed($prepared_backend->{dt_enables}{'-watch'}),
@@ -65,7 +66,7 @@ FSM
     );
 
     my $top_enable_block = $support->generate_enable_conditions($fsm_module);
-    like($top_enable_block, qr/\bassign idle_en = current_state == IDLE;/, 'enable support emits the top-level state enable assignment');
+    like($top_enable_block, qr/\bassign idle_en = \(current_state == IDLE \|\| EXTRA != 0\);/, 'enable support emits the guarded top-level state enable assignment');
     like($top_enable_block, qr/\bassign watch_en = A != 0;/, 'enable support emits the guarded standalone-DT top-level enable assignment');
 
     my $dt_block = $support->generate_dt_enables_from_analysis();

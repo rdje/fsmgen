@@ -107,6 +107,14 @@ sub prescan_wen_en_for_intermediate_signals ($self) {
 
     $ctx->{referenced_intermediate_signals} //= {};
 
+    for my $state_name (sort keys %{$ctx->{state_enables} || {}}) {
+        my $enable_ast = $ctx->{state_enables}{$state_name};
+        next unless $enable_ast && blessed($enable_ast);
+
+        fsm_debug("  PRE-SCAN: Scanning state-DT DTE: $state_name", 3);
+        $ctx->{enable_graph_intermediate_support}->track_ast_intermediate_signals($enable_ast);
+    }
+
     for my $dt_name (sort keys %{$ctx->{dt_enables} || {}}) {
         my $enable_ast = $ctx->{dt_enables}{$dt_name};
         next unless $enable_ast && blessed($enable_ast);
@@ -333,11 +341,19 @@ Build the top-level enable AST for one regular FSM state.
 
 =cut
 
-sub build_state_enable_condition_ast ($self, $state_name) {
-    return FSM::AST::Utils::equals_op(
+sub build_state_enable_condition_ast ($self, $state_name, $state = undef) {
+    my $state_decode_ast = FSM::AST::Utils::equals_op(
         FSM::AST::Utils::signal_ref('current_state'),
         FSM::AST::Utils::literal(uc($state_name)),
     );
+
+    if ($state && $state->can('dt_enable_condition')) {
+        my $condition_ast = $state->dt_enable_condition;
+        return FSM::AST::Utils::or_op($state_decode_ast, $condition_ast)
+            if $condition_ast && blessed($condition_ast);
+    }
+
+    return $state_decode_ast;
 }
 
 =head2 build_dt_enable_condition_ast
@@ -383,7 +399,7 @@ sub initialize_state_and_dt_enable_conditions ($self, $fsm_module) {
                 : 'UNBLESSED';
             fsm_debug("ENABLE_INIT: Registered standalone DT enable for $state_name -> $enable_sv", 3);
         } else {
-            my $enable_ast = $self->build_state_enable_condition_ast($state_name);
+            my $enable_ast = $self->build_state_enable_condition_ast($state_name, $state);
             $ctx->{state_enables}->{$state_name} = $enable_ast;
             my $enable_sv = blessed($enable_ast) && $enable_ast->can('to_systemverilog')
                 ? $enable_ast->to_systemverilog

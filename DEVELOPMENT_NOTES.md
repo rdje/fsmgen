@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: State DT DTE header activation
+- The same DTE model used for non-state DTs also applies to regular state DTs:
+  the state decode is one activation source, and a header guard can be a second
+  activation source.
+- The state-DT lowering is intentionally additive:
+  `state_en = (current_state == STATE) || lowered(header_guard)`. The guard is
+  not an action-local condition and it does not replace the state decode.
+- Because the header guard activates the whole DT, every assignment, test, and
+  transition in that state DT participates when the guard is true. This is the
+  power-user part of the feature: useful when intentional, but it can create
+  multi-active-region behavior if several state DTs drive the same target.
+- Non-state DT behavior is uniform for header activation and `?dt` root
+  eligibility. There is no separate public activation model for a named subset
+  of non-state DTs.
+- Async reset-tree composition remains outside DT semantics. Arbitrary
+  combinational glue on an asynchronous reset tree is glitch-prone; reset policy
+  belongs to the explicit `+system` and reset/default metadata contracts.
+- Expression-valued state activations need the same intermediate-signal
+  liveness treatment as non-state DTE guards, so WEN/EN prescan now scans
+  top-level state enables as final enable expressions.
 ## 2026-05-14: Guarded non-state DT DTE headers
 - The DT model already treats every DT as having a one-bit DTE. Exposing that
   DTE on non-state DT headers is cleaner than duplicating the same guard on

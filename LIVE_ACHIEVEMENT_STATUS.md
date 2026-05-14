@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R8 — State DT DTE header activation
+- Active language-contract slice: regular state DTs now accept optional DTE
+  header activation guards, using the same guard grammar as non-state DTs.
+- Generated `.sv` lowers a guarded state DT enable as
+  `(current_state == STATE) || lowered(header_guard)`, then applies that DTE at
+  the DT-specific output-enable boundary.
+- The book now documents that this is whole-DT activation: assignments, tests,
+  and transitions inside the state DT participate when the header activation is
+  true.
+- Non-state DTs use the same header-activation surface everywhere they are
+  accepted; DT activation is not an async reset-tree glue mechanism.
+
 ## 2026-05-14: R14/R8 — Guarded non-state DT DTE headers
 - Active language/ISF contract slice: `.fsm` non-state DTs now accept optional
   DTE guards in the header, using the existing guard grammar.

@@ -288,8 +288,8 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
             if ($root_kind eq 'dt' && $state) {
                 Carp::confess
                     "Unsupported top-level block '$element_name' inside '$root_contract_label'. ".
-                    "The active '?dt:name' contract currently supports only general DT blocks named like '(-foo ...)' at top level. ".
-                    "FSM-state blocks and dedicated reset-state blocks remain part of '?fsm:name'. ".
+                    "The active '?dt:name' contract currently supports only non-state DT blocks named like '(-foo ...)' at top level. ".
+                    "FSM-state blocks remain part of '?fsm:name'. ".
                     supported_boundary_hint()
                     unless $state->can('is_standalone_dt') && $state->is_standalone_dt;
             }
@@ -500,7 +500,7 @@ sub supported_top_level_forms_description($self, $root_kind = 'fsm', $is_flat_as
         if $root_kind eq 'dt';
     return "Inside '?fsm:module_name' and the legacy '+fsm' root family, top-level content must be a list of directive sections, ':=' directives, and state/DT blocks"
         if $is_flat_ast;
-    return "Inside '?fsm:name', the active contract supports directive sections, ':=' init/reset directives, state DT blocks, and non-state DT blocks like '(-foo ...)' or '(-foo <cond ...)' only";
+    return "Inside '?fsm:name', the active contract supports directive sections, ':=' init/reset directives, state DT blocks like '(state ...)' or '(state <cond ...)', and non-state DT blocks like '(-foo ...)' or '(-foo <cond ...)' only";
 }
 
 sub describe_top_level_source_root($self, $raw_ast) {
@@ -2548,10 +2548,8 @@ sub parse_state($self, $state_ast) {
     my ($state_type, $clean_name) = $self->classify_state_name($state_name);
     my $dt_enable_condition;
 
-    if ($state_type eq 'standalone_dt') {
-        ($dt_enable_condition, $decision_trees)
-            = $self->extract_standalone_dt_enable_condition($state_name, $decision_trees);
-    }
+    ($dt_enable_condition, $decision_trees)
+        = $self->extract_dt_header_enable_condition($state_name, $decision_trees);
     
     my $state = FSM::CoreAST::State->new(
         name => $clean_name,
@@ -2591,7 +2589,7 @@ sub parse_state($self, $state_ast) {
     return $state;
 }
 
-sub extract_standalone_dt_enable_condition($self, $state_name, $decision_trees) {
+sub extract_dt_header_enable_condition($self, $state_name, $decision_trees) {
     return (undef, $decision_trees)
         unless ref($decision_trees) eq 'ARRAY' && @$decision_trees;
 
@@ -2600,15 +2598,15 @@ sub extract_standalone_dt_enable_condition($self, $state_name, $decision_trees) 
 
     if (!ref($items[0]) && ($items[0] eq '<' || $items[0] eq '<!')) {
         Carp::confess
-            "Malformed non-state DT enable guard in '$state_name'. ".
-            "Guarded non-state DT headers must use '(-name <cond ...)' or '(-name < condition_expression ...)' with at least one body action after the guard. ".
+            "Malformed DT header enable guard in '$state_name'. ".
+            "Guarded DT headers must use '(name <cond ...)', '(-name <cond ...)', or the spaced expression form '(name < condition_expression ...)' with at least one body action after the guard. ".
             supported_boundary_hint()
             unless @items >= 3;
         @condition_parts = splice(@items, 0, 2);
     } elsif (!ref($items[0]) && $items[0] =~ /^<!?.+/) {
         Carp::confess
-            "Malformed non-state DT enable guard in '$state_name'. ".
-            "Guarded non-state DT headers must leave at least one body action after the guard condition. ".
+            "Malformed DT header enable guard in '$state_name'. ".
+            "Guarded DT headers must leave at least one body action after the guard condition. ".
             supported_boundary_hint()
             unless @items >= 2;
         @condition_parts = (shift @items);
@@ -2621,7 +2619,7 @@ sub extract_standalone_dt_enable_condition($self, $state_name, $decision_trees) 
     my $condition_expr = $self->{expression_builder}->parse_condition($full_condition);
 
     Carp::confess
-        "Malformed non-state DT enable guard in '$state_name'. ".
+        "Malformed DT header enable guard in '$state_name'. ".
         "The guard must lower to a valid condition expression and must be followed by at least one body action. ".
         supported_boundary_hint()
         unless $condition_expr && @items;
@@ -2633,8 +2631,7 @@ sub classify_state_name($self, $state_name) {
     Carp::confess
         "Malformed state/DT name '".$self->describe_contract_name($state_name)."'. ".
         "FSM-state DT blocks must use an HDL-identifier-compatible name like 'aState'; ".
-        "general/combinational DT blocks must use a single leading '-' plus an HDL-identifier-compatible name like '-mycombDT'; ".
-        "and reset-state names remain limited to '-syncrst', '-syncreset', '-asyncrst', or '-asyncreset'. ".
+        "and non-state DT blocks must use a single leading '-' plus an HDL-identifier-compatible name like '-mycombDT'. ".
         supported_boundary_hint()
         unless defined($state_name) && !ref($state_name);
 
@@ -2650,8 +2647,7 @@ sub classify_state_name($self, $state_name) {
     Carp::confess
         "Malformed state/DT name '$state_name'. ".
         "FSM-state DT blocks must use an HDL-identifier-compatible name like 'aState'; ".
-        "general/combinational DT blocks must use a single leading '-' plus an HDL-identifier-compatible name like '-mycombDT'; ".
-        "and reset-state names remain limited to '-syncrst', '-syncreset', '-asyncrst', or '-asyncreset'. ".
+        "and non-state DT blocks must use a single leading '-' plus an HDL-identifier-compatible name like '-mycombDT'. ".
         supported_boundary_hint();
 }
 

@@ -1876,8 +1876,8 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     my %guard_forms = map { $_ => 1 } @{$manifest->{language_surface}{expressions}{guard_forms}};
     ok(
-        $guard_forms{'non-state DT DTE headers such as (-route <req ...) and (-mode_hit <mode=3 ...)'},
-        'manifest advertises guarded non-state DT DTE headers',
+        $guard_forms{'state DT DTE headers such as (idle <entry_event ...) and non-state DT DTE headers such as (-route <req ...)'},
+        'manifest advertises guarded state and non-state DT DTE headers',
     );
 
     my %human_contract_docs = map { $_ => 1 } @{$manifest->{documentation}{human_contract} || []};

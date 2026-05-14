@@ -50,7 +50,7 @@ Migrated to the mdBook. Use these chapter homes as the normative contract:
 
 - Direct root and DT/FSM structure:
   `docs/book/src/03-decision-trees-and-fsms.md`, including state DTs,
-  non-state DTs, and guarded non-state DT DTE headers
+  non-state DTs, and guarded DT DTE headers
 - Guard, suffix, expression, assignment, and update surfaces:
   `docs/book/src/02-language-basics.md`
 - Declarations, package imports, and type aliases:

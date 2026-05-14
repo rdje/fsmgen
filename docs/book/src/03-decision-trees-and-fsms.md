@@ -76,9 +76,8 @@ The current `?dt:name` contract is intentionally narrower than `?fsm:name`.
 Accepted top-level content for `?dt:name` currently includes conventional
 `+system`, `+size`, `+constants`, `+enums`, `+define`, `+params`, bounded
 `+types`, bounded `+import`, canonical `(:= (signal value))` directives, and
-general non-state DT blocks such as `(-route ...)`. Regular FSM-state blocks
-such as `(idle ...)` and dedicated reset-state blocks are rejected inside
-standalone-DT roots.
+non-state DT blocks such as `(-route ...)`. Regular FSM-state blocks such as
+`(idle ...)` are rejected inside standalone-DT roots.
 
 Without explicit `+system`, a purely combinational standalone `?dt` exposes no
 implicit system ports. If any sequential assignment appears and no `+system`
@@ -113,9 +112,10 @@ All of these signals are one bit. When `DTE_i` is `0`, every
 inactive. When `DTE_i` is `1`, the gated enables are allowed to follow the
 predicates computed by the DT logic; the DT is on, enabled, or active.
 
-For state DTs, `DTE_i` is the decode of that FSM state. For non-state DTs,
-`DTE_i` defaults to `1`, or to the optional guard authored immediately after
-the non-state DT name.
+For state DTs, `DTE_i` is the decode of that FSM state ORed with any optional
+activation guard authored immediately after the state name. For non-state DTs,
+`DTE_i` defaults to `1`, or to the optional activation guard authored
+immediately after the non-state DT name.
 
 The SystemVerilog emitter keeps this as a boundary-gating rule. A state DT's
 internal selector predicates may be factored into helper wires, but the state
@@ -182,11 +182,14 @@ Inside an FSM root, a state DT is written as a normal state block such as
 as `(-route ...)`, `(-scl ...)`, or `(-counter_inc ...)`.
 
 The block spelling decides the activation context. A state DT is enabled by
-the FSM state decode. A non-state DT behaves as an always-enabled combinational
-selector region by default, or as a guarded region when its header binds a
-non-state `DTE` guard:
+the FSM state decode, and may also be activated by an optional header guard. A
+non-state DT behaves as an always-enabled combinational selector region by
+default, or as a guarded region when its header binds a `DTE` guard:
 
 ```lisp
+(idle <entry_event
+  (= (OUT_IDLE 1)))
+
 (-route <req
   (= (OUT_A 1)))
 
@@ -201,10 +204,10 @@ non-state `DTE` guard:
 ```
 
 Those guards use the same guard grammar described in the language basics
-chapter. The guard belongs to the DT header: it computes the DT enable, gates
-all output `EN`/`WEN` terms that leave that non-state DT, and is not repeated
-on each action. If the header guard is omitted, the non-state DT enable is
-`1'b1`.
+chapter. The guard belongs to the DT header: it contributes to the DT enable,
+gates all output `EN`/`WEN` terms that leave that DT, and is not repeated on
+each action. If the header guard is omitted, a state DT uses only its state
+decode and a non-state DT uses `1'b1`.
 
 The assignment operators inside either state or non-state block decide what
 kind of target mux or storage is selected:
@@ -222,15 +225,9 @@ described in the language basics chapter still apply.
 Non-state DT names must use exactly one leading dash plus an
 HDL-identifier-compatible base name, for example `-route_dt` or `-comb_1`.
 Malformed block names such as `(bad-name ...)`, `(-bad-name ...)`, and
-`(--bad ...)` are rejected explicitly.
-
-Dedicated reset-state DT blocks are the short and long reset spellings:
-
-- `-syncrst` and `-syncreset`, both normalized to `syncreset`
-- `-asyncrst` and `-asyncreset`, both normalized to `asyncreset`
-
-They are reset-state DT blocks, not regular encoded states. They do not
-participate in normal state encoding or `current_state` comparisons.
+`(--bad ...)` are rejected explicitly. Non-state DTs use the same activation
+and enable rules everywhere they are accepted; they are not regular encoded
+states and do not participate in `current_state` comparisons.
 
 ## Reset and Initialization
 
@@ -256,6 +253,11 @@ strict mode rejects it and points to `(:= (signal value))`.
 Those reset/init rules are still documented as a live contract rather than as a
 fully frozen language forever, so keep an eye on current wording in the
 reference docs.
+
+Do not treat a DT as a way to build arbitrary asynchronous reset-tree glue.
+Random combinational logic on an asynchronous reset path is glitch-prone and is
+outside the DT model. Actual clock/reset policy belongs to the `+system` reset
+contract and explicit reset/default metadata.
 
 ## State Transitions
 
@@ -295,13 +297,16 @@ The compound suffix form is useful when a transition depends on several done or
 ready signals and the source should show the conjunction at the transition
 site.
 
-## Non-State DT Enable Guards
+## DT Header Enable Guards
 
-Every DT/state block has a conceptual activity input: its `DTE`. State DTs
-derive that enable from the FSM state decode. Non-state DTs now expose a
-bounded author-facing DTE binding through an optional leading guard:
+Every DT/state block has a conceptual activity input: its `DTE`. Regular state
+DTs and non-state DTs expose a bounded author-facing DTE binding through an
+optional leading guard:
 
 ```lisp
+(state_name <guard
+  body...)
+
 (-name <guard
   body...)
 ```
@@ -314,18 +319,35 @@ The guard syntax is exactly the normal guard syntax:
   `<mode=3`, `<mode!=0`, `<count<=7`, or `<count>=2`
 - `<(& req ready)` uses the normal list-form expression language
 
-The lowered model is:
+The lowered model for a regular state DT is:
+
+```text
+state_DTE = (current_state == STATE) || lowered(guard)
+state_LHS_VAL_EN = state_DTE && state_LHS_VAL_selector
+```
+
+The lowered model for a non-state DT is:
 
 ```text
 name_DTE = lowered(guard)
 name_LHS_VAL_EN = name_DTE && name_LHS_VAL_selector
 ```
 
-If no guard is authored, `name_DTE = 1'b1`. This keeps existing non-state DT
-sources compatible while giving intent-level producers such as ISF a clean way
-to activate an entire non-state DT once. Local guarded blocks, condition
-suffixes, and test nodes inside the DT still contribute to the DT-local
-selector predicates; the header guard is the boundary enable.
+If no guard is authored, a regular state DT uses only its state decode and a
+non-state DT uses `name_DTE = 1'b1`. This keeps existing sources compatible
+while giving authors and intent-level producers such as ISF a clean way to
+activate an entire DT once. Local guarded blocks, condition suffixes, and test
+nodes inside the DT still contribute to the DT-local selector predicates; the
+header guard is the boundary enable.
+
+For regular state DTs, the header guard is additional activation. It does not
+replace the state decode. A guarded state DT can therefore be active even when
+`current_state` is a different encoded state. This is powerful and deliberate,
+but it must be reviewed as whole-DT activation: assignments, tests, and
+transitions inside that state DT all participate when the header guard is true.
+If the body contains `(-> other_state)`, that transition can drive
+`next_state` under the external activation condition as well as under the
+ordinary state decode.
 
 The parser captures the authored DTE guard as CoreAST state metadata, signal
 analysis validates referenced operands before HDL generation, and the
@@ -334,10 +356,9 @@ boundary gate on each DT output enable. Expression guards may create internal
 intermediate wires; those intermediates are kept live because the DTE
 assignment is a final enable expression.
 
-Explicit author control of state-DT DTEs remains outside the current language:
-state DTs still derive their DTE from state decode. Broader multi-active-region
-semantics need their own validation and diagnostics before becoming a public
-state-DT feature.
+Header DTE guards are supported on regular state DTs and non-state DTs. The
+header is ordinary DT activation; it is not an asynchronous reset-tree
+construction mechanism.
 
 ## Practical Guidance
 

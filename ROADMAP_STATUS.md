@@ -10,11 +10,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitted state-DT ENs are `state_en & selector_predicate` just before leaving
   the state DT; the FSM-level merge then ORs those gated state-DT ENs per
   `LHS`/`VAL` for the final mux selector.
-- Non-state DTs now accept optional DTE header guards using the normal guard
-  grammar, such as `(-route <req ...)`, `(-mode_hit <mode=3 ...)`, and
-  `(-both_ready <(& req ready) ...)`. Unguarded non-state DTs still default to
-  `DTE = 1'b1`, and guarded DTs emit the DTE as a top-level `*_en` that gates
-  every DT-specific output enable at the boundary.
+- State and non-state DTs now accept optional DTE header guards using the
+  normal guard grammar, such as `(idle <entry_event ...)`,
+  `(-route <req ...)`, `(-mode_hit <mode=3 ...)`, and
+  `(-both_ready <(& req ready) ...)`. Guarded state DTs OR the lowered guard
+  with the state decode; unguarded non-state DTs still default to
+  `DTE = 1'b1`.
 - The mdBook language-basics chapter now defines the clock tick/cycle timing
   model used by sequential assignments: `D` is sampled at the active tick,
   `Q` updates at `N+`, and `Q` remains stable through the cycle until the next
@@ -2572,10 +2573,9 @@ Done:
   - computed test selectors must start with a real selector expression,
   - computed test selectors must include at least one selector branch,
   - and malformed forms such as `(? (=0 ...))` or `(?(| A B))` now fail clearly through parser, pipeline, and CLI entry points.
-- [t/45-language-contract-reset-state-spellings.t](t/45-language-contract-reset-state-spellings.t) now locks the active reset-state spelling and classification contract:
-  - `-syncrst` and `-syncreset` normalize to the same `syncreset` reset-state identity,
-  - `-asyncrst` and `-asyncreset` normalize to the same `asyncreset` reset-state identity,
-  - and those reset blocks stay out of the regular encoded-state plan while still generating DT-style enable handling.
+- [t/45-language-contract-reset-state-spellings.t](t/45-language-contract-reset-state-spellings.t) now locks legacy non-state DT spelling compatibility:
+  - legacy aliases normalize to their existing internal identities,
+  - and those DTs stay out of the regular encoded-state plan while still generating DT-style enable handling.
 - [t/38-language-contract-generic-placeholder-boundary.t](t/38-language-contract-generic-placeholder-boundary.t) now locks explicit rejection of the legacy generic/template placeholder family in the FSM-only parser:
   - placeholder selectors such as `?[READ]`,
   - repeat macros such as `?repeat:[MAX_COUNT]`,
@@ -2616,6 +2616,15 @@ Done:
     [t/203-enable-graph-factorization-support.t](t/203-enable-graph-factorization-support.t),
     and [t/210-enable-graph-factorization-policy-support.t](t/210-enable-graph-factorization-policy-support.t)
     lock that state decode is not absorbed into precomputed selector helpers.
+- Regular state DTs now also accept optional DTE header activation guards:
+  - `(state <cond ...)` parses with the same guard grammar as non-state DTs,
+  - generated state enables lower as `(current_state == STATE) || lowered(cond)`,
+  - the state-DT DTE still boundary-gates assignments and transitions inside
+    that state DT,
+  - non-state DTs use the same header-activation surface wherever they are
+    accepted and remain outside encoded-state comparisons,
+  - and [t/82-language-contract-state-dt-dte-guards.t](t/82-language-contract-state-dt-dte-guards.t)
+    locks scalar and expression activation guards through HDL generation.
 Left:
 - Resolve the remaining gray-zone families, especially:
   - any remaining parser-accepted legacy constructs not yet cleanly bucketed.
@@ -2955,7 +2964,8 @@ Done:
 - The first reusable standalone-DT slice is now shipped in the active toolchain:
   - top-level `?dt:name` roots are classified, parsed, and generated end to end,
   - the active standalone-DT top-level contract currently supports the conventional `(+system ...)` form, `(+size ...)`, `(+constants ...)`, `(+enums ...)`, `(+define ...)`, `(+params ...)`, compact top-level `(:= signal=value)` directives, and general DT blocks such as `(-foo ...)`,
-  - standalone-DT roots still reject regular FSM-state blocks and dedicated reset-state blocks at top level,
+  - standalone-DT roots reject regular FSM-state blocks at top level while
+    accepting non-state DT blocks,
   - explicit conventional `(+system ...)` now yields `clk` / `rstn` in standalone-DT roots and composition-facing `?dtc` children,
   - without explicit `(+system ...)`, purely combinational `?dt:name` modules expose no implicit `clk` / `rst_n`,
   - without explicit `(+system ...)`, sequential `?dt:name` modules expose implicit `clk` / `rst_n`,

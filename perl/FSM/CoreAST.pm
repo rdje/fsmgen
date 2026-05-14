@@ -2137,7 +2137,8 @@ package FSM::CoreAST::State;
     sub is_standalone_dt($self) {
         my $state_type = $self->state_type;
         return 1 if $state_type eq 'standalone_dt';
-        return !$self->is_reset_state && $self->{name} =~ /^-/;
+        return 1 if $self->is_reset_state;
+        return $self->{name} =~ /^-/;
     }
 
     sub is_regular_state($self) {
