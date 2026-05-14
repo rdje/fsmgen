@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF compatibility diagnostics
+- Completed `ISF-COMPATIBILITY.4` in
+  [docs/tasks/ISF-COMPATIBILITY-SURFACE.md](docs/tasks/ISF-COMPATIBILITY-SURFACE.md).
+- Legacy handshake validation now requires exactly one scalar `valid` and one
+  scalar `ready`, rejects duplicate handshake names, and still leaves
+  `handshakes => {}` as an ignored compatibility placeholder.
+- Removed transaction `(assign ...)` now reports a targeted migration
+  diagnostic in transaction, `when`, `switch`, and `repeat` contexts.
+- The next active R14 frontier is `ISF-COMPATIBILITY.5`.
 ## 2026-05-14: ISF removed assign policy
 - Completed `ISF-COMPATIBILITY.3` in
   [docs/tasks/ISF-COMPATIBILITY-SURFACE.md](docs/tasks/ISF-COMPATIBILITY-SURFACE.md).

@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-COMPATIBILITY-SURFACE.md](docs/tasks/ISF-COMPATIBILITY-SURFACE.md),
-  whose current frontier is `ISF-COMPATIBILITY.4`. The completed
+  whose current frontier is `ISF-COMPATIBILITY.5`. The completed
   `ISF-SCHEDULE-REPORTS`, `ISF-DATA-WIDTHS`, `ISF-STAGES-CONTRACTS`,
   `ISF-RULE-ACTIONS`, `ISF-RESOURCE-CATALOG`, `ISF-RESOURCE-PRIORITY`,
   `ISF-CONFLICTS`, `ISF-COMPOSITION`, and `ISF-FIXTURES` trees are listed in
@@ -53,6 +53,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   driving, rule `(port expr)` actions for rule-driven assignments, and
   `(complete port)` for completion pulses. The active frontier advances to
   `ISF-COMPATIBILITY.4`.
+- `ISF-COMPATIBILITY.4` is complete. Parser compatibility now requires legacy
+  handshakes to provide exactly one scalar `valid` property and one scalar
+  `ready` property, rejects duplicate handshake names, and still leaves the
+  actor-shell `handshakes` placeholder empty. Scheduler validation now gives
+  removed transaction `(assign ...)` a targeted migration diagnostic in
+  transaction, `when`, `switch`, and `repeat` contexts while unknown future
+  keywords keep the generic unsupported-clause path. The active frontier
+  advances to `ISF-COMPATIBILITY.5`.
 - `ISF-RESOURCE-PRIORITY.1` is complete. The current inventory records that
   `(resources ...)` is validated metadata only, accepted arbiters are
   `priority` and `round_robin`, and successful resource arbitration is not yet

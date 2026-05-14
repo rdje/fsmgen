@@ -292,7 +292,7 @@ multiple outstanding obligations.
 
 ### Legacy Handshake Semantics
 
-Status: deprecated compatibility input; validation tightening pending.
+Status: deprecated compatibility input with tightened validation.
 
 Goal: keep old `(handshake ...)` source intentional without giving it new
 runtime semantics.
@@ -302,11 +302,11 @@ ignored. The parser accepts a scalar handshake name plus scalar `valid`/`ready`
 property entries and leaves the actor-shell handshake placeholder empty. Direct
 `(on port ...)` activation plus generated `can_accept` is the current model.
 Policy: keep well-formed legacy handshakes accepted and ignored for
-compatibility, do not lower them into scheduled `.fsm`, schedule JSON, or HDL,
-and tighten validation so accepted legacy forms require one `valid` and one
-`ready` property with no duplicate handshake names. Use `(on ...)` for
-activation and transaction `(stage name (input ready_signal) (output
-valid_signal))` for ready/valid barriers.
+compatibility, and do not lower them into scheduled `.fsm`, schedule JSON, or
+HDL. Accepted legacy forms now require one `valid` and one `ready` property
+with no duplicate handshake names. Use `(on ...)` for activation and
+transaction `(stage name (input ready_signal) (output valid_signal))` for
+ready/valid barriers.
 
 ### Removed Assign Keyword
 
@@ -318,13 +318,12 @@ and guide authors to explicit timing constructs.
 Current boundary: authored uses fail closed as unsupported transaction clauses.
 The parser may carry the raw clause as private scheduler input, but the
 scheduler rejects it in top-level transaction bodies and nested contexts such
-as `when`, `switch`, or `repeat` bodies. No migration-specific diagnostic has
-shipped yet. Policy: do not auto-map the old keyword. Use `(update var expr)`
-for transaction-local flopped updates, `(drive ...)` for protocol/output
-drives, rule `(port expr)` actions for rule-driven assignments, and
-`(complete port)` for transaction completion. A future transaction-local
-combinational assignment feature would need a new explicit construct with its
-own timing semantics.
+as `when`, `switch`, or `repeat` bodies. The diagnostic is migration-specific:
+do not auto-map the old keyword. Use `(update var expr)` for transaction-local
+flopped updates, `(drive ...)` for protocol/output drives, rule `(port expr)`
+actions for rule-driven assignments, and `(complete port)` for transaction
+completion. A future transaction-local combinational assignment feature would
+need a new explicit construct with its own timing semantics.
 
 ### Full Width Inference For Data Operations
 

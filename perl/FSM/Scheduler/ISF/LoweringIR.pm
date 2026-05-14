@@ -808,6 +808,9 @@ sub _validate_supported_transaction_clauses {
         if (defined($keyword) && !ref($keyword) && $keyword eq 'stage' && $context ne 'transaction') {
             confess "Transaction '$tn': pipeline '(stage ...)' clauses are supported only as top-level transaction clauses\n";
         }
+        if (defined($keyword) && !ref($keyword) && $keyword eq 'assign') {
+            confess _removed_assign_clause_diagnostic($tn, $label);
+        }
         confess "Transaction '$tn': unsupported '($keyword ...)' clause in $label\n"
             unless $allowed->{$keyword};
 
@@ -931,6 +934,14 @@ sub _validate_switch_clause {
     }
 
     return 1;
+}
+
+sub _removed_assign_clause_diagnostic {
+    my ($tn, $label) = @_;
+    return "Transaction '$tn': removed '(assign ...)' clause is unsupported in $label; "
+        . "use '(update var expr)' for transaction-local flopped updates, "
+        . "'(drive ...)' for protocol/output drives, rule '(port expr)' actions "
+        . "for rule-driven assignments, or '(complete port)' for completion pulses\n";
 }
 
 sub _validate_stage_clause {

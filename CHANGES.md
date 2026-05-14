@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF compatibility diagnostics
+- Completed `ISF-COMPATIBILITY.4` by implementing the selected handshake and
+  removed-assign compatibility diagnostics.
+- Legacy handshake validation now requires exactly one scalar `valid` and one
+  scalar `ready`, rejects duplicate handshake names, and still leaves
+  `handshakes => {}` as an ignored compatibility placeholder.
+- Removed transaction `(assign ...)` now reports a targeted migration
+  diagnostic in transaction, `when`, `switch`, and `repeat` contexts while
+  unrelated unknown keywords keep the generic unsupported-clause diagnostic.
+- The active `ISF-COMPATIBILITY` frontier advances to
+  `ISF-COMPATIBILITY.5`.
 ### R14 — ISF removed assign policy
 - Completed `ISF-COMPATIBILITY.3` by deciding that removed transaction
   `(assign ...)` stays rejected.

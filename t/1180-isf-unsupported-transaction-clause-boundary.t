@@ -26,7 +26,7 @@ sub assert_lower_rejected {
 }
 
 subtest 'unsupported top-level transaction clauses fail closed' => sub {
-    assert_lower_rejected(<<'ISF', 'removed assign keyword', qr/\ATransaction 'main': unsupported '\(assign \.\.\.\)' clause in transaction body/);
+    assert_lower_rejected(<<'ISF', 'removed assign keyword', qr/\ATransaction 'main': removed '\(assign \.\.\.\)' clause is unsupported in transaction body; use '\(update var expr\)' for transaction-local flopped updates, '\(drive \.\.\.\)' for protocol\/output drives, rule '\(port expr\)' actions for rule-driven assignments, or '\(complete port\)' for completion pulses/);
 (actor removed_assign
   (clock clk)
   (interface (input start) (output done))
@@ -48,13 +48,35 @@ ISF
 };
 
 subtest 'unsupported nested transaction clauses fail closed by context' => sub {
-    assert_lower_rejected(<<'ISF', 'unsupported when-body keyword', qr/\ATransaction 'main': unsupported '\(assign \.\.\.\)' clause in when body/);
+    assert_lower_rejected(<<'ISF', 'unsupported when-body keyword', qr/\ATransaction 'main': removed '\(assign \.\.\.\)' clause is unsupported in when body; use '\(update var expr\)' for transaction-local flopped updates, '\(drive \.\.\.\)' for protocol\/output drives, rule '\(port expr\)' actions for rule-driven assignments, or '\(complete port\)' for completion pulses/);
 (actor unknown_when
   (clock clk)
   (interface (input start) (input cond) (output done))
   (transaction main
     (on start)
     (when cond
+      (assign done 1))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'removed assign in switch branch', qr/\ATransaction 'main': removed '\(assign \.\.\.\)' clause is unsupported in switch branch; use '\(update var expr\)' for transaction-local flopped updates, '\(drive \.\.\.\)' for protocol\/output drives, rule '\(port expr\)' actions for rule-driven assignments, or '\(complete port\)' for completion pulses/);
+(actor assign_switch
+  (clock clk)
+  (interface (input start) (input mode) (output done))
+  (transaction main
+    (on start)
+    (switch mode
+      (0 (assign done 1)))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'removed assign in repeat body', qr/\ATransaction 'main': removed '\(assign \.\.\.\)' clause is unsupported in repeat body; use '\(update var expr\)' for transaction-local flopped updates, '\(drive \.\.\.\)' for protocol\/output drives, rule '\(port expr\)' actions for rule-driven assignments, or '\(complete port\)' for completion pulses/);
+(actor assign_repeat
+  (clock clk)
+  (interface (input start) (output done))
+  (transaction main
+    (on start)
+    (repeat 2
       (assign done 1))
     (complete done)))
 ISF

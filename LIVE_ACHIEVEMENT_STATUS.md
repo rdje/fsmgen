@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF compatibility diagnostics
+- Active R14 task-tree slice: `ISF-COMPATIBILITY.4` is complete.
+- Legacy handshake validation now requires exactly one scalar `valid` and one
+  scalar `ready`, rejects duplicate handshake names, and remains ignored for
+  lowering.
+- Removed transaction `(assign ...)` now has a targeted migration diagnostic.
+- The next active R14 frontier is `ISF-COMPATIBILITY.5`.
+
 ## 2026-05-14: R14 — ISF removed assign policy
 - Active R14 task-tree slice: `ISF-COMPATIBILITY.3` is complete.
 - Removed transaction `(assign ...)` stays rejected and will not be auto-mapped

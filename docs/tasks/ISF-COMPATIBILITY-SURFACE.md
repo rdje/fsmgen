@@ -66,12 +66,12 @@ keyword, so compatibility behavior remains intentional rather than accidental.
   Commit: `ISF-COMPATIBILITY.3: decide removed assign policy`
 
 - ID: `ISF-COMPATIBILITY.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement selected compatibility diagnostics or semantics.`
   Acceptance: `The selected policy is enforced consistently across parser,
   scheduler, CLI, and in-process facades.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: syntax checks for changed Perl modules and focused tests; `prove -l t/1178-isf-handshake-compatibility-boundary.t t/1180-isf-unsupported-transaction-clause-boundary.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-COMPATIBILITY.4: enforce compatibility diagnostics`
 
 - ID: `ISF-COMPATIBILITY.5`
   Status: `pending`
@@ -85,7 +85,7 @@ keyword, so compatibility behavior remains intentional rather than accidental.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-COMPATIBILITY.4` | `pending` | Both compatibility policies are now set; the next slice should implement the selected validation and diagnostic changes. |
+| 1 | `ISF-COMPATIBILITY.5` | `pending` | Implementation is complete; the final slice should close tests, docs, contract wording, and tree state. |
 
 ## ISF-COMPATIBILITY.1 Inventory
 
@@ -297,6 +297,36 @@ Implementation work left for `ISF-COMPATIBILITY.4`:
 - Preserve existing context labels such as `transaction body`, `when body`,
   `switch branch`, and `repeat body`.
 
+## ISF-COMPATIBILITY.4 Implementation
+
+Implemented behavior:
+
+- `_parse_handshake` now requires the retained compatibility shape to have a
+  scalar name plus exactly one scalar `(valid signal)` and one scalar
+  `(ready signal)` property.
+- Duplicate legacy handshake names now fail before actor-shell return, while
+  the returned actor shell still leaves `handshakes => {}` as an empty
+  compatibility placeholder.
+- Missing `valid`/`ready` properties now produce migration guidance that points
+  authors to `(on ...)` activation or transaction `(stage ...)` for
+  ready/valid behavior.
+- Removed transaction `(assign ...)` now has a targeted scheduler diagnostic
+  before the generic unsupported-clause path. The message preserves the
+  context label and points authors to `(update var expr)`, `(drive ...)`, rule
+  `(port expr)` actions, or `(complete port)`.
+- Unknown future transaction keywords still use the generic unsupported-clause
+  diagnostic.
+
+Regression coverage:
+
+- [t/1178-isf-handshake-compatibility-boundary.t](../../t/1178-isf-handshake-compatibility-boundary.t)
+  now covers missing `ready` and duplicate handshake name rejection in
+  addition to the retained accepted/ignored compatibility path.
+- [t/1180-isf-unsupported-transaction-clause-boundary.t](../../t/1180-isf-unsupported-transaction-clause-boundary.t)
+  now covers the targeted removed-assign diagnostic in transaction, `when`,
+  `switch`, and `repeat` contexts while preserving generic diagnostics for
+  unrelated unsupported keywords.
+
 ## Decisions
 
 - `2026-05-14`: Legacy handshake and removed transaction `assign` are tracked
@@ -314,6 +344,9 @@ Implementation work left for `ISF-COMPATIBILITY.4`:
   be auto-mapped because its timing intent is ambiguous; diagnostics should
   direct authors to explicit constructs such as `(update ...)`, `(drive ...)`,
   rule actions, or `(complete ...)`.
+- `2026-05-14`: Compatibility diagnostics are now policy-backed. Handshake
+  compatibility accepts only the exact retained shape, duplicate names fail,
+  and removed transaction `assign` reports a targeted migration diagnostic.
 
 ## Open Questions
 
@@ -333,6 +366,7 @@ Implementation work left for `ISF-COMPATIBILITY.4`:
 | `2026-05-14` | `ISF-COMPATIBILITY.1` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `prove -l t/1178-isf-handshake-compatibility-boundary.t t/1180-isf-unsupported-transaction-clause-boundary.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-COMPATIBILITY.2` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-COMPATIBILITY.3` | `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-COMPATIBILITY.4` | Syntax checks for changed Perl modules and focused tests; `prove -l t/1178-isf-handshake-compatibility-boundary.t t/1180-isf-unsupported-transaction-clause-boundary.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -342,6 +376,7 @@ Implementation work left for `ISF-COMPATIBILITY.4`:
 | `ISF-COMPATIBILITY.1` | `ISF-COMPATIBILITY.1: inventory legacy surfaces` | Inventory of deprecated handshake validation/ignored behavior and removed assign fail-closed lowering. |
 | `ISF-COMPATIBILITY.2` | `ISF-COMPATIBILITY.2: decide handshake policy` | Keep handshake as accepted ignored compatibility input, tighten validation, and point authors to `on`, `can_accept`, and transaction stages. |
 | `ISF-COMPATIBILITY.3` | `ISF-COMPATIBILITY.3: decide removed assign policy` | Keep transaction `assign` rejected and point authors to explicit replacement constructs. |
+| `ISF-COMPATIBILITY.4` | `ISF-COMPATIBILITY.4: enforce compatibility diagnostics` | Tightened handshake compatibility validation and targeted removed-assign migration diagnostics. |
 
 ## Changelog
 
@@ -350,3 +385,4 @@ Implementation work left for `ISF-COMPATIBILITY.4`:
   behavior inventory.
 - `2026-05-14`: Decided the legacy handshake policy.
 - `2026-05-14`: Decided the removed transaction `assign` policy.
+- `2026-05-14`: Implemented selected compatibility validation and diagnostics.

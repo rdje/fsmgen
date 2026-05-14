@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF compatibility diagnostics
+- Tightening legacy handshake validation while still ignoring the metadata is
+  intentional. It prevents typo-prone compatibility residue from looking
+  accepted while preserving the no-semantics policy.
+- The removed-assign diagnostic is specific only for `assign`; unknown future
+  transaction keywords still use the generic unsupported-clause path. That
+  keeps migration guidance focused without making every syntax error verbose.
+- The actor-shell handshake placeholder remains empty. Any future public
+  handshake metadata shape would need its own feature decision and contract,
+  not accidental exposure from compatibility parsing.
 ## 2026-05-14: ISF removed assign policy
 - The removed transaction `assign` keyword should stay rejected because it is
   exactly the kind of ambiguous shorthand ISF should avoid. The replacement

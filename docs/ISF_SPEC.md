@@ -217,12 +217,12 @@ Additional actor clauses with mixed parser/scheduler behavior:
 Deprecated compatibility:
 - `(handshake name (valid signal) (ready signal))`-style metadata is
   deprecated compatibility input. The parser validates a scalar name and
-  scalar `valid`/`ready` property entries, then ignores the metadata. The
-  current activation model is direct `(on port ...)` plus the
-  scheduler-created `can_accept` signal. Legacy handshake metadata will not
-  gain lowering semantics; malformed legacy forms should point authors toward
-  `(on ...)`, generated `can_accept`, or transaction `(stage ...)` for
-  ready/valid barriers.
+  exactly one scalar `valid` property plus one scalar `ready` property, rejects
+  duplicate handshake names, then ignores the metadata. The current activation
+  model is direct `(on port ...)` plus the scheduler-created `can_accept`
+  signal. Legacy handshake metadata will not gain lowering semantics;
+  malformed legacy forms point authors toward `(on ...)`, generated
+  `can_accept`, or transaction `(stage ...)` for ready/valid barriers.
 
 ## 4. Clock, Reset, Watchdog
 
@@ -394,9 +394,9 @@ lowering instead of being ignored.
 The scheduler also creates `can_accept` and asserts it in entry states. This is
 the current replacement for the old handshake-ready spelling. Deprecated
 `(handshake name (valid signal) (ready signal))` metadata is compatibility-only:
-the parser validates a scalar name and scalar `valid`/`ready` property entries,
-but the scheduler does not lower old handshake semantics. This is an explicit
-compatibility policy, not an unfinished lowering path.
+the parser validates a scalar name, exactly one scalar `valid`, and exactly one
+scalar `ready`, but the scheduler does not lower old handshake semantics. This
+is an explicit compatibility policy, not an unfinished lowering path.
 
 Samples inside `(on ...)` lower to guarded D-input assignments (`<=`) on the
 entry transition.

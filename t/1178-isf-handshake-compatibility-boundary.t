@@ -57,6 +57,16 @@ ISF
             qr/\AError: \(handshake \.\.\.\) requires '\(handshake name \(valid signal\) \(ready signal\)\)'/,
         ],
         [
+            'missing ready property',
+            <<'ISF',
+(actor bad_handshake
+  (clock clk)
+  (interface (input start) (output done))
+  (handshake request (valid req)))
+ISF
+            qr/\AError: handshake 'request' requires exactly one '\(valid signal\)' and one '\(ready signal\)' property; legacy handshakes are ignored compatibility input, use '\(on \.\.\.\)' activation or transaction '\(stage \.\.\.\)' for ready\/valid behavior/,
+        ],
+        [
             'unsupported property',
             <<'ISF',
 (actor bad_handshake
@@ -85,6 +95,17 @@ ISF
   (handshake request (ready (can_accept))))
 ISF
             qr/\AError: handshake 'request' properties must be '\(valid signal\)' or '\(ready signal\)'/,
+        ],
+        [
+            'duplicate handshake name',
+            <<'ISF',
+(actor bad_handshake
+  (clock clk)
+  (interface (input start) (output done))
+  (handshake request (valid req) (ready can_accept))
+  (handshake request (valid req2) (ready can_accept2)))
+ISF
+            qr/\AError: duplicate handshake 'request' in actor 'bad_handshake'; legacy handshakes are ignored compatibility input/,
         ],
     );
 

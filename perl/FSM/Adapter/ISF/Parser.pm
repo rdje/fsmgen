@@ -115,6 +115,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
     };
     my %actor_phase_names;
     my %actor_stage_names;
+    my %handshake_names;
     my %singleton_actor_clauses;
     my %transaction_names;
     my %rule_names;
@@ -141,7 +142,12 @@ sub _build_actor($self, $actor_ast, $source_label) {
                 $self->_claim_singleton_actor_clause($actor_name, 'interface', \%singleton_actor_clauses);
                 $result->{interface} = $self->_parse_interface($clause);
             }
-            when ('handshake') { $self->_parse_handshake($clause); }  # deprecated, validated then ignored
+            when ('handshake') {
+                my $handshake_name = $self->_parse_handshake($clause);  # deprecated, validated then ignored
+                confess "Error: duplicate handshake '$handshake_name' in actor '$actor_name'; "
+                    . "legacy handshakes are ignored compatibility input\n"
+                    if $handshake_names{$handshake_name}++;
+            }
             when ('transaction') {
                 my $transaction = $self->_parse_transaction($clause);
                 confess "Error: duplicate transaction '$transaction->{name}' in actor '$actor_name'\n"
@@ -279,7 +285,7 @@ sub _parse_interface($self, $clause) {
 
 sub _parse_handshake($self, $clause) {
     confess "Error: (handshake ...) requires '(handshake name (valid signal) (ready signal))'\n"
-        unless @$clause >= 3;
+        unless @$clause >= 3 && @$clause <= 4;
     my $name = $clause->[1];
     confess "Error: (handshake ...) requires a scalar name\n"
         unless defined($name) && !ref($name) && length($name);
@@ -301,7 +307,12 @@ sub _parse_handshake($self, $clause) {
         confess "Error: duplicate handshake '$name' property '$key'\n" if $seen{$key}++;
     }
 
-    return 1;
+    confess "Error: handshake '$name' requires exactly one '(valid signal)' and one '(ready signal)' property; "
+        . "legacy handshakes are ignored compatibility input, use '(on ...)' activation "
+        . "or transaction '(stage ...)' for ready/valid behavior\n"
+        unless $seen{valid} && $seen{ready};
+
+    return $name;
 }
 
 sub _parse_transaction($self, $clause) {
