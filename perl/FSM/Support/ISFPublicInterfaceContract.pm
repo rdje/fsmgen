@@ -46,6 +46,16 @@ our @EXPORT_OK = qw(
     isf_public_interface_schedule_report_fanin_group_kind_values
     isf_public_interface_schedule_report_fanin_group_optional_keys
     isf_public_interface_schedule_report_fanin_group_required_keys
+    isf_public_interface_schedule_report_generated_composition_binding_keys
+    isf_public_interface_schedule_report_generated_composition_child_keys
+    isf_public_interface_schedule_report_generated_composition_child_parameter_keys
+    isf_public_interface_schedule_report_generated_composition_drive_handoff_keys
+    isf_public_interface_schedule_report_generated_composition_instance_keys
+    isf_public_interface_schedule_report_generated_composition_kind_values
+    isf_public_interface_schedule_report_generated_composition_link_keys
+    isf_public_interface_schedule_report_generated_composition_parent_keys
+    isf_public_interface_schedule_report_generated_composition_payload_keys
+    isf_public_interface_schedule_report_generated_composition_required_keys
     isf_public_interface_schedule_report_multi_file_scope
     isf_public_interface_schedule_report_interface_count_shape
     isf_public_interface_schedule_report_presence_key_family_map
@@ -152,6 +162,16 @@ sub build_isf_public_interface_contract {
         schedule_report_fanin_group_required_keys => isf_public_interface_schedule_report_fanin_group_required_keys(),
         schedule_report_fanin_group_optional_keys => isf_public_interface_schedule_report_fanin_group_optional_keys(),
         schedule_report_fanin_group_kind_values => isf_public_interface_schedule_report_fanin_group_kind_values(),
+        schedule_report_generated_composition_required_keys => isf_public_interface_schedule_report_generated_composition_required_keys(),
+        schedule_report_generated_composition_kind_values => isf_public_interface_schedule_report_generated_composition_kind_values(),
+        schedule_report_generated_composition_parent_keys => isf_public_interface_schedule_report_generated_composition_parent_keys(),
+        schedule_report_generated_composition_child_keys => isf_public_interface_schedule_report_generated_composition_child_keys(),
+        schedule_report_generated_composition_child_parameter_keys => isf_public_interface_schedule_report_generated_composition_child_parameter_keys(),
+        schedule_report_generated_composition_instance_keys => isf_public_interface_schedule_report_generated_composition_instance_keys(),
+        schedule_report_generated_composition_link_keys => isf_public_interface_schedule_report_generated_composition_link_keys(),
+        schedule_report_generated_composition_binding_keys => isf_public_interface_schedule_report_generated_composition_binding_keys(),
+        schedule_report_generated_composition_drive_handoff_keys => isf_public_interface_schedule_report_generated_composition_drive_handoff_keys(),
+        schedule_report_generated_composition_payload_keys => isf_public_interface_schedule_report_generated_composition_payload_keys(),
         schedule_report_multi_file_scope => isf_public_interface_schedule_report_multi_file_scope(),
         schedule_report_interface_count_shape => isf_public_interface_schedule_report_interface_count_shape(),
         schedule_report_state_count_shape => isf_public_interface_schedule_report_state_count_shape(),
@@ -282,12 +302,14 @@ sub build_isf_public_interface_contract {
             't/1214-isf-rejected-conflict-diagnostics.t',
             't/1215-isf-spawn-parameter-binding.t',
             't/1216-isf-generated-composition-top.t',
+            't/1217-isf-generated-composition-schedule-report.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
+            'Treat the contract as live: exact metadata audits describe the current advertised surface, not a promise that ISF or the schedule-report schema is frozen.',
             'The public in-process seam is the parser/scheduler facade pair, not the raw parser AST or LoweringIR internals.',
-            'The lower(...) result currently stabilizes the files map as scheduled module and generated composition-top .fsm artifacts; the whole result hash is not yet a broad API.',
-            'The schedule report stabilizes only the advertised top-level and summary key families for now; wider schema promises must be documented and regression-backed before downstream tools rely on them.',
+            'The lower(...) result currently advertises the files map as scheduled module and generated composition-top .fsm artifacts; the whole result hash is not yet a broad API.',
+            'The schedule report currently advertises only the named top-level and summary key families; wider schema promises must be documented and regression-backed before downstream tools rely on them.',
             'The live human contract documents must evolve in the same slices that change supported ISF syntax, facade behavior, lower result shape, or schedule-report shape.',
         ],
     };
@@ -351,6 +373,16 @@ sub isf_public_interface_public_top_level_keys {
             schedule_report_fanin_group_required_keys
             schedule_report_fanin_group_optional_keys
             schedule_report_fanin_group_kind_values
+            schedule_report_generated_composition_required_keys
+            schedule_report_generated_composition_kind_values
+            schedule_report_generated_composition_parent_keys
+            schedule_report_generated_composition_child_keys
+            schedule_report_generated_composition_child_parameter_keys
+            schedule_report_generated_composition_instance_keys
+            schedule_report_generated_composition_link_keys
+            schedule_report_generated_composition_binding_keys
+            schedule_report_generated_composition_drive_handoff_keys
+            schedule_report_generated_composition_payload_keys
             schedule_report_multi_file_scope
             schedule_report_interface_count_shape
             schedule_report_state_count_shape
@@ -544,6 +576,7 @@ sub isf_public_interface_schedule_report_top_level_keys {
             inferred_storage
             transactions
             dt_blocks
+            generated_composition
             compatible_fanin_groups
             compile_issues
         ),
@@ -631,6 +664,109 @@ sub isf_public_interface_schedule_report_fanin_group_kind_values {
     ];
 }
 
+sub isf_public_interface_schedule_report_generated_composition_required_keys {
+    return [
+        qw(
+            kind
+            top_module
+            top_fsm
+            parent
+            children
+            instances
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_generated_composition_kind_values {
+    return [
+        qw(
+            spawn_generated_top
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_generated_composition_parent_keys {
+    return [
+        qw(
+            module
+            scheduled_fsm
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_generated_composition_child_keys {
+    return [
+        qw(
+            transaction
+            module
+            scheduled_fsm
+            parameters
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_generated_composition_child_parameter_keys {
+    return [
+        qw(
+            name
+            default
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_generated_composition_instance_keys {
+    return [
+        qw(
+            instance
+            child
+            start
+            done
+            parameter_bindings
+            drive_handoffs
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_generated_composition_link_keys {
+    return [
+        qw(
+            parent_port
+            child_port
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_generated_composition_binding_keys {
+    return [
+        qw(
+            name
+            source
+            value
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_generated_composition_drive_handoff_keys {
+    return [
+        qw(
+            drive
+            request
+            payloads
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_generated_composition_payload_keys {
+    return [
+        qw(
+            parameter
+            child_port
+            parent_port
+            width
+        ),
+    ];
+}
+
 sub isf_public_interface_schedule_report_source_shape {
     return 'scheduled report source basename derived from the actor name with .isf suffix';
 }
@@ -648,7 +784,7 @@ sub isf_public_interface_schedule_report_watchdog_shape {
 }
 
 sub isf_public_interface_schedule_report_multi_file_scope {
-    return 'current_report_describes_parent_module_only; child_scheduled_fsm_texts_are_available_through_lower_result_files';
+    return 'report transaction/state/dt/storage summaries describe the parent module; generated_composition summarizes generated top, child files, spawned instances, handoffs, and bindings; child scheduled .fsm text remains available through lower_result files';
 }
 
 sub isf_public_interface_schedule_report_interface_count_shape {
@@ -780,6 +916,15 @@ sub isf_public_interface_schedule_report_presence_key_family_map {
         schedule_report_compile_issue_source_keys => isf_public_interface_schedule_report_compile_issue_source_keys(),
         schedule_report_fanin_group_required_keys => isf_public_interface_schedule_report_fanin_group_required_keys(),
         schedule_report_fanin_group_optional_keys => isf_public_interface_schedule_report_fanin_group_optional_keys(),
+        schedule_report_generated_composition_required_keys => isf_public_interface_schedule_report_generated_composition_required_keys(),
+        schedule_report_generated_composition_parent_keys => isf_public_interface_schedule_report_generated_composition_parent_keys(),
+        schedule_report_generated_composition_child_keys => isf_public_interface_schedule_report_generated_composition_child_keys(),
+        schedule_report_generated_composition_child_parameter_keys => isf_public_interface_schedule_report_generated_composition_child_parameter_keys(),
+        schedule_report_generated_composition_instance_keys => isf_public_interface_schedule_report_generated_composition_instance_keys(),
+        schedule_report_generated_composition_link_keys => isf_public_interface_schedule_report_generated_composition_link_keys(),
+        schedule_report_generated_composition_binding_keys => isf_public_interface_schedule_report_generated_composition_binding_keys(),
+        schedule_report_generated_composition_drive_handoff_keys => isf_public_interface_schedule_report_generated_composition_drive_handoff_keys(),
+        schedule_report_generated_composition_payload_keys => isf_public_interface_schedule_report_generated_composition_payload_keys(),
     };
 }
 

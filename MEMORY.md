@@ -1,11 +1,26 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF composition report projection
+- Completed `ISF-COMPOSITION.5.2` in
+  [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md).
+- Schedule reports now emit the live `generated_composition` discovery field:
+  JSON null for actors without generated tops, and a bounded object for
+  spawned-child actors with generated top, parent, child, instance, start/done
+  handoff, named-drive handoff, and parameter-binding summaries.
+- The ISF public-interface contract advertises the generated-composition key
+  families and `spawn_generated_top` kind through
+  `embedding.isf_public_interface`; [t/1217-isf-generated-composition-schedule-report.t](t/1217-isf-generated-composition-schedule-report.t)
+  proves the projection.
+- The contract remains live, not frozen. Exact audits describe the current
+  advertised surface while allowing the ISF API to evolve alongside FSMGen.
+- The active frontier is now `ISF-COMPOSITION.5.3` for targeted
+  generated-composition diagnostics.
 ## 2026-05-14: ISF composition report schema
 - Completed `ISF-COMPOSITION.5.1` in
   [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md).
 - The book, ISF spec, public contract, and composition task tree now define
-  the bounded `generated_composition` schedule-report field planned for
-  `ISF-COMPOSITION.5.2`.
+  the bounded `generated_composition` schedule-report field that was later
+  implemented by `ISF-COMPOSITION.5.2`.
 - The accepted field uses JSON null for reports with no generated composition
   top and a bounded object for spawned-child reports, including generated top,
   parent, child, instance, start/done handoff, named-drive handoff, and

@@ -117,6 +117,7 @@ my $expected_tested_by = [
     't/1214-isf-rejected-conflict-diagnostics.t',
     't/1215-isf-spawn-parameter-binding.t',
     't/1216-isf-generated-composition-top.t',
+    't/1217-isf-generated-composition-schedule-report.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {

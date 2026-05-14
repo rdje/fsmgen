@@ -22,6 +22,16 @@ use FSM::Support::ISFPublicInterfaceContract qw(
     isf_public_interface_schedule_report_fanin_group_kind_values
     isf_public_interface_schedule_report_fanin_group_optional_keys
     isf_public_interface_schedule_report_fanin_group_required_keys
+    isf_public_interface_schedule_report_generated_composition_binding_keys
+    isf_public_interface_schedule_report_generated_composition_child_keys
+    isf_public_interface_schedule_report_generated_composition_child_parameter_keys
+    isf_public_interface_schedule_report_generated_composition_drive_handoff_keys
+    isf_public_interface_schedule_report_generated_composition_instance_keys
+    isf_public_interface_schedule_report_generated_composition_kind_values
+    isf_public_interface_schedule_report_generated_composition_link_keys
+    isf_public_interface_schedule_report_generated_composition_parent_keys
+    isf_public_interface_schedule_report_generated_composition_payload_keys
+    isf_public_interface_schedule_report_generated_composition_required_keys
     isf_public_interface_schedule_report_multi_file_scope
     isf_public_interface_schedule_report_presence_key_family_map
     isf_public_interface_schedule_report_reset_keys
@@ -109,6 +119,42 @@ sub assert_schedule_report_metadata {
             schedule_report_fanin_group_optional_keys =>
                 isf_public_interface_schedule_report_fanin_group_optional_keys(),
         ],
+        [
+            schedule_report_generated_composition_required_keys =>
+                isf_public_interface_schedule_report_generated_composition_required_keys(),
+        ],
+        [
+            schedule_report_generated_composition_parent_keys =>
+                isf_public_interface_schedule_report_generated_composition_parent_keys(),
+        ],
+        [
+            schedule_report_generated_composition_child_keys =>
+                isf_public_interface_schedule_report_generated_composition_child_keys(),
+        ],
+        [
+            schedule_report_generated_composition_child_parameter_keys =>
+                isf_public_interface_schedule_report_generated_composition_child_parameter_keys(),
+        ],
+        [
+            schedule_report_generated_composition_instance_keys =>
+                isf_public_interface_schedule_report_generated_composition_instance_keys(),
+        ],
+        [
+            schedule_report_generated_composition_link_keys =>
+                isf_public_interface_schedule_report_generated_composition_link_keys(),
+        ],
+        [
+            schedule_report_generated_composition_binding_keys =>
+                isf_public_interface_schedule_report_generated_composition_binding_keys(),
+        ],
+        [
+            schedule_report_generated_composition_drive_handoff_keys =>
+                isf_public_interface_schedule_report_generated_composition_drive_handoff_keys(),
+        ],
+        [
+            schedule_report_generated_composition_payload_keys =>
+                isf_public_interface_schedule_report_generated_composition_payload_keys(),
+        ],
     );
 
     for my $check (@list_checks) {
@@ -153,6 +199,15 @@ sub assert_schedule_report_metadata {
     assert_unique_scalar_list(
         $contract->{schedule_report_fanin_group_kind_values},
         "$label fan-in group kind values",
+    );
+    is_deeply(
+        $contract->{schedule_report_generated_composition_kind_values},
+        isf_public_interface_schedule_report_generated_composition_kind_values(),
+        "$label generated composition kind values are exact",
+    );
+    assert_unique_scalar_list(
+        $contract->{schedule_report_generated_composition_kind_values},
+        "$label generated composition kind values",
     );
     is(
         $contract->{schedule_report_multi_file_scope},

@@ -14,9 +14,10 @@ use FSM::Support::ISFPublicInterfaceContract qw(build_isf_public_interface_contr
 
 my $expected_guidance = [
     'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
+    'Treat the contract as live: exact metadata audits describe the current advertised surface, not a promise that ISF or the schedule-report schema is frozen.',
     'The public in-process seam is the parser/scheduler facade pair, not the raw parser AST or LoweringIR internals.',
-    'The lower(...) result currently stabilizes the files map as scheduled module and generated composition-top .fsm artifacts; the whole result hash is not yet a broad API.',
-    'The schedule report stabilizes only the advertised top-level and summary key families for now; wider schema promises must be documented and regression-backed before downstream tools rely on them.',
+    'The lower(...) result currently advertises the files map as scheduled module and generated composition-top .fsm artifacts; the whole result hash is not yet a broad API.',
+    'The schedule report currently advertises only the named top-level and summary key families; wider schema promises must be documented and regression-backed before downstream tools rely on them.',
     'The live human contract documents must evolve in the same slices that change supported ISF syntax, facade behavior, lower result shape, or schedule-report shape.',
 ];
 

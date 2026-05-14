@@ -59,6 +59,7 @@ subtest 'APB schedule report conforms to advertised public key families' => sub 
 
     is(ref($report->{compile_issues}), 'ARRAY', 'compile_issues is an array in the advertised report shell');
     is(ref($report->{compatible_fanin_groups}), 'ARRAY', 'compatible_fanin_groups is an array in the advertised report shell');
+    is($report->{generated_composition}, undef, 'generated_composition is null when no generated top exists');
 };
 
 done_testing();

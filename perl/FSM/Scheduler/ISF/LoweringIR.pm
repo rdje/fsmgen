@@ -145,8 +145,10 @@ sub _build_parent_ir($self, $actor, $spawned) {
             _ensure_port(\@ports, "$s->{instance}_done",  'input',  1);
             my $child_tx = $transaction_by_name{$s->{child}};
             my %child_drive_uses = _collect_named_drive_call_names($child_tx->{clauses}, $actor->{drives} || {});
+            my @drive_handoffs;
             for my $drive_name (sort keys %child_drive_uses) {
                 my $prefix = "$s->{instance}_${drive_name}";
+                my @payloads;
                 push @{$spawn_drive_sources{$drive_name}}, {
                     instance    => $s->{instance},
                     drive       => $drive_name,
@@ -159,8 +161,23 @@ sub _build_parent_ir($self, $actor, $spawned) {
                     my $width = _drive_param_width($actor, $drive_name, $param);
                     _ensure_port(\@ports, "${prefix}_$param", 'input', $width);
                     $ctrs{"${prefix}_$param"} = $width;
+                    push @payloads, {
+                        parameter   => $param,
+                        child_port  => "${drive_name}_$param",
+                        parent_port => "${prefix}_$param",
+                        width       => $width,
+                    };
                 }
+                push @drive_handoffs, {
+                    drive   => $drive_name,
+                    request => {
+                        child_port  => "${drive_name}_start",
+                        parent_port => "${prefix}_start",
+                    },
+                    payloads => \@payloads,
+                };
             }
+            $s->{drive_handoffs} = \@drive_handoffs;
         }
         push @spawn_instances, map { _clone_isf_value($_) } @$sp;
     }

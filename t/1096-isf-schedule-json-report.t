@@ -43,6 +43,7 @@ subtest 'schedule JSON report describes APB requester lowering IR' => sub {
     is($report->{outputs},     8, 'output count');
     is($report->{state_count}, 7, 'state count');
     is(scalar(@{$report->{compatible_fanin_groups}}), 1, 'one compatible fan-in group reported');
+    is($report->{generated_composition}, undef, 'APB report has no generated composition top');
     my $done_fanin = $report->{compatible_fanin_groups}[0];
     is($done_fanin->{kind}, 'pulse', 'done compatible fan-in group is a pulse group');
     is($done_fanin->{target}, 'done', 'done compatible fan-in group names the done target');

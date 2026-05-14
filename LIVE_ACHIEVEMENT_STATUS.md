@@ -2,13 +2,23 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF composition report projection
+- Active R14 task-tree slice: `ISF-COMPOSITION.5.2` is complete.
+- Schedule JSON now emits the live `generated_composition` discovery field for
+  spawned-child generated tops while using JSON null for non-composed actors.
+- The ISF public-interface contract and capability manifest advertise the
+  generated-composition key families and keep the API explicitly live rather
+  than frozen.
+- The next frontier is `ISF-COMPOSITION.5.3` for targeted generated-composition
+  diagnostics.
+
 ## 2026-05-14: R14 — ISF composition report schema
 - Active R14 task-tree slice: `ISF-COMPOSITION.5.1` is complete.
 - The bounded `generated_composition` schedule-report field is defined for
   generated top, parent, child, instance, handoff, and parameter-binding
   summaries.
-- The next frontier is `ISF-COMPOSITION.5.2` for emitter and contract
-  implementation.
+- At completion time, the next frontier moved to `ISF-COMPOSITION.5.2` for
+  emitter and contract implementation.
 
 ## 2026-05-14: R14 — ISF composition report/diagnostic split
 - Active R14 task-tree slice: `ISF-COMPOSITION.5` is now split into executable

@@ -92,7 +92,8 @@ schedule-report key families is
 machine-readable form is advertised through
 `--capability-manifest -> embedding.isf_public_interface`. That contract must
 evolve in the same slice as any implementation change that widens or changes
-the public ISF surface. Its identity/stability metadata and
+the public ISF surface; it is not a frozen API schema. Its identity/stability
+metadata and
 `public_top_level_presence_keys` list are audited as exact discovery data across
 direct and manifest views. Its advertised entrypoint lists are also audited as
 exact and duplicate-free across those views, and its ISF-specific CLI option
@@ -704,9 +705,9 @@ existing composition pipeline applies them to the spawned child instances.
 ### 8.3 Generated Composition Schedule Report Projection
 
 The accepted schedule-report projection for generated ISF composition is a
-top-level `generated_composition` field. The implementation leaf that emits
-this field is `ISF-COMPOSITION.5.2`; until that leaf lands, current successful
-reports remain parent-scoped as described above.
+top-level `generated_composition` field. Successful reports keep the ordinary
+transaction, storage, and DT summaries parent-scoped, while this field exposes
+bounded generated-top discovery metadata for spawned-child composition.
 
 For actors without a generated composition top, `generated_composition` is
 `null`. For spawned-child actors, the field is an object with these bounded
@@ -730,7 +731,8 @@ parameter with `parameter`, `child_port`, `parent_port`, and `width`.
 
 This projection is deliberately bounded. It does not expose raw LoweringIR
 records, raw composition parser objects, raw `?toplink` arrays, assignment
-provenance, or private port-inference internals.
+provenance, or private port-inference internals. It is live contract metadata
+that evolves with FSMGen, not a frozen full schedule-report schema.
 
 ### 8.4 Generated Composition Diagnostics
 
@@ -905,6 +907,8 @@ dropping them from the scheduled `.fsm`; this applies at top level and inside
   "inferred_storage": [],
   "transactions": [],
   "dt_blocks": [],
+  "generated_composition": null,
+  "compatible_fanin_groups": [],
   "compile_issues": []
 }
 ```
@@ -1133,6 +1137,7 @@ Focused tests:
 - [t/1214-isf-rejected-conflict-diagnostics.t](../t/1214-isf-rejected-conflict-diagnostics.t)
 - [t/1215-isf-spawn-parameter-binding.t](../t/1215-isf-spawn-parameter-binding.t)
 - [t/1216-isf-generated-composition-top.t](../t/1216-isf-generated-composition-top.t)
+- [t/1217-isf-generated-composition-schedule-report.t](../t/1217-isf-generated-composition-schedule-report.t)
 
 ## 12. Explicitly Deferred
 

@@ -22,7 +22,8 @@ bind through validated public semantics instead of remaining deferred.
 - Do not widen generated-child parameter semantics beyond what ISF spawn needs
   unless the existing composition contract already supports it.
 - Do not make schedule JSON a fully frozen schema in this tree; report-shape
-  stabilization belongs to `ISF-SCHEDULE-REPORTS`.
+  evolution beyond the advertised generated-composition summary belongs to
+  `ISF-SCHEDULE-REPORTS`.
 
 ## Acceptance Criteria
 
@@ -105,13 +106,13 @@ bind through validated public semantics instead of remaining deferred.
   Commit: `ISF-COMPOSITION.5.1: define report schema`
 
 - ID: `ISF-COMPOSITION.5.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement bounded generated-composition schedule-report metadata.`
   Acceptance: `Successful multi-file spawn reports expose bounded parent,
   generated top, child, instance, handoff, and parameter-binding metadata
   without leaking raw LoweringIR internals.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax checks; focused public report/contract/composition tests; mdbook build docs/book; git diff --check`
+  Commit: `ISF-COMPOSITION.5.2: project composition report metadata`
 
 - ID: `ISF-COMPOSITION.5.3`
   Status: `pending`
@@ -154,7 +155,7 @@ bind through validated public semantics instead of remaining deferred.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-COMPOSITION.5.2` | `pending` | The bounded generated-composition report schema is now defined; the next step is emitter and contract implementation. |
+| 1 | `ISF-COMPOSITION.5.3` | `pending` | The successful generated-composition report projection is now implemented; the next step is targeted failure diagnostics. |
 
 ## ISF-COMPOSITION.1 Inventory
 
@@ -480,10 +481,11 @@ fixtures.
 
 ### Remaining Boundary
 
-Schedule reports remain parent-scoped. They still do not yet expose bounded
-metadata for generated top name, child files, spawned instances, generated
-handoff links, or applied parameter overrides. That report/diagnostic work is
-the next `ISF-COMPOSITION.5` leaf.
+Schedule reports now keep ordinary transaction, storage, and DT summaries
+parent-scoped, while the `generated_composition` field exposes bounded
+generated top, child, instance, handoff, and parameter-binding metadata for
+spawned-child actors. Targeted failure diagnostics remain the next
+`ISF-COMPOSITION.5` leaf family.
 
 `spawn` inside `repeat` remains unimplemented. The accepted design direction is
 static instance lifetime plus repeated runtime activation of the same lexical
@@ -520,6 +522,36 @@ The accepted top-level field is `generated_composition`.
 The projection is a bounded review/discovery summary. It must not expose raw
 LoweringIR records, raw composition parser objects, raw `?toplink` arrays,
 assignment provenance, activation context, or private port-inference internals.
+
+## ISF-COMPOSITION.5.2 Generated Composition Report Projection
+
+`ISF-COMPOSITION.5.2` implements the successful-report projection defined by
+`ISF-COMPOSITION.5.1`.
+
+### Shipped Behavior
+
+- Every schedule report now includes the top-level `generated_composition`
+  key.
+- Actors without spawned-child generated tops report JSON null for that key.
+- Spawned-child actors report `kind => spawn_generated_top`, deterministic
+  generated top module/file names, and the scheduled parent module/file.
+- Child summaries expose spawned child transaction/module names, scheduled
+  child `.fsm` basenames, and stringified parameter defaults.
+- Instance summaries expose authored instance names, child names, start/done
+  handoff links, default-or-override parameter bindings, and named-drive
+  request/payload handoff links.
+- The report object is built from bounded lowerer metadata. It does not expose
+  raw LoweringIR records, raw composition parser objects, raw `?toplink`
+  syntax, activation context, assignment provenance, or private port-inference
+  internals.
+
+The ISF public-interface contract advertises the generated-composition key
+families and the `spawn_generated_top` kind value, and the capability manifest
+publishes the same metadata through `embedding.isf_public_interface`.
+
+The contract remains live. Exact tests in this leaf prove the current
+advertised surface matches the implementation and documentation; they do not
+freeze the ISF API or the full schedule-report schema.
 
 ### Diagnostic Projection Boundary
 
@@ -570,14 +602,18 @@ errors.
 - `2026-05-14`: `ISF-COMPOSITION.5.1` defines the bounded
   `generated_composition` report shape and diagnostic projection boundary
   before emitter or contract code is widened.
+- `2026-05-14`: `ISF-COMPOSITION.5.2` ships the successful-report projection
+  for generated composition while keeping the ISF contract live rather than
+  frozen. The field is public discovery metadata for current generated tops,
+  not a broad promise that raw scheduler internals or every current report key
+  are permanent.
 
 ## Open Questions
 
 - Future symbolic constant support for ISF spawn parameters waits for an
   explicit ISF constant/symbol surface.
-- Schedule-report metadata for generated top, child files, spawned instances,
-  handoff links, and applied parameter overrides remains to be defined and
-  implemented in `ISF-COMPOSITION.5`.
+- Targeted post-syntax diagnostics for generated top and handoff failures
+  remain in `ISF-COMPOSITION.5.3`.
 
 ## Blockers
 
@@ -617,6 +653,11 @@ errors.
 | `2026-05-14` | `ISF-COMPOSITION.5` | `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-COMPOSITION.5.1` | `mdbook build docs/book` | `passed` |
 | `2026-05-14` | `ISF-COMPOSITION.5.1` | `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-COMPOSITION.5.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm; perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm; perl -Iperl -c t/1217-isf-generated-composition-schedule-report.t` | `passed` |
+| `2026-05-14` | `ISF-COMPOSITION.5.2` | `prove -l t/1096-isf-schedule-json-report.t t/1112-isf-public-interface-contract.t t/1116-isf-public-schedule-report-key-family-audit.t t/1121-isf-public-cli-schedule-report-audit.t t/1128-isf-public-multifile-schedule-report-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1142-isf-public-guidance-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1154-isf-public-facade-return-metadata-audit.t t/1215-isf-spawn-parameter-binding.t t/1216-isf-generated-composition-top.t t/1217-isf-generated-composition-schedule-report.t` | `passed; 12 files, 22 tests` |
+| `2026-05-14` | `ISF-COMPOSITION.5.2` | `./bin/ci-regression isf --no-book` | `passed; 125 files, 421 tests` |
+| `2026-05-14` | `ISF-COMPOSITION.5.2` | `mdbook build docs/book` | `passed` |
+| `2026-05-14` | `ISF-COMPOSITION.5.2` | `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -630,6 +671,7 @@ errors.
 | `ISF-COMPOSITION.7` | `ISF-COMPOSITION.7: document spawn repeat lifetime` | Records static HDL spawn lifetime, future repeat activation semantics, dynamic repeat-count implications, and unshipped busy/zero-count boundaries. |
 | `ISF-COMPOSITION.5` | `ISF-COMPOSITION.5: split report diagnostic work` | Splits broad report/diagnostic work into schema, projection, diagnostics, and closure leaves. |
 | `ISF-COMPOSITION.5.1` | `ISF-COMPOSITION.5.1: define report schema` | Defines the bounded generated-composition schedule-report field and diagnostic projection boundary. |
+| `ISF-COMPOSITION.5.2` | `ISF-COMPOSITION.5.2: project composition report metadata` | Emits bounded generated-composition schedule-report metadata and advertises its key families through the live ISF public contract. |
 
 ## Changelog
 
@@ -649,3 +691,5 @@ errors.
   frontier moves to `ISF-COMPOSITION.5.1`.
 - `2026-05-14`: Completed `ISF-COMPOSITION.5.1`; current frontier moves to
   `ISF-COMPOSITION.5.2`.
+- `2026-05-14`: Completed `ISF-COMPOSITION.5.2`; current frontier moves to
+  `ISF-COMPOSITION.5.3`.

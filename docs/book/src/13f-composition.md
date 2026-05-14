@@ -190,11 +190,12 @@ The `--outdir DIR` flag writes all generated `.fsm` files:
 
 ## Schedule Report Projection
 
-The generated-composition schedule-report projection is being added under the
-`ISF-COMPOSITION.5` task tree. The accepted bounded shape is a top-level
-`generated_composition` field. For actors with no generated composition top,
-that field is `null`. For spawned-child actors, it is an object with only
-review-facing composition facts:
+The generated-composition schedule-report projection is a live bounded
+downstream-discovery field. Successful reports keep ordinary transaction,
+storage, and DT summaries parent-scoped, while the top-level
+`generated_composition` field reports generated-top structure. For actors with
+no generated composition top, that field is `null`. For spawned-child actors,
+it is an object with only review-facing composition facts:
 
 ```json
 {
@@ -247,9 +248,11 @@ review-facing composition facts:
 ```
 
 The projection is intentionally not a raw `LoweringIR` dump and not a parsed
-`?toplink` dump. It reports stable names that downstream consumers can use to
-discover the generated top, parent, child modules, instance identity, start and
-done handoff, named-drive handoff, and per-instance parameter binding.
+`?toplink` dump. It reports the current bounded names that downstream
+consumers can use to discover the generated top, parent, child modules,
+instance identity, start and done handoff, named-drive handoff, and
+per-instance parameter binding. This is live public discovery metadata, not a
+frozen schema for all future ISF releases.
 
 ## Complete Example
 

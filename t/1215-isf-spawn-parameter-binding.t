@@ -43,6 +43,7 @@ ISF
             {
                 child => 'worker',
                 instance => 'w0',
+                drive_handoffs => [],
                 parameter_overrides => [
                     { name => 'WIDTH', value => '16' },
                     { name => 'LANES', value => ["8'hA5", "8'h3C"] },
@@ -51,6 +52,7 @@ ISF
             {
                 child => 'worker',
                 instance => 'w1',
+                drive_handoffs => [],
                 parameter_overrides => [],
             },
         ],

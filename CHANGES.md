@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF composition report projection
+- Completed `ISF-COMPOSITION.5.2` by emitting the bounded
+  `generated_composition` schedule-report field.
+- Non-generated-top reports now expose `generated_composition: null`; spawned
+  child reports expose generated top, parent, child, instance, start/done
+  handoff, named-drive handoff, and parameter-binding summaries.
+- Added
+  [t/1217-isf-generated-composition-schedule-report.t](t/1217-isf-generated-composition-schedule-report.t)
+  and widened the ISF public-interface contract metadata/audits for generated
+  composition key families.
+- Clarified that the ISF public API contract is live rather than frozen:
+  exact audits prove the currently advertised surface while allowing the API to
+  evolve alongside FSMGen.
+- Advanced the active `ISF-COMPOSITION` frontier from `ISF-COMPOSITION.5.2`
+  to `ISF-COMPOSITION.5.3`.
 ### R14 — ISF composition report schema
 - Completed `ISF-COMPOSITION.5.1` by defining the bounded
   `generated_composition` schedule-report field before emitter implementation.

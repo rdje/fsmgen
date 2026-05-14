@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF composition report projection
+- The emitted `generated_composition` report field is a bounded discovery
+  projection over already-generated composition facts. It intentionally names
+  the review artifacts and handoff links consumers need, while keeping raw
+  LoweringIR, `?toplink`, activation context, and port-inference details
+  private.
+- The lowerer records named-drive handoffs beside spawn-instance metadata so
+  the JSON emitter can project request and payload links without parsing the
+  generated top text.
+- The public-interface contract now advertises generated-composition key
+  families, but the contract is still live. Exact metadata audits protect the
+  current advertised surface from drift; they are not a freeze on future ISF
+  API evolution.
 ## 2026-05-14: ISF composition report schema
 - The `generated_composition` report projection is deliberately a discovery
   summary, not an implementation dump. Downstream consumers need to know which

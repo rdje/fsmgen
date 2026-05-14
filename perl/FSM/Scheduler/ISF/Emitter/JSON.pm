@@ -29,6 +29,7 @@ sub emit($self, $ir) {
         inferred_storage => $self->_storage_summary($ir),
         transactions   => $self->_transaction_summary($ir),
         dt_blocks      => $self->_dt_summary($ir),
+        generated_composition => $self->_generated_composition_summary($ir),
         compatible_fanin_groups => $self->_compatible_fanin_group_summary($ir),
         compile_issues => $self->_compile_issue_summary($ir),
     };
@@ -122,6 +123,109 @@ sub _dt_summary($self, $ir) {
     return \@dts;
 }
 
+sub _generated_composition_summary($self, $ir) {
+    my @spawn_instances = @{$ir->{spawn_instances} || []};
+    return undef unless @spawn_instances;
+
+    my $actor_name = $ir->{actor_name};
+    my $children = $ir->{children} || {};
+
+    return {
+        kind       => 'spawn_generated_top',
+        top_module => "${actor_name}_top",
+        top_fsm    => "${actor_name}_top.fsm",
+        parent     => {
+            module        => $actor_name,
+            scheduled_fsm => "$actor_name.fsm",
+        },
+        children  => [
+            map { $self->_generated_composition_child_summary($_, $children->{$_}) }
+            sort keys %$children
+        ],
+        instances => [
+            map { $self->_generated_composition_instance_summary($_, $children->{$_->{child}}) }
+            @spawn_instances
+        ],
+    };
+}
+
+sub _generated_composition_child_summary($self, $child_name, $child_ir) {
+    $child_ir ||= {};
+    return {
+        transaction   => $child_name,
+        module        => $child_name,
+        scheduled_fsm => "$child_name.fsm",
+        parameters    => [
+            map {
+                {
+                    name    => $_->{name},
+                    default => _format_isf_value($_->{value}),
+                }
+            } @{$child_ir->{params} || []}
+        ],
+    };
+}
+
+sub _generated_composition_instance_summary($self, $spawn, $child_ir) {
+    my $instance = $spawn->{instance};
+    my $child = $spawn->{child};
+
+    return {
+        instance           => $instance,
+        child              => $child,
+        start              => {
+            parent_port => "${instance}_start",
+            child_port  => 'start',
+        },
+        done               => {
+            child_port  => 'done',
+            parent_port => "${instance}_done",
+        },
+        parameter_bindings => _instance_parameter_bindings($spawn, $child_ir || {}),
+        drive_handoffs     => [
+            map { _bounded_drive_handoff_summary($_) }
+            @{$spawn->{drive_handoffs} || []}
+        ],
+    };
+}
+
+sub _instance_parameter_bindings($spawn, $child_ir) {
+    my %override_by_name = map { $_->{name} => $_ } @{$spawn->{parameter_overrides} || []};
+    my @bindings;
+
+    for my $param (@{$child_ir->{params} || []}) {
+        my $name = $param->{name};
+        my $override = $override_by_name{$name};
+        push @bindings, {
+            name   => $name,
+            source => $override ? 'override' : 'default',
+            value  => _format_isf_value($override ? $override->{value} : $param->{value}),
+        };
+    }
+
+    return \@bindings;
+}
+
+sub _bounded_drive_handoff_summary($handoff) {
+    return {
+        drive    => $handoff->{drive},
+        request  => {
+            child_port  => $handoff->{request}{child_port},
+            parent_port => $handoff->{request}{parent_port},
+        },
+        payloads => [
+            map {
+                {
+                    parameter   => $_->{parameter},
+                    child_port  => $_->{child_port},
+                    parent_port => $_->{parent_port},
+                    width       => $_->{width},
+                }
+            } @{$handoff->{payloads} || []}
+        ],
+    };
+}
+
 sub _compile_issue_summary($self, $ir) {
     my @issues;
 
@@ -175,6 +279,12 @@ sub _bounded_source_summary($source) {
         rhs         => $source->{rhs},
         domain      => $source->{domain},
     };
+}
+
+sub _format_isf_value($value) {
+    return '(' . join(' ', map { _format_isf_value($_) } @$value) . ')'
+        if ref($value) eq 'ARRAY';
+    return defined($value) ? "$value" : '';
 }
 
 1;
