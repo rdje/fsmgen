@@ -976,6 +976,8 @@ sub _finalize_ir {
     my ($ir) = @_;
     $ir->{assignment_provenance} = _build_assignment_provenance($ir);
     $ir->{compatible_fanin_groups} = _build_compatible_fanin_groups($ir->{assignment_provenance});
+    $ir->{conflict_issues} = _build_conflict_issues($ir->{assignment_provenance});
+    _confess_conflict_issues($ir->{conflict_issues});
     return $ir;
 }
 
@@ -1300,6 +1302,123 @@ sub _fanin_source_summary {
         activation       => _clone_provenance_value($record->{activation}),
         assignment_index => $record->{assignment_index},
     };
+}
+
+sub _build_conflict_issues {
+    my ($records) = @_;
+    my @issues;
+    my @data_records = grep { ($_->{domain} // '') eq 'data' && defined $_->{target} } @$records;
+
+    for my $left_idx (0 .. $#data_records) {
+        my $left = $data_records[$left_idx];
+        for my $right_idx ($left_idx + 1 .. $#data_records) {
+            my $right = $data_records[$right_idx];
+            next unless ($left->{target} // '') eq ($right->{target} // '');
+            next if _compatible_record_pair($left, $right);
+
+            if (_both_owner_kind($left, $right, 'rule')) {
+                push @issues, _conflict_issue(
+                    code         => 'isf_conflicting_rule_writes',
+                    severity     => 'error',
+                    proof_status => 'proved_conflict',
+                    target       => $left->{target},
+                    reason       => 'overlapping rule data writes select different values',
+                    left         => $left,
+                    right        => $right,
+                );
+                next;
+            }
+
+            if (_owner_kind_pair($left, $right, 'rule', 'drive')) {
+                push @issues, _conflict_issue(
+                    code         => 'isf_unproven_rule_drive_overlap',
+                    severity     => 'warning',
+                    proof_status => 'not_doable',
+                    target       => $left->{target},
+                    reason       => 'compile-time proof for rule/drive overlap is not doable yet',
+                    left         => $left,
+                    right        => $right,
+                );
+            }
+        }
+    }
+
+    return \@issues;
+}
+
+sub _compatible_record_pair {
+    my ($left, $right) = @_;
+    return 0 unless ($left->{target} // '') eq ($right->{target} // '');
+
+    if (($left->{domain} // '') eq ($right->{domain} // '')
+        && ($left->{domain} // '') ne 'helper'
+        && ($left->{operator} // '') eq ($right->{operator} // '')
+        && _record_rhs($left) eq _record_rhs($right)) {
+        return 1;
+    }
+
+    return 1 if ($left->{domain} // '') eq 'request' && ($right->{domain} // '') eq 'request';
+    return 1 if ($left->{domain} // '') eq 'pulse'
+        && ($right->{domain} // '') eq 'pulse'
+        && _is_one_cycle_pulse_record($left)
+        && _is_one_cycle_pulse_record($right);
+
+    return 0;
+}
+
+sub _both_owner_kind {
+    my ($left, $right, $kind) = @_;
+    return ($left->{owner_kind} // '') eq $kind && ($right->{owner_kind} // '') eq $kind;
+}
+
+sub _owner_kind_pair {
+    my ($left, $right, $first, $second) = @_;
+    my $left_kind = $left->{owner_kind} // '';
+    my $right_kind = $right->{owner_kind} // '';
+    return 1 if $left_kind eq $first && $right_kind eq $second;
+    return 1 if $left_kind eq $second && $right_kind eq $first;
+    return 0;
+}
+
+sub _conflict_issue {
+    my (%args) = @_;
+    return {
+        code         => $args{code},
+        severity     => $args{severity},
+        proof_status => $args{proof_status},
+        target       => $args{target},
+        domain       => 'data',
+        reason       => $args{reason},
+        sources      => [
+            _fanin_source_summary($args{left}),
+            _fanin_source_summary($args{right}),
+        ],
+    };
+}
+
+sub _confess_conflict_issues {
+    my ($issues) = @_;
+    for my $issue (@$issues) {
+        next unless ($issue->{severity} // '') eq 'error';
+        confess _format_conflict_issue($issue) . "\n";
+    }
+}
+
+sub _format_conflict_issue {
+    my ($issue) = @_;
+    my ($left, $right) = @{$issue->{sources}};
+    return "ISF conflict '$issue->{code}' on target '$issue->{target}': "
+        . "$issue->{reason}; "
+        . _format_conflict_source($left)
+        . ' conflicts with '
+        . _format_conflict_source($right);
+}
+
+sub _format_conflict_source {
+    my ($source) = @_;
+    my $rhs = defined($source->{rhs}) ? $source->{rhs} : '';
+    return "$source->{owner_kind} '$source->{owner}' "
+        . "($source->{source_kind}, $source->{operator} $rhs)";
 }
 
 # --- Post-processing ---

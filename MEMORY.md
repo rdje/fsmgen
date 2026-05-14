@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF static conflict checks
+- Completed `ISF-CONFLICTS.4.3` in
+  [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md).
+- `FSM::Scheduler::ISF::LoweringIR` now derives internal `conflict_issues`
+  from assignment provenance before scheduled `.fsm` emission.
+- Statically provable conflicting rule/rule data writes now fail closed with
+  the `isf_conflicting_rule_writes` diagnostic.
+- Rule/drive data overlap is flagged internally as
+  `isf_unproven_rule_drive_overlap` with `proof_status => not_doable` because
+  compile-time proof is not doable for that case in this slice.
+- Ordinary transaction state mux behavior remains accepted, and public
+  schedule-report projection remains deferred to `ISF-CONFLICTS.5`.
+- The active frontier is now `ISF-CONFLICTS.4.4`.
 ## 2026-05-14: ISF compatible fan-in classification
 - Completed `ISF-CONFLICTS.4.2` in
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md).

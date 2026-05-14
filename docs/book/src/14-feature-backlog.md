@@ -148,7 +148,10 @@ transactions conflict.
 
 Current boundary: priority declarations are structurally validated and targets
 must resolve to declared rules or transactions. Priority remains informational
-and is not yet enforced as arbitration policy.
+and is not yet enforced as arbitration policy. Provable unprioritized
+rule/rule data conflicts now fail closed, while rule/drive overlap is tracked
+because compile-time proof is not doable until priority, resource arbitration,
+or runtime selector instrumentation covers it.
 
 ### Expression-Valued Rule Assignments
 

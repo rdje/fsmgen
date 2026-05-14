@@ -107,14 +107,14 @@ transaction start input.
   Commit: `ISF-CONFLICTS.4.2: classify ISF fan-in groups`
 
 - ID: `ISF-CONFLICTS.4.3`
-  Status: `pending`
-  Goal: `Add best-effort compile-time conflict detection and unprovable-case flags.`
+  Status: `done`
+  Goal: `Add best-effort compile-time conflict detection and flags for cases where proof is not doable.`
   Acceptance: `The scheduler can reject statically provable overlapping
-  rule/rule and rule/drive same-target data conflicts, preserve ordinary
-  mutually-exclusive state assignment behavior, and flag cases where
-  compile-time proof is not doable instead of silently claiming they are safe.`
-  Verification: `pending`
-  Commit: `pending`
+  same-target data conflicts, preserve ordinary mutually-exclusive state
+  assignment behavior, and flag rule/drive cases where compile-time proof is
+  not doable instead of silently claiming they are safe.`
+  Verification: `prove -l t/1144-isf-public-tested-by-metadata-audit.t t/1209-isf-static-conflict-detection.t; prove -l t/1207-isf-assignment-provenance-inventory.t t/1208-isf-compatible-fanin-classification.t t/1209-isf-static-conflict-detection.t; bin/ci-regression isf --no-book; mdbook build docs/book; git diff --check`
+  Commit: `ISF-CONFLICTS.4.3: add ISF static conflict checks`
 
 - ID: `ISF-CONFLICTS.4.4`
   Status: `pending`
@@ -166,7 +166,7 @@ transaction start input.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-CONFLICTS.4.3` | `pending` | Compatible fan-in classification now exists; the next executable slice adds best-effort compile-time conflict detection and unprovable-case flags. |
+| 1 | `ISF-CONFLICTS.4.4` | `pending` | Static conflict detection now exists; the next executable slice applies declared target-local priority to supported conflict sets. |
 
 ## Current Behavior Inventory
 
@@ -502,6 +502,28 @@ This slice is still internal: it does not alter scheduled `.fsm` emission,
 public schedule-report JSON, or HDL generation. It gives the next leaves a
 bounded candidate set for compile-time conflict detection and diagnostics.
 
+## Best-Effort Static Conflict Detection
+
+`ISF-CONFLICTS.4.3` adds internal `conflict_issues` derivation to
+`LoweringIR`. The analysis is intentionally best-effort:
+
+- Compatible pairs are skipped using the same same-value, request, and pulse
+  rules as `compatible_fanin_groups`.
+- Statically provable conflicting rule/rule data writes to the same target now
+  fail closed during lowering with a targeted `isf_conflicting_rule_writes`
+  diagnostic.
+- Rule/drive data conflicts are flagged internally as
+  `isf_unproven_rule_drive_overlap` with `proof_status => not_doable`.
+  They are not rejected yet because this slice cannot prove the rule guard and
+  generated drive-start guard overlap in all cases.
+- Ordinary transaction state assignments remain accepted. The analysis does
+  not treat different transaction states as same-cycle conflicts merely because
+  they assign different values to the same target.
+
+The public schedule report still exposes successful `compile_issues` as an
+empty array. Public projection of conflict diagnostics belongs to
+`ISF-CONFLICTS.5`.
+
 ## Decisions
 
 - `2026-05-14`: The conflict-resolution work will be tracked as a task tree
@@ -537,6 +559,10 @@ bounded candidate set for compile-time conflict detection and diagnostics.
 - `2026-05-14`: `ISF-CONFLICTS.4.2` keeps compatible fan-in classification
   internal to `LoweringIR` through `compatible_fanin_groups`; public projection
   remains deferred until diagnostics/report policy is implemented.
+- `2026-05-14`: `ISF-CONFLICTS.4.3` adds internal best-effort
+  `conflict_issues`: provable rule/rule data conflicts fail closed, while
+  rule/drive overlap is flagged as `not_doable` until a later slice can prove
+  or instrument it.
 
 ## Open Questions
 
@@ -570,6 +596,11 @@ bounded candidate set for compile-time conflict detection and diagnostics.
 | `2026-05-14` | `ISF-CONFLICTS.4.2` | `prove -l t/1207-isf-assignment-provenance-inventory.t t/1208-isf-compatible-fanin-classification.t` | `passed` |
 | `2026-05-14` | `ISF-CONFLICTS.4.2` | `bin/ci-regression isf --no-book` | `passed` |
 | `2026-05-14` | `ISF-CONFLICTS.4.2` | `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.4.3` | `prove -l t/1207-isf-assignment-provenance-inventory.t t/1208-isf-compatible-fanin-classification.t t/1209-isf-static-conflict-detection.t` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.4.3` | `bin/ci-regression isf --no-book` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.4.3` | `prove -l t/1144-isf-public-tested-by-metadata-audit.t t/1209-isf-static-conflict-detection.t` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.4.3` | `mdbook build docs/book` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.4.3` | `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -582,6 +613,7 @@ bounded candidate set for compile-time conflict detection and diagnostics.
 | `ISF-CONFLICTS.4` | `ISF-CONFLICTS.4: split conflict tracking implementation` | Splits the broad implementation container into executable provenance, classification, detection, and priority leaves. |
 | `ISF-CONFLICTS.4.1` | `ISF-CONFLICTS.4.1: add ISF assignment provenance` | Adds internal `LoweringIR` assignment provenance records and focused regression coverage. |
 | `ISF-CONFLICTS.4.2` | `ISF-CONFLICTS.4.2: classify ISF fan-in groups` | Adds internal compatible fan-in group classification from assignment provenance. |
+| `ISF-CONFLICTS.4.3` | `ISF-CONFLICTS.4.3: add ISF static conflict checks` | Adds internal best-effort conflict issues, rule/rule rejection, and rule/drive `not_doable` flags. |
 
 ## Changelog
 
@@ -600,4 +632,6 @@ bounded candidate set for compile-time conflict detection and diagnostics.
   `ISF-CONFLICTS.4.2` for compatible fan-in classification from provenance.
 - `2026-05-14`: Completed `ISF-CONFLICTS.4.2`; current frontier moves to
   `ISF-CONFLICTS.4.3` for best-effort compile-time conflict detection and
-  unprovable-case flags.
+  flags for cases where proof is not doable.
+- `2026-05-14`: Completed `ISF-CONFLICTS.4.3`; current frontier moves to
+  `ISF-CONFLICTS.4.4` for target-local priority resolution.

@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF static conflict checks
+- Completed `ISF-CONFLICTS.4.3` by deriving internal `conflict_issues` from
+  ISF assignment provenance in `FSM::Scheduler::ISF::LoweringIR`.
+- Statically provable conflicting rule/rule data writes to the same target now
+  fail closed with the `isf_conflicting_rule_writes` diagnostic.
+- Rule/drive same-target data overlap is flagged internally as
+  `isf_unproven_rule_drive_overlap` with `proof_status => not_doable` because
+  this compile-time proof is not doable in the current analysis.
+- Added [t/1209-isf-static-conflict-detection.t](t/1209-isf-static-conflict-detection.t)
+  for provable rule conflicts, compatible same-value rules, rule/drive
+  `not_doable` flags, and ordinary transaction state mux behavior.
+- Advanced the active `ISF-CONFLICTS` frontier from `ISF-CONFLICTS.4.3` to
+  `ISF-CONFLICTS.4.4`.
 ### R14 — ISF compatible fan-in classification
 - Completed `ISF-CONFLICTS.4.2` by adding internal
   `compatible_fanin_groups` derivation to `FSM::Scheduler::ISF::LoweringIR`.

@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF static conflict checks
+- Active R14 task-tree slice: `ISF-CONFLICTS.4.3` is complete.
+- `LoweringIR` now derives internal `conflict_issues` from assignment
+  provenance.
+- Provable rule/rule same-target data conflicts now fail closed, while
+  rule/drive overlap is flagged as `not_doable` because this compile-time
+  proof is not doable in the current analysis.
+- Public schedule-report JSON is unchanged. The next frontier is
+  `ISF-CONFLICTS.4.4`.
+
 ## 2026-05-14: R14 — ISF compatible fan-in classification
 - Active R14 task-tree slice: `ISF-CONFLICTS.4.2` is complete.
 - `LoweringIR` now derives internal `compatible_fanin_groups` from assignment

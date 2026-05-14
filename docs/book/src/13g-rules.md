@@ -62,6 +62,20 @@ cycle.
 )
 ```
 
+## Rule Data Conflicts
+
+Rule data writes are checked before generated scheduled `.fsm` text is accepted.
+When two rules drive the same target to incompatible values, lowering fails
+closed with `isf_conflicting_rule_writes`; compatible same-target/same-value
+rule writes remain accepted.
+
+This check is intentionally best-effort. Rule/drive same-target overlap is
+recorded internally as `isf_unproven_rule_drive_overlap` with
+`proof_status => not_doable` because the current compile-time analysis does
+not prove that the rule guard and generated drive-start guard can or cannot be
+active together. Runtime selector conflict instrumentation is tracked as later
+verification work.
+
 ## Trigger Fan-In
 
 Shipped rule-trigger lowering preserves trigger provenance before transaction
@@ -125,7 +139,8 @@ With a single rule source, the generated fan-in assigns the source directly:
 Inline priority is accepted and structurally validated by the parser, then
 ignored by current lowering. The `other_rule` target must name a declared rule
 in the same actor; forward references are accepted. It does not resolve
-conflicting drives yet.
+conflicting drives yet; unprioritized provable rule/rule data conflicts fail
+closed instead of being arbitrated by source order.
 
 ## Priorities
 
@@ -140,8 +155,9 @@ Priority declarations are structurally validated as
 in the same actor; forward references are accepted. Priorities remain
 informational in the current scheduler.
 When two rules/transactions could drive the same output, priority resolution is
-still deferred rather than enforced. The deferred enforcement work is tracked
-in [Feature Backlog](14-feature-backlog.md).
+still deferred rather than enforced; provable unprioritized rule/rule data
+conflicts fail closed. The deferred enforcement work is tracked in
+[Feature Backlog](14-feature-backlog.md).
 
 ## Resources
 

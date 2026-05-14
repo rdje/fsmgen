@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF static conflict checks
+- Static conflict detection now consumes the same assignment provenance used
+  for compatible fan-in classification. This keeps detection tied to emitted
+  scheduler ownership instead of reparsing scheduled `.fsm` text.
+- The first rejection is deliberately narrow: conflicting rule/rule data
+  writes to the same target fail closed when they select different values.
+  That case is statically actionable because independent rules can be enabled
+  in the same cycle unless future priority/resource policy says otherwise.
+- Rule/drive overlap is recorded but not rejected in this slice. A rule guard
+  and a generated drive-start guard can overlap, but the current analysis does
+  not prove the exact cycle relationship. The issue is therefore marked
+  `proof_status => not_doable` for later diagnostics or runtime selector
+  instrumentation.
+- Ordinary transaction-state muxing stays outside this conflict rejection path.
+  Different state DTs may assign different values to the same target because
+  the FSM state decode is the mutual-exclusion proof.
 ## 2026-05-14: ISF compatible fan-in classification
 - `compatible_fanin_groups` is the first consumer of assignment provenance. It
   intentionally stays internal so later diagnostics can choose a stable public

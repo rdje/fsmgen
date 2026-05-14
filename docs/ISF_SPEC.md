@@ -622,6 +622,13 @@ Current lowering:
   that follow it.
 - `(port value)` actions lower as flopped assignments inside the guarded
   non-state DT.
+- Same-target rule data writes now receive a best-effort compile-time conflict
+  check before scheduled `.fsm` text is treated as valid. Two rules that drive
+  the same target to incompatible values fail closed with
+  `isf_conflicting_rule_writes`; compatible same-target/same-value rule writes
+  remain accepted. Rule/drive overlap is tracked internally as
+  `isf_unproven_rule_drive_overlap` with `proof_status => not_doable` because
+  that compile-time proof is not doable in the current analysis.
 - `(trigger transaction)` lowers as a `<1` one-cycle delayed pulse inside the
   guarded non-state DT to a generated per-rule/per-transaction source named
   `rule_transaction`, so a rule trigger is a pulse rather than a sticky
@@ -912,6 +919,7 @@ Focused tests:
 - [t/1204-isf-child-composition-clause-boundary.t](../t/1204-isf-child-composition-clause-boundary.t)
 - [t/1205-isf-switch-clause-boundary.t](../t/1205-isf-switch-clause-boundary.t)
 - [t/1206-isf-when-clause-boundary.t](../t/1206-isf-when-clause-boundary.t)
+- [t/1209-isf-static-conflict-detection.t](../t/1209-isf-static-conflict-detection.t)
 
 ## 12. Explicitly Deferred
 

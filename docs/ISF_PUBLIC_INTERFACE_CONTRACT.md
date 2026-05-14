@@ -240,6 +240,12 @@ The schedule-report projection of that same fan-in path is checked by
 [t/1172-isf-rule-trigger-fanin-schedule-report.t](../t/1172-isf-rule-trigger-fanin-schedule-report.t)
 so downstream consumers can rely on the advertised DT kind/order and one-bit
 inferred-storage summaries for the generated trigger sources.
+The static rule-conflict path is checked by
+[t/1209-isf-static-conflict-detection.t](../t/1209-isf-static-conflict-detection.t)
+so provable incompatible rule/rule data writes fail closed, compatible
+same-value rule writes remain accepted, rule/drive overlap is flagged
+internally as `proof_status => not_doable`, and ordinary transaction state
+mux behavior remains accepted.
 The explicit-width `shift_right` data-operation path is checked by
 [t/1173-isf-shift-right-explicit-width.t](../t/1173-isf-shift-right-explicit-width.t)
 so authors can avoid the placeholder width fallback when a shifted register is
@@ -523,6 +529,11 @@ per-rule trigger provenance before the transaction start OR.
 Parser handoff now requires each rule trigger target to resolve to a declared
 transaction in the same actor. This prevents a misspelled rule trigger from
 inventing an otherwise unowned `transaction_start` fan-in path.
+Lowering also performs best-effort static conflict checks for rule data writes:
+provable incompatible rule/rule writes to the same target fail closed, while
+rule/drive same-target overlap is marked internally because compile-time proof
+is not doable in that case. The successful public schedule-report shape is
+unchanged; `compile_issues` remains an empty array on success.
 The current public parser handoff also advertises a bounded drive-definition
 shell: `drives` is a hash of entries keyed by unique non-empty drive name, and
 each entry has unique scalar `params` and `body` arrays. Body entries are
