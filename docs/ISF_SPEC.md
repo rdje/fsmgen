@@ -805,6 +805,20 @@ omitted. The capability-manifest ISF public contract advertises this through
 Successful reports keep `compile_issues` present as an empty array; the
 capability-manifest ISF public contract advertises that success shape through
 `schedule_report_compile_issues_success_shape`.
+The conflict-report projection is now defined before the emitter widens this
+JSON shape. The next report slice may project nonfatal conflict issues into
+`compile_issues` as bounded objects with stable `code`, `severity`, `target`,
+`domain`, `proof_status`, human-readable `reason`, and capped `sources`
+summaries. The important current proof status is `not_doable`, used when the
+scheduler is explicitly flagging that a compile-time proof is NOT doable for a
+case such as rule/drive overlap. Fail-closed conflicts still produce targeted
+diagnostics instead of successful schedule reports.
+Accepted compatible fan-in metadata is planned as a top-level
+`compatible_fanin_groups` array once that emitter slice lands. Each group is
+bounded to classifier `kind`, `domain`, target/value facts, and source
+summaries; raw `assignment_provenance`, activation proof context,
+assignment indexes, and priority-suppression bookkeeping remain private
+`LoweringIR` internals.
 The CLI `--emit-schedule-json` entrypoint is expected to emit the same report as
 the in-process scheduler on stdout and keep stderr clean on success.
 For multi-file lowerings, that report currently describes the parent scheduled

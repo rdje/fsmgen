@@ -759,6 +759,21 @@ scope in `schedule_report_multi_file_scope`.
 For successful schedule reports, `compile_issues` is present as an empty array.
 The machine-readable contract advertises this current success shape in
 `schedule_report_compile_issues_success_shape`.
+The conflict/report projection boundary is defined, but the machine-readable
+schedule-report contract is not widened until the corresponding emitter slices
+ship. Planned nonfatal conflict issue entries in `compile_issues` are bounded
+to stable `code`, `severity`, `target`, `domain`, `proof_status`, diagnostic
+`reason`, and capped `sources` summaries. The current proof-status value that
+matters for nonfatal conflict reporting is `not_doable`: it means the lowerer
+is explicitly flagging that compile-time proof is NOT doable for that case,
+instead of silently treating the design as conflict-free. Fail-closed conflict
+cases remain targeted diagnostics, not successful schedule-report entries.
+Planned accepted fan-in metadata uses a top-level
+`compatible_fanin_groups` array with bounded `kind`, `domain`, target/value
+facts, and the same capped source summaries. Raw `assignment_provenance`,
+activation context, assignment indexes, and priority-suppression bookkeeping
+remain non-public `LoweringIR` internals unless a later slice deliberately
+advertises a narrower field.
 
 The schedule report is not yet a frozen full schema. Downstream consumers should
 use the advertised contract metadata instead of assuming every current field,

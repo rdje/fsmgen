@@ -147,14 +147,13 @@ transaction start input.
   Commit: `pending container completion`
 
 - ID: `ISF-CONFLICTS.5.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Define the bounded conflict/fan-in schedule-report projection schema.`
-  Acceptance: `Rejected conflict cases report targeted diagnostics, and
-  accepted conflict/fan-in cases are visible in bounded schedule-report
-  metadata fields are named, scoped, and documented before emitter changes
-  widen the public schedule-report shape.`
-  Verification: `pending`
-  Commit: `pending`
+  Acceptance: `The planned nonfatal compile-issue entries and compatible
+  fan-in metadata entries are named, scoped, and documented before emitter
+  changes widen the public schedule-report shape.`
+  Verification: `git diff --check; mdbook build docs/book`
+  Commit: `ISF-CONFLICTS.5.1: define report projection schema`
 
 - ID: `ISF-CONFLICTS.5.2`
   Status: `pending`
@@ -205,7 +204,7 @@ transaction start input.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-CONFLICTS.5.1` | `pending` | The diagnostics/report projection leaf is split; schema boundaries must be named before public report emission changes. |
+| 1 | `ISF-CONFLICTS.5.2` | `pending` | The projection schema is documented; the next slice can emit nonfatal conflict issues into `compile_issues`. |
 
 ## Current Behavior Inventory
 
@@ -607,6 +606,60 @@ This leaf does not widen the successful public ISF schedule-report schema.
 Report projection of conflict/fan-in metadata remains assigned to
 `ISF-CONFLICTS.5`.
 
+## Schedule Report Projection Boundary
+
+`ISF-CONFLICTS.5.1` defines the public projection boundary for the later
+diagnostics/report leaves. It does not change emitted JSON yet.
+`compile_issues` remains an empty array in successful schedule reports until
+`ISF-CONFLICTS.5.2`, and `compatible_fanin_groups` remains absent until
+`ISF-CONFLICTS.5.3`.
+
+The planned `compile_issues` projection is for nonfatal issues that can appear
+in a successful schedule report. Fail-closed conflicts still surface as
+targeted diagnostics instead of producing a successful report, unless a future
+explicit error-report mode is designed. Each projected conflict issue must use
+a bounded object shape:
+
+- `code`: stable scalar diagnostic code, such as
+  `isf_unproven_rule_drive_overlap`.
+- `severity`: bounded scalar severity. The first projected conflict cases use
+  `warning`; rejected conflicts stay outside successful schedule reports.
+- `target`: scalar target signal or request name.
+- `domain`: bounded domain name such as `data`, `request`, `pulse`,
+  `capture`, or `helper`.
+- `proof_status`: bounded proof result. The important current value is
+  `not_doable`, meaning the scheduler is explicitly flagging that the
+  compile-time proof is NOT doable for that case.
+- `reason`: human-readable diagnostic text. Consumers should use `code` and
+  `proof_status` for machine policy, not parse this text.
+- `sources`: bounded source summaries.
+
+Each public source summary is capped to scheduler ownership and target facts:
+`owner`, `owner_kind`, `source_kind`, `target`, `operator`, `rhs`, and
+`domain`. Raw activation context, assignment indexes, priority-suppression
+bookkeeping, and the complete `assignment_provenance` records remain private
+`LoweringIR` internals unless a later slice deliberately exposes a narrower
+field.
+
+The planned `compatible_fanin_groups` projection is successful-report metadata
+for accepted fan-in groups. After `ISF-CONFLICTS.5.3`, the field should be a
+top-level array that is present even when empty. Each group must use:
+
+- `kind`: one of the shipped classifier families:
+  `same_target_value`, `request`, `pulse`, or `rule_trigger_fanin`.
+- `domain`: the fan-in domain used by the classifier.
+- `sources`: the same bounded source-summary shape used by `compile_issues`.
+- `target`: present for same-target, request, and pulse groups.
+- `operator` and `rhs`: present when the fan-in depends on one
+  target/operator/value selector.
+- `target_transaction` and `fanin_target`: present for
+  `rule_trigger_fanin`, naming the transaction and generated start target.
+
+This projection is deliberately narrower than the internal classification
+objects. It gives downstream consumers enough information to explain why a
+multi-source case was accepted without freezing raw lowerer hashes, activation
+proof internals, or future arbitration machinery as public API.
+
 ## Decisions
 
 - `2026-05-14`: The conflict-resolution work will be tracked as a task tree
@@ -658,11 +711,16 @@ Report projection of conflict/fan-in metadata remains assigned to
   report projection needs a schema boundary before public schedule-report
   emission changes, then separate nonfatal issue projection, fan-in projection,
   and rejected-diagnostic closure leaves.
+- `2026-05-14`: `ISF-CONFLICTS.5.1` defines a bounded schedule-report
+  projection boundary before emitter changes. Nonfatal `compile_issues`
+  entries will expose stable issue code, severity, target/domain,
+  `proof_status`, reason text, and capped source summaries; compatible fan-in
+  groups will expose only group kind/domain, target/value facts, and the same
+  capped source summaries. Raw provenance and activation proof internals remain
+  private.
 
 ## Open Questions
 
-- Which schedule-report fields are necessary for downstream consumers without
-  prematurely freezing a broad conflict-report API?
 - Which generated start/request sources besides rule triggers should be
   normalized into source carriers during the first implementation slice?
 - Should the first implementation slice include only diagnostics, or also
@@ -710,6 +768,9 @@ Report projection of conflict/fan-in metadata remains assigned to
 | `2026-05-14` | `ISF-CONFLICTS.4.5` | `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-CONFLICTS.5` | Split into executable diagnostics/report projection leaves | `passed` |
 | `2026-05-14` | `ISF-CONFLICTS.5` | `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.5.1` | Bounded schedule-report projection schema documented in the task tree, ISF spec, public contract, and mdBook | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.5.1` | `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.5.1` | `mdbook build docs/book` | `passed` |
 
 ## Commit Log
 
@@ -726,6 +787,7 @@ Report projection of conflict/fan-in metadata remains assigned to
 | `ISF-CONFLICTS.4.4` | `ISF-CONFLICTS.4.4: apply ISF rule priority resolution` | Adds target-local rule-priority suppression for same-target rule/rule data conflicts. |
 | `ISF-CONFLICTS.4.5` | `ISF-CONFLICTS.4.5: add runtime selector assertions` | Adds verification-only SystemVerilog selector assertions from backend assignment analysis. |
 | `ISF-CONFLICTS.5` | `ISF-CONFLICTS.5: split diagnostics projection` | Splits diagnostics/report projection into schema, compile-issues, fan-in, and rejected-diagnostic leaves. |
+| `ISF-CONFLICTS.5.1` | `ISF-CONFLICTS.5.1: define report projection schema` | Defines the bounded public shape for planned nonfatal `compile_issues` entries and compatible fan-in group summaries. |
 
 ## Changelog
 
@@ -755,3 +817,6 @@ Report projection of conflict/fan-in metadata remains assigned to
 - `2026-05-14`: Split `ISF-CONFLICTS.5`; current frontier moves to
   `ISF-CONFLICTS.5.1` for bounded conflict/fan-in schedule-report projection
   schema definition.
+- `2026-05-14`: Completed `ISF-CONFLICTS.5.1`; current frontier moves to
+  `ISF-CONFLICTS.5.2` for nonfatal conflict issue projection into
+  `compile_issues`.

@@ -13,8 +13,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree remains
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md),
-  whose current frontier is `ISF-CONFLICTS.5.1` after splitting diagnostics
-  and schedule-report projection into executable leaves.
+  whose current frontier is `ISF-CONFLICTS.5.2` after defining the bounded
+  conflict/fan-in schedule-report projection schema.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
   guide for installing the same task-tree tracking workflow in another
   project.
@@ -4356,13 +4356,17 @@ Done:
 - `ISF-CONFLICTS.5` is split into executable diagnostics/report projection
   leaves covering schema definition, nonfatal `compile_issues`, compatible
   fan-in projection, and rejected-conflict diagnostic closure.
+- `ISF-CONFLICTS.5.1` now defines the bounded public projection boundary for
+  later schedule-report conflict/fan-in metadata: nonfatal compile issues get
+  capped issue/source fields, accepted fan-in groups get capped target/value
+  summaries, and raw lowerer provenance stays private.
 Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the `ISF-CONFLICTS` task tree when selecting the ISF conflict-resolution
-  feature path; the current frontier is `ISF-CONFLICTS.5.1`, which defines
-  the bounded conflict/fan-in schedule-report projection schema.
+  feature path; the current frontier is `ISF-CONFLICTS.5.2`, which projects
+  nonfatal conflict issues into `compile_issues`.
 - ISF conflict detection policy is now split: compile-time proof is
   best-effort and must flag cases where proof is not doable, while generated
   verification HDL now checks mux selectors at runtime for same-value source

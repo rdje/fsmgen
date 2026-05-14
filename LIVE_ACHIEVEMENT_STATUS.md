@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF conflict report projection schema
+- Active R14 task-tree slice: `ISF-CONFLICTS.5.1` is complete.
+- The bounded schedule-report projection boundary is documented for later
+  nonfatal `compile_issues` entries and compatible fan-in group summaries.
+- The current implementation still emits successful reports with empty
+  `compile_issues` and no `compatible_fanin_groups`; those emitter changes are
+  the next leaves.
+- The next frontier is `ISF-CONFLICTS.5.2`.
+
 ## 2026-05-14: R14 — ISF diagnostics projection split
 - Active R14 task-tree slice: `ISF-CONFLICTS.5` is split into executable
   leaves.

@@ -74,6 +74,8 @@ recorded internally as `isf_unproven_rule_drive_overlap` with
 `proof_status => not_doable` because the current compile-time analysis does
 not prove that the rule guard and generated drive-start guard can or cannot be
 active together.
+That status is explicit: the compiler is flagging that the proof is NOT doable
+for the current analysis rather than claiming the overlap is safe.
 
 Rule priority can resolve the supported rule/rule data-conflict case. If
 `high` has priority over `low` and both rules drive the same target to
@@ -89,6 +91,15 @@ assignment whenever `high`'s rule condition is active:
   (<- (valid 0) <(! a))
 )
 ```
+
+The schedule-report projection for these conflict facts is being widened in
+bounded slices. Successful reports currently keep `compile_issues` as an empty
+array. The planned nonfatal issue entries expose only stable issue code,
+severity, target/domain, `proof_status`, human-readable reason text, and capped
+source summaries. Accepted compatible fan-in groups are planned as bounded
+`compatible_fanin_groups` entries with classifier kind/domain, target/value
+facts, and the same source-summary shape. Raw assignment provenance, activation
+proof context, and priority-suppression bookkeeping remain lowerer internals.
 
 Priority is target-local here: it gates the conflicting assignment, not the
 whole lower-priority rule. Priority cycles fail closed with

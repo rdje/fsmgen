@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF conflict report projection schema
+- Completed `ISF-CONFLICTS.5.1` by defining the bounded public projection
+  boundary for planned conflict/fan-in schedule-report metadata.
+- Planned nonfatal `compile_issues` entries are scoped to stable issue code,
+  severity, target/domain, `proof_status`, reason text, and capped source
+  summaries; `not_doable` explicitly means compile-time proof is NOT doable
+  for the case.
+- Planned accepted fan-in projection uses bounded `compatible_fanin_groups`
+  entries with group kind/domain, target/value facts, and the same capped
+  source summaries, while raw `LoweringIR` provenance remains private.
+- Advanced the active `ISF-CONFLICTS` frontier from `ISF-CONFLICTS.5.1` to
+  `ISF-CONFLICTS.5.2`.
 ### R14 — ISF diagnostics projection split
 - Split `ISF-CONFLICTS.5` into executable leaves for schedule-report schema
   definition, nonfatal `compile_issues` projection, compatible fan-in

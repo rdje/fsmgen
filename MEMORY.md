@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF conflict report projection schema
+- Completed `ISF-CONFLICTS.5.1` in
+  [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md).
+- The schedule-report projection boundary is now documented before emitter
+  changes widen the public JSON shape.
+- Planned nonfatal `compile_issues` entries are bounded to stable issue code,
+  severity, target/domain, `proof_status`, reason text, and capped source
+  summaries; `not_doable` means the scheduler is explicitly flagging that the
+  compile-time proof is NOT doable for that case.
+- Planned `compatible_fanin_groups` entries are bounded to group kind/domain,
+  target/value facts, and the same capped source summaries. Raw assignment
+  provenance, activation context, assignment indexes, and priority bookkeeping
+  remain private lowerer internals.
+- The active `ISF-CONFLICTS` frontier is now `ISF-CONFLICTS.5.2`.
 ## 2026-05-14: ISF diagnostics projection split
 - Split `ISF-CONFLICTS.5` in
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md)

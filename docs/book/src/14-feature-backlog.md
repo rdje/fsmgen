@@ -151,7 +151,7 @@ must resolve to declared rules or transactions. Same-target rule/rule data
 conflicts can now be resolved by rule-local or actor-level rule priority, with
 the lower-priority assignment guarded off by the higher-priority rule
 condition. Priority cycles and incomparable rule conflicts fail closed.
-Rule/drive overlap is still tracked because compile-time proof is not doable
+Rule/drive overlap is still tracked because compile-time proof is not doable.
 Generated SystemVerilog now includes verification-only selector assertions
 derived from backend assignment analysis: same-value source selectors and
 whole-mux value selectors are checked with `$onehot0` under
@@ -237,7 +237,9 @@ Goal: freeze the whole schedule JSON schema as a public contract.
 
 Current boundary: schedule JSON is public only through bounded key families
 advertised by `embedding.isf_public_interface`. The whole JSON tree is not yet
-promised as permanently frozen.
+promised as permanently frozen. The conflict/fan-in projection boundary is now
+defined for future emitter slices, but successful reports still keep
+`compile_issues` empty and do not yet emit `compatible_fanin_groups`.
 
 ## Backends And Validation
 

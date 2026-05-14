@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF conflict report projection schema
+- The schedule-report projection is intentionally bounded before implementation
+  changes. The next leaves can add fields without exposing raw
+  `assignment_provenance` or the full internal conflict/fan-in classifier
+  objects as public API.
+- `compile_issues` is reserved for nonfatal issues in successful reports.
+  Fail-closed conflicts should continue to report targeted diagnostics rather
+  than producing successful reports with embedded errors.
+- `proof_status => not_doable` is the public wording for cases where the
+  compiler explicitly knows its compile-time proof cannot close the case yet.
+  That is different from accepting the case as safe.
+- Compatible fan-in projection should explain accepted multi-source behavior
+  with group kind/domain, target/value facts, and capped source summaries, but
+  activation proof context, assignment indexes, and priority bookkeeping remain
+  lowerer-private until a narrower need is proven.
 ## 2026-05-14: ISF diagnostics projection split
 - Diagnostics/report projection is split before implementation because it
   changes public schedule-report behavior. The schema boundary needs to be
