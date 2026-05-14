@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: R14 feature-first focus
+- ISF is now shifting from public-interface stabilization as the main activity
+  to user-visible feature delivery as the main activity.
+- The public interface contract is still live, but it is no longer the primary
+  source of standalone work. It should change when a feature changes public
+  behavior, not consume PNT slices just to widen audit coverage.
+- Feature slices should still be signoff-level: implement the behavior,
+  update the ISF spec, mdBook, live contract if the public surface changes,
+  add focused regression, and run the appropriate gate.
+- The practical feature backlog is the documented limitation set: child
+  instantiation and spawn parameter binding, resource/priority enforcement,
+  expression-valued rule assignments, transaction stage lowering, temporal
+  contract lowering, richer width inference, and broader realistic fixtures.
 ## 2026-05-14: DTE guards use ordinary expression factorization
 - A lowered DT header guard is not a bespoke rendering island. Once parsed
   into CoreAST, the guard belongs to the same expression pipeline as the rest

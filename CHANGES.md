@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — feature-first ISF focus
+- Updated the live R14 direction so public-facing ISF feature delivery is the
+  primary near-term focus.
+- Put standalone ISF public-interface stabilization/audit expansion on hold,
+  while keeping the live public contract mandatory for any feature slice that
+  changes syntax, lowering, CLI behavior, scheduled `.fsm`, or schedule-report
+  shape.
+- Recorded the next PNT selection bias toward documented feature limitations
+  and realistic fixture expansion rather than standalone API-surface widening.
 ### R8 — DTE guard factorization path
 - Routed top-level state-DT and standalone-DT DTE expressions through the
   ordinary AST factorization feed, including first-pass collection,

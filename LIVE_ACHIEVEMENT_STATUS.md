@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — feature-first ISF focus
+- Active roadmap direction changed: R14 should now prioritize public-facing
+  ISF feature additions over standalone public-interface stabilization work.
+- ISF public-interface docs and manifest metadata remain live, but they should
+  be updated as part of feature slices rather than selected as standalone audit
+  expansion work.
+- Next PNT work should prefer documented ISF feature limitations and realistic
+  fixture coverage.
+
 ## 2026-05-14: R8 — DTE guard factorization path
 - Active language/HDL contract slice: lowered DTE header guards now flow
   through the same AST factorization, substitution, liveness, and rendering

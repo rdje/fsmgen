@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: R14 — feature-first ISF focus
+- R14 remains the active lane, but the near-term focus is now public-facing ISF
+  feature addition rather than standalone public-interface stabilization.
+- Standalone ISF public-contract audit/stabilization slices are on hold unless
+  they are directly required by a shipped feature.
+- The ISF public interface contract stays live: when a feature changes syntax,
+  lowering, CLI behavior, scheduled `.fsm`, or schedule-report shape, the
+  contract/docs/tests still move in the same slice.
+- Next PNT selection should prefer documented ISF feature limitations such as
+  child instantiation/spawn binding, resource/priority enforcement,
+  expression-valued rule assignments, stage lowering, temporal contract
+  lowering, width inference, or realistic fixture expansion.
 ## 2026-05-14: R8 — DTE guard factorization path
 - Lowered DTE header guards now use the same AST factorization and
   code-sharing path as other enable expressions. Top-level state enables and

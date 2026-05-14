@@ -2,9 +2,10 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
-- Next decision point: continue `R14` ISF implementation/API stabilization by
-  selecting another bounded documented limitation, or run a focused
-  documentation drift audit only if guide/book divergence appears.
+- Next decision point: continue `R14` by selecting the next user-visible ISF
+  feature from the documented limitation/backlog set. Standalone public
+  interface stabilization/audit work is on hold for now; keep the public
+  contract synchronized only as part of shipping each feature.
 - State-DT SystemVerilog output enables now apply the state DTE as a final
   boundary gate: selector predicates are factored without state decode, and
   emitted state-DT ENs are `state_en & selector_predicate` just before leaving
@@ -4039,6 +4040,11 @@ Done:
   start the live downstream-consumer contract for ISF CLI entrypoints,
   `FSM::Adapter::ISF` / `FSM::Scheduler::ISF` facade methods, lower-result
   files, and bounded schedule-report key families.
+- R14 focus is now feature-first: standalone public-interface stabilization
+  and audit expansion are on hold while the project prioritizes public-facing
+  ISF behavior. Public contract files remain live and must still be updated
+  when a feature changes syntax, lowering, CLI behavior, scheduled `.fsm`, or
+  schedule-report shape.
 - [t/1096-isf-schedule-json-report.t](t/1096-isf-schedule-json-report.t) locks
   the current APB schedule JSON report identity, counts, transaction state
   order, DT summaries, inferred storage, and empty `compile_issues`.
@@ -4282,10 +4288,14 @@ Done:
   [t/1200-isf-assemble-clause-boundary.t](t/1200-isf-assemble-clause-boundary.t),
   covering scalar concat parts and target before scheduled `.fsm` emission.
 Left:
+- Prioritize public-facing feature additions from the documented current
+  limitations, starting with features that materially improve author-facing
+  ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Finish or deliberately defer the documented current limitations in the
-  mdBook R14 chapters.
-- Broaden schedule-report assertions and end-to-end fixture coverage as the
-  scheduler surface stabilizes.
+  mdBook R14 chapters through feature-delivery slices, not standalone
+  contract-audit sweeps.
+- Broaden schedule-report assertions and end-to-end fixture coverage only when
+  needed to support a shipped feature or fixture.
 - Keep [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md),
   [docs/ISF_SPEC.md](docs/ISF_SPEC.md), the mdBook, and
   `FSM::Support::ISFPublicInterfaceContract` synchronized whenever public ISF
