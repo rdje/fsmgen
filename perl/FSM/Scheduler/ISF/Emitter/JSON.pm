@@ -29,6 +29,7 @@ sub emit($self, $ir) {
         inferred_storage => $self->_storage_summary($ir),
         transactions   => $self->_transaction_summary($ir),
         dt_blocks      => $self->_dt_summary($ir),
+        compatible_fanin_groups => $self->_compatible_fanin_group_summary($ir),
         compile_issues => $self->_compile_issue_summary($ir),
     };
 
@@ -134,7 +135,7 @@ sub _compile_issue_summary($self, $ir) {
             proof_status => $issue->{proof_status},
             reason       => $issue->{reason},
             sources      => [
-                map { _compile_issue_source_summary($_) } @{$issue->{sources} || []}
+                map { _bounded_source_summary($_) } @{$issue->{sources} || []}
             ],
         };
     }
@@ -142,7 +143,29 @@ sub _compile_issue_summary($self, $ir) {
     return \@issues;
 }
 
-sub _compile_issue_source_summary($source) {
+sub _compatible_fanin_group_summary($self, $ir) {
+    my @groups;
+
+    for my $group (@{$ir->{compatible_fanin_groups} || []}) {
+        next if ($group->{kind} // '') eq 'same_target_value'
+            && (($group->{domain} // '') eq 'request' || ($group->{domain} // '') eq 'pulse');
+        my %summary = (
+            kind    => $group->{kind},
+            domain  => $group->{domain},
+            sources => [
+                map { _bounded_source_summary($_) } @{$group->{sources} || []}
+            ],
+        );
+        for my $key (qw(target target_transaction fanin_target operator rhs)) {
+            $summary{$key} = $group->{$key} if exists $group->{$key};
+        }
+        push @groups, \%summary;
+    }
+
+    return \@groups;
+}
+
+sub _bounded_source_summary($source) {
     return {
         owner       => $source->{owner},
         owner_kind  => $source->{owner_kind},

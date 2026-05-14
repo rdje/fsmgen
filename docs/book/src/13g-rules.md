@@ -96,11 +96,11 @@ The schedule-report projection for these conflict facts is being widened in
 bounded slices. Successful reports with no nonfatal issues keep
 `compile_issues` as an empty array. Nonfatal issue entries now expose only
 stable issue code, severity, target/domain, `proof_status`, human-readable
-reason text, and capped source summaries. Accepted compatible fan-in groups are
-planned as bounded
-`compatible_fanin_groups` entries with classifier kind/domain, target/value
-facts, and the same source-summary shape. Raw assignment provenance, activation
-proof context, and priority-suppression bookkeeping remain lowerer internals.
+reason text, and capped source summaries. Accepted compatible fan-in groups now
+project as bounded `compatible_fanin_groups` entries with classifier
+kind/domain, target/value facts, and the same source-summary shape. Raw
+assignment provenance, activation proof context, and priority-suppression
+bookkeeping remain lowerer internals.
 
 Priority is target-local here: it gates the conflicting assignment, not the
 whole lower-priority rule. Priority cycles fail closed with

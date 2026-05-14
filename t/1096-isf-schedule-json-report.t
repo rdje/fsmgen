@@ -42,6 +42,19 @@ subtest 'schedule JSON report describes APB requester lowering IR' => sub {
     is($report->{inputs},      7, 'input count');
     is($report->{outputs},     8, 'output count');
     is($report->{state_count}, 7, 'state count');
+    is(scalar(@{$report->{compatible_fanin_groups}}), 1, 'one compatible fan-in group reported');
+    my $done_fanin = $report->{compatible_fanin_groups}[0];
+    is($done_fanin->{kind}, 'pulse', 'done compatible fan-in group is a pulse group');
+    is($done_fanin->{target}, 'done', 'done compatible fan-in group names the done target');
+    is_deeply(
+        [
+            sort
+            map { join(':', $_->{owner}, $_->{source_kind}, $_->{target}) }
+            @{$done_fanin->{sources}}
+        ],
+        ['apb_transfer:complete_pulse:done', 'apb_transfer:timeout_pulse:done'],
+        'done compatible fan-in group reports completion and timeout pulse sources',
+    );
     is_deeply($report->{compile_issues}, [], 'no compile issues reported');
 
     my $transactions = $report->{transactions};

@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF compatible fan-in projection
+- Completed `ISF-CONFLICTS.5.3` by projecting accepted compatible fan-in groups
+  into schedule-report `compatible_fanin_groups`.
+- `FSM::Scheduler::ISF::Emitter::JSON` now emits bounded group entries for
+  same-target data, request, pulse, and rule-trigger fan-in, with bounded
+  source summaries.
+- The public projection suppresses duplicate generic same-value entries for
+  request and pulse groups, keeping those domain-specific groups singular in
+  the report.
+- Added [t/1213-isf-schedule-report-compatible-fanin-projection.t](t/1213-isf-schedule-report-compatible-fanin-projection.t)
+  for in-process and CLI fan-in projection.
+- Advanced the active `ISF-CONFLICTS` frontier from `ISF-CONFLICTS.5.3` to
+  `ISF-CONFLICTS.5.4`.
 ### R14 — ISF compile issues projection
 - Completed `ISF-CONFLICTS.5.2` by projecting warning-level scheduler
   conflict issues into schedule-report `compile_issues`.

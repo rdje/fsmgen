@@ -814,12 +814,14 @@ that a compile-time proof is NOT doable for a case such as rule/drive overlap.
 The public contract advertises the bounded issue keys, source-summary keys,
 severity values, and proof-status values. Fail-closed conflicts still produce
 targeted diagnostics instead of successful schedule reports.
-Accepted compatible fan-in metadata is planned as a top-level
-`compatible_fanin_groups` array once that emitter slice lands. Each group is
-bounded to classifier `kind`, `domain`, target/value facts, and source
-summaries; raw `assignment_provenance`, activation proof context,
-assignment indexes, and priority-suppression bookkeeping remain private
-`LoweringIR` internals.
+Accepted compatible fan-in metadata is emitted as a top-level
+`compatible_fanin_groups` array. Each group is bounded to classifier `kind`,
+`domain`, target/value facts, and source summaries; raw
+`assignment_provenance`, activation proof context, assignment indexes, and
+priority-suppression bookkeeping remain private `LoweringIR` internals.
+The public projection reports request and pulse fan-in through their
+domain-specific group kinds instead of duplicating them as generic
+`same_target_value` groups.
 The CLI `--emit-schedule-json` entrypoint is expected to emit the same report as
 the in-process scheduler on stdout and keep stderr clean on success.
 For multi-file lowerings, that report currently describes the parent scheduled
@@ -957,6 +959,7 @@ Focused tests:
 - [t/1210-isf-priority-conflict-resolution.t](../t/1210-isf-priority-conflict-resolution.t)
 - [t/1211-isf-runtime-selector-conflict-instrumentation.t](../t/1211-isf-runtime-selector-conflict-instrumentation.t)
 - [t/1212-isf-schedule-report-compile-issues-projection.t](../t/1212-isf-schedule-report-compile-issues-projection.t)
+- [t/1213-isf-schedule-report-compatible-fanin-projection.t](../t/1213-isf-schedule-report-compatible-fanin-projection.t)
 
 ## 12. Explicitly Deferred
 

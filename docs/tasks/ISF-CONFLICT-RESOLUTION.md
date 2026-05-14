@@ -165,13 +165,13 @@ transaction start input.
   Commit: `ISF-CONFLICTS.5.2: project compile issues`
 
 - ID: `ISF-CONFLICTS.5.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Project accepted compatible fan-in groups into schedule-report metadata.`
   Acceptance: `Accepted same-value, request, pulse, and rule-trigger fan-in
   groups have bounded schedule-report summaries that preserve target, domain,
   operator/value, and source-owner context useful to downstream consumers.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `prove -l t/1213-isf-schedule-report-compatible-fanin-projection.t; prove -l t/1096-isf-schedule-json-report.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1131-isf-public-top-level-discovery-audit.t; bin/ci-regression isf --no-book; mdbook build docs/book; git diff --check`
+  Commit: `ISF-CONFLICTS.5.3: project fan-in groups`
 
 - ID: `ISF-CONFLICTS.5.4`
   Status: `pending`
@@ -204,7 +204,7 @@ transaction start input.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-CONFLICTS.5.3` | `pending` | Nonfatal conflict issues are projected; the next slice can expose accepted compatible fan-in groups. |
+| 1 | `ISF-CONFLICTS.5.4` | `pending` | Conflict and fan-in report projection is shipped; rejected-conflict diagnostic coverage and docs can close the projection container. |
 
 ## Current Behavior Inventory
 
@@ -640,9 +640,9 @@ bookkeeping, and the complete `assignment_provenance` records remain private
 `LoweringIR` internals unless a later slice deliberately exposes a narrower
 field.
 
-The planned `compatible_fanin_groups` projection is successful-report metadata
-for accepted fan-in groups. After `ISF-CONFLICTS.5.3`, the field should be a
-top-level array that is present even when empty. Each group must use:
+`ISF-CONFLICTS.5.3` now ships the `compatible_fanin_groups` projection as
+successful-report metadata for accepted fan-in groups. The field is a top-level
+array that is present even when empty. Each group uses:
 
 - `kind`: one of the shipped classifier families:
   `same_target_value`, `request`, `pulse`, or `rule_trigger_fanin`.
@@ -658,6 +658,12 @@ This projection is deliberately narrower than the internal classification
 objects. It gives downstream consumers enough information to explain why a
 multi-source case was accepted without freezing raw lowerer hashes, activation
 proof internals, or future arbitration machinery as public API.
+
+The public projection also avoids duplicating domain-specific fan-in groups as
+generic same-value groups. For example, a `<1 done 1` pulse fan-in is reported
+as `kind => pulse`, not as both `same_target_value` and `pulse`. That keeps the
+public report focused while leaving the internal classifier free to keep
+overlapping analysis views.
 
 ## Nonfatal Compile Issues Projection
 
@@ -684,6 +690,26 @@ The public contract metadata now advertises:
 Successful reports with no nonfatal issues continue to expose
 `compile_issues: []`, preserving the existing no-issue success shape for APB
 and other ordinary fixtures.
+
+## Compatible Fan-In Group Projection
+
+`ISF-CONFLICTS.5.3` projects accepted compatible fan-in groups into schedule
+JSON. The current report exposes a top-level `compatible_fanin_groups` array.
+The array is empty when no accepted fan-in groups exist.
+
+Projected group kinds are:
+
+- `same_target_value` for same target/operator/value selector fan-in in
+  ordinary data-like domains.
+- `request` for accepted request/start fan-in.
+- `pulse` for accepted one-cycle pulse fan-in.
+- `rule_trigger_fanin` for the existing per-rule trigger-source OR into a
+  transaction start.
+
+Group entries expose required `kind`, `domain`, and `sources` keys, plus the
+bounded optional target/value keys that apply to that group. Source summaries
+reuse the same bounded ownership/target shape used by `compile_issues`.
+Activation context and assignment indexes remain private.
 
 ## Decisions
 
@@ -746,6 +772,10 @@ and other ordinary fixtures.
 - `2026-05-14`: `ISF-CONFLICTS.5.2` ships the nonfatal `compile_issues`
   projection for successful schedule reports. Warning issues are projected with
   bounded issue/source keys; error issues remain fail-closed diagnostics.
+- `2026-05-14`: `ISF-CONFLICTS.5.3` ships accepted compatible fan-in group
+  projection through a top-level `compatible_fanin_groups` array. The public
+  projection is intentionally narrower than internal classification and avoids
+  duplicate generic same-value entries for request/pulse fan-in.
 
 ## Open Questions
 
@@ -805,6 +835,11 @@ and other ordinary fixtures.
 | `2026-05-14` | `ISF-CONFLICTS.5.2` | `bin/ci-regression isf --no-book` | `passed` |
 | `2026-05-14` | `ISF-CONFLICTS.5.2` | `mdbook build docs/book` | `passed` |
 | `2026-05-14` | `ISF-CONFLICTS.5.2` | `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.5.3` | `prove -l t/1213-isf-schedule-report-compatible-fanin-projection.t` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.5.3` | `prove -l t/1096-isf-schedule-json-report.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1131-isf-public-top-level-discovery-audit.t` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.5.3` | `bin/ci-regression isf --no-book` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.5.3` | `mdbook build docs/book` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.5.3` | `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -823,6 +858,7 @@ and other ordinary fixtures.
 | `ISF-CONFLICTS.5` | `ISF-CONFLICTS.5: split diagnostics projection` | Splits diagnostics/report projection into schema, compile-issues, fan-in, and rejected-diagnostic leaves. |
 | `ISF-CONFLICTS.5.1` | `ISF-CONFLICTS.5.1: define report projection schema` | Defines the bounded public shape for planned nonfatal `compile_issues` entries and compatible fan-in group summaries. |
 | `ISF-CONFLICTS.5.2` | `ISF-CONFLICTS.5.2: project compile issues` | Emits warning-level conflict issues in schedule-report `compile_issues` using bounded issue/source summaries. |
+| `ISF-CONFLICTS.5.3` | `ISF-CONFLICTS.5.3: project fan-in groups` | Emits accepted compatible fan-in groups in schedule-report `compatible_fanin_groups`. |
 
 ## Changelog
 
@@ -857,3 +893,6 @@ and other ordinary fixtures.
   `compile_issues`.
 - `2026-05-14`: Completed `ISF-CONFLICTS.5.2`; current frontier moves to
   `ISF-CONFLICTS.5.3` for compatible fan-in group projection.
+- `2026-05-14`: Completed `ISF-CONFLICTS.5.3`; current frontier moves to
+  `ISF-CONFLICTS.5.4` for rejected-conflict diagnostic coverage and projection
+  docs closure.

@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF compatible fan-in schedule-report projection
+- Completed `ISF-CONFLICTS.5.3` in
+  [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md).
+- `FSM::Scheduler::ISF::Emitter::JSON` now emits a top-level
+  `compatible_fanin_groups` array in schedule reports.
+- Projected groups expose bounded group/source summaries for same-target data,
+  request, pulse, and rule-trigger fan-in. Request and pulse groups are not
+  duplicated as generic same-value groups in the public report.
+- `t/1213-isf-schedule-report-compatible-fanin-projection.t` covers in-process
+  and CLI fan-in projection.
+- The active `ISF-CONFLICTS` frontier is now `ISF-CONFLICTS.5.4`.
 ## 2026-05-14: ISF compile issues schedule-report projection
 - Completed `ISF-CONFLICTS.5.2` in
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md).

@@ -113,6 +113,7 @@ my $expected_tested_by = [
     't/1210-isf-priority-conflict-resolution.t',
     't/1211-isf-runtime-selector-conflict-instrumentation.t',
     't/1212-isf-schedule-report-compile-issues-projection.t',
+    't/1213-isf-schedule-report-compatible-fanin-projection.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {

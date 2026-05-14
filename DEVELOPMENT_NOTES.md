@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF compatible fan-in projection
+- The fan-in report projection is intentionally a summary of accepted behavior,
+  not a dump of `compatible_fanin_groups`. The internal classifier may keep
+  overlapping views that are useful to conflict analysis.
+- Public schedule reports suppress the duplicate generic `same_target_value`
+  view for request and pulse fan-in. Consumers get one request or pulse group
+  for that accepted behavior instead of two ways to explain the same mux
+  selector.
+- APB now naturally reports a `done` pulse fan-in group because normal
+  completion and timeout both drive the same one-cycle done pulse.
+- The source-summary shape is shared with `compile_issues` to keep downstream
+  ownership reporting consistent across warnings and accepted fan-in.
 ## 2026-05-14: ISF compile issues projection
 - Nonfatal conflict projection is owned by the schedule JSON emitter rather
   than by string-parsing scheduled `.fsm` output. The emitter already consumes

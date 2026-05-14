@@ -130,7 +130,7 @@ public key families, and successful reports advertise and keep an empty
 `compile_issues` array when no nonfatal issues exist. Nonfatal conflict issues
 now project into `compile_issues` as bounded objects with stable code/severity,
 target/domain, `proof_status`, reason text, and capped source summaries.
-Accepted fan-in groups are planned as bounded `compatible_fanin_groups`
+Accepted fan-in groups now project as bounded `compatible_fanin_groups`
 entries. Raw assignment provenance and activation proof internals remain
 private. The lower-result `files` map is checked for both
 single-file and multi-file lowering, including scheduled `.fsm` basename keys

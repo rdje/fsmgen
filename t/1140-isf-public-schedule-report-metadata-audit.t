@@ -19,6 +19,9 @@ use FSM::Support::ISFPublicInterfaceContract qw(
     isf_public_interface_schedule_report_compile_issue_source_keys
     isf_public_interface_schedule_report_compile_issues_success_shape
     isf_public_interface_schedule_report_dt_keys
+    isf_public_interface_schedule_report_fanin_group_kind_values
+    isf_public_interface_schedule_report_fanin_group_optional_keys
+    isf_public_interface_schedule_report_fanin_group_required_keys
     isf_public_interface_schedule_report_multi_file_scope
     isf_public_interface_schedule_report_presence_key_family_map
     isf_public_interface_schedule_report_reset_keys
@@ -98,6 +101,14 @@ sub assert_schedule_report_metadata {
             schedule_report_compile_issue_source_keys =>
                 isf_public_interface_schedule_report_compile_issue_source_keys(),
         ],
+        [
+            schedule_report_fanin_group_required_keys =>
+                isf_public_interface_schedule_report_fanin_group_required_keys(),
+        ],
+        [
+            schedule_report_fanin_group_optional_keys =>
+                isf_public_interface_schedule_report_fanin_group_optional_keys(),
+        ],
     );
 
     for my $check (@list_checks) {
@@ -133,6 +144,15 @@ sub assert_schedule_report_metadata {
     assert_unique_scalar_list(
         $contract->{schedule_report_compile_issue_proof_status_values},
         "$label compile issue proof status values",
+    );
+    is_deeply(
+        $contract->{schedule_report_fanin_group_kind_values},
+        isf_public_interface_schedule_report_fanin_group_kind_values(),
+        "$label fan-in group kind values are exact",
+    );
+    assert_unique_scalar_list(
+        $contract->{schedule_report_fanin_group_kind_values},
+        "$label fan-in group kind values",
     );
     is(
         $contract->{schedule_report_multi_file_scope},

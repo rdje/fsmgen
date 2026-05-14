@@ -2,6 +2,12 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF fan-in group projection
+- Active R14 task-tree slice: `ISF-CONFLICTS.5.3` is complete.
+- Schedule reports now include `compatible_fanin_groups` with bounded summaries
+  for accepted compatible fan-in cases.
+- The next frontier is `ISF-CONFLICTS.5.4`.
+
 ## 2026-05-14: R14 — ISF compile issues projection
 - Active R14 task-tree slice: `ISF-CONFLICTS.5.2` is complete.
 - Schedule-report `compile_issues` now carries warning-level conflict issues

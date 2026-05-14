@@ -121,6 +121,9 @@ for both in-process and CLI report paths.
 The nonfatal `compile_issues` projection is checked by
 [t/1212-isf-schedule-report-compile-issues-projection.t](../t/1212-isf-schedule-report-compile-issues-projection.t)
 for both in-process and CLI report paths.
+The compatible fan-in projection is checked by
+[t/1213-isf-schedule-report-compatible-fanin-projection.t](../t/1213-isf-schedule-report-compatible-fanin-projection.t)
+for both in-process and CLI report paths.
 The lower-result `files` map is checked for both single-file and multi-file
 lowering by [t/1117-isf-public-lower-result-files-audit.t](../t/1117-isf-public-lower-result-files-audit.t).
 The lower-result discovery metadata is checked by
@@ -699,6 +702,8 @@ dt_blocks entries: name, kind, assignments
 compile_issues entries: code, severity, target, domain, proof_status, reason, sources
 compile_issues source entries: owner, owner_kind, source_kind, target, operator, rhs, domain
 compile_issues with no nonfatal issues: empty array
+compatible_fanin_groups entries: kind, domain, sources, optional target/value keys
+compatible_fanin_groups source entries: same bounded source keys as compile_issues
 ```
 
 For each `dt_blocks` entry, `assignments` is a non-negative integer count of
@@ -778,12 +783,18 @@ The current proof-status value that matters for nonfatal conflict reporting is
 proof is NOT doable for that case, instead of silently treating the design as
 conflict-free. Fail-closed conflict cases remain targeted diagnostics, not
 successful schedule-report entries.
-Planned accepted fan-in metadata uses a top-level
+Accepted fan-in metadata uses a top-level
 `compatible_fanin_groups` array with bounded `kind`, `domain`, target/value
-facts, and the same capped source summaries. Raw `assignment_provenance`,
-activation context, assignment indexes, and priority-suppression bookkeeping
-remain non-public `LoweringIR` internals unless a later slice deliberately
-advertises a narrower field.
+facts, and the same capped source summaries. The machine-readable contract
+advertises required group keys in `schedule_report_fanin_group_required_keys`,
+optional group keys in `schedule_report_fanin_group_optional_keys`, and current
+group kinds in `schedule_report_fanin_group_kind_values`.
+The public fan-in projection is narrower than internal classification: request
+and pulse fan-in are reported through `request` and `pulse` groups rather than
+duplicated as generic `same_target_value` groups. Raw
+`assignment_provenance`, activation context, assignment indexes, and
+priority-suppression bookkeeping remain non-public `LoweringIR` internals
+unless a later slice deliberately advertises a narrower field.
 
 The schedule report is not yet a frozen full schema. Downstream consumers should
 use the advertised contract metadata instead of assuming every current field,

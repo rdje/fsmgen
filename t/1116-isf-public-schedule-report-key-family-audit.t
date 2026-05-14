@@ -58,6 +58,7 @@ subtest 'APB schedule report conforms to advertised public key families' => sub 
     }
 
     is(ref($report->{compile_issues}), 'ARRAY', 'compile_issues is an array in the advertised report shell');
+    is(ref($report->{compatible_fanin_groups}), 'ARRAY', 'compatible_fanin_groups is an array in the advertised report shell');
 };
 
 done_testing();

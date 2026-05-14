@@ -43,6 +43,9 @@ our @EXPORT_OK = qw(
     isf_public_interface_schedule_report_compile_issue_source_keys
     isf_public_interface_schedule_report_dt_assignments_shape
     isf_public_interface_schedule_report_dt_kind_values
+    isf_public_interface_schedule_report_fanin_group_kind_values
+    isf_public_interface_schedule_report_fanin_group_optional_keys
+    isf_public_interface_schedule_report_fanin_group_required_keys
     isf_public_interface_schedule_report_multi_file_scope
     isf_public_interface_schedule_report_interface_count_shape
     isf_public_interface_schedule_report_presence_key_family_map
@@ -146,6 +149,9 @@ sub build_isf_public_interface_contract {
         schedule_report_compile_issue_source_keys => isf_public_interface_schedule_report_compile_issue_source_keys(),
         schedule_report_compile_issue_severity_values => isf_public_interface_schedule_report_compile_issue_severity_values(),
         schedule_report_compile_issue_proof_status_values => isf_public_interface_schedule_report_compile_issue_proof_status_values(),
+        schedule_report_fanin_group_required_keys => isf_public_interface_schedule_report_fanin_group_required_keys(),
+        schedule_report_fanin_group_optional_keys => isf_public_interface_schedule_report_fanin_group_optional_keys(),
+        schedule_report_fanin_group_kind_values => isf_public_interface_schedule_report_fanin_group_kind_values(),
         schedule_report_multi_file_scope => isf_public_interface_schedule_report_multi_file_scope(),
         schedule_report_interface_count_shape => isf_public_interface_schedule_report_interface_count_shape(),
         schedule_report_state_count_shape => isf_public_interface_schedule_report_state_count_shape(),
@@ -272,6 +278,7 @@ sub build_isf_public_interface_contract {
             't/1210-isf-priority-conflict-resolution.t',
             't/1211-isf-runtime-selector-conflict-instrumentation.t',
             't/1212-isf-schedule-report-compile-issues-projection.t',
+            't/1213-isf-schedule-report-compatible-fanin-projection.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -338,6 +345,9 @@ sub isf_public_interface_public_top_level_keys {
             schedule_report_compile_issue_source_keys
             schedule_report_compile_issue_severity_values
             schedule_report_compile_issue_proof_status_values
+            schedule_report_fanin_group_required_keys
+            schedule_report_fanin_group_optional_keys
+            schedule_report_fanin_group_kind_values
             schedule_report_multi_file_scope
             schedule_report_interface_count_shape
             schedule_report_state_count_shape
@@ -531,6 +541,7 @@ sub isf_public_interface_schedule_report_top_level_keys {
             inferred_storage
             transactions
             dt_blocks
+            compatible_fanin_groups
             compile_issues
         ),
     ];
@@ -580,6 +591,39 @@ sub isf_public_interface_schedule_report_compile_issue_proof_status_values {
     return [
         qw(
             not_doable
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_fanin_group_required_keys {
+    return [
+        qw(
+            kind
+            domain
+            sources
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_fanin_group_optional_keys {
+    return [
+        qw(
+            target
+            target_transaction
+            fanin_target
+            operator
+            rhs
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_fanin_group_kind_values {
+    return [
+        qw(
+            same_target_value
+            request
+            pulse
+            rule_trigger_fanin
         ),
     ];
 }
@@ -731,6 +775,8 @@ sub isf_public_interface_schedule_report_presence_key_family_map {
         schedule_report_dt_keys => isf_public_interface_schedule_report_dt_keys(),
         schedule_report_compile_issue_keys => isf_public_interface_schedule_report_compile_issue_keys(),
         schedule_report_compile_issue_source_keys => isf_public_interface_schedule_report_compile_issue_source_keys(),
+        schedule_report_fanin_group_required_keys => isf_public_interface_schedule_report_fanin_group_required_keys(),
+        schedule_report_fanin_group_optional_keys => isf_public_interface_schedule_report_fanin_group_optional_keys(),
     };
 }
 
