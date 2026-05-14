@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md),
-  whose current frontier is `ISF-COMPOSITION.1`. The completed
+  whose current frontier is `ISF-COMPOSITION.2`. The completed
   `ISF-CONFLICTS` tree is listed in the task-tree completed table.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
   guide for installing the same task-tree tracking workflow in another
@@ -4375,14 +4375,23 @@ Done:
 - `ISF-CONFLICTS.7` closes the conflict-resolution tree after the ISF spec,
   public contract, mdBook, roadmap, task tree, and live docs were synchronized
   with the shipped conflict behavior and remaining limits.
+- `ISF-COMPOSITION.1` inventories the current child/spawn lowering and
+  composition handoff gaps: ISF writes parent/child scheduled `.fsm` files, the
+  CLI compiles only the parent `.fsm`, parent instance-start signals are
+  internal rather than wireable composition ports, reports are parent-scoped,
+  and spawn parameter syntax is absent.
 Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the first active tree in [docs/TASK_TREE.md](docs/TASK_TREE.md) when
   selecting the next PNT slice; after closing `ISF-CONFLICTS`, that frontier is
-  `ISF-COMPOSITION.1` in
+  `ISF-COMPOSITION.2` in
   [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md).
+- Specify the public ISF child/spawn composition semantics before changing the
+  lowerer: canonical top artifact or metadata handoff, start/done port
+  ownership, spawned-child re-entry, instance identity, and first supported
+  spawn parameter binding domain.
 - ISF conflict detection policy is now split: compile-time proof is
   best-effort and must flag cases where proof is not doable, while generated
   verification HDL now checks mux selectors at runtime for same-value source

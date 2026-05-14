@@ -1,12 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF composition handoff inventory
+- Completed `ISF-COMPOSITION.1` by inventorying current child/spawn lowering
+  and existing composition handoff points before semantics work.
+- Recorded that ISF multi-file lowering emits parent/child scheduled `.fsm`
+  files and `--outdir` writes them, but the CLI still sends only the parent
+  `.fsm` through HDL generation.
+- Captured the current wiring gaps: parent `instance_start` signals are
+  internal, `instance_done` signals are parent inputs, schedule reports are
+  parent-scoped, no spawn parameter syntax exists, and injected-entry spawned
+  children can re-enter the body after completion.
+- Advanced the active `ISF-COMPOSITION` frontier from `ISF-COMPOSITION.1` to
+  `ISF-COMPOSITION.2`.
 ### R14 — ISF conflict tree closure
 - Completed `ISF-CONFLICTS.7` and marked the conflict-resolution task tree
   done.
 - Moved `ISF-CONFLICTS` from the active task-tree table to the completed table
   in [docs/TASK_TREE.md](docs/TASK_TREE.md).
-- Updated live roadmap/frontier records so PNT now continues with
+- Updated live roadmap/frontier records so PNT then continued with
   `ISF-COMPOSITION.1` in
   [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md).
 - Tightened the mdBook wording around conflict schedule-report projection now

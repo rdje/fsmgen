@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF composition handoff inventory
+- Completed `ISF-COMPOSITION.1` in
+  [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md).
+- Current ISF lowering writes parent and spawned-child scheduled `.fsm` files,
+  and `--outdir` writes those files, but the CLI still compiles only the parent
+  `.fsm` to HDL.
+- The `spawn_parent.isf` inventory shows the key handoff gaps: parent
+  `w*_start` signals are internal rather than composition-wireable ports,
+  `w*_done` signals are parent inputs, schedule JSON is parent-scoped, spawn
+  parameter syntax is absent, and injected-entry child completion can re-enter
+  the child body instead of waiting for the next `start`.
+- The active `ISF-COMPOSITION` frontier is now `ISF-COMPOSITION.2` for public
+  child/spawn composition semantics.
 ## 2026-05-14: ISF conflict tree closure
 - Completed `ISF-CONFLICTS.7` in
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md)
@@ -7,7 +20,7 @@ This is the live continuity document for fast session recovery after crashes, re
 - [docs/TASK_TREE.md](docs/TASK_TREE.md) now moves `ISF-CONFLICTS` to the
   completed table. The next active R14 tree is
   [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md)
-  with frontier `ISF-COMPOSITION.1`.
+  with frontier `ISF-COMPOSITION.1` at the time of closure.
 - The ISF spec, public interface contract, and mdBook already describe the
   shipped conflict behavior: compatible fan-in projection, warning-level
   `compile_issues`, fail-closed rejected diagnostics, priority-resolved

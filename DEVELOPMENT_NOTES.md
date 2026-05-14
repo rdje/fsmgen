@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF composition handoff inventory
+- `ISF-COMPOSITION.1` deliberately stops at inventory. The next decision must
+  define the public handoff before implementation decides whether to synthesize
+  a `?top` source, return structured composition metadata, or support both.
+- The existing composition pipeline already has useful machinery for generated
+  children and parameter overrides. Reusing that path is attractive, but ISF
+  must first expose parent/child start-done ownership in a way that does not
+  require top generation to reach into parent internals.
+- The spawned-child completion re-entry observation is a behavioral gap, not a
+  report-format concern. It should be addressed with the same public semantics
+  slice that defines how reusable spawned instances idle between starts.
 ## 2026-05-14: ISF conflict tree closure
 - `ISF-CONFLICTS.7` is a documentation/status synchronization slice. It does
   not change scheduler behavior; the behavior was shipped by the earlier
