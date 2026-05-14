@@ -360,6 +360,20 @@ summaries. Shipped transaction stages and bounded eventual contracts project
 into `transaction_stages` and `temporal_contracts` with bounded public
 summary shapes.
 
+Freeze-readiness plan: the current contractual surface is the metadata
+advertised by `embedding.isf_public_interface`, including top-level keys,
+nested key/value families, scalar policies, ordering policies, nullability
+rules, storage kind/role/width metadata, and CLI/in-process report parity.
+New optional keys or value-family members may be added only when the same slice
+updates contract metadata, focused tests, and user-facing docs.
+
+Blockers before flipping `schedule_report_full_schema_stable` are: decide
+whether the report needs its own schema/version field, close or explicitly
+defer remaining storage-role families, define generated-name stability policy,
+decide whether assignment provenance and multi-file child summaries stay
+private or gain bounded public summaries, document additive/deprecation rules,
+and keep a golden fixture matrix for every advertised branch.
+
 ## Backends And Validation
 
 ### Full VHDL Backend

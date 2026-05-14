@@ -1165,6 +1165,22 @@ the in-process scheduler on stdout and keep stderr clean on success.
 For multi-file lowerings, that report currently describes the parent scheduled
 module only.
 
+Schema-freeze readiness is tracked separately from the current bounded public
+contract. The report is contractual today through the exact metadata advertised
+by `embedding.isf_public_interface`, including top-level keys, nested
+key/value families, scalar policies, ordering policies, nullability rules, and
+CLI/in-process parity. It is not yet a frozen whole-tree schema. New optional
+keys or new value-family members may be added only with public-contract
+metadata, focused tests, and documentation in the same slice.
+
+The remaining blockers before a whole-schema freeze are explicit: decide
+whether the report needs its own schema/version field, close or deliberately
+defer remaining storage-role families, define generated-name stability,
+decide whether assignment provenance and multi-file child summaries stay
+private or become bounded public summaries, define additive/deprecation
+policy, and maintain a golden fixture matrix for every advertised branch
+through both in-process and CLI report paths.
+
 ## 11. Current Regression Fixtures
 
 Representative shipped fixtures:

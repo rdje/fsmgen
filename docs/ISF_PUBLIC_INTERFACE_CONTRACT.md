@@ -993,6 +993,44 @@ generated state name, or private lowering decision is permanent.
 The advertised schedule-report metadata fields are exact for the bounded public
 key families and policy strings they name.
 
+### Schedule-Report Freeze Readiness
+
+`schedule_report_full_schema_stable` is currently false. The contractual
+surface is the advertised metadata in `embedding.isf_public_interface`, not the
+raw JSON tree as a whole.
+
+Contractual now:
+
+- The in-process `report(...)` path and `--emit-schedule-json` CLI path emit
+  the same successful schedule report for accepted sources.
+- `schedule_report_top_level_keys` and the advertised nested key/value
+  families define the current bounded public shape.
+- Scalar count, reset/nullability, transaction ordering, DT ordering, storage
+  kind/role/width, and feature-owned summary arrays are public only to the
+  extent described by their advertised metadata fields.
+
+Bounded but not fully frozen:
+
+- New optional keys or value-family members may be added when the same slice
+  updates this contract, the mdBook/spec, and focused regressions.
+- `inferred_storage[].role`, `compile_issues[]`,
+  `compatible_fanin_groups[]`, `priority_resolutions[]`,
+  `resource_arbitration[]`, `transaction_stages[]`, `temporal_contracts[]`,
+  and `generated_composition` are bounded summaries, not raw IR exports.
+
+Blockers before flipping `schedule_report_full_schema_stable` to true:
+
+- Decide whether the report gets its own schema/version field or continues to
+  rely on `embedding.isf_public_interface` as the schema discovery surface.
+- Close or explicitly defer remaining storage-role families and generated-name
+  stability policy.
+- Decide whether assignment provenance and multi-file child summaries stay
+  private or gain bounded public summaries.
+- Define additive/deprecation policy for future top-level keys, nested optional
+  keys, and value-family growth.
+- Keep a golden fixture matrix covering every advertised branch through both
+  in-process and CLI report paths.
+
 ## Non-Public Internals
 
 These are not stable public interfaces yet:

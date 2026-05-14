@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF schedule-report schema-freeze plan
+- Completed `ISF-SCHEDULE-REPORTS.4` by documenting the full schedule JSON
+  schema-freeze readiness plan.
+- The task tree, public contract, ISF spec, and mdBook now identify what is
+  contractual today, what is bounded but still evolving, what remains private,
+  and what blocks `schedule_report_full_schema_stable` from becoming true.
+- The active `ISF-SCHEDULE-REPORTS` frontier advances to
+  `ISF-SCHEDULE-REPORTS.5`.
 ### R14 — ISF schedule-report storage roles
 - Completed `ISF-SCHEDULE-REPORTS.3` by adding the first bounded
   `inferred_storage[].role` implementation.

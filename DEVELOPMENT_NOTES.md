@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF schedule-report schema-freeze plan
+- The schedule report is deliberately bounded before it is frozen. This lets
+  downstream consumers rely on advertised key/value families while ISF feature
+  branches continue to mature.
+- A full freeze should not be represented as "all current JSON happens to be
+  stable." It needs explicit branch owners, scalar/nullability/ordering
+  policies, additive-evolution rules, fixture coverage, and a decision on
+  schema/version discovery.
+- Raw lowerer internals remain private until there is a specific downstream
+  use case and a bounded public summary shape.
 ## 2026-05-14: ISF schedule-report storage role implementation
 - Storage roles are additive report metadata. `kind` continues to describe the
   coarse hardware category (`counter` or `register`), while `role` describes

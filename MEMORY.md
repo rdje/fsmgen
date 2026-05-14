@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF schedule-report schema-freeze plan
+- Completed `ISF-SCHEDULE-REPORTS.4` in
+  [docs/tasks/ISF-SCHEDULE-REPORTS.md](docs/tasks/ISF-SCHEDULE-REPORTS.md).
+- The schedule-report tree and public contract now distinguish the current
+  contractual surface, bounded-but-not-frozen branches, raw/private internals,
+  and blockers to a full schedule JSON schema freeze.
+- The next active R14 frontier is `ISF-SCHEDULE-REPORTS.5`.
 ## 2026-05-14: ISF schedule-report storage role implementation
 - Completed `ISF-SCHEDULE-REPORTS.3` in
   [docs/tasks/ISF-SCHEDULE-REPORTS.md](docs/tasks/ISF-SCHEDULE-REPORTS.md).

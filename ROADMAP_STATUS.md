@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-SCHEDULE-REPORTS.md](docs/tasks/ISF-SCHEDULE-REPORTS.md),
-  whose current frontier is `ISF-SCHEDULE-REPORTS.4`. The completed
+  whose current frontier is `ISF-SCHEDULE-REPORTS.5`. The completed
   `ISF-DATA-WIDTHS`, `ISF-STAGES-CONTRACTS`, `ISF-RULE-ACTIONS`,
   `ISF-RESOURCE-CATALOG`, `ISF-RESOURCE-PRIORITY`, `ISF-CONFLICTS`, and
   `ISF-COMPOSITION` trees are listed in the task-tree completed table.
@@ -190,6 +190,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   readable public contract now advertises `schedule_report_storage_role_values`
   and `role` as an optional storage key. The active frontier advances to
   `ISF-SCHEDULE-REPORTS.4`.
+- `ISF-SCHEDULE-REPORTS.4` is complete. The schedule-report schema-freeze
+  readiness plan now identifies the current contractual surface, the
+  bounded-but-not-frozen branches, raw/private internals, blockers to a full
+  schema freeze, and the checklist required before
+  `schedule_report_full_schema_stable` can become true. The active frontier
+  advances to `ISF-SCHEDULE-REPORTS.5`.
 - ISF construct support now has a normative rule: parser acceptance is not a
   support claim. Every current or future shipped ISF construct must have an
   explicit accepted source shape, lowering path or fail-closed diagnostic,

@@ -2,6 +2,12 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF schedule-report schema-freeze plan
+- Active R14 task-tree slice: `ISF-SCHEDULE-REPORTS.4` is complete.
+- The schedule-report freeze plan now records contractual, bounded-evolving,
+  and private surfaces plus the blockers to a full schema freeze.
+- The next active R14 frontier is `ISF-SCHEDULE-REPORTS.5`.
+
 ## 2026-05-14: R14 — ISF schedule-report storage roles
 - Active R14 task-tree slice: `ISF-SCHEDULE-REPORTS.3` is complete.
 - Successful schedule reports now include optional `inferred_storage[].role`
