@@ -180,7 +180,7 @@ sub extract_assignment_capture_metadata ($self, $assignment_node) {
         $operator = '<' . $cycles if defined $cycles && $cycles =~ /^\d+$/;
     }
 
-    if (!defined($operator) || $operator !~ /^(?:<-|<=|=|<-=|<=\+|<[0-9]+)$/) {
+    if (!defined($operator) || $operator !~ /^(?:<-|<=|=|<-=|<=-|<=\+|<[0-9]+)$/) {
         my $node_type = ref($assignment_node) || 'UNKNOWN';
         my $intent_operator = (ref($assignment_intent) eq 'HASH') ? ($assignment_intent->{operator_symbol} // 'UNDEF') : 'NO_INTENT';
         my $pulse_cycles = $assignment_node->can('pulse_cycles') ? (eval { $assignment_node->pulse_cycles } // 'UNDEF') : 'N/A';

@@ -5,6 +5,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Next decision point: continue `R14` ISF implementation/API stabilization by
   selecting another bounded documented limitation, or run a focused
   documentation drift audit only if guide/book divergence appears.
+- The `.fsm` assignment surface now accepts preferred `<=-` for the
+  D-input-named dual-output operator, symmetric with `<-=`, while keeping
+  legacy `<=+` as a compatibility alias for the same `<LHS>_r` Q-mirror
+  behavior.
 - DT semantics are now documented in the book as combinational selector logic:
   conceptual `DTE` gating controls one-bit `EN`/`WEN` terms, assignment
   families describe target mux/storage behavior, and the tree syntax is not

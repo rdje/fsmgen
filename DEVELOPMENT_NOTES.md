@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: Preferred `<=-` dual D-input operator
+- `<=+` carried the right behavior but a weak visual model: it is the D-input
+  side counterpart to `<-=`, so `<=-` is the clearer canonical spelling.
+- The implementation treats `<=-` and legacy `<=+` as the same
+  register-in-dual family. The LHS names the D/next-value carrier, and the
+  generated auxiliary output exposes the Q mirror as `<LHS>_r`.
+- Existing `<=+` sources remain valid to avoid source churn, but diagnostics
+  and docs now point users toward `<=-` when they need same-cycle D visibility
+  plus a Q mirror.
 ## 2026-05-14: DT selector model and await watchdog lowering
 - A DT should be explained as combinational glue that computes one-bit mux
   selection predicates, with conceptual `DTE` gating applied to the emitted

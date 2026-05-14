@@ -391,7 +391,7 @@ assignment group does not write every bit.
 sub initial_group_source_expr ($self, $lhs_name_key, $lhs_ast, $operator, $signal_width) {
     my $ctx = $self->{flattened_dt};
 
-    if ($operator eq '<=' || $operator eq '<=+') {
+    if ($operator eq '<=' || $operator eq '<=-' || $operator eq '<=+') {
         return "${lhs_name_key}_q";
     }
 
@@ -1089,7 +1089,7 @@ sub get_signal_assignment_type ($self, $lhs, $lhs_analysis) {
             $has_flop_assignment = 1;
         } elsif ($operator eq '<-=') {
             $has_register_dual_assignment = 1;
-        } elsif ($operator eq '<=+') {
+        } elsif ($operator eq '<=-' || $operator eq '<=+') {
             $has_flop_dual_assignment = 1;
         } elsif ($operator eq '=') {
             $has_comb_assignment = 1;
@@ -1122,13 +1122,13 @@ sub get_signal_assignment_type ($self, $lhs, $lhs_analysis) {
 
     if ($has_register_dual_assignment) {
         if ($has_flop_assignment || $has_flop_dual_assignment) {
-            die "[AssignmentSupport.pm][get_signal_assignment_type()] Mixed '<-=' with '<='/'<=+' for LHS '$lhs' is unsupported";
+            die "[AssignmentSupport.pm][get_signal_assignment_type()] Mixed '<-=' with '<='/'<=-'/'<=+' for LHS '$lhs' is unsupported";
         }
         return 'register_out_dual';
     }
     if ($has_flop_dual_assignment) {
         if ($has_register_assignment || $has_register_dual_assignment) {
-            die "[AssignmentSupport.pm][get_signal_assignment_type()] Mixed '<=+' with '<-'/'<-=' for LHS '$lhs' is unsupported";
+            die "[AssignmentSupport.pm][get_signal_assignment_type()] Mixed '<=-'/'<=+' with '<-'/'<-=' for LHS '$lhs' is unsupported";
         }
         return 'register_in_dual';
     }
@@ -1442,7 +1442,7 @@ sub fallback_register_analysis_from_assignments ($self, $lhs_name) {
     for my $assignment (@$assignments) {
         my $operator = $assignment->{operator} || '=';
 
-        if ($operator eq '<-' || $operator eq '<=' || $operator eq '<-=' || $operator eq '<=+' || $operator =~ /^<\d+$/) {
+        if ($operator eq '<-' || $operator eq '<=' || $operator eq '<-=' || $operator eq '<=-' || $operator eq '<=+' || $operator =~ /^<\d+$/) {
             $has_register_assignment = 1;
             fsm_debug("      Found sequential assignment (operator: '$operator')", 3);
         } elsif ($operator eq '=') {

@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R8 — Preferred `<=-` dual D-input operator
+- Added `<=-` as the preferred D-input-named dual-output assignment operator
+  throughout the parser, strict-source frontend, enable-graph capture, and
+  assignment classification paths.
+- Kept legacy `<=+` accepted as an alias for the same register-in-dual
+  behavior, including `<LHS>_r` auxiliary Q exposure and D-input
+  self-dependency validation.
+- Updated the mdBook, README, language-surface manifest metadata, regression
+  corpus notes, and focused assignment tests to make `<=-` canonical while
+  preserving `<=+` compatibility coverage.
 ### R14/R8 — DT selector model and await watchdog lowering
 - Updated [docs/book/src/03-decision-trees-and-fsms.md](docs/book/src/03-decision-trees-and-fsms.md)
   to define DTs as combinational selector networks with conceptual `DTE`

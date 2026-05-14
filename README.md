@@ -385,7 +385,7 @@ owns the bounded top-level and path-list contract advertised through
 - `A <= expr`: synchronous/flopped variant where `A` names the D-input/next-value side.
 - `A = expr`: combinational assignment.
 - Safety rule: combinational `=` cannot create direct/indirect RHS feedback to same LHS.
-- Safety rule: D-input-named `<=` / `<=+` cannot read the same LHS name from the RHS or guard; use `<-` for ordinary register feedback.
+- Safety rule: D-input-named `<=` / `<=-` cannot read the same LHS name from the RHS or guard; use `<-` for ordinary register feedback. Legacy `<=+` is accepted as an alias for `<=-`.
 
 ## README maintenance policy
 - Keep `README.md` as the canonical onboarding hub.

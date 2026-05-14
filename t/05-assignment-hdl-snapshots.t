@@ -27,7 +27,7 @@ write_file($fsm_path, <<'FSM');
     (E = F)
     (G> = H)
     (I <-= J)
-    (K <=+ L)
+    (K <=- L)
     (P1 <3 1)
     (P0 <2 0)
   )
@@ -97,7 +97,7 @@ is(
 is(
     normalize_text($mr_snippet),
     normalize_text(read_file(File::Spec->catfile($FindBin::Bin, 'golden', 'assignment_intent_phase1.mr.sv.golden'))),
-    'golden snapshot: mr (<=+) block emits *_r exposure behavior'
+    'golden snapshot: mr (<=-) block emits *_r exposure behavior'
 );
 is(
     normalize_text($p0_snippet),

@@ -343,9 +343,10 @@ right-nested same-precedence grouping such as modulo over a product.
 
 [t/02-combinational-self-dependency.t](t/02-combinational-self-dependency.t)
 now also locks the parser-side safety rail for D-input-named sequential
-assignments: `<=` and `<=+` may not read the same LHS name from the RHS or
+assignments: `<=` and `<=-` may not read the same LHS name from the RHS or
 assignment guard, because that creates combinational feedback before HDL
-emission. Q/output-named `<-` loopback remains supported for ordinary register
+emission. Legacy `<=+` is accepted as an alias for `<=-` and follows the same
+rule. Q/output-named `<-` loopback remains supported for ordinary register
 feedback.
 
 All current supported protocol fixtures are now `strict_supported`: the APB

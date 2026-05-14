@@ -369,7 +369,7 @@ subtest 'canonical assignment pair form normalizes into existing assignment ASTs
     (<- (Q D))
     (<= (DIN D))
     (<-= (QN D))
-    (<=+ (QR D))
+    (<=- (QR D))
     (<1 (PULSE 1))
     (= ((concat HI LO) DATA) <load)
   )
@@ -389,7 +389,7 @@ FSM
     is($assignment_by_target{Q}->operator_symbol, '<-', 'pair-form <- keeps output-named register intent');
     is($assignment_by_target{DIN}->operator_symbol, '<=', 'pair-form <= keeps input-named register intent');
     is($assignment_by_target{QN}->operator_symbol, '<-=', 'pair-form <-= keeps next-output register intent');
-    is($assignment_by_target{QR}->operator_symbol, '<=+', 'pair-form <=+ keeps q-output register intent');
+    is($assignment_by_target{QR}->operator_symbol, '<=-', 'pair-form <=- keeps q-output register intent');
     is($assignment_by_target{PULSE}->operator_symbol, '<1', 'pair-form <N keeps delayed pulse intent');
 
     my ($sum_guard) = grep {

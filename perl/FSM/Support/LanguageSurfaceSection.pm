@@ -34,10 +34,13 @@ sub build_language_surface_section {
             ],
         },
         assignments => {
-            canonical_pair_forms => [qw(= <- <=)],
+            canonical_pair_forms => [qw(= <- <= <-= <=- <N)],
             canonical_lhs_pack_forms => [qw(concat cat)],
             canonical_rhs_pack_forms => [qw(concat cat)],
-            compatibility_forms => ['infix assignment forms'],
+            compatibility_forms => [
+                'infix assignment forms',
+                'legacy <=+ assignment operator alias for <=-',
+            ],
         },
         system_contracts => {
             canonical_clock => '(clock clk)',

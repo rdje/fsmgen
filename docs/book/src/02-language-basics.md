@@ -106,7 +106,8 @@ Current quick reference:
 - `A <- expr`: synchronous/flopped assignment where `A` names the flop output/Q value
 - `A <= expr`: synchronous/flopped variant where `A` names the D-input/next-value side
 - `A <-= expr`: synchronous with auxiliary `next_*` surface
-- `A <=+ expr`: synchronous with auxiliary `*_r` surface
+- `A <=- expr`: synchronous with auxiliary `*_r` surface
+- `A <=+ expr`: legacy spelling for `<=-`
 - `A <N 0` or `A <N 1`: delayed pulse form
 
 The LHS may also use a bounded deconstruct target when one packed RHS should
@@ -141,7 +142,8 @@ where `assign-op` is one of the same assignment families:
 (<-  (Q D))
 (<=  (D_IN NEXT_VALUE))
 (<-= (Q D))
-(<=+ (D_IN NEXT_VALUE))
+(<=- (D_IN NEXT_VALUE))
+(<=+ (D_IN NEXT_VALUE))   ;; legacy alias for <=-
 (<1  (PULSE 1))
 ```
 
@@ -164,7 +166,9 @@ D-input/next-value carrier. Because of that D-input binding, `A <= (+ A 1)` is
 not a safe counter spelling: it reads the same D-input carrier it is building
 and FSMGen rejects it before HDL generation. Write `A <- (+ A 1)` for normal
 registered feedback. If you really need same-cycle D visibility and a separate
-registered Q mirror, use `<=+` and read the generated `A_r` mirror.
+registered Q mirror, use `<=-` and read the generated `A_r` mirror. The older
+`<=+` spelling is still accepted as a compatibility alias for `<=-`, but new
+sources should prefer the symmetric `<=-` / `<-=` pair.
 
 The same pair form covers the active LHS/RHS surface, including nested
 expressions, RHS concat, aggregate leaves, explicit output exposure, and LHS
@@ -200,10 +204,10 @@ the same LHS.
 If you want retained state, use one of the sequential families instead.
 
 There is a second, related sequential safety rule: D-input-named `<=` and
-`<=+` assignments must not read the same LHS name from the RHS or assignment
-guard. That form creates combinational feedback in the generated next-value
-logic. Q/output-named `<-` feedback remains valid and is the preferred spelling
-for ordinary registers.
+`<=-` assignments must not read the same LHS name from the RHS or assignment
+guard. The legacy `<=+` alias follows the same rule. That form creates
+combinational feedback in the generated next-value logic. Q/output-named `<-`
+feedback remains valid and is the preferred spelling for ordinary registers.
 
 ## Practical Authoring Guidelines
 

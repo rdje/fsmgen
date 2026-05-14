@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: R8 — Preferred `<=-` dual D-input operator
+- The `.fsm` assignment surface now accepts `<=-` as the preferred
+  D-input-named dual-output operator, symmetric with Q/output-named `<-=`.
+- `<=-` lowers to the existing register-in-dual behavior: the authored LHS
+  names the D/next-value side and the generated auxiliary Q mirror is
+  `<LHS>_r`.
+- Legacy `<=+` remains accepted as a compatibility alias and follows the same
+  D-input self-dependency safety rule.
 ## 2026-05-14: R14/R8 — DT selector model and await watchdog lowering
 - The mdBook now defines a decision tree as pure combinational selector logic
   with a conceptual one-bit `DTE`, one-bit value-selection predicates, and

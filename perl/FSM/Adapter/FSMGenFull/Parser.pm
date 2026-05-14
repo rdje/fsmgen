@@ -1673,7 +1673,7 @@ sub validate_no_combinational_self_dependency($self) {
 }
 
 sub validate_no_register_input_self_dependency($self, $operator, $target_base_specs, $expr, $expr_role, $target_display) {
-    return unless $operator eq '<=' || $operator eq '<=+';
+    return unless $operator eq '<=' || $operator eq '<=-' || $operator eq '<=+';
     return unless $target_base_specs && ref($target_base_specs) eq 'ARRAY' && @$target_base_specs;
     return unless $expr && ref($expr);
 
@@ -1692,7 +1692,7 @@ sub validate_no_register_input_self_dependency($self, $operator, $target_base_sp
             "[Parser.pm][validate_no_register_input_self_dependency()] Illegal D-input self-dependency for '$target_display' using '$operator'. "
             . "The $expr_role references '$source_name', which is the same D-input-named LHS. "
             . "This creates combinational feedback before HDL generation; use '<-' for Q/output-named synchronous feedback, "
-            . "or use '<=+' and read the generated '<signal>_r' Q mirror when same-cycle D visibility is required. "
+            . "or use '<=-' and read the generated '<signal>_r' Q mirror when same-cycle D visibility is required. "
             . supported_boundary_hint()
         );
     }
@@ -2648,7 +2648,7 @@ sub is_array_target_assignment_action($self, $action) {
 sub is_assignment_operator_token($self, $token) {
     return defined($token)
         && !ref($token)
-        && $token =~ /^(?:=|<-|<-=|<=|<=\+|<[0-9]+)$/;
+        && $token =~ /^(?:=|<-|<-=|<=|<=-|<=\+|<[0-9]+)$/;
 }
 
 sub normalize_assignment_pair_action($self, $action) {
@@ -2657,7 +2657,7 @@ sub normalize_assignment_pair_action($self, $action) {
     Carp::confess
         "Malformed assignment pair form '".$self->describe_action_for_error($action)."'. ".
         "Canonical pair assignments must use '(assign-op (lhs rhs))' or '(assign-op (lhs rhs) <cond)'. ".
-        "Supported assign-op tokens are '=', '<-', '<=', '<-=', '<=+', and delayed-pulse forms such as '<1'. ".
+        "Supported assign-op tokens are '=', '<-', '<=', '<-=', '<=-', legacy '<=+', and delayed-pulse forms such as '<1'. ".
         supported_boundary_hint()
         unless $self->is_assignment_operator_token($operator);
 
@@ -3095,7 +3095,7 @@ sub parse_signal_action($self, $action) {
         for my $target_base_spec (@target_base_specs) {
             $self->record_combinational_dependencies($target_base_spec->{name}, $source_expr);
         }
-    } elsif ($operator eq '<=' || $operator eq '<=+') {
+    } elsif ($operator eq '<=' || $operator eq '<=-' || $operator eq '<=+') {
         $self->validate_no_register_input_self_dependency(
             $operator,
             \@target_base_specs,
@@ -3300,7 +3300,7 @@ sub parse_signal_action($self, $action) {
                 hold_policy => 'q_feedback_when_no_enable',
             },
         );
-    } elsif ($operator eq '<=+') {
+    } elsif ($operator eq '<=-' || $operator eq '<=+') {
         my $q_output_name = $target_base_signal ne '' ? $target_base_signal . '_r' : undef;
         for my $target_base_spec (@target_base_specs) {
             my $aux_output_name = $target_base_spec->{name} . '_r';
@@ -3318,7 +3318,7 @@ sub parse_signal_action($self, $action) {
             output_exposure => $output_exposure,
             source_provenance => \%source_provenance,
             assignment_intent => {
-                operator_symbol => '<=+',
+                operator_symbol => $operator,
                 sequencing => 'clocked',
                 register_style => 'input_named',
                 assignment_family => 'mux_dual_output',
@@ -3371,14 +3371,14 @@ sub parse_signal_action($self, $action) {
     } else {
         Carp::confess
             "Unsupported assignment operator '$operator' for signal '$signal_name_display'. ".
-            "Decision-tree assignments must use one of '=', '<-', '<-=', '<=', '<=+', or a delayed-pulse form like '<1'. ".
+            "Decision-tree assignments must use one of '=', '<-', '<-=', '<=', '<=-', legacy '<=+', or a delayed-pulse form like '<1'. ".
             supported_boundary_hint();
     }
     
     if (defined $full_condition) {
         my $condition_expr = $self->{expression_builder}->parse_condition($full_condition);
         if ($condition_expr) {
-            if ($operator eq '<=' || $operator eq '<=+') {
+            if ($operator eq '<=' || $operator eq '<=-' || $operator eq '<=+') {
                 $self->validate_no_register_input_self_dependency(
                     $operator,
                     \@target_base_specs,

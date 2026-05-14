@@ -2,6 +2,12 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R8 — Preferred `<=-` dual D-input operator
+- Active language-contract slice: `<=-` is now the preferred D-input-named
+  dual-output assignment operator, mirroring `<-=` and exposing `<LHS>_r`.
+- Legacy `<=+` remains accepted as a compatibility alias and is still covered
+  by regression tests.
+
 ## 2026-05-14: R14/R8 — DT selector model and await watchdog lowering
 - Active: `R14`, with `.fsm` language-contract documentation touchpoints.
   The book now defines DTs as combinational selector logic with conceptual

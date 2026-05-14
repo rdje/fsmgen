@@ -50,7 +50,7 @@ instead of emitting only a low-level parser or backend exception.
 Typical causes:
 
 - illegal combinational self-dependency
-- illegal D-input self-dependency in `<=` / `<=+`
+- illegal D-input self-dependency in `<=` / `<=-` / legacy `<=+`
 - incompatible assignment widths
 - undeclared internal operands
 - unassigned internal operands
@@ -60,8 +60,9 @@ emission.
 
 If a normal register update reads its previous value, prefer the Q/output-named
 form, for example `(<- (COUNT (+ COUNT 1)))`. The D-input-named forms `<=` and
-`<=+` are stricter: their RHS and assignment guard may not read the same LHS
+`<=-` are stricter: their RHS and assignment guard may not read the same LHS
 name, because that would build a combinational loop on the next-value carrier.
+Legacy `<=+` is accepted as an alias for `<=-` and follows the same rule.
 
 ## Failure Summaries
 

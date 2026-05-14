@@ -648,7 +648,7 @@ sub _is_strict_infix_assignment_target ($class, $target) {
 sub _is_assignment_operator_token ($class, $token) {
     return defined($token)
         && !ref($token)
-        && $token =~ /\A(?:=|<-|<-=|<=|<=\+|<[0-9]+)\z/;
+        && $token =~ /\A(?:=|<-|<-=|<=|<=-|<=\+|<[0-9]+)\z/;
 }
 
 sub _render_infix_assignment_action ($class, $target, $spec) {

@@ -27,7 +27,7 @@ write_file($fsm_path, <<'FSM');
     (E = F)
     (G> = H)
     (I <-= J)
-    (K <=+ L)
+    (K <=- L)
     (P1 <3 1)
     (P0 <2 0)
   )
@@ -113,9 +113,9 @@ is($assignment_by_target{I}->assignment_intent->{expose_next_output}, 1, "I '<-=
 is($assignment_by_target{I}->assignment_intent->{auxiliary_output_name}, 'next_I', "I '<-=' auxiliary output name is next_I");
 
 
-is($assignment_by_target{K}->operator_symbol, '<=+', "K uses '<=+' operator intent");
-is($assignment_by_target{K}->assignment_intent->{expose_q_output}, 1, "K '<=+' exposes *_r output");
-is($assignment_by_target{K}->assignment_intent->{auxiliary_output_name}, 'K_r', "K '<=+' auxiliary output name is K_r");
+is($assignment_by_target{K}->operator_symbol, '<=-', "K uses '<=-' operator intent");
+is($assignment_by_target{K}->assignment_intent->{expose_q_output}, 1, "K '<=-' exposes *_r output");
+is($assignment_by_target{K}->assignment_intent->{auxiliary_output_name}, 'K_r', "K '<=-' auxiliary output name is K_r");
 
 is($assignment_by_target{P1}->operator_symbol, '<3', "P1 uses '<3' operator intent");
 is($assignment_by_target{P1}->assignment_intent->{assignment_family}, 'pulse_delay', "P1 is pulse-delay family");
@@ -160,7 +160,13 @@ is(
 is(
     $hdl_gen->get_signal_assignment_type('lhs_meta_lte_mr', { assignments => [ { operator => '<=+' } ] }),
     'register_in_dual',
-    "assignment classifier maps '<=+' to register_in_dual"
+    "assignment classifier keeps legacy '<=+' mapped to register_in_dual"
+);
+
+is(
+    $hdl_gen->get_signal_assignment_type('lhs_meta_lte_mr_preferred', { assignments => [ { operator => '<=-' } ] }),
+    'register_in_dual',
+    "assignment classifier maps '<=-' to register_in_dual"
 );
 
 is(
@@ -174,6 +180,7 @@ my $hdl = $hdl_gen->generate_systemverilog($fsm_module);
 my $captured_a = $hdl_gen->{lhs_assignments}{A}[0];
 my $captured_g = $hdl_gen->{lhs_assignments}{G}[0];
 my $captured_i = $hdl_gen->{lhs_assignments}{I}[0];
+my $captured_k = $hdl_gen->{lhs_assignments}{K}[0];
 my $captured_p1 = $hdl_gen->{lhs_assignments}{P1}[0];
 my $module_plan = $hdl_gen->{enable_graph_module_planning_support}->build_module_declaration_plan($fsm_module);
 my $decl_plan = $hdl_gen->{enable_graph_module_planning_support}->build_internal_signal_declaration_plan(
@@ -190,11 +197,12 @@ is($captured_a->{source_provenance}{raw_operator}, '<-', "captured A assignment 
 is($captured_g->{output_exposure}, 'explicit', "captured G assignment keeps explicit output exposure");
 is($captured_i->{operator}, '<-=', "captured I assignment keeps '<-=' operator metadata");
 is($captured_i->{assignment_intent}{auxiliary_output_name}, 'next_I', "captured I assignment keeps dual-output intent metadata");
+is($captured_k->{operator}, '<=-', "captured K assignment keeps '<=-' operator metadata");
 is($captured_p1->{operator}, '<3', "captured P1 assignment keeps pulse operator metadata");
 is($captured_p1->{assignment_intent}{pulse_delay_cycles}, 3, "captured P1 assignment keeps pulse delay intent metadata");
 
 is($decl_plan->{aux_decls}{I_next}, 8, "internal declaration plan exposes I_next helper width for '<-='");
-is($decl_plan->{aux_decls}{K_q}, 8, "internal declaration plan exposes K_q helper width for '<=+'");
+is($decl_plan->{aux_decls}{K_q}, 8, "internal declaration plan exposes K_q helper width for '<=-'");
 is($decl_plan->{aux_decls}{P1_pulse_delay_pipe}, 3, "internal declaration plan exposes P1 pulse pipeline width");
 is($decl_plan->{aux_decls}{P0_pulse_delay_pipe}, 2, "internal declaration plan exposes P0 pulse pipeline width");
 ok(!exists $decl_plan->{aux_decls}{next_I}, "internal declaration plan does not redeclare next_I output port");
@@ -204,7 +212,7 @@ ok(!exists $decl_plan->{signal_decls}{G}, "internal declaration plan does not re
 
 is($module_output_by_name{next_I}{width}, 8, "module declaration plan exposes next_I output width for '<-='");
 is($module_output_by_name{next_I}{storage}, 'reg', "module declaration plan exposes next_I as reg output");
-is($module_output_by_name{K_r}{width}, 8, "module declaration plan exposes K_r output width for '<=+'");
+is($module_output_by_name{K_r}{width}, 8, "module declaration plan exposes K_r output width for '<=-'");
 is($module_output_by_name{K_r}{storage}, 'reg', "module declaration plan exposes K_r as reg output");
 is($module_output_by_name{G}{width}, 1, "module declaration plan keeps explicit output G as single-bit output");
 is($module_output_by_name{G}{storage}, 'reg', "module declaration plan keeps explicit output G as reg output");
@@ -221,7 +229,7 @@ is($module_plan->{port_directions}{G}, 'output', "module declaration plan record
 is($module_plan->{port_directions}{next_I}, 'output', "module declaration plan records next_I as output");
 
 like($hdl, qr/\boutput\s+reg\s+\[7:0\]\s+next_I\b/s, "generated HDL exposes next_I output for '<-='");
-like($hdl, qr/\boutput\s+reg\s+\[7:0\]\s+K_r\b/s, "generated HDL exposes K_r output for '<=+'");
+like($hdl, qr/\boutput\s+reg\s+\[7:0\]\s+K_r\b/s, "generated HDL exposes K_r output for '<=-'");
 like($hdl, qr/\breg\s+\[2:0\]\s+P1_pulse_delay_pipe\b/s, "generated HDL declares delay pipeline for P1 <3");
 like($hdl, qr/\bif\s*\(\s*P1_pulse_delay_pipe\[2\]\s*\)\s*begin\s*\n\s*P1\s*<=\s*1'b1;/s, "generated HDL emits positive delayed pulse at Q+3 for P1");
 like($hdl, qr/\breg\s+\[1:0\]\s+P0_pulse_delay_pipe\b/s, "generated HDL declares delay pipeline for P0 <2");

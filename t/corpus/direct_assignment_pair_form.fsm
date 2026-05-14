@@ -30,7 +30,7 @@
       (<- (Q D))
       (<= (DIN D))
       (<-= (QN D))
-      (<=+ (QR D))
+      (<=- (QR D))
       (<1 (PULSE 1))
       (= ((concat HI LO) DATA) <LOAD)
     )
