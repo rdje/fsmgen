@@ -451,6 +451,14 @@ Current lowering:
 - Repeat bodies lower named drive calls plus `await`, `sample`, `update`,
   `shift_left`, `shift_right`, `assemble`, and `extract`.
 
+The repeat count is a runtime counter load value, not an elaboration count.
+Literal counts give statically reviewable loop bounds. Named counts may be
+dynamic scalar signals when their width is known, but they make transaction
+latency data-dependent and require a clear zero-count policy before the loop
+can be treated as fully general. Future spawn-in-repeat support must preserve
+the same rule: the loop reactivates a lexically named static child instance; it
+does not create one child instance per iteration.
+
 ### 7.7 Inline Control Flow
 
 `(when condition body...)` is structurally validated with one scalar or
@@ -611,6 +619,14 @@ contract is:
   instance names.
 - Spawn parameter overrides are emitted on the generated `?fsmc` instance
   through the existing composition `(params ...)` override surface.
+
+`spawn` is static HDL composition plus runtime activation. The generated child
+instance exists for the lifetime of the generated top. Executing the spawn site
+asserts the instance start path; completion only returns that same instance to
+idle. Reaching the same lexical spawn again, including through future
+spawn-in-repeat support, reuses the same physical instance. The scheduler must
+reject or sequence any path that could start a still-busy child before its
+fresh done pulse is observed.
 
 Parameterized spawn uses one optional nested `params` block after the instance
 name:

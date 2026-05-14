@@ -219,6 +219,21 @@ use their known interface or sample-derived width, and unknown forms fall back
 to 8 bits. Repeats nested in switch branches declare the same transaction
 counter, widened to the largest branch requirement.
 
+The repeat count is not an elaboration count. It is loaded into a runtime
+counter, so a named count may be a dynamic scalar signal when its width is
+known. Dynamic counts make latency data-dependent rather than statically fixed;
+verification and reports need either a known width-derived bound or an explicit
+future bound if tighter proof is required. Dynamic counts also make zero-count
+semantics important: a fully general repeat contract must either define
+zero-count as "skip the body" or reject zero as an illegal count before the
+loop body can run.
+
+If a future repeat body contains `(spawn child as name)`, that loop still
+reuses one static child instance named `name`. It does not elaborate one child
+per iteration. The scheduler must therefore prove the loop waits for the
+instance's fresh completion before a later iteration can start it again, or
+reject the construct with a targeted busy/re-entry diagnostic.
+
 ## `(when condition body...)` — Decision State
 
 **Timing**: 1 cycle. If true, body cycles follow. If false, skip to next clause.

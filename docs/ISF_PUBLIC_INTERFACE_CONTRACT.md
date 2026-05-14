@@ -379,6 +379,11 @@ The repeat-clause boundary is checked by
 [t/1202-isf-repeat-clause-boundary.t](../t/1202-isf-repeat-clause-boundary.t)
 so `(repeat count body...)` requires one scalar non-empty count and at least
 one list-form body clause before repeat counter emission.
+The count is a runtime counter load value, not a hardware-elaboration count:
+literal counts provide fixed loop bounds, while named scalar counts may be
+dynamic when their width is known. Dynamic counts make latency data-dependent
+and require explicit zero-count and verification-bound policy before the
+repeat surface is widened further.
 The await-sync clause boundary is checked by
 [t/1203-isf-await-sync-clause-boundary.t](../t/1203-isf-await-sync-clause-boundary.t)
 so `(await_all done_port)` and `(await_any done_port)` require exactly one
@@ -673,6 +678,11 @@ also require the child target to resolve to a declared transaction in the same
 actor before scheduled `.fsm` text is emitted. Forward references are accepted,
 but missing child targets fail closed so they cannot synthesize dead
 `child_start`/`child_done` or `instance_start`/`instance_done` paths.
+Spawned child instances are static generated HDL. Runtime spawn states only
+activate the persistent child instance through its start path, and child
+completion returns that instance to start-gated idle. Future spawn-in-repeat
+support must reuse the same lexical instance on each iteration and must reject
+or sequence starts that could hit a still-busy child.
 ISF rule `(trigger transaction)` lowering also uses `<1`, not `<-`, for the
 generated `rule_transaction` trigger source. Generated combinational fan-in
 then drives `transaction_start` from every source for that transaction. This

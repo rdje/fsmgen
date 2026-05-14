@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF spawn/repeat lifetime clarification
+- Completed documentation-only `ISF-COMPOSITION.7` in
+  [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md).
+- The mdBook and live ISF docs now state that `spawn` is static HDL
+  composition plus runtime activation: a lexical spawn instance persists for
+  the generated top's lifetime, and runtime control only starts/restarts that
+  persistent child.
+- Future `spawn` inside `repeat` is recorded as backlog. It must mean repeated
+  activation of the same lexical instance, not dynamic instance creation, and
+  it needs explicit busy/re-entry diagnostics or sequencing before it ships.
+- Dynamic repeat counts are documented as runtime counter loads rather than
+  elaboration counts. They are compatible with static topology when width is
+  known, but they make latency data-dependent and require a settled zero-count
+  policy for the fully general repeat surface.
+- The active `ISF-COMPOSITION` frontier remains `ISF-COMPOSITION.5`.
 ## 2026-05-14: IR audit task tree
 - Created proposed architecture task tree
   [docs/tasks/FSMGEN-IR-AUDIT.md](docs/tasks/FSMGEN-IR-AUDIT.md) to track a

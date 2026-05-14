@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF spawn/repeat lifetime clarification
+- Completed documentation-only `ISF-COMPOSITION.7` by recording the HDL
+  lifetime contract for spawned ISF children.
+- The book, ISF spec, public interface contract, and composition task tree now
+  state that `spawn` elaborates a static child instance while runtime control
+  only activates that persistent instance through its start path.
+- Added a canonical backlog item for `spawn` inside `repeat`: future support
+  must reuse the same lexical instance on each loop iteration, not create
+  dynamic hardware, and must settle busy/re-entry behavior before shipping.
+- Clarified that repeat counts are runtime counter load values rather than
+  structural elaboration counts. Dynamic counts are compatible with the model
+  when their width is known, but they make latency data-dependent and still
+  need an explicit zero-count policy for the fully general surface.
+- The active `ISF-COMPOSITION` frontier remains `ISF-COMPOSITION.5`.
 ### R14 — ISF generated composition top handoff
 - Completed `ISF-COMPOSITION.4` by emitting a generated `<actor>_top.fsm`
   composition source for ISF actors that spawn child transactions.

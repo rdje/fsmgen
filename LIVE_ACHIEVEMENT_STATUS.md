@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF spawn/repeat lifetime clarification
+- Active R14 task-tree slice: documentation-only `ISF-COMPOSITION.7` is
+  complete.
+- The book and live ISF docs now define `spawn` as static HDL composition plus
+  runtime activation. Future `spawn` inside `repeat` must reuse the same
+  lexical instance and must not imply dynamic hardware creation.
+- Dynamic repeat counts are documented as runtime counter loads, with
+  data-dependent latency plus zero-count and busy/re-entry policy remaining as
+  explicit backlog boundaries.
+- The next frontier remains `ISF-COMPOSITION.5`.
+
 ## 2026-05-14: R14 — ISF generated composition top handoff
 - Active R14 task-tree slice: `ISF-COMPOSITION.4` is complete.
 - Spawned-child ISF lowering now emits a generated `<actor>_top.fsm`

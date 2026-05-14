@@ -272,6 +272,13 @@ widest required branch width.
 Repeat bodies lower named drive calls, awaits, samples, updates, and the
 current data operations.
 
+`N` is a counter load value, not a structural replication count. A dynamic
+scalar count is therefore compatible with the hardware model when its width is
+known, but it makes loop latency runtime-dependent and forces the zero-count
+policy to be explicit. The current shipped repeat-body subset does not include
+`spawn`; when that is added, a repeated spawn must reactivate the same static
+child instance and must not imply dynamic module-instance creation.
+
 ## `(when condition body...)` → Decision State
 
 **ISF**:
@@ -438,6 +445,12 @@ the parent lowerer IR, and applied through generated `?fsmc` `(params ...)`
 blocks in the top. The generated top wires parent start outputs, parent done
 inputs, child `start`/`done` ports, and named-drive handoff signals through the
 existing composition pipeline.
+
+The generated child instance is static HDL. A spawn state activates that
+instance through its start path; the child terminal state returns to the
+start-gated idle state and waits for a later start. Reaching the same spawn
+site again reuses the same instance. This is the required interpretation for
+future spawn-in-repeat support as well.
 
 ## Complete Example — APB Transfer
 

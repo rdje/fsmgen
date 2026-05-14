@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF spawn/repeat lifetime clarification
+- Hardware instance lifetime is structural, not procedural. A `spawn` clause
+  can therefore only describe a static child instance plus a runtime start
+  event; it cannot mean software-style process creation or destruction.
+- This distinction makes future `spawn` inside `repeat` a sequencing feature,
+  not a dynamic-instantiation feature. Reaching the same lexical spawn in a
+  later iteration must reuse the same instance, so the scheduler must either
+  prove/insert a fresh-done wait before the next start or reject the path as a
+  busy re-entry hazard.
+- A dynamic repeat count does not violate static HDL topology because the count
+  is a counter load value. The tradeoff is that latency becomes data-dependent,
+  reports and verification need bounded-width accounting, and zero-count
+  behavior must be explicit before the language claims a fully general dynamic
+  repeat contract.
 ## 2026-05-14: ISF generated composition top handoff
 - `ISF-COMPOSITION.4` makes the concrete generated `?top` source the handoff
   artifact. That keeps ISF and composition integration inspectable as text and

@@ -66,6 +66,22 @@ call.
 
 Non-blocking. Each spawn declares a separate intended instance.
 
+`spawn` is an elaboration construct with runtime activation semantics. The
+generated hardware instance is static: it exists for the lifetime of the
+generated module. Executing the spawn state at runtime asserts that instance's
+start path; completing the child transaction returns the same static instance
+to its start-gated idle state. Completion never destroys the instance, and a
+later activation reuses the same child hardware.
+
+This matters for loops. When `(spawn ...)` is eventually accepted inside a
+`(repeat ...)` body, the repeat must not mean "create N child instances." It
+must mean "activate the same lexically named child instance once per loop
+iteration." A design that needs parallel workers should author distinct spawn
+instance names, or use a future static-generation surface if one is added. A
+spawn-in-repeat implementation also needs an explicit busy rule: the scheduler
+must reject or sequence any path that could start an already active child
+instance before its fresh `done` pulse has been observed.
+
 The base form is exact: `(spawn child as name)`. The parameterized form adds
 one nested override block: `(spawn child as name (params (NAME value) ...))`.
 Both forms require scalar child and instance names plus the literal `as`

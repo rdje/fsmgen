@@ -47,7 +47,7 @@ bind through validated public semantics instead of remaining deferred.
   Goal: `Ship generated child instantiation and spawn parameter binding for ISF.`
   Children: `ISF-COMPOSITION.1`, `ISF-COMPOSITION.2`,
   `ISF-COMPOSITION.3`, `ISF-COMPOSITION.4`, `ISF-COMPOSITION.5`,
-  `ISF-COMPOSITION.6`
+  `ISF-COMPOSITION.6`, `ISF-COMPOSITION.7`
 
 - ID: `ISF-COMPOSITION.1`
   Status: `done`
@@ -103,6 +103,17 @@ bind through validated public semantics instead of remaining deferred.
   handoff, schedule-report metadata, CLI behavior, and synchronized docs.`
   Verification: `pending`
   Commit: `pending`
+
+- ID: `ISF-COMPOSITION.7`
+  Status: `done`
+  Goal: `Document static spawn lifetime and repeat activation semantics.`
+  Acceptance: `The book and live ISF docs state that spawn elaborates static
+  HDL instances, runtime control only activates them, future spawn-in-repeat
+  reuses the lexical instance instead of creating dynamic hardware, and dynamic
+  repeat counts are runtime counter loads with zero-count and busy semantics
+  still needing explicit shipped policy.`
+  Verification: `mdbook build docs/book; git diff --check`
+  Commit: `ISF-COMPOSITION.7: document spawn repeat lifetime`
 
 ## Current Frontier
 
@@ -272,6 +283,25 @@ The first shipped parameter-binding surface is deliberately spawn-only. Blocking
   top ports unless the actor explicitly declares such ports later through a
   separate feature.
 
+### Spawn Lifetime And Repeated Activation
+
+- A spawned child instance is static HDL. It is elaborated into the generated
+  top and exists for the lifetime of that top.
+- Executing a spawn state at runtime only activates the instance through its
+  start path. Completion returns that same instance to start-gated idle; it
+  does not destroy the instance.
+- Reaching the same lexical spawn again must reuse the same instance.
+- Future `(spawn ...)` support inside `(repeat ...)` must therefore mean
+  repeated activation of one lexical instance, not dynamic creation of one
+  instance per iteration.
+- A spawn-in-repeat implementation needs an explicit busy rule: prove or insert
+  sequencing so a later iteration waits for the child's fresh done pulse, or
+  reject the path before scheduled artifacts are emitted.
+- A dynamic repeat count is not a structural instance count. It is a runtime
+  counter load. Dynamic counts are compatible with static HDL topology when the
+  count width is known, but they make latency data-dependent and require an
+  explicit zero-count policy before the repeat surface is fully general.
+
 ### Parent/Child Identity And Wiring
 
 - Spawn target names resolve to declared same-actor transactions. Forward
@@ -420,6 +450,11 @@ metadata for generated top name, child files, spawned instances, generated
 handoff links, or applied parameter overrides. That report/diagnostic work is
 the next `ISF-COMPOSITION.5` leaf.
 
+`spawn` inside `repeat` remains unimplemented. The accepted design direction is
+static instance lifetime plus repeated runtime activation of the same lexical
+instance. The future implementation must define busy/re-entry diagnostics or
+sequencing and the zero-count repeat policy before claiming full support.
+
 ## Decisions
 
 - `2026-05-14`: This tree owns the ISF-specific generated-child top and spawn
@@ -442,6 +477,10 @@ the next `ISF-COMPOSITION.5` leaf.
   source as the canonical handoff artifact. The `.fsm` text boundary remains
   the integration point: ISF emits scheduled parent/child sources plus the top,
   and the existing composition pipeline owns HDL realization.
+- `2026-05-14`: `spawn` is static HDL composition plus runtime activation.
+  Future spawn-in-repeat support must reuse one lexical child instance per
+  spawn name and must settle busy/re-entry and zero-count repeat policy before
+  becoming a shipped authoring surface.
 
 ## Open Questions
 
@@ -484,6 +523,8 @@ the next `ISF-COMPOSITION.5` leaf.
 | `2026-05-14` | `ISF-COMPOSITION.4` | `./bin/ci-regression isf --no-book` | `passed; 124 files, 419 tests` |
 | `2026-05-14` | `ISF-COMPOSITION.4` | `mdbook build docs/book` | `passed` |
 | `2026-05-14` | `ISF-COMPOSITION.4` | `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-COMPOSITION.7` | `mdbook build docs/book` | `passed` |
+| `2026-05-14` | `ISF-COMPOSITION.7` | `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -494,6 +535,7 @@ the next `ISF-COMPOSITION.5` leaf.
 | `ISF-COMPOSITION.2` | `ISF-COMPOSITION.2: specify public semantics` | Defines the accepted generated-top handoff, parent/child identity and wiring, spawn parameter syntax, value domain, and rejected cases. |
 | `ISF-COMPOSITION.3` | `ISF-COMPOSITION.3: implement spawn parameter binding` | Validates spawn parameter declarations/overrides, emits child `+params`, and preserves per-instance override metadata for generated-top handoff. |
 | `ISF-COMPOSITION.4` | `ISF-COMPOSITION.4: implement generated top handoff` | Emits the generated top, wires start/done and named-drive handoffs, applies spawn parameter overrides, and compiles spawn fixtures through the composition pipeline. |
+| `ISF-COMPOSITION.7` | `ISF-COMPOSITION.7: document spawn repeat lifetime` | Records static HDL spawn lifetime, future repeat activation semantics, dynamic repeat-count implications, and unshipped busy/zero-count boundaries. |
 
 ## Changelog
 
@@ -507,3 +549,5 @@ the next `ISF-COMPOSITION.5` leaf.
 - `2026-05-14`: Completed `ISF-COMPOSITION.4`; current frontier moves to
   `ISF-COMPOSITION.5` for generated-top diagnostics and bounded
   schedule-report metadata.
+- `2026-05-14`: Completed `ISF-COMPOSITION.7` as a documentation-only
+  clarification; current frontier remains `ISF-COMPOSITION.5`.

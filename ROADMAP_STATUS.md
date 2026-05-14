@@ -93,6 +93,17 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   assignment families so those handoff ports are visible to composition.
   `t/1216` covers the generated top handoff through `.isf` lowering and
   CLI-to-HDL generation.
+- ISF `spawn` is documented as static HDL composition plus runtime activation:
+  a lexical child instance persists for the generated top's lifetime, and
+  runtime control only activates that existing instance through its start path.
+  Future `spawn` inside `repeat` is a backlog feature that must reuse the same
+  lexical instance per iteration and must settle busy/re-entry behavior before
+  shipping.
+- ISF repeat counts are documented as runtime counter load values rather than
+  structural elaboration counts. Dynamic scalar counts are compatible with
+  static HDL topology when their width is known, but they make latency
+  data-dependent and require an explicit zero-count policy before the repeat
+  surface is fully general.
 - ISF `(switch signal (value body...)...)` clauses now validate scalar signals
   and list-form branches before branch expansion. `t/1205` covers valid
   explicit/default branch lowering plus malformed switch forms.

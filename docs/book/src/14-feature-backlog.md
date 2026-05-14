@@ -137,6 +137,25 @@ the generated top. The first value domain is scalar/exact-width literals plus
 compatible aggregate/list literals; symbolic constants wait for an explicit
 ISF symbol surface.
 
+### Spawn Inside Repeat Bodies
+
+Status: backlog.
+
+Goal: allow `(spawn child as name)` inside `(repeat count body...)` without
+implying dynamic hardware creation.
+
+Required contract: the lexical spawn name denotes one static child instance in
+the generated top. The repeat loop may activate that instance multiple times,
+but it must not elaborate one instance per iteration. The scheduler needs a
+busy/re-entry rule before this can ship: either prove or insert sequencing so
+each later iteration observes the child's fresh done pulse before starting it
+again, or reject the loop with a targeted diagnostic.
+
+Dynamic repeat counts are compatible with this model because `count` is a
+runtime counter load value, not an elaboration count. They do make loop latency
+data-dependent, and the repeat contract still needs an explicit zero-count
+policy for the fully general case.
+
 ## Intent Scheduling Format
 
 ### Enforced Resource Arbitration
