@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF composition public semantics
+- Completed `ISF-COMPOSITION.2` in
+  [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md).
+- The accepted target contract is an explicit generated top over the scheduled
+  parent and spawned children. The parent keeps the actor name; the top uses
+  `<actor_name>_top`; parent `instance_start` signals are outputs, parent
+  `instance_done` signals are inputs, and spawned children return to
+  start-gated idle after completion.
+- Parameterized spawn uses one optional nested `(params (NAME value) ...)`
+  block on `(spawn child as instance ...)`, with child transaction parameters
+  declared by a transaction-local `params` clause. The first value domain is
+  scalar/exact-width literals plus compatible aggregate/list literals.
+- The active `ISF-COMPOSITION` frontier is now `ISF-COMPOSITION.3` for
+  implementing spawn parameter binding.
 ## 2026-05-14: ISF composition handoff inventory
 - Completed `ISF-COMPOSITION.1` in
   [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md).
@@ -12,7 +26,7 @@ This is the live continuity document for fast session recovery after crashes, re
   parameter syntax is absent, and injected-entry child completion can re-enter
   the child body instead of waiting for the next `start`.
 - The active `ISF-COMPOSITION` frontier is now `ISF-COMPOSITION.2` for public
-  child/spawn composition semantics.
+  child/spawn composition semantics at the time of that inventory slice.
 ## 2026-05-14: ISF conflict tree closure
 - Completed `ISF-CONFLICTS.7` in
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md)

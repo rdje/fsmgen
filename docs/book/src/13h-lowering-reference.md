@@ -430,8 +430,12 @@ done bit would let the next `(do child)` observe an old completion.
 
 Spawn lowering writes separate child `.fsm` files and a parent `.fsm` with
 per-instance start/done signals when `--outdir DIR` is used. Full composition
-top instantiation and spawn parameter binding remain deferred and are tracked
-in [Feature Backlog](14-feature-backlog.md).
+top instantiation and spawn parameter binding remain implementation work, but
+the accepted target contract is now explicit: generated top over parent and
+children, parent start outputs, parent done inputs, child `start`/`done` ports,
+spawn-only `(params ...)` overrides, and child return to start-gated idle after
+completion. The implementation remains tracked in
+[Feature Backlog](14-feature-backlog.md).
 
 ## Complete Example — APB Transfer
 

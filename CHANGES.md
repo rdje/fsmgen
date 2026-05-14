@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF composition public semantics
+- Completed `ISF-COMPOSITION.2` by specifying the public target contract for
+  generated child top instantiation and spawn parameter binding.
+- Documented the generated-top handoff: scheduled parent keeps the actor name,
+  the top uses `<actor_name>_top`, parent instance starts are outputs, parent
+  instance dones are inputs, child instances expose `start`/`done`, and spawned
+  children return to start-gated idle after completion.
+- Documented spawn parameter syntax and rejection rules: one optional nested
+  `(params ...)` block on spawn, child transaction `params` declarations,
+  unique instance/parameter names, child-declared override names, and a bounded
+  literal/aggregate value domain.
+- Advanced the active `ISF-COMPOSITION` frontier from `ISF-COMPOSITION.2` to
+  `ISF-COMPOSITION.3`.
 ### R14 — ISF composition handoff inventory
 - Completed `ISF-COMPOSITION.1` by inventorying current child/spawn lowering
   and existing composition handoff points before semantics work.

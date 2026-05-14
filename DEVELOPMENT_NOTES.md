@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF composition public semantics
+- The generated top is the public behavior, while the implementation can choose
+  whether to materialize a concrete `?top` source or equivalent structured
+  metadata. Keeping that distinction lets implementation reuse the existing
+  composition pipeline without freezing an unnecessary intermediate artifact.
+- The top name is `<actor_name>_top` for the first shipped handoff because the
+  scheduled parent already owns `<actor_name>`. Reusing the same module name
+  for parent and top would make HDL generation ambiguous.
+- Spawn parameter binding is deliberately narrower than the full composition
+  parameter surface: no symbolic constants until ISF has a real symbol surface,
+  and no parameterized `(do child)` until there is a proven authoring need.
 ## 2026-05-14: ISF composition handoff inventory
 - `ISF-COMPOSITION.1` deliberately stops at inventory. The next decision must
   define the public handoff before implementation decides whether to synthesize

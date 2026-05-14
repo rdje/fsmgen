@@ -59,13 +59,13 @@ bind through validated public semantics instead of remaining deferred.
   Commit: `ISF-COMPOSITION.1: inventory current handoff gaps`
 
 - ID: `ISF-COMPOSITION.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Specify public ISF child/spawn composition semantics.`
   Acceptance: `The tree records the accepted syntax, generated artifact
   ownership, parent/child identity rules, parameter binding rules, and rejected
   cases.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `mdbook build docs/book; git diff --check`
+  Commit: `ISF-COMPOSITION.2: specify public semantics`
 
 - ID: `ISF-COMPOSITION.3`
   Status: `pending`
@@ -105,7 +105,7 @@ bind through validated public semantics instead of remaining deferred.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-COMPOSITION.2` | `pending` | The current lowering and composition handoff gaps are now inventoried; the next slice can specify the public child/spawn composition semantics before implementation. |
+| 1 | `ISF-COMPOSITION.3` | `pending` | The public syntax and rejected cases are now specified; spawn parameter binding can be implemented in the ISF IR/lowering path. |
 
 ## ISF-COMPOSITION.1 Inventory
 
@@ -215,6 +215,120 @@ fixture before setting new policy.
 - Add bounded schedule-report metadata for parent/child files, spawned
   instances, and bindings after the public semantics are set.
 
+## ISF-COMPOSITION.2 Public Semantics
+
+`ISF-COMPOSITION.2` establishes the accepted user-facing contract for the
+implementation leaves. It is a target contract: until the implementation leaves
+land, the current shipped behavior remains the inventory described above.
+
+### Accepted Authoring Syntax
+
+The existing unparameterized spawn form stays valid:
+
+```lisp
+(spawn child_worker as w0)
+```
+
+Parameterized spawned children use one optional nested `params` block after
+the instance name:
+
+```lisp
+(transaction child_worker
+  (params
+    (WIDTH 8)
+    (LANES (8'h00 8'h00)))
+  ...)
+
+(transaction parent_main
+  (on trigger)
+  (spawn child_worker as w0
+    (params
+      (WIDTH 16)
+      (LANES (8'hA5 8'h3C))))
+  (await_all done)
+  (complete done))
+```
+
+The first shipped parameter-binding surface is deliberately spawn-only. Blocking
+`(do child)` remains unparameterized until a separate need is proven.
+
+### Generated Artifact Ownership
+
+- ISF lowering owns scheduled parent and child `.fsm` emission.
+- For a multi-file spawn actor, the canonical composition handoff is an
+  explicit generated top over the scheduled parent module and spawned child
+  modules. The implementation may materialize that handoff as a concrete
+  `?top` source or as equivalent structured metadata consumed by the existing
+  composition pipeline, but one handoff must be canonical for reports and
+  tests.
+- The scheduled parent module keeps the actor name for compatibility. The
+  generated top must use a distinct deterministic name, initially
+  `<actor_name>_top`, to avoid colliding with the scheduled parent module.
+- The top re-exports the actor's public interface. Per-instance start/done
+  handoff signals are child-to-child links inside the generated top, not public
+  top ports unless the actor explicitly declares such ports later through a
+  separate feature.
+
+### Parent/Child Identity And Wiring
+
+- Spawn target names resolve to declared same-actor transactions. Forward
+  references stay valid; missing targets still fail before scheduled artifacts
+  are emitted.
+- Spawn instance names are actor-local instance identities. Duplicate spawn
+  instance names are rejected before scheduled artifacts are emitted.
+- One scheduled child module is emitted per unique spawned transaction target.
+  Multiple spawned instances of the same transaction instantiate the same child
+  module with distinct instance names.
+- The scheduled parent exposes each `instance_start` as an output port and each
+  `instance_done` as an input port in the parent child-interface used by the
+  generated top.
+- Each spawned child exposes `start` as an input and `done` as an output. The
+  generated top wires `parent.instance_start` to `instance.start` and
+  `instance.done` to `parent.instance_done`.
+- After a spawned child completes, it returns to its `start`-guarded idle state.
+  It must not re-enter the child body until the next start pulse.
+
+### Parameter Binding Rules
+
+- Child transaction parameter declarations use a transaction-local `params`
+  clause. Parameter names must be HDL-identifier-compatible, scalar, non-empty,
+  and unique within the child transaction.
+- Spawn parameter overrides use at most one nested `params` block. Override
+  names must be HDL-identifier-compatible, scalar, non-empty, and unique within
+  the spawn.
+- An override name must match a parameter declared by the spawned child
+  transaction. Unknown overrides fail closed.
+- Missing overrides use the child transaction's default parameter value.
+- The first shipped value domain reuses the existing composition generated-child
+  parameter value rules where they apply: scalar numeric/exact-width literals
+  remain width-flexible, and aggregate/list defaults require compatible
+  aggregate/list override shape. Symbolic top constants are not accepted until
+  ISF has an explicit constant/symbol surface.
+- Parameter overrides are instance-local. Two instances of the same child
+  transaction may bind different parameter values.
+- The scheduled child `.fsm` carries direct `+params` declarations derived from
+  the child transaction parameters. The generated top carries the instance
+  overrides through the existing generated-child composition parameter override
+  path.
+
+### Rejected Cases
+
+The following cases are public fail-closed behavior for the implementation
+leaves:
+
+- malformed `spawn` forms, including missing `as`, missing instance name, nested
+  child names, nested instance names, or extra unsupported blocks;
+- duplicate spawn instance names in one actor;
+- unknown spawn targets;
+- multiple `params` blocks on one spawn or one child transaction;
+- malformed parameter declarations or overrides;
+- duplicate parameter declarations or duplicate overrides;
+- override names not declared by the spawned child transaction;
+- aggregate/scalar shape mismatches;
+- symbolic parameter values that cannot be resolved by the first shipped ISF
+  value domain; and
+- parameter blocks on `(do child)`.
+
 ## Decisions
 
 - `2026-05-14`: This tree owns the ISF-specific generated-child top and spawn
@@ -224,15 +338,20 @@ fixture before setting new policy.
   lowering emits parent/child scheduled `.fsm` artifacts but no generated top,
   and that the parent start signals are internal rather than wireable
   composition ports.
+- `2026-05-14`: `ISF-COMPOSITION.2` selects an explicit generated-top handoff
+  over scheduled parent/child modules, with `<actor_name>_top` as the initial
+  top name, parent start outputs, parent done inputs, reusable start-gated
+  spawned children, and spawn-only parameter overrides using one nested
+  `(params ...)` block.
 
 ## Open Questions
 
-- Should ISF generate a composition source explicitly, or should the scheduler
-  return enough structured metadata for an existing composition entrypoint to
-  construct the top? This remains the primary `ISF-COMPOSITION.2` decision.
-- Which parameter value domains are valid for spawned ISF children in the
-  first shipped slice? `ISF-COMPOSITION.1` confirms no spawn parameter syntax
-  exists today.
+- The canonical implementation artifact may be a concrete generated `?top`
+  source or equivalent structured metadata, but the public behavior is one
+  explicit generated top over the scheduled parent and spawned children.
+- The first parameter value domain is scalar/exact-width literals plus
+  compatible aggregate/list literals. Symbolic constants wait for an explicit
+  ISF constant/symbol surface.
 
 ## Blockers
 
@@ -249,6 +368,8 @@ fixture before setting new policy.
 | `2026-05-14` | `ISF-COMPOSITION.1` | `prove -l t/1117-isf-public-lower-result-files-audit.t t/1122-isf-public-cli-outdir-lowering-audit.t t/1128-isf-public-multifile-schedule-report-audit.t t/1110-isf-do-child-entry-rewire.t t/1177-isf-do-child-done-pulse.t t/1184-isf-child-transaction-target-boundary.t t/1204-isf-child-composition-clause-boundary.t` | `passed` |
 | `2026-05-14` | `ISF-COMPOSITION.1` | `prove -l t/184-composition-generated-child-realizer.t t/292-composition-generated-child-parameter-overrides.t t/93-composition-multi-generated-plus-rtl-children.t` | `passed` |
 | `2026-05-14` | `ISF-COMPOSITION.1` | `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-COMPOSITION.2` | `mdbook build docs/book` | `passed` |
+| `2026-05-14` | `ISF-COMPOSITION.2` | `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -256,9 +377,12 @@ fixture before setting new policy.
 | --- | --- | --- |
 | `ISF-COMPOSITION` | `R14: map ISF objectives to task trees` | Initial tree creation belongs to the ISF objective task-tree coverage slice. |
 | `ISF-COMPOSITION.1` | `ISF-COMPOSITION.1: inventory current handoff gaps` | Records current ISF child/spawn lowering, existing composition entrypoints, unsupported spawn parameters, and exact gaps. |
+| `ISF-COMPOSITION.2` | `ISF-COMPOSITION.2: specify public semantics` | Defines the accepted generated-top handoff, parent/child identity and wiring, spawn parameter syntax, value domain, and rejected cases. |
 
 ## Changelog
 
 - `2026-05-14`: Created the active ISF composition/spawn task tree.
 - `2026-05-14`: Completed `ISF-COMPOSITION.1`; current frontier moves to
   `ISF-COMPOSITION.2` for public child/spawn composition semantics.
+- `2026-05-14`: Completed `ISF-COMPOSITION.2`; current frontier moves to
+  `ISF-COMPOSITION.3` for spawn parameter binding implementation.

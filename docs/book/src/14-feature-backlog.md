@@ -114,7 +114,10 @@ composition flows without manual wiring gaps.
 Current boundary: generated-child parameterization exists for bounded
 composition paths. ISF child/spawn lowering writes scheduled child `.fsm`
 artifacts and start/done handoff signals, but full composition-top
-instantiation from ISF remains deferred.
+instantiation from ISF remains deferred. The accepted target contract uses an
+explicit generated top over the scheduled parent and spawned children, with the
+parent exposing instance starts as outputs and instance dones as inputs for top
+internal wiring.
 
 ### Spawn Parameter Binding
 
@@ -124,7 +127,12 @@ Goal: bind parameters through spawned child instances in ISF-generated
 multi-file scheduled designs.
 
 Current boundary: spawn emits child files and parent start/done wiring; spawn
-parameter binding is deferred.
+parameter binding is deferred. The accepted target syntax is one optional
+nested `(params (NAME value) ...)` block on `(spawn child as instance ...)`;
+child transaction parameters are declared by a transaction-local `params`
+clause. The first value domain is scalar/exact-width literals plus compatible
+aggregate/list literals; symbolic constants wait for an explicit ISF symbol
+surface.
 
 ## Intent Scheduling Format
 

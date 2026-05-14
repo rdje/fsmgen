@@ -188,8 +188,11 @@ limitations are:
 
 - `(do ...)` and `(spawn ...)` targets must resolve to declared same-actor
   transactions before scheduled `.fsm` emission. They bind named start/done
-  signals in scheduled `.fsm`; composition-top instantiation and spawn
-  parameter binding remain deferred.
+  signals in scheduled `.fsm`. Composition-top instantiation and spawn
+  parameter binding remain implementation backlog items, but their accepted
+  target contract now uses an explicit generated top, parent start outputs,
+  parent done inputs, reusable start-gated spawned children, and spawn-only
+  `(params ...)` overrides.
 - `(resources ...)` is structurally validated by the parser but not enforced as
   arbitration policy. `(priority ...)` is structurally validated and currently
   enforced only for same-target rule/rule data conflicts; broader transaction

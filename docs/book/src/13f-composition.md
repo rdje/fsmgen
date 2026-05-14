@@ -82,8 +82,45 @@ an invalid clause.
   that fires
 Both synchronization forms have focused regressions.
 
-Full composition-top instantiation and spawn parameter binding are still
-deferred and tracked in [Feature Backlog](14-feature-backlog.md).
+Full composition-top instantiation and spawn parameter binding are not fully
+shipped yet, but the accepted target contract is now defined and tracked in
+[Feature Backlog](14-feature-backlog.md):
+
+- Multi-file spawn actors use an explicit generated top over the scheduled
+  parent module and spawned child modules.
+- The scheduled parent keeps the actor name; the generated top uses a distinct
+  deterministic name, initially `{actor}_top`.
+- The top re-exports the actor public interface.
+- Per-instance `name_start` and `name_done` are internal top handoff links, not
+  public top ports.
+- The scheduled parent exposes `name_start` as an output and `name_done` as an
+  input for each spawned instance.
+- Each spawned child exposes `start` as an input and `done` as an output.
+- After completion, a spawned child returns to its `start`-guarded idle state
+  and waits for the next start pulse.
+
+Parameterized spawn uses one optional nested `params` block:
+
+```lisp
+(transaction worker
+  (params
+    (WIDTH 8))
+  ...)
+
+(transaction parent
+  (on start)
+  (spawn worker as w0
+    (params
+      (WIDTH 16)))
+  (await_all done)
+  (complete done))
+```
+
+The first shipped parameter surface is spawn-only. `(do child)` remains
+unparameterized. Override names must match child transaction parameters,
+duplicate instance/parameter names fail, scalar literal overrides are
+width-flexible, aggregate defaults require compatible aggregate overrides, and
+symbolic constants wait for an explicit ISF constant/symbol surface.
 
 ```lisp
 (parent_main_await_all_4

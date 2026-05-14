@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md),
-  whose current frontier is `ISF-COMPOSITION.2`. The completed
+  whose current frontier is `ISF-COMPOSITION.3`. The completed
   `ISF-CONFLICTS` tree is listed in the task-tree completed table.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
   guide for installing the same task-tree tracking workflow in another
@@ -4380,18 +4380,22 @@ Done:
   CLI compiles only the parent `.fsm`, parent instance-start signals are
   internal rather than wireable composition ports, reports are parent-scoped,
   and spawn parameter syntax is absent.
+- `ISF-COMPOSITION.2` specifies the public target semantics for ISF
+  child/spawn composition: explicit generated top over scheduled parent and
+  children, distinct `<actor_name>_top` name, parent start outputs, parent done
+  inputs, reusable start-gated spawned children, unique instance identities,
+  and spawn-only nested `(params ...)` overrides with a bounded literal value
+  domain.
 Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the first active tree in [docs/TASK_TREE.md](docs/TASK_TREE.md) when
   selecting the next PNT slice; after closing `ISF-CONFLICTS`, that frontier is
-  `ISF-COMPOSITION.2` in
+  `ISF-COMPOSITION.3` in
   [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md).
-- Specify the public ISF child/spawn composition semantics before changing the
-  lowerer: canonical top artifact or metadata handoff, start/done port
-  ownership, spawned-child re-entry, instance identity, and first supported
-  spawn parameter binding domain.
+- Implement spawn parameter binding in the ISF IR/lowering path using the
+  documented `ISF-COMPOSITION.2` syntax and rejection rules.
 - ISF conflict detection policy is now split: compile-time proof is
   best-effort and must flag cases where proof is not doable, while generated
   verification HDL now checks mux selectors at runtime for same-value source

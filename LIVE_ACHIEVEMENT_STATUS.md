@@ -2,12 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF composition public semantics
+- Active R14 task-tree slice: `ISF-COMPOSITION.2` is complete.
+- The accepted target contract now covers generated-top ownership, parent/child
+  start-done wiring, spawned-child re-entry, spawn instance identity, and
+  spawn-only `(params ...)` overrides.
+- The next frontier is `ISF-COMPOSITION.3`.
+
 ## 2026-05-14: R14 — ISF composition handoff inventory
 - Active R14 task-tree slice: `ISF-COMPOSITION.1` is complete.
 - Current ISF spawn lowering emits parent/child scheduled `.fsm` files but no
   generated top; parent start signals are internal and schedule reports are
   parent-scoped.
-- The next frontier is `ISF-COMPOSITION.2`.
+- At the time of this inventory slice, the next frontier was
+  `ISF-COMPOSITION.2`.
 
 ## 2026-05-14: R14 — ISF conflict tree closure
 - Active R14 task-tree slice: `ISF-CONFLICTS.7` is complete.

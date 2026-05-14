@@ -577,8 +577,56 @@ Current lowering:
   any one of them fires.
 Focused regressions cover both synchronization forms.
 
-Top-level child instantiation and spawn parameter binding are not part of the
-shipped lowering contract yet.
+Top-level child instantiation and spawn parameter binding are not fully shipped
+yet, but the accepted public target contract is now defined:
+
+- Multi-file spawn actors will expose an explicit generated top over the
+  scheduled parent module and spawned child modules. The implementation may
+  materialize a concrete `?top` source or equivalent structured metadata, but
+  one generated-top handoff is canonical for reports and tests.
+- The scheduled parent module keeps the actor name. The generated top uses a
+  distinct deterministic name, initially `<actor_name>_top`.
+- The generated top re-exports the actor public interface. Per-instance
+  `instance_start`/`instance_done` handoff signals are internal top wiring, not
+  public top ports.
+- The scheduled parent exposes `instance_start` as an output port and
+  `instance_done` as an input port for each spawned instance. Each spawned
+  child exposes `start` as an input and `done` as an output.
+- The generated top wires `parent.instance_start` to `instance.start` and
+  `instance.done` to `parent.instance_done`.
+- A spawned child returns to its `start`-guarded idle state after completion and
+  must not re-enter the body until the next start pulse.
+- Spawn instance names are actor-local identities and must be unique. Multiple
+  instances of one child transaction share the same child module with distinct
+  instance names.
+
+Parameterized spawn uses one optional nested `params` block after the instance
+name:
+
+```lisp
+(transaction child_worker
+  (params
+    (WIDTH 8)
+    (LANES (8'h00 8'h00)))
+  ...)
+
+(transaction parent_main
+  (spawn child_worker as w0
+    (params
+      (WIDTH 16)
+      (LANES (8'hA5 8'h3C)))))
+```
+
+The first shipped parameter-binding surface is spawn-only; `(do child)` remains
+unparameterized. Child transaction parameter declarations must use unique
+HDL-identifier-compatible names. Spawn overrides must use unique names declared
+by the child transaction; missing overrides use child defaults. Scalar numeric
+and exact-width literal overrides are width-flexible. Aggregate/list defaults
+require compatible aggregate/list override shape. Symbolic top constants are
+not accepted until ISF has an explicit constant/symbol surface. Malformed
+forms, duplicate instance names, duplicate parameters, unknown targets, unknown
+override names, unsupported value shapes, and parameter blocks on `(do child)`
+fail before misleading scheduled artifacts are emitted.
 
 ## 9. Rules
 
@@ -972,7 +1020,8 @@ Focused tests:
   parsing.
 - The removed `(assign ...)` action keyword; authored transaction uses fail
   closed as unsupported transaction clauses.
-- Top-level child instantiation and spawn parameter binding.
+- Implementation of the accepted top-level child instantiation and spawn
+  parameter binding contract described above.
 - Enforced resource arbitration and priority resolution beyond the currently
   shipped same-target rule/rule data-conflict case.
 - Expression-valued rule assignment actions beyond scalar `(port value)`.
