@@ -142,6 +142,10 @@ direct and manifest views.
 The public `--emit-schedule-json` CLI path is checked by
 [t/1121-isf-public-cli-schedule-report-audit.t](../t/1121-isf-public-cli-schedule-report-audit.t)
 to emit clean-stderr JSON matching the in-process scheduler report.
+The explicit schedule-report freeze boundary is checked by
+[t/1227-isf-schedule-report-freeze-boundary.t](../t/1227-isf-schedule-report-freeze-boundary.t)
+so the contract stays bounded-public, does not claim whole-schema stability,
+and keeps the presence-family map scoped to key families.
 The successful `compile_issues` report shape is checked by
 [t/1130-isf-public-compile-issues-success-audit.t](../t/1130-isf-public-compile-issues-success-audit.t)
 for both in-process and CLI report paths.

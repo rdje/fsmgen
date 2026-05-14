@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF schedule-report tree closure
+- The closeout test intentionally checks the negative promise: the schedule
+  report is not a fully frozen whole-tree schema yet. That is as important as
+  checking the positive key/value families because downstream consumers need a
+  clear boundary.
+- `schedule_report_presence_key_family_map` should stay a map of key-family
+  lists. Value-family metadata belongs beside it in the public contract, not
+  inside the grouped presence-key map.
 ## 2026-05-14: ISF schedule-report schema-freeze plan
 - The schedule report is deliberately bounded before it is frozen. This lets
   downstream consumers rely on advertised key/value families while ISF feature

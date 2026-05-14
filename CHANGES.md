@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF schedule-report tree closure
+- Completed `ISF-SCHEDULE-REPORTS.5` and closed the schedule-report storage
+  class/schema stabilization tree.
+- Added [t/1227-isf-schedule-report-freeze-boundary.t](t/1227-isf-schedule-report-freeze-boundary.t)
+  to prove the public contract remains bounded-public, does not claim full
+  schedule-report schema stability, and keeps the presence-family map scoped to
+  key families.
+- The active R14 PNT frontier moves to `ISF-FIXTURES.1`.
 ### R14 — ISF schedule-report schema-freeze plan
 - Completed `ISF-SCHEDULE-REPORTS.4` by documenting the full schedule JSON
   schema-freeze readiness plan.

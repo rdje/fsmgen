@@ -2,6 +2,12 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF schedule-report tree closure
+- Active R14 task-tree slice: `ISF-SCHEDULE-REPORTS.5` is complete.
+- The schedule-report tree is closed with an explicit freeze-boundary
+  regression and synchronized public-contract provenance.
+- The next active R14 frontier is `ISF-FIXTURES.1`.
+
 ## 2026-05-14: R14 — ISF schedule-report schema-freeze plan
 - Active R14 task-tree slice: `ISF-SCHEDULE-REPORTS.4` is complete.
 - The schedule-report freeze plan now records contractual, bounded-evolving,

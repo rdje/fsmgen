@@ -12,11 +12,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   frontier. The ongoing/unresolved R14 ISF objective families are now covered
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
-  [docs/tasks/ISF-SCHEDULE-REPORTS.md](docs/tasks/ISF-SCHEDULE-REPORTS.md),
-  whose current frontier is `ISF-SCHEDULE-REPORTS.5`. The completed
-  `ISF-DATA-WIDTHS`, `ISF-STAGES-CONTRACTS`, `ISF-RULE-ACTIONS`,
-  `ISF-RESOURCE-CATALOG`, `ISF-RESOURCE-PRIORITY`, `ISF-CONFLICTS`, and
-  `ISF-COMPOSITION` trees are listed in the task-tree completed table.
+  [docs/tasks/ISF-FIXTURE-COVERAGE.md](docs/tasks/ISF-FIXTURE-COVERAGE.md),
+  whose current frontier is `ISF-FIXTURES.1`. The completed
+  `ISF-SCHEDULE-REPORTS`, `ISF-DATA-WIDTHS`, `ISF-STAGES-CONTRACTS`,
+  `ISF-RULE-ACTIONS`, `ISF-RESOURCE-CATALOG`, `ISF-RESOURCE-PRIORITY`,
+  `ISF-CONFLICTS`, and `ISF-COMPOSITION` trees are listed in the task-tree
+  completed table.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
   guide for installing the same task-tree tracking workflow in another
   project.
@@ -196,6 +197,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   schema freeze, and the checklist required before
   `schedule_report_full_schema_stable` can become true. The active frontier
   advances to `ISF-SCHEDULE-REPORTS.5`.
+- `ISF-SCHEDULE-REPORTS.5` is complete and the tree is closed. The explicit
+  freeze-boundary regression now proves that the ISF public contract remains
+  bounded-public, does not claim full schedule-report schema stability, and
+  keeps `schedule_report_presence_key_family_map` scoped to key families. The
+  active PNT frontier moves to `ISF-FIXTURES.1`.
 - ISF construct support now has a normative rule: parser acceptance is not a
   support claim. Every current or future shipped ISF construct must have an
   explicit accepted source shape, lowering path or fail-closed diagnostic,

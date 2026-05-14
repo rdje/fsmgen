@@ -23,7 +23,6 @@ evidence for one top-level task.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-SCHEDULE-REPORTS` | `active` | `R14` | `ISF-SCHEDULE-REPORTS.5` | [docs/tasks/ISF-SCHEDULE-REPORTS.md](docs/tasks/ISF-SCHEDULE-REPORTS.md) |
 | `ISF-FIXTURES` | `active` | `R14` | `ISF-FIXTURES.1` | [docs/tasks/ISF-FIXTURE-COVERAGE.md](docs/tasks/ISF-FIXTURE-COVERAGE.md) |
 | `ISF-COMPATIBILITY` | `active` | `R14` | `ISF-COMPATIBILITY.1` | [docs/tasks/ISF-COMPATIBILITY-SURFACE.md](docs/tasks/ISF-COMPATIBILITY-SURFACE.md) |
 | `ISF-PUBLIC-CONTRACT` | `active` | `R14` | `ISF-PUBLIC-CONTRACT.1` | [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md) |
@@ -41,6 +40,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-SCHEDULE-REPORTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-SCHEDULE-REPORTS.md](docs/tasks/ISF-SCHEDULE-REPORTS.md) |
 | `ISF-DATA-WIDTHS` | `done` | `R14` | `closed` | [docs/tasks/ISF-DATA-WIDTHS.md](docs/tasks/ISF-DATA-WIDTHS.md) |
 | `ISF-STAGES-CONTRACTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-STAGES-CONTRACTS.md](docs/tasks/ISF-STAGES-CONTRACTS.md) |
 | `ISF-RULE-ACTIONS` | `done` | `R14` | `closed` | [docs/tasks/ISF-RULE-ACTIONS.md](docs/tasks/ISF-RULE-ACTIONS.md) |

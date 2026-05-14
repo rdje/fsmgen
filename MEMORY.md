@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF schedule-report tree closure
+- Completed `ISF-SCHEDULE-REPORTS.5` and closed
+  [docs/tasks/ISF-SCHEDULE-REPORTS.md](docs/tasks/ISF-SCHEDULE-REPORTS.md).
+- Added `t/1227-isf-schedule-report-freeze-boundary.t` to keep the schedule
+  report explicitly bounded-public rather than whole-schema-frozen.
+- The next active R14 frontier is `ISF-FIXTURES.1`.
 ## 2026-05-14: ISF schedule-report schema-freeze plan
 - Completed `ISF-SCHEDULE-REPORTS.4` in
   [docs/tasks/ISF-SCHEDULE-REPORTS.md](docs/tasks/ISF-SCHEDULE-REPORTS.md).

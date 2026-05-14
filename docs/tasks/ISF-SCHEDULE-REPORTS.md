@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-SCHEDULE-REPORTS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-14`
 - Last updated: `2026-05-14`
@@ -41,7 +41,7 @@ schedule JSON schema.
 ## Task Tree
 
 - ID: `ISF-SCHEDULE-REPORTS`
-  Status: `active`
+  Status: `done`
   Goal: `Improve schedule-report storage classes and define schema stabilization.`
   Children: `ISF-SCHEDULE-REPORTS.1`, `ISF-SCHEDULE-REPORTS.2`,
   `ISF-SCHEDULE-REPORTS.3`, `ISF-SCHEDULE-REPORTS.4`,
@@ -82,18 +82,18 @@ schedule JSON schema.
   Commit: `ISF-SCHEDULE-REPORTS.4: define schema freeze plan`
 
 - ID: `ISF-SCHEDULE-REPORTS.5`
-  Status: `pending`
+  Status: `done`
   Goal: `Add tests and synchronize docs/contracts.`
   Acceptance: `Tests cover report metadata, manifest/public contract claims,
   CLI/in-process parity, and synchronized user-facing docs.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -l t/1116-isf-public-schedule-report-key-family-audit.t t/1121-isf-public-cli-schedule-report-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1141-isf-public-identity-flags-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1148-isf-public-storage-metadata-audit.t t/1227-isf-schedule-report-freeze-boundary.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-SCHEDULE-REPORTS.5: close report contract tree`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-SCHEDULE-REPORTS.5` | `pending` | The schema-freeze readiness plan is documented; the remaining work is final report-contract test/doc synchronization and tree closure. |
+| - | `closed` | `done` | All planned schedule-report storage/schema leaves are complete. |
 
 ## ISF-SCHEDULE-REPORTS.1 Inventory
 
@@ -362,6 +362,9 @@ Readiness checklist for freezing any branch:
   assignment-provenance policy, multi-file report scope, compatibility rules,
   and a golden fixture matrix. Until those are closed, the report is bounded
   public metadata, not a frozen whole-tree schema.
+- `2026-05-14`: The schedule-report tree is closed after adding an explicit
+  freeze-boundary regression. Future schedule-report feature additions should
+  reopen this tree or create a feature-owned tree before changing report shape.
 
 ## Open Questions
 
@@ -381,6 +384,7 @@ Readiness checklist for freezing any branch:
 | `2026-05-14` | `ISF-SCHEDULE-REPORTS.2` | `prove -l t/1096-isf-schedule-json-report.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1148-isf-public-storage-metadata-audit.t t/1226-isf-data-width-storage-report.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-SCHEDULE-REPORTS.3` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -l t/1106-isf-schedule-json-counter-storage.t t/1116-isf-public-schedule-report-key-family-audit.t t/1121-isf-public-cli-schedule-report-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1148-isf-public-storage-metadata-audit.t t/1226-isf-data-width-storage-report.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-SCHEDULE-REPORTS.4` | `prove -l t/1116-isf-public-schedule-report-key-family-audit.t t/1121-isf-public-cli-schedule-report-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1148-isf-public-storage-metadata-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-SCHEDULE-REPORTS.5` | `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -l t/1116-isf-public-schedule-report-key-family-audit.t t/1121-isf-public-cli-schedule-report-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1141-isf-public-identity-flags-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1148-isf-public-storage-metadata-audit.t t/1227-isf-schedule-report-freeze-boundary.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -391,6 +395,7 @@ Readiness checklist for freezing any branch:
 | `ISF-SCHEDULE-REPORTS.2` | `ISF-SCHEDULE-REPORTS.2: specify storage roles` | Additive `inferred_storage[].role` taxonomy specified. |
 | `ISF-SCHEDULE-REPORTS.3` | `ISF-SCHEDULE-REPORTS.3: report storage roles` | First bounded storage role family implemented in schedule reports and public contract metadata. |
 | `ISF-SCHEDULE-REPORTS.4` | `ISF-SCHEDULE-REPORTS.4: define schema freeze plan` | Full schedule JSON freeze boundary, blockers, and readiness checklist documented. |
+| `ISF-SCHEDULE-REPORTS.5` | `ISF-SCHEDULE-REPORTS.5: close report contract tree` | Freeze-boundary regression added and schedule-report tree closed. |
 
 ## Changelog
 
@@ -404,3 +409,5 @@ Readiness checklist for freezing any branch:
   report slice and advanced the frontier to `ISF-SCHEDULE-REPORTS.4`.
 - `2026-05-14`: Defined the full schedule JSON schema-freeze readiness plan
   and advanced the frontier to `ISF-SCHEDULE-REPORTS.5`.
+- `2026-05-14`: Added the freeze-boundary regression, synchronized the public
+  contract provenance, and closed the schedule-report tree.
