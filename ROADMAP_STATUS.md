@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-FIXTURE-COVERAGE.md](docs/tasks/ISF-FIXTURE-COVERAGE.md),
-  whose current frontier is `ISF-FIXTURES.2`. The completed
+  whose current frontier is `ISF-FIXTURES.3`. The completed
   `ISF-SCHEDULE-REPORTS`, `ISF-DATA-WIDTHS`, `ISF-STAGES-CONTRACTS`,
   `ISF-RULE-ACTIONS`, `ISF-RESOURCE-CATALOG`, `ISF-RESOURCE-PRIORITY`,
   `ISF-CONFLICTS`, and `ISF-COMPOSITION` trees are listed in the task-tree
@@ -216,6 +216,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   schedule/HDL/strict coverage, direct `phase_test.isf` coverage, and non-APB
   strict-mode coverage are candidates for the fixture matrix. The active
   frontier advances to `ISF-FIXTURES.2`.
+- `ISF-FIXTURES.2` is complete. The fixture matrix now maps realistic and
+  future fixture targets to feature families, schedule-report assertions,
+  generated `.fsm` review checks, HDL/strict-mode gates, and regression-tier
+  placement. APB remains the current quick/smoke ISF baseline, and
+  `isf/spi_master.isf` is selected as the next compact `isf`-tier fixture
+  implementation slice, scoped to SPI-like mode-0 serial-transfer behavior
+  rather than full SPI protocol compliance. The active frontier advances to
+  `ISF-FIXTURES.3`.
 - ISF construct support now has a normative rule: parser acceptance is not a
   support claim. Every current or future shipped ISF construct must have an
   explicit accepted source shape, lowering path or fail-closed diagnostic,

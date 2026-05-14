@@ -1201,6 +1201,15 @@ Representative shipped fixtures:
 - [isf/when_test.isf](../isf/when_test.isf)
 - [isf/switch_test.isf](../isf/switch_test.isf)
 
+The active realistic fixture matrix is tracked in
+[docs/tasks/ISF-FIXTURE-COVERAGE.md](tasks/ISF-FIXTURE-COVERAGE.md). That
+matrix separates baseline APB quick coverage from broader `isf`-tier fixture
+coverage, records which feature families each fixture owns, and currently
+selects [isf/spi_master.isf](../isf/spi_master.isf) as the next compact
+file-backed schedule/HDL/strict coverage target. That fixture is scoped as an
+SPI-like mode-0 serial-transfer example, not as a complete SPI protocol
+compliance suite.
+
 Focused tests:
 - [t/1091-isf-parser-apb-requester.t](../t/1091-isf-parser-apb-requester.t)
 - [t/1092-isf-lispish-adapter.t](../t/1092-isf-lispish-adapter.t)

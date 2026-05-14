@@ -2,6 +2,12 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF fixture coverage matrix
+- Active R14 task-tree slice: `ISF-FIXTURES.2` is complete.
+- The matrix selects `isf/spi_master.isf` as the next compact SPI-like
+  mode-0 serial-transfer schedule/HDL/strict fixture target.
+- The next active R14 frontier is `ISF-FIXTURES.3`.
+
 ## 2026-05-14: R14 — ISF resource catalog metadata
 - Active R14 task-tree slice: `ISF-RESOURCE-CATALOG.3` is complete.
 - The shareable resource registry now has a code owner shared by the parser and

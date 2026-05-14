@@ -378,6 +378,24 @@ decide whether assignment provenance and multi-file child summaries stay
 private or gain bounded public summaries, document additive/deprecation rules,
 and keep a golden fixture matrix for every advertised branch.
 
+### ISF Realistic Fixture Matrix
+
+Status: active coverage work.
+
+Goal: keep realistic protocol fixtures aligned with shipped ISF behavior,
+strict-mode expectations, schedule JSON assertions, scheduled `.fsm` review
+artifacts, and generated HDL reachability.
+
+Current boundary: APB remains the quick/smoke ISF baseline for parse, scheduled
+`.fsm` header, and public-contract checks. Broader realistic fixture coverage
+belongs in the `isf` regression tier. The active matrix in
+[ISF-FIXTURE-COVERAGE](../../tasks/ISF-FIXTURE-COVERAGE.md) selects
+`isf/spi_master.isf` as the next compact implementation target because it is a
+bounded SPI-like mode-0 serial-transfer fixture with no dedicated file-backed
+schedule/HDL/strict regression today. It is not a complete SPI protocol
+compliance suite. Future fixture promotions should add stable structural
+assertions rather than full HDL or full schedule JSON snapshots.
+
 ## Backends And Validation
 
 ### Full VHDL Backend

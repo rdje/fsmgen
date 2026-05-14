@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF fixture coverage matrix
+- Completed `ISF-FIXTURES.2` by defining the realistic fixture coverage
+  matrix across feature families, schedule-report assertions, generated `.fsm`
+  and HDL checks, strict-mode expectations, and regression-tier placement.
+- The matrix keeps APB as the current quick/smoke ISF baseline and selects
+  `isf/spi_master.isf` as the next compact file-backed `isf`-tier fixture
+  target, scoped as SPI-like mode-0 serial transfer rather than complete SPI
+  protocol compliance.
+- The active `ISF-FIXTURES` frontier advances to `ISF-FIXTURES.3`.
 ### R14 — ISF resource catalog metadata
 - Completed `ISF-RESOURCE-CATALOG.3` by moving the shareable resource registry
   into `FSM::Support::ISFResourceCatalog`.

@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF fixture coverage matrix
+- Completed `ISF-FIXTURES.2` in
+  [docs/tasks/ISF-FIXTURE-COVERAGE.md](docs/tasks/ISF-FIXTURE-COVERAGE.md).
+- The fixture matrix now maps APB, SPI-like mode-0 serial transfer, I2C,
+  burst, UART, generated composition, parser breadth, rule/resource, and
+  stage/contract fixture targets to feature families, schedule-report
+  assertions, HDL checks, strict expectations, and regression tiers.
+- The next active R14 frontier is `ISF-FIXTURES.3`, targeting
+  `isf/spi_master.isf`.
 ## 2026-05-14: ISF resource catalog metadata
 - Completed `ISF-RESOURCE-CATALOG.3` in
   [docs/tasks/ISF-RESOURCE-CATALOG.md](docs/tasks/ISF-RESOURCE-CATALOG.md).

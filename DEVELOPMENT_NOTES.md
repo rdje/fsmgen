@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF fixture coverage matrix
+- The matrix keeps `quick` intentionally APB-centered for now. Realistic
+  fixture breadth belongs in the `isf` tier until a new fixture proves enough
+  signal and low enough runtime cost to justify quick promotion.
+- The SPI fixture is the next implementation target because it is compact,
+  protocol-like, already checked in, and currently lacks dedicated
+  file-backed schedule/HDL/strict coverage. It is scoped to the authored
+  mode-0-style serial transfer behavior, not full external SPI compliance.
+- Fixture tests should prefer stable structural assertions over full generated
+  HDL or full schedule JSON snapshots. Full snapshots would make future
+  scheduler improvements unnecessarily noisy.
 ## 2026-05-14: ISF resource catalog metadata
 - The resource registry is now code-owned instead of duplicated as parser-only
   literals plus prose. This keeps parser acceptance, public contract discovery,
