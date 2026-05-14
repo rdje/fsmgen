@@ -100,6 +100,12 @@ The compatibility CLI parity path is checked by
 so accepted ignored handshake compatibility source reaches CLI schedule JSON
 and strict HDL, while removed transaction `(assign ...)` fails through the CLI
 with migration guidance.
+The first reusable-library import path is checked by
+[t/1230-isf-library-import-resolution.t](../t/1230-isf-library-import-resolution.t)
+so file-backed `(imports ...)` / `(use ...)` source resolves exported library
+actors, validates use-site parameter and binding errors, emits specialized
+child scheduled `.fsm` artifacts, and reports bounded `library_uses`
+provenance.
 The current APB schedule report is checked against the advertised key families
 by [t/1116-isf-public-schedule-report-key-family-audit.t](../t/1116-isf-public-schedule-report-key-family-audit.t).
 The shipped stage/contract report projection is checked by
@@ -184,6 +190,15 @@ stringified `value`; drive handoff entries expose `drive`, `request`, and
 `payloads`, with each payload naming the drive `parameter`, child/parent ports,
 and `width`. This projection must stay a bounded live review/discovery summary,
 not a raw LoweringIR or `?toplink` dump.
+Reusable library actor uses are reported through a top-level `library_uses`
+array. Each entry exposes the bounded identity of the resolved use
+(`library`, `alias`, `export`, `kind`, `instance`), generated artifact names
+(`module`, `scheduled_fsm`), parameter summaries, and explicit binding
+summaries. Parameter entries expose `name`, `source` (`default` or
+`override`), and stringified `value`. Binding entries expose `role`,
+`library_name`, `parent_name`, and `width`; clock/reset bindings use JSON null
+for `library_name`, and width is `1`. Raw library resolver state, raw exported
+actor hashes, and generated top planning details remain non-public.
 The lower-result `files` map is checked for both single-file and multi-file
 lowering by [t/1117-isf-public-lower-result-files-audit.t](../t/1117-isf-public-lower-result-files-audit.t).
 The lower-result discovery metadata is checked by
@@ -571,6 +586,22 @@ language, that default selector means the logical negation of the OR of every
 explicit sibling branch predicate, so the fallback path is true only when no
 explicit branch matched.
 
+For the first reusable-library import surface, actor roots may use one
+`(imports ...)` clause and one or more `(use ...)` clauses. Library roots use
+`(library name ...)` with one `(exports ...)` clause, and the first supported
+export kind is `actor`. A use such as
+`(use pulse_lib.pulse_actor as rx (params (WIDTH 4)) (bind ...))` resolves a
+namespaced exported actor, validates instance-local parameter overrides and
+explicit clock/reset/interface bindings, and emits a specialized child
+scheduled `.fsm` artifact named `<importing_actor>__<instance>.fsm`.
+`parse_file(...)` resolves external library files from the importing source
+directory, `FSMLIB`, and the current directory, checking both dotted and
+path-like file names such as `common.pulse.isf` and `common/pulse.isf`.
+`parse_source(...)` can resolve same-source library roots; general external
+resolution requires a real source path, so file-backed library use should call
+`parse_file(...)`. Generated top wiring/HDL integration for those library
+actor instances remains outside this slice.
+
 Supported CLI entrypoints:
 
 ```bash
@@ -759,10 +790,10 @@ key:
 files
 ```
 
-`files` is a hash reference mapping `.fsm` basenames to scheduled module or
-generated composition-top `.fsm` source text. The generated `.fsm` text is a
-reviewable compiler artifact and then flows through the existing `.fsm`
-pipeline.
+`files` is a hash reference mapping `.fsm` basenames to scheduled module,
+specialized library-child module, or generated composition-top `.fsm` source
+text. The generated `.fsm` text is a reviewable compiler artifact and then
+flows through the existing `.fsm` pipeline.
 The plain `file.isf` CLI path lowers through that pipeline into generated HDL.
 Each public `files` key is a `.fsm` basename with no directory components.
 Scheduled module values are `.fsm` source text rooted at
@@ -858,6 +889,7 @@ transaction_stages
 temporal_contracts
 dt_blocks
 generated_composition
+library_uses
 compatible_fanin_groups
 priority_resolutions
 resource_arbitration
@@ -880,6 +912,9 @@ compatible_fanin_groups entries: kind, domain, sources, optional target/value ke
 compatible_fanin_groups source entries: same bounded source keys as compile_issues
 priority_resolutions entries: target, winner, winner_kind, loser, loser_kind
 resource_arbitration entries: resource, kind, arbiter, user, user_kind, suppressed_by
+library_uses entries: library, alias, export, kind, instance, module, scheduled_fsm, parameters, bindings
+library_uses parameter entries: name, source, value
+library_uses binding entries: role, library_name, parent_name, width
 ```
 
 For each `dt_blocks` entry, `assignments` is a non-negative integer count of
@@ -1040,7 +1075,8 @@ Bounded but not fully frozen:
 - `inferred_storage[].role`, `compile_issues[]`,
   `compatible_fanin_groups[]`, `priority_resolutions[]`,
   `resource_arbitration[]`, `transaction_stages[]`, `temporal_contracts[]`,
-  and `generated_composition` are bounded summaries, not raw IR exports.
+  `library_uses[]`, and `generated_composition` are bounded summaries, not raw
+  IR exports.
 
 Blockers before flipping `schedule_report_full_schema_stable` to true:
 
@@ -1061,6 +1097,7 @@ These are not stable public interfaces yet:
 
 - The raw actor hash returned by the parser as a whole.
 - Actor fields beyond the advertised `actor_shell_required_keys`.
+- Raw library resolver state and raw exported library actor hashes.
 - `FSM::Scheduler::ISF::LoweringIR` internals.
 - Emitter-private state objects.
 - Any unadvertised keys in the lower-result hash or schedule report.

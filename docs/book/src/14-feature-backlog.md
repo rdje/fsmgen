@@ -438,12 +438,14 @@ ISF libraries are broader than scalar constants or type packages: they should
 be able to contain reusable ISF actors, transactions, drives, and associated
 constraints when those surfaces are specified.
 
-Current boundary: no reusable ISF library import surface has shipped yet. A
-future library system must define specialization, binding, search roots,
-diagnostics, schedule report visibility, and public contract metadata before
-implementation.
+Current boundary: the first reusable ISF library import slice has shipped for
+resolution and review artifacts. Actor roots may import library roots, use an
+exported actor, validate use-site parameters and explicit bindings, emit a
+specialized child scheduled `.fsm` artifact, and project bounded
+`library_uses` schedule-report metadata. Generated top wiring and end-to-end
+HDL for library actor instances remain backlog for the FIFO fixture slice.
 
-Planned source model:
+Shipped source model for actor exports:
 
 ```lisp
 (library fifo_lib
@@ -454,7 +456,7 @@ Planned source model:
     ... reusable actor body ...))
 ```
 
-Planned use model:
+Shipped use model for actor exports:
 
 ```lisp
 (actor top
@@ -474,13 +476,13 @@ Planned use model:
       (output empty empty_o))))
 ```
 
-Imports are actor-scoped in the first planned model. Imported definitions stay
+Imports are actor-scoped in the first shipped model. Imported definitions stay
 namespaced by default; `as alias` creates a local namespace alias, not
 unqualified symbol pollution. The first shipped export target should be
 reusable actors. Standalone transaction templates and standalone drive helpers
 need their own binding rules before they become public library exports.
 
-Planned specialization and binding model:
+Shipped specialization and binding model:
 
 ```lisp
 (actor fifo
@@ -522,13 +524,23 @@ semantics. Every exported actor interface port must be bound exactly once with
 matching direction and matching specialized width. No implicit truncation,
 extension, or slicing is performed by the binder.
 
-Generated names should be deterministic: the authored instance name remains
+Generated names are deterministic in the shipped resolver: the authored
+instance name remains
 the stable diagnostic/report identity, while the first specialized child module
-and scheduled `.fsm` basename should use `<importing_actor>__<instance>` and
-`<importing_actor>__<instance>.fsm`. Successful reports should eventually
-expose a bounded `library_uses` array with library/export/instance identity,
-parameter source/value summaries, binding summaries, and generated artifact
-names without exposing raw resolver or lowerer internals.
+and scheduled `.fsm` basename use `<importing_actor>__<instance>` and
+`<importing_actor>__<instance>.fsm`. Successful reports expose a bounded
+`library_uses` array with library/export/instance identity, parameter
+source/value summaries, binding summaries, and generated artifact names without
+exposing raw resolver or lowerer internals.
+
+Resolver scope: `parse_file(...)` checks same-source library roots, then
+external library files under the importing source directory, `FSMLIB` entries,
+and the current directory. For a dotted namespace such as `common.fifo`, both
+`common.fifo.isf` and `common/fifo.isf` are candidate file names. `parse_source`
+can use same-source library roots but cannot resolve external files without a
+real source path. Standalone transaction/drive exports, symbolic parameter
+values, derived parameter expressions, and generated top HDL wiring are still
+deferred.
 
 FIFO modeling rule: a FIFO should be modeled primarily as an actor because it
 owns persistent storage, pointers, occupancy, full/empty flags, reset behavior,

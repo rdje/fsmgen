@@ -225,7 +225,13 @@ and present. The public `--emit-schedule-json` path is audited to emit the same
 report as the in-process scheduler with clean stderr. The public `--outdir`
 path is audited to write multi-file scheduled `.fsm` artifacts matching the
 in-process lower-result file map. Multi-file schedule reports are currently
-parent-scoped, and that scope is advertised in the manifest. The plain
+parent-scoped, and that scope is advertised in the manifest. Reusable library
+actor uses now project through a bounded `library_uses` schedule-report array
+with library/export/instance identity, generated child artifact names,
+parameter source/value summaries, and explicit binding summaries. The
+lower-result `files` map can include specialized library-child scheduled
+`.fsm` artifacts, but generated top wiring/HDL integration for those library
+actor instances is still backlog work. The plain
 `file.isf` CLI path is audited to reach generated HDL with clean stderr,
 including when the advertised `--strict` flag is present. Transaction summaries
 include the generated state families used by the current scheduler, including
@@ -237,6 +243,13 @@ The consolidated backlog for deferred user-visible work is
 [Feature Backlog](14-feature-backlog.md). The ISF-specific current
 limitations are:
 
+- Reusable library imports currently ship the resolver/review-artifact slice:
+  actor-scoped `(imports ...)`, `(use ...)`, exported actor resolution,
+  use-site parameter and binding validation, specialized child scheduled
+  `.fsm` artifacts, and bounded `library_uses` report metadata. Generated top
+  wiring/HDL integration for library actor instances, the reusable FIFO
+  fixture, standalone transaction/drive exports, symbolic constants, and
+  derived parameter expressions remain backlog work.
 - `(do ...)` and `(spawn ...)` targets must resolve to declared same-actor
   transactions before scheduled `.fsm` emission. They bind named start/done
   signals in scheduled `.fsm`. Spawn parameter declaration, validation, child

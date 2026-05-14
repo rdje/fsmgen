@@ -169,15 +169,17 @@ than folded into the report.
 
 ## 3. Source Root
 
-The root form is:
+The public compile/report entry root is:
 
 ```lisp
 (actor name
   actor_clause...)
 ```
 
-The active parser accepts one actor root from the Lispish source and normalizes
-the Lispish nested-head shape into canonical `(actor name ...)`.
+The active parser accepts one actor root from the Lispish source for the
+compile/report entry actor and normalizes the Lispish nested-head shape into
+canonical `(actor name ...)`. Imported sources may additionally provide
+`(library name ...)` roots as described in [3.1](#31-reusable-library-imports).
 Accepted parser output preserves `name` as the public actor-shell
 `actor_name`; nested or otherwise non-scalar actor names are rejected before the
 parser returns an actor shell.
@@ -187,6 +189,9 @@ Supported actor clauses:
 - `(reset name)` or `(reset (name async active_low))`
 - `(watchdog N)`
 - `(interface ...)`
+- actor-level `(params ...)` for reusable library actors
+- actor-level `(imports ...)` and `(use ...)` for the first reusable library
+  import-resolution slice
 - actor-level `(drive ...)` definitions
 - `(transaction name ...)`
 - `(rule name condition action...)`
@@ -195,10 +200,10 @@ Supported actor clauses:
 - `(priority ...)`
 
 Actor-shell singleton clauses are not mergeable. At most one `(clock ...)`,
-`(reset ...)`, `(watchdog ...)`, `(interface ...)`, and `(resources ...)`
-clause may appear in an actor. Duplicate singleton clauses are rejected before
-the parser returns an actor shell instead of letting later clauses overwrite
-earlier public fields.
+`(reset ...)`, `(watchdog ...)`, `(interface ...)`, `(params ...)`,
+`(imports ...)`, and `(resources ...)` clause may appear in an actor.
+Duplicate singleton clauses are rejected before the parser returns an actor
+shell instead of letting later clauses overwrite earlier public fields.
 
 Additional actor clauses with mixed parser/scheduler behavior:
 - actor-level `(phase name property...)`, structurally validated as a
@@ -223,6 +228,104 @@ Deprecated compatibility:
   signal. Legacy handshake metadata will not gain lowering semantics;
   malformed legacy forms point authors toward `(on ...)`, generated
   `can_accept`, or transaction `(stage ...)` for ready/valid barriers.
+
+## 3.1 Reusable Library Imports
+
+Reusable ISF libraries are source-intent roots for tested reusable design
+descriptions. They are not textual includes. Imported definitions still lower
+through scheduled `.fsm` review artifacts before any HDL backend sees them.
+
+The first shipped library root shape is:
+
+```lisp
+(library common.pulse
+  (exports
+    (actor pulse_actor))
+
+  (actor pulse_actor
+    ... reusable actor body ...))
+```
+
+The first shipped export kind is `actor`. Standalone `transaction` and `drive`
+exports are still deferred because they need an owning actor, storage, reset,
+interface, and conflict context before their runtime semantics are public.
+Unsupported export kinds fail closed.
+
+Actor roots import and use exported actors with actor-scoped clauses:
+
+```lisp
+(actor top
+  (imports
+    (library common.pulse as pulse_lib))
+
+  (use pulse_lib.pulse_actor as rx
+    (params
+      (WIDTH 4))
+    (bind
+      (clock clk)
+      (input trigger trigger)
+      (output fired fired))))
+```
+
+Import aliases are explicit local namespaces. Without `as alias`, the dotted
+library name is the namespace prefix, so `common.pulse.pulse_actor` remains
+namespaced rather than unqualified. Duplicate aliases and duplicate use-site
+instance names fail closed.
+
+Reusable actor parameters are declared with one actor-level `(params ...)`
+clause. Parameter names must be unique HDL identifiers and every parameter has
+a default value:
+
+```lisp
+(actor pulse_actor
+  (params
+    (WIDTH 1))
+  ...)
+```
+
+Use-site overrides are instance-local. Missing overrides use the exported
+actor default. Unknown overrides, duplicate overrides, unsupported symbolic
+values, and override shapes that do not match aggregate/list defaults fail
+closed. The first value domain is scalar decimal literals, exact-width numeric
+literals in the shipped ISF parameter syntax, and compatible aggregate/list
+literals.
+
+Bindings are explicit. A reusable actor with a clock or reset must bind that
+signal at the use site. Reset kind and polarity remain owned by the reusable
+actor in this slice; the use site binds the parent reset signal but does not
+change sync/async or polarity semantics. Every exported actor interface port
+must be bound exactly once with matching direction and matching known width.
+No implicit truncation, extension, or slicing is performed by the library
+binder.
+
+Resolution rules:
+
+- Same-source `(library ...)` roots can be resolved by both `parse_file(...)`
+  and `parse_source(...)`.
+- `parse_file(...)` also resolves external library files from the importing
+  source directory, each `FSMLIB` entry, and the current directory.
+- For a dotted namespace such as `common.pulse`, both `common.pulse.isf` and
+  `common/pulse.isf` are candidate file names under each root.
+- `parse_source(...)` has no general external-file search root unless its
+  source label is a real file path; use `parse_file(...)` for file-backed
+  library resolution.
+
+Lowering emits one specialized child scheduled `.fsm` artifact for each
+resolved library actor use. The deterministic module and file basename are
+`<importing_actor>__<instance>` and `<importing_actor>__<instance>.fsm`.
+Successful schedule reports expose a bounded top-level `library_uses` array
+with `library`, `alias`, `export`, `kind`, `instance`, `module`,
+`scheduled_fsm`, `parameters`, and `bindings`. Parameter summaries expose
+`name`, `source`, and stringified `value`. Binding summaries expose `role`,
+`library_name`, `parent_name`, and `width`; clock/reset bindings use JSON null
+for `library_name`, and reset/clock width is `1`.
+
+Current boundary: `ISF-LIBRARIES.3` resolves reusable actors, validates
+parameters and bindings, emits child scheduled `.fsm` artifacts, and reports
+bounded provenance. Generated top wiring/HDL integration for library actor
+instances, the reusable FIFO fixture, standalone transaction/drive exports,
+symbolic constants, derived parameter expressions, and library actors that
+import other libraries remain deferred.
 
 ## 4. Clock, Reset, Watchdog
 
@@ -1378,17 +1481,15 @@ Focused tests:
 - [t/1227-isf-schedule-report-freeze-boundary.t](../t/1227-isf-schedule-report-freeze-boundary.t)
 - [t/1228-isf-spi-fixture-coverage.t](../t/1228-isf-spi-fixture-coverage.t)
 - [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)
+- [t/1230-isf-library-import-resolution.t](../t/1230-isf-library-import-resolution.t)
 
 ## 12. Explicitly Deferred
 
-- Reusable ISF library imports. The planned public model uses `(library name
-  ...)` source roots, actor-scoped library imports, namespaced imported actor
-  use, exported actors as the first concrete target, instance-local
-  `(params ...)` overrides, explicit clock/reset/interface bindings,
-  deterministic `<importing_actor>__<instance>` child artifact names, and
-  bounded `library_uses` report provenance. No parser/lowerer support is
-  shipped until resolution, specialization, binding, diagnostics, and fixture
-  coverage are complete.
+- Reusable ISF library behavior beyond the shipped resolver/review-artifact
+  slice: generated top wiring/HDL integration for library actor instances, the
+  reusable FIFO fixture, standalone transaction/drive exports, symbolic
+  constants, derived parameter expressions, and library actors that import
+  other libraries.
 - Old `(handshake ...)` semantics beyond validated ignored compatibility
   parsing.
 - The removed `(assign ...)` action keyword; authored transaction uses fail

@@ -32,6 +32,7 @@ sub emit($self, $ir) {
         temporal_contracts => $self->_temporal_contract_summary($ir),
         dt_blocks      => $self->_dt_summary($ir),
         generated_composition => $self->_generated_composition_summary($ir),
+        library_uses   => $self->_library_use_summary($ir),
         compatible_fanin_groups => $self->_compatible_fanin_group_summary($ir),
         priority_resolutions => $self->_priority_resolution_summary($ir),
         resource_arbitration => $self->_resource_arbitration_summary($ir),
@@ -231,6 +232,8 @@ sub _generated_composition_summary($self, $ir) {
     my $actor_name = $ir->{actor_name};
     my $children = $ir->{children} || {};
 
+    my %spawn_child = map { $_->{child} => 1 } @spawn_instances;
+
     return {
         kind       => 'spawn_generated_top',
         top_module => "${actor_name}_top",
@@ -241,12 +244,50 @@ sub _generated_composition_summary($self, $ir) {
         },
         children  => [
             map { $self->_generated_composition_child_summary($_, $children->{$_}) }
-            sort keys %$children
+            sort keys %spawn_child
         ],
         instances => [
             map { $self->_generated_composition_instance_summary($_, $children->{$_->{child}}) }
             @spawn_instances
         ],
+    };
+}
+
+sub _library_use_summary($self, $ir) {
+    return [
+        map {
+            {
+                library       => $_->{library},
+                alias         => $_->{alias},
+                export        => $_->{export},
+                kind          => $_->{kind},
+                instance      => $_->{instance},
+                module        => $_->{module},
+                scheduled_fsm => $_->{scheduled_fsm},
+                parameters    => [
+                    map {
+                        {
+                            name   => $_->{name},
+                            source => $_->{source},
+                            value  => _format_isf_value($_->{value}),
+                        }
+                    } @{$_->{parameters} || []}
+                ],
+                bindings      => [
+                    map { _bounded_library_binding_summary($_) }
+                    @{$_->{bindings} || []}
+                ],
+            }
+        } @{$ir->{library_uses} || []}
+    ];
+}
+
+sub _bounded_library_binding_summary($binding) {
+    return {
+        role         => $binding->{role},
+        library_name => exists($binding->{library_name}) ? $binding->{library_name} : undef,
+        parent_name  => $binding->{parent_name},
+        width        => exists($binding->{width}) ? $binding->{width} : undef,
     };
 }
 

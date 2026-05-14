@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md), whose current
-  frontier is `ISF-LIBRARIES.3`. The public-contract tree remains
+  frontier is `ISF-LIBRARIES.4`. The public-contract tree remains
   cross-cutting and should not displace feature delivery unless the selected
   feature changes a public surface. The completed
   `ISF-SCHEDULE-REPORTS`, `ISF-DATA-WIDTHS`, `ISF-STAGES-CONTRACTS`,
@@ -90,6 +90,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `library_uses` schedule-report provenance. Standalone transaction/drive
   exports remain deferred until their owning-context binding rules are
   specified. The active frontier advances to `ISF-LIBRARIES.3`.
+- `ISF-LIBRARIES.3` is complete. The parser now resolves exported actor uses
+  from `(library name ...)` roots via actor-scoped `(imports ...)` and
+  `(use ...)`, searching the importing source directory, `FSMLIB`, and cwd for
+  file-backed sources. Use-site parameter overrides and explicit
+  clock/reset/interface bindings fail closed before scheduler handoff. Lowering
+  emits specialized child scheduled `.fsm` review artifacts and successful
+  reports expose bounded `library_uses` provenance. Generated top wiring/HDL
+  integration for library actor instances remains for the FIFO fixture slice.
+  The active frontier advances to `ISF-LIBRARIES.4`.
 - `ISF-RESOURCE-PRIORITY.1` is complete. The current inventory records that
   `(resources ...)` is validated metadata only, accepted arbiters are
   `priority` and `round_robin`, and successful resource arbitration is not yet
@@ -4754,7 +4763,7 @@ Left:
 - Use the first active tree in [docs/TASK_TREE.md](docs/TASK_TREE.md) when
   selecting the next PNT slice. The current first active tree is
   [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md), whose frontier
-  is `ISF-LIBRARIES.3`.
+  is `ISF-LIBRARIES.4`.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

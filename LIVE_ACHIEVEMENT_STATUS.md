@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF library import resolution
+- Active R14 task-tree slice: `ISF-LIBRARIES.3` is complete.
+- Actor-scoped `(imports ...)` and `(use ...)` now resolve exported actors
+  from `(library name ...)` roots on the file-backed source-dir/`FSMLIB`/cwd
+  search path.
+- The parser validates use-site parameters and clock/reset/interface bindings
+  before scheduler handoff.
+- Lowering emits specialized child scheduled `.fsm` artifacts and schedule
+  reports expose bounded `library_uses` provenance.
+- Generated top wiring/HDL integration remains for `ISF-LIBRARIES.4`, now the
+  next active R14 frontier.
+
 ## 2026-05-14: R14 — ISF library binding model
 - Active R14 task-tree slice: `ISF-LIBRARIES.2` is complete.
 - The first reusable-library specialization target is exported actors with

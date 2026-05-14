@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF library import resolution implementation
+- Shipping resolution before generated top wiring is deliberate. It gives the
+  project a reviewable, fail-closed parser/lowerer boundary for libraries
+  without claiming end-to-end reusable HDL instantiation prematurely.
+- Library use is modeled as specialization of an exported actor, not as text
+  expansion. The emitted child `.fsm` keeps the cycle-level artifact visible
+  and makes provenance inspectable before top-level wiring is added.
+- The first resolver is conservative: actor exports only, no nested library
+  imports inside library actors, no symbolic parameters, and exact interface
+  width matching. Each deferred relaxation needs its own runtime semantics and
+  diagnostics.
+- `library_uses` is intentionally a bounded summary. Downstream tools get the
+  identity, generated artifact names, parameter sources, and bindings they can
+  rely on without coupling to raw parser or LoweringIR structures.
 ## 2026-05-14: ISF library binding model
 - Exported actors are the right first specialization target because they own a
   complete hardware context: clock/reset policy, interface, storage, and

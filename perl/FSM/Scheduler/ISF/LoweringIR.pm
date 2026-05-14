@@ -56,8 +56,20 @@ sub build_module($self, $actor) {
         $child_irs{$cname} = $self->_build_child_ir($ct, $actor, $cname);
     }
 
+    my @library_instances;
+    for my $use (@{$actor->{library_uses} || []}) {
+        my $module = $use->{module};
+        confess "Library use '$use->{instance}' is missing a generated module name\n"
+            unless defined($module) && !ref($module) && length($module);
+        confess "Library use '$use->{instance}' generated module '$module' conflicts with another generated child\n"
+            if exists $child_irs{$module};
+        $child_irs{$module} = $self->_build_library_child_ir($use, $actor);
+        push @library_instances, _library_instance_metadata($use);
+    }
+
     my $parent_ir = $self->_build_parent_ir($actor, \%spawned);
     $parent_ir->{children} = \%child_irs;
+    $parent_ir->{library_uses} = \@library_instances;
     return $parent_ir;
 }
 
@@ -115,6 +127,23 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
         }
     }
     _finalize_ir($ir);
+    return $ir;
+}
+
+sub _build_library_child_ir($self, $use, $parent_actor) {
+    my $child_actor = _clone_isf_value($use->{actor});
+    confess "Library use '$use->{instance}' does not carry a reusable actor shell\n"
+        unless ref($child_actor) eq 'HASH';
+
+    $child_actor->{actor_name} = $use->{module};
+    my $ir = $self->_build_parent_ir($child_actor, {});
+    $ir->{library_origin} = {
+        parent_actor   => $parent_actor->{actor_name},
+        library        => $use->{library},
+        export         => $use->{export},
+        instance       => $use->{instance},
+        library_source => $use->{library_source},
+    };
     return $ir;
 }
 
@@ -228,7 +257,7 @@ sub _build_parent_ir($self, $actor, $spawned) {
         clock      => $actor->{clock},
         reset      => $actor->{reset},
         watchdog   => $actor->{watchdog},
-        params     => [],
+        params     => _actor_param_declarations($actor),
         ports      => \@ports,
         states     => \@states,
         dt_blocks  => \@dts,
@@ -316,6 +345,61 @@ sub _validate_transaction_parameter_clauses($self, $actor, $spawned) {
             unless $spawned->{$tx_name};
     }
     return 1;
+}
+
+sub _actor_param_declarations {
+    my ($actor) = @_;
+    return [] unless ref($actor) eq 'HASH';
+
+    my $actor_name = $actor->{actor_name} // 'unknown';
+    my @params;
+    my %seen;
+    for my $param (@{$actor->{params} || []}) {
+        confess "Actor '$actor_name': params entries must be hash references\n"
+            unless ref($param) eq 'HASH';
+        my $name = $param->{name};
+        confess "Actor '$actor_name': parameter names must be scalar HDL identifiers\n"
+            unless _is_hdl_identifier($name);
+        confess "Actor '$actor_name': duplicate parameter '$name'\n"
+            if $seen{$name}++;
+        _validate_isf_param_value(
+            $param->{value},
+            "Actor '$actor_name': parameter '$name'",
+        );
+        push @params, {
+            name  => $name,
+            value => _clone_isf_value($param->{value}),
+        };
+    }
+
+    return \@params;
+}
+
+sub _library_instance_metadata {
+    my ($use) = @_;
+    my %override_by_name = map { $_->{name} => $_ } @{$use->{parameter_overrides} || []};
+    my @parameters;
+    for my $param (@{($use->{actor} || {})->{params} || []}) {
+        my $override = $override_by_name{$param->{name}};
+        push @parameters, {
+            name   => $param->{name},
+            source => $override ? 'override' : 'default',
+            value  => _clone_isf_value($override ? $override->{value} : $param->{value}),
+        };
+    }
+
+    return {
+        library       => $use->{library},
+        library_source=> $use->{library_source},
+        alias         => $use->{alias},
+        export        => $use->{export},
+        kind          => $use->{kind} // 'actor',
+        instance      => $use->{instance},
+        module        => $use->{module},
+        scheduled_fsm => $use->{scheduled_fsm},
+        parameters    => \@parameters,
+        bindings      => _clone_isf_value($use->{bindings} || []),
+    };
 }
 
 sub _build_ports($self, $actor) {
@@ -1176,12 +1260,12 @@ sub _is_hdl_identifier {
 sub _validate_isf_param_value {
     my ($value, $context) = @_;
     if (!ref($value)) {
-        confess "$context uses unsupported parameter value '$value'; first ISF spawn parameter binding accepts numeric, exact-width, and aggregate/list literals only\n"
+        confess "$context uses unsupported parameter value '$value'; first ISF parameter binding accepts numeric, exact-width, and aggregate/list literals only\n"
             unless defined($value) && _is_numeric_or_exact_width_literal($value);
         return 1;
     }
 
-    confess "$context uses unsupported parameter value shape; first ISF spawn parameter binding accepts non-empty aggregate/list literals only\n"
+    confess "$context uses unsupported parameter value shape; first ISF parameter binding accepts non-empty aggregate/list literals only\n"
         unless ref($value) eq 'ARRAY' && @$value;
 
     for my $item (@$value) {

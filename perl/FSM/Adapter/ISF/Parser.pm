@@ -8,7 +8,10 @@ use feature qw(signatures postderef);
 no warnings qw(experimental::signatures experimental::smartmatch);
 
 use Lispish;
+use Cwd qw(abs_path);
+use File::Basename qw(dirname);
 use File::Slurp qw(read_file);
+use File::Spec;
 use FSM::Adapter::ISF::LispishAdapter;
 use FSM::Debug;
 use FSM::Support::ISFResourceCatalog qw(
@@ -43,6 +46,8 @@ my %RULE_ASSIGNMENT_FORBIDDEN_EXPR_HEADS = map { $_ => 1 } qw(
 #     rules         => [ { name => ..., when => ..., actions => [...] }, ... ],
 #     resources     => [ { name => ..., arbiter => ..., kind => ..., users => [...] }, ... ],
 #     priorities    => [ ... ],
+#     imports       => [ ... ],
+#     library_uses  => [ ... ],
 #   }
 
 sub new($class, %args) {
@@ -71,13 +76,15 @@ sub parse_source($self, $source_text, $source_label) {
     fsm_debug("Lispish produced " . scalar(@$raw) . " top-level form(s)", 3);
 
     # Stage 2: normalize through the Lispish adapter
-    my $actor_ast = $self->{adapter}->find_form_by_head($raw, 'actor');
+    my $forms = $self->{adapter}->normalize_multi($raw);
+    my $actor_ast = _first_form_by_head($forms, 'actor');
     confess "Error: no (actor ...) root found in '$source_label'\n"
         unless $actor_ast;
 
     # Stage 3: validate and build typed AST
     fsm_debug("Building typed actor AST", 3);
     my $result = $self->_build_actor($actor_ast, $source_label);
+    $self->_resolve_library_uses($result, $forms, $source_label);
     fsm_debug("Actor '" . $result->{actor_name} . "' parsed: "
         . scalar(@{$result->{transactions}}) . " tx, "
         . scalar(@{$result->{rules}}) . " rules, "
@@ -112,6 +119,10 @@ sub _build_actor($self, $actor_ast, $source_label) {
         drives       => {},
         phases       => [],
         stages       => [],
+        params       => [],
+        imports      => [],
+        uses         => [],
+        library_uses => [],
     };
     my %actor_phase_names;
     my %actor_stage_names;
@@ -142,6 +153,15 @@ sub _build_actor($self, $actor_ast, $source_label) {
                 $self->_claim_singleton_actor_clause($actor_name, 'interface', \%singleton_actor_clauses);
                 $result->{interface} = $self->_parse_interface($clause);
             }
+            when ('params') {
+                $self->_claim_singleton_actor_clause($actor_name, 'params', \%singleton_actor_clauses);
+                $result->{params} = $self->_parse_actor_params($clause, $actor_name);
+            }
+            when ('imports') {
+                $self->_claim_singleton_actor_clause($actor_name, 'imports', \%singleton_actor_clauses);
+                $result->{imports} = $self->_parse_imports($clause, $actor_name);
+            }
+            when ('use')       { push @{$result->{uses}}, $self->_parse_use($clause, $actor_name); }
             when ('handshake') {
                 my $handshake_name = $self->_parse_handshake($clause);  # deprecated, validated then ignored
                 confess "Error: duplicate handshake '$handshake_name' in actor '$actor_name'; "
@@ -200,6 +220,574 @@ sub _claim_singleton_actor_clause($self, $actor_name, $keyword, $seen) {
         if $seen->{$keyword}++;
 
     return 1;
+}
+
+sub _first_form_by_head($forms, $head) {
+    for my $form (@{$forms || []}) {
+        next unless ref($form) eq 'ARRAY' && @$form;
+        next unless defined($form->[0]) && !ref($form->[0]);
+        return $form if $form->[0] eq $head;
+    }
+    return undef;
+}
+
+sub _forms_by_head($forms, $head) {
+    return grep {
+        ref($_) eq 'ARRAY'
+            && @$_
+            && defined($_->[0])
+            && !ref($_->[0])
+            && $_->[0] eq $head
+    } @{$forms || []};
+}
+
+sub _parse_actor_params($self, $clause, $actor_name) {
+    confess "Error: actor '$actor_name' params require '(params (NAME value) ...)'\n"
+        unless @$clause >= 2;
+
+    my @params;
+    my %seen;
+    for my $entry (@{$clause}[1 .. $#$clause]) {
+        confess "Error: actor '$actor_name' params entries require '(NAME value)'\n"
+            unless ref($entry) eq 'ARRAY' && @$entry == 2;
+        my ($name, $value) = @$entry;
+        confess "Error: actor '$actor_name' parameter names must be scalar HDL identifiers\n"
+            unless _is_hdl_identifier($name);
+        confess "Error: actor '$actor_name' has duplicate parameter '$name'\n"
+            if $seen{$name}++;
+        _validate_isf_param_value(
+            $value,
+            "Error: actor '$actor_name' parameter '$name'",
+        );
+        push @params, {
+            name  => $name,
+            value => _clone_isf_value($value),
+        };
+    }
+
+    return \@params;
+}
+
+sub _parse_imports($self, $clause, $actor_name) {
+    my @imports;
+    my %seen_alias;
+
+    confess "Error: actor '$actor_name' imports require '(imports (library name [as alias]) ...)'\n"
+        unless @$clause >= 2;
+
+    for my $entry (@{$clause}[1 .. $#$clause]) {
+        confess "Error: actor '$actor_name' import entries must be list forms\n"
+            unless ref($entry) eq 'ARRAY' && @$entry;
+        confess "Error: actor '$actor_name' import entries require '(library name [as alias])'\n"
+            unless (@$entry == 2 || @$entry == 4)
+                && defined($entry->[0])
+                && !ref($entry->[0])
+                && $entry->[0] eq 'library'
+                && defined($entry->[1])
+                && !ref($entry->[1])
+                && _is_library_namespace($entry->[1]);
+
+        my $library = $entry->[1];
+        my $alias = $library;
+        if (@$entry == 4) {
+            confess "Error: actor '$actor_name' import for library '$library' requires '(library $library as alias)'\n"
+                unless defined($entry->[2])
+                    && !ref($entry->[2])
+                    && $entry->[2] eq 'as'
+                    && defined($entry->[3])
+                    && !ref($entry->[3])
+                    && _is_hdl_identifier($entry->[3]);
+            $alias = $entry->[3];
+        }
+
+        confess "Error: actor '$actor_name' has duplicate library import alias '$alias'\n"
+            if $seen_alias{$alias}++;
+
+        push @imports, {
+            library => $library,
+            alias   => $alias,
+        };
+    }
+
+    return \@imports;
+}
+
+sub _parse_use($self, $clause, $actor_name) {
+    confess "Error: actor '$actor_name' use requires '(use alias.actor as instance [(params ...)] (bind ...))'\n"
+        unless @$clause >= 4
+            && defined($clause->[1])
+            && !ref($clause->[1])
+            && length($clause->[1])
+            && defined($clause->[2])
+            && !ref($clause->[2])
+            && $clause->[2] eq 'as'
+            && defined($clause->[3])
+            && !ref($clause->[3])
+            && _is_hdl_identifier($clause->[3]);
+
+    my %seen_subclause;
+    my @params;
+    my @bindings;
+    my $saw_bind;
+
+    for my $subclause (@{$clause}[4 .. $#$clause]) {
+        confess "Error: actor '$actor_name' use '$clause->[3]' subclauses must be list forms\n"
+            unless ref($subclause) eq 'ARRAY' && @$subclause;
+        my $head = $subclause->[0];
+        confess "Error: actor '$actor_name' use '$clause->[3]' subclause heads must be scalar\n"
+            unless defined($head) && !ref($head) && length($head);
+        confess "Error: actor '$actor_name' use '$clause->[3]' has duplicate '$head' subclause\n"
+            if $seen_subclause{$head}++;
+
+        if ($head eq 'params') {
+            @params = @{$self->_parse_use_params($subclause, $actor_name, $clause->[3])};
+            next;
+        }
+        if ($head eq 'bind') {
+            $saw_bind = 1;
+            @bindings = @{$self->_parse_use_bind($subclause, $actor_name, $clause->[3])};
+            next;
+        }
+
+        confess "Error: actor '$actor_name' use '$clause->[3]' has unsupported subclause '$head'\n";
+    }
+
+    confess "Error: actor '$actor_name' use '$clause->[3]' requires a '(bind ...)' subclause\n"
+        unless $saw_bind;
+
+    return {
+        target              => $clause->[1],
+        instance            => $clause->[3],
+        parameter_overrides => \@params,
+        bindings            => \@bindings,
+    };
+}
+
+sub _parse_use_params($self, $clause, $actor_name, $instance) {
+    confess "Error: actor '$actor_name' use '$instance' params require '(params (NAME value) ...)'\n"
+        unless @$clause >= 2;
+
+    my @params;
+    my %seen;
+    for my $entry (@{$clause}[1 .. $#$clause]) {
+        confess "Error: actor '$actor_name' use '$instance' params entries require '(NAME value)'\n"
+            unless ref($entry) eq 'ARRAY' && @$entry == 2;
+        my ($name, $value) = @$entry;
+        confess "Error: actor '$actor_name' use '$instance' parameter override names must be scalar HDL identifiers\n"
+            unless _is_hdl_identifier($name);
+        confess "Error: actor '$actor_name' use '$instance' has duplicate parameter override '$name'\n"
+            if $seen{$name}++;
+        _validate_isf_param_value(
+            $value,
+            "Error: actor '$actor_name' use '$instance' parameter '$name'",
+        );
+        push @params, {
+            name  => $name,
+            value => _clone_isf_value($value),
+        };
+    }
+
+    return \@params;
+}
+
+sub _parse_use_bind($self, $clause, $actor_name, $instance) {
+    confess "Error: actor '$actor_name' use '$instance' bind requires binding entries\n"
+        unless @$clause >= 2;
+
+    my @bindings;
+    for my $entry (@{$clause}[1 .. $#$clause]) {
+        confess "Error: actor '$actor_name' use '$instance' bind entries must be list forms\n"
+            unless ref($entry) eq 'ARRAY' && @$entry;
+        my $role = $entry->[0];
+        confess "Error: actor '$actor_name' use '$instance' bind entry roles must be scalar\n"
+            unless defined($role) && !ref($role) && length($role);
+
+        if ($role eq 'clock' || $role eq 'reset') {
+            confess "Error: actor '$actor_name' use '$instance' $role binding requires '($role parent_signal)'\n"
+                unless @$entry == 2
+                    && defined($entry->[1])
+                    && !ref($entry->[1])
+                    && length($entry->[1]);
+            push @bindings, {
+                role        => $role,
+                parent_name => $entry->[1],
+            };
+            next;
+        }
+
+        if ($role eq 'input' || $role eq 'output') {
+            confess "Error: actor '$actor_name' use '$instance' $role binding requires '($role library_port parent_signal)'\n"
+                unless @$entry == 3
+                    && defined($entry->[1])
+                    && !ref($entry->[1])
+                    && length($entry->[1])
+                    && defined($entry->[2])
+                    && !ref($entry->[2])
+                    && length($entry->[2]);
+            push @bindings, {
+                role         => $role,
+                library_name => $entry->[1],
+                parent_name  => $entry->[2],
+            };
+            next;
+        }
+
+        confess "Error: actor '$actor_name' use '$instance' has unsupported bind role '$role'\n";
+    }
+
+    return \@bindings;
+}
+
+sub _resolve_library_uses($self, $actor, $forms, $source_label) {
+    return 1 unless @{$actor->{uses} || []};
+
+    confess "Error: actor '$actor->{actor_name}' uses imported libraries but has no '(imports ...)' clause\n"
+        unless @{$actor->{imports} || []};
+
+    my %same_source_libraries = $self->_same_source_libraries($forms, $source_label);
+    my %imports_by_alias;
+    my %resolved_by_alias;
+
+    for my $import (@{$actor->{imports}}) {
+        my $alias = $import->{alias};
+        my $library = $import->{library};
+        confess "Error: actor '$actor->{actor_name}' has duplicate library import alias '$alias'\n"
+            if $imports_by_alias{$alias}++;
+        $resolved_by_alias{$alias} = $self->_resolve_library(
+            $library,
+            \%same_source_libraries,
+            $source_label,
+            {},
+        );
+    }
+
+    my %seen_instance;
+    my @resolved_uses;
+    for my $use (@{$actor->{uses}}) {
+        my $instance = $use->{instance};
+        confess "Error: actor '$actor->{actor_name}' has duplicate library use instance '$instance'\n"
+            if $seen_instance{$instance}++;
+
+        my ($alias, $export) = _split_use_target($use->{target}, \%resolved_by_alias);
+        confess "Error: actor '$actor->{actor_name}' use '$instance' target '$use->{target}' does not match any imported library alias\n"
+            unless defined $alias;
+
+        my $library = $resolved_by_alias{$alias};
+        my $exported_actor = $library->{exports}{actor}{$export};
+        confess "Error: actor '$actor->{actor_name}' use '$instance' references missing actor export '$export' from library '$library->{name}'\n"
+            unless $exported_actor;
+
+        $self->_validate_use_params($actor, $use, $exported_actor);
+        my $bindings = $self->_validate_use_bindings($actor, $use, $exported_actor);
+
+        my $module = _specialized_library_module_name($actor->{actor_name}, $instance);
+        push @resolved_uses, {
+            library             => $library->{name},
+            library_source      => $library->{source},
+            alias               => $alias,
+            export              => $export,
+            kind                => 'actor',
+            instance            => $instance,
+            module              => $module,
+            scheduled_fsm       => "$module.fsm",
+            actor               => _clone_isf_value($exported_actor),
+            parameter_overrides => _clone_isf_value($use->{parameter_overrides} || []),
+            bindings            => $bindings,
+        };
+    }
+
+    $actor->{library_uses} = \@resolved_uses;
+    return 1;
+}
+
+sub _same_source_libraries($self, $forms, $source_label) {
+    my %libraries;
+    for my $form (_forms_by_head($forms, 'library')) {
+        my $library = $self->_parse_library_form($form, $source_label);
+        confess "Error: duplicate library '$library->{name}' in '$source_label'\n"
+            if exists $libraries{$library->{name}};
+        $libraries{$library->{name}} = $library;
+    }
+    return %libraries;
+}
+
+sub _resolve_library($self, $library_name, $same_source_libraries, $source_label, $seen) {
+    return $same_source_libraries->{$library_name}
+        if exists $same_source_libraries->{$library_name};
+
+    my @candidates = _library_file_candidates($library_name, $source_label);
+    my @searched;
+    for my $candidate (@candidates) {
+        push @searched, $candidate;
+        next unless -f $candidate && -r $candidate;
+        my $abs = abs_path($candidate) || $candidate;
+        my $key = "$abs:$library_name";
+        confess "Error: recursive library import of '$library_name' through '$candidate' is unsupported\n"
+            if $seen->{$key}++;
+
+        my $source = read_file($candidate);
+        my $raw = Lispish::multi(\$source);
+        confess "Error: failed to parse library '$library_name' source '$candidate' with Lispish\n"
+            unless defined $raw && ref($raw) eq 'ARRAY';
+        my $forms = $self->{adapter}->normalize_multi($raw);
+
+        my @matching;
+        for my $form (_forms_by_head($forms, 'library')) {
+            next unless defined($form->[1]) && !ref($form->[1]) && $form->[1] eq $library_name;
+            push @matching, $form;
+        }
+        confess "Error: library source '$candidate' contains multiple '(library $library_name ...)' roots\n"
+            if @matching > 1;
+        confess "Error: library source '$candidate' does not contain '(library $library_name ...)'\n"
+            unless @matching;
+
+        return $self->_parse_library_form($matching[0], $candidate);
+    }
+
+    confess "Error: library '$library_name' not found for '$source_label'; searched:\n"
+        . join('', map { "  - $_\n" } @searched);
+}
+
+sub _parse_library_form($self, $form, $source_label) {
+    confess "Error: (library ...) requires a scalar dotted namespace name\n"
+        unless ref($form) eq 'ARRAY'
+            && @$form >= 3
+            && defined($form->[1])
+            && !ref($form->[1])
+            && _is_library_namespace($form->[1]);
+
+    my $library_name = $form->[1];
+    my %exported_actor_names;
+    my %actor_defs;
+    my $saw_exports;
+
+    for my $clause (@{$form}[2 .. $#$form]) {
+        confess "Error: library '$library_name' body clauses must be list forms\n"
+            unless ref($clause) eq 'ARRAY' && @$clause;
+        my $head = $clause->[0];
+        confess "Error: library '$library_name' body clause heads must be scalar\n"
+            unless defined($head) && !ref($head) && length($head);
+
+        if ($head eq 'exports') {
+            confess "Error: library '$library_name' accepts only one '(exports ...)'\n"
+                if $saw_exports++;
+            for my $entry (@{$clause}[1 .. $#$clause]) {
+                confess "Error: library '$library_name' exports require '(actor name)' entries\n"
+                    unless ref($entry) eq 'ARRAY'
+                        && @$entry == 2
+                        && defined($entry->[0])
+                        && !ref($entry->[0])
+                        && defined($entry->[1])
+                        && !ref($entry->[1])
+                        && length($entry->[1]);
+                confess "Error: library '$library_name' export kind '$entry->[0]' is not supported yet; first shipped library exports are actors\n"
+                    unless $entry->[0] eq 'actor';
+                confess "Error: library '$library_name' has duplicate actor export '$entry->[1]'\n"
+                    if $exported_actor_names{$entry->[1]}++;
+            }
+            next;
+        }
+
+        if ($head eq 'actor') {
+            my $actor = $self->_build_actor($clause, $source_label);
+            confess "Error: library '$library_name' has duplicate actor definition '$actor->{actor_name}'\n"
+                if exists $actor_defs{$actor->{actor_name}};
+            confess "Error: library '$library_name' actor '$actor->{actor_name}' cannot import libraries yet\n"
+                if @{$actor->{imports} || []} || @{$actor->{uses} || []};
+            $actor_defs{$actor->{actor_name}} = $actor;
+            next;
+        }
+
+        confess "Error: library '$library_name' has unsupported body clause '$head'\n";
+    }
+
+    confess "Error: library '$library_name' requires an '(exports ...)' clause\n"
+        unless $saw_exports;
+    confess "Error: library '$library_name' exports at least one actor\n"
+        unless keys %exported_actor_names;
+
+    my %exports = (actor => {});
+    for my $actor_name (sort keys %exported_actor_names) {
+        confess "Error: library '$library_name' exports unknown actor '$actor_name'\n"
+            unless exists $actor_defs{$actor_name};
+        $exports{actor}{$actor_name} = $actor_defs{$actor_name};
+    }
+
+    return {
+        name    => $library_name,
+        source  => $source_label,
+        exports => \%exports,
+    };
+}
+
+sub _validate_use_params($self, $actor, $use, $exported_actor) {
+    my %declared = map { $_->{name} => $_ } @{$exported_actor->{params} || []};
+    for my $override (@{$use->{parameter_overrides} || []}) {
+        my $name = $override->{name};
+        confess "Error: actor '$actor->{actor_name}' use '$use->{instance}' overrides unknown parameter '$name'\n"
+            unless exists $declared{$name};
+        confess "Error: actor '$actor->{actor_name}' use '$use->{instance}' parameter '$name' shape does not match actor '$exported_actor->{actor_name}' declaration\n"
+            unless _param_values_shape_compatible($declared{$name}{value}, $override->{value});
+    }
+    return 1;
+}
+
+sub _validate_use_bindings($self, $actor, $use, $exported_actor) {
+    my @bindings = @{$use->{bindings} || []};
+    my %parent_ports = (
+        map({ $_->{name} => { %$_, direction => 'input' } } @{$actor->{interface}{inputs} || []}),
+        map({ $_->{name} => { %$_, direction => 'output' } } @{$actor->{interface}{outputs} || []}),
+    );
+    my %library_ports = (
+        map({ $_->{name} => { %$_, direction => 'input' } } @{$exported_actor->{interface}{inputs} || []}),
+        map({ $_->{name} => { %$_, direction => 'output' } } @{$exported_actor->{interface}{outputs} || []}),
+    );
+
+    my %seen_clock_reset;
+    my %seen_library_port;
+    my @resolved;
+
+    for my $binding (@bindings) {
+        my $role = $binding->{role};
+        if ($role eq 'clock' || $role eq 'reset') {
+            confess "Error: actor '$actor->{actor_name}' use '$use->{instance}' has duplicate $role binding\n"
+                if $seen_clock_reset{$role}++;
+            my $parent_name = $binding->{parent_name};
+            confess "Error: actor '$actor->{actor_name}' use '$use->{instance}' $role binding references unknown parent signal '$parent_name'\n"
+                unless exists $parent_ports{$parent_name}
+                    || (defined($actor->{$role}) && $actor->{$role} && (($role eq 'clock' ? $actor->{clock} : $actor->{reset}{name}) // '') eq $parent_name);
+            push @resolved, { %$binding, width => 1 };
+            next;
+        }
+
+        my $library_name = $binding->{library_name};
+        my $parent_name = $binding->{parent_name};
+        confess "Error: actor '$actor->{actor_name}' use '$use->{instance}' has duplicate binding for library port '$library_name'\n"
+            if $seen_library_port{$library_name}++;
+        confess "Error: actor '$actor->{actor_name}' use '$use->{instance}' references unknown library port '$library_name'\n"
+            unless exists $library_ports{$library_name};
+        confess "Error: actor '$actor->{actor_name}' use '$use->{instance}' binding for '$library_name' declares role '$role' but exported actor role is '$library_ports{$library_name}{direction}'\n"
+            unless $library_ports{$library_name}{direction} eq $role;
+        confess "Error: actor '$actor->{actor_name}' use '$use->{instance}' binding for '$library_name' references unknown parent signal '$parent_name'\n"
+            unless exists $parent_ports{$parent_name};
+        confess "Error: actor '$actor->{actor_name}' use '$use->{instance}' binding for '$library_name' targets parent '$parent_name' with direction '$parent_ports{$parent_name}{direction}', expected '$role'\n"
+            unless $parent_ports{$parent_name}{direction} eq $role;
+
+        my $library_width = $library_ports{$library_name}{width} // 1;
+        my $parent_width = $parent_ports{$parent_name}{width} // 1;
+        confess "Error: actor '$actor->{actor_name}' use '$use->{instance}' binding for '$library_name' width $library_width does not match parent '$parent_name' width $parent_width\n"
+            unless $library_width == $parent_width;
+
+        push @resolved, { %$binding, width => $library_width };
+    }
+
+    confess "Error: actor '$actor->{actor_name}' use '$use->{instance}' requires a clock binding for actor '$exported_actor->{actor_name}'\n"
+        if defined($exported_actor->{clock}) && length($exported_actor->{clock}) && !$seen_clock_reset{clock};
+    confess "Error: actor '$actor->{actor_name}' use '$use->{instance}' has a clock binding but actor '$exported_actor->{actor_name}' has no clock\n"
+        if (!defined($exported_actor->{clock}) || !length($exported_actor->{clock})) && $seen_clock_reset{clock};
+    confess "Error: actor '$actor->{actor_name}' use '$use->{instance}' requires a reset binding for actor '$exported_actor->{actor_name}'\n"
+        if $exported_actor->{reset} && !$seen_clock_reset{reset};
+    confess "Error: actor '$actor->{actor_name}' use '$use->{instance}' has a reset binding but actor '$exported_actor->{actor_name}' has no reset\n"
+        if !$exported_actor->{reset} && $seen_clock_reset{reset};
+
+    for my $port_name (sort keys %library_ports) {
+        confess "Error: actor '$actor->{actor_name}' use '$use->{instance}' does not bind library port '$port_name'\n"
+            unless $seen_library_port{$port_name};
+    }
+
+    return \@resolved;
+}
+
+sub _split_use_target($target, $libraries_by_alias) {
+    for my $alias (sort { length($b) <=> length($a) || $a cmp $b } keys %{$libraries_by_alias || {}}) {
+        next unless index($target, "$alias.") == 0;
+        my $export = substr($target, length($alias) + 1);
+        next unless defined($export) && length($export) && _is_hdl_identifier($export);
+        return ($alias, $export);
+    }
+    return (undef, undef);
+}
+
+sub _library_file_candidates($library_name, $source_label) {
+    my @roots;
+    if (defined($source_label) && !ref($source_label) && -f $source_label) {
+        push @roots, dirname(File::Spec->rel2abs($source_label));
+    }
+    push @roots, grep { defined($_) && length($_) } split(/:/, $ENV{FSMLIB} || '');
+    push @roots, File::Spec->curdir();
+
+    my $flat = "$library_name.isf";
+    my $pathish = File::Spec->catfile(split(/\./, $library_name)) . '.isf';
+    my @candidates;
+    my %seen;
+    for my $root (@roots) {
+        for my $rel ($flat, $pathish) {
+            my $candidate = File::Spec->catfile($root, $rel);
+            push @candidates, $candidate unless $seen{$candidate}++;
+        }
+    }
+    return @candidates;
+}
+
+sub _specialized_library_module_name($actor_name, $instance) {
+    my $name = "${actor_name}__${instance}";
+    $name =~ s/[^A-Za-z0-9_]/_/g;
+    return $name;
+}
+
+sub _is_hdl_identifier {
+    my ($value) = @_;
+    return defined($value) && !ref($value) && $value =~ /\A[A-Za-z_]\w*\z/;
+}
+
+sub _is_library_namespace {
+    my ($value) = @_;
+    return defined($value)
+        && !ref($value)
+        && $value =~ /\A[A-Za-z_]\w*(?:\.[A-Za-z_]\w*)*\z/;
+}
+
+sub _validate_isf_param_value {
+    my ($value, $context) = @_;
+    if (!ref($value)) {
+        confess "$context uses unsupported parameter value '$value'; first ISF library parameter binding accepts numeric, exact-width, and aggregate/list literals only\n"
+            unless defined($value) && _is_numeric_or_exact_width_literal($value);
+        return 1;
+    }
+
+    confess "$context uses unsupported parameter value shape; first ISF library parameter binding accepts non-empty aggregate/list literals only\n"
+        unless ref($value) eq 'ARRAY' && @$value;
+
+    for my $item (@$value) {
+        _validate_isf_param_value($item, $context);
+    }
+    return 1;
+}
+
+sub _is_numeric_or_exact_width_literal {
+    my ($value) = @_;
+    return 0 unless defined($value) && !ref($value);
+    return 1 if $value =~ /\A\d+\z/;
+    return 1 if $value =~ /\A\d+'[bBoOdDhH][0-9a-fA-F_xXzZ]+\z/;
+    return 0;
+}
+
+sub _param_values_shape_compatible {
+    my ($declared, $override) = @_;
+    return 1 if !ref($declared) && !ref($override);
+    return 0 unless ref($declared) eq 'ARRAY' && ref($override) eq 'ARRAY';
+    return 0 unless @$declared == @$override;
+    for my $index (0 .. $#$declared) {
+        return 0 unless _param_values_shape_compatible($declared->[$index], $override->[$index]);
+    }
+    return 1;
+}
+
+sub _clone_isf_value {
+    my ($value) = @_;
+    return [ map { _clone_isf_value($_) } @$value ] if ref($value) eq 'ARRAY';
+    return { map { $_ => _clone_isf_value($value->{$_}) } keys %$value } if ref($value) eq 'HASH';
+    return $value;
 }
 
 sub _parse_clock($self, $clause) {

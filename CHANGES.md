@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF library import resolution
+- Completed `ISF-LIBRARIES.3` by implementing the first reusable-library
+  parser/lowerer slice for exported actors.
+- Actor roots can now use `(imports ...)` and `(use ...)` to resolve
+  `(library name ...)` roots from the importing source directory, `FSMLIB`,
+  and the current directory.
+- The resolver validates exported actor use-site parameters and explicit
+  clock/reset/interface bindings before scheduler handoff.
+- Lowering emits specialized child scheduled `.fsm` review artifacts named
+  `<importing_actor>__<instance>.fsm`, and successful reports expose bounded
+  `library_uses` provenance.
+- Generated top wiring/HDL integration for library actor instances remains
+  deferred to the FIFO fixture slice. The active R14 PNT frontier advances to
+  `ISF-LIBRARIES.4`.
 ### R14 — ISF library binding model
 - Completed `ISF-LIBRARIES.2` by specifying the reusable-actor
   specialization and binding model.

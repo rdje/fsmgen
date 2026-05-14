@@ -72,13 +72,26 @@ reusable ISF design intent, not only scalar constants or types.
   Commit: `ISF-LIBRARIES.2: specify library binding model`
 
 - ID: `ISF-LIBRARIES.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement import resolution for reusable ISF libraries.`
   Acceptance: `The parser/lowerer can resolve imported reusable definitions
   from configured search roots, rejects ambiguous or missing definitions, and
   preserves provenance in scheduled artifacts and reports.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `prove -l t/1230-isf-library-import-resolution.t
+  t/1116-isf-public-schedule-report-key-family-audit.t
+  t/1121-isf-public-cli-schedule-report-audit.t
+  t/1131-isf-public-top-level-discovery-audit.t
+  t/1139-isf-public-lower-result-metadata-audit.t
+  t/1140-isf-public-schedule-report-metadata-audit.t
+  t/1142-isf-public-guidance-metadata-audit.t
+  t/1112-isf-public-interface-contract.t
+  t/1144-isf-public-tested-by-metadata-audit.t
+  t/1154-isf-public-facade-return-metadata-audit.t
+  t/1156-isf-public-lower-result-file-shape-audit.t
+  t/1183-ci-regression-tier-selection.t`;
+  `./bin/ci-regression isf --no-book`;
+  `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-LIBRARIES.3: implement library import resolution`
 
 - ID: `ISF-LIBRARIES.4`
   Status: `pending`
@@ -103,7 +116,7 @@ reusable ISF design intent, not only scalar constants or types.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-LIBRARIES.3` | `pending` | The public source model plus specialization/binding model are selected; import resolution can now be implemented against that boundary. |
+| 1 | `ISF-LIBRARIES.4` | `pending` | Import resolution and scheduled child artifacts now exist; the next feature slice should prove a reusable FIFO fixture and the generated top/HDL path. |
 
 ## Design Notes
 
@@ -136,7 +149,7 @@ Public terminology:
   are a separate source-intent surface for reusable actors and transaction
   patterns.
 
-Planned source roots:
+Source roots:
 
 ```lisp
 (library fifo_lib
@@ -149,8 +162,9 @@ Planned source roots:
 
 Rules:
 
-- A `.isf` source root may be an `(actor ...)` root, as today, or a planned
-  `(library name ...)` root once the feature ships.
+- A `.isf` compile/report entry source root may be an `(actor ...)` root, as
+  today. Imported file-backed or same-source reusable descriptions may provide
+  `(library name ...)` roots.
 - A library name is a non-empty HDL-identifier-compatible dotted namespace such
   as `common.fifo` or `vendor.ip.fifo`.
 - A library body may contain exported reusable definitions and private helper
@@ -376,6 +390,42 @@ Rejected cases:
 - attempts to use standalone transaction/drive exports before their binding
   model ships.
 
+## ISF-LIBRARIES.3 Import Resolution Implementation
+
+Shipped behavior:
+
+- Actor roots may carry one `(imports ...)` clause and one or more `(use ...)`
+  clauses.
+- Imported library roots use `(library name ...)` with an `(exports ...)`
+  clause. The first supported export kind is `actor`.
+- `parse_file(...)` resolves external library files from the importing source
+  directory, `FSMLIB` entries, and the current directory. For a library name
+  such as `common.pulse`, the resolver checks both `common.pulse.isf` and
+  `common/pulse.isf` under each root.
+- `parse_source(...)` can resolve same-source library roots, but external file
+  resolution requires `parse_file(...)` so the resolver has a source directory.
+- Use-site parameter overrides and clock/reset/interface bindings are validated
+  during parsing. Missing libraries, missing exports, unknown parameters,
+  missing port bindings, direction mismatches, unknown parent signals, and
+  width mismatches fail closed before scheduler handoff.
+- Lowering emits one specialized child scheduled `.fsm` file per resolved
+  library actor use. The child module/file name uses
+  `<importing_actor>__<instance>`.
+- Schedule reports now include a top-level `library_uses` array. Entries expose
+  bounded library/export/instance identity, generated child artifact names,
+  parameter source/value summaries, and binding summaries.
+- `generated_composition` remains scoped to spawned-child generated tops in
+  this slice; library actor instances do not yet generate top wiring.
+
+Remaining boundary:
+
+- Library actor instances are resolved and emitted as reviewable scheduled
+  child `.fsm` artifacts, but they are not yet wired into generated top HDL.
+- Standalone transaction and drive exports still fail closed.
+- Symbolic parameter values and derived parameter expressions remain deferred.
+- The first FIFO fixture belongs to `ISF-LIBRARIES.4`, where generated top/HDL
+  wiring must be handled before end-to-end FIFO reuse is claimed.
+
 ## Decisions
 
 - `2026-05-14`: Use **library** as the user-facing term for reusable ISF
@@ -409,10 +459,11 @@ Rejected cases:
 
 ## Blockers
 
-- No known design blocker remains for the next import-resolution implementation
-  slice. `ISF-LIBRARIES.3` must keep parser acceptance fail-closed until the
-  resolver, binder, scheduled artifacts, diagnostics, and tests honor the
-  `ISF-LIBRARIES.1` and `ISF-LIBRARIES.2` boundaries.
+- No known design blocker remains for the FIFO fixture slice.
+- Generated top wiring for library actor instances is not shipped by
+  `ISF-LIBRARIES.3`. `ISF-LIBRARIES.4` must connect the resolved child actor
+  artifacts into the normal composition/HDL path before claiming end-to-end
+  reusable FIFO HDL support.
 
 ## Verification Log
 
@@ -421,6 +472,9 @@ Rejected cases:
 | `2026-05-14` | `ISF-LIBRARIES` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-LIBRARIES.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-LIBRARIES.2` | `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-LIBRARIES.3` | `prove -l t/1230-isf-library-import-resolution.t t/1116-isf-public-schedule-report-key-family-audit.t t/1121-isf-public-cli-schedule-report-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1139-isf-public-lower-result-metadata-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1142-isf-public-guidance-metadata-audit.t t/1112-isf-public-interface-contract.t t/1144-isf-public-tested-by-metadata-audit.t t/1154-isf-public-facade-return-metadata-audit.t t/1156-isf-public-lower-result-file-shape-audit.t t/1183-ci-regression-tier-selection.t` | `passed; 12 files, 29 tests` |
+| `2026-05-14` | `ISF-LIBRARIES.3` | `./bin/ci-regression isf --no-book` | `passed; 138 files, 469 tests` |
+| `2026-05-14` | `ISF-LIBRARIES.3` | `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -429,6 +483,7 @@ Rejected cases:
 | `ISF-LIBRARIES` | `R14: log proposed ISF library support` | Proposed tree created from the FIFO/library design discussion. |
 | `ISF-LIBRARIES.1` | `ISF-LIBRARIES.1: specify library import model` | Public library terminology, source roots, import/use shape, namespaces, export kinds, and diagnostics boundary. |
 | `ISF-LIBRARIES.2` | `ISF-LIBRARIES.2: specify library binding model` | Actor parameter declarations, use-site overrides, clock/reset/interface binding, generated names, report provenance, and rejected cases. |
+| `ISF-LIBRARIES.3` | `ISF-LIBRARIES.3: implement library import resolution` | Parser/lowerer resolve exported library actors from source-dir/FSMLIB/cwd roots, emit specialized child scheduled `.fsm`, and project `library_uses` report metadata. |
 
 ## Changelog
 
@@ -437,3 +492,6 @@ Rejected cases:
   library/import model.
 - `2026-05-14`: Specified the first specialization and binding model for
   imported reusable actor definitions.
+- `2026-05-14`: Implemented the first library import-resolution slice:
+  actor-scoped imports, exported actor uses, parameter/binding diagnostics,
+  specialized scheduled child artifacts, and bounded `library_uses` reports.

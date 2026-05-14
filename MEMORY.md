@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF library import resolution implementation
+- Completed `ISF-LIBRARIES.3` in
+  [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md).
+- The parser now resolves actor-scoped `(imports ...)` and `(use ...)`
+  clauses for exported actors in `(library name ...)` roots.
+- File-backed resolution searches the importing source directory, `FSMLIB`,
+  and the current directory, using both dotted and path-like `.isf` names.
+- Use-site parameter overrides and explicit clock/reset/interface bindings
+  fail closed for missing libraries, missing exports, unknown parameters,
+  missing bindings, direction mismatches, unknown parent signals, and width
+  mismatches.
+- Lowering emits specialized child scheduled `.fsm` artifacts such as
+  `<importing_actor>__<instance>.fsm`, and schedule reports expose bounded
+  `library_uses` provenance.
+- Generated top wiring/HDL integration for library actor instances is not
+  shipped yet; the next active R14 frontier is `ISF-LIBRARIES.4`.
 ## 2026-05-14: ISF library binding model
 - Completed `ISF-LIBRARIES.2` in
   [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md).
