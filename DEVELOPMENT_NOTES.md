@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: R14 objective task-tree coverage
+- The R14 objective backlog is now represented as active task trees instead of
+  one flat "left" list. This gives every ongoing or unresolved ISF objective a
+  stable owner, first frontier leaf, open-question space, and future
+  validation/commit log.
+- The split follows feature-family boundaries rather than source-file
+  boundaries: composition/spawn, resource/priority, rule actions,
+  stages/contracts, data widths, schedule reports, fixtures, compatibility,
+  public contract synchronization, and same-cycle conflict policy.
+- `ISF-CONFLICTS` remains first in the active tree table because same-target
+  conflict semantics is the current highest-priority policy blocker and also
+  informs resource/priority and rule-action widening.
+- The public-contract tree is intentionally cross-cutting and feature-driven;
+  it should keep feature slices synchronized without becoming a standalone
+  audit lane ahead of user-facing ISF features.
 ## 2026-05-14: task-tree adoption guide
 - The task-tree workflow now has a separate setup guide because
   [docs/TASK_TREE.md](docs/TASK_TREE.md) is the local operating spec, not the

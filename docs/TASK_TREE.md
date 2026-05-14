@@ -24,6 +24,36 @@ evidence for one top-level task.
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
 | `ISF-CONFLICTS` | `active` | `R14` | `ISF-CONFLICTS.1` | [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md) |
+| `ISF-COMPOSITION` | `active` | `R14` | `ISF-COMPOSITION.1` | [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md) |
+| `ISF-RESOURCE-PRIORITY` | `active` | `R14` | `ISF-RESOURCE-PRIORITY.1` | [docs/tasks/ISF-RESOURCE-PRIORITY.md](docs/tasks/ISF-RESOURCE-PRIORITY.md) |
+| `ISF-RULE-ACTIONS` | `active` | `R14` | `ISF-RULE-ACTIONS.1` | [docs/tasks/ISF-RULE-ACTIONS.md](docs/tasks/ISF-RULE-ACTIONS.md) |
+| `ISF-STAGES-CONTRACTS` | `active` | `R14` | `ISF-STAGES-CONTRACTS.1` | [docs/tasks/ISF-STAGES-CONTRACTS.md](docs/tasks/ISF-STAGES-CONTRACTS.md) |
+| `ISF-DATA-WIDTHS` | `active` | `R14` | `ISF-DATA-WIDTHS.1` | [docs/tasks/ISF-DATA-WIDTHS.md](docs/tasks/ISF-DATA-WIDTHS.md) |
+| `ISF-SCHEDULE-REPORTS` | `active` | `R14` | `ISF-SCHEDULE-REPORTS.1` | [docs/tasks/ISF-SCHEDULE-REPORTS.md](docs/tasks/ISF-SCHEDULE-REPORTS.md) |
+| `ISF-FIXTURES` | `active` | `R14` | `ISF-FIXTURES.1` | [docs/tasks/ISF-FIXTURE-COVERAGE.md](docs/tasks/ISF-FIXTURE-COVERAGE.md) |
+| `ISF-COMPATIBILITY` | `active` | `R14` | `ISF-COMPATIBILITY.1` | [docs/tasks/ISF-COMPATIBILITY-SURFACE.md](docs/tasks/ISF-COMPATIBILITY-SURFACE.md) |
+| `ISF-PUBLIC-CONTRACT` | `active` | `R14` | `ISF-PUBLIC-CONTRACT.1` | [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md) |
+
+## R14 ISF Objective Coverage
+
+All currently documented ongoing or unresolved R14 ISF objective families have
+task-tree ownership. Already-shipped base objectives such as parsing `.isf`
+actors, lowering through `LoweringIR`, emitting scheduled `.fsm`, schedule JSON
+emission, and HDL handoff remain recorded in [ROADMAP_STATUS.md](ROADMAP_STATUS.md)
+as done work unless a future task reopens them.
+
+| ISF objective family | Owning tree |
+| --- | --- |
+| Same-cycle output conflicts, fan-in, and fail-closed drive policy | `ISF-CONFLICTS` |
+| Generated-child top instantiation and spawn parameter binding | `ISF-COMPOSITION` |
+| Resource arbitration and priority enforcement | `ISF-RESOURCE-PRIORITY` |
+| Expression-valued rule assignments and rule action widening | `ISF-RULE-ACTIONS` |
+| Transaction stage lowering and temporal contract lowering | `ISF-STAGES-CONTRACTS` |
+| Data-operation width inference for shift/extract/assemble families | `ISF-DATA-WIDTHS` |
+| Schedule-report storage classes and schedule JSON stabilization | `ISF-SCHEDULE-REPORTS` |
+| Realistic protocol fixtures, strict-mode checks, and end-to-end coverage | `ISF-FIXTURES` |
+| Legacy handshake metadata and removed transaction `assign` compatibility | `ISF-COMPATIBILITY` |
+| ISF spec, mdBook, public interface contract, and manifest synchronization | `ISF-PUBLIC-CONTRACT` |
 
 ## ISF Task-Tree Rule
 

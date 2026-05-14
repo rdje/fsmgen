@@ -63,6 +63,15 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/TASK_TREE.md` — repo-local task-tree workflow, active tree index, and PNT frontier rules.
 - `docs/tasks/TEMPLATE.md` — reusable template for one top-level task tree.
 - `docs/tasks/ISF-CONFLICT-RESOLUTION.md` — active `R14` task tree for ISF same-cycle conflict semantics.
+- `docs/tasks/ISF-COMPOSITION-INSTANTIATION.md` — active `R14` task tree for generated child instantiation and spawn parameter binding.
+- `docs/tasks/ISF-RESOURCE-PRIORITY.md` — active `R14` task tree for resource arbitration and priority enforcement.
+- `docs/tasks/ISF-RULE-ACTIONS.md` — active `R14` task tree for expression-valued rule assignments.
+- `docs/tasks/ISF-STAGES-CONTRACTS.md` — active `R14` task tree for transaction stages and temporal contracts.
+- `docs/tasks/ISF-DATA-WIDTHS.md` — active `R14` task tree for data-operation width inference.
+- `docs/tasks/ISF-SCHEDULE-REPORTS.md` — active `R14` task tree for schedule-report storage classes and schema stabilization.
+- `docs/tasks/ISF-FIXTURE-COVERAGE.md` — active `R14` task tree for realistic fixtures and strict-mode coverage.
+- `docs/tasks/ISF-COMPATIBILITY-SURFACE.md` — active `R14` task tree for legacy handshake and removed assign compatibility policy.
+- `docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md` — active `R14` task tree for ISF spec, book, manifest, and contract synchronization.
 - `docs/BIN_FSMGEN_IMPORT_TREE.md` — live `bin/fsmgen` import-tree and runtime-spine architecture snapshot.
 - `docs/COMPOSITION_SCOPE.md` — concrete composition scope and acceptance boundary for the active architecture.
 - `docs/COMPOSITION_LEGACY_MAPPING.md` — historical legacy-composition behavior mapped onto the active architecture.

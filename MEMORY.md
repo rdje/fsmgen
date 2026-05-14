@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: R14 ISF objective task-tree coverage
+- [docs/TASK_TREE.md](docs/TASK_TREE.md) now lists active task-tree ownership
+  for all currently documented ongoing/unresolved R14 ISF objective families.
+- Existing [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md)
+  remains the first active tree and current frontier for PNT.
+- Added active trees for generated child/spawn composition, resources and
+  priorities, rule action widening, transaction stages/contracts, data width
+  inference, schedule reports/schema stabilization, realistic fixtures,
+  compatibility surfaces, and public contract synchronization.
+- Future ISF work should attach to the relevant active objective tree unless a
+  genuinely new objective family is discovered and needs its own tree.
 ## 2026-05-14: Task-tree adoption guide
 - Added [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) as the direct
   setup guide for bringing the task-tree tracking workflow into another

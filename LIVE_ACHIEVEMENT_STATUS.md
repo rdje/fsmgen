@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF objective task-tree coverage
+- Active R14 tracking slice: all currently documented ongoing/unresolved ISF
+  objective families now have active task trees and current-frontier leaves
+  under `docs/tasks/`.
+- `ISF-CONFLICTS.1` remains the first active frontier because same-cycle
+  conflict semantics informs the resource/priority and rule-action objectives.
+- Additional trees now cover composition/spawn, resource/priority, rule
+  actions, stages/contracts, data widths, schedule reports, fixtures,
+  compatibility, and public contract synchronization.
+
 ## 2026-05-14: Workflow — task-tree adoption guide
 - Active workflow docs slice: [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md)
   now provides a direct setup guide for using the same task-tree tracking

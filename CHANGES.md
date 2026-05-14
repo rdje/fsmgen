@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF objective task-tree coverage
+- Expanded [docs/TASK_TREE.md](docs/TASK_TREE.md) so all currently documented
+  ongoing/unresolved R14 ISF objective families have active task-tree
+  ownership and current frontier leaves.
+- Added active task trees for generated child/spawn composition, resource and
+  priority enforcement, expression-valued rule assignments, transaction stages
+  and contracts, data-operation width inference, schedule-report/schema
+  stabilization, realistic fixture coverage, legacy compatibility surfaces,
+  and public contract synchronization.
+- Updated [README.md](README.md), [ROADMAP_STATUS.md](ROADMAP_STATUS.md),
+  [MEMORY.md](MEMORY.md), [DEVELOPMENT_NOTES.md](DEVELOPMENT_NOTES.md), and
+  [LIVE_ACHIEVEMENT_STATUS.md](LIVE_ACHIEVEMENT_STATUS.md) so session
+  recovery sees the full R14 task-tree map.
 ### Workflow — task-tree adoption guide
 - Added [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) as a standalone
   setup guide for adopting the task-tree tracking workflow in another project.

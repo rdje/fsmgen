@@ -9,7 +9,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Repo-local task trees now live at [docs/TASK_TREE.md](docs/TASK_TREE.md),
   with per-tree files under `docs/tasks/`. When PNT is working inside an
   active tree, it should pick the first eligible leaf from that tree's current
-  frontier. The first active tree is
+  frontier. The ongoing/unresolved R14 ISF objective families are now covered
+  by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
+  table; the first active tree remains
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md),
   whose current frontier is `ISF-CONFLICTS.1`.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
@@ -2213,6 +2215,12 @@ Done:
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) now documents the full
   project-adoption sequence for bringing this task-tree tracking workflow into
   another repository with minimal friction.
+- [docs/TASK_TREE.md](docs/TASK_TREE.md) now lists active task-tree coverage
+  for every currently documented ongoing/unresolved R14 ISF objective family,
+  including
+  composition/spawn, resource/priority, rule actions, stages/contracts,
+  data widths, schedule reports, fixtures, compatibility, and public contract
+  synchronization.
 - [docs/TASK_TREE.md](docs/TASK_TREE.md) now also makes `R14` / ISF work
   task-tree-managed by default, including small documentation-only or
   diagnostics-only ISF changes.
@@ -4328,6 +4336,17 @@ Done:
   including conflict-domain inventory, compatible fan-in policy,
   fail-closed/priority policy, scheduler/emitter implementation, diagnostics,
   tests, and documentation closure.
+- R14 objective-family task trees now cover the rest of the documented ongoing
+  ISF feature backlog and roadmap objectives:
+  [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md),
+  [docs/tasks/ISF-RESOURCE-PRIORITY.md](docs/tasks/ISF-RESOURCE-PRIORITY.md),
+  [docs/tasks/ISF-RULE-ACTIONS.md](docs/tasks/ISF-RULE-ACTIONS.md),
+  [docs/tasks/ISF-STAGES-CONTRACTS.md](docs/tasks/ISF-STAGES-CONTRACTS.md),
+  [docs/tasks/ISF-DATA-WIDTHS.md](docs/tasks/ISF-DATA-WIDTHS.md),
+  [docs/tasks/ISF-SCHEDULE-REPORTS.md](docs/tasks/ISF-SCHEDULE-REPORTS.md),
+  [docs/tasks/ISF-FIXTURE-COVERAGE.md](docs/tasks/ISF-FIXTURE-COVERAGE.md),
+  [docs/tasks/ISF-COMPATIBILITY-SURFACE.md](docs/tasks/ISF-COMPATIBILITY-SURFACE.md),
+  and [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md).
 Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
@@ -4337,9 +4356,9 @@ Left:
   current behavior and names conflict domains before policy or implementation
   work starts.
 - Before any future ISF implementation, diagnostics, fixture, contract, or
-  documentation slice, either attach the work to an active ISF task tree or
-  create a new one under `docs/tasks/`; do not run ad hoc ISF slices outside
-  the task-tree ledger.
+  documentation slice, attach the work to the relevant active ISF objective
+  tree or create a new tree under `docs/tasks/` if a new objective family is
+  discovered; do not run ad hoc ISF slices outside the task-tree ledger.
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters through feature-delivery slices, not standalone
   contract-audit sweeps.
