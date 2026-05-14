@@ -428,7 +428,7 @@ slice.
 
 ### ISF Reusable Libraries
 
-Status: proposed feature tree under
+Status: active feature tree under
 [ISF-LIBRARIES](../../tasks/ISF-LIBRARIES.md).
 
 Goal: let users import tested reusable ISF descriptions instead of rewriting
@@ -439,9 +439,46 @@ be able to contain reusable ISF actors, transactions, drives, and associated
 constraints when those surfaces are specified.
 
 Current boundary: no reusable ISF library import surface has shipped yet. A
-future library system must define source/root shape, exported definitions,
-namespace rules, search roots, aliases, specialization, diagnostics, schedule
-report visibility, and public contract metadata before implementation.
+future library system must define specialization, binding, search roots,
+diagnostics, schedule report visibility, and public contract metadata before
+implementation.
+
+Planned source model:
+
+```lisp
+(library fifo_lib
+  (exports
+    (actor fifo))
+
+  (actor fifo
+    ... reusable actor body ...))
+```
+
+Planned use model:
+
+```lisp
+(actor top
+  (imports
+    (library common.fifo as fifo_lib))
+
+  (use fifo_lib.fifo as rx_fifo
+    (params (WIDTH 32) (DEPTH 16))
+    (bind
+      (clock clk)
+      (reset rst)
+      (input push push_i)
+      (input pop pop_i)
+      (input data_in data_i)
+      (output data_out data_o)
+      (output full full_o)
+      (output empty empty_o))))
+```
+
+Imports are actor-scoped in the first planned model. Imported definitions stay
+namespaced by default; `as alias` creates a local namespace alias, not
+unqualified symbol pollution. The first shipped export target should be
+reusable actors. Standalone transaction templates and standalone drive helpers
+need their own binding rules before they become public library exports.
 
 FIFO modeling rule: a FIFO should be modeled primarily as an actor because it
 owns persistent storage, pointers, occupancy, full/empty flags, reset behavior,

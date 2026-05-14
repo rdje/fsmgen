@@ -12,8 +12,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   frontier. The ongoing/unresolved R14 ISF objective families are now covered
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
-  [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md),
-  whose current frontier is `ISF-PUBLIC-CONTRACT.1`. That tree is
+  [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md), whose current
+  frontier is `ISF-LIBRARIES.2`. The public-contract tree remains
   cross-cutting and should not displace feature delivery unless the selected
   feature changes a public surface. The completed
   `ISF-SCHEDULE-REPORTS`, `ISF-DATA-WIDTHS`, `ISF-STAGES-CONTRACTS`,
@@ -26,13 +26,16 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - All `R14` / ISF work is now task-tree-managed by default: every ISF task,
   slice, or PNT-selected activity must be attached to an existing active ISF
   task tree or create a new `docs/tasks/*.md` tree before implementation.
-- `ISF-LIBRARIES` is now a proposed R14 backlog tree for reusable ISF
+- `ISF-LIBRARIES` is now the active R14 feature tree for reusable ISF
   libraries/imports. The public term is "library"; implementation may reuse
   package/import infrastructure, but the feature target is reusable ISF design
-  intent such as actors and transaction patterns. FIFO should be modeled as a
-  reusable actor because it owns persistent storage, pointers, occupancy,
-  flags, reset behavior, and interface timing; transactions can model enqueue,
-  dequeue, flush, or status operations against that actor.
+  intent such as actors and transaction patterns. `ISF-LIBRARIES.1` specifies
+  planned `(library name ...)` roots, actor-scoped imports, namespaced
+  imported actor use, exported actors as the first shipped definition kind,
+  and fail-closed diagnostics. FIFO should be modeled as a reusable actor
+  because it owns persistent storage, pointers, occupancy, flags, reset
+  behavior, and interface timing; transactions can model enqueue, dequeue,
+  flush, or status operations against that actor.
 - `ISF-COMPATIBILITY.1` is complete. The inventory records that deprecated
   `(handshake ...)` is currently parser-validated then ignored, leaving the
   actor-shell `handshakes` hash as an empty compatibility placeholder and
@@ -71,6 +74,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   asserts that parity test is included. Future transaction-local
   combinational assignment, if needed, remains a new feature request with
   explicit timing semantics.
+- `ISF-LIBRARIES.1` is complete. The library feature tree is active and the
+  first public model is specified: user-facing "library" roots use planned
+  `(library name ...)` source roots, actor-scoped `(imports (library name as
+  alias))`, namespaced `(use alias.actor as instance ...)`, exact
+  fail-closed diagnostics for missing/ambiguous imports, and exported actors
+  as the first shipped definition kind. FIFO remains actor-first because it
+  owns storage, pointers, occupancy, flags, reset behavior, and interface
+  timing. The active frontier advances to `ISF-LIBRARIES.2`.
 - `ISF-RESOURCE-PRIORITY.1` is complete. The current inventory records that
   `(resources ...)` is validated metadata only, accepted arbiters are
   `priority` and `round_robin`, and successful resource arbitration is not yet
@@ -4733,9 +4744,9 @@ Left:
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the first active tree in [docs/TASK_TREE.md](docs/TASK_TREE.md) when
-  selecting the next PNT slice; after closing `ISF-FIXTURES`, that frontier is
-  `ISF-COMPATIBILITY.1` in
-  [docs/tasks/ISF-COMPATIBILITY-SURFACE.md](docs/tasks/ISF-COMPATIBILITY-SURFACE.md).
+  selecting the next PNT slice. The current first active tree is
+  [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md), whose frontier
+  is `ISF-LIBRARIES.2`.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

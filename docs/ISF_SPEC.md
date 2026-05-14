@@ -1381,6 +1381,10 @@ Focused tests:
 
 ## 12. Explicitly Deferred
 
+- Reusable ISF library imports. The planned public model uses `(library name
+  ...)` source roots, actor-scoped library imports, and namespaced imported
+  actor use, but no parser/lowerer support is shipped until specialization,
+  binding, provenance, diagnostics, and fixture coverage are complete.
 - Old `(handshake ...)` semantics beyond validated ignored compatibility
   parsing.
 - The removed `(assign ...)` action keyword; authored transaction uses fail

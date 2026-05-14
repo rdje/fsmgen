@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF library import model
+- Completed `ISF-LIBRARIES.1` in
+  [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md).
+- The `ISF-LIBRARIES` task tree is now active; its current frontier is
+  `ISF-LIBRARIES.2`, which will specify specialization and binding before
+  parser/lowerer implementation starts.
+- The planned public model uses user-facing **library** terminology,
+  `(library name ...)` source roots, actor-scoped
+  `(imports (library name as alias))`, and namespaced
+  `(use alias.actor as instance ...)` imported actor use.
+- Imported definitions are not textual includes. They must lower through
+  reviewable scheduled `.fsm` after specialization or fail closed with
+  targeted diagnostics.
+- FIFO remains actor-first: the reusable FIFO owns storage, pointers,
+  occupancy, full/empty flags, reset behavior, and interface timing;
+  transactions model operations against that actor.
 ## 2026-05-14: ISF compatibility tree closure
 - Completed `ISF-COMPATIBILITY.5` and closed
   [docs/tasks/ISF-COMPATIBILITY-SURFACE.md](docs/tasks/ISF-COMPATIBILITY-SURFACE.md).

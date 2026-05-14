@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF library import model
+- "Library" should stay the public word for reusable ISF design intent. It
+  matches how users think about tested reusable actors and transaction
+  patterns, while leaving the implementation free to reuse package/search-root
+  code where that is technically appropriate.
+- The first model keeps imports actor-scoped and namespaced. That reduces
+  accidental symbol capture and gives each importing actor an explicit binding
+  point for clocks, resets, parameters, interfaces, generated names, and
+  diagnostics.
+- Exported actors are the right first shipped target because they carry their
+  own state, interface, reset, and conflict context. Standalone transaction or
+  drive exports remain useful, but they need a binding contract before they
+  can be safe public library entries.
+- Imported definitions must not become textual includes. The review artifact
+  remains scheduled `.fsm`, so library use should specialize and lower into
+  inspectable cycle-level intent or fail before emission.
 ## 2026-05-14: ISF compatibility tree closure
 - The final compatibility slice added CLI parity because the policy is
   user-facing: accepted ignored handshake source must work through the same

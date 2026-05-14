@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF library import model
+- Completed `ISF-LIBRARIES.1` by activating the reusable-library tree and
+  specifying the first public library/import model.
+- The mdBook backlog and task tree now use **library** as the user-facing term
+  and reserve package wording for existing scalar/type package mechanics.
+- The planned public surface uses `(library name ...)` source roots,
+  actor-scoped `(imports (library name as alias))`, namespaced
+  `(use alias.actor as instance ...)` imported actor use, and exported actors
+  as the first shipped reusable-definition kind.
+- The active R14 PNT frontier advances to `ISF-LIBRARIES.2`, which will bound
+  specialization and binding for widths, depths, resets, interfaces,
+  generated names, and report provenance before implementation.
 ### R14 — ISF compatibility tree closure
 - Completed `ISF-COMPATIBILITY.5` and closed the compatibility-surface tree.
 - Added [t/1229-isf-compatibility-cli-parity.t](t/1229-isf-compatibility-cli-parity.t)

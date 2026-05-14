@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF library import model
+- Active R14 task-tree slice: `ISF-LIBRARIES.1` is complete.
+- The `ISF-LIBRARIES` tree is active with frontier `ISF-LIBRARIES.2`.
+- The planned public surface now has a documented shape: `(library name ...)`
+  roots, actor-scoped imports, namespaced imported actor use, exported actors
+  first, and fail-closed diagnostics for unresolved or ambiguous library use.
+- FIFO remains a reusable actor, not a transaction-only abstraction, because
+  it owns persistent storage and interface timing.
+
 ## 2026-05-14: R14 — ISF compatibility tree closure
 - Active R14 task-tree slice: `ISF-COMPATIBILITY.5` is complete, and the
   `ISF-COMPATIBILITY` tree is closed.
