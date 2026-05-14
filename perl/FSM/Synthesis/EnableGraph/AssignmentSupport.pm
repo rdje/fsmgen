@@ -656,7 +656,6 @@ sub generate_complete_enable_structure ($self, $lhs) {
             }
 
             my $dt_enable_ast = FSM::AST::Utils::signal_ref($dt_enable);
-            my $complete_enable_ast = FSM::AST::Utils::and_op($dt_enable_ast, $or_tree_of_conditions_ast);
 
             my $clean_rhs = $signal_support->clean_signal_name($rhs);
             my $clean_lhs = $signal_support->clean_signal_name($lhs);
@@ -665,13 +664,16 @@ sub generate_complete_enable_structure ($self, $lhs) {
             my $dt_enable_info = {
                 dt => $dt_name,
                 enable_name => $dt_enable_name,
-                enable_ast => $complete_enable_ast,
+                enable_ast => $or_tree_of_conditions_ast,
+                dte_gate_ast => $dt_enable_ast,
+                dte_gate_signal => $dt_enable,
                 shared_signal => undef,
             };
 
             push @{$lhs_analysis->{rhs_groups}->{$rhs}->{dt_specific_enables}}, $dt_enable_info;
 
-            my $debug_expr = $complete_enable_ast->to_systemverilog();
+            my $debug_expr = FSM::AST::Utils::and_op($dt_enable_ast, $or_tree_of_conditions_ast)
+                ->to_systemverilog();
             fsm_debug("    [AssignmentSupport.pm] DT-specific enable: $dt_enable_name = $debug_expr", 3);
         }
     }

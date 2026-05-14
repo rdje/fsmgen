@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R8 — State DTE boundary-gated output enables
+- Changed DT-specific SystemVerilog enable emission so state-DT selector
+  predicates are stored and factored separately from the state DTE, then
+  boundary-gated as `state_en & selector` when the DT-specific output enable is
+  rendered.
+- Added `dte_gate_ast` / `dte_gate_signal` metadata in the assignment-analysis
+  enable records and reused the boundary-gated AST in operand-contract
+  validation.
+- Updated focused enable/factorization tests and the mdBook DT chapter to lock
+  the timing shape: the state decode is the final gate before a state-DT EN
+  leaves the DT, before FSM-level OR merging forms the final per-`LHS`/`VAL`
+  mux selector.
 ### R8 — Clock tick and cycle timing model
 - Added a clock tick/cycle timing subsection to
   [docs/book/src/02-language-basics.md](docs/book/src/02-language-basics.md)

@@ -117,6 +117,25 @@ For state DTs, `DTE_i` is the decode of that FSM state. For non-state DTs,
 `DTE_i` behaves as `1` in the current language, although the model leaves room
 for a future feature that exposes or binds that enable to explicit logic.
 
+The SystemVerilog emitter keeps this as a boundary-gating rule. A state DT's
+internal selector predicates may be factored into helper wires, but the state
+decode itself stays outside those internal helpers. The emitted DT output
+enable is formed as the final gate before the enable leaves the state DT:
+
+```text
+state_DT_output_EN = state_DTE && state_DT_selector_predicate
+```
+
+That shape is intentional. Inside one state DT, all route predicates that
+select the same `LHS`/`VAL` pair are ORed into the DT-local selector predicate.
+That ORed selector is then ANDed with the state `DTE` just before it leaves the
+state DT. At the FSM level, the already-gated state-DT enables are ORed again
+per `LHS`/`VAL` pair to form the FSM-level enable for that mux input. That
+final per-value enable is the selector used by the target LHS mux. The path
+from the state decode `DTE` to any emitted state-DT output enable is therefore
+only the final boundary gate, while the rest of the selector logic can be
+optimized independently.
+
 Each ungated `DT_i_LHS_j_VAL_k` predicate is the logical OR of every DT path
 that selects `VAL_k` for `LHS_j`. Each path term is the logical AND of the
 guards, tests, and branch predicates seen from the root of the tree down to the

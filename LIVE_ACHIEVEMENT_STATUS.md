@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R8 — State DTE boundary-gated output enables
+- Active language/HDL contract slice: state-DT selector predicates remain
+  factorizable without state decode, and the state DTE gates each emitted
+  DT-specific output EN at the boundary.
+- Generated `.sv` now keeps paths like `state_lhs_value_en = state_en &
+  selector_predicate`, making the DTE-to-EN path the final gate.
+- The book/live docs now state the full enable hierarchy: route OR inside each
+  state DT, DTE gate at the state-DT boundary, FSM-level OR per `LHS`/`VAL`,
+  then the target mux selector.
+
 ## 2026-05-14: R8 — Clock tick and cycle timing model
 - Active language-contract docs slice: the mdBook now defines clock ticks,
   cycles, `N-`/`N+`, and the stable-`Q` interval between consecutive ticks.

@@ -97,7 +97,11 @@ FSM
         debug_level => 0,
     );
     my $second_pass_fed_count = $policy_support->feed_current_asts_to_second_pass($second_pass_factorizer);
-    cmp_ok($second_pass_fed_count, '>', 0, 'factorization policy support exposes post-substitution ASTs that still depend on intermediates to the second-pass factorizer');
+    is(
+        $second_pass_fed_count,
+        0,
+        'factorization policy support skips second-pass factoring when the substituted DT selector is a bare intermediate and the DTE remains a boundary gate',
+    );
 };
 
 done_testing();

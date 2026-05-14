@@ -5,6 +5,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Next decision point: continue `R14` ISF implementation/API stabilization by
   selecting another bounded documented limitation, or run a focused
   documentation drift audit only if guide/book divergence appears.
+- State-DT SystemVerilog output enables now apply the state DTE as a final
+  boundary gate: selector predicates are factored without state decode, and
+  emitted state-DT ENs are `state_en & selector_predicate` just before leaving
+  the state DT; the FSM-level merge then ORs those gated state-DT ENs per
+  `LHS`/`VAL` for the final mux selector.
 - The mdBook language-basics chapter now defines the clock tick/cycle timing
   model used by sequential assignments: `D` is sampled at the active tick,
   `Q` updates at `N+`, and `Q` remains stable through the cycle until the next
@@ -2587,6 +2592,19 @@ Done:
     through the following cycle,
   - and this vocabulary explains the `<-` Q/output-named versus `<=`
     D/next-value-named distinction before detailed assignment examples.
+- State DT output-enable emission now keeps DTE as a final boundary gate:
+  - DT-local selector predicates remain the factorizable AST surface,
+  - matching route predicates are ORed per `LHS`/`VAL` before the boundary
+    DTE gate,
+  - DTE metadata is carried separately as `dte_gate_ast`/`dte_gate_signal`,
+  - [perl/FSM/Synthesis/EnableGraph/EnableSupport.pm](perl/FSM/Synthesis/EnableGraph/EnableSupport.pm)
+    renders each DT-specific output enable as `DTE & selector`,
+  - FSM-level merging then ORs those gated state-DT enables per `LHS`/`VAL`
+    to drive the final mux selector,
+  - and [t/12-enablegraph-capture-registry.t](t/12-enablegraph-capture-registry.t),
+    [t/203-enable-graph-factorization-support.t](t/203-enable-graph-factorization-support.t),
+    and [t/210-enable-graph-factorization-policy-support.t](t/210-enable-graph-factorization-policy-support.t)
+    lock that state decode is not absorbed into precomputed selector helpers.
 Left:
 - Resolve the remaining gray-zone families, especially:
   - any remaining parser-accepted legacy constructs not yet cleanly bucketed.

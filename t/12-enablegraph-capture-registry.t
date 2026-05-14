@@ -178,8 +178,13 @@ like(
 );
 like(
     $hdl,
-    qr/\bassign\s+s0_en_and_MODE\s*=\s*s0_en\s*&\s*MODE\s*;/,
-    'generated HDL collapses the test-node comparison to direct 1-bit signal truthiness in enable logic',
+    qr/\bassign\s+s0_out_in_en\s*=\s*s0_en\s*&\s*MODE\s*;/,
+    'generated HDL applies the state DTE as the final boundary gate on a direct 1-bit test-node enable',
+);
+unlike(
+    $hdl,
+    qr/\bassign\s+s0_en_and_MODE\s*=/,
+    'generated HDL keeps state DTE out of precomputed selector helper signals',
 );
 
 done_testing();

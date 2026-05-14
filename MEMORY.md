@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: R8 — State DTE boundary-gated output enables
+- SystemVerilog enable emission now keeps each state DT's selector predicate
+  separate from the state DTE during factorization and applies the DTE as the
+  final gate on each DT-specific output enable.
+- Generated state-DT ENs now have the shape
+  `state_lhs_value_en = state_en & selector_predicate`, so the path from state
+  decode to the output EN is the final boundary gate.
+- The documented flow is now explicit: state-DT routes are ORed per
+  `LHS`/`VAL` inside the DT, DTE gates that OR at the DT boundary, and the FSM
+  then ORs those gated state-DT ENs per `LHS`/`VAL` for the final mux selector.
+- Focused tests now reject the old shape where factorization could absorb
+  `state_en` into intermediate helper names such as `state_en_and_*`.
 ## 2026-05-14: R8 — Clock tick and cycle timing model
 - The mdBook language-basics assignment section now defines a clock tick as an
   active edge and a clock cycle as the interval between consecutive ticks.

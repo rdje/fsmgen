@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: State DTE boundary gating
+- The semantic model already said DTE gates DT selector enables, but the old
+  emitted shape let factorization absorb `state_en` into internal helper
+  expressions such as `state_en_and_condition`.
+- The new shape keeps the selector predicate as the factorizable DT-local
+  expression and carries DTE separately. Rendering composes them only at the
+  DT-specific output enable assignment, so `state_en` reaches the output EN
+  through the final AND gate.
+- This preserves the intended hierarchy: OR matching route predicates per
+  `LHS`/`VAL` inside the state DT, gate that ORed selector with DTE at the DT
+  output boundary, then OR the gated state-DT enables at the FSM level for the
+  final mux selector.
+- This is a timing-oriented HDL shape change, not a functional logic change:
+  selector factoring still happens, but state decode stays as the fastest path
+  to the emitted state-DT EN.
 ## 2026-05-14: Clock tick and cycle timing vocabulary
 - The book now states the clock-edge model explicitly because assignment
   semantics depend on whether a source name denotes the flop `Q` side or the

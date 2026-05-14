@@ -104,9 +104,11 @@ sub validate_pre_generation_operand_contract ($self, $fsm_module, $prepared_bloc
             my $rhs_group = $lhs_analysis->{rhs_groups}{$rhs} || {};
 
             for my $dt_enable_info (@{$rhs_group->{dt_specific_enables} || []}) {
+                my $dt_enable_ast = $ctx->{enable_graph_enable_support}
+                    ->build_boundary_gated_dt_enable_ast($dt_enable_info);
                 $self->_validate_named_ast(
                     "DT-specific enable '$dt_enable_info->{enable_name}'",
-                    $dt_enable_info->{enable_ast},
+                    $dt_enable_ast,
                     $inventory,
                     \@violations,
                 );

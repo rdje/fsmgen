@@ -229,6 +229,8 @@ sub generate_dt_enables_from_analysis ($self) {
                 push @{$dt_to_lhs_enables{$dt_name}{$lhs}}, {
                     enable_name => $enable_name,
                     enable_ast => $enable_ast,
+                    dte_gate_ast => $dt_enable_info->{dte_gate_ast},
+                    dte_gate_signal => $dt_enable_info->{dte_gate_signal},
                     rhs => $rhs,
                 };
             }
@@ -246,7 +248,8 @@ sub generate_dt_enables_from_analysis ($self) {
                 my $enable_ast = $enable_info->{enable_ast};
                 my $rhs = $enable_info->{rhs};
 
-                my $enable_expr = $enable_graph_ast_support->ast_to_systemverilog($enable_ast);
+                my $boundary_gated_ast = $self->build_boundary_gated_dt_enable_ast($enable_info);
+                my $enable_expr = $enable_graph_ast_support->ast_to_systemverilog($boundary_gated_ast);
                 $hdl .= "  assign $enable_name = $enable_expr;  // $lhs <- $rhs\n";
 
                 fsm_debug("  Generated DT-specific enable: $enable_name = $enable_expr", 3);
@@ -255,6 +258,26 @@ sub generate_dt_enables_from_analysis ($self) {
     }
 
     return $hdl;
+}
+
+=head2 build_boundary_gated_dt_enable_ast
+
+Build the final output-enable AST for one DT-specific enable.
+
+The stored C<enable_ast> is the DT-local selector predicate. The DTE is kept
+separate so state enables are applied at the DT output boundary instead of
+being absorbed into internal factored selector helpers.
+
+=cut
+
+sub build_boundary_gated_dt_enable_ast ($self, $dt_enable_info) {
+    my $selector_ast = $dt_enable_info->{enable_ast};
+    my $dte_gate_ast = $dt_enable_info->{dte_gate_ast};
+
+    return $selector_ast unless $dte_gate_ast && blessed($dte_gate_ast);
+    return $dte_gate_ast unless $selector_ast && blessed($selector_ast);
+
+    return FSM::AST::Utils::and_op($dte_gate_ast, $selector_ast);
 }
 
 =head2 generate_lhs_enables_from_analysis

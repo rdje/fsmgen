@@ -57,7 +57,10 @@ FSM
         $sv =~ /intermediate_or_A_B_/;
     } @ast_expressions;
     ok($intermediate_backed_expression, 'factorization policy support exposes the prepared AST set through its current intermediate-backed owner expressions');
-    ok($support->ast_contains_intermediate_signals($intermediate_backed_expression->{ast}), 'factorization policy support recognizes intermediate-backed expressions in the prepared AST set');
+    ok(
+        !$support->ast_contains_intermediate_signals($intermediate_backed_expression->{ast}),
+        'factorization policy support does not second-pass factor a bare intermediate-backed DT selector',
+    );
     ok($support->ast_has_intermediate_signals_recursive($intermediate_backed_expression->{ast}), 'factorization policy support recognizes intermediate-backed subtrees recursively');
 
     my $factorizer = FSM::HDL::ASTFactorization->new(
@@ -94,7 +97,11 @@ FSM
         debug_level => 0,
     );
     my $second_pass_fed_count = $support->feed_current_asts_to_second_pass($second_pass_factorizer);
-    cmp_ok($second_pass_fed_count, '>', 0, 'factorization policy support exposes post-substitution ASTs that still depend on intermediates to the second-pass factorizer');
+    is(
+        $second_pass_fed_count,
+        0,
+        'factorization policy support skips second-pass factoring for bare selector intermediates because DTE gating is emitted at the DT boundary',
+    );
 };
 
 done_testing();
