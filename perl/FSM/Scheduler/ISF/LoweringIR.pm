@@ -15,7 +15,7 @@ my %SUPPORTED_TRANSACTION_CLAUSES = (
         map { $_ => 1 } qw(
             on drive await sample update phase shift_left shift_right assemble
             extract complete when switch repeat latency do spawn await_all
-            await_any
+            await_any params
         )
     },
     when => {
@@ -47,6 +47,7 @@ my %TRANSACTION_CONTEXT_LABEL = (
 sub build_module($self, $actor) {
     $self->_validate_child_transaction_refs($actor);
     my %spawned = $self->_collect_spawn_refs($actor);
+    $self->_validate_transaction_parameter_clauses($actor, \%spawned);
 
     my %child_irs;
     for my $cname (sort keys %spawned) {
@@ -79,6 +80,7 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
         clock      => $actor->{clock},
         reset      => $actor->{reset},
         watchdog   => $actor->{watchdog},
+        params     => _transaction_param_declarations($tx),
         ports      => $ports,
         states     => $states,
         dt_blocks  => $dts,
@@ -117,6 +119,7 @@ sub _build_parent_ir($self, $actor, $spawned) {
     my %ctrs;
     my @states;
     my @dts;
+    my @spawn_instances;
     my $ti = 0;
 
     for my $tx (@{$actor->{transactions}}) {
@@ -129,6 +132,7 @@ sub _build_parent_ir($self, $actor, $spawned) {
         push @dts, @$ds;
         for my $c (@$do)  { $ctrs{"${c}_start"} = 1; $ctrs{"${c}_done"} = 1; }
         for my $s (@$sp)  { $ctrs{"$s->{instance}_start"} = 1; $ctrs{"$s->{instance}_done"} = 1; }
+        push @spawn_instances, map { _clone_isf_value($_) } @$sp;
     }
 
     push @dts, $self->_build_rules($actor, \%ctrs);
@@ -140,11 +144,13 @@ sub _build_parent_ir($self, $actor, $spawned) {
         clock      => $actor->{clock},
         reset      => $actor->{reset},
         watchdog   => $actor->{watchdog},
+        params     => [],
         ports      => \@ports,
         states     => \@states,
         dt_blocks  => \@dts,
         counters   => \%ctrs,
         children   => {},
+        spawn_instances => \@spawn_instances,
     };
     $ir->{priority_resolution} = _apply_rule_priority_resolution($ir, $actor);
     _finalize_ir($ir);
@@ -164,6 +170,8 @@ sub _collect_spawn_refs($self, $actor) {
 
 sub _validate_child_transaction_refs($self, $actor) {
     my %transactions = map { $_->{name} => 1 } @{$actor->{transactions} || []};
+    my %transaction_by_name = map { $_->{name} => $_ } @{$actor->{transactions} || []};
+    my %spawn_instances;
 
     for my $tx (@{$actor->{transactions} || []}) {
         my $tx_name = $tx->{name};
@@ -180,9 +188,38 @@ sub _validate_child_transaction_refs($self, $actor) {
                 unless defined($target) && !ref($target) && length($target);
             confess "Transaction '$tx_name': $keyword target '$target' is not a declared transaction\n"
                 unless $transactions{$target};
+
+            next unless $keyword eq 'spawn';
+
+            my $instance = $clause->[3];
+            confess "Transaction '$tx_name': duplicate spawn instance '$instance' in actor '$actor->{actor_name}'\n"
+                if $spawn_instances{$instance}++;
+
+            my %declared_params = map {
+                $_->{name} => $_
+            } @{_transaction_param_declarations($transaction_by_name{$target})};
+            for my $override (@{_spawn_parameter_overrides($clause, $tx_name, 'transaction body')}) {
+                my $name = $override->{name};
+                confess "Transaction '$tx_name': spawn instance '$instance' overrides unknown parameter '$name' on child '$target'\n"
+                    unless exists $declared_params{$name};
+                confess "Transaction '$tx_name': spawn instance '$instance' parameter '$name' shape does not match child '$target' declaration\n"
+                    unless _param_values_shape_compatible($declared_params{$name}{value}, $override->{value});
+            }
         }
     }
 
+    return 1;
+}
+
+sub _validate_transaction_parameter_clauses($self, $actor, $spawned) {
+    for my $tx (@{$actor->{transactions} || []}) {
+        my $params = _transaction_param_declarations($tx);
+        next unless @$params;
+
+        my $tx_name = $tx->{name};
+        confess "Transaction '$tx_name': params are supported only on spawned child transactions\n"
+            unless $spawned->{$tx_name};
+    }
     return 1;
 }
 
@@ -442,8 +479,9 @@ sub _build_transaction($self, $tx, $actor, $txi) {
         }
         elsif ($k eq 'repeat')   { my ($rs,$rc,$rw) = _ir_repeat($cl,$tn,\$si,\@ps,$wd,$drives,$widths); push @st,@$rs; _register_counter_width(\%ct,$rc,$rw); }
         elsif ($k eq 'latency')  { $lat = _parse_latency($cl, $tn); }
+        elsif ($k eq 'params')   { next; }
         elsif ($k eq 'do')       { push @doc, $cl->[1]; push @st, _ir_do($cl,$tn,$si++); }
-        elsif ($k eq 'spawn')    { push @spc, { child => $cl->[1], instance => $cl->[3] || "${tn}_${si}" }; push @dps, "$spc[-1]{instance}_done"; push @st, _ir_spawn($cl,$tn,$si++); }
+        elsif ($k eq 'spawn')    { push @spc, _spawn_ref_from_clause($cl,$tn); push @dps, "$spc[-1]{instance}_done"; push @st, _ir_spawn($cl,$tn,$si++); }
         elsif ($k eq 'await_all') { push @st, _ir_sync_all($tn,$si++,\@dps); @dps = (); }
         elsif ($k eq 'await_any') { push @st, _ir_sync_any($tn,$si++,\@dps); @dps = (); }
     }
@@ -628,8 +666,8 @@ sub _validate_child_action_clause {
         return 1;
     }
 
-    confess "Transaction '$tn': spawn requires '(spawn transaction as instance)' in $label\n"
-        unless @$clause == 4
+    confess "Transaction '$tn': spawn requires '(spawn transaction as instance [(params (NAME value) ...)])' in $label\n"
+        unless (@$clause == 4 || @$clause == 5)
             && defined($clause->[1])
             && !ref($clause->[1])
             && length($clause->[1])
@@ -639,6 +677,9 @@ sub _validate_child_action_clause {
             && defined($clause->[3])
             && !ref($clause->[3])
             && length($clause->[3]);
+
+    _parse_spawn_params_clause($clause->[4], $tn, $clause->[3], $label)
+        if @$clause == 5;
 
     return 1;
 }
@@ -654,6 +695,142 @@ sub _validate_sync_clause {
             && length($clause->[1]);
 
     return 1;
+}
+
+sub _transaction_param_declarations {
+    my ($tx) = @_;
+    return [] unless ref($tx) eq 'HASH';
+
+    my $tx_name = $tx->{name} // 'unknown';
+    my @param_clauses = grep {
+        ref($_) eq 'ARRAY' && @$_ && defined($_->[0]) && !ref($_->[0]) && $_->[0] eq 'params'
+    } @{$tx->{clauses} || []};
+
+    confess "Transaction '$tx_name': transaction parameters allow at most one '(params ...)' clause\n"
+        if @param_clauses > 1;
+    return [] unless @param_clauses;
+
+    my $params_clause = $param_clauses[0];
+    confess "Transaction '$tx_name': params require '(params (NAME value) ...)'\n"
+        unless @$params_clause >= 2;
+
+    my @params;
+    my %seen;
+    for my $entry (@{$params_clause}[1 .. $#$params_clause]) {
+        confess "Transaction '$tx_name': params entries require '(NAME value)'\n"
+            unless ref($entry) eq 'ARRAY' && @$entry == 2;
+        my ($name, $value) = @$entry;
+        confess "Transaction '$tx_name': parameter names must be scalar HDL identifiers\n"
+            unless _is_hdl_identifier($name);
+        confess "Transaction '$tx_name': duplicate parameter '$name'\n"
+            if $seen{$name}++;
+        _validate_isf_param_value(
+            $value,
+            "Transaction '$tx_name': parameter '$name'",
+        );
+        push @params, {
+            name  => $name,
+            value => _clone_isf_value($value),
+        };
+    }
+
+    return \@params;
+}
+
+sub _spawn_ref_from_clause {
+    my ($clause, $tn) = @_;
+    my $instance = $clause->[3] // "${tn}_spawn";
+    return {
+        child => $clause->[1],
+        instance => $instance,
+        parameter_overrides => _spawn_parameter_overrides($clause, $tn, 'transaction body'),
+    };
+}
+
+sub _spawn_parameter_overrides {
+    my ($clause, $tn, $label) = @_;
+    return [] unless ref($clause) eq 'ARRAY' && @$clause >= 5;
+    return _parse_spawn_params_clause($clause->[4], $tn, $clause->[3], $label);
+}
+
+sub _parse_spawn_params_clause {
+    my ($params_clause, $tn, $instance, $label) = @_;
+    confess "Transaction '$tn': spawn params require '(params (NAME value) ...)' in $label\n"
+        unless ref($params_clause) eq 'ARRAY'
+            && @$params_clause >= 2
+            && defined($params_clause->[0])
+            && !ref($params_clause->[0])
+            && $params_clause->[0] eq 'params';
+
+    my @overrides;
+    my %seen;
+    for my $entry (@{$params_clause}[1 .. $#$params_clause]) {
+        confess "Transaction '$tn': spawn params entries require '(NAME value)' in $label\n"
+            unless ref($entry) eq 'ARRAY' && @$entry == 2;
+        my ($name, $value) = @$entry;
+        confess "Transaction '$tn': spawn parameter override names must be scalar HDL identifiers\n"
+            unless _is_hdl_identifier($name);
+        confess "Transaction '$tn': spawn instance '$instance' has duplicate parameter override '$name'\n"
+            if $seen{$name}++;
+        _validate_isf_param_value(
+            $value,
+            "Transaction '$tn': spawn instance '$instance' parameter '$name'",
+        );
+        push @overrides, {
+            name  => $name,
+            value => _clone_isf_value($value),
+        };
+    }
+
+    return \@overrides;
+}
+
+sub _is_hdl_identifier {
+    my ($value) = @_;
+    return defined($value) && !ref($value) && $value =~ /\A[A-Za-z_]\w*\z/;
+}
+
+sub _validate_isf_param_value {
+    my ($value, $context) = @_;
+    if (!ref($value)) {
+        confess "$context uses unsupported parameter value '$value'; first ISF spawn parameter binding accepts numeric, exact-width, and aggregate/list literals only\n"
+            unless defined($value) && _is_numeric_or_exact_width_literal($value);
+        return 1;
+    }
+
+    confess "$context uses unsupported parameter value shape; first ISF spawn parameter binding accepts non-empty aggregate/list literals only\n"
+        unless ref($value) eq 'ARRAY' && @$value;
+
+    for my $item (@$value) {
+        _validate_isf_param_value($item, $context);
+    }
+    return 1;
+}
+
+sub _is_numeric_or_exact_width_literal {
+    my ($value) = @_;
+    return 0 unless defined($value) && !ref($value);
+    return 1 if $value =~ /\A\d+\z/;
+    return 1 if $value =~ /\A\d+'[bBoOdDhH][0-9a-fA-F_xXzZ]+\z/;
+    return 0;
+}
+
+sub _param_values_shape_compatible {
+    my ($declared, $override) = @_;
+    return 1 if !ref($declared) && !ref($override);
+    return 0 unless ref($declared) eq 'ARRAY' && ref($override) eq 'ARRAY';
+    return 0 unless @$declared == @$override;
+    for my $index (0 .. $#$declared) {
+        return 0 unless _param_values_shape_compatible($declared->[$index], $override->[$index]);
+    }
+    return 1;
+}
+
+sub _clone_isf_value {
+    my ($value) = @_;
+    return [ map { _clone_isf_value($_) } @$value ] if ref($value) eq 'ARRAY';
+    return { map { $_ => _clone_isf_value($value->{$_}) } keys %$value } if ref($value) eq 'HASH';
+    return $value;
 }
 
 sub _validate_repeat_clause {

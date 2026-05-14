@@ -121,16 +121,20 @@ internal wiring.
 
 ### Spawn Parameter Binding
 
-Status: backlog.
+Status: partially shipped; generated-top application remains backlog.
 
 Goal: bind parameters through spawned child instances in ISF-generated
 multi-file scheduled designs.
 
-Current boundary: spawn emits child files and parent start/done wiring; spawn
-parameter binding is deferred. The accepted target syntax is one optional
-nested `(params (NAME value) ...)` block on `(spawn child as instance ...)`;
-child transaction parameters are declared by a transaction-local `params`
-clause. The first value domain is scalar/exact-width literals plus compatible
+Current boundary: spawn emits child files and parent start/done wiring. The
+ISF lowerer now accepts one optional nested `(params (NAME value) ...)` block
+on `(spawn child as instance ...)`, accepts spawned child transaction
+parameters from a transaction-local `params` clause, emits child defaults as
+scheduled child `+params`, validates duplicates/unknown overrides/value
+shapes, rejects parameter declarations on non-spawned transactions, and
+preserves per-instance override lists in the parent lowerer IR. The generated
+top that applies those preserved overrides to child instances is still
+deferred. The first value domain is scalar/exact-width literals plus compatible
 aggregate/list literals; symbolic constants wait for an explicit ISF symbol
 surface.
 

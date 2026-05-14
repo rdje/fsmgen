@@ -558,9 +558,10 @@ Current lowering:
 
 Current lowering:
 - Spawned transactions are emitted as separate child `.fsm` files.
-- `spawn` is structurally validated as `(spawn transaction as instance)` with
-  one scalar child transaction and one scalar instance name before spawned
-  child collection.
+- `spawn` is structurally validated as
+  `(spawn transaction as instance [(params (NAME value) ...)])` with one
+  scalar child transaction, one scalar instance name, and at most one validated
+  parameter override block before spawned child collection.
 - The spawned transaction target must name a declared transaction in the same
   actor. Forward references are accepted; missing targets fail before
   scheduled `.fsm` emission.
@@ -577,8 +578,11 @@ Current lowering:
   any one of them fires.
 Focused regressions cover both synchronization forms.
 
-Top-level child instantiation and spawn parameter binding are not fully shipped
-yet, but the accepted public target contract is now defined:
+Top-level generated-child instantiation remains not fully shipped. Spawn
+parameter declaration, validation, scheduled child `+params` emission, and
+per-instance override preservation now ship in the lowering path, but the
+generated top still has to apply those overrides to child instances. The
+accepted public target contract is:
 
 - Multi-file spawn actors will expose an explicit generated top over the
   scheduled parent module and spawned child modules. The implementation may
@@ -617,7 +621,7 @@ name:
       (LANES (8'hA5 8'h3C)))))
 ```
 
-The first shipped parameter-binding surface is spawn-only; `(do child)` remains
+The shipped parameter-binding surface is spawn-only; `(do child)` remains
 unparameterized. Child transaction parameter declarations must use unique
 HDL-identifier-compatible names. Spawn overrides must use unique names declared
 by the child transaction; missing overrides use child defaults. Scalar numeric
@@ -625,8 +629,13 @@ and exact-width literal overrides are width-flexible. Aggregate/list defaults
 require compatible aggregate/list override shape. Symbolic top constants are
 not accepted until ISF has an explicit constant/symbol surface. Malformed
 forms, duplicate instance names, duplicate parameters, unknown targets, unknown
-override names, unsupported value shapes, and parameter blocks on `(do child)`
-fail before misleading scheduled artifacts are emitted.
+override names, unsupported value shapes, parameter declarations on
+non-spawned transactions, and parameter blocks on `(do child)` fail before
+misleading scheduled artifacts are emitted. The scheduled child `.fsm` carries
+the child transaction defaults in a direct `+params` block, and the parent
+lowerer IR preserves each spawn instance's override list for the generated-top
+handoff. Until that generated-top leaf ships, those preserved override values
+are not yet emitted as top-level instance parameter overrides.
 
 ## 9. Rules
 
@@ -1013,6 +1022,7 @@ Focused tests:
 - [t/1212-isf-schedule-report-compile-issues-projection.t](../t/1212-isf-schedule-report-compile-issues-projection.t)
 - [t/1213-isf-schedule-report-compatible-fanin-projection.t](../t/1213-isf-schedule-report-compatible-fanin-projection.t)
 - [t/1214-isf-rejected-conflict-diagnostics.t](../t/1214-isf-rejected-conflict-diagnostics.t)
+- [t/1215-isf-spawn-parameter-binding.t](../t/1215-isf-spawn-parameter-binding.t)
 
 ## 12. Explicitly Deferred
 
@@ -1020,8 +1030,10 @@ Focused tests:
   parsing.
 - The removed `(assign ...)` action keyword; authored transaction uses fail
   closed as unsupported transaction clauses.
-- Implementation of the accepted top-level child instantiation and spawn
-  parameter binding contract described above.
+- Implementation of the accepted top-level child instantiation contract
+  described above. Spawn parameter declaration, validation, and child `+params`
+  emission are shipped, but applying per-instance overrides in the generated
+  top remains deferred.
 - Enforced resource arbitration and priority resolution beyond the currently
   shipped same-target rule/rule data-conflict case.
 - Expression-valued rule assignment actions beyond scalar `(port value)`.

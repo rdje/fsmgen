@@ -21,6 +21,10 @@ sub emit($self, $ir) {
 
     push @lines, $self->_emit_header($ir);
     push @lines, '';
+    if (@{$ir->{params} || []}) {
+        push @lines, $self->_emit_params($ir);
+        push @lines, '';
+    }
     push @lines, $self->_emit_system($ir);
     push @lines, '';
     push @lines, $self->_emit_size($ir);
@@ -36,6 +40,16 @@ sub emit($self, $ir) {
 
 sub _emit_header($self, $ir) {
     return "(?fsm:$ir->{actor_name}";
+}
+
+sub _emit_params($self, $ir) {
+    my @l;
+    push @l, '  (+params';
+    for my $param (@{$ir->{params} || []}) {
+        push @l, "    ($param->{name} " . _format_param_value($param->{value}) . ")";
+    }
+    push @l, '  )';
+    return join("\n", @l);
 }
 
 sub _emit_system($self, $ir) {
@@ -317,6 +331,12 @@ sub _format_expr {
         push @args, ref($a) ? _format_expr($a) : $a;
     }
     return "($op " . join(' ', @args) . ')';
+}
+
+sub _format_param_value {
+    my ($value) = @_;
+    return $value unless ref($value) eq 'ARRAY';
+    return '(' . join(' ', map { _format_param_value($_) } @$value) . ')';
 }
 
 sub _is_default_selector {

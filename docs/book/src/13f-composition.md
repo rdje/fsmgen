@@ -66,10 +66,11 @@ call.
 
 Non-blocking. Each spawn declares a separate intended instance.
 
-The form is exact: `(spawn child as name)`, with scalar child and instance
-names and a literal `as` separator. Malformed spawn forms fail before spawned
-child collection, so the scheduler does not invent a default instance name for
-an invalid clause.
+The base form is exact: `(spawn child as name)`. The parameterized form adds
+one nested override block: `(spawn child as name (params (NAME value) ...))`.
+Both forms require scalar child and instance names plus the literal `as`
+separator. Malformed spawn forms fail before spawned child collection, so the
+scheduler does not invent a default instance name for an invalid clause.
 
 **Lowering**:
 - One `.fsm` per unique child module
@@ -82,9 +83,12 @@ an invalid clause.
   that fires
 Both synchronization forms have focused regressions.
 
-Full composition-top instantiation and spawn parameter binding are not fully
-shipped yet, but the accepted target contract is now defined and tracked in
-[Feature Backlog](14-feature-backlog.md):
+Full composition-top instantiation is not fully shipped yet, but the accepted
+target contract is now defined and tracked in
+[Feature Backlog](14-feature-backlog.md). Spawn parameter declaration,
+validation, scheduled child `+params` emission, and per-instance override
+preservation now ship in the lowering path; applying those overrides to child
+instances waits for the generated top handoff:
 
 - Multi-file spawn actors use an explicit generated top over the scheduled
   parent module and spawned child modules.
@@ -116,11 +120,14 @@ Parameterized spawn uses one optional nested `params` block:
   (complete done))
 ```
 
-The first shipped parameter surface is spawn-only. `(do child)` remains
+The shipped parameter surface is spawn-only. `(do child)` remains
 unparameterized. Override names must match child transaction parameters,
 duplicate instance/parameter names fail, scalar literal overrides are
 width-flexible, aggregate defaults require compatible aggregate overrides, and
-symbolic constants wait for an explicit ISF constant/symbol surface.
+symbolic constants wait for an explicit ISF constant/symbol surface. A spawned
+child `.fsm` now emits the child transaction defaults in `+params`; parameter
+declarations on non-spawned transactions fail closed; the parent lowerer IR
+preserves per-instance override lists for the later generated-top handoff.
 
 ```lisp
 (parent_main_await_all_4

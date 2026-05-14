@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF spawn parameter binding
+- Completed `ISF-COMPOSITION.3` in
+  [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md).
+- ISF spawn now accepts one nested `(params (NAME value) ...)` block,
+  validates child parameter declarations and per-instance overrides, rejects
+  duplicate instances, unknown overrides, symbolic values, aggregate shape
+  mismatches, non-spawned transaction parameter declarations, and parameterized
+  `(do child)`, and emits child transaction defaults as scheduled child `.fsm`
+  `+params`.
+- Parent lowerer metadata now preserves each spawned instance's override list
+  for the later generated-top handoff. The active `ISF-COMPOSITION` frontier
+  is now `ISF-COMPOSITION.4` for generated top/composition wiring.
 ## 2026-05-14: ISF composition public semantics
 - Completed `ISF-COMPOSITION.2` in
   [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md).

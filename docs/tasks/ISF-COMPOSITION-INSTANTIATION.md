@@ -68,13 +68,15 @@ bind through validated public semantics instead of remaining deferred.
   Commit: `ISF-COMPOSITION.2: specify public semantics`
 
 - ID: `ISF-COMPOSITION.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement spawn parameter binding in the ISF IR/lowering path.`
   Acceptance: `Valid spawn parameter bindings preserve through lowering, and
   malformed or unsupported bindings fail before misleading scheduled artifacts
   are emitted.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -c LoweringIR; perl -Iperl -c Emitter::FSM; focused
+  spawn/composition/metadata tests; ci-regression isf --no-book; mdbook build;
+  git diff --check`
+  Commit: `ISF-COMPOSITION.3: implement spawn parameter binding`
 
 - ID: `ISF-COMPOSITION.4`
   Status: `pending`
@@ -105,7 +107,7 @@ bind through validated public semantics instead of remaining deferred.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-COMPOSITION.3` | `pending` | The public syntax and rejected cases are now specified; spawn parameter binding can be implemented in the ISF IR/lowering path. |
+| 1 | `ISF-COMPOSITION.4` | `pending` | Spawn parameter metadata is now preserved; the next executable gap is the generated top/composition handoff that applies parent/child wiring and per-instance overrides. |
 
 ## ISF-COMPOSITION.1 Inventory
 
@@ -290,9 +292,9 @@ The first shipped parameter-binding surface is deliberately spawn-only. Blocking
 
 ### Parameter Binding Rules
 
-- Child transaction parameter declarations use a transaction-local `params`
-  clause. Parameter names must be HDL-identifier-compatible, scalar, non-empty,
-  and unique within the child transaction.
+- Spawned child transaction parameter declarations use a transaction-local
+  `params` clause. Parameter names must be HDL-identifier-compatible, scalar,
+  non-empty, and unique within the child transaction.
 - Spawn parameter overrides use at most one nested `params` block. Override
   names must be HDL-identifier-compatible, scalar, non-empty, and unique within
   the spawn.
@@ -326,8 +328,46 @@ leaves:
 - override names not declared by the spawned child transaction;
 - aggregate/scalar shape mismatches;
 - symbolic parameter values that cannot be resolved by the first shipped ISF
-  value domain; and
+  value domain;
+- parameter declarations on non-spawned transactions; and
 - parameter blocks on `(do child)`.
+
+## ISF-COMPOSITION.3 Spawn Parameter Binding
+
+`ISF-COMPOSITION.3` implements the spawn parameter surface in the ISF
+IR/lowering path while deliberately stopping short of generated-top
+instantiation.
+
+### Shipped Behavior
+
+- Transaction-local `(params (NAME value) ...)` clauses are accepted on spawned
+  child transactions and validated before scheduled `.fsm` artifacts are
+  emitted. Parameter declarations on non-spawned transactions fail closed.
+- Spawn clauses may carry one nested `(params (NAME value) ...)` override
+  block after the instance name.
+- Spawn instance names are actor-local and must be unique.
+- Child parameter names and spawn override names must be scalar
+  HDL-identifier-compatible names and unique in their local declaration block.
+- Spawn override names must match parameters declared by the target child
+  transaction.
+- The first value domain accepts scalar decimal literals, exact-width numeric
+  literals, and non-empty aggregate/list literals with compatible shape.
+  Symbolic constants still fail closed until ISF has its own constant/symbol
+  surface.
+- Spawned child scheduled `.fsm` files now emit child transaction defaults in a
+  direct `+params` block.
+- The parent lowerer IR preserves each spawned instance's override list in a
+  `spawn_instances` collection for the later generated-top handoff.
+- `(do child)` remains unparameterized; parameter blocks on `do` still fail
+  closed.
+
+### Remaining Boundary
+
+The generated top that wires parent start outputs, parent done inputs, child
+`start`/`done` ports, and per-instance parameter overrides remains
+`ISF-COMPOSITION.4`. Until that leaf lands, the per-instance override values
+are validated and preserved in lowerer metadata but are not yet applied to HDL
+child instances.
 
 ## Decisions
 
@@ -343,15 +383,18 @@ leaves:
   top name, parent start outputs, parent done inputs, reusable start-gated
   spawned children, and spawn-only parameter overrides using one nested
   `(params ...)` block.
+- `2026-05-14`: `ISF-COMPOSITION.3` ships the spawn parameter parser/lowering
+  surface but keeps generated-top application as a separate leaf. The child
+  scheduled `.fsm` carries default `+params`, and parent lowerer metadata keeps
+  instance-local override lists for `ISF-COMPOSITION.4`.
 
 ## Open Questions
 
 - The canonical implementation artifact may be a concrete generated `?top`
   source or equivalent structured metadata, but the public behavior is one
   explicit generated top over the scheduled parent and spawned children.
-- The first parameter value domain is scalar/exact-width literals plus
-  compatible aggregate/list literals. Symbolic constants wait for an explicit
-  ISF constant/symbol surface.
+- Future symbolic constant support for ISF spawn parameters waits for an
+  explicit ISF constant/symbol surface.
 
 ## Blockers
 
@@ -370,6 +413,15 @@ leaves:
 | `2026-05-14` | `ISF-COMPOSITION.1` | `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-COMPOSITION.2` | `mdbook build docs/book` | `passed` |
 | `2026-05-14` | `ISF-COMPOSITION.2` | `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-COMPOSITION.3` | `perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm` | `passed` |
+| `2026-05-14` | `ISF-COMPOSITION.3` | `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm` | `passed` |
+| `2026-05-14` | `ISF-COMPOSITION.3` | `prove -l t/1215-isf-spawn-parameter-binding.t` | `passed` |
+| `2026-05-14` | `ISF-COMPOSITION.3` | `prove -l t/1204-isf-child-composition-clause-boundary.t t/1144-isf-public-tested-by-metadata-audit.t` | `passed` |
+| `2026-05-14` | `ISF-COMPOSITION.3` | `prove -l t/1117-isf-public-lower-result-files-audit.t t/1122-isf-public-cli-outdir-lowering-audit.t t/1128-isf-public-multifile-schedule-report-audit.t t/1184-isf-child-transaction-target-boundary.t` | `passed` |
+| `2026-05-14` | `ISF-COMPOSITION.3` | `prove -l t/184-composition-generated-child-realizer.t t/292-composition-generated-child-parameter-overrides.t` | `passed` |
+| `2026-05-14` | `ISF-COMPOSITION.3` | `./bin/ci-regression isf --no-book` | `passed; 123 files, 417 tests` |
+| `2026-05-14` | `ISF-COMPOSITION.3` | `mdbook build docs/book` | `passed` |
+| `2026-05-14` | `ISF-COMPOSITION.3` | `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -378,6 +430,7 @@ leaves:
 | `ISF-COMPOSITION` | `R14: map ISF objectives to task trees` | Initial tree creation belongs to the ISF objective task-tree coverage slice. |
 | `ISF-COMPOSITION.1` | `ISF-COMPOSITION.1: inventory current handoff gaps` | Records current ISF child/spawn lowering, existing composition entrypoints, unsupported spawn parameters, and exact gaps. |
 | `ISF-COMPOSITION.2` | `ISF-COMPOSITION.2: specify public semantics` | Defines the accepted generated-top handoff, parent/child identity and wiring, spawn parameter syntax, value domain, and rejected cases. |
+| `ISF-COMPOSITION.3` | `ISF-COMPOSITION.3: implement spawn parameter binding` | Validates spawn parameter declarations/overrides, emits child `+params`, and preserves per-instance override metadata for generated-top handoff. |
 
 ## Changelog
 
@@ -386,3 +439,5 @@ leaves:
   `ISF-COMPOSITION.2` for public child/spawn composition semantics.
 - `2026-05-14`: Completed `ISF-COMPOSITION.2`; current frontier moves to
   `ISF-COMPOSITION.3` for spawn parameter binding implementation.
+- `2026-05-14`: Completed `ISF-COMPOSITION.3`; current frontier moves to
+  `ISF-COMPOSITION.4` for generated-top composition handoff.

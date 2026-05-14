@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF spawn parameter binding
+- `ISF-COMPOSITION.3` intentionally lands the validation and preservation
+  layer before generated-top wiring. That keeps malformed authoring forms from
+  reaching scheduled artifacts while leaving the actual instance application
+  for the composition handoff slice.
+- Child defaults are emitted as direct scheduled child `+params` because that
+  reuses the existing generated-child parameter declaration contract. Spawn
+  overrides stay instance-local in parent lowerer metadata until the generated
+  top can bind them through the existing composition parameter override path.
+- The first value domain stays literal-only. Accepting symbolic constants
+  before ISF has an explicit constant/symbol surface would make name lookup
+  ambiguous and would freeze a public behavior before the authoring model is
+  defined.
 ## 2026-05-14: ISF composition public semantics
 - The generated top is the public behavior, while the implementation can choose
   whether to materialize a concrete `?top` source or equivalent structured

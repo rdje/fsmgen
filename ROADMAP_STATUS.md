@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md),
-  whose current frontier is `ISF-COMPOSITION.3`. The completed
+  whose current frontier is `ISF-COMPOSITION.4`. The completed
   `ISF-CONFLICTS` tree is listed in the task-tree completed table.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
   guide for installing the same task-tree tracking workflow in another
@@ -72,6 +72,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   validate exact scalar child/instance operands before child-target resolution
   or spawned-child collection. `t/1204` covers valid child handshake lowering
   plus malformed child-composition forms.
+- ISF spawned transactions now support spawn-only parameter binding:
+  transaction-local `params` declarations lower to spawned child `.fsm`
+  `+params`, nested spawn `(params ...)` overrides validate against child
+  declarations, per-instance override lists are preserved in lowerer metadata,
+  and malformed values/duplicates/non-spawned transaction params/parameterized
+  `do` forms fail before scheduled artifact emission. `t/1215` covers the
+  shipped binding surface.
 - ISF `(switch signal (value body...)...)` clauses now validate scalar signals
   and list-form branches before branch expansion. `t/1205` covers valid
   explicit/default branch lowering plus malformed switch forms.
@@ -4386,16 +4393,21 @@ Done:
   inputs, reusable start-gated spawned children, unique instance identities,
   and spawn-only nested `(params ...)` overrides with a bounded literal value
   domain.
+- `ISF-COMPOSITION.3` implements spawn parameter binding in the ISF
+  IR/lowering path: child transaction defaults emit as scheduled child
+  `+params`, spawn overrides validate against those declarations, and
+  per-instance override metadata is preserved for the generated-top handoff.
 Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the first active tree in [docs/TASK_TREE.md](docs/TASK_TREE.md) when
   selecting the next PNT slice; after closing `ISF-CONFLICTS`, that frontier is
-  `ISF-COMPOSITION.3` in
+  `ISF-COMPOSITION.4` in
   [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md).
-- Implement spawn parameter binding in the ISF IR/lowering path using the
-  documented `ISF-COMPOSITION.2` syntax and rejection rules.
+- Implement the generated top/composition handoff that consumes the preserved
+  spawn-instance metadata, wires parent/child start-done ports, and applies
+  per-instance parameter overrides.
 - ISF conflict detection policy is now split: compile-time proof is
   best-effort and must flag cases where proof is not doable, while generated
   verification HDL now checks mux selectors at runtime for same-value source

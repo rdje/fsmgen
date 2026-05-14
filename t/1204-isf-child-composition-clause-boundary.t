@@ -88,7 +88,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'missing spawn instance', qr/\ATransaction 'parent': spawn requires '\(spawn transaction as instance\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'missing spawn instance', qr/\ATransaction 'parent': spawn requires '\(spawn transaction as instance/);
 (actor spawn_missing_instance
   (clock clk)
   (interface (input start) (output done))
@@ -100,7 +100,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'wrong spawn separator', qr/\ATransaction 'parent': spawn requires '\(spawn transaction as instance\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'wrong spawn separator', qr/\ATransaction 'parent': spawn requires '\(spawn transaction as instance/);
 (actor spawn_wrong_separator
   (clock clk)
   (interface (input start) (output done))
@@ -112,7 +112,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'nested spawn instance', qr/\ATransaction 'parent': spawn requires '\(spawn transaction as instance\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'nested spawn instance', qr/\ATransaction 'parent': spawn requires '\(spawn transaction as instance/);
 (actor spawn_nested_instance
   (clock clk)
   (interface (input start) (output done))

@@ -383,9 +383,17 @@ so `(await_all done_port)` and `(await_any done_port)` require exactly one
 scalar done-port operand before sync-state emission.
 The child-composition clause boundary is checked by
 [t/1204-isf-child-composition-clause-boundary.t](../t/1204-isf-child-composition-clause-boundary.t)
-so `(do transaction)` and `(spawn transaction as instance)` require exact
-scalar child/instance operands before child-target resolution or spawned-child
-collection.
+so `(do transaction)` and `(spawn transaction as instance [(params (NAME value)
+...)])` require exact scalar child/instance operands before child-target
+resolution or spawned-child collection.
+Spawn parameter binding is checked by
+[t/1215-isf-spawn-parameter-binding.t](../t/1215-isf-spawn-parameter-binding.t).
+The shipped surface preserves validated per-instance spawn overrides in
+lowerer metadata, emits child transaction defaults into spawned-child
+scheduled `.fsm` `+params` blocks, rejects duplicate instances, duplicate
+parameters, unknown overrides, unsupported symbolic values, and aggregate
+shape mismatches, rejects parameter declarations on non-spawned transactions,
+and keeps parameterized `(do child)` unsupported.
 The switch-clause boundary is checked by
 [t/1205-isf-switch-clause-boundary.t](../t/1205-isf-switch-clause-boundary.t)
 so `(switch signal (value body...)...)` requires one scalar signal, one or more

@@ -280,6 +280,7 @@ sub build_isf_public_interface_contract {
             't/1212-isf-schedule-report-compile-issues-projection.t',
             't/1213-isf-schedule-report-compatible-fanin-projection.t',
             't/1214-isf-rejected-conflict-diagnostics.t',
+            't/1215-isf-spawn-parameter-binding.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',

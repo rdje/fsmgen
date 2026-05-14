@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF spawn parameter binding
+- Active R14 task-tree slice: `ISF-COMPOSITION.3` is complete.
+- Spawn parameter declarations and per-instance overrides now validate before
+  scheduled `.fsm` emission; spawned child `.fsm` files carry default
+  `+params`, and parent lowerer metadata preserves override lists for the
+  generated-top handoff.
+- The next frontier is `ISF-COMPOSITION.4`.
+
 ## 2026-05-14: R14 — ISF composition public semantics
 - Active R14 task-tree slice: `ISF-COMPOSITION.2` is complete.
 - The accepted target contract now covers generated-top ownership, parent/child

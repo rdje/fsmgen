@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF spawn parameter binding
+- Completed `ISF-COMPOSITION.3` by implementing spawn parameter binding in the
+  ISF IR/lowering path.
+- `FSM::Scheduler::ISF::LoweringIR` now accepts spawned child
+  transaction-local `params` declarations, validates spawn override blocks,
+  rejects duplicate spawn instances, unknown overrides, symbolic values,
+  aggregate shape mismatches, duplicate parameters, non-spawned transaction
+  parameter declarations, and parameterized `(do child)`, and preserves
+  per-instance override metadata.
+- Spawned child `.fsm` emission now includes child transaction defaults in a
+  direct `+params` block. Generated-top application of those preserved
+  overrides remains the next `ISF-COMPOSITION.4` slice.
+- Added [t/1215-isf-spawn-parameter-binding.t](t/1215-isf-spawn-parameter-binding.t)
+  and wired it into the ISF public tested-by metadata.
 ### R14 — ISF composition public semantics
 - Completed `ISF-COMPOSITION.2` by specifying the public target contract for
   generated child top instantiation and spawn parameter binding.
