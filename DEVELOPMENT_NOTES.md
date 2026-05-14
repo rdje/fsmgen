@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: Clock tick and cycle timing vocabulary
+- The book now states the clock-edge model explicitly because assignment
+  semantics depend on whether a source name denotes the flop `Q` side or the
+  `D`/next-value side.
+- The important review rule is that a flop samples stable `D` at the active
+  tick and presents that value on `Q` just after the tick; `Q` is then stable
+  for the cycle until the next active tick, except for asynchronous reset.
+- This vocabulary keeps DT examples from being read procedurally: action order
+  inside one tree does not create same-cycle execution ordering, it selects
+  combinational `D` values for the next flop sampling event.
 ## 2026-05-14: Preferred `<=-` dual D-input operator
 - `<=+` carried the right behavior but a weak visual model: it is the D-input
   side counterpart to `<-=`, so `<=-` is the clearer canonical spelling.

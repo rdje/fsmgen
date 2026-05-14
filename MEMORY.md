@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: R8 — Clock tick and cycle timing model
+- The mdBook language-basics assignment section now defines a clock tick as an
+  active edge and a clock cycle as the interval between consecutive ticks.
+- The book explains `N-`, `N+`, and `(N+1)-` flop timing: `D` is sampled at the
+  tick, `Q` updates just after it, and `Q` remains stable through the cycle
+  unless asynchronous reset intervenes.
+- The wording ties that timing model back to `<-` as Q/output-named and `<=`
+  as D/next-value-named so later assignment examples do not rely on implicit
+  timing assumptions.
 ## 2026-05-14: R8 — Preferred `<=-` dual D-input operator
 - The `.fsm` assignment surface now accepts `<=-` as the preferred
   D-input-named dual-output operator, symmetric with Q/output-named `<-=`.

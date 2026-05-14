@@ -110,6 +110,34 @@ Current quick reference:
 - `A <=+ expr`: legacy spelling for `<=-`
 - `A <N 0` or `A <N 1`: delayed pulse form
 
+### Clock Ticks and Cycles
+
+FSMGen uses the usual edge-triggered flop timing model when describing
+sequential assignments. A clock tick is one active clock transition. That
+transition can be low-to-high or high-to-low in hardware, but most FSMGen
+examples and generated synchronous logic use the low-to-high transition.
+
+A clock cycle is the interval between two consecutive ticks. If the preceding
+tick is called `N` and the next tick is called `N+1`, then cycle `N` is the
+time after tick `N` and before tick `N+1`.
+
+At tick `N`, a flop samples its `D` input as it was stable immediately before
+the edge, written here as `N-`. Immediately after that edge, `N+`, the flop's
+`Q` output holds the sampled value. `Q` then remains stable for the whole
+cycle, up to `(N+1)-`, unless asynchronous reset or another explicitly
+asynchronous mechanism intervenes. At tick `N+1`, the same rule repeats: the
+`D` value stable at `(N+1)-` becomes the `Q` value at `(N+1)+`.
+
+This is the timing basis for the sequential assignment operators. A `<-`
+assignment names the `Q`/output side of the flop: the assignment selects a
+`D` value during the current cycle, and the authored LHS observes that value
+as `Q` after the next active tick. A `<=` assignment names the `D`/next-value
+side directly: the authored LHS denotes the value selected during the current
+cycle, while the corresponding `Q` value is only available after the next tick
+unless a dual-output form exposes it separately. Decision-tree ordering does
+not create procedural before/after timing inside a cycle; the tree selects the
+combinational values that will be sampled by flops at the next active tick.
+
 The LHS may also use a bounded deconstruct target when one packed RHS should
 feed several static lvalues:
 

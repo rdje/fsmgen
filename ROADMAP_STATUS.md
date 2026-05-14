@@ -5,6 +5,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Next decision point: continue `R14` ISF implementation/API stabilization by
   selecting another bounded documented limitation, or run a focused
   documentation drift audit only if guide/book divergence appears.
+- The mdBook language-basics chapter now defines the clock tick/cycle timing
+  model used by sequential assignments: `D` is sampled at the active tick,
+  `Q` updates at `N+`, and `Q` remains stable through the cycle until the next
+  tick unless asynchronous reset intervenes.
 - The `.fsm` assignment surface now accepts preferred `<=-` for the
   D-input-named dual-output operator, symmetric with `<-=`, while keeping
   legacy `<=+` as a compatibility alias for the same `<LHS>_r` Q-mirror
@@ -2534,7 +2538,7 @@ Done:
   - malformed inline comparison tokens such as `cnt[2:1]!=` or `=3` now fail through the dedicated inline-comparison boundary,
   - and both malformed families now fail clearly through parser, pipeline, and CLI entry points without emitting HDL.
 - [t/59-language-contract-assignment-operator-boundary.t](t/59-language-contract-assignment-operator-boundary.t) now locks the assignment-operator boundary explicitly:
-  - the active assignment family is `=`, `<-`, `<-=`, `<=`, `<=+`, and delayed-pulse forms like `<1`,
+  - the active assignment family is `=`, `<-`, `<-=`, `<=`, preferred `<=-`, legacy `<=+`, and delayed-pulse forms like `<1`,
   - unsupported operators such as `?=` or `=>` now fail through a dedicated assignment-operator boundary,
   - and those malformed assignment forms now fail clearly through parser, pipeline, and CLI entry points without emitting HDL.
 - [t/35-language-contract-test-branch-boundary.t](t/35-language-contract-test-branch-boundary.t) now locks explicit rejection of malformed empty test-node branches so `?sig` / case-style dispatch no longer fails through a generic internal `undef` action path.
@@ -2570,10 +2574,19 @@ Done:
   - slice bounds alone now stay regression-backed as a source of base-signal width for partial `=`, `<-=`, and `<=+` writes,
   - and indexed targets such as `IDXOUT[4]` / `IDXOUT[0]` now stay regression-backed as a source of a 5-bit base width too.
 - Canonical Lisp-ish assignment pair form is now active syntax and normalizes into the same assignment AST/IR as the existing infix compatibility spellings before generation:
-  - `(assign-op (lhs rhs))` and `(assign-op (lhs rhs) <cond)` are accepted for `=`, `<-`, `<=`, `<-=`, `<=+`, and delayed-pulse `<N`,
+  - `(assign-op (lhs rhs))` and `(assign-op (lhs rhs) <cond)` are accepted for `=`, `<-`, `<=`, `<-=`, preferred `<=-`, legacy `<=+`, and delayed-pulse `<N`,
   - nested RHS expressions, guarded assignments, and LHS deconstruct targets share the existing assignment validator/generator path,
   - [t/29-language-contract-core-forms.t](t/29-language-contract-core-forms.t) locks the parser/CoreAST/HDL behavior,
   - and [t/corpus/direct_assignment_pair_form.fsm](t/corpus/direct_assignment_pair_form.fsm) plus the regression corpus catalog lock pipeline and CLI coverage for the supported surface.
+- [docs/book/src/02-language-basics.md](docs/book/src/02-language-basics.md)
+  now defines clock tick/cycle timing for assignment semantics:
+  - a tick is the active clock edge,
+  - cycle `N` is the interval from just after tick `N` until just before
+    tick `N+1`,
+  - flops sample stable `D` at the tick and hold the sampled value on `Q`
+    through the following cycle,
+  - and this vocabulary explains the `<-` Q/output-named versus `<=`
+    D/next-value-named distinction before detailed assignment examples.
 Left:
 - Resolve the remaining gray-zone families, especially:
   - any remaining parser-accepted legacy constructs not yet cleanly bucketed.

@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R8 — Clock tick and cycle timing model
+- Added a clock tick/cycle timing subsection to
+  [docs/book/src/02-language-basics.md](docs/book/src/02-language-basics.md)
+  before the detailed assignment pair-form discussion.
+- Defined tick `N`, cycle `N`, `N-`, `N+`, and `(N+1)-` in the book's own
+  words so sequential assignment timing has an explicit shared vocabulary.
+- Connected the timing model to `<-` Q/output-named assignments, `<=`
+  D/next-value-named assignments, and the non-procedural reading of DT action
+  order within one cycle.
 ### R8 — Preferred `<=-` dual D-input operator
 - Added `<=-` as the preferred D-input-named dual-output assignment operator
   throughout the parser, strict-source frontend, enable-graph capture, and

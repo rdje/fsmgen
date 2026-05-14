@@ -2,6 +2,12 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R8 — Clock tick and cycle timing model
+- Active language-contract docs slice: the mdBook now defines clock ticks,
+  cycles, `N-`/`N+`, and the stable-`Q` interval between consecutive ticks.
+- The new wording grounds `<-` and `<=` assignment timing in edge-triggered
+  flop behavior before the book introduces detailed pair-form examples.
+
 ## 2026-05-14: R8 — Preferred `<=-` dual D-input operator
 - Active language-contract slice: `<=-` is now the preferred D-input-named
   dual-output assignment operator, mirroring `<-=` and exposing `<LHS>_r`.
