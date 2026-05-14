@@ -79,9 +79,13 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
     my ($states, $ctrs, $dts, $do_children, $spawn_refs, $contracts, $signal_widths, $storage_roles) =
         $self->_build_transaction($tx, $actor, 0);
     $states = [@$states]; $ctrs = { %$ctrs }; $dts = [@$dts];
+    my %module_signal_widths = _declared_storage_signal_widths($actor);
+    my %module_storage_roles = _declared_storage_roles($actor);
+    _merge_signal_widths(\%module_signal_widths, $signal_widths, $tx->{name});
+    _merge_storage_roles(\%module_storage_roles, $storage_roles, $tx->{name});
 
     my %used_drives = _collect_named_drive_call_names($tx->{clauses}, $actor->{drives} || {});
-    _register_drive_call_signal_widths($actor, $ctrs, \%used_drives, $storage_roles);
+    _register_drive_call_signal_widths($actor, $ctrs, \%used_drives, \%module_storage_roles);
 
     my $ports = $self->_build_child_ports($actor, $states, $dts, \%used_drives);
 
@@ -95,8 +99,9 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
         states     => $states,
         dt_blocks  => $dts,
         counters   => $ctrs,
-        signal_widths => { %{$signal_widths || {}} },
-        storage_roles => { %{$storage_roles || {}} },
+        declared_storage => _declared_storage_for_ir($actor),
+        signal_widths => \%module_signal_widths,
+        storage_roles => \%module_storage_roles,
         children   => {},
         temporal_contracts => $contracts,
     };
@@ -156,8 +161,8 @@ sub _build_parent_ir($self, $actor, $spawned) {
     my @dts;
     my @spawn_instances;
     my @temporal_contracts;
-    my %signal_widths;
-    my %storage_roles;
+    my %signal_widths = _declared_storage_signal_widths($actor);
+    my %storage_roles = _declared_storage_roles($actor);
     my %local_drive_uses;
     my %spawn_drive_sources;
     my %transaction_by_name = map { $_->{name} => $_ } @{$actor->{transactions} || []};
@@ -262,6 +267,7 @@ sub _build_parent_ir($self, $actor, $spawned) {
         states     => \@states,
         dt_blocks  => \@dts,
         counters   => \%ctrs,
+        declared_storage => _declared_storage_for_ir($actor),
         signal_widths => \%signal_widths,
         storage_roles => \%storage_roles,
         children   => {},
@@ -412,6 +418,59 @@ sub _build_ports($self, $actor) {
     return \@p;
 }
 
+sub _declared_storage_for_ir {
+    my ($actor) = @_;
+    my @storage;
+
+    for my $entry (@{$actor->{storage} || []}) {
+        my @signals = map {
+            my %signal = (
+                name  => $_->{name},
+                width => $_->{width},
+            );
+            $signal{index} = $_->{index} if exists $_->{index};
+            \%signal;
+        } @{$entry->{signals} || []};
+
+        my %copy = (
+            kind    => $entry->{kind},
+            name    => $entry->{name},
+            width   => $entry->{width},
+            signals => \@signals,
+        );
+        $copy{depth} = $entry->{depth} if exists $entry->{depth};
+        push @storage, \%copy;
+    }
+
+    return \@storage;
+}
+
+sub _declared_storage_signal_widths {
+    my ($actor) = @_;
+    my %widths;
+
+    for my $entry (@{$actor->{storage} || []}) {
+        for my $signal (@{$entry->{signals} || []}) {
+            $widths{$signal->{name}} = $signal->{width};
+        }
+    }
+
+    return %widths;
+}
+
+sub _declared_storage_roles {
+    my ($actor) = @_;
+    my %roles;
+
+    for my $entry (@{$actor->{storage} || []}) {
+        for my $signal (@{$entry->{signals} || []}) {
+            $roles{$signal->{name}} = 'actor_storage';
+        }
+    }
+
+    return %roles;
+}
+
 sub _build_child_ports {
     my ($self, $actor, $states, $dts, $used_drives) = @_;
 
@@ -545,6 +604,11 @@ sub _build_signal_width_map {
     my %widths;
     for my $i (@{$actor->{interface}{inputs}})  { $widths{$i->{name}} = $i->{width} // 1; }
     for my $o (@{$actor->{interface}{outputs}}) { $widths{$o->{name}} = $o->{width} // 1; }
+    for my $entry (@{$actor->{storage} || []}) {
+        for my $signal (@{$entry->{signals} || []}) {
+            $widths{$signal->{name}} = $signal->{width};
+        }
+    }
     _collect_sample_widths($tx->{clauses}, \%widths);
     _collect_shift_widths($tx->{clauses}, \%widths);
     _collect_extract_widths($tx->{clauses}, \%widths);

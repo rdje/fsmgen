@@ -137,13 +137,23 @@ reusable ISF design intent, not only scalar constants or types.
   Commit: `ISF-LIBRARIES.4.2: specify real FIFO requirements`
 
 - ID: `ISF-LIBRARIES.4.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Specify and implement FIFO actor-owned storage primitives.`
-  Acceptance: `ISF can declare reusable actor-owned fixed-depth storage needed
-  by the first 4-entry FIFO, including data storage and pointer/occupancy
-  state, with deterministic scheduled `.fsm` and HDL lowering or targeted
-  fail-closed diagnostics for unsupported shapes.`
-  Verification: `pending`
+  Acceptance: `ISF actors can declare reusable actor-owned fixed-width
+  registers and fixed-depth banks needed by the first 4-entry FIFO, including
+  data storage and pointer/occupancy state, with deterministic scheduled
+  `.fsm`, schedule-report metadata, SystemVerilog generation for used storage,
+  and targeted fail-closed diagnostics for unsupported shapes.`
+  Verification: `prove -I perl t/1232-isf-actor-storage-declarations.t
+  t/1140-isf-public-schedule-report-metadata-audit.t
+  t/1144-isf-public-tested-by-metadata-audit.t
+  t/1148-isf-public-storage-metadata-audit.t
+  t/1160-isf-public-actor-shell-value-shape-audit.t
+  t/1165-isf-public-actor-shell-timing-shape-audit.t
+  t/1192-isf-singleton-actor-clause-boundary.t
+  t/1183-ci-regression-tier-selection.t`;
+  `./bin/ci-regression isf --no-book`; `mdbook build docs/book`;
+  `git diff --check`
   Commit: `pending`
 
 - ID: `ISF-LIBRARIES.4.4`
@@ -190,7 +200,7 @@ reusable ISF design intent, not only scalar constants or types.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-LIBRARIES.4.3` | `pending` | A real FIFO fixture needs actor-owned multi-entry storage before it can be authored honestly. |
+| 1 | `ISF-LIBRARIES.4.4` | `pending` | The first FIFO storage declarations exist; the FIFO now needs same-cycle push/pop update semantics before the reusable actor can be authored honestly. |
 
 ## Design Notes
 
@@ -216,6 +226,21 @@ reusable ISF design intent, not only scalar constants or types.
   review target for storage indexing, 2-bit read/write pointer wrap, occupancy
   values 0 through 4, full/empty flag derivation, and same-cycle push/pop
   updates without waiting for arbitrary-depth parameter elaboration.
+- The first actor-owned storage surface is shipped as a singleton
+  `(storage ...)` actor clause. `(register name (width N))` declares fixed
+  internal state such as `rd_ptr`, `wr_ptr`, or `occupancy`.
+  `(bank name (width N) (depth N))` declares fixed-depth actor-owned storage
+  and currently scalarizes to `<name>_0` through `<name>_<depth-1>` in the
+  scheduled `.fsm` review artifact. The first FIFO target uses this to model
+  four concrete entries before arbitrary-depth memory-array generation is
+  generalized.
+- Declared actor-owned storage is internal to the actor. Storage signals must
+  not collide with interface ports, actor clock/reset signals, or generated
+  scheduler signals such as `can_accept`. Unsupported shapes fail closed
+  before scheduler handoff.
+- Schedule reports keep the existing storage `kind` values and mark declared
+  storage entries with role `actor_storage`. Used storage reaches HDL through
+  the existing scalar signal/flop path.
 - A library should be reusable source intent, not generated HDL pasted into a
   design. The imported definition should still lower through scheduled `.fsm`
   so users can inspect the exact cycle-level artifact.

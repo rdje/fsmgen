@@ -60,6 +60,20 @@ sub _storage_summary($self, $ir) {
     my %signal_widths = %{$ir->{signal_widths} || {}};
     my %storage_roles = %{$ir->{storage_roles} || {}};
 
+    for my $declared (@{$ir->{declared_storage} || []}) {
+        for my $signal (@{$declared->{signals} || []}) {
+            my $name = $signal->{name};
+            next if $seen{$name}++;
+            my %entry = (
+                name  => $name,
+                kind  => 'register',
+                role  => 'actor_storage',
+                width => $signal->{width},
+            );
+            push @storage, \%entry;
+        }
+    }
+
     for my $s (@{$ir->{states}}) {
         for my $a (@{$s->{assignments}}) {
             next if $seen{$a->{lhs}}++;

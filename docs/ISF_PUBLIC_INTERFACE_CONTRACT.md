@@ -137,6 +137,10 @@ roles and widths are checked by
 [t/1226-isf-data-width-storage-report.t](../t/1226-isf-data-width-storage-report.t)
 for sampled aliases, extracted fields, assembled targets, explicit-width
 shift registers, and completion pulses.
+Actor-owned fixed storage declarations are checked by
+[t/1232-isf-actor-storage-declarations.t](../t/1232-isf-actor-storage-declarations.t)
+for parser shape, scalarized bank lowering, `actor_storage` report metadata,
+fail-closed diagnostics, and SystemVerilog generation for used storage.
 The transaction-summary metadata is checked by
 [t/1149-isf-public-transaction-metadata-audit.t](../t/1149-isf-public-transaction-metadata-audit.t)
 to keep transaction `states` and `count` shapes exact across direct and
@@ -422,8 +426,8 @@ accepted.
 The singleton actor-clause boundary is checked by
 [t/1192-isf-singleton-actor-clause-boundary.t](../t/1192-isf-singleton-actor-clause-boundary.t)
 so `(clock ...)`, `(reset ...)`, `(watchdog ...)`, `(interface ...)`, and
-`(resources ...)` fail closed when repeated instead of letting later clauses
-overwrite earlier public actor-shell fields.
+`(resources ...)`, and `(storage ...)` fail closed when repeated instead of
+letting later clauses overwrite earlier public actor-shell fields.
 The blocking `do` child-completion handoff is checked by
 [t/1177-isf-do-child-done-pulse.t](../t/1177-isf-do-child-done-pulse.t)
 so the generated internal `child_done` signal remains a one-cycle delayed pulse
@@ -673,6 +677,12 @@ The machine-readable contract advertises those required shell fields through
 `actor_shell_required_keys` and the value shapes through
 `actor_shell_value_shape`. That promise is intentionally a shell contract: the
 full raw actor hash remains non-public.
+Actor roots may also carry parser-validated actor-owned storage declarations
+through a singleton `(storage ...)` clause. That field is not a required actor
+shell key, but the advertised value-shape string records that `storage` is an
+optional array reference when present. The shipped storage entries are
+fixed-width `register` declarations and fixed-depth `bank` declarations whose
+scalarized element names are scheduler input.
 The current public parser handoff also advertises one bounded subshape inside
 that shell: `interface` contains `inputs` and `outputs` arrays, and each public
 port entry has unique non-empty scalar `name` plus positive integer `width`,
@@ -696,10 +706,11 @@ The current public parser handoff also advertises bounded actor timing fields:
 hash with scalar `name`, `kind`, and `polarity`, and `watchdog` is null when
 omitted or a positive integer. The machine-readable contract advertises this
 through `actor_shell_timing_shape`.
-Those timing fields, along with `interface` and parser-carried `resources`, are
-source-level singleton actor clauses. Repeating one is a parser boundary error;
-the parser does not merge duplicate interface/resources blocks or let later
-clock/reset/watchdog clauses overwrite earlier ones.
+Those timing fields, along with `interface`, parser-carried `resources`, and
+parser-carried `storage`, are source-level singleton actor clauses. Repeating
+one is a parser boundary error; the parser does not merge duplicate
+interface/resources/storage blocks or let later clock/reset/watchdog clauses
+overwrite earlier ones.
 The current public parser handoff also advertises a bounded rule-entry shell:
 `rules` is an array of entries with unique non-empty scalar `name`, optional
 `when`, and `actions` array fields. The machine-readable contract advertises this through
@@ -937,12 +948,13 @@ through `schedule_report_dt_kind_values`.
 For each `inferred_storage` entry, `kind` is currently one of `counter` or
 `register`. Optional `role` values describe the stable scheduler purpose when
 the lowerer has direct evidence. The current role family is
-`completion_pulse`, `data_register`, `drive_payload`, `drive_request`,
-`extract_field`, `latency_counter`, `repeat_counter`, `sample_alias`, and
-`watchdog_counter`. Optional `width` values are positive integer bit widths
-when present, and are currently present for inferred scheduler counters plus
-register storage with known ISF width evidence. The machine-readable contract
-advertises these through `schedule_report_storage_kind_values`,
+`actor_storage`, `completion_pulse`, `data_register`, `drive_payload`,
+`drive_request`, `extract_field`, `latency_counter`, `repeat_counter`,
+`sample_alias`, and `watchdog_counter`. Optional `width` values are positive
+integer bit widths when present, and are currently present for declared
+actor-owned storage, inferred scheduler counters, and register storage with
+known ISF width evidence. The machine-readable contract advertises these
+through `schedule_report_storage_kind_values`,
 `schedule_report_storage_role_values`, and
 `schedule_report_storage_width_shape`.
 

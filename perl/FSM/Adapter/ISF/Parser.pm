@@ -45,6 +45,7 @@ my %RULE_ASSIGNMENT_FORBIDDEN_EXPR_HEADS = map { $_ => 1 } qw(
 #     transactions  => [ { name => ..., clauses => [...] }, ... ],
 #     rules         => [ { name => ..., when => ..., actions => [...] }, ... ],
 #     resources     => [ { name => ..., arbiter => ..., kind => ..., users => [...] }, ... ],
+#     storage       => [ { kind => "register"|"bank", name => ..., width => ..., depth => ..., signals => [...] }, ... ],
 #     priorities    => [ ... ],
 #     imports       => [ ... ],
 #     library_uses  => [ ... ],
@@ -115,6 +116,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
         transactions => [],
         rules        => [],
         resources    => [],
+        storage      => [],
         priorities   => [],
         drives       => {},
         phases       => [],
@@ -184,6 +186,10 @@ sub _build_actor($self, $actor_ast, $source_label) {
                 $self->_claim_singleton_actor_clause($actor_name, 'resources', \%singleton_actor_clauses);
                 $result->{resources} = $self->_parse_resources($clause);
             }
+            when ('storage') {
+                $self->_claim_singleton_actor_clause($actor_name, 'storage', \%singleton_actor_clauses);
+                $result->{storage} = $self->_parse_storage($clause, $actor_name);
+            }
             when ('priority')  { push @{$result->{priorities}}, $self->_parse_priority($clause); }
             when ('drive')     { $self->_parse_drive_def($clause, $result->{drives}); }
             when ('phase')     {
@@ -208,6 +214,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
     $self->_validate_rule_priority_targets($result);
     $self->_validate_actor_priority_targets($result);
     $self->_validate_resource_user_targets($result);
+    $self->_validate_storage_actor_names($result);
 
     fsm_trace_exit('Parser _build_actor completed', 3);
     return $result;
@@ -871,6 +878,101 @@ sub _parse_interface($self, $clause) {
     return { inputs => \@inputs, outputs => \@outputs };
 }
 
+sub _parse_storage($self, $clause, $actor_name) {
+    confess "Error: actor '$actor_name' storage requires '(storage (register name (width N)) ...)' entries\n"
+        unless @$clause >= 2;
+
+    my @entries;
+    my %seen_logical_name;
+    my %seen_signal_name;
+
+    for my $entry (@{$clause}[1 .. $#$clause]) {
+        confess "Error: actor '$actor_name' storage entries must be list forms\n"
+            unless ref($entry) eq 'ARRAY' && @$entry;
+
+        my ($kind, $name, @options) = @$entry;
+        confess "Error: actor '$actor_name' storage entry kind must be 'register' or 'bank'\n"
+            unless defined($kind) && !ref($kind) && ($kind eq 'register' || $kind eq 'bank');
+        confess "Error: actor '$actor_name' storage '$kind' entry requires a scalar HDL identifier name\n"
+            unless _is_hdl_identifier($name);
+        confess "Error: actor '$actor_name' has duplicate storage name '$name'\n"
+            if $seen_logical_name{$name}++;
+
+        my %parsed_options;
+        for my $option (@options) {
+            confess "Error: actor '$actor_name' storage '$name' options must be list forms\n"
+                unless ref($option) eq 'ARRAY' && @$option;
+            my $option_name = $option->[0];
+            confess "Error: actor '$actor_name' storage '$name' option name must be scalar\n"
+                unless defined($option_name) && !ref($option_name) && length($option_name);
+            confess "Error: actor '$actor_name' storage '$name' has duplicate '$option_name' option\n"
+                if $parsed_options{$option_name}++;
+
+            if ($option_name eq 'width') {
+                $parsed_options{width_value} = _parse_storage_positive_integer_option(
+                    $option,
+                    "Error: actor '$actor_name' storage '$name' width",
+                );
+                next;
+            }
+            if ($option_name eq 'depth') {
+                $parsed_options{depth_value} = _parse_storage_positive_integer_option(
+                    $option,
+                    "Error: actor '$actor_name' storage '$name' depth",
+                );
+                next;
+            }
+
+            confess "Error: actor '$actor_name' storage '$name' has unsupported option '$option_name'\n";
+        }
+
+        my $width = $parsed_options{width_value};
+        confess "Error: actor '$actor_name' storage '$name' requires '(width N)'\n"
+            unless defined($width);
+
+        my @signals;
+        if ($kind eq 'register') {
+            confess "Error: actor '$actor_name' storage register '$name' does not accept '(depth N)'\n"
+                if defined($parsed_options{depth_value});
+            @signals = ({ name => $name, width => $width });
+        } else {
+            my $depth = $parsed_options{depth_value};
+            confess "Error: actor '$actor_name' storage bank '$name' requires '(depth N)'\n"
+                unless defined($depth);
+            @signals = map { +{ name => "${name}_$_", width => $width, index => $_ } } 0 .. $depth - 1;
+        }
+
+        for my $signal (@signals) {
+            my $signal_name = $signal->{name};
+            confess "Error: actor '$actor_name' storage '$name' lowers to duplicate signal '$signal_name'\n"
+                if $seen_signal_name{$signal_name}++;
+        }
+
+        push @entries, {
+            kind    => $kind,
+            name    => $name,
+            width   => $width,
+            signals => \@signals,
+            ($kind eq 'bank' ? (depth => $parsed_options{depth_value}) : ()),
+        };
+    }
+
+    return \@entries;
+}
+
+sub _parse_storage_positive_integer_option {
+    my ($option, $context) = @_;
+
+    confess "$context requires '(name positive_integer)'\n"
+        unless ref($option) eq 'ARRAY'
+            && @$option == 2
+            && defined($option->[1])
+            && !ref($option->[1])
+            && $option->[1] =~ /\A[1-9][0-9]*\z/;
+
+    return 0 + $option->[1];
+}
+
 sub _parse_handshake($self, $clause) {
     confess "Error: (handshake ...) requires '(handshake name (valid signal) (ready signal))'\n"
         unless @$clause >= 3 && @$clause <= 4;
@@ -1174,6 +1276,35 @@ sub _validate_resource_user_targets($self, $actor) {
                 unless defined($user)
                     && !ref($user)
                     && $rule_names{$user};
+        }
+    }
+
+    return 1;
+}
+
+sub _validate_storage_actor_names($self, $actor) {
+    my $actor_name = $actor->{actor_name};
+    my %ports = (
+        map({ $_->{name} => 'input' } @{$actor->{interface}{inputs} || []}),
+        map({ $_->{name} => 'output' } @{$actor->{interface}{outputs} || []}),
+    );
+
+    my %reserved;
+    $reserved{$actor->{clock}} = 'clock'
+        if defined($actor->{clock}) && length($actor->{clock});
+    $reserved{$actor->{reset}{name}} = 'reset'
+        if ref($actor->{reset}) eq 'HASH'
+            && defined($actor->{reset}{name})
+            && length($actor->{reset}{name});
+    $reserved{can_accept} = 'scheduler-generated signal';
+
+    for my $entry (@{$actor->{storage} || []}) {
+        for my $signal (@{$entry->{signals} || []}) {
+            my $name = $signal->{name};
+            confess "Error: actor '$actor_name' storage signal '$name' conflicts with interface $ports{$name} port '$name'\n"
+                if exists $ports{$name};
+            confess "Error: actor '$actor_name' storage signal '$name' conflicts with $reserved{$name} '$name'\n"
+                if exists $reserved{$name};
         }
     }
 

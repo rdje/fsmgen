@@ -76,6 +76,14 @@ sub _emit_size($self, $ir) {
         $declared{$p->{name}} = 1;
         push @l, "    ($p->{name} $p->{width})";
     }
+    for my $storage (@{$ir->{declared_storage} || []}) {
+        for my $signal (@{$storage->{signals} || []}) {
+            my $name = $signal->{name};
+            next if $declared{$name};
+            $declared{$name} = 1;
+            push @l, "    ($name $signal->{width})";
+        }
+    }
     my $ctrs = $ir->{counters} || {};
     for my $name (sort keys %$ctrs) {
         next if $declared{$name};

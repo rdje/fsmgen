@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF actor-owned storage declarations
+- Completed `ISF-LIBRARIES.4.3` by adding the first actor-owned storage
+  declaration surface for reusable FIFO work.
+- Added parser support for singleton `(storage ...)` actor clauses with
+  fixed-width `(register name (width N))` entries and fixed-depth
+  `(bank name (width N) (depth N))` entries.
+- Storage banks scalarize to deterministic signal names such as `data_0`
+  through `data_3`, which keeps scheduled `.fsm` review artifacts and
+  SystemVerilog generation on the existing scalar signal path.
+- Lowering now carries declared storage widths into scheduled `.fsm` `+size`
+  and schedule reports, where declared storage entries use the new
+  `actor_storage` role.
+- Added [t/1232-isf-actor-storage-declarations.t](t/1232-isf-actor-storage-declarations.t)
+  for parser shape, deterministic scalarization, report metadata,
+  fail-closed diagnostics, and CLI SystemVerilog generation.
+- The active R14 PNT frontier advances to `ISF-LIBRARIES.4.4`.
 ### R14 — ISF real FIFO requirements
 - Completed `ISF-LIBRARIES.4.2` by formalizing what the reusable FIFO fixture
   must actually model before source is shipped.

@@ -132,10 +132,11 @@ must match it.
 ### Current Width Evidence Boundary
 
 Before lowering a transaction, ISF builds one private width map from the whole
-transaction clause tree. Interface declarations seed that map, samples inherit
-known source widths, explicit `shift_right` and `extract` width options add
-local evidence, and `assemble` can infer its target width when all parts are
-known. This is type/shape evidence, not cycle-value evidence, so it is not
+actor and transaction shape. Interface declarations and actor-owned
+`(storage ...)` declarations seed that map, samples inherit known source
+widths, explicit `shift_right` and `extract` width options add local evidence,
+and `assemble` can infer its target width when all parts are known. This is
+type/shape evidence, not cycle-value evidence, so it is not
 source-order-sensitive inside the transaction.
 
 Today this evidence is used to avoid `WIDTH`, `HIGH`, and `LOW` placeholders
@@ -143,16 +144,17 @@ for accepted migrated data operations. Schedule reports expose positive
 integer `width` metadata for inferred scheduler counters and for register
 storage whose ISF width evidence is known. They also expose optional `role`
 metadata when the lowerer has stable evidence for the storage purpose,
-including sampled aliases, extracted fields, ordinary data registers,
-completion pulses, watchdog/latency/repeat counters, and named-drive
-request/payload storage.
+including declared actor-owned storage, sampled aliases, extracted fields,
+ordinary data registers, completion pulses, watchdog/latency/repeat counters,
+and named-drive request/payload storage.
 
-The planned precedence for this tree is declaration first, then explicit
-operation-local width options, sampled-alias propagation, structural derivation
-from `assemble`/`extract`, and finally existing generated scheduler storage for
-counter families. Explicit width options are assertions, not silent casts: they
-may fill an unknown width, but they must agree with any existing width fact for
-the same name.
+The planned precedence for this tree is declaration first: interface and
+actor-owned storage declarations are hard width facts. Then come explicit
+operation-local width options, sampled-alias propagation, structural
+derivation from `assemble`/`extract`, and finally existing generated scheduler
+storage for counter families. Explicit width options are assertions, not
+silent casts: they may fill an unknown width, but they must agree with any
+existing width fact for the same name.
 
 Accepted migrated operation families do not emit `WIDTH`, `HIGH`, or `LOW`
 placeholders. `extract` fails when field positions cannot be proven.

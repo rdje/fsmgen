@@ -201,7 +201,8 @@ Supported actor clauses:
 
 Actor-shell singleton clauses are not mergeable. At most one `(clock ...)`,
 `(reset ...)`, `(watchdog ...)`, `(interface ...)`, `(params ...)`,
-`(imports ...)`, and `(resources ...)` clause may appear in an actor.
+`(imports ...)`, `(resources ...)`, and `(storage ...)` clause may appear in
+an actor.
 Duplicate singleton clauses are rejected before the parser returns an actor
 shell instead of letting later clauses overwrite earlier public fields.
 
@@ -327,12 +328,12 @@ with `library`, `alias`, `export`, `kind`, `instance`, `module`,
 `library_name`, `parent_name`, and `width`; clock/reset bindings use JSON null
 for `library_name`, and reset/clock width is `1`.
 
-Current boundary: `ISF-LIBRARIES.4.2` resolves reusable actors, validates
+Current boundary: `ISF-LIBRARIES.4.3` resolves reusable actors, validates
 parameters and bindings, emits child scheduled `.fsm` artifacts, wires library
 actor instances into generated tops for same-name system ports, reaches
 SystemVerilog generation for the covered generated-top path, reports bounded
-provenance, and records the real FIFO requirements before any FIFO fixture is
-shipped.
+provenance, records the real FIFO requirements before any FIFO fixture is
+shipped, and adds the first actor-owned storage declaration surface.
 
 No FIFO library fixture is shipped yet. A depth-1 element is not considered a
 FIFO for this library catalog; it is a register/holding element and would hide
@@ -348,12 +349,16 @@ must preserve state. Depth 4 gives the first fixture concrete review points:
 four storage entries, 2-bit pointer wrap, occupancy values 0 through 4, and
 full/empty derivation. Transaction `(when condition body...)` remains ordered
 control flow; it must not be used to pretend FIFO ports are concurrent when a
-push and pop request arrive in the same cycle. Parameter-driven interface
-widths, arbitrary-depth memory-backed FIFO generation beyond the first
-`DEPTH=4` fixture, automatic non-zero reset values such as empty=1, reusable
-FIFO library source, standalone transaction/drive exports, symbolic constants,
-derived parameter expressions, clock/reset name remapping, and library actors
-that import other libraries remain deferred.
+push and pop request arrive in the same cycle. The storage primitive needed
+for that target is now available as actor-owned fixed storage:
+`(register name (width N))` for pointer/occupancy state and
+`(bank name (width N) (depth 4))` for the four data entries.
+Parameter-driven interface widths, arbitrary-depth memory-backed FIFO
+generation beyond the first `DEPTH=4` fixture, automatic non-zero reset values
+such as empty=1, same-cycle FIFO update semantics, reusable FIFO library
+source, standalone transaction/drive exports, symbolic constants, derived
+parameter expressions, clock/reset name remapping, and library actors that
+import other libraries remain deferred.
 
 ## 4. Clock, Reset, Watchdog
 
@@ -405,6 +410,49 @@ If an inferred scheduler storage name matches a declared interface port, the
 declared port entry is kept and the inferred duplicate is suppressed.
 Output ports are marked as public outputs by the `.fsm` emitter when assigned
 from drive/rule output paths.
+
+### 5.1 Actor-Owned Storage
+
+Actors may declare internal persistent state with a singleton `(storage ...)`
+clause:
+
+```lisp
+(storage
+  (register rd_ptr (width 2))
+  (register wr_ptr (width 2))
+  (register occupancy (width 3))
+  (bank data (width 8) (depth 4)))
+```
+
+The first shipped storage forms are:
+
+- `(register name (width N))`: a fixed-width actor-owned internal register.
+- `(bank name (width N) (depth N))`: a fixed-depth actor-owned storage bank.
+
+All widths and depths are positive integer literals in the current shipped
+surface. Parameter-derived widths/depths, symbolic constants, dynamic storage
+depth, and memory-array backend emission remain deferred.
+
+Storage banks lower to deterministic scalar storage element names in the
+scheduled `.fsm` review artifact. For example,
+`(bank data (width 8) (depth 4))` declares `data_0`, `data_1`, `data_2`, and
+`data_3`, each 8 bits wide. This scalarized lowering is intentional for the
+first FIFO work: it lets the `DEPTH=4` fixture use four concrete storage
+entries and reach the existing scalar signal/flop SystemVerilog backend before
+generalized indexed storage syntax or memory-array emission is shipped.
+
+Declared storage is internal actor state, not an interface port. A storage
+signal must not collide with an interface port, actor clock/reset signal, or
+generated scheduler signal such as `can_accept`. Missing width/depth options,
+duplicate logical storage names, duplicate scalarized element names, and
+duplicate `(storage ...)` clauses fail closed before scheduler handoff.
+
+Lowering emits declared storage signals in scheduled `.fsm` `+size`. The
+lowerer also carries their widths as normal width evidence so updates and data
+operations can reuse the existing expression and mux paths. Schedule reports
+include declared storage entries in `inferred_storage` with kind `register`,
+role `actor_storage`, and positive integer `width`. Used storage signals reach
+SystemVerilog generation through the existing scalar assignment path.
 
 ## 6. Drive Definitions and Calls
 
@@ -1230,11 +1278,12 @@ Each `dt_blocks` entry's `kind` value is currently `drive`,
 advertises this value family through `schedule_report_dt_kind_values`.
 Each `inferred_storage` entry's `kind` value is currently `counter` or
 `register`. Optional `role` values describe stable scheduler purpose when the
-lowerer has direct evidence: `completion_pulse`, `data_register`,
-`drive_payload`, `drive_request`, `extract_field`, `latency_counter`,
-`repeat_counter`, `sample_alias`, and `watchdog_counter`. Optional `width`
-values are positive integer bit widths when present and currently appear on
-inferred scheduler counters and register storage with known ISF width evidence.
+lowerer has direct evidence: `actor_storage`, `completion_pulse`,
+`data_register`, `drive_payload`, `drive_request`, `extract_field`,
+`latency_counter`, `repeat_counter`, `sample_alias`, and `watchdog_counter`.
+Optional `width` values are positive integer bit widths when present and
+currently appear on declared actor-owned storage, inferred scheduler counters,
+and register storage with known ISF width evidence.
 The capability-manifest ISF public contract advertises this through
 `schedule_report_storage_kind_values`, `schedule_report_storage_role_values`,
 and `schedule_report_storage_width_shape`.
@@ -1511,13 +1560,16 @@ Focused tests:
 - [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)
 - [t/1230-isf-library-import-resolution.t](../t/1230-isf-library-import-resolution.t)
 - [t/1231-isf-library-generated-top.t](../t/1231-isf-library-generated-top.t)
+- [t/1232-isf-actor-storage-declarations.t](../t/1232-isf-actor-storage-declarations.t)
 
 ## 12. Explicitly Deferred
 
-- Reusable ISF library behavior beyond the shipped resolver/review-artifact
-  and same-name generated-top slices: the real reusable FIFO actor fixture,
+- Reusable ISF library behavior beyond the shipped resolver/review-artifact,
+  same-name generated-top, and actor-owned fixed-storage slices: same-cycle
+  FIFO read/write update semantics, the real reusable FIFO actor fixture,
   standalone transaction/drive exports, symbolic constants, derived parameter
-  expressions, clock/reset name remapping, and library actors that import
+  expressions, parameter-derived storage dimensions, clock/reset name
+  remapping, memory-array backend emission, and library actors that import
   other libraries.
 - Old `(handshake ...)` semantics beyond validated ignored compatibility
   parsing.

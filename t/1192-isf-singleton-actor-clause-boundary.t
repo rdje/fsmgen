@@ -28,7 +28,7 @@ sub assert_parse_rejected {
     like($diagnostic, $diagnostic_re, "$label diagnostic is targeted");
 }
 
-subtest 'single clock reset watchdog interface and resources clauses are preserved' => sub {
+subtest 'single clock reset watchdog interface resources and storage clauses are preserved' => sub {
     my $actor = parse_source(<<'ISF');
 (actor singleton_actor_clauses
   (clock clk)
@@ -39,6 +39,8 @@ subtest 'single clock reset watchdog interface and resources clauses are preserv
     (output done))
   (resources
     (resource shared_bus (arbiter priority)))
+  (storage
+    (register rd_ptr (width 2)))
   (transaction main
     (on start)
     (complete done)))
@@ -60,6 +62,18 @@ ISF
         $actor->{resources},
         [{ name => 'shared_bus', arbiter => 'priority' }],
         'resources shell is preserved',
+    );
+    is_deeply(
+        $actor->{storage},
+        [
+            {
+                kind    => 'register',
+                name    => 'rd_ptr',
+                width   => 2,
+                signals => [{ name => 'rd_ptr', width => 2 }],
+            },
+        ],
+        'storage shell is preserved',
     );
 };
 
@@ -106,6 +120,17 @@ ISF
     (resource shared_bus (arbiter priority)))
   (resources
     (resource mem_port (arbiter round_robin)))
+  (transaction main (on start) (complete done)))
+ISF
+
+    assert_parse_rejected(<<'ISF', 'duplicate storage clause', qr/\AError: duplicate actor clause 'storage' in actor 'duplicate_storage'/);
+(actor duplicate_storage
+  (clock clk)
+  (interface (input start) (output done))
+  (storage
+    (register rd_ptr (width 2)))
+  (storage
+    (register wr_ptr (width 2)))
   (transaction main (on start) (complete done)))
 ISF
 };

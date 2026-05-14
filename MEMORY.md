@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF actor-owned storage declarations
+- Completed `ISF-LIBRARIES.4.3` in
+  [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md).
+- ISF actors now accept a singleton `(storage ...)` clause with fixed-width
+  `(register name (width N))` entries and fixed-depth
+  `(bank name (width N) (depth N))` entries.
+- Storage banks scalarize deterministically to `<name>_0`,
+  `<name>_1`, ... `<name>_<depth-1>` in scheduled `.fsm` so the first
+  `DEPTH=4` FIFO target can use four explicit storage entries without waiting
+  for backend memory-array support.
+- Declared actor-owned storage is emitted in scheduled `.fsm` `+size`, carries
+  width evidence into lowering, appears in schedule reports with role
+  `actor_storage`, and reaches SystemVerilog generation when the storage
+  signals are used.
+- Unsupported storage shapes fail closed for missing width/depth, duplicate
+  scalarized names, duplicate singleton storage clauses, and conflicts with
+  interface/system/generated names.
+- The next active R14 frontier is `ISF-LIBRARIES.4.4`, adding same-cycle FIFO
+  read/write update semantics on top of these storage primitives.
 ## 2026-05-14: ISF real FIFO requirements
 - Completing `ISF-LIBRARIES.4.2` in
   [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md).

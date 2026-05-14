@@ -363,6 +363,7 @@ sub build_isf_public_interface_contract {
             't/1229-isf-compatibility-cli-parity.t',
             't/1230-isf-library-import-resolution.t',
             't/1231-isf-library-generated-top.t',
+            't/1232-isf-actor-storage-declarations.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -584,7 +585,7 @@ sub isf_public_interface_actor_shell_required_keys {
 }
 
 sub isf_public_interface_actor_shell_value_shape {
-    return 'actor_name is scalar; transactions is an array reference; interface is a hash reference';
+    return 'actor_name is scalar; transactions is an array reference; interface is a hash reference; storage is an optional array reference when actor-owned storage is declared';
 }
 
 sub isf_public_interface_actor_shell_actor_name_shape {
@@ -592,7 +593,7 @@ sub isf_public_interface_actor_shell_actor_name_shape {
 }
 
 sub isf_public_interface_actor_shell_timing_shape {
-    return 'clock is a non-empty scalar when configured; reset is null when omitted or a hash with scalar name, kind, and polarity; watchdog is null when omitted or a positive integer; source clock, reset, watchdog, interface, and resources clauses are singleton actor clauses';
+    return 'clock is a non-empty scalar when configured; reset is null when omitted or a hash with scalar name, kind, and polarity; watchdog is null when omitted or a positive integer; source clock, reset, watchdog, interface, resources, and storage clauses are singleton actor clauses';
 }
 
 sub isf_public_interface_actor_shell_interface_shape {
@@ -1036,12 +1037,13 @@ sub isf_public_interface_schedule_report_storage_role_values {
             repeat_counter
             sample_alias
             watchdog_counter
+            actor_storage
         ),
     ];
 }
 
 sub isf_public_interface_schedule_report_storage_width_shape {
-    return 'positive integer bit width when present; currently present for inferred scheduler counters and register storage with known ISF width evidence';
+    return 'positive integer bit width when present; currently present for declared actor-owned storage, inferred scheduler counters, and register storage with known ISF width evidence';
 }
 
 sub isf_public_interface_schedule_report_transaction_keys {

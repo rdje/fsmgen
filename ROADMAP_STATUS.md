@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md), whose current
-  frontier is `ISF-LIBRARIES.4.3`. The public-contract tree remains
+  frontier is `ISF-LIBRARIES.4.4`. The public-contract tree remains
   cross-cutting and should not displace feature delivery unless the selected
   feature changes a public surface. The completed
   `ISF-SCHEDULE-REPORTS`, `ISF-DATA-WIDTHS`, `ISF-STAGES-CONTRACTS`,
@@ -114,6 +114,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   simultaneous push+pop cycles. Transaction `(when ...)` is documented as
   ordered control flow, not a model for same-cycle FIFO port concurrency. The
   active frontier advances to `ISF-LIBRARIES.4.3`.
+- `ISF-LIBRARIES.4.3` is complete. ISF actors now support singleton
+  `(storage ...)` clauses with fixed-width `(register name (width N))`
+  declarations and fixed-depth `(bank name (width N) (depth N))` declarations.
+  Banks scalarize deterministically to `<name>_0` through
+  `<name>_<depth-1>` in scheduled `.fsm`, declared storage width evidence is
+  emitted through `+size`, schedule reports expose role `actor_storage`, and
+  focused coverage proves fail-closed diagnostics plus SystemVerilog
+  generation for used storage. The active frontier advances to
+  `ISF-LIBRARIES.4.4`.
 - `ISF-RESOURCE-PRIORITY.1` is complete. The current inventory records that
   `(resources ...)` is validated metadata only, accepted arbiters are
   `priority` and `round_robin`, and successful resource arbitration is not yet

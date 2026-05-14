@@ -1,5 +1,28 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF actor-owned storage declarations
+- The first storage implementation deliberately lowers fixed-depth banks to
+  scalar register names instead of adding a second backend memory-array path.
+  The existing `.fsm` and SystemVerilog pipeline already has the required
+  width, mux, and flop machinery for scalar signals, so this gives FIFO work a
+  reviewable path while keeping the slice bounded.
+- `(bank data (width 8) (depth 4))` currently names the logical storage bank,
+  but the emitted review artifact exposes `data_0`, `data_1`, `data_2`, and
+  `data_3`. Later indexed access syntax can target the logical bank and still
+  lower through the same scalarized representation if that remains the right
+  backend strategy.
+- Declared storage is internal actor state, not an interface port. The parser
+  rejects storage signals that collide with interface ports, clock/reset, or
+  `can_accept` so a storage declaration cannot silently change module
+  boundaries or generated scheduler state.
+- Schedule reports keep the existing `counter`/`register` kind family and add
+  the `actor_storage` role. That avoids inventing a broad `memory` schema
+  before the first FIFO update semantics, reset policy, and indexed access
+  model are all specified.
+- Unused scalarized storage can be absent from optimized generated HDL because
+  the backend materializes logic from assignments. The committed regression
+  uses all four `DEPTH=4` entries to prove the storage declarations reach
+  SystemVerilog on the shipped path.
 ## 2026-05-14: ISF real FIFO requirements
 - The reusable FIFO fixture must be a real FIFO actor. The first target is
   `DEPTH=4`; a depth-1 element does not exercise FIFO storage, pointer,

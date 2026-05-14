@@ -13,10 +13,10 @@
 Every actor has a clock, an optional reset, and optional watchdog.
 The actor is the top-level unit — one hardware agent.
 
-The parser treats `(clock ...)`, `(reset ...)`, `(watchdog ...)`, and
-`(interface ...)` as singleton actor clauses. Each may appear at most once in
-an actor; repeated clauses are rejected before the public actor shell is
-returned rather than merged or overwritten.
+The parser treats `(clock ...)`, `(reset ...)`, `(watchdog ...)`,
+`(interface ...)`, and `(storage ...)` as singleton actor clauses. Each may
+appear at most once in an actor; repeated clauses are rejected before the
+public actor shell is returned rather than merged or overwritten.
 
 ## Clock
 
@@ -71,6 +71,40 @@ Ports become `.fsm` `+size` declarations and module ports. Inferred scheduler
 storage is not emitted a second time when it shares a name with a declared port.
 Interface port names are unique across both input and output directions, and
 the interface block itself is a singleton actor clause.
+
+## Actor-Owned Storage
+
+```lisp
+(storage
+  (register rd_ptr (width 2))
+  (register wr_ptr (width 2))
+  (register occupancy (width 3))
+  (bank data (width 8) (depth 4)))
+```
+
+The first shipped actor-owned storage forms are fixed-width internal
+registers and fixed-depth banks. A register lowers to one internal storage
+signal with the authored name. A bank lowers to deterministic scalar element
+names in the scheduled `.fsm` review artifact: `data_0`, `data_1`, `data_2`,
+and `data_3` for the example above.
+
+This scalarized representation is deliberate for the first reusable FIFO work.
+It lets the `DEPTH=4` fixture use four concrete storage entries, 2-bit
+pointers, and 3-bit occupancy state while staying on the existing scalar
+signal/flop backend path. Parameter-derived widths/depths, symbolic
+dimensions, indexed bank access syntax, and memory-array backend emission are
+future generalizations.
+
+`(storage ...)` is a singleton actor clause. Storage names and scalarized
+element names must not collide with interface ports, actor clock/reset signals,
+or generated scheduler signals such as `can_accept`. Missing `(width N)`,
+missing bank `(depth N)`, duplicate storage names, duplicate scalarized element
+names, and repeated storage clauses fail closed before scheduler handoff.
+
+Declared storage is emitted in scheduled `.fsm` `+size`, contributes width
+evidence to later lowering, and appears in schedule reports as `kind:
+register`, `role: actor_storage`, with positive integer `width`. Used storage
+signals reach SystemVerilog through the normal scalar assignment path.
 
 ### Complete Example — APB Interface
 

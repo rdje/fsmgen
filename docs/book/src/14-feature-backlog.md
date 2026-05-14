@@ -438,14 +438,15 @@ ISF libraries are broader than scalar constants or type packages: they should
 be able to contain reusable ISF actors, transactions, drives, and associated
 constraints when those surfaces are specified.
 
-Current boundary: the first reusable ISF library import and same-name
-generated-top slices have shipped. Actor roots may
+Current boundary: the first reusable ISF library import, same-name
+generated-top, and actor-owned fixed-storage slices have shipped. Actor roots may
 import library roots, use an exported actor, validate use-site parameters and
 explicit bindings, emit a specialized child scheduled `.fsm` artifact, wire
 the library actor through a generated top, reach SystemVerilog generation for
 the covered generated-top path, project bounded `library_uses`
-schedule-report metadata, and record real FIFO requirements. No FIFO fixture
-is shipped yet. Clock/reset name remapping remains fail-closed.
+schedule-report metadata, declare fixed actor-owned registers/banks, and
+record real FIFO requirements. No FIFO fixture is shipped yet. Clock/reset name
+remapping remains fail-closed.
 
 Shipped source model for actor exports:
 
@@ -550,6 +551,25 @@ and interface timing across cycles. Enqueue, dequeue, flush, or status-probe
 behaviors can be transactions or callable operations inside or against that
 actor, but a transaction alone should not own the FIFO's persistent state.
 
+Shipped actor-owned storage model:
+
+```lisp
+(actor fifo
+  (storage
+    (register rd_ptr (width 2))
+    (register wr_ptr (width 2))
+    (register occupancy (width 3))
+    (bank data (width 8) (depth 4)))
+  ...)
+```
+
+`(register name (width N))` declares one fixed-width internal actor register.
+`(bank name (width N) (depth N))` declares fixed-depth actor-owned storage and
+currently scalarizes to `<name>_0` through `<name>_<depth-1>` in scheduled
+`.fsm`. This is the first `DEPTH=4` FIFO storage path; parameter-derived
+dimensions, indexed source access, generalized arbitrary-depth elaboration,
+and memory-array backend emission remain future work.
+
 The first FIFO fixture must be a real FIFO actor, not a depth-1 placeholder.
 A depth-1 element may be useful as a register slice or holding element, but it
 does not exercise FIFO depth, pointers, or occupancy semantics. The first
@@ -563,8 +583,8 @@ storage indices, 2-bit pointer wrap, occupancy values 0 through 4, and
 full/empty flag checks before arbitrary-depth elaboration is generalized.
 Transaction `(when condition body...)` is ordered control flow, so using a
 chain of `when` branches to model FIFO ports would be misleading. The next
-FIFO slices must first ship actor-owned indexed storage and same-cycle
-two-port update semantics, then author and prove the reusable FIFO library.
+FIFO slice must ship same-cycle two-port update semantics on top of the
+declared storage primitives, then author and prove the reusable FIFO library.
 
 ## Backends And Validation
 

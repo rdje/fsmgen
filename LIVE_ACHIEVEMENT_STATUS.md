@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF actor-owned storage declarations
+- Active R14 task-tree slice: `ISF-LIBRARIES.4.3` is complete.
+- Actors can now declare fixed-width internal registers and fixed-depth
+  storage banks through a singleton `(storage ...)` clause.
+- Storage banks lower to deterministic scalar element names such as
+  `data_0` through `data_3`, giving the first `DEPTH=4` FIFO fixture concrete
+  reviewable storage before memory-array syntax is generalized.
+- Declared storage is emitted in scheduled `.fsm` `+size`, reported with the
+  `actor_storage` role, and proven through SystemVerilog generation when used.
+- The next active R14 frontier is `ISF-LIBRARIES.4.4`, same-cycle FIFO
+  read/write update semantics.
+
 ## 2026-05-14: R14 — ISF real FIFO requirements
 - Active R14 task-tree slice: `ISF-LIBRARIES.4.2` is complete.
 - A depth-1 placeholder has been rejected as the reusable FIFO fixture.

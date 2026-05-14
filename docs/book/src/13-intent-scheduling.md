@@ -200,11 +200,11 @@ Schedule-report DT `kind` values are currently `drive`, `latency_counter`,
 manifest advertises that family through `schedule_report_dt_kind_values`.
 Inferred-storage `kind` values are `counter` or `register`, and optional
 `role` values describe stable scheduler purpose when evidence is known. The
-current role family is `completion_pulse`, `data_register`, `drive_payload`,
-`drive_request`, `extract_field`, `latency_counter`, `repeat_counter`,
-`sample_alias`, and `watchdog_counter`. Optional positive integer `width`
-values belong to inferred counters and register storage with known ISF width
-evidence.
+current role family is `actor_storage`, `completion_pulse`, `data_register`,
+`drive_payload`, `drive_request`, `extract_field`, `latency_counter`,
+`repeat_counter`, `sample_alias`, and `watchdog_counter`. Optional positive
+integer `width` values belong to declared actor-owned storage, inferred
+counters, and register storage with known ISF width evidence.
 Transaction summaries expose emitted scheduled-state names in `states`, and
 `count` equals that array length; transaction summaries are sorted lexically by
 name while each `states` array keeps scheduled `.fsm` state emission order.
@@ -248,18 +248,20 @@ limitations are:
   actor-scoped `(imports ...)`, `(use ...)`, exported actor resolution,
   use-site parameter and binding validation, specialized child scheduled
   `.fsm` artifacts, generated top wiring for same-name system ports, HDL
-  reachability for the covered generated-top path, and bounded `library_uses`
-  report metadata. A FIFO fixture is not shipped yet: a depth-1 placeholder is
-  not treated as a FIFO in this project, and transaction `(when ...)` control
-  flow is not enough to model the independent write/read sides of a real FIFO.
-  The first real fixture target is a 4-entry FIFO. It must cover push-only,
-  pop-only, simultaneous push+pop, and idle cycles with fire predicates
-  derived from the same pre-cycle state. Depth 4 is the concrete review target
-  for indexed storage, 2-bit pointer wrap, occupancy values 0 through 4, and
-  full/empty derivation. Parameter-driven interface widths, arbitrary-depth
-  generation beyond the first `DEPTH=4` fixture, automatic non-zero reset
-  values, standalone transaction/drive exports, symbolic constants, derived
-  parameter expressions, and clock/reset name remapping remain backlog work.
+  reachability for the covered generated-top path, bounded `library_uses`
+  report metadata, and actor-owned fixed storage declarations. A FIFO fixture
+  is not shipped yet: a depth-1 placeholder is not treated as a FIFO in this
+  project, and transaction `(when ...)` control flow is not enough to model
+  the independent write/read sides of a real FIFO. The first real fixture
+  target is a 4-entry FIFO. It must cover push-only, pop-only, simultaneous
+  push+pop, and idle cycles with fire predicates derived from the same
+  pre-cycle state. Depth 4 is the concrete review target for scalarized
+  storage entries, 2-bit pointer wrap, occupancy values 0 through 4, and
+  full/empty derivation. Same-cycle FIFO update semantics,
+  parameter-driven interface/storage widths, arbitrary-depth generation beyond
+  the first `DEPTH=4` fixture, automatic non-zero reset values, standalone
+  transaction/drive exports, symbolic constants, derived parameter
+  expressions, and clock/reset name remapping remain backlog work.
 - `(do ...)` and `(spawn ...)` targets must resolve to declared same-actor
   transactions before scheduled `.fsm` emission. They bind named start/done
   signals in scheduled `.fsm`. Spawn parameter declaration, validation, child
