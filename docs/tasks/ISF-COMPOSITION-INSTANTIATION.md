@@ -95,14 +95,14 @@ bind through validated public semantics instead of remaining deferred.
   `ISF-COMPOSITION.5.3`, `ISF-COMPOSITION.5.4`
 
 - ID: `ISF-COMPOSITION.5.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Define the bounded composition schedule-report and diagnostic projection schema.`
   Acceptance: `The task tree, ISF spec, public contract, and book state the
   public report fields for generated top, parent, child files, spawned
   instances, handoff links, parameter bindings, and the targeted diagnostics
   expected from composition/spawn lowering.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `mdbook build docs/book; git diff --check`
+  Commit: `ISF-COMPOSITION.5.1: define report schema`
 
 - ID: `ISF-COMPOSITION.5.2`
   Status: `pending`
@@ -154,7 +154,7 @@ bind through validated public semantics instead of remaining deferred.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-COMPOSITION.5.1` | `pending` | The report and diagnostic public projection needs a bounded schema before implementation widens successful schedule JSON. |
+| 1 | `ISF-COMPOSITION.5.2` | `pending` | The bounded generated-composition report schema is now defined; the next step is emitter and contract implementation. |
 
 ## ISF-COMPOSITION.1 Inventory
 
@@ -490,6 +490,53 @@ static instance lifetime plus repeated runtime activation of the same lexical
 instance. The future implementation must define busy/re-entry diagnostics or
 sequencing and the zero-count repeat policy before claiming full support.
 
+## ISF-COMPOSITION.5.1 Report And Diagnostic Schema
+
+`ISF-COMPOSITION.5.1` defines the target public projection before implementation
+widens successful schedule JSON.
+
+### Generated Composition Report Field
+
+The accepted top-level field is `generated_composition`.
+
+- Reports with no generated composition top use JSON null.
+- Spawned-child generated-top reports use an object with `kind`, `top_module`,
+  `top_fsm`, `parent`, `children`, and `instances`.
+- `kind` is currently `spawn_generated_top`.
+- `parent` exposes `module` and `scheduled_fsm`.
+- Each child entry exposes `transaction`, `module`, `scheduled_fsm`, and
+  `parameters`. Parameter entries expose `name` and stringified `default`.
+- Each instance entry exposes `instance`, `child`, `start`, `done`,
+  `parameter_bindings`, and `drive_handoffs`.
+- `start` exposes `parent_port` and `child_port`.
+- `done` exposes `child_port` and `parent_port`.
+- `parameter_bindings` entries expose `name`, `source`, and stringified
+  `value`; `source` is `default` or `override`.
+- `drive_handoffs` entries expose `drive`, `request`, and `payloads`.
+- A drive `request` exposes `child_port` and `parent_port`.
+- Drive payload entries expose `parameter`, `child_port`, `parent_port`, and
+  `width`.
+
+The projection is a bounded review/discovery summary. It must not expose raw
+LoweringIR records, raw composition parser objects, raw `?toplink` arrays,
+assignment provenance, activation context, or private port-inference internals.
+
+### Diagnostic Projection Boundary
+
+Generated composition diagnostics should fail before misleading scheduled
+artifacts or generated tops are emitted. A targeted diagnostic in this family
+should name the relevant transaction, spawn instance, child transaction,
+parameter, generated top, or handoff link.
+
+Already-covered diagnostic families include malformed spawn syntax, unknown
+child targets, duplicate instance names, parent actor naming conflicts,
+malformed or duplicate parameter declarations/overrides, unknown override
+names, aggregate/scalar shape mismatches, parameter declarations on
+non-spawned transactions, and parameterized `(do child)`. The next diagnostics
+leaf audits and adds targeted diagnostics for post-syntax generated-top and
+handoff failures that can still fall through to generic composition-pipeline
+errors.
+
 ## Decisions
 
 - `2026-05-14`: This tree owns the ISF-specific generated-child top and spawn
@@ -520,6 +567,9 @@ sequencing and the zero-count repeat policy before claiming full support.
   implementation because it widens successful schedule JSON and diagnostic
   behavior. Schema definition comes first, then report projection, targeted
   diagnostics, and synchronized regression/docs closure.
+- `2026-05-14`: `ISF-COMPOSITION.5.1` defines the bounded
+  `generated_composition` report shape and diagnostic projection boundary
+  before emitter or contract code is widened.
 
 ## Open Questions
 
@@ -565,6 +615,8 @@ sequencing and the zero-count repeat policy before claiming full support.
 | `2026-05-14` | `ISF-COMPOSITION.7` | `mdbook build docs/book` | `passed` |
 | `2026-05-14` | `ISF-COMPOSITION.7` | `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-COMPOSITION.5` | `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-COMPOSITION.5.1` | `mdbook build docs/book` | `passed` |
+| `2026-05-14` | `ISF-COMPOSITION.5.1` | `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -577,6 +629,7 @@ sequencing and the zero-count repeat policy before claiming full support.
 | `ISF-COMPOSITION.4` | `ISF-COMPOSITION.4: implement generated top handoff` | Emits the generated top, wires start/done and named-drive handoffs, applies spawn parameter overrides, and compiles spawn fixtures through the composition pipeline. |
 | `ISF-COMPOSITION.7` | `ISF-COMPOSITION.7: document spawn repeat lifetime` | Records static HDL spawn lifetime, future repeat activation semantics, dynamic repeat-count implications, and unshipped busy/zero-count boundaries. |
 | `ISF-COMPOSITION.5` | `ISF-COMPOSITION.5: split report diagnostic work` | Splits broad report/diagnostic work into schema, projection, diagnostics, and closure leaves. |
+| `ISF-COMPOSITION.5.1` | `ISF-COMPOSITION.5.1: define report schema` | Defines the bounded generated-composition schedule-report field and diagnostic projection boundary. |
 
 ## Changelog
 
@@ -594,3 +647,5 @@ sequencing and the zero-count repeat policy before claiming full support.
   clarification; current frontier remains `ISF-COMPOSITION.5`.
 - `2026-05-14`: Split `ISF-COMPOSITION.5` into executable leaves; current
   frontier moves to `ISF-COMPOSITION.5.1`.
+- `2026-05-14`: Completed `ISF-COMPOSITION.5.1`; current frontier moves to
+  `ISF-COMPOSITION.5.2`.

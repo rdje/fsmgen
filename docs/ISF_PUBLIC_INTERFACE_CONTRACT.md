@@ -143,6 +143,18 @@ Rejected conflict diagnostics are checked by
 for both in-process scheduler calls and the CLI schedule-report path.
 Generated composition-top lowering is checked by
 [t/1216-isf-generated-composition-top.t](../t/1216-isf-generated-composition-top.t).
+The accepted generated-composition report projection is a top-level
+`generated_composition` field. It is planned for implementation under
+`ISF-COMPOSITION.5.2`: non-generated-top reports use JSON null, while
+spawned-child reports use a bounded object with `kind`, `top_module`,
+`top_fsm`, `parent`, `children`, and `instances`. Parent entries expose
+`module` and `scheduled_fsm`; child entries expose `transaction`, `module`,
+`scheduled_fsm`, and `parameters`; instance entries expose `instance`, `child`,
+`start`, `done`, `parameter_bindings`, and `drive_handoffs`. Parameter binding
+entries expose `name`, `source`, and stringified `value`; drive handoff entries
+expose `drive`, `request`, and `payloads`, with each payload naming the drive
+`parameter`, child/parent ports, and `width`. This projection must stay a
+bounded review/discovery summary, not a raw LoweringIR or `?toplink` dump.
 The lower-result `files` map is checked for both single-file and multi-file
 lowering by [t/1117-isf-public-lower-result-files-audit.t](../t/1117-isf-public-lower-result-files-audit.t).
 The lower-result discovery metadata is checked by

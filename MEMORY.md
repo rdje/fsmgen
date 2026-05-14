@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF composition report schema
+- Completed `ISF-COMPOSITION.5.1` in
+  [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md).
+- The book, ISF spec, public contract, and composition task tree now define
+  the bounded `generated_composition` schedule-report field planned for
+  `ISF-COMPOSITION.5.2`.
+- The accepted field uses JSON null for reports with no generated composition
+  top and a bounded object for spawned-child reports, including generated top,
+  parent, child, instance, start/done handoff, named-drive handoff, and
+  parameter-binding summaries.
+- The projection explicitly excludes raw LoweringIR, raw composition parser
+  objects, raw `?toplink` arrays, assignment provenance, and private
+  port-inference internals. The active frontier is now `ISF-COMPOSITION.5.2`.
 ## 2026-05-14: ISF composition report/diagnostic split
 - Split broad `ISF-COMPOSITION.5` in
   [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md)

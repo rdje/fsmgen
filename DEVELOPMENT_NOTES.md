@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF composition report schema
+- The `generated_composition` report projection is deliberately a discovery
+  summary, not an implementation dump. Downstream consumers need to know which
+  top, parent, child modules, instances, handoffs, and parameter bindings were
+  generated; they do not need LoweringIR objects or raw `?toplink` syntax.
+- Using JSON null for actors without generated tops gives consumers one stable
+  top-level key while avoiding accidental empty-object semantics.
+- Parameter values are specified as stringified review values for the first
+  projection. That keeps the report bounded while preserving enough information
+  for users to understand whether an instance used a default or override.
 ## 2026-05-14: ISF composition report/diagnostic split
 - `ISF-COMPOSITION.5` changes public machine-facing behavior, so the schema
   needs to be named before emitter code widens successful schedule reports.

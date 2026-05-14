@@ -188,6 +188,69 @@ The `--outdir DIR` flag writes all generated `.fsm` files:
 # If --output is also provided, HDL generation uses spawn_parent_top.fsm.
 ```
 
+## Schedule Report Projection
+
+The generated-composition schedule-report projection is being added under the
+`ISF-COMPOSITION.5` task tree. The accepted bounded shape is a top-level
+`generated_composition` field. For actors with no generated composition top,
+that field is `null`. For spawned-child actors, it is an object with only
+review-facing composition facts:
+
+```json
+{
+  "kind": "spawn_generated_top",
+  "top_module": "spawn_parent_top",
+  "top_fsm": "spawn_parent_top.fsm",
+  "parent": {
+    "module": "spawn_parent",
+    "scheduled_fsm": "spawn_parent.fsm"
+  },
+  "children": [
+    {
+      "transaction": "child_worker",
+      "module": "child_worker",
+      "scheduled_fsm": "child_worker.fsm",
+      "parameters": [
+        { "name": "WIDTH", "default": "8" }
+      ]
+    }
+  ],
+  "instances": [
+    {
+      "instance": "w0",
+      "child": "child_worker",
+      "start": { "parent_port": "w0_start", "child_port": "start" },
+      "done": { "child_port": "done", "parent_port": "w0_done" },
+      "parameter_bindings": [
+        { "name": "WIDTH", "source": "override", "value": "16" }
+      ],
+      "drive_handoffs": [
+        {
+          "drive": "rdata",
+          "request": {
+            "child_port": "rdata_start",
+            "parent_port": "w0_rdata_start"
+          },
+          "payloads": [
+            {
+              "parameter": "val",
+              "child_port": "rdata_val",
+              "parent_port": "w0_rdata_val",
+              "width": 32
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+The projection is intentionally not a raw `LoweringIR` dump and not a parsed
+`?toplink` dump. It reports stable names that downstream consumers can use to
+discover the generated top, parent, child modules, instance identity, start and
+done handoff, named-drive handoff, and per-instance parameter binding.
+
 ## Complete Example
 
 ```lisp

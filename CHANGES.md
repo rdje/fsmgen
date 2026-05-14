@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF composition report schema
+- Completed `ISF-COMPOSITION.5.1` by defining the bounded
+  `generated_composition` schedule-report field before emitter implementation.
+- The planned field uses JSON null for reports with no generated composition
+  top and a bounded object for spawned-child reports.
+- The object schema covers generated top, parent, child modules, spawned
+  instances, start/done handoff, named-drive handoff, and parameter bindings
+  while explicitly excluding raw LoweringIR, raw composition parser objects,
+  raw `?toplink` arrays, assignment provenance, and private port-inference
+  internals.
+- Advanced the active `ISF-COMPOSITION` frontier from `ISF-COMPOSITION.5.1`
+  to `ISF-COMPOSITION.5.2`.
 ### R14 — ISF composition report/diagnostic split
 - Split broad `ISF-COMPOSITION.5` into executable leaves before changing
   successful schedule JSON or generated-composition diagnostics.

@@ -701,6 +701,51 @@ lowerer IR preserves each spawn instance's override list. The generated top
 emits those overrides as `?fsmc` instance `(params ...)` blocks, so the
 existing composition pipeline applies them to the spawned child instances.
 
+### 8.3 Generated Composition Schedule Report Projection
+
+The accepted schedule-report projection for generated ISF composition is a
+top-level `generated_composition` field. The implementation leaf that emits
+this field is `ISF-COMPOSITION.5.2`; until that leaf lands, current successful
+reports remain parent-scoped as described above.
+
+For actors without a generated composition top, `generated_composition` is
+`null`. For spawned-child actors, the field is an object with these bounded
+keys:
+- `kind`: currently `spawn_generated_top`.
+- `top_module`: generated top module name, initially `<actor>_top`.
+- `top_fsm`: generated top `.fsm` basename, initially `<actor>_top.fsm`.
+- `parent`: object with `module` and `scheduled_fsm` for the scheduled parent.
+- `children`: array of spawned child module summaries. Each child entry exposes
+  `transaction`, `module`, `scheduled_fsm`, and `parameters`; parameter entries
+  expose `name` and stringified `default`.
+- `instances`: array of spawned instance summaries. Each instance entry exposes
+  `instance`, `child`, `start`, `done`, `parameter_bindings`, and
+  `drive_handoffs`.
+
+Instance `start` and `done` entries expose the parent and child port names used
+by the generated top. `parameter_bindings` entries expose `name`, `source`
+(`default` or `override`), and stringified `value`. `drive_handoffs` entries
+expose one named drive, its request link, and one payload entry per drive
+parameter with `parameter`, `child_port`, `parent_port`, and `width`.
+
+This projection is deliberately bounded. It does not expose raw LoweringIR
+records, raw composition parser objects, raw `?toplink` arrays, assignment
+provenance, or private port-inference internals.
+
+### 8.4 Generated Composition Diagnostics
+
+Generated composition diagnostics must be targeted before scheduled artifacts
+or generated tops become misleading. Diagnostics in this family should name the
+transaction, spawn instance, child transaction, parameter, or generated handoff
+that failed. The current accepted diagnostic families cover malformed spawn
+syntax, unknown child targets, duplicate instance names, parent actor naming
+conflicts, malformed or duplicate parameter declarations/overrides, unknown
+override names, aggregate/scalar shape mismatches, parameter declarations on
+non-spawned transactions, and parameterized `(do child)`. The remaining
+`ISF-COMPOSITION.5.3` work is to audit and add targeted diagnostics for
+post-syntax generated-top and handoff failures that can still fall through to
+generic composition-pipeline errors.
+
 ## 9. Rules
 
 ```lisp
