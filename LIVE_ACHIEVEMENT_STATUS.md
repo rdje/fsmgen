@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — proposed ISF libraries/imports
+- Proposed R14 task tree: `ISF-LIBRARIES` now tracks reusable ISF library and
+  import support.
+- The book backlog records the FIFO modeling rule: FIFO is actor-first because
+  it owns persistent storage and interface state; transactions model
+  operations against that actor.
+- The tree is proposed, not active. The next active R14 frontier remains
+  `ISF-COMPATIBILITY.1`.
+
 ## 2026-05-14: R14 — ISF fixture tree closure
 - Active R14 task-tree slice: `ISF-FIXTURES.5` is complete, and the
   `ISF-FIXTURES` tree is closed.

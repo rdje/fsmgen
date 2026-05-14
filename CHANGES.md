@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — proposed ISF libraries/imports
+- Added proposed task tree
+  [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md) for reusable
+  ISF libraries and imports.
+- The mdBook backlog now records the public model: libraries should contain
+  tested reusable ISF design intent such as actors and transaction patterns,
+  while implementation may reuse package/import machinery where appropriate.
+- FIFO is recorded as an actor-first reusable library target because it owns
+  persistent storage, pointers, occupancy, flags, reset behavior, and interface
+  timing; transactions model operations against the FIFO actor.
+- This does not activate the tree yet. The active R14 PNT frontier remains
+  `ISF-COMPATIBILITY.1`.
 ### R14 — ISF fixture tree closure
 - Completed `ISF-FIXTURES.5` and closed the fixture coverage task tree.
 - The fixture docs now distinguish shipped fixture-backed claims from

@@ -411,6 +411,34 @@ deterministic. Each new variadic surface needs targeted malformed-arity
 diagnostics, focused or fixture coverage, and book/spec updates in the same
 slice.
 
+### ISF Reusable Libraries
+
+Status: proposed feature tree under
+[ISF-LIBRARIES](../../tasks/ISF-LIBRARIES.md).
+
+Goal: let users import tested reusable ISF descriptions instead of rewriting
+common actors and transaction patterns in every design. The user-facing term is
+**library**. The implementation may reuse package/import infrastructure, but
+ISF libraries are broader than scalar constants or type packages: they should
+be able to contain reusable ISF actors, transactions, drives, and associated
+constraints when those surfaces are specified.
+
+Current boundary: no reusable ISF library import surface has shipped yet. A
+future library system must define source/root shape, exported definitions,
+namespace rules, search roots, aliases, specialization, diagnostics, schedule
+report visibility, and public contract metadata before implementation.
+
+FIFO modeling rule: a FIFO should be modeled primarily as an actor because it
+owns persistent storage, pointers, occupancy, full/empty flags, reset behavior,
+and interface timing across cycles. Enqueue, dequeue, flush, or status-probe
+behaviors can be transactions or callable operations inside or against that
+actor, but a transaction alone should not own the FIFO's persistent state.
+
+The first useful shipped fixture for this feature should be a parameterized
+FIFO actor library that can be imported, specialized for width/depth/reset and
+interface binding, lowered to reviewable scheduled `.fsm`, and generated to
+HDL with focused checks for storage, flags, push/pop behavior, and reset.
+
 ## Backends And Validation
 
 ### Full VHDL Backend

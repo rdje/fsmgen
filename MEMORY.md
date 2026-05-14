@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: Proposed ISF libraries/imports
+- Created proposed task tree
+  [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md).
+- Public wording is "ISF libraries": reusable tested ISF descriptions that can
+  be imported, specialized, and used without rewriting common actors or
+  transaction patterns.
+- FIFO should be modeled as a reusable actor because it owns persistent
+  storage, pointers, occupancy/full/empty flags, reset behavior, and interface
+  timing. Transactions can model enqueue/dequeue/flush/status operations
+  against that actor.
+- The tree is proposed, not active; the next active R14 frontier remains
+  `ISF-COMPATIBILITY.1`.
 ## 2026-05-14: ISF fixture tree closure
 - Completed `ISF-FIXTURES.5` and closed
   [docs/tasks/ISF-FIXTURE-COVERAGE.md](docs/tasks/ISF-FIXTURE-COVERAGE.md).

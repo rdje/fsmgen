@@ -24,6 +24,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - All `R14` / ISF work is now task-tree-managed by default: every ISF task,
   slice, or PNT-selected activity must be attached to an existing active ISF
   task tree or create a new `docs/tasks/*.md` tree before implementation.
+- `ISF-LIBRARIES` is now a proposed R14 backlog tree for reusable ISF
+  libraries/imports. The public term is "library"; implementation may reuse
+  package/import infrastructure, but the feature target is reusable ISF design
+  intent such as actors and transaction patterns. FIFO should be modeled as a
+  reusable actor because it owns persistent storage, pointers, occupancy,
+  flags, reset behavior, and interface timing; transactions can model enqueue,
+  dequeue, flush, or status operations against that actor.
 - `ISF-RESOURCE-PRIORITY.1` is complete. The current inventory records that
   `(resources ...)` is validated metadata only, accepted arbiters are
   `priority` and `round_robin`, and successful resource arbitration is not yet

@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: Proposed ISF libraries/imports
+- "Library" is the right user-facing word for reusable tested ISF design
+  intent. Internally, the implementation can still reuse package/import
+  resolution if that gives the right lookup, provenance, and search-root
+  behavior.
+- FIFO should not be specified as only a transaction. The FIFO itself is an
+  actor because it owns state over time; push/pop/flush/status behavior can be
+  transactions or callable operations attached to that actor.
+- The hard part is not syntax alone. Library support needs namespacing,
+  specialization, binding, generated-name policy, schedule-report provenance,
+  and fail-closed diagnostics before reusable sources can be public examples.
 ## 2026-05-14: ISF fixture tree closure
 - Closing the fixture tree does not mean fixture work is finished forever. It
   means the current cross-feature fixture pass has synchronized its shipped
