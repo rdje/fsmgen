@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF compatible fan-in classification
+- Completed `ISF-CONFLICTS.4.2` by adding internal
+  `compatible_fanin_groups` derivation to `FSM::Scheduler::ISF::LoweringIR`.
+- The classifier identifies same target/operator/RHS non-helper groups,
+  request fan-in, one-cycle pulse fan-in, and per-rule transaction-trigger
+  fan-in from assignment provenance.
+- Added [t/1208-isf-compatible-fanin-classification.t](t/1208-isf-compatible-fanin-classification.t)
+  for same-value data grouping, direct/request fan-in, pulse fan-in,
+  rule-trigger fan-in, and helper exclusion.
+- Advanced the active `ISF-CONFLICTS` frontier from `ISF-CONFLICTS.4.2` to
+  `ISF-CONFLICTS.4.3`.
 ### R14 — ISF assignment provenance inventory
 - Completed `ISF-CONFLICTS.4.1` by adding internal assignment provenance to
   `FSM::Scheduler::ISF::LoweringIR`.

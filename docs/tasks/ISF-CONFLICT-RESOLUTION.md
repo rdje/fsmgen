@@ -97,14 +97,14 @@ transaction start input.
   Commit: `ISF-CONFLICTS.4.1: add ISF assignment provenance`
 
 - ID: `ISF-CONFLICTS.4.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Classify compatible fan-in groups from assignment provenance.`
   Acceptance: `The scheduler can identify same target/operator/value groups,
   one-bit request/event fan-in, one-cycle pulse fan-in, and existing
   rule-trigger fan-in without treating unrelated data/helper assignments as
   compatible.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `prove -l t/1207-isf-assignment-provenance-inventory.t t/1208-isf-compatible-fanin-classification.t; bin/ci-regression isf --no-book; git diff --check`
+  Commit: `ISF-CONFLICTS.4.2: classify ISF fan-in groups`
 
 - ID: `ISF-CONFLICTS.4.3`
   Status: `pending`
@@ -166,7 +166,7 @@ transaction start input.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-CONFLICTS.4.2` | `pending` | Assignment provenance now exists; the next executable slice classifies compatible fan-in groups from that provenance. |
+| 1 | `ISF-CONFLICTS.4.3` | `pending` | Compatible fan-in classification now exists; the next executable slice adds best-effort compile-time conflict detection and unprovable-case flags. |
 
 ## Current Behavior Inventory
 
@@ -475,6 +475,33 @@ public schedule-report schema. Schedule-report projection belongs to
 `ISF-CONFLICTS.5`; compatible fan-in classification belongs to
 `ISF-CONFLICTS.4.2`.
 
+## Compatible Fan-In Classification
+
+`ISF-CONFLICTS.4.2` adds a second internal implementation layer:
+`LoweringIR` now derives `compatible_fanin_groups` from
+`assignment_provenance`.
+
+The classifier records compatible groups for:
+
+- `same_target_value`: same `target`, `operator`, `rhs`, and non-helper
+  `domain`. This represents ordinary selector ORing for one `LHS`/`VAL` pair.
+- `request`: multiple request-domain sources for the same request target.
+  This includes combinations such as a direct `do` start request and a
+  generated rule-trigger fan-in request for the same transaction start.
+- `pulse`: multiple one-cycle pulse-domain sources for the same target and
+  pulse value, such as several `(complete done)` paths.
+- `rule_trigger_fanin`: per-rule trigger-source pulses grouped by target
+  transaction before the generated `transaction_trigger_fanin` request.
+
+The classifier intentionally skips helper-domain same-value groups such as
+`can_accept`, watchdog, latency, or repeat helpers. Those generated helpers
+remain single-owner or future diagnostics territory unless a later policy marks
+them shareable.
+
+This slice is still internal: it does not alter scheduled `.fsm` emission,
+public schedule-report JSON, or HDL generation. It gives the next leaves a
+bounded candidate set for compile-time conflict detection and diagnostics.
+
 ## Decisions
 
 - `2026-05-14`: The conflict-resolution work will be tracked as a task tree
@@ -507,6 +534,9 @@ public schedule-report schema. Schedule-report projection belongs to
 - `2026-05-14`: Compile-time conflict detection is best-effort. Cases where
   static proof is not doable must be flagged explicitly, and verification-only
   runtime selector conflict instrumentation is tracked as `ISF-CONFLICTS.4.5`.
+- `2026-05-14`: `ISF-CONFLICTS.4.2` keeps compatible fan-in classification
+  internal to `LoweringIR` through `compatible_fanin_groups`; public projection
+  remains deferred until diagnostics/report policy is implemented.
 
 ## Open Questions
 
@@ -537,6 +567,9 @@ public schedule-report schema. Schedule-report projection belongs to
 | `2026-05-14` | `ISF-CONFLICTS.4.1` | `prove -l t/1207-isf-assignment-provenance-inventory.t` | `passed` |
 | `2026-05-14` | `ISF-CONFLICTS.4.1` | `bin/ci-regression isf --no-book` | `passed` |
 | `2026-05-14` | `ISF-CONFLICTS.4.1` | `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.4.2` | `prove -l t/1207-isf-assignment-provenance-inventory.t t/1208-isf-compatible-fanin-classification.t` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.4.2` | `bin/ci-regression isf --no-book` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.4.2` | `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -548,6 +581,7 @@ public schedule-report schema. Schedule-report projection belongs to
 | `ISF-CONFLICTS.3` | `ISF-CONFLICTS.3: specify conflict priority policy` | Records fail-closed behavior for incompatible overlap and target-local priority/resource boundaries. |
 | `ISF-CONFLICTS.4` | `ISF-CONFLICTS.4: split conflict tracking implementation` | Splits the broad implementation container into executable provenance, classification, detection, and priority leaves. |
 | `ISF-CONFLICTS.4.1` | `ISF-CONFLICTS.4.1: add ISF assignment provenance` | Adds internal `LoweringIR` assignment provenance records and focused regression coverage. |
+| `ISF-CONFLICTS.4.2` | `ISF-CONFLICTS.4.2: classify ISF fan-in groups` | Adds internal compatible fan-in group classification from assignment provenance. |
 
 ## Changelog
 
@@ -564,3 +598,6 @@ public schedule-report schema. Schedule-report projection belongs to
   `ISF-CONFLICTS.4.1` for scheduler-side assignment provenance inventory.
 - `2026-05-14`: Completed `ISF-CONFLICTS.4.1`; current frontier moves to
   `ISF-CONFLICTS.4.2` for compatible fan-in classification from provenance.
+- `2026-05-14`: Completed `ISF-CONFLICTS.4.2`; current frontier moves to
+  `ISF-CONFLICTS.4.3` for best-effort compile-time conflict detection and
+  unprovable-case flags.

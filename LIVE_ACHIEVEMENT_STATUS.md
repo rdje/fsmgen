@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF compatible fan-in classification
+- Active R14 task-tree slice: `ISF-CONFLICTS.4.2` is complete.
+- `LoweringIR` now derives internal `compatible_fanin_groups` from assignment
+  provenance for same-value selector groups, request fan-in, pulse fan-in, and
+  rule-trigger fan-in.
+- Public schedule-report JSON is unchanged. The next frontier is
+  `ISF-CONFLICTS.4.3`.
+
 ## 2026-05-14: R14 — ISF assignment provenance inventory
 - Active R14 task-tree slice: `ISF-CONFLICTS.4.1` is complete.
 - `LoweringIR` now carries internal assignment provenance records before
@@ -11,7 +19,8 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   cases must be flagged, and runtime mux-selector conflict checks are tracked
   as a later verification-only leaf.
 - The public schedule report is unchanged; projection remains deferred to the
-  diagnostics/report leaf. The next frontier is `ISF-CONFLICTS.4.2`.
+  diagnostics/report leaf. This slice moved the tree to `ISF-CONFLICTS.4.2`;
+  the current frontier is recorded in the latest R14 task-tree entry above.
 
 ## 2026-05-14: R14 — ISF conflict tracking implementation split
 - Active R14 task-tree slice: `ISF-CONFLICTS.4` is now an active implementation

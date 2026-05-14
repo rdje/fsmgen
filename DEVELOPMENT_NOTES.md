@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF compatible fan-in classification
+- `compatible_fanin_groups` is the first consumer of assignment provenance. It
+  intentionally stays internal so later diagnostics can choose a stable public
+  projection after conflict handling is real.
+- The classifier separates four compatible cases: same target/operator/RHS
+  selectors, request-domain fan-in, one-cycle pulse-domain fan-in, and
+  per-rule transaction-trigger fan-in.
+- Helper-domain same-value assignments are skipped. Generated helpers such as
+  `can_accept`, watchdog, latency, and repeat carriers should not become
+  shareable just because they happen to have matching values.
+- Request fan-in groups are domain-driven, not RHS-driven. That lets direct
+  `do` start pulses and generated rule-trigger fan-in assignments for the same
+  transaction start be seen as one compatible request group.
 ## 2026-05-14: ISF assignment provenance inventory
 - The first conflict-tracking implementation slice is intentionally internal.
   It gives the scheduler a source-aware inventory without changing `.fsm`

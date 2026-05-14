@@ -975,6 +975,7 @@ sub _ir_repeat {
 sub _finalize_ir {
     my ($ir) = @_;
     $ir->{assignment_provenance} = _build_assignment_provenance($ir);
+    $ir->{compatible_fanin_groups} = _build_compatible_fanin_groups($ir->{assignment_provenance});
     return $ir;
 }
 
@@ -1145,6 +1146,160 @@ sub _clone_provenance_value {
         return [ map { _clone_provenance_value($_) } @$value ];
     }
     return $value;
+}
+
+sub _build_compatible_fanin_groups {
+    my ($records) = @_;
+    my @groups;
+
+    push @groups, _same_target_value_groups($records);
+    push @groups, _domain_fanin_groups($records, 'request');
+    push @groups, _domain_fanin_groups($records, 'pulse');
+    push @groups, _rule_trigger_fanin_groups($records);
+
+    return \@groups;
+}
+
+sub _same_target_value_groups {
+    my ($records) = @_;
+    return _group_compatible_records(
+        $records,
+        sub {
+            my ($record) = @_;
+            return undef if ($record->{domain} // '') eq 'helper';
+            return _group_key(
+                'same_target_value',
+                $record->{domain},
+                $record->{target},
+                $record->{operator},
+                _record_rhs($record),
+            );
+        },
+        sub {
+            my ($key, $members) = @_;
+            return {
+                kind     => 'same_target_value',
+                domain   => $members->[0]{domain},
+                target   => $members->[0]{target},
+                operator => $members->[0]{operator},
+                rhs      => _record_rhs($members->[0]),
+                sources  => [ map { _fanin_source_summary($_) } @$members ],
+            };
+        },
+    );
+}
+
+sub _domain_fanin_groups {
+    my ($records, $domain) = @_;
+    return _group_compatible_records(
+        $records,
+        sub {
+            my ($record) = @_;
+            return undef unless ($record->{domain} // '') eq $domain;
+            return undef if $domain eq 'pulse' && !_is_one_cycle_pulse_record($record);
+            return _group_key($domain, $record->{target});
+        },
+        sub {
+            my ($key, $members) = @_;
+            my $group = {
+                kind    => $domain,
+                domain  => $domain,
+                target  => $members->[0]{target},
+                sources => [ map { _fanin_source_summary($_) } @$members ],
+            };
+            if ($domain eq 'pulse') {
+                $group->{operator} = $members->[0]{operator};
+                $group->{rhs} = _record_rhs($members->[0]);
+            }
+            return $group;
+        },
+    );
+}
+
+sub _rule_trigger_fanin_groups {
+    my ($records) = @_;
+    return _group_compatible_records(
+        $records,
+        sub {
+            my ($record) = @_;
+            return undef unless ($record->{source_kind} // '') eq 'rule_trigger_source';
+            my $target = _rule_trigger_target_transaction($record);
+            return undef unless defined $target && length $target;
+            return _group_key('rule_trigger_fanin', $target);
+        },
+        sub {
+            my ($key, $members) = @_;
+            my $target = _rule_trigger_target_transaction($members->[0]);
+            return {
+                kind               => 'rule_trigger_fanin',
+                domain             => 'request',
+                target_transaction => $target,
+                fanin_target       => "${target}_start",
+                sources            => [ map { _fanin_source_summary($_) } @$members ],
+            };
+        },
+    );
+}
+
+sub _group_compatible_records {
+    my ($records, $key_for, $group_builder) = @_;
+    my %by_key;
+    my @order;
+
+    for my $record (@$records) {
+        my $key = $key_for->($record);
+        next unless defined $key;
+        push @order, $key unless exists $by_key{$key};
+        push @{$by_key{$key}}, $record;
+    }
+
+    my @groups;
+    for my $key (@order) {
+        my $members = $by_key{$key};
+        next unless @$members > 1;
+        push @groups, $group_builder->($key, $members);
+    }
+
+    return @groups;
+}
+
+sub _group_key {
+    return join "\0", map { defined($_) ? $_ : '' } @_;
+}
+
+sub _record_rhs {
+    my ($record) = @_;
+    return defined($record->{rhs}) ? "$record->{rhs}" : '';
+}
+
+sub _is_one_cycle_pulse_record {
+    my ($record) = @_;
+    return ($record->{operator} // '') =~ /^<[0-9]+$/ && _record_rhs($record) eq '1';
+}
+
+sub _rule_trigger_target_transaction {
+    my ($record) = @_;
+    my $owner = $record->{owner};
+    my $target = $record->{target};
+    return undef unless defined($owner) && defined($target);
+    my $prefix = "${owner}_";
+    return undef unless index($target, $prefix) == 0;
+    return substr($target, length($prefix));
+}
+
+sub _fanin_source_summary {
+    my ($record) = @_;
+    return {
+        owner            => $record->{owner},
+        owner_kind       => $record->{owner_kind},
+        source_kind      => $record->{source_kind},
+        target           => $record->{target},
+        operator         => $record->{operator},
+        rhs              => $record->{rhs},
+        domain           => $record->{domain},
+        activation       => _clone_provenance_value($record->{activation}),
+        assignment_index => $record->{assignment_index},
+    };
 }
 
 # --- Post-processing ---

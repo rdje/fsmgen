@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF compatible fan-in classification
+- Completed `ISF-CONFLICTS.4.2` in
+  [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md).
+- `LoweringIR` now derives internal `compatible_fanin_groups` from
+  `assignment_provenance`.
+- Groups cover same target/operator/RHS non-helper selectors, request fan-in,
+  one-cycle pulse fan-in, and per-rule transaction-trigger fan-in.
+- Helper-domain same-value groups are intentionally skipped for now. Emitted
+  scheduled `.fsm`, HDL, and public schedule-report JSON remain unchanged.
+- The active frontier is now `ISF-CONFLICTS.4.3`.
 ## 2026-05-14: ISF assignment provenance inventory
 - Completed `ISF-CONFLICTS.4.1` in
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md).
