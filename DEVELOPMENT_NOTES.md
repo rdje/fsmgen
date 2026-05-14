@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF fixture coverage inventory
+- The fixture tree separates realistic protocol confidence from focused
+  construct correctness. Focused inline tests are still the right tool for
+  malformed boundaries and exact lowering mechanics; fixtures should prove
+  feature interactions that a downstream user would actually author.
+- Current strict accepted-source coverage is intentionally narrow and APB-based.
+  Before adding more strict fixtures, the matrix should choose compact cases
+  that add coverage value without slowing quick turnaround.
 ## 2026-05-14: ISF schedule-report tree closure
 - The closeout test intentionally checks the negative promise: the schedule
   report is not a fully frozen whole-tree schema yet. That is as important as

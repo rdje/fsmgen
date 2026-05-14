@@ -2,6 +2,12 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF fixture coverage inventory
+- Active R14 task-tree slice: `ISF-FIXTURES.1` is complete.
+- The fixture tree now inventories current `.isf` fixtures, ISF regression
+  tiers, strict-mode coverage, and gaps before adding new realistic cases.
+- The next active R14 frontier is `ISF-FIXTURES.2`.
+
 ## 2026-05-14: R14 — ISF schedule-report tree closure
 - Active R14 task-tree slice: `ISF-SCHEDULE-REPORTS.5` is complete.
 - The schedule-report tree is closed with an explicit freeze-boundary

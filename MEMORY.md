@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF fixture coverage inventory
+- Completed `ISF-FIXTURES.1` in
+  [docs/tasks/ISF-FIXTURE-COVERAGE.md](docs/tasks/ISF-FIXTURE-COVERAGE.md).
+- Current inventory: 10 checked-in `.isf` fixtures, 135 ISF-tier tests, APB
+  coverage in quick/smoke, and APB-only strict accepted-source coverage.
+- The next active R14 frontier is `ISF-FIXTURES.2`.
 ## 2026-05-14: ISF schedule-report tree closure
 - Completed `ISF-SCHEDULE-REPORTS.5` and closed
   [docs/tasks/ISF-SCHEDULE-REPORTS.md](docs/tasks/ISF-SCHEDULE-REPORTS.md).

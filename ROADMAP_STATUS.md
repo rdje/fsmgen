@@ -202,6 +202,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   bounded-public, does not claim full schedule-report schema stability, and
   keeps `schedule_report_presence_key_family_map` scoped to key families. The
   active PNT frontier moves to `ISF-FIXTURES.1`.
+- `ISF-FIXTURES.1` is complete. The fixture tree now inventories 10 checked-in
+  `.isf` fixtures, the 135-test ISF regression tier, quick/smoke tier content,
+  strict-mode APB coverage, and current fixture gaps. SPI, I2C/UART
+  schedule/HDL/strict coverage, direct `phase_test.isf` coverage, and non-APB
+  strict-mode coverage are candidates for the fixture matrix. The active
+  frontier advances to `ISF-FIXTURES.2`.
 - ISF construct support now has a normative rule: parser acceptance is not a
   support claim. Every current or future shipped ISF construct must have an
   explicit accepted source shape, lowering path or fail-closed diagnostic,

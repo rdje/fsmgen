@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF fixture coverage inventory
+- Completed `ISF-FIXTURES.1` by inventorying the checked-in `.isf` fixtures,
+  the 109x/11xx/12xx ISF regression tier, quick/smoke coverage, strict-mode
+  checks, and current fixture gaps.
+- The fixture tree now records that SPI lacks dedicated file-backed coverage,
+  I2C/UART need stronger schedule/HDL/strict assertions before signoff use,
+  `phase_test.isf` lacks direct file-backed coverage, and strict ISF accepted
+  coverage is APB-only.
+- The active `ISF-FIXTURES` frontier advances to `ISF-FIXTURES.2`.
 ### R14 — ISF schedule-report tree closure
 - Completed `ISF-SCHEDULE-REPORTS.5` and closed the schedule-report storage
   class/schema stabilization tree.
