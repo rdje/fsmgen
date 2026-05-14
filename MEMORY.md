@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF composition report/diagnostic split
+- Split broad `ISF-COMPOSITION.5` in
+  [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md)
+  into executable leaves before widening schedule-report JSON or diagnostics.
+- New leaves cover bounded schema definition, generated-composition
+  schedule-report metadata implementation, targeted composition/spawn
+  diagnostics, and final synchronized regression/docs closure.
+- The active `ISF-COMPOSITION` frontier is now `ISF-COMPOSITION.5.1`.
 ## 2026-05-14: ISF intent abstraction layer terminology
 - Completed documentation-only `ISF-PUBLIC-CONTRACT.6` in
   [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md).

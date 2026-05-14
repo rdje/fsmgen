@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF composition report/diagnostic split
+- Active R14 task-tree slice: `ISF-COMPOSITION.5` is now split into executable
+  leaves.
+- The next report/diagnostic work is schema-first, followed by successful
+  generated-composition report projection, targeted diagnostics, and closure.
+- The active `ISF-COMPOSITION` frontier is now `ISF-COMPOSITION.5.1`.
+
 ## 2026-05-14: R14 — ISF intent abstraction layers
 - Active R14 task-tree slice: documentation-only `ISF-PUBLIC-CONTRACT.6` is
   complete.

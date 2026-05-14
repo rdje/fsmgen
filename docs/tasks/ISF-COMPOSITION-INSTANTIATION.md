@@ -89,10 +89,45 @@ bind through validated public semantics instead of remaining deferred.
   Commit: `ISF-COMPOSITION.4: implement generated top handoff`
 
 - ID: `ISF-COMPOSITION.5`
-  Status: `pending`
+  Status: `active`
   Goal: `Add diagnostics and bounded schedule-report metadata.`
-  Acceptance: `Composition/spawn failures are targeted, and accepted parent,
-  child, instance, and binding metadata appears in bounded report fields.`
+  Children: `ISF-COMPOSITION.5.1`, `ISF-COMPOSITION.5.2`,
+  `ISF-COMPOSITION.5.3`, `ISF-COMPOSITION.5.4`
+
+- ID: `ISF-COMPOSITION.5.1`
+  Status: `pending`
+  Goal: `Define the bounded composition schedule-report and diagnostic projection schema.`
+  Acceptance: `The task tree, ISF spec, public contract, and book state the
+  public report fields for generated top, parent, child files, spawned
+  instances, handoff links, parameter bindings, and the targeted diagnostics
+  expected from composition/spawn lowering.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-COMPOSITION.5.2`
+  Status: `pending`
+  Goal: `Implement bounded generated-composition schedule-report metadata.`
+  Acceptance: `Successful multi-file spawn reports expose bounded parent,
+  generated top, child, instance, handoff, and parameter-binding metadata
+  without leaking raw LoweringIR internals.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-COMPOSITION.5.3`
+  Status: `pending`
+  Goal: `Add targeted diagnostics for generated-composition lowering failures.`
+  Acceptance: `Composition/spawn failures that can occur after syntax-level
+  validation fail with source-local, actionable diagnostics instead of generic
+  Perl or composition-pipeline fallout.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-COMPOSITION.5.4`
+  Status: `pending`
+  Goal: `Close schedule-report/diagnostic documentation and regression coverage.`
+  Acceptance: `Focused tests, ISF spec, public interface contract, mdBook,
+  roadmap, live docs, and task tree agree on shipped generated-composition
+  report and diagnostic behavior.`
   Verification: `pending`
   Commit: `pending`
 
@@ -119,7 +154,7 @@ bind through validated public semantics instead of remaining deferred.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-COMPOSITION.5` | `pending` | Generated top handoff is now executable; the next gap is targeted diagnostics and bounded schedule-report metadata for parent/child/instance relationships. |
+| 1 | `ISF-COMPOSITION.5.1` | `pending` | The report and diagnostic public projection needs a bounded schema before implementation widens successful schedule JSON. |
 
 ## ISF-COMPOSITION.1 Inventory
 
@@ -481,6 +516,10 @@ sequencing and the zero-count repeat policy before claiming full support.
   Future spawn-in-repeat support must reuse one lexical child instance per
   spawn name and must settle busy/re-entry and zero-count repeat policy before
   becoming a shipped authoring surface.
+- `2026-05-14`: `ISF-COMPOSITION.5` is split into executable leaves before
+  implementation because it widens successful schedule JSON and diagnostic
+  behavior. Schema definition comes first, then report projection, targeted
+  diagnostics, and synchronized regression/docs closure.
 
 ## Open Questions
 
@@ -525,6 +564,7 @@ sequencing and the zero-count repeat policy before claiming full support.
 | `2026-05-14` | `ISF-COMPOSITION.4` | `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-COMPOSITION.7` | `mdbook build docs/book` | `passed` |
 | `2026-05-14` | `ISF-COMPOSITION.7` | `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-COMPOSITION.5` | `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -536,6 +576,7 @@ sequencing and the zero-count repeat policy before claiming full support.
 | `ISF-COMPOSITION.3` | `ISF-COMPOSITION.3: implement spawn parameter binding` | Validates spawn parameter declarations/overrides, emits child `+params`, and preserves per-instance override metadata for generated-top handoff. |
 | `ISF-COMPOSITION.4` | `ISF-COMPOSITION.4: implement generated top handoff` | Emits the generated top, wires start/done and named-drive handoffs, applies spawn parameter overrides, and compiles spawn fixtures through the composition pipeline. |
 | `ISF-COMPOSITION.7` | `ISF-COMPOSITION.7: document spawn repeat lifetime` | Records static HDL spawn lifetime, future repeat activation semantics, dynamic repeat-count implications, and unshipped busy/zero-count boundaries. |
+| `ISF-COMPOSITION.5` | `ISF-COMPOSITION.5: split report diagnostic work` | Splits broad report/diagnostic work into schema, projection, diagnostics, and closure leaves. |
 
 ## Changelog
 
@@ -551,3 +592,5 @@ sequencing and the zero-count repeat policy before claiming full support.
   schedule-report metadata.
 - `2026-05-14`: Completed `ISF-COMPOSITION.7` as a documentation-only
   clarification; current frontier remains `ISF-COMPOSITION.5`.
+- `2026-05-14`: Split `ISF-COMPOSITION.5` into executable leaves; current
+  frontier moves to `ISF-COMPOSITION.5.1`.

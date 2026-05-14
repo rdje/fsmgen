@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF composition report/diagnostic split
+- Split broad `ISF-COMPOSITION.5` into executable leaves before changing
+  successful schedule JSON or generated-composition diagnostics.
+- The new leaves define schema first, then implement generated-composition
+  schedule-report metadata, targeted composition/spawn diagnostics, and final
+  synchronized regression/docs closure.
+- Advanced the active `ISF-COMPOSITION` frontier from `ISF-COMPOSITION.5` to
+  `ISF-COMPOSITION.5.1`.
 ### R14 — ISF intent abstraction layer terminology
 - Completed documentation-only `ISF-PUBLIC-CONTRACT.6` by recording intent
   abstraction layer terminology in the ISF book, spec, public contract, and

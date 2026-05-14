@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF composition report/diagnostic split
+- `ISF-COMPOSITION.5` changes public machine-facing behavior, so the schema
+  needs to be named before emitter code widens successful schedule reports.
+- Splitting the work also keeps diagnostics separate from successful metadata:
+  report projection should summarize accepted composition structure, while
+  targeted diagnostics should own failure paths and should not leak raw
+  LoweringIR or composition-pipeline fallout.
+- The first executable leaf is schema definition. Implementation should follow
+  that contract instead of inventing report shape while writing the emitter.
 ## 2026-05-14: ISF intent abstraction layer terminology
 - Calling `.fsm` IAL0 is useful because it acknowledges that `.fsm` is already
   above HDL while still preserving it as the cycle-accurate audit artifact.
