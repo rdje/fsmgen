@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF rule-expression conflict/report integration
+- Completed `ISF-RULE-ACTIONS.4` by adding explicit coverage that expression
+  rule assignments use the existing compatible fan-in, conflict diagnostic,
+  and priority-resolution report paths.
+- Added [t/1222-isf-rule-expression-conflict-report.t](t/1222-isf-rule-expression-conflict-report.t)
+  and advertised it in ISF public contract provenance.
+- Advanced the active `ISF-RULE-ACTIONS` frontier from
+  `ISF-RULE-ACTIONS.4` to `ISF-RULE-ACTIONS.5`.
 ### R14 — ISF rule-expression assignment implementation
 - Completed `ISF-RULE-ACTIONS.3` by allowing ordinary rule assignments to use
   scalar-or-list RHS expressions while preserving the existing flopped `<-`

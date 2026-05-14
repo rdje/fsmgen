@@ -81,6 +81,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   proves scheduled `.fsm` emission, assignment provenance, normal `.fsm`
   frontend parsing, and HDL generation. The active frontier advances to
   `ISF-RULE-ACTIONS.4`.
+- `ISF-RULE-ACTIONS.4` is complete. Expression-valued rule assignments now
+  have explicit conflict/report coverage: same-expression fan-in reports as
+  compatible, different expressions fail closed with
+  `isf_conflicting_rule_writes`, and priority-resolved expression conflicts
+  appear in `priority_resolutions`. The active frontier advances to
+  `ISF-RULE-ACTIONS.5`.
 - ISF construct support now has a normative rule: parser acceptance is not a
   support claim. Every current or future shipped ISF construct must have an
   explicit accepted source shape, lowering path or fail-closed diagnostic,

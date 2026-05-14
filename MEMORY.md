@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF rule-expression conflict/report integration
+- Completed `ISF-RULE-ACTIONS.4` in
+  [docs/tasks/ISF-RULE-ACTIONS.md](docs/tasks/ISF-RULE-ACTIONS.md).
+- Added [t/1222-isf-rule-expression-conflict-report.t](t/1222-isf-rule-expression-conflict-report.t)
+  to prove expression-valued rule assignments are counted in rule DT blocks,
+  report same-expression fan-in, fail closed on different-expression writes,
+  and project priority-resolved expression conflicts.
+- The next active R14 frontier is `ISF-RULE-ACTIONS.5`.
 ## 2026-05-14: ISF rule-expression assignment implementation
 - Completed `ISF-RULE-ACTIONS.3` in
   [docs/tasks/ISF-RULE-ACTIONS.md](docs/tasks/ISF-RULE-ACTIONS.md).

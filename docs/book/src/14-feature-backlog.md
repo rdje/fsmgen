@@ -231,8 +231,8 @@ policy, and broader resource arbitration remain backlog items.
 
 ### Expression-Valued Rule Assignments
 
-Status: partially shipped; conflict/report synchronization remains active in
-`ISF-RULE-ACTIONS`.
+Status: shipped for ordinary flopped rule assignments; final docs/test
+synchronization remains active in `ISF-RULE-ACTIONS`.
 
 Goal: allow rule actions to assign expression values, not only scalar
 `(port value)` pairs.
@@ -244,7 +244,10 @@ assignment under the rule DT DTE, where `expr` may be a scalar token or one
 list expression from the transaction `update`/`.fsm` RHS expression domain.
 `(trigger transaction)` lowers through a generated one-cycle source and
 transaction start fan-in. `(priority over other_rule)` feeds the covered
-priority/resource arbitration paths. Expression guards and alternate rule
+priority/resource arbitration paths. Same-expression rule writes report as
+compatible fan-in, incompatible expressions fail closed through the same
+rule-write conflict diagnostic, and priority-resolved expression conflicts
+project through `priority_resolutions`. Expression guards and alternate rule
 assignment operators are separate future features.
 
 ### Transaction Stage Lowering

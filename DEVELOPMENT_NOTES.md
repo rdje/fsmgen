@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF rule-expression conflict/report integration
+- No separate conflict domain is needed for expression-valued rule
+  assignments. Once the RHS is formatted through the existing expression
+  formatter, the current rule data-conflict machinery can compare expression
+  RHS strings exactly as it compares scalar values.
+- This keeps compatible fan-in, fail-closed conflict diagnostics, and
+  priority-resolution reports aligned with scalar rule assignments.
 ## 2026-05-14: ISF rule-expression assignment implementation
 - The implementation deliberately reuses `_format_isf_expr`, the existing
   transaction `update` expression formatter. That keeps rule expressions and

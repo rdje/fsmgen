@@ -269,6 +269,11 @@ The rule-expression assignment lowering path is checked by
 so expression-valued rule assignments preserve through scheduled `.fsm`
 emission, assignment provenance, normal `.fsm` frontend parsing, and HDL
 generation while keeping the existing flopped `<-` rule assignment family.
+The expression-valued rule conflict/report path is checked by
+[t/1222-isf-rule-expression-conflict-report.t](../t/1222-isf-rule-expression-conflict-report.t)
+so same-expression rule writes appear as compatible fan-in, different
+expression writes fail closed through `isf_conflicting_rule_writes`, and
+priority-resolved expression conflicts project through `priority_resolutions`.
 The rule-trigger target boundary is checked by
 [t/1182-isf-rule-trigger-target-boundary.t](../t/1182-isf-rule-trigger-target-boundary.t)
 so `(trigger transaction)` must name a declared transaction in the same actor.

@@ -70,12 +70,12 @@ current rule guard, delayed trigger, and conflict semantics.
   Commit: `ISF-RULE-ACTIONS.3: implement rule expression assignments`
 
 - ID: `ISF-RULE-ACTIONS.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Integrate rule expressions with conflict tracking and reports.`
   Acceptance: `Expression-valued rule assignments are counted, reported, and
   checked against same-target conflict policy.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -l t/1144-isf-public-tested-by-metadata-audit.t t/1209-isf-static-conflict-detection.t t/1210-isf-priority-conflict-resolution.t t/1213-isf-schedule-report-compatible-fanin-projection.t t/1221-isf-rule-expression-assignment.t t/1222-isf-rule-expression-conflict-report.t`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-RULE-ACTIONS.4: integrate expression conflict reports`
 
 - ID: `ISF-RULE-ACTIONS.5`
   Status: `pending`
@@ -90,7 +90,7 @@ current rule guard, delayed trigger, and conflict semantics.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-RULE-ACTIONS.4` | `pending` | Expression RHS lowering is implemented; next integrate the widened assignment family with conflict/report tracking. |
+| 1 | `ISF-RULE-ACTIONS.5` | `pending` | Expression conflict/report behavior is covered; next perform final docs/contracts synchronization and closure coverage. |
 
 ## ISF-RULE-ACTIONS.1 Inventory
 
@@ -343,6 +343,34 @@ This slice ships expression-valued RHS support for ordinary rule assignments.
 - [t/1144-isf-public-tested-by-metadata-audit.t](../../t/1144-isf-public-tested-by-metadata-audit.t)
   includes the new regression in ISF public contract provenance.
 
+## ISF-RULE-ACTIONS.4 Integration
+
+Expression-valued rule assignments now participate in the existing conflict
+and report paths as ordinary rule data assignments.
+
+### Conflict And Report Behavior
+
+- Schedule reports count expression-valued rule assignments in rule
+  `dt_blocks` through the existing assignment-count field.
+- Same-target/same-operator rule assignments with the same formatted
+  expression RHS are compatible same-target fan-in.
+- Same-target/same-operator rule assignments with different expression RHS
+  values fail closed with `isf_conflicting_rule_writes`.
+- Priority-resolved rule/rule expression conflicts use the existing
+  `priority_resolutions` report path.
+- The implementation did not need a new conflict domain: expression-valued
+  rule assignments continue to use `source_kind => 'rule_action'`,
+  `operator => '<-'`, and `domain => 'data'`.
+
+### Regression Evidence
+
+- [t/1222-isf-rule-expression-conflict-report.t](../../t/1222-isf-rule-expression-conflict-report.t)
+  covers compatible same-expression fan-in reporting, incompatible expression
+  conflict diagnostics, and priority-resolved expression conflicts in schedule
+  reports.
+- [t/1144-isf-public-tested-by-metadata-audit.t](../../t/1144-isf-public-tested-by-metadata-audit.t)
+  includes the conflict/report regression in ISF public contract provenance.
+
 ## Decisions
 
 - `2026-05-14`: Rule action widening is tracked independently from legacy
@@ -359,6 +387,10 @@ This slice ships expression-valued RHS support for ordinary rule assignments.
 - `2026-05-14`: The implementation uses the existing transaction-update
   expression formatter for rule RHS values, so this slice changes the rule
   action parser/lowerer boundary without adding a second expression language.
+- `2026-05-14`: Expression-valued rule assignments stay in the existing rule
+  data-conflict domain. Compatible fan-in, fail-closed conflict diagnostics,
+  and priority-resolution reports compare the formatted RHS expression, the
+  same way scalar rule assignments compare formatted RHS values.
 
 ## Open Questions
 
@@ -380,6 +412,7 @@ This slice ships expression-valued RHS support for ordinary rule assignments.
 | `2026-05-14` | `ISF-RULE-ACTIONS.1` | `prove -l t/1168-isf-rule-guard-factoring.t t/1169-isf-rule-shorthand-guard.t t/1171-isf-rule-trigger-fanin.t t/1172-isf-rule-trigger-fanin-schedule-report.t t/1181-isf-rule-action-boundary.t t/1190-isf-rule-priority-target-boundary.t t/1209-isf-static-conflict-detection.t t/1210-isf-priority-conflict-resolution.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-RULE-ACTIONS.2` | `prove -l t/1168-isf-rule-guard-factoring.t t/1169-isf-rule-shorthand-guard.t t/1171-isf-rule-trigger-fanin.t t/1172-isf-rule-trigger-fanin-schedule-report.t t/1181-isf-rule-action-boundary.t t/1198-isf-update-clause-boundary.t t/1209-isf-static-conflict-detection.t t/1210-isf-priority-conflict-resolution.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-RULE-ACTIONS.3` | `perl -I perl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -l t/1144-isf-public-tested-by-metadata-audit.t t/1181-isf-rule-action-boundary.t t/1198-isf-update-clause-boundary.t t/1221-isf-rule-expression-assignment.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-RULE-ACTIONS.4` | `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -l t/1144-isf-public-tested-by-metadata-audit.t t/1209-isf-static-conflict-detection.t t/1210-isf-priority-conflict-resolution.t t/1213-isf-schedule-report-compatible-fanin-projection.t t/1221-isf-rule-expression-assignment.t t/1222-isf-rule-expression-conflict-report.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -389,6 +422,7 @@ This slice ships expression-valued RHS support for ordinary rule assignments.
 | `ISF-RULE-ACTIONS.1` | `ISF-RULE-ACTIONS.1: inventory rule action behavior` | Current scalar-only boundary and report/conflict touchpoints inventoried. |
 | `ISF-RULE-ACTIONS.2` | `ISF-RULE-ACTIONS.2: specify rule expression assignments` | Expression RHS semantics specified before implementation. |
 | `ISF-RULE-ACTIONS.3` | `ISF-RULE-ACTIONS.3: implement rule expression assignments` | Parser/lowerer support and focused regression landed. |
+| `ISF-RULE-ACTIONS.4` | `ISF-RULE-ACTIONS.4: integrate expression conflict reports` | Conflict/report integration covered. |
 
 ## Changelog
 
@@ -400,4 +434,7 @@ This slice ships expression-valued RHS support for ordinary rule assignments.
 - `2026-05-14`: Completed `ISF-RULE-ACTIONS.3` by implementing
   expression-valued rule assignment parsing/lowering and adding focused
   parser/lowering/HDL coverage.
+- `2026-05-14`: Completed `ISF-RULE-ACTIONS.4` by covering expression-valued
+  compatible fan-in reports, conflict diagnostics, and priority-resolution
+  reports.
 - `2026-05-14`: Created the active ISF rule-action task tree.
