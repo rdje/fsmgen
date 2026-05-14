@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-COMPATIBILITY-SURFACE.md](docs/tasks/ISF-COMPATIBILITY-SURFACE.md),
-  whose current frontier is `ISF-COMPATIBILITY.3`. The completed
+  whose current frontier is `ISF-COMPATIBILITY.4`. The completed
   `ISF-SCHEDULE-REPORTS`, `ISF-DATA-WIDTHS`, `ISF-STAGES-CONTRACTS`,
   `ISF-RULE-ACTIONS`, `ISF-RESOURCE-CATALOG`, `ISF-RESOURCE-PRIORITY`,
   `ISF-CONFLICTS`, `ISF-COMPOSITION`, and `ISF-FIXTURES` trees are listed in
@@ -46,6 +46,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   handshake names, and point authors to `(on ...)`, generated `can_accept`,
   or transaction `(stage ...)` for ready/valid behavior. The active frontier
   advances to `ISF-COMPATIBILITY.3`.
+- `ISF-COMPATIBILITY.3` is complete. Removed transaction `(assign ...)` stays
+  rejected and will not be auto-mapped because its timing intent is ambiguous.
+  Diagnostics should point authors to explicit constructs: `(update var expr)`
+  for transaction-local flopped updates, `(drive ...)` for protocol/output
+  driving, rule `(port expr)` actions for rule-driven assignments, and
+  `(complete port)` for completion pulses. The active frontier advances to
+  `ISF-COMPATIBILITY.4`.
 - `ISF-RESOURCE-PRIORITY.1` is complete. The current inventory records that
   `(resources ...)` is validated metadata only, accepted arbiters are
   `priority` and `round_robin`, and successful resource arbitration is not yet

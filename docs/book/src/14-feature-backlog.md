@@ -310,16 +310,21 @@ valid_signal))` for ready/valid barriers.
 
 ### Removed Assign Keyword
 
-Status: removal/deferred compatibility item.
+Status: removed compatibility item; targeted diagnostic pending.
 
-Goal: decide whether the removed `(assign ...)` transaction keyword should
-stay unsupported or be replaced by a different explicit construct.
+Goal: keep the removed `(assign ...)` transaction keyword out of the language
+and guide authors to explicit timing constructs.
 
 Current boundary: authored uses fail closed as unsupported transaction clauses.
 The parser may carry the raw clause as private scheduler input, but the
 scheduler rejects it in top-level transaction bodies and nested contexts such
 as `when`, `switch`, or `repeat` bodies. No migration-specific diagnostic has
-shipped yet.
+shipped yet. Policy: do not auto-map the old keyword. Use `(update var expr)`
+for transaction-local flopped updates, `(drive ...)` for protocol/output
+drives, rule `(port expr)` actions for rule-driven assignments, and
+`(complete port)` for transaction completion. A future transaction-local
+combinational assignment feature would need a new explicit construct with its
+own timing semantics.
 
 ### Full Width Inference For Data Operations
 

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF removed assign policy
+- The removed transaction `assign` keyword should stay rejected because it is
+  exactly the kind of ambiguous shorthand ISF should avoid. The replacement
+  depends on timing: transaction-local storage update, output/protocol drive,
+  rule-side assignment, or completion pulse.
+- Keeping rejection in scheduler validation is acceptable for now because
+  transaction clause payloads are private scheduler input. The important
+  improvement is a targeted migration diagnostic before scheduled `.fsm`
+  emission.
+- Any future transaction-local combinational assignment should be a new
+  explicit construct with its own lowering and runtime semantics, not a
+  compatibility revival of `assign`.
 ## 2026-05-14: ISF handshake compatibility policy
 - Keeping legacy handshake accepted but ignored is the least disruptive policy
   while ISF feature work continues. Giving it semantics would create a second

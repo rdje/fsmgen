@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF removed assign policy
+- Completed `ISF-COMPATIBILITY.3` in
+  [docs/tasks/ISF-COMPATIBILITY-SURFACE.md](docs/tasks/ISF-COMPATIBILITY-SURFACE.md).
+- Removed transaction `(assign ...)` stays rejected and will not be auto-mapped
+  because it does not carry enough timing intent.
+- Migration guidance should point to `(update var expr)`, `(drive ...)`, rule
+  `(port expr)` actions, or `(complete port)` depending on the intended
+  timing and target.
+- The next active R14 frontier is `ISF-COMPATIBILITY.4`.
 ## 2026-05-14: ISF handshake compatibility policy
 - Completed `ISF-COMPATIBILITY.2` in
   [docs/tasks/ISF-COMPATIBILITY-SURFACE.md](docs/tasks/ISF-COMPATIBILITY-SURFACE.md).

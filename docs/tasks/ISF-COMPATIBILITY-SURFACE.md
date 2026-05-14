@@ -58,12 +58,12 @@ keyword, so compatibility behavior remains intentional rather than accidental.
   Commit: `ISF-COMPATIBILITY.2: decide handshake policy`
 
 - ID: `ISF-COMPATIBILITY.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Decide removed transaction assign policy.`
   Acceptance: `The tree records whether transaction assign stays rejected, gains a
   replacement, or maps to another construct, with migration diagnostics.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-COMPATIBILITY.3: decide removed assign policy`
 
 - ID: `ISF-COMPATIBILITY.4`
   Status: `pending`
@@ -85,7 +85,7 @@ keyword, so compatibility behavior remains intentional rather than accidental.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-COMPATIBILITY.3` | `pending` | Handshake policy is now set; the next slice should decide whether removed transaction `assign` stays rejected and what migration guidance should say. |
+| 1 | `ISF-COMPATIBILITY.4` | `pending` | Both compatibility policies are now set; the next slice should implement the selected validation and diagnostic changes. |
 
 ## ISF-COMPATIBILITY.1 Inventory
 
@@ -247,6 +247,56 @@ Implementation work left for `ISF-COMPATIBILITY.4`:
 - Add CLI/strict parity coverage in the final test/docs leaf if the current
   CLI behavior remains accepted.
 
+## ISF-COMPATIBILITY.3 Removed Transaction Assign Policy
+
+Decision: keep transaction `(assign ...)` removed and rejected.
+
+Selected policy:
+
+- Do not reintroduce `(assign ...)` as a transaction clause.
+- Do not silently map `(assign ...)` to `(update ...)`, `(drive ...)`, rule
+  assignment, or `(complete ...)`. The old keyword does not encode enough
+  timing intent to choose one safely.
+- Keep parser behavior as-is for now: the parser may carry raw transaction
+  clauses as private scheduler input, and the scheduler owns the fail-closed
+  unsupported-clause boundary.
+- Replace the generic unsupported-clause diagnostic for `assign` with a
+  migration-specific diagnostic during the implementation leaf.
+- Keep nested-context rejection. `(assign ...)` should be rejected in top-level
+  transaction bodies and inside `when`, `switch`, or `repeat` bodies.
+
+Rationale:
+
+- ISF now has more explicit constructs for the common meanings an old
+  `assign` might have had. `(update var expr)` names a transaction-local
+  flopped state update. `(drive name ...)` names output/protocol drive
+  behavior. Rule actions name rule-driven assignments. `(complete port)` names
+  terminal completion behavior.
+- An automatic mapping would be ambiguous and could silently change timing.
+  Hardware intent should state whether the target is a persistent update, a
+  protocol/output drive, a rule-side action, or a completion pulse.
+- Keeping the rejection in the scheduler preserves the current parser shell
+  boundary while still failing before scheduled `.fsm` emission.
+
+Migration guidance:
+
+- Use `(update var expr)` for transaction-local flopped data/state updates.
+- Use a named or inline `(drive ...)` for protocol/output driving behavior.
+- Use rule `(port expr)` actions for rule-driven assignments.
+- Use `(complete port)` when the old intent was transaction completion.
+- If a future need appears for transaction-local combinational assignment, it
+  should be introduced as an explicit new construct with documented timing
+  semantics rather than reviving the ambiguous `assign` keyword.
+
+Implementation work left for `ISF-COMPATIBILITY.4`:
+
+- Add a targeted `assign` rejection in `_validate_supported_transaction_clauses`
+  before the generic unsupported-clause path.
+- Include concise migration wording in the diagnostic without making every
+  unknown future keyword verbose.
+- Preserve existing context labels such as `transaction body`, `when body`,
+  `switch branch`, and `repeat body`.
+
 ## Decisions
 
 - `2026-05-14`: Legacy handshake and removed transaction `assign` are tracked
@@ -260,11 +310,16 @@ Implementation work left for `ISF-COMPATIBILITY.4`:
   compatibility input. It will not gain lowering semantics; implementation
   should tighten shape validation and diagnostics while leaving the public
   actor-shell handshake metadata unpopulated.
+- `2026-05-14`: Removed transaction `(assign ...)` stays rejected. It will not
+  be auto-mapped because its timing intent is ambiguous; diagnostics should
+  direct authors to explicit constructs such as `(update ...)`, `(drive ...)`,
+  rule actions, or `(complete ...)`.
 
 ## Open Questions
 
-- Should transaction `(assign ...)` remain removed permanently, or should a
-  new explicit construct replace its original intent?
+- Whether a future transaction-local combinational construct is needed; that
+  should be a new feature request with explicit timing semantics, not a
+  compatibility revival of `(assign ...)`.
 
 ## Blockers
 
@@ -277,6 +332,7 @@ Implementation work left for `ISF-COMPATIBILITY.4`:
 | `2026-05-14` | `ISF-COMPATIBILITY` | `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-COMPATIBILITY.1` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `prove -l t/1178-isf-handshake-compatibility-boundary.t t/1180-isf-unsupported-transaction-clause-boundary.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-COMPATIBILITY.2` | `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-COMPATIBILITY.3` | `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -285,6 +341,7 @@ Implementation work left for `ISF-COMPATIBILITY.4`:
 | `ISF-COMPATIBILITY` | `R14: map ISF objectives to task trees` | Initial tree creation belongs to the ISF objective task-tree coverage slice. |
 | `ISF-COMPATIBILITY.1` | `ISF-COMPATIBILITY.1: inventory legacy surfaces` | Inventory of deprecated handshake validation/ignored behavior and removed assign fail-closed lowering. |
 | `ISF-COMPATIBILITY.2` | `ISF-COMPATIBILITY.2: decide handshake policy` | Keep handshake as accepted ignored compatibility input, tighten validation, and point authors to `on`, `can_accept`, and transaction stages. |
+| `ISF-COMPATIBILITY.3` | `ISF-COMPATIBILITY.3: decide removed assign policy` | Keep transaction `assign` rejected and point authors to explicit replacement constructs. |
 
 ## Changelog
 
@@ -292,3 +349,4 @@ Implementation work left for `ISF-COMPATIBILITY.4`:
 - `2026-05-14`: Added the current legacy handshake and removed assign
   behavior inventory.
 - `2026-05-14`: Decided the legacy handshake policy.
+- `2026-05-14`: Decided the removed transaction `assign` policy.

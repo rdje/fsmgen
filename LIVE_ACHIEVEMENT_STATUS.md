@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF removed assign policy
+- Active R14 task-tree slice: `ISF-COMPATIBILITY.3` is complete.
+- Removed transaction `(assign ...)` stays rejected and will not be auto-mapped
+  because its timing intent is ambiguous.
+- The implementation leaf should add a targeted migration diagnostic.
+- The next active R14 frontier is `ISF-COMPATIBILITY.4`.
+
 ## 2026-05-14: R14 — ISF handshake compatibility policy
 - Active R14 task-tree slice: `ISF-COMPATIBILITY.2` is complete.
 - Legacy `(handshake ...)` stays accepted but ignored; it will not gain

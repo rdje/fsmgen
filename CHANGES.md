@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF removed assign policy
+- Completed `ISF-COMPATIBILITY.3` by deciding that removed transaction
+  `(assign ...)` stays rejected.
+- The old keyword will not be auto-mapped because it does not encode whether
+  the author intended a flopped update, protocol/output drive, rule-side
+  assignment, or completion pulse.
+- The implementation follow-up should add a targeted diagnostic pointing
+  authors to `(update var expr)`, `(drive ...)`, rule `(port expr)` actions,
+  or `(complete port)`.
+- The active `ISF-COMPATIBILITY` frontier advances to
+  `ISF-COMPATIBILITY.4`.
 ### R14 — ISF handshake compatibility policy
 - Completed `ISF-COMPATIBILITY.2` by deciding the legacy handshake policy.
 - Legacy `(handshake ...)` remains accepted but ignored compatibility input;
