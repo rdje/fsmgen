@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF expression-valued rule guards
+- Completed `ISF-LIBRARIES.4.4.1` in
+  [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md).
+- Rule guards now accept scalar names or list expressions in both shorthand
+  `(rule name condition ...)` and long-form `(rule name (when condition) ...)`
+  spellings.
+- Expression guards are preserved in the parser actor shell's normalized
+  `when` field and lower once as the rule non-state DT DTE, keeping actions
+  factored under the rule enable.
+- This is the first enabling slice for same-cycle FIFO semantics: FIFO fire
+  predicates can now be authored directly as expressions such as
+  `(& push (! pop) (! full))`.
+- The next active R14 frontier is `ISF-LIBRARIES.4.4.2`, teaching conflict
+  analysis to accept provably disjoint same-target FIFO rule writes.
 ## 2026-05-14: ISF actor-owned storage declarations
 - Completed `ISF-LIBRARIES.4.3` in
   [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md).

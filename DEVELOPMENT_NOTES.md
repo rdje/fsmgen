@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF expression-valued rule guards
+- Rules are the natural ISF carrier for same-cycle FIFO fire predicates because
+  rules lower as non-state DTs rather than ordered transaction states. Widening
+  rule guards to list expressions lets authors describe push-only, pop-only,
+  and push+pop cases directly as boolean equations.
+- The shorthand grammar remains conservative: a list-form shorthand guard is
+  recognized only when its head is a known expression operator. Ordinary
+  action forms such as `(valid 1)` continue to be parsed as actions, not
+  silently reinterpreted as guards.
+- The normalized actor shell still stores the guard in the `when` field. For
+  expression guards, that payload remains scheduler input, but the public
+  shape now accurately says scalar or expression guards normalize into `when`.
+- Lowering keeps the existing factored-rule shape. The rule DTE becomes the
+  formatted expression guard, and each action stays unguarded inside the
+  rule DT body. This preserves the DTE-to-enable timing model and avoids
+  repeating a complex FIFO predicate on every action.
 ## 2026-05-14: ISF actor-owned storage declarations
 - The first storage implementation deliberately lowers fixed-depth banks to
   scalar register names instead of adding a second backend memory-array path.

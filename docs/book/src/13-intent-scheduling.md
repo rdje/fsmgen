@@ -249,15 +249,16 @@ limitations are:
   use-site parameter and binding validation, specialized child scheduled
   `.fsm` artifacts, generated top wiring for same-name system ports, HDL
   reachability for the covered generated-top path, bounded `library_uses`
-  report metadata, and actor-owned fixed storage declarations. A FIFO fixture
-  is not shipped yet: a depth-1 placeholder is not treated as a FIFO in this
+  report metadata, actor-owned fixed storage declarations, and
+  expression-valued rule guards for direct fire predicates. A FIFO fixture is
+  not shipped yet: a depth-1 placeholder is not treated as a FIFO in this
   project, and transaction `(when ...)` control flow is not enough to model
   the independent write/read sides of a real FIFO. The first real fixture
   target is a 4-entry FIFO. It must cover push-only, pop-only, simultaneous
   push+pop, and idle cycles with fire predicates derived from the same
   pre-cycle state. Depth 4 is the concrete review target for scalarized
   storage entries, 2-bit pointer wrap, occupancy values 0 through 4, and
-  full/empty derivation. Same-cycle FIFO update semantics,
+  full/empty derivation. Disjoint-rule proof for same-target updates,
   parameter-driven interface/storage widths, arbitrary-depth generation beyond
   the first `DEPTH=4` fixture, automatic non-zero reset values, standalone
   transaction/drive exports, symbolic constants, derived parameter

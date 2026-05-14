@@ -333,7 +333,8 @@ parameters and bindings, emits child scheduled `.fsm` artifacts, wires library
 actor instances into generated tops for same-name system ports, reaches
 SystemVerilog generation for the covered generated-top path, reports bounded
 provenance, records the real FIFO requirements before any FIFO fixture is
-shipped, and adds the first actor-owned storage declaration surface.
+shipped, adds the first actor-owned storage declaration surface, and lets rule
+guards be scalar or list expressions for direct FIFO fire predicates.
 
 No FIFO library fixture is shipped yet. A depth-1 element is not considered a
 FIFO for this library catalog; it is a register/holding element and would hide
@@ -1026,11 +1027,17 @@ Current lowering:
   an actor shell is returned.
 - Each rule emits one non-state DT block.
 - A scalar condition immediately after the rule name is the preferred shorthand
-  guard. Long-form `(when condition)` supplies the same guard. The parser
-  normalizes both spellings to the same public `when` field. The shipped guard
-  form is a single port/signal condition. Rule-local `(when condition)` is not
-  the transaction control-flow form; it has no body and guards the rule actions
-  that follow it.
+  guard, and a list-expression condition may also be used when the expression
+  head is a recognized expression operator. Long-form `(when condition)`
+  supplies the same scalar-or-expression guard. The parser normalizes both
+  spellings to the same public `when` field. Rule-local `(when condition)` is
+  not the transaction control-flow form; it has no body and guards the rule
+  actions that follow it.
+- Expression rule guards lower through the same `.fsm` guard-expression
+  surface as authored DT guards. A FIFO fire predicate can therefore be
+  written directly, for example
+  `(rule push_only (& push (! pop) (! full)) ...)`, and the scheduled `.fsm`
+  emits `-push_only <(& push (! pop) (! full))`.
 - `(port expr)` actions lower as flopped assignments inside the guarded
   non-state DT. They keep the existing `<-` rule data-assignment family and
   do not introduce combinational or D-input-named rule action operators.
@@ -1561,16 +1568,18 @@ Focused tests:
 - [t/1230-isf-library-import-resolution.t](../t/1230-isf-library-import-resolution.t)
 - [t/1231-isf-library-generated-top.t](../t/1231-isf-library-generated-top.t)
 - [t/1232-isf-actor-storage-declarations.t](../t/1232-isf-actor-storage-declarations.t)
+- [t/1233-isf-rule-expression-guards.t](../t/1233-isf-rule-expression-guards.t)
 
 ## 12. Explicitly Deferred
 
 - Reusable ISF library behavior beyond the shipped resolver/review-artifact,
-  same-name generated-top, and actor-owned fixed-storage slices: same-cycle
-  FIFO read/write update semantics, the real reusable FIFO actor fixture,
-  standalone transaction/drive exports, symbolic constants, derived parameter
-  expressions, parameter-derived storage dimensions, clock/reset name
-  remapping, memory-array backend emission, and library actors that import
-  other libraries.
+  same-name generated-top, actor-owned fixed-storage, and expression-valued
+  rule-guard slices: disjoint-rule proof for same-target FIFO updates,
+  same-cycle FIFO read/write update semantics, the real reusable FIFO actor
+  fixture, standalone transaction/drive exports, symbolic constants, derived
+  parameter expressions, parameter-derived storage dimensions, clock/reset
+  name remapping, memory-array backend emission, and library actors that
+  import other libraries.
 - Old `(handshake ...)` semantics beyond validated ignored compatibility
   parsing.
 - The removed `(assign ...)` action keyword; authored transaction uses fail

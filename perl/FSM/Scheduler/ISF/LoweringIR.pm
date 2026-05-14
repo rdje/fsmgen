@@ -3073,7 +3073,13 @@ sub _build_rules {
     return @d;
 }
 sub _rule_trigger_source_name { my ($rule, $target) = @_; "${rule}_${target}" }
-sub _rule_cond { my($self,$w)=@_; return {port=>'1'} unless $w&&ref($w)eq'ARRAY'&&@$w>=2; {port=>$w->[1]} }
+sub _rule_cond {
+    my ($self, $w) = @_;
+    return { port => '1' } unless $w && ref($w) eq 'ARRAY' && @$w >= 2;
+    return ref($w->[1])
+        ? { expr => _format_isf_expr($w->[1]) }
+        : { port => $w->[1] };
+}
 
 sub _build_drive_dts {
     my ($self, $actor, $dts, $ctrs, $local_drive_uses, $extra_drive_sources, $storage_roles) = @_;

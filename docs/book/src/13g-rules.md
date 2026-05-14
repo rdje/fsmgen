@@ -9,6 +9,9 @@ are independent of the transaction state machine.
 (rule always_ready ready
   (valid 1)
   (trigger main_transfer))
+
+(rule push_only (& push (! pop) (! full))
+  (write_fire 1))
 ```
 
 The long form remains accepted and normalizes to the same parser output:
@@ -24,6 +27,10 @@ This rule-local `(when ready)` is a guard clause, not transaction control flow.
 It has no body of its own; it guards the rule actions that follow it. The
 body-bearing `(when condition body...)` form is only described in
 [Control Flow](13d-control-flow.md) because it is a transaction clause.
+Rule guards may be scalar conditions or list expressions using the normal
+`.fsm` expression spelling. Expression guards are the intended way to author
+FIFO fire predicates such as `(& push (! pop) (! full))` without creating
+temporary scalar condition signals.
 
 **Actions**:
 - `(port expr)` — guarded flopped assignment when the condition holds
@@ -42,10 +49,10 @@ body is collected. `(priority over other_rule)` must name a declared rule in
 the same actor.
 
 **Lowering**: Non-state DT block with the rule guard emitted as the DT header
-DTE. The shorthand scalar guard and the long-form `(when ...)` guard both
-become the public parser `when` field. Scheduled `.fsm` emission writes that
-guard once in the DT header instead of repeating it on every assignment or
-wrapping the actions in a nested guard block. Ordinary `(port expr)` actions
+DTE. Shorthand scalar or expression guards and long-form `(when ...)` guards
+all become the public parser `when` field. Scheduled `.fsm` emission writes
+that guard once in the DT header instead of repeating it on every assignment
+or wrapping the actions in a nested guard block. Ordinary `(port expr)` actions
 are flopped assignments selected by the guarded DT. `(trigger transaction)`
 uses `<1` on a generated
 `rule_transaction` source so the request remains pulse-shaped, and a generated
@@ -56,6 +63,10 @@ cycle.
 (-always_ready <ready
   (<- (valid> 1))
   (<1 (always_ready_main_transfer 1))
+)
+
+(-push_only <(& push (! pop) (! full))
+  (<- (write_fire> 1))
 )
 
 (-main_transfer_trigger_fanin

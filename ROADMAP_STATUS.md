@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md), whose current
-  frontier is `ISF-LIBRARIES.4.4`. The public-contract tree remains
+  frontier is `ISF-LIBRARIES.4.4.2`. The public-contract tree remains
   cross-cutting and should not displace feature delivery unless the selected
   feature changes a public surface. The completed
   `ISF-SCHEDULE-REPORTS`, `ISF-DATA-WIDTHS`, `ISF-STAGES-CONTRACTS`,
@@ -123,6 +123,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   focused coverage proves fail-closed diagnostics plus SystemVerilog
   generation for used storage. The active frontier advances to
   `ISF-LIBRARIES.4.4`.
+- `ISF-LIBRARIES.4.4.1` is complete. Rule guards now accept scalar or
+  list-expression conditions in both shorthand and long-form `(when ...)`
+  spellings. Expression guards are preserved in the parser actor shell, emit
+  once as the rule non-state DT DTE, and pass scheduled `.fsm` parsing plus
+  SystemVerilog generation. This enables direct FIFO fire predicates such as
+  `(& push (! pop) (! full))`. The active frontier advances to
+  `ISF-LIBRARIES.4.4.2`.
 - `ISF-RESOURCE-PRIORITY.1` is complete. The current inventory records that
   `(resources ...)` is validated metadata only, accepted arbiters are
   `priority` and `round_robin`, and successful resource arbitration is not yet

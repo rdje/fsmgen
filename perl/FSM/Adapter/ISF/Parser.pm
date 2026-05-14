@@ -28,6 +28,9 @@ my %RESOURCE_KINDS    = map { $_ => 1 } @RESOURCE_KINDS;
 my %RULE_ASSIGNMENT_FORBIDDEN_EXPR_HEADS = map { $_ => 1 } qw(
     when switch repeat do spawn complete
 );
+my %RULE_GUARD_SHORTHAND_EXPR_HEADS = map { $_ => 1 } qw(
+    & | ! ~ ^ = == != < > <= >= !| ~|
+);
 
 # Parses .isf source files into a structured, validated AST.
 #
@@ -1031,6 +1034,8 @@ sub _parse_rule($self, $clause) {
 
     if (@body && defined($body[0]) && !ref($body[0])) {
         $when = $self->_parse_rule_when(['when', shift @body], $name);
+    } elsif (@body && _is_rule_guard_shorthand_expr($body[0])) {
+        $when = $self->_parse_rule_when(['when', shift @body], $name);
     }
 
     for my $elem (@body) {
@@ -1048,14 +1053,50 @@ sub _parse_rule($self, $clause) {
 }
 
 sub _parse_rule_when($self, $clause, $rule_name) {
-    confess "Error: rule '$rule_name' guard requires exactly one scalar condition\n"
+    confess "Error: rule '$rule_name' guard requires exactly one condition\n"
         unless ref($clause) eq 'ARRAY'
             && @$clause == 2
-            && defined($clause->[1])
-            && !ref($clause->[1])
-            && length($clause->[1]);
+            && defined($clause->[1]);
 
-    return ['when', $clause->[1]];
+    my $condition = $clause->[1];
+    if (!ref($condition)) {
+        confess "Error: rule '$rule_name' guard condition must be a non-empty scalar or list expression\n"
+            unless length($condition);
+        return ['when', $condition];
+    }
+
+    $self->_validate_rule_guard_expr($condition, $rule_name);
+    return ['when', _clone_isf_value($condition)];
+}
+
+sub _is_rule_guard_shorthand_expr {
+    my ($expr) = @_;
+    return 0 unless ref($expr) eq 'ARRAY' && @$expr;
+    my $head = $expr->[0];
+    return defined($head)
+        && !ref($head)
+        && $RULE_GUARD_SHORTHAND_EXPR_HEADS{$head};
+}
+
+sub _validate_rule_guard_expr($self, $expr, $rule_name) {
+    confess "Error: rule '$rule_name' guard expression must be a non-empty list\n"
+        unless ref($expr) eq 'ARRAY' && @$expr;
+
+    my $head = $expr->[0];
+    confess "Error: rule '$rule_name' guard expression heads must be scalar\n"
+        unless defined($head) && !ref($head) && length($head);
+
+    confess "Error: rule '$rule_name' guard expression cannot use control-flow form '$head'\n"
+        if $RULE_ASSIGNMENT_FORBIDDEN_EXPR_HEADS{$head};
+
+    for my $operand (@{$expr}[1 .. $#$expr]) {
+        confess "Error: rule '$rule_name' guard expression operands must be defined\n"
+            unless defined($operand);
+        $self->_validate_rule_guard_expr($operand, $rule_name)
+            if ref($operand);
+    }
+
+    return 1;
 }
 
 sub _parse_rule_priority($self, $clause, $rule_name) {

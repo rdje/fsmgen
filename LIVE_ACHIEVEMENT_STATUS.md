@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF expression-valued rule guards
+- Active R14 task-tree slice: `ISF-LIBRARIES.4.4.1` is complete.
+- Rule guards now accept scalar or list-expression conditions in shorthand and
+  long-form `(when ...)` spellings.
+- Expression guards lower once as the rule non-state DT DTE and reach
+  scheduled `.fsm` parsing plus SystemVerilog generation.
+- This unblocks direct FIFO fire predicates such as
+  `(& push (! pop) (! full))`.
+- The next active R14 frontier is `ISF-LIBRARIES.4.4.2`, disjoint-rule write
+  proof for the FIFO same-cycle update matrix.
+
 ## 2026-05-14: R14 — ISF actor-owned storage declarations
 - Active R14 task-tree slice: `ISF-LIBRARIES.4.3` is complete.
 - Actors can now declare fixed-width internal registers and fixed-depth

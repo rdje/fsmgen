@@ -157,13 +157,49 @@ reusable ISF design intent, not only scalar constants or types.
   Commit: `pending`
 
 - ID: `ISF-LIBRARIES.4.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Specify and implement same-cycle FIFO read/write update semantics.`
   Acceptance: `A FIFO actor can evaluate write and read requests in the same
   cycle, derive write_fire/read_fire with full/empty policy, update storage,
   pointers, occupancy, and flags atomically for all push/pop combinations, and
   avoid modeling port concurrency as a sequential chain of blocking
   transaction branches.`
+  Children: `ISF-LIBRARIES.4.4.1`, `ISF-LIBRARIES.4.4.2`,
+  `ISF-LIBRARIES.4.4.3`
+  Verification: `pending; see child leaves`
+  Commit: `pending; see child leaves`
+
+- ID: `ISF-LIBRARIES.4.4.1`
+  Status: `done`
+  Goal: `Support expression-valued rule guards for FIFO fire predicates.`
+  Acceptance: `Rules accept scalar or list-expression guards in shorthand and
+  long-form '(when ...)' spellings, preserve the normalized guard in the
+  parser actor shell, emit the expression once as the rule non-state DT DTE,
+  and reach scheduled '.fsm' parsing plus HDL generation.`
+  Verification: `prove -I perl t/1233-isf-rule-expression-guards.t
+  t/1166-isf-public-actor-shell-rule-shape-audit.t
+  t/1144-isf-public-tested-by-metadata-audit.t
+  t/1183-ci-regression-tier-selection.t`; `./bin/ci-regression isf --no-book`;
+  `mdbook build docs/book`; `git diff --check`
+  Commit: `pending`
+
+- ID: `ISF-LIBRARIES.4.4.2`
+  Status: `pending`
+  Goal: `Accept provably disjoint FIFO rule write cases.`
+  Acceptance: `The scheduler can prove the four FIFO request-case rules are
+  mutually exclusive for same-target state updates, accepts those disjoint
+  rule writes without priority boilerplate, and still rejects genuinely
+  overlapping same-target rule data writes.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-LIBRARIES.4.4.3`
+  Status: `pending`
+  Goal: `Prove the FIFO same-cycle update matrix on actor-owned storage.`
+  Acceptance: `A focused 4-entry FIFO-like actor uses actor-owned storage and
+  same-cycle rules to model idle, push-only, pop-only, and push+pop update
+  cases through scheduled '.fsm', schedule report, and SystemVerilog
+  generation.`
   Verification: `pending`
   Commit: `pending`
 
@@ -200,7 +236,7 @@ reusable ISF design intent, not only scalar constants or types.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-LIBRARIES.4.4` | `pending` | The first FIFO storage declarations exist; the FIFO now needs same-cycle push/pop update semantics before the reusable actor can be authored honestly. |
+| 1 | `ISF-LIBRARIES.4.4.2` | `pending` | Expression-valued rule guards exist; the scheduler still needs disjoint-rule conflict proof before the FIFO four-case update matrix can drive shared storage without priority boilerplate. |
 
 ## Design Notes
 
@@ -241,6 +277,11 @@ reusable ISF design intent, not only scalar constants or types.
 - Schedule reports keep the existing storage `kind` values and mark declared
   storage entries with role `actor_storage`. Used storage reaches HDL through
   the existing scalar signal/flop path.
+- Same-cycle FIFO behavior is being built on rules because rules lower as
+  non-state DTs. The first enabling slice lets rule guards be full list
+  expressions, for example `(& push (! pop) (! full))`, so the FIFO fire
+  predicates can be authored directly instead of materializing one scalar
+  condition per case.
 - A library should be reusable source intent, not generated HDL pasted into a
   design. The imported definition should still lower through scheduled `.fsm`
   so users can inspect the exact cycle-level artifact.

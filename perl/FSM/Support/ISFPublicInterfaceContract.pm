@@ -364,6 +364,7 @@ sub build_isf_public_interface_contract {
             't/1230-isf-library-import-resolution.t',
             't/1231-isf-library-generated-top.t',
             't/1232-isf-actor-storage-declarations.t',
+            't/1233-isf-rule-expression-guards.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -605,7 +606,7 @@ sub isf_public_interface_actor_shell_transaction_shape {
 }
 
 sub isf_public_interface_actor_shell_rule_shape {
-    return 'rules is an array of public rule shell entries; each entry has unique non-empty scalar name, optional normalized when clause, and actions array; shorthand rule guards normalize into when while rule payload contents remain private scheduler input';
+    return 'rules is an array of public rule shell entries; each entry has unique non-empty scalar name, optional normalized when clause, and actions array; scalar or expression shorthand rule guards normalize into when while rule payload contents remain private scheduler input';
 }
 
 sub isf_public_interface_actor_shell_drive_shape {

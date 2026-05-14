@@ -439,14 +439,15 @@ be able to contain reusable ISF actors, transactions, drives, and associated
 constraints when those surfaces are specified.
 
 Current boundary: the first reusable ISF library import, same-name
-generated-top, and actor-owned fixed-storage slices have shipped. Actor roots may
+generated-top, actor-owned fixed-storage, and expression-valued rule-guard
+slices have shipped. Actor roots may
 import library roots, use an exported actor, validate use-site parameters and
 explicit bindings, emit a specialized child scheduled `.fsm` artifact, wire
 the library actor through a generated top, reach SystemVerilog generation for
 the covered generated-top path, project bounded `library_uses`
-schedule-report metadata, declare fixed actor-owned registers/banks, and
-record real FIFO requirements. No FIFO fixture is shipped yet. Clock/reset name
-remapping remains fail-closed.
+schedule-report metadata, declare fixed actor-owned registers/banks, author
+rule fire predicates as expressions, and record real FIFO requirements. No
+FIFO fixture is shipped yet. Clock/reset name remapping remains fail-closed.
 
 Shipped source model for actor exports:
 
@@ -583,8 +584,9 @@ storage indices, 2-bit pointer wrap, occupancy values 0 through 4, and
 full/empty flag checks before arbitrary-depth elaboration is generalized.
 Transaction `(when condition body...)` is ordered control flow, so using a
 chain of `when` branches to model FIFO ports would be misleading. The next
-FIFO slice must ship same-cycle two-port update semantics on top of the
-declared storage primitives, then author and prove the reusable FIFO library.
+FIFO slice must ship disjoint-rule proof for same-target storage updates and
+then same-cycle two-port update semantics on top of the declared storage
+primitives, then author and prove the reusable FIFO library.
 
 ## Backends And Validation
 

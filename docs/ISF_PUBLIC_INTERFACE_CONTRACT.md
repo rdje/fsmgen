@@ -141,6 +141,10 @@ Actor-owned fixed storage declarations are checked by
 [t/1232-isf-actor-storage-declarations.t](../t/1232-isf-actor-storage-declarations.t)
 for parser shape, scalarized bank lowering, `actor_storage` report metadata,
 fail-closed diagnostics, and SystemVerilog generation for used storage.
+Rule expression guards are checked by
+[t/1233-isf-rule-expression-guards.t](../t/1233-isf-rule-expression-guards.t)
+for shorthand and long-form guard normalization, scheduled `.fsm` DT-DTE
+emission, HDL generation, and targeted parser diagnostics.
 The transaction-summary metadata is checked by
 [t/1149-isf-public-transaction-metadata-audit.t](../t/1149-isf-public-transaction-metadata-audit.t)
 to keep transaction `states` and `count` shapes exact across direct and
@@ -718,8 +722,8 @@ The current public parser handoff also advertises a bounded rule-entry shell:
 scheduler input.
 Authored `(rule name condition actions...)` shorthand and long-form
 `(rule name (when condition) actions...)` normalize to the same public `when`
-field. The current shorthand guard is scalar because scheduled rule guards are
-still single port/signal conditions. Rule-local `(when condition)` is a
+field. The guard may be a scalar condition or a list expression using the
+normal `.fsm` expression spelling. Rule-local `(when condition)` is a
 guard-only clause; it is not the transaction `(when condition body...)`
 control-flow construct.
 Current scheduled `.fsm` review artifacts emit a rule's `when` guard as the

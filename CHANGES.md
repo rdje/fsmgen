@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF expression-valued rule guards
+- Completed `ISF-LIBRARIES.4.4.1` by widening rule guards from scalar-only
+  conditions to scalar-or-list expressions.
+- The parser now accepts expression-valued rule guards in both shorthand
+  `(rule name condition ...)` and long-form `(rule name (when condition) ...)`
+  spellings, with control-flow forms still rejected inside guard expressions.
+- The lowerer emits expression guards once as the rule non-state DT DTE,
+  preserving the factored action style used by scalar rule guards.
+- Added [t/1233-isf-rule-expression-guards.t](t/1233-isf-rule-expression-guards.t)
+  for parser normalization, scheduled `.fsm` emission, normal `.fsm`
+  frontend parsing, HDL generation, and parser-boundary diagnostics.
+- The active R14 PNT frontier advances to `ISF-LIBRARIES.4.4.2`.
 ### R14 — ISF actor-owned storage declarations
 - Completed `ISF-LIBRARIES.4.3` by adding the first actor-owned storage
   declaration surface for reusable FIFO work.

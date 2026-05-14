@@ -133,6 +133,7 @@ my $expected_tested_by = [
     't/1230-isf-library-import-resolution.t',
     't/1231-isf-library-generated-top.t',
     't/1232-isf-actor-storage-declarations.t',
+    't/1233-isf-rule-expression-guards.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {
