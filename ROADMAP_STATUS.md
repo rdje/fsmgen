@@ -13,8 +13,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree remains
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md),
-  whose current frontier is `ISF-CONFLICTS.5` after adding verification-only
-  runtime selector assertions for mux selector conflicts.
+  whose current frontier is `ISF-CONFLICTS.5.1` after splitting diagnostics
+  and schedule-report projection into executable leaves.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
   guide for installing the same task-tree tracking workflow in another
   project.
@@ -4353,14 +4353,16 @@ Done:
   scheduled `.fsm`: same-value source selectors and whole-mux value selectors
   are checked with `$onehot0`, Verilog stays assertion-free, and standalone DT
   roots keep the existing standalone-DT assertion path.
+- `ISF-CONFLICTS.5` is split into executable diagnostics/report projection
+  leaves covering schema definition, nonfatal `compile_issues`, compatible
+  fan-in projection, and rejected-conflict diagnostic closure.
 Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the `ISF-CONFLICTS` task tree when selecting the ISF conflict-resolution
-  feature path; the current frontier is `ISF-CONFLICTS.5`, which adds targeted
-  diagnostics and schedule-report projection for accepted/rejected conflict
-  cases.
+  feature path; the current frontier is `ISF-CONFLICTS.5.1`, which defines
+  the bounded conflict/fan-in schedule-report projection schema.
 - ISF conflict detection policy is now split: compile-time proof is
   best-effort and must flag cases where proof is not doable, while generated
   verification HDL now checks mux selectors at runtime for same-value source

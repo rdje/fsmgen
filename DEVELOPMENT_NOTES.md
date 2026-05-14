@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF diagnostics projection split
+- Diagnostics/report projection is split before implementation because it
+  changes public schedule-report behavior. The schema boundary needs to be
+  named first, then warning projection and fan-in projection can ship as
+  separately testable leaves.
+- Rejected conflict diagnostics already exist in the lowerer for the current
+  fail-closed cases, but CLI/in-process diagnostic coverage and user-facing
+  documentation should be closed after the report fields are settled.
 ## 2026-05-14: ISF runtime selector conflict instrumentation
 - Runtime selector checks are implemented at the generated-module HDL layer,
   not directly in the ISF scheduler, because that is where the final per-source

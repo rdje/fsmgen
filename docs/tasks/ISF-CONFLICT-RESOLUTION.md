@@ -136,11 +136,50 @@ transaction start input.
   Commit: `ISF-CONFLICTS.4.5: add runtime selector assertions`
 
 - ID: `ISF-CONFLICTS.5`
-  Status: `pending`
+  Status: `active`
   Goal: `Add diagnostics and schedule-report projection.`
+  Children: `ISF-CONFLICTS.5.1`, `ISF-CONFLICTS.5.2`,
+  `ISF-CONFLICTS.5.3`, `ISF-CONFLICTS.5.4`
   Acceptance: `Rejected conflict cases report targeted diagnostics, and
   accepted conflict/fan-in cases are visible in bounded schedule-report
   metadata where useful for downstream consumers.`
+  Verification: `split into executable leaves`
+  Commit: `pending container completion`
+
+- ID: `ISF-CONFLICTS.5.1`
+  Status: `pending`
+  Goal: `Define the bounded conflict/fan-in schedule-report projection schema.`
+  Acceptance: `Rejected conflict cases report targeted diagnostics, and
+  accepted conflict/fan-in cases are visible in bounded schedule-report
+  metadata fields are named, scoped, and documented before emitter changes
+  widen the public schedule-report shape.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-CONFLICTS.5.2`
+  Status: `pending`
+  Goal: `Project nonfatal conflict issues into schedule-report compile_issues.`
+  Acceptance: `Warning-level conflict issues such as rule/drive overlap are
+  emitted in schedule JSON with bounded code, severity, proof status, target,
+  and source-owner summaries without changing fail-closed diagnostics.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-CONFLICTS.5.3`
+  Status: `pending`
+  Goal: `Project accepted compatible fan-in groups into schedule-report metadata.`
+  Acceptance: `Accepted same-value, request, pulse, and rule-trigger fan-in
+  groups have bounded schedule-report summaries that preserve target, domain,
+  operator/value, and source-owner context useful to downstream consumers.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-CONFLICTS.5.4`
+  Status: `pending`
+  Goal: `Add rejected-conflict diagnostic coverage and close projection docs.`
+  Acceptance: `CLI/in-process rejected conflict diagnostics name the stable
+  code, target, and conflicting owners, and the ISF spec, public contract, and
+  mdBook agree with the shipped projection behavior.`
   Verification: `pending`
   Commit: `pending`
 
@@ -166,7 +205,7 @@ transaction start input.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-CONFLICTS.5` | `pending` | Runtime selector instrumentation is shipped; the next slice projects useful conflict/fan-in diagnostics into targeted reports. |
+| 1 | `ISF-CONFLICTS.5.1` | `pending` | The diagnostics/report projection leaf is split; schema boundaries must be named before public report emission changes. |
 
 ## Current Behavior Inventory
 
@@ -615,6 +654,10 @@ Report projection of conflict/fan-in metadata remains assigned to
   checks in the generated-module HDL path rather than the ISF scheduler. That
   keeps checks tied to the actual mux selector signals after all backend
   factoring and LHS-level selector generation are complete.
+- `2026-05-14`: `ISF-CONFLICTS.5` is split before implementation because
+  report projection needs a schema boundary before public schedule-report
+  emission changes, then separate nonfatal issue projection, fan-in projection,
+  and rejected-diagnostic closure leaves.
 
 ## Open Questions
 
@@ -665,6 +708,8 @@ Report projection of conflict/fan-in metadata remains assigned to
 | `2026-05-14` | `ISF-CONFLICTS.4.5` | `bin/ci-regression isf --no-book` | `passed` |
 | `2026-05-14` | `ISF-CONFLICTS.4.5` | `mdbook build docs/book` | `passed` |
 | `2026-05-14` | `ISF-CONFLICTS.4.5` | `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.5` | Split into executable diagnostics/report projection leaves | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.5` | `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -680,6 +725,7 @@ Report projection of conflict/fan-in metadata remains assigned to
 | `ISF-CONFLICTS.4.3` | `ISF-CONFLICTS.4.3: add ISF static conflict checks` | Adds internal best-effort conflict issues, rule/rule rejection, and rule/drive `not_doable` flags. |
 | `ISF-CONFLICTS.4.4` | `ISF-CONFLICTS.4.4: apply ISF rule priority resolution` | Adds target-local rule-priority suppression for same-target rule/rule data conflicts. |
 | `ISF-CONFLICTS.4.5` | `ISF-CONFLICTS.4.5: add runtime selector assertions` | Adds verification-only SystemVerilog selector assertions from backend assignment analysis. |
+| `ISF-CONFLICTS.5` | `ISF-CONFLICTS.5: split diagnostics projection` | Splits diagnostics/report projection into schema, compile-issues, fan-in, and rejected-diagnostic leaves. |
 
 ## Changelog
 
@@ -706,3 +752,6 @@ Report projection of conflict/fan-in metadata remains assigned to
   instrumentation.
 - `2026-05-14`: Completed `ISF-CONFLICTS.4.5`; current frontier moves to
   `ISF-CONFLICTS.5` for diagnostics and schedule-report projection.
+- `2026-05-14`: Split `ISF-CONFLICTS.5`; current frontier moves to
+  `ISF-CONFLICTS.5.1` for bounded conflict/fan-in schedule-report projection
+  schema definition.

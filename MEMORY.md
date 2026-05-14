@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF diagnostics projection split
+- Split `ISF-CONFLICTS.5` in
+  [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md)
+  before scheduler/report implementation.
+- New leaves cover schedule-report schema definition, nonfatal
+  `compile_issues` projection, compatible fan-in projection, and
+  rejected-conflict diagnostic/documentation closure.
+- The active `ISF-CONFLICTS` frontier is now `ISF-CONFLICTS.5.1`.
 ## 2026-05-14: ISF runtime selector conflict instrumentation
 - Completed `ISF-CONFLICTS.4.5` in
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md).

@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF diagnostics projection split
+- Split `ISF-CONFLICTS.5` into executable leaves for schedule-report schema
+  definition, nonfatal `compile_issues` projection, compatible fan-in
+  projection, and rejected-conflict diagnostic/documentation closure.
+- Advanced the active `ISF-CONFLICTS` frontier from `ISF-CONFLICTS.5` to
+  `ISF-CONFLICTS.5.1`.
 ### R14 — ISF runtime selector conflict instrumentation
 - Completed `ISF-CONFLICTS.4.5` by adding generated-module
   verification-only runtime selector assertions after ISF lowers through

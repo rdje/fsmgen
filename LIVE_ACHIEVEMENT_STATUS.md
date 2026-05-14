@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF diagnostics projection split
+- Active R14 task-tree slice: `ISF-CONFLICTS.5` is split into executable
+  leaves.
+- New leaves cover bounded schedule-report schema definition, nonfatal
+  `compile_issues` projection, compatible fan-in projection, and
+  rejected-conflict diagnostic closure.
+- The next frontier is `ISF-CONFLICTS.5.1`.
+
 ## 2026-05-14: R14 — ISF runtime selector conflict instrumentation
 - Active R14 task-tree slice: `ISF-CONFLICTS.4.5` is complete.
 - Generated SystemVerilog now emits verification-only `$onehot0` selector
