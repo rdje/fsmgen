@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF bounded contract lowering
+- Active R14 task-tree slice: `ISF-STAGES-CONTRACTS.5` is complete.
+- Top-level `(contract name (eventually signal (within cycles)))` now lowers
+  to one transaction arm state plus an always-on monitor DT.
+- The monitor owns pending, age, and sticky-fail storage: success clears the
+  pending obligation, timeout or overlap sets fail, and reset clears the
+  generated storage.
+- The new regression covers scheduled `.fsm` emission, targeted rejections,
+  `.fsm` frontend parsing, and SystemVerilog handoff.
+- The next active R14 frontier is `ISF-STAGES-CONTRACTS.6`.
+
 ## 2026-05-14: R14 — ISF bounded stage lowering
 - Active R14 task-tree slice: `ISF-STAGES-CONTRACTS.4` is complete.
 - Top-level `(stage name (input ready_signal) (output valid_signal))` now

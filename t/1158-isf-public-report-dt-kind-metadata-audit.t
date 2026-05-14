@@ -64,6 +64,24 @@ subtest 'schedule reports use exactly advertised DT kind values' => sub {
         }
     }
 
+    my $contract_report = report_for_source(<<'ISF');
+(actor contract_report_kind
+  (clock clk)
+  (interface
+    (input start)
+    (input ack)
+    (output done))
+  (transaction main
+    (on start)
+    (contract ack_seen (eventually ack (within 2)))
+    (complete done)))
+ISF
+    for my $dt (@{$contract_report->{dt_blocks} || []}) {
+        my $kind = $dt->{kind};
+        ok($advertised{$kind}, "contract report DT '$dt->{name}' kind '$kind' is advertised");
+        $observed{$kind} = 1;
+    }
+
     is_deeply(
         sorted([keys %observed]),
         sorted(isf_public_interface_schedule_report_dt_kind_values()),
@@ -91,6 +109,12 @@ sub report_for_file {
     my ($fixture) = @_;
     my $path = File::Spec->catfile($FindBin::Bin, '..', 'isf', $fixture);
     my $actor = FSM::Adapter::ISF->new()->parse_file($path);
+    return decode_json(FSM::Scheduler::ISF->new()->report($actor));
+}
+
+sub report_for_source {
+    my ($source) = @_;
+    my $actor = FSM::Adapter::ISF->new()->parse_source($source, 'dt-kind-contract.isf');
     return decode_json(FSM::Scheduler::ISF->new()->report($actor));
 }
 

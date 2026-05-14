@@ -185,8 +185,8 @@ Schedule-report `dt_blocks`
 `assignments` values are assignment counts, not payload lists, and the manifest
 advertises that shape through `schedule_report_dt_assignments_shape`.
 Schedule-report DT `kind` values are currently `drive`, `latency_counter`,
-`rule`, and `rule_trigger_fanin`, and the manifest advertises that family
-through `schedule_report_dt_kind_values`.
+`rule`, `rule_trigger_fanin`, and `temporal_contract_monitor`, and the
+manifest advertises that family through `schedule_report_dt_kind_values`.
 Inferred-storage `kind` values are `counter` or `register`, and optional
 positive integer `width` values currently belong to inferred counters.
 Transaction summaries expose emitted scheduled-state names in `states`, and
@@ -249,16 +249,18 @@ limitations are:
 - Unsupported transaction clause heads now fail closed during lowering instead
   of being silently dropped. This includes the removed `(assign ...)` keyword
   and unsupported nested body forms in `when`, `switch`, and `repeat`.
-- Rule actions are structurally validated as `(port value)`,
-  `(trigger transaction)`, or `(priority over other_rule)`. Expression-valued
-  rule assignments remain deferred. Rule trigger targets must resolve to a
-  declared transaction in the same actor before parser handoff returns.
+- Rule actions are structurally validated as `(port value-or-expression)`,
+  `(trigger transaction)`, or `(priority over other_rule)`. Rule trigger
+  targets must resolve to a declared transaction in the same actor before
+  parser handoff returns.
 - `(shift_right ...)` accepts an explicit `(width N)` option when the shifted
   register width is not declared elsewhere; values with no known or explicit
   width still use the placeholder `WIDTH` expression.
 - `(extract ...)` accepts an ordered `(widths N...)` option when field widths
   are not declared elsewhere; values with no known or explicit widths still
   use placeholder slice bounds.
-- `(contract ...)` temporal assertions are not implemented; authored
-  transaction contract clauses currently fail closed during lowering instead of
-  being dropped from the scheduled `.fsm`.
+- The first `(contract ...)` temporal assertion subset is implemented for
+  top-level `(contract name (eventually signal (within cycles)))`. It lowers
+  to an arm state plus an always-on monitor DT with pending, age, and
+  sticky-fail storage. Nested contracts and richer temporal forms still fail
+  closed instead of being dropped from the scheduled `.fsm`.

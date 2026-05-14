@@ -15,7 +15,7 @@ my %SUPPORTED_TRANSACTION_CLAUSES = (
         map { $_ => 1 } qw(
             on drive await sample update phase shift_left shift_right assemble
             extract complete when switch repeat latency do spawn await_all
-            await_any params stage
+            await_any params stage contract
         )
     },
     when => {
@@ -64,7 +64,8 @@ sub build_module($self, $actor) {
 # --- Child IR (separate module) ---
 
 sub _build_child_ir($self, $tx, $actor, $cname) {
-    my ($states, $ctrs, $dts) = $self->_build_transaction($tx, $actor, 0);
+    my ($states, $ctrs, $dts, $do_children, $spawn_refs, $contracts) =
+        $self->_build_transaction($tx, $actor, 0);
     $states = [@$states]; $ctrs = { %$ctrs }; $dts = [@$dts];
 
     my %used_drives = _collect_named_drive_call_names($tx->{clauses}, $actor->{drives} || {});
@@ -83,6 +84,7 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
         dt_blocks  => $dts,
         counters   => $ctrs,
         children   => {},
+        temporal_contracts => $contracts,
     };
 
     # Inject entry state if missing (spawn targets need start handshake)
@@ -122,6 +124,7 @@ sub _build_parent_ir($self, $actor, $spawned) {
     my @states;
     my @dts;
     my @spawn_instances;
+    my @temporal_contracts;
     my %local_drive_uses;
     my %spawn_drive_sources;
     my %transaction_by_name = map { $_->{name} => $_ } @{$actor->{transactions} || []};
@@ -129,7 +132,7 @@ sub _build_parent_ir($self, $actor, $spawned) {
 
     for my $tx (@{$actor->{transactions}}) {
         next if $spawned->{$tx->{name}};
-        my ($ss, $cs, $ds, $do, $sp) = $self->_build_transaction($tx, $actor, $ti++);
+        my ($ss, $cs, $ds, $do, $sp, $contracts) = $self->_build_transaction($tx, $actor, $ti++);
         my %tx_drive_uses = _collect_named_drive_call_names($tx->{clauses}, $actor->{drives} || {});
         $local_drive_uses{$_} = 1 for keys %tx_drive_uses;
         push @states, @$ss;
@@ -137,6 +140,7 @@ sub _build_parent_ir($self, $actor, $spawned) {
             $ctrs{$k} = $cs->{$k};
         }
         push @dts, @$ds;
+        push @temporal_contracts, @$contracts;
         for my $c (@$do)  { $ctrs{"${c}_start"} = 1; $ctrs{"${c}_done"} = 1; }
         for my $s (@$sp)  {
             $ctrs{"$s->{instance}_start"} = 1;
@@ -223,6 +227,7 @@ sub _build_parent_ir($self, $actor, $spawned) {
         counters   => \%ctrs,
         children   => {},
         spawn_instances => \@spawn_instances,
+        temporal_contracts => \@temporal_contracts,
     };
     $ir->{resource_arbitration} = _apply_rule_slot_resource_arbitration($ir, $actor);
     $ir->{priority_resolution} = _merge_priority_resolution(
@@ -646,7 +651,15 @@ sub _build_transaction($self, $tx, $actor, $txi) {
     my $drives = $actor->{drives} || {};
     _validate_supported_transaction_clauses($tx->{clauses}, $tn, 'transaction');
     my $widths = _build_signal_width_map($actor, $tx);
-    my @st; my %ct; my @dt; my @ps; my @doc; my @spc; my @dps;
+    my @st;
+    my %ct;
+    my @dt;
+    my @ps;
+    my @doc;
+    my @spc;
+    my @dps;
+    my @contracts;
+    my %contract_names;
     my $si  = 0; my $ha = 0; my $wdc; my $lat;
 
     for my $cl (@{$tx->{clauses}}) {
@@ -668,6 +681,15 @@ sub _build_transaction($self, $tx, $actor, $txi) {
         elsif ($k eq 'update')      { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_update($cl,$tn,$si++); }
         elsif ($k eq 'phase')       { push @st, _ir_phase($cl,$tn,$si++); }
         elsif ($k eq 'stage')       { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_stage($cl,$tn,$si++,$actor); }
+        elsif ($k eq 'contract')    {
+            _push_sample_state(\@st, $tn, \@ps, \$si);
+            my ($cs, $cdt, $cm) = _ir_contract(
+                $cl, $tn, $si++, $actor, $widths, \%ct, \%contract_names,
+            );
+            push @st, $cs;
+            push @dt, $cdt;
+            push @contracts, $cm;
+        }
         elsif ($k eq 'shift_left')  { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_shift_left($cl,$tn,$si++); }
         elsif ($k eq 'shift_right') { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_shift_right($cl,$tn,$si++,$widths); }
         elsif ($k eq 'assemble')    { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_assemble($cl,$tn,$si++); }
@@ -712,7 +734,7 @@ sub _build_transaction($self, $tx, $actor, $txi) {
     _link_states(\@st, $tn);
     $ct{can_accept} = 1;
     for my $s (@st) { next unless $s->{kind} eq 'entry'; unshift @{$s->{assignments}}, { lhs => 'can_accept', rhs => 1, op => '=' }; }
-    return (\@st, \%ct, \@dt, \@doc, \@spc);
+    return (\@st, \%ct, \@dt, \@doc, \@spc, \@contracts);
 }
 
 sub _validate_supported_transaction_clauses {
@@ -731,8 +753,8 @@ sub _validate_supported_transaction_clauses {
         confess "Transaction '$tn': transaction clause heads must be scalar in $label\n"
             unless defined($keyword) && !ref($keyword) && length($keyword);
 
-        if (defined($keyword) && !ref($keyword) && $keyword eq 'contract') {
-            confess "Transaction '$tn': temporal '(contract ...)' clauses are parsed but not implemented by ISF lowering\n";
+        if (defined($keyword) && !ref($keyword) && $keyword eq 'contract' && $context ne 'transaction') {
+            confess "Transaction '$tn': temporal '(contract ...)' clauses are supported only as top-level transaction clauses\n";
         }
         if (defined($keyword) && !ref($keyword) && $keyword eq 'stage' && $context ne 'transaction') {
             confess "Transaction '$tn': pipeline '(stage ...)' clauses are supported only as top-level transaction clauses\n";
@@ -762,6 +784,8 @@ sub _validate_supported_transaction_clauses {
             _validate_child_action_clause($clause, $tn, $label);
         } elsif ($keyword eq 'stage') {
             _validate_stage_clause($clause, $tn, $label);
+        } elsif ($keyword eq 'contract') {
+            _validate_contract_clause($clause, $tn, $label);
         } elsif ($keyword eq 'switch') {
             _validate_switch_clause($clause, $tn, $label);
             for my $branch (@{$clause}[2 .. $#$clause]) {
@@ -867,6 +891,13 @@ sub _validate_stage_clause {
     return 1;
 }
 
+sub _validate_contract_clause {
+    my ($clause, $tn, $label) = @_;
+
+    _parse_bounded_eventual_contract_clause($clause, $tn, $label);
+    return 1;
+}
+
 sub _parse_stage_handshake_clause {
     my ($clause, $tn, $label) = @_;
 
@@ -906,6 +937,43 @@ sub _parse_stage_handshake_clause {
         unless defined($parsed{valid});
 
     return \%parsed;
+}
+
+sub _parse_bounded_eventual_contract_clause {
+    my ($clause, $tn, $label) = @_;
+
+    confess "Transaction '$tn': contract requires '(contract name (eventually signal (within cycles)))' in $label\n"
+        unless ref($clause) eq 'ARRAY'
+            && @$clause == 3
+            && defined($clause->[1])
+            && !ref($clause->[1])
+            && length($clause->[1]);
+
+    my $name = $clause->[1];
+    my $eventual = $clause->[2];
+    confess "Transaction '$tn': contract '$name' supports only '(eventually signal (within cycles))'\n"
+        unless ref($eventual) eq 'ARRAY'
+            && @$eventual == 3
+            && defined($eventual->[0])
+            && !ref($eventual->[0])
+            && $eventual->[0] eq 'eventually'
+            && defined($eventual->[1])
+            && !ref($eventual->[1])
+            && length($eventual->[1])
+            && ref($eventual->[2]) eq 'ARRAY'
+            && @{$eventual->[2]} == 2
+            && defined($eventual->[2][0])
+            && !ref($eventual->[2][0])
+            && $eventual->[2][0] eq 'within'
+            && defined($eventual->[2][1])
+            && !ref($eventual->[2][1])
+            && $eventual->[2][1] =~ /\A[1-9][0-9]*\z/;
+
+    return {
+        name          => $name,
+        signal        => $eventual->[1],
+        within_cycles => 0 + $eventual->[2][1],
+    };
 }
 
 sub _validate_child_action_clause {
@@ -1358,6 +1426,151 @@ sub _ir_stage {
         ],
         transitions => [],
     };
+}
+
+sub _ir_contract {
+    my ($cl, $tn, $i, $actor, $widths, $counters, $seen_contracts) = @_;
+    my $contract = _parse_bounded_eventual_contract_clause($cl, $tn, 'transaction body');
+    my %interface_signals = map {
+        $_->{name} => 1
+    } (@{$actor->{interface}{inputs} || []}, @{$actor->{interface}{outputs} || []});
+
+    confess "Transaction '$tn': duplicate contract '$contract->{name}'\n"
+        if $seen_contracts->{$contract->{name}}++;
+    confess "Transaction '$tn': contract '$contract->{name}' signal '$contract->{signal}' is not an actor interface signal\n"
+        unless $interface_signals{$contract->{signal}};
+
+    my $signals = _contract_monitor_signals($tn, $i);
+    _validate_contract_monitor_signal_names($tn, $contract, $signals, $actor, $widths, $counters);
+
+    my ($arm, $pending, $age, $fail) = @{$signals}{qw(arm pending age fail)};
+    my $observed = $contract->{signal};
+    my $last_cycle = $contract->{within_cycles} - 1;
+    my $age_width = _unsigned_width_for_max($last_cycle);
+    $counters->{$arm} = 1;
+    $counters->{$pending} = 1;
+    $counters->{$age} = $age_width;
+    $counters->{$fail} = 1;
+
+    my $arm_start_guard = "(& $arm (! $pending))";
+    my $expiry_guard = "(& $pending (! $observed) (== $age $last_cycle))";
+    my $clear_guard = "(| (& $pending $observed) $expiry_guard)";
+    my $fail_guard = "(| (& $arm $pending) $expiry_guard)";
+    my @monitor_assignments = (
+        {
+            lhs         => $pending,
+            rhs         => 1,
+            op          => '<-',
+            guard       => { expr => $arm_start_guard },
+            source_kind => 'contract_pending_set',
+        },
+        {
+            lhs         => $pending,
+            rhs         => 0,
+            op          => '<-',
+            guard       => { expr => $clear_guard },
+            source_kind => 'contract_pending_clear',
+        },
+        {
+            lhs         => $age,
+            rhs         => 0,
+            op          => '<-',
+            guard       => { expr => $arm_start_guard },
+            source_kind => 'contract_age_reset',
+        },
+        {
+            lhs         => $fail,
+            rhs         => 1,
+            op          => '<-',
+            guard       => { expr => $fail_guard },
+            source_kind => 'contract_fail',
+        },
+    );
+
+    if ($contract->{within_cycles} > 1) {
+        my $advance_guard = "(& $pending (! $observed) (! (== $age $last_cycle)))";
+        splice @monitor_assignments, 3, 0, {
+            lhs         => $age,
+            rhs         => "(+ $age 1)",
+            op          => '<-',
+            guard       => { expr => $advance_guard },
+            source_kind => 'contract_age_increment',
+        };
+    }
+
+    my $state = {
+        name          => $signals->{state},
+        kind          => 'contract',
+        contract_name => $contract->{name},
+        assignments   => [
+            { lhs => $arm, rhs => 1, op => '=', source_kind => 'contract_arm_request' },
+        ],
+        transitions   => [],
+    };
+    my $dt = {
+        name        => $signals->{monitor},
+        kind        => 'temporal_contract_monitor',
+        assignments => \@monitor_assignments,
+    };
+    my $summary = {
+        transaction     => $tn,
+        name            => $contract->{name},
+        kind            => 'bounded_eventually',
+        trigger         => $signals->{state},
+        signal          => $contract->{signal},
+        within_cycles   => $contract->{within_cycles},
+        arm_signal      => $signals->{arm},
+        pending_signal  => $signals->{pending},
+        counter_signal  => $signals->{age},
+        fail_signal     => $signals->{fail},
+        monitor_dt      => $signals->{monitor},
+        overlap_policy  => 'fail',
+    };
+
+    return ($state, $dt, $summary);
+}
+
+sub _contract_monitor_signals {
+    my ($tn, $i) = @_;
+    my $prefix = "${tn}_contract_$i";
+    return {
+        state   => $prefix,
+        monitor => "${prefix}_monitor",
+        arm     => "${prefix}_arm",
+        pending => "${prefix}_pending",
+        age     => "${prefix}_age",
+        fail    => "${prefix}_fail",
+    };
+}
+
+sub _validate_contract_monitor_signal_names {
+    my ($tn, $contract, $signals, $actor, $widths, $counters) = @_;
+    my %reserved;
+    $reserved{$_->{name}} = 1 for @{$actor->{interface}{inputs} || []};
+    $reserved{$_->{name}} = 1 for @{$actor->{interface}{outputs} || []};
+    $reserved{$_} = 1 for keys %{$widths || {}};
+    $reserved{$_} = 1 for keys %{$counters || {}};
+
+    for my $role (qw(arm pending age fail)) {
+        my $signal = $signals->{$role};
+        confess "Transaction '$tn': contract '$contract->{name}' generated signal '$signal' collides with an existing signal\n"
+            if $reserved{$signal};
+    }
+
+    return 1;
+}
+
+sub _unsigned_width_for_max {
+    my ($max_value) = @_;
+    return 1 unless defined($max_value) && $max_value > 0;
+
+    my $width = 1;
+    my $max_representable = 1;
+    while ($max_representable < $max_value) {
+        ++$width;
+        $max_representable = (2 ** $width) - 1;
+    }
+    return $width;
 }
 sub _ir_placeholder{ my ($cl,$tn,$i)=@_; {name=>"${tn}_$cl->[0]_$i",kind=>'sequential',assignments=>[],transitions=>[]} }
 sub _ir_do       { my ($cl,$tn,$i)=@_; my $c=$cl->[1]; {name=>"${tn}_do_$i",kind=>'await',assignments=>[{lhs=>"${c}_start",rhs=>1,op=>'=',source_kind=>'do_start'}],transitions=>[],guard=>{port=>"${c}_done"}} }
@@ -2097,7 +2310,7 @@ sub _dt_assignment_provenance {
 sub _transaction_owner_from_state_name {
     my ($name) = @_;
     return undef unless defined $name;
-    return $1 if $name =~ /^(.+)_(?:idle|drive|await|done|repeat|sample|max_chk|when|switch|update|shift|asm|ext|extract|do|spawn|phase|stage)_/;
+    return $1 if $name =~ /^(.+)_(?:idle|drive|await|done|repeat|sample|max_chk|when|switch|update|shift|asm|ext|extract|do|spawn|phase|stage|contract)_/;
     return $1 if $name =~ /^(.+)_timeout$/;
     return undef;
 }
@@ -2146,6 +2359,7 @@ sub _dt_assignment_source_kind {
     return 'rule_trigger_fanin' if $kind eq 'rule_trigger_fanin';
     return 'drive_body' if $kind eq 'drive';
     return 'latency_counter' if $kind eq 'latency_counter';
+    return 'contract_monitor' if $kind eq 'temporal_contract_monitor';
     return 'dt_assignment';
 }
 
@@ -2175,7 +2389,7 @@ sub _assignment_domain_hint {
     return 'request' if $source_kind eq 'rule_trigger_fanin';
     return 'pulse' if $op =~ /^<[0-9]+$/ && $rhs eq '1';
     return 'capture' if $source_kind =~ /(?:sample|extract)_capture/;
-    return 'helper' if $source_kind =~ /^(?:scheduler_|latency_|repeat_|timeout_status)/;
+    return 'helper' if $source_kind =~ /^(?:scheduler_|latency_|repeat_|timeout_status|contract_)/;
     return 'data';
 }
 
@@ -2576,7 +2790,7 @@ sub _link_states {
         elsif($s->{kind}eq'await'&&$next){push @{$s->{transitions}},{target=>$next,condition=>$s->{guard}};push @{$s->{transitions}},{target=>"${tn}_timeout",condition=>{signal=>$s->{watchdog}{name},op=>'=',value=>0}}}
         elsif($s->{kind}eq'stage'&&$next){push @{$s->{transitions}},{target=>$next,condition=>{port=>$s->{ready}}}}
         elsif($s->{kind}eq'repeat_check'){push @{$s->{transitions}},{target=>$s->{loop_target},condition=>{signal=>$s->{counter},op=>'!=',value=>0}};push @{$s->{transitions}},{target=>$next,condition=>{signal=>$s->{counter},op=>'=',value=>0}}if$next}
-        elsif($s->{kind}eq'sequential'&&$next){push @{$s->{transitions}},{target=>$next}}
+        elsif(($s->{kind}eq'sequential'||$s->{kind}eq'contract')&&$next){push @{$s->{transitions}},{target=>$next}}
         elsif($s->{kind}eq'switch'){my$skip=$s->{switch_exit_target}||$n||$e;push @{$s->{transitions}},{target=>$skip} unless $s->{has_default_branch};for my$br(@{$s->{branches}}){next if _is_default_switch_value($br->{value});push @{$s->{transitions}},{target=>$br->{body_start},condition=>{signal=>$s->{signal},value=>$br->{value}}}}}
         elsif($s->{kind}eq'branch'){my$skip=$s->{branch_exit_target}||$n||$e;push @{$s->{transitions}},{target=>$skip}}
         elsif($s->{kind}eq'sync_all'&&$next){push @{$s->{transitions}},{target=>$next}}

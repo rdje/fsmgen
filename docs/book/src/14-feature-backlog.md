@@ -24,7 +24,7 @@ unless you want to" across every source position.
 
 ### Dynamic Divisor Safety Proofs
 
-Status: backlog.
+Status: partially shipped.
 
 Goal: reject or prove safe runtime division/modulo expressions whose divisors
 could be zero.
@@ -274,21 +274,18 @@ Status: backlog.
 Goal: lower transaction `(contract ...)` temporal assertions into generated
 checks or equivalent scheduled artifacts.
 
-Current boundary: authored transaction contract clauses fail closed during
-lowering instead of being silently dropped. The parser currently carries the
-raw contract clause to the scheduler boundary; there is no public payload
-grammar, check IR, reset/disable policy, generated check artifact, or
-schedule-report summary yet.
-
-First planned shipped subset: a top-level transaction contract of the form
+Shipped subset: a top-level transaction contract of the form
 `(contract name (eventually signal (within cycles)))`. Reaching the clause
-arms one bounded eventual obligation; the generated scheduled `.fsm` monitor
-tracks pending/age/fail storage, clears on actor reset, and sets a sticky fail
-bit if the signal is not seen within the window or if the same contract is
-armed again while pending. A later SystemVerilog projection may assert that
-fail bit under `` `ifndef SYNTHESIS``. Global `always` implication forms,
-min/max windows, dynamic bounds, same-cycle checks, nested contracts, and
-multiple outstanding obligations remain deferred.
+emits one arm state; the generated scheduled `.fsm` monitor tracks
+pending/age/fail storage, clears on actor reset, and sets a sticky fail bit if
+the signal is not seen within the window or if the same contract is armed
+again while pending.
+
+Remaining backlog: bounded schedule-report projection, optional
+verification-only SystemVerilog assertion text from the sticky fail bit,
+global `always` implication forms, min/max windows, dynamic bounds,
+same-cycle checks, nested contracts, expression operands, and multiple
+outstanding obligations.
 
 ### Legacy Handshake Semantics
 

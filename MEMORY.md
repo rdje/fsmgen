@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF bounded contract lowering
+- Completed `ISF-STAGES-CONTRACTS.5` in
+  [docs/tasks/ISF-STAGES-CONTRACTS.md](docs/tasks/ISF-STAGES-CONTRACTS.md).
+- `contract` is now supported as a top-level transaction clause for
+  `(contract name (eventually signal (within cycles)))`. It lowers to a
+  transaction arm state plus an always-on monitor DT with pending, age, and
+  sticky-fail storage.
+- [t/1224-isf-contract-lowering.t](t/1224-isf-contract-lowering.t) covers
+  emitted scheduled `.fsm`, targeted rejections, normal `.fsm` frontend
+  parsing, and SystemVerilog handoff. The next active R14 frontier is
+  `ISF-STAGES-CONTRACTS.6`.
 ## 2026-05-14: ISF bounded stage lowering
 - Completed `ISF-STAGES-CONTRACTS.4` in
   [docs/tasks/ISF-STAGES-CONTRACTS.md](docs/tasks/ISF-STAGES-CONTRACTS.md).

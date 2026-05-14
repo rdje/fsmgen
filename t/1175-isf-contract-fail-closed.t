@@ -17,7 +17,7 @@ sub lower_source {
 }
 
 sub assert_contract_rejected {
-    my ($source, $label) = @_;
+    my ($source, $label, $expected) = @_;
 
     my $ok = eval {
         lower_source($source);
@@ -27,13 +27,13 @@ sub assert_contract_rejected {
     ok(!$ok, "$label is rejected during lowering");
     like(
         $@,
-        qr/Transaction 'main': temporal '\(contract \.\.\.\)' clauses are parsed but not implemented by ISF lowering/,
+        $expected,
         "$label diagnostic is targeted",
     );
 }
 
-subtest 'top-level contract clause fails closed' => sub {
-    assert_contract_rejected(<<'ISF', 'top-level contract');
+subtest 'unsupported top-level contract shapes fail closed' => sub {
+    assert_contract_rejected(<<'ISF', 'top-level historical contract', qr/\ATransaction 'main': contract requires '\(contract name \(eventually signal \(within cycles\)\)\)' in transaction body/);
 (actor contract_top
   (clock clk)
   (interface
@@ -47,7 +47,9 @@ ISF
 };
 
 subtest 'contract clauses inside transaction bodies fail closed' => sub {
-    assert_contract_rejected(<<'ISF', 'when-body contract');
+    my $nested_contract = qr/\ATransaction 'main': temporal '\(contract \.\.\.\)' clauses are supported only as top-level transaction clauses/;
+
+    assert_contract_rejected(<<'ISF', 'when-body contract', $nested_contract);
 (actor contract_when
   (clock clk)
   (interface
@@ -57,11 +59,11 @@ subtest 'contract clauses inside transaction bodies fail closed' => sub {
   (transaction main
     (on start)
     (when ready
-      (contract ready_obligation))
+      (contract ready_obligation (eventually ready (within 2))))
     (complete done)))
 ISF
 
-    assert_contract_rejected(<<'ISF', 'switch-branch contract');
+    assert_contract_rejected(<<'ISF', 'switch-branch contract', $nested_contract);
 (actor contract_switch
   (clock clk)
   (interface
@@ -71,11 +73,11 @@ ISF
   (transaction main
     (on start)
     (switch opcode
-      (0 (contract opcode_obligation)))
+      (0 (contract opcode_obligation (eventually opcode (within 2)))))
     (complete done)))
 ISF
 
-    assert_contract_rejected(<<'ISF', 'repeat-body contract');
+    assert_contract_rejected(<<'ISF', 'repeat-body contract', $nested_contract);
 (actor contract_repeat
   (clock clk)
   (interface
@@ -84,7 +86,7 @@ ISF
   (transaction main
     (on start)
     (repeat 2
-      (contract loop_obligation))
+      (contract loop_obligation (eventually start (within 2))))
     (complete done)))
 ISF
 };

@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-STAGES-CONTRACTS.md](docs/tasks/ISF-STAGES-CONTRACTS.md),
-  whose current frontier is `ISF-STAGES-CONTRACTS.5`. The completed
+  whose current frontier is `ISF-STAGES-CONTRACTS.6`. The completed
   `ISF-RULE-ACTIONS`, `ISF-RESOURCE-CATALOG`,
   `ISF-RESOURCE-PRIORITY`, `ISF-CONFLICTS`, and `ISF-COMPOSITION` trees are
   listed in the task-tree completed table.
@@ -123,6 +123,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   materializes pending samples before the stage, rejects nested/unsupported
   stage forms, and proves scheduled `.fsm` parsing plus SystemVerilog
   generation. The active frontier advances to `ISF-STAGES-CONTRACTS.5`.
+- `ISF-STAGES-CONTRACTS.5` is complete. The first bounded temporal-contract
+  lowering path now ships for top-level
+  `(contract name (eventually signal (within cycles)))`: the scheduler emits
+  one arm state plus an always-on monitor DT with pending, age, and sticky-fail
+  storage, rejects nested/richer contract forms with targeted diagnostics, and
+  proves scheduled `.fsm` parsing plus SystemVerilog generation. The active
+  frontier advances to `ISF-STAGES-CONTRACTS.6` for bounded schedule-report
+  projection and final docs.
 - ISF construct support now has a normative rule: parser acceptance is not a
   support claim. Every current or future shipped ISF construct must have an
   explicit accepted source shape, lowering path or fail-closed diagnostic,

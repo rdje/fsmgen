@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF bounded contract lowering
+- Completed `ISF-STAGES-CONTRACTS.5` by implementing the shipped top-level
+  transaction contract subset
+  `(contract name (eventually signal (within cycles)))`.
+- Contract lowering now emits one arm state plus an always-on monitor DT with
+  pending, age, and sticky-fail storage; timeout or overlap sets fail, success
+  clears the pending obligation, and actor reset clears the monitor storage.
+- Added [t/1224-isf-contract-lowering.t](t/1224-isf-contract-lowering.t) for
+  scheduled `.fsm` emission, bounded-window behavior, targeted rejections,
+  normal `.fsm` frontend parsing, and SystemVerilog handoff coverage.
+- Advertised the generated monitor DT kind as `temporal_contract_monitor` so
+  schedule-report `dt_blocks` metadata remains exact for contract-bearing
+  actors.
+- Advanced the active `ISF-STAGES-CONTRACTS` frontier from
+  `ISF-STAGES-CONTRACTS.5` to `ISF-STAGES-CONTRACTS.6`.
 ### R14 — ISF bounded stage lowering
 - Completed `ISF-STAGES-CONTRACTS.4` by implementing the shipped top-level
   transaction stage subset `(stage name (input ready_signal) (output

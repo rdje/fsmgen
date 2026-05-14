@@ -103,7 +103,7 @@ count, not an assignment payload list.
 The schedule-report DT kind metadata is checked by
 [t/1158-isf-public-report-dt-kind-metadata-audit.t](../t/1158-isf-public-report-dt-kind-metadata-audit.t)
 to keep advertised `dt_blocks[*].kind` values exact across direct and manifest
-views and aligned with APB plus full-featured reports.
+views and aligned with APB, full-featured, and temporal-contract reports.
 The inferred-storage metadata is checked by
 [t/1148-isf-public-storage-metadata-audit.t](../t/1148-isf-public-storage-metadata-audit.t)
 to keep advertised storage `kind` values and optional `width` shape exact
@@ -320,11 +320,15 @@ so authors can avoid placeholder slice bounds when extract field widths are
 not declared elsewhere.
 The temporal-contract lowering boundary is checked by
 [t/1175-isf-contract-fail-closed.t](../t/1175-isf-contract-fail-closed.t)
-so authored transaction `(contract ...)` clauses fail closed with a targeted
-diagnostic until temporal assertion lowering is implemented. The current
-parser carries the raw contract clause to this scheduler boundary; it does not
-advertise a frozen contract payload grammar, check IR, reset/disable policy,
-generated assertion artifact, or schedule-report summary yet.
+and [t/1224-isf-contract-lowering.t](../t/1224-isf-contract-lowering.t).
+The shipped subset is the top-level transaction form
+`(contract name (eventually signal (within cycles)))`. It lowers to one arm
+state plus an always-on monitor DT with pending, age, and sticky-fail storage.
+Schedule reports classify that DT as `temporal_contract_monitor` and classify
+the generated pending/fail storage as registers and age storage as a counter.
+Unsupported top-level bodies and nested contracts still fail closed with
+targeted diagnostics. The bounded `temporal_contracts` summary projection and
+any verification-only assertion text are not advertised yet.
 The parser boundary for resource and priority metadata is checked by
 [t/1176-isf-resource-priority-boundary.t](../t/1176-isf-resource-priority-boundary.t)
 so malformed `(resources ...)`, actor-level `(priority lhs over rhs)`, and
@@ -396,8 +400,10 @@ The unsupported transaction-clause boundary is checked by
 so removed or future transaction clause heads, including `(assign ...)`, fail
 closed instead of disappearing from scheduled `.fsm` output. The nested
 `when`, `switch`, and `repeat` body contexts use the same shipped-lowerer
-boundary, while deferred `contract` clauses and deferred nested/unsupported
-`stage` forms keep their dedicated diagnostics.
+boundary, while unsupported `contract` clauses and deferred nested/unsupported
+`stage` forms keep their dedicated diagnostics. The shipped top-level
+bounded-eventual `contract` subset is covered separately by
+[t/1224-isf-contract-lowering.t](../t/1224-isf-contract-lowering.t).
 The actor-shell drive shape is checked by
 [t/1167-isf-public-actor-shell-drive-shape-audit.t](../t/1167-isf-public-actor-shell-drive-shape-audit.t)
 to keep parser-returned drive definitions discoverable as a unique
@@ -831,8 +837,9 @@ assignment forms in the matching scheduled `.fsm` DT block. It is not an
 assignment payload list. The machine-readable contract advertises this through
 `schedule_report_dt_assignments_shape`.
 For each `dt_blocks` entry, `kind` is currently one of `drive`,
-`latency_counter`, `rule`, or `rule_trigger_fanin`. The machine-readable
-contract advertises this through `schedule_report_dt_kind_values`.
+`latency_counter`, `rule`, `rule_trigger_fanin`, or
+`temporal_contract_monitor`. The machine-readable contract advertises this
+through `schedule_report_dt_kind_values`.
 
 For each `inferred_storage` entry, `kind` is currently one of `counter` or
 `register`. Optional `width` values are positive integer bit widths when

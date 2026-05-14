@@ -76,10 +76,23 @@ sub _storage_summary($self, $ir) {
 
     for my $name (sort keys %counter_widths) {
         next if $seen{$name}++;
-        push @storage, { name => $name, kind => 'counter', width => $counter_widths{$name} };
+        my $contract_kind = _contract_monitor_storage_kind($name);
+        next if defined($contract_kind) && $contract_kind eq 'combinational';
+
+        my $kind = $contract_kind // 'counter';
+        my %entry = (name => $name, kind => $kind);
+        $entry{width} = $counter_widths{$name} if $kind eq 'counter';
+        push @storage, \%entry;
     }
 
     return \@storage;
+}
+
+sub _contract_monitor_storage_kind($name) {
+    return undef unless defined($name) && $name =~ /_contract_[0-9]+_(arm|pending|age|fail)\z/;
+    return 'combinational' if $1 eq 'arm';
+    return 'counter' if $1 eq 'age';
+    return 'register';
 }
 
 sub _is_scheduler_counter_name($name) {
@@ -96,7 +109,7 @@ sub _transaction_summary($self, $ir) {
 
     # Group states by transaction prefix
     for my $s (@{$ir->{states}}) {
-        my ($tx_name) = ($s->{name} =~ /^(\w+?)_(?:idle|drive|await|done|repeat|sample|max_chk|when|switch|update|shift|asm|extract|do|spawn|phase|stage)_/);
+        my ($tx_name) = ($s->{name} =~ /^(\w+?)_(?:idle|drive|await|done|repeat|sample|max_chk|when|switch|update|shift|asm|extract|do|spawn|phase|stage|contract)_/);
         ($tx_name) = ($s->{name} =~ /^(\w+)_timeout$/) unless $tx_name;
         push @{$tx_states{$tx_name}}, $s->{name};
     }

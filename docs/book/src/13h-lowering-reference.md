@@ -550,34 +550,51 @@ ready/valid barrier report contract is complete.
 (contract (always request -> eventually[1..8] grant))
 ```
 
-Temporal assertions. **Not implemented**. Deferred to separate design discussion.
-Authored transaction contract clauses currently fail closed during ISF lowering
-instead of being emitted as scheduled `.fsm` or silently ignored; this includes
-clauses nested inside `when`, `switch`, and `repeat` bodies. The current parser
-does not define a contract payload language beyond carrying the raw clause list
-to the scheduler boundary; the missing implementation pieces are a bounded
-payload model, a check IR, reset/disable semantics, generated check artifacts,
-and schedule-report metadata.
-
-The first planned lowered contract model is a transaction-local bounded
-eventual check:
+Historical/free-form temporal assertions like that remain deferred. The first
+shipped contract model is a transaction-local bounded eventual check:
 
 ```lisp
 (contract response_seen
   (eventually done (within 8)))
 ```
 
-When the transaction reaches the contract clause, lowering will arm one
-obligation. The checked window starts on the next cycle and lasts for the
-specified positive integer number of cycles. If `done` is seen before the
-window expires, the obligation clears. If the window expires first, or if the
-same contract is armed again while an obligation is still pending, a generated
-sticky fail bit is set until actor reset.
+When the transaction reaches the contract clause, lowering emits one arm state
+that asserts an internal combinational arm request for that cycle. The checked
+window starts on the next cycle and lasts for the specified positive integer
+number of cycles. If `done` is seen before the window expires, the obligation
+clears. If the window expires first, or if the same contract is armed again
+while an obligation is still pending, a generated sticky fail bit is set until
+actor reset.
 
-The planned reviewable artifact is not SVA-only. The scheduled `.fsm` should
-contain one arm state plus an always-on monitor DT with a pending bit, an age
-counter, and a fail bit. Generated SystemVerilog may project that fail bit into
-a verification-only assertion under `` `ifndef SYNTHESIS``; Verilog may keep
-only the monitor storage. Global `always` implication forms, min/max windows,
-dynamic bounds, same-cycle windows, nested contracts, expression operands, and
-multiple outstanding obligations remain deferred.
+The reviewable artifact is not SVA-only. The scheduled `.fsm` contains one arm
+state plus an always-on monitor DT with pending, age, and fail storage. The
+monitor DT is the source of truth; schedule reports classify it as
+`temporal_contract_monitor` and report pending/fail as registers and age as a
+counter. Generated SystemVerilog assertion text from the fail bit remains
+deferred until the public check/report surface is specified. Unsupported
+bodies and nested contracts fail closed. Global
+`always` implication forms, min/max windows, dynamic bounds, same-cycle
+windows, expression operands, and multiple outstanding obligations remain
+deferred.
+
+For a three-cycle window, the scheduled artifact has this shape:
+
+```lisp
+(main_contract_1
+  (= (main_contract_1_arm 1))
+  (-> main_done_2))
+
+(-main_contract_1_monitor
+  (<- (main_contract_1_pending 1)
+      <(& main_contract_1_arm (! main_contract_1_pending)))
+  (<- (main_contract_1_pending 0)
+      <(| (& main_contract_1_pending done)
+          (& main_contract_1_pending (! done) (== main_contract_1_age 2))))
+  (<- (main_contract_1_age 0)
+      <(& main_contract_1_arm (! main_contract_1_pending)))
+  (<- (main_contract_1_age (+ main_contract_1_age 1))
+      <(& main_contract_1_pending (! done) (! (== main_contract_1_age 2))))
+  (<- (main_contract_1_fail 1)
+      <(| (& main_contract_1_arm main_contract_1_pending)
+          (& main_contract_1_pending (! done) (== main_contract_1_age 2)))))
+```

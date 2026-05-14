@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF bounded contract lowering
+- The implementation keeps the scheduled `.fsm` monitor as the source of
+  truth. The arm state is ordinary transaction scheduling, and the monitor DT
+  is ordinary always-on selector logic that drives pending, age, and sticky
+  fail storage.
+- The arm request is combinational in the contract state so the monitor sees
+  the arm in the same cycle the transaction reaches the contract clause. The
+  obligation becomes pending after the next clock tick, which makes the
+  checked window start on the cycle after the arm state as specified.
+- The first overlap policy is deliberately simple: a second arm while pending
+  sets the same sticky fail bit rather than queueing a second obligation.
+  Queueing or accepting multiple outstanding obligations would be a different
+  resource/state contract.
 ## 2026-05-14: ISF bounded stage lowering
 - The first stage implementation reuses the existing state transition model:
   a `stage` state has the same conditional-transition shape as an `await`

@@ -84,12 +84,14 @@ covered stage and temporal-check domains.
   Commit: `ISF-STAGES-CONTRACTS.4: implement bounded stage lowering`
 
 - ID: `ISF-STAGES-CONTRACTS.5`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement temporal contract lowering.`
   Acceptance: `Covered contract forms lower into generated checks or scheduled
   artifacts, while unsupported forms fail closed with targeted diagnostics.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `prove -l t/1175-isf-contract-fail-closed.t t/1180-isf-unsupported-transaction-clause-boundary.t t/1224-isf-contract-lowering.t t/1158-isf-public-report-dt-kind-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`;
+  `./bin/ci-regression isf --no-book`; `mdbook build docs/book`;
+  `git diff --check`
+  Commit: `ISF-STAGES-CONTRACTS.5: implement bounded contract lowering`
 
 - ID: `ISF-STAGES-CONTRACTS.6`
   Status: `pending`
@@ -103,7 +105,7 @@ covered stage and temporal-check domains.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-STAGES-CONTRACTS.5` | `pending` | The contract model is specified and can now be lowered into scheduled monitor logic. |
+| 1 | `ISF-STAGES-CONTRACTS.6` | `pending` | Stage and contract lowering now need bounded schedule-report projection and final synchronized docs. |
 
 ## ISF-STAGES-CONTRACTS.1 Inventory
 
@@ -369,18 +371,62 @@ Deferred to later leaves or backlog:
   registered-valid variants, skid buffers, and nested stages remain backlog
   until their runtime and report contracts are specified.
 
+## ISF-STAGES-CONTRACTS.5 Contract Implementation
+
+Shipped behavior:
+
+- `%SUPPORTED_TRANSACTION_CLAUSES` now accepts `contract` only in top-level
+  transaction bodies. Nested contracts in `when`, `switch`, and `repeat`
+  remain fail-closed with the dedicated top-level-only diagnostic.
+- The lowerer validates the first bounded source shape exactly as
+  `(contract name (eventually signal (within cycles)))`, with a unique
+  contract name per transaction, one scalar actor interface signal, and a
+  positive integer `cycles` bound.
+- The generated contract state is named `<transaction>_contract_<index>`.
+  It drives an internal combinational arm request for the cycle in which that
+  state is active, then falls through to the next scheduled transaction state.
+- The generated always-on monitor DT is named
+  `<transaction>_contract_<index>_monitor`. It owns the internal arm,
+  pending, age, and sticky-fail signals, with age width sized for the final
+  checked cycle.
+- The monitor starts checking on the cycle after the arm state. While pending,
+  seeing the observed signal clears pending, reaching the final checked cycle
+  without the signal sets the sticky fail bit and clears pending, and seeing a
+  new arm while pending sets the same sticky fail bit.
+- The generated scheduled `.fsm` parses through the normal `.fsm` frontend and
+  reaches SystemVerilog generation in
+  [t/1224-isf-contract-lowering.t](../../t/1224-isf-contract-lowering.t).
+- Schedule reports already expose the generated monitor DT through the
+  advertised `temporal_contract_monitor` `dt_blocks[*].kind` value, and report
+  pending/fail as register storage and age as counter storage. The internal
+  combinational arm request is not reported as storage.
+
+Deferred to later leaves or backlog:
+
+- Schedule-report `temporal_contracts` projection is deferred to
+  `ISF-STAGES-CONTRACTS.6`.
+- Verification-only SystemVerilog assertion text from the sticky fail bit is
+  deferred until the report/check-artifact surface is explicit.
+- Global implication forms, min/max windows, same-cycle checks, dynamic
+  bounds, expression operands, nested contracts, and multiple outstanding
+  obligation queues remain backlog until their runtime and diagnostic
+  contracts are specified.
+
 ## Decisions
 
 - `2026-05-14`: Stage lowering and temporal contract lowering are tracked in
   one tree because both are transaction-local scheduling/checking metadata that
   currently fail closed at lowering time.
+- `2026-05-14`: The first contract implementation emits scheduled monitor
+  logic first. Any backend assertion text must remain a projection of that
+  monitor, and its public surface is deferred until the report/check-artifact
+  contract is explicit.
 
 ## Open Questions
 
-- What is the smallest useful stage model that can be emitted as reviewable
-  `.fsm` without hiding handshake timing?
-- Should temporal contracts initially emit simulation assertions, scheduled
-  check states, or both?
+- None for the current frontier. `ISF-STAGES-CONTRACTS.6` must still define
+  the bounded schedule-report projection for shipped stage and contract
+  metadata.
 
 ## Blockers
 
@@ -395,6 +441,7 @@ Deferred to later leaves or backlog:
 | `2026-05-14` | `ISF-STAGES-CONTRACTS.2` | `prove -l t/1179-isf-phase-stage-boundary.t t/1180-isf-unsupported-transaction-clause-boundary.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-STAGES-CONTRACTS.3` | `prove -l t/1175-isf-contract-fail-closed.t t/1180-isf-unsupported-transaction-clause-boundary.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-STAGES-CONTRACTS.4` | `prove -l t/1179-isf-phase-stage-boundary.t t/1180-isf-unsupported-transaction-clause-boundary.t t/1223-isf-stage-lowering.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-STAGES-CONTRACTS.5` | `prove -l t/1175-isf-contract-fail-closed.t t/1180-isf-unsupported-transaction-clause-boundary.t t/1224-isf-contract-lowering.t t/1158-isf-public-report-dt-kind-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -405,6 +452,7 @@ Deferred to later leaves or backlog:
 | `ISF-STAGES-CONTRACTS.2` | `ISF-STAGES-CONTRACTS.2: specify bounded stage semantics` | First bounded transaction-stage semantics. |
 | `ISF-STAGES-CONTRACTS.3` | `ISF-STAGES-CONTRACTS.3: specify bounded contract semantics` | First bounded temporal-contract semantics. |
 | `ISF-STAGES-CONTRACTS.4` | `ISF-STAGES-CONTRACTS.4: implement bounded stage lowering` | First bounded transaction-stage lowering. |
+| `ISF-STAGES-CONTRACTS.5` | `ISF-STAGES-CONTRACTS.5: implement bounded contract lowering` | First bounded temporal-contract monitor lowering. |
 
 ## Changelog
 
@@ -420,3 +468,5 @@ Deferred to later leaves or backlog:
   `ISF-STAGES-CONTRACTS.4`.
 - `2026-05-14`: Implemented the first bounded transaction-stage lowering path
   and advanced the frontier to `ISF-STAGES-CONTRACTS.5`.
+- `2026-05-14`: Implemented the first bounded temporal-contract monitor
+  lowering path and advanced the frontier to `ISF-STAGES-CONTRACTS.6`.

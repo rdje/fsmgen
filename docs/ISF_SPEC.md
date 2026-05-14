@@ -950,27 +950,25 @@ cycle. Nested stages, stage-local `(latency ...)`, `(compute ...)`, arbitrary
 stage body actions, multiple ready/valid endpoints, registered-valid variants,
 and skid-buffer behavior remain fail-closed/deferred.
 
-Authored transaction `(contract ...)` temporal assertion clauses are not lowered
-yet. The scheduler rejects them with a targeted diagnostic instead of silently
-dropping them from the scheduled `.fsm`; this applies at top level and inside
-`when`, `switch`, and `repeat` bodies. The current parser carries the raw
-contract clause list to the scheduler boundary; it does not yet define a
-contract payload grammar, check IR, reset/disable policy, generated assertion
-artifact, or schedule-report summary.
-The first planned shipped temporal-contract subset is a top-level transaction
-clause of the form `(contract name (eventually signal (within cycles)))`.
-Reaching that clause arms one bounded eventual obligation; the checked window
-starts on the next cycle and lasts for the positive integer `cycles` bound. The
-planned scheduled `.fsm` artifact contains an arm state plus an always-on
-monitor DT with pending, age, and sticky-fail storage. Actor reset clears the
-monitor. Seeing `signal` while pending clears the obligation; window expiry or
-re-arming the same contract while pending sets the sticky fail bit. Schedule
-reports should expose bounded contract summaries through `temporal_contracts`
-without exposing raw monitor equations. SystemVerilog may project the fail bit
-into a verification-only assertion under `` `ifndef SYNTHESIS``; the scheduled
-monitor remains the source of truth. Global `always` implication forms,
-min/max windows, dynamic bounds, same-cycle checks, nested contracts,
-expression operands, and multiple outstanding obligations remain deferred.
+Transaction-level `(contract name (eventually signal (within cycles)))` is the
+first shipped temporal-contract subset. It is supported only as a top-level
+transaction clause, with a unique contract name per transaction, `signal` bound
+to a scalar actor interface input or output, and `cycles` as a positive integer
+literal. Reaching the clause emits one arm state. The checked window starts on
+the next cycle and lasts for the `cycles` bound. The generated scheduled `.fsm`
+artifact contains the arm state plus an always-on monitor DT with pending, age,
+and sticky-fail storage. Actor reset clears the monitor storage. Seeing
+`signal` while pending clears the obligation; window expiry or re-arming the
+same contract while pending sets the sticky fail bit. Schedule-report
+`dt_blocks` classify the generated monitor as `temporal_contract_monitor`, and
+`inferred_storage` reports pending/fail as registers and age as a counter.
+The richer `temporal_contracts` projection remains deferred until the report
+surface is specified in the next slice. SystemVerilog assertion text under
+`` `ifndef SYNTHESIS`` also remains deferred; the scheduled monitor is already
+the source of truth. Historical/free-form contract bodies, global `always`
+implication forms, min/max windows, dynamic bounds, same-cycle checks, nested
+contracts, expression operands, and multiple outstanding obligations remain
+fail-closed/deferred.
 
 ## 10. Schedule JSON Report
 
@@ -1024,9 +1022,9 @@ assignment forms in the matching scheduled `.fsm` DT block, not an assignment
 payload list. The capability-manifest ISF public contract advertises this shape
 through `schedule_report_dt_assignments_shape`.
 Each `dt_blocks` entry's `kind` value is currently `drive`,
-`latency_counter`, `rule`, or `rule_trigger_fanin`. The capability-manifest ISF
-public contract advertises this value family through
-`schedule_report_dt_kind_values`.
+`latency_counter`, `rule`, `rule_trigger_fanin`, or
+`temporal_contract_monitor`. The capability-manifest ISF public contract
+advertises this value family through `schedule_report_dt_kind_values`.
 Each `inferred_storage` entry's `kind` value is currently `counter` or
 `register`; optional `width` values are positive integer bit widths when
 present and currently appear on inferred scheduler counters. The
@@ -1241,6 +1239,7 @@ Focused tests:
 - [t/1221-isf-rule-expression-assignment.t](../t/1221-isf-rule-expression-assignment.t)
 - [t/1222-isf-rule-expression-conflict-report.t](../t/1222-isf-rule-expression-conflict-report.t)
 - [t/1223-isf-stage-lowering.t](../t/1223-isf-stage-lowering.t)
+- [t/1224-isf-contract-lowering.t](../t/1224-isf-contract-lowering.t)
 
 ## 12. Explicitly Deferred
 
@@ -1265,8 +1264,9 @@ Focused tests:
   barrier: nested stages, stage-local latency/compute bodies, multiple
   endpoints, registered-valid variants, skid buffers, and stage report
   projection remain deferred.
-- Full temporal `(contract ...)` assertion lowering. Authored transaction
-  contract clauses currently fail closed during lowering.
+- Temporal `(contract ...)` forms beyond the shipped top-level bounded
+  eventual subset. Schedule-report projection for shipped temporal contracts
+  is tracked by `ISF-STAGES-CONTRACTS.6`.
 - Rich storage-class optimization in schedule reports.
 - Full width inference for `extract` values that do not use known field widths
   or an explicit `(widths N...)` option, and `shift_right` values that do not

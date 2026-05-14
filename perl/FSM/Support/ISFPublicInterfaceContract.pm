@@ -313,6 +313,7 @@ sub build_isf_public_interface_contract {
             't/1221-isf-rule-expression-assignment.t',
             't/1222-isf-rule-expression-conflict-report.t',
             't/1223-isf-stage-lowering.t',
+            't/1224-isf-contract-lowering.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -935,6 +936,7 @@ sub isf_public_interface_schedule_report_dt_kind_values {
             latency_counter
             rule
             rule_trigger_fanin
+            temporal_contract_monitor
         ),
     ];
 }
