@@ -23,7 +23,7 @@ evidence for one top-level task.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-CONFLICTS` | `active` | `R14` | `ISF-CONFLICTS.2` | [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md) |
+| `ISF-CONFLICTS` | `active` | `R14` | `ISF-CONFLICTS.3` | [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md) |
 | `ISF-COMPOSITION` | `active` | `R14` | `ISF-COMPOSITION.1` | [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md) |
 | `ISF-RESOURCE-PRIORITY` | `active` | `R14` | `ISF-RESOURCE-PRIORITY.1` | [docs/tasks/ISF-RESOURCE-PRIORITY.md](docs/tasks/ISF-RESOURCE-PRIORITY.md) |
 | `ISF-RULE-ACTIONS` | `active` | `R14` | `ISF-RULE-ACTIONS.1` | [docs/tasks/ISF-RULE-ACTIONS.md](docs/tasks/ISF-RULE-ACTIONS.md) |

@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF compatible fan-in policy
+- The compatible fan-in policy is intentionally conservative. A merge is safe
+  only when every active source requests the same observable target behavior:
+  same `LHS`/operator/value selector, one-bit event/request assertion, or
+  pulse-class `<1 target 1`.
+- This keeps the policy aligned with the DT mux-selector model. Multiple
+  routes may OR together for one `LHS`/`VAL` selector, but selecting different
+  values for the same target is a separate arbitration problem.
+- Rule-trigger fan-in is preserved as the public precedent because it keeps
+  per-rule provenance (`Rj_Tk`) before the generated `Tk_trigger_fanin` OR.
+  Future start request sources can join the same conceptual domain, but only
+  through explicit source ownership.
+- Drive starts expose why start OR alone is not enough: `drive_start` can be a
+  request fan-in target, but `drive_param` carriers are data payloads and need
+  single-owner, same-value, priority, or resource policy before simultaneous
+  calls are signoff-safe.
+- Generated helper names now have a default owner rule: they are single-owner
+  unless their domain explicitly marks them as shareable. This prevents helper
+  name reuse from becoming accidental semantics.
 ## 2026-05-14: ISF conflict-domain inventory
 - `ISF-CONFLICTS.1` deliberately stopped at inventory rather than jumping into
   code. Same-target conflict policy needs exact vocabulary because ISF has

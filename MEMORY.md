@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF compatible fan-in policy
+- Completed `ISF-CONFLICTS.2` in
+  [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md).
+- Compatible fan-in is now defined narrowly: same `LHS`/operator/value
+  selectors, one-bit request/event ORs, one-cycle `<1 target 1` pulse ORs, and
+  the existing per-rule transaction-trigger fan-in shape.
+- Mixed timing operators, different values/RHS expressions, drive parameter
+  payload conflicts, and unclassified generated helper sharing must not be
+  silently merged.
+- The active `ISF-CONFLICTS` frontier is now `ISF-CONFLICTS.3` for
+  fail-closed, priority, and deferred resource-arbitration policy.
 ## 2026-05-14: ISF conflict-domain inventory
 - Completed `ISF-CONFLICTS.1` in
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md).
@@ -11,7 +22,8 @@ This is the live continuity document for fast session recovery after crashes, re
   assignment arrays without a general same-target ownership/conflict registry.
 - Named conflict domains now cover transaction starts, public output/data
   drives, completion/done pulses, sample aliases, generated helper/storage, and
-  resource/priority metadata. The next frontier is `ISF-CONFLICTS.2`.
+  resource/priority metadata. This slice moved the tree to
+  `ISF-CONFLICTS.2`; the current frontier is recorded in the latest entry.
 ## 2026-05-14: R14 ISF objective task-tree coverage
 - [docs/TASK_TREE.md](docs/TASK_TREE.md) now lists active task-tree ownership
   for all currently documented ongoing/unresolved R14 ISF objective families.

@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF compatible fan-in policy
+- Completed `ISF-CONFLICTS.2` in
+  [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md)
+  by specifying which same-target cases future implementation slices may merge
+  deliberately.
+- Defined compatible fan-in as same `LHS`/operator/value selector ORs, one-bit
+  request/event ORs, one-cycle `<1 target 1` pulse ORs, and the existing
+  per-rule `Rj_Tk` to `Tk_trigger_fanin` transaction-trigger shape.
+- Recorded that different values, different timing operators, payload/data
+  carrier conflicts, and unclassified generated helper sharing must flow to
+  fail-closed or priority/resource policy instead of silent merge.
+- Advanced the active `ISF-CONFLICTS` frontier from `ISF-CONFLICTS.2` to
+  `ISF-CONFLICTS.3`.
 ### R14 — ISF conflict-domain inventory
 - Completed `ISF-CONFLICTS.1` in
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md)
