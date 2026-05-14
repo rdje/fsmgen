@@ -104,39 +104,38 @@ Current boundary: the Verilog-family backend lowers validated parameters and
 aggregate overrides to SystemVerilog `#(...)` instance parameters. VHDL
 generic-map lowering is not shipped.
 
-### Full Generated-Child Top Instantiation
+### Broader Generated-Child Top Instantiation
 
-Status: backlog.
+Status: partially shipped; generalized surfaces remain backlog.
 
 Goal: instantiate generated child FSM/DT artifacts from higher-level ISF or
 composition flows without manual wiring gaps.
 
 Current boundary: generated-child parameterization exists for bounded
-composition paths. ISF child/spawn lowering writes scheduled child `.fsm`
-artifacts and start/done handoff signals, but full composition-top
-instantiation from ISF remains deferred. The accepted target contract uses an
-explicit generated top over the scheduled parent and spawned children, with the
-parent exposing instance starts as outputs and instance dones as inputs for top
-internal wiring.
+composition paths, and ISF spawned-child fixtures now emit a generated
+`<actor>_top.fsm` that wires the scheduled parent, scheduled children,
+start/done handoffs, named-drive handoffs, and per-instance spawn parameter
+overrides through the existing composition pipeline. Broader generated-child
+top surfaces beyond the covered ISF spawn pattern remain backlog.
 
 ### Spawn Parameter Binding
 
-Status: partially shipped; generated-top application remains backlog.
+Status: partially shipped; broader parameter/value surfaces remain backlog.
 
 Goal: bind parameters through spawned child instances in ISF-generated
 multi-file scheduled designs.
 
-Current boundary: spawn emits child files and parent start/done wiring. The
-ISF lowerer now accepts one optional nested `(params (NAME value) ...)` block
-on `(spawn child as instance ...)`, accepts spawned child transaction
-parameters from a transaction-local `params` clause, emits child defaults as
-scheduled child `+params`, validates duplicates/unknown overrides/value
-shapes, rejects parameter declarations on non-spawned transactions, and
-preserves per-instance override lists in the parent lowerer IR. The generated
-top that applies those preserved overrides to child instances is still
-deferred. The first value domain is scalar/exact-width literals plus compatible
-aggregate/list literals; symbolic constants wait for an explicit ISF symbol
-surface.
+Current boundary: spawn emits child files, a parent scheduled `.fsm`, and a
+generated composition top for covered spawned-child fixtures. The ISF lowerer
+now accepts one optional nested `(params (NAME value) ...)` block on
+`(spawn child as instance ...)`, accepts spawned child transaction parameters
+from a transaction-local `params` clause, emits child defaults as scheduled
+child `+params`, validates duplicates/unknown overrides/value shapes, rejects
+parameter declarations on non-spawned transactions, preserves per-instance
+override lists in the parent lowerer IR, and applies those overrides through
+the generated top. The first value domain is scalar/exact-width literals plus
+compatible aggregate/list literals; symbolic constants wait for an explicit
+ISF symbol surface.
 
 ## Intent Scheduling Format
 

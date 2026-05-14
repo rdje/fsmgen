@@ -103,17 +103,17 @@ sub _emit_assignments($self, $state) {
     for my $a (@{$state->{assignments}}) {
         my $guard_str = _format_guard_suffix($a->{guard});
         my $op = $a->{op};
+        my $lhs = $self->_lhs_token($a->{lhs});
         if ($op eq '=') {
-            my $port_suffix = $self->{outputs}{$a->{lhs}} ? '>' : '';
-            push @lines, "    (= ($a->{lhs}$port_suffix $a->{rhs})$guard_str)";
+            push @lines, "    (= ($lhs $a->{rhs})$guard_str)";
         } elsif ($op eq '<-') {
-            push @lines, "    (<- ($a->{lhs} $a->{rhs})$guard_str)";
+            push @lines, "    (<- ($lhs $a->{rhs})$guard_str)";
         } elsif ($op eq '<=') {
-            push @lines, "    (<= ($a->{lhs} $a->{rhs})$guard_str)";
+            push @lines, "    (<= ($lhs $a->{rhs})$guard_str)";
         } elsif ($op eq '--') {
             push @lines, "    (-- $a->{lhs})";
         } else {
-            push @lines, "    ($op ($a->{lhs} $a->{rhs})$guard_str)";
+            push @lines, "    ($op ($lhs $a->{rhs})$guard_str)";
         }
     }
     if ($state->{fields}) {
@@ -285,19 +285,23 @@ sub _format_dt_assignment($self, $assignment, $indent, %options) {
     my $padding = ' ' x $indent;
     my $guard = !$options{no_guard} ? _format_guard_suffix($assignment->{guard}) : '';
     my $op = $assignment->{op};
+    my $lhs = $self->_lhs_token($assignment->{lhs});
 
     if ($op eq '=') {
-        my $port_suffix = $self->{outputs}{$assignment->{lhs}} ? '>' : '';
-        return "$padding(= ($assignment->{lhs}$port_suffix $assignment->{rhs})$guard)";
+        return "$padding(= ($lhs $assignment->{rhs})$guard)";
     } elsif ($op eq '<-') {
-        return "$padding(<- ($assignment->{lhs} $assignment->{rhs})$guard)";
+        return "$padding(<- ($lhs $assignment->{rhs})$guard)";
     } elsif ($op eq '<=') {
-        return "$padding(<= ($assignment->{lhs} $assignment->{rhs})$guard)";
+        return "$padding(<= ($lhs $assignment->{rhs})$guard)";
     } elsif ($op =~ /^<[0-9]+$/) {
-        return "$padding($op ($assignment->{lhs} $assignment->{rhs})$guard)";
+        return "$padding($op ($lhs $assignment->{rhs})$guard)";
     }
 
-    return "$padding($assignment->{lhs} = $assignment->{rhs})$guard";
+    return "$padding($lhs = $assignment->{rhs})$guard";
+}
+
+sub _lhs_token($self, $name) {
+    return $self->{outputs}{$name} ? "$name>" : $name;
 }
 
 sub _rule_guard_key {

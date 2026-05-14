@@ -37,8 +37,8 @@ subtest 'CLI --outdir writes the scheduled lower-result files' => sub {
     my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
     is_deeply(
         sorted([keys %{$lowered->{files}}]),
-        [qw(child_worker.fsm spawn_parent.fsm)],
-        'fixture lowers to the expected scheduled file set',
+        [qw(child_worker.fsm spawn_parent.fsm spawn_parent_top.fsm)],
+        'fixture lowers to the expected scheduled and generated-top file set',
     );
 
     for my $basename (sort keys %{$lowered->{files}}) {

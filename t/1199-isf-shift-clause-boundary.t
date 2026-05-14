@@ -47,8 +47,8 @@ subtest 'valid shift clauses lower to explicit shift expressions' => sub {
 ISF
 
     my $fsm = $result->{files}{'shift_boundary.fsm'};
-    like($fsm, qr/\(<- \(reg_out \(\| \(<< reg_out 1\) din\)\)\)/, 'shift_left lowers with scalar register and bit');
-    like($fsm, qr/\(<- \(reg_out \(\| \(>> reg_out 1\) \(<< din 7\)\)\)\)/, 'shift_right lowers with explicit width');
+    like($fsm, qr/\(<- \(reg_out> \(\| \(<< reg_out 1\) din\)\)\)/, 'shift_left lowers with scalar register and bit');
+    like($fsm, qr/\(<- \(reg_out> \(\| \(>> reg_out 1\) \(<< din 7\)\)\)\)/, 'shift_right lowers with explicit width');
 };
 
 subtest 'malformed shift clauses fail before scheduled emission' => sub {

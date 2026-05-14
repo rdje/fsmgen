@@ -66,20 +66,20 @@ The port value changes in the NEXT cycle (flopped).
 
 **Cycle-by-cycle** (for `(drive scl 1)`):
 - Cycle N: `scl_start=1`, `scl_val=1` asserted. Non-state DT `(-scl)` is
-  enabled. The DT's `(<- (scl scl_val))` schedules `scl` to become `1`.
+  enabled. The DT's `(<- (scl> scl_val))` schedules output `scl` to become `1`.
 - Cycle N+1: `scl` output port = `1`. Next state executes.
 
 **What happens**:
 1. `_start` signal for the drive is asserted (=1)
 2. Parameter signals are wired to actual values
-3. The non-state DT `(-drive_name ...)` is enabled, doing `(<- (port param_val))`
+3. The non-state DT `(-drive_name ...)` is enabled, doing `(<- (port> param_val))`
 4. Due to `<-` (flopped), the port output changes NEXT cycle
 5. State transitions to next
 
 **Generated .fsm** — Drive DT (once per definition):
 ```lisp
 (-scl
-  (<- (scl scl_val) <scl_start))
+  (<- (scl> scl_val) <scl_start))
 ```
 
 **Generated .fsm** — Call state (once per call):
@@ -154,8 +154,8 @@ value.
     (>0 (-- apb_transfer_wd))))
 
 (apb_transfer_timeout
-  (<1 (done 1))
-  (<- (last_error 1))
+  (<1 (done> 1))
+  (<- (last_error> 1))
   (-> apb_transfer_idle_0))
 ```
 
@@ -186,7 +186,7 @@ completion port rests low except for the generated one-cycle pulse.
 **Generated .fsm**:
 ```lisp
 (apb_transfer_done_5
-  (<1 (done 1))
+  (<1 (done> 1))
   (-> apb_transfer_idle_0))
 ```
 
@@ -283,7 +283,7 @@ Shift operations are also exact scalar forms:
 **Generated .fsm**:
 ```lisp
 (i2c_transfer_shift_6
-  (<- (rdata (| (<< rdata 1) sda_in)))
+  (<- (rdata> (| (<< rdata 1) sda_in)))
   (-> next_state))
 ```
 

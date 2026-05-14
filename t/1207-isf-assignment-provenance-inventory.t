@@ -105,7 +105,7 @@ is_deeply($drive_body->{activation}{assignment_guard}, { port => 'set_valid_star
 
 my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'assignment_provenance.fsm'};
 like($fsm, qr/\(-main_trigger_fanin\s+\(= \(main_start always_ready_main\)\)\s+\)/s, 'scheduled .fsm still emits existing rule trigger fan-in shape');
-like($fsm, qr/\(-set_valid\s+\(<- \(valid 1\) <set_valid_start\)\s+\)/s, 'scheduled .fsm still emits existing drive body shape');
+like($fsm, qr/\(-set_valid\s+\(<- \(valid> 1\) <set_valid_start\)\s+\)/s, 'scheduled .fsm emits public-output drive body shape');
 
 done_testing();
 

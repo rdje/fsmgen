@@ -56,7 +56,7 @@ ISF
     );
     like(
         $result->{files}{'child_forward_refs.fsm'},
-        qr/\(= \(worker_start 1\)\)/,
+        qr/\(= \(worker_start> 1\)\)/,
         'spawn instance target is wired in the parent file',
     );
 };

@@ -1,6 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF generated composition top handoff
+- Completed `ISF-COMPOSITION.4` by emitting a generated `<actor>_top.fsm`
+  composition source for ISF actors that spawn child transactions.
+- The `.isf` CLI path now selects that generated top as the HDL entrypoint
+  when present, while `--outdir` writes the parent, child, and top `.fsm`
+  artifacts from the same lower-result file map.
+- Parent scheduled `.fsm` artifacts now expose spawn start signals as outputs
+  and spawn done signals as inputs. Spawned children return to start-gated
+  idle after terminal completion.
+- Scheduled `.fsm` emission now applies the `>` output marker to declared
+  output LHS tokens for every assignment family, not only combinational `=`,
+  so sequential public outputs and generated handoff outputs are composition
+  visible.
+- Named drive calls inside spawned children now lower to child drive handoff
+  outputs wired into parent per-instance inputs; the parent drive DT aggregates
+  those handoffs through the actor drive body instead of relying on direct
+  child actor-output exposure.
+- Generated `?fsmc` child instances now carry the validated per-instance spawn
+  parameter overrides. Added
+  [t/1216-isf-generated-composition-top.t](t/1216-isf-generated-composition-top.t)
+  and updated the ISF public contract audits for generated `?top` lower-result
+  files.
 ### Architecture backlog — IR audit task tree
 - Added [docs/tasks/FSMGEN-IR-AUDIT.md](docs/tasks/FSMGEN-IR-AUDIT.md) as a
   proposed task tree for auditing current FSMGen IR structures and defining a

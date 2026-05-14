@@ -8,6 +8,24 @@ This is the live continuity document for fast session recovery after crashes, re
 - The tree is indexed from [docs/TASK_TREE.md](docs/TASK_TREE.md) as
   `proposed`, not active, so the current `R14` ISF feature PNT lane remains
   unchanged.
+## 2026-05-14: ISF generated composition top handoff
+- Completed `ISF-COMPOSITION.4` in
+  [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md).
+- Spawned-child ISF lowering now emits a generated `<actor>_top.fsm`
+  composition source beside the parent and child scheduled `.fsm` files. The
+  CLI selects that generated top as the HDL entrypoint, so spawned-child
+  fixtures flow through the normal composition pipeline instead of compiling
+  only the scheduled parent.
+- Parent instance starts are exposed as outputs, instance dones as inputs, and
+  child named-drive calls become per-instance handoff outputs that the top
+  wires back into parent inputs. The parent drive DT then aggregates those
+  per-instance sources through the actor drive body.
+- Scheduled `.fsm` emission now marks declared output LHS tokens with `>` for
+  all assignment families, which keeps sequential public outputs and generated
+  handoff outputs visible to composition.
+- Spawn parameter overrides are now applied through generated `?fsmc`
+  `(params ...)` blocks. The active `ISF-COMPOSITION` frontier is now
+  `ISF-COMPOSITION.5` for diagnostics and bounded schedule-report metadata.
 ## 2026-05-14: ISF spawn parameter binding
 - Completed `ISF-COMPOSITION.3` in
   [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md).

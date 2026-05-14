@@ -47,8 +47,8 @@ subtest 'valid extract clause lowers exact slices with explicit widths' => sub {
 ISF
 
     my $fsm = $result->{files}{'extract_boundary.fsm'};
-    like($fsm, qr/\(<= \(header \(slice packet 11 8\)\)\)/, 'extract lowers first exact slice');
-    like($fsm, qr/\(<= \(payload \(slice packet 7 0\)\)\)/, 'extract lowers second exact slice');
+    like($fsm, qr/\(<= \(header> \(slice packet 11 8\)\)\)/, 'extract lowers first exact slice');
+    like($fsm, qr/\(<= \(payload> \(slice packet 7 0\)\)\)/, 'extract lowers second exact slice');
 };
 
 subtest 'malformed extract clauses fail before scheduled emission' => sub {

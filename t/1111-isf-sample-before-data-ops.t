@@ -43,7 +43,7 @@ ISF
 
     like(state_block($fsm, 'main_sample_1'), qr/\(<= \(hold din\)\)/, 'sample state captures hold');
     like(state_block($fsm, 'main_sample_1'), qr/\(-> main_update_2\)/, 'sample state precedes update');
-    like(state_block($fsm, 'main_update_2'), qr/\(<- \(out hold\)\)/, 'update consumes sampled name after capture state');
+    like(state_block($fsm, 'main_update_2'), qr/\(<- \(out> hold\)\)/, 'update consumes sampled name after capture state');
 };
 
 subtest 'when-local sample materializes before data operation' => sub {

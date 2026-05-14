@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF generated composition top handoff
+- Active R14 task-tree slice: `ISF-COMPOSITION.4` is complete.
+- Spawned-child ISF lowering now emits a generated `<actor>_top.fsm`
+  composition source, and the CLI uses it as the HDL entrypoint when present.
+- The generated top wires parent start outputs, child done outputs, child
+  named-drive handoff outputs, and per-instance spawn parameter overrides
+  through the existing composition pipeline.
+- The next frontier is `ISF-COMPOSITION.5`.
+
 ## 2026-05-14: Architecture backlog — IR audit task tree
 - Proposed [docs/tasks/FSMGEN-IR-AUDIT.md](docs/tasks/FSMGEN-IR-AUDIT.md) to
   track a future inventory and consolidation audit for FSMGen IR structures.

@@ -1,5 +1,27 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF generated composition top handoff
+- `ISF-COMPOSITION.4` makes the concrete generated `?top` source the handoff
+  artifact. That keeps ISF and composition integration inspectable as text and
+  lets the existing composition pipeline own child realization, parameter
+  override validation, shared-datapath handling, and HDL emission.
+- Spawned children should not directly publish actor drive outputs when the
+  output is produced by a named drive call. The child instead publishes a
+  per-drive request plus payload handoff, and the parent consumes those
+  per-instance handoffs through the actor drive DT. This preserves the actor's
+  output ownership in the parent and avoids child instances competing to drive
+  the top-level actor output directly.
+- Parent start/done handoff ports are intentionally generated on the scheduled
+  parent rather than inferred by the top. The parent owns when each instance is
+  started and which done signal the transaction awaits; the generated top only
+  connects those explicit ports.
+- Applying the `.fsm` output marker to every emitted assignment family is part
+  of the handoff, not just formatting. Composition child realization discovers
+  generated child outputs from those markers, so `<-`, `<=`, and `<1` public
+  output assignments must be marked the same way as `=` assignments.
+- Child terminal states now return to the start-gated entry state so a spawned
+  child instance is reusable. Without that, a terminal child could fall back
+  into its body without waiting for the next parent start pulse.
 ## 2026-05-14: IR audit task-tree capture
 - FSMGen already has several IR or IR-like layers for legitimate reasons:
   parsed syntax, ISF scheduling/lowering, direct FSM semantics, forward

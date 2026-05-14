@@ -11,6 +11,7 @@ no warnings 'experimental::signatures';
 use FSM::Debug;
 use FSM::Scheduler::ISF::LoweringIR;
 use FSM::Scheduler::ISF::Emitter::FSM;
+use FSM::Scheduler::ISF::Emitter::CompositionTop;
 use FSM::Scheduler::ISF::Emitter::JSON;
 
 sub new($class, @constructor_args) {
@@ -23,6 +24,7 @@ sub new($class, @constructor_args) {
         debug       => $debug,
         ir          => FSM::Scheduler::ISF::LoweringIR->new(debug => $debug),
         fsm_emitter => FSM::Scheduler::ISF::Emitter::FSM->new,
+        top_emitter => FSM::Scheduler::ISF::Emitter::CompositionTop->new,
         json_emitter=> FSM::Scheduler::ISF::Emitter::JSON->new,
     }, $class;
 
@@ -62,9 +64,13 @@ sub lower($self, @args) {
 
     # Emit children
     my $children = $ir->{children} || {};
-    while (my ($cname, $cir) = each %$children) {
+    for my $cname (sort keys %$children) {
+        my $cir = $children->{$cname};
         $files{"$cname.fsm"} = $self->{fsm_emitter}->emit($cir);
     }
+
+    my $top = $self->{top_emitter}->emit($ir, \%files);
+    $files{"$ir->{actor_name}_top.fsm"} = $top if defined $top;
 
     fsm_trace_exit("Scheduler lower completed", 2);
     return { files => \%files };

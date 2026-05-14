@@ -60,12 +60,15 @@ ISF
     my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
     my $parent_fsm = $lowered->{files}{'spawn_parameter_binding.fsm'};
     my $child_fsm = $lowered->{files}{'worker.fsm'};
+    my $top_fsm = $lowered->{files}{'spawn_parameter_binding_top.fsm'};
 
     ok(defined($parent_fsm), 'parent scheduled .fsm is emitted');
     ok(defined($child_fsm), 'spawned child scheduled .fsm is emitted');
-    like($parent_fsm, qr/\(= \(w0_start 1\)\)/, 'parent drives the first spawn instance start');
-    like($parent_fsm, qr/\(= \(w1_start 1\)\)/, 'parent drives the second spawn instance start');
+    ok(defined($top_fsm), 'generated top .fsm is emitted');
+    like($parent_fsm, qr/\(= \(w0_start> 1\)\)/, 'parent exposes the first spawn instance start');
+    like($parent_fsm, qr/\(= \(w1_start> 1\)\)/, 'parent exposes the second spawn instance start');
     like($child_fsm, qr/\(\+params\s+\(WIDTH 8\)\s+\(LANES \(8'h00 8'h00\)\)\s+\)/s, 'child .fsm emits transaction parameter defaults');
+    like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\(LANES \(8'hA5 8'h3C\)\)\s+\)\s+\)/s, 'generated top applies per-instance spawn parameter overrides');
 };
 
 subtest 'spawn parameter bindings fail closed for unsupported or ambiguous shapes' => sub {

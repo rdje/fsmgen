@@ -54,7 +54,7 @@ ISF
     my $fsm = FSM::Scheduler::ISF->new()->lower(parse_actor($source))->{files}{'local_priority_conflict.fsm'};
     like(
         $fsm,
-        qr/\(-low\s+<b\s+\(<- \(valid 0\) <\(! a\)\)\s+\)/s,
+        qr/\(-low\s+<b\s+\(<- \(valid> 0\) <\(! a\)\)\s+\)/s,
         'scheduled .fsm gates the lower-priority assignment with the inverse high-priority rule condition',
     );
     assert_fsm_reaches_hdl($fsm, 'local_priority_conflict');

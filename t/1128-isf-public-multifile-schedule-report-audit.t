@@ -24,8 +24,8 @@ subtest 'multi-file ISF report is parent-scoped and contract-advertised' => sub 
     my $lowered = $scheduler->lower($actor);
     is_deeply(
         sorted([keys %{$lowered->{files}}]),
-        [qw(child_worker.fsm spawn_parent.fsm)],
-        'fixture still lowers to parent and child scheduled files',
+        [qw(child_worker.fsm spawn_parent.fsm spawn_parent_top.fsm)],
+        'fixture still lowers to parent, child, and generated top files',
     );
 
     my $report = JSON::PP->new->decode($scheduler->report($actor));

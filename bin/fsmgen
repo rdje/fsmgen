@@ -549,12 +549,15 @@ if ($fsm_file =~ /\.isf$/i) {
     }
 
     my $files = $result->{files};
+    my $entry_basename = exists $files->{"$actor->{actor_name}_top.fsm"}
+        ? "$actor->{actor_name}_top.fsm"
+        : "$actor->{actor_name}.fsm";
 
     my $dir = $outdir || undef;
 
     if (!$dir && scalar(keys %$files) == 1) {
         # Single file, no outdir: write to temp and feed to normal pipeline
-        my ($only_file) = values %$files;
+        my $only_file = $files->{$entry_basename};
         my ($fh, $tmp_path) = File::Temp::tempfile(SUFFIX => '.fsm');
         print $fh $only_file;
         close $fh;
@@ -570,7 +573,7 @@ if ($fsm_file =~ /\.isf$/i) {
             close $fh;
             print "Wrote: $path\n" unless $machine_json_mode;
         }
-        $fsm_file = File::Spec->catfile($dir, "$actor->{actor_name}.fsm");
+        $fsm_file = File::Spec->catfile($dir, $entry_basename);
     }
 
     unless ($machine_json_mode) {

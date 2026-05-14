@@ -35,7 +35,7 @@ subtest 'repeat body lowers shift_left data operation' => sub {
 
     like(
         $fsm,
-        qr/\(<- \(rdata \(\| \(<< rdata 1\) sda_in\)\)\)/,
+        qr/\(<- \(rdata> \(\| \(<< rdata 1\) sda_in\)\)\)/,
         'repeat shift_left captures serial input into rdata',
     );
 };

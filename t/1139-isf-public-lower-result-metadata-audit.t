@@ -15,7 +15,7 @@ use FSM::Support::ISFPublicInterfaceContract qw(
     isf_public_interface_lower_result_presence_keys
 );
 
-my $expected_file_map_shape = 'hash reference mapping scheduled .fsm basename to scheduled .fsm source text';
+my $expected_file_map_shape = 'hash reference mapping .fsm basename to scheduled module or generated composition-top .fsm source text';
 
 subtest 'direct ISF lower-result metadata is exact and unique' => sub {
     assert_lower_result_metadata(

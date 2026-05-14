@@ -27,11 +27,12 @@ targets, and extra operands are rejected before scheduled `.fsm` emission.
 Shifts `reg` left by 1 and ORs in `bit` at LSB.
 The form is exact: `(shift_left reg bit)`, with scalar `reg` and scalar `bit`.
 
-**Lowering**: `(<- (reg (| (<< reg 1) bit)))`
+**Lowering**: `(<- (reg (| (<< reg 1) bit)))`, or `reg>` when `reg` is a
+declared output port.
 
 ```lisp
 (state
-  (<- (rdata (| (<< rdata 1) sda_in)))
+  (<- (rdata> (| (<< rdata 1) sda_in)))
   (-> next_state))
 ```
 
@@ -106,9 +107,9 @@ be positive integers and must not conflict with already known field widths.
 
 ```lisp
 (state
-  (<= (header (slice packet 15 12)))
-  (<= (payload (slice packet 11 4)))
-  (<= (crc (slice packet 3 0)))
+  (<= (header> (slice packet 15 12)))
+  (<= (payload> (slice packet 11 4)))
+  (<= (crc> (slice packet 3 0)))
   (-> next_state))
 ```
 

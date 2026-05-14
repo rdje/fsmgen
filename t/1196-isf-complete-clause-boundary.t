@@ -43,7 +43,7 @@ subtest 'valid complete clause lowers to delayed-pulse terminal assignment' => s
 ISF
 
     my $fsm = $result->{files}{'complete_boundary.fsm'};
-    like($fsm, qr/\(<1 \(done 1\)\)/, 'complete lowers to a delayed-pulse assignment');
+    like($fsm, qr/\(<1 \(done> 1\)\)/, 'complete lowers to a delayed-pulse assignment');
     like($fsm, qr/\(-> main_idle_0\)/, 'complete terminal state returns to idle');
 };
 

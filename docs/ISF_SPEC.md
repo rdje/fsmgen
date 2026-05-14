@@ -273,6 +273,9 @@ Current lowering:
   rule-trigger fan-in DTs.
 - Drive DT assignments use flopped output assignment (`<-`) by default, so a
   drive call consumes one state and the driven port updates on the next clock.
+- When a generated scheduled `.fsm` assignment targets a declared actor output,
+  the LHS uses the normal `.fsm` output marker, such as `scl>`, `done>`, or
+  `rdata>`, for all assignment families.
 - DT selector logic is combinational. Assignment families decide the target
   behavior selected by that logic: `=` assignments drive combinational mux
   outputs, `<-` and `<=` assignments drive sequential/flopped targets, and
@@ -565,9 +568,13 @@ Current lowering:
 - The spawned transaction target must name a declared transaction in the same
   actor. Forward references are accepted; missing targets fail before
   scheduled `.fsm` emission.
-- Each child gets `start`, `done`, and `last_error` ports if missing.
-- The parent declares per-instance `instance_start` and `instance_done` signals.
-- Each spawn state asserts its matching `instance_start` signal.
+- Each spawned child exposes `start` as an input and `done` as an output. Named
+  drive calls inside a spawned child expose drive handoff outputs such as
+  `<drive>_start` and `<drive>_<param>` instead of directly exporting the
+  actor output driven by that drive body.
+- The parent exposes per-instance `instance_start` outputs and
+  `instance_done` inputs for generated-top wiring. Each spawn state asserts
+  its matching `instance_start` signal.
 - `await_all` and `await_any` are structurally validated as
   `(await_all done_port)` and `(await_any done_port)` with one scalar done-port
   operand before sync-state emission.
@@ -578,16 +585,14 @@ Current lowering:
   any one of them fires.
 Focused regressions cover both synchronization forms.
 
-Top-level generated-child instantiation remains not fully shipped. Spawn
-parameter declaration, validation, scheduled child `+params` emission, and
-per-instance override preservation now ship in the lowering path, but the
-generated top still has to apply those overrides to child instances. The
-accepted public target contract is:
+Top-level generated-child instantiation is now shipped for the covered
+spawned-child fixture set. Spawn parameter declaration, validation, scheduled
+child `+params` emission, per-instance override preservation, and generated-top
+application now all flow through the normal composition pipeline. The public
+contract is:
 
-- Multi-file spawn actors will expose an explicit generated top over the
-  scheduled parent module and spawned child modules. The implementation may
-  materialize a concrete `?top` source or equivalent structured metadata, but
-  one generated-top handoff is canonical for reports and tests.
+- Multi-file spawn actors expose an explicit generated `?top` source over the
+  scheduled parent module and spawned child modules.
 - The scheduled parent module keeps the actor name. The generated top uses a
   distinct deterministic name, initially `<actor_name>_top`.
 - The generated top re-exports the actor public interface. Per-instance
@@ -596,13 +601,16 @@ accepted public target contract is:
 - The scheduled parent exposes `instance_start` as an output port and
   `instance_done` as an input port for each spawned instance. Each spawned
   child exposes `start` as an input and `done` as an output.
-- The generated top wires `parent.instance_start` to `instance.start` and
-  `instance.done` to `parent.instance_done`.
+- The generated top wires `parent.instance_start` to `instance.start`,
+  `instance.done` to `parent.instance_done`, and child named-drive handoff
+  outputs to parent per-instance handoff inputs.
 - A spawned child returns to its `start`-guarded idle state after completion and
   must not re-enter the body until the next start pulse.
 - Spawn instance names are actor-local identities and must be unique. Multiple
   instances of one child transaction share the same child module with distinct
   instance names.
+- Spawn parameter overrides are emitted on the generated `?fsmc` instance
+  through the existing composition `(params ...)` override surface.
 
 Parameterized spawn uses one optional nested `params` block after the instance
 name:
@@ -633,9 +641,9 @@ override names, unsupported value shapes, parameter declarations on
 non-spawned transactions, and parameter blocks on `(do child)` fail before
 misleading scheduled artifacts are emitted. The scheduled child `.fsm` carries
 the child transaction defaults in a direct `+params` block, and the parent
-lowerer IR preserves each spawn instance's override list for the generated-top
-handoff. Until that generated-top leaf ships, those preserved override values
-are not yet emitted as top-level instance parameter overrides.
+lowerer IR preserves each spawn instance's override list. The generated top
+emits those overrides as `?fsmc` instance `(params ...)` blocks, so the
+existing composition pipeline applies them to the spawned child instances.
 
 ## 9. Rules
 
@@ -715,7 +723,7 @@ Current lowering:
 
 ```lisp
 (-always_ready <ready
-  (<- (valid 1))
+  (<- (valid> 1))
   (<1 (always_ready_main_transfer 1))
 )
 
@@ -1023,6 +1031,7 @@ Focused tests:
 - [t/1213-isf-schedule-report-compatible-fanin-projection.t](../t/1213-isf-schedule-report-compatible-fanin-projection.t)
 - [t/1214-isf-rejected-conflict-diagnostics.t](../t/1214-isf-rejected-conflict-diagnostics.t)
 - [t/1215-isf-spawn-parameter-binding.t](../t/1215-isf-spawn-parameter-binding.t)
+- [t/1216-isf-generated-composition-top.t](../t/1216-isf-generated-composition-top.t)
 
 ## 12. Explicitly Deferred
 
@@ -1030,10 +1039,10 @@ Focused tests:
   parsing.
 - The removed `(assign ...)` action keyword; authored transaction uses fail
   closed as unsupported transaction clauses.
-- Implementation of the accepted top-level child instantiation contract
-  described above. Spawn parameter declaration, validation, and child `+params`
-  emission are shipped, but applying per-instance overrides in the generated
-  top remains deferred.
+- Broader generated-child top instantiation surfaces beyond the covered ISF
+  spawn pattern. The current generated top covers scheduled parent/child
+  wiring, start/done handoff, named-drive handoff, and spawn parameter
+  overrides for the shipped fixture set.
 - Enforced resource arbitration and priority resolution beyond the currently
   shipped same-target rule/rule data-conflict case.
 - Expression-valued rule assignment actions beyond scalar `(port value)`.

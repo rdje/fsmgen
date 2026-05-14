@@ -127,6 +127,8 @@ for both in-process and CLI report paths.
 Rejected conflict diagnostics are checked by
 [t/1214-isf-rejected-conflict-diagnostics.t](../t/1214-isf-rejected-conflict-diagnostics.t)
 for both in-process scheduler calls and the CLI schedule-report path.
+Generated composition-top lowering is checked by
+[t/1216-isf-generated-composition-top.t](../t/1216-isf-generated-composition-top.t).
 The lower-result `files` map is checked for both single-file and multi-file
 lowering by [t/1117-isf-public-lower-result-files-audit.t](../t/1117-isf-public-lower-result-files-audit.t).
 The lower-result discovery metadata is checked by
@@ -388,6 +390,8 @@ so `(do transaction)` and `(spawn transaction as instance [(params (NAME value)
 resolution or spawned-child collection.
 Spawn parameter binding is checked by
 [t/1215-isf-spawn-parameter-binding.t](../t/1215-isf-spawn-parameter-binding.t).
+Generated composition-top wiring for spawned children is checked by
+[t/1216-isf-generated-composition-top.t](../t/1216-isf-generated-composition-top.t).
 The shipped surface preserves validated per-instance spawn overrides in
 lowerer metadata, emits child transaction defaults into spawned-child
 scheduled `.fsm` `+params` blocks, rejects duplicate instances, duplicate
@@ -599,9 +603,10 @@ The advertised ISF-specific CLI option family is `--emit-schedule-json`,
 The `cli_option_names` list is exact discovery metadata for that option family.
 The CLI success-shape fields are exact discovery metadata for successful public
 CLI runs: `--emit-schedule-json` writes schedule-report JSON to stdout with
-empty stderr, `--outdir DIR` writes scheduled `.fsm` files by basename into
-`DIR`, and plain `file.isf` generation lowers through scheduled `.fsm` before
-writing the requested HDL output with empty stderr.
+empty stderr, `--outdir DIR` writes lower-result `.fsm` files by basename into
+`DIR`, and plain `file.isf` generation lowers through scheduled `.fsm` and any
+generated composition top before writing the requested HDL output with empty
+stderr.
 The strict CLI success-shape field advertises that accepted `--strict
 file.isf` generation follows the public HDL-generation success shape and keeps
 stderr empty on success.
@@ -615,16 +620,18 @@ key:
 files
 ```
 
-`files` is a hash reference mapping scheduled `.fsm` basenames to scheduled
-`.fsm` source text. The generated `.fsm` text is a reviewable compiler artifact
-and then flows through the existing `.fsm` pipeline.
+`files` is a hash reference mapping `.fsm` basenames to scheduled module or
+generated composition-top `.fsm` source text. The generated `.fsm` text is a
+reviewable compiler artifact and then flows through the existing `.fsm`
+pipeline.
 The plain `file.isf` CLI path lowers through that pipeline into generated HDL.
-Each public `files` key is a scheduled `.fsm` basename with no directory
-components. Each value is scheduled `.fsm` source text rooted at
-`(?fsm:<basename-stem> ...)`.
+Each public `files` key is a `.fsm` basename with no directory components.
+Scheduled module values are `.fsm` source text rooted at
+`(?fsm:<basename-stem> ...)`; generated composition-top values are `.fsm`
+source text rooted at `(?top:<basename-stem> ...)`.
 
-The `--outdir` CLI path materializes the same scheduled `.fsm` basename/text
-map on disk for multi-file lowerings.
+The `--outdir` CLI path materializes the same lower-result `.fsm`
+basename/text map on disk for multi-file lowerings.
 
 The full lower-result hash is not yet a broad public API beyond the advertised
 keys.
@@ -642,6 +649,10 @@ DT itself is combinational or sequential:
 - `=` drives a combinational target mux output.
 - `<-` and `<=` drive sequential/flopped targets.
 - `<1` requests a one-cycle delayed pulse.
+
+When scheduled `.fsm` text assigns a declared actor output port, the emitted
+LHS carries the normal `.fsm` output marker for every assignment family, such
+as `done>`, `last_error>`, or `rdata>`.
 
 The machine-readable contract advertises these target-behavior families through
 `dt_assignment_operator_family_map`.

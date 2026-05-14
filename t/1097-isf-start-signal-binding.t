@@ -31,9 +31,9 @@ subtest 'spawn start states assert per-instance start signals' => sub {
     like($fsm, qr/\(w1_start 1\)/, 'declares w1_start');
     like($fsm, qr/\(w2_start 1\)/, 'declares w2_start');
 
-    like($fsm, qr/\(= \(w0_start 1\)\)/, 'first spawn asserts w0_start');
-    like($fsm, qr/\(= \(w1_start 1\)\)/, 'second spawn asserts w1_start');
-    like($fsm, qr/\(= \(w2_start 1\)\)/, 'third spawn asserts w2_start');
+    like($fsm, qr/\(= \(w0_start> 1\)\)/, 'first spawn asserts w0_start');
+    like($fsm, qr/\(= \(w1_start> 1\)\)/, 'second spawn asserts w1_start');
+    like($fsm, qr/\(= \(w2_start> 1\)\)/, 'third spawn asserts w2_start');
     unlike($fsm, qr/\(_start\b/, 'spawn lowering does not emit anonymous _start');
 };
 

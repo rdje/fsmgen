@@ -49,6 +49,8 @@ This chapter shows the exact generated `.fsm` for each construct.
 Declared interface ports are emitted once. If inferred scheduler storage such
 as timeout/error bookkeeping has the same name as an interface port, the
 inferred duplicate is suppressed.
+When generated scheduled `.fsm` assigns a declared output port, the assignment
+LHS carries the normal `.fsm` output marker, for example `done>` or `rdata>`.
 
 ## Reset → +system
 
@@ -99,7 +101,7 @@ Explicit `async`/`active_low`/`active_high` override.
 Non-state DT block:
 ```lisp
 (-scl
-  (<- (scl scl_val) <scl_start))   ;; flopped: next cycle scl = scl_val
+  (<- (scl> scl_val) <scl_start))  ;; flopped: next cycle scl = scl_val
 ```
 
 Call state:
@@ -201,8 +203,8 @@ current-Q test.
 Timeout state:
 ```lisp
 (apb_transfer_timeout
-  (<1 (done 1))
-  (<- (last_error 1))
+  (<1 (done> 1))
+  (<- (last_error> 1))
   (-> apb_transfer_idle_0))
 ```
 
@@ -216,7 +218,7 @@ Timeout state:
 **Generated .fsm**:
 ```lisp
 (apb_transfer_done_5
-  (<1 (done 1))                   ;; one-cycle delayed completion pulse
+  (<1 (done> 1))                  ;; one-cycle delayed completion pulse
   (-> apb_transfer_idle_0))       ;; return to idle
 ```
 
@@ -332,7 +334,7 @@ scheduler's implicit fallthrough branch.
 **Generated .fsm**:
 ```lisp
 (i2c_transfer_shift_6
-  (<- (rdata (| (<< rdata 1) sda_in)))   ;; Q-named assignment
+  (<- (rdata> (| (<< rdata 1) sda_in)))  ;; Q-named output assignment
   (-> next_state))
 ```
 
@@ -418,7 +420,7 @@ Max violation via watchdog timeout (if no `(await ...)` in transaction).
     (-> child_drive_0)))
 
 (child_done_5                     ;; terminal: pulses done
-  (<1 (done 1))
+  (<1 (done> 1))
   (<1 (child_done 1))             ;; pulse parent-visible child completion
   (-> child_idle_0))
 ```
@@ -428,14 +430,14 @@ The internal `{child}_done` handoff is pulse-shaped for the same reason as the
 public completion output: a parent may call the same child again, and a sticky
 done bit would let the next `(do child)` observe an old completion.
 
-Spawn lowering writes separate child `.fsm` files and a parent `.fsm` with
-per-instance start/done signals when `--outdir DIR` is used. Spawn parameter
-declarations now lower into child `+params` blocks, and spawn override lists
-are validated and preserved in the parent lowerer IR. Full composition-top
-instantiation remains implementation work: the generated top still has to wire
-parent start outputs, parent done inputs, child `start`/`done` ports, and
-per-instance parameter overrides. The remaining implementation is tracked in
-[Feature Backlog](14-feature-backlog.md).
+Spawn lowering writes separate child `.fsm` files, a parent `.fsm` with
+per-instance handoff ports, and a generated `<actor>_top.fsm` composition
+source when `--outdir DIR` is used. Spawn parameter declarations lower into
+child `+params` blocks, and spawn override lists are validated, preserved in
+the parent lowerer IR, and applied through generated `?fsmc` `(params ...)`
+blocks in the top. The generated top wires parent start outputs, parent done
+inputs, child `start`/`done` ports, and named-drive handoff signals through the
+existing composition pipeline.
 
 ## Complete Example — APB Transfer
 

@@ -40,7 +40,7 @@ my $fsm = $result->{files}{'do_child_done_pulse.fsm'};
 my $child_done = state_block($fsm, 'child_done_2');
 like($child_done, qr/\(<1 \(child_done 1\)\)/, 'blocking do child completion handoff uses a delayed pulse');
 unlike($child_done, qr/\(<- \(child_done 1\)\)/, 'blocking do child completion handoff is not sticky');
-like($child_done, qr/\(<1 \(done 1\)\)/, 'public child completion remains a delayed pulse');
+like($child_done, qr/\(<1 \(done> 1\)\)/, 'public child completion remains a delayed pulse');
 
 my $first_parent_do = state_block($fsm, 'parent_do_1');
 my $second_parent_do = state_block($fsm, 'parent_do_2');

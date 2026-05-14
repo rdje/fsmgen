@@ -53,7 +53,7 @@ cycle.
 
 ```lisp
 (-always_ready <ready
-  (<- (valid 1))
+  (<- (valid> 1))
   (<1 (always_ready_main_transfer 1))
 )
 
@@ -84,11 +84,11 @@ assignment whenever `high`'s rule condition is active:
 
 ```lisp
 (-high <a
-  (<- (valid 1))
+  (<- (valid> 1))
 )
 
 (-low <b
-  (<- (valid 0) <(! a))
+  (<- (valid> 0) <(! a))
 )
 ```
 
@@ -193,8 +193,8 @@ With a single rule source, the generated fan-in assigns the source directly:
 **DT block**:
 ```lisp
 (-error_gate <err
-  (<- (valid 1))
-  (<- (err 1))
+  (<- (valid> 1))
+  (<- (err> 1))
 )
 ```
 

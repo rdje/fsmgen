@@ -67,13 +67,10 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
     my ($states, $ctrs, $dts) = $self->_build_transaction($tx, $actor, 0);
     $states = [@$states]; $ctrs = { %$ctrs }; $dts = [@$dts];
 
-    my $ports = $self->_build_ports($actor);
-    {
-        my %have = map { $_->{name} => 1 } @$ports;
-        push @$ports, { name => 'start',      direction => 'input',  width => 1 } unless $have{start};
-        push @$ports, { name => 'done',       direction => 'output', width => 1 } unless $have{done};
-        push @$ports, { name => 'last_error',  direction => 'output', width => 1 } unless $have{last_error};
-    }
+    my %used_drives = _collect_named_drive_call_names($tx->{clauses}, $actor->{drives} || {});
+    _register_drive_call_signal_widths($actor, $ctrs, \%used_drives);
+
+    my $ports = $self->_build_child_ports($actor, $states, $dts, \%used_drives);
 
     my $ir = {
         actor_name => $cname,
@@ -107,6 +104,11 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
         $entry->{transitions} = [];
         my ($n) = grep { $_->{kind} ne 'entry' && $_->{name} !~ /_timeout$/ } @{$ir->{states}};
         push @{$entry->{transitions}}, { target => $n->{name}, condition => $entry->{guard} } if $n;
+
+        for my $state (@{$ir->{states}}) {
+            next unless $state->{kind} eq 'terminal';
+            $state->{transitions} = [{ target => $entry->{name} }];
+        }
     }
     _finalize_ir($ir);
     return $ir;
@@ -120,24 +122,53 @@ sub _build_parent_ir($self, $actor, $spawned) {
     my @states;
     my @dts;
     my @spawn_instances;
+    my %local_drive_uses;
+    my %spawn_drive_sources;
+    my %transaction_by_name = map { $_->{name} => $_ } @{$actor->{transactions} || []};
     my $ti = 0;
 
     for my $tx (@{$actor->{transactions}}) {
         next if $spawned->{$tx->{name}};
         my ($ss, $cs, $ds, $do, $sp) = $self->_build_transaction($tx, $actor, $ti++);
+        my %tx_drive_uses = _collect_named_drive_call_names($tx->{clauses}, $actor->{drives} || {});
+        $local_drive_uses{$_} = 1 for keys %tx_drive_uses;
         push @states, @$ss;
         for my $k (sort keys %$cs) {
             $ctrs{$k} = $cs->{$k};
         }
         push @dts, @$ds;
         for my $c (@$do)  { $ctrs{"${c}_start"} = 1; $ctrs{"${c}_done"} = 1; }
-        for my $s (@$sp)  { $ctrs{"$s->{instance}_start"} = 1; $ctrs{"$s->{instance}_done"} = 1; }
+        for my $s (@$sp)  {
+            $ctrs{"$s->{instance}_start"} = 1;
+            $ctrs{"$s->{instance}_done"} = 1;
+            _ensure_port(\@ports, "$s->{instance}_start", 'output', 1);
+            _ensure_port(\@ports, "$s->{instance}_done",  'input',  1);
+            my $child_tx = $transaction_by_name{$s->{child}};
+            my %child_drive_uses = _collect_named_drive_call_names($child_tx->{clauses}, $actor->{drives} || {});
+            for my $drive_name (sort keys %child_drive_uses) {
+                my $prefix = "$s->{instance}_${drive_name}";
+                push @{$spawn_drive_sources{$drive_name}}, {
+                    instance    => $s->{instance},
+                    drive       => $drive_name,
+                    prefix      => $prefix,
+                    source_kind => 'spawn_drive_body',
+                };
+                _ensure_port(\@ports, "${prefix}_start", 'input', 1);
+                $ctrs{"${prefix}_start"} = 1;
+                for my $param (@{($actor->{drives} || {})->{$drive_name}{params} || []}) {
+                    my $width = _drive_param_width($actor, $drive_name, $param);
+                    _ensure_port(\@ports, "${prefix}_$param", 'input', $width);
+                    $ctrs{"${prefix}_$param"} = $width;
+                }
+            }
+        }
         push @spawn_instances, map { _clone_isf_value($_) } @$sp;
     }
 
     push @dts, $self->_build_rules($actor, \%ctrs);
     $self->_wire_do_children(\@states, \%ctrs, $actor);
-    $self->_build_drive_dts($actor, \@dts, \%ctrs);
+    my $local_drive_filter = keys(%$spawned) ? \%local_drive_uses : undef;
+    $self->_build_drive_dts($actor, \@dts, \%ctrs, $local_drive_filter, \%spawn_drive_sources);
 
     my $ir = {
         actor_name => $actor->{actor_name},
@@ -190,8 +221,12 @@ sub _validate_child_transaction_refs($self, $actor) {
                 unless $transactions{$target};
 
             next unless $keyword eq 'spawn';
+            confess "Transaction '$tx_name': spawn target '$target' conflicts with parent actor module name '$actor->{actor_name}'\n"
+                if $target eq $actor->{actor_name};
 
             my $instance = $clause->[3];
+            confess "Transaction '$tx_name': spawn instance '$instance' conflicts with parent actor instance name '$actor->{actor_name}'\n"
+                if $instance eq $actor->{actor_name};
             confess "Transaction '$tx_name': duplicate spawn instance '$instance' in actor '$actor->{actor_name}'\n"
                 if $spawn_instances{$instance}++;
 
@@ -228,6 +263,127 @@ sub _build_ports($self, $actor) {
     for my $i (@{$actor->{interface}{inputs}})  { push @p, { name => $i->{name}, direction => 'input',  width => $i->{width} // 1 }; }
     for my $o (@{$actor->{interface}{outputs}}) { push @p, { name => $o->{name}, direction => 'output', width => $o->{width} // 1 }; }
     return \@p;
+}
+
+sub _build_child_ports {
+    my ($self, $actor, $states, $dts, $used_drives) = @_;
+
+    my %actor_output_width = map {
+        $_->{name} => ($_->{width} // 1)
+    } @{$actor->{interface}{outputs} || []};
+
+    my @ports;
+    my %seen;
+    for my $input (@{$actor->{interface}{inputs} || []}) {
+        _push_port(\@ports, \%seen, $input->{name}, 'input', $input->{width} // 1);
+    }
+
+    my %assigned_public_outputs;
+    for my $assignment (_all_ir_assignments($states, $dts)) {
+        my $lhs = $assignment->{lhs};
+        next unless defined($lhs) && !ref($lhs);
+        next unless exists $actor_output_width{$lhs};
+        next if ($assignment->{source_kind} // '') =~ /\Adrive_call_/;
+        $assigned_public_outputs{$lhs} = 1;
+    }
+
+    for my $name (sort keys %assigned_public_outputs) {
+        _push_port(\@ports, \%seen, $name, 'output', $actor_output_width{$name});
+    }
+
+    _push_port(\@ports, \%seen, 'start', 'input', 1);
+    _push_port(\@ports, \%seen, 'done', 'output', 1);
+
+    for my $drive_name (sort keys %{$used_drives || {}}) {
+        my $drive = ($actor->{drives} || {})->{$drive_name} || next;
+        _push_port(\@ports, \%seen, "${drive_name}_start", 'output', 1);
+        for my $param (@{$drive->{params} || []}) {
+            _push_port(\@ports, \%seen, "${drive_name}_$param", 'output',
+                _drive_param_width($actor, $drive_name, $param));
+        }
+    }
+
+    return \@ports;
+}
+
+sub _push_port {
+    my ($ports, $seen, $name, $direction, $width) = @_;
+    return if !defined($name) || ref($name) || !length($name);
+    return if $seen->{$name}++;
+    push @$ports, { name => $name, direction => $direction, width => $width || 1 };
+}
+
+sub _ensure_port {
+    my ($ports, $name, $direction, $width) = @_;
+    for my $port (@$ports) {
+        confess "ISF generated port '$name' conflicts with an existing actor interface port\n"
+            if $port->{name} eq $name;
+    }
+    push @$ports, { name => $name, direction => $direction, width => $width, isf_handoff => 1 };
+}
+
+sub _collect_named_drive_call_names {
+    my ($node, $drives) = @_;
+    my %used;
+    _collect_named_drive_call_names_into($node, $drives || {}, \%used);
+    return %used;
+}
+
+sub _collect_named_drive_call_names_into {
+    my ($node, $drives, $used) = @_;
+    return unless ref($node) eq 'ARRAY';
+
+    if (@$node >= 2
+        && defined($node->[0])
+        && !ref($node->[0])
+        && $node->[0] eq 'drive'
+        && defined($node->[1])
+        && !ref($node->[1])
+        && exists $drives->{$node->[1]})
+    {
+        $used->{$node->[1]} = 1;
+    }
+
+    for my $child (@$node) {
+        _collect_named_drive_call_names_into($child, $drives, $used)
+            if ref($child) eq 'ARRAY';
+    }
+}
+
+sub _register_drive_call_signal_widths {
+    my ($actor, $counters, $used_drives) = @_;
+    for my $drive_name (sort keys %{$used_drives || {}}) {
+        my $drive = ($actor->{drives} || {})->{$drive_name} || next;
+        $counters->{"${drive_name}_start"} = 1;
+        for my $param (@{$drive->{params} || []}) {
+            $counters->{"${drive_name}_$param"} = _drive_param_width($actor, $drive_name, $param);
+        }
+    }
+}
+
+sub _drive_param_width {
+    my ($actor, $drive_name, $param) = @_;
+    my $drive = ($actor->{drives} || {})->{$drive_name} || {};
+    my $width = 1;
+    for my $pair (@{$drive->{body} || []}) {
+        next unless ref($pair) eq 'ARRAY' && @$pair >= 2 && $pair->[1] eq $param;
+        for my $port (@{$actor->{interface}{outputs} || []}) {
+            $width = $port->{width} if $port->{name} eq $pair->[0];
+        }
+    }
+    return $width || 1;
+}
+
+sub _all_ir_assignments {
+    my ($states, $dts) = @_;
+    my @assignments;
+    for my $state (@{$states || []}) {
+        push @assignments, @{$state->{assignments} || []};
+    }
+    for my $dt (@{$dts || []}) {
+        push @assignments, @{$dt->{assignments} || []};
+    }
+    return @assignments;
 }
 
 sub _build_signal_width_map {
@@ -1994,41 +2150,45 @@ sub _rule_trigger_source_name { my ($rule, $target) = @_; "${rule}_${target}" }
 sub _rule_cond { my($self,$w)=@_; return {port=>'1'} unless $w&&ref($w)eq'ARRAY'&&@$w>=2; {port=>$w->[1]} }
 
 sub _build_drive_dts {
-    my ($self, $actor, $dts, $ctrs) = @_;
+    my ($self, $actor, $dts, $ctrs, $local_drive_uses, $extra_drive_sources) = @_;
     my $drives = $actor->{drives} || {};
     for my $name (sort keys %$drives) {
         my $def = $drives->{$name};
         my $body = $def->{body};
         my @params = @{$def->{params}};
+        my @sources;
+
+        push @sources, { prefix => $name, source_kind => 'drive_body' }
+            if !$local_drive_uses || $local_drive_uses->{$name};
+        push @sources, @{$extra_drive_sources->{$name} || []};
+        next unless @sources;
+
         my @assignments;
 
-        # Build a map: formal param -> signal name
-        my %param_signal;
-        for my $p (@params) {
-            $param_signal{$p} = "${name}_${p}";
-            # Infer width from the port this parameter drives
-            my $w = 1;
-            for my $pair (@$body) {
-                next unless ref($pair) eq 'ARRAY' && @$pair >= 2 && $pair->[1] eq $p;
-                for my $port (@{$actor->{interface}{outputs}}) {
-                    $w = $port->{width} if $port->{name} eq $pair->[0];
-                }
+        for my $source (@sources) {
+            my $prefix = $source->{prefix};
+            $ctrs->{"${prefix}_start"} = 1;
+            for my $p (@params) {
+                $ctrs->{"${prefix}_$p"} = _drive_param_width($actor, $name, $p);
             }
-            $ctrs->{$param_signal{$p}} = $w;
+
+            my %param_signal = map { $_ => "${prefix}_$_" } @params;
+            for my $pair (@$body) {
+                next unless ref($pair) eq 'ARRAY' && @$pair >= 2;
+                my $lhs = $pair->[0];
+                my $rhs = $pair->[1];
+                $rhs = $param_signal{$rhs} if exists $param_signal{$rhs};
+                push @assignments, {
+                    lhs         => $lhs,
+                    rhs         => $rhs,
+                    op          => '<-',
+                    guard       => { port => "${prefix}_start" },
+                    source_kind => $source->{source_kind} || 'drive_body',
+                };
+            }
         }
 
-        for my $pair (@$body) {
-            next unless ref($pair) eq 'ARRAY' && @$pair >= 2;
-            my $lhs = $pair->[0];
-            my $rhs = $pair->[1];
-            # Substitute formal params in RHS
-            if (exists $param_signal{$rhs}) {
-                $rhs = $param_signal{$rhs};
-            }
-            push @assignments, { lhs => $lhs, rhs => $rhs, op => '<-', guard => { port => "${name}_start" }, source_kind => 'drive_body' };
-        }
         push @$dts, { name => $name, kind => 'drive', assignments => \@assignments };
-        $ctrs->{"${name}_start"} = 1;
     }
 }
 

@@ -47,8 +47,8 @@ subtest 'valid scalar and expression updates lower as single flopped assignments
 ISF
 
     my $fsm = $result->{files}{'update_boundary.fsm'};
-    like($fsm, qr/\(<- \(out payload\)\)/, 'scalar update lowers as a flopped assignment');
-    like($fsm, qr/\(<- \(out \(\+ payload 1\)\)\)/, 'expression update is formatted as a single RHS expression');
+    like($fsm, qr/\(<- \(out> payload\)\)/, 'scalar update lowers as a flopped assignment');
+    like($fsm, qr/\(<- \(out> \(\+ payload 1\)\)\)/, 'expression update is formatted as a single RHS expression');
 };
 
 subtest 'malformed update clauses fail before scheduled emission' => sub {

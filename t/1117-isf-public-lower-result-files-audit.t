@@ -43,8 +43,8 @@ subtest 'multi-file ISF lower result exposes parent and child files' => sub {
     );
     is_deeply(
         sorted([keys %{$lowered->{files}}]),
-        [qw(child_worker.fsm spawn_parent.fsm)],
-        'multi-file lower result maps parent and spawned child scheduled .fsm basenames',
+        [qw(child_worker.fsm spawn_parent.fsm spawn_parent_top.fsm)],
+        'multi-file lower result maps parent, spawned child, and generated top .fsm basenames',
     );
     like(
         $lowered->{files}{'spawn_parent.fsm'},
@@ -55,6 +55,11 @@ subtest 'multi-file ISF lower result exposes parent and child files' => sub {
         $lowered->{files}{'child_worker.fsm'},
         qr/\A\(\?fsm:child_worker\b/,
         'multi-file lower result stores child scheduled .fsm text',
+    );
+    like(
+        $lowered->{files}{'spawn_parent_top.fsm'},
+        qr/\A\(\?top:spawn_parent_top\b/,
+        'multi-file lower result stores generated top composition .fsm text',
     );
 };
 

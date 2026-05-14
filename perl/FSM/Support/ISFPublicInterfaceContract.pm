@@ -134,7 +134,7 @@ sub build_isf_public_interface_contract {
         actor_shell_rule_shape => isf_public_interface_actor_shell_rule_shape(),
         actor_shell_drive_shape => isf_public_interface_actor_shell_drive_shape(),
         lower_result_presence_keys => isf_public_interface_lower_result_presence_keys(),
-        lower_result_file_map_shape => 'hash reference mapping scheduled .fsm basename to scheduled .fsm source text',
+        lower_result_file_map_shape => 'hash reference mapping .fsm basename to scheduled module or generated composition-top .fsm source text',
         lower_result_file_name_shape => isf_public_interface_lower_result_file_name_shape(),
         lower_result_file_text_shape => isf_public_interface_lower_result_file_text_shape(),
         dt_assignment_operator_family_map => isf_public_interface_dt_assignment_operator_family_map(),
@@ -281,11 +281,12 @@ sub build_isf_public_interface_contract {
             't/1213-isf-schedule-report-compatible-fanin-projection.t',
             't/1214-isf-rejected-conflict-diagnostics.t',
             't/1215-isf-spawn-parameter-binding.t',
+            't/1216-isf-generated-composition-top.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
             'The public in-process seam is the parser/scheduler facade pair, not the raw parser AST or LoweringIR internals.',
-            'The lower(...) result currently stabilizes the files map as scheduled .fsm artifacts; the whole result hash is not yet a broad API.',
+            'The lower(...) result currently stabilizes the files map as scheduled module and generated composition-top .fsm artifacts; the whole result hash is not yet a broad API.',
             'The schedule report stabilizes only the advertised top-level and summary key families for now; wider schema promises must be documented and regression-backed before downstream tools rely on them.',
             'The live human contract documents must evolve in the same slices that change supported ISF syntax, facade behavior, lower result shape, or schedule-report shape.',
         ],
@@ -426,7 +427,7 @@ sub isf_public_interface_cli_schedule_json_success_shape {
 }
 
 sub isf_public_interface_cli_outdir_success_shape {
-    return '--outdir DIR writes scheduled .fsm files by basename into DIR and keeps stderr empty on success';
+    return '--outdir DIR writes lower-result .fsm files by basename into DIR and keeps stderr empty on success';
 }
 
 sub isf_public_interface_cli_hdl_generation_success_shape {
@@ -504,11 +505,11 @@ sub isf_public_interface_lower_result_presence_keys {
 }
 
 sub isf_public_interface_lower_result_file_name_shape {
-    return 'scheduled .fsm basename with no directory components';
+    return '.fsm basename with no directory components';
 }
 
 sub isf_public_interface_lower_result_file_text_shape {
-    return 'scheduled .fsm source text rooted at (?fsm:<basename-stem> ...)';
+    return 'scheduled .fsm source text rooted at (?fsm:<basename-stem> ...) or generated composition-top .fsm text rooted at (?top:<basename-stem> ...)';
 }
 
 sub isf_public_interface_dt_assignment_operator_family_map {

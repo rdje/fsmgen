@@ -43,14 +43,14 @@ ISF
 
     like(
         $fsm,
-        qr/\(<- \(out_packet \(concat header payload crc\)\)\)/,
+        qr/\(<- \(out_packet> \(concat header payload crc\)\)\)/,
         'assemble assigns the target after as',
     );
     unlike($fsm, qr/\(<- \(as /, 'assemble does not treat as as the target');
 
-    like($fsm, qr/\(<= \(out_header \(slice packet 15 12\)\)\)/,  'header slice is exact');
-    like($fsm, qr/\(<= \(out_payload \(slice packet 11 4\)\)\)/,  'payload slice is exact');
-    like($fsm, qr/\(<= \(out_crc \(slice packet 3 0\)\)\)/,       'crc slice is exact');
+    like($fsm, qr/\(<= \(out_header> \(slice packet 15 12\)\)\)/, 'header slice is exact');
+    like($fsm, qr/\(<= \(out_payload> \(slice packet 11 4\)\)\)/, 'payload slice is exact');
+    like($fsm, qr/\(<= \(out_crc> \(slice packet 3 0\)\)\)/,      'crc slice is exact');
     unlike($fsm, qr/HIGH|LOW/, 'known-width extract does not emit placeholder slice bounds');
 };
 
@@ -77,9 +77,9 @@ ISF
 
     my $fsm = lower_source($source, 'extract_from_assembled.fsm');
 
-    like($fsm, qr/\(<= \(out_header \(slice packet 15 12\)\)\)/, 'assembled word width drives first slice');
-    like($fsm, qr/\(<= \(out_payload \(slice packet 11 4\)\)\)/, 'assembled word width drives middle slice');
-    like($fsm, qr/\(<= \(out_crc \(slice packet 3 0\)\)\)/,      'assembled word width drives final slice');
+    like($fsm, qr/\(<= \(out_header> \(slice packet 15 12\)\)\)/, 'assembled word width drives first slice');
+    like($fsm, qr/\(<= \(out_payload> \(slice packet 11 4\)\)\)/, 'assembled word width drives middle slice');
+    like($fsm, qr/\(<= \(out_crc> \(slice packet 3 0\)\)\)/,      'assembled word width drives final slice');
     unlike($fsm, qr/HIGH|LOW/, 'assemble-inferred extract does not emit placeholder slice bounds');
 };
 

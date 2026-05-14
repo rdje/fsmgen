@@ -49,7 +49,7 @@ ISF
 
     my $fsm = $result->{files}{'child_composition_boundary.fsm'};
     like($fsm, qr/\(= \(child_start 1\)\)/, 'blocking do start is emitted');
-    like($fsm, qr/\(= \(worker_start 1\)\)/, 'spawn instance start is emitted');
+    like($fsm, qr/\(= \(worker_start> 1\)\)/, 'spawn instance start is emitted');
     ok($result->{files}{'child.fsm'}, 'spawned child file is emitted');
 };
 

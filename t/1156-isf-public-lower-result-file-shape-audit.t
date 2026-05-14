@@ -82,9 +82,13 @@ sub assert_lower_result_files {
         my $stem = $basename;
         $stem =~ s/\.fsm\z//;
 
-        like($basename, qr/\A[^\/\\]+\.fsm\z/, "$fixture file key is a scheduled .fsm basename");
+        like($basename, qr/\A[^\/\\]+\.fsm\z/, "$fixture file key is a .fsm basename");
         ok(!ref($source), "$fixture $basename source text is scalar");
-        like($source, qr/\A\(\?fsm:\Q$stem\E\b/, "$fixture $basename source root matches basename stem");
+        if ($stem =~ /_top\z/) {
+            like($source, qr/\A\(\?top:\Q$stem\E\b/, "$fixture $basename generated top root matches basename stem");
+        } else {
+            like($source, qr/\A\(\?fsm:\Q$stem\E\b/, "$fixture $basename source root matches basename stem");
+        }
     }
 }
 

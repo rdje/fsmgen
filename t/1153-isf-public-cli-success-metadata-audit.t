@@ -106,6 +106,7 @@ sub assert_outdir_cli {
     is(join('', @{$stderr_buf || []}), '', '--outdir keeps stderr empty');
     ok(-f File::Spec->catfile($outdir, 'spawn_parent.fsm'), '--outdir writes parent scheduled .fsm');
     ok(-f File::Spec->catfile($outdir, 'child_worker.fsm'), '--outdir writes child scheduled .fsm');
+    ok(-f File::Spec->catfile($outdir, 'spawn_parent_top.fsm'), '--outdir writes generated top .fsm');
     ok(-f $hdl_output, '--outdir writes requested HDL output');
 }
 

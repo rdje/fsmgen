@@ -47,7 +47,7 @@ subtest 'valid assemble clause lowers to a concat assignment' => sub {
 ISF
 
     my $fsm = $result->{files}{'assemble_boundary.fsm'};
-    like($fsm, qr/\(<- \(packet \(concat header payload\)\)\)/, 'assemble lowers to concat assignment');
+    like($fsm, qr/\(<- \(packet> \(concat header payload\)\)\)/, 'assemble lowers to concat assignment');
 };
 
 subtest 'malformed assemble clauses fail before scheduled emission' => sub {

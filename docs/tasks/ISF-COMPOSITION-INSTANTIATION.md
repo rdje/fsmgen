@@ -79,13 +79,14 @@ bind through validated public semantics instead of remaining deferred.
   Commit: `ISF-COMPOSITION.3: implement spawn parameter binding`
 
 - ID: `ISF-COMPOSITION.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement generated top/composition handoff for ISF parent/child artifacts.`
   Acceptance: `The covered ISF multi-file output can be consumed by the
   existing generation pipeline to produce a wired parent/child top for the
   agreed fixture set.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax checks; focused public/fixture tests; generated top
+  CLI-to-HDL probe; ci-regression isf --no-book; mdbook build; git diff --check`
+  Commit: `ISF-COMPOSITION.4: implement generated top handoff`
 
 - ID: `ISF-COMPOSITION.5`
   Status: `pending`
@@ -107,7 +108,7 @@ bind through validated public semantics instead of remaining deferred.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-COMPOSITION.4` | `pending` | Spawn parameter metadata is now preserved; the next executable gap is the generated top/composition handoff that applies parent/child wiring and per-instance overrides. |
+| 1 | `ISF-COMPOSITION.5` | `pending` | Generated top handoff is now executable; the next gap is targeted diagnostics and bounded schedule-report metadata for parent/child/instance relationships. |
 
 ## ISF-COMPOSITION.1 Inventory
 
@@ -369,6 +370,56 @@ The generated top that wires parent start outputs, parent done inputs, child
 are validated and preserved in lowerer metadata but are not yet applied to HDL
 child instances.
 
+## ISF-COMPOSITION.4 Generated Top Handoff
+
+`ISF-COMPOSITION.4` implements the concrete generated-top composition handoff
+over scheduled parent and child `.fsm` artifacts for the covered spawned-child
+fixtures.
+
+### Shipped Behavior
+
+- Spawn actors now lower to a deterministic generated `<actor>_top.fsm`
+  composition source in addition to the scheduled parent `<actor>.fsm` and one
+  scheduled child `.fsm` per unique spawned transaction target.
+- The CLI selects the generated top as the HDL entrypoint whenever it is
+  present. `--outdir` materializes the same lower-result file map, including
+  the top, and the normal `.fsm` composition pipeline compiles that top to HDL.
+- The scheduled parent exposes every `instance_start` signal as an output port
+  and every `instance_done` signal as an input port. The generated top wires
+  `parent.instance_start` to `instance.start` and `instance.done` to
+  `parent.instance_done`.
+- Spawned children now return to their start-gated entry state after a
+  terminal state. They do not re-enter the child body until the next `start`
+  pulse.
+- Named drive calls inside spawned children no longer directly expose the
+  actor output they conceptually drive. Instead, the child exposes
+  `<drive>_start` plus one `<drive>_<param>` output per drive parameter.
+- The parent exposes matching per-instance handoff inputs such as
+  `w0_rdata_start` and `w0_rdata_val`. The generated top wires child handoff
+  outputs to those parent handoff inputs.
+- The parent drive DT aggregates local drive calls and spawned-child handoff
+  sources through the actor drive body. For example, a child `rdata` drive
+  becomes parent assignments guarded by `w0_rdata_start`, `w1_rdata_start`,
+  and so on, each selecting the corresponding per-instance payload.
+- The scheduled `.fsm` emitter now marks declared output ports with `>` across
+  all assignment families, so parent start outputs, child drive handoff
+  outputs, and ordinary public output updates remain visible to the composition
+  pipeline.
+- Spawn parameter overrides are applied through generated `?fsmc` parameter
+  override blocks such as `(?fsmc:w0 child_worker (params ...))`, reusing the
+  existing generated-child composition parameter validator and SystemVerilog
+  instance-parameter emission.
+- Child public actor outputs are exposed only when the spawned child assigns
+  them directly as actor outputs. Drive-call-owned actor outputs stay behind
+  the per-instance drive handoff boundary.
+
+### Remaining Boundary
+
+Schedule reports remain parent-scoped. They still do not yet expose bounded
+metadata for generated top name, child files, spawned instances, generated
+handoff links, or applied parameter overrides. That report/diagnostic work is
+the next `ISF-COMPOSITION.5` leaf.
+
 ## Decisions
 
 - `2026-05-14`: This tree owns the ISF-specific generated-child top and spawn
@@ -387,14 +438,18 @@ child instances.
   surface but keeps generated-top application as a separate leaf. The child
   scheduled `.fsm` carries default `+params`, and parent lowerer metadata keeps
   instance-local override lists for `ISF-COMPOSITION.4`.
+- `2026-05-14`: `ISF-COMPOSITION.4` selects a concrete generated `?top`
+  source as the canonical handoff artifact. The `.fsm` text boundary remains
+  the integration point: ISF emits scheduled parent/child sources plus the top,
+  and the existing composition pipeline owns HDL realization.
 
 ## Open Questions
 
-- The canonical implementation artifact may be a concrete generated `?top`
-  source or equivalent structured metadata, but the public behavior is one
-  explicit generated top over the scheduled parent and spawned children.
 - Future symbolic constant support for ISF spawn parameters waits for an
   explicit ISF constant/symbol surface.
+- Schedule-report metadata for generated top, child files, spawned instances,
+  handoff links, and applied parameter overrides remains to be defined and
+  implemented in `ISF-COMPOSITION.5`.
 
 ## Blockers
 
@@ -422,6 +477,13 @@ child instances.
 | `2026-05-14` | `ISF-COMPOSITION.3` | `./bin/ci-regression isf --no-book` | `passed; 123 files, 417 tests` |
 | `2026-05-14` | `ISF-COMPOSITION.3` | `mdbook build docs/book` | `passed` |
 | `2026-05-14` | `ISF-COMPOSITION.3` | `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-COMPOSITION.4` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm; perl -Iperl -c perl/FSM/Scheduler/ISF.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm; perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm; perl -Iperl -c bin/fsmgen; perl -Iperl -c t/1216-isf-generated-composition-top.t` | `passed` |
+| `2026-05-14` | `ISF-COMPOSITION.4` | `prove -l t/1117-isf-public-lower-result-files-audit.t t/1122-isf-public-cli-outdir-lowering-audit.t t/1128-isf-public-multifile-schedule-report-audit.t t/1139-isf-public-lower-result-metadata-audit.t t/1142-isf-public-guidance-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1153-isf-public-cli-success-metadata-audit.t t/1156-isf-public-lower-result-file-shape-audit.t t/1215-isf-spawn-parameter-binding.t t/1216-isf-generated-composition-top.t` | `passed; 10 files, 20 tests` |
+| `2026-05-14` | `ISF-COMPOSITION.4` | `prove -l t/1096-isf-schedule-json-report.t t/1097-isf-start-signal-binding.t t/1099-isf-repeat-data-ops.t t/1100-isf-sample-piggyback.t t/1101-isf-extract-slices.t t/1105-isf-size-deduplication.t t/1106-isf-schedule-json-counter-storage.t t/1111-isf-sample-before-data-ops.t t/1119-isf-deterministic-dt-block-order.t t/1121-isf-public-cli-schedule-report-audit.t t/1168-isf-rule-guard-factoring.t t/1169-isf-rule-shorthand-guard.t t/1177-isf-do-child-done-pulse.t t/1184-isf-child-transaction-target-boundary.t t/1194-isf-drive-body-boundary.t t/1196-isf-complete-clause-boundary.t t/1198-isf-update-clause-boundary.t t/1199-isf-shift-clause-boundary.t t/1200-isf-assemble-clause-boundary.t t/1201-isf-extract-clause-boundary.t t/1204-isf-child-composition-clause-boundary.t t/1207-isf-assignment-provenance-inventory.t t/1210-isf-priority-conflict-resolution.t` | `passed; 23 files, 157 tests` |
+| `2026-05-14` | `ISF-COMPOSITION.4` | `./bin/fsmgen --quiet --outdir /tmp/isf-spawn-parent-cli.* --output /tmp/isf-spawn-parent-cli.*/spawn_parent.sv isf/spawn_parent.isf` | `passed` |
+| `2026-05-14` | `ISF-COMPOSITION.4` | `./bin/ci-regression isf --no-book` | `passed; 124 files, 419 tests` |
+| `2026-05-14` | `ISF-COMPOSITION.4` | `mdbook build docs/book` | `passed` |
+| `2026-05-14` | `ISF-COMPOSITION.4` | `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -431,6 +493,7 @@ child instances.
 | `ISF-COMPOSITION.1` | `ISF-COMPOSITION.1: inventory current handoff gaps` | Records current ISF child/spawn lowering, existing composition entrypoints, unsupported spawn parameters, and exact gaps. |
 | `ISF-COMPOSITION.2` | `ISF-COMPOSITION.2: specify public semantics` | Defines the accepted generated-top handoff, parent/child identity and wiring, spawn parameter syntax, value domain, and rejected cases. |
 | `ISF-COMPOSITION.3` | `ISF-COMPOSITION.3: implement spawn parameter binding` | Validates spawn parameter declarations/overrides, emits child `+params`, and preserves per-instance override metadata for generated-top handoff. |
+| `ISF-COMPOSITION.4` | `ISF-COMPOSITION.4: implement generated top handoff` | Emits the generated top, wires start/done and named-drive handoffs, applies spawn parameter overrides, and compiles spawn fixtures through the composition pipeline. |
 
 ## Changelog
 
@@ -441,3 +504,6 @@ child instances.
   `ISF-COMPOSITION.3` for spawn parameter binding implementation.
 - `2026-05-14`: Completed `ISF-COMPOSITION.3`; current frontier moves to
   `ISF-COMPOSITION.4` for generated-top composition handoff.
+- `2026-05-14`: Completed `ISF-COMPOSITION.4`; current frontier moves to
+  `ISF-COMPOSITION.5` for generated-top diagnostics and bounded
+  schedule-report metadata.

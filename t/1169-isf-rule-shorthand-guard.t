@@ -61,7 +61,7 @@ my $fsm = $result->{files}{'rule_shorthand.fsm'};
 
 like(
     $fsm,
-    qr/\(-always_ready\s+<ready\s+\(<- \(valid 1\)\)\s+\(<1 \(always_ready_main_transfer 1\)\)\s+\)/s,
+    qr/\(-always_ready\s+<ready\s+\(<- \(valid> 1\)\)\s+\(<1 \(always_ready_main_transfer 1\)\)\s+\)/s,
     'shorthand guarded rule lowers to a guarded standalone-DT DTE',
 );
 like(
@@ -71,7 +71,7 @@ like(
 );
 like(
     $fsm,
-    qr/\(-legacy_ready\s+<ready\s+\(<- \(shadow_valid 1\)\)\s+\)/s,
+    qr/\(-legacy_ready\s+<ready\s+\(<- \(shadow_valid> 1\)\)\s+\)/s,
     'long-form guarded rule remains supported through the same guarded-DT DTE form',
 );
 

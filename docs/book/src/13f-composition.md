@@ -42,7 +42,7 @@ body may start with a drive, await, data operation, or other scheduled state.
     (-> read_phase_drive_0)))
 
 (read_phase_done_5
-  (<1 (done 1))
+  (<1 (done> 1))
   (<1 (read_phase_done 1))
   (-> read_phase_idle_0))
 ```
@@ -83,12 +83,10 @@ scheduler does not invent a default instance name for an invalid clause.
   that fires
 Both synchronization forms have focused regressions.
 
-Full composition-top instantiation is not fully shipped yet, but the accepted
-target contract is now defined and tracked in
-[Feature Backlog](14-feature-backlog.md). Spawn parameter declaration,
-validation, scheduled child `+params` emission, and per-instance override
-preservation now ship in the lowering path; applying those overrides to child
-instances waits for the generated top handoff:
+Composition-top instantiation is shipped for the covered spawned-child fixture
+set. Spawn parameter declaration, validation, scheduled child `+params`
+emission, per-instance override preservation, and generated-top application now
+flow through the existing composition pipeline:
 
 - Multi-file spawn actors use an explicit generated top over the scheduled
   parent module and spawned child modules.
@@ -100,6 +98,8 @@ instances waits for the generated top handoff:
 - The scheduled parent exposes `name_start` as an output and `name_done` as an
   input for each spawned instance.
 - Each spawned child exposes `start` as an input and `done` as an output.
+- Named drive calls in spawned children expose per-drive handoff outputs that
+  the top wires back into parent per-instance handoff inputs.
 - After completion, a spawned child returns to its `start`-guarded idle state
   and waits for the next start pulse.
 
@@ -127,7 +127,8 @@ width-flexible, aggregate defaults require compatible aggregate overrides, and
 symbolic constants wait for an explicit ISF constant/symbol surface. A spawned
 child `.fsm` now emits the child transaction defaults in `+params`; parameter
 declarations on non-spawned transactions fail closed; the parent lowerer IR
-preserves per-instance override lists for the later generated-top handoff.
+preserves per-instance override lists, and the generated top applies those
+overrides through `?fsmc` `(params ...)` blocks.
 
 ```lisp
 (parent_main_await_all_4
@@ -157,15 +158,18 @@ spawn_parent.isf
     │
     ▼ LoweringIR
     │
-    ├── child_worker.fsm    (child module with start/done ports)
-    └── spawn_parent.fsm    (parent with per-instance signals)
+    ├── child_worker.fsm       (child module with start/done ports)
+    ├── spawn_parent.fsm       (parent with per-instance handoff signals)
+    └── spawn_parent_top.fsm   (generated composition top wiring parent and children)
 ```
 
 The `--outdir DIR` flag writes all generated `.fsm` files:
 
 ```bash
 ./bin/fsmgen --strict --outdir output/ isf/spawn_parent.isf
-# Writes: output/child_worker.fsm, output/spawn_parent.fsm
+# Writes: output/child_worker.fsm, output/spawn_parent.fsm,
+#         and output/spawn_parent_top.fsm.
+# If --output is also provided, HDL generation uses spawn_parent_top.fsm.
 ```
 
 ## Complete Example

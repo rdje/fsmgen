@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md),
-  whose current frontier is `ISF-COMPOSITION.4`. The completed
+  whose current frontier is `ISF-COMPOSITION.5`. The completed
   `ISF-CONFLICTS` tree is listed in the task-tree completed table.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
   guide for installing the same task-tree tracking workflow in another
@@ -83,6 +83,16 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   and malformed values/duplicates/non-spawned transaction params/parameterized
   `do` forms fail before scheduled artifact emission. `t/1215` covers the
   shipped binding surface.
+- ISF spawned-child lowering now emits a generated `<actor>_top.fsm`
+  composition source for spawn actors and the CLI selects that top as the HDL
+  entrypoint. The generated top wires parent `instance_start` outputs to child
+  `start` inputs, child `done` outputs to parent `instance_done` inputs,
+  child named-drive handoff outputs to parent per-instance inputs, and applies
+  spawn parameter overrides through `?fsmc` `(params ...)` blocks. Scheduled
+  `.fsm` output assignments now carry the `>` output marker across all
+  assignment families so those handoff ports are visible to composition.
+  `t/1216` covers the generated top handoff through `.isf` lowering and
+  CLI-to-HDL generation.
 - ISF `(switch signal (value body...)...)` clauses now validate scalar signals
   and list-form branches before branch expansion. `t/1205` covers valid
   explicit/default branch lowering plus malformed switch forms.

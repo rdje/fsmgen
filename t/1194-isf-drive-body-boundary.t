@@ -58,7 +58,7 @@ ISF
     );
 
     my $fsm = lower_source($source)->{files}{'drive_body.fsm'};
-    like($fsm, qr/\(<- \(out set_out_val\) <set_out_start\)/, 'drive body lowers through the parameter signal');
+    like($fsm, qr/\(<- \(out> set_out_val\) <set_out_start\)/, 'drive body lowers through the parameter signal');
 };
 
 subtest 'malformed drive body entries fail before actor-shell return' => sub {
