@@ -324,6 +324,12 @@ The expression-valued rule conflict/report path is checked by
 so same-expression rule writes appear as compatible fan-in, different
 expression writes fail closed through `isf_conflicting_rule_writes`, and
 priority-resolved expression conflicts project through `priority_resolutions`.
+The disjoint-rule write path is checked by
+[t/1234-isf-disjoint-rule-writes.t](../t/1234-isf-disjoint-rule-writes.t)
+so same-target FIFO-style rule writes are accepted when direct contradictory
+guard literals prove the rules cannot fire in the same cycle, while
+overlapping expression guards still fail closed through
+`isf_conflicting_rule_writes`.
 The rule-trigger target boundary is checked by
 [t/1182-isf-rule-trigger-target-boundary.t](../t/1182-isf-rule-trigger-target-boundary.t)
 so `(trigger transaction)` must name a declared transaction in the same actor.
@@ -746,10 +752,13 @@ transaction in the same actor. This prevents a misspelled rule trigger from
 inventing an otherwise unowned `transaction_start` fan-in path.
 Lowering also performs best-effort static conflict checks for rule data writes:
 provable incompatible rule/rule writes to the same target fail closed, while
-rule/drive same-target overlap is marked internally because compile-time proof
-is not doable in that case. Nonfatal rule/drive overlap is now projected into
-successful schedule-report `compile_issues`; reports with no nonfatal issues
-still keep that array empty.
+same-target rule writes with direct contradictory guard literals are accepted
+as disjoint. This proof is conservative and currently recognizes simple
+signal and negated-signal terms, including conjunctions used by FIFO fire
+predicates. Rule/drive same-target overlap is marked internally because
+compile-time proof is not doable in that case. Nonfatal rule/drive overlap is
+now projected into successful schedule-report `compile_issues`; reports with
+no nonfatal issues still keep that array empty.
 For same-target rule/rule data conflicts, rule-local and actor-level priority
 edges can now select a target-local winner by guarding the lower-priority
 assignment with the inverse higher-priority rule condition. This changes the

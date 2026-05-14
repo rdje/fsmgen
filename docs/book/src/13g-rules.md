@@ -81,6 +81,18 @@ When two rules drive the same target to incompatible values, lowering fails
 closed with `isf_conflicting_rule_writes`; compatible same-target/same-value
 rule writes remain accepted.
 
+The checker also accepts same-target rule writes when their rule guards are
+proved mutually exclusive by direct contradictory literals. For example, a
+push-only FIFO rule guarded by `(& push (! pop) (! full))` and a pop-only FIFO
+rule guarded by `(& pop (! push) (! empty))` cannot both fire because one path
+requires `pop=0` while the other requires `pop=1`, and likewise one path
+requires `push=1` while the other requires `push=0`. That proof is enough for
+the scheduler to avoid priority boilerplate for the covered FIFO-style cases.
+The proof is intentionally conservative: if the guard equations are not
+reduced to direct contradictory signal literals, the pair remains unproved and
+uses the existing compatible fan-in, priority-resolution, or fail-closed
+conflict path.
+
 This check is intentionally best-effort. Rule/drive same-target overlap is
 recorded internally as `isf_unproven_rule_drive_overlap` with
 `proof_status => not_doable` because the current compile-time analysis does

@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF disjoint rule writes for FIFO cases
+- Completed `ISF-LIBRARIES.4.4.2` in
+  [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md).
+- Same-target rule writes are now accepted when the scheduler can prove their
+  rule guards are mutually exclusive through direct contradictory literals,
+  such as `push` versus `(! push)` or `pop` versus `(! pop)`.
+- The proof is intentionally conservative. Guards that are not proved
+  disjoint still use the existing compatible fan-in, priority-resolution, or
+  fail-closed conflict paths.
+- The focused regression uses a depth-4 FIFO-like actor shell with
+  actor-owned storage, write/read pointer registers, occupancy, and the four
+  request cases: idle, push-only, pop-only, and simultaneous push+pop.
+- FIFO modeling remains actor-first: the write and read sides are persistent
+  hardware processes that interact with shared multi-entry storage and
+  pointer state while the design is powered, clocked, and out of reset.
+- The next active R14 frontier is `ISF-LIBRARIES.4.4.3`, proving the complete
+  same-cycle FIFO update matrix on actor-owned storage.
 ## 2026-05-14: ISF expression-valued rule guards
 - Completed `ISF-LIBRARIES.4.4.1` in
   [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md).

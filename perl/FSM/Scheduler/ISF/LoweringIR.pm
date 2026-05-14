@@ -2002,6 +2002,7 @@ sub _apply_rule_priority_resolution {
             for my $right_idx ($left_idx + 1 .. $#$target_records) {
                 my $right = $target_records->[$right_idx];
                 next if _rule_assignment_pair_compatible($left, $right);
+                next if _condition_terms_prove_disjoint($left, $right);
 
                 if (($left->{operator} // '') ne ($right->{operator} // '')) {
                     push @issues, _priority_conflict_issue(
@@ -2220,6 +2221,7 @@ sub _rule_data_assignment_refs {
         next unless ($dt->{kind} // '') eq 'rule';
         my $assignment_index = 0;
         my $rule_condition = _guard_condition_expr($dt->{dte_guard}) // '1';
+        my $rule_condition_terms = $dt->{dte_guard_terms};
         for my $assignment (@{$dt->{assignments} || []}) {
             if (($assignment->{source_kind} // '') eq 'rule_action' && defined $assignment->{lhs}) {
                 my $activation_condition = _combine_condition_exprs(
@@ -2237,6 +2239,7 @@ sub _rule_data_assignment_refs {
                     assignment       => $assignment,
                     rule_condition   => $activation_condition,
                     owner_condition  => $activation_condition,
+                    condition_terms   => $rule_condition_terms,
                     assignment_index => $assignment_index,
                 };
             }
@@ -2396,6 +2399,82 @@ sub _guard_condition_expr {
     return undef;
 }
 
+sub _condition_literal_terms {
+    my ($condition) = @_;
+    return {} unless defined($condition);
+
+    if (!ref($condition)) {
+        return {} if $condition eq '1';
+        return { $1 => 0 } if $condition =~ /\A!([A-Za-z_]\w*)\z/;
+        return { $condition => 1 } if _is_condition_signal_term($condition);
+        return undef;
+    }
+
+    return undef unless ref($condition) eq 'ARRAY' && @$condition;
+    my $head = $condition->[0];
+    return undef unless defined($head) && !ref($head);
+
+    if ($head eq '&') {
+        my %merged;
+        for my $operand (@{$condition}[1 .. $#$condition]) {
+            my $terms = _condition_literal_terms($operand);
+            return undef unless defined $terms;
+            return { __unsat => 1 } if $terms->{__unsat};
+            for my $signal (sort keys %$terms) {
+                next if $signal eq '__unsat';
+                if (exists($merged{$signal}) && $merged{$signal} != $terms->{$signal}) {
+                    return { __unsat => 1 };
+                }
+                $merged{$signal} = $terms->{$signal};
+            }
+        }
+        return \%merged;
+    }
+
+    if (($head eq '!' || $head eq '~') && @$condition == 2) {
+        my $operand = $condition->[1];
+        return { $operand => 0 }
+            if defined($operand) && !ref($operand) && _is_condition_signal_term($operand);
+        if (ref($operand) eq 'ARRAY'
+            && @$operand == 2
+            && defined($operand->[0])
+            && !ref($operand->[0])
+            && ($operand->[0] eq '!' || $operand->[0] eq '~')
+            && defined($operand->[1])
+            && !ref($operand->[1])
+            && _is_condition_signal_term($operand->[1])) {
+            return { $operand->[1] => 1 };
+        }
+        return undef;
+    }
+
+    return undef;
+}
+
+sub _is_condition_signal_term {
+    my ($term) = @_;
+    return defined($term)
+        && !ref($term)
+        && $term =~ /\A[A-Za-z_]\w*(?:\[[^\]]+\])?\z/;
+}
+
+sub _condition_terms_prove_disjoint {
+    my ($left, $right) = @_;
+    my $left_terms = $left->{condition_terms};
+    my $right_terms = $right->{condition_terms};
+
+    return 0 unless ref($left_terms) eq 'HASH' && ref($right_terms) eq 'HASH';
+    return 1 if $left_terms->{__unsat} || $right_terms->{__unsat};
+
+    for my $signal (sort keys %$left_terms) {
+        next if $signal eq '__unsat';
+        next unless exists $right_terms->{$signal};
+        return 1 if $left_terms->{$signal} != $right_terms->{$signal};
+    }
+
+    return 0;
+}
+
 sub _negated_condition_expr {
     my ($condition) = @_;
     $condition = '1' unless defined($condition) && length($condition);
@@ -2504,6 +2583,7 @@ sub _dt_assignment_provenance {
         operator         => $assignment->{op},
         rhs              => $assignment->{rhs},
         domain           => _assignment_domain_hint($assignment, $source_kind),
+        condition_terms   => (($dt->{kind} // '') eq 'rule' ? $dt->{dte_guard_terms} : undef),
         assignment_index => $assignment_index,
         priority_suppressed_by => _assignment_priority_suppressed_by($assignment),
         resource_suppressed_by => _assignment_resource_suppressed_by($assignment),
@@ -2797,6 +2877,7 @@ sub _build_conflict_issues {
             my $right = $data_records[$right_idx];
             next unless ($left->{target} // '') eq ($right->{target} // '');
             next if _compatible_record_pair($left, $right);
+            next if _condition_terms_prove_disjoint($left, $right);
             next if _priority_resolved_record_pair($left, $right);
             next if _resource_resolved_record_pair($left, $right);
 
@@ -3036,6 +3117,7 @@ sub _build_rules {
 
     for my $r (@{$actor->{rules} || []}) {
         my $c = $self->_rule_cond($r->{when});
+        my $terms = _rule_cond_terms($r->{when});
         my @a;
 
         for my $ac (@{$r->{actions}}) {
@@ -3057,7 +3139,13 @@ sub _build_rules {
             }
         }
 
-        push @d, { name => $r->{name}, kind => 'rule', dte_guard => $c, assignments => \@a };
+        push @d, {
+            name            => $r->{name},
+            kind            => 'rule',
+            dte_guard       => $c,
+            dte_guard_terms => $terms,
+            assignments     => \@a,
+        };
     }
 
     for my $target (sort keys %fanin_by_transaction) {
@@ -3079,6 +3167,11 @@ sub _rule_cond {
     return ref($w->[1])
         ? { expr => _format_isf_expr($w->[1]) }
         : { port => $w->[1] };
+}
+sub _rule_cond_terms {
+    my ($w) = @_;
+    return {} unless $w && ref($w) eq 'ARRAY' && @$w >= 2;
+    return _condition_literal_terms($w->[1]);
 }
 
 sub _build_drive_dts {

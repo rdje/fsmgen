@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF disjoint rule writes
+- Active R14 task-tree slice: `ISF-LIBRARIES.4.4.2` is complete.
+- Same-target rule writes are accepted when rule guards contain direct
+  contradictory literals proving the guarded assignments cannot fire in the
+  same cycle.
+- The regression fixture is depth 4 and includes actor-owned storage,
+  write/read pointer registers, occupancy, and the four FIFO request cases.
+- Unproved overlaps remain conservative: compatible fan-in, priority
+  resolution, or fail-closed conflict diagnostics still handle them.
+- The next active R14 frontier is `ISF-LIBRARIES.4.4.3`, the complete
+  same-cycle FIFO update matrix on actor-owned storage.
+
 ## 2026-05-14: R14 — ISF expression-valued rule guards
 - Active R14 task-tree slice: `ISF-LIBRARIES.4.4.1` is complete.
 - Rule guards now accept scalar or list-expression conditions in shorthand and

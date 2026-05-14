@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF disjoint rule writes
+- Completed `ISF-LIBRARIES.4.4.2` by accepting same-target rule writes when
+  rule guards are proved mutually exclusive through direct contradictory
+  literals.
+- The rule conflict checker now skips incompatible same-target rule pairs when
+  one guard requires a signal and the other requires its negation, for example
+  `push` versus `(! push)` or `pop` versus `(! pop)`.
+- The proof is conservative and local to simple guard literals. Unproved
+  overlaps continue through compatible fan-in, priority resolution, or the
+  existing `isf_conflicting_rule_writes` fail-closed diagnostic.
+- Added [t/1234-isf-disjoint-rule-writes.t](t/1234-isf-disjoint-rule-writes.t)
+  with a depth-4 FIFO-like actor shell, actor-owned bank storage, write/read
+  pointer registers, occupancy, and idle, push-only, pop-only, and
+  simultaneous push+pop rule cases.
+- The active R14 PNT frontier advances to `ISF-LIBRARIES.4.4.3`.
 ### R14 — ISF expression-valued rule guards
 - Completed `ISF-LIBRARIES.4.4.1` by widening rule guards from scalar-only
   conditions to scalar-or-list expressions.

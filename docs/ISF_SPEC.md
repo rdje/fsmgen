@@ -328,13 +328,15 @@ with `library`, `alias`, `export`, `kind`, `instance`, `module`,
 `library_name`, `parent_name`, and `width`; clock/reset bindings use JSON null
 for `library_name`, and reset/clock width is `1`.
 
-Current boundary: `ISF-LIBRARIES.4.3` resolves reusable actors, validates
+Current boundary: `ISF-LIBRARIES.4.4.2` resolves reusable actors, validates
 parameters and bindings, emits child scheduled `.fsm` artifacts, wires library
 actor instances into generated tops for same-name system ports, reaches
 SystemVerilog generation for the covered generated-top path, reports bounded
 provenance, records the real FIFO requirements before any FIFO fixture is
-shipped, adds the first actor-owned storage declaration surface, and lets rule
-guards be scalar or list expressions for direct FIFO fire predicates.
+shipped, adds the first actor-owned storage declaration surface, lets rule
+guards be scalar or list expressions for direct FIFO fire predicates, and
+accepts same-target rule writes when direct contradictory guard literals prove
+that the writes cannot fire in the same cycle.
 
 No FIFO library fixture is shipped yet. A depth-1 element is not considered a
 FIFO for this library catalog; it is a register/holding element and would hide
@@ -354,6 +356,15 @@ push and pop request arrive in the same cycle. The storage primitive needed
 for that target is now available as actor-owned fixed storage:
 `(register name (width N))` for pointer/occupancy state and
 `(bank name (width N) (depth 4))` for the four data entries.
+Hardware components modeled by ISF are persistent regions, not software
+processes that die when work is done. Actors, transactions, DTs, and rules can
+be inactive, but while the design is powered, clocked, and released from reset
+their logic remains present. FIFO write and read behavior should therefore be
+modeled as concurrently evaluable actor logic that interacts with shared
+multi-entry storage. The write pointer names the entry that the next accepted
+push writes; the read pointer names the entry that the next accepted pop
+reads; for the first depth-4 target both pointers wrap from entry 3 back to
+entry 0.
 Parameter-driven interface widths, arbitrary-depth memory-backed FIFO
 generation beyond the first `DEPTH=4` fixture, automatic non-zero reset values
 such as empty=1, same-cycle FIFO update semantics, reusable FIFO library
@@ -1045,7 +1056,13 @@ Current lowering:
   check before scheduled `.fsm` text is treated as valid. Two rules that drive
   the same target to incompatible values fail closed with
   `isf_conflicting_rule_writes`; compatible same-target/same-value rule writes
-  remain accepted. Rule/drive overlap is tracked internally as
+  remain accepted. The checker also accepts same-target rule writes when their
+  rule guards contain a direct contradictory literal, such as `push` versus
+  `(! push)` or `pop` versus `(! pop)`, proving that the assignments cannot
+  fire in the same cycle. This disjointness proof is intentionally
+  conservative; guards that are not proved disjoint still use the existing
+  compatible fan-in, priority-resolution, or fail-closed conflict paths.
+  Rule/drive overlap is tracked internally as
   `isf_unproven_rule_drive_overlap` with `proof_status => not_doable` because
   that compile-time proof is not doable in the current analysis.
 - Rule-local `(priority over other_rule)` and actor-level
@@ -1569,17 +1586,18 @@ Focused tests:
 - [t/1231-isf-library-generated-top.t](../t/1231-isf-library-generated-top.t)
 - [t/1232-isf-actor-storage-declarations.t](../t/1232-isf-actor-storage-declarations.t)
 - [t/1233-isf-rule-expression-guards.t](../t/1233-isf-rule-expression-guards.t)
+- [t/1234-isf-disjoint-rule-writes.t](../t/1234-isf-disjoint-rule-writes.t)
 
 ## 12. Explicitly Deferred
 
 - Reusable ISF library behavior beyond the shipped resolver/review-artifact,
   same-name generated-top, actor-owned fixed-storage, and expression-valued
-  rule-guard slices: disjoint-rule proof for same-target FIFO updates,
-  same-cycle FIFO read/write update semantics, the real reusable FIFO actor
-  fixture, standalone transaction/drive exports, symbolic constants, derived
-  parameter expressions, parameter-derived storage dimensions, clock/reset
-  name remapping, memory-array backend emission, and library actors that
-  import other libraries.
+  rule-guard/disjoint-rule slices: complete same-cycle FIFO read/write update
+  semantics, the real reusable FIFO actor fixture, standalone
+  transaction/drive exports, symbolic constants, derived parameter
+  expressions, parameter-derived storage dimensions, clock/reset name
+  remapping, memory-array backend emission, and library actors that import
+  other libraries.
 - Old `(handshake ...)` semantics beyond validated ignored compatibility
   parsing.
 - The removed `(assign ...)` action keyword; authored transaction uses fail

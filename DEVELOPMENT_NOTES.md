@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF disjoint rule writes
+- The FIFO work treats ISF actors, transactions, DTs, and rules as hardware
+  regions. They come into existence with the powered, clocked design after
+  reset release and can become inactive, but they are not software processes
+  that terminate. This is why FIFO push and pop behavior must be represented
+  as concurrently evaluable actor logic.
+- The first disjointness proof is deliberately syntactic. If two rule guards
+  carry contradictory signal literals on the same path, the corresponding
+  same-target writes cannot fire in the same cycle and do not need priority
+  boilerplate. Anything more subtle remains unproved until a stronger boolean
+  proof engine is introduced.
+- The depth-4 FIFO target now has a clearer model: one persistent actor owns
+  the multi-entry data storage, write pointer, read pointer, occupancy, and
+  flags. The write process uses `wr_ptr` as the next push location; the read
+  process uses `rd_ptr` as the next pop location. Both pointers wrap after the
+  maximum entry. The next slice must prove that update matrix over the current
+  actor-owned storage surface.
+- Keeping the proof in the scheduler conflict path preserves the existing
+  scheduled `.fsm` review contract. The emitted rule DTs still show the
+  authored guards; the checker simply avoids rejecting pairs that it can
+  prove mutually exclusive.
 ## 2026-05-14: ISF expression-valued rule guards
 - Rules are the natural ISF carrier for same-cycle FIFO fire predicates because
   rules lower as non-state DTs rather than ordered transaction states. Widening

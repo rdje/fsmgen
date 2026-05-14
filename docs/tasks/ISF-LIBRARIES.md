@@ -154,7 +154,7 @@ reusable ISF design intent, not only scalar constants or types.
   t/1183-ci-regression-tier-selection.t`;
   `./bin/ci-regression isf --no-book`; `mdbook build docs/book`;
   `git diff --check`
-  Commit: `pending`
+  Commit: `ISF-LIBRARIES.4.3: add actor storage declarations`
 
 - ID: `ISF-LIBRARIES.4.4`
   Status: `active`
@@ -181,17 +181,20 @@ reusable ISF design intent, not only scalar constants or types.
   t/1144-isf-public-tested-by-metadata-audit.t
   t/1183-ci-regression-tier-selection.t`; `./bin/ci-regression isf --no-book`;
   `mdbook build docs/book`; `git diff --check`
-  Commit: `pending`
+  Commit: `ISF-LIBRARIES.4.4.1: support rule expression guards`
 
 - ID: `ISF-LIBRARIES.4.4.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Accept provably disjoint FIFO rule write cases.`
   Acceptance: `The scheduler can prove the four FIFO request-case rules are
   mutually exclusive for same-target state updates, accepts those disjoint
   rule writes without priority boilerplate, and still rejects genuinely
   overlapping same-target rule data writes.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `prove -I perl t/1234-isf-disjoint-rule-writes.t
+  t/1144-isf-public-tested-by-metadata-audit.t
+  t/1183-ci-regression-tier-selection.t`; `./bin/ci-regression isf
+  --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-LIBRARIES.4.4.2: accept disjoint rule writes`
 
 - ID: `ISF-LIBRARIES.4.4.3`
   Status: `pending`
@@ -236,7 +239,7 @@ reusable ISF design intent, not only scalar constants or types.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-LIBRARIES.4.4.2` | `pending` | Expression-valued rule guards exist; the scheduler still needs disjoint-rule conflict proof before the FIFO four-case update matrix can drive shared storage without priority boilerplate. |
+| 1 | `ISF-LIBRARIES.4.4.3` | `pending` | Disjoint same-target rule writes are accepted; the next slice needs to prove the complete FIFO same-cycle update matrix on actor-owned storage. |
 
 ## Design Notes
 
@@ -244,6 +247,12 @@ reusable ISF design intent, not only scalar constants or types.
   cycles: storage array, write pointer, read pointer, occupancy, flags, and
   reset behavior. Enqueue, dequeue, flush, or status-probe behaviors may be
   transactions or callable operations on that actor.
+- Hardware components in ISF are persistent regions, not software processes
+  that can be killed after doing work. Actors, transactions, DTs, and rules
+  can be inactive, but while the design is powered, clocked, and released from
+  reset, their logic remains present. FIFO write and read behavior should
+  therefore be modeled as concurrently evaluable actor logic around shared
+  storage and pointer state.
 - For the reusable library catalog, a depth-1 placeholder is not considered a
   FIFO. It may be useful as a register slice or skid/holding element, but the
   first FIFO fixture must be a 4-entry FIFO and cover the associated pointer
@@ -262,6 +271,10 @@ reusable ISF design intent, not only scalar constants or types.
   review target for storage indexing, 2-bit read/write pointer wrap, occupancy
   values 0 through 4, full/empty flag derivation, and same-cycle push/pop
   updates without waiting for arbitrary-depth parameter elaboration.
+- `wr_ptr` names the storage entry that the next accepted push writes, and
+  `rd_ptr` names the storage entry that the next accepted pop reads. For the
+  depth-4 fixture both are 2-bit pointers and wrap from entry 3 back to entry
+  0.
 - The first actor-owned storage surface is shipped as a singleton
   `(storage ...)` actor clause. `(register name (width N))` declares fixed
   internal state such as `rd_ptr`, `wr_ptr`, or `occupancy`.
@@ -282,6 +295,11 @@ reusable ISF design intent, not only scalar constants or types.
   expressions, for example `(& push (! pop) (! full))`, so the FIFO fire
   predicates can be authored directly instead of materializing one scalar
   condition per case.
+- The static rule conflict checker now accepts same-target rule writes when
+  their rule guards have a direct contradictory literal, such as `pop` versus
+  `(! pop)` or `push` versus `(! push)`. This is intentionally conservative:
+  guards that are not proved disjoint still use the existing conflict or
+  priority paths.
 - A library should be reusable source intent, not generated HDL pasted into a
   design. The imported definition should still lower through scheduled `.fsm`
   so users can inspect the exact cycle-level artifact.
@@ -645,10 +663,10 @@ Remaining boundary:
 ## Blockers
 
 - The real FIFO fixture is blocked on missing ISF expressiveness: actor-owned
-  indexed storage, pointer/occupancy state for the first `DEPTH=4` target,
-  parameter-driven widths/depths beyond that bounded literal target,
-  non-zero reset-value policy, and same-cycle
-  two-port update lowering.
+  indexed storage access, complete same-cycle two-port update lowering,
+  parameter-driven widths/depths beyond the bounded `DEPTH=4` target, and
+  non-zero reset-value policy. Fixed actor-owned storage declarations and
+  pointer/occupancy register declarations are now shipped.
 
 ## Verification Log
 
@@ -664,6 +682,9 @@ Remaining boundary:
 | `2026-05-14` | `ISF-LIBRARIES.4.1` | `./bin/ci-regression isf --no-book` | `passed; 139 files, 472 tests` |
 | `2026-05-14` | `ISF-LIBRARIES.4.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-LIBRARIES.4.2` | `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-LIBRARIES.4.3` | `prove -I perl t/1232-isf-actor-storage-declarations.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1148-isf-public-storage-metadata-audit.t t/1160-isf-public-actor-shell-value-shape-audit.t t/1165-isf-public-actor-shell-timing-shape-audit.t t/1192-isf-singleton-actor-clause-boundary.t t/1183-ci-regression-tier-selection.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-LIBRARIES.4.4.1` | `prove -I perl t/1233-isf-rule-expression-guards.t t/1166-isf-public-actor-shell-rule-shape-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-LIBRARIES.4.4.2` | `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -I perl t/1234-isf-disjoint-rule-writes.t t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed; focused 3 files, 9 tests; ISF tier 142 files, 479 tests` |
 
 ## Commit Log
 
@@ -675,6 +696,9 @@ Remaining boundary:
 | `ISF-LIBRARIES.3` | `ISF-LIBRARIES.3: implement library import resolution` | Parser/lowerer resolve exported library actors from source-dir/FSMLIB/cwd roots, emit specialized child scheduled `.fsm`, and project `library_uses` report metadata. |
 | `ISF-LIBRARIES.4.1` | `ISF-LIBRARIES.4.1: wire library generated tops` | Generated top wiring for resolved library actor instances; same-name system ports use auto-wiring and remapping fails closed. |
 | `ISF-LIBRARIES.4.2` | `ISF-LIBRARIES.4.2: specify real FIFO requirements` | Rejected a depth-1 placeholder as a FIFO, captured same-cycle push/pop semantics, and split missing storage/concurrency support into follow-up leaves. |
+| `ISF-LIBRARIES.4.3` | `ISF-LIBRARIES.4.3: add actor storage declarations` | Singleton `(storage ...)` actor clauses with fixed-width registers and fixed-depth scalarized banks for the first depth-4 FIFO target. |
+| `ISF-LIBRARIES.4.4.1` | `ISF-LIBRARIES.4.4.1: support rule expression guards` | Scalar or list-expression rule guards lower once as non-state DT DTEs for direct FIFO fire predicates. |
+| `ISF-LIBRARIES.4.4.2` | `ISF-LIBRARIES.4.4.2: accept disjoint rule writes` | Conservative direct-literal disjointness proof accepts FIFO-style same-target rule writes without priority boilerplate while preserving fail-closed overlap diagnostics. |
 
 ## Changelog
 
@@ -692,3 +716,9 @@ Remaining boundary:
   transaction `when` is blocking control flow rather than same-cycle port
   concurrency, and the real fixture is blocked on storage and concurrent
   update support.
+- `2026-05-14`: Added actor-owned storage declarations for fixed registers
+  and fixed-depth banks, then widened rule guards to scalar-or-expression
+  predicates so FIFO fire cases can be authored directly.
+- `2026-05-14`: Accepted conservative disjoint same-target rule writes when
+  direct contradictory guard literals prove FIFO-style request cases cannot
+  fire together.

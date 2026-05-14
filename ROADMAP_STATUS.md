@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md), whose current
-  frontier is `ISF-LIBRARIES.4.4.2`. The public-contract tree remains
+  frontier is `ISF-LIBRARIES.4.4.3`. The public-contract tree remains
   cross-cutting and should not displace feature delivery unless the selected
   feature changes a public surface. The completed
   `ISF-SCHEDULE-REPORTS`, `ISF-DATA-WIDTHS`, `ISF-STAGES-CONTRACTS`,
@@ -130,6 +130,17 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   SystemVerilog generation. This enables direct FIFO fire predicates such as
   `(& push (! pop) (! full))`. The active frontier advances to
   `ISF-LIBRARIES.4.4.2`.
+- `ISF-LIBRARIES.4.4.2` is complete. Same-target rule writes are now accepted
+  when their rule guards are proved disjoint by direct contradictory literals,
+  such as `push` versus `(! push)` or `pop` versus `(! pop)`. The proof is
+  conservative: unproved overlaps still take the existing compatible fan-in,
+  priority-resolution, or fail-closed conflict paths. The focused fixture uses
+  a depth-4 FIFO-like actor shell with actor-owned storage, write/read pointer
+  registers, occupancy, and idle, push-only, pop-only, and push+pop rule
+  cases. Hardware-process wording is now explicit for FIFO work: actors,
+  transactions, DTs, and rules model persistent hardware regions that can be
+  inactive but do not die while powered, clocked, and out of reset. The active
+  frontier advances to `ISF-LIBRARIES.4.4.3`.
 - `ISF-RESOURCE-PRIORITY.1` is complete. The current inventory records that
   `(resources ...)` is validated metadata only, accepted arbiters are
   `priority` and `round_robin`, and successful resource arbitration is not yet
