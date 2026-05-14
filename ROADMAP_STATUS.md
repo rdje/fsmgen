@@ -13,7 +13,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree remains
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md),
-  whose current frontier is `ISF-CONFLICTS.1`.
+  whose current frontier is `ISF-CONFLICTS.2` after completing the current
+  behavior/conflict-domain inventory.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
   guide for installing the same task-tree tracking workflow in another
   project.
@@ -4352,9 +4353,9 @@ Left:
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the `ISF-CONFLICTS` task tree when selecting the ISF conflict-resolution
-  feature path; the current frontier is `ISF-CONFLICTS.1`, which inventories
-  current behavior and names conflict domains before policy or implementation
-  work starts.
+  feature path; the current frontier is `ISF-CONFLICTS.2`, which specifies
+  deterministic merge policy for compatible fan-in from the completed current
+  behavior inventory.
 - Before any future ISF implementation, diagnostics, fixture, contract, or
   documentation slice, attach the work to the relevant active ISF objective
   tree or create a new tree under `docs/tasks/` if a new objective family is

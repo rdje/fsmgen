@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF conflict-domain inventory
+- `ISF-CONFLICTS.1` deliberately stopped at inventory rather than jumping into
+  code. Same-target conflict policy needs exact vocabulary because ISF has
+  several semantically different assignment families that all become ordinary
+  scheduled `.fsm` assignments.
+- Rule-trigger fan-in is the current compatible-merge precedent: the lowerer
+  creates one `<rule>_<transaction>` `<1` pulse source per triggering rule,
+  then emits one combinational `<transaction>_trigger_fanin` DT that ORs those
+  sources into `<transaction>_start`.
+- That precedent should not be generalized blindly. Rule output assignments,
+  drive body assignments, completion pulses, sample aliases, generated helper
+  storage, and child/transaction starts have different timing and ownership
+  expectations.
+- The lowerer currently stores assignment arrays and the emitters render them;
+  the schedule report counts DT assignments. None of those layers currently
+  owns a source-aware same-target conflict registry. Future policy and
+  diagnostics should be built at scheduler/IR level before emitted `.fsm` is
+  treated as signoff evidence.
 ## 2026-05-14: R14 objective task-tree coverage
 - The R14 objective backlog is now represented as active task trees instead of
   one flat "left" list. This gives every ongoing or unresolved ISF objective a

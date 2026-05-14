@@ -49,13 +49,13 @@ transaction start input.
   `ISF-CONFLICTS.7`
 
 - ID: `ISF-CONFLICTS.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Inventory current conflict behavior and define conflict domains.`
   Acceptance: `Existing scheduler/emitter behavior is inspected, current
   accepted/rejected multi-drive shapes are listed, and conflict domains are
   named in this task file before implementation work starts.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `source/test inspection complete; git diff --check passed`
+  Commit: `ISF-CONFLICTS.1: inventory current conflict domains`
 
 - ID: `ISF-CONFLICTS.2`
   Status: `pending`
@@ -114,7 +114,110 @@ transaction start input.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-CONFLICTS.1` | `pending` | The implementation policy must be based on the current scheduler/emitter behavior and exact conflict-domain vocabulary. |
+| 1 | `ISF-CONFLICTS.2` | `pending` | The current behavior inventory is complete; the next executable step is to turn that baseline into deterministic merge policy for compatible fan-in. |
+
+## Current Behavior Inventory
+
+`ISF-CONFLICTS.1` inspected the current scheduler, `.fsm` emitter, schedule
+JSON emitter, parser boundaries, and focused rule/drive/complete tests before
+any new conflict implementation. The implementation baseline is:
+
+- `perl/FSM/Scheduler/ISF/LoweringIR.pm` builds state assignment arrays and
+  non-state DT blocks. It records assignment `lhs`, `rhs`, `op`, and optional
+  guard metadata, but it does not maintain a central same-target conflict
+  registry.
+- `perl/FSM/Scheduler/ISF/Emitter/FSM.pm` renders those assignment arrays in
+  scheduled `.fsm` form. Rule DT assignments can be grouped by assignment-local
+  guard, but the emitter does not diagnose multiple assignments to the same
+  `lhs`.
+- `perl/FSM/Scheduler/ISF/Emitter/JSON.pm` reports DT names, kinds, and
+  assignment counts. It does not expose per-assignment ownership, target
+  domains, fan-in provenance beyond DT names, or conflict metadata.
+- `perl/FSM/Adapter/ISF/Parser.pm` rejects malformed public syntax and several
+  namespace collisions, but it does not reject same-cycle semantic conflicts
+  between otherwise valid actions.
+
+Current accepted or intentionally generated shapes:
+
+- Multiple rules may trigger the same transaction. Each `(trigger Tk)` inside
+  rule `Rj` lowers to a distinct one-cycle delayed-pulse source named
+  `Rj_Tk`; a generated combinational `Tk_trigger_fanin` DT ORs all such
+  sources into `Tk_start`. This is the one explicit compatible fan-in
+  precedent in the current implementation.
+- A rule's non-trigger `(port value)` action lowers to a guarded rule DT action
+  that flops `port` with `<-`. The parser accepts only scalar values today.
+  There is no current ISF-level check that two simultaneously enabled rules
+  drive the same `port`.
+- Named drive definitions lower to non-state DTs. Each drive body assignment is
+  emitted as `<- (lhs rhs)` guarded by the drive's `name_start` signal, with
+  parameter actuals routed through generated `name_param` carriers. The parser
+  checks drive names, parameter names, and body entry shape, but not duplicate
+  body targets or same-target overlap between different drive DTs.
+- Transaction-local `(sample port as name)` captures and extract field
+  captures lower with `<=`, so the sample alias names the D input and can be
+  observed in the same cycle by following state-DT logic. No global same-alias
+  ownership policy exists today.
+- `(complete port)` and timeout terminal paths lower completion outputs with
+  `<1`, creating a one-cycle delayed pulse. Child completion handshakes also
+  use `<1` for generated `child_done` signals. There is no general check that
+  user-authored drive/rule paths do not also target the same completion port.
+- `(do child)` and `(spawn child as instance)` emit ordinary combinational
+  start assignments to `child_start` or `instance_start`; these direct
+  transaction-control assignments are not currently merged through the
+  rule-trigger fan-in mechanism.
+- Watchdog, latency, repeat, child-handshake, drive-parameter, and rule-trigger
+  helper signals are generated as ordinary scheduler-owned targets. Their
+  storage widths and report summaries are inferred, but ownership is not yet
+  represented as a conflict domain in schedule JSON.
+
+Current rejected shapes and boundaries:
+
+- Duplicate actor-local transaction names, rule names, drive names, actor
+  phase names, actor stage names, and interface port names are rejected.
+- Singleton actor clauses `(clock ...)`, `(reset ...)`, `(watchdog ...)`,
+  `(interface ...)`, and `(resources ...)` fail closed when repeated.
+- Rule action shapes are limited to scalar `(port value)`,
+  `(trigger transaction)`, and `(priority over other_rule)`. Unknown trigger
+  targets and unknown rule-priority targets are rejected.
+- Actor-level `(priority lhs over rhs)` targets must resolve to declared rules
+  or transactions. Resource entries must use
+  `(resource name (arbiter priority|round_robin))` and duplicate resources are
+  rejected.
+- Drive body entries are limited to scalar `(port value)` pairs, drive
+  parameter names must be scalar and unique per drive, duplicate drive
+  definitions are rejected, and known drive calls must match declared arity.
+- `(complete port)`, `(sample port as name)`, `(do transaction)`,
+  `(spawn transaction as instance)`, sync, repeat, switch, when, data-operation,
+  and child-target forms have focused shape validation, but those checks are
+  syntax/target checks, not same-target conflict checks.
+
+Conflict domains named for the next policy slices:
+
+- Transaction start domain: `Tk_start` requests, per-rule `Rj_Tk` trigger
+  sources, generated `Tk_trigger_fanin` DTs, and direct `do`/`spawn` start
+  assignments.
+- Public output/data-drive domain: interface outputs and user-visible storage
+  driven by rule actions, named drive bodies, inline transaction drives,
+  updates, shifts, assembles, and extracts.
+- Completion/done domain: `(complete port)` pulses, timeout completion pulses,
+  generated child-done pulses, and any author path that targets the same done
+  signal.
+- Sample/alias capture domain: `(sample port as name)` and extract-field
+  captures that use `<=` D-input naming and may be consumed by following state
+  logic.
+- Generated helper/storage domain: watchdog counters, latency counters and
+  error flags, repeat counters, drive parameter carriers, child start/done
+  signals, and rule-trigger source pulses.
+- Resource/priority domain: parser-carried `(resources ...)`,
+  actor-level `(priority lhs over rhs)`, and rule-local
+  `(priority over other_rule)` metadata that is validated today but not yet
+  enforced as arbitration.
+
+The key gap is therefore explicit: ISF lowering currently accumulates
+assignments and relies on downstream `.fsm` semantics for most same-target
+cases. The conflict work must introduce scheduler-level ownership/conflict
+tracking so compatible fan-in is deliberate and incompatible same-cycle drives
+fail closed with targeted diagnostics.
 
 ## Decisions
 
@@ -124,6 +227,10 @@ transaction start input.
 - `2026-05-14`: The existing rule-trigger fan-in implementation remains a
   compatible fan-in precedent, not a license to silently merge every same-target
   drive.
+- `2026-05-14`: `ISF-CONFLICTS.1` established that rule-trigger fan-in is the
+  only explicit compatible same-target merge path in the current ISF lowerer.
+  Other same-target cases are accepted or rejected by narrower syntax/namespace
+  boundaries, not by a general ISF conflict model.
 
 ## Open Questions
 
@@ -143,13 +250,18 @@ transaction start input.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-14` | `ISF-CONFLICTS` | `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.1` | Source/test inspection of `LoweringIR`, scheduled `.fsm` emitter, schedule JSON emitter, parser boundaries, and focused ISF rule/drive/complete tests | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.1` | `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-CONFLICTS` | `Docs: formalize repo-local task tree` | Initial tree creation is part of the repo-local task-tree workflow slice. |
+| `ISF-CONFLICTS.1` | `ISF-CONFLICTS.1: inventory current conflict domains` | Records the inspected current behavior and names conflict domains before policy/implementation work. |
 
 ## Changelog
 
 - `2026-05-14`: Created the active ISF conflict-resolution task tree.
+- `2026-05-14`: Completed `ISF-CONFLICTS.1` inventory; current frontier moves
+  to `ISF-CONFLICTS.2` for compatible fan-in merge policy.

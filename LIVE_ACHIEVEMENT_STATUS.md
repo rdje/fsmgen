@@ -2,12 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF conflict-domain inventory
+- Active R14 task-tree slice: `ISF-CONFLICTS.1` is complete in
+  [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md).
+- The current scheduler baseline now has a documented inventory: rule-trigger
+  fan-in is the only deliberate compatible same-target merge path, and other
+  same-target assignment families still need explicit policy/diagnostics.
+- The next `ISF-CONFLICTS` frontier is `ISF-CONFLICTS.2`, which specifies
+  deterministic merge policy for compatible fan-in before implementation.
+
 ## 2026-05-14: R14 — ISF objective task-tree coverage
 - Active R14 tracking slice: all currently documented ongoing/unresolved ISF
   objective families now have active task trees and current-frontier leaves
   under `docs/tasks/`.
-- `ISF-CONFLICTS.1` remains the first active frontier because same-cycle
-  conflict semantics informs the resource/priority and rule-action objectives.
+- `ISF-CONFLICTS` remains the first active tree because same-cycle conflict
+  semantics informs the resource/priority and rule-action objectives.
 - Additional trees now cover composition/spawn, resource/priority, rule
   actions, stages/contracts, data widths, schedule reports, fixtures,
   compatibility, and public contract synchronization.
@@ -36,8 +45,8 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   index; [docs/tasks/TEMPLATE.md](docs/tasks/TEMPLATE.md) is the reusable
   top-level task template.
 - [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md)
-  is the first active tree and sets `ISF-CONFLICTS.1` as the next frontier
-  leaf for ISF same-cycle conflict-semantics work.
+  is the first active tree and originally set `ISF-CONFLICTS.1` as the first
+  frontier leaf for ISF same-cycle conflict-semantics work.
 
 ## 2026-05-14: Book — feature backlog consolidation
 - Active docs slice: not-fully-shipped, deferred, future-work, and not-yet

@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF conflict-domain inventory
+- Completed `ISF-CONFLICTS.1` in
+  [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md)
+  by inspecting the ISF lowerer, scheduled `.fsm` emitter, schedule JSON
+  emitter, parser boundaries, and focused rule/drive/complete tests.
+- Recorded the current accepted baseline: rule triggers to the same
+  transaction use per-rule delayed-pulse sources plus a generated OR fan-in DT,
+  while broader same-target assignments are not governed by a general ISF
+  conflict model yet.
+- Named the conflict domains that future slices must handle: transaction
+  starts, public output/data drives, completion/done pulses, sample aliases,
+  generated helper/storage, and resource/priority metadata.
+- Advanced the active `ISF-CONFLICTS` frontier from `ISF-CONFLICTS.1` to
+  `ISF-CONFLICTS.2`.
 ### R14 — ISF objective task-tree coverage
 - Expanded [docs/TASK_TREE.md](docs/TASK_TREE.md) so all currently documented
   ongoing/unresolved R14 ISF objective families have active task-tree

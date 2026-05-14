@@ -1,10 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF conflict-domain inventory
+- Completed `ISF-CONFLICTS.1` in
+  [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md).
+- The current ISF baseline has one deliberate compatible same-target merge:
+  multiple rule triggers to the same transaction lower through per-rule
+  `<rule>_<transaction>` one-cycle pulse sources and a generated
+  `<transaction>_trigger_fanin` OR DT.
+- The ISF lowerer and scheduled `.fsm` emitter otherwise accumulate and render
+  assignment arrays without a general same-target ownership/conflict registry.
+- Named conflict domains now cover transaction starts, public output/data
+  drives, completion/done pulses, sample aliases, generated helper/storage, and
+  resource/priority metadata. The next frontier is `ISF-CONFLICTS.2`.
 ## 2026-05-14: R14 ISF objective task-tree coverage
 - [docs/TASK_TREE.md](docs/TASK_TREE.md) now lists active task-tree ownership
   for all currently documented ongoing/unresolved R14 ISF objective families.
 - Existing [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md)
-  remains the first active tree and current frontier for PNT.
+  remains the first active tree; its current frontier is now recorded in the
+  task file and [docs/TASK_TREE.md](docs/TASK_TREE.md).
 - Added active trees for generated child/spawn composition, resources and
   priorities, rule action widening, transaction stages/contracts, data width
   inference, schedule reports/schema stabilization, realistic fixtures,
@@ -41,7 +54,7 @@ This is the live continuity document for fast session recovery after crashes, re
   to adopt the same approach.
 - Added [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md)
   as the first active tree. It tracks `R14` ISF same-cycle conflict semantics
-  and names `ISF-CONFLICTS.1` as the first current-frontier leaf.
+  and originally named `ISF-CONFLICTS.1` as the first frontier leaf.
 - Updated [COMMIT.md](COMMIT.md), [README.md](README.md), and
   [SESSION_BOOTSTRAP.md](SESSION_BOOTSTRAP.md) so task-tree-managed work is
   discoverable during startup and leaf completions remain recoverable through
