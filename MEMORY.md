@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF rule-expression assignment specification
+- Completed `ISF-RULE-ACTIONS.2` in
+  [docs/tasks/ISF-RULE-ACTIONS.md](docs/tasks/ISF-RULE-ACTIONS.md).
+- The specified source shape is `(port expr)`: scalar `port`, scalar-or-list
+  `.fsm` RHS expression, existing flopped `<-` rule assignment family, and
+  existing rule-DTE guard selection.
+- Expression guards, explicit alternate rule assignment operators, and broad
+  new width inference are deferred. The next active R14 frontier is
+  `ISF-RULE-ACTIONS.3`.
 ## 2026-05-14: ISF rule-action behavior inventory
 - Completed `ISF-RULE-ACTIONS.1` in
   [docs/tasks/ISF-RULE-ACTIONS.md](docs/tasks/ISF-RULE-ACTIONS.md).

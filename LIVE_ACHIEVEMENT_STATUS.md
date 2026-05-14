@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF rule-expression assignment specification
+- Active R14 task-tree slice: `ISF-RULE-ACTIONS.2` is complete.
+- Expression-valued rule assignments are specified as `(port expr)` with
+  scalar `port`, scalar-or-list `.fsm` RHS expressions, and existing flopped
+  `<-` rule assignment semantics.
+- Rule guards remain scalar in this slice; alternate rule assignment operators
+  and broad new width inference remain deferred.
+- The next active R14 frontier is `ISF-RULE-ACTIONS.3`.
+
 ## 2026-05-14: R14 — ISF rule-action behavior inventory
 - Active R14 task-tree slice: `ISF-RULE-ACTIONS.1` is complete.
 - The task tree now inventories current rule guard/action parsing,

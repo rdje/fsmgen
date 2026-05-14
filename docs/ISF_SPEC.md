@@ -781,9 +781,10 @@ Current lowering:
   actor-shell rule-shape metadata.
 - Rule actions are structurally validated before the actor shell is returned.
   Supported action shapes are `(port value)`, `(trigger transaction)`, and
-  `(priority over other_rule)`. Today, `(port value)` and trigger targets use
-  scalar payloads because the rule lowerer does not implement expression-valued
-  rule assignments.
+  `(priority over other_rule)`. The planned expression-valued assignment
+  widening keeps the assignment shape as `(port expr)`, keeps `port` scalar,
+  and allows `expr` to use the same scalar-or-list `.fsm` RHS expression
+  domain as transaction `(update var expr)`.
 - `(trigger transaction)` targets must name a declared transaction in the same
   actor. Forward references are accepted because the parser validates trigger
   targets after the full actor body is collected; missing targets fail before
@@ -796,7 +797,9 @@ Current lowering:
   the transaction control-flow form; it has no body and guards the rule actions
   that follow it.
 - `(port value)` actions lower as flopped assignments inside the guarded
-  non-state DT.
+  non-state DT. Expression-valued rule assignments will keep that same `<-`
+  rule data-assignment family; they do not introduce combinational or
+  D-input-named rule action operators.
 - Same-target rule data writes now receive a best-effort compile-time conflict
   check before scheduled `.fsm` text is treated as valid. Two rules that drive
   the same target to incompatible values fail closed with

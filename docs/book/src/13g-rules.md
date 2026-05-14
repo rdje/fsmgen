@@ -33,9 +33,11 @@ body-bearing `(when condition body...)` form is only described in
   covered priority and resource-arbitration paths
 
 Rule actions are structurally validated before the actor shell is returned.
-The current `(port value)` action accepts scalar values only; expression-valued
-rule assignments are deferred until the rule lowerer has a real expression
-path. That widening is tracked in [Feature Backlog](14-feature-backlog.md).
+The current shipped `(port value)` action accepts scalar values only. The
+planned expression-valued widening keeps the same two-item `(port expr)` shape
+and uses the same `.fsm` RHS expression domain as transaction
+`(update var expr)`, while keeping rule assignments flopped with `<-`. That
+widening is tracked in [Feature Backlog](14-feature-backlog.md).
 `(trigger transaction)` must name a declared transaction in the same actor;
 forward references are accepted because validation happens after the full actor
 body is collected. `(priority over other_rule)` must name a declared rule in

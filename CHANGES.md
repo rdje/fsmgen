@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF rule-expression assignment specification
+- Completed `ISF-RULE-ACTIONS.2` by specifying the first expression-valued
+  rule assignment surface: `(port expr)` with scalar `port`,
+  scalar-or-list `.fsm` RHS expressions, and existing flopped `<-` rule
+  assignment semantics.
+- The specification keeps rule guards scalar for this slice, composes with
+  current priority/resource suppression, delegates width behavior to the
+  existing `.fsm` expression path, and rejects empty or malformed expression
+  trees.
+- Advanced the active `ISF-RULE-ACTIONS` frontier from
+  `ISF-RULE-ACTIONS.2` to `ISF-RULE-ACTIONS.3`.
 ### R14 — ISF rule-action behavior inventory
 - Completed `ISF-RULE-ACTIONS.1` by inventorying current rule guard/action
   parser behavior, malformed diagnostics, scalar-only limits, lowering,

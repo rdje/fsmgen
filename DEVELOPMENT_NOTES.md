@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF rule-expression assignment specification
+- Rule expression assignments should reuse the transaction `update` RHS
+  expression domain instead of inventing a rule-only expression language.
+  That keeps author expectations aligned and preserves the scheduled `.fsm`
+  expression validation path.
+- The first widening deliberately keeps the assignment family as `<-`. Adding
+  combinational, D-input-named, or pulse-style rule action operators would be
+  a separate semantic feature because it changes hardware timing, conflict
+  domains, and report expectations.
+- Width behavior should stay with the existing `.fsm` expression machinery for
+  this tree. Broader inference belongs to `ISF-DATA-WIDTHS`.
 ## 2026-05-14: ISF rule-action behavior inventory
 - The widening point for this tree is the RHS of `(port value)`. Today that
   value must be scalar and lowers directly as a flopped `<-` rule assignment.

@@ -68,6 +68,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   behavior, schedule-report/storage metadata, and conflict touchpoints. The
   active frontier advances to `ISF-RULE-ACTIONS.2` to specify the
   expression-valued assignment RHS semantics.
+- `ISF-RULE-ACTIONS.2` is complete. Expression-valued rule assignments are
+  now specified as `(port expr)` with scalar `port`, scalar-or-list `.fsm`
+  RHS expressions, existing flopped `<-` rule assignment semantics, ordinary
+  rule-DTE guard selection, existing priority/resource suppression
+  composition, and no new broad width-inference requirement. The active
+  frontier advances to `ISF-RULE-ACTIONS.3` for implementation.
 - ISF construct support now has a normative rule: parser acceptance is not a
   support claim. Every current or future shipped ISF construct must have an
   explicit accepted source shape, lowering path or fail-closed diagnostic,

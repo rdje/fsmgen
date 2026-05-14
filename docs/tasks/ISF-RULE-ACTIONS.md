@@ -54,12 +54,12 @@ current rule guard, delayed trigger, and conflict semantics.
   Commit: `ISF-RULE-ACTIONS.1: inventory rule action behavior`
 
 - ID: `ISF-RULE-ACTIONS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Specify expression-valued rule assignment syntax and semantics.`
   Acceptance: `The tree records accepted expression forms, symbol visibility,
   width rules, assignment family, guard interaction, and rejected cases.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `prove -l t/1168-isf-rule-guard-factoring.t t/1169-isf-rule-shorthand-guard.t t/1171-isf-rule-trigger-fanin.t t/1172-isf-rule-trigger-fanin-schedule-report.t t/1181-isf-rule-action-boundary.t t/1198-isf-update-clause-boundary.t t/1209-isf-static-conflict-detection.t t/1210-isf-priority-conflict-resolution.t`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-RULE-ACTIONS.2: specify rule expression assignments`
 
 - ID: `ISF-RULE-ACTIONS.3`
   Status: `pending`
@@ -90,7 +90,7 @@ current rule guard, delayed trigger, and conflict semantics.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-RULE-ACTIONS.2` | `pending` | The existing scalar-only boundary is now inventoried; the next leaf can specify the expression-valued syntax and semantics. |
+| 1 | `ISF-RULE-ACTIONS.3` | `pending` | The syntax and semantics are now specified; the next leaf can implement parser/lowering support. |
 
 ## ISF-RULE-ACTIONS.1 Inventory
 
@@ -204,6 +204,115 @@ API promise.
   the same transaction are resolved by generated OR fan-in, not by data
   conflict arbitration.
 
+## ISF-RULE-ACTIONS.2 Specification
+
+This specification defines the first expression-valued rule assignment slice.
+It intentionally widens only the RHS of ordinary rule data assignments.
+
+### Source Shape
+
+Accepted forms:
+
+```lisp
+(rule drive_status ready
+  (valid 1)
+  (status (| req_valid error_seen))
+  (next_count (+ count 1)))
+```
+
+- The assignment action keeps the existing two-item shape: `(target expr)`.
+- `target` must be a non-empty scalar action head and must not be the reserved
+  rule action heads `trigger` or `priority`.
+- `expr` may be one scalar token or one non-empty list expression.
+- A list expression is one `.fsm` RHS expression tree. Its head must be a
+  scalar expression operator or callable token, and its operands may be scalar
+  leaves or nested expression lists.
+- Expression-valued rule assignments do not add new rule action keywords.
+
+### Expression Domain
+
+The initial implementation should share the same RHS expression domain as
+transaction `(update var expr)` and the `.fsm` value expression slot:
+
+- scalar literals and signal references
+- named constants, enum values, and parameter/generic values visible to the
+  scheduled `.fsm`
+- indexed and sliced references accepted by `.fsm`
+- unary `!`
+- n-ary arithmetic/bitwise/logical forms such as `+`, `-`, `*`, `/`, `%`,
+  `&`, `|`, `^`, `!&`, `!|`, and `!^`
+- word aliases such as `not`, `eq`, `ne`, `lt`, `le`, `gt`, `ge`, `add`,
+  `sub`, `mul`, `div`, `mod`, `and`, `nand`, `or`, `nor`, `xor`, and `xnor`
+- RHS pack expressions such as `(concat ...)` and `(cat ...)`
+
+The rule lowerer should preserve the RHS as structured expression data until
+the scheduled `.fsm` emitter formats it. The generated `.fsm` must still pass
+through the normal `.fsm` parser and HDL generation path; expression support
+must not be a raw-text bypass around existing expression validation.
+
+### Symbol Visibility
+
+Expression names are interpreted in the generated scheduled `.fsm` module
+scope. The visible set is the same practical set available to transaction
+`update` RHS expressions:
+
+- actor interface inputs and outputs
+- generated start/done, trigger-source, counter, and helper storage declared
+  in the scheduled `.fsm`
+- values captured by `sample`, `extract`, `assemble`, and other data-operation
+  paths when those names are present in the scheduled module
+- imported constants, enum values, parameters, and generic values that the
+  scheduled `.fsm` frontend already accepts
+
+The rule parser should validate expression shape. Unknown or unresolvable
+symbols should fail through the normal scheduled `.fsm`/HDL validation path
+unless a narrower symbol table is added in the implementation slice.
+
+### Assignment Family And Guard Interaction
+
+- Expression-valued rule assignments remain ordinary rule data assignments.
+- They lower with `op => '<-'` and `source_kind => 'rule_action'`, the same as
+  scalar `(port value)` actions today.
+- The LHS keeps the existing output handling: if `target` names an actor
+  output, scheduled `.fsm` emission uses the existing output LHS token form.
+- The rule guard remains the non-state DT DTE. The expression is selected when
+  that rule DTE is active.
+- Priority/resource suppression composes as assignment or DTE guards exactly
+  as it does for scalar rule assignments. Suppression never rewrites the RHS
+  expression itself.
+- This slice does not introduce combinational `=` rule actions, D-input-named
+  `<=` rule actions, or delayed-pulse `<1` rule data assignments.
+
+### Width Rules
+
+- No broad new ISF width-inference engine is part of this tree.
+- Width behavior follows the existing `.fsm` expression and assignment rules.
+  Authors should declare widths with the existing interface/`+size` surfaces
+  or use exact-width literals when the expression would otherwise be
+  ambiguous.
+- Exact-width and based literals remain the preferred way to disambiguate RHS
+  expression width.
+- A width problem discovered by scheduled `.fsm` parsing, AST normalization,
+  or HDL generation is a valid fail-closed outcome for this first slice.
+- Aggregate/record growth and backend-owned struct emission remain outside
+  this task tree.
+
+### Rejected Cases
+
+- `(target)` with no RHS remains rejected.
+- `(target expr extra)` remains rejected.
+- `((target) expr)` remains rejected because the LHS must be scalar.
+- `(target ())` is rejected because the RHS expression list is empty.
+- `(target ((op) a b))` is rejected because expression heads must be scalar.
+- `(trigger expr)` remains the trigger action and must keep the exact
+  `(trigger transaction)` shape.
+- `(priority expr)` remains the priority action and must keep the exact
+  `(priority over other_rule)` shape.
+- Expression-valued rule guards are not part of this slice; rule guards stay
+  scalar until a separate guard-expression contract is accepted.
+- Control-flow forms such as `when`, `switch`, `repeat`, `do`, `spawn`, and
+  `complete` are not RHS expressions.
+
 ## Decisions
 
 - `2026-05-14`: Rule action widening is tracked independently from legacy
@@ -213,13 +322,18 @@ API promise.
   scalar RHS of `(port value)`. Rule guards, trigger targets, and priority
   targets are also scalar-only today, but this tree focuses first on
   expression-valued assignment RHS lowering.
+- `2026-05-14`: Expression-valued rule assignments will share the transaction
+  `update`/`.fsm` RHS expression domain and keep the existing flopped `<-`
+  rule assignment family. Guard expressions, alternate rule assignment
+  operators, and broad new width inference are deferred.
 
 ## Open Questions
 
-- Should rule assignment expressions initially share the same expression domain
-  as transaction `(update var expr)`, or a narrower domain?
-- How much width inference is required here versus delegated to
-  `ISF-DATA-WIDTHS`?
+- Whether rule guards should later accept full expression syntax remains a
+  separate future feature question.
+- Whether rule actions should later expose explicit assignment operators such
+  as combinational `=` or D-input-named `<=` remains a separate future feature
+  question.
 
 ## Blockers
 
@@ -231,6 +345,7 @@ API promise.
 | --- | --- | --- | --- |
 | `2026-05-14` | `ISF-RULE-ACTIONS` | `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-RULE-ACTIONS.1` | `prove -l t/1168-isf-rule-guard-factoring.t t/1169-isf-rule-shorthand-guard.t t/1171-isf-rule-trigger-fanin.t t/1172-isf-rule-trigger-fanin-schedule-report.t t/1181-isf-rule-action-boundary.t t/1190-isf-rule-priority-target-boundary.t t/1209-isf-static-conflict-detection.t t/1210-isf-priority-conflict-resolution.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-RULE-ACTIONS.2` | `prove -l t/1168-isf-rule-guard-factoring.t t/1169-isf-rule-shorthand-guard.t t/1171-isf-rule-trigger-fanin.t t/1172-isf-rule-trigger-fanin-schedule-report.t t/1181-isf-rule-action-boundary.t t/1198-isf-update-clause-boundary.t t/1209-isf-static-conflict-detection.t t/1210-isf-priority-conflict-resolution.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -238,9 +353,13 @@ API promise.
 | --- | --- | --- |
 | `ISF-RULE-ACTIONS` | `R14: map ISF objectives to task trees` | Initial tree creation belongs to the ISF objective task-tree coverage slice. |
 | `ISF-RULE-ACTIONS.1` | `ISF-RULE-ACTIONS.1: inventory rule action behavior` | Current scalar-only boundary and report/conflict touchpoints inventoried. |
+| `ISF-RULE-ACTIONS.2` | `ISF-RULE-ACTIONS.2: specify rule expression assignments` | Expression RHS semantics specified before implementation. |
 
 ## Changelog
 
 - `2026-05-14`: Completed `ISF-RULE-ACTIONS.1` by inventorying current rule
   action parser, lowering, schedule-report, storage, and conflict behavior.
+- `2026-05-14`: Completed `ISF-RULE-ACTIONS.2` by specifying expression-valued
+  rule assignment syntax, expression domain, symbol visibility, width policy,
+  guard interaction, assignment family, and rejected cases.
 - `2026-05-14`: Created the active ISF rule-action task tree.

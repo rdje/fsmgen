@@ -243,7 +243,10 @@ today. `(port value)` lowers as a flopped `<-` rule assignment under the rule
 DT DTE; `(trigger transaction)` lowers through a generated one-cycle source
 and transaction start fan-in; `(priority over other_rule)` feeds the covered
 priority/resource arbitration paths. Expression-valued rule assignment RHS
-lowering is deferred.
+lowering is deferred. The intended first widening is `(port expr)`, where
+`expr` uses the transaction `update`/`.fsm` RHS expression domain and the
+assignment family remains `<-`; expression guards and alternate assignment
+operators are separate future features.
 
 ### Transaction Stage Lowering
 
