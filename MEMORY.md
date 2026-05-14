@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF conflict tree closure
+- Completed `ISF-CONFLICTS.7` in
+  [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md)
+  and marked the top-level conflict-resolution tree `done`.
+- [docs/TASK_TREE.md](docs/TASK_TREE.md) now moves `ISF-CONFLICTS` to the
+  completed table. The next active R14 tree is
+  [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md)
+  with frontier `ISF-COMPOSITION.1`.
+- The ISF spec, public interface contract, and mdBook already describe the
+  shipped conflict behavior: compatible fan-in projection, warning-level
+  `compile_issues`, fail-closed rejected diagnostics, priority-resolved
+  rule/rule conflicts, and verification-only selector assertions.
 ## 2026-05-14: ISF conflict regression coverage closure
 - Completed `ISF-CONFLICTS.6` in
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md).
@@ -181,8 +193,8 @@ This is the live continuity document for fast session recovery after crashes, re
 - [docs/TASK_TREE.md](docs/TASK_TREE.md) now lists active task-tree ownership
   for all currently documented ongoing/unresolved R14 ISF objective families.
 - Existing [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md)
-  remains the first active tree; its current frontier is now recorded in the
-  task file and [docs/TASK_TREE.md](docs/TASK_TREE.md).
+  was initially kept as the first active tree; its then-current frontier was
+  recorded in the task file and [docs/TASK_TREE.md](docs/TASK_TREE.md).
 - Added active trees for generated child/spawn composition, resources and
   priorities, rule action widening, transaction stages/contracts, data width
   inference, schedule reports/schema stabilization, realistic fixtures,
@@ -218,8 +230,8 @@ This is the live continuity document for fast session recovery after crashes, re
   top-level task-tree template for this repo and for other projects that want
   to adopt the same approach.
 - Added [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md)
-  as the first active tree. It tracks `R14` ISF same-cycle conflict semantics
-  and originally named `ISF-CONFLICTS.1` as the first frontier leaf.
+  as the initial active tree. It tracks `R14` ISF same-cycle conflict
+  semantics and originally named `ISF-CONFLICTS.1` as the first frontier leaf.
 - Updated [COMMIT.md](COMMIT.md), [README.md](README.md), and
   [SESSION_BOOTSTRAP.md](SESSION_BOOTSTRAP.md) so task-tree-managed work is
   discoverable during startup and leaf completions remain recoverable through

@@ -2,6 +2,12 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF conflict tree closure
+- Active R14 task-tree slice: `ISF-CONFLICTS.7` is complete.
+- The `ISF-CONFLICTS` task tree is closed and now appears in the completed
+  task-tree table.
+- The next active R14 frontier is `ISF-COMPOSITION.1`.
+
 ## 2026-05-14: R14 — ISF conflict regression coverage
 - Active R14 task-tree slice: `ISF-CONFLICTS.6` is complete.
 - Existing focused tests now cover nonfatal compile issues, compatible fan-in
@@ -135,8 +141,8 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Active R14 tracking slice: all currently documented ongoing/unresolved ISF
   objective families now have active task trees and current-frontier leaves
   under `docs/tasks/`.
-- `ISF-CONFLICTS` remains the first active tree because same-cycle conflict
-  semantics informs the resource/priority and rule-action objectives.
+- `ISF-CONFLICTS` was the first active tree because same-cycle conflict
+  semantics informed the resource/priority and rule-action objectives.
 - Additional trees now cover composition/spawn, resource/priority, rule
   actions, stages/contracts, data widths, schedule reports, fixtures,
   compatibility, and public contract synchronization.
@@ -165,8 +171,8 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   index; [docs/tasks/TEMPLATE.md](docs/tasks/TEMPLATE.md) is the reusable
   top-level task template.
 - [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md)
-  is the first active tree and originally set `ISF-CONFLICTS.1` as the first
-  frontier leaf for ISF same-cycle conflict-semantics work.
+  was created as the first active tree and originally set `ISF-CONFLICTS.1` as
+  the first frontier leaf for ISF same-cycle conflict-semantics work.
 
 ## 2026-05-14: Book — feature backlog consolidation
 - Active docs slice: not-fully-shipped, deferred, future-work, and not-yet

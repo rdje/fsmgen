@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF conflict tree closure
+- `ISF-CONFLICTS.7` is a documentation/status synchronization slice. It does
+  not change scheduler behavior; the behavior was shipped by the earlier
+  conflict implementation and projection leaves.
+- Closing the tree makes the task-tree index the source of truth again: PNT
+  should no longer select conflict-resolution leaves, and should continue with
+  the first active tree, `ISF-COMPOSITION`.
+- Remaining conflict-adjacent work belongs to the relevant active trees:
+  composition/spawn fanout in `ISF-COMPOSITION`, broader arbitration in
+  `ISF-RESOURCE-PRIORITY`, and public-contract follow-through when a feature
+  slice changes public behavior.
 ## 2026-05-14: ISF conflict regression coverage
 - `ISF-CONFLICTS.6` is closed as a coverage-accounting slice rather than by
   adding another redundant fixture. The concrete tests were added while
@@ -268,10 +279,10 @@ This document captures engineering rationale, design constraints, and working de
 - PNT should select only frontier leaves. If the apparent next task is a
   container, the correct action is to split it into executable leaves before
   implementation, then commit that honest decomposition.
-- The first active tree, `ISF-CONFLICTS`, intentionally starts with inventory
-  and conflict-domain vocabulary. That keeps same-cycle output conflict work
-  from jumping straight to implementation before the merge-vs-reject policy is
-  reviewable.
+- The initial active tree, `ISF-CONFLICTS`, intentionally started with
+  inventory and conflict-domain vocabulary. That kept same-cycle output
+  conflict work from jumping straight to implementation before the
+  merge-vs-reject policy was reviewable.
 ## 2026-05-14: feature backlog chapter
 - The book now has one canonical backlog chapter for deferred or not-fully
   shipped user-visible features. This avoids the old pattern where limitation

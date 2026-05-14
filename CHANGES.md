@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF conflict tree closure
+- Completed `ISF-CONFLICTS.7` and marked the conflict-resolution task tree
+  done.
+- Moved `ISF-CONFLICTS` from the active task-tree table to the completed table
+  in [docs/TASK_TREE.md](docs/TASK_TREE.md).
+- Updated live roadmap/frontier records so PNT now continues with
+  `ISF-COMPOSITION.1` in
+  [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md).
+- Tightened the mdBook wording around conflict schedule-report projection now
+  that `compile_issues` and `compatible_fanin_groups` are shipped.
 ### R14 — ISF conflict regression coverage
 - Completed `ISF-CONFLICTS.6` by recording the focused regression and realistic
   fixture coverage now in place for the conflict model.

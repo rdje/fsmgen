@@ -23,7 +23,6 @@ evidence for one top-level task.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-CONFLICTS` | `active` | `R14` | `ISF-CONFLICTS.7` | [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md) |
 | `ISF-COMPOSITION` | `active` | `R14` | `ISF-COMPOSITION.1` | [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md) |
 | `ISF-RESOURCE-PRIORITY` | `active` | `R14` | `ISF-RESOURCE-PRIORITY.1` | [docs/tasks/ISF-RESOURCE-PRIORITY.md](docs/tasks/ISF-RESOURCE-PRIORITY.md) |
 | `ISF-RULE-ACTIONS` | `active` | `R14` | `ISF-RULE-ACTIONS.1` | [docs/tasks/ISF-RULE-ACTIONS.md](docs/tasks/ISF-RULE-ACTIONS.md) |
@@ -33,6 +32,12 @@ evidence for one top-level task.
 | `ISF-FIXTURES` | `active` | `R14` | `ISF-FIXTURES.1` | [docs/tasks/ISF-FIXTURE-COVERAGE.md](docs/tasks/ISF-FIXTURE-COVERAGE.md) |
 | `ISF-COMPATIBILITY` | `active` | `R14` | `ISF-COMPATIBILITY.1` | [docs/tasks/ISF-COMPATIBILITY-SURFACE.md](docs/tasks/ISF-COMPATIBILITY-SURFACE.md) |
 | `ISF-PUBLIC-CONTRACT` | `active` | `R14` | `ISF-PUBLIC-CONTRACT.1` | [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md) |
+
+## Completed Task Trees
+
+| Tree | Status | Roadmap lane | Completed frontier | File |
+| --- | --- | --- | --- | --- |
+| `ISF-CONFLICTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md) |
 
 ## R14 ISF Objective Coverage
 

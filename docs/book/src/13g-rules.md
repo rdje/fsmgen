@@ -92,8 +92,8 @@ assignment whenever `high`'s rule condition is active:
 )
 ```
 
-The schedule-report projection for these conflict facts is being widened in
-bounded slices. Successful reports with no nonfatal issues keep
+The schedule-report projection for these conflict facts is intentionally
+bounded. Successful reports with no nonfatal issues keep
 `compile_issues` as an empty array. Nonfatal issue entries now expose only
 stable issue code, severity, target/domain, `proof_status`, human-readable
 reason text, and capped source summaries. Accepted compatible fan-in groups now

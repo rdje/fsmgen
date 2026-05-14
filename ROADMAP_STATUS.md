@@ -11,10 +11,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   active tree, it should pick the first eligible leaf from that tree's current
   frontier. The ongoing/unresolved R14 ISF objective families are now covered
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
-  table; the first active tree remains
-  [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md),
-  whose current frontier is `ISF-CONFLICTS.7` after closing focused regression
-  and realistic fixture coverage.
+  table; the first active tree is now
+  [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md),
+  whose current frontier is `ISF-COMPOSITION.1`. The completed
+  `ISF-CONFLICTS` tree is listed in the task-tree completed table.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
   guide for installing the same task-tree tracking workflow in another
   project.
@@ -2228,7 +2228,7 @@ Done:
 - [docs/tasks/TEMPLATE.md](docs/tasks/TEMPLATE.md) provides the reusable
   top-level task-tree template, and
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md)
-  is the first active tree.
+  is the first completed tree.
 Left:
 - Keep the board current before every commit when a task changes status, remaining work, or the active lane.
 - Keep `docs/TASK_TREE.md` and active `docs/tasks/*.md` files current whenever
@@ -4372,13 +4372,17 @@ Done:
 - `ISF-CONFLICTS.6` is closed by focused coverage for nonfatal compile issues,
   compatible fan-in groups, rejected diagnostics, and the realistic APB
   done-pulse fan-in fixture.
+- `ISF-CONFLICTS.7` closes the conflict-resolution tree after the ISF spec,
+  public contract, mdBook, roadmap, task tree, and live docs were synchronized
+  with the shipped conflict behavior and remaining limits.
 Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
-- Use the `ISF-CONFLICTS` task tree when selecting the ISF conflict-resolution
-  feature path; the current frontier is `ISF-CONFLICTS.7`, which synchronizes
-  user-facing documentation and closes the tree.
+- Use the first active tree in [docs/TASK_TREE.md](docs/TASK_TREE.md) when
+  selecting the next PNT slice; after closing `ISF-CONFLICTS`, that frontier is
+  `ISF-COMPOSITION.1` in
+  [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md).
 - ISF conflict detection policy is now split: compile-time proof is
   best-effort and must flag cases where proof is not doable, while generated
   verification HDL now checks mux selectors at runtime for same-value source

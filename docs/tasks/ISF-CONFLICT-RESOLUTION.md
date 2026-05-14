@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-CONFLICTS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-14`
 - Last updated: `2026-05-14`
@@ -42,7 +42,7 @@ transaction start input.
 ## Task Tree
 
 - ID: `ISF-CONFLICTS`
-  Status: `active`
+  Status: `done`
   Goal: `Define and ship ISF same-cycle output conflict semantics.`
   Children: `ISF-CONFLICTS.1`, `ISF-CONFLICTS.2`, `ISF-CONFLICTS.3`,
   `ISF-CONFLICTS.4`, `ISF-CONFLICTS.5`, `ISF-CONFLICTS.6`,
@@ -192,19 +192,19 @@ transaction start input.
   Commit: `ISF-CONFLICTS.6: close regression coverage`
 
 - ID: `ISF-CONFLICTS.7`
-  Status: `pending`
+  Status: `done`
   Goal: `Synchronize user-facing documentation and close the tree.`
   Acceptance: `The ISF spec, public interface contract, mdBook, roadmap,
   MEMORY, CHANGES, DEVELOPMENT_NOTES, and LIVE_ACHIEVEMENT_STATUS describe the
   shipped conflict behavior and remaining limitations.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `mdbook build docs/book; git diff --check`
+  Commit: `ISF-CONFLICTS.7: close conflict tree`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-CONFLICTS.7` | `pending` | Regression and fixture coverage is closed; the final leaf can synchronize user-facing docs and close the tree. |
+| - | - | `closed` | `ISF-CONFLICTS` is complete; PNT should continue with the next active tree in `docs/TASK_TREE.md`. |
 
 ## Current Behavior Inventory
 
@@ -823,6 +823,9 @@ pulse would be ambiguous in downstream schedule-report interpretation.
 - `2026-05-14`: `ISF-CONFLICTS.6` is satisfied by the focused regression set
   added in `ISF-CONFLICTS.5.2` through `ISF-CONFLICTS.5.4`, plus the APB
   requester schedule-report fixture coverage for realistic done-pulse fan-in.
+- `2026-05-14`: `ISF-CONFLICTS.7` closes the tree after the ISF spec, public
+  contract, mdBook, roadmap, task tree, and live docs were synchronized with
+  shipped conflict behavior and remaining limits.
 
 ## Open Questions
 
@@ -894,6 +897,8 @@ pulse would be ambiguous in downstream schedule-report interpretation.
 | `2026-05-14` | `ISF-CONFLICTS.5.4` | `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-CONFLICTS.6` | `prove -l t/1096-isf-schedule-json-report.t t/1212-isf-schedule-report-compile-issues-projection.t t/1213-isf-schedule-report-compatible-fanin-projection.t t/1214-isf-rejected-conflict-diagnostics.t` | `passed` |
 | `2026-05-14` | `ISF-CONFLICTS.6` | `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.7` | `mdbook build docs/book` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.7` | `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -915,6 +920,7 @@ pulse would be ambiguous in downstream schedule-report interpretation.
 | `ISF-CONFLICTS.5.3` | `ISF-CONFLICTS.5.3: project fan-in groups` | Emits accepted compatible fan-in groups in schedule-report `compatible_fanin_groups`. |
 | `ISF-CONFLICTS.5.4` | `ISF-CONFLICTS.5.4: cover rejected diagnostics` | Adds in-process and CLI fail-closed diagnostic coverage and closes the projection container. |
 | `ISF-CONFLICTS.6` | `ISF-CONFLICTS.6: close regression coverage` | Records the accepted fan-in, rejected conflict, and APB realistic fixture coverage that now satisfies the leaf. |
+| `ISF-CONFLICTS.7` | `ISF-CONFLICTS.7: close conflict tree` | Closes the conflict-resolution tree after final user-facing documentation synchronization. |
 
 ## Changelog
 
@@ -956,3 +962,4 @@ pulse would be ambiguous in downstream schedule-report interpretation.
   container; current frontier moves to `ISF-CONFLICTS.6`.
 - `2026-05-14`: Completed `ISF-CONFLICTS.6`; current frontier moves to
   `ISF-CONFLICTS.7` for final documentation synchronization and tree closure.
+- `2026-05-14`: Completed `ISF-CONFLICTS.7`; `ISF-CONFLICTS` is closed.
