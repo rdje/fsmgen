@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF conflict tracking implementation split
+- `ISF-CONFLICTS.4` is too broad to implement honestly in one slice. The
+  implementation needs a provenance substrate before classification,
+  detection, and priority can be trustworthy.
+- The first implementation leaf, `ISF-CONFLICTS.4.1`, intentionally avoids
+  behavior changes: it should make assignment ownership/domain context
+  available inside the scheduler before scheduled `.fsm` text emission.
+- Compatible fan-in classification and conflict rejection are separate leaves
+  so tests can distinguish "we can see the candidate sources" from "we now
+  reject or merge them."
+- Priority resolution is kept after unprioritized conflict detection because
+  priority should be applied to a known conflict set, not guessed from raw
+  assignment order.
 ## 2026-05-14: ISF fail-closed conflict policy
 - The conflict policy is activation-aware because different FSM states may
   assign different values to the same target safely when their state decodes

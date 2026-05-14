@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF conflict tracking implementation split
+- Split `ISF-CONFLICTS.4` into executable implementation leaves before making
+  scheduler/emitter code changes.
+- Added subleaves for assignment provenance inventory, compatible fan-in
+  classification, incompatible unprioritized overlap detection, and
+  target-local priority resolution.
+- Advanced the active `ISF-CONFLICTS` frontier from `ISF-CONFLICTS.4` to
+  `ISF-CONFLICTS.4.1`.
 ### R14 — ISF fail-closed conflict policy
 - Completed `ISF-CONFLICTS.3` in
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md)

@@ -75,11 +75,51 @@ transaction start input.
   Commit: `ISF-CONFLICTS.3: specify conflict priority policy`
 
 - ID: `ISF-CONFLICTS.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Implement scheduler/emitter conflict tracking.`
+  Children: `ISF-CONFLICTS.4.1`, `ISF-CONFLICTS.4.2`,
+  `ISF-CONFLICTS.4.3`, `ISF-CONFLICTS.4.4`
   Acceptance: `The implementation can distinguish compatible fan-in from
   incompatible same-cycle drive conflicts without relying on text-order
   accidents in emitted `.fsm`.`
+  Verification: `split into executable leaves`
+  Commit: `pending container completion`
+
+- ID: `ISF-CONFLICTS.4.1`
+  Status: `pending`
+  Goal: `Add scheduler-side assignment provenance inventory.`
+  Acceptance: `ISF lowering has a bounded internal representation for emitted
+  assignments that records source owner, source kind, target, operator, RHS,
+  domain hint, and activation context before scheduled `.fsm` text is
+  generated. Existing scheduled `.fsm` output remains behavior-compatible.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-CONFLICTS.4.2`
+  Status: `pending`
+  Goal: `Classify compatible fan-in groups from assignment provenance.`
+  Acceptance: `The scheduler can identify same target/operator/value groups,
+  one-bit request/event fan-in, one-cycle pulse fan-in, and existing
+  rule-trigger fan-in without treating unrelated data/helper assignments as
+  compatible.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-CONFLICTS.4.3`
+  Status: `pending`
+  Goal: `Detect incompatible unprioritized overlap.`
+  Acceptance: `The scheduler can reject at least overlapping rule/rule and
+  rule/drive same-target data conflicts while preserving ordinary
+  mutually-exclusive state assignment behavior.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-CONFLICTS.4.4`
+  Status: `pending`
+  Goal: `Apply target-local priority resolution for implemented conflict sets.`
+  Acceptance: `Declared rule/actor priority can select one unique winner for a
+  supported same-domain data conflict, while cycles, incomparable winners, and
+  mixed timing operators fail closed.`
   Verification: `pending`
   Commit: `pending`
 
@@ -114,7 +154,7 @@ transaction start input.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-CONFLICTS.4` | `pending` | Conflict domains and policies are now specified; the next executable slice is scheduler/emitter conflict tracking. |
+| 1 | `ISF-CONFLICTS.4.1` | `pending` | Scheduler-side provenance is the narrow foundation for later compatible fan-in classification, conflict diagnostics, and priority handling. |
 
 ## Current Behavior Inventory
 
@@ -389,6 +429,9 @@ Deferred resource-arbitration policy:
   priority selects one unique winner within the same timing/domain class.
   Resource declarations remain metadata until usage binding and arbiter
   lowering are implemented.
+- `2026-05-14`: `ISF-CONFLICTS.4` was split into executable implementation
+  leaves before code changes: provenance inventory, compatible fan-in
+  classification, unprioritized conflict detection, and target-local priority.
 
 ## Open Questions
 
@@ -414,6 +457,8 @@ Deferred resource-arbitration policy:
 | `2026-05-14` | `ISF-CONFLICTS.2` | `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-CONFLICTS.3` | Fail-closed, priority, and deferred resource-arbitration policy documented in the task tree and live docs | `passed` |
 | `2026-05-14` | `ISF-CONFLICTS.3` | `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.4` | Split into executable implementation leaves | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.4` | `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -423,6 +468,7 @@ Deferred resource-arbitration policy:
 | `ISF-CONFLICTS.1` | `ISF-CONFLICTS.1: inventory current conflict domains` | Records the inspected current behavior and names conflict domains before policy/implementation work. |
 | `ISF-CONFLICTS.2` | `ISF-CONFLICTS.2: specify compatible fan-in policy` | Records the deterministic OR/fan-in policy for compatible request, pulse, and same-value selector domains. |
 | `ISF-CONFLICTS.3` | `ISF-CONFLICTS.3: specify conflict priority policy` | Records fail-closed behavior for incompatible overlap and target-local priority/resource boundaries. |
+| `ISF-CONFLICTS.4` | `ISF-CONFLICTS.4: split conflict tracking implementation` | Splits the broad implementation container into executable provenance, classification, detection, and priority leaves. |
 
 ## Changelog
 
@@ -435,3 +481,5 @@ Deferred resource-arbitration policy:
 - `2026-05-14`: Completed `ISF-CONFLICTS.3` fail-closed and priority policy;
   current frontier moves to `ISF-CONFLICTS.4` for scheduler/emitter conflict
   tracking.
+- `2026-05-14`: Split `ISF-CONFLICTS.4`; current frontier moves to
+  `ISF-CONFLICTS.4.1` for scheduler-side assignment provenance inventory.

@@ -2,14 +2,22 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF conflict tracking implementation split
+- Active R14 task-tree slice: `ISF-CONFLICTS.4` is now an active implementation
+  container with executable subleaves.
+- The new current frontier is `ISF-CONFLICTS.4.1`, which adds
+  scheduler-side assignment provenance inventory.
+- Later subleaves cover compatible fan-in classification, unprioritized
+  conflict detection, and target-local priority resolution.
+
 ## 2026-05-14: R14 — ISF fail-closed conflict policy
 - Active R14 task-tree slice: `ISF-CONFLICTS.3` is complete in
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md).
 - Incompatible same-target sources now have documented policy: prove mutual
   exclusion, use compatible fan-in, select one unique priority winner, or fail
   closed with targeted diagnostics.
-- The next `ISF-CONFLICTS` frontier is `ISF-CONFLICTS.4`, which implements
-  scheduler/emitter conflict tracking.
+- This slice moved the tree to `ISF-CONFLICTS.4`; the current frontier is
+  recorded in the latest R14 task-tree entry above.
 
 ## 2026-05-14: R14 — ISF compatible fan-in policy
 - Active R14 task-tree slice: `ISF-CONFLICTS.2` is complete in
