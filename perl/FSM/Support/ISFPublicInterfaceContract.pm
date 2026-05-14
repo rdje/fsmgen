@@ -71,6 +71,7 @@ our @EXPORT_OK = qw(
     isf_public_interface_schedule_report_storage_kind_values
     isf_public_interface_schedule_report_storage_optional_keys
     isf_public_interface_schedule_report_storage_required_keys
+    isf_public_interface_schedule_report_storage_role_values
     isf_public_interface_schedule_report_storage_width_shape
     isf_public_interface_schedule_report_temporal_contract_assertion_projection_values
     isf_public_interface_schedule_report_temporal_contract_keys
@@ -194,6 +195,7 @@ sub build_isf_public_interface_contract {
         schedule_report_storage_required_keys => isf_public_interface_schedule_report_storage_required_keys(),
         schedule_report_storage_optional_keys => isf_public_interface_schedule_report_storage_optional_keys(),
         schedule_report_storage_kind_values => isf_public_interface_schedule_report_storage_kind_values(),
+        schedule_report_storage_role_values => isf_public_interface_schedule_report_storage_role_values(),
         schedule_report_storage_width_shape => isf_public_interface_schedule_report_storage_width_shape(),
         schedule_report_transaction_keys => isf_public_interface_schedule_report_transaction_keys(),
         schedule_report_transaction_states_shape => isf_public_interface_schedule_report_transaction_states_shape(),
@@ -423,6 +425,7 @@ sub isf_public_interface_public_top_level_keys {
             schedule_report_storage_required_keys
             schedule_report_storage_optional_keys
             schedule_report_storage_kind_values
+            schedule_report_storage_role_values
             schedule_report_storage_width_shape
             schedule_report_transaction_keys
             schedule_report_transaction_states_shape
@@ -904,6 +907,7 @@ sub isf_public_interface_schedule_report_storage_required_keys {
 sub isf_public_interface_schedule_report_storage_optional_keys {
     return [
         qw(
+            role
             width
         ),
     ];
@@ -914,6 +918,22 @@ sub isf_public_interface_schedule_report_storage_kind_values {
         qw(
             counter
             register
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_storage_role_values {
+    return [
+        qw(
+            completion_pulse
+            data_register
+            drive_payload
+            drive_request
+            extract_field
+            latency_counter
+            repeat_counter
+            sample_alias
+            watchdog_counter
         ),
     ];
 }

@@ -24,11 +24,12 @@ sub entry_by_name {
 }
 
 sub assert_storage_width {
-    my ($storage, $name, $kind, $width, $label) = @_;
+    my ($storage, $name, $kind, $width, $role, $label) = @_;
     my $entry = entry_by_name($storage, $name);
     ok($entry, "$label storage entry exists");
     is($entry->{kind}, $kind, "$label storage kind") if $entry;
     is($entry->{width}, $width, "$label storage width") if $entry;
+    is($entry->{role}, $role, "$label storage role") if $entry;
 }
 
 subtest 'schedule report includes ordinary data-operation register widths' => sub {
@@ -52,12 +53,12 @@ ISF
 
     my $storage = $report->{inferred_storage};
 
-    assert_storage_width($storage, 'packet_copy', 'register', 12, 'sampled word');
-    assert_storage_width($storage, 'header', 'register', 4, 'extract header');
-    assert_storage_width($storage, 'payload', 'register', 8, 'extract payload');
-    assert_storage_width($storage, 'packet_out', 'register', 12, 'assembled packet');
-    assert_storage_width($storage, 'shreg', 'register', 8, 'explicit-width shift register');
-    assert_storage_width($storage, 'done', 'register', 1, 'completion pulse');
+    assert_storage_width($storage, 'packet_copy', 'register', 12, 'sample_alias', 'sampled word');
+    assert_storage_width($storage, 'header', 'register', 4, 'extract_field', 'extract header');
+    assert_storage_width($storage, 'payload', 'register', 8, 'extract_field', 'extract payload');
+    assert_storage_width($storage, 'packet_out', 'register', 12, 'data_register', 'assembled packet');
+    assert_storage_width($storage, 'shreg', 'register', 8, 'data_register', 'explicit-width shift register');
+    assert_storage_width($storage, 'done', 'register', 1, 'completion_pulse', 'completion pulse');
 };
 
 done_testing();

@@ -595,7 +595,10 @@ infer target width from known parts. The evidence is collected from the whole
 transaction clause tree before scheduled state emission, so it is not
 source-order-sensitive. Schedule reports expose positive integer `width`
 metadata for inferred scheduler counters and for register storage whose ISF
-width evidence is known.
+width evidence is known. They also expose optional `role` metadata when the
+lowerer has stable scheduler evidence for the storage purpose, such as
+sampled aliases, extracted fields, ordinary data registers, completion pulses,
+watchdog/latency/repeat counters, and named-drive request/payload storage.
 
 Planned width-evidence precedence for this tree is: actor interface
 declaration, operation-local explicit option, sampled-alias propagation,
@@ -1071,10 +1074,15 @@ Each `dt_blocks` entry's `kind` value is currently `drive`,
 `temporal_contract_monitor`. The capability-manifest ISF public contract
 advertises this value family through `schedule_report_dt_kind_values`.
 Each `inferred_storage` entry's `kind` value is currently `counter` or
-`register`; optional `width` values are positive integer bit widths when
-present and currently appear on inferred scheduler counters. The
-capability-manifest ISF public contract advertises this through
-`schedule_report_storage_kind_values` and `schedule_report_storage_width_shape`.
+`register`. Optional `role` values describe stable scheduler purpose when the
+lowerer has direct evidence: `completion_pulse`, `data_register`,
+`drive_payload`, `drive_request`, `extract_field`, `latency_counter`,
+`repeat_counter`, `sample_alias`, and `watchdog_counter`. Optional `width`
+values are positive integer bit widths when present and currently appear on
+inferred scheduler counters and register storage with known ISF width evidence.
+The capability-manifest ISF public contract advertises this through
+`schedule_report_storage_kind_values`, `schedule_report_storage_role_values`,
+and `schedule_report_storage_width_shape`.
 Each `transactions` entry's `states` value is an emitted-order array of
 scheduled state names belonging to that transaction, and `count` is a
 non-negative integer equal to that array length. The capability-manifest ISF

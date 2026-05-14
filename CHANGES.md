@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF schedule-report storage roles
+- Completed `ISF-SCHEDULE-REPORTS.3` by adding the first bounded
+  `inferred_storage[].role` implementation.
+- Schedule reports now classify evidence-backed storage purposes for generated
+  watchdog/latency/repeat counters, named-drive request/payload storage,
+  sampled aliases, extracted fields, ordinary data registers, and completion
+  pulses.
+- The ISF public-interface contract, spec, mdBook, task tree, and storage
+  report regressions now advertise `schedule_report_storage_role_values` and
+  the optional storage `role` key.
 ### R14 — ISF schedule-report storage role taxonomy
 - Completed `ISF-SCHEDULE-REPORTS.2` by specifying richer storage
   classification as an additive optional `inferred_storage[].role` key.

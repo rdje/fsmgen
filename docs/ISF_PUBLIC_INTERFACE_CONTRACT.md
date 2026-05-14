@@ -110,8 +110,9 @@ Stage and contract schedule-report key/value families are audited across
 direct and manifest views and checked against generated JSON.
 The inferred-storage metadata is checked by
 [t/1148-isf-public-storage-metadata-audit.t](../t/1148-isf-public-storage-metadata-audit.t)
-to keep advertised storage `kind` values and optional `width` shape exact
-across direct and manifest views. Data-operation storage widths are checked by
+to keep advertised storage `kind` values, optional `role` values, and optional
+`width` shape exact across direct and manifest views. Data-operation storage
+roles and widths are checked by
 [t/1226-isf-data-width-storage-report.t](../t/1226-isf-data-width-storage-report.t)
 for sampled aliases, extracted fields, assembled targets, explicit-width
 shift registers, and completion pulses.
@@ -843,7 +844,7 @@ Current bounded nested and array summary families:
 
 ```text
 reset: name, kind, polarity
-inferred_storage entries: name, kind, optional width
+inferred_storage entries: name, kind, optional role, optional width
 transactions entries: name, states, count
 transaction_stages entries: transaction, name, kind, state, ready, valid
 temporal_contracts entries: transaction, name, kind, trigger, signal, within_cycles, pending_signal, counter_signal, fail_signal, overlap_policy, reset_policy, assertion_projection
@@ -867,11 +868,16 @@ For each `dt_blocks` entry, `kind` is currently one of `drive`,
 through `schedule_report_dt_kind_values`.
 
 For each `inferred_storage` entry, `kind` is currently one of `counter` or
-`register`. Optional `width` values are positive integer bit widths when
-present, and are currently present for inferred scheduler counters plus
+`register`. Optional `role` values describe the stable scheduler purpose when
+the lowerer has direct evidence. The current role family is
+`completion_pulse`, `data_register`, `drive_payload`, `drive_request`,
+`extract_field`, `latency_counter`, `repeat_counter`, `sample_alias`, and
+`watchdog_counter`. Optional `width` values are positive integer bit widths
+when present, and are currently present for inferred scheduler counters plus
 register storage with known ISF width evidence. The machine-readable contract
-advertises these through
-`schedule_report_storage_kind_values` and `schedule_report_storage_width_shape`.
+advertises these through `schedule_report_storage_kind_values`,
+`schedule_report_storage_role_values`, and
+`schedule_report_storage_width_shape`.
 
 For each `transactions` entry, `states` is an array of scheduled state names
 belonging to that transaction in emitted order, and `count` is a non-negative

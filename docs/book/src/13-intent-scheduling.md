@@ -194,7 +194,12 @@ Schedule-report DT `kind` values are currently `drive`, `latency_counter`,
 `rule`, `rule_trigger_fanin`, and `temporal_contract_monitor`, and the
 manifest advertises that family through `schedule_report_dt_kind_values`.
 Inferred-storage `kind` values are `counter` or `register`, and optional
-positive integer `width` values currently belong to inferred counters.
+`role` values describe stable scheduler purpose when evidence is known. The
+current role family is `completion_pulse`, `data_register`, `drive_payload`,
+`drive_request`, `extract_field`, `latency_counter`, `repeat_counter`,
+`sample_alias`, and `watchdog_counter`. Optional positive integer `width`
+values belong to inferred counters and register storage with known ISF width
+evidence.
 Transaction summaries expose emitted scheduled-state names in `states`, and
 `count` equals that array length; transaction summaries are sorted lexically by
 name while each `states` array keeps scheduled `.fsm` state emission order.

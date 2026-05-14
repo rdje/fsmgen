@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-SCHEDULE-REPORTS.md](docs/tasks/ISF-SCHEDULE-REPORTS.md),
-  whose current frontier is `ISF-SCHEDULE-REPORTS.3`. The completed
+  whose current frontier is `ISF-SCHEDULE-REPORTS.4`. The completed
   `ISF-DATA-WIDTHS`, `ISF-STAGES-CONTRACTS`, `ISF-RULE-ACTIONS`,
   `ISF-RESOURCE-CATALOG`, `ISF-RESOURCE-PRIORITY`, `ISF-CONFLICTS`, and
   `ISF-COMPOSITION` trees are listed in the task-tree completed table.
@@ -183,6 +183,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   counters, named-drive request/payload storage, samples, data operations, and
   completion pulses. The active frontier advances to
   `ISF-SCHEDULE-REPORTS.3`.
+- `ISF-SCHEDULE-REPORTS.3` is complete. Successful schedule reports now attach
+  optional `inferred_storage[].role` metadata for watchdog, latency, repeat,
+  named-drive request/payload, sample-alias, extract-field, data-register, and
+  completion-pulse storage when direct lowerer evidence exists. The machine
+  readable public contract now advertises `schedule_report_storage_role_values`
+  and `role` as an optional storage key. The active frontier advances to
+  `ISF-SCHEDULE-REPORTS.4`.
 - ISF construct support now has a normative rule: parser acceptance is not a
   support claim. Every current or future shipped ISF construct must have an
   explicit accepted source shape, lowering path or fail-closed diagnostic,
@@ -621,8 +628,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - `t/1147` now advertises and proves schedule-report DT `assignments` values
   are counts matching scheduled `.fsm` DT blocks, not assignment payload lists.
 - `t/1148` now advertises and proves schedule-report inferred-storage kind
-  values and optional width shape, including completion `done` as
-  register-backed storage.
+  values, optional role values, and optional width shape, including completion
+  `done` as register-backed `completion_pulse` storage.
 - `t/1149` now advertises and proves schedule-report transaction `states` and
   `count` shapes.
 - `t/1150` now advertises and proves schedule-report reset kind and polarity

@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF schedule-report storage roles
+- Active R14 task-tree slice: `ISF-SCHEDULE-REPORTS.3` is complete.
+- Successful schedule reports now include optional `inferred_storage[].role`
+  metadata for the first evidence-backed storage families, and the public
+  contract advertises the bounded role value family.
+- The next active R14 frontier is `ISF-SCHEDULE-REPORTS.4`.
+
 ## 2026-05-14: R14 — ISF schedule-report storage role taxonomy
 - Active R14 task-tree slice: `ISF-SCHEDULE-REPORTS.2` is complete.
 - Richer storage classification is specified as optional

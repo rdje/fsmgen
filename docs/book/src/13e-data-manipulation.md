@@ -134,7 +134,11 @@ source-order-sensitive inside the transaction.
 Today this evidence is used to avoid `WIDTH`, `HIGH`, and `LOW` placeholders
 for accepted migrated data operations. Schedule reports expose positive
 integer `width` metadata for inferred scheduler counters and for register
-storage whose ISF width evidence is known.
+storage whose ISF width evidence is known. They also expose optional `role`
+metadata when the lowerer has stable evidence for the storage purpose,
+including sampled aliases, extracted fields, ordinary data registers,
+completion pulses, watchdog/latency/repeat counters, and named-drive
+request/payload storage.
 
 The planned precedence for this tree is declaration first, then explicit
 operation-local width options, sampled-alias propagation, structural derivation

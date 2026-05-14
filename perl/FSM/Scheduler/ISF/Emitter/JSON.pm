@@ -57,23 +57,29 @@ sub _storage_summary($self, $ir) {
     my %seen;
     my %counter_widths = %{$ir->{counters} || {}};
     my %signal_widths = %{$ir->{signal_widths} || {}};
+    my %storage_roles = %{$ir->{storage_roles} || {}};
 
     for my $s (@{$ir->{states}}) {
         for my $a (@{$s->{assignments}}) {
             next if $seen{$a->{lhs}}++;
             next if $a->{op} eq '=';  # combinational
             if (_is_scheduler_counter_name($a->{lhs}) && exists $counter_widths{$a->{lhs}}) {
-                push @storage, {
+                my %entry = (
                     name  => $a->{lhs},
                     kind  => 'counter',
                     width => $counter_widths{$a->{lhs}},
-                };
+                );
+                my $role = _storage_role_for_assignment($a, \%storage_roles);
+                $entry{role} = $role if defined $role;
+                push @storage, \%entry;
                 next;
             }
             my %entry = (
                 name  => $a->{lhs},
                 kind  => _is_clocked_register_op($a->{op}) ? 'register' : 'counter',
             );
+            my $role = _storage_role_for_assignment($a, \%storage_roles);
+            $entry{role} = $role if defined $role;
             $entry{width} = $signal_widths{$a->{lhs}}
                 if $entry{kind} eq 'register'
                     && exists($signal_widths{$a->{lhs}})
@@ -89,12 +95,41 @@ sub _storage_summary($self, $ir) {
 
         my $kind = $contract_kind // 'counter';
         my %entry = (name => $name, kind => $kind);
+        my $role = _storage_role_for_name($name, \%storage_roles);
+        $entry{role} = $role if defined $role;
         $entry{width} = $counter_widths{$name}
             if defined($counter_widths{$name}) && $counter_widths{$name} > 0;
         push @storage, \%entry;
     }
 
     return \@storage;
+}
+
+sub _storage_role_for_assignment {
+    my ($assignment, $storage_roles) = @_;
+    my $name = $assignment->{lhs};
+    my $role = _storage_role_for_name($name, $storage_roles);
+    return $role if defined $role;
+
+    my $source_kind = $assignment->{source_kind} // '';
+    return 'sample_alias' if $source_kind eq 'sample_capture';
+    return 'extract_field' if $source_kind eq 'extract_capture';
+    return 'completion_pulse' if $source_kind eq 'complete_pulse' || $source_kind eq 'timeout_pulse';
+    return 'data_register' if $source_kind eq 'update'
+        || $source_kind eq 'shift'
+        || $source_kind eq 'assemble';
+    return undef;
+}
+
+sub _storage_role_for_name {
+    my ($name, $storage_roles) = @_;
+    return undef unless defined $name;
+    return $storage_roles->{$name}
+        if ref($storage_roles) eq 'HASH'
+            && exists $storage_roles->{$name}
+            && defined $storage_roles->{$name}
+            && length $storage_roles->{$name};
+    return undef;
 }
 
 sub _contract_monitor_storage_kind($name) {

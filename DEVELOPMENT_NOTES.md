@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF schedule-report storage role implementation
+- Storage roles are additive report metadata. `kind` continues to describe the
+  coarse hardware category (`counter` or `register`), while `role` describes
+  stable scheduler purpose only when direct lowerer evidence exists.
+- The first implementation carries generated drive/counter evidence through
+  `LoweringIR->{storage_roles}` and lets the JSON emitter derive data roles
+  from assignment `source_kind`. That avoids guessing from authored names.
+- Additional role families should remain unreported until their owning feature
+  can provide stable evidence and public-contract tests.
 ## 2026-05-14: ISF schedule-report storage role taxonomy
 - Keeping `kind` coarse avoids breaking downstream consumers that only need to
   know whether a storage entry is register-like or counter-like.

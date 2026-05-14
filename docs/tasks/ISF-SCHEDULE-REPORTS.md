@@ -65,12 +65,12 @@ schedule JSON schema.
   Commit: `ISF-SCHEDULE-REPORTS.2: specify storage roles`
 
 - ID: `ISF-SCHEDULE-REPORTS.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement first richer storage-class report slice.`
   Acceptance: `The selected storage families report the new bounded class
   metadata through in-process and CLI schedule JSON.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -l t/1106-isf-schedule-json-counter-storage.t t/1116-isf-public-schedule-report-key-family-audit.t t/1121-isf-public-cli-schedule-report-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1148-isf-public-storage-metadata-audit.t t/1226-isf-data-width-storage-report.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-SCHEDULE-REPORTS.3: report storage roles`
 
 - ID: `ISF-SCHEDULE-REPORTS.4`
   Status: `pending`
@@ -93,7 +93,7 @@ schedule JSON schema.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-SCHEDULE-REPORTS.3` | `pending` | The richer storage role taxonomy is specified; the first role-reporting slice can now be implemented. |
+| 1 | `ISF-SCHEDULE-REPORTS.4` | `pending` | The first storage-role report slice is implemented; the remaining work is the full schema-freeze readiness plan. |
 
 ## ISF-SCHEDULE-REPORTS.1 Inventory
 
@@ -228,7 +228,7 @@ Compatibility rules:
   fail closed before emitting a successful report rather than choosing one
   role silently.
 
-Planned `role` values for the first implementation slice:
+Shipped `role` values for the first implementation slice:
 
 | Role | Coarse `kind` | Required evidence |
 | --- | --- | --- |
@@ -240,7 +240,7 @@ Planned `role` values for the first implementation slice:
 | `sample_alias` | `register` | State assignment with `source_kind = sample_capture`. |
 | `extract_field` | `register` | State assignment with `source_kind = extract_capture`. |
 | `data_register` | `register` | State assignment with source kind from ordinary data operations: `update`, `shift`, or `assemble`. |
-| `completion_pulse` | `register` | State assignment with `source_kind = complete_pulse`. |
+| `completion_pulse` | `register` | State assignment with `source_kind = complete_pulse` or `timeout_pulse`. |
 
 Deferred `role` values:
 
@@ -261,6 +261,11 @@ Deferred `role` values:
 - `2026-05-14`: Richer storage classification should use an optional `role`
   key while preserving `kind = counter|register` as the coarse storage
   category. The first role slice should be additive and evidence-driven.
+- `2026-05-14`: The first `inferred_storage[].role` slice is shipped for
+  watchdog, latency, repeat, named-drive request/payload, sample-alias,
+  extract-field, data-register, and completion-pulse storage. Additional role
+  families remain backlog until they have direct lowerer evidence and their
+  own contract tests.
 
 ## Open Questions
 
@@ -278,6 +283,7 @@ Deferred `role` values:
 | `2026-05-14` | `ISF-SCHEDULE-REPORTS` | `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-SCHEDULE-REPORTS.1` | `prove -l t/1096-isf-schedule-json-report.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1148-isf-public-storage-metadata-audit.t t/1226-isf-data-width-storage-report.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-SCHEDULE-REPORTS.2` | `prove -l t/1096-isf-schedule-json-report.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1148-isf-public-storage-metadata-audit.t t/1226-isf-data-width-storage-report.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-SCHEDULE-REPORTS.3` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -l t/1106-isf-schedule-json-counter-storage.t t/1116-isf-public-schedule-report-key-family-audit.t t/1121-isf-public-cli-schedule-report-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1148-isf-public-storage-metadata-audit.t t/1226-isf-data-width-storage-report.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -286,6 +292,7 @@ Deferred `role` values:
 | `ISF-SCHEDULE-REPORTS` | `R14: map ISF objectives to task trees` | Initial tree creation belongs to the ISF objective task-tree coverage slice. |
 | `ISF-SCHEDULE-REPORTS.1` | `ISF-SCHEDULE-REPORTS.1: inventory report contract` | Current schedule-report shape, owners, and non-frozen branches inventoried. |
 | `ISF-SCHEDULE-REPORTS.2` | `ISF-SCHEDULE-REPORTS.2: specify storage roles` | Additive `inferred_storage[].role` taxonomy specified. |
+| `ISF-SCHEDULE-REPORTS.3` | `ISF-SCHEDULE-REPORTS.3: report storage roles` | First bounded storage role family implemented in schedule reports and public contract metadata. |
 
 ## Changelog
 
@@ -295,3 +302,5 @@ Deferred `role` values:
   `ISF-SCHEDULE-REPORTS.2`.
 - `2026-05-14`: Specified the richer storage role taxonomy and advanced the
   frontier to `ISF-SCHEDULE-REPORTS.3`.
+- `2026-05-14`: Implemented the first bounded `inferred_storage[].role`
+  report slice and advanced the frontier to `ISF-SCHEDULE-REPORTS.4`.

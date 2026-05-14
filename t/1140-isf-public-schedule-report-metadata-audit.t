@@ -39,6 +39,7 @@ use FSM::Support::ISFPublicInterfaceContract qw(
     isf_public_interface_schedule_report_reset_keys
     isf_public_interface_schedule_report_storage_optional_keys
     isf_public_interface_schedule_report_storage_required_keys
+    isf_public_interface_schedule_report_storage_role_values
     isf_public_interface_schedule_report_temporal_contract_assertion_projection_values
     isf_public_interface_schedule_report_temporal_contract_keys
     isf_public_interface_schedule_report_temporal_contract_kind_values
@@ -224,6 +225,15 @@ sub assert_schedule_report_metadata {
     assert_unique_scalar_list(
         $contract->{schedule_report_fanin_group_kind_values},
         "$label fan-in group kind values",
+    );
+    is_deeply(
+        $contract->{schedule_report_storage_role_values},
+        isf_public_interface_schedule_report_storage_role_values(),
+        "$label storage role values are exact",
+    );
+    assert_unique_scalar_list(
+        $contract->{schedule_report_storage_role_values},
+        "$label storage role values",
     );
     is_deeply(
         $contract->{schedule_report_generated_composition_kind_values},

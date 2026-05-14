@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF schedule-report storage role implementation
+- Completed `ISF-SCHEDULE-REPORTS.3` in
+  [docs/tasks/ISF-SCHEDULE-REPORTS.md](docs/tasks/ISF-SCHEDULE-REPORTS.md).
+- Successful schedule reports now emit optional `inferred_storage[].role`
+  values for evidence-backed storage families: watchdog, latency, repeat,
+  named-drive request/payload, sample-alias, extract-field, data-register, and
+  completion-pulse storage.
+- The public contract now advertises `schedule_report_storage_role_values` and
+  `role` as an optional storage key. The next active R14 frontier is
+  `ISF-SCHEDULE-REPORTS.4`.
 ## 2026-05-14: ISF schedule-report storage role taxonomy
 - Completed `ISF-SCHEDULE-REPORTS.2` in
   [docs/tasks/ISF-SCHEDULE-REPORTS.md](docs/tasks/ISF-SCHEDULE-REPORTS.md).

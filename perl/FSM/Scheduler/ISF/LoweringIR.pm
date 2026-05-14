@@ -64,12 +64,12 @@ sub build_module($self, $actor) {
 # --- Child IR (separate module) ---
 
 sub _build_child_ir($self, $tx, $actor, $cname) {
-    my ($states, $ctrs, $dts, $do_children, $spawn_refs, $contracts, $signal_widths) =
+    my ($states, $ctrs, $dts, $do_children, $spawn_refs, $contracts, $signal_widths, $storage_roles) =
         $self->_build_transaction($tx, $actor, 0);
     $states = [@$states]; $ctrs = { %$ctrs }; $dts = [@$dts];
 
     my %used_drives = _collect_named_drive_call_names($tx->{clauses}, $actor->{drives} || {});
-    _register_drive_call_signal_widths($actor, $ctrs, \%used_drives);
+    _register_drive_call_signal_widths($actor, $ctrs, \%used_drives, $storage_roles);
 
     my $ports = $self->_build_child_ports($actor, $states, $dts, \%used_drives);
 
@@ -84,6 +84,7 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
         dt_blocks  => $dts,
         counters   => $ctrs,
         signal_widths => { %{$signal_widths || {}} },
+        storage_roles => { %{$storage_roles || {}} },
         children   => {},
         temporal_contracts => $contracts,
     };
@@ -127,6 +128,7 @@ sub _build_parent_ir($self, $actor, $spawned) {
     my @spawn_instances;
     my @temporal_contracts;
     my %signal_widths;
+    my %storage_roles;
     my %local_drive_uses;
     my %spawn_drive_sources;
     my %transaction_by_name = map { $_->{name} => $_ } @{$actor->{transactions} || []};
@@ -134,8 +136,9 @@ sub _build_parent_ir($self, $actor, $spawned) {
 
     for my $tx (@{$actor->{transactions}}) {
         next if $spawned->{$tx->{name}};
-        my ($ss, $cs, $ds, $do, $sp, $contracts, $widths) = $self->_build_transaction($tx, $actor, $ti++);
+        my ($ss, $cs, $ds, $do, $sp, $contracts, $widths, $roles) = $self->_build_transaction($tx, $actor, $ti++);
         _merge_signal_widths(\%signal_widths, $widths, $tx->{name});
+        _merge_storage_roles(\%storage_roles, $roles, $tx->{name});
         my %tx_drive_uses = _collect_named_drive_call_names($tx->{clauses}, $actor->{drives} || {});
         $local_drive_uses{$_} = 1 for keys %tx_drive_uses;
         push @states, @$ss;
@@ -182,6 +185,7 @@ sub _build_parent_ir($self, $actor, $spawned) {
                     "Transaction '$tx->{name}': spawn instance '$s->{instance}' named drive '$drive_name' generated request handoff",
                 );
                 $ctrs{"${prefix}_start"} = 1;
+                $storage_roles{"${prefix}_start"} = 'drive_request';
                 for my $param (@{($actor->{drives} || {})->{$drive_name}{params} || []}) {
                     my $width = _drive_param_width($actor, $drive_name, $param);
                     _ensure_port(
@@ -192,6 +196,7 @@ sub _build_parent_ir($self, $actor, $spawned) {
                         "Transaction '$tx->{name}': spawn instance '$s->{instance}' named drive '$drive_name' parameter '$param' generated payload handoff",
                     );
                     $ctrs{"${prefix}_$param"} = $width;
+                    $storage_roles{"${prefix}_$param"} = 'drive_payload';
                     push @payloads, {
                         parameter   => $param,
                         child_port  => "${drive_name}_$param",
@@ -216,7 +221,7 @@ sub _build_parent_ir($self, $actor, $spawned) {
     push @dts, $self->_build_rules($actor, \%ctrs);
     $self->_wire_do_children(\@states, \%ctrs, $actor);
     my $local_drive_filter = keys(%$spawned) ? \%local_drive_uses : undef;
-    $self->_build_drive_dts($actor, \@dts, \%ctrs, $local_drive_filter, \%spawn_drive_sources);
+    $self->_build_drive_dts($actor, \@dts, \%ctrs, $local_drive_filter, \%spawn_drive_sources, \%storage_roles);
 
     my $ir = {
         actor_name => $actor->{actor_name},
@@ -229,6 +234,7 @@ sub _build_parent_ir($self, $actor, $spawned) {
         dt_blocks  => \@dts,
         counters   => \%ctrs,
         signal_widths => \%signal_widths,
+        storage_roles => \%storage_roles,
         children   => {},
         spawn_instances => \@spawn_instances,
         temporal_contracts => \@temporal_contracts,
@@ -408,12 +414,16 @@ sub _collect_named_drive_call_names_into {
 }
 
 sub _register_drive_call_signal_widths {
-    my ($actor, $counters, $used_drives) = @_;
+    my ($actor, $counters, $used_drives, $storage_roles) = @_;
     for my $drive_name (sort keys %{$used_drives || {}}) {
         my $drive = ($actor->{drives} || {})->{$drive_name} || next;
         $counters->{"${drive_name}_start"} = 1;
+        $storage_roles->{"${drive_name}_start"} = 'drive_request'
+            if ref($storage_roles) eq 'HASH';
         for my $param (@{$drive->{params} || []}) {
             $counters->{"${drive_name}_$param"} = _drive_param_width($actor, $drive_name, $param);
+            $storage_roles->{"${drive_name}_$param"} = 'drive_payload'
+                if ref($storage_roles) eq 'HASH';
         }
     }
 }
@@ -670,6 +680,7 @@ sub _build_transaction($self, $tx, $actor, $txi) {
     my @dps;
     my @contracts;
     my %contract_names;
+    my %storage_roles;
     my $si  = 0; my $ha = 0; my $wdc; my $lat;
 
     for my $cl (@{$tx->{clauses}}) {
@@ -707,14 +718,14 @@ sub _build_transaction($self, $tx, $actor, $txi) {
         elsif ($k eq 'complete') { push @st, _ir_complete($cl, $tn, $si++); }
         elsif ($k eq 'when' && !@st) { push @st, _ir_when_activation($cl,$tn,$si++); }
         elsif ($k eq 'when')     {
-            my ($ws) = _expand_when($cl,$tn,\$si,\@ps,$drives,$wd,$widths,\%ct);
+            my ($ws) = _expand_when($cl,$tn,\$si,\@ps,$drives,$wd,$widths,\%ct,\%storage_roles);
             push @st, @$ws;
         }
         elsif ($k eq 'switch')   {
-            my ($ss) = _expand_switch($cl,$tn,\$si,\@ps,$drives,$wd,$widths,\%ct);
+            my ($ss) = _expand_switch($cl,$tn,\$si,\@ps,$drives,$wd,$widths,\%ct,\%storage_roles);
             push @st, @$ss;
         }
-        elsif ($k eq 'repeat')   { my ($rs,$rc,$rw) = _ir_repeat($cl,$tn,\$si,\@ps,$wd,$drives,$widths); push @st,@$rs; _register_counter_width(\%ct,$rc,$rw); }
+        elsif ($k eq 'repeat')   { my ($rs,$rc,$rw) = _ir_repeat($cl,$tn,\$si,\@ps,$wd,$drives,$widths); push @st,@$rs; _register_counter_width(\%ct,$rc,$rw); $storage_roles{$rc} = 'repeat_counter'; }
         elsif ($k eq 'latency')  { $lat = _parse_latency($cl, $tn); }
         elsif ($k eq 'params')   { next; }
         elsif ($k eq 'do')       { push @doc, $cl->[1]; push @st, _ir_do($cl,$tn,$si++); }
@@ -729,6 +740,7 @@ sub _build_transaction($self, $tx, $actor, $txi) {
     if ($ha && $wdc) {
         my $lim = $wd // 65536;
         $ct{$wdc} = int(log($lim)/log(2)) + 1;
+        $storage_roles{$wdc} = 'watchdog_counter';
         _inj_watchdog(\@st, $tn, $wdc, $lim, \%ct);
     }
 
@@ -736,6 +748,7 @@ sub _build_transaction($self, $tx, $actor, $txi) {
     if ($lat) {
         my ($cc,$inc,$err,$cdt) = _inj_latency(\@st, $tn, $lat, $ha, \%ct);
         $ct{$cc} = int(log($lat->{max}//256)/log(2)) + 1;
+        $storage_roles{$cc} = 'latency_counter';
         $ct{$inc} = 1; $ct{$err} = 1;
         push @dt, $cdt;
     }
@@ -744,7 +757,7 @@ sub _build_transaction($self, $tx, $actor, $txi) {
     _link_states(\@st, $tn);
     $ct{can_accept} = 1;
     for my $s (@st) { next unless $s->{kind} eq 'entry'; unshift @{$s->{assignments}}, { lhs => 'can_accept', rhs => 1, op => '=' }; }
-    return (\@st, \%ct, \@dt, \@doc, \@spc, \@contracts, { %{$widths || {}} });
+    return (\@st, \%ct, \@dt, \@doc, \@spc, \@contracts, { %{$widths || {}} }, \%storage_roles);
 }
 
 sub _merge_signal_widths {
@@ -757,6 +770,19 @@ sub _merge_signal_widths {
         confess "signal width for '$name' conflicts across transactions while merging '$transaction'\n"
             if defined($merged->{$name}) && $merged->{$name} > 0 && $merged->{$name} != $width;
         $merged->{$name} = $width;
+    }
+}
+
+sub _merge_storage_roles {
+    my ($merged, $roles, $transaction) = @_;
+    return unless ref($roles) eq 'HASH';
+
+    for my $name (sort keys %$roles) {
+        my $role = $roles->{$name};
+        next unless defined($role) && length($role);
+        confess "storage role for '$name' conflicts across transactions while merging '$transaction'\n"
+            if defined($merged->{$name}) && $merged->{$name} ne $role;
+        $merged->{$name} = $role;
     }
 }
 
@@ -1598,15 +1624,15 @@ sub _ir_placeholder{ my ($cl,$tn,$i)=@_; {name=>"${tn}_$cl->[0]_$i",kind=>'seque
 sub _ir_do       { my ($cl,$tn,$i)=@_; my $c=$cl->[1]; {name=>"${tn}_do_$i",kind=>'await',assignments=>[{lhs=>"${c}_start",rhs=>1,op=>'=',source_kind=>'do_start'}],transitions=>[],guard=>{port=>"${c}_done"}} }
 sub _ir_spawn    { my ($cl,$tn,$i)=@_; my $inst=$cl->[3]||"${tn}_$i"; {name=>"${tn}_spawn_$i",kind=>'sequential',assignments=>[{lhs=>"${inst}_start",rhs=>1,op=>'=',source_kind=>'spawn_start'}],transitions=>[]} }
 sub _ir_when     { my ($cl,$tn,$i)=@_; {name=>"${tn}_when_$i",kind=>'branch',condition=>$cl->[1],body_clauses=>[@{$cl}[2..$#$cl]],assignments=>[],transitions=>[]} }
-sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters)=@_; my @s; my $bstate=_ir_when($cl,$tn,$$ir++); push @s,$bstate; my @body_states; my @lp;
+sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_roles)=@_; my @s; my $bstate=_ir_when($cl,$tn,$$ir++); push @s,$bstate; my @body_states; my @lp;
     for my $bc(@{$bstate->{body_clauses}}){next unless ref($bc)eq'ARRAY';my$bk=$bc->[0];
         if($bk eq'drive'){my$n=$bc->[1];confess qq{drive $n not defined} unless !ref($n)&&$drives->{$n};push @body_states,_ir_named_drive_call($bc,$tn,$$ir++,$drives->{$n},[splice @lp])}
         elsif($bk eq'await'){push @body_states,_ir_await($bc,$tn,$$ir++,$wd,[splice @lp])}
         elsif($bk eq'sample'){push @lp,$bc}
         elsif($bk eq'complete'){push @body_states,_ir_complete($bc,$tn,$$ir++)}
-        elsif($bk eq'repeat'){my($rs,$rc,$rw)=_ir_repeat($bc,$tn,$ir,\@lp,$wd,$drives,$widths);push @body_states,@$rs;_register_counter_width($counters,$rc,$rw) if $counters}
+        elsif($bk eq'repeat'){my($rs,$rc,$rw)=_ir_repeat($bc,$tn,$ir,\@lp,$wd,$drives,$widths);push @body_states,@$rs;_register_counter_width($counters,$rc,$rw) if $counters;$storage_roles->{$rc}='repeat_counter' if ref($storage_roles)eq'HASH'}
         elsif($bk eq'update'||$bk eq'shift_left'||$bk eq'shift_right'||$bk eq'assemble'||$bk eq'extract'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_data_op($bk,$bc,$tn,$$ir++,$widths)}
-        elsif($bk eq'when'){my($ws)=_expand_when($bc,$tn,$ir,\@lp,$drives,$wd,$widths,$counters);push @body_states,@$ws}}
+        elsif($bk eq'when'){my($ws)=_expand_when($bc,$tn,$ir,\@lp,$drives,$wd,$widths,$counters,$storage_roles);push @body_states,@$ws}}
     if(@lp){push @body_states,_ir_sample_state($tn,\@lp,$$ir++)}
     if(@body_states){$bstate->{true_target}=$body_states[0]{name};$bstate->{branch_state_names}=[map { $_->{name} } @body_states];push @s,@body_states}
     return (\@s);
@@ -1625,7 +1651,7 @@ sub _canonical_switch_value_key {
     return defined($value) ? "$value" : '';
 }
 
-sub _expand_switch { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters)=@_; my $signal=$cl->[1]; my @branches; my @branch_state_names; my @branch_end_names; my %seen_val; my @s;
+sub _expand_switch { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_roles)=@_; my $signal=$cl->[1]; my @branches; my @branch_state_names; my @branch_end_names; my %seen_val; my @s;
     for my $i(2..$#$cl){my$br=$cl->[$i];next unless ref($br)eq'ARRAY'&&@$br>=2;my$val=$br->[0];my@bc=@{$br}[1..$#$br];
         my $seen_key = _canonical_switch_value_key($val);
         confess "Switch '$tn': duplicate value '$val'\n" if$seen_val{$seen_key}++;my@body_states;my@lp;
@@ -1633,9 +1659,9 @@ sub _expand_switch { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters)=@_; my $
             if($bk2 eq'drive'){my$n=$bc2->[1];confess qq{drive $n not defined} unless !ref($n)&&$drives->{$n};push @body_states,_ir_named_drive_call($bc2,$tn,$$ir++,$drives->{$n},[splice @lp])}
             elsif($bk2 eq'await'){push @body_states,_ir_await($bc2,$tn,$$ir++,$wd,[splice @lp])}
             elsif($bk2 eq'sample'){push @lp,$bc2}
-            elsif($bk2 eq'repeat'){my($rs,$rc,$rw)=_ir_repeat($bc2,$tn,$ir,\@lp,$wd,$drives,$widths);push @body_states,@$rs;_register_counter_width($counters,$rc,$rw) if $counters}
+            elsif($bk2 eq'repeat'){my($rs,$rc,$rw)=_ir_repeat($bc2,$tn,$ir,\@lp,$wd,$drives,$widths);push @body_states,@$rs;_register_counter_width($counters,$rc,$rw) if $counters;$storage_roles->{$rc}='repeat_counter' if ref($storage_roles)eq'HASH'}
             elsif($bk2 eq'update'||$bk2 eq'shift_left'||$bk2 eq'shift_right'||$bk2 eq'assemble'||$bk2 eq'extract'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_data_op($bk2,$bc2,$tn,$$ir++,$widths)}
-            elsif($bk2 eq'when'){my($ws)=_expand_when($bc2,$tn,$ir,\@lp,$drives,$wd,$widths,$counters);push @body_states,@$ws}}
+            elsif($bk2 eq'when'){my($ws)=_expand_when($bc2,$tn,$ir,\@lp,$drives,$wd,$widths,$counters,$storage_roles);push @body_states,@$ws}}
         if(@lp||!@body_states){push @body_states,_ir_sample_state($tn,\@lp,$$ir++)if@lp;push @body_states,{name=>"${tn}_switch_${val}_" . $$ir++,kind=>'sequential',assignments=>[],transitions=>[]}unless@body_states}
         push @branches,{value=>$val,body_start=>$body_states[0]{name}};
         push @branch_state_names, map { $_->{name} } @body_states;
@@ -2888,7 +2914,7 @@ sub _rule_trigger_source_name { my ($rule, $target) = @_; "${rule}_${target}" }
 sub _rule_cond { my($self,$w)=@_; return {port=>'1'} unless $w&&ref($w)eq'ARRAY'&&@$w>=2; {port=>$w->[1]} }
 
 sub _build_drive_dts {
-    my ($self, $actor, $dts, $ctrs, $local_drive_uses, $extra_drive_sources) = @_;
+    my ($self, $actor, $dts, $ctrs, $local_drive_uses, $extra_drive_sources, $storage_roles) = @_;
     my $drives = $actor->{drives} || {};
     for my $name (sort keys %$drives) {
         my $def = $drives->{$name};
@@ -2906,8 +2932,12 @@ sub _build_drive_dts {
         for my $source (@sources) {
             my $prefix = $source->{prefix};
             $ctrs->{"${prefix}_start"} = 1;
+            $storage_roles->{"${prefix}_start"} = 'drive_request'
+                if ref($storage_roles) eq 'HASH';
             for my $p (@params) {
                 $ctrs->{"${prefix}_$p"} = _drive_param_width($actor, $name, $p);
+                $storage_roles->{"${prefix}_$p"} = 'drive_payload'
+                    if ref($storage_roles) eq 'HASH';
             }
 
             my %param_signal = map { $_ => "${prefix}_$_" } @params;

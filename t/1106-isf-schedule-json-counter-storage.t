@@ -26,14 +26,17 @@ subtest 'schedule JSON reports assigned counters with inferred widths' => sub {
     my @watchdogs = grep { $_->{name} eq 'apb_transfer_wd' } @$storage;
     is(scalar(@watchdogs), 1, 'watchdog counter appears once');
     is($watchdogs[0]{kind},  'counter', 'watchdog storage is classified as a counter');
+    is($watchdogs[0]{role},  'watchdog_counter', 'watchdog storage reports its scheduler role');
     is($watchdogs[0]{width}, 17,        'watchdog storage keeps the inferred width');
 
     my $latency_counter = entry_by_name($storage, 'apb_transfer_cc');
     is($latency_counter->{kind},  'counter', 'latency storage is classified as a counter');
+    is($latency_counter->{role},  'latency_counter', 'latency storage reports its scheduler role');
     is($latency_counter->{width}, 5,         'latency storage keeps the max-bound inferred width');
 
     my $drive_start = entry_by_name($storage, 'penable_start');
     is($drive_start->{kind},  'counter', 'combinational drive start still comes from the counter table');
+    is($drive_start->{role},  'drive_request', 'combinational drive start reports its role');
     is($drive_start->{width}, 1,         'combinational drive start keeps its counter-table width');
 
     my $last_error = entry_by_name($storage, 'last_error');

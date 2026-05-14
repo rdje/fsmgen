@@ -325,21 +325,23 @@ scheduler counters and register storage with known ISF width evidence.
 
 ### Richer Schedule-Report Storage Classes
 
-Status: backlog.
+Status: partially shipped; additional classes remain backlog.
 
 Goal: classify inferred storage more precisely in schedule reports.
 
 Current boundary: schedule reports expose bounded storage metadata with
-optional positive integer widths when width evidence is known. Richer
-storage-class optimization, such as more precise classes than `counter` and
-`register`, is not shipped.
+optional positive integer widths when width evidence is known.
+`inferred_storage[].kind` remains the coarse storage category (`counter` or
+`register`). The first optional `inferred_storage[].role` slice is shipped for
+storage families with stable lowering evidence: `watchdog_counter`,
+`latency_counter`, `repeat_counter`, `drive_request`, `drive_payload`,
+`sample_alias`, `extract_field`, `data_register`, and `completion_pulse`.
 
-Planned direction: keep `inferred_storage[].kind` as the coarse storage
-category (`counter` or `register`) and add an optional
-`inferred_storage[].role` for scheduler purpose once each role has stable
-evidence, compatibility rules, public contract metadata, and tests. Candidate
-roles include watchdog, latency, repeat, named-drive request/payload,
-sample-alias, extract-field, data-register, and completion-pulse roles.
+Remaining direction: keep `role` additive and omit it when evidence is
+ambiguous. Additional roles, including temporal-contract monitor storage,
+child `do`/`spawn` handoff storage, rule-trigger source storage, and
+resource-grant/debug storage, remain backlog until each family has its own
+compatibility rules, public contract metadata, and regression coverage.
 
 ### Fully Frozen Schedule JSON Schema
 

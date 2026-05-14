@@ -15,6 +15,7 @@ use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::Support::ISFPublicInterfaceContract qw(
     build_isf_public_interface_contract
     isf_public_interface_schedule_report_storage_kind_values
+    isf_public_interface_schedule_report_storage_role_values
     isf_public_interface_schedule_report_storage_width_shape
 );
 
@@ -55,11 +56,17 @@ subtest 'APB schedule report inferred storage follows advertised metadata' => su
     my $actor = FSM::Adapter::ISF->new()->parse_file($isf_path);
     my $report = JSON::PP->new->decode(FSM::Scheduler::ISF->new()->report($actor));
     my %kind = map { $_ => 1 } @{isf_public_interface_schedule_report_storage_kind_values()};
+    my %role = map { $_ => 1 } @{isf_public_interface_schedule_report_storage_role_values()};
     my $width_entries = 0;
+    my $role_entries = 0;
 
     ok(@{$report->{inferred_storage} || []}, 'APB report exposes inferred storage entries');
     for my $entry (@{$report->{inferred_storage} || []}) {
         ok($kind{$entry->{kind}}, "storage '$entry->{name}' kind '$entry->{kind}' is advertised");
+        if (exists $entry->{role}) {
+            $role_entries++;
+            ok($role{$entry->{role}}, "storage '$entry->{name}' role '$entry->{role}' is advertised");
+        }
         if (exists $entry->{width}) {
             $width_entries++;
             like($entry->{width}, qr/\A[1-9][0-9]*\z/, "storage '$entry->{name}' width is a positive integer");
@@ -70,10 +77,13 @@ subtest 'APB schedule report inferred storage follows advertised metadata' => su
     ok($done, 'APB report exposes completion done storage');
     is($done->{kind}, 'register', 'completion pulse storage is reported through the register kind')
         if $done;
+    is($done->{role}, 'completion_pulse', 'completion pulse storage reports its role')
+        if $done;
     is($done->{width}, 1, 'completion pulse storage reports its known one-bit width')
         if $done;
 
     ok($width_entries > 0, 'APB report includes width-bearing inferred storage entries');
+    ok($role_entries > 0, 'APB report includes role-bearing inferred storage entries');
 };
 
 done_testing();
@@ -89,6 +99,15 @@ sub assert_storage_metadata {
     assert_unique_scalar_list(
         $contract->{schedule_report_storage_kind_values},
         "$label storage kind values",
+    );
+    is_deeply(
+        $contract->{schedule_report_storage_role_values},
+        isf_public_interface_schedule_report_storage_role_values(),
+        "$label storage role values are exact",
+    );
+    assert_unique_scalar_list(
+        $contract->{schedule_report_storage_role_values},
+        "$label storage role values",
     );
     is(
         $contract->{schedule_report_storage_width_shape},
