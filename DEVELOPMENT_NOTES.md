@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF intent abstraction layer terminology
+- Calling `.fsm` IAL0 is useful because it acknowledges that `.fsm` is already
+  above HDL while still preserving it as the cycle-accurate audit artifact.
+- Calling current `.isf` IAL1 keeps its role narrow: it is scheduling intent
+  that must lower to reviewable `.fsm`, not a license to hide runtime
+  behavior.
+- A future IAL2 should not exist merely to make syntax prettier. It should
+  carry a semantic level that is genuinely above transactions, most plausibly
+  reusable protocol intent or platform/resource mapping policy. Anything that
+  is only an alias, macro, or wrapper should stay in IAL1 or outside the
+  language.
 ## 2026-05-14: ISF construct semantics invariant
 - ISF should not accumulate parser-visible syntax that lacks a real hardware
   meaning. A construct is only useful when users can predict its scheduled

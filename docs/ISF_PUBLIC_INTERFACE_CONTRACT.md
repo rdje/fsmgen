@@ -16,6 +16,12 @@ semantic in terms of cycles/activation/storage/conflicts/completion, and
 focused regression coverage. Constructs without that full chain remain deferred,
 backlog, or validated compatibility input.
 
+The intent-layer terminology used by the docs is also part of this live
+contract: `.fsm` is Intent Abstraction Layer 0 (`IAL0`), the explicit
+cycle-authored review artifact, and current `.isf` is Intent Abstraction Layer
+1 (`IAL1`), the scheduling-intent layer that lowers to reviewable IAL0 `.fsm`.
+No higher layer is currently shipped.
+
 Machine-readable discovery lives in
 [perl/FSM/Support/ISFPublicInterfaceContract.pm](../perl/FSM/Support/ISFPublicInterfaceContract.pm)
 and is advertised through:

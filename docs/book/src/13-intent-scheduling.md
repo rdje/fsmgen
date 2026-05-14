@@ -5,9 +5,30 @@ You describe **what** happens — the compiler infers **when** and produces
 explicit cycle-accurate `.fsm`.
 
 ```text
-.isf → LoweringIR → Emitter::FSM → .fsm → SystemVerilog / Verilog
+IAL1 .isf → LoweringIR → Emitter::FSM → IAL0 .fsm → SystemVerilog / Verilog
                     → Emitter::JSON → Schedule Report
 ```
+
+## Intent Abstraction Layers
+
+FSMGen treats explicit `.fsm` as **Intent Abstraction Layer 0** (`IAL0`).
+Layer 0 is still an abstraction above HDL, but it is the cycle-authored review
+artifact: DTs, assignment operators, state and non-state regions, mux-selector
+semantics, and exact runtime behavior are visible there.
+
+Current `.isf` constructs form **Intent Abstraction Layer 1** (`IAL1`). Layer 1
+describes scheduling intent: transactions, rules, drives, samples, waits,
+repeats, child calls, spawned child activation, and constraints. The Layer 1
+contract is that lowering produces reviewable Layer 0 `.fsm` unless a targeted
+diagnostic rejects the construct first.
+
+Higher layers are intentionally reserved, not assumed. A future `IAL2` would
+need its own semantic level, such as reusable protocol-level intent objects
+(`APB read transaction`, `AXI burst`, and similar) or platform/resource mapping
+decisions above individual transactions. It should not be introduced for
+aliases, macros, syntax sugar, or wrappers that have no distinct runtime model.
+Any future layer must lower through the same chain: clear source semantics,
+clear lower-layer mapping, and clear runtime behavior.
 
 ## Design Principles
 

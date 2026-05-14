@@ -25,6 +25,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   support claim. Every current or future shipped ISF construct must have an
   explicit accepted source shape, lowering path or fail-closed diagnostic,
   runtime semantics, downstream visibility contract, and regression evidence.
+- ISF intent terminology now names `.fsm` as Intent Abstraction Layer 0
+  (`IAL0`) and current `.isf` as Intent Abstraction Layer 1 (`IAL1`). A
+  possible `IAL2` remains backlog exploration only for real protocol-level
+  intent or platform/resource mapping semantics above transactions, not for
+  aliases, macros, wrappers, or syntax sugar without distinct runtime meaning.
 - Architecture backlog: [docs/tasks/FSMGEN-IR-AUDIT.md](docs/tasks/FSMGEN-IR-AUDIT.md)
   now records the proposed audit of current IR structures and consolidation
   policy. It is not the active PNT lane while `R14` ISF feature delivery

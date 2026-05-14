@@ -158,6 +158,22 @@ policy for the fully general case.
 
 ## Intent Scheduling Format
 
+### IAL2 Protocol And Platform Intent Exploration
+
+Status: backlog.
+
+Goal: decide whether an intent layer above current ISF has enough independent
+semantic value to exist.
+
+Current boundary: FSMGen names `.fsm` as Intent Abstraction Layer 0 (`IAL0`)
+and current `.isf` as Intent Abstraction Layer 1 (`IAL1`). A future `IAL2`
+would need to justify itself with semantics above individual transactions, not
+only syntax convenience. The first worthwhile areas to investigate are
+reusable protocol-level intent objects, such as APB/AXI transaction templates,
+and platform/resource mapping decisions that choose among legal ISF schedules
+or resource allocations. Aliases, macros, wrappers, and sugar without a
+distinct runtime model should stay inside IAL1 or remain out of the language.
+
 ### Enforced Resource Arbitration
 
 Status: backlog.

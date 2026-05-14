@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF intent abstraction layer terminology
+- Completed documentation-only `ISF-PUBLIC-CONTRACT.6` in
+  [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md).
+- The ISF book, spec, and public contract now name `.fsm` as Intent
+  Abstraction Layer 0 (`IAL0`) and current `.isf` as Intent Abstraction Layer
+  1 (`IAL1`).
+- A possible `IAL2` is recorded only as backlog exploration. The first
+  worthwhile directions are reusable protocol-level intent objects and
+  platform/resource mapping decisions above individual transactions. Aliases,
+  macros, wrappers, or syntax sugar without distinct runtime semantics are
+  explicitly weak reasons to add a layer.
+- The active R14 composition frontier remains `ISF-COMPOSITION.5`; the
+  `ISF-PUBLIC-CONTRACT` frontier remains `ISF-PUBLIC-CONTRACT.1`.
 ## 2026-05-14: ISF construct semantics invariant
 - Completed documentation-only `ISF-PUBLIC-CONTRACT.5` in
   [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md).

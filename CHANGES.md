@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF intent abstraction layer terminology
+- Completed documentation-only `ISF-PUBLIC-CONTRACT.6` by recording intent
+  abstraction layer terminology in the ISF book, spec, public contract, and
+  task tree.
+- `.fsm` is now documented as Intent Abstraction Layer 0 (`IAL0`), the
+  explicit cycle-authored review artifact before HDL.
+- Current `.isf` constructs are now documented as Intent Abstraction Layer 1
+  (`IAL1`), the scheduling-intent layer that lowers to reviewable IAL0 `.fsm`.
+- Added backlog guidance for possible `IAL2`: reusable protocol-level intent
+  objects and platform/resource mapping decisions are plausible exploration
+  areas, while aliases, macros, wrappers, and syntax sugar without distinct
+  runtime semantics are weak reasons to create a layer.
+- The active R14 composition frontier remains `ISF-COMPOSITION.5`.
 ### R14 — ISF construct semantics invariant
 - Completed documentation-only `ISF-PUBLIC-CONTRACT.5` by making the ISF
   construct shipping rule explicit in the book, spec, public contract, and

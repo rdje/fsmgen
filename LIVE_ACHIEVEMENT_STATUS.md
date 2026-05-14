@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF intent abstraction layers
+- Active R14 task-tree slice: documentation-only `ISF-PUBLIC-CONTRACT.6` is
+  complete.
+- The ISF book, spec, and public contract now name `.fsm` as IAL0 and current
+  `.isf` as IAL1.
+- Possible IAL2 work is only backlog exploration for real protocol/platform
+  semantics above transactions; aliases/macros/sugar without distinct runtime
+  meaning are not enough reason to create another layer.
+- The active R14 composition frontier remains `ISF-COMPOSITION.5`.
+
 ## 2026-05-14: R14 — ISF construct semantics invariant
 - Active R14 task-tree slice: documentation-only `ISF-PUBLIC-CONTRACT.5` is
   complete.

@@ -20,7 +20,29 @@ then uses the ordinary `.fsm` pipeline for HDL generation.
 Cycles are not hidden. They are inferred into a generated `.fsm` artifact and a
 schedule JSON report that can be reviewed.
 
-## 1.1 Construct Shipping Rule
+## 1.1 Intent Abstraction Layers
+
+FSMGen uses the following terminology when discussing intent levels:
+
+- `.fsm` is **Intent Abstraction Layer 0** (`IAL0`). It is explicit
+  cycle-authored hardware intent. It owns DT structure, assignment operators,
+  state and non-state activation regions, mux-selection semantics, and exact
+  runtime behavior. It is the semantic audit artifact produced before HDL.
+- Current `.isf` is **Intent Abstraction Layer 1** (`IAL1`). It is scheduling
+  intent above `.fsm`: transactions, rules, drives, samples, waits, repeats,
+  transaction composition, spawned-child activation, and constraints lower into
+  reviewable `IAL0` `.fsm`.
+
+Additional layers are not assumed. A future `IAL2` should be introduced only
+if it carries a real semantic level that is not merely nicer spelling for
+existing ISF constructs. Plausible reasons include reusable protocol-level
+intent objects, such as an authored APB read or AXI burst operation, or
+platform/resource mapping decisions above individual transactions. Weak
+reasons include aliases, macro wrappers, syntax sugar, or any form that lacks
+a distinct runtime model. Every layer must preserve a clear lowering chain and
+runtime semantics.
+
+## 1.2 Construct Shipping Rule
 
 An ISF construct is shipped only when its syntax, lowering, and runtime
 semantics are all explicit. Parser acceptance alone is not support.

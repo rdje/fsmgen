@@ -43,7 +43,7 @@ primary R14 focus.
   Goal: `Keep ISF specs, book, public contract, manifest, and tests synchronized.`
   Children: `ISF-PUBLIC-CONTRACT.1`, `ISF-PUBLIC-CONTRACT.2`,
   `ISF-PUBLIC-CONTRACT.3`, `ISF-PUBLIC-CONTRACT.4`,
-  `ISF-PUBLIC-CONTRACT.5`
+  `ISF-PUBLIC-CONTRACT.5`, `ISF-PUBLIC-CONTRACT.6`
 
 - ID: `ISF-PUBLIC-CONTRACT.1`
   Status: `pending`
@@ -88,6 +88,16 @@ primary R14 focus.
   Verification: `mdbook build docs/book; git diff --check`
   Commit: `ISF-PUBLIC-CONTRACT.5: document construct semantics invariant`
 
+- ID: `ISF-PUBLIC-CONTRACT.6`
+  Status: `done`
+  Goal: `Record IAL0/IAL1 terminology and IAL2 criteria.`
+  Acceptance: `The ISF book, spec, public contract, and backlog state that
+  .fsm is IAL0, current .isf is IAL1, and any possible IAL2 requires a real
+  protocol/platform semantic level rather than aliases, macros, or syntax
+  sugar without a distinct runtime model.`
+  Verification: `mdbook build docs/book; git diff --check`
+  Commit: `ISF-PUBLIC-CONTRACT.6: document intent abstraction layers`
+
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
@@ -102,6 +112,9 @@ primary R14 focus.
 - `2026-05-14`: Parser acceptance is not a support claim for ISF. A construct
   is shipped only when source shape, lowering, runtime semantics, diagnostics,
   downstream visibility, and regression evidence are all explicit.
+- `2026-05-14`: FSMGen uses IAL terminology for intent levels: `.fsm` is
+  IAL0, current `.isf` is IAL1, and IAL2 remains an exploration topic only for
+  real protocol/platform semantics above transactions.
 
 ## Open Questions
 
@@ -121,6 +134,8 @@ primary R14 focus.
 | `2026-05-14` | `ISF-PUBLIC-CONTRACT` | `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-PUBLIC-CONTRACT.5` | `mdbook build docs/book` | `passed` |
 | `2026-05-14` | `ISF-PUBLIC-CONTRACT.5` | `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-PUBLIC-CONTRACT.6` | `mdbook build docs/book` | `passed` |
+| `2026-05-14` | `ISF-PUBLIC-CONTRACT.6` | `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -128,9 +143,12 @@ primary R14 focus.
 | --- | --- | --- |
 | `ISF-PUBLIC-CONTRACT` | `R14: map ISF objectives to task trees` | Initial tree creation belongs to the ISF objective task-tree coverage slice. |
 | `ISF-PUBLIC-CONTRACT.5` | `ISF-PUBLIC-CONTRACT.5: document construct semantics invariant` | Records that every shipped ISF construct must have explicit source, lowering, runtime, diagnostic, visibility, and regression semantics. |
+| `ISF-PUBLIC-CONTRACT.6` | `ISF-PUBLIC-CONTRACT.6: document intent abstraction layers` | Records `.fsm` as IAL0, current `.isf` as IAL1, and the criteria/backlog for possible IAL2 exploration. |
 
 ## Changelog
 
 - `2026-05-14`: Created the active ISF public-contract synchronization task tree.
 - `2026-05-14`: Completed `ISF-PUBLIC-CONTRACT.5` as a documentation-only
   invariant; current frontier remains `ISF-PUBLIC-CONTRACT.1`.
+- `2026-05-14`: Completed `ISF-PUBLIC-CONTRACT.6` as a documentation-only
+  terminology/backlog slice; current frontier remains `ISF-PUBLIC-CONTRACT.1`.
