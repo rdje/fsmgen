@@ -12,6 +12,12 @@ use File::Slurp qw(read_file);
 use FSM::Adapter::ISF::LispishAdapter;
 use FSM::Debug;
 
+my %RESOURCE_ARBITERS = map { $_ => 1 } qw(priority round_robin);
+my %RESOURCE_KINDS = map { $_ => 1 } qw(
+    rule_slot output_bundle interface_bundle named_drive
+    transaction_start child_instance storage_port
+);
+
 # Parses .isf source files into a structured, validated AST.
 #
 # Pipeline: Lispish raw parse -> LispishAdapter normalization -> validation
@@ -26,7 +32,7 @@ use FSM::Debug;
 #     handshakes    => { name => { valid => ..., ready => ... }, ... },
 #     transactions  => [ { name => ..., clauses => [...] }, ... ],
 #     rules         => [ { name => ..., when => ..., actions => [...] }, ... ],
-#     resources     => [ { name => ..., arbiter => ... }, ... ],
+#     resources     => [ { name => ..., arbiter => ..., kind => ..., users => [...] }, ... ],
 #     priorities    => [ ... ],
 #   }
 
@@ -166,6 +172,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
     $self->_validate_rule_trigger_targets($result);
     $self->_validate_rule_priority_targets($result);
     $self->_validate_actor_priority_targets($result);
+    $self->_validate_resource_user_targets($result);
 
     fsm_trace_exit('Parser _build_actor completed', 3);
     return $result;
@@ -451,28 +458,96 @@ sub _parse_resources($self, $clause) {
     for my $i (1 .. $#$clause) {
         my $res = $clause->[$i];
         confess "Error: resource must be a list\n" unless ref($res) eq 'ARRAY';
-        my ($kw, $name, $arbiter_form) = @$res;
-        confess "Error: resource entries require '(resource name (arbiter priority|round_robin))'\n"
-            unless @$res == 3
+        my ($kw, $name, @forms) = @$res;
+        confess "Error: resource entries require '(resource name (arbiter priority|round_robin) [(kind kind)] [(users rule...)])'\n"
+            unless @$res >= 3
                 && defined($kw)
                 && !ref($kw)
                 && $kw eq 'resource'
                 && defined($name)
                 && !ref($name)
-                && length($name)
-                && ref($arbiter_form) eq 'ARRAY'
-                && @$arbiter_form == 2
-                && defined($arbiter_form->[0])
-                && !ref($arbiter_form->[0])
-                && $arbiter_form->[0] eq 'arbiter'
-                && defined($arbiter_form->[1])
-                && !ref($arbiter_form->[1])
-                && ($arbiter_form->[1] eq 'priority' || $arbiter_form->[1] eq 'round_robin');
+                && length($name);
 
         confess "Error: duplicate resource '$name'\n" if $seen{$name}++;
-        push @resources, { name => $name, arbiter => $arbiter_form->[1] };
+
+        my %seen_subclause;
+        my ($arbiter, $kind);
+        my @users;
+        my %seen_users;
+
+        for my $form (@forms) {
+            confess "Error: resource '$name' subclauses must be list forms\n"
+                unless ref($form) eq 'ARRAY' && @$form;
+            my $head = $form->[0];
+            confess "Error: resource '$name' subclause heads must be scalar\n"
+                unless defined($head) && !ref($head) && length($head);
+            confess "Error: duplicate resource '$name' subclause '$head'\n"
+                if $seen_subclause{$head}++;
+
+            if ($head eq 'arbiter') {
+                confess "Error: resource '$name' arbiter requires '(arbiter priority|round_robin)'\n"
+                    unless @$form == 2
+                        && defined($form->[1])
+                        && !ref($form->[1])
+                        && $RESOURCE_ARBITERS{$form->[1]};
+                $arbiter = $form->[1];
+                next;
+            }
+
+            if ($head eq 'kind') {
+                confess "Error: resource '$name' kind requires '(kind rule_slot|output_bundle|interface_bundle|named_drive|transaction_start|child_instance|storage_port)'\n"
+                    unless @$form == 2
+                        && defined($form->[1])
+                        && !ref($form->[1])
+                        && $RESOURCE_KINDS{$form->[1]};
+                $kind = $form->[1];
+                next;
+            }
+
+            if ($head eq 'users') {
+                confess "Error: resource '$name' users requires '(users rule...)'\n"
+                    unless @$form >= 2;
+                for my $u (@{$form}[1 .. $#$form]) {
+                    confess "Error: resource '$name' users must be scalar names\n"
+                        unless defined($u) && !ref($u) && length($u);
+                    confess "Error: duplicate resource '$name' user '$u'\n"
+                        if $seen_users{$u}++;
+                    push @users, $u;
+                }
+                next;
+            }
+
+            confess "Error: resource '$name' has unsupported subclause '$head'\n";
+        }
+
+        confess "Error: resource '$name' requires '(arbiter priority|round_robin)'\n"
+            unless defined($arbiter);
+        confess "Error: resource '$name' with users requires '(kind rule_slot)'\n"
+            if @users && !defined($kind);
+
+        my %resource = (name => $name, arbiter => $arbiter);
+        $resource{kind} = $kind if defined($kind);
+        $resource{users} = \@users if @users;
+        push @resources, \%resource;
     }
     return \@resources;
+}
+
+sub _validate_resource_user_targets($self, $actor) {
+    my $actor_name = $actor->{actor_name};
+    my %rule_names = map { $_->{name} => 1 } @{$actor->{rules} || []};
+
+    for my $resource (@{$actor->{resources} || []}) {
+        next unless ($resource->{kind} // '') eq 'rule_slot';
+        for my $user (@{$resource->{users} || []}) {
+            confess "Error: resource '$resource->{name}' user '$user' is not a declared rule in actor '$actor_name'\n"
+                unless defined($user)
+                    && !ref($user)
+                    && $rule_names{$user};
+        }
+    }
+
+    return 1;
 }
 
 sub _parse_priority($self, $clause) {

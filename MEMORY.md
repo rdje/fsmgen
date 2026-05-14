@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF rule-slot resource enforcement
+- Completed `ISF-RESOURCE-PRIORITY.3` in
+  [docs/tasks/ISF-RESOURCE-PRIORITY.md](docs/tasks/ISF-RESOURCE-PRIORITY.md).
+- The parser now accepts resource `(kind ...)` and `(users ...)` subclauses
+  while preserving the legacy metadata-only resource shape. `rule_slot` users
+  validate against declared same-actor rules.
+- The scheduler now enforces `rule_slot` resources with the `priority`
+  arbiter by gating the whole lowered rule DT DTE. A lower-priority bound rule
+  runs only when its own guard is true and no higher-priority bound requester
+  is active.
+- Unsupported resource kinds with users, `round_robin` with users, incomplete
+  priority orderings, and resource priority cycles fail closed. The next
+  active frontier is `ISF-RESOURCE-PRIORITY.4`.
 ## 2026-05-14: ISF resource/priority arbitration semantics
 - Completed `ISF-RESOURCE-PRIORITY.2` in
   [docs/tasks/ISF-RESOURCE-PRIORITY.md](docs/tasks/ISF-RESOURCE-PRIORITY.md).

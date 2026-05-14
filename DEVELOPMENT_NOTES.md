@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF rule-slot resource enforcement
+- `rule_slot` maps cleanly to existing non-state rule DTs: the resource grant
+  is just an additional DTE condition, so enforcement does not add a cycle or
+  require new storage.
+- Resource arbitration is owner-level for the bound rule. That is intentionally
+  different from same-target priority suppression, which remains
+  assignment-local and only suppresses the conflicting assignment.
+- The first implementation requires a complete priority order across bound
+  users because the current lowerer does not prove arbitrary rule guards
+  mutually exclusive. Failing incomplete orderings closed is better than
+  silently allowing simultaneous requests to a supposedly exclusive resource.
+- Resource grant provenance is kept internal for now. Public schedule-report
+  projection should be specified separately so downstream consumers get a
+  bounded resource-arbitration summary instead of raw LoweringIR details.
 ## 2026-05-14: ISF resource/priority arbitration semantics
 - Resource arbitration needs a catalog of shareable resource kinds, not only
   arbitrary names. The resource name identifies an instance; the kind defines

@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF rule-slot resource enforcement
+- Active R14 task-tree slice: `ISF-RESOURCE-PRIORITY.3` is complete.
+- ISF now enforces priority-arbitrated `rule_slot` resources by gating bound
+  rule DT enables with resource grants.
+- New parser support accepts `(kind ...)` and `(users ...)` resource
+  subclauses, while unsupported bound resource kinds and `round_robin` bound
+  resources fail closed.
+- The next active R14 frontier is `ISF-RESOURCE-PRIORITY.4`.
+
 ## 2026-05-14: R14 — ISF resource/priority arbitration semantics
 - Active R14 task-tree slice: `ISF-RESOURCE-PRIORITY.2` is complete.
 - ISF resource semantics now have a growable shareable-resource catalog. The

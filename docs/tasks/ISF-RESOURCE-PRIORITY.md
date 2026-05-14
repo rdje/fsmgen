@@ -66,12 +66,12 @@ diagnostics for unresolved arbitration.
   Commit: `ISF-RESOURCE-PRIORITY.2: specify arbitration semantics`
 
 - ID: `ISF-RESOURCE-PRIORITY.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement resource mutual-exclusion lowering.`
   Acceptance: `The scheduler enforces the covered resource conflicts with
   deterministic generated artifacts or targeted fail-closed diagnostics.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -I perl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -l t/1112-isf-public-interface-contract.t t/1144-isf-public-tested-by-metadata-audit.t t/1176-isf-resource-priority-boundary.t t/1190-isf-rule-priority-target-boundary.t t/1191-isf-actor-priority-target-boundary.t t/1210-isf-priority-conflict-resolution.t t/1218-isf-rule-slot-resource-arbitration.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-RESOURCE-PRIORITY.3: enforce rule-slot resources`
 
 - ID: `ISF-RESOURCE-PRIORITY.4`
   Status: `pending`
@@ -101,13 +101,14 @@ diagnostics for unresolved arbitration.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-RESOURCE-PRIORITY.3` | `pending` | Resource arbitration now has a documented target semantic contract, so implementation can start with the covered priority-arbitrated rule case. |
+| 1 | `ISF-RESOURCE-PRIORITY.4` | `pending` | Rule-slot resource arbitration is implemented; the remaining priority leaf can decide whether additional rule/transaction conflict cases need implementation or can be narrowed/deferred. |
 
 ## ISF-RESOURCE-PRIORITY.1 Inventory
 
-This inventory records current shipped behavior. It is not a frozen API claim:
-the ISF public surface is live and may evolve alongside FSMGen as the
-resource/priority implementation becomes more complete.
+This inventory records shipped behavior at the completion of
+`ISF-RESOURCE-PRIORITY.1`. It is not a frozen API claim: the ISF public
+surface is live and may evolve alongside FSMGen as the resource/priority
+implementation becomes more complete.
 
 ### Accepted Resource Forms
 
@@ -157,7 +158,7 @@ Current storage: the parser returns
 - Priority attempts to resolve mixed assignment timing operators fail closed
   with `isf_priority_mixed_timing_conflict`.
 
-### Current Enforcement
+### Enforcement At Inventory Time
 
 - `(resources ...)` is not enforced by the scheduler today. A declared
   resource does not yet create mutual exclusion, grants, arbitration state, or
@@ -420,6 +421,61 @@ Allowed no-op metadata:
   lowering because they confirm that generated mux selectors obey the final
   onehot/onehot0 assumptions.
 
+## ISF-RESOURCE-PRIORITY.3 Implementation
+
+This slice ships the first enforceable resource kind: priority-arbitrated
+`rule_slot`.
+
+### Parser Surface
+
+- Existing metadata-only resources keep their old shape:
+  `(resource name (arbiter priority|round_robin))`.
+- Enforceable resources can now add:
+  `(kind rule_slot)` and `(users rule_a rule_b ...)`.
+- The parser accepts the growable resource-kind catalog:
+  `rule_slot`, `output_bundle`, `interface_bundle`, `named_drive`,
+  `transaction_start`, `child_instance`, and `storage_port`.
+- Duplicate resource names, duplicate subclauses, duplicate users, malformed
+  arbiter/kind/users clauses, and unknown `rule_slot` users fail before
+  scheduler handoff.
+- Unsupported resource kinds remain metadata only until used. If a resource
+  with bound users uses a non-`rule_slot` kind, lowering fails closed.
+
+### Lowering Surface
+
+- `rule_slot` + `priority` is the only enforced resource/arbitration pair.
+- Each bound rule requests the slot when its normalized rule guard is true.
+- Actor-level and rule-local priority edges are reused to build the resource
+  ordering graph.
+- A complete acyclic ordering is required across bound users. Cycles fail with
+  `isf_resource_priority_cycle`; unordered pairs fail with
+  `isf_resource_priority_incomplete`.
+- `round_robin` resources with bound users fail with
+  `isf_resource_unsupported_arbiter` until round-robin state semantics ship.
+- Bound users on unsupported kinds fail with
+  `isf_resource_unsupported_kind`.
+- The generated grant gates the whole lowered rule DT DTE. For example,
+  `high > low` lowers the low rule header guard to the equivalent of
+  `<(& low_guard (! high_guard))`, so all low rule actions, including
+  triggers, are suppressed while the higher requester is active.
+- Assignment provenance records `resource_suppressed_by` internally so static
+  same-target conflict checks can recognize conflicts resolved by resource
+  arbitration without widening the public schedule-report schema yet.
+
+### Regression Evidence
+
+- [t/1218-isf-rule-slot-resource-arbitration.t](../../t/1218-isf-rule-slot-resource-arbitration.t)
+  covers parser preservation for `(kind rule_slot)`/`(users ...)`, scheduled
+  `.fsm` DTE gating, HDL handoff, incomplete ordering rejection, cycle
+  rejection, unsupported `round_robin`, unsupported resource kinds, and
+  unknown `rule_slot` users.
+- [t/1176-isf-resource-priority-boundary.t](../../t/1176-isf-resource-priority-boundary.t)
+  continues to cover the legacy metadata-only resource shape plus malformed
+  resource and priority input.
+- [t/1144-isf-public-tested-by-metadata-audit.t](../../t/1144-isf-public-tested-by-metadata-audit.t)
+  now includes the resource-arbitration regression in the ISF public-interface
+  contract's live `tested_by` list.
+
 ## Decisions
 
 - `2026-05-14`: Resource and priority enforcement is tracked separately from
@@ -444,14 +500,17 @@ Allowed no-op metadata:
   priority-arbitrated rule users. Transaction, drive, output-target,
   child-instance, storage-port, round-robin, and lifetime-hold resource
   semantics remain deferred until their contracts are explicit.
+- `2026-05-14`: `ISF-RESOURCE-PRIORITY.3` ships the `rule_slot`/`priority`
+  case exactly. Other resource kinds stay accepted catalog metadata but fail
+  closed when bound users attempt to use them for enforced arbitration.
+- `2026-05-14`: Resource grant provenance remains internal for now.
+  Successful schedule-report projection is left to `ISF-RESOURCE-PRIORITY.5`
+  so the public JSON surface can be specified and audited as its own slice.
 
 ## Open Questions
 
-- Should successful priority/resource arbitration decisions become schedule
-  JSON metadata before or together with first resource enforcement?
-- What exact diagnostic code names should be used for unsupported
-  round-robin, unknown users, incomplete priority order, and priority cycles
-  in resource arbitration?
+- What bounded schedule-report metadata should `ISF-RESOURCE-PRIORITY.5`
+  expose for successful resource grants?
 
 ## Blockers
 
@@ -464,6 +523,7 @@ Allowed no-op metadata:
 | `2026-05-14` | `ISF-RESOURCE-PRIORITY` | `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-RESOURCE-PRIORITY.1` | `prove -l t/1176-isf-resource-priority-boundary.t t/1190-isf-rule-priority-target-boundary.t t/1191-isf-actor-priority-target-boundary.t t/1210-isf-priority-conflict-resolution.t`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-RESOURCE-PRIORITY.2` | `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-RESOURCE-PRIORITY.3` | `perl -I perl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -l t/1112-isf-public-interface-contract.t t/1144-isf-public-tested-by-metadata-audit.t t/1176-isf-resource-priority-boundary.t t/1190-isf-rule-priority-target-boundary.t t/1191-isf-actor-priority-target-boundary.t t/1210-isf-priority-conflict-resolution.t t/1218-isf-rule-slot-resource-arbitration.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -472,6 +532,7 @@ Allowed no-op metadata:
 | `ISF-RESOURCE-PRIORITY` | `R14: map ISF objectives to task trees` | Initial tree creation belongs to the ISF objective task-tree coverage slice. |
 | `ISF-RESOURCE-PRIORITY.1` | `ISF-RESOURCE-PRIORITY.1: inventory metadata behavior` | Records accepted resource/priority forms, existing validation, current enforcement, schedule-report exposure gaps, and implementation gaps. |
 | `ISF-RESOURCE-PRIORITY.2` | `ISF-RESOURCE-PRIORITY.2: specify arbitration semantics` | Defines the shareable resource-kind catalog, first-pass `(kind rule_slot)` plus `(users ...)` binding, priority-arbitrated rule-user grants, tie/cycle behavior, and unsupported cases. |
+| `ISF-RESOURCE-PRIORITY.3` | `ISF-RESOURCE-PRIORITY.3: enforce rule-slot resources` | Adds parser/lowering support for priority-arbitrated `rule_slot` resources and fail-closed unsupported cases. |
 
 ## Changelog
 
@@ -480,3 +541,5 @@ Allowed no-op metadata:
   frontier to `ISF-RESOURCE-PRIORITY.2`.
 - `2026-05-14`: Completed the resource/priority target semantics and moved
   the frontier to `ISF-RESOURCE-PRIORITY.3`.
+- `2026-05-14`: Implemented priority-arbitrated `rule_slot` resource
+  enforcement and moved the frontier to `ISF-RESOURCE-PRIORITY.4`.

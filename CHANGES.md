@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF rule-slot resource enforcement
+- Completed `ISF-RESOURCE-PRIORITY.3` by implementing the first enforced
+  resource kind: priority-arbitrated `rule_slot`.
+- Resource entries now accept optional `(kind ...)` and `(users ...)`
+  subclauses. `rule_slot` users must resolve to declared same-actor rules.
+- Lowering gates each lower-priority bound rule DT with the inverse of higher
+  active requesters, so the resource grant suppresses all actions in the
+  denied rule without adding a cycle.
+- Unsupported resource kinds with users, `round_robin` with users, incomplete
+  priority ordering, and resource priority cycles fail closed. Added
+  [t/1218-isf-rule-slot-resource-arbitration.t](t/1218-isf-rule-slot-resource-arbitration.t).
+- Advanced the active `ISF-RESOURCE-PRIORITY` frontier from
+  `ISF-RESOURCE-PRIORITY.3` to `ISF-RESOURCE-PRIORITY.4`.
 ### R14 — ISF resource/priority arbitration semantics
 - Completed `ISF-RESOURCE-PRIORITY.2` by defining the first resource
   arbitration target in

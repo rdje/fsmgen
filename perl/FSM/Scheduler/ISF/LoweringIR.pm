@@ -224,6 +224,7 @@ sub _build_parent_ir($self, $actor, $spawned) {
         children   => {},
         spawn_instances => \@spawn_instances,
     };
+    $ir->{resource_arbitration} = _apply_rule_slot_resource_arbitration($ir, $actor);
     $ir->{priority_resolution} = _apply_rule_priority_resolution($ir, $actor);
     _finalize_ir($ir);
     return $ir;
@@ -1350,6 +1351,136 @@ sub _ir_repeat {
     return (\@s,$ctr,$width);
 }
 
+sub _apply_rule_slot_resource_arbitration {
+    my ($ir, $actor) = @_;
+    my @resources = @{$actor->{resources} || []};
+    my %rule_dt = map {
+        (($_->{kind} // '') eq 'rule') ? ($_->{name} => $_) : ()
+    } @{$ir->{dt_blocks} || []};
+    my %original_guard = map {
+        $_ => (_guard_condition_expr($rule_dt{$_}{dte_guard}) // '1')
+    } keys %rule_dt;
+    my $model = _build_rule_priority_model($actor);
+    my @grants;
+
+    for my $resource (@resources) {
+        my @users = @{$resource->{users} || []};
+        next unless @users;
+
+        my $resource_name = $resource->{name} // '<unnamed>';
+        my $kind = $resource->{kind} // '';
+        my $arbiter = $resource->{arbiter} // '';
+
+        _resource_arbitration_error(
+            'isf_resource_unsupported_kind',
+            $resource_name,
+            "resource kind '$kind' is not enforced yet",
+        ) unless $kind eq 'rule_slot';
+
+        _resource_arbitration_error(
+            'isf_resource_unsupported_arbiter',
+            $resource_name,
+            "arbiter '$arbiter' is not enforced yet for rule_slot resources",
+        ) unless $arbiter eq 'priority';
+
+        for my $user (@users) {
+            _resource_arbitration_error(
+                'isf_resource_unknown_user',
+                $resource_name,
+                "user '$user' is not a lowered rule",
+            ) unless $rule_dt{$user};
+        }
+
+        for my $left_idx (0 .. $#users) {
+            my $left = $users[$left_idx];
+            for my $right_idx ($left_idx + 1 .. $#users) {
+                my $right = $users[$right_idx];
+                my $left_over_right = _priority_dominates($model, $left, $right);
+                my $right_over_left = _priority_dominates($model, $right, $left);
+
+                if ($left_over_right && $right_over_left) {
+                    _resource_arbitration_error(
+                        'isf_resource_priority_cycle',
+                        $resource_name,
+                        "priority cycle leaves no unique winner between '$left' and '$right'",
+                    );
+                }
+
+                if (!$left_over_right && !$right_over_left) {
+                    _resource_arbitration_error(
+                        'isf_resource_priority_incomplete',
+                        $resource_name,
+                        "priority arbiter needs an ordering between '$left' and '$right'",
+                    );
+                }
+            }
+        }
+
+        for my $user (@users) {
+            my @higher = sort grep {
+                $_ ne $user && _priority_dominates($model, $_, $user)
+            } @users;
+            my $dt = $rule_dt{$user};
+            my @higher_conditions = map { $original_guard{$_} // '1' } @higher;
+
+            push @grants, {
+                resource => $resource_name,
+                kind     => $kind,
+                arbiter  => $arbiter,
+                user     => $user,
+                higher   => [@higher],
+            };
+            push @{$dt->{resource_grants}}, {
+                resource => $resource_name,
+                higher   => [@higher],
+            };
+
+            next unless @higher;
+            $dt->{dte_guard} = _combine_rule_dte_with_resource_suppressors(
+                $dt->{dte_guard},
+                \@higher_conditions,
+            );
+            _mark_rule_assignments_resource_suppressed($dt, \@higher);
+        }
+    }
+
+    return { grants => \@grants, issues => [] };
+}
+
+sub _combine_rule_dte_with_resource_suppressors {
+    my ($guard, $suppressor_conditions) = @_;
+    my @terms;
+    my $existing = _guard_condition_expr($guard);
+    push @terms, $existing if defined($existing) && $existing ne '1';
+
+    my @conditions = grep { defined($_) && length($_) } @$suppressor_conditions;
+    if (@conditions == 1) {
+        push @terms, "(! $conditions[0])";
+    } elsif (@conditions > 1) {
+        push @terms, '(! (| ' . join(' ', @conditions) . '))';
+    }
+
+    return { port => '1' } unless @terms;
+    return { expr => $terms[0] } if @terms == 1;
+    return { expr => '(& ' . join(' ', @terms) . ')' };
+}
+
+sub _mark_rule_assignments_resource_suppressed {
+    my ($dt, $higher_rules) = @_;
+    for my $assignment (@{$dt->{assignments} || []}) {
+        my %seen = map { $_ => 1 } @{$assignment->{resource_suppressed_by} || []};
+        for my $higher (@$higher_rules) {
+            next if $seen{$higher}++;
+            push @{$assignment->{resource_suppressed_by}}, $higher;
+        }
+    }
+}
+
+sub _resource_arbitration_error {
+    my ($code, $resource_name, $reason) = @_;
+    confess "ISF resource arbitration '$code' on resource '$resource_name': $reason\n";
+}
+
 sub _apply_rule_priority_resolution {
     my ($ir, $actor) = @_;
     my $model = _build_rule_priority_model($actor);
@@ -1635,6 +1766,7 @@ sub _state_assignment_provenance {
         domain           => _assignment_domain_hint($assignment, $source_kind),
         assignment_index => $assignment_index,
         priority_suppressed_by => _assignment_priority_suppressed_by($assignment),
+        resource_suppressed_by => _assignment_resource_suppressed_by($assignment),
         activation       => {
             container_kind   => 'state',
             container_name   => $state->{name},
@@ -1659,6 +1791,7 @@ sub _dt_assignment_provenance {
         domain           => _assignment_domain_hint($assignment, $source_kind),
         assignment_index => $assignment_index,
         priority_suppressed_by => _assignment_priority_suppressed_by($assignment),
+        resource_suppressed_by => _assignment_resource_suppressed_by($assignment),
         activation       => {
             container_kind   => 'dt',
             container_name   => $dt->{name},
@@ -1774,6 +1907,12 @@ sub _assignment_priority_suppressed_by {
     my ($assignment) = @_;
     return [] unless ref($assignment->{priority_suppressed_by}) eq 'ARRAY';
     return [ @{$assignment->{priority_suppressed_by}} ];
+}
+
+sub _assignment_resource_suppressed_by {
+    my ($assignment) = @_;
+    return [] unless ref($assignment->{resource_suppressed_by}) eq 'ARRAY';
+    return [ @{$assignment->{resource_suppressed_by}} ];
 }
 
 sub _build_compatible_fanin_groups {
@@ -1943,6 +2082,7 @@ sub _build_conflict_issues {
             next unless ($left->{target} // '') eq ($right->{target} // '');
             next if _compatible_record_pair($left, $right);
             next if _priority_resolved_record_pair($left, $right);
+            next if _resource_resolved_record_pair($left, $right);
 
             if (_both_owner_kind($left, $right, 'rule')) {
                 push @issues, _conflict_issue(
@@ -2002,10 +2142,29 @@ sub _priority_resolved_record_pair {
     return 0;
 }
 
+sub _resource_resolved_record_pair {
+    my ($left, $right) = @_;
+    return 0 unless _both_owner_kind($left, $right, 'rule');
+    return 1 if _record_resource_suppressed_by($left, $right->{owner});
+    return 1 if _record_resource_suppressed_by($right, $left->{owner});
+    return 0;
+}
+
 sub _record_priority_suppressed_by {
     my ($record, $owner) = @_;
     return 0 unless defined($owner);
     my $suppressed_by = $record->{priority_suppressed_by};
+    return 0 unless ref($suppressed_by) eq 'ARRAY';
+    for my $higher (@$suppressed_by) {
+        return 1 if defined($higher) && $higher eq $owner;
+    }
+    return 0;
+}
+
+sub _record_resource_suppressed_by {
+    my ($record, $owner) = @_;
+    return 0 unless defined($owner);
+    my $suppressed_by = $record->{resource_suppressed_by};
     return 0 unless ref($suppressed_by) eq 'ARRAY';
     for my $higher (@$suppressed_by) {
         return 1 if defined($higher) && $higher eq $owner;

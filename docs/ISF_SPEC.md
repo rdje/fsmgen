@@ -198,14 +198,16 @@ clause may appear in an actor. Duplicate singleton clauses are rejected before
 the parser returns an actor shell instead of letting later clauses overwrite
 earlier public fields.
 
-Parser-carried but not currently semantically enforced by the scheduler:
+Additional actor clauses with mixed parser/scheduler behavior:
 - actor-level `(phase name property...)`, structurally validated as a
   non-empty scalar name plus list-form body entries; duplicate actor phase
   names are rejected.
 - actor-level `(stage name property...)`, structurally validated as a
   non-empty scalar name plus list-form body entries; duplicate actor stage
   names are rejected.
-- `(resources ...)`, structurally validated as `(resource name (arbiter priority|round_robin))`
+- `(resources ...)`, structurally validated as resource entries with
+  `(arbiter priority|round_robin)` plus optional `(kind ...)` and
+  `(users ...)`; `rule_slot` + `priority` resources are scheduler-enforced.
 - actor-level `(priority lhs over rhs)`
 
 Deprecated compatibility:
@@ -869,32 +871,34 @@ metadata is enforced only for same-target rule/rule data conflicts when both
 targets are rules. Transaction priority and broader resource arbitration remain
 deferred.
 
-`(resources ...)` entries are structurally validated as
-`(resource name (arbiter priority|round_robin))`, with duplicate resource
-names rejected before an actor shell is returned. `(resources ...)` is an
-actor-level singleton clause, so repeated resources blocks are rejected instead
-of merged or overwritten. Resource arbitration is still not enforced by
-lowering. Resource semantics use a growable catalog of shareable resource
-kinds. The resource name is the author-defined instance handle; the kind says
-what is being shared; the `arbiter` says how requesters are selected.
+`(resources ...)` entries are structurally validated as resource entries with
+non-empty scalar names, an `(arbiter priority|round_robin)` subclause, and
+optional `(kind ...)` and `(users ...)` subclauses. Duplicate resource names,
+duplicate resource subclauses, duplicate users, malformed kinds, malformed
+users, and unknown `rule_slot` users are rejected before scheduled `.fsm`
+emission. `(resources ...)` is an actor-level singleton clause, so repeated
+resources blocks are rejected instead of merged or overwritten. Resource
+semantics use a growable catalog of shareable resource kinds. The resource name
+is the author-defined instance handle; the kind says what is being shared; the
+`arbiter` says how requesters are selected.
 
-The next resource-arbitration implementation target is priority-arbitrated
-`rule_slot` users. The planned source shape keeps binding centralized under
+The shipped resource-arbitration implementation covers priority-arbitrated
+`rule_slot` users. The source shape keeps binding centralized under
 `(resources ...)` by extending a resource entry with `(kind rule_slot)` and
 `(users rule_a rule_b ...)` subclauses. For that covered case, each bound rule
 requests the resource when its normalized rule guard is true. Rule-local
 `(priority over other_rule)` and actor-level `(priority lhs over rhs)` edges
 choose the active winner when the endpoints are bound rules of the same
 resource. The generated grant gates the whole lowered rule DT DTE, while
-existing same-target priority suppression remains assignment-local. Planned
-but unshipped resource kinds include `output_bundle`, `interface_bundle`,
+existing same-target priority suppression remains assignment-local. Unshipped
+resource kinds include `output_bundle`, `interface_bundle`,
 `named_drive`, `transaction_start`, `child_instance`, and `storage_port`.
 Cycles, incomplete ordering among potentially simultaneous bound users,
-unknown users, ambiguous future user namespaces, unsupported resource kinds,
-and `round_robin` resources with bound users must fail closed until those
-cases have explicit contracts. Transaction users, named-drive users,
-output-target users, child-instance users, storage-port users, multi-capacity
-resources, and transaction-lifetime hold/release semantics remain deferred.
+ambiguous future user namespaces, unsupported resource kinds, and
+`round_robin` resources with bound users fail closed. Transaction users,
+named-drive users, output-target users, child-instance users, storage-port
+users, multi-capacity resources, and transaction-lifetime hold/release
+semantics remain deferred.
 
 Actor-level `(phase name property...)` and `(stage name property...)` metadata
 is structurally validated by the parser and carried in the actor shell for
@@ -1163,6 +1167,7 @@ Focused tests:
 - [t/1215-isf-spawn-parameter-binding.t](../t/1215-isf-spawn-parameter-binding.t)
 - [t/1216-isf-generated-composition-top.t](../t/1216-isf-generated-composition-top.t)
 - [t/1217-isf-generated-composition-schedule-report.t](../t/1217-isf-generated-composition-schedule-report.t)
+- [t/1218-isf-rule-slot-resource-arbitration.t](../t/1218-isf-rule-slot-resource-arbitration.t)
 
 ## 12. Explicitly Deferred
 
@@ -1174,13 +1179,13 @@ Focused tests:
   spawn pattern. The current generated top covers scheduled parent/child
   wiring, start/done handoff, named-drive handoff, and spawn parameter
   overrides for the shipped fixture set.
-- Enforced resource arbitration beyond the planned first priority-arbitrated
+- Enforced resource arbitration beyond the shipped priority-arbitrated
   `rule_slot` case: `round_robin`, `output_bundle`, `interface_bundle`,
   `named_drive`, `transaction_start`, `child_instance`, `storage_port`,
   multi-capacity resources, dynamic resource names, and transaction lifetime
   ownership remain deferred.
 - Priority resolution beyond the currently shipped same-target rule/rule
-  data-conflict case and the planned resource-level bound-rule grant case.
+  data-conflict case and the resource-level bound-rule grant case.
 - Expression-valued rule assignment actions beyond scalar `(port value)`.
 - Full transaction `(stage ...)` valid/ready pipeline lowering. Authored
   transaction stage clauses currently fail closed during lowering.

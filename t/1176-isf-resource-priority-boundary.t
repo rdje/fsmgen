@@ -55,7 +55,7 @@ subtest 'malformed resources are rejected before actor shell return' => sub {
     (shared_bus (arbiter priority))))
 ISF
 
-    assert_parse_rejected(<<'ISF', 'unsupported resource arbiter', qr/resource entries require/);
+    assert_parse_rejected(<<'ISF', 'unsupported resource arbiter', qr/resource 'shared_bus' arbiter requires/);
 (actor bad_resource_arbiter
   (clock clk)
   (interface (input start) (output done))
