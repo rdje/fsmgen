@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF resource/priority tree closure
+- Completed `ISF-RESOURCE-PRIORITY.6` and closed
+  [docs/tasks/ISF-RESOURCE-PRIORITY.md](docs/tasks/ISF-RESOURCE-PRIORITY.md).
+- `docs/TASK_TREE.md` now lists `ISF-RESOURCE-PRIORITY` in the completed table.
+  The next active ISF frontier is `ISF-RULE-ACTIONS.1`.
+- Shipped resource/priority behavior is bounded to parser validation,
+  priority-arbitrated `rule_slot`, target-local rule/rule and
+  rule-over-transaction priority, fail-closed diagnostics, and schedule-report
+  summaries. Non-`rule_slot` resources, `round_robin`, transaction-over-rule,
+  transaction lifetime ownership, and runtime grant traces remain backlog.
 ## 2026-05-14: ISF arbitration schedule-report projection
 - Completed `ISF-RESOURCE-PRIORITY.5` in
   [docs/tasks/ISF-RESOURCE-PRIORITY.md](docs/tasks/ISF-RESOURCE-PRIORITY.md).

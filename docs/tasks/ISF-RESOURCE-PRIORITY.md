@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-RESOURCE-PRIORITY`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-14`
 - Last updated: `2026-05-14`
@@ -42,7 +42,7 @@ diagnostics for unresolved arbitration.
 ## Task Tree
 
 - ID: `ISF-RESOURCE-PRIORITY`
-  Status: `active`
+  Status: `done`
   Goal: `Ship resource arbitration and priority enforcement for ISF.`
   Children: `ISF-RESOURCE-PRIORITY.1`, `ISF-RESOURCE-PRIORITY.2`,
   `ISF-RESOURCE-PRIORITY.3`, `ISF-RESOURCE-PRIORITY.4`,
@@ -90,18 +90,18 @@ diagnostics for unresolved arbitration.
   Commit: `ISF-RESOURCE-PRIORITY.5: report arbitration decisions`
 
 - ID: `ISF-RESOURCE-PRIORITY.6`
-  Status: `pending`
+  Status: `done`
   Goal: `Add tests and synchronize docs.`
   Acceptance: `Tests cover accepted arbitration, priority ordering, ties,
   cycles, unsupported arbiters, diagnostics, and synchronized user-facing docs.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `prove -l t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1176-isf-resource-priority-boundary.t t/1190-isf-rule-priority-target-boundary.t t/1191-isf-actor-priority-target-boundary.t t/1209-isf-static-conflict-detection.t t/1210-isf-priority-conflict-resolution.t t/1218-isf-rule-slot-resource-arbitration.t t/1219-isf-rule-transaction-priority.t t/1220-isf-arbitration-schedule-report.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-RESOURCE-PRIORITY.6: close resource priority tree`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-RESOURCE-PRIORITY.6` | `pending` | Arbitration/reporting behavior is implemented; the remaining leaf should close any final regression/doc synchronization gaps for this resource/priority tree. |
+| - | - | `closed` | `ISF-RESOURCE-PRIORITY` is complete; PNT should continue with the next active tree in `docs/TASK_TREE.md`. |
 
 ## ISF-RESOURCE-PRIORITY.1 Inventory
 
@@ -545,6 +545,40 @@ without publishing raw `LoweringIR` internals.
   now includes the arbitration report regression in the ISF public-interface
   contract's live `tested_by` list.
 
+## ISF-RESOURCE-PRIORITY.6 Closure
+
+This closure slice confirms that the resource/priority tree has no remaining
+open leaf work.
+
+### Shipped Coverage
+
+- Parser validation covers resource entries, resource subclauses, duplicate
+  resources/users, rule-local priorities, actor-level priorities, and target
+  resolution.
+- Resource arbitration covers priority-arbitrated `rule_slot` resources with
+  complete acyclic rule ordering, whole-rule DT DTE gating, and fail-closed
+  diagnostics for unsupported or incomplete cases.
+- Target-local priority covers same-target rule/rule data conflicts and the
+  lowerable rule-over-transaction data case. Mixed timing, cycles,
+  incomparable/unordered cases, and transaction-over-rule priority fail closed.
+- Successful schedule reports expose bounded `priority_resolutions` and
+  `resource_arbitration` summaries.
+- The ISF spec, public contract, mdBook, roadmap, task-tree index, MEMORY,
+  CHANGES, DEVELOPMENT_NOTES, and LIVE_ACHIEVEMENT_STATUS agree on the shipped
+  behavior and deferred boundaries.
+
+### Remaining Backlog Outside This Tree
+
+- `round_robin` resources with users still fail closed until stateful arbiter
+  semantics ship.
+- Resource kinds beyond `rule_slot` remain backlog: `output_bundle`,
+  `interface_bundle`, `named_drive`, `transaction_start`, `child_instance`,
+  and `storage_port`.
+- Transaction-over-rule priority remains deferred until state-active guards
+  have an explicit public lowering contract for non-state rule DTs.
+- Per-cycle runtime grant tracing remains outside the current schedule-report
+  surface.
+
 ## Decisions
 
 - `2026-05-14`: Resource and priority enforcement is tracked separately from
@@ -603,6 +637,7 @@ without publishing raw `LoweringIR` internals.
 | `2026-05-14` | `ISF-RESOURCE-PRIORITY.3` | `perl -I perl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -l t/1112-isf-public-interface-contract.t t/1144-isf-public-tested-by-metadata-audit.t t/1176-isf-resource-priority-boundary.t t/1190-isf-rule-priority-target-boundary.t t/1191-isf-actor-priority-target-boundary.t t/1210-isf-priority-conflict-resolution.t t/1218-isf-rule-slot-resource-arbitration.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-RESOURCE-PRIORITY.4` | `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -l t/1144-isf-public-tested-by-metadata-audit.t t/1176-isf-resource-priority-boundary.t t/1190-isf-rule-priority-target-boundary.t t/1191-isf-actor-priority-target-boundary.t t/1209-isf-static-conflict-detection.t t/1210-isf-priority-conflict-resolution.t t/1218-isf-rule-slot-resource-arbitration.t t/1219-isf-rule-transaction-priority.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-RESOURCE-PRIORITY.5` | `perl -I perl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -l t/1096-isf-schedule-json-report.t t/1112-isf-public-interface-contract.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1213-isf-schedule-report-compatible-fanin-projection.t t/1220-isf-arbitration-schedule-report.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-RESOURCE-PRIORITY.6` | `prove -l t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1176-isf-resource-priority-boundary.t t/1190-isf-rule-priority-target-boundary.t t/1191-isf-actor-priority-target-boundary.t t/1209-isf-static-conflict-detection.t t/1210-isf-priority-conflict-resolution.t t/1218-isf-rule-slot-resource-arbitration.t t/1219-isf-rule-transaction-priority.t t/1220-isf-arbitration-schedule-report.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -614,6 +649,7 @@ without publishing raw `LoweringIR` internals.
 | `ISF-RESOURCE-PRIORITY.3` | `ISF-RESOURCE-PRIORITY.3: enforce rule-slot resources` | Adds parser/lowering support for priority-arbitrated `rule_slot` resources and fail-closed unsupported cases. |
 | `ISF-RESOURCE-PRIORITY.4` | `ISF-RESOURCE-PRIORITY.4: resolve rule-transaction priority` | Adds target-local rule-over-transaction priority suppression and fail-closed diagnostics for unordered, cyclic, mixed-timing, and transaction-over-rule cases. |
 | `ISF-RESOURCE-PRIORITY.5` | `ISF-RESOURCE-PRIORITY.5: report arbitration decisions` | Adds bounded schedule-report projection for successful priority suppressions and resource arbitration decisions. |
+| `ISF-RESOURCE-PRIORITY.6` | `ISF-RESOURCE-PRIORITY.6: close resource priority tree` | Confirms coverage and closes the resource/priority task tree. |
 
 ## Changelog
 
@@ -628,3 +664,5 @@ without publishing raw `LoweringIR` internals.
   moved the frontier to `ISF-RESOURCE-PRIORITY.5`.
 - `2026-05-14`: Added bounded schedule-report projection for arbitration
   decisions and moved the frontier to `ISF-RESOURCE-PRIORITY.6`.
+- `2026-05-14`: Closed the resource/priority tree and moved PNT to the next
+  active ISF task tree.

@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF resource/priority tree closure
+- The resource/priority tree is closed with the deliberately bounded shipped
+  surface: `rule_slot` + `priority` for owner-wide rule mutual exclusion,
+  target-local rule/rule priority, lowerable rule-over-transaction priority,
+  and schedule-report summaries for successful static decisions.
+- The remaining resource/priority work is explicitly backlog, not unfinished
+  work in this tree: stateful `round_robin`, non-`rule_slot` resource kinds,
+  transaction-over-rule lowering, transaction-lifetime ownership, and runtime
+  grant tracing.
 ## 2026-05-14: ISF arbitration schedule-report projection
 - The schedule-report projection exposes successful arbitration as bounded
   summaries, not as raw `LoweringIR` provenance. `priority_resolutions` names

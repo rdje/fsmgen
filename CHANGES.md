@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF resource/priority tree closure
+- Completed `ISF-RESOURCE-PRIORITY.6` and closed the resource/priority task
+  tree.
+- The tree now covers parser boundaries, priority-arbitrated `rule_slot`
+  resources, target-local rule/rule and rule-over-transaction priority,
+  fail-closed diagnostics, bounded arbitration schedule-report metadata, and
+  synchronized user-facing docs.
+- Moved the active PNT frontier to `ISF-RULE-ACTIONS.1`.
 ### R14 — ISF arbitration schedule-report projection
 - Completed `ISF-RESOURCE-PRIORITY.5` by adding bounded schedule-report
   summaries for successful arbitration lowering decisions.

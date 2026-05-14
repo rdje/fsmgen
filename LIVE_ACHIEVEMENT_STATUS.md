@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF resource/priority tree closure
+- Active R14 task-tree slice: `ISF-RESOURCE-PRIORITY.6` is complete.
+- The `ISF-RESOURCE-PRIORITY` task tree is closed and moved to the completed
+  task-tree table.
+- Covered behavior now includes parser/resource boundaries, priority-arbitrated
+  `rule_slot`, target-local priority, fail-closed diagnostics, and bounded
+  arbitration schedule-report metadata.
+- The next active R14 frontier is `ISF-RULE-ACTIONS.1`.
+
 ## 2026-05-14: R14 — ISF arbitration schedule-report projection
 - Active R14 task-tree slice: `ISF-RESOURCE-PRIORITY.5` is complete.
 - Successful schedule reports now expose `priority_resolutions` and
