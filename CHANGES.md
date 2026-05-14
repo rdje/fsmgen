@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R8 — DTE guard factorization path
+- Routed top-level state-DT and standalone-DT DTE expressions through the
+  ordinary AST factorization feed, including first-pass collection,
+  post-substitution write-back, second-pass eligibility, and final liveness
+  checks.
+- Changed top-level `*_en` emission to render through the shared EnableGraph
+  AST renderer instead of direct AST `to_systemverilog()` calls.
+- Added focused coverage proving that repeated lowered DTE guards such as
+  `<mode=3` are factored once and reused by multiple state-enable assignments.
+- Updated the mdBook and live docs to state that lowered header guards
+  participate in normal expression factorization and code sharing.
 ### R8 — State DT DTE header activation
 - Extended optional DT header guards from non-state DTs to regular state DTs.
   Authored forms such as `(idle <entry_event ...)` now preserve the header

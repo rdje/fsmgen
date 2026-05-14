@@ -169,20 +169,25 @@ prepared enable registries.
 
 sub generate_enable_conditions ($self, $fsm_module = undef) {
     my $ctx = $self->{flattened_dt};
+    my $ast_support = $ctx->{enable_graph_ast_support};
     my $hdl = "  // State and DT Enable Conditions\n";
 
     for my $state_name (sort keys %{$ctx->{state_enables}}) {
         my $enable_expr = $ctx->{state_enables}->{$state_name};
-        $enable_expr = blessed($enable_expr) && $enable_expr->can('to_systemverilog')
-            ? $enable_expr->to_systemverilog
+        $enable_expr = blessed($enable_expr) && $ast_support
+            ? $ast_support->ast_to_systemverilog($enable_expr)
+            : blessed($enable_expr) && $enable_expr->can('to_systemverilog')
+                ? $enable_expr->to_systemverilog
             : $enable_expr;
         $hdl .= "  assign ${state_name}_en = $enable_expr;\n";
     }
 
     for my $dt_name (sort keys %{$ctx->{dt_enables}}) {
         my $enable_expr = $ctx->{dt_enables}->{$dt_name};
-        $enable_expr = blessed($enable_expr) && $enable_expr->can('to_systemverilog')
-            ? $enable_expr->to_systemverilog
+        $enable_expr = blessed($enable_expr) && $ast_support
+            ? $ast_support->ast_to_systemverilog($enable_expr)
+            : blessed($enable_expr) && $enable_expr->can('to_systemverilog')
+                ? $enable_expr->to_systemverilog
             : $enable_expr;
         my $clean_name = $dt_name;
         $clean_name =~ s/^-//;

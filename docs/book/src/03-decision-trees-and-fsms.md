@@ -352,9 +352,12 @@ ordinary state decode.
 The parser captures the authored DTE guard as CoreAST state metadata, signal
 analysis validates referenced operands before HDL generation, and the
 SystemVerilog backend emits the top-level `*_en` assignment plus the final
-boundary gate on each DT output enable. Expression guards may create internal
-intermediate wires; those intermediates are kept live because the DTE
-assignment is a final enable expression.
+boundary gate on each DT output enable. After the header guard is lowered it
+is treated as an ordinary AST expression: it enters the same factorization,
+code-sharing, substitution, liveness, and rendering flow as other enable
+expressions. For example, if two DT headers use `<mode=3`, the generated HDL
+may create one shared helper such as `mode_eq_const_3` and reuse it in both
+top-level DTE assignments instead of inlining the comparison twice.
 
 Header DTE guards are supported on regular state DTs and non-state DTs. The
 header is ordinary DT activation; it is not an asynchronous reset-tree

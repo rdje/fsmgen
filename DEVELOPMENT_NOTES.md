@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: DTE guards use ordinary expression factorization
+- A lowered DT header guard is not a bespoke rendering island. Once parsed
+  into CoreAST, the guard belongs to the same expression pipeline as the rest
+  of the enable graph.
+- The top-level state-DT and standalone-DT enable registries are now part of
+  the global factorizer feed. Substituted ASTs are written back into
+  `state_enables` and `dt_enables` after the primary pass and after the
+  post-substitution fixpoint pass.
+- This matters for shared guards. If two DT headers use the same nontrivial
+  predicate, such as `<mode=3`, the factorizer can create one helper
+  expression and both top-level DTE assignments reuse it.
+- Rendering those DTE assignments through `EnableGraph::ASTSupport` also keeps
+  operator spelling and truthiness simplification consistent with ordinary
+  WEN/EN expressions. The DTE concept remains special semantically, but the
+  lowered guard expression is not special in the code-generation pipeline.
 ## 2026-05-14: State DT DTE header activation
 - The same DTE model used for non-state DTs also applies to regular state DTs:
   the state decode is one activation source, and a header guard can be a second

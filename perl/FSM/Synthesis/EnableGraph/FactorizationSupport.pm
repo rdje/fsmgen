@@ -96,6 +96,34 @@ sub count_unary_negations_in_original_expressions ($self) {
         }
     }
 
+    for my $state_name (keys %{$ctx->{state_enables} || {}}) {
+        my $enable_ast = $ctx->{state_enables}{$state_name};
+        next unless $enable_ast && blessed($enable_ast);
+
+        my $sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($enable_ast) }
+            || eval { $enable_ast->to_systemverilog() }
+            || "[NO SV]";
+        if ($sv =~ /!\w+/) {
+            $neg_count++;
+            $neg_patterns{$sv}++;
+            fsm_debug("    UNARY_NEG: $sv in top-level state enable $state_name", 3);
+        }
+    }
+
+    for my $dt_name (keys %{$ctx->{dt_enables} || {}}) {
+        my $enable_ast = $ctx->{dt_enables}{$dt_name};
+        next unless $enable_ast && blessed($enable_ast);
+
+        my $sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($enable_ast) }
+            || eval { $enable_ast->to_systemverilog() }
+            || "[NO SV]";
+        if ($sv =~ /!\w+/) {
+            $neg_count++;
+            $neg_patterns{$sv}++;
+            fsm_debug("    UNARY_NEG: $sv in top-level DT enable $dt_name", 3);
+        }
+    }
+
     fsm_debug("  Found $neg_count unary negations in expressions:", 3);
     for my $pattern (sort keys %neg_patterns) {
         fsm_debug("    '$pattern' appears $neg_patterns{$pattern} times", 3);
@@ -120,9 +148,51 @@ sub update_original_asts_with_substituted_versions ($self, $factorizer) {
         log_context_map => 1,
     );
     my $updated_count = 0;
+    my $top_state_enable_updates = 0;
+    my $top_dt_enable_updates = 0;
     my $dt_ast_updates = 0;
     my $lhs_ast_updates = 0;
     my $assignment_ast_updates = 0;
+
+    for my $state_name (keys %{$ctx->{state_enables} || {}}) {
+        my $context_key = "top_state_enable:$state_name";
+        next unless exists $context_to_substituted_ast->{$context_key};
+
+        my $original_ast = $ctx->{state_enables}{$state_name};
+        my $substituted_ast = $context_to_substituted_ast->{$context_key};
+        next unless $substituted_ast && blessed($substituted_ast);
+
+        my $original_sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($original_ast) } || "[NO SV REPRESENTATION]";
+        my $substituted_sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
+
+        $ctx->{state_enables}{$state_name} = $substituted_ast;
+        $updated_count++;
+        $top_state_enable_updates++;
+
+        fsm_debug("  *** UPDATED top-level state enable AST: $state_name ***", 3);
+        fsm_debug("    Original:  $original_sv", 3);
+        fsm_debug("    Updated:   $substituted_sv", 3);
+    }
+
+    for my $dt_name (keys %{$ctx->{dt_enables} || {}}) {
+        my $context_key = "top_dt_enable:$dt_name";
+        next unless exists $context_to_substituted_ast->{$context_key};
+
+        my $original_ast = $ctx->{dt_enables}{$dt_name};
+        my $substituted_ast = $context_to_substituted_ast->{$context_key};
+        next unless $substituted_ast && blessed($substituted_ast);
+
+        my $original_sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($original_ast) } || "[NO SV REPRESENTATION]";
+        my $substituted_sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
+
+        $ctx->{dt_enables}{$dt_name} = $substituted_ast;
+        $updated_count++;
+        $top_dt_enable_updates++;
+
+        fsm_debug("  *** UPDATED top-level DT enable AST: $dt_name ***", 3);
+        fsm_debug("    Original:  $original_sv", 3);
+        fsm_debug("    Updated:   $substituted_sv", 3);
+    }
 
     if ($ctx->{assignment_analysis}) {
         fsm_debug("UPDATE_ORIGINAL_ASTS: Updating assignment_analysis structure", 3);
@@ -215,6 +285,8 @@ sub update_original_asts_with_substituted_versions ($self, $factorizer) {
     }
 
     fsm_debug("UPDATE_ORIGINAL_ASTS: Updated $updated_count AST expressions with substituted versions", 3);
+    fsm_debug("  - Top-level state enable updates: $top_state_enable_updates", 3);
+    fsm_debug("  - Top-level DT enable updates: $top_dt_enable_updates", 3);
     fsm_debug("  - DT-specific enable updates: $dt_ast_updates", 3);
     fsm_debug("  - LHS-level enable updates: $lhs_ast_updates", 3);
     fsm_debug("  - Assignment condition updates: $assignment_ast_updates", 3);
@@ -243,6 +315,44 @@ sub update_original_asts_with_second_pass_substitutions ($self, $second_pass_fac
         debug_prefix => 'UPDATE_SECOND_PASS',
     );
     my $updated_count = 0;
+
+    for my $state_name (keys %{$ctx->{state_enables} || {}}) {
+        my $context_key = "second_pass_top_state_enable:$state_name";
+        next unless exists $second_pass_context_to_ast->{$context_key};
+
+        my $original_ast = $ctx->{state_enables}{$state_name};
+        my $substituted_ast = $second_pass_context_to_ast->{$context_key};
+        next unless $substituted_ast && blessed($substituted_ast);
+
+        my $original_sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($original_ast) } || "[NO SV REPRESENTATION]";
+        my $substituted_sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
+
+        $ctx->{state_enables}{$state_name} = $substituted_ast;
+        $updated_count++;
+
+        fsm_debug("  *** SECOND-PASS UPDATED top-level state enable AST: $state_name ***", 3);
+        fsm_debug("    Original:  $original_sv", 3);
+        fsm_debug("    Updated:   $substituted_sv", 3);
+    }
+
+    for my $dt_name (keys %{$ctx->{dt_enables} || {}}) {
+        my $context_key = "second_pass_top_dt_enable:$dt_name";
+        next unless exists $second_pass_context_to_ast->{$context_key};
+
+        my $original_ast = $ctx->{dt_enables}{$dt_name};
+        my $substituted_ast = $second_pass_context_to_ast->{$context_key};
+        next unless $substituted_ast && blessed($substituted_ast);
+
+        my $original_sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($original_ast) } || "[NO SV REPRESENTATION]";
+        my $substituted_sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
+
+        $ctx->{dt_enables}{$dt_name} = $substituted_ast;
+        $updated_count++;
+
+        fsm_debug("  *** SECOND-PASS UPDATED top-level DT enable AST: $dt_name ***", 3);
+        fsm_debug("    Original:  $original_sv", 3);
+        fsm_debug("    Updated:   $substituted_sv", 3);
+    }
 
     if ($ctx->{assignment_analysis}) {
         for my $lhs (keys %{$ctx->{assignment_analysis}}) {

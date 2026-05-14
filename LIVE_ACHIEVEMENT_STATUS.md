@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R8 — DTE guard factorization path
+- Active language/HDL contract slice: lowered DTE header guards now flow
+  through the same AST factorization, substitution, liveness, and rendering
+  path as ordinary enable expressions.
+- Generated `.sv` can share repeated header-guard predicates, for example one
+  `mode_eq_const_3` helper reused by multiple state `*_en` assignments.
+- Focused tests now lock both the shared generated HDL shape and the
+  `top_state_enable:*` / `top_dt_enable:*` factorization contexts.
+
 ## 2026-05-14: R8 — State DT DTE header activation
 - Active language-contract slice: regular state DTs now accept optional DTE
   header activation guards, using the same guard grammar as non-state DTs.

@@ -64,10 +64,20 @@ FSM
         'A != 0',
         'enable support keeps the guarded standalone-DT enable AST contract',
     );
+    my @factorization_candidates =
+        $prepared_backend->{enable_graph_factorization_policy_support}->collect_all_wen_en_ast_expressions();
+    ok(
+        scalar(grep { $_->{context} eq 'top_state_enable:idle' && $_->{usage_type} eq 'top_state_enable' } @factorization_candidates),
+        'top-level state DTE AST participates in ordinary factorization collection',
+    );
+    ok(
+        scalar(grep { $_->{context} eq 'top_dt_enable:-watch' && $_->{usage_type} eq 'top_dt_enable' } @factorization_candidates),
+        'top-level standalone-DT DTE AST participates in ordinary factorization collection',
+    );
 
     my $top_enable_block = $support->generate_enable_conditions($fsm_module);
-    like($top_enable_block, qr/\bassign idle_en = \(current_state == IDLE\) \| \(EXTRA != 0\);/, 'enable support emits the guarded top-level state enable assignment with bitwise OR');
-    like($top_enable_block, qr/\bassign watch_en = A != 0;/, 'enable support emits the guarded standalone-DT top-level enable assignment');
+    like($top_enable_block, qr/\bassign idle_en = \(current_state == IDLE\) \| EXTRA;/, 'enable support emits guarded top-level state enable through shared AST rendering');
+    like($top_enable_block, qr/\bassign watch_en = A;/, 'enable support emits guarded standalone-DT top-level enable through shared AST rendering');
 
     my $dt_block = $support->generate_dt_enables_from_analysis();
     like($dt_block, qr/\bassign idle_out1_1_en = idle_en & A;\s+\/\/ OUT1 <- 1\b/, 'enable support emits DT-specific enable wiring for regular-state assignments');

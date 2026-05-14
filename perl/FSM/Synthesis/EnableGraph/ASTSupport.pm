@@ -277,6 +277,18 @@ sub _render_binary_op ($self, $ast, $parent_precedence) {
     my $right_sv = $self->_ast_to_systemverilog_internal($right, $my_precedence);
     my $op_symbol = $self->_choose_operator_symbol($operator, $left, $right);
 
+    if (($op_symbol eq '|' || $op_symbol eq '&')
+        && $self->_bitwise_child_needs_grouping($left))
+    {
+        $left_sv = "($left_sv)";
+    }
+
+    if (($op_symbol eq '|' || $op_symbol eq '&')
+        && $self->_bitwise_child_needs_grouping($right))
+    {
+        $right_sv = "($right_sv)";
+    }
+
     if ($self->_right_child_needs_same_precedence_parentheses($operator, $right)) {
         $right_sv = "($right_sv)";
     }
@@ -508,6 +520,19 @@ Internal precedence helper for binary rendering.
 sub _needs_parentheses ($self, $my_precedence, $parent_precedence) {
     return 0 unless defined $parent_precedence;
     return $my_precedence < $parent_precedence;
+}
+
+sub _bitwise_child_needs_grouping ($self, $child) {
+    return 0 unless $child && blessed($child);
+    return 0 unless $child->can('operator');
+
+    my $operator = $child->operator || '';
+    return 0 if defined $self->_render_truthiness_comparison(
+        $operator,
+        $child->can('left') ? $child->left : undef,
+        $child->can('right') ? $child->right : undef,
+    );
+    return $operator =~ /^(?:==|!=|<|>|<=|>=|&&|\|\|)$/ ? 1 : 0;
 }
 
 sub _right_child_needs_same_precedence_parentheses ($self, $parent_operator, $right_child) {

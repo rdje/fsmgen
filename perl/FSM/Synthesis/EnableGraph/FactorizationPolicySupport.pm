@@ -135,6 +135,28 @@ sub collect_all_wen_en_ast_expressions ($self) {
 
     fsm_debug("COLLECT_AST: Collecting all WEN/EN AST expressions", 3);
 
+    for my $state_name (sort keys %{$ctx->{state_enables} || {}}) {
+        my $enable_ast = $ctx->{state_enables}{$state_name};
+        next unless $enable_ast && blessed($enable_ast);
+
+        push @ast_expressions, {
+            ast => $enable_ast,
+            context => "top_state_enable:$state_name",
+            usage_type => 'top_state_enable',
+        };
+    }
+
+    for my $dt_name (sort keys %{$ctx->{dt_enables} || {}}) {
+        my $enable_ast = $ctx->{dt_enables}{$dt_name};
+        next unless $enable_ast && blessed($enable_ast);
+
+        push @ast_expressions, {
+            ast => $enable_ast,
+            context => "top_dt_enable:$dt_name",
+            usage_type => 'top_dt_enable',
+        };
+    }
+
     if ($ctx->{assignment_analysis}) {
         for my $lhs (keys %{$ctx->{assignment_analysis}}) {
             my $lhs_analysis = $ctx->{assignment_analysis}->{$lhs};
@@ -192,9 +214,39 @@ sub feed_asts_to_factorizer ($self, $factorizer) {
     fsm_debug("FEED_ASTS: Feeding AST expressions to generic factorizer", 3);
 
     my $total_fed = 0;
+    my $top_state_enables_fed = 0;
+    my $top_dt_enables_fed = 0;
     my $dt_enables_fed = 0;
     my $lhs_enables_fed = 0;
     my $assignment_conditions_fed = 0;
+
+    for my $state_name (sort keys %{$ctx->{state_enables} || {}}) {
+        my $enable_ast = $ctx->{state_enables}{$state_name};
+        next unless $enable_ast && blessed($enable_ast);
+
+        my $sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($enable_ast) }
+            || eval { $enable_ast->to_systemverilog() }
+            || "[NO SV REPRESENTATION]";
+        $factorizer->add_ast_expression($enable_ast, "top_state_enable:$state_name");
+        $total_fed++;
+        $top_state_enables_fed++;
+        fsm_debug("  Fed top-level state enable AST: $state_name", 3);
+        fsm_debug("    Expression: $sv", 3);
+    }
+
+    for my $dt_name (sort keys %{$ctx->{dt_enables} || {}}) {
+        my $enable_ast = $ctx->{dt_enables}{$dt_name};
+        next unless $enable_ast && blessed($enable_ast);
+
+        my $sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($enable_ast) }
+            || eval { $enable_ast->to_systemverilog() }
+            || "[NO SV REPRESENTATION]";
+        $factorizer->add_ast_expression($enable_ast, "top_dt_enable:$dt_name");
+        $total_fed++;
+        $top_dt_enables_fed++;
+        fsm_debug("  Fed top-level DT enable AST: $dt_name", 3);
+        fsm_debug("    Expression: $sv", 3);
+    }
 
     if ($ctx->{assignment_analysis}) {
         my $total_lhs = scalar(keys %{$ctx->{assignment_analysis}});
@@ -311,6 +363,8 @@ sub feed_asts_to_factorizer ($self, $factorizer) {
     }
 
     fsm_debug("FEED_ASTS: Total ASTs fed to factorizer: $total_fed", 3);
+    fsm_debug("  - Top-level state enables: $top_state_enables_fed", 3);
+    fsm_debug("  - Top-level DT enables: $top_dt_enables_fed", 3);
     fsm_debug("  - DT-specific enables: $dt_enables_fed", 3);
     fsm_debug("  - LHS-level enables: $lhs_enables_fed", 3);
     fsm_debug("  - Assignment conditions: $assignment_conditions_fed", 3);
@@ -409,6 +463,40 @@ sub feed_current_asts_to_second_pass ($self, $second_pass_factorizer) {
     fsm_debug("SECOND_PASS_FEED: Collecting current AST expressions", 3);
 
     my $total_fed = 0;
+
+    for my $state_name (sort keys %{$ctx->{state_enables} || {}}) {
+        my $enable_ast = $ctx->{state_enables}{$state_name};
+        next unless $enable_ast && blessed($enable_ast);
+
+        my $sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($enable_ast) }
+            || "[NO SV REPRESENTATION]";
+        if ($self->ast_contains_intermediate_signals($enable_ast)) {
+            $second_pass_factorizer->add_ast_expression(
+                $enable_ast,
+                "second_pass_top_state_enable:$state_name",
+            );
+            $total_fed++;
+            fsm_debug("  Fed second-pass top-level state enable: $state_name", 3);
+            fsm_debug("    Expression: $sv", 3);
+        }
+    }
+
+    for my $dt_name (sort keys %{$ctx->{dt_enables} || {}}) {
+        my $enable_ast = $ctx->{dt_enables}{$dt_name};
+        next unless $enable_ast && blessed($enable_ast);
+
+        my $sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($enable_ast) }
+            || "[NO SV REPRESENTATION]";
+        if ($self->ast_contains_intermediate_signals($enable_ast)) {
+            $second_pass_factorizer->add_ast_expression(
+                $enable_ast,
+                "second_pass_top_dt_enable:$dt_name",
+            );
+            $total_fed++;
+            fsm_debug("  Fed second-pass top-level DT enable: $dt_name", 3);
+            fsm_debug("    Expression: $sv", 3);
+        }
+    }
 
     if ($ctx->{assignment_analysis}) {
         for my $lhs (keys %{$ctx->{assignment_analysis}}) {

@@ -163,8 +163,8 @@ FSM
 
     my $hdl = FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($fsm_module);
 
-    like($hdl, qr/\bassign\s+route_en\s*=\s*req\s*!=\s*0\s*;/, 'truthy standalone DT DTE emits as the top-level DT enable');
-    like($hdl, qr/\bassign\s+neg_en\s*=\s*hold\s*==\s*0\s*;/, 'negated standalone DT DTE emits as the top-level DT enable');
+    like($hdl, qr/\bassign\s+route_en\s*=\s*req\s*;/, 'truthy standalone DT DTE emits through shared AST rendering');
+    like($hdl, qr/\bassign\s+neg_en\s*=\s*!hold\s*;/, 'negated standalone DT DTE emits through shared AST rendering');
     like($hdl, qr/\bassign\s+mode_hit_en\s*=\s*mode\s*==\s*3\s*;/, 'comparison standalone DT DTE emits as the top-level DT enable');
     like($hdl, qr/\bassign\s+expr_guard_en\s*=\s*intermediate_and_req_ready_\d+\s*;/, 'expression standalone DT DTE emits through a backed intermediate');
     like($hdl, qr/\bassign\s+intermediate_and_req_ready_\d+\s*=\s*req\s*&\s*ready\s*;/, 'expression standalone DT DTE intermediate is assigned');

@@ -56,8 +56,8 @@ my $hdl = $hdl_gen->generate_systemverilog($fsm_module);
 
 like(
     $hdl,
-    qr/\bassign\s+idle_en\s*=\s*\(current_state\s*==\s*IDLE\)\s*\|\s*\(req\s*!=\s*0\)\s*;/,
-    'state DT DTE bitwise-ORs state decode with scalar header activation',
+    qr/\bassign\s+idle_en\s*=\s*\(current_state\s*==\s*IDLE\)\s*\|\s*req\s*;/,
+    'state DT DTE renders scalar header activation through shared AST support',
 );
 like(
     $hdl,
@@ -88,6 +88,56 @@ like(
     $hdl,
     qr/\bassign\s+active_next_state_idle_en\s*=\s*active_en\s*&\s*1'b1\s*;/,
     'state DT expression DTE also gates transition output enable boundary',
+);
+
+my $shared_guard_module = parse_fsm_module(<<'FSM');
+(?fsm:shared_dte_guard_factor_contract
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+size
+    (mode 2)
+    (OUT_A 1)
+    (OUT_B 1)
+  )
+  (idle <mode=3
+    (= (OUT_A 1))
+    (-> active)
+  )
+  (active <mode=3
+    (= (OUT_B 1))
+    (-> idle)
+  )
+)
+FSM
+
+my $shared_hdl = FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($shared_guard_module);
+
+like(
+    $shared_hdl,
+    qr/\bwire\s+mode_eq_const_3\s*;/,
+    'shared lowered DTE guard expression receives one factored wire declaration',
+);
+like(
+    $shared_hdl,
+    qr/\bassign\s+mode_eq_const_3\s*=\s*mode\s*==\s*3\s*;\s*\/\/ Source:\s*ast_factorization\b/,
+    'shared lowered DTE guard expression is emitted by the AST factorizer',
+);
+like(
+    $shared_hdl,
+    qr/\bassign\s+idle_en\s*=\s*\(current_state\s*==\s*IDLE\)\s*\|\s*mode_eq_const_3\s*;/,
+    'idle state DTE reuses the factored lowered guard expression',
+);
+like(
+    $shared_hdl,
+    qr/\bassign\s+active_en\s*=\s*\(current_state\s*==\s*ACTIVE\)\s*\|\s*mode_eq_const_3\s*;/,
+    'active state DTE reuses the same factored lowered guard expression',
+);
+unlike(
+    $shared_hdl,
+    qr/\bassign\s+(?:idle|active)_en\s*=\s*[^;]*mode\s*==\s*3\s*;/,
+    'state DTE assignments do not inline the shared guard after factorization',
 );
 
 done_testing();

@@ -109,8 +109,8 @@ FSM
     ok(exists $hdl_gen->{dt_enables}->{syncreset}, 'first alias gets a DT-style enable');
     ok(exists $hdl_gen->{dt_enables}->{asyncreset}, 'second alias gets a DT-style enable');
 
-    like($hdl, qr/\bassign\s+syncreset_en\s*=\s*force_sync\s*!=\s*0\s*;/, 'generated HDL emits a guarded DT-style enable for syncreset');
-    like($hdl, qr/\bassign\s+asyncreset_en\s*=\s*force_async\s*==\s*0\s*;/, 'generated HDL emits a guarded DT-style enable for asyncreset');
+    like($hdl, qr/\bassign\s+syncreset_en\s*=\s*force_sync\s*;/, 'generated HDL emits a shared-rendered guarded DT-style enable for syncreset');
+    like($hdl, qr/\bassign\s+asyncreset_en\s*=\s*!force_async\s*;/, 'generated HDL emits a shared-rendered guarded DT-style enable for asyncreset');
     unlike($hdl, qr/current_state\s*==\s*SYNCRESET/, 'generated HDL does not encode syncreset as a regular state');
     unlike($hdl, qr/current_state\s*==\s*ASYNCRESET/, 'generated HDL does not encode asyncreset as a regular state');
 };
@@ -147,7 +147,7 @@ FSM
     my $hdl = $hdl_gen->generate_systemverilog($fsm_module);
 
     ok(exists $hdl_gen->{dt_enables}->{syncreset}, 'standalone ?dt root registers alias DT enable');
-    like($hdl, qr/\bassign\s+syncreset_en\s*=\s*force_sync\s*!=\s*0\s*;/, 'standalone ?dt root emits the alias DT header guard');
+    like($hdl, qr/\bassign\s+syncreset_en\s*=\s*force_sync\s*;/, 'standalone ?dt root emits the alias DT header guard through shared AST rendering');
     unlike($hdl, qr/current_state\s*==\s*SYNCRESET/, 'standalone ?dt root does not encode aliases as states');
 };
 

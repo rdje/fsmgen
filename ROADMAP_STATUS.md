@@ -16,6 +16,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `(-both_ready <(& req ready) ...)`. Guarded state DTs OR the lowered guard
   with the state decode; unguarded non-state DTs still default to
   `DTE = 1'b1`.
+- Lowered DTE header guards now run through the ordinary AST expression
+  pipeline. Top-level state and non-state DT enables participate in global
+  factorization, code sharing, substitution, liveness, and shared AST
+  rendering just like other enable expressions; repeated guards such as
+  `<mode=3` can be emitted once and reused by multiple `*_en` assignments.
 - The mdBook language-basics chapter now defines the clock tick/cycle timing
   model used by sequential assignments: `D` is sampled at the active tick,
   `Q` updates at `N+`, and `Q` remains stable through the cycle until the next
@@ -2625,6 +2630,17 @@ Done:
     accepted and remain outside encoded-state comparisons,
   - and [t/82-language-contract-state-dt-dte-guards.t](t/82-language-contract-state-dt-dte-guards.t)
     locks scalar and expression activation guards through HDL generation.
+- Lowered DTE header guards now participate in the ordinary expression
+  factorization and code-sharing path:
+  - top-level state and non-state DT enable ASTs are collected as
+    `top_state_enable:*` and `top_dt_enable:*` contexts,
+  - first-pass and second-pass substitutions are written back into
+    `state_enables` and `dt_enables`,
+  - final `*_en` assignments render through the shared EnableGraph AST
+    renderer,
+  - and [t/82-language-contract-state-dt-dte-guards.t](t/82-language-contract-state-dt-dte-guards.t)
+    plus [t/206-enable-graph-enable-support.t](t/206-enable-graph-enable-support.t)
+    prove repeated guards such as `<mode=3` are emitted once and reused.
 Left:
 - Resolve the remaining gray-zone families, especially:
   - any remaining parser-accepted legacy constructs not yet cleanly bucketed.

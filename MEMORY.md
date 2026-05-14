@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: R8 — DTE guard factorization path
+- Lowered DTE header guards now use the same AST factorization and
+  code-sharing path as other enable expressions. Top-level state enables and
+  standalone-DT enables are collected, counted, fed to the primary
+  factorizer, updated after substitution, and eligible for the second-pass
+  fixpoint flow.
+- Top-level `*_en` assignments now render through the shared EnableGraph AST
+  renderer, so truthiness guards use the same compact HDL shape as other
+  emitted enables.
+- [t/82-language-contract-state-dt-dte-guards.t](t/82-language-contract-state-dt-dte-guards.t)
+  now proves repeated `<mode=3` state-DTE guards produce one
+  `mode_eq_const_3` helper from AST factorization and reuse it in both
+  state-enable assignments.
+- [t/206-enable-graph-enable-support.t](t/206-enable-graph-enable-support.t)
+  now locks collection of `top_state_enable:*` and `top_dt_enable:*`
+  contexts, making the public DTE guard contract recoverable from the
+  factorization policy layer.
 ## 2026-05-14: R8 — State DT DTE header activation
 - Regular state DTs now accept the same optional DTE header guard surface as
   non-state DTs, for example `(idle <entry_event ...)` or
