@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF fail-closed conflict policy
+- Completed `ISF-CONFLICTS.3` in
+  [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md).
+- Incompatible same-target sources fail closed when overlap is possible and no
+  compatible fan-in or explicit priority selects one unique winner.
+- Priority is target-local for this conflict model and resolves only within one
+  timing/domain class; mixed `=`, `<-`, `<=`, and `<1` drives remain invalid.
+- `(resources ...)` remains validated metadata until usage binding and arbiter
+  lowering are implemented. Declared resources do not yet resolve conflicts.
+- The active `ISF-CONFLICTS` frontier is now `ISF-CONFLICTS.4` for
+  scheduler/emitter conflict tracking.
 ## 2026-05-14: ISF compatible fan-in policy
 - Completed `ISF-CONFLICTS.2` in
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md).
@@ -9,8 +20,8 @@ This is the live continuity document for fast session recovery after crashes, re
 - Mixed timing operators, different values/RHS expressions, drive parameter
   payload conflicts, and unclassified generated helper sharing must not be
   silently merged.
-- The active `ISF-CONFLICTS` frontier is now `ISF-CONFLICTS.3` for
-  fail-closed, priority, and deferred resource-arbitration policy.
+- This slice moved the tree to `ISF-CONFLICTS.3`; the current frontier is
+  recorded in the latest entry.
 ## 2026-05-14: ISF conflict-domain inventory
 - Completed `ISF-CONFLICTS.1` in
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md).

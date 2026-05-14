@@ -2,14 +2,23 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF fail-closed conflict policy
+- Active R14 task-tree slice: `ISF-CONFLICTS.3` is complete in
+  [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md).
+- Incompatible same-target sources now have documented policy: prove mutual
+  exclusion, use compatible fan-in, select one unique priority winner, or fail
+  closed with targeted diagnostics.
+- The next `ISF-CONFLICTS` frontier is `ISF-CONFLICTS.4`, which implements
+  scheduler/emitter conflict tracking.
+
 ## 2026-05-14: R14 — ISF compatible fan-in policy
 - Active R14 task-tree slice: `ISF-CONFLICTS.2` is complete in
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md).
 - Compatible fan-in is now specified for same target/value selector ORs,
   request/event ORs, pulse-class `<1 target 1` ORs, and the existing
   rule-trigger fan-in shape.
-- The next `ISF-CONFLICTS` frontier is `ISF-CONFLICTS.3`, which covers
-  fail-closed and priority policy for incompatible same-cycle drives.
+- This slice moved the tree to `ISF-CONFLICTS.3`; the current frontier is
+  recorded in the latest R14 task-tree entry above.
 
 ## 2026-05-14: R14 — ISF conflict-domain inventory
 - Active R14 task-tree slice: `ISF-CONFLICTS.1` is complete in

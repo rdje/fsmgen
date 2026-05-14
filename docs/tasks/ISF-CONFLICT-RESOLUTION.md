@@ -67,12 +67,12 @@ transaction start input.
   Commit: `ISF-CONFLICTS.2: specify compatible fan-in policy`
 
 - ID: `ISF-CONFLICTS.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Specify fail-closed and priority policy for incompatible drives.`
   Acceptance: `The task file records the policy for incompatible writes,
   missing priority, declared priority, and deferred resource arbitration.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `policy documented; git diff --check passed`
+  Commit: `ISF-CONFLICTS.3: specify conflict priority policy`
 
 - ID: `ISF-CONFLICTS.4`
   Status: `pending`
@@ -114,7 +114,7 @@ transaction start input.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-CONFLICTS.3` | `pending` | Compatible fan-in policy is specified; the next policy gap is incompatible same-cycle drives, priority, and deferred resource arbitration. |
+| 1 | `ISF-CONFLICTS.4` | `pending` | Conflict domains and policies are now specified; the next executable slice is scheduler/emitter conflict tracking. |
 
 ## Current Behavior Inventory
 
@@ -292,6 +292,81 @@ Implementation consequence for later leaves:
 - The emitted scheduled `.fsm` should be a consequence of the policy, not the
   place where ISF discovers whether a same-target merge was safe.
 
+## Fail-Closed And Priority Policy
+
+`ISF-CONFLICTS.3` defines what happens when same-target sources are not
+compatible fan-in. The rule is fail closed unless the scheduler can prove that
+the sources cannot be active in the same cycle or can select a unique winner
+through explicit priority.
+
+Conflict detection is activation-aware:
+
+- Different values for the same target are not a conflict when their source
+  activation predicates are mutually exclusive. Ordinary distinct FSM state
+  decode predicates are the baseline structural mutual-exclusion proof.
+- If overlap is possible, or the scheduler cannot prove non-overlap, the
+  sources must either match a compatible fan-in rule or be resolved by explicit
+  priority.
+- Text order is never an arbitration rule. Author order may preserve reporting
+  determinism, but it must not choose hardware behavior for an incompatible
+  same-cycle drive.
+
+Incompatible writes without priority:
+
+- Same target with different values or different RHS expressions in overlapping
+  activation regions fails before scheduled `.fsm`/HDL is accepted.
+- Same target with different assignment operators, such as `=`, `<-`, `<=`, or
+  `<1`, fails even if priority metadata exists. Mixed timing operators describe
+  different hardware contracts, not just different data values.
+- Same source owner assigning different values to the same target in one active
+  region fails. Priority cannot order an owner against itself.
+- Same drive body, same rule body, or same generated helper family emitting
+  conflicting payload/data assignments fails unless the assignments collapse to
+  the same target/operator/value selector.
+- Diagnostics should name the target, domain, assignment operators, source
+  owners, representative values/RHS expressions, and the missing policy
+  needed to proceed.
+
+Declared priority policy:
+
+- Actor-level `(priority lhs over rhs)` and rule-local
+  `(priority over other_rule)` form one priority graph over source owners.
+  Parser validation already ensures that declared targets exist; the conflict
+  implementation must additionally detect cycles and ambiguous incomparable
+  winners for a given conflict set.
+- Priority is target-local for this conflict model. A priority edge selects the
+  winning assignment for the conflicting target/domain; it must not silently
+  disable unrelated non-conflicting actions unless a later resource-arbitration
+  policy introduces explicit owner-wide grants.
+- Priority can resolve data/value conflicts only within one timing/domain
+  class. It does not legalize mixed `=`, `<-`, `<=`, and `<1` drives to the
+  same target.
+- If one unique maximal source remains after applying the priority graph, that
+  source wins for the conflicting target. If two or more incomparable maximal
+  sources remain and they drive different values, the scheduler fails closed.
+- Rule-local priority is equivalent to an edge from the containing rule to the
+  referenced rule. Actor-level priority can order rules or transactions. A
+  transaction priority edge applies to assignments owned by that transaction's
+  active states, not to generated helper signals owned by another domain.
+- A lower-priority source still participates when no higher-priority conflicting
+  source is active. Priority selects among overlapping contenders; it does not
+  erase the lower-priority behavior.
+
+Deferred resource-arbitration policy:
+
+- `(resources ...)` metadata is validated and preserved today, but no current
+  syntax binds a rule, transaction, drive, or output to a named resource. A
+  declared resource therefore cannot by itself resolve a same-target conflict.
+- A `priority` resource arbiter is a future owner-wide grant mechanism, not a
+  substitute for the target-local priority policy above until resource usage
+  binding exists.
+- A `round_robin` resource arbiter requires stateful grant generation and
+  fairness semantics. It is deferred to the resource/priority task tree and
+  must not be approximated by author order or by combinational ORs.
+- Until resource arbitration is implemented, any conflict whose only plausible
+  resolution is a named resource must fail with a diagnostic that says resource
+  arbitration is declared but not enforced for that conflict.
+
 ## Decisions
 
 - `2026-05-14`: The conflict-resolution work will be tracked as a task tree
@@ -309,15 +384,20 @@ Implementation consequence for later leaves:
   pulse-class `<1 target 1` ORs, and the existing per-rule transaction-trigger
   fan-in shape. Payload/data conflicts and mixed timing operators must not be
   silently merged.
+- `2026-05-14`: `ISF-CONFLICTS.3` makes incompatible overlap fail closed
+  unless activation predicates are provably mutually exclusive or explicit
+  priority selects one unique winner within the same timing/domain class.
+  Resource declarations remain metadata until usage binding and arbiter
+  lowering are implemented.
 
 ## Open Questions
 
-- Should priority metadata be enforced in this tree, or should this tree first
-  fail closed for conflicts that require priority semantics?
 - Which schedule-report fields are necessary for downstream consumers without
   prematurely freezing a broad conflict-report API?
 - Which generated start/request sources besides rule triggers should be
   normalized into source carriers during the first implementation slice?
+- Should the first implementation slice include only diagnostics, or also
+  accepted priority lowering for data conflicts with one unique winner?
 
 ## Blockers
 
@@ -332,6 +412,8 @@ Implementation consequence for later leaves:
 | `2026-05-14` | `ISF-CONFLICTS.1` | `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-CONFLICTS.2` | Compatible fan-in policy documented in the task tree and live docs | `passed` |
 | `2026-05-14` | `ISF-CONFLICTS.2` | `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.3` | Fail-closed, priority, and deferred resource-arbitration policy documented in the task tree and live docs | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.3` | `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -340,6 +422,7 @@ Implementation consequence for later leaves:
 | `ISF-CONFLICTS` | `Docs: formalize repo-local task tree` | Initial tree creation is part of the repo-local task-tree workflow slice. |
 | `ISF-CONFLICTS.1` | `ISF-CONFLICTS.1: inventory current conflict domains` | Records the inspected current behavior and names conflict domains before policy/implementation work. |
 | `ISF-CONFLICTS.2` | `ISF-CONFLICTS.2: specify compatible fan-in policy` | Records the deterministic OR/fan-in policy for compatible request, pulse, and same-value selector domains. |
+| `ISF-CONFLICTS.3` | `ISF-CONFLICTS.3: specify conflict priority policy` | Records fail-closed behavior for incompatible overlap and target-local priority/resource boundaries. |
 
 ## Changelog
 
@@ -349,3 +432,6 @@ Implementation consequence for later leaves:
 - `2026-05-14`: Completed `ISF-CONFLICTS.2` compatible fan-in policy; current
   frontier moves to `ISF-CONFLICTS.3` for incompatible-drive, priority, and
   resource-arbitration policy.
+- `2026-05-14`: Completed `ISF-CONFLICTS.3` fail-closed and priority policy;
+  current frontier moves to `ISF-CONFLICTS.4` for scheduler/emitter conflict
+  tracking.

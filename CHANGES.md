@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF fail-closed conflict policy
+- Completed `ISF-CONFLICTS.3` in
+  [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md)
+  by specifying fail-closed behavior for incompatible same-cycle drives.
+- Defined conflict handling as activation-aware: provably mutually exclusive
+  sources are allowed, compatible fan-in can merge, and otherwise overlapping
+  incompatible sources require explicit priority or fail before scheduled
+  `.fsm`/HDL is treated as valid.
+- Recorded target-local priority semantics, cycle/ambiguity failure, rejection
+  of mixed timing operators, and deferred resource-arbitration boundaries.
+- Advanced the active `ISF-CONFLICTS` frontier from `ISF-CONFLICTS.3` to
+  `ISF-CONFLICTS.4`.
 ### R14 — ISF compatible fan-in policy
 - Completed `ISF-CONFLICTS.2` in
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md)

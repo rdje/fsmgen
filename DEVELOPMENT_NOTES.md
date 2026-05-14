@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF fail-closed conflict policy
+- The conflict policy is activation-aware because different FSM states may
+  assign different values to the same target safely when their state decodes
+  are mutually exclusive. The scheduler must not confuse ordinary mux behavior
+  with a same-cycle conflict.
+- Unproved overlap is treated as real overlap. This is the conservative rule
+  that prevents generated scheduled `.fsm` from hiding hardware ambiguity.
+- Priority is deliberately target-local in this tree. It chooses the winner for
+  a conflicting target/domain but does not silently disable unrelated actions;
+  broader owner-wide grants belong to resource arbitration.
+- Mixed assignment operators are not priority-resolvable because they encode
+  different timing contracts. Choosing between `=`, `<-`, `<=`, and `<1` is a
+  design rewrite, not an arbitration edge.
+- Resource metadata currently lacks usage binding. Until a rule/transaction or
+  drive can be attached to a named resource and the arbiter can be lowered, a
+  declared resource is diagnostic context rather than conflict resolution.
 ## 2026-05-14: ISF compatible fan-in policy
 - The compatible fan-in policy is intentionally conservative. A merge is safe
   only when every active source requests the same observable target behavior:
