@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF data-width inventory
+- Completed `ISF-DATA-WIDTHS.1` by inventorying the current transaction-local
+  width map, shipped explicit width options, placeholder fallback behavior,
+  and schedule-report storage effects for ISF data operations.
+- Recorded current gaps before implementation: `shift_right` explicit width
+  conflicts are not diagnosed, `assemble` can overwrite target width evidence,
+  `extract` does not yet validate source width against field-width totals, and
+  ordinary data-operation target widths are not public schedule-report
+  metadata.
+- Advanced the active `ISF-DATA-WIDTHS` frontier from `ISF-DATA-WIDTHS.1` to
+  `ISF-DATA-WIDTHS.2`.
 ### R14 — ISF stage and contract schedule reports
 - Completed `ISF-STAGES-CONTRACTS.6` and closed the stage/contract task tree.
 - Successful schedule reports now expose shipped ready/valid stages through

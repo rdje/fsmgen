@@ -568,10 +568,14 @@ Current lowering:
   emits a right shift plus inserted bit. When the shifted signal has a known
   interface, sampled-source, assemble-inferred, or explicit `(width N)` width,
   the insert position uses that width; unknown-width values still fall back to
-  the placeholder width expression.
+  the placeholder width expression. The current explicit option is a local
+  lowering override; conflict policy with an already-known register width is
+  deferred.
 - `assemble` is structurally validated as `(assemble part... as target)` with
   one or more scalar parts and one scalar target, then emits a concat
-  expression into the target variable.
+  expression into the target variable. The private width map infers the target
+  width as the sum of known part widths, but today it does not reject a
+  mismatch with an already-known target width.
 - `extract` is structurally validated as
   `(extract word as field... [(widths N...)])` with one scalar source word and
   one or more scalar destination fields. It emits one extraction state. When
@@ -580,7 +584,18 @@ Current lowering:
   assigned exact descending slices. If a width is unknown, the emitter keeps
   placeholder slice bounds for that field and any later field whose position
   can no longer be proven. Explicit widths must be positive integers and must
-  not conflict with already known field widths.
+  not conflict with already known field widths. The current lowerer does not
+  yet reject a known source word whose width disagrees with the sum of field
+  widths.
+
+Width evidence is transaction-local and private to lowering today. Interface
+declarations seed it, sampled aliases inherit known source widths, explicit
+`shift_right` and `extract` options add local evidence, and `assemble` can
+infer target width from known parts. The evidence is collected from the whole
+transaction clause tree before scheduled state emission, so it is not
+source-order-sensitive. Schedule reports do not yet expose ordinary
+data-operation target widths; those targets are reported as register storage
+without a `width` field unless they also belong to a generated counter family.
 
 ## 8. Composition Between Transactions
 

@@ -61,7 +61,9 @@ positive integer width when the option is present.
 Known interface, sampled-source, assemble-inferred, and explicit `(width N)`
 widths use a concrete insert position. If the shifted value has no known width
 and no explicit width option, the current implementation falls back to the
-placeholder `WIDTH` expression.
+placeholder `WIDTH` expression. An explicit `(width N)` is used by the local
+`shift_right` expression; conflict policy with an already-known register width
+is still backlog work.
 
 ## `(assemble field1 field2 ... as var)` — Concatenation
 
@@ -104,6 +106,8 @@ ordered `(widths N...)` list matching the field count, each field is assigned
 from an exact descending slice. If a width is unknown, the scheduler preserves
 placeholder slice bounds for the unproven field positions. Explicit widths must
 be positive integers and must not conflict with already known field widths.
+The current lowerer does not yet reject a known source word whose width
+disagrees with the sum of field widths.
 
 ```lisp
 (state
@@ -112,6 +116,20 @@ be positive integers and must not conflict with already known field widths.
   (<= (crc> (slice packet 3 0)))
   (-> next_state))
 ```
+
+### Current Width Evidence Boundary
+
+Before lowering a transaction, ISF builds one private width map from the whole
+transaction clause tree. Interface declarations seed that map, samples inherit
+known source widths, explicit `shift_right` and `extract` width options add
+local evidence, and `assemble` can infer its target width when all parts are
+known. This is type/shape evidence, not cycle-value evidence, so it is not
+source-order-sensitive inside the transaction.
+
+Today this evidence is used to avoid `WIDTH`, `HIGH`, and `LOW` placeholders
+where the existing rules can prove positions. It is not yet a public
+data-register width report: schedule reports still classify ordinary
+data-operation targets as `register` storage without a `width` field.
 
 ## I2C Shift Register — Complete Example
 

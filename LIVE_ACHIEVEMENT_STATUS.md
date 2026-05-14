@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF data-width inventory
+- Active R14 task-tree slice: `ISF-DATA-WIDTHS.1` is complete.
+- The task tree now records current width sources, explicit options,
+  placeholder fallbacks, generated `.fsm` shapes, underconstrained cases, and
+  schedule-report storage effects for ISF data operations.
+- The next active R14 frontier is `ISF-DATA-WIDTHS.2`.
+
 ## 2026-05-14: R14 — ISF stage/contract schedule-report closure
 - Active R14 task-tree slice: `ISF-STAGES-CONTRACTS.6` is complete, and the
   `ISF-STAGES-CONTRACTS` tree is closed.

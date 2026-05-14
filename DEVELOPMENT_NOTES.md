@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF data-width inventory
+- The current width map is intentionally separate from cycle scheduling. It
+  scans the whole transaction for type/shape facts before state emission, so
+  evidence can flow across source order without implying any value is
+  available early in hardware.
+- The next design slice needs a precedence and failure policy before code
+  changes. The current implementation has tolerated placeholders and some
+  mismatches for compatibility; tightening those cases must be explicit.
+- Schedule-report storage width is a separate public-surface decision. The
+  lowerer already uses private width evidence for expressions, but downstream
+  consumers do not yet receive ordinary data-register widths in
+  `inferred_storage`.
 ## 2026-05-14: ISF stage/contract schedule reports
 - The stage projection is intentionally a summary of the shipped runtime
   contract, not a stage-state dump. Downstream consumers need the authored

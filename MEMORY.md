@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF data-width inventory
+- Completed `ISF-DATA-WIDTHS.1` in
+  [docs/tasks/ISF-DATA-WIDTHS.md](docs/tasks/ISF-DATA-WIDTHS.md).
+- The current width map is transaction-local and collected before lowering
+  from interface widths, sampled aliases, explicit `shift_right`/`extract`
+  options, and assemble-inferred target widths.
+- Known gaps are now recorded before implementation: placeholder fallbacks
+  remain for underconstrained shifts/extracts, some width conflicts are not yet
+  diagnosed, and ordinary data-operation target widths are not public
+  schedule-report metadata. The next active R14 frontier is
+  `ISF-DATA-WIDTHS.2`.
 ## 2026-05-14: ISF stage/contract schedule-report closure
 - Completed `ISF-STAGES-CONTRACTS.6` and closed
   [docs/tasks/ISF-STAGES-CONTRACTS.md](docs/tasks/ISF-STAGES-CONTRACTS.md).

@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-DATA-WIDTHS.md](docs/tasks/ISF-DATA-WIDTHS.md),
-  whose current frontier is `ISF-DATA-WIDTHS.1`. The completed
+  whose current frontier is `ISF-DATA-WIDTHS.2`. The completed
   `ISF-STAGES-CONTRACTS`, `ISF-RULE-ACTIONS`, `ISF-RESOURCE-CATALOG`,
   `ISF-RESOURCE-PRIORITY`, `ISF-CONFLICTS`, and `ISF-COMPOSITION` trees are
   listed in the task-tree completed table.
@@ -137,6 +137,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `temporal_contracts`. The public contract advertises the new key/value
   families, the CLI and in-process report paths are regression-covered, and
   the active PNT frontier moves to `ISF-DATA-WIDTHS.1`.
+- `ISF-DATA-WIDTHS.1` is complete. The current inventory records the
+  transaction-local width map, existing interface/sample/explicit
+  width-evidence sources, shipped `shift_right`, `assemble`, and `extract`
+  fallback shapes, known underconstrained cases, and the fact that current
+  schedule reports classify data-operation targets as registers without
+  public width metadata. The active frontier advances to `ISF-DATA-WIDTHS.2`.
 - ISF construct support now has a normative rule: parser acceptance is not a
   support claim. Every current or future shipped ISF construct must have an
   explicit accepted source shape, lowering path or fail-closed diagnostic,
