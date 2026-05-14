@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-DATA-WIDTHS.md](docs/tasks/ISF-DATA-WIDTHS.md),
-  whose current frontier is `ISF-DATA-WIDTHS.2`. The completed
+  whose current frontier is `ISF-DATA-WIDTHS.3`. The completed
   `ISF-STAGES-CONTRACTS`, `ISF-RULE-ACTIONS`, `ISF-RESOURCE-CATALOG`,
   `ISF-RESOURCE-PRIORITY`, `ISF-CONFLICTS`, and `ISF-COMPOSITION` trees are
   listed in the task-tree completed table.
@@ -143,6 +143,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   fallback shapes, known underconstrained cases, and the fact that current
   schedule reports classify data-operation targets as registers without
   public width metadata. The active frontier advances to `ISF-DATA-WIDTHS.2`.
+- `ISF-DATA-WIDTHS.2` is complete. Width evidence now has a planned
+  precedence model: interface declarations, explicit options as assertions,
+  sampled-alias propagation, structural derivation, then existing generated
+  scheduler storage for counter families. Migrated operation families should
+  fail closed instead of emitting placeholders for accepted source. The first
+  implementation target is `extract`, and the active frontier advances to
+  `ISF-DATA-WIDTHS.3`.
 - ISF construct support now has a normative rule: parser acceptance is not a
   support claim. Every current or future shipped ISF construct must have an
   explicit accepted source shape, lowering path or fail-closed diagnostic,

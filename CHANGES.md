@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF data-width policy
+- Completed `ISF-DATA-WIDTHS.2` by specifying the width-evidence precedence
+  and failure policy before implementation.
+- Explicit width options are now planned as assertions that fill unknowns but
+  must agree with existing facts. Migrated operation families should fail
+  closed instead of emitting placeholder `WIDTH`, `HIGH`, or `LOW` terms for
+  accepted source.
+- Selected `extract` as the first implementation family for
+  `ISF-DATA-WIDTHS.3`.
 ### R14 — ISF data-width inventory
 - Completed `ISF-DATA-WIDTHS.1` by inventorying the current transaction-local
   width map, shipped explicit width options, placeholder fallback behavior,

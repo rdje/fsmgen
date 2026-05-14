@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF data-width policy
+- Completed `ISF-DATA-WIDTHS.2` in
+  [docs/tasks/ISF-DATA-WIDTHS.md](docs/tasks/ISF-DATA-WIDTHS.md).
+- Planned width-evidence precedence is interface declaration, explicit option
+  as assertion, sampled-alias propagation, structural derivation, then
+  generated scheduler storage for existing counter families.
+- The next implementation slice is `ISF-DATA-WIDTHS.3`, targeting `extract`
+  first. Migrated operation families should fail closed instead of emitting
+  placeholder `WIDTH`, `HIGH`, or `LOW` terms for accepted source.
 ## 2026-05-14: ISF data-width inventory
 - Completed `ISF-DATA-WIDTHS.1` in
   [docs/tasks/ISF-DATA-WIDTHS.md](docs/tasks/ISF-DATA-WIDTHS.md).

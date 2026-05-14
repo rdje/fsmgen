@@ -55,12 +55,13 @@ neighboring operations.
   Commit: `ISF-DATA-WIDTHS.1: inventory data width behavior`
 
 - ID: `ISF-DATA-WIDTHS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Specify width-evidence precedence and failure policy.`
   Acceptance: `The tree records which evidence sources win, which cases infer,
   which cases fail, and which cases remain deferred.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `prove -l t/1099-isf-repeat-data-ops.t t/1101-isf-extract-slices.t t/1111-isf-sample-before-data-ops.t t/1173-isf-shift-right-explicit-width.t t/1174-isf-extract-explicit-widths.t t/1199-isf-shift-clause-boundary.t t/1200-isf-assemble-clause-boundary.t t/1201-isf-extract-clause-boundary.t`;
+  `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-DATA-WIDTHS.2: specify width evidence policy`
 
 - ID: `ISF-DATA-WIDTHS.3`
   Status: `pending`
@@ -90,7 +91,7 @@ neighboring operations.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-DATA-WIDTHS.2` | `pending` | Width-evidence precedence and failure policy must be specified before inference behavior changes. |
+| 1 | `ISF-DATA-WIDTHS.3` | `pending` | `extract` is the first implementation family because it currently emits placeholder slice bounds and already has partial width validation. |
 
 ## ISF-DATA-WIDTHS.1 Inventory
 
@@ -184,16 +185,90 @@ Current schedule-report storage effects:
   existing counter-width path; this tree should avoid conflating that shipped
   counter reporting with future data-register width reporting.
 
+## ISF-DATA-WIDTHS.2 Width Policy
+
+Width facts:
+
+- A width fact is a positive integer associated with one signal-like ISF name
+  inside one actor/transaction lowering scope.
+- Width facts are type/shape facts. They never imply that a runtime value is
+  available before the state in which it is assigned.
+- A width fact may be used across source order inside one transaction because
+  widths are static facts, but the same rule must not be copied to
+  cycle-sensitive values.
+
+Precedence and conflict policy:
+
+| Priority | Evidence | Policy |
+| --- | --- | --- |
+| 1 | Actor interface declaration | Authoritative public width. Omitted widths normalize to `1`. |
+| 2 | Operation-local explicit option | Author assertion for that operation, such as `shift_right (width N)` or `extract (widths N...)`. It may fill an unknown width, but it must match any existing fact for the same named signal. |
+| 3 | Alias propagation | `(sample source as alias)` copies `source` width to `alias` when known. It must not override an existing different `alias` width. |
+| 4 | Structural derivation | `assemble` part sums and `extract` field/source sums can derive missing widths only when all required operands are known. They must agree with already-known facts. |
+| 5 | Generated scheduler storage | Repeat/watchdog/contract counters keep their existing generated-width path. This is not a reason to expose ordinary data-register widths until `ISF-DATA-WIDTHS.5`. |
+
+Failure and fallback policy:
+
+- Once an operation family is migrated by this tree, that family should not
+  emit `WIDTH`, `HIGH`, or `LOW` placeholders for accepted source. A case that
+  cannot derive exact positions must fail closed with a targeted diagnostic,
+  unless the tree explicitly marks the subcase deferred.
+- Conflict between two width facts for the same name must fail closed. The
+  lowerer should name the signal, the conflicting values, and the evidence
+  sources when practical.
+- Explicit width options are not force-casts. They document author intent and
+  fill gaps, but they do not silently override declarations or derived facts.
+- Compatibility placeholder behavior may remain temporarily for operation
+  families that have not yet been migrated by `ISF-DATA-WIDTHS.3` or
+  `ISF-DATA-WIDTHS.4`, but that boundary must stay documented until removed.
+
+Operation-specific policy:
+
+- `extract` is the first implementation family for `ISF-DATA-WIDTHS.3`.
+  Accepted exact cases are:
+  known source word width plus all field widths known; unknown source word
+  width plus all field widths known, using the field-width sum; explicit
+  `(widths N...)` for every field with no conflicts; and field widths inherited
+  from interface/sample/structural facts.
+- `extract` must fail when a known source word width disagrees with the sum of
+  field widths, when any field width remains unknown after the evidence pass,
+  or when explicit field widths conflict with known facts.
+- `shift_right` should later use the same explicit-width-as-assertion policy:
+  explicit `(width N)` can fill an unknown register width, but must not
+  disagree with known register width. Unknown register width without explicit
+  width should fail after the family is migrated.
+- `assemble` should derive target width only when all part widths are known.
+  If target width is already known, the part sum must match it. Unknown part
+  widths may remain deferred if the emitted concat can still be reviewed, but
+  they cannot be used as evidence for neighboring operations.
+- `shift_left` needs no insertion-position width today. It participates mainly
+  by consuming and preserving the register width facts used by other
+  operations.
+
+Deferred policy details:
+
+- Broad aggregate/record width inference remains outside this tree.
+- Signedness, truncation, extension, and explicit cast semantics remain
+  separate language-surface work.
+- Public schedule-report width metadata for ordinary data registers is
+  deferred to `ISF-DATA-WIDTHS.5` after implementation proves which width facts
+  are stable enough to advertise.
+
 ## Decisions
 
 - `2026-05-14`: This tree owns ISF-specific data-operation width inference,
   not broad language-wide type inference.
+- `2026-05-14`: Width evidence precedence is declaration, explicit option,
+  alias propagation, structural derivation, then generated scheduler storage.
+  Explicit width options are assertions, not silent overrides.
+- `2026-05-14`: `extract` is the first implementation family because it owns
+  the most visible placeholder fallback (`HIGH`/`LOW`) and already has
+  explicit width validation hooks.
 
 ## Open Questions
 
-- Should ambiguous unknown-width data operations fail immediately once safer
-  inference exists, or remain compatibility fallback in default mode?
-- Which operation family is the highest-value first implementation slice?
+- None for the current frontier. `ISF-DATA-WIDTHS.3` should implement the
+  `extract` policy above before widening to other operation families.
 
 ## Blockers
 
@@ -205,6 +280,7 @@ Current schedule-report storage effects:
 | --- | --- | --- | --- |
 | `2026-05-14` | `ISF-DATA-WIDTHS` | `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-DATA-WIDTHS.1` | `prove -l t/1099-isf-repeat-data-ops.t t/1101-isf-extract-slices.t t/1111-isf-sample-before-data-ops.t t/1173-isf-shift-right-explicit-width.t t/1174-isf-extract-explicit-widths.t t/1199-isf-shift-clause-boundary.t t/1200-isf-assemble-clause-boundary.t t/1201-isf-extract-clause-boundary.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-DATA-WIDTHS.2` | `prove -l t/1099-isf-repeat-data-ops.t t/1101-isf-extract-slices.t t/1111-isf-sample-before-data-ops.t t/1173-isf-shift-right-explicit-width.t t/1174-isf-extract-explicit-widths.t t/1199-isf-shift-clause-boundary.t t/1200-isf-assemble-clause-boundary.t t/1201-isf-extract-clause-boundary.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -212,9 +288,13 @@ Current schedule-report storage effects:
 | --- | --- | --- |
 | `ISF-DATA-WIDTHS` | `R14: map ISF objectives to task trees` | Initial tree creation belongs to the ISF objective task-tree coverage slice. |
 | `ISF-DATA-WIDTHS.1` | `ISF-DATA-WIDTHS.1: inventory data width behavior` | Current width sources, fallbacks, and report effects. |
+| `ISF-DATA-WIDTHS.2` | `ISF-DATA-WIDTHS.2: specify width evidence policy` | Width precedence and first implementation target. |
 
 ## Changelog
 
 - `2026-05-14`: Created the active ISF data-width task tree.
 - `2026-05-14`: Completed the current width-inference and placeholder
   fallback inventory; advanced the frontier to `ISF-DATA-WIDTHS.2`.
+- `2026-05-14`: Specified width-evidence precedence and fail-closed policy;
+  selected `extract` as the first implementation family and advanced the
+  frontier to `ISF-DATA-WIDTHS.3`.

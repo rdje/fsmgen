@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF data-width policy
+- Explicit width syntax should be treated as an assertion rather than a cast.
+  If the author says `(width 8)` and the signal is already known as 7 bits,
+  silently choosing one side would hide a real design inconsistency.
+- `extract` is the right first implementation target because exact slice
+  positions are its core behavior. Leaving `HIGH`/`LOW` placeholders in
+  accepted source is less useful than failing with a targeted diagnostic once
+  the policy is in force.
+- Keeping ordinary data-register report widths until the final reporting leaf
+  avoids advertising private width facts before implementation proves which
+  facts are stable and conflict-checked.
 ## 2026-05-14: ISF data-width inventory
 - The current width map is intentionally separate from cycle scheduling. It
   scans the whole transaction for type/shape facts before state emission, so

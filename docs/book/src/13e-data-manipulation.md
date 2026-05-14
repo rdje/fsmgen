@@ -131,6 +131,19 @@ where the existing rules can prove positions. It is not yet a public
 data-register width report: schedule reports still classify ordinary
 data-operation targets as `register` storage without a `width` field.
 
+The planned precedence for this tree is declaration first, then explicit
+operation-local width options, sampled-alias propagation, structural derivation
+from `assemble`/`extract`, and finally existing generated scheduler storage for
+counter families. Explicit width options are assertions, not silent casts: they
+may fill an unknown width, but they must agree with any existing width fact for
+the same name.
+
+As each operation family is migrated, accepted source should not emit
+`WIDTH`, `HIGH`, or `LOW` placeholders. The first implementation target is
+`extract`, where unknown field positions or source/field width disagreement
+will become targeted diagnostics before the remaining shift/assemble cases are
+widened.
+
 ## I2C Shift Register — Complete Example
 
 ```lisp

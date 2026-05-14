@@ -597,6 +597,23 @@ source-order-sensitive. Schedule reports do not yet expose ordinary
 data-operation target widths; those targets are reported as register storage
 without a `width` field unless they also belong to a generated counter family.
 
+Planned width-evidence precedence for this tree is: actor interface
+declaration, operation-local explicit option, sampled-alias propagation,
+structural derivation from `assemble`/`extract`, then generated scheduler
+storage for existing counter families. Explicit width options are author
+assertions, not force-casts: they may fill unknown facts, but they must match
+already-known facts for the same name. Once an operation family is migrated by
+the data-width tree, that family should fail closed instead of emitting
+`WIDTH`, `HIGH`, or `LOW` placeholders for accepted source.
+
+The first planned implementation family is `extract`. It should accept exact
+slice lowering when all field positions can be proven from source-word width,
+field widths, explicit `(widths N...)`, or inherited width facts. It should
+fail when a field width remains unknown, when explicit field widths conflict
+with known facts, or when the sum of field widths disagrees with a known source
+word width. `shift_right` and `assemble` will then be aligned to the same
+explicit-width-as-assertion and no-silent-override policy.
+
 ## 8. Composition Between Transactions
 
 ### 8.1 Blocking Sequence
