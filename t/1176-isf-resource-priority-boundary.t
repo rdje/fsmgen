@@ -8,6 +8,10 @@ use FindBin;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Adapter::ISF;
+use FSM::Support::ISFResourceCatalog qw(
+    isf_resource_arbiter_values
+    isf_resource_kind_values
+);
 
 sub parse_source {
     my ($source) = @_;
@@ -42,6 +46,41 @@ subtest 'valid resource and priority metadata survives parsing' => sub {
             { name => 'mem_port',   arbiter => 'round_robin' },
         ],
         'resource metadata shape is preserved',
+    );
+};
+
+subtest 'resource parser accepts the shared resource catalog values' => sub {
+    my @resources;
+    my $index = 0;
+    for my $kind (@{isf_resource_kind_values()}) {
+        push @resources, sprintf(
+            '    (resource res_%02d (kind %s) (arbiter priority))',
+            ++$index,
+            $kind,
+        );
+    }
+
+    my $source = join("\n",
+        '(actor resource_catalog_values',
+        '  (clock clk)',
+        '  (interface (input start) (output done))',
+        '  (transaction main (on start) (complete done))',
+        '  (resources',
+        @resources,
+        '  ))',
+        '',
+    );
+
+    my $actor = parse_source($source);
+    is_deeply(
+        [map { $_->{kind} } @{$actor->{resources}}],
+        isf_resource_kind_values(),
+        'parser accepts every shared resource kind from the catalog',
+    );
+    is_deeply(
+        isf_resource_arbiter_values(),
+        [qw(priority round_robin)],
+        'shared resource arbiter catalog remains explicit',
     );
 };
 

@@ -38,7 +38,8 @@ backlog resource categories.
 - ID: `ISF-RESOURCE-CATALOG`
   Status: `done`
   Goal: `Publish the shareable resource kind registry.`
-  Children: `ISF-RESOURCE-CATALOG.1`, `ISF-RESOURCE-CATALOG.2`
+  Children: `ISF-RESOURCE-CATALOG.1`, `ISF-RESOURCE-CATALOG.2`,
+  `ISF-RESOURCE-CATALOG.3`
 
 - ID: `ISF-RESOURCE-CATALOG.1`
   Status: `done`
@@ -58,11 +59,20 @@ backlog resource categories.
   Verification: `prove -l t/1176-isf-resource-priority-boundary.t t/1218-isf-rule-slot-resource-arbitration.t`; `mdbook build docs/book`; `git diff --check`
   Commit: `ISF-RESOURCE-CATALOG.2: clarify shareable resource registry`
 
+- ID: `ISF-RESOURCE-CATALOG.3`
+  Status: `done`
+  Goal: `Expose the shareable resource registry as machine-readable contract metadata.`
+  Acceptance: `The parser and public ISF contract share one resource catalog
+  owner, and the public contract advertises resource kinds, arbiters, shipped
+  versus backlog status, and meanings for downstream consumers.`
+  Verification: `prove -l t/1112-isf-public-interface-contract.t t/1131-isf-public-top-level-discovery-audit.t t/1176-isf-resource-priority-boundary.t t/1218-isf-rule-slot-resource-arbitration.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-RESOURCE-CATALOG.3: publish resource catalog metadata`
+
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| - | - | `closed` | `ISF-RESOURCE-CATALOG.2` completed the requested registry clarification. |
+| - | - | `closed` | `ISF-RESOURCE-CATALOG.3` made the registry both documented and machine-readable. |
 
 ## Decisions
 
@@ -76,6 +86,11 @@ backlog resource categories.
   shareable resource kinds. Resource names remain author-defined instance
   handles; resource kinds are the registry entries that say what class of
   hardware or scheduler-controlled ownership domain is being shared.
+- `2026-05-14`: The resource catalog now has a code owner,
+  `FSM::Support::ISFResourceCatalog`. The parser and ISF public-interface
+  contract consume that owner so downstream tools can discover the same
+  resource kind list, arbiter list, shipped/backlog status, and meaning text
+  that authors see in the docs.
 
 ## Open Questions
 
@@ -91,6 +106,7 @@ backlog resource categories.
 | --- | --- | --- | --- |
 | `2026-05-14` | `ISF-RESOURCE-CATALOG.1` | `prove -l t/1176-isf-resource-priority-boundary.t t/1218-isf-rule-slot-resource-arbitration.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-RESOURCE-CATALOG.2` | `prove -l t/1176-isf-resource-priority-boundary.t t/1218-isf-rule-slot-resource-arbitration.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-RESOURCE-CATALOG.3` | `prove -l t/1112-isf-public-interface-contract.t t/1131-isf-public-top-level-discovery-audit.t t/1176-isf-resource-priority-boundary.t t/1218-isf-rule-slot-resource-arbitration.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -98,6 +114,7 @@ backlog resource categories.
 | --- | --- | --- |
 | `ISF-RESOURCE-CATALOG.1` | `ISF-RESOURCE-CATALOG.1: publish resource kind catalog` | Documentation-only registry slice. |
 | `ISF-RESOURCE-CATALOG.2` | `ISF-RESOURCE-CATALOG.2: clarify shareable resource registry` | Documentation-only clarification that the catalog is the public growable registry. |
+| `ISF-RESOURCE-CATALOG.3` | `ISF-RESOURCE-CATALOG.3: publish resource catalog metadata` | Machine-readable catalog owner and public contract metadata. |
 
 ## Changelog
 
@@ -105,3 +122,4 @@ backlog resource categories.
   catalog tree.
 - `2026-05-14`: Clarified the catalog as the public growable registry of ISF
   shareable resource kinds.
+- `2026-05-14`: Added the machine-readable resource catalog metadata slice.

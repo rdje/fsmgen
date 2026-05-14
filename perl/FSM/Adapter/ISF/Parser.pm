@@ -11,12 +11,17 @@ use Lispish;
 use File::Slurp qw(read_file);
 use FSM::Adapter::ISF::LispishAdapter;
 use FSM::Debug;
-
-my %RESOURCE_ARBITERS = map { $_ => 1 } qw(priority round_robin);
-my %RESOURCE_KINDS = map { $_ => 1 } qw(
-    rule_slot output_bundle interface_bundle named_drive
-    transaction_start child_instance storage_port
+use FSM::Support::ISFResourceCatalog qw(
+    isf_resource_arbiter_values
+    isf_resource_kind_values
 );
+
+my @RESOURCE_ARBITERS = @{isf_resource_arbiter_values()};
+my @RESOURCE_KINDS    = @{isf_resource_kind_values()};
+my $RESOURCE_ARBITER_SYNTAX = join('|', @RESOURCE_ARBITERS);
+my $RESOURCE_KIND_SYNTAX    = join('|', @RESOURCE_KINDS);
+my %RESOURCE_ARBITERS = map { $_ => 1 } @RESOURCE_ARBITERS;
+my %RESOURCE_KINDS    = map { $_ => 1 } @RESOURCE_KINDS;
 my %RULE_ASSIGNMENT_FORBIDDEN_EXPR_HEADS = map { $_ => 1 } qw(
     when switch repeat do spawn complete
 );
@@ -484,7 +489,7 @@ sub _parse_resources($self, $clause) {
         my $res = $clause->[$i];
         confess "Error: resource must be a list\n" unless ref($res) eq 'ARRAY';
         my ($kw, $name, @forms) = @$res;
-        confess "Error: resource entries require '(resource name (arbiter priority|round_robin) [(kind kind)] [(users rule...)])'\n"
+        confess "Error: resource entries require '(resource name (arbiter $RESOURCE_ARBITER_SYNTAX) [(kind kind)] [(users rule...)])'\n"
             unless @$res >= 3
                 && defined($kw)
                 && !ref($kw)
@@ -510,7 +515,7 @@ sub _parse_resources($self, $clause) {
                 if $seen_subclause{$head}++;
 
             if ($head eq 'arbiter') {
-                confess "Error: resource '$name' arbiter requires '(arbiter priority|round_robin)'\n"
+                confess "Error: resource '$name' arbiter requires '(arbiter $RESOURCE_ARBITER_SYNTAX)'\n"
                     unless @$form == 2
                         && defined($form->[1])
                         && !ref($form->[1])
@@ -520,7 +525,7 @@ sub _parse_resources($self, $clause) {
             }
 
             if ($head eq 'kind') {
-                confess "Error: resource '$name' kind requires '(kind rule_slot|output_bundle|interface_bundle|named_drive|transaction_start|child_instance|storage_port)'\n"
+                confess "Error: resource '$name' kind requires '(kind $RESOURCE_KIND_SYNTAX)'\n"
                     unless @$form == 2
                         && defined($form->[1])
                         && !ref($form->[1])
@@ -545,7 +550,7 @@ sub _parse_resources($self, $clause) {
             confess "Error: resource '$name' has unsupported subclause '$head'\n";
         }
 
-        confess "Error: resource '$name' requires '(arbiter priority|round_robin)'\n"
+        confess "Error: resource '$name' requires '(arbiter $RESOURCE_ARBITER_SYNTAX)'\n"
             unless defined($arbiter);
         confess "Error: resource '$name' with users requires '(kind rule_slot)'\n"
             if @users && !defined($kind);

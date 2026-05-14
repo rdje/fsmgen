@@ -256,6 +256,11 @@ The table below is the current public registry of things ISF can name as
 shareable resources. It deliberately starts small. A new kind should enter the
 registry only when its authoring shape, lowering path, runtime semantics,
 diagnostics, report surface, and tests are explicit.
+The code owner is `FSM::Support::ISFResourceCatalog`; the parser and
+machine-readable ISF public contract use that same owner. Downstream consumers
+can discover the current arbiter list, resource-kind list, status map, meaning
+map, enforced kinds, and backlog kinds from
+`embedding.isf_public_interface`.
 
 Current shareable resource registry:
 

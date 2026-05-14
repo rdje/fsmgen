@@ -245,8 +245,11 @@ limitations are:
   `output_bundle`, `interface_bundle`, `named_drive`, `transaction_start`,
   `child_instance`, and `storage_port` remain backlog until their lowering
   contracts are explicit. The accepted `round_robin` value remains parser
-  metadata until round-robin lowering ships. `(priority ...)` is structurally
-  validated and currently enforced for same-target rule/rule data conflicts,
+  metadata until round-robin lowering ships. The parser and
+  `embedding.isf_public_interface` contract share the same resource catalog,
+  including the current status and meaning of each kind. `(priority ...)` is
+  structurally validated and currently enforced for same-target rule/rule data
+  conflicts,
   priority-arbitrated `rule_slot` resources, and the lowerable
   rule-over-transaction same-target data case. Transaction-over-rule priority
   remains deferred because scheduled `.fsm` review text does not yet expose a

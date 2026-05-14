@@ -2,6 +2,12 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF resource catalog metadata
+- Active R14 task-tree slice: `ISF-RESOURCE-CATALOG.3` is complete.
+- The shareable resource registry now has a code owner shared by the parser and
+  `embedding.isf_public_interface`.
+- The next active R14 frontier remains `ISF-FIXTURES.2`.
+
 ## 2026-05-14: R14 — ISF fixture coverage inventory
 - Active R14 task-tree slice: `ISF-FIXTURES.1` is complete.
 - The fixture tree now inventories current `.isf` fixtures, ISF regression

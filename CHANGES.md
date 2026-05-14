@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF resource catalog metadata
+- Completed `ISF-RESOURCE-CATALOG.3` by moving the shareable resource registry
+  into `FSM::Support::ISFResourceCatalog`.
+- The ISF parser and public-interface contract now consume the same resource
+  catalog, and `embedding.isf_public_interface` advertises resource arbiters,
+  resource kinds, shipped/backlog status, meaning text, enforced kinds, and
+  backlog kinds for downstream consumers.
+- The documented resource registry remains intentionally small: `rule_slot`
+  with `priority` arbitration is shipped, while the other catalog names remain
+  backlog until their lowering contracts ship.
 ### R14 — ISF fixture coverage inventory
 - Completed `ISF-FIXTURES.1` by inventorying the checked-in `.isf` fixtures,
   the 109x/11xx/12xx ISF regression tier, quick/smoke coverage, strict-mode

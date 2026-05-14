@@ -105,6 +105,8 @@ guidance list are audited as exact across the same views. Its `tested_by`
 provenance metadata is also audited as an exact repo-local test list.
 Its lower-result file sub-shape metadata is audited as exact for scheduled
 `.fsm` basenames and scheduled text roots.
+Its shareable-resource catalog metadata is audited as exact for current
+arbiter names, resource kinds, shipped/backlog status, and meaning text.
 Its schedule-report transaction-ordering metadata is audited as exact for the
 lexically sorted transaction list and emitted-order per-transaction states.
 Its CLI success-shape metadata is audited as exact for the schedule JSON,
@@ -937,6 +939,11 @@ is the author-defined instance handle; the kind says what is being shared; the
 public registry of things ISF can name as shareable resources. It deliberately
 starts small and grows only when a kind has a clear lowering path, runtime
 semantics, diagnostics, report surface, and regression coverage.
+The same registry is owned in code by `FSM::Support::ISFResourceCatalog` and
+advertised through the machine-readable ISF public contract as
+`resource_arbiter_values`, `resource_kind_values`,
+`resource_kind_status_map`, `resource_kind_meaning_map`,
+`enforced_resource_kind_values`, and `backlog_resource_kind_values`.
 
 Current shareable resource registry:
 

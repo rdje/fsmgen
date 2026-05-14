@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF resource catalog metadata
+- Completed `ISF-RESOURCE-CATALOG.3` in
+  [docs/tasks/ISF-RESOURCE-CATALOG.md](docs/tasks/ISF-RESOURCE-CATALOG.md).
+- `FSM::Support::ISFResourceCatalog` now owns the shared ISF resource catalog
+  used by the parser and public contract.
+- Downstream consumers can discover resource arbiters, kinds, status, meanings,
+  enforced kinds, and backlog kinds through `embedding.isf_public_interface`.
+- The next active R14 frontier remains `ISF-FIXTURES.2`.
 ## 2026-05-14: ISF fixture coverage inventory
 - Completed `ISF-FIXTURES.1` in
   [docs/tasks/ISF-FIXTURE-COVERAGE.md](docs/tasks/ISF-FIXTURE-COVERAGE.md).

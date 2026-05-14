@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF resource catalog metadata
+- The resource registry is now code-owned instead of duplicated as parser-only
+  literals plus prose. This keeps parser acceptance, public contract discovery,
+  and documentation aligned as the list grows.
+- The public contract deliberately exposes both `resource_kind_values` and
+  `resource_kind_status_map`. The list answers "what can ISF name"; the status
+  map answers "what has shipped runtime behavior."
+- Meaning text is public discovery metadata, but it is still bounded: adding a
+  new resource kind must bring source shape, lowering semantics, diagnostics,
+  report surface, and regressions before it becomes more than backlog.
 ## 2026-05-14: ISF fixture coverage inventory
 - The fixture tree separates realistic protocol confidence from focused
   construct correctness. Focused inline tests are still the right tool for

@@ -188,6 +188,10 @@ resource kind: `rule_slot`, a one-cycle mutual-exclusion slot where each bound
 rule requests when its guard is true, the priority graph chooses a unique
 active winner, and the generated grant gates the whole rule DT DTE without
 adding a cycle.
+The resource-kind catalog is owned in code by
+`FSM::Support::ISFResourceCatalog` and exposed through the machine-readable
+ISF public contract, so downstream consumers can distinguish shipped resource
+behavior from parser-recognized backlog names without scraping prose.
 
 Current shareable resource registry:
 

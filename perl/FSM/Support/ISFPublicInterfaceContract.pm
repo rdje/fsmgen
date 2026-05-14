@@ -5,6 +5,14 @@ use warnings;
 
 use Exporter 'import';
 use JSON::PP ();
+use FSM::Support::ISFResourceCatalog qw(
+    isf_backlog_resource_kind_values
+    isf_enforced_resource_kind_values
+    isf_resource_arbiter_values
+    isf_resource_kind_meaning_map
+    isf_resource_kind_status_map
+    isf_resource_kind_values
+);
 
 our @EXPORT_OK = qw(
     build_isf_public_interface_contract
@@ -25,6 +33,8 @@ our @EXPORT_OK = qw(
     isf_public_interface_constructor_option_names
     isf_public_interface_dt_assignment_operator_family_map
     isf_public_interface_facade_failure_diagnostic_shape
+    isf_public_interface_backlog_resource_kind_values
+    isf_public_interface_enforced_resource_kind_values
     isf_public_interface_live_document_paths
     isf_public_interface_lower_return_shape
     isf_public_interface_lower_result_file_name_shape
@@ -35,6 +45,10 @@ our @EXPORT_OK = qw(
     isf_public_interface_parse_source_return_shape
     isf_public_interface_parser_method_names
     isf_public_interface_public_top_level_keys
+    isf_public_interface_resource_arbiter_values
+    isf_public_interface_resource_kind_meaning_map
+    isf_public_interface_resource_kind_status_map
+    isf_public_interface_resource_kind_values
     isf_public_interface_schedule_report_compile_issues_success_shape
     isf_public_interface_schedule_report_clock_shape
     isf_public_interface_schedule_report_compile_issue_keys
@@ -127,6 +141,12 @@ sub build_isf_public_interface_contract {
         scheduler_method_names => isf_public_interface_scheduler_method_names(),
         constructor_option_names => isf_public_interface_constructor_option_names(),
         cli_option_names => isf_public_interface_cli_option_names(),
+        resource_arbiter_values => isf_public_interface_resource_arbiter_values(),
+        resource_kind_values => isf_public_interface_resource_kind_values(),
+        resource_kind_status_map => isf_public_interface_resource_kind_status_map(),
+        resource_kind_meaning_map => isf_public_interface_resource_kind_meaning_map(),
+        enforced_resource_kind_values => isf_public_interface_enforced_resource_kind_values(),
+        backlog_resource_kind_values => isf_public_interface_backlog_resource_kind_values(),
         cli_schedule_json_success_shape => isf_public_interface_cli_schedule_json_success_shape(),
         cli_outdir_success_shape => isf_public_interface_cli_outdir_success_shape(),
         cli_hdl_generation_success_shape => isf_public_interface_cli_hdl_generation_success_shape(),
@@ -358,6 +378,12 @@ sub isf_public_interface_public_top_level_keys {
             scheduler_method_names
             constructor_option_names
             cli_option_names
+            resource_arbiter_values
+            resource_kind_values
+            resource_kind_status_map
+            resource_kind_meaning_map
+            enforced_resource_kind_values
+            backlog_resource_kind_values
             cli_schedule_json_success_shape
             cli_outdir_success_shape
             cli_hdl_generation_success_shape
@@ -454,6 +480,30 @@ sub isf_public_interface_public_top_level_keys {
             guidance
         ),
     ];
+}
+
+sub isf_public_interface_resource_arbiter_values {
+    return isf_resource_arbiter_values();
+}
+
+sub isf_public_interface_resource_kind_values {
+    return isf_resource_kind_values();
+}
+
+sub isf_public_interface_resource_kind_status_map {
+    return isf_resource_kind_status_map();
+}
+
+sub isf_public_interface_resource_kind_meaning_map {
+    return isf_resource_kind_meaning_map();
+}
+
+sub isf_public_interface_enforced_resource_kind_values {
+    return isf_enforced_resource_kind_values();
+}
+
+sub isf_public_interface_backlog_resource_kind_values {
+    return isf_backlog_resource_kind_values();
 }
 
 sub isf_public_interface_parser_method_names {

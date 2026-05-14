@@ -362,6 +362,12 @@ registry is:
 not public runtime behavior, until their lowering paths, runtime semantics,
 diagnostics, report surfaces, and regressions ship. The accepted `round_robin`
 string remains parser metadata until round-robin lowering ships.
+The code owner for that registry is `FSM::Support::ISFResourceCatalog`; the
+parser and this public contract both consume it. Downstream consumers can
+discover the current values through `resource_arbiter_values`,
+`resource_kind_values`, `resource_kind_status_map`,
+`resource_kind_meaning_map`, `enforced_resource_kind_values`, and
+`backlog_resource_kind_values` on `embedding.isf_public_interface`.
 The first resource-arbitration path is checked by
 [t/1218-isf-rule-slot-resource-arbitration.t](../t/1218-isf-rule-slot-resource-arbitration.t)
 for parser metadata, scheduled `.fsm` DTE gating, HDL handoff, and

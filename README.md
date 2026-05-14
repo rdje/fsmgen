@@ -143,6 +143,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `perl/FSM/Support/ExtensionContract.pm` — bounded typed-extension/context contract advertised to embedders through the capability manifest.
 - `perl/FSM/Support/HDLGeneratorFacadeContract.pm` — bounded public in-process `HDLGenerator` constructor/generation facade contract advertised through `embedding.hdl_generator_facade`.
 - `perl/FSM/Support/ISFPublicInterfaceContract.pm` — bounded public ISF parser/scheduler facade and schedule-report contract advertised through `embedding.isf_public_interface`.
+- `perl/FSM/Support/ISFResourceCatalog.pm` — shared ISF resource-kind registry consumed by the parser and public contract, including current arbiters, shareable resource kinds, shipped/backlog status, and meaning text.
 - `perl/FSM/Support/HDLGeneratorModuleInfoContract.pm` — bounded nested-object contract for `HDLGenerator` `module_info` identity plus direct/composition scalar summary subsurfaces.
 - `perl/FSM/Support/HDLGeneratorCompositionPlanContract.pm` — bounded shell-only contract for the raw `HDLGenerator` `composition_plan` branch plus its sanitized composition-summary fallback surfaces.
 - `perl/FSM/Support/HDLGeneratorCompositionSpecContract.pm` — bounded shell-only contract for the raw `HDLGenerator` `composition_spec` branch plus its sanitized composition-summary fallback surfaces.

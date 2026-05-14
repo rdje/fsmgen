@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-FIXTURE-COVERAGE.md](docs/tasks/ISF-FIXTURE-COVERAGE.md),
-  whose current frontier is `ISF-FIXTURES.1`. The completed
+  whose current frontier is `ISF-FIXTURES.2`. The completed
   `ISF-SCHEDULE-REPORTS`, `ISF-DATA-WIDTHS`, `ISF-STAGES-CONTRACTS`,
   `ISF-RULE-ACTIONS`, `ISF-RESOURCE-CATALOG`, `ISF-RESOURCE-PRIORITY`,
   `ISF-CONFLICTS`, and `ISF-COMPOSITION` trees are listed in the task-tree
@@ -70,6 +70,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   author-defined resource names from registry resource kinds, and preserve the
   shipped/backlog boundary. This does not change the active R14 frontier,
   which is now `ISF-SCHEDULE-REPORTS.1` after the data-width tree closure.
+- `ISF-RESOURCE-CATALOG.3` is complete. The shareable resource registry now
+  has a code owner, `FSM::Support::ISFResourceCatalog`, consumed by both the
+  parser and the ISF public-interface contract. Downstream consumers can now
+  discover resource arbiters, resource kinds, shipped/backlog status, meaning
+  text, currently enforced kinds, and backlog kinds from
+  `embedding.isf_public_interface`. This preserves the current feature
+  boundary: `rule_slot` with `priority` is shipped; all non-`rule_slot` kinds
+  remain parser-recognized backlog names until their lowering contracts ship.
 - `ISF-RULE-ACTIONS.1` is complete. The rule-action task tree now inventories
   the current scalar-only parser surface, malformed diagnostics, lowering
   behavior, schedule-report/storage metadata, and conflict touchpoints. The
