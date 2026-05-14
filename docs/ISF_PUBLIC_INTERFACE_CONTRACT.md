@@ -95,6 +95,11 @@ The compact SPI-like serial fixture is checked by
 to keep file-backed schedule JSON, scheduled `.fsm`, plain HDL generation,
 strict HDL generation, explicit MOSI bit selection, and ISF shift handoff
 covered without claiming full external SPI protocol compliance.
+The compatibility CLI parity path is checked by
+[t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)
+so accepted ignored handshake compatibility source reaches CLI schedule JSON
+and strict HDL, while removed transaction `(assign ...)` fails through the CLI
+with migration guidance.
 The current APB schedule report is checked against the advertised key families
 by [t/1116-isf-public-schedule-report-key-family-audit.t](../t/1116-isf-public-schedule-report-key-family-audit.t).
 The shipped stage/contract report projection is checked by
@@ -410,8 +415,10 @@ declared same-actor transaction before scheduled `.fsm` emission, while
 forward references remain accepted.
 The deprecated handshake compatibility boundary is checked by
 [t/1178-isf-handshake-compatibility-boundary.t](../t/1178-isf-handshake-compatibility-boundary.t)
-so `(handshake name (valid signal) (ready signal))` metadata is structurally
-validated before being ignored. Old handshake semantics are still not lowered.
+so `(handshake name (valid signal) (ready signal))` metadata requires exactly
+one scalar `valid` and one scalar `ready`, rejects duplicate handshake names,
+and remains ignored after validation. Old handshake semantics are still not
+lowered.
 The phase/stage boundary is checked by
 [t/1179-isf-phase-stage-boundary.t](../t/1179-isf-phase-stage-boundary.t)
 so actor-level phase/stage metadata and transaction phase/stage clauses have
@@ -428,10 +435,12 @@ HDL.
 The unsupported transaction-clause boundary is checked by
 [t/1180-isf-unsupported-transaction-clause-boundary.t](../t/1180-isf-unsupported-transaction-clause-boundary.t)
 so removed or future transaction clause heads, including `(assign ...)`, fail
-closed instead of disappearing from scheduled `.fsm` output. The nested
-`when`, `switch`, and `repeat` body contexts use the same shipped-lowerer
-boundary, while unsupported `contract` clauses and deferred nested/unsupported
-`stage` forms keep their dedicated diagnostics. The shipped top-level
+closed instead of disappearing from scheduled `.fsm` output. Removed
+`(assign ...)` has targeted migration guidance, while unknown future keywords
+keep the generic unsupported-clause diagnostic. The nested `when`, `switch`,
+and `repeat` body contexts use the same shipped-lowerer boundary, while
+unsupported `contract` clauses and deferred nested/unsupported `stage` forms
+keep their dedicated diagnostics. The shipped top-level
 bounded-eventual `contract` subset is covered separately by
 [t/1224-isf-contract-lowering.t](../t/1224-isf-contract-lowering.t).
 The actor-shell drive shape is checked by

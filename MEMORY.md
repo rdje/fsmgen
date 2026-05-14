@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF compatibility tree closure
+- Completed `ISF-COMPATIBILITY.5` and closed
+  [docs/tasks/ISF-COMPATIBILITY-SURFACE.md](docs/tasks/ISF-COMPATIBILITY-SURFACE.md).
+- Added [t/1229-isf-compatibility-cli-parity.t](t/1229-isf-compatibility-cli-parity.t)
+  for CLI schedule-report, strict-HDL, and removed-assign failure parity.
+- `embedding.isf_public_interface.tested_by` now includes the compatibility
+  parity regression, and tier selection asserts it is in the ISF suite.
+- The remaining public-contract tree is cross-cutting and should not displace
+  feature delivery unless a selected feature changes a public surface.
 ## 2026-05-14: ISF compatibility diagnostics
 - Completed `ISF-COMPATIBILITY.4` in
   [docs/tasks/ISF-COMPATIBILITY-SURFACE.md](docs/tasks/ISF-COMPATIBILITY-SURFACE.md).

@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF compatibility tree closure
+- The final compatibility slice added CLI parity because the policy is
+  user-facing: accepted ignored handshake source must work through the same
+  CLI report and strict-HDL paths as in-process lowering, and removed `assign`
+  must fail with the same migration guidance at the CLI boundary.
+- Public `tested_by` provenance now includes the parity test so downstream
+  consumers can discover that the compatibility behavior is tested as part of
+  the advertised ISF surface.
+- The remaining public-contract tree is deliberately cross-cutting. It should
+  be used to keep feature slices synchronized, not to restart standalone API
+  stabilization ahead of feature delivery.
 ## 2026-05-14: ISF compatibility diagnostics
 - Tightening legacy handshake validation while still ignoring the metadata is
   intentional. It prevents typo-prone compatibility residue from looking

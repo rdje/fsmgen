@@ -12,12 +12,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   frontier. The ongoing/unresolved R14 ISF objective families are now covered
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
-  [docs/tasks/ISF-COMPATIBILITY-SURFACE.md](docs/tasks/ISF-COMPATIBILITY-SURFACE.md),
-  whose current frontier is `ISF-COMPATIBILITY.5`. The completed
+  [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md),
+  whose current frontier is `ISF-PUBLIC-CONTRACT.1`. That tree is
+  cross-cutting and should not displace feature delivery unless the selected
+  feature changes a public surface. The completed
   `ISF-SCHEDULE-REPORTS`, `ISF-DATA-WIDTHS`, `ISF-STAGES-CONTRACTS`,
   `ISF-RULE-ACTIONS`, `ISF-RESOURCE-CATALOG`, `ISF-RESOURCE-PRIORITY`,
-  `ISF-CONFLICTS`, `ISF-COMPOSITION`, and `ISF-FIXTURES` trees are listed in
-  the task-tree completed table.
+  `ISF-CONFLICTS`, `ISF-COMPOSITION`, `ISF-FIXTURES`, and
+  `ISF-COMPATIBILITY` trees are listed in the task-tree completed table.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
   guide for installing the same task-tree tracking workflow in another
   project.
@@ -61,6 +63,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   transaction, `when`, `switch`, and `repeat` contexts while unknown future
   keywords keep the generic unsupported-clause path. The active frontier
   advances to `ISF-COMPATIBILITY.5`.
+- `ISF-COMPATIBILITY.5` is complete and the compatibility tree is closed. The
+  CLI schedule-report and strict-HDL paths now cover accepted ignored
+  handshake compatibility input, CLI failure covers the removed-assign
+  migration diagnostic, the ISF public `tested_by` provenance includes
+  `t/1229-isf-compatibility-cli-parity.t`, and the ISF tier selection audit
+  asserts that parity test is included. Future transaction-local
+  combinational assignment, if needed, remains a new feature request with
+  explicit timing semantics.
 - `ISF-RESOURCE-PRIORITY.1` is complete. The current inventory records that
   `(resources ...)` is validated metadata only, accepted arbiters are
   `priority` and `round_robin`, and successful resource arbitration is not yet

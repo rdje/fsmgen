@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-COMPATIBILITY`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-14`
 - Last updated: `2026-05-14`
@@ -36,7 +36,7 @@ keyword, so compatibility behavior remains intentional rather than accidental.
 ## Task Tree
 
 - ID: `ISF-COMPATIBILITY`
-  Status: `active`
+  Status: `done`
   Goal: `Resolve legacy handshake and removed assign compatibility policy.`
   Children: `ISF-COMPATIBILITY.1`, `ISF-COMPATIBILITY.2`,
   `ISF-COMPATIBILITY.3`, `ISF-COMPATIBILITY.4`, `ISF-COMPATIBILITY.5`
@@ -74,18 +74,18 @@ keyword, so compatibility behavior remains intentional rather than accidental.
   Commit: `ISF-COMPATIBILITY.4: enforce compatibility diagnostics`
 
 - ID: `ISF-COMPATIBILITY.5`
-  Status: `pending`
+  Status: `done`
   Goal: `Add tests and synchronize docs/contracts.`
   Acceptance: `Focused tests and docs cover compatibility policy, rejected
   cases, migration hints, and public contract wording.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: syntax checks for changed tests and contract module; `prove -l t/1178-isf-handshake-compatibility-boundary.t t/1180-isf-unsupported-transaction-clause-boundary.t t/1183-ci-regression-tier-selection.t t/1229-isf-compatibility-cli-parity.t t/1112-isf-public-interface-contract.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-COMPATIBILITY.5: close compatibility surface`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-COMPATIBILITY.5` | `pending` | Implementation is complete; the final slice should close tests, docs, contract wording, and tree state. |
+| 1 | `closed` | `done` | All known compatibility leaves are complete. Future compatibility work should open a new leaf or feature tree. |
 
 ## ISF-COMPATIBILITY.1 Inventory
 
@@ -327,6 +327,38 @@ Regression coverage:
   `switch`, and `repeat` contexts while preserving generic diagnostics for
   unrelated unsupported keywords.
 
+## ISF-COMPATIBILITY.5 Closure
+
+Closure state:
+
+- Deprecated actor-level `(handshake ...)` remains accepted but ignored
+  compatibility input when it has exactly one scalar `valid` and one scalar
+  `ready` property.
+- Duplicate handshake names fail before actor-shell return.
+- The public actor shell still does not expose populated handshake metadata;
+  `handshakes => {}` is a private compatibility placeholder, not a stable
+  public surface.
+- Removed transaction `(assign ...)` remains rejected in top-level
+  transaction bodies and nested `when`, `switch`, and `repeat` contexts.
+- The removed-assign diagnostic now carries migration guidance; unrelated
+  unsupported transaction keywords still use the generic unsupported-clause
+  diagnostic.
+- CLI schedule-report and strict-HDL paths now have parity coverage for
+  accepted ignored handshake compatibility input.
+- CLI failure now has parity coverage for the removed-assign migration
+  diagnostic.
+
+Public contract and tier sync:
+
+- [t/1229-isf-compatibility-cli-parity.t](../../t/1229-isf-compatibility-cli-parity.t)
+  is part of the ISF regression tier.
+- `embedding.isf_public_interface.tested_by` now advertises the new parity
+  test through `FSM::Support::ISFPublicInterfaceContract`.
+- [t/1183-ci-regression-tier-selection.t](../../t/1183-ci-regression-tier-selection.t)
+  asserts the ISF tier includes the compatibility parity regression.
+- The ISF spec, mdBook backlog, roadmap, and live docs describe the closed
+  compatibility policy and remaining future-only question.
+
 ## Decisions
 
 - `2026-05-14`: Legacy handshake and removed transaction `assign` are tracked
@@ -367,6 +399,7 @@ Regression coverage:
 | `2026-05-14` | `ISF-COMPATIBILITY.2` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-COMPATIBILITY.3` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-COMPATIBILITY.4` | Syntax checks for changed Perl modules and focused tests; `prove -l t/1178-isf-handshake-compatibility-boundary.t t/1180-isf-unsupported-transaction-clause-boundary.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-COMPATIBILITY.5` | Syntax checks for changed tests and contract module; `prove -l t/1178-isf-handshake-compatibility-boundary.t t/1180-isf-unsupported-transaction-clause-boundary.t t/1183-ci-regression-tier-selection.t t/1229-isf-compatibility-cli-parity.t t/1112-isf-public-interface-contract.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -377,6 +410,7 @@ Regression coverage:
 | `ISF-COMPATIBILITY.2` | `ISF-COMPATIBILITY.2: decide handshake policy` | Keep handshake as accepted ignored compatibility input, tighten validation, and point authors to `on`, `can_accept`, and transaction stages. |
 | `ISF-COMPATIBILITY.3` | `ISF-COMPATIBILITY.3: decide removed assign policy` | Keep transaction `assign` rejected and point authors to explicit replacement constructs. |
 | `ISF-COMPATIBILITY.4` | `ISF-COMPATIBILITY.4: enforce compatibility diagnostics` | Tightened handshake compatibility validation and targeted removed-assign migration diagnostics. |
+| `ISF-COMPATIBILITY.5` | `ISF-COMPATIBILITY.5: close compatibility surface` | CLI/strict parity coverage, public contract provenance, docs, live status, and tree closure. |
 
 ## Changelog
 
@@ -386,3 +420,5 @@ Regression coverage:
 - `2026-05-14`: Decided the legacy handshake policy.
 - `2026-05-14`: Decided the removed transaction `assign` policy.
 - `2026-05-14`: Implemented selected compatibility validation and diagnostics.
+- `2026-05-14`: Added CLI/strict parity coverage, synchronized public
+  contract provenance, and closed the compatibility tree.

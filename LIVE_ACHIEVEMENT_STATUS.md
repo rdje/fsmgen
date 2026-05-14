@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF compatibility tree closure
+- Active R14 task-tree slice: `ISF-COMPATIBILITY.5` is complete, and the
+  `ISF-COMPATIBILITY` tree is closed.
+- Added CLI schedule-report/strict-HDL parity for accepted ignored handshake
+  compatibility input and CLI failure parity for removed transaction `assign`.
+- Public `tested_by` metadata and tier selection now include
+  [t/1229-isf-compatibility-cli-parity.t](t/1229-isf-compatibility-cli-parity.t).
+- The remaining public-contract tree is cross-cutting and should not displace
+  feature delivery unless a selected feature changes a public surface.
+
 ## 2026-05-14: R14 — ISF compatibility diagnostics
 - Active R14 task-tree slice: `ISF-COMPATIBILITY.4` is complete.
 - Legacy handshake validation now requires exactly one scalar `valid` and one

@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF compatibility tree closure
+- Completed `ISF-COMPATIBILITY.5` and closed the compatibility-surface tree.
+- Added [t/1229-isf-compatibility-cli-parity.t](t/1229-isf-compatibility-cli-parity.t)
+  to prove CLI schedule-report and strict-HDL parity for accepted ignored
+  handshake compatibility input, and CLI failure parity for the removed
+  transaction `assign` migration diagnostic.
+- The ISF public `tested_by` metadata and tier-selection audit now include the
+  compatibility parity regression.
+- Future transaction-local combinational assignment remains a new feature
+  request with explicit timing semantics, not a revival of removed `assign`.
 ### R14 — ISF compatibility diagnostics
 - Completed `ISF-COMPATIBILITY.4` by implementing the selected handshake and
   removed-assign compatibility diagnostics.

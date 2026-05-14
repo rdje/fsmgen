@@ -129,6 +129,7 @@ my $expected_tested_by = [
     't/1226-isf-data-width-storage-report.t',
     't/1227-isf-schedule-report-freeze-boundary.t',
     't/1228-isf-spi-fixture-coverage.t',
+    't/1229-isf-compatibility-cli-parity.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {
