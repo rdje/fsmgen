@@ -814,6 +814,10 @@ that a compile-time proof is NOT doable for a case such as rule/drive overlap.
 The public contract advertises the bounded issue keys, source-summary keys,
 severity values, and proof-status values. Fail-closed conflicts still produce
 targeted diagnostics instead of successful schedule reports.
+Rejected conflict diagnostics are regression-covered for both in-process
+scheduler calls and the CLI schedule-report path. They name the stable code,
+target, reason, conflicting owners, source kinds, operators, and values, and
+the CLI path does not emit successful schedule JSON for rejected conflicts.
 Accepted compatible fan-in metadata is emitted as a top-level
 `compatible_fanin_groups` array. Each group is bounded to classifier `kind`,
 `domain`, target/value facts, and source summaries; raw
@@ -960,6 +964,7 @@ Focused tests:
 - [t/1211-isf-runtime-selector-conflict-instrumentation.t](../t/1211-isf-runtime-selector-conflict-instrumentation.t)
 - [t/1212-isf-schedule-report-compile-issues-projection.t](../t/1212-isf-schedule-report-compile-issues-projection.t)
 - [t/1213-isf-schedule-report-compatible-fanin-projection.t](../t/1213-isf-schedule-report-compatible-fanin-projection.t)
+- [t/1214-isf-rejected-conflict-diagnostics.t](../t/1214-isf-rejected-conflict-diagnostics.t)
 
 ## 12. Explicitly Deferred
 

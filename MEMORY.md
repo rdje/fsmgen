@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF rejected conflict diagnostic coverage
+- Completed `ISF-CONFLICTS.5.4` and closed the `ISF-CONFLICTS.5`
+  diagnostics/report projection container in
+  [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md).
+- `t/1214-isf-rejected-conflict-diagnostics.t` now covers provable rule/rule
+  conflict diagnostics through in-process `lower(...)`, in-process
+  `report(...)`, and CLI `--emit-schedule-json`.
+- Rejected diagnostics name stable code, target, reason, owners, source kinds,
+  operators, and values. CLI rejected conflicts do not emit successful schedule
+  JSON.
+- The active `ISF-CONFLICTS` frontier is now `ISF-CONFLICTS.6`.
 ## 2026-05-14: ISF compatible fan-in schedule-report projection
 - Completed `ISF-CONFLICTS.5.3` in
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md).

@@ -136,15 +136,15 @@ transaction start input.
   Commit: `ISF-CONFLICTS.4.5: add runtime selector assertions`
 
 - ID: `ISF-CONFLICTS.5`
-  Status: `active`
+  Status: `done`
   Goal: `Add diagnostics and schedule-report projection.`
   Children: `ISF-CONFLICTS.5.1`, `ISF-CONFLICTS.5.2`,
   `ISF-CONFLICTS.5.3`, `ISF-CONFLICTS.5.4`
   Acceptance: `Rejected conflict cases report targeted diagnostics, and
   accepted conflict/fan-in cases are visible in bounded schedule-report
   metadata where useful for downstream consumers.`
-  Verification: `split into executable leaves`
-  Commit: `pending container completion`
+  Verification: `all executable leaves complete through rejected-conflict diagnostic coverage`
+  Commit: `completed by ISF-CONFLICTS.5.4`
 
 - ID: `ISF-CONFLICTS.5.1`
   Status: `done`
@@ -174,13 +174,13 @@ transaction start input.
   Commit: `ISF-CONFLICTS.5.3: project fan-in groups`
 
 - ID: `ISF-CONFLICTS.5.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Add rejected-conflict diagnostic coverage and close projection docs.`
   Acceptance: `CLI/in-process rejected conflict diagnostics name the stable
   code, target, and conflicting owners, and the ISF spec, public contract, and
   mdBook agree with the shipped projection behavior.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `prove -l t/1214-isf-rejected-conflict-diagnostics.t; prove -l t/1209-isf-static-conflict-detection.t t/1210-isf-priority-conflict-resolution.t t/1144-isf-public-tested-by-metadata-audit.t; bin/ci-regression isf --no-book; mdbook build docs/book; git diff --check`
+  Commit: `ISF-CONFLICTS.5.4: cover rejected diagnostics`
 
 - ID: `ISF-CONFLICTS.6`
   Status: `pending`
@@ -204,7 +204,7 @@ transaction start input.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-CONFLICTS.5.4` | `pending` | Conflict and fan-in report projection is shipped; rejected-conflict diagnostic coverage and docs can close the projection container. |
+| 1 | `ISF-CONFLICTS.6` | `pending` | Diagnostics/report projection is complete; the next leaf adds broader focused regressions and a realistic fixture. |
 
 ## Current Behavior Inventory
 
@@ -711,6 +711,25 @@ bounded optional target/value keys that apply to that group. Source summaries
 reuse the same bounded ownership/target shape used by `compile_issues`.
 Activation context and assignment indexes remain private.
 
+## Rejected Conflict Diagnostic Coverage
+
+`ISF-CONFLICTS.5.4` closes the diagnostics/report projection container. The
+new coverage proves that provable rule/rule conflicts fail closed through both
+the in-process scheduler (`lower(...)` and `report(...)`) and the CLI
+`--emit-schedule-json` path.
+
+Rejected conflict diagnostics must name:
+
+- the stable code, currently `isf_conflicting_rule_writes`;
+- the target, such as `valid`;
+- the reason, such as overlapping rule data writes selecting different values;
+- the conflicting owners, source kinds, operators, and values.
+
+The CLI path must not emit successful schedule JSON on these rejected cases.
+This keeps the contract clear: `compile_issues` is for nonfatal issues in
+successful reports, while proved incompatible conflicts remain fail-closed
+diagnostics.
+
 ## Decisions
 
 - `2026-05-14`: The conflict-resolution work will be tracked as a task tree
@@ -776,6 +795,9 @@ Activation context and assignment indexes remain private.
   projection through a top-level `compatible_fanin_groups` array. The public
   projection is intentionally narrower than internal classification and avoids
   duplicate generic same-value entries for request/pulse fan-in.
+- `2026-05-14`: `ISF-CONFLICTS.5.4` closes diagnostics/report projection by
+  regression-covering rejected conflict diagnostics in the in-process scheduler
+  and CLI schedule-report path. `compile_issues` remains nonfatal-only.
 
 ## Open Questions
 
@@ -840,6 +862,11 @@ Activation context and assignment indexes remain private.
 | `2026-05-14` | `ISF-CONFLICTS.5.3` | `bin/ci-regression isf --no-book` | `passed` |
 | `2026-05-14` | `ISF-CONFLICTS.5.3` | `mdbook build docs/book` | `passed` |
 | `2026-05-14` | `ISF-CONFLICTS.5.3` | `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.5.4` | `prove -l t/1214-isf-rejected-conflict-diagnostics.t` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.5.4` | `prove -l t/1209-isf-static-conflict-detection.t t/1210-isf-priority-conflict-resolution.t t/1144-isf-public-tested-by-metadata-audit.t` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.5.4` | `bin/ci-regression isf --no-book` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.5.4` | `mdbook build docs/book` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.5.4` | `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -859,6 +886,7 @@ Activation context and assignment indexes remain private.
 | `ISF-CONFLICTS.5.1` | `ISF-CONFLICTS.5.1: define report projection schema` | Defines the bounded public shape for planned nonfatal `compile_issues` entries and compatible fan-in group summaries. |
 | `ISF-CONFLICTS.5.2` | `ISF-CONFLICTS.5.2: project compile issues` | Emits warning-level conflict issues in schedule-report `compile_issues` using bounded issue/source summaries. |
 | `ISF-CONFLICTS.5.3` | `ISF-CONFLICTS.5.3: project fan-in groups` | Emits accepted compatible fan-in groups in schedule-report `compatible_fanin_groups`. |
+| `ISF-CONFLICTS.5.4` | `ISF-CONFLICTS.5.4: cover rejected diagnostics` | Adds in-process and CLI fail-closed diagnostic coverage and closes the projection container. |
 
 ## Changelog
 
@@ -896,3 +924,5 @@ Activation context and assignment indexes remain private.
 - `2026-05-14`: Completed `ISF-CONFLICTS.5.3`; current frontier moves to
   `ISF-CONFLICTS.5.4` for rejected-conflict diagnostic coverage and projection
   docs closure.
+- `2026-05-14`: Completed `ISF-CONFLICTS.5.4` and the `ISF-CONFLICTS.5`
+  container; current frontier moves to `ISF-CONFLICTS.6`.

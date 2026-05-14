@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF rejected conflict diagnostics
+- Completed `ISF-CONFLICTS.5.4` and closed the diagnostics/report projection
+  container.
+- Added [t/1214-isf-rejected-conflict-diagnostics.t](t/1214-isf-rejected-conflict-diagnostics.t)
+  to cover fail-closed rule/rule conflict diagnostics through in-process
+  `lower(...)`, in-process `report(...)`, and CLI `--emit-schedule-json`.
+- Confirmed rejected conflicts name stable code, target, reason, owners, source
+  kinds, operators, and values, and do not emit successful schedule JSON on the
+  CLI path.
+- Advanced the active `ISF-CONFLICTS` frontier from `ISF-CONFLICTS.5.4` to
+  `ISF-CONFLICTS.6`.
 ### R14 — ISF compatible fan-in projection
 - Completed `ISF-CONFLICTS.5.3` by projecting accepted compatible fan-in groups
   into schedule-report `compatible_fanin_groups`.

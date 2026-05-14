@@ -13,8 +13,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree remains
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md),
-  whose current frontier is `ISF-CONFLICTS.5.4` after projecting accepted
-  compatible fan-in groups into schedule-report metadata.
+  whose current frontier is `ISF-CONFLICTS.6` after closing diagnostics and
+  schedule-report projection coverage.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
   guide for installing the same task-tree tracking workflow in another
   project.
@@ -4366,13 +4366,16 @@ Done:
 - `ISF-CONFLICTS.5.3` now emits accepted compatible fan-in groups into
   schedule-report `compatible_fanin_groups` with bounded group/source
   summaries.
+- `ISF-CONFLICTS.5.4` now covers rejected conflict diagnostics across
+  in-process scheduler calls and the CLI schedule-report path, closing the
+  diagnostics/report projection container.
 Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the `ISF-CONFLICTS` task tree when selecting the ISF conflict-resolution
-  feature path; the current frontier is `ISF-CONFLICTS.5.4`, which closes
-  rejected-conflict diagnostic coverage and projection documentation.
+  feature path; the current frontier is `ISF-CONFLICTS.6`, which adds focused
+  regressions and at least one realistic fixture.
 - ISF conflict detection policy is now split: compile-time proof is
   best-effort and must flag cases where proof is not doable, while generated
   verification HDL now checks mux selectors at runtime for same-value source

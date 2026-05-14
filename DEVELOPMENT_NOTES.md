@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF rejected conflict diagnostics
+- `compile_issues` remains a successful-report surface for nonfatal issues.
+  Proved incompatible conflicts should stay fail-closed and must not generate
+  partial schedule JSON through `--emit-schedule-json`.
+- The rejected-conflict diagnostic test intentionally covers both public
+  in-process scheduler entrypoints, `lower(...)` and `report(...)`, because
+  either path can be used by downstream tooling.
+- The CLI assertion checks stdout stays empty on rejected conflicts. That keeps
+  machine consumers from accidentally treating a failed report run as a usable
+  partial schedule report.
 ## 2026-05-14: ISF compatible fan-in projection
 - The fan-in report projection is intentionally a summary of accepted behavior,
   not a dump of `compatible_fanin_groups`. The internal classifier may keep

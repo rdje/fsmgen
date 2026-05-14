@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF rejected conflict diagnostics
+- Active R14 task-tree slice: `ISF-CONFLICTS.5.4` is complete.
+- In-process scheduler calls and CLI schedule-report generation now have
+  regression coverage for fail-closed rejected conflict diagnostics.
+- The `ISF-CONFLICTS.5` diagnostics/report projection container is complete.
+- The next frontier is `ISF-CONFLICTS.6`.
+
 ## 2026-05-14: R14 — ISF fan-in group projection
 - Active R14 task-tree slice: `ISF-CONFLICTS.5.3` is complete.
 - Schedule reports now include `compatible_fanin_groups` with bounded summaries

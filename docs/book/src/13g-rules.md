@@ -102,6 +102,12 @@ kind/domain, target/value facts, and the same source-summary shape. Raw
 assignment provenance, activation proof context, and priority-suppression
 bookkeeping remain lowerer internals.
 
+Rejected conflicts stay on the fail-closed diagnostic path. For a provable
+rule/rule conflict, in-process scheduling and `--emit-schedule-json` both
+reject the source with a diagnostic that names the stable conflict code,
+target, reason, conflicting owners, source kinds, operators, and values. The
+CLI does not emit successful schedule JSON for that case.
+
 Priority is target-local here: it gates the conflicting assignment, not the
 whole lower-priority rule. Priority cycles fail closed with
 `isf_priority_cycle_conflict`, and incomparable conflicting rules still fail

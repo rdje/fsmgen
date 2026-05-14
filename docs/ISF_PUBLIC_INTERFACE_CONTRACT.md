@@ -124,6 +124,9 @@ for both in-process and CLI report paths.
 The compatible fan-in projection is checked by
 [t/1213-isf-schedule-report-compatible-fanin-projection.t](../t/1213-isf-schedule-report-compatible-fanin-projection.t)
 for both in-process and CLI report paths.
+Rejected conflict diagnostics are checked by
+[t/1214-isf-rejected-conflict-diagnostics.t](../t/1214-isf-rejected-conflict-diagnostics.t)
+for both in-process scheduler calls and the CLI schedule-report path.
 The lower-result `files` map is checked for both single-file and multi-file
 lowering by [t/1117-isf-public-lower-result-files-audit.t](../t/1117-isf-public-lower-result-files-audit.t).
 The lower-result discovery metadata is checked by
@@ -783,6 +786,9 @@ The current proof-status value that matters for nonfatal conflict reporting is
 proof is NOT doable for that case, instead of silently treating the design as
 conflict-free. Fail-closed conflict cases remain targeted diagnostics, not
 successful schedule-report entries.
+Those rejected diagnostics name the stable code, target, reason, conflicting
+owners, source kinds, operators, and values. The CLI `--emit-schedule-json`
+path does not emit successful JSON for those rejected conflicts.
 Accepted fan-in metadata uses a top-level
 `compatible_fanin_groups` array with bounded `kind`, `domain`, target/value
 facts, and the same capped source summaries. The machine-readable contract
