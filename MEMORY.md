@@ -4,8 +4,10 @@ This is the live continuity document for fast session recovery after crashes, re
 - Regular state DTs now accept the same optional DTE header guard surface as
   non-state DTs, for example `(idle <entry_event ...)` or
   `(active <(& req ready) ...)`.
-- State DT DTE lowering is additive: `state_en = (current_state == STATE) ||
+- State DT DTE lowering is additive: `state_en = (current_state == STATE) |
   lowered(header_guard)`. The header activation does not replace state decode.
+- The additive state-DTE composition is emitted with bitwise `|` because both
+  sides are one-bit predicates.
 - The generated state DT DTE gates all DT-specific output enables at the
   boundary, including `next_state` transition enables, so a guarded state DT
   can drive transitions when externally activated.

@@ -5,8 +5,12 @@ This document captures engineering rationale, design constraints, and working de
   the state decode is one activation source, and a header guard can be a second
   activation source.
 - The state-DT lowering is intentionally additive:
-  `state_en = (current_state == STATE) || lowered(header_guard)`. The guard is
+  `state_en = (current_state == STATE) | lowered(header_guard)`. The guard is
   not an action-local condition and it does not replace the state decode.
+- That additive composition uses bitwise `|`, not logical OR, because both
+  operands are already one-bit enable predicates. This keeps the generated HDL
+  aligned with the mux-selector/DTE mental model instead of wider-expression
+  truthiness.
 - Because the header guard activates the whole DT, every assignment, test, and
   transition in that state DT participates when the guard is true. This is the
   power-user part of the feature: useful when intentional, but it can create

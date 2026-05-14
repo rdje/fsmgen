@@ -56,13 +56,13 @@ my $hdl = $hdl_gen->generate_systemverilog($fsm_module);
 
 like(
     $hdl,
-    qr/\bassign\s+idle_en\s*=\s*\(current_state\s*==\s*IDLE\s*\|\|\s*req\s*!=\s*0\)\s*;/,
-    'state DT DTE ORs state decode with scalar header activation',
+    qr/\bassign\s+idle_en\s*=\s*\(current_state\s*==\s*IDLE\)\s*\|\s*\(req\s*!=\s*0\)\s*;/,
+    'state DT DTE bitwise-ORs state decode with scalar header activation',
 );
 like(
     $hdl,
-    qr/\bassign\s+active_en\s*=\s*\(current_state\s*==\s*ACTIVE\s*\|\|\s*intermediate_and_req_ready_\d+\)\s*;/,
-    'state DT DTE ORs state decode with expression header activation',
+    qr/\bassign\s+active_en\s*=\s*\(current_state\s*==\s*ACTIVE\)\s*\|\s*intermediate_and_req_ready_\d+\s*;/,
+    'state DT DTE bitwise-ORs state decode with expression header activation',
 );
 like(
     $hdl,

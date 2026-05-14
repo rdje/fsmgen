@@ -2618,7 +2618,7 @@ Done:
     lock that state decode is not absorbed into precomputed selector helpers.
 - Regular state DTs now also accept optional DTE header activation guards:
   - `(state <cond ...)` parses with the same guard grammar as non-state DTs,
-  - generated state enables lower as `(current_state == STATE) || lowered(cond)`,
+  - generated state enables lower as `(current_state == STATE) | lowered(cond)`,
   - the state-DT DTE still boundary-gates assignments and transitions inside
     that state DT,
   - non-state DTs use the same header-activation surface wherever they are

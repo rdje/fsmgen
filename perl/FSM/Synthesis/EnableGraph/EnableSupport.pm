@@ -349,7 +349,7 @@ sub build_state_enable_condition_ast ($self, $state_name, $state = undef) {
 
     if ($state && $state->can('dt_enable_condition')) {
         my $condition_ast = $state->dt_enable_condition;
-        return FSM::AST::Utils::or_op($state_decode_ast, $condition_ast)
+        return FSM::AST::Utils::bitwise_or($state_decode_ast, $condition_ast)
             if $condition_ast && blessed($condition_ast);
     }
 

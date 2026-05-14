@@ -235,12 +235,22 @@ sub to_systemverilog ($self) {
     if ($op eq '&&' || $op eq '||') {
         return "($left_sv $op $right_sv)";
     } elsif ($op eq '&' || $op eq '|') {
+        $left_sv = "($left_sv)" if _bitwise_child_needs_grouping($self->{left});
+        $right_sv = "($right_sv)" if _bitwise_child_needs_grouping($self->{right});
         return "$left_sv $op $right_sv";
     } elsif ($op eq '==' || $op eq '!=' || $op eq '<' || $op eq '>' || $op eq '<=' || $op eq '>=') {
         return "$left_sv $op $right_sv";
     } else {
         return "($left_sv $op $right_sv)";
     }
+}
+
+sub _bitwise_child_needs_grouping ($child) {
+    return 0 unless $child && Scalar::Util::blessed($child);
+    return 0 unless $child->can('operator');
+
+    my $operator = $child->operator;
+    return $operator =~ /^(?:==|!=|<|>|<=|>=|&&|\|\|)$/ ? 1 : 0;
 }
 
 sub clone ($self) {
@@ -332,6 +342,10 @@ sub or_op ($left, $right) {
 
 sub bitwise_and ($left, $right) {
     return FSM::AST::BinaryOp->new('&', $left, $right);
+}
+
+sub bitwise_or ($left, $right) {
+    return FSM::AST::BinaryOp->new('|', $left, $right);
 }
 
 sub equals_op ($left, $right) {

@@ -322,7 +322,7 @@ The guard syntax is exactly the normal guard syntax:
 The lowered model for a regular state DT is:
 
 ```text
-state_DTE = (current_state == STATE) || lowered(guard)
+state_DTE = (current_state == STATE) | lowered(guard)
 state_LHS_VAL_EN = state_DTE && state_LHS_VAL_selector
 ```
 

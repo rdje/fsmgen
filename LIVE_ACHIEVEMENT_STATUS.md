@@ -6,7 +6,7 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Active language-contract slice: regular state DTs now accept optional DTE
   header activation guards, using the same guard grammar as non-state DTs.
 - Generated `.sv` lowers a guarded state DT enable as
-  `(current_state == STATE) || lowered(header_guard)`, then applies that DTE at
+  `(current_state == STATE) | lowered(header_guard)`, then applies that DTE at
   the DT-specific output-enable boundary.
 - The book now documents that this is whole-DT activation: assignments, tests,
   and transitions inside the state DT participate when the header activation is

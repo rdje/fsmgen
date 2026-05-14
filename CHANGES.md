@@ -6,8 +6,10 @@ This is the persistent technical change history for FSMGen.
   Authored forms such as `(idle <entry_event ...)` now preserve the header
   guard as CoreAST state metadata.
 - Changed regular state-enable construction so guarded state DTs emit
-  `(current_state == STATE) || lowered(header_guard)`, while unguarded state
+  `(current_state == STATE) | lowered(header_guard)`, while unguarded state
   DTs keep the ordinary state-decode-only DTE.
+- Rendered the additive state-DTE composition with bitwise `|` because both
+  sides are one-bit enable predicates.
 - Added state-enable prescan coverage so expression-valued state header guards
   keep parser-created intermediates declared and assigned.
 - Updated the mdBook and language-surface manifest wording to document
