@@ -461,6 +461,11 @@ The extract-clause boundary is checked by
 so `(extract word as field... [(widths N...)])` requires one scalar source
 word, one or more scalar fields, and at most one ordered positive-integer
 `(widths N...)` option before scheduled `.fsm` emission.
+The exact-slice extraction behavior is checked by
+[t/1101-isf-extract-slices.t](../t/1101-isf-extract-slices.t), so accepted
+`extract` source emits concrete descending slices and fails closed for unknown
+field widths or known source/field width disagreement instead of emitting
+placeholder slice bounds.
 The repeat-clause boundary is checked by
 [t/1202-isf-repeat-clause-boundary.t](../t/1202-isf-repeat-clause-boundary.t)
 so `(repeat count body...)` requires one scalar non-empty count and at least

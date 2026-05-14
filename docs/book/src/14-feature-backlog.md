@@ -314,8 +314,10 @@ Goal: infer widths for `extract` and `shift_right` in more cases without
 requiring explicit width options.
 
 Current boundary: `shift_right` accepts `(width N)` and `extract` accepts
-`(widths N...)` as explicit anchors. Unknown-width cases still use placeholder
-width/slice expressions.
+`(widths N...)` as explicit anchors. `extract` now fails closed instead of
+emitting placeholder slice bounds when field positions cannot be proven or
+field totals conflict with known source width. Unknown-width `shift_right`
+still uses the placeholder width expression until that family is migrated.
 
 ### Richer Schedule-Report Storage Classes
 

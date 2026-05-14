@@ -64,12 +64,15 @@ neighboring operations.
   Commit: `ISF-DATA-WIDTHS.2: specify width evidence policy`
 
 - ID: `ISF-DATA-WIDTHS.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement inference for the first data-operation family.`
   Acceptance: `The selected operation family lowers exact widths without
   placeholders for documented safe cases and rejects ambiguous cases.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`;
+  `prove -l t/1101-isf-extract-slices.t t/1111-isf-sample-before-data-ops.t t/1174-isf-extract-explicit-widths.t t/1201-isf-extract-clause-boundary.t`;
+  `./bin/ci-regression isf --no-book`; `mdbook build docs/book`;
+  `git diff --check`
+  Commit: `ISF-DATA-WIDTHS.3: enforce exact extract widths`
 
 - ID: `ISF-DATA-WIDTHS.4`
   Status: `pending`
@@ -91,7 +94,7 @@ neighboring operations.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-DATA-WIDTHS.3` | `pending` | `extract` is the first implementation family because it currently emits placeholder slice bounds and already has partial width validation. |
+| 1 | `ISF-DATA-WIDTHS.4` | `pending` | Remaining covered operation families should now be aligned to the same width-evidence policy. |
 
 ## ISF-DATA-WIDTHS.1 Inventory
 
@@ -254,6 +257,34 @@ Deferred policy details:
   deferred to `ISF-DATA-WIDTHS.5` after implementation proves which width facts
   are stable enough to advertise.
 
+## ISF-DATA-WIDTHS.3 Extract Implementation
+
+Shipped behavior:
+
+- `extract` now implements the first migrated no-placeholder data-width
+  policy. Accepted `extract` source emits exact descending slices only.
+- Each destination field must have a known positive width from interface
+  declaration, sampled-alias propagation, structural evidence, or explicit
+  `(widths N...)`.
+- If the source word has a known width, the sum of destination field widths
+  must match that source width. A mismatch fails before scheduled `.fsm`
+  emission.
+- If the source word does not have a known width but every field width is
+  known, the source word extraction window is inferred from the field-width
+  total.
+- Existing explicit field-width conflict checks remain in place.
+- Unknown field widths now fail closed with a targeted diagnostic instead of
+  emitting `(slice word field HIGH field LOW)` placeholders.
+
+Deferred to later leaves or backlog:
+
+- `shift_right` still needs the explicit-width-as-assertion policy and
+  unknown-width fail-closed behavior.
+- `assemble` still needs target-width conflict detection and clearer policy
+  for unknown part widths.
+- Public schedule-report width metadata for ordinary data registers remains
+  deferred to `ISF-DATA-WIDTHS.5`.
+
 ## Decisions
 
 - `2026-05-14`: This tree owns ISF-specific data-operation width inference,
@@ -281,6 +312,7 @@ Deferred policy details:
 | `2026-05-14` | `ISF-DATA-WIDTHS` | `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-DATA-WIDTHS.1` | `prove -l t/1099-isf-repeat-data-ops.t t/1101-isf-extract-slices.t t/1111-isf-sample-before-data-ops.t t/1173-isf-shift-right-explicit-width.t t/1174-isf-extract-explicit-widths.t t/1199-isf-shift-clause-boundary.t t/1200-isf-assemble-clause-boundary.t t/1201-isf-extract-clause-boundary.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-DATA-WIDTHS.2` | `prove -l t/1099-isf-repeat-data-ops.t t/1101-isf-extract-slices.t t/1111-isf-sample-before-data-ops.t t/1173-isf-shift-right-explicit-width.t t/1174-isf-extract-explicit-widths.t t/1199-isf-shift-clause-boundary.t t/1200-isf-assemble-clause-boundary.t t/1201-isf-extract-clause-boundary.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-DATA-WIDTHS.3` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -l t/1101-isf-extract-slices.t t/1111-isf-sample-before-data-ops.t t/1174-isf-extract-explicit-widths.t t/1201-isf-extract-clause-boundary.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -289,6 +321,7 @@ Deferred policy details:
 | `ISF-DATA-WIDTHS` | `R14: map ISF objectives to task trees` | Initial tree creation belongs to the ISF objective task-tree coverage slice. |
 | `ISF-DATA-WIDTHS.1` | `ISF-DATA-WIDTHS.1: inventory data width behavior` | Current width sources, fallbacks, and report effects. |
 | `ISF-DATA-WIDTHS.2` | `ISF-DATA-WIDTHS.2: specify width evidence policy` | Width precedence and first implementation target. |
+| `ISF-DATA-WIDTHS.3` | `ISF-DATA-WIDTHS.3: enforce exact extract widths` | First migrated data-operation family. |
 
 ## Changelog
 
@@ -298,3 +331,6 @@ Deferred policy details:
 - `2026-05-14`: Specified width-evidence precedence and fail-closed policy;
   selected `extract` as the first implementation family and advanced the
   frontier to `ISF-DATA-WIDTHS.3`.
+- `2026-05-14`: Implemented exact-width `extract` lowering and fail-closed
+  diagnostics for unknown field widths and source/field width mismatches;
+  advanced the frontier to `ISF-DATA-WIDTHS.4`.

@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF extract width enforcement
+- `extract` is now a clean first application of the width policy: if slice
+  positions cannot be proven, the lowerer rejects the source instead of
+  preserving symbolic `HIGH`/`LOW` placeholders into scheduled `.fsm`.
+- Source-word width and field-width total must agree when both are known. This
+  avoids silently dropping low bits or producing negative slice lows.
+- The implementation deliberately leaves `shift_right` and `assemble` for the
+  next leaf so each operation family can get focused tests and diagnostics.
 ## 2026-05-14: ISF data-width policy
 - Explicit width syntax should be treated as an assertion rather than a cast.
   If the author says `(width 8)` and the signal is already known as 7 bits,

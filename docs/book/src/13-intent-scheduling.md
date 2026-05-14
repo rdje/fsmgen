@@ -267,8 +267,9 @@ limitations are:
   register width is not declared elsewhere; values with no known or explicit
   width still use the placeholder `WIDTH` expression.
 - `(extract ...)` accepts an ordered `(widths N...)` option when field widths
-  are not declared elsewhere; values with no known or explicit widths still
-  use placeholder slice bounds.
+  are not declared elsewhere. Accepted `extract` source now emits exact
+  descending slices only; unknown field widths or source/field width
+  disagreement fail closed before scheduled `.fsm` emission.
 - The first `(contract ...)` temporal assertion subset is implemented for
   top-level `(contract name (eventually signal (within cycles)))`. It lowers
   to an arm state plus an always-on monitor DT with pending, age, and

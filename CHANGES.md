@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF extract width enforcement
+- Completed `ISF-DATA-WIDTHS.3` by migrating `extract` to the new
+  no-placeholder width policy.
+- Accepted `extract` source now emits exact descending slices only; unknown
+  field widths and known source/field width-total disagreements fail closed
+  before scheduled `.fsm` emission.
+- Updated [t/1101-isf-extract-slices.t](t/1101-isf-extract-slices.t) to cover
+  targeted rejection of underconstrained and mismatched extract widths.
 ### R14 — ISF data-width policy
 - Completed `ISF-DATA-WIDTHS.2` by specifying the width-evidence precedence
   and failure policy before implementation.

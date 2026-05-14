@@ -372,8 +372,10 @@ expression.
 Current `extract` lowering emits exact descending slices when the source word
 and destination field widths are known. An ordered `(widths N...)` option can
 provide field widths for the extract clause when those fields are not declared
-elsewhere; the option count must match the field count. Unknown widths keep
-placeholder slice bounds for unproven field positions.
+elsewhere; the option count must match the field count. Unknown field widths
+or source/field width disagreement fail closed before scheduled `.fsm`
+emission, so accepted `extract` source no longer emits placeholder slice
+bounds.
 
 ## `(latency (min N) (max M))` → Verification Logic
 

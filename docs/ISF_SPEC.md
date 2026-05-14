@@ -581,12 +581,10 @@ Current lowering:
   one or more scalar destination fields. It emits one extraction state. When
   the source word and destination fields have known widths, or when the clause
   supplies an ordered `(widths N...)` list matching the field count, fields are
-  assigned exact descending slices. If a width is unknown, the emitter keeps
-  placeholder slice bounds for that field and any later field whose position
-  can no longer be proven. Explicit widths must be positive integers and must
-  not conflict with already known field widths. The current lowerer does not
-  yet reject a known source word whose width disagrees with the sum of field
-  widths.
+  assigned exact descending slices. Unknown field widths fail closed instead
+  of producing placeholder slice bounds. Explicit widths must be positive
+  integers and must not conflict with already known field widths. When the
+  source word width is known, the sum of field widths must match it.
 
 Width evidence is transaction-local and private to lowering today. Interface
 declarations seed it, sampled aliases inherit known source widths, explicit
@@ -603,15 +601,15 @@ structural derivation from `assemble`/`extract`, then generated scheduler
 storage for existing counter families. Explicit width options are author
 assertions, not force-casts: they may fill unknown facts, but they must match
 already-known facts for the same name. Once an operation family is migrated by
-the data-width tree, that family should fail closed instead of emitting
+the data-width tree, that family must fail closed instead of emitting
 `WIDTH`, `HIGH`, or `LOW` placeholders for accepted source.
 
-The first planned implementation family is `extract`. It should accept exact
-slice lowering when all field positions can be proven from source-word width,
-field widths, explicit `(widths N...)`, or inherited width facts. It should
-fail when a field width remains unknown, when explicit field widths conflict
-with known facts, or when the sum of field widths disagrees with a known source
-word width. `shift_right` and `assemble` will then be aligned to the same
+The first migrated family is `extract`: exact slice lowering is accepted only
+when all field positions can be proven from source-word width, field widths,
+explicit `(widths N...)`, or inherited width facts. It fails when a field
+width remains unknown, when explicit field widths conflict with known facts, or
+when the sum of field widths disagrees with a known source word width.
+`shift_right` and `assemble` remain to be aligned to the same
 explicit-width-as-assertion and no-silent-override policy.
 
 ## 8. Composition Between Transactions
@@ -1324,8 +1322,8 @@ Focused tests:
 - Temporal `(contract ...)` forms beyond the shipped top-level bounded
   eventual subset.
 - Rich storage-class optimization in schedule reports.
-- Full width inference for `extract` values that do not use known field widths
-  or an explicit `(widths N...)` option, and `shift_right` values that do not
-  use a known signal width or explicit `(width N)` option.
+- Remaining data-width work for `shift_right` values that do not use a known
+  signal width or explicit `(width N)`, plus `assemble` target-width conflict
+  diagnostics and public data-register width reporting.
 - Treating the schedule JSON as a fully frozen public schema beyond the bounded
   key families advertised by `embedding.isf_public_interface`.

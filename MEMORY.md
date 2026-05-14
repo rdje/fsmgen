@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF extract width enforcement
+- Completed `ISF-DATA-WIDTHS.3` in
+  [docs/tasks/ISF-DATA-WIDTHS.md](docs/tasks/ISF-DATA-WIDTHS.md).
+- `extract` now emits exact slices only for accepted source. Unknown field
+  widths and source/field width-total mismatches fail closed with targeted
+  diagnostics before scheduled `.fsm` emission.
+- [t/1101-isf-extract-slices.t](t/1101-isf-extract-slices.t) now covers both
+  exact slice lowering and the new fail-closed width cases. The next active
+  R14 frontier is `ISF-DATA-WIDTHS.4`.
 ## 2026-05-14: ISF data-width policy
 - Completed `ISF-DATA-WIDTHS.2` in
   [docs/tasks/ISF-DATA-WIDTHS.md](docs/tasks/ISF-DATA-WIDTHS.md).

@@ -104,10 +104,10 @@ must contain one positive integer width per field.
 destination fields have known widths, or when the extract clause supplies an
 ordered `(widths N...)` list matching the field count, each field is assigned
 from an exact descending slice. If a width is unknown, the scheduler preserves
-placeholder slice bounds for the unproven field positions. Explicit widths must
-be positive integers and must not conflict with already known field widths.
-The current lowerer does not yet reject a known source word whose width
-disagrees with the sum of field widths.
+targeted fail-closed diagnostics instead of placeholder slice bounds. Explicit
+widths must be positive integers and must not conflict with already known
+field widths. When the source word width is known, the sum of field widths
+must match it.
 
 ```lisp
 (state
@@ -139,10 +139,10 @@ may fill an unknown width, but they must agree with any existing width fact for
 the same name.
 
 As each operation family is migrated, accepted source should not emit
-`WIDTH`, `HIGH`, or `LOW` placeholders. The first implementation target is
-`extract`, where unknown field positions or source/field width disagreement
-will become targeted diagnostics before the remaining shift/assemble cases are
-widened.
+`WIDTH`, `HIGH`, or `LOW` placeholders. `extract` is the first migrated family:
+unknown field positions and source/field width disagreement now produce
+targeted diagnostics before scheduled `.fsm` emission. The remaining
+shift/assemble cases still need to be aligned to the same policy.
 
 ## I2C Shift Register — Complete Example
 

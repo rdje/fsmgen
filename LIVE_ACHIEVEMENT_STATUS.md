@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF extract width enforcement
+- Active R14 task-tree slice: `ISF-DATA-WIDTHS.3` is complete.
+- `extract` now follows the no-placeholder width policy: accepted source emits
+  exact slices, while unknown field widths and source/field width mismatches
+  fail closed before scheduled `.fsm` emission.
+- The next active R14 frontier is `ISF-DATA-WIDTHS.4`.
+
 ## 2026-05-14: R14 — ISF data-width policy
 - Active R14 task-tree slice: `ISF-DATA-WIDTHS.2` is complete.
 - Width evidence precedence and failure policy are now specified. Explicit

@@ -1345,6 +1345,7 @@ sub _ir_extract {
     my ($word, $fields, $explicit_widths) = _parse_extract_clause($cl);
     my @assignments;
     my @field_widths;
+    my $total_field_width = 0;
 
     for my $idx (0 .. $#$fields) {
         my $field = $fields->[$idx];
@@ -1358,35 +1359,25 @@ sub _ir_extract {
                 && $explicit_width != $known_width;
 
         $field_widths[$idx] = defined($explicit_width) ? $explicit_width : $known_width;
+        confess "extract width for '$field' is unknown; add an interface width or '(widths ...)' option\n"
+            unless defined($field_widths[$idx]) && $field_widths[$idx] > 0;
+        $total_field_width += $field_widths[$idx];
     }
 
-    my $high;
-    if (defined($widths->{$word}) && $widths->{$word} > 0) {
-        $high = $widths->{$word} - 1;
-    } else {
-        my $total = 0;
-        for my $width (@field_widths) {
-            if (!defined($width) || $width <= 0) {
-                $total = undef;
-                last;
-            }
-            $total += $width;
-        }
-        $high = $total - 1 if defined $total && $total > 0;
-    }
+    my $word_width = $widths->{$word};
+    confess "extract field widths sum $total_field_width conflicts with known width $word_width for '$word'\n"
+        if defined($word_width) && $word_width > 0 && $word_width != $total_field_width;
+
+    my $high = (defined($word_width) && $word_width > 0)
+        ? $word_width - 1
+        : $total_field_width - 1;
 
     for my $idx (0 .. $#$fields) {
         my $field = $fields->[$idx];
         my $field_width = $field_widths[$idx];
-        my $rhs;
-        if (defined $high && defined($field_width) && $field_width > 0) {
-            my $low = $high - $field_width + 1;
-            $rhs = "(slice $word $high $low)";
-            $high = $low - 1;
-        } else {
-            $rhs = "(slice $word $field HIGH $field LOW)";
-            $high = undef;
-        }
+        my $low = $high - $field_width + 1;
+        my $rhs = "(slice $word $high $low)";
+        $high = $low - 1;
         push @assignments, { lhs => $field, rhs => $rhs, op => '<=', source_kind => 'extract_capture' };
     }
 

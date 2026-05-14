@@ -16,6 +16,15 @@ sub lower_source {
     return $result->{files}{$fsm_name};
 }
 
+sub lower_rejected {
+    my ($source, $fsm_name) = @_;
+    my $ok = eval {
+        lower_source($source, $fsm_name);
+        1;
+    };
+    return ($ok, $@);
+}
+
 subtest 'assemble target and exact extract field slices use the as-form' => sub {
     my $source = <<'ISF';
 (actor extract_exact
@@ -83,7 +92,7 @@ ISF
     unlike($fsm, qr/HIGH|LOW/, 'assemble-inferred extract does not emit placeholder slice bounds');
 };
 
-subtest 'unknown extract widths preserve placeholder slice bounds' => sub {
+subtest 'unknown extract widths fail closed instead of preserving placeholders' => sub {
     my $source = <<'ISF';
 (actor extract_unknown
   (clock clk)
@@ -97,17 +106,40 @@ subtest 'unknown extract widths preserve placeholder slice bounds' => sub {
     (complete done)))
 ISF
 
-    my $fsm = lower_source($source, 'extract_unknown.fsm');
+    my ($ok, $diagnostic) = lower_rejected($source, 'extract_unknown.fsm');
 
+    ok(!$ok, 'unknown extract widths are rejected');
     like(
-        $fsm,
-        qr/\(<= \(header \(slice packet header HIGH header LOW\)\)\)/,
-        'unknown first field keeps placeholder slice bounds',
+        $diagnostic,
+        qr/\Aextract width for 'header' is unknown; add an interface width or '\(widths \.\.\.\)' option/,
+        'unknown field width diagnostic is targeted',
     );
+};
+
+subtest 'extract rejects known source and field width disagreement' => sub {
+    my $source = <<'ISF';
+(actor extract_width_mismatch
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input packet (width 16))
+    (output done)
+    (output header (width 4))
+    (output payload (width 8)))
+  (transaction main
+    (on start)
+    (extract packet as header payload)
+    (complete done)))
+ISF
+
+    my ($ok, $diagnostic) = lower_rejected($source, 'extract_width_mismatch.fsm');
+
+    ok(!$ok, 'source/field width disagreement is rejected');
     like(
-        $fsm,
-        qr/\(<= \(payload \(slice packet payload HIGH payload LOW\)\)\)/,
-        'unknown later field keeps placeholder slice bounds',
+        $diagnostic,
+        qr/\Aextract field widths sum 12 conflicts with known width 16 for 'packet'/,
+        'source width mismatch diagnostic is targeted',
     );
 };
 
