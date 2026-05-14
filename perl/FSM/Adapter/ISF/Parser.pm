@@ -17,6 +17,9 @@ my %RESOURCE_KINDS = map { $_ => 1 } qw(
     rule_slot output_bundle interface_bundle named_drive
     transaction_start child_instance storage_port
 );
+my %RULE_ASSIGNMENT_FORBIDDEN_EXPR_HEADS = map { $_ => 1 } qw(
+    when switch repeat do spawn complete
+);
 
 # Parses .isf source files into a structured, validated AST.
 #
@@ -382,10 +385,32 @@ sub _parse_rule_action($self, $action, $rule_name) {
         return $self->_parse_rule_priority($action, $rule_name);
     }
 
-    confess "Error: rule '$rule_name' assignment actions require '(port value)'\n"
+    confess "Error: rule '$rule_name' assignment actions require '(port expr)'\n"
         unless @$action == 2
-            && defined($action->[1])
-            && !ref($action->[1]);
+            && defined($action->[1]);
+
+    $self->_validate_rule_assignment_expr($action->[1], $rule_name);
+
+    return 1;
+}
+
+sub _validate_rule_assignment_expr($self, $expr, $rule_name) {
+    return 1 unless ref($expr);
+
+    confess "Error: rule '$rule_name' assignment RHS expression must be a non-empty list\n"
+        unless ref($expr) eq 'ARRAY' && @$expr;
+
+    my $head = $expr->[0];
+    confess "Error: rule '$rule_name' assignment expression heads must be scalar\n"
+        unless defined($head) && !ref($head) && length($head);
+
+    confess "Error: rule '$rule_name' assignment RHS cannot use control-flow form '$head'\n"
+        if $RULE_ASSIGNMENT_FORBIDDEN_EXPR_HEADS{$head};
+
+    for my $operand (@{$expr}[1 .. $#$expr]) {
+        $self->_validate_rule_assignment_expr($operand, $rule_name)
+            if ref($operand);
+    }
 
     return 1;
 }

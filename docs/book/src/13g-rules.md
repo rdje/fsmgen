@@ -26,18 +26,16 @@ body-bearing `(when condition body...)` form is only described in
 [Control Flow](13d-control-flow.md) because it is a transaction clause.
 
 **Actions**:
-- `(port value)` — guarded assignment when the condition holds
+- `(port expr)` — guarded flopped assignment when the condition holds
 - `(trigger transaction)` — guarded one-cycle delayed pulse on a per-rule
   trigger source; generated fan-in drives the transaction start signal
 - `(priority over other_rule)` — a rule-local priority edge used by the
   covered priority and resource-arbitration paths
 
 Rule actions are structurally validated before the actor shell is returned.
-The current shipped `(port value)` action accepts scalar values only. The
-planned expression-valued widening keeps the same two-item `(port expr)` shape
-and uses the same `.fsm` RHS expression domain as transaction
-`(update var expr)`, while keeping rule assignments flopped with `<-`. That
-widening is tracked in [Feature Backlog](14-feature-backlog.md).
+The shipped `(port expr)` action accepts a scalar RHS or one list expression
+using the same `.fsm` RHS expression domain as transaction
+`(update var expr)`, while keeping rule assignments flopped with `<-`.
 `(trigger transaction)` must name a declared transaction in the same actor;
 forward references are accepted because validation happens after the full actor
 body is collected. `(priority over other_rule)` must name a declared rule in
@@ -47,7 +45,7 @@ the same actor.
 DTE. The shorthand scalar guard and the long-form `(when ...)` guard both
 become the public parser `when` field. Scheduled `.fsm` emission writes that
 guard once in the DT header instead of repeating it on every assignment or
-wrapping the actions in a nested guard block. Ordinary `(port value)` actions
+wrapping the actions in a nested guard block. Ordinary `(port expr)` actions
 are flopped assignments selected by the guarded DT. `(trigger transaction)`
 uses `<1` on a generated
 `rule_transaction` source so the request remains pulse-shaped, and a generated

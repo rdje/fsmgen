@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF rule-expression assignment implementation
+- Completed `ISF-RULE-ACTIONS.3` by allowing ordinary rule assignments to use
+  scalar-or-list RHS expressions while preserving the existing flopped `<-`
+  rule assignment family.
+- Added recursive parser validation for rule assignment expression-list shape
+  and rejected ISF control-flow heads as RHS expressions.
+- Added [t/1221-isf-rule-expression-assignment.t](t/1221-isf-rule-expression-assignment.t)
+  for scheduled `.fsm` emission, provenance, frontend parsing, and HDL
+  handoff coverage, and advertised it in ISF public contract provenance.
+- The full ISF regression tier passed after the parser/lowerer widening.
+- Advanced the active `ISF-RULE-ACTIONS` frontier from
+  `ISF-RULE-ACTIONS.3` to `ISF-RULE-ACTIONS.4`.
 ### R14 — ISF rule-expression assignment specification
 - Completed `ISF-RULE-ACTIONS.2` by specifying the first expression-valued
   rule assignment surface: `(port expr)` with scalar `port`,

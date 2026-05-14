@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF rule-expression assignment implementation
+- The implementation deliberately reuses `_format_isf_expr`, the existing
+  transaction `update` expression formatter. That keeps rule expressions and
+  transaction update expressions aligned until a broader shared expression IR
+  is introduced.
+- Rule assignment RHS validation is structural: it rejects empty or malformed
+  expression trees and obvious ISF control-flow heads, while leaving unknown
+  operator/symbol validation to the normal scheduled `.fsm` and HDL pipeline.
+- Expression-valued rule assignments remain data-domain `<-` writes, so the
+  next slice can focus on conflict/report behavior without adding a second
+  timing family.
 ## 2026-05-14: ISF rule-expression assignment specification
 - Rule expression assignments should reuse the transaction `update` RHS
   expression domain instead of inventing a rule-only expression language.

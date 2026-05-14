@@ -35,13 +35,16 @@ subtest 'valid rule actions preserve the public rule shell' => sub {
   (interface
     (input start)
     (input ready)
+    (input error_seen)
     (output valid)
+    (output status)
     (output done))
   (transaction main
     (on start)
     (complete done))
   (rule always_ready ready
     (valid 1)
+    (status (| ready error_seen))
     (trigger main)
     (priority over fallback))
   (rule fallback start
@@ -53,6 +56,7 @@ ISF
         $actor->{rules}[0]{actions},
         [
             ['valid',   '1'],
+            ['status', ['|', 'ready', 'error_seen']],
             ['trigger', 'main'],
             ['priority', 'over', 'fallback'],
         ],
@@ -97,7 +101,7 @@ ISF
     (trigger main other)))
 ISF
 
-    assert_parse_rejected(<<'ISF', 'missing assignment value', qr/\AError: rule 'bad' assignment actions require '\(port value\)'/);
+    assert_parse_rejected(<<'ISF', 'missing assignment value', qr/\AError: rule 'bad' assignment actions require '\(port expr\)'/);
 (actor bad_rule_action
   (clock clk)
   (interface (input start) (input ready) (output done))
@@ -106,13 +110,40 @@ ISF
     (done)))
 ISF
 
-    assert_parse_rejected(<<'ISF', 'nested assignment value', qr/\AError: rule 'bad' assignment actions require '\(port value\)'/);
+    assert_parse_rejected(<<'ISF', 'extra assignment operand', qr/\AError: rule 'bad' assignment actions require '\(port expr\)'/);
 (actor bad_rule_action
   (clock clk)
   (interface (input start) (input ready) (output done))
   (transaction main (on start) (complete done))
   (rule bad ready
-    (done (| ready start))))
+    (done 1 extra)))
+ISF
+
+    assert_parse_rejected(<<'ISF', 'empty assignment expression', qr/\AError: rule 'bad' assignment actions require '\(port expr\)'/);
+(actor bad_rule_action
+  (clock clk)
+  (interface (input start) (input ready) (output done))
+  (transaction main (on start) (complete done))
+  (rule bad ready
+    (done ())))
+ISF
+
+    assert_parse_rejected(<<'ISF', 'nested assignment expression head', qr/\AError: rule 'bad' assignment expression heads must be scalar/);
+(actor bad_rule_action
+  (clock clk)
+  (interface (input start) (input ready) (output done))
+  (transaction main (on start) (complete done))
+  (rule bad ready
+    (done ((|) ready start))))
+ISF
+
+    assert_parse_rejected(<<'ISF', 'control-flow expression head', qr/\AError: rule 'bad' assignment RHS cannot use control-flow form 'when'/);
+(actor bad_rule_action
+  (clock clk)
+  (interface (input start) (input ready) (output done))
+  (transaction main (on start) (complete done))
+  (rule bad ready
+    (done (when ready 1))))
 ISF
 };
 

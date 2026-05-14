@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF rule-expression assignment implementation
+- Active R14 task-tree slice: `ISF-RULE-ACTIONS.3` is complete.
+- Rule assignment actions now accept scalar-or-list RHS expressions and lower
+  them as existing flopped `<-` rule assignments.
+- New coverage proves scheduled `.fsm` emission, assignment provenance, normal
+  `.fsm` frontend parsing, and HDL generation.
+- The full ISF regression tier passed after the parser/lowerer change.
+- The next active R14 frontier is `ISF-RULE-ACTIONS.4`.
+
 ## 2026-05-14: R14 — ISF rule-expression assignment specification
 - Active R14 task-tree slice: `ISF-RULE-ACTIONS.2` is complete.
 - Expression-valued rule assignments are specified as `(port expr)` with

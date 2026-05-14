@@ -62,12 +62,12 @@ current rule guard, delayed trigger, and conflict semantics.
   Commit: `ISF-RULE-ACTIONS.2: specify rule expression assignments`
 
 - ID: `ISF-RULE-ACTIONS.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement expression lowering for rule assignments.`
   Acceptance: `Valid expressions preserve through scheduled FSM emission
   and HDL generation, while invalid expressions fail before emission.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -I perl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -l t/1144-isf-public-tested-by-metadata-audit.t t/1181-isf-rule-action-boundary.t t/1198-isf-update-clause-boundary.t t/1221-isf-rule-expression-assignment.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-RULE-ACTIONS.3: implement rule expression assignments`
 
 - ID: `ISF-RULE-ACTIONS.4`
   Status: `pending`
@@ -90,7 +90,7 @@ current rule guard, delayed trigger, and conflict semantics.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-RULE-ACTIONS.3` | `pending` | The syntax and semantics are now specified; the next leaf can implement parser/lowering support. |
+| 1 | `ISF-RULE-ACTIONS.4` | `pending` | Expression RHS lowering is implemented; next integrate the widened assignment family with conflict/report tracking. |
 
 ## ISF-RULE-ACTIONS.1 Inventory
 
@@ -313,6 +313,36 @@ unless a narrower symbol table is added in the implementation slice.
 - Control-flow forms such as `when`, `switch`, `repeat`, `do`, `spawn`, and
   `complete` are not RHS expressions.
 
+## ISF-RULE-ACTIONS.3 Implementation
+
+This slice ships expression-valued RHS support for ordinary rule assignments.
+
+### Parser And Lowering
+
+- Rule assignment actions now accept `(port expr)` where `expr` is either a
+  scalar token or a non-empty list expression.
+- The parser validates expression-list shape recursively: expression heads
+  must be scalar, and ISF control-flow heads such as `when`, `switch`,
+  `repeat`, `do`, `spawn`, and `complete` are rejected as RHS expressions.
+- Missing RHS values and extra assignment operands continue to fail closed
+  with the targeted rule-action diagnostic.
+- The scheduler formats rule assignment RHS values through the same ISF
+  expression formatter used by transaction `(update var expr)`.
+- Rule expression assignments keep `op => '<-'` and
+  `source_kind => 'rule_action'`; they remain ordinary data-domain rule
+  assignments.
+
+### Regression Evidence
+
+- [t/1181-isf-rule-action-boundary.t](../../t/1181-isf-rule-action-boundary.t)
+  now covers accepted expression-valued rule actions plus malformed expression
+  boundaries.
+- [t/1221-isf-rule-expression-assignment.t](../../t/1221-isf-rule-expression-assignment.t)
+  covers scheduled `.fsm` expression emission, separate rule-trigger fan-in,
+  assignment provenance, normal `.fsm` frontend parsing, and HDL generation.
+- [t/1144-isf-public-tested-by-metadata-audit.t](../../t/1144-isf-public-tested-by-metadata-audit.t)
+  includes the new regression in ISF public contract provenance.
+
 ## Decisions
 
 - `2026-05-14`: Rule action widening is tracked independently from legacy
@@ -326,6 +356,9 @@ unless a narrower symbol table is added in the implementation slice.
   `update`/`.fsm` RHS expression domain and keep the existing flopped `<-`
   rule assignment family. Guard expressions, alternate rule assignment
   operators, and broad new width inference are deferred.
+- `2026-05-14`: The implementation uses the existing transaction-update
+  expression formatter for rule RHS values, so this slice changes the rule
+  action parser/lowerer boundary without adding a second expression language.
 
 ## Open Questions
 
@@ -346,6 +379,7 @@ unless a narrower symbol table is added in the implementation slice.
 | `2026-05-14` | `ISF-RULE-ACTIONS` | `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-RULE-ACTIONS.1` | `prove -l t/1168-isf-rule-guard-factoring.t t/1169-isf-rule-shorthand-guard.t t/1171-isf-rule-trigger-fanin.t t/1172-isf-rule-trigger-fanin-schedule-report.t t/1181-isf-rule-action-boundary.t t/1190-isf-rule-priority-target-boundary.t t/1209-isf-static-conflict-detection.t t/1210-isf-priority-conflict-resolution.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-RULE-ACTIONS.2` | `prove -l t/1168-isf-rule-guard-factoring.t t/1169-isf-rule-shorthand-guard.t t/1171-isf-rule-trigger-fanin.t t/1172-isf-rule-trigger-fanin-schedule-report.t t/1181-isf-rule-action-boundary.t t/1198-isf-update-clause-boundary.t t/1209-isf-static-conflict-detection.t t/1210-isf-priority-conflict-resolution.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-RULE-ACTIONS.3` | `perl -I perl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -l t/1144-isf-public-tested-by-metadata-audit.t t/1181-isf-rule-action-boundary.t t/1198-isf-update-clause-boundary.t t/1221-isf-rule-expression-assignment.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -354,6 +388,7 @@ unless a narrower symbol table is added in the implementation slice.
 | `ISF-RULE-ACTIONS` | `R14: map ISF objectives to task trees` | Initial tree creation belongs to the ISF objective task-tree coverage slice. |
 | `ISF-RULE-ACTIONS.1` | `ISF-RULE-ACTIONS.1: inventory rule action behavior` | Current scalar-only boundary and report/conflict touchpoints inventoried. |
 | `ISF-RULE-ACTIONS.2` | `ISF-RULE-ACTIONS.2: specify rule expression assignments` | Expression RHS semantics specified before implementation. |
+| `ISF-RULE-ACTIONS.3` | `ISF-RULE-ACTIONS.3: implement rule expression assignments` | Parser/lowerer support and focused regression landed. |
 
 ## Changelog
 
@@ -362,4 +397,7 @@ unless a narrower symbol table is added in the implementation slice.
 - `2026-05-14`: Completed `ISF-RULE-ACTIONS.2` by specifying expression-valued
   rule assignment syntax, expression domain, symbol visibility, width policy,
   guard interaction, assignment family, and rejected cases.
+- `2026-05-14`: Completed `ISF-RULE-ACTIONS.3` by implementing
+  expression-valued rule assignment parsing/lowering and adding focused
+  parser/lowering/HDL coverage.
 - `2026-05-14`: Created the active ISF rule-action task tree.

@@ -74,6 +74,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   rule-DTE guard selection, existing priority/resource suppression
   composition, and no new broad width-inference requirement. The active
   frontier advances to `ISF-RULE-ACTIONS.3` for implementation.
+- `ISF-RULE-ACTIONS.3` is complete. The parser now accepts
+  expression-valued rule assignments, validates RHS expression-list shape, and
+  the scheduler lowers those RHS expressions through the existing ISF
+  expression formatter into flopped `<-` rule assignments. Focused coverage
+  proves scheduled `.fsm` emission, assignment provenance, normal `.fsm`
+  frontend parsing, and HDL generation. The active frontier advances to
+  `ISF-RULE-ACTIONS.4`.
 - ISF construct support now has a normative rule: parser acceptance is not a
   support claim. Every current or future shipped ISF construct must have an
   explicit accepted source shape, lowering path or fail-closed diagnostic,

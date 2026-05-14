@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF rule-expression assignment implementation
+- Completed `ISF-RULE-ACTIONS.3` in
+  [docs/tasks/ISF-RULE-ACTIONS.md](docs/tasks/ISF-RULE-ACTIONS.md).
+- Rule assignment actions now accept scalar-or-list RHS expressions and lower
+  them through the existing ISF expression formatter into `<-` rule
+  assignments.
+- Added [t/1221-isf-rule-expression-assignment.t](t/1221-isf-rule-expression-assignment.t)
+  and advertised it in ISF public contract provenance. The next active R14
+  frontier is `ISF-RULE-ACTIONS.4`.
+- Validation included the focused rule-expression tests and the full
+  `./bin/ci-regression isf --no-book` tier.
 ## 2026-05-14: ISF rule-expression assignment specification
 - Completed `ISF-RULE-ACTIONS.2` in
   [docs/tasks/ISF-RULE-ACTIONS.md](docs/tasks/ISF-RULE-ACTIONS.md).

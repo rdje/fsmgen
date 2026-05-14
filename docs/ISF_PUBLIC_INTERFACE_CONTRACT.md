@@ -260,9 +260,15 @@ so duplicate rule names fail before actor-shell return and generated rule DTs
 plus rule-trigger source prefixes remain unambiguous.
 The rule-action parser boundary is checked by
 [t/1181-isf-rule-action-boundary.t](../t/1181-isf-rule-action-boundary.t)
-so accepted rule actions have explicit `(port value)`,
+so accepted rule actions have explicit `(port expr)`,
 `(trigger transaction)`, or `(priority over other_rule)` shapes before a rule
-enters the actor shell. Expression-valued rule assignments remain deferred.
+enters the actor shell. Assignment RHS values may be scalar tokens or
+non-empty list expressions with scalar expression heads.
+The rule-expression assignment lowering path is checked by
+[t/1221-isf-rule-expression-assignment.t](../t/1221-isf-rule-expression-assignment.t)
+so expression-valued rule assignments preserve through scheduled `.fsm`
+emission, assignment provenance, normal `.fsm` frontend parsing, and HDL
+generation while keeping the existing flopped `<-` rule assignment family.
 The rule-trigger target boundary is checked by
 [t/1182-isf-rule-trigger-target-boundary.t](../t/1182-isf-rule-trigger-target-boundary.t)
 so `(trigger transaction)` must name a declared transaction in the same actor.
@@ -604,7 +610,7 @@ Current scheduled `.fsm` review artifacts emit a rule's `when` guard as the
 non-state DT header DTE for that rule's lowered actions. This keeps the
 generated text aligned with the source rule structure without widening the
 actor-shell rule payload contract.
-Within that scheduled `.fsm` review artifact, ordinary rule `(port value)`
+Within that scheduled `.fsm` review artifact, ordinary rule `(port expr)`
 actions remain flopped assignments inside the guarded DT, while
 `(trigger transaction)` actions use `<1` on a generated `rule_transaction`
 trigger source inside that same guarded DT. A rule trigger is therefore a

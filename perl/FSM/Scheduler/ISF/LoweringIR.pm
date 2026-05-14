@@ -2554,7 +2554,7 @@ sub _build_rules {
             } elsif ($a0 eq 'priority') {
                 # Parsed metadata; arbitration enforcement is a later slice.
             } else {
-                push @a, { lhs => $a0, rhs => $ac->[1], op => '<-', source_kind => 'rule_action' };
+                push @a, { lhs => $a0, rhs => _format_isf_expr($ac->[1]), op => '<-', source_kind => 'rule_action' };
             }
         }
 

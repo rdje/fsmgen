@@ -231,22 +231,21 @@ policy, and broader resource arbitration remain backlog items.
 
 ### Expression-Valued Rule Assignments
 
-Status: backlog.
+Status: partially shipped; conflict/report synchronization remains active in
+`ISF-RULE-ACTIONS`.
 
 Goal: allow rule actions to assign expression values, not only scalar
 `(port value)` pairs.
 
-Current boundary: rule actions accept scalar `(port value)` assignments,
-`(trigger transaction)`, and `(priority over other_rule)`. Rule guards,
-assignment values, trigger targets, and priority targets are scalar-only
-today. `(port value)` lowers as a flopped `<-` rule assignment under the rule
-DT DTE; `(trigger transaction)` lowers through a generated one-cycle source
-and transaction start fan-in; `(priority over other_rule)` feeds the covered
-priority/resource arbitration paths. Expression-valued rule assignment RHS
-lowering is deferred. The intended first widening is `(port expr)`, where
-`expr` uses the transaction `update`/`.fsm` RHS expression domain and the
-assignment family remains `<-`; expression guards and alternate assignment
-operators are separate future features.
+Current boundary: rule actions accept `(port expr)`, `(trigger transaction)`,
+and `(priority over other_rule)`. Rule guards, trigger targets, and priority
+targets remain scalar-only today. `(port expr)` lowers as a flopped `<-` rule
+assignment under the rule DT DTE, where `expr` may be a scalar token or one
+list expression from the transaction `update`/`.fsm` RHS expression domain.
+`(trigger transaction)` lowers through a generated one-cycle source and
+transaction start fan-in. `(priority over other_rule)` feeds the covered
+priority/resource arbitration paths. Expression guards and alternate rule
+assignment operators are separate future features.
 
 ### Transaction Stage Lowering
 
