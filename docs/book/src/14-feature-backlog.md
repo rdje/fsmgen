@@ -301,7 +301,9 @@ advertised by `embedding.isf_public_interface`. The whole JSON tree is not yet
 promised as permanently frozen. The conflict/fan-in projection boundary is now
 defined. Nonfatal conflict issues project into `compile_issues`, and accepted
 fan-in groups project into `compatible_fanin_groups`, both with bounded
-summary shapes.
+summary shapes. Successful priority/resource decisions project into
+`priority_resolutions` and `resource_arbitration` as bounded static lowering
+summaries.
 
 ## Backends And Validation
 

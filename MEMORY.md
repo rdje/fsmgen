@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF arbitration schedule-report projection
+- Completed `ISF-RESOURCE-PRIORITY.5` in
+  [docs/tasks/ISF-RESOURCE-PRIORITY.md](docs/tasks/ISF-RESOURCE-PRIORITY.md).
+- `FSM::Scheduler::ISF::Emitter::JSON` now emits `priority_resolutions` and
+  `resource_arbitration` arrays in successful schedule reports. These are
+  bounded static lowering summaries, not raw provenance or per-cycle grant
+  traces.
+- `t/1220-isf-arbitration-schedule-report.t` covers both in-process reports
+  and `./bin/fsmgen --emit-schedule-json`. The active frontier is now
+  `ISF-RESOURCE-PRIORITY.6`.
 ## 2026-05-14: ISF rule/transaction priority resolution
 - Completed `ISF-RESOURCE-PRIORITY.4` in
   [docs/tasks/ISF-RESOURCE-PRIORITY.md](docs/tasks/ISF-RESOURCE-PRIORITY.md).

@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF arbitration schedule-report projection
+- The schedule-report projection exposes successful arbitration as bounded
+  summaries, not as raw `LoweringIR` provenance. `priority_resolutions` names
+  target-local winner/loser decisions; `resource_arbitration` names enforced
+  resource grant shaping and higher-priority suppressors.
+- The entries describe static lowering decisions. They are intentionally not
+  runtime grant traces because per-cycle grant values belong to generated HDL
+  or future verification/debug instrumentation.
+- Fail-closed arbitration cases stay as diagnostics instead of successful JSON.
+  Nonfatal proof-limited warnings remain in the existing `compile_issues`
+  channel.
 ## 2026-05-14: ISF rule/transaction priority resolution
 - The lowerable rule/transaction target-local priority direction is
   rule-over-transaction. A rule's active condition is already expressible as a

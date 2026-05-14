@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-RESOURCE-PRIORITY.md](docs/tasks/ISF-RESOURCE-PRIORITY.md),
-  whose current frontier is `ISF-RESOURCE-PRIORITY.5`. The completed
+  whose current frontier is `ISF-RESOURCE-PRIORITY.6`. The completed
   `ISF-CONFLICTS` and `ISF-COMPOSITION` trees are listed in the task-tree
   completed table.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
@@ -47,8 +47,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   priority now resolves the covered same-target data case by guarding the
   transaction-state assignment with the inverse active rule condition.
   Unordered rule/transaction conflicts, priority cycles, mixed timing
-  conflicts, and transaction-over-rule priority fail closed. The current
-  frontier is `ISF-RESOURCE-PRIORITY.5`.
+  conflicts, and transaction-over-rule priority fail closed.
+- `ISF-RESOURCE-PRIORITY.5` is complete. Successful schedule reports now expose
+  bounded `priority_resolutions` and `resource_arbitration` arrays for static
+  arbitration lowering decisions. Fail-closed arbitration conflicts remain
+  targeted diagnostics. The current frontier is `ISF-RESOURCE-PRIORITY.6`.
 - ISF construct support now has a normative rule: parser acceptance is not a
   support claim. Every current or future shipped ISF construct must have an
   explicit accepted source shape, lowering path or fail-closed diagnostic,

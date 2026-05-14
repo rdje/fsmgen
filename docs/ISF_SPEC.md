@@ -952,6 +952,8 @@ dropping them from the scheduled `.fsm`; this applies at top level and inside
   "dt_blocks": [],
   "generated_composition": null,
   "compatible_fanin_groups": [],
+  "priority_resolutions": [],
+  "resource_arbitration": [],
   "compile_issues": []
 }
 ```
@@ -1039,6 +1041,14 @@ priority-suppression bookkeeping remain private `LoweringIR` internals.
 The public projection reports request and pulse fan-in through their
 domain-specific group kinds instead of duplicating them as generic
 `same_target_value` groups.
+Successful priority/resource decisions are emitted as top-level
+`priority_resolutions` and `resource_arbitration` arrays. A
+`priority_resolutions` entry records the target plus bounded winner/loser owner
+names and owner kinds for target-local suppression. A `resource_arbitration`
+entry records an enforced resource's name, kind, arbiter, bound rule user, and
+the higher-priority rule users that can suppress that user's grant. These
+entries describe the static lowering decision; they are not per-cycle runtime
+grant traces.
 The CLI `--emit-schedule-json` entrypoint is expected to emit the same report as
 the in-process scheduler on stdout and keep stderr clean on success.
 For multi-file lowerings, that report currently describes the parent scheduled
@@ -1183,6 +1193,7 @@ Focused tests:
 - [t/1217-isf-generated-composition-schedule-report.t](../t/1217-isf-generated-composition-schedule-report.t)
 - [t/1218-isf-rule-slot-resource-arbitration.t](../t/1218-isf-rule-slot-resource-arbitration.t)
 - [t/1219-isf-rule-transaction-priority.t](../t/1219-isf-rule-transaction-priority.t)
+- [t/1220-isf-arbitration-schedule-report.t](../t/1220-isf-arbitration-schedule-report.t)
 
 ## 12. Explicitly Deferred
 

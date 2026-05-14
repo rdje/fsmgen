@@ -331,6 +331,10 @@ The first rule/transaction priority path is checked by
 [t/1219-isf-rule-transaction-priority.t](../t/1219-isf-rule-transaction-priority.t)
 for accepted rule-over-transaction suppression, unordered conflict rejection,
 cycle rejection, and transaction-over-rule fail-closed diagnostics.
+The arbitration schedule-report projection is checked by
+[t/1220-isf-arbitration-schedule-report.t](../t/1220-isf-arbitration-schedule-report.t)
+for bounded successful `priority_resolutions` and `resource_arbitration`
+entries across the in-process scheduler and CLI JSON path.
 The rule-local priority target boundary is checked by
 [t/1190-isf-rule-priority-target-boundary.t](../t/1190-isf-rule-priority-target-boundary.t)
 so `other_rule` in `(priority over other_rule)` must resolve to a declared
@@ -777,6 +781,10 @@ state_count
 inferred_storage
 transactions
 dt_blocks
+generated_composition
+compatible_fanin_groups
+priority_resolutions
+resource_arbitration
 compile_issues
 ```
 
@@ -792,6 +800,8 @@ compile_issues source entries: owner, owner_kind, source_kind, target, operator,
 compile_issues with no nonfatal issues: empty array
 compatible_fanin_groups entries: kind, domain, sources, optional target/value keys
 compatible_fanin_groups source entries: same bounded source keys as compile_issues
+priority_resolutions entries: target, winner, winner_kind, loser, loser_kind
+resource_arbitration entries: resource, kind, arbiter, user, user_kind, suppressed_by
 ```
 
 For each `dt_blocks` entry, `assignments` is a non-negative integer count of
@@ -883,9 +893,16 @@ group kinds in `schedule_report_fanin_group_kind_values`.
 The public fan-in projection is narrower than internal classification: request
 and pulse fan-in are reported through `request` and `pulse` groups rather than
 duplicated as generic `same_target_value` groups. Raw
-`assignment_provenance`, activation context, assignment indexes, and
-priority-suppression bookkeeping remain non-public `LoweringIR` internals
-unless a later slice deliberately advertises a narrower field.
+Successful arbitration metadata uses top-level `priority_resolutions` and
+`resource_arbitration` arrays. `priority_resolutions` records static
+target-local suppressions with bounded winner/loser owner names and owner
+kinds. `resource_arbitration` records static resource grant-shaping decisions
+for enforced resources, including the resource name, resource kind, arbiter,
+rule user, and higher-priority users that can suppress that user's grant. These
+entries describe the lowering decision, not per-cycle runtime grant values.
+Raw `assignment_provenance`, activation context, assignment indexes, and
+priority/resource suppression bookkeeping remain non-public `LoweringIR`
+internals unless a later slice deliberately advertises a narrower field.
 
 The schedule report is not yet a frozen full schema. Downstream consumers should
 use the advertised contract metadata instead of assuming every current field,

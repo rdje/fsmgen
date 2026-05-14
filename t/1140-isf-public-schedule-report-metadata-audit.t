@@ -22,6 +22,8 @@ use FSM::Support::ISFPublicInterfaceContract qw(
     isf_public_interface_schedule_report_fanin_group_kind_values
     isf_public_interface_schedule_report_fanin_group_optional_keys
     isf_public_interface_schedule_report_fanin_group_required_keys
+    isf_public_interface_schedule_report_priority_resolution_keys
+    isf_public_interface_schedule_report_resource_arbitration_keys
     isf_public_interface_schedule_report_generated_composition_binding_keys
     isf_public_interface_schedule_report_generated_composition_child_keys
     isf_public_interface_schedule_report_generated_composition_child_parameter_keys
@@ -118,6 +120,14 @@ sub assert_schedule_report_metadata {
         [
             schedule_report_fanin_group_optional_keys =>
                 isf_public_interface_schedule_report_fanin_group_optional_keys(),
+        ],
+        [
+            schedule_report_priority_resolution_keys =>
+                isf_public_interface_schedule_report_priority_resolution_keys(),
+        ],
+        [
+            schedule_report_resource_arbitration_keys =>
+                isf_public_interface_schedule_report_resource_arbitration_keys(),
         ],
         [
             schedule_report_generated_composition_required_keys =>

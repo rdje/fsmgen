@@ -159,8 +159,11 @@ public key families, and successful reports advertise and keep an empty
 now project into `compile_issues` as bounded objects with stable code/severity,
 target/domain, `proof_status`, reason text, and capped source summaries.
 Accepted fan-in groups now project as bounded `compatible_fanin_groups`
-entries. Raw assignment provenance and activation proof internals remain
-private. The lower-result `files` map is checked for both
+entries. Successful priority and resource arbitration decisions now project as
+bounded `priority_resolutions` and `resource_arbitration` entries that describe
+static lowering decisions, not per-cycle runtime traces. Raw assignment
+provenance and activation proof internals remain private. The lower-result
+`files` map is checked for both
 single-file and multi-file lowering, including scheduled `.fsm` basename keys
 and matching scheduled-text roots. The in-memory `parse_source(...)` facade is
 also checked against `parse_file(...)` on a real fixture. APB DT block order

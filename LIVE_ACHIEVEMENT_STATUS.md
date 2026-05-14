@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF arbitration schedule-report projection
+- Active R14 task-tree slice: `ISF-RESOURCE-PRIORITY.5` is complete.
+- Successful schedule reports now expose `priority_resolutions` and
+  `resource_arbitration` arrays for bounded static arbitration decisions.
+- The in-process scheduler and CLI JSON path are covered by
+  `t/1220-isf-arbitration-schedule-report.t`.
+- The next active R14 frontier is `ISF-RESOURCE-PRIORITY.6`.
+
 ## 2026-05-14: R14 — ISF rule/transaction priority resolution
 - Active R14 task-tree slice: `ISF-RESOURCE-PRIORITY.4` is complete.
 - Actor-level rule-over-transaction priority now resolves the covered

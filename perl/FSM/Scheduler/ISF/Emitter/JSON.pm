@@ -31,6 +31,8 @@ sub emit($self, $ir) {
         dt_blocks      => $self->_dt_summary($ir),
         generated_composition => $self->_generated_composition_summary($ir),
         compatible_fanin_groups => $self->_compatible_fanin_group_summary($ir),
+        priority_resolutions => $self->_priority_resolution_summary($ir),
+        resource_arbitration => $self->_resource_arbitration_summary($ir),
         compile_issues => $self->_compile_issue_summary($ir),
     };
 
@@ -267,6 +269,35 @@ sub _compatible_fanin_group_summary($self, $ir) {
     }
 
     return \@groups;
+}
+
+sub _priority_resolution_summary($self, $ir) {
+    return [
+        map {
+            {
+                target      => $_->{target},
+                winner      => $_->{winner},
+                winner_kind => $_->{winner_kind} // 'rule',
+                loser       => $_->{loser},
+                loser_kind  => $_->{loser_kind} // 'rule',
+            }
+        } @{$ir->{priority_resolution}{resolutions} || []}
+    ];
+}
+
+sub _resource_arbitration_summary($self, $ir) {
+    return [
+        map {
+            {
+                resource      => $_->{resource},
+                kind          => $_->{kind},
+                arbiter       => $_->{arbiter},
+                user          => $_->{user},
+                user_kind     => 'rule',
+                suppressed_by => [@{$_->{higher} || []}],
+            }
+        } @{$ir->{resource_arbitration}{grants} || []}
+    ];
 }
 
 sub _bounded_source_summary($source) {

@@ -46,6 +46,8 @@ our @EXPORT_OK = qw(
     isf_public_interface_schedule_report_fanin_group_kind_values
     isf_public_interface_schedule_report_fanin_group_optional_keys
     isf_public_interface_schedule_report_fanin_group_required_keys
+    isf_public_interface_schedule_report_priority_resolution_keys
+    isf_public_interface_schedule_report_resource_arbitration_keys
     isf_public_interface_schedule_report_generated_composition_binding_keys
     isf_public_interface_schedule_report_generated_composition_child_keys
     isf_public_interface_schedule_report_generated_composition_child_parameter_keys
@@ -162,6 +164,8 @@ sub build_isf_public_interface_contract {
         schedule_report_fanin_group_required_keys => isf_public_interface_schedule_report_fanin_group_required_keys(),
         schedule_report_fanin_group_optional_keys => isf_public_interface_schedule_report_fanin_group_optional_keys(),
         schedule_report_fanin_group_kind_values => isf_public_interface_schedule_report_fanin_group_kind_values(),
+        schedule_report_priority_resolution_keys => isf_public_interface_schedule_report_priority_resolution_keys(),
+        schedule_report_resource_arbitration_keys => isf_public_interface_schedule_report_resource_arbitration_keys(),
         schedule_report_generated_composition_required_keys => isf_public_interface_schedule_report_generated_composition_required_keys(),
         schedule_report_generated_composition_kind_values => isf_public_interface_schedule_report_generated_composition_kind_values(),
         schedule_report_generated_composition_parent_keys => isf_public_interface_schedule_report_generated_composition_parent_keys(),
@@ -305,6 +309,7 @@ sub build_isf_public_interface_contract {
             't/1217-isf-generated-composition-schedule-report.t',
             't/1218-isf-rule-slot-resource-arbitration.t',
             't/1219-isf-rule-transaction-priority.t',
+            't/1220-isf-arbitration-schedule-report.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -375,6 +380,8 @@ sub isf_public_interface_public_top_level_keys {
             schedule_report_fanin_group_required_keys
             schedule_report_fanin_group_optional_keys
             schedule_report_fanin_group_kind_values
+            schedule_report_priority_resolution_keys
+            schedule_report_resource_arbitration_keys
             schedule_report_generated_composition_required_keys
             schedule_report_generated_composition_kind_values
             schedule_report_generated_composition_parent_keys
@@ -580,6 +587,8 @@ sub isf_public_interface_schedule_report_top_level_keys {
             dt_blocks
             generated_composition
             compatible_fanin_groups
+            priority_resolutions
+            resource_arbitration
             compile_issues
         ),
     ];
@@ -662,6 +671,31 @@ sub isf_public_interface_schedule_report_fanin_group_kind_values {
             request
             pulse
             rule_trigger_fanin
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_priority_resolution_keys {
+    return [
+        qw(
+            target
+            winner
+            winner_kind
+            loser
+            loser_kind
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_resource_arbitration_keys {
+    return [
+        qw(
+            resource
+            kind
+            arbiter
+            user
+            user_kind
+            suppressed_by
         ),
     ];
 }
@@ -918,6 +952,8 @@ sub isf_public_interface_schedule_report_presence_key_family_map {
         schedule_report_compile_issue_source_keys => isf_public_interface_schedule_report_compile_issue_source_keys(),
         schedule_report_fanin_group_required_keys => isf_public_interface_schedule_report_fanin_group_required_keys(),
         schedule_report_fanin_group_optional_keys => isf_public_interface_schedule_report_fanin_group_optional_keys(),
+        schedule_report_priority_resolution_keys => isf_public_interface_schedule_report_priority_resolution_keys(),
+        schedule_report_resource_arbitration_keys => isf_public_interface_schedule_report_resource_arbitration_keys(),
         schedule_report_generated_composition_required_keys => isf_public_interface_schedule_report_generated_composition_required_keys(),
         schedule_report_generated_composition_parent_keys => isf_public_interface_schedule_report_generated_composition_parent_keys(),
         schedule_report_generated_composition_child_keys => isf_public_interface_schedule_report_generated_composition_child_keys(),

@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF arbitration schedule-report projection
+- Completed `ISF-RESOURCE-PRIORITY.5` by adding bounded schedule-report
+  summaries for successful arbitration lowering decisions.
+- Reports now include `priority_resolutions` for target-local priority
+  suppressions and `resource_arbitration` for enforced resource grant shaping.
+- Added [t/1220-isf-arbitration-schedule-report.t](t/1220-isf-arbitration-schedule-report.t)
+  to cover the in-process scheduler and CLI JSON path, and updated the public
+  contract metadata.
+- Advanced the active `ISF-RESOURCE-PRIORITY` frontier from
+  `ISF-RESOURCE-PRIORITY.5` to `ISF-RESOURCE-PRIORITY.6`.
 ### R14 — ISF rule/transaction priority resolution
 - Completed `ISF-RESOURCE-PRIORITY.4` by adding the first lowerable
   rule/transaction priority case.
