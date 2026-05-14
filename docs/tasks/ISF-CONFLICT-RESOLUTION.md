@@ -183,13 +183,13 @@ transaction start input.
   Commit: `ISF-CONFLICTS.5.4: cover rejected diagnostics`
 
 - ID: `ISF-CONFLICTS.6`
-  Status: `pending`
+  Status: `done`
   Goal: `Add focused regressions and at least one realistic fixture.`
   Acceptance: `Tests cover accepted fan-in, rejected incompatible drives, and
   a realistic ISF fixture that would have been ambiguous without the new
   conflict model.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `prove -l t/1096-isf-schedule-json-report.t t/1212-isf-schedule-report-compile-issues-projection.t t/1213-isf-schedule-report-compatible-fanin-projection.t t/1214-isf-rejected-conflict-diagnostics.t; bin/ci-regression isf --no-book`
+  Commit: `ISF-CONFLICTS.6: close regression coverage`
 
 - ID: `ISF-CONFLICTS.7`
   Status: `pending`
@@ -204,7 +204,7 @@ transaction start input.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-CONFLICTS.6` | `pending` | Diagnostics/report projection is complete; the next leaf adds broader focused regressions and a realistic fixture. |
+| 1 | `ISF-CONFLICTS.7` | `pending` | Regression and fixture coverage is closed; the final leaf can synchronize user-facing docs and close the tree. |
 
 ## Current Behavior Inventory
 
@@ -730,6 +730,28 @@ This keeps the contract clear: `compile_issues` is for nonfatal issues in
 successful reports, while proved incompatible conflicts remain fail-closed
 diagnostics.
 
+## Regression And Fixture Coverage
+
+`ISF-CONFLICTS.6` is closed by the coverage added while shipping
+`ISF-CONFLICTS.5.2` through `ISF-CONFLICTS.5.4`:
+
+- [t/1212-isf-schedule-report-compile-issues-projection.t](../../t/1212-isf-schedule-report-compile-issues-projection.t)
+  covers nonfatal rule/drive overlap projection through in-process and CLI
+  schedule reports.
+- [t/1213-isf-schedule-report-compatible-fanin-projection.t](../../t/1213-isf-schedule-report-compatible-fanin-projection.t)
+  covers accepted same-value, request, pulse, and rule-trigger fan-in groups
+  through in-process and CLI schedule reports.
+- [t/1214-isf-rejected-conflict-diagnostics.t](../../t/1214-isf-rejected-conflict-diagnostics.t)
+  covers fail-closed rejected incompatible rule writes through in-process and
+  CLI schedule-report paths.
+- [t/1096-isf-schedule-json-report.t](../../t/1096-isf-schedule-json-report.t)
+  now uses the realistic APB requester fixture to prove that normal completion
+  and timeout completion are reported as an accepted `done` pulse fan-in group.
+
+That APB case is the realistic fixture required by this leaf: without the
+explicit compatible fan-in model, the two terminal paths driving the same done
+pulse would be ambiguous in downstream schedule-report interpretation.
+
 ## Decisions
 
 - `2026-05-14`: The conflict-resolution work will be tracked as a task tree
@@ -798,6 +820,9 @@ diagnostics.
 - `2026-05-14`: `ISF-CONFLICTS.5.4` closes diagnostics/report projection by
   regression-covering rejected conflict diagnostics in the in-process scheduler
   and CLI schedule-report path. `compile_issues` remains nonfatal-only.
+- `2026-05-14`: `ISF-CONFLICTS.6` is satisfied by the focused regression set
+  added in `ISF-CONFLICTS.5.2` through `ISF-CONFLICTS.5.4`, plus the APB
+  requester schedule-report fixture coverage for realistic done-pulse fan-in.
 
 ## Open Questions
 
@@ -867,6 +892,8 @@ diagnostics.
 | `2026-05-14` | `ISF-CONFLICTS.5.4` | `bin/ci-regression isf --no-book` | `passed` |
 | `2026-05-14` | `ISF-CONFLICTS.5.4` | `mdbook build docs/book` | `passed` |
 | `2026-05-14` | `ISF-CONFLICTS.5.4` | `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.6` | `prove -l t/1096-isf-schedule-json-report.t t/1212-isf-schedule-report-compile-issues-projection.t t/1213-isf-schedule-report-compatible-fanin-projection.t t/1214-isf-rejected-conflict-diagnostics.t` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.6` | `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -887,6 +914,7 @@ diagnostics.
 | `ISF-CONFLICTS.5.2` | `ISF-CONFLICTS.5.2: project compile issues` | Emits warning-level conflict issues in schedule-report `compile_issues` using bounded issue/source summaries. |
 | `ISF-CONFLICTS.5.3` | `ISF-CONFLICTS.5.3: project fan-in groups` | Emits accepted compatible fan-in groups in schedule-report `compatible_fanin_groups`. |
 | `ISF-CONFLICTS.5.4` | `ISF-CONFLICTS.5.4: cover rejected diagnostics` | Adds in-process and CLI fail-closed diagnostic coverage and closes the projection container. |
+| `ISF-CONFLICTS.6` | `ISF-CONFLICTS.6: close regression coverage` | Records the accepted fan-in, rejected conflict, and APB realistic fixture coverage that now satisfies the leaf. |
 
 ## Changelog
 
@@ -926,3 +954,5 @@ diagnostics.
   docs closure.
 - `2026-05-14`: Completed `ISF-CONFLICTS.5.4` and the `ISF-CONFLICTS.5`
   container; current frontier moves to `ISF-CONFLICTS.6`.
+- `2026-05-14`: Completed `ISF-CONFLICTS.6`; current frontier moves to
+  `ISF-CONFLICTS.7` for final documentation synchronization and tree closure.

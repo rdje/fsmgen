@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF conflict regression coverage closure
+- Completed `ISF-CONFLICTS.6` in
+  [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md).
+- The leaf is satisfied by the focused coverage added in `ISF-CONFLICTS.5.2`
+  through `ISF-CONFLICTS.5.4`: nonfatal compile issues, compatible fan-in
+  groups, and rejected conflict diagnostics.
+- The realistic fixture requirement is covered by
+  [t/1096-isf-schedule-json-report.t](t/1096-isf-schedule-json-report.t), where
+  the APB requester reports normal completion plus timeout completion as an
+  accepted `done` pulse fan-in group.
+- The active `ISF-CONFLICTS` frontier is now `ISF-CONFLICTS.7`.
 ## 2026-05-14: ISF rejected conflict diagnostic coverage
 - Completed `ISF-CONFLICTS.5.4` and closed the `ISF-CONFLICTS.5`
   diagnostics/report projection container in

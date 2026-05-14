@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF conflict regression coverage
+- Completed `ISF-CONFLICTS.6` by recording the focused regression and realistic
+  fixture coverage now in place for the conflict model.
+- Coverage now spans nonfatal compile-issue projection, accepted compatible
+  fan-in projection, rejected conflict diagnostics, and APB requester
+  done-pulse fan-in as a realistic fixture.
+- Advanced the active `ISF-CONFLICTS` frontier from `ISF-CONFLICTS.6` to
+  `ISF-CONFLICTS.7`.
 ### R14 — ISF rejected conflict diagnostics
 - Completed `ISF-CONFLICTS.5.4` and closed the diagnostics/report projection
   container.

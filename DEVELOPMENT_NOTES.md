@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF conflict regression coverage
+- `ISF-CONFLICTS.6` is closed as a coverage-accounting slice rather than by
+  adding another redundant fixture. The concrete tests were added while
+  implementing the report projection leaves.
+- APB is the realistic fixture for this closure because its normal completion
+  and timeout completion both drive `done` as a one-cycle pulse. The new
+  schedule-report fan-in projection makes that compatible behavior explicit.
+- The remaining `ISF-CONFLICTS.7` work should be final documentation
+  synchronization and tree closure, not another behavior change.
 ## 2026-05-14: ISF rejected conflict diagnostics
 - `compile_issues` remains a successful-report surface for nonfatal issues.
   Proved incompatible conflicts should stay fail-closed and must not generate

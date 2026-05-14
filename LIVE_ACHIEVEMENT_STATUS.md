@@ -2,6 +2,12 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF conflict regression coverage
+- Active R14 task-tree slice: `ISF-CONFLICTS.6` is complete.
+- Existing focused tests now cover nonfatal compile issues, compatible fan-in
+  groups, rejected diagnostics, and realistic APB done-pulse fan-in.
+- The next frontier is `ISF-CONFLICTS.7`.
+
 ## 2026-05-14: R14 — ISF rejected conflict diagnostics
 - Active R14 task-tree slice: `ISF-CONFLICTS.5.4` is complete.
 - In-process scheduler calls and CLI schedule-report generation now have
