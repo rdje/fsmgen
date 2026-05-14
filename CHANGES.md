@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### Workflow — repo-local task tree formalization
+- Added [docs/TASK_TREE.md](docs/TASK_TREE.md) as the canonical repo-local
+  task-tree workflow, including stable ID rules, status vocabulary,
+  current-frontier selection, splitting rules, blocker rules, completion
+  evidence, and portability guidance for other projects.
+- Added [docs/tasks/TEMPLATE.md](docs/tasks/TEMPLATE.md) for new top-level
+  task trees and [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md)
+  as the first active `R14` tree for ISF same-cycle conflict semantics.
+- Updated [COMMIT.md](COMMIT.md) so task-tree-managed completions update the
+  owning task file and identify completed leaf IDs in the commit subject or
+  first body line.
+- Updated [README.md](README.md), [SESSION_BOOTSTRAP.md](SESSION_BOOTSTRAP.md),
+  [ROADMAP_STATUS.md](ROADMAP_STATUS.md), [MEMORY.md](MEMORY.md),
+  [DEVELOPMENT_NOTES.md](DEVELOPMENT_NOTES.md), and
+  [LIVE_ACHIEVEMENT_STATUS.md](LIVE_ACHIEVEMENT_STATUS.md) so the workflow is
+  discoverable and recoverable.
 ### Book — feature backlog consolidation
 - Added a canonical mdBook feature backlog chapter for user-visible items
   described elsewhere as future work, deferred, not fully shipped, or not yet

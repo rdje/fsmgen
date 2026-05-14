@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: Repo-local task tree workflow
+- Added [docs/TASK_TREE.md](docs/TASK_TREE.md) as the repo-local workflow for
+  tracking broad tasks as recursive task trees with stable IDs, explicit
+  statuses, current-frontier leaves, blocker rules, validation evidence, and
+  commit-subject traceability.
+- Added [docs/tasks/TEMPLATE.md](docs/tasks/TEMPLATE.md) as the copyable
+  top-level task-tree template for this repo and for other projects that want
+  to adopt the same approach.
+- Added [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md)
+  as the first active tree. It tracks `R14` ISF same-cycle conflict semantics
+  and names `ISF-CONFLICTS.1` as the first current-frontier leaf.
+- Updated [COMMIT.md](COMMIT.md), [README.md](README.md), and
+  [SESSION_BOOTSTRAP.md](SESSION_BOOTSTRAP.md) so task-tree-managed work is
+  discoverable during startup and leaf completions remain recoverable through
+  task-scoped commits.
 ## 2026-05-14: Book feature backlog consolidation
 - Added [docs/book/src/14-feature-backlog.md](docs/book/src/14-feature-backlog.md)
   as the canonical mdBook list for user-visible features discussed as future

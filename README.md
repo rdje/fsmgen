@@ -28,26 +28,27 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 2. `COMMIT.md`: mandatory commit workflow and safety invariant for crash recovery.
 3. `SESSION_BOOTSTRAP.md`: default first task for a new engineering session.
 4. `ROADMAP_STATUS.md`: canonical live roadmap/workstream status.
-5. `ROADMAP_V2.md`: detailed post-`R0`..`R7` roadmap intent and sequencing.
-6. `docs/book/src/SUMMARY.md`: progressive mdBook table of contents.
-7. `docs/USER_GUIDE.md`: broad live reference during the book split.
-8. `docs/COMPOSITION_SCOPE.md`: concrete `R6` composition scope and acceptance boundary.
-9. `docs/COMPOSITION_LEGACY_MAPPING.md`: historical `fx/bin/fsmgen` composition behavior mapped onto the active `R6` plan.
-10. `docs/EXTENSION_MODEL.md`: active `R7` typed extension boundary replacing legacy `.plg` / `PPlugin` as architecture direction.
-11. `docs/SPECFORGE_FEEDBACK_RESPONSE.md`: FSMGen's tracked response and alignment plan for SPECFORGE adapter feedback.
-12. `docs/INTENT_SCHEDULING_BRAINSTORM.md`: living brainstorm log for an intent-scheduling layer above explicit cycle-authored `.fsm`.
-13. `docs/ISF_SPEC.md`: active R14 `.isf` Intent Scheduling Format specification.
-14. `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`: live downstream-consumer API contract for ISF parser/scheduler surfaces.
-15. `docs/BIN_FSMGEN_IMPORT_TREE.md`: live `bin/fsmgen` import-tree and runtime-spine architecture snapshot.
-16. `docs/REGRESSION_CORPUS.md`: human-readable regression/support-accounting corpus companion.
-17. `docs/INTENT_CAPTURE_AXI_CASE_STUDY.md`: AXI intent-capture case-study notes for future high-level synthesis work.
-18. `docs/FEATURE_BACKLOG.md`: pointer to the canonical mdBook feature backlog for deferred/not-fully-shipped user-visible work.
-19. `CHANGES.md`: chronological technical changes.
-20. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
-21. `MEMORY.md`: continuity/handoff state.
-22. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
-23. `WARP.md`: repository-specific agent/development guidance.
-24. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
+5. `docs/TASK_TREE.md`: repo-local task-tree workflow, active tree index, and PNT frontier rules.
+6. `ROADMAP_V2.md`: detailed post-`R0`..`R7` roadmap intent and sequencing.
+7. `docs/book/src/SUMMARY.md`: progressive mdBook table of contents.
+8. `docs/USER_GUIDE.md`: broad live reference during the book split.
+9. `docs/COMPOSITION_SCOPE.md`: concrete `R6` composition scope and acceptance boundary.
+10. `docs/COMPOSITION_LEGACY_MAPPING.md`: historical `fx/bin/fsmgen` composition behavior mapped onto the active `R6` plan.
+11. `docs/EXTENSION_MODEL.md`: active `R7` typed extension boundary replacing legacy `.plg` / `PPlugin` as architecture direction.
+12. `docs/SPECFORGE_FEEDBACK_RESPONSE.md`: FSMGen's tracked response and alignment plan for SPECFORGE adapter feedback.
+13. `docs/INTENT_SCHEDULING_BRAINSTORM.md`: living brainstorm log for an intent-scheduling layer above explicit cycle-authored `.fsm`.
+14. `docs/ISF_SPEC.md`: active R14 `.isf` Intent Scheduling Format specification.
+15. `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`: live downstream-consumer API contract for ISF parser/scheduler surfaces.
+16. `docs/BIN_FSMGEN_IMPORT_TREE.md`: live `bin/fsmgen` import-tree and runtime-spine architecture snapshot.
+17. `docs/REGRESSION_CORPUS.md`: human-readable regression/support-accounting corpus companion.
+18. `docs/INTENT_CAPTURE_AXI_CASE_STUDY.md`: AXI intent-capture case-study notes for future high-level synthesis work.
+19. `docs/FEATURE_BACKLOG.md`: pointer to the canonical mdBook feature backlog for deferred/not-fully-shipped user-visible work.
+20. `CHANGES.md`: chronological technical changes.
+21. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
+22. `MEMORY.md`: continuity/handoff state.
+23. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
+24. `WARP.md`: repository-specific agent/development guidance.
+25. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
 
 ## Documentation index (all `.md` files in this repo)
 - `README.md` — single entry point and navigation hub.
@@ -57,6 +58,9 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/book/` — mdBook source for the progressive FSMGen book.
 - `docs/BOOK_PLAN.md` — migration plan from the monolithic guide into the mdBook.
 - `docs/USER_GUIDE.md` — broad live reference and command usage during the split.
+- `docs/TASK_TREE.md` — repo-local task-tree workflow, active tree index, and PNT frontier rules.
+- `docs/tasks/TEMPLATE.md` — reusable template for one top-level task tree.
+- `docs/tasks/ISF-CONFLICT-RESOLUTION.md` — active `R14` task tree for ISF same-cycle conflict semantics.
 - `docs/BIN_FSMGEN_IMPORT_TREE.md` — live `bin/fsmgen` import-tree and runtime-spine architecture snapshot.
 - `docs/COMPOSITION_SCOPE.md` — concrete composition scope and acceptance boundary for the active architecture.
 - `docs/COMPOSITION_LEGACY_MAPPING.md` — historical legacy-composition behavior mapped onto the active architecture.

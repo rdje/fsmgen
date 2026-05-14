@@ -6,6 +6,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   feature from the documented limitation/backlog set. Standalone public
   interface stabilization/audit work is on hold for now; keep the public
   contract synchronized only as part of shipping each feature.
+- Repo-local task trees now live at [docs/TASK_TREE.md](docs/TASK_TREE.md),
+  with per-tree files under `docs/tasks/`. When PNT is working inside an
+  active tree, it should pick the first eligible leaf from that tree's current
+  frontier. The first active tree is
+  [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md),
+  whose current frontier is `ISF-CONFLICTS.1`.
 - User-visible deferred/not-fully-shipped feature items now have a canonical
   mdBook backlog at [docs/book/src/14-feature-backlog.md](docs/book/src/14-feature-backlog.md),
   with [docs/FEATURE_BACKLOG.md](docs/FEATURE_BACKLOG.md) as the repo-level
@@ -2194,8 +2200,19 @@ Status: `done`
 Done:
 - `ROADMAP_STATUS.md` is the canonical live status board.
 - `README.md`, `MEMORY.md`, `COMMIT.md`, and `.agents/workflows/commit.md` are wired to this board and its update rule.
+- [docs/TASK_TREE.md](docs/TASK_TREE.md) now defines the repo-local task-tree
+  workflow for broad tasks that need recursive subtasks, current-frontier
+  leaves, blocker tracking, validation evidence, and task-ID commit
+  traceability.
+- [docs/tasks/TEMPLATE.md](docs/tasks/TEMPLATE.md) provides the reusable
+  top-level task-tree template, and
+  [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md)
+  is the first active tree.
 Left:
 - Keep the board current before every commit when a task changes status, remaining work, or the active lane.
+- Keep `docs/TASK_TREE.md` and active `docs/tasks/*.md` files current whenever
+  a task-tree-managed slice changes status, frontier, blockers, validation, or
+  completion evidence.
 Exit criteria:
 - Already met; this is now an ongoing maintenance obligation.
 
@@ -4294,10 +4311,19 @@ Done:
 - Assemble clause validation is now regression-backed by
   [t/1200-isf-assemble-clause-boundary.t](t/1200-isf-assemble-clause-boundary.t),
   covering scalar concat parts and target before scheduled `.fsm` emission.
+- [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md)
+  now tracks the active task tree for same-cycle ISF conflict semantics,
+  including conflict-domain inventory, compatible fan-in policy,
+  fail-closed/priority policy, scheduler/emitter implementation, diagnostics,
+  tests, and documentation closure.
 Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
+- Use the `ISF-CONFLICTS` task tree when selecting the ISF conflict-resolution
+  feature path; the current frontier is `ISF-CONFLICTS.1`, which inventories
+  current behavior and names conflict domains before policy or implementation
+  work starts.
 - Finish or deliberately defer the documented current limitations in the
   mdBook R14 chapters through feature-delivery slices, not standalone
   contract-audit sweeps.

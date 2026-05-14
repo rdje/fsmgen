@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: Workflow — repo-local task tree formalization
+- Active workflow slice: broad tasks can now be tracked as repo-local task
+  trees with stable node IDs, current-frontier leaf selection, blocker rules,
+  validation evidence, and commit-subject traceability.
+- [docs/TASK_TREE.md](docs/TASK_TREE.md) owns the workflow and active-tree
+  index; [docs/tasks/TEMPLATE.md](docs/tasks/TEMPLATE.md) is the reusable
+  top-level task template.
+- [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md)
+  is the first active tree and sets `ISF-CONFLICTS.1` as the next frontier
+  leaf for ISF same-cycle conflict-semantics work.
+
 ## 2026-05-14: Book — feature backlog consolidation
 - Active docs slice: not-fully-shipped, deferred, future-work, and not-yet
   frozen user-visible items now have one mdBook home:

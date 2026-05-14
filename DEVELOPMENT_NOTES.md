@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: repo-local task tree workflow
+- Broad feature work needs a durable tree, not only a flat backlog entry,
+  because many `R14` items branch into policy, implementation, diagnostics,
+  tests, docs, and public-contract follow-up. The task tree gives that branch
+  structure a stable home without turning `ROADMAP_STATUS.md` into a nested
+  project-management document.
+- The workflow keeps one source of truth per concern: the roadmap owns
+  workstream status, the task file owns recursive decomposition and current
+  frontier, live docs own recovery history, and git owns completed slice
+  evidence.
+- Stable dot-numbered IDs are the join key across task files, commits, and
+  handoffs. A completed task-tree leaf must identify its leaf ID in the commit
+  subject or first body line because the final commit hash cannot be written
+  into the same task-file update before the commit exists.
+- PNT should select only frontier leaves. If the apparent next task is a
+  container, the correct action is to split it into executable leaves before
+  implementation, then commit that honest decomposition.
+- The first active tree, `ISF-CONFLICTS`, intentionally starts with inventory
+  and conflict-domain vocabulary. That keeps same-cycle output conflict work
+  from jumping straight to implementation before the merge-vs-reject policy is
+  reviewable.
 ## 2026-05-14: feature backlog chapter
 - The book now has one canonical backlog chapter for deferred or not-fully
   shipped user-visible features. This avoids the old pattern where limitation

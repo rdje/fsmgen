@@ -31,18 +31,20 @@ For a normal new session, the agent should:
 
 1. Read [README.md](README.md).
 2. Read [COMMIT.md](COMMIT.md) early and adopt it as a non-negotiable session rule.
-3. Read the Markdown files referenced from [README.md](README.md).
-4. Rebuild a current understanding of:
+3. Read [docs/TASK_TREE.md](docs/TASK_TREE.md) and any active task files it lists.
+4. Read the Markdown files referenced from [README.md](README.md).
+5. Rebuild a current understanding of:
    - the live roadmap state,
+   - the active task-tree frontier, if one exists,
    - the current architecture,
    - the current active lane,
    - and the continuity/history notes that matter for the ongoing work.
-5. Analyze [bin/fsmgen](bin/fsmgen) and the project-owned transitive `FSM::...` import tree from source.
-6. Compare that live source picture against [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md).
-7. Update [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) if the saved picture is stale, incomplete, or no longer honest.
-8. Then continue by helping fulfil the objectives captured in [ROADMAP_V2.md](ROADMAP_V2.md) and tracked live in [ROADMAP_STATUS.md](ROADMAP_STATUS.md).
-9. After every completed task, slice, lane, or task-scoped activity from that point on, run the full workflow in [COMMIT.md](COMMIT.md) before starting or switching to another one.
-10. When that workflow reaches git write steps, run them sequentially and treat a stale `.git/index.lock` as a recovery event governed by [COMMIT.md](COMMIT.md).
+6. Analyze [bin/fsmgen](bin/fsmgen) and the project-owned transitive `FSM::...` import tree from source.
+7. Compare that live source picture against [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md).
+8. Update [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) if the saved picture is stale, incomplete, or no longer honest.
+9. Then continue by helping fulfil the objectives captured in [ROADMAP_V2.md](ROADMAP_V2.md) and tracked live in [ROADMAP_STATUS.md](ROADMAP_STATUS.md).
+10. After every completed task, slice, lane, or task-scoped activity from that point on, run the full workflow in [COMMIT.md](COMMIT.md) before starting or switching to another one.
+11. When that workflow reaches git write steps, run them sequentially and treat a stale `.git/index.lock` as a recovery event governed by [COMMIT.md](COMMIT.md).
 
 ## Expected close-out from that startup task
 After completing the bootstrap task, the agent should report:

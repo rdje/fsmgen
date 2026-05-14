@@ -36,9 +36,13 @@ Ignoring it is not a style issue; it is a project-safety failure.
   - Canonical live roadmap/workstream board.
   - Must be updated before commit whenever a task changes status, deliverables, remaining work, or the current active lane.
   - Every workstream in this board must keep explicit `Description`, `Deliverables`, `Status`, `Done`, `Left`, and `Exit criteria`.
+- `docs/TASK_TREE.md` and `docs/tasks/*.md`
+  - Repo-local task-tree workflow and per-top-level task files.
+  - Must be updated before commit whenever a task-tree-managed activity changes a node status, current frontier, blocker, decision, validation evidence, or completion evidence.
+  - Must stay below this file for commit policy: task-tree docs may require task IDs and evidence, but must not redefine the commit workflow independently.
 - `CHANGES.md`
   - Persistent technical change history.
-  - Must be updated after `MEMORY.md` and any needed `ROADMAP_STATUS.md` refresh.
+  - Must be updated after `MEMORY.md`, any needed `ROADMAP_STATUS.md` refresh, and any needed task-tree update.
   - When live status changes, this is the required historical log of that status transition.
 - `DEVELOPMENT_NOTES.md`
   - Design rationale and engineering context.
@@ -55,8 +59,9 @@ Ignoring it is not a style issue; it is a project-safety failure.
 2. Update docs in this exact order:
    1. `MEMORY.md`
    2. `ROADMAP_STATUS.md` if the task changed roadmap status, deliverables, remaining work, or the current active lane
-   3. `CHANGES.md` and explicitly log any live-status change there
-   4. `DEVELOPMENT_NOTES.md`
+   3. `docs/TASK_TREE.md` and the owning `docs/tasks/*.md` file if the activity belongs to an active task tree
+   4. `CHANGES.md` and explicitly log any live-status change there
+   5. `DEVELOPMENT_NOTES.md`
 3. Run validation appropriate to the scope:
    - For code changes: syntax + tests/regression.
    - For doc-only changes: basic repo state checks are sufficient.
@@ -64,6 +69,7 @@ Ignoring it is not a style issue; it is a project-safety failure.
    - concise subject line,
    - key body lines or bullet points,
    - no attribution trailer unless the user explicitly asks for one.
+   - If the completed activity belongs to a task-tree leaf, identify the leaf ID in the subject or first body line.
 5. Stage intended tracked files (`git add ...`).
    - This and every later git write step must run sequentially.
 6. Commit using:
