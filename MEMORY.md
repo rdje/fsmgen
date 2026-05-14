@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: Task-tree adoption guide
+- Added [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) as the direct
+  setup guide for bringing the task-tree tracking workflow into another
+  project.
+- The guide covers file roles, minimum setup, recommended full setup,
+  `docs/TASK_TREE.md` adaptation, first-tree creation, operating rules,
+  completion evidence, anti-patterns, setup checklist, and a first commit
+  message template.
+- [docs/TASK_TREE.md](docs/TASK_TREE.md) and [README.md](README.md) now point
+  to the adoption guide.
 ## 2026-05-14: R14 ISF task-tree requirement
 - [docs/TASK_TREE.md](docs/TASK_TREE.md) now states that all `R14` / ISF work
   is task-tree-managed by default.

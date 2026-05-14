@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### Workflow — task-tree adoption guide
+- Added [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) as a standalone
+  setup guide for adopting the task-tree tracking workflow in another project.
+- Documented the minimum file set, recommended full integration, roadmap and
+  task-tree responsibilities, commit-workflow hook, session-bootstrap hook,
+  first-tree creation, operating rules, completion evidence, anti-patterns,
+  setup checklist, and initial commit-message shape.
+- Linked the guide from [docs/TASK_TREE.md](docs/TASK_TREE.md),
+  [README.md](README.md), [ROADMAP_STATUS.md](ROADMAP_STATUS.md),
+  [MEMORY.md](MEMORY.md), [DEVELOPMENT_NOTES.md](DEVELOPMENT_NOTES.md), and
+  [LIVE_ACHIEVEMENT_STATUS.md](LIVE_ACHIEVEMENT_STATUS.md).
 ### R14 — ISF task-tree requirement
 - Updated [docs/TASK_TREE.md](docs/TASK_TREE.md) so all `R14` / ISF work is
   task-tree-managed by default.

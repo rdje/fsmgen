@@ -12,6 +12,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   frontier. The first active tree is
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md),
   whose current frontier is `ISF-CONFLICTS.1`.
+- [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
+  guide for installing the same task-tree tracking workflow in another
+  project.
 - All `R14` / ISF work is now task-tree-managed by default: every ISF task,
   slice, or PNT-selected activity must be attached to an existing active ISF
   task tree or create a new `docs/tasks/*.md` tree before implementation.
@@ -2207,6 +2210,9 @@ Done:
   workflow for broad tasks that need recursive subtasks, current-frontier
   leaves, blocker tracking, validation evidence, and task-ID commit
   traceability.
+- [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) now documents the full
+  project-adoption sequence for bringing this task-tree tracking workflow into
+  another repository with minimal friction.
 - [docs/TASK_TREE.md](docs/TASK_TREE.md) now also makes `R14` / ISF work
   task-tree-managed by default, including small documentation-only or
   diagnostics-only ISF changes.

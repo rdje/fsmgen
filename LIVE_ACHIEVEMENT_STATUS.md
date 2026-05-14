@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: Workflow — task-tree adoption guide
+- Active workflow docs slice: [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md)
+  now provides a direct setup guide for using the same task-tree tracking
+  approach in another project.
+- The guide covers the minimum required files, recommended full integration,
+  roadmap/status relationship, commit and bootstrap hooks, first-tree creation,
+  operating rules, completion evidence, and setup checklist.
+
 ## 2026-05-14: R14 — ISF task-tree requirement
 - Active R14 workflow rule: every ISF task, slice, or PNT-selected activity
   must be sliced and logged in a task tree before implementation.

@@ -5,6 +5,9 @@ It is intentionally portable: another project can copy this file, the
 `docs/tasks/TEMPLATE.md` template, and the commit-subject rule, then replace
 the roadmap lane names and live-doc file names with local equivalents.
 
+For a step-by-step setup guide that can be reused by another project, read
+[docs/TASK_TREE_README.md](docs/TASK_TREE_README.md).
+
 ## Purpose
 
 Use a task tree when a top-level task is too broad to finish safely as one
@@ -245,16 +248,20 @@ and summarize only the part that changes live project state.
 
 ## Copying This Workflow To Another Project
 
+The detailed project-adoption checklist lives in
+[docs/TASK_TREE_README.md](docs/TASK_TREE_README.md).
+
 To reuse this approach elsewhere:
 
-1. Copy `docs/TASK_TREE.md`.
-2. Copy `docs/tasks/TEMPLATE.md`.
-3. Add `docs/tasks/` to the project documentation index.
-4. Add a commit-workflow rule requiring completed task-tree leaf commits to
+1. Copy `docs/TASK_TREE_README.md`.
+2. Copy `docs/TASK_TREE.md`.
+3. Copy `docs/tasks/TEMPLATE.md`.
+4. Add `docs/tasks/` to the project documentation index.
+5. Add a commit-workflow rule requiring completed task-tree leaf commits to
    identify the leaf ID.
-5. Add the task-tree file to the session bootstrap or fast ramp-up order.
-6. Create one top-level task file per broad task.
-7. Keep the roadmap high-level and the task files detailed.
+6. Add the task-tree file to the session bootstrap or fast ramp-up order.
+7. Create one top-level task file per broad task.
+8. Keep the roadmap high-level and the task files detailed.
 
 The only project-specific parts are roadmap lane names, live-doc filenames,
 validation commands, and commit-message conventions.

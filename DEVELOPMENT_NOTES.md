@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: task-tree adoption guide
+- The task-tree workflow now has a separate setup guide because
+  [docs/TASK_TREE.md](docs/TASK_TREE.md) is the local operating spec, not the
+  best standalone onboarding path for another project.
+- [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is intentionally
+  project-portable: it names the minimum file set, the recommended full
+  integration, roadmap/status responsibilities, commit workflow hooks, session
+  bootstrap hooks, first-tree creation, and completion-evidence rules.
+- Keeping the adoption checklist separate avoids overloading the live workflow
+  spec while still giving downstream projects one direct document to follow.
 ## 2026-05-14: ISF work is task-tree-managed
 - `R14` is still new enough that apparently small requests often expose
   policy, lowering, diagnostics, public-contract, fixture, and book follow-up
