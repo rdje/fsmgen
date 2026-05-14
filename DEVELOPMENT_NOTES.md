@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF resource/priority arbitration semantics
+- Resource arbitration needs a catalog of shareable resource kinds, not only
+  arbitrary names. The resource name identifies an instance; the kind defines
+  what the scheduler is allowed to gate or sequence; the arbiter defines how
+  requesters are selected.
+- The first kind is deliberately small: `rule_slot` means one-cycle mutual
+  exclusion among rule users. It maps cleanly onto current lowering because a
+  grant can gate the whole rule DT DTE without inventing storage or changing
+  transaction lifetimes.
+- Other useful resource kinds are now named but deferred:
+  `output_bundle`, `interface_bundle`, `named_drive`, `transaction_start`,
+  `child_instance`, and `storage_port`. Each needs its own ownership,
+  hold/release, conflict, and reporting rules before it should become runtime
+  behavior.
+- `round_robin` stays metadata for now because it introduces arbiter state.
+  Shipping it requires reset, pointer-advance, idle-cycle, and debug/report
+  semantics for each resource kind.
 ## 2026-05-14: ISF resource/priority metadata inventory
 - The inventory separates parser acceptance from scheduler support. Resource
   metadata is useful as a future arbitration hook, but today it is not bound

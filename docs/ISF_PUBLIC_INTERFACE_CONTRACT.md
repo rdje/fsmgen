@@ -315,7 +315,14 @@ The parser boundary for resource and priority metadata is checked by
 [t/1176-isf-resource-priority-boundary.t](../t/1176-isf-resource-priority-boundary.t)
 so malformed `(resources ...)`, actor-level `(priority lhs over rhs)`, and
 rule-local `(priority over other_rule)` forms are rejected before an actor
-shell is returned. Arbitration enforcement remains deferred.
+shell is returned. Arbitration enforcement remains deferred. Current parser
+metadata carries resource names and arbiter strings; the planned enforceable
+surface adds a growable resource-kind catalog. The first target kind is
+`rule_slot`, a one-cycle mutual-exclusion slot for rule users. Future kinds
+such as `output_bundle`, `interface_bundle`, `named_drive`,
+`transaction_start`, `child_instance`, and `storage_port` are not public
+runtime behavior until their lowering and diagnostics ship. The accepted
+`priority` and `round_robin` strings are arbiter policy metadata.
 The rule-local priority target boundary is checked by
 [t/1190-isf-rule-priority-target-boundary.t](../t/1190-isf-rule-priority-target-boundary.t)
 so `other_rule` in `(priority over other_rule)` must resolve to a declared

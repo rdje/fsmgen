@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF resource/priority arbitration semantics
+- Completed `ISF-RESOURCE-PRIORITY.2` in
+  [docs/tasks/ISF-RESOURCE-PRIORITY.md](docs/tasks/ISF-RESOURCE-PRIORITY.md).
+- ISF resources now have a planned growable catalog of shareable resource
+  kinds. The first implementation target is `rule_slot`, a one-cycle
+  mutual-exclusion slot for rule users. Planned but unshipped kinds include
+  `output_bundle`, `interface_bundle`, `named_drive`, `transaction_start`,
+  `child_instance`, and `storage_port`.
+- The first implementation target is priority arbitration among bound rule
+  users through planned resource-local `(kind rule_slot)` and `(users ...)`
+  subclauses. A bound rule requests when its guard is true, the priority graph
+  selects the unique active winner, and the generated grant gates the whole
+  rule DT DTE without adding a cycle.
+- Deferred cases remain explicit: `round_robin` state, transaction lifetime
+  ownership, non-`rule_slot` resource kinds, multi-capacity resources, dynamic
+  resource names, and successful schedule-report projection for resource
+  grants. The active frontier is now `ISF-RESOURCE-PRIORITY.3`.
 ## 2026-05-14: ISF resource/priority metadata inventory
 - Completed `ISF-RESOURCE-PRIORITY.1` in
   [docs/tasks/ISF-RESOURCE-PRIORITY.md](docs/tasks/ISF-RESOURCE-PRIORITY.md).

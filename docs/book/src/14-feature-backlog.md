@@ -183,7 +183,23 @@ exclusion and arbiter behavior.
 
 Current boundary: resource metadata is structurally validated, including
 supported arbiter names and duplicate resource rejection. The scheduler does
-not yet enforce resources.
+not yet enforce resources. ISF resource semantics now use a growable catalog
+of shareable resource kinds so users can see which hardware/scheduler
+resources the language can actually arbitrate.
+
+Target direction: first-pass enforcement should keep resource-user binding
+centralized inside the `(resources ...)` block, for example by extending a
+resource entry with `(kind rule_slot)` and `(users rule_a rule_b ...)`
+subclauses. The first implementation-ready resource kind is `rule_slot`: a
+one-cycle mutual-exclusion slot where each bound rule requests when its guard
+is true, the priority graph chooses a unique active winner, and the generated
+grant gates the whole rule DT DTE without adding a cycle. Planned but
+unshipped resource kinds include `output_bundle`, `interface_bundle`,
+`named_drive`, `transaction_start`, `child_instance`, and `storage_port`.
+`round_robin`, transaction lifetime ownership, named-drive users,
+output-target users, multi-capacity resources, and dynamic resource names
+remain backlog until their reset, hold/release, fairness, and diagnostic
+contracts are explicit.
 
 ### Priority Resolution
 

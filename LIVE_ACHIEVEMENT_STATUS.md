@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF resource/priority arbitration semantics
+- Active R14 task-tree slice: `ISF-RESOURCE-PRIORITY.2` is complete.
+- ISF resource semantics now have a growable shareable-resource catalog. The
+  first implementation target is `rule_slot`, a one-cycle mutual-exclusion
+  resource for rule users.
+- Planned but unshipped kinds include `output_bundle`, `interface_bundle`,
+  `named_drive`, `transaction_start`, `child_instance`, and `storage_port`;
+  unsupported kinds must fail closed until their lowering contracts ship.
+- The next active R14 frontier is `ISF-RESOURCE-PRIORITY.3`.
+
 ## 2026-05-14: R14 — ISF resource/priority metadata inventory
 - Active R14 task-tree slice: `ISF-RESOURCE-PRIORITY.1` is complete.
 - The task tree now records accepted resource and priority forms, parser

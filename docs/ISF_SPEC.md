@@ -874,7 +874,27 @@ deferred.
 names rejected before an actor shell is returned. `(resources ...)` is an
 actor-level singleton clause, so repeated resources blocks are rejected instead
 of merged or overwritten. Resource arbitration is still not enforced by
-lowering.
+lowering. Resource semantics use a growable catalog of shareable resource
+kinds. The resource name is the author-defined instance handle; the kind says
+what is being shared; the `arbiter` says how requesters are selected.
+
+The next resource-arbitration implementation target is priority-arbitrated
+`rule_slot` users. The planned source shape keeps binding centralized under
+`(resources ...)` by extending a resource entry with `(kind rule_slot)` and
+`(users rule_a rule_b ...)` subclauses. For that covered case, each bound rule
+requests the resource when its normalized rule guard is true. Rule-local
+`(priority over other_rule)` and actor-level `(priority lhs over rhs)` edges
+choose the active winner when the endpoints are bound rules of the same
+resource. The generated grant gates the whole lowered rule DT DTE, while
+existing same-target priority suppression remains assignment-local. Planned
+but unshipped resource kinds include `output_bundle`, `interface_bundle`,
+`named_drive`, `transaction_start`, `child_instance`, and `storage_port`.
+Cycles, incomplete ordering among potentially simultaneous bound users,
+unknown users, ambiguous future user namespaces, unsupported resource kinds,
+and `round_robin` resources with bound users must fail closed until those
+cases have explicit contracts. Transaction users, named-drive users,
+output-target users, child-instance users, storage-port users, multi-capacity
+resources, and transaction-lifetime hold/release semantics remain deferred.
 
 Actor-level `(phase name property...)` and `(stage name property...)` metadata
 is structurally validated by the parser and carried in the actor shell for
@@ -1154,8 +1174,13 @@ Focused tests:
   spawn pattern. The current generated top covers scheduled parent/child
   wiring, start/done handoff, named-drive handoff, and spawn parameter
   overrides for the shipped fixture set.
-- Enforced resource arbitration and priority resolution beyond the currently
-  shipped same-target rule/rule data-conflict case.
+- Enforced resource arbitration beyond the planned first priority-arbitrated
+  `rule_slot` case: `round_robin`, `output_bundle`, `interface_bundle`,
+  `named_drive`, `transaction_start`, `child_instance`, `storage_port`,
+  multi-capacity resources, dynamic resource names, and transaction lifetime
+  ownership remain deferred.
+- Priority resolution beyond the currently shipped same-target rule/rule
+  data-conflict case and the planned resource-level bound-rule grant case.
 - Expression-valued rule assignment actions beyond scalar `(port value)`.
 - Full transaction `(stage ...)` valid/ready pipeline lowering. Authored
   transaction stage clauses currently fail closed during lowering.

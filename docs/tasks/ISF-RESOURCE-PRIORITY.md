@@ -57,13 +57,13 @@ diagnostics for unresolved arbitration.
   Commit: `ISF-RESOURCE-PRIORITY.1: inventory metadata behavior`
 
 - ID: `ISF-RESOURCE-PRIORITY.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Specify arbitration and priority semantics.`
   Acceptance: `The tree records mutual-exclusion rules, supported arbiters,
   actor-level priority ordering, rule-local priority ordering, ties, cycles,
   and unsupported cases.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-RESOURCE-PRIORITY.2: specify arbitration semantics`
 
 - ID: `ISF-RESOURCE-PRIORITY.3`
   Status: `pending`
@@ -101,7 +101,7 @@ diagnostics for unresolved arbitration.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-RESOURCE-PRIORITY.2` | `pending` | The shipped parser/lowering boundary is now inventoried, so the next slice can define the supported arbitration semantics before implementation. |
+| 1 | `ISF-RESOURCE-PRIORITY.3` | `pending` | Resource arbitration now has a documented target semantic contract, so implementation can start with the covered priority-arbitrated rule case. |
 
 ## ISF-RESOURCE-PRIORITY.1 Inventory
 
@@ -224,6 +224,202 @@ Current storage: the parser returns
   priority suppression, scheduled `.fsm` guard output, HDL handoff, and cycle
   rejection.
 
+## ISF-RESOURCE-PRIORITY.2 Semantics
+
+This section defines the target semantics for the next resource/priority
+implementation slices. It separates what the parser accepts today from what
+the scheduler is allowed to enforce next.
+
+### Resource Model
+
+- ISF resources need two orthogonal pieces of information: the shareable
+  resource kind and the arbiter policy.
+- The resource name, such as `shared_bus`, `mem_port`, or `csr_window`, is the
+  author-defined instance handle.
+- The resource kind tells the scheduler what is being shared and therefore how
+  a grant affects lowering.
+- The `arbiter` field names the arbitration policy for that resource kind.
+- The only parser-accepted arbiter policy names are `priority` and
+  `round_robin`.
+- A resource is a single-grant domain for the covered implementation. At most
+  one bound user may be granted in a cycle.
+- A declared resource with no bound users remains accepted metadata and has no
+  scheduler effect.
+
+### Shareable Resource Kind Catalog
+
+The resource-kind catalog starts deliberately small and should grow only when a
+kind has a clear lowering path, runtime semantics, diagnostics, and report
+surface.
+
+| Kind | Status | Meaning |
+| --- | --- | --- |
+| `rule_slot` | first implementation target | One-cycle mutual-exclusion slot for rule users. A grant enables the whole bound rule DT for that cycle. |
+| `output_bundle` | backlog | A group of actor outputs or LHS targets that must have one owner for a cycle. |
+| `interface_bundle` | backlog | A protocol-facing interface or bus bundle, such as an APB-like signal group. |
+| `named_drive` | backlog | A reusable actor `(drive ...)` body or drive-call path that multiple users may request. |
+| `transaction_start` | backlog | The start/request fan-in for one transaction. |
+| `child_instance` | backlog | A spawned child instance that must not be re-entered while busy. |
+| `storage_port` | backlog | A shared state/register/memory-port access path. |
+
+Unsupported resource kinds must fail closed when authors try to use them for
+enforced arbitration. A future slice may add kinds to this list, but it must
+also define their lowering and diagnostics before they are treated as shipped.
+
+### Resource User Binding
+
+The first enforceable resource syntax should extend the existing resource
+entry with an explicit `kind` plus an optional `users` clause:
+
+```lisp
+(resources
+  (resource shared_bus
+    (kind rule_slot)
+    (arbiter priority)
+    (users high_pri low_pri)))
+```
+
+The existing metadata-only spelling remains accepted:
+
+```lisp
+(resources
+  (resource shared_bus (arbiter priority)))
+```
+
+Target binding rules:
+
+- Enforced resources require a supported `kind` clause. The first supported
+  kind is `rule_slot`.
+- `users` names are non-empty scalar tokens.
+- Duplicate user names inside one resource are rejected.
+- The first enforceable user kind for `rule_slot` is a rule name.
+- User names must resolve to declared same-actor rules for the first
+  implementation. Unknown names fail closed before scheduled `.fsm` emission.
+- Ambiguous names that resolve to more than one future user namespace must fail
+  closed until a namespace-qualified syntax is introduced.
+- Transaction users, named-drive users, output-target users, child-instance
+  users, storage-port users, and whole transaction-lifetime ownership are
+  deferred. They need resource-kind-specific hold/release and re-entry
+  contracts before being enforced.
+
+The syntax is intentionally centralized under `(resources ...)` instead of
+being parsed as a rule action. That avoids collisions with the current
+`(port value)` rule-action shape and keeps resource mapping next to resource
+policy.
+
+### Priority Arbiter Semantics
+
+`priority` is the first implementation-ready resource arbiter for bound
+`rule_slot` users.
+
+For a priority-arbitrated resource:
+
+- Each bound rule requests the resource in cycles where that rule's normalized
+  guard is true.
+- Rule-local `(priority over other_rule)` adds an ordering edge from the
+  containing rule to `other_rule`.
+- Actor-level `(priority lhs over rhs)` adds an ordering edge for resource
+  arbitration when both endpoints are bound rule users of the same resource.
+- Priority edges are transitive.
+- Duplicate identical edges are harmless.
+- A cycle in the priority graph fails closed.
+- A resource with two or more bound rule users requires a deterministic unique
+  winner for any possible simultaneous request. The first implementation
+  should require a total ordering across bound users unless a later proof pass
+  can prove the unordered users mutually exclusive.
+- Incomparable bound users are therefore rejected for enforced priority
+  resources in the first implementation.
+- The winner is the active requester that has no active higher-priority bound
+  requester.
+- A lower-priority rule is denied only while a higher-priority bound requester
+  is active. When no higher requester is active, the lower-priority rule can
+  still run.
+- The generated resource grant gates the whole lowered rule DT DTE.
+  Assignment-specific priority suppression for same-target rule/rule data
+  conflicts stays target-local and composes with the resource grant.
+
+Conceptually, for a resource with `high > low`, the rule DTEs become:
+
+```text
+high_grant = high_guard
+low_grant  = low_guard & !high_guard
+```
+
+For a longer order `r0 > r1 > r2`, the grant shape is:
+
+```text
+r0_grant = r0_guard
+r1_grant = r1_guard & !r0_guard
+r2_grant = r2_guard & !(r0_guard | r1_guard)
+```
+
+The generated form is combinational and does not add a cycle.
+
+### Round-Robin Arbiter Semantics
+
+`round_robin` remains parser-accepted metadata, but it is not
+implementation-ready for enforced resources.
+
+Reason: a real round-robin arbiter introduces state. The contract still needs
+to define reset value, grant advance point, whether the pointer advances on
+request or accepted grant, behavior when no requester is active, and report/
+debug visibility for each resource kind. Until that is settled, a
+`round_robin` resource with bound users must fail closed instead of silently
+behaving like priority arbitration.
+
+### Priority Declarations Outside Resources
+
+Existing same-target rule/rule data priority remains target-local:
+
+- It suppresses the losing assignment only.
+- It does not disable unrelated actions in the losing rule.
+- It does not by itself claim a resource.
+
+Resource priority is owner-level for the bound rule:
+
+- It gates the rule's non-state DT DTE for the resource-protected rule.
+- It can suppress triggers and all data actions in that rule while a higher
+  requester is active.
+- It is the right mechanism when the user wants mutual exclusion over a shared
+  resource, not merely conflict resolution for one target.
+
+Actor-level priorities that mention transactions remain validated metadata
+until transaction priority semantics are implemented. They do not participate
+in first-pass rule-resource arbitration unless both endpoints are bound rules
+of the same resource.
+
+### Ties, Cycles, And Unsupported Cases
+
+Fail closed:
+
+- Unknown resource user.
+- Duplicate user inside one resource.
+- Ambiguous user namespace.
+- Unsupported resource kind.
+- Priority cycle among bound users.
+- Incomparable bound users in an enforced `priority` resource.
+- `round_robin` resource with bound users before round-robin lowering ships.
+- Transaction, drive, output-target, child-instance, storage-port, dynamic,
+  nested, or multi-capacity resource users before their contracts ship.
+
+Allowed no-op metadata:
+
+- A valid resource declaration with no `users` clause.
+- A priority declaration that is valid but irrelevant to the currently covered
+  rule/rule data or rule-resource arbitration path.
+
+### Conflict Interaction
+
+- Resource arbitration can prevent same-cycle conflicts by making at most one
+  bound rule active for that resource in a cycle.
+- Resource arbitration does not replace `ISF-CONFLICTS`: unbound same-target
+  incompatible writes still fail through the existing conflict diagnostics.
+- Compatible fan-in, such as same-target same-value writes or request/pulse
+  OR fan-in, does not require a resource.
+- Verification-only runtime selector checks remain valuable after resource
+  lowering because they confirm that generated mux selectors obey the final
+  onehot/onehot0 assumptions.
+
 ## Decisions
 
 - `2026-05-14`: Resource and priority enforcement is tracked separately from
@@ -236,17 +432,26 @@ Current storage: the parser returns
 - `2026-05-14`: Resource/priority schedule-report exposure is intentionally
   not treated as frozen. Any new public metadata must be added as a bounded,
   documented, regression-backed surface when the feature implementation ships.
+- `2026-05-14`: ISF resources need an explicit growable catalog of shareable
+  resource kinds. The first implementation target is `rule_slot`, a
+  one-cycle mutual-exclusion slot that gates bound rule DTs. Additional kinds
+  such as `output_bundle`, `interface_bundle`, `named_drive`,
+  `transaction_start`, `child_instance`, and `storage_port` remain backlog
+  until their lowering and diagnostics are explicit.
+- `2026-05-14`: First-pass resource enforcement should use centralized
+  resource user binding through explicit `(kind rule_slot)` and optional
+  `(users ...)` resource subclauses, and should cover only
+  priority-arbitrated rule users. Transaction, drive, output-target,
+  child-instance, storage-port, round-robin, and lifetime-hold resource
+  semantics remain deferred until their contracts are explicit.
 
 ## Open Questions
 
-- Which resource arbiter names are implementation-ready in the first shipped
-  slice?
-- Should priority resolution be allowed to choose among same-target data
-  drives, or only among transaction/rule activation candidates?
-- What authored syntax should bind rules, transactions, drives, or outputs to
-  a declared resource?
 - Should successful priority/resource arbitration decisions become schedule
   JSON metadata before or together with first resource enforcement?
+- What exact diagnostic code names should be used for unsupported
+  round-robin, unknown users, incomplete priority order, and priority cycles
+  in resource arbitration?
 
 ## Blockers
 
@@ -258,6 +463,7 @@ Current storage: the parser returns
 | --- | --- | --- | --- |
 | `2026-05-14` | `ISF-RESOURCE-PRIORITY` | `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-RESOURCE-PRIORITY.1` | `prove -l t/1176-isf-resource-priority-boundary.t t/1190-isf-rule-priority-target-boundary.t t/1191-isf-actor-priority-target-boundary.t t/1210-isf-priority-conflict-resolution.t`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-RESOURCE-PRIORITY.2` | `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -265,9 +471,12 @@ Current storage: the parser returns
 | --- | --- | --- |
 | `ISF-RESOURCE-PRIORITY` | `R14: map ISF objectives to task trees` | Initial tree creation belongs to the ISF objective task-tree coverage slice. |
 | `ISF-RESOURCE-PRIORITY.1` | `ISF-RESOURCE-PRIORITY.1: inventory metadata behavior` | Records accepted resource/priority forms, existing validation, current enforcement, schedule-report exposure gaps, and implementation gaps. |
+| `ISF-RESOURCE-PRIORITY.2` | `ISF-RESOURCE-PRIORITY.2: specify arbitration semantics` | Defines the shareable resource-kind catalog, first-pass `(kind rule_slot)` plus `(users ...)` binding, priority-arbitrated rule-user grants, tie/cycle behavior, and unsupported cases. |
 
 ## Changelog
 
 - `2026-05-14`: Created the active ISF resource/priority task tree.
 - `2026-05-14`: Completed the current-behavior inventory and moved the
   frontier to `ISF-RESOURCE-PRIORITY.2`.
+- `2026-05-14`: Completed the resource/priority target semantics and moved
+  the frontier to `ISF-RESOURCE-PRIORITY.3`.

@@ -222,7 +222,13 @@ limitations are:
   symbolic parameter values and richer generated-child surfaces remain
   backlog work.
 - `(resources ...)` is structurally validated by the parser but not enforced as
-  arbitration policy. `(priority ...)` is structurally validated and currently
+  arbitration policy. Resource semantics now use a growable catalog of
+  shareable resource kinds; the first planned kind is `rule_slot`, a one-cycle
+  mutual-exclusion slot for rule users. Future kinds such as `output_bundle`,
+  `interface_bundle`, `named_drive`, `transaction_start`, `child_instance`,
+  and `storage_port` remain backlog until their lowering contracts are
+  explicit. The accepted `priority` and `round_robin` values are arbiter
+  policy names. `(priority ...)` is structurally validated and currently
   enforced only for same-target rule/rule data conflicts; broader transaction
   and resource arbitration remains deferred.
 - Deprecated `(handshake name (valid signal) (ready signal))` metadata is

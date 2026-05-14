@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF resource/priority arbitration semantics
+- Completed `ISF-RESOURCE-PRIORITY.2` by defining the first resource
+  arbitration target in
+  [docs/tasks/ISF-RESOURCE-PRIORITY.md](docs/tasks/ISF-RESOURCE-PRIORITY.md).
+- Resource semantics now use a growable catalog of shareable resource kinds.
+  The first implementation target is `rule_slot`, a one-cycle
+  mutual-exclusion slot for rule users, bound through planned `(kind
+  rule_slot)` and `(users ...)` resource subclauses.
+- Deferred resource kinds are explicitly listed: `output_bundle`,
+  `interface_bundle`, `named_drive`, `transaction_start`, `child_instance`,
+  and `storage_port`, along with round-robin state, multi-capacity resources,
+  dynamic resource names, and transaction lifetime ownership.
+- Advanced the active `ISF-RESOURCE-PRIORITY` frontier from
+  `ISF-RESOURCE-PRIORITY.2` to `ISF-RESOURCE-PRIORITY.3`.
 ### R14 — ISF resource/priority metadata inventory
 - Completed `ISF-RESOURCE-PRIORITY.1` by recording current parser,
   validation, lowering, schedule-report, and enforcement behavior in

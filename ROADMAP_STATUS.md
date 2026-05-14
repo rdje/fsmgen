@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-RESOURCE-PRIORITY.md](docs/tasks/ISF-RESOURCE-PRIORITY.md),
-  whose current frontier is `ISF-RESOURCE-PRIORITY.2`. The completed
+  whose current frontier is `ISF-RESOURCE-PRIORITY.3`. The completed
   `ISF-CONFLICTS` and `ISF-COMPOSITION` trees are listed in the task-tree
   completed table.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
@@ -28,8 +28,16 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   lowered or reported. Priority has one shipped enforcement path today:
   same-target rule/rule data conflicts can be resolved by actor-level or
   rule-local priority when both endpoints are rules and one unique winner is
-  selected. The current frontier is `ISF-RESOURCE-PRIORITY.2`, which must
-  specify the next supported arbitration semantics before implementation.
+  selected.
+- `ISF-RESOURCE-PRIORITY.2` is complete. ISF now has a planned growable
+  catalog of shareable resource kinds. The first implementation target is
+  `rule_slot`, a one-cycle mutual-exclusion slot for rule users, bound through
+  planned resource-local `(kind rule_slot)` and `(users ...)` subclauses.
+  Planned but unshipped kinds include `output_bundle`, `interface_bundle`,
+  `named_drive`, `transaction_start`, `child_instance`, and `storage_port`.
+  `round_robin`, multi-capacity resources, dynamic resource names, and
+  transaction lifetime ownership remain deferred. The current frontier is
+  `ISF-RESOURCE-PRIORITY.3`.
 - ISF construct support now has a normative rule: parser acceptance is not a
   support claim. Every current or future shipped ISF construct must have an
   explicit accepted source shape, lowering path or fail-closed diagnostic,
