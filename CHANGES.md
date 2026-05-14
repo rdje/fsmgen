@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF resource/priority metadata inventory
+- Completed `ISF-RESOURCE-PRIORITY.1` by recording current parser,
+  validation, lowering, schedule-report, and enforcement behavior in
+  [docs/tasks/ISF-RESOURCE-PRIORITY.md](docs/tasks/ISF-RESOURCE-PRIORITY.md).
+- The inventory makes the shipped boundary explicit: resources are validated
+  metadata only, accepted arbiters are `priority` and `round_robin`, and no
+  resource arbitration is emitted yet.
+- Priority currently resolves only same-target rule/rule data conflicts when
+  actor-level or rule-local priority selects one unique rule winner. Other
+  priority/resource behavior remains to be specified before implementation.
+- Advanced the active `ISF-RESOURCE-PRIORITY` frontier from
+  `ISF-RESOURCE-PRIORITY.1` to `ISF-RESOURCE-PRIORITY.2`.
 ### R14 — ISF composition tree closure
 - Completed `ISF-COMPOSITION.6` and closed the top-level
   `ISF-COMPOSITION` task tree.

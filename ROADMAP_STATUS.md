@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-RESOURCE-PRIORITY.md](docs/tasks/ISF-RESOURCE-PRIORITY.md),
-  whose current frontier is `ISF-RESOURCE-PRIORITY.1`. The completed
+  whose current frontier is `ISF-RESOURCE-PRIORITY.2`. The completed
   `ISF-CONFLICTS` and `ISF-COMPOSITION` trees are listed in the task-tree
   completed table.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
@@ -22,6 +22,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - All `R14` / ISF work is now task-tree-managed by default: every ISF task,
   slice, or PNT-selected activity must be attached to an existing active ISF
   task tree or create a new `docs/tasks/*.md` tree before implementation.
+- `ISF-RESOURCE-PRIORITY.1` is complete. The current inventory records that
+  `(resources ...)` is validated metadata only, accepted arbiters are
+  `priority` and `round_robin`, and successful resource arbitration is not yet
+  lowered or reported. Priority has one shipped enforcement path today:
+  same-target rule/rule data conflicts can be resolved by actor-level or
+  rule-local priority when both endpoints are rules and one unique winner is
+  selected. The current frontier is `ISF-RESOURCE-PRIORITY.2`, which must
+  specify the next supported arbitration semantics before implementation.
 - ISF construct support now has a normative rule: parser acceptance is not a
   support claim. Every current or future shipped ISF construct must have an
   explicit accepted source shape, lowering path or fail-closed diagnostic,

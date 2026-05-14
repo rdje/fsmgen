@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF resource/priority metadata inventory
+- The inventory separates parser acceptance from scheduler support. Resource
+  metadata is useful as a future arbitration hook, but today it is not bound
+  to any rule, transaction, drive, or output, so it must not be described as
+  enforced behavior.
+- Current priority enforcement is intentionally target-local. When two rules
+  write different values to the same target and one rule dominates the other,
+  only the lower-priority assignment is suppressed. The lower-priority rule's
+  unrelated actions remain live, which avoids turning priority into an
+  owner-wide kill switch.
+- Transaction priority, resource priority, and round-robin arbitration need a
+  source-level binding contract before lowering. The next slice should define
+  who requests a resource, what a grant suppresses or enables, how ties and
+  cycles fail, and what successful decisions expose in schedule JSON.
+- The API contract remains live while ISF evolves. The useful discipline is
+  bounded, regression-backed metadata for each shipped feature, not pretending
+  the whole future ISF surface is already frozen.
 ## 2026-05-14: ISF composition tree closure
 - `ISF-COMPOSITION.6` closes the generated-child composition objective by
   checking the realistic `spawn_parent.isf` schedule-report projection through

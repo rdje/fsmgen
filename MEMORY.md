@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF resource/priority metadata inventory
+- Completed `ISF-RESOURCE-PRIORITY.1` in
+  [docs/tasks/ISF-RESOURCE-PRIORITY.md](docs/tasks/ISF-RESOURCE-PRIORITY.md).
+- The task file now records the shipped resource/priority boundary:
+  `(resources ...)` is parsed as singleton actor metadata with `priority` and
+  `round_robin` arbiters, but resources do not yet lower into mutual
+  exclusion, grants, schedule reports, or HDL.
+- Priority enforcement exists only for same-target rule/rule data conflicts
+  where the priority graph selects one unique rule winner. Transaction
+  priorities are validated metadata today, and rule-local priority does not
+  yet order transaction starts, resource requests, or named-drive calls.
+- The ISF public surface remains live rather than frozen; this inventory
+  describes current behavior so the next slice can specify the next supported
+  arbitration semantics. The active frontier is now
+  `ISF-RESOURCE-PRIORITY.2`.
 ## 2026-05-14: ISF composition tree closure
 - Completed `ISF-COMPOSITION.6` and closed
   [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md).

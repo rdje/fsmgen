@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF resource/priority metadata inventory
+- Active R14 task-tree slice: `ISF-RESOURCE-PRIORITY.1` is complete.
+- The task tree now records accepted resource and priority forms, parser
+  validations, current same-target rule/rule priority enforcement,
+  schedule-report exposure gaps, and resource arbitration gaps.
+- Resources remain validated metadata only; priority currently resolves only
+  the covered rule/rule data-conflict case.
+- The next active R14 frontier is `ISF-RESOURCE-PRIORITY.2`, which must define
+  supported arbitration and priority semantics before implementation.
+
 ## 2026-05-14: R14 — ISF composition tree closure
 - Active R14 task-tree slice: `ISF-COMPOSITION.6` is complete.
 - The `ISF-COMPOSITION` tree is now closed and moved to the completed
