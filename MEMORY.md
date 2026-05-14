@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF compatibility inventory
+- Completed `ISF-COMPATIBILITY.1` in
+  [docs/tasks/ISF-COMPATIBILITY-SURFACE.md](docs/tasks/ISF-COMPATIBILITY-SURFACE.md).
+- Deprecated `(handshake ...)` is currently validated by the parser and then
+  ignored; the actor-shell `handshakes` value remains an empty compatibility
+  placeholder and has no schedule/HDL semantics.
+- Removed transaction `(assign ...)` is parsed as private transaction clause
+  input, then rejected by scheduler validation in top-level and nested
+  transaction contexts.
+- The next active R14 frontier is `ISF-COMPATIBILITY.2`.
 ## 2026-05-14: Proposed ISF libraries/imports
 - Created proposed task tree
   [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md).

@@ -298,8 +298,12 @@ Goal: decide whether old `(handshake ...)` metadata should gain real lowering
 semantics or remain validated ignored compatibility input only.
 
 Current boundary: deprecated handshake metadata is structurally validated and
-ignored. Direct `(on port ...)` activation plus generated `can_accept` is the
-current model.
+ignored. The parser accepts a scalar handshake name plus scalar `valid`/`ready`
+property entries and leaves the actor-shell handshake placeholder empty. Direct
+`(on port ...)` activation plus generated `can_accept` is the current model.
+The next policy decision is whether to keep that validated-ignored behavior,
+tighten validation before ignoring, or reject the old form with migration
+guidance.
 
 ### Removed Assign Keyword
 
@@ -309,6 +313,10 @@ Goal: decide whether the removed `(assign ...)` transaction keyword should
 stay unsupported or be replaced by a different explicit construct.
 
 Current boundary: authored uses fail closed as unsupported transaction clauses.
+The parser may carry the raw clause as private scheduler input, but the
+scheduler rejects it in top-level transaction bodies and nested contexts such
+as `when`, `switch`, or `repeat` bodies. No migration-specific diagnostic has
+shipped yet.
 
 ### Full Width Inference For Data Operations
 

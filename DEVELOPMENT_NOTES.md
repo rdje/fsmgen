@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF compatibility inventory
+- The deprecated handshake surface is more compatibility residue than a
+  dormant feature. It validates basic shape, discards the result, and does not
+  affect `can_accept`, scheduled `.fsm`, reports, or HDL.
+- The inventory intentionally does not decide whether to keep, tighten, or
+  reject handshake. It does identify policy gaps: duplicate handshake names are
+  not diagnosable today because metadata is not retained, and the parser does
+  not currently prove both `valid` and `ready` are present before ignoring the
+  clause.
+- Removed transaction `(assign ...)` is fail-closed in the lowerer, not the
+  parser. That keeps parser shells permissive but makes scheduler validation
+  the current compatibility boundary.
 ## 2026-05-14: Proposed ISF libraries/imports
 - "Library" is the right user-facing word for reusable tested ISF design
   intent. Internally, the implementation can still reuse package/import

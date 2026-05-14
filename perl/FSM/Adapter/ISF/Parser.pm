@@ -37,7 +37,8 @@ my %RULE_ASSIGNMENT_FORBIDDEN_EXPR_HEADS = map { $_ => 1 } qw(
 #     reset         => { name => "rst_n", kind => "async", polarity => "active_low" },
 #     watchdog      => 65536,
 #     interface     => { inputs => [...], outputs => [...] },
-#     handshakes    => { name => { valid => ..., ready => ... }, ... },
+#     handshakes    => {}, # deprecated compatibility placeholder; parsed
+#                          # handshake clauses are validated then ignored
 #     transactions  => [ { name => ..., clauses => [...] }, ... ],
 #     rules         => [ { name => ..., when => ..., actions => [...] }, ... ],
 #     resources     => [ { name => ..., arbiter => ..., kind => ..., users => [...] }, ... ],

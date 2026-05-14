@@ -215,9 +215,11 @@ Additional actor clauses with mixed parser/scheduler behavior:
 - actor-level `(priority lhs over rhs)`
 
 Deprecated compatibility:
-- `(handshake name (valid signal) (ready signal))` is structurally validated
-  and then ignored. The current activation model is direct `(on port ...)`
-  plus the scheduler-created `can_accept` signal.
+- `(handshake name (valid signal) (ready signal))`-style metadata is
+  deprecated compatibility input. The parser validates a scalar name and
+  scalar `valid`/`ready` property entries, then ignores the metadata. The
+  current activation model is direct `(on port ...)` plus the
+  scheduler-created `can_accept` signal.
 
 ## 4. Clock, Reset, Watchdog
 
@@ -389,8 +391,8 @@ lowering instead of being ignored.
 The scheduler also creates `can_accept` and asserts it in entry states. This is
 the current replacement for the old handshake-ready spelling. Deprecated
 `(handshake name (valid signal) (ready signal))` metadata is compatibility-only:
-the parser validates its shape, but the scheduler does not lower old handshake
-semantics.
+the parser validates a scalar name and scalar `valid`/`ready` property entries,
+but the scheduler does not lower old handshake semantics.
 
 Samples inside `(on ...)` lower to guarded D-input assignments (`<=`) on the
 entry transition.

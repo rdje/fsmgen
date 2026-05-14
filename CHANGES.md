@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF compatibility inventory
+- Completed `ISF-COMPATIBILITY.1` by inventorying the current behavior of
+  deprecated handshake metadata and the removed transaction `assign` keyword.
+- The parser comment now matches behavior: `handshakes` is an empty
+  compatibility placeholder because validated handshake clauses are ignored.
+- The task tree records that handshake metadata has no scheduled `.fsm`,
+  schedule JSON, HDL, or strict-mode semantics today, while `(assign ...)`
+  fails closed during scheduler validation with context-specific unsupported
+  clause diagnostics.
+- The active `ISF-COMPATIBILITY` frontier advances to
+  `ISF-COMPATIBILITY.2`.
 ### R14 — proposed ISF libraries/imports
 - Added proposed task tree
   [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md) for reusable

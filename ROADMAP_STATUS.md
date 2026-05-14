@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-COMPATIBILITY-SURFACE.md](docs/tasks/ISF-COMPATIBILITY-SURFACE.md),
-  whose current frontier is `ISF-COMPATIBILITY.1`. The completed
+  whose current frontier is `ISF-COMPATIBILITY.2`. The completed
   `ISF-SCHEDULE-REPORTS`, `ISF-DATA-WIDTHS`, `ISF-STAGES-CONTRACTS`,
   `ISF-RULE-ACTIONS`, `ISF-RESOURCE-CATALOG`, `ISF-RESOURCE-PRIORITY`,
   `ISF-CONFLICTS`, `ISF-COMPOSITION`, and `ISF-FIXTURES` trees are listed in
@@ -31,6 +31,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   reusable actor because it owns persistent storage, pointers, occupancy,
   flags, reset behavior, and interface timing; transactions can model enqueue,
   dequeue, flush, or status operations against that actor.
+- `ISF-COMPATIBILITY.1` is complete. The inventory records that deprecated
+  `(handshake ...)` is currently parser-validated then ignored, leaving the
+  actor-shell `handshakes` hash as an empty compatibility placeholder and
+  producing no schedule/HDL semantics. Removed transaction `(assign ...)` is
+  parsed as private transaction clause input but fails closed during scheduler
+  validation in top-level and nested transaction contexts. The active
+  frontier advances to `ISF-COMPATIBILITY.2`.
 - `ISF-RESOURCE-PRIORITY.1` is complete. The current inventory records that
   `(resources ...)` is validated metadata only, accepted arbiters are
   `priority` and `round_robin`, and successful resource arbitration is not yet

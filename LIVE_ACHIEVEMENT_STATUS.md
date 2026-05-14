@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF compatibility inventory
+- Active R14 task-tree slice: `ISF-COMPATIBILITY.1` is complete.
+- Deprecated `(handshake ...)` is parser-validated then ignored; it does not
+  affect scheduled `.fsm`, schedule JSON, HDL, or strict-mode semantics.
+- Removed transaction `(assign ...)` is parsed as private clause input and
+  fails closed during scheduler validation.
+- The next active R14 frontier is `ISF-COMPATIBILITY.2`.
+
 ## 2026-05-14: R14 — proposed ISF libraries/imports
 - Proposed R14 task tree: `ISF-LIBRARIES` now tracks reusable ISF library and
   import support.
