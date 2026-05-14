@@ -318,11 +318,13 @@ rule-local `(priority over other_rule)` forms are rejected before an actor
 shell is returned. Current parser metadata carries resource names, arbiter
 strings, and optional resource-kind/user metadata. The first enforced resource
 kind is `rule_slot`, a one-cycle mutual-exclusion slot for rule users under
-the `priority` arbiter. Future kinds such as `output_bundle`,
+the `priority` arbiter. The current shareable resource kind catalog is:
+`rule_slot` (shipped for `priority` arbitration), `output_bundle`,
 `interface_bundle`, `named_drive`, `transaction_start`, `child_instance`, and
-`storage_port` are not public runtime behavior until their lowering and
-diagnostics ship. The accepted `round_robin` string remains parser metadata
-until round-robin lowering ships.
+`storage_port`. The non-`rule_slot` kinds are public catalog/backlog names,
+not public runtime behavior, until their lowering paths, runtime semantics,
+diagnostics, report surfaces, and regressions ship. The accepted `round_robin`
+string remains parser metadata until round-robin lowering ships.
 The first resource-arbitration path is checked by
 [t/1218-isf-rule-slot-resource-arbitration.t](../t/1218-isf-rule-slot-resource-arbitration.t)
 for parser metadata, scheduled `.fsm` DTE gating, HDL handoff, and

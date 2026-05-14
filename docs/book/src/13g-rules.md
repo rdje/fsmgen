@@ -231,16 +231,42 @@ remaining enforcement work is tracked in [Feature Backlog](14-feature-backlog.md
 
 ```lisp
 (resources
-  (resource shared_bus (arbiter priority))
-  (resource mem_port   (arbiter round_robin)))
+  (resource rule_exec
+    (kind rule_slot)
+    (arbiter priority)
+    (users high_pri low_pri))
+  (resource mem_port
+    (arbiter round_robin)))
 ```
 
-Resources are shared hardware that only one transaction can use at a time.
-Arbiter types: `priority`, `round_robin`.
+Resources name shareable hardware or scheduler-controlled ownership domains.
+The resource name, such as `rule_exec` or `mem_port`, is the author-defined
+instance handle. The resource kind says what is being shared. The arbiter says
+how requesters are selected. Arbiter names accepted by the parser are
+`priority` and `round_robin`.
 
 Resource metadata is structurally validated by the parser, including supported
-arbiter names and duplicate resource rejection. `(resources ...)` is a
-singleton actor clause, so repeated resources blocks are rejected rather than
-merged or overwritten. Resource lowering is still deferred — resources are not
-yet enforced by the scheduler. The scheduler-enforced resource work is tracked
-in [Feature Backlog](14-feature-backlog.md).
+arbiter names, resource kinds, duplicate resource names, duplicate resource
+subclauses, duplicate users, and known `rule_slot` users. `(resources ...)` is
+a singleton actor clause, so repeated resources blocks are rejected rather
+than merged or overwritten.
+
+The current shareable resource kind catalog is deliberately small:
+
+| Kind | Status | Meaning |
+| --- | --- | --- |
+| `rule_slot` | shipped for `priority` arbitration | A one-cycle mutual-exclusion slot for rule users. A grant enables the whole bound rule DT for that cycle. |
+| `output_bundle` | backlog | A group of actor outputs or LHS targets that must have one owner for a cycle. |
+| `interface_bundle` | backlog | A protocol-facing interface or bus bundle, such as an APB-like signal group. |
+| `named_drive` | backlog | A reusable actor `(drive ...)` body or drive-call path that multiple users may request. |
+| `transaction_start` | backlog | The start/request fan-in for one transaction. |
+| `child_instance` | backlog | A spawned child instance that must not be re-entered while busy. |
+| `storage_port` | backlog | A shared state, register, memory, or storage-port access path. |
+
+Today, only `rule_slot` with `priority` arbitration has shipped scheduler
+behavior. Each bound rule requests the slot when its normalized rule guard is
+true. Priority edges choose the active winner, and the generated grant gates
+the whole lowered rule DT DTE without adding a cycle. Backlog resource kinds
+are parser-recognized names, not runtime support claims; a backlog kind with
+bound users fails closed until its lowering contract ships. The remaining
+resource work is tracked in [Feature Backlog](14-feature-backlog.md).

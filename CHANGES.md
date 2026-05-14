@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF shareable resource kind catalog
+- Completed `ISF-RESOURCE-CATALOG.1` by publishing the current growable
+  shareable-resource kind catalog in the ISF spec, mdBook, public contract,
+  and feature backlog.
+- The catalog identifies `rule_slot` as the only shipped enforced kind today
+  and keeps `output_bundle`, `interface_bundle`, `named_drive`,
+  `transaction_start`, `child_instance`, and `storage_port` as named backlog
+  entries until their lowering contracts ship.
+- Added [docs/tasks/ISF-RESOURCE-CATALOG.md](docs/tasks/ISF-RESOURCE-CATALOG.md)
+  as the completed task-tree record for this documentation slice.
+- Verified the catalog against the focused resource parser/lowering
+  regressions plus the mdBook build.
 ### R14 — ISF resource/priority tree closure
 - Completed `ISF-RESOURCE-PRIORITY.6` and closed the resource/priority task
   tree.

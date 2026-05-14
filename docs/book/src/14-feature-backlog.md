@@ -189,12 +189,22 @@ rule requests when its guard is true, the priority graph chooses a unique
 active winner, and the generated grant gates the whole rule DT DTE without
 adding a cycle.
 
-Remaining backlog: unshipped resource kinds include `output_bundle`,
-`interface_bundle`, `named_drive`, `transaction_start`, `child_instance`, and
-`storage_port`. `round_robin`, transaction lifetime ownership, named-drive
-users, output-target users, multi-capacity resources, and dynamic resource
-names remain backlog until their reset, hold/release, fairness, and diagnostic
-contracts are explicit.
+Current resource kind catalog:
+
+| Kind | Status | Meaning |
+| --- | --- | --- |
+| `rule_slot` | shipped for `priority` arbitration | One-cycle mutual exclusion for rule users under the `priority` arbiter. |
+| `output_bundle` | backlog | One-cycle ownership of a group of actor outputs or LHS targets. |
+| `interface_bundle` | backlog | Ownership of a protocol-facing interface or bus bundle. |
+| `named_drive` | backlog | Ownership of a reusable actor `(drive ...)` body or drive-call path. |
+| `transaction_start` | backlog | Arbitration for start/request fan-in into one transaction. |
+| `child_instance` | backlog | Re-entry control for a spawned child instance. |
+| `storage_port` | backlog | Arbitration for shared state, register, memory, or storage-port access. |
+
+Remaining backlog: non-`rule_slot` resource kinds, `round_robin`, transaction
+lifetime ownership, named-drive users, output-target users, multi-capacity
+resources, and dynamic resource names remain backlog until their reset,
+hold/release, fairness, and diagnostic contracts are explicit.
 
 ### Priority Resolution
 

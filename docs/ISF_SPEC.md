@@ -896,6 +896,23 @@ semantics use a growable catalog of shareable resource kinds. The resource name
 is the author-defined instance handle; the kind says what is being shared; the
 `arbiter` says how requesters are selected.
 
+Current shareable resource kind catalog:
+
+| Kind | Status | Meaning |
+| --- | --- | --- |
+| `rule_slot` | shipped for `priority` arbitration | A one-cycle mutual-exclusion slot for rule users. A grant enables the whole bound rule DT for that cycle. |
+| `output_bundle` | backlog | A group of actor outputs or LHS targets that must have one owner for a cycle. |
+| `interface_bundle` | backlog | A protocol-facing interface or bus bundle, such as an APB-like signal group. |
+| `named_drive` | backlog | A reusable actor `(drive ...)` body or drive-call path that multiple users may request. |
+| `transaction_start` | backlog | The start/request fan-in for one transaction. |
+| `child_instance` | backlog | A spawned child instance that must not be re-entered while busy. |
+| `storage_port` | backlog | A shared state, register, memory, or storage-port access path. |
+
+Backlog names are parser-recognized catalog entries, not shipped runtime
+behavior. A backlog kind with bound users must fail closed until its lowering
+path, runtime semantics, diagnostics, report surface, and regression coverage
+ship.
+
 The shipped resource-arbitration implementation covers priority-arbitrated
 `rule_slot` users. The source shape keeps binding centralized under
 `(resources ...)` by extending a resource entry with `(kind rule_slot)` and
@@ -904,10 +921,8 @@ requests the resource when its normalized rule guard is true. Rule-local
 `(priority over other_rule)` and actor-level `(priority lhs over rhs)` edges
 choose the active winner when the endpoints are bound rules of the same
 resource. The generated grant gates the whole lowered rule DT DTE, while
-existing same-target priority suppression remains assignment-local. Unshipped
-resource kinds include `output_bundle`, `interface_bundle`,
-`named_drive`, `transaction_start`, `child_instance`, and `storage_port`.
-Cycles, incomplete ordering among potentially simultaneous bound users,
+existing same-target priority suppression remains assignment-local. Cycles,
+incomplete ordering among potentially simultaneous bound users,
 ambiguous future user namespaces, unsupported resource kinds, and
 `round_robin` resources with bound users fail closed. Transaction users,
 named-drive users, output-target users, child-instance users, storage-port

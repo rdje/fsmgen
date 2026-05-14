@@ -44,6 +44,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-RESOURCE-CATALOG` | `done` | `R14` | `closed` | [docs/tasks/ISF-RESOURCE-CATALOG.md](docs/tasks/ISF-RESOURCE-CATALOG.md) |
 | `ISF-RESOURCE-PRIORITY` | `done` | `R14` | `closed` | [docs/tasks/ISF-RESOURCE-PRIORITY.md](docs/tasks/ISF-RESOURCE-PRIORITY.md) |
 | `ISF-CONFLICTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md) |
 | `ISF-COMPOSITION` | `done` | `R14` | `closed` | [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md) |
@@ -61,6 +62,7 @@ as done work unless a future task reopens them.
 | Same-cycle output conflicts, fan-in, and fail-closed drive policy | `ISF-CONFLICTS` |
 | Generated-child top instantiation and spawn parameter binding | `ISF-COMPOSITION` |
 | Resource arbitration and priority enforcement | `ISF-RESOURCE-PRIORITY` |
+| Shareable resource kind catalog and public resource registry | `ISF-RESOURCE-CATALOG` |
 | Expression-valued rule assignments and rule action widening | `ISF-RULE-ACTIONS` |
 | Transaction stage lowering and temporal contract lowering | `ISF-STAGES-CONTRACTS` |
 | Data-operation width inference for shift/extract/assemble families | `ISF-DATA-WIDTHS` |

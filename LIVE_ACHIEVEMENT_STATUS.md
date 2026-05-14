@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF shareable resource kind catalog
+- Active R14 task-tree slice: `ISF-RESOURCE-CATALOG.1` is complete.
+- Public ISF documentation now lists the growable shareable resource kind
+  catalog across the spec, mdBook, public contract, and feature backlog.
+- `rule_slot` is the only shipped enforced kind today; `output_bundle`,
+  `interface_bundle`, `named_drive`, `transaction_start`, `child_instance`,
+  and `storage_port` remain backlog catalog names.
+- Focused resource parser/lowering regressions and the mdBook build pass.
+- The next active R14 frontier remains `ISF-RULE-ACTIONS.1`.
+
 ## 2026-05-14: R14 — ISF resource/priority tree closure
 - Active R14 task-tree slice: `ISF-RESOURCE-PRIORITY.6` is complete.
 - The `ISF-RESOURCE-PRIORITY` task tree is closed and moved to the completed

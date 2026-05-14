@@ -57,6 +57,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   diagnostics, schedule-report metadata, focused tests, public contract,
   mdBook, roadmap, and live docs are synchronized. PNT continues with
   `ISF-RULE-ACTIONS.1`.
+- `ISF-RESOURCE-CATALOG.1` is complete. The ISF spec, mdBook rules chapter,
+  public contract, and feature backlog now publish the growable shareable
+  resource kind catalog. `rule_slot` is the only shipped enforced kind today;
+  `output_bundle`, `interface_bundle`, `named_drive`, `transaction_start`,
+  `child_instance`, and `storage_port` remain backlog catalog names until
+  their lowering contracts ship.
 - ISF construct support now has a normative rule: parser acceptance is not a
   support claim. Every current or future shipped ISF construct must have an
   explicit accepted source shape, lowering path or fail-closed diagnostic,

@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF shareable resource kind catalog
+- Completed `ISF-RESOURCE-CATALOG.1` in
+  [docs/tasks/ISF-RESOURCE-CATALOG.md](docs/tasks/ISF-RESOURCE-CATALOG.md).
+- The ISF spec, mdBook rules chapter, public contract, and feature backlog
+  now list the growable shareable resource kind catalog.
+- `rule_slot` is the only shipped enforced resource kind today. Backlog
+  catalog names are `output_bundle`, `interface_bundle`, `named_drive`,
+  `transaction_start`, `child_instance`, and `storage_port`. The next active
+  R14 frontier remains `ISF-RULE-ACTIONS.1`.
+- Verification passed with the focused resource parser/lowering tests,
+  `mdbook build docs/book`, and `git diff --check`.
 ## 2026-05-14: ISF resource/priority tree closure
 - Completed `ISF-RESOURCE-PRIORITY.6` and closed
   [docs/tasks/ISF-RESOURCE-PRIORITY.md](docs/tasks/ISF-RESOURCE-PRIORITY.md).

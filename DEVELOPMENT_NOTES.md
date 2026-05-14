@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF shareable resource kind catalog
+- The resource list is now treated as a growable public registry. It starts
+  small on purpose: a kind should enter shipped runtime behavior only when it
+  has a clear lowering path, runtime semantics, diagnostics, report surface,
+  and regression evidence.
+- `rule_slot` is the only runtime-backed kind today because it maps directly
+  to rule DT DTE gating. The other catalog names are useful design anchors,
+  but they remain backlog so parser acceptance does not overstate support.
 ## 2026-05-14: ISF resource/priority tree closure
 - The resource/priority tree is closed with the deliberately bounded shipped
   surface: `rule_slot` + `priority` for owner-wide rule mutual exclusion,
