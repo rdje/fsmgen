@@ -13,8 +13,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree remains
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md),
-  whose current frontier is `ISF-CONFLICTS.4.1` after splitting the broad
-  conflict-tracking implementation container into executable leaves.
+  whose current frontier is `ISF-CONFLICTS.4.2` after adding internal
+  scheduler-side assignment provenance.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
   guide for installing the same task-tree tracking workflow in another
   project.
@@ -4353,9 +4353,12 @@ Left:
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the `ISF-CONFLICTS` task tree when selecting the ISF conflict-resolution
-  feature path; the current frontier is `ISF-CONFLICTS.4.1`, which adds
-  scheduler-side assignment provenance inventory before classification and
-  conflict rejection.
+  feature path; the current frontier is `ISF-CONFLICTS.4.2`, which classifies
+  compatible fan-in groups from scheduler-side assignment provenance.
+- ISF conflict detection policy is now split: compile-time proof is
+  best-effort and must flag cases where proof is not doable, while
+  verification-only runtime selector conflict instrumentation is tracked as a
+  later `ISF-CONFLICTS.4.5` leaf.
 - Before any future ISF implementation, diagnostics, fixture, contract, or
   documentation slice, attach the work to the relevant active ISF objective
   tree or create a new tree under `docs/tasks/` if a new objective family is

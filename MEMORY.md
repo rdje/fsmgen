@@ -1,13 +1,30 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF assignment provenance inventory
+- Completed `ISF-CONFLICTS.4.1` in
+  [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md).
+- `FSM::Scheduler::ISF::LoweringIR` now attaches an internal
+  `assignment_provenance` array to each lowered module before scheduled `.fsm`
+  emission.
+- Each record carries owner, owner kind, source kind, target, operator, RHS,
+  domain hint, assignment index, and activation context for the state or DT
+  container.
+- Static conflict detection is now documented as best-effort: cases where
+  compile-time proof is not doable must be flagged. Verification-only runtime
+  selector conflict instrumentation is tracked as `ISF-CONFLICTS.4.5`.
+- Emitted scheduled `.fsm`, generated HDL behavior, and public schedule-report
+  schema are unchanged in this slice. The active frontier is now
+  `ISF-CONFLICTS.4.2`.
 ## 2026-05-14: ISF conflict tracking implementation split
 - Split broad container `ISF-CONFLICTS.4` in
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md)
   before code changes.
 - New executable leaves cover scheduler-side assignment provenance,
   compatible fan-in classification, incompatible unprioritized overlap
-  detection, and target-local priority resolution.
-- The active `ISF-CONFLICTS` frontier is now `ISF-CONFLICTS.4.1`.
+  detection, target-local priority resolution, and verification-only runtime
+  selector conflict instrumentation.
+- This slice moved the tree to `ISF-CONFLICTS.4.1`; the current frontier is
+  recorded in the latest entry.
 ## 2026-05-14: ISF fail-closed conflict policy
 - Completed `ISF-CONFLICTS.3` in
   [docs/tasks/ISF-CONFLICT-RESOLUTION.md](docs/tasks/ISF-CONFLICT-RESOLUTION.md).

@@ -78,7 +78,8 @@ transaction start input.
   Status: `active`
   Goal: `Implement scheduler/emitter conflict tracking.`
   Children: `ISF-CONFLICTS.4.1`, `ISF-CONFLICTS.4.2`,
-  `ISF-CONFLICTS.4.3`, `ISF-CONFLICTS.4.4`
+  `ISF-CONFLICTS.4.3`, `ISF-CONFLICTS.4.4`,
+  `ISF-CONFLICTS.4.5`
   Acceptance: `The implementation can distinguish compatible fan-in from
   incompatible same-cycle drive conflicts without relying on text-order
   accidents in emitted `.fsm`.`
@@ -86,14 +87,14 @@ transaction start input.
   Commit: `pending container completion`
 
 - ID: `ISF-CONFLICTS.4.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Add scheduler-side assignment provenance inventory.`
   Acceptance: `ISF lowering has a bounded internal representation for emitted
   assignments that records source owner, source kind, target, operator, RHS,
   domain hint, and activation context before scheduled `.fsm` text is
   generated. Existing scheduled `.fsm` output remains behavior-compatible.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `prove -l t/1207-isf-assignment-provenance-inventory.t; bin/ci-regression isf --no-book; git diff --check`
+  Commit: `ISF-CONFLICTS.4.1: add ISF assignment provenance`
 
 - ID: `ISF-CONFLICTS.4.2`
   Status: `pending`
@@ -107,10 +108,11 @@ transaction start input.
 
 - ID: `ISF-CONFLICTS.4.3`
   Status: `pending`
-  Goal: `Detect incompatible unprioritized overlap.`
-  Acceptance: `The scheduler can reject at least overlapping rule/rule and
-  rule/drive same-target data conflicts while preserving ordinary
-  mutually-exclusive state assignment behavior.`
+  Goal: `Add best-effort compile-time conflict detection and unprovable-case flags.`
+  Acceptance: `The scheduler can reject statically provable overlapping
+  rule/rule and rule/drive same-target data conflicts, preserve ordinary
+  mutually-exclusive state assignment behavior, and flag cases where
+  compile-time proof is not doable instead of silently claiming they are safe.`
   Verification: `pending`
   Commit: `pending`
 
@@ -120,6 +122,16 @@ transaction start input.
   Acceptance: `Declared rule/actor priority can select one unique winner for a
   supported same-domain data conflict, while cycles, incomparable winners, and
   mixed timing operators fail closed.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-CONFLICTS.4.5`
+  Status: `pending`
+  Goal: `Add verification-only runtime selector conflict instrumentation.`
+  Acceptance: `The implementation can emit verification-only logic that checks
+  mux selector conflicts at runtime: multi-hit source selectors for the same
+  LHS/VAL selector when requested, and two or more different VAL selectors
+  active for the same LHS mux in the same cycle.`
   Verification: `pending`
   Commit: `pending`
 
@@ -154,7 +166,7 @@ transaction start input.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-CONFLICTS.4.1` | `pending` | Scheduler-side provenance is the narrow foundation for later compatible fan-in classification, conflict diagnostics, and priority handling. |
+| 1 | `ISF-CONFLICTS.4.2` | `pending` | Assignment provenance now exists; the next executable slice classifies compatible fan-in groups from that provenance. |
 
 ## Current Behavior Inventory
 
@@ -347,6 +359,9 @@ Conflict detection is activation-aware:
 - If overlap is possible, or the scheduler cannot prove non-overlap, the
   sources must either match a compatible fan-in rule or be resolved by explicit
   priority.
+- Compile-time proof is best-effort. When the scheduler cannot prove a case
+  safe or conflicting, it must flag that proof is not doable for that case
+  instead of silently treating the design as conflict-free.
 - Text order is never an arbitration rule. Author order may preserve reporting
   determinism, but it must not choose hardware behavior for an incompatible
   same-cycle drive.
@@ -407,6 +422,59 @@ Deferred resource-arbitration policy:
   resolution is a named resource must fail with a diagnostic that says resource
   arbitration is declared but not enforced for that conflict.
 
+## Runtime Selector Conflict Verification
+
+Compile-time conflict detection is useful but inherently incomplete. The tree
+therefore keeps a separate runtime-verification path for selector conflicts.
+That path is verification-only for now.
+
+Runtime conflict checks follow the mux-selector model:
+
+- For each `LHS` mux, every selectable `VAL` has a one-bit selector. That
+  selector is the logical OR of all FSM/ISF-origin source selectors for the
+  corresponding `LHS`/`VAL` pair.
+- A verification check can flag multiple active source selectors contributing
+  to the same `LHS`/`VAL` selector in the same cycle when the policy wants
+  one-hot source ownership for that selector.
+- A verification check must flag two or more different `VAL` selectors active
+  for the same `LHS` mux in the same cycle, because that means the design is
+  trying to mux out different values to one target.
+- The same reasoning applies inside an ISF transaction or FSM-local lowering
+  region when the needed selector signals are still visible.
+
+This runtime path complements, rather than replaces, compile-time analysis:
+compile-time checks should catch and reject what they can prove; unprovable
+cases should be flagged; verification-only selector checks can then catch the
+remaining runtime-active conflicts.
+
+## Assignment Provenance Inventory
+
+`ISF-CONFLICTS.4.1` adds the first internal implementation layer for conflict
+tracking. `FSM::Scheduler::ISF::LoweringIR` now finalizes each lowered module
+with an `assignment_provenance` array before any scheduled `.fsm` text is
+emitted.
+
+Each provenance record carries:
+
+- `owner` and `owner_kind`, naming the transaction, rule, drive, or generated
+  owner associated with the assignment.
+- `source_kind`, such as `drive_call_start`, `drive_call_param`,
+  `complete_pulse`, `rule_action`, `rule_trigger_source`,
+  `rule_trigger_fanin`, or `drive_body`.
+- `target`, `operator`, and `rhs`, copied from the assignment that will be
+  emitted.
+- `domain`, a bounded hint such as `request`, `pulse`, `capture`, `helper`, or
+  `data`.
+- `assignment_index`, preserving the assignment's stable order within its
+  source container.
+- `activation`, naming the state or DT container plus the state guard, DT DTE
+  guard, and assignment-local guard when present.
+
+This slice does not change emitted scheduled `.fsm`, generated HDL, or the
+public schedule-report schema. Schedule-report projection belongs to
+`ISF-CONFLICTS.5`; compatible fan-in classification belongs to
+`ISF-CONFLICTS.4.2`.
+
 ## Decisions
 
 - `2026-05-14`: The conflict-resolution work will be tracked as a task tree
@@ -432,6 +500,13 @@ Deferred resource-arbitration policy:
 - `2026-05-14`: `ISF-CONFLICTS.4` was split into executable implementation
   leaves before code changes: provenance inventory, compatible fan-in
   classification, unprioritized conflict detection, and target-local priority.
+- `2026-05-14`: `ISF-CONFLICTS.4.1` keeps assignment provenance internal to
+  `LoweringIR` for now. Public schedule-report projection is deferred to
+  `ISF-CONFLICTS.5` so the report schema does not widen before diagnostics are
+  designed.
+- `2026-05-14`: Compile-time conflict detection is best-effort. Cases where
+  static proof is not doable must be flagged explicitly, and verification-only
+  runtime selector conflict instrumentation is tracked as `ISF-CONFLICTS.4.5`.
 
 ## Open Questions
 
@@ -459,6 +534,9 @@ Deferred resource-arbitration policy:
 | `2026-05-14` | `ISF-CONFLICTS.3` | `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-CONFLICTS.4` | Split into executable implementation leaves | `passed` |
 | `2026-05-14` | `ISF-CONFLICTS.4` | `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.4.1` | `prove -l t/1207-isf-assignment-provenance-inventory.t` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.4.1` | `bin/ci-regression isf --no-book` | `passed` |
+| `2026-05-14` | `ISF-CONFLICTS.4.1` | `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -469,6 +547,7 @@ Deferred resource-arbitration policy:
 | `ISF-CONFLICTS.2` | `ISF-CONFLICTS.2: specify compatible fan-in policy` | Records the deterministic OR/fan-in policy for compatible request, pulse, and same-value selector domains. |
 | `ISF-CONFLICTS.3` | `ISF-CONFLICTS.3: specify conflict priority policy` | Records fail-closed behavior for incompatible overlap and target-local priority/resource boundaries. |
 | `ISF-CONFLICTS.4` | `ISF-CONFLICTS.4: split conflict tracking implementation` | Splits the broad implementation container into executable provenance, classification, detection, and priority leaves. |
+| `ISF-CONFLICTS.4.1` | `ISF-CONFLICTS.4.1: add ISF assignment provenance` | Adds internal `LoweringIR` assignment provenance records and focused regression coverage. |
 
 ## Changelog
 
@@ -483,3 +562,5 @@ Deferred resource-arbitration policy:
   tracking.
 - `2026-05-14`: Split `ISF-CONFLICTS.4`; current frontier moves to
   `ISF-CONFLICTS.4.1` for scheduler-side assignment provenance inventory.
+- `2026-05-14`: Completed `ISF-CONFLICTS.4.1`; current frontier moves to
+  `ISF-CONFLICTS.4.2` for compatible fan-in classification from provenance.

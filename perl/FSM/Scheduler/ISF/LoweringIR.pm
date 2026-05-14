@@ -106,6 +106,7 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
         my ($n) = grep { $_->{kind} ne 'entry' && $_->{name} !~ /_timeout$/ } @{$ir->{states}};
         push @{$entry->{transitions}}, { target => $n->{name}, condition => $entry->{guard} } if $n;
     }
+    _finalize_ir($ir);
     return $ir;
 }
 
@@ -134,7 +135,7 @@ sub _build_parent_ir($self, $actor, $spawned) {
     $self->_wire_do_children(\@states, \%ctrs, $actor);
     $self->_build_drive_dts($actor, \@dts, \%ctrs);
 
-    return {
+    my $ir = {
         actor_name => $actor->{actor_name},
         clock      => $actor->{clock},
         reset      => $actor->{reset},
@@ -145,6 +146,8 @@ sub _build_parent_ir($self, $actor, $spawned) {
         counters   => \%ctrs,
         children   => {},
     };
+    _finalize_ir($ir);
+    return $ir;
 }
 
 sub _collect_spawn_refs($self, $actor) {
@@ -715,7 +718,7 @@ sub _sample_assignments {
     for my $sample (@$samples) {
         next unless ref($sample) eq 'ARRAY' && @$sample >= 4;
         next unless $sample->[0] eq 'sample' && $sample->[2] eq 'as';
-        push @assignments, { lhs => $sample->[3], rhs => $sample->[1], op => '<=' };
+        push @assignments, { lhs => $sample->[3], rhs => $sample->[1], op => '<=', source_kind => 'sample_capture' };
     }
 
     return @assignments;
@@ -777,7 +780,10 @@ sub _ir_named_drive_call {
     my $name = $cl->[1];
     my @params = @{$def->{params}};
     my @actuals = @{$cl}[2 .. $#$cl];
-    my @assignments = (_sample_assignments($pending_samples || []), { lhs => "${name}_start", rhs => 1, op => '=' });
+    my @assignments = (
+        _sample_assignments($pending_samples || []),
+        { lhs => "${name}_start", rhs => 1, op => '=', source_kind => 'drive_call_start' },
+    );
 
     confess "Transaction '$tn': drive '$name' expects " . scalar(@params) . " actual(s), got " . scalar(@actuals) . "\n"
         if @actuals > @params;
@@ -786,7 +792,7 @@ sub _ir_named_drive_call {
         my $arg = $actuals[$pi];
         confess "Transaction '$tn': drive '$name' missing actual for '$params[$pi]'\n"
             unless defined $arg;
-        push @assignments, { lhs => "${name}_$params[$pi]", rhs => $arg, op => '=' };
+        push @assignments, { lhs => "${name}_$params[$pi]", rhs => $arg, op => '=', source_kind => 'drive_call_param' };
     }
 
     return {
@@ -796,7 +802,7 @@ sub _ir_named_drive_call {
         transitions => [],
     };
 }
-sub _ir_drive   { my ($cl,$tn,$ps,$i)=@_; my @a; for(@$ps){push @a,{lhs=>$_->[3],rhs=>$_->[1],op=>'<='}} for my $j(2..$#$cl){my$x=$cl->[$j];next unless ref($x)eq'ARRAY'&&@$x>=2;push @a,{lhs=>$x->[0],rhs=>$x->[1],op=>'='}} {name=>"${tn}_drive_$i",kind=>'sequential',assignments=>\@a,transitions=>[]} }
+sub _ir_drive   { my ($cl,$tn,$ps,$i)=@_; my @a; for(@$ps){push @a,{lhs=>$_->[3],rhs=>$_->[1],op=>'<=',source_kind=>'sample_capture'}} for my $j(2..$#$cl){my$x=$cl->[$j];next unless ref($x)eq'ARRAY'&&@$x>=2;push @a,{lhs=>$x->[0],rhs=>$x->[1],op=>'=',source_kind=>'inline_drive'}} {name=>"${tn}_drive_$i",kind=>'sequential',assignments=>\@a,transitions=>[]} }
 sub _ir_drive_call { my ($body,$tn,$ps,$i)=@_; return undef; }
 sub _ir_await {
     my ($cl, $tn, $i, $wd, $pending_samples) = @_;
@@ -811,9 +817,9 @@ sub _ir_await {
         watchdog    => { name => "${tn}_wd", limit => $wd // 65536 },
     };
 }
-sub _ir_complete{ my ($cl,$tn,$i)=@_; {name=>"${tn}_done_$i",kind=>'terminal',assignments=>[{lhs=>$cl->[1],rhs=>1,op=>'<1'}],transitions=>[]} }
-sub _ir_update   { my ($cl,$tn,$i)=@_; my$rhs=_format_isf_expr($cl->[2]); {name=>"${tn}_update_$i",kind=>'sequential',assignments=>[{lhs=>$cl->[1],rhs=>$rhs,op=>'<-'}],transitions=>[]} }
-sub _ir_shift_left { my ($cl,$tn,$i)=@_; my$reg=$cl->[1];my$bit=$cl->[2]; {name=>"${tn}_shift_$i",kind=>'sequential',assignments=>[{lhs=>$reg,rhs=>"(| (<< $reg 1) $bit)",op=>'<-'}],transitions=>[]} }
+sub _ir_complete{ my ($cl,$tn,$i)=@_; {name=>"${tn}_done_$i",kind=>'terminal',assignments=>[{lhs=>$cl->[1],rhs=>1,op=>'<1',source_kind=>'complete_pulse'}],transitions=>[]} }
+sub _ir_update   { my ($cl,$tn,$i)=@_; my$rhs=_format_isf_expr($cl->[2]); {name=>"${tn}_update_$i",kind=>'sequential',assignments=>[{lhs=>$cl->[1],rhs=>$rhs,op=>'<-',source_kind=>'update'}],transitions=>[]} }
+sub _ir_shift_left { my ($cl,$tn,$i)=@_; my$reg=$cl->[1];my$bit=$cl->[2]; {name=>"${tn}_shift_$i",kind=>'sequential',assignments=>[{lhs=>$reg,rhs=>"(| (<< $reg 1) $bit)",op=>'<-',source_kind=>'shift'}],transitions=>[]} }
 sub _ir_shift_right {
     my ($cl, $tn, $i, $widths) = @_;
     my $reg = $cl->[1];
@@ -828,11 +834,11 @@ sub _ir_shift_right {
     return {
         name        => "${tn}_shift_$i",
         kind        => 'sequential',
-        assignments => [{ lhs => $reg, rhs => "(| (>> $reg 1) (<< $bit $insert))", op => '<-' }],
+        assignments => [{ lhs => $reg, rhs => "(| (>> $reg 1) (<< $bit $insert))", op => '<-', source_kind => 'shift' }],
         transitions => [],
     };
 }
-sub _ir_assemble  { my ($cl,$tn,$i)=@_; my($var,@parts)=_parse_assemble_clause($cl);my$rhs='(concat '.join(' ',@parts).')'; {name=>"${tn}_asm_$i",kind=>'sequential',assignments=>[{lhs=>$var,rhs=>$rhs,op=>'<-'}],transitions=>[]} }
+sub _ir_assemble  { my ($cl,$tn,$i)=@_; my($var,@parts)=_parse_assemble_clause($cl);my$rhs='(concat '.join(' ',@parts).')'; {name=>"${tn}_asm_$i",kind=>'sequential',assignments=>[{lhs=>$var,rhs=>$rhs,op=>'<-',source_kind=>'assemble'}],transitions=>[]} }
 sub _ir_extract {
     my ($cl, $tn, $i, $widths) = @_;
     my ($word, $fields, $explicit_widths) = _parse_extract_clause($cl);
@@ -880,7 +886,7 @@ sub _ir_extract {
             $rhs = "(slice $word $field HIGH $field LOW)";
             $high = undef;
         }
-        push @assignments, { lhs => $field, rhs => $rhs, op => '<=' };
+        push @assignments, { lhs => $field, rhs => $rhs, op => '<=', source_kind => 'extract_capture' };
     }
 
     return {
@@ -895,11 +901,11 @@ sub _format_isf_expr {
     return $expr unless ref($expr) eq 'ARRAY';
     return '(' . join(' ', map { _format_isf_expr($_) } @$expr) . ')';
 }
-sub _ir_sample_state { my ($tn,$ps,$i)=@_; my @a; for(@$ps){push @a,{lhs=>$_->[3],rhs=>$_->[1],op=>'<='}} {name=>"${tn}_sample_$i",kind=>'sequential',assignments=>\@a,transitions=>[]} }
+sub _ir_sample_state { my ($tn,$ps,$i)=@_; my @a; for(@$ps){push @a,{lhs=>$_->[3],rhs=>$_->[1],op=>'<=',source_kind=>'sample_capture'}} {name=>"${tn}_sample_$i",kind=>'sequential',assignments=>\@a,transitions=>[]} }
 sub _ir_phase { my ($cl,$tn,$i)=@_; my $name=$cl->[1]; {name=>"${tn}_phase_$i",kind=>'sequential',assignments=>[],transitions=>[],phase_name=>$name} }
 sub _ir_placeholder{ my ($cl,$tn,$i)=@_; {name=>"${tn}_$cl->[0]_$i",kind=>'sequential',assignments=>[],transitions=>[]} }
-sub _ir_do       { my ($cl,$tn,$i)=@_; my $c=$cl->[1]; {name=>"${tn}_do_$i",kind=>'await',assignments=>[{lhs=>"${c}_start",rhs=>1,op=>'='}],transitions=>[],guard=>{port=>"${c}_done"}} }
-sub _ir_spawn    { my ($cl,$tn,$i)=@_; my $inst=$cl->[3]||"${tn}_$i"; {name=>"${tn}_spawn_$i",kind=>'sequential',assignments=>[{lhs=>"${inst}_start",rhs=>1,op=>'='}],transitions=>[]} }
+sub _ir_do       { my ($cl,$tn,$i)=@_; my $c=$cl->[1]; {name=>"${tn}_do_$i",kind=>'await',assignments=>[{lhs=>"${c}_start",rhs=>1,op=>'=',source_kind=>'do_start'}],transitions=>[],guard=>{port=>"${c}_done"}} }
+sub _ir_spawn    { my ($cl,$tn,$i)=@_; my $inst=$cl->[3]||"${tn}_$i"; {name=>"${tn}_spawn_$i",kind=>'sequential',assignments=>[{lhs=>"${inst}_start",rhs=>1,op=>'=',source_kind=>'spawn_start'}],transitions=>[]} }
 sub _ir_when     { my ($cl,$tn,$i)=@_; {name=>"${tn}_when_$i",kind=>'branch',condition=>$cl->[1],body_clauses=>[@{$cl}[2..$#$cl]],assignments=>[],transitions=>[]} }
 sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters)=@_; my @s; my $bstate=_ir_when($cl,$tn,$$ir++); push @s,$bstate; my @body_states; my @lp;
     for my $bc(@{$bstate->{body_clauses}}){next unless ref($bc)eq'ARRAY';my$bk=$bc->[0];
@@ -966,6 +972,181 @@ sub _ir_repeat {
     return (\@s,$ctr,$width);
 }
 
+sub _finalize_ir {
+    my ($ir) = @_;
+    $ir->{assignment_provenance} = _build_assignment_provenance($ir);
+    return $ir;
+}
+
+sub _build_assignment_provenance {
+    my ($ir) = @_;
+    my @records;
+
+    for my $state (@{$ir->{states} || []}) {
+        my $assignment_index = 0;
+        for my $assignment (@{$state->{assignments} || []}) {
+            push @records, _state_assignment_provenance($state, $assignment, $assignment_index++);
+        }
+    }
+
+    for my $dt (@{$ir->{dt_blocks} || []}) {
+        my $assignment_index = 0;
+        for my $assignment (@{$dt->{assignments} || []}) {
+            push @records, _dt_assignment_provenance($dt, $assignment, $assignment_index++);
+        }
+    }
+
+    return \@records;
+}
+
+sub _state_assignment_provenance {
+    my ($state, $assignment, $assignment_index) = @_;
+    my $owner = _transaction_owner_from_state_name($state->{name});
+    my $source_kind = _state_assignment_source_kind($state, $assignment);
+
+    return {
+        owner            => $owner // $state->{name},
+        owner_kind       => defined($owner) ? 'transaction' : 'generated',
+        source_kind      => $source_kind,
+        target           => $assignment->{lhs},
+        operator         => $assignment->{op},
+        rhs              => $assignment->{rhs},
+        domain           => _assignment_domain_hint($assignment, $source_kind),
+        assignment_index => $assignment_index,
+        activation       => {
+            container_kind   => 'state',
+            container_name   => $state->{name},
+            state_kind       => $state->{kind},
+            state_guard      => _clone_provenance_value($state->{guard}),
+            assignment_guard => _clone_provenance_value($assignment->{guard}),
+        },
+    };
+}
+
+sub _dt_assignment_provenance {
+    my ($dt, $assignment, $assignment_index) = @_;
+    my $source_kind = _dt_assignment_source_kind($dt, $assignment);
+
+    return {
+        owner            => _dt_assignment_owner($dt),
+        owner_kind       => _dt_assignment_owner_kind($dt),
+        source_kind      => $source_kind,
+        target           => $assignment->{lhs},
+        operator         => $assignment->{op},
+        rhs              => $assignment->{rhs},
+        domain           => _assignment_domain_hint($assignment, $source_kind),
+        assignment_index => $assignment_index,
+        activation       => {
+            container_kind   => 'dt',
+            container_name   => $dt->{name},
+            dt_kind          => $dt->{kind},
+            dte_guard        => _clone_provenance_value($dt->{dte_guard}),
+            assignment_guard => _clone_provenance_value($assignment->{guard}),
+        },
+    };
+}
+
+sub _transaction_owner_from_state_name {
+    my ($name) = @_;
+    return undef unless defined $name;
+    return $1 if $name =~ /^(.+)_(?:idle|drive|await|done|repeat|sample|max_chk|when|switch|update|shift|asm|ext|extract|do|spawn|phase)_/;
+    return $1 if $name =~ /^(.+)_timeout$/;
+    return undef;
+}
+
+sub _state_assignment_source_kind {
+    my ($state, $assignment) = @_;
+    return $assignment->{source_kind} if defined $assignment->{source_kind};
+
+    my $name = $state->{name} // '';
+    my $kind = $state->{kind} // '';
+    my $target = $assignment->{lhs} // '';
+    my $op = $assignment->{op} // '';
+
+    return 'scheduler_can_accept' if $target eq 'can_accept';
+    return 'drive_call_start' if $name =~ /_drive_/ && $target =~ /_start\z/ && $op eq '=';
+    return 'drive_call_param' if $name =~ /_drive_/ && $op eq '=';
+    return 'do_start' if $name =~ /_do_/ && $target =~ /_start\z/;
+    return 'spawn_start' if $name =~ /_spawn_/ && $target =~ /_start\z/;
+    return 'timeout_pulse' if $name =~ /_timeout\z/ && $op =~ /^<[0-9]+$/;
+    return 'timeout_status' if $name =~ /_timeout\z/;
+    return 'complete_pulse' if $kind eq 'terminal' && $op =~ /^<[0-9]+$/;
+    return 'sample_capture' if $name =~ /_(?:idle|sample)_/ && $op eq '<=';
+    return 'extract_capture' if $name =~ /_ext_/ && $op eq '<=';
+    return 'latency_counter_init' if $target =~ /_cc\z/ && $op eq '<-';
+    return 'latency_increment_request' if $target =~ /_inc\z/ && $op eq '=';
+    return 'latency_error' if $target =~ /_lerr\z/;
+    return 'repeat_counter' if $name =~ /_repeat_/;
+    return 'update' if $name =~ /_update_/;
+    return 'shift' if $name =~ /_shift_/;
+    return 'assemble' if $name =~ /_asm_/;
+    return 'inline_drive' if $name =~ /_drive_/;
+    return 'state_assignment';
+}
+
+sub _dt_assignment_source_kind {
+    my ($dt, $assignment) = @_;
+    return $assignment->{source_kind} if defined $assignment->{source_kind};
+
+    my $kind = $dt->{kind} // '';
+    my $target = $assignment->{lhs} // '';
+    my $op = $assignment->{op} // '';
+
+    return 'rule_trigger_source'
+        if $kind eq 'rule' && $op =~ /^<[0-9]+$/ && $target =~ /^\Q$dt->{name}\E_/;
+    return 'rule_action' if $kind eq 'rule';
+    return 'rule_trigger_fanin' if $kind eq 'rule_trigger_fanin';
+    return 'drive_body' if $kind eq 'drive';
+    return 'latency_counter' if $kind eq 'latency_counter';
+    return 'dt_assignment';
+}
+
+sub _dt_assignment_owner {
+    my ($dt) = @_;
+    return $1 if ($dt->{kind} // '') eq 'rule_trigger_fanin' && ($dt->{name} // '') =~ /^(.+)_trigger_fanin\z/;
+    return $dt->{name};
+}
+
+sub _dt_assignment_owner_kind {
+    my ($dt) = @_;
+    my $kind = $dt->{kind} // '';
+    return 'rule' if $kind eq 'rule';
+    return 'drive' if $kind eq 'drive';
+    return 'transaction' if $kind eq 'rule_trigger_fanin';
+    return 'generated';
+}
+
+sub _assignment_domain_hint {
+    my ($assignment, $source_kind) = @_;
+    my $target = $assignment->{lhs} // '';
+    my $op = $assignment->{op} // '';
+    my $rhs = defined($assignment->{rhs}) ? "$assignment->{rhs}" : '';
+
+    return 'request' if $source_kind =~ /(?:_start|_fanin)\z/ && $rhs eq '1';
+    return 'request' if $target =~ /_start\z/ && $op eq '=' && $rhs eq '1';
+    return 'request' if $source_kind eq 'rule_trigger_fanin';
+    return 'pulse' if $op =~ /^<[0-9]+$/ && $rhs eq '1';
+    return 'capture' if $source_kind =~ /(?:sample|extract)_capture/;
+    return 'helper' if $source_kind =~ /^(?:scheduler_|latency_|repeat_|timeout_status)/;
+    return 'data';
+}
+
+sub _clone_provenance_value {
+    my ($value) = @_;
+    return undef unless defined $value;
+    if (ref($value) eq 'HASH') {
+        my %copy;
+        for my $key (sort keys %$value) {
+            $copy{$key} = _clone_provenance_value($value->{$key});
+        }
+        return \%copy;
+    }
+    if (ref($value) eq 'ARRAY') {
+        return [ map { _clone_provenance_value($_) } @$value ];
+    }
+    return $value;
+}
+
 # --- Post-processing ---
 sub _link_states {
     my ($st,$tn)=@_;
@@ -1027,20 +1208,20 @@ sub _link_states {
 sub _inj_watchdog {
     my ($st,$tn,$wn,$lim,$ctrs)=@_;
     $ctrs->{last_error} = 1;
-    unshift @{$st->[0]{assignments}},{lhs=>$wn,rhs=>"(- $lim 1)",op=>'<='};
-    push @$st,{name=>"${tn}_timeout",kind=>'terminal',assignments=>[{lhs=>'done',rhs=>1,op=>'<1'},{lhs=>'last_error',rhs=>1,op=>'<-'}],transitions=>[]};
+    unshift @{$st->[0]{assignments}},{lhs=>$wn,rhs=>"(- $lim 1)",op=>'<=',source_kind=>'watchdog_init'};
+    push @$st,{name=>"${tn}_timeout",kind=>'terminal',assignments=>[{lhs=>'done',rhs=>1,op=>'<1',source_kind=>'timeout_pulse'},{lhs=>'last_error',rhs=>1,op=>'<-',source_kind=>'timeout_status'}],transitions=>[]};
 }
 
 sub _inj_latency {
     my ($st,$tn,$lat,$ha,$ctrs)=@_;
     $ctrs->{last_error} = 1; my $cc="${tn}_cc";my $inc="${tn}_inc";my $err="${tn}_lerr";my $min=$lat->{min}//1;my $max=$lat->{max}//256;
-    unshift @{$st->[0]{assignments}},{lhs=>$cc,rhs=>0,op=>'<-'};
-    for my $s(@$st){next if $s->{kind}eq'entry'||$s->{kind}eq'terminal'||$s->{name}=~/_timeout$/;unshift @{$s->{assignments}},{lhs=>$inc,rhs=>1,op=>'='}}
+    unshift @{$st->[0]{assignments}},{lhs=>$cc,rhs=>0,op=>'<-',source_kind=>'latency_counter_init'};
+    for my $s(@$st){next if $s->{kind}eq'entry'||$s->{kind}eq'terminal'||$s->{name}=~/_timeout$/;unshift @{$s->{assignments}},{lhs=>$inc,rhs=>1,op=>'=',source_kind=>'latency_increment_request'}}
     my($done)=grep{$_->{kind}eq'terminal'&&$_->{name}!~/_timeout$/}@$st;
-    if($done){push @{$done->{assignments}},{lhs=>$err,rhs=>1,op=>'=',guard=>{signal=>$cc,op=>'<',value=>$min}}}
+    if($done){push @{$done->{assignments}},{lhs=>$err,rhs=>1,op=>'=',guard=>{signal=>$cc,op=>'<',value=>$min},source_kind=>'latency_error'}}
     if(!$ha&&$max){my $mc="${tn}_max_chk";push @$st,{name=>$mc,kind=>'sequential',assignments=>[],transitions=>[{target=>"${tn}_timeout",condition=>{signal=>$cc,op=>'=',value=>$max}}]};
-        push @$st,{name=>"${tn}_timeout",kind=>'terminal',assignments=>[{lhs=>$err,rhs=>1,op=>'='},{lhs=>'done',rhs=>1,op=>'<1'},{lhs=>'last_error',rhs=>1,op=>'<-'}],transitions=>[]}}
-    my $dt={name=>"${tn}_cc_inc",kind=>'latency_counter',assignments=>[{lhs=>$cc,rhs=>"(+ $cc 1)",op=>'<-',guard=>{port=>$inc}}]};
+        push @$st,{name=>"${tn}_timeout",kind=>'terminal',assignments=>[{lhs=>$err,rhs=>1,op=>'=',source_kind=>'latency_error'},{lhs=>'done',rhs=>1,op=>'<1',source_kind=>'timeout_pulse'},{lhs=>'last_error',rhs=>1,op=>'<-',source_kind=>'timeout_status'}],transitions=>[]}}
+    my $dt={name=>"${tn}_cc_inc",kind=>'latency_counter',assignments=>[{lhs=>$cc,rhs=>"(+ $cc 1)",op=>'<-',guard=>{port=>$inc},source_kind=>'latency_counter'}]};
     return ($cc,$inc,$err,$dt);
 }
 
@@ -1061,7 +1242,7 @@ sub _build_rules {
             if ($a0 eq 'trigger') {
                 my $target = $ac->[1];
                 my $source = _rule_trigger_source_name($r->{name}, $target);
-                push @a, { lhs => $source, rhs => 1, op => '<1' };
+                push @a, { lhs => $source, rhs => 1, op => '<1', source_kind => 'rule_trigger_source' };
                 $ctrs->{$source} = 1 if $ctrs;
                 $ctrs->{"${target}_start"} = 1 if $ctrs;
                 push @{$fanin_by_transaction{$target}}, $source
@@ -1069,7 +1250,7 @@ sub _build_rules {
             } elsif ($a0 eq 'priority') {
                 # Parsed metadata; arbitration enforcement is a later slice.
             } else {
-                push @a, { lhs => $a0, rhs => $ac->[1], op => '<-' };
+                push @a, { lhs => $a0, rhs => $ac->[1], op => '<-', source_kind => 'rule_action' };
             }
         }
 
@@ -1082,7 +1263,7 @@ sub _build_rules {
         push @d, {
             name        => "${target}_trigger_fanin",
             kind        => 'rule_trigger_fanin',
-            assignments => [{ lhs => "${target}_start", rhs => $rhs, op => '=' }],
+            assignments => [{ lhs => "${target}_start", rhs => $rhs, op => '=', source_kind => 'rule_trigger_fanin' }],
         };
     }
 
@@ -1123,7 +1304,7 @@ sub _build_drive_dts {
             if (exists $param_signal{$rhs}) {
                 $rhs = $param_signal{$rhs};
             }
-            push @assignments, { lhs => $lhs, rhs => $rhs, op => '<-', guard => { port => "${name}_start" } };
+            push @assignments, { lhs => $lhs, rhs => $rhs, op => '<-', guard => { port => "${name}_start" }, source_kind => 'drive_body' };
         }
         push @$dts, { name => $name, kind => 'drive', assignments => \@assignments };
         $ctrs->{"${name}_start"} = 1;

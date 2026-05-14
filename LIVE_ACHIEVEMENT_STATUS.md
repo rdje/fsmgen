@@ -2,13 +2,25 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF assignment provenance inventory
+- Active R14 task-tree slice: `ISF-CONFLICTS.4.1` is complete.
+- `LoweringIR` now carries internal assignment provenance records before
+  scheduled `.fsm` emission, with source ownership, target/operator/RHS,
+  domain hint, and activation context.
+- Compile-time conflict detection is now explicitly best-effort: unprovable
+  cases must be flagged, and runtime mux-selector conflict checks are tracked
+  as a later verification-only leaf.
+- The public schedule report is unchanged; projection remains deferred to the
+  diagnostics/report leaf. The next frontier is `ISF-CONFLICTS.4.2`.
+
 ## 2026-05-14: R14 — ISF conflict tracking implementation split
 - Active R14 task-tree slice: `ISF-CONFLICTS.4` is now an active implementation
   container with executable subleaves.
-- The new current frontier is `ISF-CONFLICTS.4.1`, which adds
-  scheduler-side assignment provenance inventory.
+- This slice moved the tree to `ISF-CONFLICTS.4.1`; the current frontier is
+  recorded in the latest R14 task-tree entry above.
 - Later subleaves cover compatible fan-in classification, unprioritized
-  conflict detection, and target-local priority resolution.
+  conflict detection, target-local priority resolution, and runtime selector
+  conflict instrumentation for verification builds.
 
 ## 2026-05-14: R14 — ISF fail-closed conflict policy
 - Active R14 task-tree slice: `ISF-CONFLICTS.3` is complete in

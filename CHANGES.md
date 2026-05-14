@@ -1,12 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF assignment provenance inventory
+- Completed `ISF-CONFLICTS.4.1` by adding internal assignment provenance to
+  `FSM::Scheduler::ISF::LoweringIR`.
+- Each lowered module now carries `assignment_provenance` records with source
+  owner, owner kind, source kind, target, operator, RHS, domain hint,
+  assignment index, and state/DT activation context.
+- Captured the conflict-detection clarification that compile-time proof is
+  best-effort, unprovable cases must be flagged, and verification-only runtime
+  selector conflict checks are tracked separately.
+- Added [t/1207-isf-assignment-provenance-inventory.t](t/1207-isf-assignment-provenance-inventory.t)
+  to lock provenance shape and confirm scheduled `.fsm` output remains
+  behavior-compatible for rule trigger fan-in and drive bodies.
+- Advanced the active `ISF-CONFLICTS` frontier from `ISF-CONFLICTS.4.1` to
+  `ISF-CONFLICTS.4.2`.
 ### R14 — ISF conflict tracking implementation split
 - Split `ISF-CONFLICTS.4` into executable implementation leaves before making
   scheduler/emitter code changes.
 - Added subleaves for assignment provenance inventory, compatible fan-in
   classification, incompatible unprioritized overlap detection, and
   target-local priority resolution.
+- Added `ISF-CONFLICTS.4.5` for verification-only runtime selector conflict
+  instrumentation after the compile-time conflict slices.
 - Advanced the active `ISF-CONFLICTS` frontier from `ISF-CONFLICTS.4` to
   `ISF-CONFLICTS.4.1`.
 ### R14 — ISF fail-closed conflict policy

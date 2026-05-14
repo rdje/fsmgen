@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF assignment provenance inventory
+- The first conflict-tracking implementation slice is intentionally internal.
+  It gives the scheduler a source-aware inventory without changing `.fsm`
+  emission or the public schedule-report schema.
+- Provenance is attached after states, rule DTs, trigger fan-in DTs, drive DTs,
+  child rewiring, watchdog, and latency helpers have been built. This keeps
+  the inventory aligned with what the emitters will actually see.
+- The inventory stores domain hints rather than final classifications. Hints
+  such as `request`, `pulse`, `capture`, `helper`, and `data` are enough for
+  the next leaf to classify fan-in candidates, while avoiding premature
+  diagnostics/report API design.
+- Activation context records state guards, DT DTE guards, and assignment-local
+  guards. That is the minimum substrate needed to later distinguish ordinary
+  mutually-exclusive state assignments from possible same-cycle overlaps.
+- Compile-time conflict detection is deliberately best-effort. The scheduler
+  should reject what it can prove, but when static proof is not doable it must
+  flag that limitation instead of silently blessing the design.
+- Runtime selector conflict detection is tracked separately because it can use
+  the actual mux selector signals: one-hot source ownership checks for a
+  `LHS`/`VAL` selector when requested, and different-VAL selector conflicts for
+  a single `LHS` mux.
 ## 2026-05-14: ISF conflict tracking implementation split
 - `ISF-CONFLICTS.4` is too broad to implement honestly in one slice. The
   implementation needs a provenance substrate before classification,
@@ -13,6 +34,8 @@ This document captures engineering rationale, design constraints, and working de
 - Priority resolution is kept after unprioritized conflict detection because
   priority should be applied to a known conflict set, not guessed from raw
   assignment order.
+- Runtime selector conflict instrumentation is a separate later leaf so
+  verification-only logic does not get mixed into compile-time proof policy.
 ## 2026-05-14: ISF fail-closed conflict policy
 - The conflict policy is activation-aware because different FSM states may
   assign different values to the same target safely when their state decodes
