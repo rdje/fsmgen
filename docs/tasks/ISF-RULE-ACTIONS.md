@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-RULE-ACTIONS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-14`
 - Last updated: `2026-05-14`
@@ -39,7 +39,7 @@ current rule guard, delayed trigger, and conflict semantics.
 ## Task Tree
 
 - ID: `ISF-RULE-ACTIONS`
-  Status: `active`
+  Status: `done`
   Goal: `Ship expression-valued rule assignments.`
   Children: `ISF-RULE-ACTIONS.1`, `ISF-RULE-ACTIONS.2`,
   `ISF-RULE-ACTIONS.3`, `ISF-RULE-ACTIONS.4`, `ISF-RULE-ACTIONS.5`
@@ -78,19 +78,19 @@ current rule guard, delayed trigger, and conflict semantics.
   Commit: `ISF-RULE-ACTIONS.4: integrate expression conflict reports`
 
 - ID: `ISF-RULE-ACTIONS.5`
-  Status: `pending`
+  Status: `done`
   Goal: `Add tests and synchronize docs/contracts.`
   Acceptance: `Focused tests and docs cover valid expression assignments,
   malformed cases, conflict cases, schedule report behavior, and public
   contract updates.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `prove -l t/1144-isf-public-tested-by-metadata-audit.t t/1181-isf-rule-action-boundary.t t/1198-isf-update-clause-boundary.t t/1209-isf-static-conflict-detection.t t/1210-isf-priority-conflict-resolution.t t/1213-isf-schedule-report-compatible-fanin-projection.t t/1221-isf-rule-expression-assignment.t t/1222-isf-rule-expression-conflict-report.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-RULE-ACTIONS.5: close rule action tree`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-RULE-ACTIONS.5` | `pending` | Expression conflict/report behavior is covered; next perform final docs/contracts synchronization and closure coverage. |
+| - | - | `closed` | `ISF-RULE-ACTIONS` is complete; PNT should continue with the next active tree in `docs/TASK_TREE.md`. |
 
 ## ISF-RULE-ACTIONS.1 Inventory
 
@@ -371,6 +371,41 @@ and report paths as ordinary rule data assignments.
 - [t/1144-isf-public-tested-by-metadata-audit.t](../../t/1144-isf-public-tested-by-metadata-audit.t)
   includes the conflict/report regression in ISF public contract provenance.
 
+## ISF-RULE-ACTIONS.5 Closure
+
+This closure slice confirms that the expression-valued rule assignment tree is
+complete for ordinary flopped rule actions.
+
+### Shipped Coverage
+
+- Parser support accepts `(port expr)` rule assignments where `expr` is a
+  scalar token or a structurally valid list expression.
+- Malformed assignment RHS forms fail before actor-shell return.
+- Lowering formats rule RHS expressions through the existing ISF expression
+  formatter and emits flopped `<-` rule assignments.
+- Scheduled `.fsm` output with rule expressions parses through the normal
+  `.fsm` frontend and reaches HDL generation.
+- Schedule reports count expression-valued rule assignments through rule
+  `dt_blocks`.
+- Same-expression rule writes project through compatible fan-in reports.
+- Different-expression rule writes fail closed through
+  `isf_conflicting_rule_writes`.
+- Priority-resolved expression conflicts project through
+  `priority_resolutions`.
+- The public ISF contract provenance includes the rule-expression assignment
+  and conflict/report regressions.
+- The ISF spec, mdBook rules chapter, mdBook backlog, public contract, task
+  tree, roadmap, and live docs are synchronized.
+
+### Remaining Backlog Outside This Tree
+
+- Full expression-valued rule guards remain a future feature.
+- Explicit rule action assignment operators other than flopped `<-` remain a
+  future feature.
+- Broader width inference remains owned by `ISF-DATA-WIDTHS`.
+- A broader shared expression IR remains architecture backlog, not a blocker
+  for the shipped rule-expression surface.
+
 ## Decisions
 
 - `2026-05-14`: Rule action widening is tracked independently from legacy
@@ -413,6 +448,7 @@ and report paths as ordinary rule data assignments.
 | `2026-05-14` | `ISF-RULE-ACTIONS.2` | `prove -l t/1168-isf-rule-guard-factoring.t t/1169-isf-rule-shorthand-guard.t t/1171-isf-rule-trigger-fanin.t t/1172-isf-rule-trigger-fanin-schedule-report.t t/1181-isf-rule-action-boundary.t t/1198-isf-update-clause-boundary.t t/1209-isf-static-conflict-detection.t t/1210-isf-priority-conflict-resolution.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-RULE-ACTIONS.3` | `perl -I perl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -l t/1144-isf-public-tested-by-metadata-audit.t t/1181-isf-rule-action-boundary.t t/1198-isf-update-clause-boundary.t t/1221-isf-rule-expression-assignment.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-RULE-ACTIONS.4` | `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -l t/1144-isf-public-tested-by-metadata-audit.t t/1209-isf-static-conflict-detection.t t/1210-isf-priority-conflict-resolution.t t/1213-isf-schedule-report-compatible-fanin-projection.t t/1221-isf-rule-expression-assignment.t t/1222-isf-rule-expression-conflict-report.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-RULE-ACTIONS.5` | `prove -l t/1144-isf-public-tested-by-metadata-audit.t t/1181-isf-rule-action-boundary.t t/1198-isf-update-clause-boundary.t t/1209-isf-static-conflict-detection.t t/1210-isf-priority-conflict-resolution.t t/1213-isf-schedule-report-compatible-fanin-projection.t t/1221-isf-rule-expression-assignment.t t/1222-isf-rule-expression-conflict-report.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -423,6 +459,7 @@ and report paths as ordinary rule data assignments.
 | `ISF-RULE-ACTIONS.2` | `ISF-RULE-ACTIONS.2: specify rule expression assignments` | Expression RHS semantics specified before implementation. |
 | `ISF-RULE-ACTIONS.3` | `ISF-RULE-ACTIONS.3: implement rule expression assignments` | Parser/lowerer support and focused regression landed. |
 | `ISF-RULE-ACTIONS.4` | `ISF-RULE-ACTIONS.4: integrate expression conflict reports` | Conflict/report integration covered. |
+| `ISF-RULE-ACTIONS.5` | `ISF-RULE-ACTIONS.5: close rule action tree` | Tree closed; PNT moves to next active tree. |
 
 ## Changelog
 
@@ -437,4 +474,6 @@ and report paths as ordinary rule data assignments.
 - `2026-05-14`: Completed `ISF-RULE-ACTIONS.4` by covering expression-valued
   compatible fan-in reports, conflict diagnostics, and priority-resolution
   reports.
+- `2026-05-14`: Completed `ISF-RULE-ACTIONS.5` and closed the rule-action
+  task tree.
 - `2026-05-14`: Created the active ISF rule-action task tree.

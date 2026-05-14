@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF rule-action tree closure
+- Active R14 task-tree slice: `ISF-RULE-ACTIONS.5` is complete.
+- The `ISF-RULE-ACTIONS` task tree is closed and moved to the completed
+  task-tree table.
+- Covered behavior now includes expression-valued rule assignment parsing,
+  lowering, malformed diagnostics, scheduled `.fsm`/HDL handoff, compatible
+  fan-in reports, conflict diagnostics, and priority-resolution reports.
+- The next active R14 frontier is `ISF-STAGES-CONTRACTS.1`.
+
 ## 2026-05-14: R14 — ISF rule-expression conflict/report integration
 - Active R14 task-tree slice: `ISF-RULE-ACTIONS.4` is complete.
 - Expression-valued rule assignments now have explicit compatible fan-in,

@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF rule-action tree closure
+- Completed `ISF-RULE-ACTIONS.5` and closed
+  [docs/tasks/ISF-RULE-ACTIONS.md](docs/tasks/ISF-RULE-ACTIONS.md).
+- `docs/TASK_TREE.md` now lists `ISF-RULE-ACTIONS` in the completed table.
+  The next active ISF frontier is `ISF-STAGES-CONTRACTS.1`.
+- Shipped rule-action behavior now includes expression-valued `(port expr)`
+  rule assignments for ordinary flopped `<-` rule data writes, malformed
+  diagnostics, scheduled `.fsm`/HDL handoff, compatible fan-in reports,
+  fail-closed conflicts, and priority-resolution reports.
 ## 2026-05-14: ISF rule-expression conflict/report integration
 - Completed `ISF-RULE-ACTIONS.4` in
   [docs/tasks/ISF-RULE-ACTIONS.md](docs/tasks/ISF-RULE-ACTIONS.md).

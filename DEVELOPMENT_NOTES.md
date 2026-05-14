@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF rule-action tree closure
+- The expression-valued rule assignment surface is now shipped for ordinary
+  flopped rule assignments. The implementation intentionally stays inside the
+  existing `<-` data-assignment family and the existing rule conflict/report
+  domain.
+- Remaining rule-action ideas, such as expression-valued rule guards or
+  explicit alternate assignment operators, need separate task trees because
+  they change guard semantics or timing families rather than just widening RHS
+  expressions.
 ## 2026-05-14: ISF rule-expression conflict/report integration
 - No separate conflict domain is needed for expression-valued rule
   assignments. Once the RHS is formatted through the existing expression

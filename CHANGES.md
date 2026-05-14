@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF rule-action tree closure
+- Completed `ISF-RULE-ACTIONS.5` and closed the expression-valued rule action
+  task tree.
+- The tree now covers parser/lowering support, malformed diagnostics,
+  scheduled `.fsm`/HDL handoff, schedule-report counts, compatible fan-in
+  reports, fail-closed conflict diagnostics, priority-resolution reports, and
+  public contract provenance.
+- Moved the active PNT frontier to `ISF-STAGES-CONTRACTS.1`.
 ### R14 — ISF rule-expression conflict/report integration
 - Completed `ISF-RULE-ACTIONS.4` by adding explicit coverage that expression
   rule assignments use the existing compatible fan-in, conflict diagnostic,

@@ -231,8 +231,7 @@ policy, and broader resource arbitration remain backlog items.
 
 ### Expression-Valued Rule Assignments
 
-Status: shipped for ordinary flopped rule assignments; final docs/test
-synchronization remains active in `ISF-RULE-ACTIONS`.
+Status: shipped for ordinary flopped rule assignments.
 
 Goal: allow rule actions to assign expression values, not only scalar
 `(port value)` pairs.

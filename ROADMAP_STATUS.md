@@ -12,8 +12,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   frontier. The ongoing/unresolved R14 ISF objective families are now covered
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
-  [docs/tasks/ISF-RULE-ACTIONS.md](docs/tasks/ISF-RULE-ACTIONS.md), whose
-  current frontier is `ISF-RULE-ACTIONS.1`. The completed
+  [docs/tasks/ISF-STAGES-CONTRACTS.md](docs/tasks/ISF-STAGES-CONTRACTS.md),
+  whose current frontier is `ISF-STAGES-CONTRACTS.1`. The completed
+  `ISF-RULE-ACTIONS`, `ISF-RESOURCE-CATALOG`,
   `ISF-RESOURCE-PRIORITY`, `ISF-CONFLICTS`, and `ISF-COMPOSITION` trees are
   listed in the task-tree completed table.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
@@ -87,6 +88,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `isf_conflicting_rule_writes`, and priority-resolved expression conflicts
   appear in `priority_resolutions`. The active frontier advances to
   `ISF-RULE-ACTIONS.5`.
+- `ISF-RULE-ACTIONS.5` is complete. The expression-valued rule assignment
+  tree is closed with parser/lowering support, malformed diagnostics,
+  schedule-report counts, compatible fan-in reporting, fail-closed conflict
+  diagnostics, priority-resolution reports, public contract provenance,
+  mdBook/spec/contract docs, and regression evidence synchronized. PNT
+  continues with `ISF-STAGES-CONTRACTS.1`.
 - ISF construct support now has a normative rule: parser acceptance is not a
   support claim. Every current or future shipped ISF construct must have an
   explicit accepted source shape, lowering path or fail-closed diagnostic,

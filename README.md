@@ -66,7 +66,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-COMPOSITION-INSTANTIATION.md` — completed `R14` task tree for generated child instantiation and spawn parameter binding.
 - `docs/tasks/ISF-RESOURCE-PRIORITY.md` — completed `R14` task tree for resource arbitration and priority enforcement.
 - `docs/tasks/ISF-RESOURCE-CATALOG.md` — completed `R14` task tree for the shareable resource kind registry.
-- `docs/tasks/ISF-RULE-ACTIONS.md` — active `R14` task tree for expression-valued rule assignments.
+- `docs/tasks/ISF-RULE-ACTIONS.md` — completed `R14` task tree for expression-valued rule assignments.
 - `docs/tasks/ISF-STAGES-CONTRACTS.md` — active `R14` task tree for transaction stages and temporal contracts.
 - `docs/tasks/ISF-DATA-WIDTHS.md` — active `R14` task tree for data-operation width inference.
 - `docs/tasks/ISF-SCHEDULE-REPORTS.md` — active `R14` task tree for schedule-report storage classes and schema stabilization.
