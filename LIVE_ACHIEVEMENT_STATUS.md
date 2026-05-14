@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF library generated top wiring
+- Active R14 task-tree slice: `ISF-LIBRARIES.4.1` is complete.
+- Resolved library actor uses now emit generated composition tops and reach
+  SystemVerilog generation through the normal composition path.
+- Bound library inputs/outputs are linked directly between top ports and the
+  library child instance, with library-owned outputs suppressing duplicate
+  parent output links.
+- Same-name clock/reset bindings use existing system-port auto-wiring;
+  system-name remapping remains fail-closed.
+- The next active R14 frontier is `ISF-LIBRARIES.4.2`.
+
 ## 2026-05-14: R14 — ISF library import resolution
 - Active R14 task-tree slice: `ISF-LIBRARIES.3` is complete.
 - Actor-scoped `(imports ...)` and `(use ...)` now resolve exported actors

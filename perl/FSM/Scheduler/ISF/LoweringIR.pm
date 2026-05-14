@@ -398,7 +398,10 @@ sub _library_instance_metadata {
         module        => $use->{module},
         scheduled_fsm => $use->{scheduled_fsm},
         parameters    => \@parameters,
+        parameter_overrides => _clone_isf_value($use->{parameter_overrides} || []),
         bindings      => _clone_isf_value($use->{bindings} || []),
+        child_clock   => ($use->{actor} || {})->{clock},
+        child_reset   => (($use->{actor} || {})->{reset} || {})->{name},
     };
 }
 

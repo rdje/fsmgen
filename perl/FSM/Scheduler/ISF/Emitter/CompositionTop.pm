@@ -18,7 +18,8 @@ sub emit($self, $ir, $files) {
         unless ref($files) eq 'HASH';
 
     my @spawn_instances = @{$ir->{spawn_instances} || []};
-    return undef unless @spawn_instances;
+    my @library_uses = @{$ir->{library_uses} || []};
+    return undef unless @spawn_instances || @library_uses;
 
     fsm_trace_enter('Emitter::CompositionTop emit', 2);
 
@@ -34,7 +35,8 @@ sub emit($self, $ir, $files) {
     push @lines, _emit_ports_block($ir);
     push @lines, _emit_parent_instance($actor_name);
     push @lines, map { _emit_spawn_instance($_) } @spawn_instances;
-    push @lines, _emit_toplink_block($ir, \@spawn_instances);
+    push @lines, map { _emit_library_instance($_) } @library_uses;
+    push @lines, _emit_toplink_block($ir, \@spawn_instances, \@library_uses);
     push @lines, ')';
     push @lines, '';
     push @lines, _trim_trailing_newlines($files->{$parent_file});
@@ -116,8 +118,32 @@ sub _emit_spawn_instance {
     return join("\n", @lines);
 }
 
+sub _emit_library_instance {
+    my ($use) = @_;
+    my $instance = $use->{instance};
+    my $module = $use->{module};
+    my @overrides = @{$use->{parameter_overrides} || []};
+
+    confess "CompositionTop emitter library use is missing an instance name\n"
+        unless defined($instance) && length($instance);
+    confess "CompositionTop emitter library use '$instance' is missing a module name\n"
+        unless defined($module) && length($module);
+
+    return "  (?fsmc:$instance $module)" unless @overrides;
+
+    my @lines;
+    push @lines, "  (?fsmc:$instance $module";
+    push @lines, '    (params';
+    for my $override (@overrides) {
+        push @lines, "      ($override->{name} " . _format_param_value($override->{value}) . ")";
+    }
+    push @lines, '    )';
+    push @lines, '  )';
+    return join("\n", @lines);
+}
+
 sub _emit_toplink_block {
-    my ($ir, $spawn_instances) = @_;
+    my ($ir, $spawn_instances, $library_uses) = @_;
     my $actor_name = $ir->{actor_name};
     my %parent_port = map { $_->{name} => $_ } @{$ir->{ports} || []};
     my %child_ports_by_name = map {
@@ -126,13 +152,17 @@ sub _emit_toplink_block {
         }
     } keys %{$ir->{children} || {}};
     my @links;
+    my %library_output_parent = _library_output_parent_port_map($library_uses || []);
+    my %library_input_parent = _library_input_parent_port_map($library_uses || []);
 
     for my $port (@{$ir->{ports} || []}) {
         next if $port->{isf_handoff};
         my $name = $port->{name};
         if ($port->{direction} eq 'output') {
+            next if $library_output_parent{$name};
             push @links, "/$actor_name.$name/$name/";
         } else {
+            next if $library_input_parent{$name};
             push @links, "/$name/$actor_name.$name/";
         }
     }
@@ -164,10 +194,91 @@ sub _emit_toplink_block {
         }
     }
 
+    for my $use (@$library_uses) {
+        my $instance = $use->{instance};
+        my $module = $use->{module};
+        my $child_ports = $child_ports_by_name{$module} || {};
+
+        for my $binding (@{$use->{bindings} || []}) {
+            my $role = $binding->{role};
+            my $parent_name = $binding->{parent_name};
+
+            if ($role eq 'clock') {
+                my $child_clock = $use->{child_clock};
+                confess "CompositionTop emitter library use '$instance' has a clock binding but no child clock name\n"
+                    unless defined($child_clock) && length($child_clock);
+                confess "CompositionTop emitter library use '$instance' binds parent clock '$parent_name' to child clock '$child_clock', but generated composition currently requires same-name system clocks\n"
+                    unless $child_clock eq $parent_name;
+                next;
+            }
+
+            if ($role eq 'reset') {
+                my $child_reset = $use->{child_reset};
+                confess "CompositionTop emitter library use '$instance' has a reset binding but no child reset name\n"
+                    unless defined($child_reset) && length($child_reset);
+                confess "CompositionTop emitter library use '$instance' binds parent reset '$parent_name' to child reset '$child_reset', but generated composition currently requires same-name system resets\n"
+                    unless $child_reset eq $parent_name;
+                next;
+            }
+
+            my $library_name = $binding->{library_name};
+            confess "CompositionTop emitter library use '$instance' binding is missing a library port name\n"
+                unless defined($library_name) && length($library_name);
+            confess "CompositionTop emitter library use '$instance' references child port '$library_name' not present on module '$module'\n"
+                unless exists $child_ports->{$library_name};
+
+            if ($role eq 'input') {
+                push @links, "/$parent_name/$instance.$library_name/";
+                next;
+            }
+            if ($role eq 'output') {
+                push @links, "/$instance.$library_name/$parent_name/";
+                next;
+            }
+
+            confess "CompositionTop emitter library use '$instance' has unsupported binding role '$role'\n";
+        }
+    }
+
     my @lines = ('  (?toplink:isf_wiring');
     push @lines, map { "    $_" } @links;
     push @lines, '  )';
     return join("\n", @lines);
+}
+
+sub _library_output_parent_port_map {
+    my ($library_uses) = @_;
+    my %drivers;
+
+    for my $use (@$library_uses) {
+        my $instance = $use->{instance} // 'unknown';
+        for my $binding (@{$use->{bindings} || []}) {
+            next unless ($binding->{role} || '') eq 'output';
+            my $parent_name = $binding->{parent_name};
+            next unless defined($parent_name) && length($parent_name);
+            confess "CompositionTop emitter library output '$parent_name' is driven by both '$drivers{$parent_name}' and '$instance'\n"
+                if exists $drivers{$parent_name};
+            $drivers{$parent_name} = $instance;
+        }
+    }
+
+    return %drivers;
+}
+
+sub _library_input_parent_port_map {
+    my ($library_uses) = @_;
+    my %consumers;
+
+    for my $use (@$library_uses) {
+        for my $binding (@{$use->{bindings} || []}) {
+            next unless ($binding->{role} || '') eq 'input';
+            my $parent_name = $binding->{parent_name};
+            next unless defined($parent_name) && length($parent_name);
+            $consumers{$parent_name} = 1;
+        }
+    }
+
+    return %consumers;
 }
 
 sub _format_param_value {

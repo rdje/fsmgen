@@ -94,12 +94,51 @@ reusable ISF design intent, not only scalar constants or types.
   Commit: `ISF-LIBRARIES.3: implement library import resolution`
 
 - ID: `ISF-LIBRARIES.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Ship the first reusable FIFO library fixture.`
   Acceptance: `A parameterized FIFO actor library fixture can be imported,
   specialized, lowered to scheduled `.fsm`, and generated to HDL with focused
   assertions for storage, enqueue/dequeue behavior, full/empty flags, and
   reset behavior.`
+  Children: `ISF-LIBRARIES.4.1`, `ISF-LIBRARIES.4.2`,
+  `ISF-LIBRARIES.4.3`
+  Verification: `pending; see child leaves`
+  Commit: `pending; see child leaves`
+
+- ID: `ISF-LIBRARIES.4.1`
+  Status: `done`
+  Goal: `Wire resolved library actor instances through generated tops.`
+  Acceptance: `A library actor use emits a generated composition top, binds
+  same-name clock/reset through the existing system-port auto-wiring path,
+  links bound inputs/outputs directly to the library child instance, and
+  reaches SystemVerilog generation. Unsupported system-name remapping fails
+  before backend parsing.`
+  Verification: `prove -l t/1231-isf-library-generated-top.t
+  t/1230-isf-library-import-resolution.t
+  t/1216-isf-generated-composition-top.t
+  t/1217-isf-generated-composition-schedule-report.t
+  t/1122-isf-public-cli-outdir-lowering-audit.t
+  t/1144-isf-public-tested-by-metadata-audit.t
+  t/1183-ci-regression-tier-selection.t`;
+  `./bin/ci-regression isf --no-book`; `mdbook build docs/book`;
+  `git diff --check`
+  Commit: `ISF-LIBRARIES.4.1: wire library generated tops`
+
+- ID: `ISF-LIBRARIES.4.2`
+  Status: `pending`
+  Goal: `Author the first reusable FIFO actor library fixture.`
+  Acceptance: `The repo contains an importable FIFO actor library fixture with
+  explicit shipped parameters, bindings, reset behavior, and documented
+  limitations that match current ISF expressiveness.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-LIBRARIES.4.3`
+  Status: `pending`
+  Goal: `Prove FIFO fixture lowering and HDL generation.`
+  Acceptance: `The FIFO fixture lowers through library import, generated top,
+  scheduled `.fsm`, schedule report, and SystemVerilog generation with focused
+  checks for the behavior that current ISF can express.`
   Verification: `pending`
   Commit: `pending`
 
@@ -116,7 +155,7 @@ reusable ISF design intent, not only scalar constants or types.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-LIBRARIES.4` | `pending` | Import resolution and scheduled child artifacts now exist; the next feature slice should prove a reusable FIFO fixture and the generated top/HDL path. |
+| 1 | `ISF-LIBRARIES.4.2` | `pending` | Library actor instances now reach generated top/HDL; the next slice should author the reusable FIFO fixture within the current ISF expressiveness boundary. |
 
 ## Design Notes
 
@@ -414,17 +453,23 @@ Shipped behavior:
 - Schedule reports now include a top-level `library_uses` array. Entries expose
   bounded library/export/instance identity, generated child artifact names,
   parameter source/value summaries, and binding summaries.
-- `generated_composition` remains scoped to spawned-child generated tops in
-  this slice; library actor instances do not yet generate top wiring.
+- Generated tops now include library actor instances. Same-name library
+  clock/reset bindings use the existing system-port auto-wiring path; explicit
+  system-name remapping remains fail-closed until the composition backend
+  supports it.
 
 Remaining boundary:
 
-- Library actor instances are resolved and emitted as reviewable scheduled
-  child `.fsm` artifacts, but they are not yet wired into generated top HDL.
+- Library actor instances are resolved, emitted as reviewable scheduled child
+  `.fsm` artifacts, wired into generated tops, and reachable through
+  SystemVerilog generation when system clock/reset names match.
 - Standalone transaction and drive exports still fail closed.
 - Symbolic parameter values and derived parameter expressions remain deferred.
-- The first FIFO fixture belongs to `ISF-LIBRARIES.4`, where generated top/HDL
-  wiring must be handled before end-to-end FIFO reuse is claimed.
+- The first FIFO fixture remains under `ISF-LIBRARIES.4`; it must stay inside
+  current ISF expressiveness or explicitly log any missing FIFO language
+  features as follow-up leaves.
+- Library actor system clock/reset name remapping remains deferred; the
+  current generated-top path requires same-name system ports.
 
 ## Decisions
 
@@ -459,11 +504,9 @@ Remaining boundary:
 
 ## Blockers
 
-- No known design blocker remains for the FIFO fixture slice.
-- Generated top wiring for library actor instances is not shipped by
-  `ISF-LIBRARIES.3`. `ISF-LIBRARIES.4` must connect the resolved child actor
-  artifacts into the normal composition/HDL path before claiming end-to-end
-  reusable FIFO HDL support.
+- No known design blocker remains for authoring the first FIFO fixture, but
+  the fixture must respect the current same-name system-port boundary and the
+  current lack of broad memory/array FIFO primitives.
 
 ## Verification Log
 
@@ -475,6 +518,9 @@ Remaining boundary:
 | `2026-05-14` | `ISF-LIBRARIES.3` | `prove -l t/1230-isf-library-import-resolution.t t/1116-isf-public-schedule-report-key-family-audit.t t/1121-isf-public-cli-schedule-report-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1139-isf-public-lower-result-metadata-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1142-isf-public-guidance-metadata-audit.t t/1112-isf-public-interface-contract.t t/1144-isf-public-tested-by-metadata-audit.t t/1154-isf-public-facade-return-metadata-audit.t t/1156-isf-public-lower-result-file-shape-audit.t t/1183-ci-regression-tier-selection.t` | `passed; 12 files, 29 tests` |
 | `2026-05-14` | `ISF-LIBRARIES.3` | `./bin/ci-regression isf --no-book` | `passed; 138 files, 469 tests` |
 | `2026-05-14` | `ISF-LIBRARIES.3` | `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-LIBRARIES.4.1` | `prove -l t/1231-isf-library-generated-top.t t/1230-isf-library-import-resolution.t t/1216-isf-generated-composition-top.t t/1217-isf-generated-composition-schedule-report.t t/1122-isf-public-cli-outdir-lowering-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t` | `passed; 7 files, 18 tests` |
+| `2026-05-14` | `ISF-LIBRARIES.4.1` | `./bin/ci-regression isf --no-book` | `passed; 139 files, 472 tests` |
+| `2026-05-14` | `ISF-LIBRARIES.4.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -484,6 +530,7 @@ Remaining boundary:
 | `ISF-LIBRARIES.1` | `ISF-LIBRARIES.1: specify library import model` | Public library terminology, source roots, import/use shape, namespaces, export kinds, and diagnostics boundary. |
 | `ISF-LIBRARIES.2` | `ISF-LIBRARIES.2: specify library binding model` | Actor parameter declarations, use-site overrides, clock/reset/interface binding, generated names, report provenance, and rejected cases. |
 | `ISF-LIBRARIES.3` | `ISF-LIBRARIES.3: implement library import resolution` | Parser/lowerer resolve exported library actors from source-dir/FSMLIB/cwd roots, emit specialized child scheduled `.fsm`, and project `library_uses` report metadata. |
+| `ISF-LIBRARIES.4.1` | `ISF-LIBRARIES.4.1: wire library generated tops` | Generated top wiring for resolved library actor instances; same-name system ports use auto-wiring and remapping fails closed. |
 
 ## Changelog
 
@@ -495,3 +542,5 @@ Remaining boundary:
 - `2026-05-14`: Implemented the first library import-resolution slice:
   actor-scoped imports, exported actor uses, parameter/binding diagnostics,
   specialized scheduled child artifacts, and bounded `library_uses` reports.
+- `2026-05-14`: Implemented generated top wiring for resolved library actor
+  instances and proved CLI SystemVerilog generation for the wrapper path.

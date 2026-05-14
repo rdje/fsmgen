@@ -438,12 +438,13 @@ ISF libraries are broader than scalar constants or type packages: they should
 be able to contain reusable ISF actors, transactions, drives, and associated
 constraints when those surfaces are specified.
 
-Current boundary: the first reusable ISF library import slice has shipped for
-resolution and review artifacts. Actor roots may import library roots, use an
-exported actor, validate use-site parameters and explicit bindings, emit a
-specialized child scheduled `.fsm` artifact, and project bounded
-`library_uses` schedule-report metadata. Generated top wiring and end-to-end
-HDL for library actor instances remain backlog for the FIFO fixture slice.
+Current boundary: the first reusable ISF library import and same-name
+generated-top slices have shipped. Actor roots may import library roots, use
+an exported actor, validate use-site parameters and explicit bindings, emit a
+specialized child scheduled `.fsm` artifact, wire the library actor through a
+generated top, reach SystemVerilog generation, and project bounded
+`library_uses` schedule-report metadata. The reusable FIFO fixture remains
+backlog, and clock/reset name remapping remains fail-closed.
 
 Shipped source model for actor exports:
 
@@ -539,8 +540,8 @@ and the current directory. For a dotted namespace such as `common.fifo`, both
 `common.fifo.isf` and `common/fifo.isf` are candidate file names. `parse_source`
 can use same-source library roots but cannot resolve external files without a
 real source path. Standalone transaction/drive exports, symbolic parameter
-values, derived parameter expressions, and generated top HDL wiring are still
-deferred.
+values, derived parameter expressions, clock/reset name remapping, and the
+FIFO library fixture are still deferred.
 
 FIFO modeling rule: a FIFO should be modeled primarily as an actor because it
 owns persistent storage, pointers, occupancy, full/empty flags, reset behavior,

@@ -106,6 +106,11 @@ so file-backed `(imports ...)` / `(use ...)` source resolves exported library
 actors, validates use-site parameter and binding errors, emits specialized
 child scheduled `.fsm` artifacts, and reports bounded `library_uses`
 provenance.
+Generated top wiring for resolved library actor instances is checked by
+[t/1231-isf-library-generated-top.t](../t/1231-isf-library-generated-top.t)
+so a library actor wrapper reaches CLI `--outdir`, generated top `.fsm`, and
+SystemVerilog output through the normal composition path, while unsupported
+clock/reset name remapping fails closed before backend parsing.
 The current APB schedule report is checked against the advertised key families
 by [t/1116-isf-public-schedule-report-key-family-audit.t](../t/1116-isf-public-schedule-report-key-family-audit.t).
 The shipped stage/contract report projection is checked by
@@ -599,8 +604,11 @@ directory, `FSMLIB`, and the current directory, checking both dotted and
 path-like file names such as `common.pulse.isf` and `common/pulse.isf`.
 `parse_source(...)` can resolve same-source library roots; general external
 resolution requires a real source path, so file-backed library use should call
-`parse_file(...)`. Generated top wiring/HDL integration for those library
-actor instances remains outside this slice.
+`parse_file(...)`. Resolved library actor instances emit a generated top when
+lowered for HDL: bound library inputs/outputs link directly between top ports
+and the library child instance. Same-name clock/reset bindings use the existing
+composition system-port auto-wiring path; clock/reset name remapping is
+currently fail-closed.
 
 Supported CLI entrypoints:
 

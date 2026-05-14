@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF library generated top wiring
+- Completed `ISF-LIBRARIES.4.1` by wiring resolved library actor instances
+  into generated composition tops.
+- The generated top now instantiates the importing actor plus each resolved
+  library child actor, applies use-site parameter overrides to the library
+  instance, and links bound library inputs/outputs directly to top ports.
+- Same-name clock/reset bindings use the existing composition system-port
+  auto-wiring path; system clock/reset name remapping fails closed with a
+  targeted diagnostic before backend parsing.
+- Added [t/1231-isf-library-generated-top.t](t/1231-isf-library-generated-top.t)
+  for in-process lowering, CLI `--outdir`, generated top `.fsm`, HDL
+  generation, and system-remapping diagnostics.
+- The active R14 PNT frontier advances to `ISF-LIBRARIES.4.2`.
 ### R14 — ISF library import resolution
 - Completed `ISF-LIBRARIES.3` by implementing the first reusable-library
   parser/lowerer slice for exported actors.

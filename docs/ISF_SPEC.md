@@ -313,6 +313,13 @@ Resolution rules:
 Lowering emits one specialized child scheduled `.fsm` artifact for each
 resolved library actor use. The deterministic module and file basename are
 `<importing_actor>__<instance>` and `<importing_actor>__<instance>.fsm`.
+When a library actor use is present, lowering also emits a generated top
+`<importing_actor>_top.fsm` that instantiates the importing actor and each
+library child actor. Bound library inputs are linked from top inputs directly
+to the library instance, and bound library outputs drive the corresponding top
+outputs. Same-name clock/reset bindings use the existing generated-composition
+system-port auto-wiring path. Clock/reset name remapping remains fail-closed
+until the composition backend supports remapped system ports.
 Successful schedule reports expose a bounded top-level `library_uses` array
 with `library`, `alias`, `export`, `kind`, `instance`, `module`,
 `scheduled_fsm`, `parameters`, and `bindings`. Parameter summaries expose
@@ -320,11 +327,12 @@ with `library`, `alias`, `export`, `kind`, `instance`, `module`,
 `library_name`, `parent_name`, and `width`; clock/reset bindings use JSON null
 for `library_name`, and reset/clock width is `1`.
 
-Current boundary: `ISF-LIBRARIES.3` resolves reusable actors, validates
-parameters and bindings, emits child scheduled `.fsm` artifacts, and reports
-bounded provenance. Generated top wiring/HDL integration for library actor
-instances, the reusable FIFO fixture, standalone transaction/drive exports,
-symbolic constants, derived parameter expressions, and library actors that
+Current boundary: `ISF-LIBRARIES.4.1` resolves reusable actors, validates
+parameters and bindings, emits child scheduled `.fsm` artifacts, wires library
+actor instances into generated tops for same-name system ports, reaches
+SystemVerilog generation, and reports bounded provenance. The reusable FIFO
+fixture, standalone transaction/drive exports, symbolic constants, derived
+parameter expressions, clock/reset name remapping, and library actors that
 import other libraries remain deferred.
 
 ## 4. Clock, Reset, Watchdog
@@ -1482,13 +1490,14 @@ Focused tests:
 - [t/1228-isf-spi-fixture-coverage.t](../t/1228-isf-spi-fixture-coverage.t)
 - [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)
 - [t/1230-isf-library-import-resolution.t](../t/1230-isf-library-import-resolution.t)
+- [t/1231-isf-library-generated-top.t](../t/1231-isf-library-generated-top.t)
 
 ## 12. Explicitly Deferred
 
 - Reusable ISF library behavior beyond the shipped resolver/review-artifact
-  slice: generated top wiring/HDL integration for library actor instances, the
-  reusable FIFO fixture, standalone transaction/drive exports, symbolic
-  constants, derived parameter expressions, and library actors that import
+  and same-name generated-top slice: the reusable FIFO fixture, standalone
+  transaction/drive exports, symbolic constants, derived parameter
+  expressions, clock/reset name remapping, and library actors that import
   other libraries.
 - Old `(handshake ...)` semantics beyond validated ignored compatibility
   parsing.

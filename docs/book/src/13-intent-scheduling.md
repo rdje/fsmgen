@@ -230,8 +230,9 @@ actor uses now project through a bounded `library_uses` schedule-report array
 with library/export/instance identity, generated child artifact names,
 parameter source/value summaries, and explicit binding summaries. The
 lower-result `files` map can include specialized library-child scheduled
-`.fsm` artifacts, but generated top wiring/HDL integration for those library
-actor instances is still backlog work. The plain
+`.fsm` artifacts and a generated top that wires library actor instances through
+the normal composition/HDL path. Same-name clock/reset bindings use system-port
+auto-wiring; clock/reset name remapping remains fail-closed. The plain
 `file.isf` CLI path is audited to reach generated HDL with clean stderr,
 including when the advertised `--strict` flag is present. Transaction summaries
 include the generated state families used by the current scheduler, including
@@ -246,10 +247,10 @@ limitations are:
 - Reusable library imports currently ship the resolver/review-artifact slice:
   actor-scoped `(imports ...)`, `(use ...)`, exported actor resolution,
   use-site parameter and binding validation, specialized child scheduled
-  `.fsm` artifacts, and bounded `library_uses` report metadata. Generated top
-  wiring/HDL integration for library actor instances, the reusable FIFO
-  fixture, standalone transaction/drive exports, symbolic constants, and
-  derived parameter expressions remain backlog work.
+  `.fsm` artifacts, generated top wiring for same-name system ports, HDL
+  reachability, and bounded `library_uses` report metadata. The reusable FIFO
+  fixture, standalone transaction/drive exports, symbolic constants, derived
+  parameter expressions, and clock/reset name remapping remain backlog work.
 - `(do ...)` and `(spawn ...)` targets must resolve to declared same-actor
   transactions before scheduled `.fsm` emission. They bind named start/done
   signals in scheduled `.fsm`. Spawn parameter declaration, validation, child

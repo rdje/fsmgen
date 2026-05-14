@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF library generated top wiring
+- Library actor instances now use the same generated-top composition route as
+  spawned children instead of inventing a separate HDL path. That keeps review
+  artifacts in `.fsm` and lets existing composition validation catch wiring
+  mistakes.
+- Bound library outputs are treated as library-owned top outputs. The emitter
+  intentionally suppresses the importing actor's duplicate output link for
+  those signals, which avoids multiple drivers in wrapper-style actors.
+- Bound library inputs are linked directly from top inputs to the library
+  child. The parent link is skipped for those signals because a wrapper parent
+  may not realize unused interface inputs as child ports.
+- Clock/reset remapping is fail-closed for now. The existing generated-child
+  composition path supports same-name system-port auto-wiring; allowing
+  different child system names needs backend support and separate diagnostics.
 ## 2026-05-14: ISF library import resolution implementation
 - Shipping resolution before generated top wiring is deliberate. It gives the
   project a reviewable, fail-closed parser/lowerer boundary for libraries

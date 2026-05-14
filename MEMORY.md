@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF library generated top wiring
+- Completed `ISF-LIBRARIES.4.1` in
+  [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md).
+- Resolved library actor instances now cause the ISF lowerer to emit a
+  generated composition top, instantiate the importing actor and library
+  child actor, and link bound library inputs/outputs directly to top ports.
+- Same-name library clock/reset bindings use the existing composition
+  system-port auto-wiring path. System clock/reset name remapping now fails
+  closed before backend parsing.
+- `t/1231-isf-library-generated-top.t` proves in-process lowering, CLI
+  `--outdir`, generated top `.fsm`, and SystemVerilog generation for the
+  library wrapper path.
+- The next active R14 frontier is `ISF-LIBRARIES.4.2`, authoring the first
+  reusable FIFO fixture within the current ISF expressiveness boundary.
 ## 2026-05-14: ISF library import resolution implementation
 - Completed `ISF-LIBRARIES.3` in
   [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md).
