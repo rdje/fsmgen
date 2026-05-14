@@ -471,6 +471,22 @@ sub is_signal_referenced_in_substitutions ($self, $signal_name) {
         }
     }
 
+    for my $state_name (keys %{$ctx->{state_enables} || {}}) {
+        my $enable_ast = $ctx->{state_enables}{$state_name};
+        if ($enable_ast && blessed($enable_ast) && $self->ast_contains_signal($enable_ast, $signal_name)) {
+            fsm_debug("  REFERENCE FOUND: Signal '$signal_name' in top-level state enable '$state_name'", 3);
+            return 1;
+        }
+    }
+
+    for my $dt_name (keys %{$ctx->{dt_enables} || {}}) {
+        my $enable_ast = $ctx->{dt_enables}{$dt_name};
+        if ($enable_ast && blessed($enable_ast) && $self->ast_contains_signal($enable_ast, $signal_name)) {
+            fsm_debug("  REFERENCE FOUND: Signal '$signal_name' in top-level DT enable '$dt_name'", 3);
+            return 1;
+        }
+    }
+
     for my $lhs (keys %{$ctx->{lhs_assignments} || {}}) {
         for my $assignment (@{$ctx->{lhs_assignments}->{$lhs}}) {
             if ($assignment->{conditions_ast} && blessed($assignment->{conditions_ast})) {
@@ -521,6 +537,22 @@ sub is_signal_actually_used_in_final_expressions ($self, $signal_name) {
                     }
                 }
             }
+        }
+    }
+
+    for my $state_name (keys %{$ctx->{state_enables} || {}}) {
+        my $enable_ast = $ctx->{state_enables}{$state_name};
+        if ($enable_ast && blessed($enable_ast) && $self->ast_contains_signal($enable_ast, $signal_name)) {
+            fsm_debug("    FOUND: Signal used in top-level state enable $state_name", 3);
+            return 1;
+        }
+    }
+
+    for my $dt_name (keys %{$ctx->{dt_enables} || {}}) {
+        my $enable_ast = $ctx->{dt_enables}{$dt_name};
+        if ($enable_ast && blessed($enable_ast) && $self->ast_contains_signal($enable_ast, $signal_name)) {
+            fsm_debug("    FOUND: Signal used in top-level DT enable $dt_name", 3);
+            return 1;
         }
     }
 

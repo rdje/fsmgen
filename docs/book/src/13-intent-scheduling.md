@@ -142,6 +142,9 @@ combinational; assignment families decide the selected target behavior:
 targets, and `<1` requests a one-cycle delayed pulse whether they appear in
 state or non-state DT blocks. The manifest advertises those operator families
 through `dt_assignment_operator_family_map`.
+Rule guards lower through non-state DT DTE headers in scheduled `.fsm` review
+artifacts, so the guard activates the whole rule DT once instead of being
+repeated on every action.
 Schedule-report `dt_blocks`
 `assignments` values are assignment counts, not payload lists, and the manifest
 advertises that shape through `schedule_report_dt_assignments_shape`.

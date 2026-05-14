@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14/R8 — Guarded non-state DT DTE headers
+- Active language/ISF contract slice: `.fsm` non-state DTs now accept optional
+  DTE guards in the header, using the existing guard grammar.
+- Generated `.sv` now emits guarded non-state DT top-level enables such as
+  `route_en = req != 0` or `expr_guard_en = intermediate_and_req_ready_1`,
+  then applies those DTEs at the DT-specific output-enable boundary.
+- ISF rule guards now lower as rule DT DTE headers, for example
+  `(-always_ready <ready ...)`, instead of nested guard blocks around rule
+  actions.
+- The mdBook, ISF spec, public-interface contract, manifest metadata, and
+  focused tests are aligned to the new surface.
+
 ## 2026-05-14: R8 — State DTE boundary-gated output enables
 - Active language/HDL contract slice: state-DT selector predicates remain
   factorizable without state decode, and the state DTE gates each emitted

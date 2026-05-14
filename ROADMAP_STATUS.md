@@ -10,6 +10,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitted state-DT ENs are `state_en & selector_predicate` just before leaving
   the state DT; the FSM-level merge then ORs those gated state-DT ENs per
   `LHS`/`VAL` for the final mux selector.
+- Non-state DTs now accept optional DTE header guards using the normal guard
+  grammar, such as `(-route <req ...)`, `(-mode_hit <mode=3 ...)`, and
+  `(-both_ready <(& req ready) ...)`. Unguarded non-state DTs still default to
+  `DTE = 1'b1`, and guarded DTs emit the DTE as a top-level `*_en` that gates
+  every DT-specific output enable at the boundary.
 - The mdBook language-basics chapter now defines the clock tick/cycle timing
   model used by sequential assignments: `D` is sampled at the active tick,
   `Q` updates at `N+`, and `Q` remains stable through the cycle until the next
@@ -156,10 +161,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   fallthrough, supports authored `(default ...)` and `(_ ...)` fallback
   branches, and rejects the fallback aliases as duplicates. `t/1103` covers
   the emitted scheduled `.fsm` behavior.
-- ISF rule DT emission now factors each rule's `(when ...)` condition into one
-  `.fsm` guarded block around the lowered actions instead of repeating the
-  guard suffix on every assignment. `t/1168` covers the scheduled text and
-  parse-to-HDL path.
+- ISF rule DT emission now uses guarded non-state DT DTE headers for each
+  rule's `(when ...)` condition instead of emitting a nested `.fsm` guard
+  block or repeating the guard suffix on every assignment. `t/1168` covers the
+  scheduled text and parse-to-HDL path.
 - ISF rule `(trigger transaction)` actions now lower to generated
   `rule_transaction` delayed-pulse sources, and generated combinational
   fan-in drives `transaction_start`; `t/1168` and `t/1171` lock the
@@ -2452,6 +2457,12 @@ Done:
   - hyphen-prefixed general DT blocks now carry explicit `standalone_dt` classification in the AST,
   - they stay out of the encoded-state plan,
   - and they emit DT-style enables instead of regular `current_state` comparisons.
+- [t/48-language-contract-standalone-dt-classification.t](t/48-language-contract-standalone-dt-classification.t) now also locks optional non-state DT DTE guards:
+  - `(-name <signal ...)`, `(-name <!signal ...)`, compact comparison guards,
+    and list-form expression guards are stored as the DT enable condition,
+  - unguarded non-state DTs keep the default `DTE = 1'b1`,
+  - and generated HDL emits the guarded top-level `*_en` plus boundary-gated
+    DT-specific output enables.
 - [t/49-language-contract-state-body-boundary.t](t/49-language-contract-state-body-boundary.t) now locks the state/DT body boundary explicitly:
   - empty FSM-state DT blocks like `(idle)` are rejected,
   - empty general DT blocks like `(-misc)` are rejected,
@@ -4132,6 +4143,10 @@ Done:
   and the mdBook Rules chapter: same-transaction rule triggers now expose
   distinct `rule_transaction` pulse sources, and generated combinational
   fan-in drives `transaction_start` without adding a cycle.
+- ISF rule guards now lower through guarded non-state DT DTE headers in
+  scheduled `.fsm` text, for example `(-always_ready <ready ...)`, so the
+  rule condition activates the whole rule DT once and the actions remain
+  unadorned by repeated or nested guards.
 - The mdBook Control Flow chapter now explicitly scopes
   `(when condition body...)` to transaction-local conditional scheduling and
   cross-references the guard-only rule form `(rule name (when condition)

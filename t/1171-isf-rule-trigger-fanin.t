@@ -39,13 +39,13 @@ like($fsm, qr/\(r1_work 1\)/, 'rule r1 trigger source is declared as one-bit sto
 like($fsm, qr/\(work_start 1\)/, 'transaction start fan-in target is declared as one-bit storage');
 like(
     $fsm,
-    qr/\(-r0\s+\(<a\s+\(<1 \(r0_work 1\)\)\s+\)\s+\)/s,
-    'first rule pulses its own trigger source',
+    qr/\(-r0\s+<a\s+\(<1 \(r0_work 1\)\)\s+\)/s,
+    'first rule pulses its own trigger source under a guarded-DT DTE',
 );
 like(
     $fsm,
-    qr/\(-r1\s+\(<b\s+\(<1 \(r1_work 1\)\)\s+\)\s+\)/s,
-    'second rule pulses its own trigger source',
+    qr/\(-r1\s+<b\s+\(<1 \(r1_work 1\)\)\s+\)/s,
+    'second rule pulses its own trigger source under a guarded-DT DTE',
 );
 like(
     $fsm,

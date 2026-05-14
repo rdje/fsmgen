@@ -107,6 +107,14 @@ sub prescan_wen_en_for_intermediate_signals ($self) {
 
     $ctx->{referenced_intermediate_signals} //= {};
 
+    for my $dt_name (sort keys %{$ctx->{dt_enables} || {}}) {
+        my $enable_ast = $ctx->{dt_enables}{$dt_name};
+        next unless $enable_ast && blessed($enable_ast);
+
+        fsm_debug("  PRE-SCAN: Scanning standalone-DT DTE: $dt_name", 3);
+        $ctx->{enable_graph_intermediate_support}->track_ast_intermediate_signals($enable_ast);
+    }
+
     for my $lhs (sort keys %{$ctx->{assignment_analysis}}) {
         my $lhs_analysis = $ctx->{assignment_analysis}->{$lhs};
 
@@ -338,7 +346,12 @@ Build the top-level enable AST for one standalone DT.
 
 =cut
 
-sub build_dt_enable_condition_ast ($self, $dt_name) {
+sub build_dt_enable_condition_ast ($self, $dt_name, $state = undef) {
+    if ($state && $state->can('dt_enable_condition')) {
+        my $condition_ast = $state->dt_enable_condition;
+        return $condition_ast if $condition_ast && blessed($condition_ast);
+    }
+
     return FSM::AST::Utils::literal("1'b1");
 }
 
@@ -363,7 +376,7 @@ sub initialize_state_and_dt_enable_conditions ($self, $fsm_module) {
         next unless defined($state_name) && $state_name ne '';
 
         if ($state->can('is_regular_state') ? !$state->is_regular_state : $state_name =~ /^-/) {
-            my $enable_ast = $self->build_dt_enable_condition_ast($state_name);
+            my $enable_ast = $self->build_dt_enable_condition_ast($state_name, $state);
             $ctx->{dt_enables}->{$state_name} = $enable_ast;
             my $enable_sv = blessed($enable_ast) && $enable_ast->can('to_systemverilog')
                 ? $enable_ast->to_systemverilog

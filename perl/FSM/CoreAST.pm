@@ -2117,6 +2117,7 @@ package FSM::CoreAST::State;
             decision_trees => _clone_state_value($args{decision_trees} // []),
             encoding => $args{encoding},
             state_type => $args{state_type} // 'normal',
+            dt_enable_condition => _clone_state_value($args{dt_enable_condition}),
             attributes => _clone_state_value($args{attributes} // {}),
         }, $class;
     }
@@ -2125,6 +2126,7 @@ package FSM::CoreAST::State;
     sub decision_trees($self) { _clone_state_value($self->{decision_trees}) }
     sub encoding($self) { $self->{encoding} }
     sub state_type($self) { $self->{state_type} // 'normal' }
+    sub dt_enable_condition($self) { _clone_state_value($self->{dt_enable_condition}) }
     sub attributes($self) { _clone_state_value($self->{attributes}) }
 
     sub is_reset_state($self) {

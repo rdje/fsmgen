@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: Guarded non-state DT DTE headers
+- The DT model already treats every DT as having a one-bit DTE. Exposing that
+  DTE on non-state DT headers is cleaner than duplicating the same guard on
+  every assignment or wrapping a whole generated DT body in a nested guard
+  block.
+- The implementation reuses the existing guard parser instead of inventing a
+  parallel syntax. Header guards are stored once on the CoreAST state wrapper,
+  then consumed by enable initialization as the DT's top-level enable
+  expression.
+- Generated HDL keeps the intended hierarchy: `dt_en` is the lowered header
+  guard, DT-local selectors remain the factorizable per-`LHS`/`VAL`
+  predicates, and each emitted DT-specific output enable is `dt_en & selector`
+  at the boundary. With no header guard, `dt_en` stays `1'b1`.
+- Expression-valued DTE guards can create parser-owned intermediates, so
+  enable-graph liveness must treat top-level state/DT enables as final
+  expressions. Otherwise the DTE assignment can reference an intermediate that
+  was declared during prescan but filtered before assignment emission.
+- ISF rules are a direct consumer of this surface: the rule condition is the
+  rule DT's DTE, while ordinary rule assignments and `<1` trigger-source pulses
+  stay visually unguarded inside that DT.
 ## 2026-05-14: State DTE boundary gating
 - The semantic model already said DTE gates DT selector enables, but the old
   emitted shape let factorization absorb `state_en` into internal helper
@@ -512,10 +532,11 @@ This document captures engineering rationale, design constraints, and working de
   interface consumers do not need a second guard representation.
 - The long `(rule name (when condition) actions...)` form remains supported for
   compatibility and for cases where the more explicit spelling improves review.
-- The shorthand is intentionally scalar-only for this slice. The current
-  scheduled `.fsm` rule guard emitter still produces one `<condition` guard
-  block, so accepting list expressions here would advertise more rule-guard
-  semantics than lowering can honestly preserve.
+- The shorthand was intentionally scalar-only for this slice. That original
+  decision matched the then-current nested guard-block emitter; the later
+  guarded non-state DT DTE header slice changed the emitted `.fsm` shape but
+  did not broaden rule guard payloads beyond the parser's current scalar
+  boundary.
 ## 2026-05-13: R14 ISF rule trigger pulse lowering
 - Rule-triggered transactions should not leave a sticky start request active
   after the rule fires. ISF rule `(trigger transaction)` therefore lowers to a
@@ -525,21 +546,21 @@ This document captures engineering rationale, design constraints, and working de
   assignments because those actions describe rule-owned state/output updates.
   The trigger action is different: it is a control pulse into another
   transaction's entry condition.
-- The scheduled `.fsm` emitter now formats delayed-pulse operators in non-state
-  DT blocks, so factored rule guard blocks can contain both ordinary `<-`
-  assignments and `<1` trigger pulses without falling back to legacy infix
-  text.
+- The scheduled `.fsm` emitter now formats delayed-pulse operators in
+  non-state DT blocks. Later guarded-DTE emission reuses the same formatting
+  for `<1` trigger pulses inside rule DTs without needing a nested guard block.
 ## 2026-05-13: R14 ISF rule guard factoring
 - Rule lowering already has a single source-level guard: `(when condition)`.
   Repeating that guard as a suffix on every lowered assignment made the
   generated `.fsm` harder to review and obscured the source structure.
-- The LoweringIR stays unchanged: each rule action still carries the guard for
-  simple downstream processing. The scheduled `.fsm` emitter is responsible for
-  review-quality formatting and now groups rule assignments with the same guard
-  under one DT guard block.
+- This slice originally kept the guard on each LoweringIR action and made the
+  scheduled `.fsm` emitter group those actions under one DT guard block. The
+  later guarded non-state DT DTE header slice moved that guard to the DT block
+  itself, so rule actions now stay unguarded inside a guarded rule DT.
 - Rule DTs with no effective guard still emit direct assignments. Guarded rule
-  DTs now render as `(<ready ...actions...)`, which is parsed by the normal
-  `.fsm` frontend while preserving ordinary rule port-assignment semantics.
+  DTs now render their activation as a DT header guard such as
+  `(-always_ready <ready ...)`, which is parsed by the normal `.fsm` frontend
+  while preserving ordinary rule port-assignment semantics.
 ## 2026-05-13: R14 .fsm default selector and ISF switch fallback
 - A test-node default branch must mean "no explicit sibling branch predicate
   matched." It is not a magic case item copied from one branch and it is not

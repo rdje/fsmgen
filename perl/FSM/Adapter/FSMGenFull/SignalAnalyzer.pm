@@ -51,6 +51,10 @@ sub _analyze_signal_usage_from_ast($self, $fsm_module) {
     fsm_debug("  Found $state_count states in FSM module", 3);
     
     for my $state (@$states) {
+        if ($state->can('dt_enable_condition') && $state->dt_enable_condition) {
+            $self->_analyze_condition_references($state->dt_enable_condition);
+        }
+
         my $dts = $state->decision_trees || [];
         for my $dt (@$dts) {
             $self->_analyze_decision_tree($dt);

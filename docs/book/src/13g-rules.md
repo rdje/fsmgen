@@ -1,7 +1,7 @@
 # Rules and Priorities
 
-Rules lower to non-state DT guard blocks. Their assignments are guarded by the
-rule condition and are independent of the transaction state machine.
+Rules lower to non-state DTs whose DTE is the rule condition. Their assignments
+are independent of the transaction state machine.
 
 ## Rule Syntax
 
@@ -39,22 +39,21 @@ path. `(trigger transaction)` must name a declared transaction in the same
 actor; forward references are accepted because validation happens after the
 full actor body is collected.
 
-**Lowering**: Non-state DT block containing one guarded action block in the
-current scheduler. The shorthand scalar guard and the long-form `(when ...)`
-guard both become the public parser `when` field. Scheduled `.fsm` emission
-renders that rule guard once around the actions instead of repeating it on
-every assignment. Ordinary `(port value)` actions are guarded flopped
-assignments. `(trigger transaction)` uses `<1` on a generated
+**Lowering**: Non-state DT block with the rule guard emitted as the DT header
+DTE. The shorthand scalar guard and the long-form `(when ...)` guard both
+become the public parser `when` field. Scheduled `.fsm` emission writes that
+guard once in the DT header instead of repeating it on every assignment or
+wrapping the actions in a nested guard block. Ordinary `(port value)` actions
+are flopped assignments selected by the guarded DT. `(trigger transaction)`
+uses `<1` on a generated
 `rule_transaction` source so the request remains pulse-shaped, and a generated
 combinational fan-in DT drives `transaction_start` without adding another
 cycle.
 
 ```lisp
-(-always_ready
-  (<ready
-    (<- (valid 1))
-    (<1 (always_ready_main_transfer 1))
-  )
+(-always_ready <ready
+  (<- (valid 1))
+  (<1 (always_ready_main_transfer 1))
 )
 
 (-main_transfer_trigger_fanin
@@ -75,16 +74,12 @@ per-rule `<1` pulse appears; it only separates "which rule requested the
 transaction" from "the transaction sees at least one request."
 
 ```lisp
-(-r0
-  (<a
-    (<1 (r0_work 1))
-  )
+(-r0 <a
+  (<1 (r0_work 1))
 )
 
-(-r1
-  (<b
-    (<1 (r1_work 1))
-  )
+(-r1 <b
+  (<1 (r1_work 1))
 )
 
 (-work_trigger_fanin
@@ -112,11 +107,9 @@ With a single rule source, the generated fan-in assigns the source directly:
 
 **DT block**:
 ```lisp
-(-error_gate
-  (<err
-    (<- (valid 1))
-    (<- (err 1))
-  )
+(-error_gate <err
+  (<- (valid 1))
+  (<- (err 1))
 )
 ```
 

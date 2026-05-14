@@ -114,8 +114,8 @@ inactive. When `DTE_i` is `1`, the gated enables are allowed to follow the
 predicates computed by the DT logic; the DT is on, enabled, or active.
 
 For state DTs, `DTE_i` is the decode of that FSM state. For non-state DTs,
-`DTE_i` behaves as `1` in the current language, although the model leaves room
-for a future feature that exposes or binds that enable to explicit logic.
+`DTE_i` defaults to `1`, or to the optional guard authored immediately after
+the non-state DT name.
 
 The SystemVerilog emitter keeps this as a boundary-gating rule. A state DT's
 internal selector predicates may be factored into helper wires, but the state
@@ -182,10 +182,32 @@ Inside an FSM root, a state DT is written as a normal state block such as
 as `(-route ...)`, `(-scl ...)`, or `(-counter_inc ...)`.
 
 The block spelling decides the activation context. A state DT is enabled by
-the FSM state decode. A non-state DT currently behaves as an always-enabled
-combinational selector region unless its actions carry their own guards. The
-assignment operators inside either block decide what kind of target mux or
-storage is selected:
+the FSM state decode. A non-state DT behaves as an always-enabled combinational
+selector region by default, or as a guarded region when its header binds a
+non-state `DTE` guard:
+
+```lisp
+(-route <req
+  (= (OUT_A 1)))
+
+(-holdoff <!hold
+  (= (OUT_B 1)))
+
+(-mode_hit <mode=3
+  (= (OUT_C 1)))
+
+(-both_ready <(& req ready)
+  (= (OUT_D 1)))
+```
+
+Those guards use the same guard grammar described in the language basics
+chapter. The guard belongs to the DT header: it computes the DT enable, gates
+all output `EN`/`WEN` terms that leave that non-state DT, and is not repeated
+on each action. If the header guard is omitted, the non-state DT enable is
+`1'b1`.
+
+The assignment operators inside either state or non-state block decide what
+kind of target mux or storage is selected:
 
 - `(= (lhs rhs))` is combinational.
 - `(<- (lhs rhs))` is sequential/flopped with a Q/output-named LHS.
@@ -273,39 +295,49 @@ The compound suffix form is useful when a transition depends on several done or
 ready signals and the source should show the conjunction at the transition
 site.
 
-## Future Feature: Advanced DT Enable Control
+## Non-State DT Enable Guards
 
-Every DT/state block has a conceptual activity input: its `DTE`. Today the
-author-facing `.fsm` language does not expose that input directly. State DTs
-derive `DTE` from the state decode. Non-state DTs behave as if `DTE` is tied
-to `1` before local guards and test-node predicates are applied.
+Every DT/state block has a conceptual activity input: its `DTE`. State DTs
+derive that enable from the FSM state decode. Non-state DTs now expose a
+bounded author-facing DTE binding through an optional leading guard:
 
-The intended future advanced feature is to expose that hidden control as a
-semantic DT enable expression, still defaulting to `1` for existing sources.
-An author should eventually be able to bind a DT/state block's enable to a
-signal or bounded logical expression, for example an OR of several event/control
-inputs. That would make it possible to model independently activatable
-state-like regions, including designs that behave like they have multiple
-initial/entry states.
+```lisp
+(-name <guard
+  body...)
+```
 
-A classic FSM with one reset/initial state and one active state at a time is
-therefore the conservative subset, not the full model. The broader model treats
-states and DT blocks as activation regions: a region can be active because of
-the normal FSM state decode, the default `DTE = 1` behavior, an external
-actor, or a validated logical expression. In that model, a state-like region can
-be activated or deactivated outside the strict transition graph.
+The guard syntax is exactly the normal guard syntax:
 
-That power should be allowed, but it must not be invisible. Validation and
-reports should make hazards explicit, including multiple active regions driving
-the same target, conflicting assignment families, the selected merge/priority
-policy, assertion hooks, and debug reporting. This is a power-user feature:
-intent-level semantics, strong diagnostics, and no hidden backend magic.
+- `<signal` means `signal != 0`
+- `<!signal` means `signal == 0`
+- `<name<op>value` uses the existing compact comparison grammar, such as
+  `<mode=3`, `<mode!=0`, `<count<=7`, or `<count>=2`
+- `<(& req ready)` uses the normal list-form expression language
 
-This must be implemented as frontend intent, not as a late HDL-generation
-shortcut. The parser should capture the authored enable expression, validation
-should prove the referenced operands and widths before generation, the AST/IR
-should preserve the DT enable contract, and only then should the selected HDL
-backend emit the gated behavior.
+The lowered model is:
+
+```text
+name_DTE = lowered(guard)
+name_LHS_VAL_EN = name_DTE && name_LHS_VAL_selector
+```
+
+If no guard is authored, `name_DTE = 1'b1`. This keeps existing non-state DT
+sources compatible while giving intent-level producers such as ISF a clean way
+to activate an entire non-state DT once. Local guarded blocks, condition
+suffixes, and test nodes inside the DT still contribute to the DT-local
+selector predicates; the header guard is the boundary enable.
+
+The parser captures the authored DTE guard as CoreAST state metadata, signal
+analysis validates referenced operands before HDL generation, and the
+SystemVerilog backend emits the top-level `*_en` assignment plus the final
+boundary gate on each DT output enable. Expression guards may create internal
+intermediate wires; those intermediates are kept live because the DTE
+assignment is a final enable expression.
+
+Explicit author control of state-DT DTEs remains outside the current language:
+state DTs still derive their DTE from state decode. Broader multi-active-region
+semantics need their own validation and diagnostics before becoming a public
+state-DT feature.
 
 ## Practical Guidance
 

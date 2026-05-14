@@ -1874,6 +1874,11 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
         $literal_families{q{FSMGen intent-sized literals like 5'23, 8'-10, 8'-0xA, 8'-0b1010, and 20'x1}},
         'manifest advertises intent-level sized literal normalization',
     );
+    my %guard_forms = map { $_ => 1 } @{$manifest->{language_surface}{expressions}{guard_forms}};
+    ok(
+        $guard_forms{'non-state DT DTE headers such as (-route <req ...) and (-mode_hit <mode=3 ...)'},
+        'manifest advertises guarded non-state DT DTE headers',
+    );
 
     my %human_contract_docs = map { $_ => 1 } @{$manifest->{documentation}{human_contract} || []};
     ok($human_contract_docs{'docs/book/src/SUMMARY.md'}, 'manifest points human readers at the book summary');

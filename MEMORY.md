@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: R14/R8 — Guarded non-state DT DTE headers
+- `.fsm` non-state DTs now accept an optional leading DTE guard after the DT
+  name, for example `(-route <req ...)`, `(-mode_hit <mode=3 ...)`, and
+  `(-both_ready <(& req ready) ...)`.
+- The parser stores the guard as CoreAST state metadata, signal analysis sees
+  guard operands, and enable generation emits the guarded top-level `*_en`
+  before applying it as the boundary gate on each DT-specific output enable.
+- Unguarded non-state DTs still default to `DTE = 1'b1`.
+- ISF rule lowering now uses this `.fsm` surface directly: a rule guard emits
+  as the rule DT's DTE header instead of as a nested guard block around the
+  rule actions.
+- The language-surface manifest now advertises guard forms, including
+  non-state DT DTE headers, and focused tests cover `.fsm`, enable graph,
+  manifest, and ISF scheduled `.fsm` behavior.
 ## 2026-05-14: R8 — State DTE boundary-gated output enables
 - SystemVerilog enable emission now keeps each state DT's selector predicate
   separate from the state DTE during factorization and applies the DTE as the
@@ -467,8 +481,9 @@ This is the live continuity document for fast session recovery after crashes, re
   for `(rule name (when condition) actions...)`. The parser normalizes both
   spellings into the public `when` field, so scheduler lowering and downstream
   actor-shell consumers keep the same shape.
-- Kept the shorthand bounded to scalar conditions because current scheduled
-  rule guards are still single port/signal guard blocks.
+- Kept the shorthand bounded to scalar conditions. The later guarded
+  non-state DT DTE header slice changed the scheduled `.fsm` review shape but
+  did not broaden rule guard payloads beyond the current scalar boundary.
 - Added `t/1169-isf-rule-shorthand-guard.t`, converted
   `isf/full_featured.isf` `always_ready` to the shorthand spelling, and updated
   the ISF spec, public-interface contract, and mdBook Rules chapter.
@@ -478,17 +493,19 @@ This is the live continuity document for fast session recovery after crashes, re
   transactions now receive a one-cycle delayed start pulse rather than a sticky
   flopped request bit.
 - Extended scheduled `.fsm` DT formatting to emit delayed-pulse operators such
-  as `<1` correctly inside non-state DT blocks, including factored rule guard
-  blocks.
+  as `<1` correctly inside non-state DT blocks. Later guarded-DTE rule
+  emission reuses that formatting without wrapping rule actions in a nested
+  guard block.
 - Updated `t/1168-isf-rule-guard-factoring.t`, the mdBook Rules and
   Priorities chapter, `docs/ISF_SPEC.md`, and
   `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md` to lock and document the pulsed
   trigger contract.
 ## 2026-05-13: R14 — ISF rule guard factoring
 - Changed scheduled `.fsm` emission for ISF rule DT blocks so a rule-level
-  `(when ...)` guard is emitted once as a factored DT guard block around the
+  `(when ...)` guard was emitted once as a factored DT guard block around the
   lowered actions, instead of repeating the same guard suffix on every rule
-  assignment.
+  assignment. This historical shape is superseded by guarded non-state DT DTE
+  headers.
 - Added `t/1168-isf-rule-guard-factoring.t` to prove the generated `.fsm`
   shape and that the factored guarded block parses back through the normal
   `.fsm` frontend and reaches HDL generation.

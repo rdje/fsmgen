@@ -224,9 +224,10 @@ The rule-trigger target boundary is checked by
 so `(trigger transaction)` must name a declared transaction in the same actor.
 Forward references are accepted because validation runs after the full actor
 body is collected; missing targets fail before actor-shell return.
-The factored rule-guard scheduled `.fsm` shape is checked by
+The rule-guard scheduled `.fsm` DTE-header shape is checked by
 [t/1168-isf-rule-guard-factoring.t](../t/1168-isf-rule-guard-factoring.t)
-so rule actions remain grouped under one guard block in review artifacts.
+so rule actions remain grouped under one guarded non-state DT enable in review
+artifacts.
 The shorthand rule-guard parser/lowering path is checked by
 [t/1169-isf-rule-shorthand-guard.t](../t/1169-isf-rule-shorthand-guard.t)
 to keep `(rule name condition actions...)` normalized to the same public
@@ -504,15 +505,15 @@ field. The current shorthand guard is scalar because scheduled rule guards are
 still single port/signal conditions. Rule-local `(when condition)` is a
 guard-only clause; it is not the transaction `(when condition body...)`
 control-flow construct.
-Current scheduled `.fsm` review artifacts emit a rule's `when` guard as one
-factored DT guard block around that rule's lowered actions. This keeps the
+Current scheduled `.fsm` review artifacts emit a rule's `when` guard as the
+non-state DT header DTE for that rule's lowered actions. This keeps the
 generated text aligned with the source rule structure without widening the
 actor-shell rule payload contract.
 Within that scheduled `.fsm` review artifact, ordinary rule `(port value)`
-actions remain guarded flopped assignments, while `(trigger transaction)`
-actions use `<1` on a generated `rule_transaction` trigger source. A rule
-trigger is therefore a one-cycle delayed pulse, not a sticky flopped request
-bit.
+actions remain flopped assignments inside the guarded DT, while
+`(trigger transaction)` actions use `<1` on a generated `rule_transaction`
+trigger source inside that same guarded DT. A rule trigger is therefore a
+one-cycle delayed pulse, not a sticky flopped request bit.
 Multiple rules may trigger the same transaction. The current scheduled `.fsm`
 artifact exposes those triggers as distinct one-bit `rule_transaction` sources
 and emits a generated combinational `transaction_trigger_fanin` DT for each

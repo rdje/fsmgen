@@ -119,6 +119,7 @@ sub language_surface_system_contracts_keys {
 sub language_surface_expressions_keys {
     return [
         qw(
+            guard_forms
             scalar_constant_expression_operators
             runtime_expression_operators
             test_node_selectors

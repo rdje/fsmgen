@@ -61,8 +61,8 @@ my $fsm = $result->{files}{'rule_shorthand.fsm'};
 
 like(
     $fsm,
-    qr/\(-always_ready\s+\(<ready\s+\(<- \(valid 1\)\)\s+\(<1 \(always_ready_main_transfer 1\)\)\s+\)\s+\)/s,
-    'shorthand guarded rule lowers to the same factored guard block',
+    qr/\(-always_ready\s+<ready\s+\(<- \(valid 1\)\)\s+\(<1 \(always_ready_main_transfer 1\)\)\s+\)/s,
+    'shorthand guarded rule lowers to a guarded standalone-DT DTE',
 );
 like(
     $fsm,
@@ -71,8 +71,8 @@ like(
 );
 like(
     $fsm,
-    qr/\(-legacy_ready\s+\(<ready\s+\(<- \(shadow_valid 1\)\)\s+\)\s+\)/s,
-    'long-form guarded rule remains supported',
+    qr/\(-legacy_ready\s+<ready\s+\(<- \(shadow_valid 1\)\)\s+\)/s,
+    'long-form guarded rule remains supported through the same guarded-DT DTE form',
 );
 
 my $tempdir = tempdir(CLEANUP => 1);

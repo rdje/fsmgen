@@ -52,6 +52,12 @@ sub build_language_surface_section {
             ],
         },
         expressions => {
+            guard_forms => [
+                'guarded blocks such as (<req ...) and (<!hold ...)',
+                'condition suffixes such as (-> busy <start) and (= (OUT IN) <(& valid ready))',
+                'non-state DT DTE headers such as (-route <req ...) and (-mode_hit <mode=3 ...)',
+                'compact comparison guards use the existing name<op>value grammar',
+            ],
             scalar_constant_expression_operators => [qw(+ - * / % & | ^ add sub mul div mod and or xor)],
             runtime_expression_operators => [qw(+ - * / % & | ^ && || == != < <= > >= !)],
             test_node_selectors => [

@@ -36,8 +36,8 @@ my $fsm = $result->{files}{'rule_guard_factoring.fsm'};
 
 like(
     $fsm,
-    qr/\(-always_ready\s+\(<ready\s+\(<- \(valid 1\)\)\s+\(<1 \(always_ready_main_transfer 1\)\)\s+\)\s+\)/s,
-    'rule DT emits one factored guard block with delayed-pulse trigger source assignment',
+    qr/\(-always_ready\s+<ready\s+\(<- \(valid 1\)\)\s+\(<1 \(always_ready_main_transfer 1\)\)\s+\)/s,
+    'rule DT emits its guard as the standalone-DT DTE with delayed-pulse trigger source assignment',
 );
 like(
     $fsm,
@@ -48,6 +48,11 @@ unlike(
     $fsm,
     qr/\(<- \(valid 1\) <ready\)/,
     'rule DT no longer repeats the rule guard on each assignment',
+);
+unlike(
+    $fsm,
+    qr/\(<ready\s+\(<- \(valid 1\)\)/,
+    'rule DT no longer emits a nested guard block for the rule guard',
 );
 unlike(
     $fsm,

@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14/R8 — Guarded non-state DT DTE headers
+- Added optional non-state DT DTE guards to the `.fsm` parser, preserving the
+  authored guard as CoreAST state metadata and accepting the existing guard
+  grammar in headers such as `(-route <req ...)`, `(-neg <!hold ...)`,
+  `(-mode_hit <mode=3 ...)`, and `(-expr_guard <(& req ready) ...)`.
+- Updated signal analysis, enable initialization, intermediate liveness, and
+  generated SystemVerilog emission so guarded non-state DTs produce a top-level
+  `*_en` DTE and apply it as the final boundary gate on DT-specific output
+  enables. Unguarded non-state DTs still emit `DTE = 1'b1`.
+- Pivoted ISF rule lowering to emit rule `(when ...)` conditions as guarded
+  non-state DT DTE headers instead of nested guard blocks, while preserving
+  `<1` per-rule trigger-source pulses and generated transaction fan-in.
+- Advertised the guard surface through the language-surface manifest and
+  updated the mdBook, ISF spec, public-interface contract, user-guide pointer,
+  and focused tests.
 ### R8 — State DTE boundary-gated output enables
 - Changed DT-specific SystemVerilog enable emission so state-DT selector
   predicates are stored and factored separately from the state DTE, then

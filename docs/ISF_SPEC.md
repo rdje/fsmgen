@@ -620,23 +620,23 @@ Current lowering:
   form is a single port/signal condition. Rule-local `(when condition)` is not
   the transaction control-flow form; it has no body and guards the rule actions
   that follow it.
-- `(port value)` actions lower as guarded flopped assignments to that port.
-- `(trigger transaction)` lowers as a guarded `<1` one-cycle delayed pulse to a
-  generated per-rule/per-transaction source named `rule_transaction`, so a rule
-  trigger is a pulse rather than a sticky flopped request bit.
+- `(port value)` actions lower as flopped assignments inside the guarded
+  non-state DT.
+- `(trigger transaction)` lowers as a `<1` one-cycle delayed pulse inside the
+  guarded non-state DT to a generated per-rule/per-transaction source named
+  `rule_transaction`, so a rule trigger is a pulse rather than a sticky
+  flopped request bit.
 - If multiple rules trigger the same transaction, the scheduled `.fsm` exposes
   each rule source separately and emits one generated combinational fan-in DT
   per target transaction. That DT drives `transaction_start` from the OR of the
   rule sources without adding another cycle.
-- Scheduled `.fsm` emission factors the rule guard as one DT guard block around
-  all guarded actions, for example:
+- Scheduled `.fsm` emission writes the rule guard as the non-state DT header
+  DTE, for example:
 
 ```lisp
-(-always_ready
-  (<ready
-    (<- (valid 1))
-    (<1 (always_ready_main_transfer 1))
-  )
+(-always_ready <ready
+  (<- (valid 1))
+  (<1 (always_ready_main_transfer 1))
 )
 
 (-main_transfer_trigger_fanin
@@ -647,16 +647,12 @@ Current lowering:
 Multi-rule fan-in example:
 
 ```lisp
-(-r0
-  (<a
-    (<1 (r0_work 1))
-  )
+(-r0 <a
+  (<1 (r0_work 1))
 )
 
-(-r1
-  (<b
-    (<1 (r1_work 1))
-  )
+(-r1 <b
+  (<1 (r1_work 1))
 )
 
 (-work_trigger_fanin

@@ -1061,7 +1061,7 @@ sub _build_rules {
             if ($a0 eq 'trigger') {
                 my $target = $ac->[1];
                 my $source = _rule_trigger_source_name($r->{name}, $target);
-                push @a, { lhs => $source, rhs => 1, op => '<1', guard => $c };
+                push @a, { lhs => $source, rhs => 1, op => '<1' };
                 $ctrs->{$source} = 1 if $ctrs;
                 $ctrs->{"${target}_start"} = 1 if $ctrs;
                 push @{$fanin_by_transaction{$target}}, $source
@@ -1069,11 +1069,11 @@ sub _build_rules {
             } elsif ($a0 eq 'priority') {
                 # Parsed metadata; arbitration enforcement is a later slice.
             } else {
-                push @a, { lhs => $a0, rhs => $ac->[1], op => '<-', guard => $c };
+                push @a, { lhs => $a0, rhs => $ac->[1], op => '<-' };
             }
         }
 
-        push @d, { name => $r->{name}, kind => 'rule', assignments => \@a };
+        push @d, { name => $r->{name}, kind => 'rule', dte_guard => $c, assignments => \@a };
     }
 
     for my $target (sort keys %fanin_by_transaction) {

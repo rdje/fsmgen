@@ -87,16 +87,7 @@ sub _emit_assignments($self, $state) {
     my @lines;
 
     for my $a (@{$state->{assignments}}) {
-        my $guard_str = '';
-        if ($a->{guard}) {
-            my $g = $a->{guard};
-            if ($g->{port} && !$g->{op}) {
-                $guard_str = " <$g->{port}";
-            } elsif ($g->{signal} && $g->{op}) {
-                my $v = $g->{value};
-                $guard_str = " <$g->{signal}" . ($g->{op} eq '<' ? "<$v" : "=$v");
-            }
-        }
+        my $guard_str = _format_guard_suffix($a->{guard});
         my $op = $a->{op};
         if ($op eq '=') {
             my $port_suffix = $self->{outputs}{$a->{lhs}} ? '>' : '';
@@ -235,7 +226,7 @@ sub _emit_transitions($self, $state) {
 sub _emit_dt_blocks($self, $ir, $outputs) {
     my @lines;
     for my $dt (@{$ir->{dt_blocks}}) {
-        push @lines, "  (-$dt->{name}";
+        push @lines, "  (-$dt->{name}" . _format_guard_suffix($dt->{dte_guard});
         push @lines,
             $dt->{kind} eq 'rule'
                 ? $self->_emit_rule_dt_assignments($dt)
@@ -278,7 +269,7 @@ sub _emit_rule_dt_assignments($self, $dt) {
 
 sub _format_dt_assignment($self, $assignment, $indent, %options) {
     my $padding = ' ' x $indent;
-    my $guard = !$options{no_guard} && $assignment->{guard} ? " <$assignment->{guard}{port}" : '';
+    my $guard = !$options{no_guard} ? _format_guard_suffix($assignment->{guard}) : '';
     my $op = $assignment->{op};
 
     if ($op eq '=') {
@@ -300,6 +291,20 @@ sub _rule_guard_key {
     return '' unless $guard && ref($guard) eq 'HASH';
     return '' if defined($guard->{port}) && $guard->{port} eq '1';
     return $guard->{port} // '';
+}
+
+sub _format_guard_suffix {
+    my ($guard) = @_;
+    return '' unless $guard && ref($guard) eq 'HASH';
+    return '' if defined($guard->{port}) && $guard->{port} eq '1';
+    return " <$guard->{port}" if $guard->{port} && !$guard->{op};
+    if ($guard->{signal} && $guard->{op}) {
+        my $value = $guard->{value};
+        my $operator = $guard->{op} eq '=' ? '=' : $guard->{op};
+        return " <$guard->{signal}$operator$value";
+    }
+    return " <$guard->{expr}" if $guard->{expr};
+    return '';
 }
 
 sub _format_expr {

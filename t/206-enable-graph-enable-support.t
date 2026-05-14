@@ -33,7 +33,7 @@ subtest 'enable-graph enable support rebuilds top-level enable initialization, W
       (OUT1 <= 1)
     )
   )
-  (-watch
+  (-watch <A
     (WATCH = 1)
   )
 )
@@ -60,13 +60,13 @@ FSM
     );
     is(
         $prepared_backend->{dt_enables}{'-watch'}->to_systemverilog,
-        "1'b1",
-        'enable support keeps the standalone-DT enable AST contract',
+        'A != 0',
+        'enable support keeps the guarded standalone-DT enable AST contract',
     );
 
     my $top_enable_block = $support->generate_enable_conditions($fsm_module);
     like($top_enable_block, qr/\bassign idle_en = current_state == IDLE;/, 'enable support emits the top-level state enable assignment');
-    like($top_enable_block, qr/\bassign watch_en = 1'b1;/, 'enable support emits the standalone-DT top-level enable assignment');
+    like($top_enable_block, qr/\bassign watch_en = A != 0;/, 'enable support emits the guarded standalone-DT top-level enable assignment');
 
     my $dt_block = $support->generate_dt_enables_from_analysis();
     like($dt_block, qr/\bassign idle_out1_1_en = idle_en & A;\s+\/\/ OUT1 <- 1\b/, 'enable support emits DT-specific enable wiring for regular-state assignments');

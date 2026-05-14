@@ -99,6 +99,80 @@ FSM
     unlike($hdl, qr/current_state\s*==\s*MISC/, 'generated HDL does not encode the standalone DT as a regular state');
 };
 
+subtest 'standalone DT blocks accept optional DTE guards using the normal guard grammar' => sub {
+    my $fsm_module = parse_fsm_module(<<'FSM');
+(?fsm:standalone_dt_guard_contract
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+size
+    (req 1)
+    (hold 1)
+    (mode 2)
+    (ready 1)
+    (OUT_A 1)
+    (OUT_B 1)
+    (OUT_C 1)
+    (OUT_D 1)
+    (OUT_E 1)
+  )
+  (-route <req
+    (= (OUT_A 1))
+  )
+  (-neg <!hold
+    (= (OUT_B 1))
+  )
+  (-mode_hit <mode=3
+    (= (OUT_C 1))
+  )
+  (-expr_guard <(& req ready)
+    (= (OUT_D 1))
+  )
+  (-plain
+    (= (OUT_E 1))
+  )
+)
+FSM
+
+    my %state_by_name = map { $_->name => $_ } @{$fsm_module->states || []};
+
+    ok($state_by_name{'-route'}->dt_enable_condition, 'truthy shorthand guard is stored as the DT enable condition');
+    assert_binary_condition(
+        $state_by_name{'-route'}->dt_enable_condition,
+        '!=',
+        'req',
+        '0',
+        'standalone DT <req DTE guard',
+    );
+    assert_binary_condition(
+        $state_by_name{'-neg'}->dt_enable_condition,
+        '==',
+        'hold',
+        '0',
+        'standalone DT <!hold DTE guard',
+    );
+    assert_binary_condition(
+        $state_by_name{'-mode_hit'}->dt_enable_condition,
+        '==',
+        'mode',
+        '3',
+        'standalone DT <mode=3 DTE guard',
+    );
+    is($state_by_name{'-plain'}->dt_enable_condition, undef, 'unguarded standalone DT keeps the default DTE');
+
+    my $hdl = FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($fsm_module);
+
+    like($hdl, qr/\bassign\s+route_en\s*=\s*req\s*!=\s*0\s*;/, 'truthy standalone DT DTE emits as the top-level DT enable');
+    like($hdl, qr/\bassign\s+neg_en\s*=\s*hold\s*==\s*0\s*;/, 'negated standalone DT DTE emits as the top-level DT enable');
+    like($hdl, qr/\bassign\s+mode_hit_en\s*=\s*mode\s*==\s*3\s*;/, 'comparison standalone DT DTE emits as the top-level DT enable');
+    like($hdl, qr/\bassign\s+expr_guard_en\s*=\s*intermediate_and_req_ready_\d+\s*;/, 'expression standalone DT DTE emits through a backed intermediate');
+    like($hdl, qr/\bassign\s+intermediate_and_req_ready_\d+\s*=\s*req\s*&\s*ready\s*;/, 'expression standalone DT DTE intermediate is assigned');
+    like($hdl, qr/\bassign\s+plain_en\s*=\s*1'b1\s*;/, 'unguarded standalone DT defaults DTE to one');
+    like($hdl, qr/\bassign\s+route_out_a_1_en\s*=\s*route_en\s*&\s*1'b1\s*;/, 'truthy DTE gates the standalone DT output enable boundary');
+    like($hdl, qr/\bassign\s+expr_guard_out_d_1_en\s*=\s*expr_guard_en\s*&\s*1'b1\s*;/, 'expression DTE gates the standalone DT output enable boundary');
+};
+
 done_testing();
 
 sub parse_fsm_module {
@@ -116,4 +190,12 @@ sub write_file {
     open my $fh, '>', $path or die "Cannot open $path for write: $!";
     print {$fh} $content or die "Cannot write $path: $!";
     close $fh or die "Cannot close $path: $!";
+}
+
+sub assert_binary_condition {
+    my ($condition, $operator, $lhs_name, $rhs_sv, $label) = @_;
+    ok($condition->isa('FSM::CoreAST::BinaryOp'), "$label uses BinaryOp AST");
+    is($condition->operator, $operator, "$label uses the expected operator");
+    is($condition->left->signal->name, $lhs_name, "$label keeps the expected signal on the left");
+    is($condition->right->to_systemverilog, $rhs_sv, "$label keeps the expected RHS literal");
 }

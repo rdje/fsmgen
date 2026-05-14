@@ -364,6 +364,11 @@ Active shorthand meanings are:
 - `(<(& req start !full) ...)` uses the normal expression language and means
   the compound predicate is true
 
+The compact comparison family is the existing `name<op>value` grammar. The
+same guard grammar is reused by condition suffixes and by non-state DT DTE
+headers such as `(-route <req ...)`, `(-mode_hit <mode=3 ...)`, and
+`(-both_ready <(& req ready) ...)`.
+
 ### Condition Suffixes
 
 A condition suffix is the single-action form of a guarded block. It must use an
