@@ -515,11 +515,9 @@ conditional entry points. Needs more design discussion.
 
 Pipeline stages with implicit valid/ready handshake. Stage names must be scalar,
 and stage body entries must be list forms before an actor shell is returned.
-Transaction-level stages are parsed but **not lowered**: the scheduler rejects
-authored `(stage ...)` transaction clauses with a targeted diagnostic instead
-of silently dropping them from the scheduled `.fsm`. This fail-closed boundary
-also applies when a transaction stage appears inside a nested `when`, `switch`,
-or `repeat` body.
+The first shipped transaction-stage subset is intentionally smaller than the
+historical free-form examples: a top-level transaction clause with one ready
+input and one valid output.
 
 Actor-level `(phase ...)` and `(stage ...)` metadata uses the same scalar-name
 and list-body structural boundary, is carried in the parser actor shell for
@@ -527,28 +525,24 @@ downstream consumers, and is not semantically enforced by the scheduler yet.
 That actor-level metadata is not copied into the scheduling IR, schedule JSON,
 generated `.fsm`, generated composition top, or HDL today.
 
-The first planned lowered transaction-stage model is intentionally smaller
-than the historical free-form examples: a top-level transaction clause with
-one ready input and one valid output.
-
 ```lisp
 (stage accept
   (input ready)
   (output valid))
 ```
 
-That stage will lower to one transaction state. While the state is active,
-`valid` is driven combinationally high with `=`, and the state advances only
-when `ready` is true in the same cycle. If `ready` is false, the FSM remains
-in the stage state and keeps `valid` asserted. Pending samples immediately
-before the stage must materialize before the stage so a stall does not
-resample every cycle. Nested stages, stage-local `(latency ...)`,
-`(compute ...)`, embedded transaction actions, multiple ready/valid endpoints,
-registered-valid variants, and skid-buffer behavior remain separate backlog
-features until their generated-state and report semantics are explicit.
+That stage lowers to one transaction state. While the state is active, `valid`
+is driven combinationally high with `=`, and the state advances only when
+`ready` is true in the same cycle. If `ready` is false, the FSM remains in the
+stage state and keeps `valid` asserted. Pending samples immediately before the
+stage materialize before the stage so a stall does not resample every cycle.
+Nested stages, stage-local `(latency ...)`, `(compute ...)`, embedded
+transaction actions, multiple ready/valid endpoints, registered-valid variants,
+and skid-buffer behavior remain separate backlog features until their
+generated-state and report semantics are explicit.
 
-**Future**: Implement the first ready/valid barrier, then grow toward richer
-pipeline registers only after the handoff and report contract are shipped.
+**Future**: Grow toward richer pipeline registers only after the shipped
+ready/valid barrier report contract is complete.
 
 ### Contracts
 

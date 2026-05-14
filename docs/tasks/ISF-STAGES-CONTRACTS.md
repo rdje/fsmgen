@@ -74,12 +74,14 @@ covered stage and temporal-check domains.
   Commit: `ISF-STAGES-CONTRACTS.3: specify bounded contract semantics`
 
 - ID: `ISF-STAGES-CONTRACTS.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement stage lowering.`
   Acceptance: `Covered stage forms lower into scheduled FSM, parse through
   the normal frontend, and generate HDL/check artifacts as specified.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `prove -l t/1179-isf-phase-stage-boundary.t t/1180-isf-unsupported-transaction-clause-boundary.t t/1223-isf-stage-lowering.t t/1144-isf-public-tested-by-metadata-audit.t`;
+  `./bin/ci-regression isf --no-book`; `mdbook build docs/book`;
+  `git diff --check`
+  Commit: `ISF-STAGES-CONTRACTS.4: implement bounded stage lowering`
 
 - ID: `ISF-STAGES-CONTRACTS.5`
   Status: `pending`
@@ -101,7 +103,7 @@ covered stage and temporal-check domains.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-STAGES-CONTRACTS.4` | `pending` | The stage model is specified and can now be lowered into scheduled `.fsm`. |
+| 1 | `ISF-STAGES-CONTRACTS.5` | `pending` | The contract model is specified and can now be lowered into scheduled monitor logic. |
 
 ## ISF-STAGES-CONTRACTS.1 Inventory
 
@@ -340,6 +342,33 @@ Rejected or deferred contract forms:
 - Contracts that would collide with generated monitor names fail before
   scheduled artifact emission.
 
+## ISF-STAGES-CONTRACTS.4 Stage Implementation
+
+Shipped behavior:
+
+- `%SUPPORTED_TRANSACTION_CLAUSES` now accepts `stage` only in top-level
+  transaction bodies.
+- The lowerer validates the first bounded source shape exactly as
+  `(stage name (input ready_signal) (output valid_signal))`, with one scalar
+  actor input and one scalar actor output.
+- The generated stage state is named `<transaction>_stage_<index>`, drives
+  `valid_signal = 1` with a combinational `=` assignment while active, and
+  transitions to the next state only under `<ready_signal`.
+- Pending samples immediately before a stage are flushed to a separate sample
+  state before the stage, so a stalled stage does not recapture source ports.
+- Nested stages in `when`, `switch`, and `repeat`, unsupported stage body
+  entries such as `(latency ...)`, and endpoint direction mismatches fail
+  closed with targeted diagnostics.
+- The generated scheduled `.fsm` parses through the normal `.fsm` frontend and
+  reaches SystemVerilog generation in `t/1223-isf-stage-lowering.t`.
+
+Deferred to later leaves or backlog:
+
+- Schedule-report stage metadata is deferred to `ISF-STAGES-CONTRACTS.6`.
+- Stage-local latency, compute/action bodies, multiple endpoints,
+  registered-valid variants, skid buffers, and nested stages remain backlog
+  until their runtime and report contracts are specified.
+
 ## Decisions
 
 - `2026-05-14`: Stage lowering and temporal contract lowering are tracked in
@@ -365,6 +394,7 @@ Rejected or deferred contract forms:
 | `2026-05-14` | `ISF-STAGES-CONTRACTS.1` | `prove -l t/1175-isf-contract-fail-closed.t t/1179-isf-phase-stage-boundary.t t/1180-isf-unsupported-transaction-clause-boundary.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-STAGES-CONTRACTS.2` | `prove -l t/1179-isf-phase-stage-boundary.t t/1180-isf-unsupported-transaction-clause-boundary.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-STAGES-CONTRACTS.3` | `prove -l t/1175-isf-contract-fail-closed.t t/1180-isf-unsupported-transaction-clause-boundary.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-STAGES-CONTRACTS.4` | `prove -l t/1179-isf-phase-stage-boundary.t t/1180-isf-unsupported-transaction-clause-boundary.t t/1223-isf-stage-lowering.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -374,6 +404,7 @@ Rejected or deferred contract forms:
 | `ISF-STAGES-CONTRACTS.1` | `ISF-STAGES-CONTRACTS.1: inventory stage contract boundary` | Stage/contract parse and fail-closed inventory. |
 | `ISF-STAGES-CONTRACTS.2` | `ISF-STAGES-CONTRACTS.2: specify bounded stage semantics` | First bounded transaction-stage semantics. |
 | `ISF-STAGES-CONTRACTS.3` | `ISF-STAGES-CONTRACTS.3: specify bounded contract semantics` | First bounded temporal-contract semantics. |
+| `ISF-STAGES-CONTRACTS.4` | `ISF-STAGES-CONTRACTS.4: implement bounded stage lowering` | First bounded transaction-stage lowering. |
 
 ## Changelog
 
@@ -387,3 +418,5 @@ Rejected or deferred contract forms:
 - `2026-05-14`: Specified the first bounded temporal contract model as a
   transaction-local bounded eventual monitor and advanced the frontier to
   `ISF-STAGES-CONTRACTS.4`.
+- `2026-05-14`: Implemented the first bounded transaction-stage lowering path
+  and advanced the frontier to `ISF-STAGES-CONTRACTS.5`.

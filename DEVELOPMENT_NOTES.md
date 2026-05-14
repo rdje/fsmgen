@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF bounded stage lowering
+- The first stage implementation reuses the existing state transition model:
+  a `stage` state has the same conditional-transition shape as an `await`
+  state, but without watchdog timeout behavior.
+- `valid_signal` is emitted as a combinational state assignment so it is
+  asserted for every cycle in which the stage state is active and disappears
+  when the state is left. This avoids a sticky valid bit and keeps the
+  scheduled `.fsm` review text directly tied to state activity.
+- Samples before a stage are deliberately flushed into their own state. A
+  stalled ready/valid stage must not keep recapturing a source port every
+  cycle while waiting for downstream ready.
 ## 2026-05-14: ISF bounded contract semantics
 - The first temporal contract is transaction-local and bounded because it can
   be represented as ordinary scheduled hardware: an arm state plus an

@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-STAGES-CONTRACTS.md](docs/tasks/ISF-STAGES-CONTRACTS.md),
-  whose current frontier is `ISF-STAGES-CONTRACTS.4`. The completed
+  whose current frontier is `ISF-STAGES-CONTRACTS.5`. The completed
   `ISF-RULE-ACTIONS`, `ISF-RESOURCE-CATALOG`,
   `ISF-RESOURCE-PRIORITY`, `ISF-CONFLICTS`, and `ISF-COMPOSITION` trees are
   listed in the task-tree completed table.
@@ -116,6 +116,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   The planned scheduled `.fsm` artifact owns the monitor; SystemVerilog may
   project it into a verification-only assertion. The active frontier advances
   to `ISF-STAGES-CONTRACTS.4`.
+- `ISF-STAGES-CONTRACTS.4` is complete. The first bounded transaction-stage
+  lowering path now ships for top-level
+  `(stage name (input ready_signal) (output valid_signal))`: the scheduler
+  emits one ready-gated state, drives `valid_signal = 1` while active,
+  materializes pending samples before the stage, rejects nested/unsupported
+  stage forms, and proves scheduled `.fsm` parsing plus SystemVerilog
+  generation. The active frontier advances to `ISF-STAGES-CONTRACTS.5`.
 - ISF construct support now has a normative rule: parser acceptance is not a
   support claim. Every current or future shipped ISF construct must have an
   explicit accepted source shape, lowering path or fail-closed diagnostic,
@@ -386,9 +393,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - ISF phase/stage handling now has an explicit boundary: actor-level
   `(phase ...)` and `(stage ...)` metadata is structurally validated and
   parser-carried, transaction `(phase ...)` remains a pass-through state
-  marker, and transaction `(stage ...)` fails closed during lowering until
-  valid/ready pipeline-stage generation is implemented. `t/1179` covers the
-  accepted and malformed boundary cases.
+  marker, and the first top-level transaction `(stage name (input ready)
+  (output valid))` subset now lowers as a ready/valid barrier. `t/1179` covers
+  the parser boundary and rejected unsupported stage body shapes; `t/1223`
+  covers the shipped bounded stage lowering.
 - ISF unsupported transaction clause heads now fail closed before lowering
   instead of being silently ignored. `t/1180` covers removed `(assign ...)`,
   unknown future-style clauses, unsupported nested `when`/`switch`/`repeat`
@@ -1513,8 +1521,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
     exact descending slices.
   - [t/1179-isf-phase-stage-boundary.t](t/1179-isf-phase-stage-boundary.t)
     now proves the phase/stage boundary: actor-level metadata is validated and
-    carried, transaction phases lower as pass-through markers, and transaction
-    stages fail closed until pipeline-stage generation is implemented.
+    carried, transaction phases lower as pass-through markers, and unsupported
+    stage bodies fail closed. [t/1223-isf-stage-lowering.t](t/1223-isf-stage-lowering.t)
+    proves the shipped top-level ready/valid stage lowering.
   - [t/1180-isf-unsupported-transaction-clause-boundary.t](t/1180-isf-unsupported-transaction-clause-boundary.t)
     now proves unsupported transaction clause heads fail closed before state
     expansion, including removed `(assign ...)` and unsupported nested

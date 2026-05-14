@@ -251,22 +251,21 @@ assignment operators are separate future features.
 
 ### Transaction Stage Lowering
 
-Status: backlog.
+Status: partially shipped.
 
 Goal: lower transaction `(stage ...)` clauses into valid/ready pipeline-stage
 logic.
 
-Current boundary: transaction stage clauses are parsed and fail closed during
-lowering with a targeted diagnostic. Actor-level stage metadata is
-parser-carried only; it does not reach `LoweringIR`, schedule JSON, scheduled
-`.fsm`, generated composition tops, or HDL.
-
-First planned shipped subset: a top-level transaction stage of the form
+Shipped subset: a top-level transaction stage of the form
 `(stage name (input ready_signal) (output valid_signal))`. It lowers to one
 state that drives `valid_signal = 1` while active and advances only when
-`ready_signal` is true. Nested stages, stage-local latency, compute/action
-bodies, multiple ready/valid endpoints, registered-valid variants, and
-skid-buffer behavior remain deferred.
+`ready_signal` is true. Actor-level stage metadata remains parser-carried only;
+it does not reach `LoweringIR`, schedule JSON, scheduled `.fsm`, generated
+composition tops, or HDL.
+
+Remaining backlog: nested stages, stage-local latency, compute/action bodies,
+multiple ready/valid endpoints, registered-valid variants, skid-buffer
+behavior, and bounded schedule-report projection for stage metadata.
 
 ### Temporal Contract Lowering
 

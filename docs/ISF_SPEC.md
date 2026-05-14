@@ -939,19 +939,16 @@ stage semantics yet. That actor-level metadata is not copied into `LoweringIR`,
 schedule JSON, generated `.fsm`, generated composition tops, or HDL today.
 Transaction-level `(phase name property...)` remains the
 current pass-through state marker lowering. Transaction-level
-`(stage name property...)` is structurally validated, but lowering rejects it
-with a targeted diagnostic because implicit valid/ready pipeline-stage
-generation is still deferred. The same fail-closed stage boundary applies at
-top level and inside transaction `when`, `switch`, and `repeat` bodies.
-The first planned shipped transaction-stage subset is a top-level transaction
-clause of the form `(stage name (input ready_signal) (output valid_signal))`.
-It will lower to one transaction state that drives `valid_signal = 1` while the
-state is active and advances only when `ready_signal` is true in that same
-cycle. Pending samples immediately before the stage must materialize before
-the stage so a stall does not resample every cycle. Nested stages, stage-local
-`(latency ...)`, `(compute ...)`, arbitrary stage body actions, multiple
-ready/valid endpoints, registered-valid variants, and skid-buffer behavior
-remain deferred.
+`(stage name (input ready_signal) (output valid_signal))` is the first shipped
+stage-lowering subset. It is supported only as a top-level transaction clause,
+with `ready_signal` bound to an actor input and `valid_signal` bound to an
+actor output. It lowers to one transaction state that drives
+`valid_signal = 1` while the state is active and advances only when
+`ready_signal` is true in that same cycle. Pending samples immediately before
+the stage materialize before the stage so a stall does not resample every
+cycle. Nested stages, stage-local `(latency ...)`, `(compute ...)`, arbitrary
+stage body actions, multiple ready/valid endpoints, registered-valid variants,
+and skid-buffer behavior remain fail-closed/deferred.
 
 Authored transaction `(contract ...)` temporal assertion clauses are not lowered
 yet. The scheduler rejects them with a targeted diagnostic instead of silently
@@ -1241,6 +1238,9 @@ Focused tests:
 - [t/1218-isf-rule-slot-resource-arbitration.t](../t/1218-isf-rule-slot-resource-arbitration.t)
 - [t/1219-isf-rule-transaction-priority.t](../t/1219-isf-rule-transaction-priority.t)
 - [t/1220-isf-arbitration-schedule-report.t](../t/1220-isf-arbitration-schedule-report.t)
+- [t/1221-isf-rule-expression-assignment.t](../t/1221-isf-rule-expression-assignment.t)
+- [t/1222-isf-rule-expression-conflict-report.t](../t/1222-isf-rule-expression-conflict-report.t)
+- [t/1223-isf-stage-lowering.t](../t/1223-isf-stage-lowering.t)
 
 ## 12. Explicitly Deferred
 
@@ -1260,9 +1260,11 @@ Focused tests:
 - Priority resolution beyond the currently shipped same-target rule/rule
   data-conflict case, rule-over-transaction data-conflict case, and
   resource-level bound-rule grant case.
-- Expression-valued rule assignment actions beyond scalar `(port value)`.
-- Full transaction `(stage ...)` valid/ready pipeline lowering. Authored
-  transaction stage clauses currently fail closed during lowering.
+- Expression-valued rule guards and alternate rule assignment operators.
+- Transaction `(stage ...)` forms beyond the shipped top-level ready/valid
+  barrier: nested stages, stage-local latency/compute bodies, multiple
+  endpoints, registered-valid variants, skid buffers, and stage report
+  projection remain deferred.
 - Full temporal `(contract ...)` assertion lowering. Authored transaction
   contract clauses currently fail closed during lowering.
 - Rich storage-class optimization in schedule reports.

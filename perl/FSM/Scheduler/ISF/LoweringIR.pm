@@ -15,7 +15,7 @@ my %SUPPORTED_TRANSACTION_CLAUSES = (
         map { $_ => 1 } qw(
             on drive await sample update phase shift_left shift_right assemble
             extract complete when switch repeat latency do spawn await_all
-            await_any params
+            await_any params stage
         )
     },
     when => {
@@ -667,6 +667,7 @@ sub _build_transaction($self, $tx, $actor, $txi) {
         elsif ($k eq 'sample')   { push @ps, $cl; }
         elsif ($k eq 'update')      { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_update($cl,$tn,$si++); }
         elsif ($k eq 'phase')       { push @st, _ir_phase($cl,$tn,$si++); }
+        elsif ($k eq 'stage')       { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_stage($cl,$tn,$si++,$actor); }
         elsif ($k eq 'shift_left')  { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_shift_left($cl,$tn,$si++); }
         elsif ($k eq 'shift_right') { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_shift_right($cl,$tn,$si++,$widths); }
         elsif ($k eq 'assemble')    { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_assemble($cl,$tn,$si++); }
@@ -733,8 +734,8 @@ sub _validate_supported_transaction_clauses {
         if (defined($keyword) && !ref($keyword) && $keyword eq 'contract') {
             confess "Transaction '$tn': temporal '(contract ...)' clauses are parsed but not implemented by ISF lowering\n";
         }
-        if (defined($keyword) && !ref($keyword) && $keyword eq 'stage') {
-            confess "Transaction '$tn': pipeline '(stage ...)' clauses are parsed but not implemented by ISF lowering\n";
+        if (defined($keyword) && !ref($keyword) && $keyword eq 'stage' && $context ne 'transaction') {
+            confess "Transaction '$tn': pipeline '(stage ...)' clauses are supported only as top-level transaction clauses\n";
         }
         confess "Transaction '$tn': unsupported '($keyword ...)' clause in $label\n"
             unless $allowed->{$keyword};
@@ -759,6 +760,8 @@ sub _validate_supported_transaction_clauses {
             _validate_sync_clause($clause, $tn, $label);
         } elsif ($keyword eq 'do' || $keyword eq 'spawn') {
             _validate_child_action_clause($clause, $tn, $label);
+        } elsif ($keyword eq 'stage') {
+            _validate_stage_clause($clause, $tn, $label);
         } elsif ($keyword eq 'switch') {
             _validate_switch_clause($clause, $tn, $label);
             for my $branch (@{$clause}[2 .. $#$clause]) {
@@ -855,6 +858,54 @@ sub _validate_switch_clause {
     }
 
     return 1;
+}
+
+sub _validate_stage_clause {
+    my ($clause, $tn, $label) = @_;
+
+    _parse_stage_handshake_clause($clause, $tn, $label);
+    return 1;
+}
+
+sub _parse_stage_handshake_clause {
+    my ($clause, $tn, $label) = @_;
+
+    confess "Transaction '$tn': stage requires '(stage name (input ready_signal) (output valid_signal))' in $label\n"
+        unless ref($clause) eq 'ARRAY'
+            && @$clause >= 2
+            && defined($clause->[1])
+            && !ref($clause->[1])
+            && length($clause->[1]);
+
+    my %seen;
+    my %parsed = (name => $clause->[1]);
+
+    for my $subclause (@{$clause}[2 .. $#$clause]) {
+        confess "Transaction '$tn': stage '$parsed{name}' subclauses must be '(input ready_signal)' or '(output valid_signal)' in $label\n"
+            unless ref($subclause) eq 'ARRAY'
+                && @$subclause == 2
+                && defined($subclause->[0])
+                && !ref($subclause->[0])
+                && length($subclause->[0]);
+
+        my ($head, $signal) = @$subclause;
+        confess "Transaction '$tn': stage '$parsed{name}' has unsupported subclause '$head'\n"
+            unless $head eq 'input' || $head eq 'output';
+        confess "Transaction '$tn': duplicate stage '$parsed{name}' subclause '$head'\n"
+            if $seen{$head}++;
+        confess "Transaction '$tn': stage '$parsed{name}' $head signal must be scalar\n"
+            unless defined($signal) && !ref($signal) && length($signal);
+
+        $parsed{ready} = $signal if $head eq 'input';
+        $parsed{valid} = $signal if $head eq 'output';
+    }
+
+    confess "Transaction '$tn': stage '$parsed{name}' requires '(input ready_signal)'\n"
+        unless defined($parsed{ready});
+    confess "Transaction '$tn': stage '$parsed{name}' requires '(output valid_signal)'\n"
+        unless defined($parsed{valid});
+
+    return \%parsed;
 }
 
 sub _validate_child_action_clause {
@@ -1285,6 +1336,29 @@ sub _format_isf_expr {
 }
 sub _ir_sample_state { my ($tn,$ps,$i)=@_; my @a; for(@$ps){push @a,{lhs=>$_->[3],rhs=>$_->[1],op=>'<=',source_kind=>'sample_capture'}} {name=>"${tn}_sample_$i",kind=>'sequential',assignments=>\@a,transitions=>[]} }
 sub _ir_phase { my ($cl,$tn,$i)=@_; my $name=$cl->[1]; {name=>"${tn}_phase_$i",kind=>'sequential',assignments=>[],transitions=>[],phase_name=>$name} }
+sub _ir_stage {
+    my ($cl, $tn, $i, $actor) = @_;
+    my $stage = _parse_stage_handshake_clause($cl, $tn, 'transaction body');
+    my %inputs = map { $_->{name} => 1 } @{$actor->{interface}{inputs} || []};
+    my %outputs = map { $_->{name} => 1 } @{$actor->{interface}{outputs} || []};
+
+    confess "Transaction '$tn': stage '$stage->{name}' input '$stage->{ready}' is not an actor input\n"
+        unless $inputs{$stage->{ready}};
+    confess "Transaction '$tn': stage '$stage->{name}' output '$stage->{valid}' is not an actor output\n"
+        unless $outputs{$stage->{valid}};
+
+    return {
+        name        => "${tn}_stage_$i",
+        kind        => 'stage',
+        stage_name  => $stage->{name},
+        ready       => $stage->{ready},
+        valid       => $stage->{valid},
+        assignments => [
+            { lhs => $stage->{valid}, rhs => 1, op => '=', source_kind => 'stage_valid' },
+        ],
+        transitions => [],
+    };
+}
 sub _ir_placeholder{ my ($cl,$tn,$i)=@_; {name=>"${tn}_$cl->[0]_$i",kind=>'sequential',assignments=>[],transitions=>[]} }
 sub _ir_do       { my ($cl,$tn,$i)=@_; my $c=$cl->[1]; {name=>"${tn}_do_$i",kind=>'await',assignments=>[{lhs=>"${c}_start",rhs=>1,op=>'=',source_kind=>'do_start'}],transitions=>[],guard=>{port=>"${c}_done"}} }
 sub _ir_spawn    { my ($cl,$tn,$i)=@_; my $inst=$cl->[3]||"${tn}_$i"; {name=>"${tn}_spawn_$i",kind=>'sequential',assignments=>[{lhs=>"${inst}_start",rhs=>1,op=>'=',source_kind=>'spawn_start'}],transitions=>[]} }
@@ -2023,7 +2097,7 @@ sub _dt_assignment_provenance {
 sub _transaction_owner_from_state_name {
     my ($name) = @_;
     return undef unless defined $name;
-    return $1 if $name =~ /^(.+)_(?:idle|drive|await|done|repeat|sample|max_chk|when|switch|update|shift|asm|ext|extract|do|spawn|phase)_/;
+    return $1 if $name =~ /^(.+)_(?:idle|drive|await|done|repeat|sample|max_chk|when|switch|update|shift|asm|ext|extract|do|spawn|phase|stage)_/;
     return $1 if $name =~ /^(.+)_timeout$/;
     return undef;
 }
@@ -2500,6 +2574,7 @@ sub _link_states {
     for my $i(0..$#$st){my $s=$st->[$i];my $n=$i<$#$st?$st->[$i+1]{name}:undef;my $next=$branch_exit_target{$s->{name}}||$n;
         if($s->{kind}eq'entry'&&$n){push @{$s->{transitions}},{target=>$n,condition=>$s->{guard}}}
         elsif($s->{kind}eq'await'&&$next){push @{$s->{transitions}},{target=>$next,condition=>$s->{guard}};push @{$s->{transitions}},{target=>"${tn}_timeout",condition=>{signal=>$s->{watchdog}{name},op=>'=',value=>0}}}
+        elsif($s->{kind}eq'stage'&&$next){push @{$s->{transitions}},{target=>$next,condition=>{port=>$s->{ready}}}}
         elsif($s->{kind}eq'repeat_check'){push @{$s->{transitions}},{target=>$s->{loop_target},condition=>{signal=>$s->{counter},op=>'!=',value=>0}};push @{$s->{transitions}},{target=>$next,condition=>{signal=>$s->{counter},op=>'=',value=>0}}if$next}
         elsif($s->{kind}eq'sequential'&&$next){push @{$s->{transitions}},{target=>$next}}
         elsif($s->{kind}eq'switch'){my$skip=$s->{switch_exit_target}||$n||$e;push @{$s->{transitions}},{target=>$skip} unless $s->{has_default_branch};for my$br(@{$s->{branches}}){next if _is_default_switch_value($br->{value});push @{$s->{transitions}},{target=>$br->{body_start},condition=>{signal=>$s->{signal},value=>$br->{value}}}}}

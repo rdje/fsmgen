@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF bounded stage lowering
+- Completed `ISF-STAGES-CONTRACTS.4` in
+  [docs/tasks/ISF-STAGES-CONTRACTS.md](docs/tasks/ISF-STAGES-CONTRACTS.md).
+- `stage` is now supported as a top-level transaction clause for
+  `(stage name (input ready_signal) (output valid_signal))`. It lowers to one
+  ready-gated state and drives `valid_signal = 1` while active.
+- [t/1223-isf-stage-lowering.t](t/1223-isf-stage-lowering.t) covers emitted
+  scheduled `.fsm`, pending-sample materialization before a stalled stage,
+  targeted rejections, normal `.fsm` frontend parsing, and SystemVerilog
+  handoff. The next active R14 frontier is `ISF-STAGES-CONTRACTS.5`.
 ## 2026-05-14: ISF bounded contract semantics
 - Completed `ISF-STAGES-CONTRACTS.3` in
   [docs/tasks/ISF-STAGES-CONTRACTS.md](docs/tasks/ISF-STAGES-CONTRACTS.md).

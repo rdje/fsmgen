@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF bounded stage lowering
+- Completed `ISF-STAGES-CONTRACTS.4` by implementing the shipped top-level
+  transaction stage subset `(stage name (input ready_signal) (output
+  valid_signal))`.
+- Stage lowering now emits one ready-gated state, drives `valid_signal = 1`
+  while the state is active, materializes pending samples before the stage, and
+  rejects nested or unsupported stage forms with targeted diagnostics.
+- Added [t/1223-isf-stage-lowering.t](t/1223-isf-stage-lowering.t) for
+  scheduled `.fsm` emission, normal `.fsm` frontend parsing, and SystemVerilog
+  handoff coverage.
+- Advanced the active `ISF-STAGES-CONTRACTS` frontier from
+  `ISF-STAGES-CONTRACTS.4` to `ISF-STAGES-CONTRACTS.5`.
 ### R14 — ISF bounded contract semantics
 - Completed `ISF-STAGES-CONTRACTS.3` by specifying the first temporal
   contract model as a transaction-local bounded eventual monitor.

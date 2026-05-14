@@ -102,16 +102,18 @@ ISF
     );
 };
 
-subtest 'transaction stage fails closed during lowering' => sub {
+subtest 'unsupported transaction stage body fails closed during lowering' => sub {
     my $actor = parse_source(<<'ISF');
 (actor transaction_stage
   (clock clk)
   (interface
     (input start)
+    (input ready)
+    (output valid)
     (output done))
   (transaction main
     (on start)
-    (stage pass_through (input start) (output done))
+    (stage pass_through (input ready) (output valid) (latency (max 3)))
     (complete done)))
 ISF
 
@@ -121,11 +123,11 @@ ISF
     };
     my $diagnostic = $@;
 
-    ok(!$ok, 'transaction stage is rejected by lowering');
+    ok(!$ok, 'unsupported transaction stage body is rejected by lowering');
     ok(!ref($diagnostic), 'transaction stage diagnostic is scalar');
     like(
         $diagnostic,
-        qr/\ATransaction 'main': pipeline '\(stage \.\.\.\)' clauses are parsed but not implemented by ISF lowering/,
+        qr/\ATransaction 'main': stage 'pass_through' has unsupported subclause 'latency'/,
         'transaction stage diagnostic is bounded',
     );
 };

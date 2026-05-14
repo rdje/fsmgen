@@ -383,17 +383,21 @@ The phase/stage boundary is checked by
 so actor-level phase/stage metadata and transaction phase/stage clauses have
 scalar names plus list-form body entries before an actor shell is returned.
 Transaction `(phase ...)` remains a pass-through state marker; transaction
-`(stage ...)` fails closed during lowering until valid/ready pipeline-stage
-generation is implemented. Actor-level phase/stage metadata is parser-carried
-only today and is not copied into `LoweringIR`, schedule JSON, generated
-`.fsm`, generated composition tops, or HDL.
+`(stage name (input ready_signal) (output valid_signal))` has its first
+bounded lowering path checked by
+[t/1223-isf-stage-lowering.t](../t/1223-isf-stage-lowering.t): it emits one
+ready-gated state that drives `valid_signal = 1` while active, parses through
+the normal `.fsm` frontend, and reaches SystemVerilog generation. Actor-level
+phase/stage metadata is parser-carried only today and is not copied into
+`LoweringIR`, schedule JSON, generated `.fsm`, generated composition tops, or
+HDL.
 The unsupported transaction-clause boundary is checked by
 [t/1180-isf-unsupported-transaction-clause-boundary.t](../t/1180-isf-unsupported-transaction-clause-boundary.t)
 so removed or future transaction clause heads, including `(assign ...)`, fail
 closed instead of disappearing from scheduled `.fsm` output. The nested
 `when`, `switch`, and `repeat` body contexts use the same shipped-lowerer
-boundary, while deferred `contract` and `stage` clauses keep their dedicated
-diagnostics.
+boundary, while deferred `contract` clauses and deferred nested/unsupported
+`stage` forms keep their dedicated diagnostics.
 The actor-shell drive shape is checked by
 [t/1167-isf-public-actor-shell-drive-shape-audit.t](../t/1167-isf-public-actor-shell-drive-shape-audit.t)
 to keep parser-returned drive definitions discoverable as a unique

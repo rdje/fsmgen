@@ -95,13 +95,13 @@ subtest 'deferred transaction clauses keep their specific diagnostics' => sub {
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'stage remains specific', qr/\ATransaction 'main': pipeline '\(stage \.\.\.\)' clauses are parsed but not implemented by ISF lowering/);
+    assert_lower_rejected(<<'ISF', 'unsupported stage remains specific', qr/\ATransaction 'main': stage 'pipe' has unsupported subclause 'compute'/);
 (actor deferred_stage
   (clock clk)
   (interface (input start) (output done))
   (transaction main
     (on start)
-    (stage pipe (input start) (output done))
+    (stage pipe (input start) (output done) (compute done))
     (complete done)))
 ISF
 };

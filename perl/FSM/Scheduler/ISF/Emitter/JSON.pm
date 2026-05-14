@@ -96,7 +96,7 @@ sub _transaction_summary($self, $ir) {
 
     # Group states by transaction prefix
     for my $s (@{$ir->{states}}) {
-        my ($tx_name) = ($s->{name} =~ /^(\w+?)_(?:idle|drive|await|done|repeat|sample|max_chk|when|switch|update|shift|asm|extract|do|spawn|phase)_/);
+        my ($tx_name) = ($s->{name} =~ /^(\w+?)_(?:idle|drive|await|done|repeat|sample|max_chk|when|switch|update|shift|asm|extract|do|spawn|phase|stage)_/);
         ($tx_name) = ($s->{name} =~ /^(\w+)_timeout$/) unless $tx_name;
         push @{$tx_states{$tx_name}}, $s->{name};
     }

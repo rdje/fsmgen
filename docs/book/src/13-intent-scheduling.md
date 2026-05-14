@@ -241,8 +241,11 @@ limitations are:
   plus generated `can_accept` is the current model.
 - Actor-level `(phase ...)` and `(stage ...)` metadata is structurally
   validated and parser-carried only. Transaction `(phase ...)` lowers as a
-  pass-through marker state; transaction `(stage ...)` fails closed during
-  lowering until valid/ready pipeline-stage generation is implemented.
+  pass-through marker state. The first transaction `(stage ...)` subset now
+  lowers as a top-level ready/valid barrier:
+  `(stage name (input ready_signal) (output valid_signal))`.
+  Broader stage forms still fail closed until their runtime semantics are
+  specified.
 - Unsupported transaction clause heads now fail closed during lowering instead
   of being silently dropped. This includes the removed `(assign ...)` keyword
   and unsupported nested body forms in `when`, `switch`, and `repeat`.
