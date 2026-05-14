@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF generated handoff diagnostics
+- Generated composition owns the per-instance handoff namespace it creates.
+  When the actor interface already declares one of those names, continuing to
+  generated-top emission would produce confusing downstream composition
+  fallout.
+- The diagnostic is therefore emitted at the lowerer boundary where the
+  transaction, spawn instance, generated handoff role, named drive, and payload
+  parameter are still available as source-local context.
+- This keeps the failure in ISF terms instead of requiring users to reverse
+  map a later `?toplink` or child-port error back to the authored spawn.
 ## 2026-05-14: ISF composition report projection
 - The emitted `generated_composition` report field is a bounded discovery
   projection over already-generated composition facts. It intentionally names

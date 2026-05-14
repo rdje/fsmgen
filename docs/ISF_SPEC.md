@@ -743,10 +743,15 @@ that failed. The current accepted diagnostic families cover malformed spawn
 syntax, unknown child targets, duplicate instance names, parent actor naming
 conflicts, malformed or duplicate parameter declarations/overrides, unknown
 override names, aggregate/scalar shape mismatches, parameter declarations on
-non-spawned transactions, and parameterized `(do child)`. The remaining
-`ISF-COMPOSITION.5.3` work is to audit and add targeted diagnostics for
-post-syntax generated-top and handoff failures that can still fall through to
-generic composition-pipeline errors.
+non-spawned transactions, parameterized `(do child)`, and generated handoff
+port-name conflicts.
+
+If an actor interface already declares a port name reserved for a generated
+handoff, lowering fails before the generated top is emitted. Spawn start/done
+conflicts name the transaction and spawn instance. Named-drive request
+conflicts also name the drive. Named-drive payload conflicts name the drive and
+payload parameter. This keeps generated-composition failures source-local
+instead of letting them fall through as later composition-pipeline fallout.
 
 ## 9. Rules
 

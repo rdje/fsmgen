@@ -141,8 +141,20 @@ sub _build_parent_ir($self, $actor, $spawned) {
         for my $s (@$sp)  {
             $ctrs{"$s->{instance}_start"} = 1;
             $ctrs{"$s->{instance}_done"} = 1;
-            _ensure_port(\@ports, "$s->{instance}_start", 'output', 1);
-            _ensure_port(\@ports, "$s->{instance}_done",  'input',  1);
+            _ensure_port(
+                \@ports,
+                "$s->{instance}_start",
+                'output',
+                1,
+                "Transaction '$tx->{name}': spawn instance '$s->{instance}' generated start handoff",
+            );
+            _ensure_port(
+                \@ports,
+                "$s->{instance}_done",
+                'input',
+                1,
+                "Transaction '$tx->{name}': spawn instance '$s->{instance}' generated done handoff",
+            );
             my $child_tx = $transaction_by_name{$s->{child}};
             my %child_drive_uses = _collect_named_drive_call_names($child_tx->{clauses}, $actor->{drives} || {});
             my @drive_handoffs;
@@ -155,11 +167,23 @@ sub _build_parent_ir($self, $actor, $spawned) {
                     prefix      => $prefix,
                     source_kind => 'spawn_drive_body',
                 };
-                _ensure_port(\@ports, "${prefix}_start", 'input', 1);
+                _ensure_port(
+                    \@ports,
+                    "${prefix}_start",
+                    'input',
+                    1,
+                    "Transaction '$tx->{name}': spawn instance '$s->{instance}' named drive '$drive_name' generated request handoff",
+                );
                 $ctrs{"${prefix}_start"} = 1;
                 for my $param (@{($actor->{drives} || {})->{$drive_name}{params} || []}) {
                     my $width = _drive_param_width($actor, $drive_name, $param);
-                    _ensure_port(\@ports, "${prefix}_$param", 'input', $width);
+                    _ensure_port(
+                        \@ports,
+                        "${prefix}_$param",
+                        'input',
+                        $width,
+                        "Transaction '$tx->{name}': spawn instance '$s->{instance}' named drive '$drive_name' parameter '$param' generated payload handoff",
+                    );
                     $ctrs{"${prefix}_$param"} = $width;
                     push @payloads, {
                         parameter   => $param,
@@ -331,9 +355,12 @@ sub _push_port {
 }
 
 sub _ensure_port {
-    my ($ports, $name, $direction, $width) = @_;
+    my ($ports, $name, $direction, $width, $context) = @_;
     for my $port (@$ports) {
-        confess "ISF generated port '$name' conflicts with an existing actor interface port\n"
+        my $prefix = defined($context) && length($context)
+            ? $context
+            : 'ISF generated handoff';
+        confess "$prefix port '$name' conflicts with existing actor interface port '$name'\n"
             if $port->{name} eq $name;
     }
     push @$ports, { name => $name, direction => $direction, width => $width, isf_handoff => 1 };

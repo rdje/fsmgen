@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF generated handoff diagnostics
+- Active R14 task-tree slice: `ISF-COMPOSITION.5.3` is complete.
+- Generated-composition handoff port-name conflicts now fail before
+  generated-top emission with diagnostics naming the transaction, spawn
+  instance, handoff role, and named drive/parameter when applicable.
+- The next frontier is `ISF-COMPOSITION.5.4` for final
+  report/diagnostic closure.
+
 ## 2026-05-14: R14 — ISF composition report projection
 - Active R14 task-tree slice: `ISF-COMPOSITION.5.2` is complete.
 - Schedule JSON now emits the live `generated_composition` discovery field for

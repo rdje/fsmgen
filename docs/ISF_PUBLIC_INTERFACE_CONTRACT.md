@@ -147,7 +147,8 @@ Rejected conflict diagnostics are checked by
 [t/1214-isf-rejected-conflict-diagnostics.t](../t/1214-isf-rejected-conflict-diagnostics.t)
 for both in-process scheduler calls and the CLI schedule-report path.
 Generated composition-top lowering is checked by
-[t/1216-isf-generated-composition-top.t](../t/1216-isf-generated-composition-top.t).
+[t/1216-isf-generated-composition-top.t](../t/1216-isf-generated-composition-top.t),
+including contextual diagnostics for generated handoff port-name conflicts.
 The accepted generated-composition report projection is a top-level
 `generated_composition` field and is checked by
 [t/1217-isf-generated-composition-schedule-report.t](../t/1217-isf-generated-composition-schedule-report.t).

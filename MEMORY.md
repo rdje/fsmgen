@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF generated handoff diagnostics
+- Completed `ISF-COMPOSITION.5.3` in
+  [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md).
+- Generated spawn start/done handoff port conflicts now name the owning
+  transaction and spawn instance before generated-top emission.
+- Named-drive request and payload handoff conflicts now also name the drive
+  and, for payloads, the drive parameter that would have generated the
+  conflicting port.
+- [t/1216-isf-generated-composition-top.t](t/1216-isf-generated-composition-top.t)
+  covers generated start, named-drive request, and named-drive payload conflict
+  diagnostics.
+- The active frontier is now `ISF-COMPOSITION.5.4` for final
+  report/diagnostic closure.
 ## 2026-05-14: ISF composition report projection
 - Completed `ISF-COMPOSITION.5.2` in
   [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md).

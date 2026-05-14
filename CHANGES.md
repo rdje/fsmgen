@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF generated handoff diagnostics
+- Completed `ISF-COMPOSITION.5.3` by adding contextual diagnostics for
+  generated-composition handoff port-name conflicts.
+- Spawn start/done handoff conflicts now name the owning transaction and spawn
+  instance. Named-drive request/payload handoff conflicts also name the drive
+  and payload parameter where relevant.
+- Extended
+  [t/1216-isf-generated-composition-top.t](t/1216-isf-generated-composition-top.t)
+  to cover generated start, named-drive request, and named-drive payload
+  conflict diagnostics.
+- Advanced the active `ISF-COMPOSITION` frontier from `ISF-COMPOSITION.5.3`
+  to `ISF-COMPOSITION.5.4`.
 ### R14 — ISF composition report projection
 - Completed `ISF-COMPOSITION.5.2` by emitting the bounded
   `generated_composition` schedule-report field.

@@ -254,6 +254,13 @@ instance identity, start and done handoff, named-drive handoff, and
 per-instance parameter binding. This is live public discovery metadata, not a
 frozen schema for all future ISF releases.
 
+Generated handoff names are reserved by the generated composition boundary. If
+an actor interface already declares a would-be spawn start/done handoff,
+named-drive request handoff, or named-drive payload handoff, lowering fails
+before emitting the generated top. The diagnostic names the transaction, spawn
+instance, and the handoff role; named-drive diagnostics also name the drive and
+payload parameter when relevant.
+
 ## Complete Example
 
 ```lisp

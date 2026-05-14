@@ -115,13 +115,13 @@ bind through validated public semantics instead of remaining deferred.
   Commit: `ISF-COMPOSITION.5.2: project composition report metadata`
 
 - ID: `ISF-COMPOSITION.5.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Add targeted diagnostics for generated-composition lowering failures.`
   Acceptance: `Composition/spawn failures that can occur after syntax-level
   validation fail with source-local, actionable diagnostics instead of generic
   Perl or composition-pipeline fallout.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax checks; focused generated-top diagnostics test; ci-regression isf --no-book; mdbook build docs/book; git diff --check`
+  Commit: `ISF-COMPOSITION.5.3: contextualize handoff diagnostics`
 
 - ID: `ISF-COMPOSITION.5.4`
   Status: `pending`
@@ -155,7 +155,7 @@ bind through validated public semantics instead of remaining deferred.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-COMPOSITION.5.3` | `pending` | The successful generated-composition report projection is now implemented; the next step is targeted failure diagnostics. |
+| 1 | `ISF-COMPOSITION.5.4` | `pending` | Successful report projection and generated handoff conflict diagnostics are implemented; the next step is closure coverage and docs consistency. |
 
 ## ISF-COMPOSITION.1 Inventory
 
@@ -564,10 +564,25 @@ Already-covered diagnostic families include malformed spawn syntax, unknown
 child targets, duplicate instance names, parent actor naming conflicts,
 malformed or duplicate parameter declarations/overrides, unknown override
 names, aggregate/scalar shape mismatches, parameter declarations on
-non-spawned transactions, and parameterized `(do child)`. The next diagnostics
-leaf audits and adds targeted diagnostics for post-syntax generated-top and
-handoff failures that can still fall through to generic composition-pipeline
-errors.
+non-spawned transactions, and parameterized `(do child)`.
+
+## ISF-COMPOSITION.5.3 Generated Handoff Diagnostics
+
+`ISF-COMPOSITION.5.3` improves generated-composition handoff conflict
+diagnostics before the generated top or later composition pipeline can produce
+misleading fallout.
+
+### Shipped Behavior
+
+- Generated spawn start/done handoff port conflicts now identify the owning
+  transaction and spawn instance.
+- Generated named-drive request handoff conflicts now identify the owning
+  transaction, spawn instance, and drive name.
+- Generated named-drive payload handoff conflicts now identify the owning
+  transaction, spawn instance, drive name, and drive parameter.
+- The diagnostic still fails before scheduled artifacts or generated tops are
+  emitted, so the author sees the actor interface port that blocks the
+  generated handoff name instead of a later composition-pipeline failure.
 
 ## Decisions
 
@@ -607,13 +622,17 @@ errors.
   frozen. The field is public discovery metadata for current generated tops,
   not a broad promise that raw scheduler internals or every current report key
   are permanent.
+- `2026-05-14`: `ISF-COMPOSITION.5.3` treats generated handoff names as part
+  of the ISF-generated composition boundary. When an actor interface already
+  owns a would-be generated handoff name, the lowerer reports the transaction,
+  spawn instance, and handoff role before any generated top is emitted.
 
 ## Open Questions
 
 - Future symbolic constant support for ISF spawn parameters waits for an
   explicit ISF constant/symbol surface.
-- Targeted post-syntax diagnostics for generated top and handoff failures
-  remain in `ISF-COMPOSITION.5.3`.
+- Final generated-composition report/diagnostic closure remains in
+  `ISF-COMPOSITION.5.4`.
 
 ## Blockers
 
@@ -658,6 +677,11 @@ errors.
 | `2026-05-14` | `ISF-COMPOSITION.5.2` | `./bin/ci-regression isf --no-book` | `passed; 125 files, 421 tests` |
 | `2026-05-14` | `ISF-COMPOSITION.5.2` | `mdbook build docs/book` | `passed` |
 | `2026-05-14` | `ISF-COMPOSITION.5.2` | `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-COMPOSITION.5.3` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm; perl -Iperl -c t/1216-isf-generated-composition-top.t` | `passed` |
+| `2026-05-14` | `ISF-COMPOSITION.5.3` | `prove -l t/1215-isf-spawn-parameter-binding.t t/1216-isf-generated-composition-top.t t/1217-isf-generated-composition-schedule-report.t` | `passed; 3 files, 7 tests` |
+| `2026-05-14` | `ISF-COMPOSITION.5.3` | `./bin/ci-regression isf --no-book` | `passed; 125 files, 422 tests` |
+| `2026-05-14` | `ISF-COMPOSITION.5.3` | `mdbook build docs/book` | `passed` |
+| `2026-05-14` | `ISF-COMPOSITION.5.3` | `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -672,6 +696,7 @@ errors.
 | `ISF-COMPOSITION.5` | `ISF-COMPOSITION.5: split report diagnostic work` | Splits broad report/diagnostic work into schema, projection, diagnostics, and closure leaves. |
 | `ISF-COMPOSITION.5.1` | `ISF-COMPOSITION.5.1: define report schema` | Defines the bounded generated-composition schedule-report field and diagnostic projection boundary. |
 | `ISF-COMPOSITION.5.2` | `ISF-COMPOSITION.5.2: project composition report metadata` | Emits bounded generated-composition schedule-report metadata and advertises its key families through the live ISF public contract. |
+| `ISF-COMPOSITION.5.3` | `ISF-COMPOSITION.5.3: contextualize handoff diagnostics` | Adds transaction, spawn instance, named-drive, and payload context to generated handoff port conflict diagnostics. |
 
 ## Changelog
 
@@ -693,3 +718,5 @@ errors.
   `ISF-COMPOSITION.5.2`.
 - `2026-05-14`: Completed `ISF-COMPOSITION.5.2`; current frontier moves to
   `ISF-COMPOSITION.5.3`.
+- `2026-05-14`: Completed `ISF-COMPOSITION.5.3`; current frontier moves to
+  `ISF-COMPOSITION.5.4`.

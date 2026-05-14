@@ -69,6 +69,68 @@ subtest 'CLI compiles generated top through the normal composition pipeline' => 
     like($hdl, qr/child_worker w0 \([\s\S]*?\.rdata_start\(comp_link_w0_rdata_start\)/, 'child instance produces per-instance drive request');
 };
 
+subtest 'generated handoff port conflicts use contextual diagnostics' => sub {
+    my $start_conflict_re = qr/spawn instance 'w0' generated start handoff port 'w0_start' conflicts/;
+    my $request_conflict_re = qr/named drive 'rdata' generated request handoff port 'w0_rdata_start' conflicts/;
+    my $payload_conflict_re = qr/named drive 'rdata' parameter 'val' generated payload handoff port 'w0_rdata_val' conflicts/;
+
+    assert_lower_rejected(<<'ISF', 'spawn start handoff conflict', $start_conflict_re);
+(actor spawn_start_conflict
+  (clock clk)
+  (interface
+    (input start)
+    (output done)
+    (output w0_start))
+  (transaction parent
+    (on start)
+    (spawn worker as w0)
+    (await_all done)
+    (complete done))
+  (transaction worker
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'named-drive request handoff conflict', $request_conflict_re);
+(actor spawn_drive_request_conflict
+  (clock clk)
+  (interface
+    (input start)
+    (input w0_rdata_start)
+    (output done)
+    (output rdata (width 32)))
+  (drive (rdata val) (rdata val))
+  (transaction parent
+    (on start)
+    (spawn worker as w0)
+    (await_all done)
+    (complete done))
+  (transaction worker
+    (sample start as val)
+    (drive rdata val)
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'named-drive payload handoff conflict', $payload_conflict_re);
+(actor spawn_drive_payload_conflict
+  (clock clk)
+  (interface
+    (input start)
+    (input w0_rdata_val (width 32))
+    (output done)
+    (output rdata (width 32)))
+  (drive (rdata val) (rdata val))
+  (transaction parent
+    (on start)
+    (spawn worker as w0)
+    (await_all done)
+    (complete done))
+  (transaction worker
+    (sample start as val)
+    (drive rdata val)
+    (complete done)))
+ISF
+};
+
 done_testing();
 
 sub lower_fixture {
@@ -76,6 +138,29 @@ sub lower_fixture {
     my $path = File::Spec->catfile($repo_root, 'isf', $fixture);
     my $actor = FSM::Adapter::ISF->new()->parse_file($path);
     return FSM::Scheduler::ISF->new()->lower($actor);
+}
+
+sub lower_source {
+    my ($source) = @_;
+    my $actor = FSM::Adapter::ISF->new()->parse_source(
+        $source,
+        'generated-composition-diagnostic.isf',
+    );
+    return FSM::Scheduler::ISF->new()->lower($actor);
+}
+
+sub assert_lower_rejected {
+    my ($source, $label, $diagnostic_re) = @_;
+
+    my $ok = eval {
+        lower_source($source);
+        1;
+    };
+    my $diagnostic = $@;
+
+    ok(!$ok, "$label is rejected during generated composition lowering");
+    ok(!ref($diagnostic), "$label diagnostic is scalar");
+    like($diagnostic, $diagnostic_re, "$label diagnostic is contextual");
 }
 
 sub slurp {
