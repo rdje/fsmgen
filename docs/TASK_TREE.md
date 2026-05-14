@@ -33,6 +33,15 @@ evidence for one top-level task.
 | `ISF-COMPATIBILITY` | `active` | `R14` | `ISF-COMPATIBILITY.1` | [docs/tasks/ISF-COMPATIBILITY-SURFACE.md](docs/tasks/ISF-COMPATIBILITY-SURFACE.md) |
 | `ISF-PUBLIC-CONTRACT` | `active` | `R14` | `ISF-PUBLIC-CONTRACT.1` | [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md) |
 
+## Proposed Task Trees
+
+Proposed trees record accepted backlog direction, but they are not
+PNT-eligible until explicitly activated or until the roadmap selects that lane.
+
+| Tree | Status | Roadmap lane | Proposed first leaf | File |
+| --- | --- | --- | --- | --- |
+| `FSMGEN-IR-AUDIT` | `proposed` | `architecture backlog` | `FSMGEN-IR-AUDIT.1` | [docs/tasks/FSMGEN-IR-AUDIT.md](docs/tasks/FSMGEN-IR-AUDIT.md) |
+
 ## Completed Task Trees
 
 | Tree | Status | Roadmap lane | Completed frontier | File |

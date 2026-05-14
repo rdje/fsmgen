@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### Architecture backlog — IR audit task tree
+- Added [docs/tasks/FSMGEN-IR-AUDIT.md](docs/tasks/FSMGEN-IR-AUDIT.md) as a
+  proposed task tree for auditing current FSMGen IR structures and defining a
+  policy for when future work should reuse, extend, create, or retire IRs.
+- Indexed the tree from [docs/TASK_TREE.md](docs/TASK_TREE.md),
+  [README.md](README.md), and [ROADMAP_STATUS.md](ROADMAP_STATUS.md) without
+  making it PNT-eligible ahead of the active `R14` ISF feature lane.
 ### R14 — ISF spawn parameter binding
 - Completed `ISF-COMPOSITION.3` by implementing spawn parameter binding in the
   ISF IR/lowering path.

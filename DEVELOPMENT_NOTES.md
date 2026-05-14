@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: IR audit task-tree capture
+- FSMGen already has several IR or IR-like layers for legitimate reasons:
+  parsed syntax, ISF scheduling/lowering, direct FSM semantics, forward
+  intent, lowered behavior, structural/connectivity, composition planning, and
+  public report projections. The existence of several layers is not itself a
+  defect.
+- The risk is accidental IR sprawl: creating a new task-local structure
+  whenever a feature needs a handoff, without documenting whether an existing
+  IR should have been extended instead.
+- `FSMGEN-IR-AUDIT` is therefore proposed as an architecture backlog tree, not
+  as an interruption to `R14`. Its first job is inventory and classification;
+  only after that should it recommend consolidation or standardization slices.
 ## 2026-05-14: ISF spawn parameter binding
 - `ISF-COMPOSITION.3` intentionally lands the validation and preservation
   layer before generated-top wiring. That keeps malformed authoring forms from

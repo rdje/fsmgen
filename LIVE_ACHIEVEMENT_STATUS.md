@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: Architecture backlog — IR audit task tree
+- Proposed [docs/tasks/FSMGEN-IR-AUDIT.md](docs/tasks/FSMGEN-IR-AUDIT.md) to
+  track a future inventory and consolidation audit for FSMGen IR structures.
+- The tree records the current architecture concern without making IR
+  consolidation the active PNT lane ahead of `R14` ISF feature work.
+- [docs/TASK_TREE.md](docs/TASK_TREE.md), [README.md](README.md),
+  [ROADMAP_STATUS.md](ROADMAP_STATUS.md), [CHANGES.md](CHANGES.md),
+  [DEVELOPMENT_NOTES.md](DEVELOPMENT_NOTES.md), and [MEMORY.md](MEMORY.md)
+  point to the proposed tree.
+
 ## 2026-05-14: R14 — ISF spawn parameter binding
 - Active R14 task-tree slice: `ISF-COMPOSITION.3` is complete.
 - Spawn parameter declarations and per-instance overrides now validate before

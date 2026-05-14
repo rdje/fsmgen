@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: IR audit task tree
+- Created proposed architecture task tree
+  [docs/tasks/FSMGEN-IR-AUDIT.md](docs/tasks/FSMGEN-IR-AUDIT.md) to track a
+  future audit of FSMGen IR structures, ownership, phase boundaries, and
+  consolidation policy.
+- The tree is indexed from [docs/TASK_TREE.md](docs/TASK_TREE.md) as
+  `proposed`, not active, so the current `R14` ISF feature PNT lane remains
+  unchanged.
 ## 2026-05-14: ISF spawn parameter binding
 - Completed `ISF-COMPOSITION.3` in
   [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md).
