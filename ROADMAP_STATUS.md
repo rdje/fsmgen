@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md),
-  whose current frontier is `ISF-COMPOSITION.5.4`. The completed
+  whose current frontier is `ISF-COMPOSITION.6`. The completed
   `ISF-CONFLICTS` tree is listed in the task-tree completed table.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
   guide for installing the same task-tree tracking workflow in another
@@ -104,8 +104,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   CLI-to-HDL generation.
 - ISF generated-composition report/diagnostic work is now split under
   `ISF-COMPOSITION.5`: schema definition, schedule-report projection,
-  targeted diagnostics, and synchronized regression/docs closure. The current
-  implementation frontier is `ISF-COMPOSITION.5.4`.
+  targeted diagnostics, and synchronized regression/docs closure. This
+  sub-tree is complete; the current implementation frontier is
+  `ISF-COMPOSITION.6`.
 - ISF generated-composition schedule reports now emit the live
   `generated_composition` discovery field: non-generated-top reports use null,
   while spawned-child reports expose bounded generated top, parent, child,

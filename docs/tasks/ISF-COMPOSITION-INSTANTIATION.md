@@ -90,7 +90,7 @@ bind through validated public semantics instead of remaining deferred.
   Commit: `ISF-COMPOSITION.4: implement generated top handoff`
 
 - ID: `ISF-COMPOSITION.5`
-  Status: `active`
+  Status: `done`
   Goal: `Add diagnostics and bounded schedule-report metadata.`
   Children: `ISF-COMPOSITION.5.1`, `ISF-COMPOSITION.5.2`,
   `ISF-COMPOSITION.5.3`, `ISF-COMPOSITION.5.4`
@@ -124,13 +124,13 @@ bind through validated public semantics instead of remaining deferred.
   Commit: `ISF-COMPOSITION.5.3: contextualize handoff diagnostics`
 
 - ID: `ISF-COMPOSITION.5.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Close schedule-report/diagnostic documentation and regression coverage.`
   Acceptance: `Focused tests, ISF spec, public interface contract, mdBook,
   roadmap, live docs, and task tree agree on shipped generated-composition
   report and diagnostic behavior.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `mdbook build docs/book; git diff --check`
+  Commit: `ISF-COMPOSITION.5.4: close report diagnostic lane`
 
 - ID: `ISF-COMPOSITION.6`
   Status: `pending`
@@ -155,7 +155,7 @@ bind through validated public semantics instead of remaining deferred.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-COMPOSITION.5.4` | `pending` | Successful report projection and generated handoff conflict diagnostics are implemented; the next step is closure coverage and docs consistency. |
+| 1 | `ISF-COMPOSITION.6` | `pending` | Generated top, parameters, reports, and targeted handoff diagnostics are shipped; the next step is the broader fixture/regression/docs consolidation leaf. |
 
 ## ISF-COMPOSITION.1 Inventory
 
@@ -484,8 +484,8 @@ fixtures.
 Schedule reports now keep ordinary transaction, storage, and DT summaries
 parent-scoped, while the `generated_composition` field exposes bounded
 generated top, child, instance, handoff, and parameter-binding metadata for
-spawned-child actors. Targeted failure diagnostics remain the next
-`ISF-COMPOSITION.5` leaf family.
+spawned-child actors. Generated handoff port conflicts now fail at the ISF
+lowerer boundary with contextual diagnostics before generated-top emission.
 
 `spawn` inside `repeat` remains unimplemented. The accepted design direction is
 static instance lifetime plus repeated runtime activation of the same lexical
@@ -584,6 +584,35 @@ misleading fallout.
   emitted, so the author sees the actor interface port that blocks the
   generated handoff name instead of a later composition-pipeline failure.
 
+## ISF-COMPOSITION.5.4 Report/Diagnostic Closure
+
+`ISF-COMPOSITION.5.4` closes the generated-composition report/diagnostic
+subtree by aligning shipped behavior, focused regression evidence, and live
+documentation.
+
+### Closure Matrix
+
+- Schema definition: `ISF-COMPOSITION.5.1` documents the live
+  `generated_composition` field, its null case, spawned-child object shape,
+  and private-internals boundary.
+- Successful projection: `ISF-COMPOSITION.5.2` emits the field and advertises
+  its key families through `embedding.isf_public_interface`.
+- Diagnostics: `ISF-COMPOSITION.5.3` makes generated handoff port conflicts
+  source-local by naming the transaction, spawn instance, handoff role, drive,
+  and payload parameter where applicable.
+- Regression evidence:
+  [t/1217-isf-generated-composition-schedule-report.t](../../t/1217-isf-generated-composition-schedule-report.t)
+  covers the report projection, and
+  [t/1216-isf-generated-composition-top.t](../../t/1216-isf-generated-composition-top.t)
+  covers generated-top wiring, CLI HDL handoff, and handoff conflict
+  diagnostics.
+- Contract/book/spec/live-doc alignment:
+  [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](../ISF_PUBLIC_INTERFACE_CONTRACT.md),
+  [docs/ISF_SPEC.md](../ISF_SPEC.md),
+  [docs/book/src/13f-composition.md](../book/src/13f-composition.md),
+  [ROADMAP_STATUS.md](../../ROADMAP_STATUS.md), and this task tree now agree
+  that the ISF API contract remains live rather than frozen.
+
 ## Decisions
 
 - `2026-05-14`: This tree owns the ISF-specific generated-child top and spawn
@@ -626,13 +655,16 @@ misleading fallout.
   of the ISF-generated composition boundary. When an actor interface already
   owns a would-be generated handoff name, the lowerer reports the transaction,
   spawn instance, and handoff role before any generated top is emitted.
+- `2026-05-14`: `ISF-COMPOSITION.5.4` closes the generated-composition
+  report/diagnostic sub-tree. The report field, handoff diagnostics, public
+  contract, mdBook, spec, roadmap, and live docs now agree on shipped behavior.
 
 ## Open Questions
 
 - Future symbolic constant support for ISF spawn parameters waits for an
   explicit ISF constant/symbol surface.
-- Final generated-composition report/diagnostic closure remains in
-  `ISF-COMPOSITION.5.4`.
+- Broader fixture/regression/docs consolidation remains in
+  `ISF-COMPOSITION.6`.
 
 ## Blockers
 
@@ -682,6 +714,8 @@ misleading fallout.
 | `2026-05-14` | `ISF-COMPOSITION.5.3` | `./bin/ci-regression isf --no-book` | `passed; 125 files, 422 tests` |
 | `2026-05-14` | `ISF-COMPOSITION.5.3` | `mdbook build docs/book` | `passed` |
 | `2026-05-14` | `ISF-COMPOSITION.5.3` | `git diff --check` | `passed` |
+| `2026-05-14` | `ISF-COMPOSITION.5.4` | `mdbook build docs/book` | `passed` |
+| `2026-05-14` | `ISF-COMPOSITION.5.4` | `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -697,6 +731,7 @@ misleading fallout.
 | `ISF-COMPOSITION.5.1` | `ISF-COMPOSITION.5.1: define report schema` | Defines the bounded generated-composition schedule-report field and diagnostic projection boundary. |
 | `ISF-COMPOSITION.5.2` | `ISF-COMPOSITION.5.2: project composition report metadata` | Emits bounded generated-composition schedule-report metadata and advertises its key families through the live ISF public contract. |
 | `ISF-COMPOSITION.5.3` | `ISF-COMPOSITION.5.3: contextualize handoff diagnostics` | Adds transaction, spawn instance, named-drive, and payload context to generated handoff port conflict diagnostics. |
+| `ISF-COMPOSITION.5.4` | `ISF-COMPOSITION.5.4: close report diagnostic lane` | Closes the generated-composition report/diagnostic subtree and moves the frontier to broader fixture/regression consolidation. |
 
 ## Changelog
 
@@ -720,3 +755,5 @@ misleading fallout.
   `ISF-COMPOSITION.5.3`.
 - `2026-05-14`: Completed `ISF-COMPOSITION.5.3`; current frontier moves to
   `ISF-COMPOSITION.5.4`.
+- `2026-05-14`: Completed `ISF-COMPOSITION.5.4`; current frontier moves to
+  `ISF-COMPOSITION.6`.

@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-14: ISF composition report/diagnostic closure
+- Completed documentation-only `ISF-COMPOSITION.5.4` in
+  [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md).
+- The generated-composition report/diagnostic sub-tree is now closed: schema,
+  successful report projection, contextual handoff diagnostics, focused tests,
+  ISF spec, public contract, mdBook, roadmap, and live docs agree on shipped
+  behavior.
+- The ISF API contract remains live and evolves alongside FSMGen; exact audits
+  prove the currently advertised surface rather than freezing the full future
+  API.
+- The active frontier is now `ISF-COMPOSITION.6`.
 ## 2026-05-14: ISF generated handoff diagnostics
 - Completed `ISF-COMPOSITION.5.3` in
   [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md).
@@ -11,8 +22,8 @@ This is the live continuity document for fast session recovery after crashes, re
 - [t/1216-isf-generated-composition-top.t](t/1216-isf-generated-composition-top.t)
   covers generated start, named-drive request, and named-drive payload conflict
   diagnostics.
-- The active frontier is now `ISF-COMPOSITION.5.4` for final
-  report/diagnostic closure.
+- At completion time, the active frontier moved to `ISF-COMPOSITION.5.4` for
+  final report/diagnostic closure.
 ## 2026-05-14: ISF composition report projection
 - Completed `ISF-COMPOSITION.5.2` in
   [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md).
@@ -26,8 +37,8 @@ This is the live continuity document for fast session recovery after crashes, re
   proves the projection.
 - The contract remains live, not frozen. Exact audits describe the current
   advertised surface while allowing the ISF API to evolve alongside FSMGen.
-- The active frontier is now `ISF-COMPOSITION.5.3` for targeted
-  generated-composition diagnostics.
+- At completion time, the active frontier moved to `ISF-COMPOSITION.5.3` for
+  targeted generated-composition diagnostics.
 ## 2026-05-14: ISF composition report schema
 - Completed `ISF-COMPOSITION.5.1` in
   [docs/tasks/ISF-COMPOSITION-INSTANTIATION.md](docs/tasks/ISF-COMPOSITION-INSTANTIATION.md).

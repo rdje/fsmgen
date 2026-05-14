@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-14: ISF composition report/diagnostic closure
+- Closing `ISF-COMPOSITION.5` as a documentation slice keeps the task tree
+  honest: the schema, implementation, diagnostics, and regression evidence
+  were already shipped in executable leaves, and this leaf records that the
+  surrounding live docs agree.
+- The closure also preserves the live-contract stance. The generated
+  composition report field is public discovery metadata for the current
+  implementation, but it is not a claim that the full ISF schedule-report API
+  is frozen.
 ## 2026-05-14: ISF generated handoff diagnostics
 - Generated composition owns the per-instance handoff namespace it creates.
   When the actor interface already declares one of those names, continuing to

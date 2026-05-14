@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-14
+### R14 — ISF composition report/diagnostic closure
+- Completed documentation-only `ISF-COMPOSITION.5.4` by closing the
+  generated-composition report/diagnostic sub-tree.
+- The composition task tree now records the closure matrix for schema,
+  projection, diagnostics, regression evidence, public contract, mdBook, spec,
+  roadmap, and live docs.
+- Advanced the active `ISF-COMPOSITION` frontier from `ISF-COMPOSITION.5.4`
+  to `ISF-COMPOSITION.6`.
 ### R14 — ISF generated handoff diagnostics
 - Completed `ISF-COMPOSITION.5.3` by adding contextual diagnostics for
   generated-composition handoff port-name conflicts.

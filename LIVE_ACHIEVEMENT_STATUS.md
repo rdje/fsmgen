@@ -2,13 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-14: R14 — ISF composition report/diagnostic closure
+- Active R14 task-tree slice: `ISF-COMPOSITION.5.4` is complete.
+- The generated-composition report/diagnostic sub-tree is closed with schema,
+  projection, contextual handoff diagnostics, tests, contract docs, mdBook,
+  roadmap, and live docs aligned.
+- The next frontier is `ISF-COMPOSITION.6`.
+
 ## 2026-05-14: R14 — ISF generated handoff diagnostics
 - Active R14 task-tree slice: `ISF-COMPOSITION.5.3` is complete.
 - Generated-composition handoff port-name conflicts now fail before
   generated-top emission with diagnostics naming the transaction, spawn
   instance, handoff role, and named drive/parameter when applicable.
-- The next frontier is `ISF-COMPOSITION.5.4` for final
-  report/diagnostic closure.
+- At completion time, the next frontier moved to `ISF-COMPOSITION.5.4` for
+  final report/diagnostic closure.
 
 ## 2026-05-14: R14 — ISF composition report projection
 - Active R14 task-tree slice: `ISF-COMPOSITION.5.2` is complete.
@@ -17,8 +24,8 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - The ISF public-interface contract and capability manifest advertise the
   generated-composition key families and keep the API explicitly live rather
   than frozen.
-- The next frontier is `ISF-COMPOSITION.5.3` for targeted generated-composition
-  diagnostics.
+- At completion time, the next frontier moved to `ISF-COMPOSITION.5.3` for
+  targeted generated-composition diagnostics.
 
 ## 2026-05-14: R14 — ISF composition report schema
 - Active R14 task-tree slice: `ISF-COMPOSITION.5.1` is complete.
