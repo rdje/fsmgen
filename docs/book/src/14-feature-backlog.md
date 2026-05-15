@@ -614,6 +614,25 @@ form, but the FIFO-controller matrix does not use an internal bank. Data
 storage and data muxing belong to the later reusable FIFO fixture/datapath
 work.
 
+Selected data-buffer access surface:
+
+```lisp
+(store data wr_ptr data_in)
+(load data rd_ptr as data_out)
+```
+
+`store` writes a value into the actor-owned bank entry selected by the index.
+For the first depth-4 implementation it should lower through the existing
+scalarized review artifact by guarded updates to `data_0`, `data_1`,
+`data_2`, and `data_3`. `load` reads the selected bank entry into a scalar
+target, again through mux-equivalent guarded assignments from the scalarized
+entry family. These forms are specified but not implemented yet.
+
+The first same-cycle store/load policy is read-before-write. A load observes
+the current cycle's bank value, while a store updates the selected entry for
+the next cycle. Write-first collision behavior, explicit bypassing, or
+collision diagnostics need their own future option or construct.
+
 The first FIFO fixture must be a real FIFO actor, not a depth-1 placeholder.
 A depth-1 element may be useful as a register slice or holding element, but it
 does not exercise FIFO depth, pointers, or occupancy semantics. The first
@@ -633,12 +652,12 @@ entry 3 back to entry 0.
 Transaction `(when condition body...)` is ordered control flow, so using a
 chain of `when` branches to model FIFO ports would be misleading. Disjoint-rule
 proof for same-target FIFO-style rule writes is shipped for direct
-contradictory guard literals and equality facts, such as one case requiring
+contradictory guard facts, such as one case requiring
 `(== occupancy 1)` while another requires `(== occupancy 2)`. Same-cycle
 two-port controller semantics are now proven on actor-owned state. The next
-FIFO slice must specify real data-buffer access before the reusable FIFO
-library can honestly model pointer-selected writes into storage and reads to
-`data_out`.
+FIFO slice must implement the specified data-buffer access forms before the
+reusable FIFO library can honestly model pointer-selected writes into storage
+and reads to `data_out`.
 
 ## Backends And Validation
 

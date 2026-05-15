@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: ISF FIFO data-buffer access contract
+- The FIFO datapath needs source-level bank access, not hard-coded `data_0`
+  fixture hacks. The selected first surface is action-oriented:
+  `(store bank index value)` for writes and `(load bank index as target)` for
+  reads.
+- Keeping store/load as explicit actions makes timing easier to specify than
+  introducing a general dynamic bank expression immediately. Expression-level
+  bank references can still be added later after the action semantics and
+  conflict behavior are proven.
+- The first lowering should preserve the current scalarized `.fsm` review
+  model. A depth-4 bank access should visibly become per-entry guards over
+  `data_0`, `data_1`, `data_2`, and `data_3`.
+- Same-cycle store/load semantics are read-before-write. That matches the DT
+  cycle-snapshot model: reads observe current Q values, and stores select
+  next values. Write-first FIFO variants need explicit bypass policy rather
+  than implicit magic.
+- The implementation slice must treat store/load as public syntax only when
+  parser shape, lowering, diagnostics, schedule-report visibility, and HDL
+  reachability are all regression-backed.
 ## 2026-05-15: ISF FIFO controller same-cycle matrix
 - The `ISF-LIBRARIES.4.4.3` fixture is intentionally a controller matrix, not
   a full FIFO datapath. It proves the real control boundary and same-cycle

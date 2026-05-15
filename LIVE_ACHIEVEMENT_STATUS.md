@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF FIFO data-buffer access contract
+- Active R14 task-tree slice: `ISF-LIBRARIES.4.4.4` is complete.
+- The FIFO datapath access syntax is specified as
+  `(store bank index value)` and `(load bank index as target)`.
+- The planned lowering uses the existing scalarized bank entries, so a
+  depth-4 bank remains reviewable through guarded access to `data_0` through
+  `data_3`.
+- Same-cycle store/load on the same bank is read-before-write in the first
+  contract.
+- The next active R14 frontier is `ISF-LIBRARIES.4.4.5`, implementing that
+  bank access surface.
+
 ## 2026-05-15: R14 — ISF FIFO controller same-cycle matrix
 - Active R14 task-tree slice: `ISF-LIBRARIES.4.4.3` is complete.
 - A depth-4 FIFO controller fixture now lowers through scheduled `.fsm`,

@@ -335,7 +335,7 @@ with `library`, `alias`, `export`, `kind`, `instance`, `module`,
 `library_name`, `parent_name`, and `width`; clock/reset bindings use JSON null
 for `library_name`, and reset/clock width is `1`.
 
-Current boundary: `ISF-LIBRARIES.4.4.3` resolves reusable actors, validates
+Current boundary: `ISF-LIBRARIES.4.4.4` resolves reusable actors, validates
 parameters and bindings, emits child scheduled `.fsm` artifacts, wires library
 actor instances into generated tops for same-name system ports, reaches
 SystemVerilog generation for the covered generated-top path, reports bounded
@@ -345,7 +345,9 @@ guards be scalar or list expressions for direct FIFO fire predicates, and
 accepts same-target rule writes when direct contradictory guard facts prove
 that the writes cannot fire in the same cycle. A depth-4 FIFO-controller
 matrix now lowers through scheduled `.fsm`, schedule JSON, and SystemVerilog
-with actor-maintained pointer/occupancy/full/empty state.
+with actor-maintained pointer/occupancy/full/empty state. The next FIFO
+datapath surface is now specified as `(store bank index value)` and
+`(load bank index as target)`, but those forms are not implemented yet.
 
 No FIFO library fixture is shipped yet. A depth-1 element is not considered a
 FIFO for this library catalog; it is a register/holding element and would hide
@@ -479,6 +481,51 @@ SystemVerilog generation through the existing scalar assignment path.
 The report `kind` is the generated storage class; authored scalar storage uses
 the ISF source word `state`, and `(register ...)` is rejected as a storage
 entry spelling.
+
+### 5.2 Planned Actor-Owned Bank Access
+
+The first selected source surface for actor-owned bank data access is explicit
+action syntax:
+
+```lisp
+(store bank index value)
+(load bank index as target)
+```
+
+This surface is specified for the next FIFO implementation slice, but parser
+and lowerer support are not shipped yet.
+
+`(store data wr_ptr data_in)` means: write `data_in` into the actor-owned bank
+entry selected by `wr_ptr`. For a fixed-depth scalarized bank, lowering should
+emit one guarded update per bank entry. With depth 4, the scheduled `.fsm`
+review artifact should make the selected entry visible through guards
+equivalent to `wr_ptr == 0`, `wr_ptr == 1`, `wr_ptr == 2`, and `wr_ptr == 3`
+on `data_0`, `data_1`, `data_2`, and `data_3`.
+
+`(load data rd_ptr as data_out)` means: read the actor-owned bank entry
+selected by `rd_ptr` into `data_out`. Lowering should use the same scalarized
+entry family to build a mux-equivalent set of guarded assignments from
+`data_0` through `data_3` into the target.
+
+The first timing contract is read-before-write for same-cycle store and load
+against the same bank. A load observes the current bank entry value from the
+cycle snapshot. A store updates the selected bank entry for the following
+cycle. If a later design needs write-first behavior, bypass behavior, or a
+collision diagnostic, that must be an explicit future option or construct.
+
+The first implementation should require:
+- `bank` names a declared actor-owned `(bank ...)`;
+- `index` is a scalar expression whose value domain is checked against the
+  fixed bank depth where possible;
+- `value` has bank-entry width or enough width evidence to reject mismatch
+  before scheduled `.fsm` emission;
+- `target` is a scalar storage or interface target with width compatible with
+  the bank entry;
+- malformed arity, unknown banks, non-bank storage names, unsupported dynamic
+  depth, width mismatch, and unsupported same-target conflicts fail closed with
+  targeted diagnostics; and
+- schedule reports expose enough bounded metadata for downstream consumers to
+  see that a generated storage entry participates in actor-owned bank access.
 
 ## 6. Drive Definitions and Calls
 
@@ -1608,10 +1655,11 @@ Focused tests:
 
 - Reusable ISF library behavior beyond the shipped resolver/review-artifact,
   same-name generated-top, actor-owned fixed-storage, and expression-valued
-  rule-guard/disjoint-rule/FIFO-controller-matrix slices: the real reusable
-  FIFO actor fixture with explicit data-buffer access and data-storage
-  datapath, standalone transaction/drive exports, symbolic constants, derived
-  parameter expressions,
+  rule-guard/disjoint-rule/FIFO-controller-matrix slices: implementation of
+  the specified `(store bank index value)` and
+  `(load bank index as target)` bank-access forms, the real reusable FIFO actor
+  fixture with data-storage datapath, standalone transaction/drive exports,
+  symbolic constants, derived parameter expressions,
   parameter-derived storage dimensions, clock/reset name remapping,
   memory-array backend emission, and library actors that import other
   libraries.

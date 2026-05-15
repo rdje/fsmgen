@@ -702,6 +702,11 @@ fixed-width authored `state` declarations and fixed-depth `bank` declarations
 whose scalarized element names are scheduler input. Schedule reports still use
 coarse `kind: register` for generated storage class; that report value is not
 the source vocabulary.
+The planned bank access forms `(store bank index value)` and
+`(load bank index as target)` are not public parser support yet. They are
+specified as the next FIFO data-buffer implementation surface and must update
+this contract, manifest metadata, diagnostics, schedule-report visibility, and
+tests when they ship.
 The current public parser handoff also advertises one bounded subshape inside
 that shell: `interface` contains `inputs` and `outputs` arrays, and each public
 port entry has unique non-empty scalar `name` plus positive integer `width`,

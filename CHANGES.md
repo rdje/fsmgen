@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF FIFO data-buffer access contract
+- Completed `ISF-LIBRARIES.4.4.4` by specifying the source syntax and
+  lowering contract needed before the reusable FIFO library can model actual
+  data storage.
+- Selected `(store bank index value)` for actor-owned bank writes and
+  `(load bank index as target)` for actor-owned bank reads.
+- The specified lowering keeps the existing scalarized `.fsm` review artifact:
+  a depth-4 bank maps store/load through guarded access to `data_0` through
+  `data_3` rather than hidden dynamic array behavior.
+- The first same-cycle store/load policy is read-before-write. Write-first,
+  bypass, or collision-diagnostic variants remain future explicit features.
+- The active R14 PNT frontier advances to `ISF-LIBRARIES.4.4.5`, implementing
+  the bank access parser/lowerer/report/test support.
 ### R14 — ISF FIFO controller same-cycle matrix
 - Completed `ISF-LIBRARIES.4.4.3` by adding a depth-4 FIFO controller
   fixture that lowers through scheduled `.fsm`, schedule JSON, and

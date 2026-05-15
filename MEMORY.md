@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF FIFO data-buffer access contract
+- Completed `ISF-LIBRARIES.4.4.4` in
+  [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md).
+- Selected `(store bank index value)` and `(load bank index as target)` as
+  the first actor-owned bank access source forms for the FIFO datapath.
+- Store lowers, once implemented, to per-entry guarded updates of scalarized
+  bank entries such as `data_0` through `data_3`; load lowers to a
+  mux-equivalent set of guarded assignments from those entries to the target.
+- Same-cycle store/load on one bank uses read-before-write semantics in the
+  first contract: load observes the current cycle snapshot, while store
+  updates the selected entry for the following cycle.
+- The next active R14 frontier is `ISF-LIBRARIES.4.4.5`, implementing parser,
+  lowerer, diagnostics, report, and regression support for those bank access
+  forms.
 ## 2026-05-15: ISF FIFO controller same-cycle matrix
 - Completed `ISF-LIBRARIES.4.4.3` in
   [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md).
