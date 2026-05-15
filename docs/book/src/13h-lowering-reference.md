@@ -294,6 +294,46 @@ entered, it reads only the sampled counter: a sampled value of `1` exits after
 one active cycle, while values greater than `1` decrement and loop until the
 counter reaches `1`.
 
+If a top-level runtime wait has pending samples before it, the positive-count
+path materializes those samples in the first active wait state. The zero-count
+path goes to a sample-preserving clone of the following state, so `count == 0`
+still consumes no hidden wait or sample-only cycle:
+
+```lisp
+(main_idle_0
+  (<- (main_wait_1_cnt cycles) <(& start cycles))
+  (-> main_wait_1 <(& start cycles))
+  (-> main_wait_1_zero_sample <(& start (== cycles 0))))
+
+(main_wait_1
+  (<= (hold din))
+  (-- main_wait_1_cnt)
+  (?main_wait_1_cnt
+    (=1 (-> main_drive_2)))
+  (?main_wait_1_cnt
+    (>1 (-> main_wait_1_loop))))
+
+(main_wait_1_loop
+  (-- main_wait_1_cnt)
+  (?main_wait_1_cnt
+    (=1 (-> main_drive_2)))
+  (?main_wait_1_cnt
+    (>1 (-> main_wait_1_loop))))
+
+(main_wait_1_zero_sample
+  (<= (hold din))
+  (= (outp_start 1))
+  (= (outp_val hold))
+  (-> main_done_3))
+```
+
+The original `main_drive_2` remains the positive-count successor and does not
+carry the sample assignment, preventing a second sample after a positive wait.
+The separate `main_wait_1_loop` state handles counts greater than one without
+repeating the sample on every loop cycle. If the zero-count successor cannot
+carry the pending sample without changing timing, the lowerer rejects the form
+until that successor shape has an explicit materialization rule.
+
 Consecutive top-level runtime scalar waits reuse the same split on both the
 activation edge and the first wait's final sampled-counter edge. For:
 

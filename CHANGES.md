@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF top-level runtime wait pending samples
+- Completed `ISF-DYNAMIC-WAIT.3.3.5.2`.
+- Top-level runtime waits now accept pending samples before the wait.
+- Positive-count paths materialize samples once in the first active wait state
+  and continue counts greater than one through a generated no-resample wait
+  loop state.
+- Zero-count paths bypass to a sample-preserving clone of the following
+  state-producing clause when that state can carry samples without changing
+  timing, so runtime `count == 0` still adds no active wait or sample-only
+  cycle for the shipped subset.
+- Other top-level zero-count successors fail closed until their
+  materialization rule is explicit.
+- Updated the ISF spec, public contract, mdBook transaction/lowering/backlog
+  chapters, task tree, roadmap status, and live continuity docs. The active
+  frontier advances to `ISF-DYNAMIC-WAIT.3.3.5.3`.
 ### R14 — ISF pending-sample dynamic wait split
 - Completed `ISF-DYNAMIC-WAIT.3.3.5.1` by splitting
   `ISF-DYNAMIC-WAIT.3.3.5` into executable leaves for pending-sample

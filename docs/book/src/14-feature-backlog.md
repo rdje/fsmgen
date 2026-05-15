@@ -422,9 +422,11 @@ non-integer counts, list-expression counts, unknown constant names,
 actor/transaction parameter names, unknown-width dynamic names, or unsupported
 dynamic contexts fail closed today.
 
-Remaining backlog: runtime scalar waits after pending samples, after any
-remaining predecessor kinds whose edge split is not implemented yet, and with
-expression-valued or parameter-backed counts.
+Remaining backlog: runtime scalar waits after any remaining predecessor kinds
+whose edge split is not implemented yet, top-level pending-sample zero
+bypasses whose successor cannot yet carry samples without changing timing,
+pending samples before inline dynamic waits, and expression-valued or
+parameter-backed counts.
 The inline-body surface is now split into context-specific implementation
 leaves. `when` and `repeat` bodies are shipped for the no-pending-sample
 subset, `switch` branches are shipped for the no-pending-sample subset, and
@@ -436,19 +438,23 @@ Expansion order is tracked under `ISF-DYNAMIC-WAIT.3.3`: consecutive
 top-level dynamic waits and the requested additional top-level predecessor
 kinds are shipped. The inline-body work is split; `when` bodies, `repeat`
 bodies, `switch` branches, and `while`/`until` bodies are shipped for the
-no-pending-sample subset. The next frontier is pending-sample preservation,
-now split under `ISF-DYNAMIC-WAIT.3.3.5`; the first implementation target is
-top-level runtime waits under `ISF-DYNAMIC-WAIT.3.3.5.2`. Expression-valued
-runtime counts follow once their width/type/snapshot contract is specified.
+no-pending-sample subset. Pending-sample preservation is now split under
+`ISF-DYNAMIC-WAIT.3.3.5`; top-level runtime waits are shipped under
+`ISF-DYNAMIC-WAIT.3.3.5.2`, and the next frontier is branch pending-sample
+preservation under `ISF-DYNAMIC-WAIT.3.3.5.3`. Expression-valued runtime
+counts follow once their width/type/snapshot contract is specified.
 
 Pending samples cannot be enabled by simply putting the sample assignment on a
 shared successor state. The positive-count path must behave like a positive
 static wait, where samples materialize in the first active wait state. The
 zero-count path must behave like `wait 0`, where no hidden wait/sample cycle is
 introduced and the samples materialize with the next state-producing clause.
-That requires path-specific materialization, likely by specializing the
-zero-bypass successor state or an equivalent lowering that does not add a
-cycle and does not double-sample after a positive runtime wait.
+Top-level runtime waits now use a first wait state that samples once, a
+separate wait-loop state for counts greater than one, and a zero-bypass clone
+of the following state-producing clause when that successor can carry samples
+without changing timing. Other top-level successor shapes, plus inline branch
+and loop contexts, still need equivalent path-specific materialization before
+their pending-sample forms can ship.
 
 ### Transaction Dynamic Loops
 

@@ -14,9 +14,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   waits in `when` bodies, `ISF-DYNAMIC-WAIT.3.3.4.3` shipped dynamic waits in
   `repeat` bodies, `ISF-DYNAMIC-WAIT.3.3.4.4` shipped dynamic waits in
   `switch` branches, `ISF-DYNAMIC-WAIT.3.3.4.5` shipped dynamic waits in
-  `while`/`until` bodies, and the current frontier is
-  `ISF-DYNAMIC-WAIT.3.3.5.2`: implementing top-level pending-sample
-  preservation across runtime dynamic wait paths.
+  `while`/`until` bodies, `ISF-DYNAMIC-WAIT.3.3.5.2` shipped top-level
+  pending-sample preservation, and the current frontier is
+  `ISF-DYNAMIC-WAIT.3.3.5.3`: implementing branch pending-sample preservation
+  across runtime dynamic wait paths.
   `ISF-ACTIVATION-BIND-EXPRESSIONS` is now closed after shipping
   expression-valued activation input bindings,
   `ISF-LIBRARY-SYSTEM-BINDINGS` is closed after shipping reusable-library
@@ -51,10 +52,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   while unrelated alternatives such as await timeouts, repeat loop-back edges,
   and opposite loop branches remain intact.
   Inline `when`/`repeat`/`switch`/`while`/`until` dynamic waits are shipped for
-  the no-pending-sample subset. Pending samples before a dynamic wait, count
-  expressions, parameter-backed counts, and any remaining predecessor-edge
-  splits remain fail-closed until their exact bypass and snapshot behavior is
-  implemented.
+  the no-pending-sample subset. Pending samples before top-level runtime waits
+  are now shipped: positive counts sample once in the first wait state and use
+  a separate no-resample wait-loop state when the sampled count is greater than
+  one, while zero counts bypass to a sample-preserving clone of the following
+  state when that state can carry samples without changing timing. Other
+  top-level zero-count successors, pending samples before inline dynamic waits,
+  count expressions, parameter-backed counts, and any remaining
+  predecessor-edge splits remain fail-closed until their exact bypass and
+  snapshot behavior is implemented.
 - ISF inline dynamic wait update: dynamic waits in `when`, `switch`, `repeat`,
   `while`, and `until` bodies are split into context-specific leaves. `when`
   bodies, `repeat` bodies, `switch` branches, and `while`/`until` bodies are
@@ -73,8 +79,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `when`/`repeat`/`switch`/`while`/`until` inline contexts are complete for the
   no-pending-sample subset. Pending-sample preservation is now split under
   `ISF-DYNAMIC-WAIT.3.3.5`; `ISF-DYNAMIC-WAIT.3.3.5.1` recorded the
-  path-specific materialization plan, and the next implementation leaf is
-  `ISF-DYNAMIC-WAIT.3.3.5.2` for top-level runtime waits.
+  path-specific materialization plan, `ISF-DYNAMIC-WAIT.3.3.5.2` shipped
+  top-level runtime wait preservation, and the next implementation leaf is
+  `ISF-DYNAMIC-WAIT.3.3.5.3` for branch runtime waits.
 - ISF activation binding expression update: activation input bindings for
   shipped `do`, generated `do`/`spawn`, and rule-trigger sites now accept
   scalar actor-side signals, numeric/exact-width literals, and non-empty
@@ -218,8 +225,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   frontier advances to `ISF-DYNAMIC-WAIT.3.3.5`: pending-sample preservation.
 - `ISF-DYNAMIC-WAIT.3.3.5` is active and split into executable
   pending-sample leaves. `ISF-DYNAMIC-WAIT.3.3.5.1` recorded the
-  path-specific materialization contract, and the active frontier is
-  `ISF-DYNAMIC-WAIT.3.3.5.2`: top-level runtime waits.
+  path-specific materialization contract, `ISF-DYNAMIC-WAIT.3.3.5.2` shipped
+  top-level runtime waits with pending samples, and the active frontier is
+  `ISF-DYNAMIC-WAIT.3.3.5.3`: branch runtime waits.
 - Top-level transaction-local `(while cond body...)` and
   `(until cond body...)` loops are shipped. `while` lowers as a pre-test
   zero-or-more loop with entry and back-edge decision states; `until` lowers

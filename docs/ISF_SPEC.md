@@ -1128,13 +1128,21 @@ pending samples, after predecessor states whose edge split is not implemented
 yet, and counts expressed as list expressions or parameter-backed values remain
 rejected.
 
-Pending samples before runtime waits remain a deliberate fail-closed boundary
-until path-specific sample materialization ships. The positive-count path must
-match positive static waits by materializing samples in the first active wait
-state. The zero-count path must match `wait 0` by materializing samples in the
-next state-producing clause without adding a hidden sample-only cycle. A shared
-successor assignment would double-sample after positive waits, so this feature
-is tracked separately under `ISF-DYNAMIC-WAIT.3.3.5`.
+Pending samples before top-level runtime waits are supported for the first
+path-specific sample-materialization subset when the following state can carry
+the zero-count sample without changing timing, such as a drive call, an await,
+or a static wait state. The positive-count path matches positive static waits
+by materializing samples in the first active wait state. For counts greater
+than one, a second generated wait-loop state consumes the remaining sampled
+counter value without repeating the sample. The zero-count path matches
+`wait 0` by materializing samples in a specialized clone of the next
+state-producing clause, so no hidden sample-only cycle is added and the
+original following state does not double-sample after a positive wait.
+Top-level runtime waits whose zero-count successor cannot yet carry pending
+samples without changing timing fail closed.
+Pending samples before runtime waits inside `when`, `switch`, `repeat`,
+`while`, or `until` bodies remain fail-closed until their branch/loop-specific
+sample materialization leaves ship.
 
 Diagnostics:
 - `(wait)` and `(wait N extra)` are malformed arity.

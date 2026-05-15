@@ -1217,9 +1217,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
                     push @st, @{_ir_wait($cl, $tn, \$si, [splice @ps], $actor, 'transaction body', $wait)};
                 }
             } else {
-                confess "Transaction '$tn': runtime dynamic wait count '$wait->{source}' in transaction body cannot follow pending samples yet\n"
-                    if @ps;
-                my ($states, $counter, $width) = _ir_dynamic_wait($cl, $tn, \$si, $wait);
+                my ($states, $counter, $width) = _ir_dynamic_wait($cl, $tn, \$si, $wait, [splice @ps]);
                 push @st, @$states;
                 _register_counter_width(\%ct, $counter, $width);
                 $storage_roles{$counter} = 'dynamic_wait_counter';
@@ -2521,14 +2519,19 @@ sub _ir_wait {
 }
 
 sub _ir_dynamic_wait {
-    my ($cl, $tn, $ir, $wait_spec) = @_;
+    my ($cl, $tn, $ir, $wait_spec, $pending_samples) = @_;
     my $state_name = "${tn}_wait_" . $$ir++;
     my $counter = "${state_name}_cnt";
+    my @sample_assignments = _sample_assignments($pending_samples || []);
+    my $loop_state_name = @sample_assignments ? "${state_name}_loop" : undef;
+    my @wait_state_names = ($state_name);
+    push @wait_state_names, $loop_state_name if defined $loop_state_name;
 
     my $state = {
         name                 => $state_name,
         kind                 => 'wait',
         assignments          => [
+            @sample_assignments,
             {
                 lhs         => $counter,
                 rhs         => undef,
@@ -2542,9 +2545,30 @@ sub _ir_dynamic_wait {
         wait_count_source    => $wait_spec->{source},
         wait_counter         => $counter,
         wait_counter_width   => $wait_spec->{width},
-        wait_state_names     => [$state_name],
+        wait_state_names     => \@wait_state_names,
         dynamic_wait_entry   => 1,
     };
+    if (@sample_assignments) {
+        my $loop_state = {
+            name                  => $loop_state_name,
+            kind                  => 'wait',
+            assignments           => [
+                {
+                    lhs         => $counter,
+                    rhs         => undef,
+                    op          => '--',
+                    source_kind => 'dynamic_wait_counter_decrement',
+                },
+            ],
+            transitions           => [],
+            wait_counter          => $counter,
+            wait_counter_width    => $wait_spec->{width},
+            dynamic_wait_loop_for => $state_name,
+        };
+        $state->{pending_sample_assignments} = \@sample_assignments;
+        $state->{dynamic_wait_loop_state} = $loop_state_name;
+        return ([$state, $loop_state], $counter, $wait_spec->{width});
+    }
 
     return ([$state], $counter, $wait_spec->{width});
 }
@@ -4689,15 +4713,25 @@ sub _link_states {
         my $s = $st->[$i];
         next unless $s->{dynamic_wait_entry};
 
-        my $exit_target = $i < $#$st ? $st->[$i + 1]{name} : $e;
-        $s->{dynamic_wait_next_wait_state} = $st->[$i + 1]
-            if $i < $#$st && $st->[$i + 1]{dynamic_wait_entry};
+        my $last_idx = _state_region_last_index(\%idx_by_name, $s->{wait_state_names}, $i);
+        my $exit_idx = $last_idx + 1;
+        my $exit_target = $exit_idx <= $#$st ? $st->[$exit_idx]{name} : $e;
+        $s->{dynamic_wait_next_wait_state} = $st->[$exit_idx]
+            if $exit_idx <= $#$st && $st->[$exit_idx]{dynamic_wait_entry};
         $s->{dynamic_wait_exit_target} = $exit_target;
+        if (defined($s->{dynamic_wait_loop_state})) {
+            my $loop_state = _state_by_name(\%idx_by_name, $st, $s->{dynamic_wait_loop_state});
+            if ($loop_state) {
+                $loop_state->{dynamic_wait_next_wait_state} = $s->{dynamic_wait_next_wait_state};
+                $loop_state->{dynamic_wait_exit_target} = $exit_target;
+            }
+        }
     }
 
     for my $i(0..$#$st){my $s=$st->[$i];my $n=$i<$#$st?$st->[$i+1]{name}:undef;my $next=$branch_exit_target{$s->{name}}||$n;
         my $next_state = $i < $#$st ? $st->[$i + 1] : undef;
         if($s->{dynamic_wait_entry}){_link_dynamic_wait_state($s)}
+        elsif($s->{dynamic_wait_loop_for}){_link_dynamic_wait_loop_state($s)}
         elsif($s->{kind}eq'switch'){_link_switch_state($s,\%idx_by_name,$st,$n,$e)}
         elsif($s->{kind}eq'loop_while'||$s->{kind}eq'loop_until'){_link_loop_state($s,\%idx_by_name,$st)}
         elsif($next_state&&$next_state->{dynamic_wait_entry}){_link_dynamic_wait_predecessor($tn,$s,$next_state)}
@@ -4710,6 +4744,20 @@ sub _link_states {
         elsif($s->{kind}eq'sync_all'&&$next){push @{$s->{transitions}},{target=>$next}}
         elsif($s->{kind}eq'sync_any'&&$next){push @{$s->{transitions}},{target=>$next}}
         elsif($s->{kind}eq'terminal'){push @{$s->{transitions}},{target=>$e}}}
+
+    _append_dynamic_wait_zero_sample_clones($st,\%idx_by_name);
+}
+
+sub _state_region_last_index {
+    my ($idx_by_name, $state_names, $fallback_idx) = @_;
+    my $last_idx = $fallback_idx;
+    for my $name (@{$state_names || []}) {
+        next unless defined $name;
+        next unless exists $idx_by_name->{$name};
+        $last_idx = $idx_by_name->{$name}
+            if $idx_by_name->{$name} > $last_idx;
+    }
+    return $last_idx;
 }
 
 sub _link_switch_state {
@@ -4901,6 +4949,38 @@ sub _link_dynamic_wait_state {
             condition => { signal => $counter, op => '=', value => 1 },
         };
     }
+    my $loop_target = $state->{dynamic_wait_loop_state} // $state->{name};
+    push @{$state->{transitions}}, {
+        target    => $loop_target,
+        condition => { signal => $counter, op => '>', value => 1 },
+    } if $width > 1;
+}
+
+sub _link_dynamic_wait_loop_state {
+    my ($state) = @_;
+    my $counter = $state->{wait_counter};
+    my $exit_target = $state->{dynamic_wait_exit_target};
+    my $width = $state->{wait_counter_width} // 1;
+
+    confess "Runtime dynamic wait loop state '$state->{name}' has no sampled counter\n"
+        unless defined($counter) && length($counter);
+    confess "Runtime dynamic wait loop state '$state->{name}' has no exit target\n"
+        unless defined($exit_target) && length($exit_target);
+
+    my $final_cycle_condition = "(== $counter 1)";
+    my $next_dynamic_wait = $state->{dynamic_wait_next_wait_state};
+    if ($next_dynamic_wait) {
+        _link_dynamic_wait_entry_edge(
+            $state,
+            $next_dynamic_wait,
+            $final_cycle_condition,
+        );
+    } else {
+        push @{$state->{transitions}}, {
+            target    => $exit_target,
+            condition => { signal => $counter, op => '=', value => 1 },
+        };
+    }
     push @{$state->{transitions}}, {
         target    => $state->{name},
         condition => { signal => $counter, op => '>', value => 1 },
@@ -5016,13 +5096,132 @@ sub _link_dynamic_wait_entry_edge {
 
     my $next_dynamic_wait = $wait_state->{dynamic_wait_next_wait_state};
     if ($next_dynamic_wait) {
+        confess "Transaction dynamic wait '$wait_state->{name}': pending samples before consecutive runtime waits are not supported in the current pending-sample slice\n"
+            if _dynamic_wait_has_pending_samples($wait_state);
         _link_dynamic_wait_entry_edge($state, $next_dynamic_wait, $bypass_condition);
     } else {
+        my $target = _dynamic_wait_zero_bypass_target($wait_state);
         push @{$state->{transitions}}, {
-            target    => $exit_target,
+            target    => $target,
             condition => { expr => $bypass_condition },
         };
     }
+}
+
+sub _dynamic_wait_zero_bypass_target {
+    my ($wait_state) = @_;
+    return $wait_state->{dynamic_wait_exit_target}
+        unless _dynamic_wait_has_pending_samples($wait_state);
+
+    my $clone = $wait_state->{dynamic_wait_zero_sample_clone_name}
+        //= "$wait_state->{name}_zero_sample";
+    return $clone;
+}
+
+sub _dynamic_wait_has_pending_samples {
+    my ($wait_state) = @_;
+    return ref($wait_state->{pending_sample_assignments}) eq 'ARRAY'
+        && @{$wait_state->{pending_sample_assignments}};
+}
+
+sub _append_dynamic_wait_zero_sample_clones {
+    my ($states, $idx_by_name) = @_;
+    my @clones;
+
+    for my $wait_state (@$states) {
+        next unless ($wait_state->{dynamic_wait_entry} // 0);
+        next unless _dynamic_wait_has_pending_samples($wait_state);
+        my $clone_name = $wait_state->{dynamic_wait_zero_sample_clone_name};
+        next unless defined($clone_name) && length($clone_name);
+        next if exists $idx_by_name->{$clone_name};
+
+        my $target_name = $wait_state->{dynamic_wait_exit_target};
+        my $target_state = _state_by_name($idx_by_name, $states, $target_name);
+        confess "Runtime dynamic wait '$wait_state->{name}' cannot build zero-count sample target '$target_name'\n"
+            unless $target_state;
+        push @clones, _clone_dynamic_wait_zero_sample_target(
+            $wait_state,
+            $target_state,
+            $clone_name,
+        );
+    }
+
+    for my $clone (@clones) {
+        $idx_by_name->{$clone->{name}} = scalar(@$states);
+        push @$states, $clone;
+    }
+}
+
+sub _clone_dynamic_wait_zero_sample_target {
+    my ($wait_state, $target_state, $clone_name) = @_;
+
+    confess "Runtime dynamic wait '$wait_state->{name}' with pending samples cannot zero-bypass to state '$target_state->{name}' because that state cannot materialize pending samples without changing timing in the current pending-sample slice\n"
+        unless _dynamic_wait_zero_sample_target_accepts_samples($target_state);
+
+    my %clone = %$target_state;
+    $clone{name} = $clone_name;
+    $clone{assignments} = [
+        map { _clone_assignment($_) } @{$wait_state->{pending_sample_assignments}},
+        map { _clone_assignment($_) } @{$target_state->{assignments} || []},
+    ];
+    $clone{transitions} = [
+        map { _clone_transition($_) } @{$target_state->{transitions} || []},
+    ];
+    $clone{zero_sample_clone_of} = $target_state->{name};
+    delete $clone{wait_entry};
+    delete $clone{wait_state_names};
+    delete $clone{wait_cycles};
+    delete $clone{wait_count_kind};
+    delete $clone{wait_count_source};
+    delete $clone{wait_counter};
+    delete $clone{wait_counter_width};
+    delete $clone{dynamic_wait_entry};
+    delete $clone{dynamic_wait_loop_for};
+    delete $clone{dynamic_wait_loop_state};
+    delete $clone{dynamic_wait_exit_target};
+    delete $clone{dynamic_wait_next_wait_state};
+    delete $clone{dynamic_wait_zero_sample_clone_name};
+    delete $clone{pending_sample_assignments};
+
+    return \%clone;
+}
+
+sub _dynamic_wait_zero_sample_target_accepts_samples {
+    my ($target_state) = @_;
+    my $kind = $target_state->{kind} // '';
+    return 0 if $target_state->{dynamic_wait_entry} || $target_state->{dynamic_wait_loop_for};
+
+    return 1 if $kind eq 'wait';
+    return 1 if $kind eq 'await'
+        && !grep { ($_->{source_kind} // '') =~ /\Ado_/ } @{$target_state->{assignments} || []};
+
+    if ($kind eq 'sequential') {
+        for my $assignment (@{$target_state->{assignments} || []}) {
+            my $source_kind = $assignment->{source_kind} // '';
+            return 1
+                if $source_kind eq 'drive_call_start'
+                    || $source_kind eq 'inline_drive'
+                    || $source_kind eq 'sample_capture';
+        }
+    }
+
+    return 0;
+}
+
+sub _clone_assignment {
+    my ($assignment) = @_;
+    my %clone = %$assignment;
+    $clone{guard} = { %{$assignment->{guard}} }
+        if ref($assignment->{guard}) eq 'HASH';
+    return \%clone;
+}
+
+sub _clone_transition {
+    my ($transition) = @_;
+    my %clone = %$transition;
+    $clone{condition} = { %{$transition->{condition}} }
+        if ref($transition->{condition}) eq 'HASH';
+    return \%clone;
 }
 
 sub _inj_watchdog {

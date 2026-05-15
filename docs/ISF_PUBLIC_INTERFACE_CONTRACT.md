@@ -359,8 +359,13 @@ unsupported dynamic counts. Inline `when`, `repeat`, `switch`, `while`, and
 `until` body dynamic waits are covered for the no-pending-sample subset. Branch
 and loop decision states preserve their alternate exits while splitting the
 selected dynamic-wait edge into positive-count load/entry and zero-count
-bypass paths. Pending samples before inline dynamic waits remain fail-closed
-with diagnostics that name the body context.
+bypass paths. Pending samples before top-level runtime waits are covered: the
+positive path materializes samples in the first wait state, counts greater
+than one continue through a no-resample wait-loop state, and the zero path uses
+a sample-preserving clone of the following state when that state can carry the
+sample without changing timing. Top-level zero-count successors that cannot
+yet carry pending samples fail closed. Pending samples before inline dynamic
+waits remain fail-closed with diagnostics that name the body context.
 The transaction loop boundary is checked by
 [t/1245-isf-transaction-loop-lowering.t](../t/1245-isf-transaction-loop-lowering.t)
 so top-level transaction `(while cond body...)` lowers as a pre-test

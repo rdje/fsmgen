@@ -213,13 +213,14 @@ changing the exact timing meaning of the shipped wait construct.
   Commit: `ISF-DYNAMIC-WAIT.3.3.5.1: split pending-sample preservation`
 
 - ID: `ISF-DYNAMIC-WAIT.3.3.5.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Preserve pending samples for top-level runtime waits.`
   Acceptance: A top-level runtime wait preceded by pending samples preserves
   static-wait timing on the positive-count path and zero-wait timing on the
-  zero-count bypass path without adding a hidden decision/sample cycle.
-  Verification: `pending`
-  Commit: `pending`
+  zero-count bypass path for sample-compatible successors without adding a
+  hidden decision/sample cycle; other successors fail closed.
+  Verification: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-DYNAMIC-WAIT.3.3.5.2: preserve top-level wait samples`
 
 - ID: `ISF-DYNAMIC-WAIT.3.3.5.3`
   Status: `pending`
@@ -254,7 +255,7 @@ changing the exact timing meaning of the shipped wait construct.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-DYNAMIC-WAIT.3.3.5.2` | `pending` | Top-level runtime waits are the smallest context for implementing the path-specific pending-sample materialization contract. |
+| 1 | `ISF-DYNAMIC-WAIT.3.3.5.3` | `pending` | Branch contexts are the next smallest pending-sample materialization problem after top-level runtime waits. |
 
 ## Decisions
 
@@ -351,6 +352,14 @@ changing the exact timing meaning of the shipped wait construct.
   shared successor would double-sample after a positive wait, and inserting a
   separate sample-only state on the zero path would violate the no-hidden-cycle
   invariant.
+- `2026-05-15`: Top-level runtime waits with pending samples use path-specific
+  materialization. The positive path enters a sample-carrying wait state for
+  the first active wait cycle, then counts greater than one move to a generated
+  no-resample wait-loop state. The zero path targets a sample-preserving clone
+  of the following state-producing clause when that successor can carry samples
+  without changing timing, preserving `wait 0` timing without modifying the
+  original positive-count successor. Other top-level successor shapes fail
+  closed until their sample materialization rule is explicit.
 
 ## Open Questions
 
@@ -378,6 +387,7 @@ changing the exact timing meaning of the shipped wait construct.
 | `2026-05-15` | `ISF-DYNAMIC-WAIT.3.3.4.4` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-DYNAMIC-WAIT.3.3.4.5` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-DYNAMIC-WAIT.3.3.5.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-DYNAMIC-WAIT.3.3.5.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -396,6 +406,7 @@ changing the exact timing meaning of the shipped wait construct.
 | `ISF-DYNAMIC-WAIT.3.3.4.4` | `ISF-DYNAMIC-WAIT.3.3.4.4: support switch-branch dynamic waits` | Supports runtime waits in `switch` branches for the no-pending-sample subset. |
 | `ISF-DYNAMIC-WAIT.3.3.4.5` | `ISF-DYNAMIC-WAIT.3.3.4.5: support loop-body dynamic waits` | Supports runtime waits in `while` and `until` bodies for the no-pending-sample subset. |
 | `ISF-DYNAMIC-WAIT.3.3.5.1` | `ISF-DYNAMIC-WAIT.3.3.5.1: split pending-sample preservation` | Splits pending-sample preservation into executable leaves and records the path-specific materialization contract. |
+| `ISF-DYNAMIC-WAIT.3.3.5.2` | `ISF-DYNAMIC-WAIT.3.3.5.2: preserve top-level wait samples` | Supports pending samples before top-level runtime waits with one-shot positive sampling and a zero-count sample-preserving clone for sample-compatible successors. |
 
 ## Changelog
 
@@ -443,3 +454,9 @@ changing the exact timing meaning of the shipped wait construct.
   preservation is split into executable leaves and the path-specific
   materialization contract is documented. The current frontier advances to
   `ISF-DYNAMIC-WAIT.3.3.5.2`.
+- `2026-05-15`: Completed `ISF-DYNAMIC-WAIT.3.3.5.2`; top-level runtime waits
+  now preserve pending samples with a sample-carrying first wait state, a
+  no-resample wait-loop state for counts greater than one, and a zero-count
+  sample-preserving clone of sample-compatible following states. Non-compatible
+  top-level successors fail closed. The current frontier advances to
+  `ISF-DYNAMIC-WAIT.3.3.5.3`.

@@ -250,9 +250,17 @@ first wait state, using the same sample materialization rule as drive/await
 piggybacking. Pending samples immediately before `(wait 0)` are preserved and
 materialize on the next state-producing clause. Static waits do not introduce
 a hidden wait counter; the scheduled `.fsm` review artifact shows the exact
-fixed state chain for positive waits. Runtime scalar waits currently reject
-pending samples before the wait because the zero-count bypass and positive
-counter path must preserve sample timing exactly.
+fixed state chain for positive waits. Top-level runtime scalar waits preserve
+pending samples with path-specific materialization: the positive path samples
+in the first active wait state, then counts greater than one continue in a
+generated wait-loop state that does not repeat the sample. The zero path uses
+a sample-preserving clone of the following state-producing clause so no hidden
+sample-only cycle is inserted and the original following state does not sample
+again after a positive wait. This top-level subset is limited to following
+states that can carry the zero-count sample without changing timing; other
+successor shapes fail closed until their sample materialization is specified.
+Inline runtime waits still reject pending samples before the wait because
+their branch/loop bypass paths need separate materialization support.
 
 **Generated .fsm** for `(wait 2)` followed by `(drive tick)`:
 

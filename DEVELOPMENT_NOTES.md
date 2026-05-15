@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: top-level runtime wait samples need a one-shot state
+- A pending sample before a runtime wait must not live on a self-looping wait
+  state. For counts greater than one, that would update the sampled LHS on
+  every loop cycle rather than only on the first active wait cycle.
+- The top-level lowering therefore emits a sample-carrying first wait state
+  when pending samples exist. If the sampled counter is greater than one, the
+  state transitions to a generated wait-loop state that only decrements and
+  tests the same sampled counter.
+- The zero-count path remains separate: the predecessor bypass targets a clone
+  of the following state-producing clause with the pending samples prepended.
+  That clone preserves `wait 0` timing without modifying the original
+  positive-count successor.
 ## 2026-05-15: pending samples require path-specific runtime wait materialization
 - Pending samples before a runtime wait cannot be handled by one unconditional
   sample placement because the positive-count and zero-count paths have
