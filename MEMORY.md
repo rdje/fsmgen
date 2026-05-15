@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: verbose composition ?ports syntax
+- Added verbose composition `?ports` declarations:
+  `(input NAME)`, `(input NAME (width TOKEN))`, `(output NAME)`, and
+  `(output NAME (width TOKEN))`.
+- Verbose ports normalize to the same typed composition port IR as compact
+  tokens such as `clk`, `data_in<8`, and `result_data>8`.
+- Declared same-name binding now has verbose spellings. Canonical syntax is
+  `:same-name`; `(same-name)`, `:connect-by-name`, and `(connect-by-name)` are
+  accepted aliases. These produce the same `connect_by_name` binding mode as
+  compact `=name`.
+- Malformed list items inside `?ports` are now reported as malformed verbose
+  declarations with `Declaration '(...)'` failure-summary context.
+- Focused validation passed for parser normalization, generated-child HDL,
+  single-RTL C4 same-name wiring, parser-boundary diagnostics, and composition
+  failure-summary coverage.
 ## 2026-05-15: ISF transaction activation tree closure
 - Completed `ISF-TRANSACTION-ACTIVATION.4` and closed
   [docs/tasks/ISF-TRANSACTION-ACTIVATION.md](docs/tasks/ISF-TRANSACTION-ACTIVATION.md).

@@ -13,6 +13,63 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Pipeline::HDLGenerator;
 use FSM::Composition::Plan;
 
+subtest 'verbose top ports normalize before generated-child C1 emission' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'verbose_ports_generated_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'verbose_ports_generated_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:verbose_ports_generated_top
+  (?ports:public_io
+    (input payload_in (width 8))
+    (output result_data (width 8))
+  )
+  (?dtc:router router_src)
+)
+
+(?dt:router_src
+  (-route
+    (result_data> = payload_in)
+  )
+  (+size
+    (payload_in 8)
+    (result_data 8)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $result = $pipeline->generate_hdl_from_file($composition_path);
+
+    isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
+    is($result->{composition_plan}->lane, 'C1', 'verbose explicit ports stay on the generated-child passthrough lane');
+
+    my %ports = map { $_->name => $_ } @{$result->{composition_plan}->ports};
+    is($ports{payload_in}->direction, 'input', 'verbose input reaches the composition plan as an input');
+    is($ports{payload_in}->width, 8, 'verbose input reaches the composition plan with the declared width');
+    is($ports{result_data}->direction, 'output', 'verbose output reaches the composition plan as an output');
+    is($ports{result_data}->width, 8, 'verbose output reaches the composition plan with the declared width');
+
+    my $hdl = $result->{hdl_code};
+    like($hdl, qr/\binput\s+\[7:0\]\s+payload_in\b/s, 'generated HDL exposes the verbose input');
+    like($hdl, qr/\boutput\s+\[7:0\]\s+result_data\b/s, 'generated HDL exposes the verbose output');
+
+    my ($success) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
+    );
+
+    ok($success, 'CLI succeeds for verbose explicit top ports');
+    ok(-e $output_path, 'CLI writes HDL for verbose explicit top ports');
+};
+
 subtest 'explicit plain top ports can adopt same-name convention in generated-child C2' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'explicit_plain_ports_generated_top.fsm');

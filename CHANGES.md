@@ -1,6 +1,27 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R6 — verbose composition port declarations
+- Added verbose `?ports` declarations as aliases for compact top-port tokens:
+  `(input NAME)`, `(input NAME (width TOKEN))`, `(output NAME)`, and
+  `(output NAME (width TOKEN))` now normalize through the same
+  `FSM::Composition::Port` path as `NAME`, `NAME<N`, and `NAME>N`.
+- Added declared same-name binding flags on verbose ports. The canonical concise
+  spelling is `:same-name`; `(same-name)`, `:connect-by-name`, and
+  `(connect-by-name)` are accepted aliases and lower to the same
+  `connect_by_name` binding mode as compact `=name`.
+- Updated malformed verbose-port diagnostics and composition failure summaries
+  so invalid list declarations inside `?ports` are reported as malformed
+  declarations, while compact invalid tokens and legacy mapping directives keep
+  their existing targeted boundaries.
+- Added parser, generated-child HDL, external-RTL C4 by-name, parser-boundary,
+  and failed-run summary coverage in
+  [t/14-composition-parser.t](t/14-composition-parser.t),
+  [t/102-composition-explicit-port-convention.t](t/102-composition-explicit-port-convention.t),
+  [t/90-composition-single-rtl-child.t](t/90-composition-single-rtl-child.t),
+  [t/126-composition-parser-token-diagnostics.t](t/126-composition-parser-token-diagnostics.t),
+  and
+  [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t).
 ### R14 — ISF transaction activation tree closure
 - Completed `ISF-TRANSACTION-ACTIVATION.4` and closed
   [docs/tasks/ISF-TRANSACTION-ACTIVATION.md](docs/tasks/ISF-TRANSACTION-ACTIVATION.md).

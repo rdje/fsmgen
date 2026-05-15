@@ -101,6 +101,76 @@ isa_ok($explicit_spec->top->toplinks->[0]->links->[0], 'FSM::Composition::Link')
 is($explicit_spec->top->toplinks->[0]->links->[0]->source, 'child_ctrl.output_data', 'typed link preserves dotted child source endpoints');
 is($explicit_spec->top->toplinks->[0]->links->[0]->target, 'txd', 'typed link preserves target endpoint');
 
+my $verbose_ports_spec = $parser->parse_source(
+    scalar Lispish::single(\'(?top:verbose_ports_top
+  (?ports:public_io
+    (input clk)
+    (input rst_n)
+    (input data_in (width 8))
+    (output result_data (width 8))
+    (input enable :same-name)
+    (output status (width 8) :connect-by-name)
+    (input ack (same-name))
+    (output ready (connect-by-name))
+  )
+  (?dtc:router route_src)
+)'),
+);
+
+my @verbose_ports = @{$verbose_ports_spec->top->ports_blocks->[0]->ports};
+is(scalar(@verbose_ports), 8, 'verbose ports block materializes every verbose port declaration');
+is($verbose_ports[0]->name, 'clk', 'verbose input preserves the port name');
+is($verbose_ports[0]->direction, 'input', 'verbose input normalizes to the input direction');
+is($verbose_ports[0]->width, 1, 'verbose input without width defaults to one bit');
+is($verbose_ports[2]->name, 'data_in', 'verbose input with width preserves the port name');
+is($verbose_ports[2]->direction, 'input', 'verbose input with width normalizes to the input direction');
+is($verbose_ports[2]->width, 8, 'verbose input with width resolves its numeric width');
+is($verbose_ports[3]->name, 'result_data', 'verbose output with width preserves the port name');
+is($verbose_ports[3]->direction, 'output', 'verbose output normalizes to the output direction');
+is($verbose_ports[3]->width, 8, 'verbose output with width resolves its numeric width');
+is($verbose_ports[3]->binding_mode, 'explicit', 'verbose ports are explicit top ports');
+is($verbose_ports[3]->raw_token, '(output result_data (width 8))', 'verbose port keeps a readable raw token');
+is($verbose_ports[4]->name, 'enable', 'verbose same-name input preserves the port name');
+is($verbose_ports[4]->direction, 'input', 'verbose same-name input normalizes to the input direction');
+is($verbose_ports[4]->binding_mode, 'connect_by_name', 'verbose same-name input requests connect-by-name binding');
+is($verbose_ports[4]->origin_kind, 'declared_connect_by_name_port', 'verbose same-name input keeps the declared by-name origin');
+is($verbose_ports[5]->name, 'status', 'verbose connect-by-name alias output preserves the port name');
+is($verbose_ports[5]->direction, 'output', 'verbose connect-by-name alias normalizes to the output direction');
+is($verbose_ports[5]->width, 8, 'verbose connect-by-name alias output resolves its numeric width');
+is($verbose_ports[5]->binding_mode, 'connect_by_name', 'verbose connect-by-name alias requests connect-by-name binding');
+is($verbose_ports[6]->name, 'ack', 'parenthesized verbose same-name input preserves the port name');
+is($verbose_ports[6]->binding_mode, 'connect_by_name', 'parenthesized verbose same-name input requests connect-by-name binding');
+is($verbose_ports[7]->name, 'ready', 'parenthesized verbose connect-by-name output preserves the port name');
+is($verbose_ports[7]->binding_mode, 'connect_by_name', 'parenthesized verbose connect-by-name output requests connect-by-name binding');
+
+my $bad_verbose_keyword_error = eval {
+    $parser->parse_source(
+        scalar Lispish::single(\'(?top:bad_verbose_keyword (?ports:public_io (inout bus)))'),
+    );
+    undef;
+};
+$bad_verbose_keyword_error = $@;
+
+like(
+    $bad_verbose_keyword_error,
+    qr/verbose declaration '\(inout bus\)'.*must start with the literal keyword 'input' or 'output'/s,
+    'parser rejects unsupported verbose port direction keywords with a targeted error',
+);
+
+my $bad_verbose_width_error = eval {
+    $parser->parse_source(
+        scalar Lispish::single(\'(?top:bad_verbose_width (?ports:public_io (output bus (width))))'),
+    );
+    undef;
+};
+$bad_verbose_width_error = $@;
+
+like(
+    $bad_verbose_width_error,
+    qr/verbose declaration '\(output bus \(width\)\)'.*'\(width TOKEN\)' must contain exactly one scalar width token/s,
+    'parser rejects verbose width attributes without a scalar token',
+);
+
 my $inline_port_error = eval {
     $parser->parse_source(
         scalar Lispish::single(\'(?top:inline_ports clk rstn (?ports))'),

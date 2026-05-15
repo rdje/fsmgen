@@ -176,6 +176,58 @@ FSM
     is($rtl_bindings{txd}, 'txd', 'single rtl by-name resolves the unique same-name output');
 };
 
+subtest 'single ?rtl child supports verbose C4 same-name declarations' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'single_rtl_verbose_by_name_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'single_rtl_verbose_by_name_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:single_rtl_verbose_by_name_top
+  (?ports:public_io
+    (input core_clk)
+    (input rst_async_n)
+    (input data_in (width 8) :same-name)
+    (output txd :connect-by-name)
+  )
+  (?rtl:uart_tx)
+)
+
+(?rtlif:uart_tx
+  core_clk:clock
+  rst_async_n:reset
+  data_in<8:data
+  txd>:data
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $result = $pipeline->generate_hdl_from_file($composition_path);
+
+    isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
+    is($result->{composition_plan}->lane, 'C4', 'single rtl verbose same-name declarations use the C4 lane');
+
+    my %rtl_bindings = map { $_->{port_name} => $_->{signal_name} } @{$result->{composition_plan}->instances->[0]->port_bindings};
+    is($rtl_bindings{core_clk}, 'core_clk', 'verbose by-name keeps typed clock auto-wiring');
+    is($rtl_bindings{rst_async_n}, 'rst_async_n', 'verbose by-name keeps typed reset auto-wiring');
+    is($rtl_bindings{data_in}, 'data_in', 'verbose same-name input resolves the unique same-name input');
+    is($rtl_bindings{txd}, 'txd', 'verbose connect-by-name alias resolves the unique same-name output');
+
+    my ($success) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
+    );
+
+    ok($success, 'CLI succeeds for verbose same-name declarations');
+    ok(-e $output_path, 'CLI writes HDL for verbose same-name declarations');
+};
+
 done_testing();
 
 sub write_file {

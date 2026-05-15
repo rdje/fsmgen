@@ -933,10 +933,10 @@ sub parse_ports_block ($self, $top_name, $child_ast, $block_name, $items, $top_s
     my @ports;
 
     for my $item (@$items) {
-        confess "Composition top '$top_name' contains a nested '?ports' item, ".
-            "but composition port declaration flatness is blocked because the active composition parser only supports flat explicit port tokens.".
-            $self->scope_docs_suffix
-            if ref($item);
+        if (ref($item)) {
+            push @ports, $self->parse_verbose_port_form($top_name, $item, $top_symbols);
+            next;
+        }
 
         if ($item =~ m{^/} || $item =~ /^\{/) {
             confess
@@ -952,6 +952,147 @@ sub parse_ports_block ($self, $top_name, $child_ast, $block_name, $items, $top_s
         name => $block_name,
         ports => \@ports,
         raw_ast => $child_ast,
+    );
+}
+
+sub parse_verbose_port_form ($self, $top_name, $form, $top_symbols = undef) {
+    my $rendered = $self->render_ast_fragment($form);
+
+    confess
+        "Composition top '$top_name' contains '?ports' verbose declaration '$rendered', ".
+        "but composition port declaration shape is blocked because verbose declarations must start with '(input NAME ...)' or '(output NAME ...)' and may carry optional '(width TOKEN)' plus optional ':same-name', '(same-name)', ':connect-by-name', or '(connect-by-name)' attributes.".
+        $self->scope_docs_suffix
+        unless ref($form) eq 'ARRAY' && @$form == 2;
+
+    my ($direction_keyword, $payload) = @$form;
+    confess
+        "Composition top '$top_name' contains '?ports' verbose declaration '$rendered', ".
+        "but composition port declaration shape is blocked because verbose declarations must start with the literal keyword 'input' or 'output'.".
+        $self->scope_docs_suffix
+        unless defined($direction_keyword)
+            && !ref($direction_keyword)
+            && ($direction_keyword eq 'input' || $direction_keyword eq 'output');
+
+    confess
+        "Composition top '$top_name' contains '?ports' verbose declaration '$rendered', ".
+        "but composition port declaration shape is blocked because verbose declarations must carry a proper item list after '$direction_keyword'.".
+        $self->scope_docs_suffix
+        unless defined($payload) && ref($payload) eq 'ARRAY' && @$payload;
+
+    my @items = @$payload;
+    my $port = shift @items;
+    confess
+        "Composition top '$top_name' contains '?ports' verbose declaration '$rendered', ".
+        "but composition port declaration shape is blocked because the port name must be an HDL-identifier-compatible bare name.".
+        $self->scope_docs_suffix
+        unless defined($port) && !ref($port) && $port =~ /\A[A-Za-z_]\w*\z/;
+
+    my $width_token;
+    my $binding_mode = 'explicit';
+    for my $attribute (@items) {
+        my $attribute_rendered = $self->render_ast_fragment($attribute);
+
+        if (
+            defined($attribute)
+            && !ref($attribute)
+            && ($attribute eq ':same-name' || $attribute eq ':connect-by-name')
+        ) {
+            confess
+                "Composition top '$top_name' contains '?ports' verbose declaration '$rendered', ".
+                "but composition port declaration binding is blocked because the verbose declaration repeats the same-name binding attribute.".
+                $self->scope_docs_suffix
+                if $binding_mode eq 'connect_by_name';
+
+            $binding_mode = 'connect_by_name';
+            next;
+        }
+
+        confess
+            "Composition top '$top_name' contains '?ports' verbose declaration '$rendered', ".
+            "but composition port declaration attribute shape is blocked because attribute '$attribute_rendered' is not a supported verbose port attribute.".
+            $self->scope_docs_suffix
+            unless ref($attribute) eq 'ARRAY' && @$attribute == 2;
+
+        my ($attribute_name, $attribute_payload) = @$attribute;
+        confess
+            "Composition top '$top_name' contains '?ports' verbose declaration '$rendered', ".
+            "but composition port declaration attribute shape is blocked because attribute '$attribute_rendered' is not a supported verbose port attribute.".
+            $self->scope_docs_suffix
+            unless defined($attribute_name) && !ref($attribute_name);
+
+        if ($attribute_name eq 'same-name' || $attribute_name eq 'connect-by-name') {
+            my $has_payload = defined($attribute_payload)
+                && !(ref($attribute_payload) eq 'ARRAY' && @$attribute_payload == 0);
+            confess
+                "Composition top '$top_name' contains '?ports' verbose declaration '$rendered', ".
+                "but composition port declaration binding is blocked because '($attribute_name)' must not carry payload items.".
+                $self->scope_docs_suffix
+                if $has_payload;
+            confess
+                "Composition top '$top_name' contains '?ports' verbose declaration '$rendered', ".
+                "but composition port declaration binding is blocked because the verbose declaration repeats the same-name binding attribute.".
+                $self->scope_docs_suffix
+                if $binding_mode eq 'connect_by_name';
+
+            $binding_mode = 'connect_by_name';
+            next;
+        }
+
+        confess
+            "Composition top '$top_name' contains '?ports' verbose declaration '$rendered', ".
+            "but composition port declaration attribute shape is blocked because attribute '$attribute_rendered' is not a supported verbose port attribute.".
+            $self->scope_docs_suffix
+            unless $attribute_name eq 'width';
+
+        confess
+            "Composition top '$top_name' contains '?ports' verbose declaration '$rendered', ".
+            "but composition port declaration sizing is blocked because the verbose declaration repeats the '(width TOKEN)' attribute.".
+            $self->scope_docs_suffix
+            if defined $width_token;
+
+        my $unwrapped_width = $self->unwrap_scalar_token($attribute_payload);
+        confess
+            "Composition top '$top_name' contains '?ports' verbose declaration '$rendered', ".
+            "but composition port declaration sizing is blocked because '(width TOKEN)' must contain exactly one scalar width token.".
+            $self->scope_docs_suffix
+            unless defined($unwrapped_width) && !ref($unwrapped_width);
+
+        $width_token = $unwrapped_width;
+    }
+
+    my $resolved_contract = {
+        width => 1,
+        signed => 0,
+        state_model => undef,
+    };
+    if (defined $width_token) {
+        $resolved_contract = FSM::Composition::PortWidthResolver->resolve_port_contract(
+            top_name => $top_name,
+            token => $rendered,
+            width_token => $width_token,
+            top_symbols => $top_symbols,
+            docs_hint => $self->scope_docs_suffix,
+            allow_unresolved_imported_type_refs => 1,
+        );
+    }
+
+    return FSM::Composition::Port->new(
+        name => $port,
+        direction => $direction_keyword,
+        width => $resolved_contract->{width},
+        width_token => $width_token,
+        signed => ($resolved_contract->{signed} // 0),
+        state_model => $resolved_contract->{state_model},
+        declared_type_name => $resolved_contract->{declared_type_name},
+        declared_type_spec => $resolved_contract->{declared_type_spec},
+        type => undef,
+        binding_mode => $binding_mode,
+        raw_token => $rendered,
+        origin_kind => (
+            $binding_mode eq 'connect_by_name'
+                ? 'declared_connect_by_name_port'
+                : 'declared_explicit_port'
+        ),
     );
 }
 
@@ -1142,6 +1283,26 @@ sub is_contract_identifier ($self, $value) {
 
 sub describe_contract_name ($self, $value) {
     return defined($value) && !ref($value) ? $value : 'unknown';
+}
+
+sub render_ast_fragment ($self, $value) {
+    return 'undef' unless defined $value;
+    return $value unless ref($value);
+    return '(' . $value->[0] . ')'
+        if ref($value) eq 'ARRAY'
+            && @$value == 2
+            && defined($value->[0])
+            && !ref($value->[0])
+            && !defined($value->[1]);
+    return '(' . join(' ', $value->[0], map { $self->render_ast_fragment($_) } @{ $value->[1] }) . ')'
+        if ref($value) eq 'ARRAY'
+            && @$value == 2
+            && defined($value->[0])
+            && !ref($value->[0])
+            && ref($value->[1]) eq 'ARRAY';
+    return '(' . join(' ', map { $self->render_ast_fragment($_) } @$value) . ')'
+        if ref($value) eq 'ARRAY';
+    return ref($value);
 }
 
 sub is_contract_type_reference ($self, $value) {

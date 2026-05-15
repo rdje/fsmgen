@@ -36,7 +36,8 @@ This document defines the concrete `R6` scope for composition-oriented work in t
   - bounded undeclared same-name internal-carrier inference for unique producer-to-consumer child families that remain otherwise unwired,
   - deterministic internal-net creation and mixed-child instantiation without regenerating external RTL internals.
 - The active toolchain now also ships the first `C4` composition lane:
-  - top ports can be declared as `=name` inside `?ports` to request explicit same-name connect-by-name,
+  - top ports can be declared as compact `=name` or verbose `:same-name`
+    inside `?ports` to request explicit same-name connect-by-name,
   - declared connect-by-name now covers one or more generated children, one or more external `?rtl` children, or any mixture of those generated and external RTL children,
   - declared connect-by-name can also coexist with explicit `?toplink` child-to-child wiring in those same bounded lanes,
   - declared top outputs still require exactly one matching child output,
@@ -57,6 +58,15 @@ This document defines the concrete `R6` scope for composition-oriented work in t
 The currently shipped composition behavior is intentionally bounded:
 - exactly one top-level `?top:name`,
 - zero or one `?ports` block,
+- `?ports` may use the compact token spelling (`clk`, `data_in<8`,
+  `result_data>8`, `=status>`) or verbose declarations
+  (`(input clk)`, `(input data_in (width 8))`,
+  `(output result_data (width 8))`, `(output status :same-name)`);
+  verbose `(width TOKEN)` uses the same width-token resolver as compact
+  suffixes, and nullary verbose attributes may be written either as
+  `(attribute)` or `:attribute`. The shipped same-name binding flags are
+  canonical `:same-name` plus accepted aliases `(same-name)`,
+  `:connect-by-name`, and `(connect-by-name)`,
 - zero or more bounded `+constants` / `+enums` / `+types` blocks plus zero or more bounded `+import` blocks at that `?top` root, with top-root `+constants` now also allowing bounded aggregate values, whole aggregate roots on the live literal path, authored-member-order packing for hash-like roots, and aggregate values that reuse same-scope local constants and enum members regardless of declaration order as long as the symbol dependency graph stays acyclic, and with local `+types` now covering bounded aliases for `bit`, `(bits N)`, `(signed bit)`, `(signed (bits N))`, `(two_state ...)`, `(four_state ...)`, packed `(list ...)`, packed `(record (field TYPE) ...)`, same-scope named type aliases on the `?ports` width path, positive integer scalar symbols on that same `?ports` width path, direct package-qualified imported type aliases such as `shared.byte` and `shared.frame_t`, local aliases that themselves target those imported package types including nested imported aggregate members, signedness/state-model-preserving Verilog-family top-port emission when those aliases resolve to explicit signed, two-state, or four-state scalar types, backend-owned local packed typedef emission for aggregate aliases on generated composition-top SystemVerilog boundaries and typed structural nets, and preserved `declared_type_name` / canonical `declared_type_spec` metadata on top ports plus realized generated-child interface ports when those live width contracts came from named type aliases,
 - zero or more embedded `?pkg:name` roots in the same file and zero or more external `?pkg:name` package sources resolved through the normal search roots, with packages currently carrying shared named scalar values, bounded named aggregate values, enum families, bounded scalar and packed-aggregate type aliases, and aggregate values that reuse same-scope package constants and enum members regardless of declaration order as long as the symbol dependency graph stays acyclic,
 - one or more child instances, currently `?fsmc`, `?dtc`, and `?rtl`,
@@ -74,7 +84,7 @@ The currently shipped composition behavior is intentionally bounded:
 - `C2` and `C3` may now also infer undeclared same-name internal carriers when no explicit link already touches that name family, exactly one same-name child output remains available, and one or more same-name child inputs remain available,
 - those inferred same-name internal carriers stay internal by default, but an explicit same-name top output may adopt and re-export that carrier when its direction, width, type metadata, and any preserved declared type contract match the child-side family exactly,
 - `C3` explicit-link composition currently supports any explicit-link top with at least one external `?rtl` child, including pure multi-`?rtl`, one-generated-plus-`?rtl`, and multi-generated-plus-`?rtl` mixtures,
-- `C4` declared connect-by-name currently supports top ports marked as `=name` inside `?ports` for one or more generated children, one or more external `?rtl` children, or any mixture of those generated and external RTL children,
+- `C4` declared connect-by-name currently supports top ports marked as compact `=name` or verbose `:same-name` / `(same-name)` / `:connect-by-name` / `(connect-by-name)` declarations inside `?ports` for one or more generated children, one or more external `?rtl` children, or any mixture of those generated and external RTL children,
 - each `=name` top output must resolve to exactly one same-named child output with the same width,
 - each `=name` top input may resolve to one or more same-named child inputs with the same width,
 - when either side preserved `declared_type_name` / `declared_type_spec` from named aliases, that same-name family must also keep one compatible declared type contract instead of flattening the decision to width alone,
@@ -142,11 +152,11 @@ The currently shipped composition behavior is intentionally bounded:
   - and it now also covers explicit-link top-wiring and realized-child-wiring failures when declared top ports or realized child ports remain unwired in explicit-link lanes,
   - and it now also covers explicit-link lane-entry and remaining topology failures when explicit-link lanes are entered without `?toplink` or when a still-unsupported explicit-link topology is requested,
   - and it now also covers top-level composition lane/shape gates when no child instances exist, when `?ports` multiplicity is invalid, or when omitted/empty `?ports` appears outside the bounded inference cases,
-  - and it now also covers declared `=name` connect-by-name failures when direction, width, ambiguity, or missing-endpoint evidence blocks the declared match,
+  - and it now also covers compact `=name` and verbose `:same-name` connect-by-name failures when direction, width, ambiguity, or missing-endpoint evidence blocks the declared match,
   - and it now also covers `C1` passthrough exposure failures when explicit top exposure omits a realized child port or disagrees with the realized child interface on name, width, or direction,
   - and it now also covers duplicate top-port and duplicate child-instance declarations when those composition-shape conflicts would otherwise make planning ambiguous,
   - and it now also covers reserved system-port `=name` declarations and unsupported explicit endpoint syntax when those endpoint-shape errors would otherwise leave the binding contract ambiguous,
-  - and it now also covers malformed `?ports` and `?toplink` parser items when top-port or top-link token flatness/shape/sizing/declaration-mode would otherwise fail through older raw wording,
+  - and it now also covers malformed `?ports` and `?toplink` parser items when top-port token shape/sizing/declaration-mode, verbose top-port declaration shape/attribute shape/binding/sizing, or top-link token flatness/shape would otherwise fail through older raw wording,
   - and it now also covers unsupported composition backend targets when a valid composition source asks for a backend that the current composition lanes do not emit,
   - and it now also covers generated child-source resolution/realization failures when external `?fsmc` / `?dtc` child sources are missing or resolve to the wrong active root kind,
   - and it now also covers blocked `C2` lane selection when an explicit-link generated-child composition still provides only one generated child,
@@ -227,7 +237,7 @@ Current shipped runtime subset:
 - and the unified semantic `composition_children` export now derives child identity and order from `structural_rtl_ir->{instances}` instead of rereading realized child identity directly from plan instances, with the narrower generated-child and reusable standalone-DT export builders reusing that same computed child surface in the top-generation path,
 - and realized generated-child interface planning now consumes that child `structural_rtl_ir` boundary summary first, with low-level declaration types like `wire` / `logic` normalized back to plain semantic data ports on the way into composition typing,
 - and that same structural/interface boundary now also preserves declared type identity through `declared_type_name` plus canonical `declared_type_spec` on top ports and realized child interface ports whenever the live width contract came from a named alias instead of a plain numeric width token,
-- and the same-name composition convention family now consumes that preserved type identity directly, so undeclared top-port inference, plain explicit top-port convention, declared `=name` connect-by-name, and inferred internal-carrier re-export all block when child-side evidence disagrees on declared type contract even if raw packed width still matches,
+- and the same-name composition convention family now consumes that preserved type identity directly, so undeclared top-port inference, plain explicit top-port convention, declared compact `=name` / verbose `:same-name` connect-by-name, and inferred internal-carrier re-export all block when child-side evidence disagrees on declared type contract even if raw packed width still matches,
 - and inferred composition carrier nets now also preserve that same declared type identity when they are driven by one typed child-output family, so structural RTL export no longer flattens those internal carriers back to width-only metadata before later aggregate-aware lowering or embedder inspection sees them,
 - and whole aggregate actual roots on the bounded explicit-actual path now consume that same declared type boundary too when they bind directly to a typed aggregate top output or typed aggregate child input, so width-equal but aggregate-shape-incompatible whole actuals are now blocked explicitly instead of slipping through direct actual binding on packed width alone,
 - and source-side top expressions plus child expressions now consume that same declared type boundary too when they bind directly to a typed aggregate top output or typed aggregate child input, so width-equal but aggregate-shape-incompatible concat/repeat/bit-slice/whole-signal expression sources are now blocked explicitly instead of slipping through explicit-link planning on packed width alone,
@@ -296,7 +306,7 @@ The first lane must represent:
 The first lane supports:
 - explicit top-port exposure,
 - explicit child-port wiring,
-- declared top-port connect-by-name through `=name` declarations in `?ports`,
+- declared top-port connect-by-name through compact `=name` declarations or verbose `:same-name` declarations in `?ports`,
 - deterministic connect-by-name only when the names are unambiguous and declared,
 - explicit failure on:
   - unknown ports,
@@ -335,7 +345,9 @@ The following are out of scope for the first implementation slice:
 - `?rtl`
   - External RTL module binding with declared interface metadata loaded separately for composition-time validation and wiring.
 - `?ports`
-  - Explicit top-level interface declaration for the generated composition.
+  - Explicit top-level interface declaration for the generated composition,
+    using compact port tokens or verbose `(input ...)` / `(output ...)`
+    declarations.
 - `?toplink`
   - Explicit connectivity specification between top ports, interconnect nets, and child ports.
 
@@ -434,8 +446,8 @@ Status:
 
 ### C4. Connect-by-name only when unambiguous
 Status:
-- Implemented in the current active toolchain for top ports declared as `=name` inside `?ports`, with direction-asymmetric same-name matching across the shipped single-child (`?fsmc`, `?dtc`, or `?rtl`), multi-generated-child, multi-`?rtl`, and mixed generated-child plus external RTL lanes.
-- Implemented in the current active toolchain for top ports declared as `=name` inside `?ports`, with direction-asymmetric same-name matching:
+- Implemented in the current active toolchain for top ports declared as compact `=name` or verbose `:same-name` / `(same-name)` / `:connect-by-name` / `(connect-by-name)` inside `?ports`, with direction-asymmetric same-name matching across the shipped single-child (`?fsmc`, `?dtc`, or `?rtl`), multi-generated-child, multi-`?rtl`, and mixed generated-child plus external RTL lanes.
+- Implemented in the current active toolchain for compact or verbose declared same-name top ports inside `?ports`, with direction-asymmetric same-name matching:
   - top outputs still require exactly one compatible child output,
   - top inputs may fan out to one or more compatible child inputs.
 
@@ -450,7 +462,8 @@ Status:
 
 ### C5. Width mismatch diagnostics
 Status:
-- Implemented in the current active toolchain for both explicit `?toplink` links and declared `=name` connect-by-name ports.
+- Implemented in the current active toolchain for both explicit `?toplink`
+  links and compact or verbose declared connect-by-name ports.
 
 - Input:
   - composition with incompatible linked widths.

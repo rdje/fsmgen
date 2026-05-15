@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R6 — verbose composition port declarations
+- `?ports` now accepts verbose `(input ...)` and `(output ...)` declarations
+  as aliases for compact top-port tokens.
+- `(width TOKEN)` uses the same width resolver as compact suffixes.
+- Nullary verbose attributes can be written as `(attribute)` or `:attribute`;
+  the shipped declared same-name flag is canonical `:same-name`, with
+  `(same-name)`, `:connect-by-name`, and `(connect-by-name)` accepted aliases.
+- Malformed verbose declarations now produce declaration-shaped diagnostics and
+  failed-run summaries.
+- Focused validation passed for parser, HDL, C4 by-name, parser diagnostics,
+  and failure-summary tests.
+
 ## 2026-05-15: R14 — ISF transaction activation tree closure
 - Active R14 task-tree slice: `ISF-TRANSACTION-ACTIVATION.4` is complete, and
   [docs/tasks/ISF-TRANSACTION-ACTIVATION.md](docs/tasks/ISF-TRANSACTION-ACTIVATION.md)

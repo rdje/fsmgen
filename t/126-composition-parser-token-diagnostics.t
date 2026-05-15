@@ -20,7 +20,7 @@ my $pipeline = FSM::Pipeline::HDLGenerator->new(
     quiet => 1,
 );
 
-subtest 'nested ?ports items now say port-declaration flatness is blocked' => sub {
+subtest 'malformed verbose ?ports declarations now say port-declaration shape is blocked' => sub {
     expect_failure(
         name => 'nested_ports_item_top',
         body => <<'FSM',
@@ -47,9 +47,9 @@ subtest 'nested ?ports items now say port-declaration flatness is blocked' => su
   )
 )
 FSM
-        pipeline_regex => qr/Composition top 'nested_ports_item_top' contains a nested '\?ports' item, .*composition port declaration flatness is blocked because the active composition parser only supports flat explicit port tokens/s,
-        cli_regex => qr/composition port declaration flatness is blocked because the active composition parser only supports flat explicit port tokens/s,
-        cli_failure_name => 'nested ?ports items',
+        pipeline_regex => qr/Composition top 'nested_ports_item_top' contains '\?ports' verbose declaration '\(group clk\)', .*composition port declaration shape is blocked because verbose declarations must start with the literal keyword 'input' or 'output'/s,
+        cli_regex => qr/composition port declaration shape is blocked because verbose declarations must start with the literal keyword 'input' or 'output'/s,
+        cli_failure_name => 'malformed verbose ?ports declarations',
     );
 };
 

@@ -249,7 +249,7 @@ That declared type information now affects:
 
 - same-name undeclared top-port inference
 - plain explicit top-port convention
-- declared `=name` connect-by-name
+- declared compact `=name` or verbose `:same-name` connect-by-name
 - explicit plain port-to-port `?toplink`
 - inferred internal carrier nets
 - whole aggregate direct actual binding

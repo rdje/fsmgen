@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: verbose composition port declarations
+- Verbose `?ports` forms are normalization sugar, not a new composition lane.
+  The parser creates the same `FSM::Composition::Port` objects used by compact
+  tokens, so width/type resolution, C1/C2/C3/C4 planning, structural RTL, and
+  HDL emission do not fork into a parallel interface model.
+- The nullary attribute shorthand is intentionally general as an authoring
+  convention: when a verbose attribute has no payload, `(attribute)` may be
+  shortened to `:attribute`. The parser still accepts only attributes with
+  shipped semantics on this surface; `:same-name` is the canonical declared
+  by-name marker, and `connect-by-name` is an accepted readability alias.
+- Invalid list items inside `?ports` are now malformed verbose declarations
+  rather than generic flatness failures. The failure-summary builder therefore
+  reports `Declaration '(...)'` context and the `port declaration shape`
+  boundary for these cases.
 ## 2026-05-15: ISF transaction activation tree closure
 - Closing `ISF-TRANSACTION-ACTIVATION` is a boundary decision, not a claim that
   every imaginable activation-site parameter feature is done. The shipped

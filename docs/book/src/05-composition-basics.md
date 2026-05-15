@@ -18,7 +18,7 @@ The current active top-root body can contain:
 
 - zero or more declaration sections such as `+constants`, `+enums`, bounded
   `+types`, and bounded `+import`
-- zero or one flat `?ports` block
+- zero or one `?ports` block
 - one or more child instances
 - zero or more explicit `?toplink` wiring blocks
 - embedded generated child roots, embedded `?pkg` package roots, or embedded
@@ -69,7 +69,50 @@ Plain direction tokens are:
 
 The plain forms are ordinary explicit ports.
 
-The `=name` forms are declared same-name connect-by-name ports. They mean:
+For readability, `?ports` also accepts verbose declarations. These are aliases
+of the compact tokens, not a separate port kind:
+
+```lisp
+(?ports:public_io
+  (input clk)
+  (input rst_n)
+  (input data_in (width 8))
+  (output result_data (width 8))
+)
+```
+
+That is equivalent to:
+
+```lisp
+(?ports:public_io
+  clk
+  rst_n
+  data_in<8
+  result_data>8
+)
+```
+
+The `(width TOKEN)` attribute accepts the same width tokens as the compact
+suffix: positive integer widths, same-scope scalar width symbols, same-scope
+type aliases, or direct imported type aliases.
+
+The compact `=name` forms and verbose `:same-name` forms are declared
+same-name connect-by-name ports:
+
+```lisp
+=status>              ;; same as (output status :same-name)
+=enable<              ;; same as (input enable :same-name)
+=enable               ;; same as (input enable :same-name)
+(output status :same-name)
+(input enable :same-name)
+```
+
+Nullary verbose attributes may be written either as `(attribute)` or
+`:attribute`. The canonical concise spelling for declared same-name binding is
+`:same-name`; `(same-name)`, `:connect-by-name`, and `(connect-by-name)` are
+accepted aliases.
+
+Declared same-name ports mean:
 
 - “this top port must bind by the same name”
 - not “infer whatever seems convenient”
@@ -106,7 +149,8 @@ That means `?ports` is especially useful for:
 - forcing a stable published interface,
 - renaming ports at the top boundary,
 - attaching explicit width/type intent when inference is underconstrained,
-- and using declared same-name forms like `=status>` or `=enable<`.
+- and using declared same-name forms like `=status>`, `=enable<`, or
+  `(output status :same-name)`.
 
 This is also why the current composition inference work keeps adding more
 safe omitted-`?ports` paths: the long-term goal is that authoring a clean
@@ -220,7 +264,7 @@ There are now several bounded same-name paths:
 - undeclared top-input inference when compatible child inputs remain top-facing
 - undeclared top-output inference when one unique child output remains top-facing
 - plain explicit top ports reusing the same-name convention
-- declared `=name` connect-by-name
+- declared compact `=name` or verbose `:same-name` connect-by-name
 
 Simple example:
 
@@ -332,7 +376,8 @@ cover:
 - `C1` single-child passthrough and interface inference
 - `C2` explicit-link composition with generated children
 - `C3` explicit-link composition with at least one external RTL child
-- `C4` declared connect-by-name through `=name`
+- `C4` declared connect-by-name through compact `=name` or verbose
+  `:same-name`
 - `C5` diagnostics for duplicate drivers, width mismatches, ambiguous or
   missing connect-by-name matches, unknown endpoints, malformed child/source
   metadata, and blocked inference
