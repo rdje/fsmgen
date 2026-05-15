@@ -39,6 +39,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
 | `ISF-CLOCK-DOMAINS` | `done` | `R14` | `closed` | [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md) |
+| `ISF-DOWNSTREAM-INTEGRATION-SPEC` | `done` | `R14` | `closed` | [docs/tasks/ISF-DOWNSTREAM-INTEGRATION-SPEC.md](docs/tasks/ISF-DOWNSTREAM-INTEGRATION-SPEC.md) |
 | `ISF-ACTIVATION-PARAM-OVERRIDES` | `done` | `R14` | `closed` | [docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md](docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md) |
 | `ISF-PUBLIC-CONTRACT` | `done` | `R14` | `closed` | [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md) |
 | `ISF-DYNAMIC-WAIT` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md) |
@@ -92,6 +93,7 @@ as done work unless a future task reopens them.
 | Scalar setter syntax shared by rules and transactions | `ISF-SETTER-SYNTAX` |
 | Task-like transaction activation semantics and parameter overrides | `ISF-TRANSACTION-ACTIVATION` |
 | Remaining rule-trigger and direct-activation parameter overrides | `ISF-ACTIVATION-PARAM-OVERRIDES` |
+| Self-contained downstream ISF integration handoff | `ISF-DOWNSTREAM-INTEGRATION-SPEC` |
 | Legacy handshake metadata and removed transaction `assign` compatibility | `ISF-COMPATIBILITY` |
 | Transaction-local unconditional waits and dynamic loops | `ISF-CONTROL-FLOW`, `ISF-WAIT-ZERO` |
 | Non-literal transaction wait counts | `ISF-DYNAMIC-WAIT` |
@@ -113,6 +115,11 @@ Before implementing any ISF task, slice, or PNT-selected activity:
   [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md)
   and record the selected public sync scope in the owning task file, live
   recovery docs, or commit body.
+- For every downstream-visible ISF behavior, syntax, diagnostics, report,
+  public-facade, generated-artifact, fixture, or deferral change, keep
+  [docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md](docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md)
+  synchronized in the same slice. This handoff document is part of the public
+  sync set, not optional secondary documentation.
 - Update the owning task file when the leaf status, blocker, decision,
   validation evidence, or completion evidence changes.
 - Run the full [COMMIT.md](COMMIT.md) workflow after each completed leaf before

@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF downstream integration handoff published
+- Completed `ISF-DOWNSTREAM-INTEGRATION-SPEC.1`.
+- Added
+  [docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md](docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md)
+  as the single self-contained human integration contract for current
+  bounded-public `.isf` consumption by SPECFORGE-style downstream tools.
+- Included that same canonical file in the mdBook through
+  [docs/book/src/13i-downstream-integration.md](docs/book/src/13i-downstream-integration.md)
+  so the book and handoff do not drift into separate truths.
+- Registered the handoff in the ISF public synchronization workflow and public
+  contract live-document paths, making it a required same-slice update target
+  for future downstream-visible syntax, diagnostics, lowering, facade,
+  schedule-report, generated-artifact, fixture, or deferral changes.
+- This is documentation and public-contract discovery metadata only. Parser,
+  scheduler, report payload, generated HDL, and accepted source behavior are
+  unchanged.
 ### R14 — ISF activation parameter override tree closed
 - Completed `ISF-ACTIVATION-PARAM-OVERRIDES.5`, closing the
   `ISF-ACTIVATION-PARAM-OVERRIDES` task tree.

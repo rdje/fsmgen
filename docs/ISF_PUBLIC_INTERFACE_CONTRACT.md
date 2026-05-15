@@ -2,11 +2,16 @@
 
 This is the live downstream-consumer contract for the `.isf` intent-scheduling
 surface.
+The single self-contained human integration handoff for downstream producers
+and consumers is
+[docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md](ISF_DOWNSTREAM_INTEGRATION_SPEC.md).
+That document must stay synchronized with this contract, the live `.isf` spec,
+the mdBook, manifest metadata, regression tests, and implementation behavior.
 
 It is intentionally a live document: any implementation slice that changes
 supported ISF syntax, CLI behavior, public in-process facade behavior, scheduled
-`.fsm` result shape, or schedule-report shape must update this file in the same
-commit.
+`.fsm` result shape, or schedule-report shape must update this file and the
+downstream integration spec in the same commit.
 
 This contract is not frozen. Exact audits in this document and in
 `embedding.isf_public_interface` mean the current advertised surface is

@@ -130,6 +130,10 @@ public audit families.
 - `docs/ISF_SPEC.md`: canonical shipped `.isf` source syntax, lowering
   semantics, diagnostics boundaries, public-report semantics, and explicit
   deferrals.
+- `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`: single self-contained human
+  downstream integration and handoff contract for SPECFORGE-style consumers.
+  It must stay truthful with respect to the live spec, mdBook, public
+  contract, manifest metadata, tests, and implementation behavior.
 - `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`: downstream public parser/scheduler
   facade contract and `embedding.isf_public_interface` prose companion.
 - `docs/ISF_LIBRARY_CATALOG.md`: shipped reusable ISF library catalog that the
@@ -158,6 +162,10 @@ public audit families.
   arbitration semantics.
 - `docs/book/src/13h-lowering-reference.md`: reviewable `.fsm` lowering
   patterns and schedule-report examples.
+- `docs/book/src/13i-downstream-integration.md`: mdBook view of the canonical
+  downstream integration spec, included from
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` rather than maintained as a
+  divergent copy.
 - `docs/book/src/14-feature-backlog.md`: explicit ISF deferrals and public
   schema-stability boundary.
 - `docs/book/src/90-reference-map.md` and `docs/book/src/SUMMARY.md`: public
@@ -167,7 +175,9 @@ public audit families.
 
 - `perl/FSM/Support/ISFPublicInterfaceContract.pm`: source of truth for
   parser/scheduler facade metadata, schedule-report key/value families,
-  tested-by provenance, live-doc paths, and public stability flags.
+  tested-by provenance, live-doc paths, and public stability flags. Its
+  `live_document_paths` list must include the downstream integration spec so
+  machine consumers can discover the handoff document.
 - `perl/FSM/Support/CapabilityManifest.pm`: embeds the ISF public contract at
   `embedding.isf_public_interface` for CLI and in-process manifest consumers.
 - `perl/FSM/Support/CapabilityManifestContract.pm`: owns manifest shell
@@ -239,10 +249,18 @@ intentionally unchanged.
 
 ### 2. Synchronize Written Docs And Book
 
+- Update `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` for every
+  downstream-visible ISF source syntax, diagnostic, lowering, public facade,
+  lower-result, schedule-report, generated-artifact, fixture, or deferral
+  change. This handoff document is not optional and must stay truthful with
+  respect to code, tests, live docs, the book, and manifest metadata.
 - Update `docs/ISF_SPEC.md` when source syntax, accepted values, lowering
   semantics, diagnostics, report shape, or explicit deferrals change.
 - Update the relevant `docs/book/src/13*.md` chapter when a user-visible ISF
   behavior, generated artifact, or review workflow changes.
+- Update `docs/book/src/13i-downstream-integration.md` only to keep its include
+  wrapper valid; the actual downstream integration content lives in
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`.
 - Update `docs/book/src/13h-lowering-reference.md` when emitted `.fsm` or
   schedule-report examples need to show the new behavior.
 - Update `docs/book/src/14-feature-backlog.md` when behavior remains
@@ -348,6 +366,10 @@ intentionally unchanged.
   that feature-driven public ISF changes must move matching public contract and
   manifest audit tests in the same implementation slice. The exact guidance
   audit is the enforcement point for that public metadata.
+- `2026-05-16`: The self-contained downstream integration spec is now a
+  required synchronization target for every downstream-visible ISF behavior or
+  contract change. It is included into the mdBook to avoid divergent book and
+  handoff-document truth.
 
 ## Open Questions
 

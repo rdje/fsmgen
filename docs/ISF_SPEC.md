@@ -2,6 +2,7 @@
 
 Source material:
 - [docs/INTENT_SCHEDULING_BRAINSTORM.md](INTENT_SCHEDULING_BRAINSTORM.md)
+- [docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md](ISF_DOWNSTREAM_INTEGRATION_SPEC.md)
 - [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](ISF_PUBLIC_INTERFACE_CONTRACT.md)
 - [docs/book/src/13-intent-scheduling.md](book/src/13-intent-scheduling.md)
 - [docs/book/src/13h-lowering-reference.md](book/src/13h-lowering-reference.md)
@@ -65,6 +66,12 @@ For every current or future construct, the public contract must answer:
 
 If one of those answers is not ready, the construct remains deferred, backlog,
 or fail-closed compatibility input rather than a shipped ISF feature.
+The downstream integration handoff in
+[docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md](ISF_DOWNSTREAM_INTEGRATION_SPEC.md)
+must be updated in the same slice as any downstream-visible syntax,
+diagnostic, lowering, public facade, schedule-report, generated-artifact, or
+deferral change. A mismatch between that handoff, this spec, the mdBook, the
+public contract, tests, or code is a bug.
 
 ## 2. CLI Contract
 

@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: downstream ISF handoff is now a sync target
+- `ISF-DOWNSTREAM-INTEGRATION-SPEC.1` packages the existing `.isf` definition
+  into one downstream-facing document. The issue was not that `.isf` lacked an
+  implementation/specification at all; the issue was that a consumer had to
+  reconstruct the bounded public surface from the spec, book, tests, public
+  contract, manifest metadata, and code.
+- The mdBook includes the canonical handoff file instead of restating it. That
+  keeps the user's review surface and the downstream integration document on
+  the same text path.
+- The public contract now advertises the handoff in `live_document_paths`, and
+  the ISF public synchronization workflow requires same-slice updates whenever
+  downstream-visible source syntax, diagnostics, lowering behavior, facade
+  shape, schedule-report keys, generated artifacts, fixtures, or explicit
+  deferrals change.
+- This is a documentation/discovery slice only. Accepted syntax, scheduler
+  behavior, report payloads, and HDL output are unchanged.
 ## 2026-05-16: activation params closure stays test-only
 - `ISF-ACTIVATION-PARAM-OVERRIDES.5` closes the direct activation parameter
   boundary without scheduler edits because the existing `(on ...)` validator

@@ -110,6 +110,11 @@ current APB report shape is regression-covered. The bounded downstream-facing
 ISF API contract is advertised through `--capability-manifest` at
 `embedding.isf_public_interface` and described in
 [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](../../ISF_PUBLIC_INTERFACE_CONTRACT.md).
+The self-contained SPECFORGE-style integration handoff is
+[docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md](../../ISF_DOWNSTREAM_INTEGRATION_SPEC.md)
+and is included later in this book as the downstream integration chapter. It
+must stay synchronized with the live spec, this book, public contract,
+manifest metadata, tests, and implementation behavior.
 That contract is live documentation: it evolves in the same slice as public ISF
 parser, scheduler, CLI, lower-result, or schedule-report changes, and those
 feature slices must move the matching public contract and manifest audit tests

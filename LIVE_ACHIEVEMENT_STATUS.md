@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF downstream integration handoff published
+- Completed R14 task-tree slice: `ISF-DOWNSTREAM-INTEGRATION-SPEC.1`.
+- Added [docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md](docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md)
+  as the single self-contained human integration contract for downstream
+  `.isf` producers and consumers.
+- The mdBook includes the same canonical handoff content through
+  [docs/book/src/13i-downstream-integration.md](docs/book/src/13i-downstream-integration.md),
+  so the book and handoff document cannot drift through duplicated prose.
+- The handoff is now part of the ISF public synchronization invariant and the
+  machine-readable public contract `live_document_paths`; future
+  downstream-visible ISF changes must keep it synchronized with code, tests,
+  live spec, book, public contract, manifest metadata, and deferrals.
+- Parser, scheduler, schedule-report payload shape, and HDL behavior are
+  unchanged by this slice.
+
 ## 2026-05-16: R14 — ISF activation parameter override tree closed
 - Completed R14 task-tree slice: `ISF-ACTIVATION-PARAM-OVERRIDES.5`.
 - Added focused regression coverage proving direct

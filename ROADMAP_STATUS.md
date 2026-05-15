@@ -10,11 +10,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: create a fresh R14 task-tree owner for the requested
-  self-contained `.isf` downstream integration specification before editing
-  the integration document. The `ISF-ACTIVATION-PARAM-OVERRIDES` tree is now
-  closed after `ISF-ACTIVATION-PARAM-OVERRIDES.5` added focused fail-closed
-  coverage for direct `(on start (params ...))`.
+- Next decision point: select the next roadmap-aligned R14 task tree after
+  closing the requested self-contained `.isf` downstream integration handoff.
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` is now the single human
+  SPECFORGE-style integration contract and a mandatory sync target for future
+  downstream-visible ISF source syntax, diagnostics, lowering, public facade,
+  schedule-report, generated-artifact, fixture, or deferral changes.
   `ISF-DYNAMIC-WAIT.2` shipped statically resolved symbolic wait counts from
   actor constants, `ISF-DYNAMIC-WAIT.3.1` split the runtime work around the
   zero-count bypass requirement, `ISF-DYNAMIC-WAIT.3.2` shipped the first
@@ -85,6 +86,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   transaction ports, `(sample ...)`, or supported `(bind ...)` payloads.
   `ISF-ACTIVATION-PARAM-OVERRIDES.5` added focused regression coverage for
   that fail-closed direct activation parameter syntax and closed the tree.
+  `ISF-DOWNSTREAM-INTEGRATION-SPEC.1` then published the single downstream
+  integration handoff, included it into the mdBook, added it to the public
+  contract live-doc path list, and updated the ISF public synchronization
+  workflow so it remains truthful with the codebase, live spec, book, public
+  contract, manifest metadata, tests, and deferrals.
   Standalone public interface stabilization/audit work remains feature-driven;
   the completed `ISF-PUBLIC-CONTRACT` tree now supplies the synchronization
   checklist for future feature trees.

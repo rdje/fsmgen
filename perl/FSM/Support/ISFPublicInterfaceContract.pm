@@ -1550,6 +1550,7 @@ sub isf_public_interface_schedule_report_presence_key_family_map {
 sub isf_public_interface_live_document_paths {
     return [
         qw(
+            docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md
             docs/ISF_PUBLIC_INTERFACE_CONTRACT.md
             docs/ISF_SPEC.md
             docs/ISF_LIBRARY_CATALOG.md

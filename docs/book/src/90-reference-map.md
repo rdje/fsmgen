@@ -26,6 +26,7 @@ Some docs are intentionally still focused references:
 - [../../EXTENSION_MODEL.md](../../EXTENSION_MODEL.md)
 - [../../REGRESSION_CORPUS.md](../../REGRESSION_CORPUS.md)
 - [../../FEATURE_BACKLOG.md](../../FEATURE_BACKLOG.md)
+- [../../ISF_DOWNSTREAM_INTEGRATION_SPEC.md](../../ISF_DOWNSTREAM_INTEGRATION_SPEC.md)
 - [../../ISF_SPEC.md](../../ISF_SPEC.md)
 - [../../ISF_PUBLIC_INTERFACE_CONTRACT.md](../../ISF_PUBLIC_INTERFACE_CONTRACT.md)
 - [../../BIN_FSMGEN_IMPORT_TREE.md](../../BIN_FSMGEN_IMPORT_TREE.md)
@@ -37,6 +38,11 @@ Some docs are intentionally still focused references:
 - [../../../COMMIT.md](../../../COMMIT.md)
 
 These should stay precise and sometimes narrower than the book.
+
+`ISF_DOWNSTREAM_INTEGRATION_SPEC.md` is the canonical human handoff contract
+for SPECFORGE-style downstream consumers. The book includes that file directly
+in the ISF downstream integration chapter, so edits to the handoff document and
+the book view cannot drift apart.
 
 `BIN_FSMGEN_IMPORT_TREE.md` is the live maintainer-facing architecture map for
 the `bin/fsmgen` runtime spine. It is not a tutorial chapter, but it is the

@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF downstream integration handoff published
+- Completed `ISF-DOWNSTREAM-INTEGRATION-SPEC.1` in
+  [docs/tasks/ISF-DOWNSTREAM-INTEGRATION-SPEC.md](docs/tasks/ISF-DOWNSTREAM-INTEGRATION-SPEC.md).
+- Added [docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md](docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md)
+  as the single self-contained downstream `.isf` integration and handoff
+  document for SPECFORGE-style consumers.
+- The mdBook now includes that same canonical file through
+  [docs/book/src/13i-downstream-integration.md](docs/book/src/13i-downstream-integration.md),
+  avoiding a divergent book copy.
+- The handoff is now a mandatory sync target: future downstream-visible ISF
+  behavior, syntax, diagnostics, public facade, lower-result, schedule-report,
+  generated-artifact, fixture, or deferral changes must keep it truthful with
+  the codebase, live spec, mdBook, public contract, manifest metadata, and
+  tests.
+- The machine-readable ISF public contract now lists the handoff in
+  `live_document_paths`, so downstream tools can discover it through
+  `--capability-manifest -> embedding.isf_public_interface`.
+- This slice changes documentation and contract discovery only. Parser,
+  scheduler, report payload shape, and HDL output behavior are unchanged.
 ## 2026-05-16: ISF activation parameter override tree closed
 - Completed `ISF-ACTIVATION-PARAM-OVERRIDES.5` in
   [docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md](docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md),
