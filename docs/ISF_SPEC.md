@@ -663,6 +663,13 @@ Current transaction clauses:
 - `(complete port)`
 - `(latency (min N) (max M))`
 
+Specified next transaction-control surfaces, not yet parser-public until their
+implementation leaves ship:
+- `(wait N)` for an unconditional exact-cycle delay with positive integer
+  literal `N >= 1`.
+- `(while cond body...)` for a pre-test zero-or-more loop.
+- `(until cond body...)` for a body-first one-or-more loop.
+
 Unsupported transaction clause heads now fail closed during lowering instead
 of being silently ignored. The same applies inside currently lowered body
 contexts: `when` bodies, `switch` branches, and `repeat` bodies each have a
@@ -923,6 +930,51 @@ can be treated as fully general. Future spawn-in-repeat support must preserve
 the same rule: the loop reactivates a lexically named static child instance; it
 does not create one child instance per iteration.
 
+### 7.6.1 Transaction Wait (specified next)
+
+```lisp
+(wait 3)
+```
+
+`(wait N)` is specified as an unconditional transaction-local delay, distinct
+from `(await cond)` and `(repeat count body...)`. It does not test an external
+condition and it does not repeat a body. The first shipped surface is limited
+to positive integer literals: `N` must be a literal integer greater than or
+equal to 1. Dynamic counts, symbolic counts, and zero-count waits remain
+deferred until their width, no-op/diagnostic, reset, latency, and report
+contracts are specified.
+
+Cycle semantics:
+- `wait 1` means the transaction occupies one generated wait region for one
+  active clock cycle, then advances on the next state transition.
+- `wait N` contributes exactly `N` active transaction cycles every time the
+  clause executes.
+- A wait inside a future loop contributes its full `N` cycles for each loop
+  iteration that reaches it.
+- The wait does not observe or consume an `(await ...)` watchdog. It is still
+  ordinary transaction time and therefore counts toward transaction latency
+  accounting or transaction-level monitors that count active transaction
+  cycles.
+
+Lowering must remain reviewable scheduled `.fsm`. A literal wait may lower to
+an explicit fixed state chain or to a generated counter plus wait states, but
+the emitted artifact must make the exact `N`-cycle delay visible. Any generated
+counter is normal scheduler-owned storage with reset behavior matching other
+transaction-local counters; no asynchronous reset special case is introduced
+for waits.
+
+Diagnostics before public parser support:
+- `(wait)` and `(wait N extra)` are malformed arity.
+- `(wait 0)`, negative literals, non-integer literals, list expressions, and
+  named dynamic counts are unsupported for the first shipped surface.
+- Waits outside transaction body contexts are invalid.
+
+When `(wait N)` ships, successful schedule reports should expose a bounded
+`transaction_waits[]` summary rather than raw lowering internals. The planned
+minimum entry shape is `transaction`, `cycles`, `entry_state`, `exit_state`,
+and `counter_signal` where `counter_signal` is JSON null when no counter is
+used.
+
 ### 7.7 Inline Control Flow
 
 `(when condition body...)` is structurally validated with one scalar or
@@ -963,6 +1015,67 @@ Current branch-body support includes drive, await, sample, repeat, update,
 shift/assemble/extract data operations, and nested `when`. Branch bodies exit
 to the first state after the whole switch, so multi-state branches and repeat
 checks do not fall through into later branch bodies.
+
+### 7.7.1 Transaction Loops (specified next)
+
+```lisp
+(while (! done)
+  (drive poll)
+  (await ready))
+
+(until done
+  (drive step)
+  (wait 1))
+```
+
+`(while cond body...)` is a pre-test transaction loop. The scheduler must emit
+a generated decision state that samples `cond` once before each possible
+iteration. If the sampled condition is true, control enters the body. If it is
+false, control exits to the transaction clause after the whole loop. Zero
+iterations are possible.
+
+`(until cond body...)` is a body-first transaction loop. Control enters the
+body once before the first condition sample. After the body, the scheduler
+emits a generated decision state that samples `cond` once. If the sampled
+condition is true, control exits. If it is false, control loops back to the
+body. One or more iterations are therefore required. A pre-test "run while not
+done" loop should be written as `(while (! done) body...)`, not by overloading
+`until`.
+
+Loop conditions use the same scalar or list-expression condition surface as
+transaction `(when ...)` and rule guards. The condition is sampled only in the
+generated decision state. It is not a continuous guard over every state inside
+a multi-cycle body; once the body starts, body states run according to their
+own scheduled control flow until they reach the loop check or exit path.
+
+The first implementation should accept only non-empty bodies from the current
+inline body subset: named drive calls, `await`, `sample`, `complete`,
+`repeat`, `update`, shift/assemble/extract data operations, nested `when`, and
+shipped `(wait N)` clauses. `do`, `spawn`, `await_all`, `await_any`, `stage`,
+`contract`, and nested `while`/`until` remain deferred until re-entry, child
+lifetime, and report semantics are specified for those combinations.
+
+Dynamic loops are ordinary persistent hardware schedule regions, not software
+processes that appear or die. They may run for data-dependent or unbounded
+cycle counts. They do not create an implicit timeout. Existing actor watchdog,
+transaction latency, and temporal-contract mechanisms must remain explicit and
+must count loop-body cycles according to their own documented active-cycle
+semantics.
+
+Malformed loop diagnostics before public parser support:
+- Missing condition, missing body, non-list body forms, or extra structural
+  wrapper forms must fail before misleading scheduled artifacts are emitted.
+- Unsupported body clause heads must name the unsupported construct and the
+  loop kind.
+- Conditions must use the same scalar/list-expression condition contract as
+  other ISF guards.
+
+When dynamic loops ship, successful schedule reports should expose bounded
+`transaction_loops[]` entries rather than raw loop IR. The planned minimum
+entry shape is `transaction`, `kind` (`while` or `until`), `condition`,
+`decision_state`, `first_body_state`, `exit_state`, and `body_clause_count`.
+The `condition` value should be the same normalized condition text used in the
+scheduled `.fsm` review artifact, not a raw parser node.
 
 ### 7.8 Data Manipulation
 
@@ -1836,21 +1949,17 @@ Focused tests:
   parameter-derived storage dimensions, clock/reset name remapping,
   memory-array backend emission, and library actors that import other
   libraries.
-- Unconditional transaction delay `(wait N)`. The proposed first contract is a
-  positive-integer literal delay that advances after exactly `N` clock cycles
-  without checking an external condition. Dynamic counts remain deferred until
-  zero-count, width, reset, latency, and report semantics are specified.
+- Unconditional transaction delay beyond the first specified `(wait N)` shape:
+  dynamic counts, symbolic counts, and zero-count behavior remain deferred
+  until width, reset, latency, and report semantics are specified.
 - Transaction binding surfaces beyond scalar `do`, `spawn`, and rule-trigger
   input bindings. Expression-valued bindings, rule-trigger output bindings,
   explicit snapshot-vs-live timing selection, broader static conflict
   diagnostics, and richer report metadata remain under `ISF-PORT-BINDING`.
-- Transaction-local dynamic loops `(while cond body...)` and
-  `(until cond body...)`. The proposed contract makes `while` a pre-test
-  zero-or-more loop and `until` a body-first one-or-more loop. Conditions are
-  sampled once in generated decision states, not continuously during body
-  execution. Parser support remains deferred until loop diagnostics,
-  watchdog/latency interaction, body-clause coverage, and report visibility
-  are specified.
+- Transaction-local dynamic loop implementation for `(while cond body...)`
+  and `(until cond body...)`. The source/runtime contract is specified in
+  Section 7.7.1, but parser/lowering/report support remains deferred until the
+  implementation leaf ships.
 - Old `(handshake ...)` semantics beyond validated ignored compatibility
   parsing.
 - The removed `(assign ...)` action keyword; authored transaction uses fail

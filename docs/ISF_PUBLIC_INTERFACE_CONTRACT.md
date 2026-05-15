@@ -1240,6 +1240,11 @@ These are not stable public interfaces yet:
   explicit snapshot-vs-live timing selection, broader static conflict
   diagnostics, and richer report fields remain deferred follow-on
   port-binding work.
+- Transaction control-flow behavior for `(wait N)`, `(while cond body...)`,
+  and `(until cond body...)` is specified as the next R14 feature surface, but
+  parser/lowering/report support and any `transaction_waits[]` or
+  `transaction_loops[]` report metadata remain non-public until their
+  implementation and regression leaves ship.
 - `FSM::Scheduler::ISF::LoweringIR` internals.
 - Emitter-private state objects.
 - Any unadvertised keys in the lower-result hash or schedule report.

@@ -2,11 +2,10 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
-- Next decision point: `ISF-PORT-BINDING` is closed. Continue `R14` by
-  selecting or activating the next feature tree; the proposed
-  [docs/tasks/ISF-CONTROL-FLOW.md](docs/tasks/ISF-CONTROL-FLOW.md) tree is
-  the next natural user-visible feature candidate for `(wait N)`,
-  `(while ...)`, and `(until ...)`.
+- Next decision point: `ISF-CONTROL-FLOW` is active. Continue `R14` by
+  implementing [docs/tasks/ISF-CONTROL-FLOW.md](docs/tasks/ISF-CONTROL-FLOW.md)
+  one leaf at a time; the current frontier is `ISF-CONTROL-FLOW.2`, positive
+  literal `(wait N)` lowering.
   Standalone public interface stabilization/audit work is on hold for now;
   keep the public contract synchronized only as part of shipping each feature.
 - Repo-local task trees now live at [docs/TASK_TREE.md](docs/TASK_TREE.md),
@@ -14,7 +13,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   active tree, it should pick the first eligible leaf from that tree's current
   frontier. The ongoing/unresolved R14 ISF objective families are now covered
   by active, proposed, or completed task trees in
-  [docs/TASK_TREE.md](docs/TASK_TREE.md). The completed
+  [docs/TASK_TREE.md](docs/TASK_TREE.md). The active `ISF-CONTROL-FLOW`
+  tree now owns transaction-local waits and loops. The completed
   `ISF-PORT-BINDING` tree is now listed in the completed table. The
   public-contract tree remains cross-cutting and should not displace feature
   delivery unless the selected feature changes a public surface. The completed
@@ -37,6 +37,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `(until cond body...)` loops are now logged as backlog. `while` is proposed
   as a pre-test zero-or-more loop, `until` as a body-first one-or-more loop,
   and both need explicit watchdog/latency/report semantics before shipping.
+- `ISF-CONTROL-FLOW.1` is complete. `(wait N)` is now specified as an
+  unconditional exact-cycle transaction delay with positive integer literal
+  `N >= 1` for the first implementation; `wait 1` occupies one active cycle
+  before advancing. Dynamic counts, symbolic counts, and zero-count behavior
+  remain deferred. `(while cond body...)` is specified as a pre-test
+  zero-or-more loop, and `(until cond body...)` as a body-first one-or-more
+  loop; conditions are sampled only in generated decision states. The active
+  frontier advances to `ISF-CONTROL-FLOW.2`.
 - `ISF-LIBRARIES` is complete. The public term is "library"; implementation
   may reuse package/import infrastructure, but the feature target is reusable
   ISF design intent such as actors and transaction patterns. The shipped tree

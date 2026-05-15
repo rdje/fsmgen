@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF control-flow contract specification
+- Activated [docs/tasks/ISF-CONTROL-FLOW.md](docs/tasks/ISF-CONTROL-FLOW.md)
+  and completed `ISF-CONTROL-FLOW.1`.
+- Updated [docs/ISF_SPEC.md](docs/ISF_SPEC.md) and the mdBook backlog to
+  specify `(wait N)` as an unconditional exact-cycle transaction delay for
+  positive integer literal counts, with dynamic counts and zero-count behavior
+  deferred.
+- Specified `(while cond body...)` as a pre-test zero-or-more loop and
+  `(until cond body...)` as a body-first one-or-more loop, with conditions
+  sampled only in generated decision states.
+- Recorded planned bounded `transaction_waits[]` and `transaction_loops[]`
+  schedule-report surfaces for the future implementation leaves.
 ### R14 — ISF port binding authoring boundary
 - Completed `ISF-PUBLIC-CONTRACT.7` as a documentation-only clarification of
   the transaction-port authoring boundary.

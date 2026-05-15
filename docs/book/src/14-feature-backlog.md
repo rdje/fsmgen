@@ -317,27 +317,42 @@ behavior, and richer stage report families for future stage kinds.
 
 ### Transaction Unconditional Wait
 
-Status: backlog.
+Status: specified next feature; implementation backlog.
 
 Goal: support an unconditional cycle delay such as `(wait N)` inside a
 transaction body.
 
-Proposed contract: `(wait N)` advances only after exactly `N` clock cycles,
-without checking an external condition. It is different from `(await cond)`,
-which waits for a signal condition, and different from `(repeat N body...)`,
-which repeats a body. The first shipped surface should probably require `N` to
-be a positive integer literal so the scheduled `.fsm` review artifact has a
-clear fixed delay; dynamic wait counts can follow later if the zero-count,
-width, reset, and latency/report semantics are specified.
+Specified first contract: `(wait N)` advances only after exactly `N` active
+transaction clock cycles, without checking an external condition. It is
+different from `(await cond)`, which waits for a signal condition, and
+different from `(repeat N body...)`, which repeats a body. The first shipped
+surface requires `N` to be a positive integer literal. `wait 1` occupies one
+generated wait region for one active cycle and advances on the next state
+transition; `wait N` contributes exactly `N` active cycles wherever it
+executes, including inside future loops.
+
+The lowering must remain reviewable scheduled `.fsm`: either an explicit fixed
+state chain or generated wait counter is acceptable if the emitted artifact
+makes the exact delay visible. Any generated wait counter is normal
+scheduler-owned storage with ordinary transaction reset behavior. Dynamic
+counts, symbolic counts, and zero-count behavior remain deferred until width,
+reset, latency, and report semantics are specified.
+
+When shipped, successful schedule reports should expose bounded
+`transaction_waits[]` entries with at least transaction name, cycle count,
+entry state, exit state, and optional counter signal. Malformed waits such as
+missing counts, extra operands, zero/negative counts, non-integer counts,
+list-expression counts, or dynamic signal counts should fail closed until the
+matching contract exists.
 
 ### Transaction Dynamic Loops
 
-Status: backlog.
+Status: specified next feature; implementation backlog.
 
 Goal: support transaction-local loops such as `(while cond body...)` and
 `(until cond body...)`.
 
-Proposed contract: `(while cond body...)` is a pre-test loop. The scheduler
+Specified contract: `(while cond body...)` is a pre-test loop. The scheduler
 emits a decision state that samples `cond` once per iteration; true enters the
 body, and false exits to the next transaction clause. Zero iterations are
 therefore possible. `(until cond body...)` is a body-first loop. It executes
@@ -347,11 +362,19 @@ A pre-test "run while not done" loop should be authored as
 `(while (! done) body...)` rather than overloading `until`.
 
 Loop bodies must be non-empty and should initially reuse the same body-clause
-surface as `when` and `repeat`. The condition uses the same scalar or
-list-expression condition surface as `when`. These loops can be unbounded at
-runtime, so the first implementation must define diagnostics, watchdog or
-latency interaction, and schedule-report visibility before parser acceptance
-becomes a support claim.
+surface as `when` and `repeat`, plus shipped `(wait N)` clauses. The first
+implementation should continue rejecting `do`, `spawn`, `await_all`,
+`await_any`, `stage`, `contract`, and nested `while`/`until` until re-entry,
+child lifetime, and reporting semantics are specified. The condition uses the
+same scalar or list-expression condition surface as `when`.
+
+These loops are persistent hardware schedule regions, not software processes.
+They may be data-dependent or unbounded at runtime and do not create an
+implicit timeout. Existing watchdog, latency, and temporal-contract mechanisms
+remain explicit and count loop-body cycles according to their own active-cycle
+semantics. When shipped, successful reports should expose bounded
+`transaction_loops[]` entries with transaction name, kind, normalized
+condition text, generated decision/body/exit states, and body clause count.
 
 ### Transaction Ports And Actor Pin Access
 

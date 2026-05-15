@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: ISF control-flow contract specification
+- `(wait N)` is intentionally separate from both `(await cond)` and
+  `(repeat count body...)`. It has no condition and no body; it simply spends
+  an exact number of active transaction cycles before the next clause.
+- The first implementation is limited to positive integer literals because the
+  scheduled `.fsm` review artifact can then be exact and bounded. Dynamic
+  counts need separate decisions for zero-count behavior, counter width,
+  reset, latency accounting, and report shape.
+- `while` and `until` use different sampling points instead of being aliases:
+  `while` samples before the body and can execute zero times; `until` runs the
+  body once and samples after the body.
+- Loop conditions are decision-state samples, not continuous guards over every
+  state inside the body. This matters for multi-cycle bodies containing
+  `await`, `repeat`, data operations, or future waits.
+- Loop bodies are hardware schedule regions. The first body surface should stay
+  within the existing inline-body subset and reject child-call/spawn forms
+  until child lifetime and re-entry semantics are explicit.
 ## 2026-05-15: ISF port binding authoring boundary
 - Transaction-port connectivity belongs at the ISF level because authors are
   describing hardware intent between rules, transactions, variables, storage,

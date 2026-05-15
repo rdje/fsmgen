@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF control-flow contract specification
+- Activated `ISF-CONTROL-FLOW` in
+  [docs/tasks/ISF-CONTROL-FLOW.md](docs/tasks/ISF-CONTROL-FLOW.md) and
+  completed `ISF-CONTROL-FLOW.1`.
+- [docs/ISF_SPEC.md](docs/ISF_SPEC.md) and the mdBook now specify `(wait N)`
+  as an unconditional exact-cycle transaction delay for positive integer
+  literal `N >= 1`. `wait 1` occupies one active transaction cycle and then
+  advances on the next state transition; dynamic counts and zero-count
+  behavior remain deferred.
+- `(while cond body...)` is specified as pre-test zero-or-more, and
+  `(until cond body...)` as body-first one-or-more. Loop conditions are sampled
+  only in generated decision states, not continuously over multi-cycle bodies.
+- The next active R14 frontier is `ISF-CONTROL-FLOW.2`, implementing
+  positive-literal `(wait N)`.
 ## 2026-05-15: ISF port binding authoring boundary
 - Completed `ISF-PUBLIC-CONTRACT.7` in
   [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md)

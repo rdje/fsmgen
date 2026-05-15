@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-CONTROL-FLOW`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `R14`
 - Created: `2026-05-15`
 - Last updated: `2026-05-15`
@@ -40,23 +40,23 @@ semantics with `(await ...)`, `(repeat ...)`, or rule guards.
 ## Task Tree
 
 - ID: `ISF-CONTROL-FLOW`
-  Status: `proposed`
+  Status: `active`
   Goal: `Add transaction-local unconditional waits and dynamic loops.`
   Children: `ISF-CONTROL-FLOW.1`, `ISF-CONTROL-FLOW.2`,
   `ISF-CONTROL-FLOW.3`
 
 - ID: `ISF-CONTROL-FLOW.1`
-  Status: `proposed`
+  Status: `done`
   Goal: `Specify the wait and loop contracts before implementation.`
   Acceptance: The task tree, mdBook, spec, and live docs define `(wait N)`,
   `(while cond body...)`, and `(until cond body...)`, including condition
   sampling, cycle accounting, watchdog/latency interaction, reset behavior,
   body-clause support, diagnostics, and report surfaces.
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-CONTROL-FLOW.1: specify wait and loop contracts`
 
 - ID: `ISF-CONTROL-FLOW.2`
-  Status: `proposed`
+  Status: `pending`
   Goal: Implement positive-literal `(wait N)`.
   Acceptance: Transaction bodies accept `(wait N)` for positive integer
   literal N, lower to reviewable scheduled `.fsm`, report generated wait
@@ -66,7 +66,7 @@ semantics with `(await ...)`, `(repeat ...)`, or rule guards.
   Commit: `pending`
 
 - ID: `ISF-CONTROL-FLOW.3`
-  Status: `proposed`
+  Status: `pending`
   Goal: `Implement dynamic transaction loops.`
   Acceptance: `(while cond body...)` lowers as a pre-test zero-or-more loop,
   `(until cond body...)` lowers as a body-first one-or-more loop, conditions
@@ -78,8 +78,9 @@ semantics with `(await ...)`, `(repeat ...)`, or rule guards.
 
 ## Current Frontier
 
-This tree is proposed and not PNT-eligible yet. If activated, the first
-frontier leaf is `ISF-CONTROL-FLOW.1`.
+| Order | Leaf | Status | Why next |
+| --- | --- | --- | --- |
+| 1 | `ISF-CONTROL-FLOW.2` | `pending` | The source/runtime contract is specified; positive-literal `(wait N)` is the smallest executable implementation slice before dynamic loops. |
 
 ## Design Notes
 
@@ -98,6 +99,12 @@ frontier leaf is `ISF-CONTROL-FLOW.1`.
 - Loop bodies are persistent hardware schedule regions, not software calls.
   The implementation must make re-entry, child spawn/call behavior, and
   unbounded-latency reporting explicit for any body forms it enables.
+- First shipped loop bodies should use the current inline-body subset:
+  named drive calls, `await`, `sample`, `complete`, `repeat`, `update`,
+  shift/assemble/extract data operations, nested `when`, and shipped `wait`
+  clauses. `do`, `spawn`, `await_all`, `await_any`, `stage`, `contract`, and
+  nested `while`/`until` remain deferred until re-entry, child lifetime, and
+  reporting semantics are specified.
 
 ## Decisions
 
@@ -106,6 +113,18 @@ frontier leaf is `ISF-CONTROL-FLOW.1`.
 - `2026-05-15`: Use `while` for pre-test zero-or-more loops and `until` for
   body-first one-or-more loops unless a later specification leaf changes the
   contract before implementation.
+- `2026-05-15`: Activate this tree for R14 PNT. The first shipped wait surface
+  is `(wait N)` with positive integer literal `N >= 1`; dynamic counts and
+  zero-count behavior remain deferred.
+- `2026-05-15`: `wait 1` means one active transaction cycle in a generated
+  wait region, then advance on the next state transition. `wait N` contributes
+  exactly `N` active cycles wherever it executes, including inside future
+  loops.
+- `2026-05-15`: Loop conditions are sampled only in generated decision states.
+  They are not continuously active guards over multi-cycle loop bodies.
+- `2026-05-15`: Successful reports should grow bounded `transaction_waits[]`
+  and `transaction_loops[]` summaries when those constructs ship; raw lowering
+  internals and raw parser clauses remain private.
 
 ## Open Questions
 
@@ -117,20 +136,23 @@ frontier leaf is `ISF-CONTROL-FLOW.1`.
 
 ## Blockers
 
-- This tree is proposed only. It needs explicit activation before PNT can
-  select implementation leaves.
+- None. The tree is active; implementation proceeds one leaf at a time.
 
 ## Verification Log
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-05-15` | `ISF-CONTROL-FLOW.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
+| `ISF-CONTROL-FLOW.1` | `ISF-CONTROL-FLOW.1: specify wait and loop contracts` | Activates the tree and records exact wait-cycle semantics plus loop sampling/body/report boundaries. |
 
 ## Changelog
 
 - `2026-05-15`: Created the proposed transaction wait/loop task tree from the
   `(wait N)`, `(while ...)`, and `(until ...)` design discussion.
+- `2026-05-15`: Activated the tree and completed `ISF-CONTROL-FLOW.1`; the
+  current frontier is `ISF-CONTROL-FLOW.2`.

@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF control-flow contract specification
+- Active R14 task-tree slice: `ISF-CONTROL-FLOW.1` is complete, and
+  `ISF-CONTROL-FLOW` is now active.
+- `(wait N)` is specified as an unconditional exact-cycle transaction delay
+  for positive integer literal `N >= 1`; dynamic counts and zero-count
+  behavior remain deferred.
+- `(while cond body...)` is specified as pre-test zero-or-more, and
+  `(until cond body...)` as body-first one-or-more, with conditions sampled
+  only in generated decision states.
+- The next active R14 frontier is `ISF-CONTROL-FLOW.2`, positive-literal
+  `(wait N)` implementation.
+
 ## 2026-05-15: R14 — ISF port binding authoring boundary
 - Active R14 task-tree slice: `ISF-PUBLIC-CONTRACT.7` is complete as a
   documentation-only clarification.
