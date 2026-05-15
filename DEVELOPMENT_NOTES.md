@@ -1,17 +1,37 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: ISF blocking do parameter overrides
+- Blocking `do` parameter overrides are static elaboration, not runtime signal
+  writes. The implementation therefore reuses the generated-child composition
+  path rather than trying to mutate one local child transaction body with
+  different parameter values.
+- The generated `do` instance name is deterministic:
+  `{parent}_{child}_do_{ordinal}`. That makes scheduled `.fsm`, generated top,
+  schedule JSON, and diagnostics stable enough for review while avoiding an
+  author-visible instance name on the source form.
+- Generated `do` output bindings are done-gated in a parent-owned
+  `do_port_binding` DT. This keeps blocking-call output capture aligned with
+  the cycle where the child completion pulse is observed.
+- Generated `do` instances do not receive the spawn-only public-input
+  auto-fanout in the generated top. Payload transfer for generated `do` is
+  explicit through `(bind ...)`, which avoids accidentally wiring actor start or
+  unrelated top inputs into child ports.
+- A plain `do` to a transaction that has been lifted out as a generated child
+  must also use a generated activation instance. Otherwise the scheduled parent
+  would reference local child start/done signals for a child body that was
+  intentionally skipped from the parent module.
 ## 2026-05-15: ISF task-like transaction activation boundary
 - The "transaction as hardware task" analogy is useful only if the boundary is
   explicit. Ports map well to formal arguments, and `(bind ...)` maps to actual
   signal binding, but the implementation still elaborates static hardware with
   persistent handoff signals and scheduled states.
 - Parameter overrides are not the same thing as runtime payload actuals. The
-  shipped spawn parameter surface specializes a static generated child instance;
-  it does not imply that every activation site can override transaction
-  parameters.
-- The next implementation decision is whether broader activation-site
-  parameters should ship first for blocking `do`, rule `trigger`, or another
-  activation form.
+  shipped spawn and blocking `do` parameter surfaces specialize static
+  generated child instances; they do not imply that every activation site can
+  override transaction parameters.
+- Blocking `do` has since shipped as the first broader activation-site
+  parameter implementation. Rule `trigger` and any direct activation form still
+  need separate lowering and conflict semantics before shipping.
 - General activation-site parameters should reuse the existing spawn
   `(params (NAME value) ...)` syntax, but the docs now make the distinction by
   semantics rather than spelling: `params` is static specialization, while

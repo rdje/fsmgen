@@ -279,11 +279,11 @@ limitations are:
   expressions, and clock/reset name remapping remain backlog work.
 - `(do ...)` and `(spawn ...)` targets must resolve to declared same-actor
   transactions before scheduled `.fsm` emission. They bind named start/done
-  signals in scheduled `.fsm`. Spawn parameter declaration, validation, child
-  `+params` emission, per-instance override preservation, and generated-top
-  application are shipped for the spawn-only `(params ...)` surface. Broader
-  symbolic parameter values and richer generated-child surfaces remain
-  backlog work.
+  signals in scheduled `.fsm`. Spawn and blocking `do` parameter declaration,
+  validation, child `+params` emission, per-instance override preservation, and
+  generated-top application are shipped for the static `(params ...)` surface.
+  Broader symbolic parameter values, rule-trigger parameter overrides, and
+  richer generated-child surfaces remain backlog work.
 - Transaction-local `(ports ...)` declarations are parser-public metadata and
   can be bound at activation sites with scalar `(bind ...)` blocks. `do`
   supports input and output bindings in the parent await state. `spawn`

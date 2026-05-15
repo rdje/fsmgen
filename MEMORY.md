@@ -1,5 +1,28 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF blocking do parameter overrides
+- Completed `ISF-TRANSACTION-ACTIVATION.3` in
+  [docs/tasks/ISF-TRANSACTION-ACTIVATION.md](docs/tasks/ISF-TRANSACTION-ACTIVATION.md).
+- Blocking `(do child (params ...))` now uses the generated child activation
+  path. The parent starts and awaits a deterministic generated instance named
+  `{parent}_{child}_do_{ordinal}`, while the generated top applies static
+  parameter overrides on the `?fsmc` instance.
+- Generated blocking `do` port bindings use explicit handoff ports and a
+  parent-owned `do_port_binding` DT. Input handoffs are same-cycle assignments;
+  output handoffs are copied under the generated child instance's `done` pulse.
+- Plain unparameterized `do` remains local when the child transaction is local.
+  If the child transaction is already emitted as a generated child because of
+  spawn or parameterized `do`, the plain `do` also uses a generated activation
+  instance so the parent does not reference a skipped local child body.
+- Schedule reports now distinguish `spawn_generated_top` from
+  `activation_generated_top`, and generated-composition instances expose
+  `activation_kind`. Public DT kind metadata now includes `spawn_port_binding`
+  and `do_port_binding`.
+- The active frontier advances to `ISF-TRANSACTION-ACTIVATION.4` for closure
+  publication and the next decision on rule-trigger parameter overrides.
+- Validation passed: changed-module Perl syntax checks, focused
+  composition/report tests, `./bin/ci-regression isf --no-book`,
+  `mdbook build docs/book`, and `git diff --check`.
 ## 2026-05-15: ISF task-like transaction activation boundary
 - Activated `ISF-TRANSACTION-ACTIVATION` in
   [docs/tasks/ISF-TRANSACTION-ACTIVATION.md](docs/tasks/ISF-TRANSACTION-ACTIVATION.md).
@@ -9,10 +32,11 @@ This is the live continuity document for fast session recovery after crashes, re
   consume cycles, may declare `(ports ...)` formal data/control ports, and can
   receive scalar actual signals through explicit `(bind ...)` blocks at the
   shipped activation sites.
-- Parameter boundary: spawned child transactions support per-instance
-  `(params ...)` overrides for static generated-child specialization. General
-  parameter overrides for `do`, rule `trigger`, and other activation sites
-  remain backlog and must not be assumed from the task analogy.
+- Parameter boundary from that slice: spawned child transactions supported
+  per-instance `(params ...)` overrides for static generated-child
+  specialization, while broader activation-site parameter overrides were
+  backlog. Blocking `do` overrides have since shipped; rule `trigger` and other
+  activation sites remain backlog.
 - Completed `ISF-TRANSACTION-ACTIVATION.2`: future general activation-site
   parameter overrides will reuse explicit `(params (NAME value) ...)` blocks,
   but those values are static specialization parameters, not runtime payloads.

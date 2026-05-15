@@ -1017,6 +1017,7 @@ sub isf_public_interface_schedule_report_generated_composition_required_keys {
 sub isf_public_interface_schedule_report_generated_composition_kind_values {
     return [
         qw(
+            activation_generated_top
             spawn_generated_top
         ),
     ];
@@ -1056,6 +1057,7 @@ sub isf_public_interface_schedule_report_generated_composition_instance_keys {
         qw(
             instance
             child
+            activation_kind
             start
             done
             parameter_bindings
@@ -1381,9 +1383,11 @@ sub isf_public_interface_schedule_report_dt_kind_values {
     return [
         qw(
             drive
+            do_port_binding
             latency_counter
             rule
             rule_trigger_fanin
+            spawn_port_binding
             temporal_contract_monitor
         ),
     ];

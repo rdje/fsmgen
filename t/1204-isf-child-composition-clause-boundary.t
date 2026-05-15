@@ -48,13 +48,13 @@ subtest 'valid do and spawn clauses lower child handshakes' => sub {
 ISF
 
     my $fsm = $result->{files}{'child_composition_boundary.fsm'};
-    like($fsm, qr/\(= \(child_start 1\)\)/, 'blocking do start is emitted');
+    like($fsm, qr/\(= \(parent_child_do_0_start> 1\)\)/, 'blocking do to a generated child asserts its generated instance start');
     like($fsm, qr/\(= \(worker_start> 1\)\)/, 'spawn instance start is emitted');
     ok($result->{files}{'child.fsm'}, 'spawned child file is emitted');
 };
 
 subtest 'malformed child composition clauses fail before scheduled emission' => sub {
-    assert_lower_rejected(<<'ISF', 'missing do target', qr/\ATransaction 'parent': do requires '\(do transaction \[\(bind \.\.\.\)\]\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'missing do target', qr/\ATransaction 'parent': do requires '\(do transaction \[\(params \(NAME value\) \.\.\.\)\] \[\(bind \.\.\.\)\]\)' in transaction body/);
 (actor do_missing_target
   (clock clk)
   (interface (input start) (output done))
@@ -64,7 +64,7 @@ subtest 'malformed child composition clauses fail before scheduled emission' => 
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'nested do target', qr/\ATransaction 'parent': do requires '\(do transaction \[\(bind \.\.\.\)\]\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'nested do target', qr/\ATransaction 'parent': do requires '\(do transaction \[\(params \(NAME value\) \.\.\.\)\] \[\(bind \.\.\.\)\]\)' in transaction body/);
 (actor do_nested_target
   (clock clk)
   (interface (input start) (output done))
@@ -76,7 +76,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'extra do operand', qr/\ATransaction 'parent': activation subclauses must be list forms in transaction body/);
+    assert_lower_rejected(<<'ISF', 'extra do operand', qr/\ATransaction 'parent': do subclauses must be '\(params \.\.\.\)' or '\(bind \.\.\.\)' in transaction body/);
 (actor do_extra_operand
   (clock clk)
   (interface (input start) (output done))

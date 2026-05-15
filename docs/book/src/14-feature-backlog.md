@@ -112,26 +112,29 @@ Goal: instantiate generated child FSM/DT artifacts from higher-level ISF or
 composition flows without manual wiring gaps.
 
 Current boundary: generated-child parameterization exists for bounded
-composition paths, and ISF spawned-child fixtures now emit a generated
+composition paths, and ISF generated-child fixtures now emit a generated
 `<actor>_top.fsm` that wires the scheduled parent, scheduled children,
-start/done handoffs, named-drive handoffs, and per-instance spawn parameter
-overrides through the existing composition pipeline. Broader generated-child
-top surfaces beyond the covered ISF spawn pattern remain backlog.
+start/done handoffs, named-drive handoffs, explicit port-binding handoffs, and
+per-instance parameter overrides for spawn and generated blocking `do`
+activations through the existing composition pipeline. Broader generated-child
+top surfaces beyond the covered spawn and parameterized `do` patterns remain
+backlog.
 
-### Spawn Parameter Binding
+### Spawn and Blocking Do Parameter Binding
 
 Status: partially shipped; broader parameter/value surfaces remain backlog.
 
-Goal: bind parameters through spawned child instances in ISF-generated
-multi-file scheduled designs.
+Goal: bind parameters through static generated child activations in
+ISF-generated multi-file scheduled designs.
 
-Current boundary: spawn emits child files, a parent scheduled `.fsm`, and a
-generated composition top for covered spawned-child fixtures. The ISF lowerer
-now accepts one optional nested `(params (NAME value) ...)` block on
-`(spawn child as instance ...)`, accepts spawned child transaction parameters
-from a transaction-local `params` clause, emits child defaults as scheduled
-child `+params`, validates duplicates/unknown overrides/value shapes, rejects
-parameter declarations on non-spawned transactions, preserves per-instance
+Current boundary: spawn and parameterized blocking `do` emit child files, a
+parent scheduled `.fsm`, and a generated composition top for covered
+generated-child fixtures. The ISF lowerer accepts one optional nested
+`(params (NAME value) ...)` block on `(spawn child as instance ...)` and on
+`(do child ...)`, accepts generated child transaction parameters from a
+transaction-local `params` clause, emits child defaults as scheduled child
+`+params`, validates duplicates/unknown overrides/value shapes, rejects
+parameter declarations on non-generated transactions, preserves per-instance
 override lists in the parent lowerer IR, and applies those overrides through
 the generated top. The first value domain is scalar/exact-width literals plus
 compatible aggregate/list literals; symbolic constants wait for an explicit
@@ -139,7 +142,7 @@ ISF symbol surface.
 
 ### General Transaction Activation Parameter Overrides
 
-Status: backlog; tracked by `ISF-TRANSACTION-ACTIVATION`.
+Status: partially shipped; tracked by `ISF-TRANSACTION-ACTIVATION`.
 
 Goal: extend the task-like transaction activation model so activation sites can
 override declared transaction parameters where that is semantically valid.
@@ -147,17 +150,18 @@ override declared transaction parameters where that is semantically valid.
 Current boundary: transaction ports already provide formal data/control ports,
 and shipped activation-site `(bind ...)` blocks pass scalar actual signals for
 the supported `do`, `spawn`, and rule `trigger` subset. Spawned child
-transactions also support per-instance `(params (NAME value) ...)` overrides
-through generated composition. That is not yet a general trigger-site
-parameter-override contract. Parameter overrides on blocking `do`, rule
-`trigger`, direct transaction activation, or other future activation forms need
-an explicit source shape, compile-time versus runtime interpretation, value
-domain, diagnostics, lowering, report metadata, and HDL proof before they are
-public syntax.
+transactions and blocking `do` child activations support per-instance
+`(params (NAME value) ...)` overrides through generated composition. That is
+still not a general trigger-site parameter-override contract. Parameter
+overrides on rule `trigger`, direct transaction activation, or other future
+activation forms need explicit source shape, compile-time versus runtime
+interpretation, value domain, diagnostics, lowering, report metadata, and HDL
+proof before they are public syntax.
 
-Planned source shape: reuse the existing explicit spawn-style
+Source shape: reuse the existing explicit spawn-style
 `(params (NAME value) ...)` block on activation sites that support static
-specialization, while keeping runtime payloads in `(bind ...)`:
+specialization, while keeping runtime payloads in `(bind ...)`. This is
+shipped for spawn and blocking `do`; the trigger example remains backlog:
 
 ```lisp
 (do child
@@ -174,8 +178,10 @@ specialization, while keeping runtime payloads in `(bind ...)`:
 ```
 
 Lowering rule: parameter overrides specialize hardware; they do not assign
-runtime parameter signals. If two activation sites pass different parameter
-values to the same transaction, the eventual lowerer must elaborate distinct
+runtime parameter signals. A parameterized blocking `do` elaborates a generated
+child activation instance named `{parent}_{child}_do_{ordinal}` and waits for
+that instance's `done` handoff. If two activation sites pass different
+parameter values to the same transaction, the lowerer must elaborate distinct
 logical child instances or cloned scheduled regions. If that cannot be done for
 a given activation form, the form must fail closed with a diagnostic that tells
 the author to move the value to a transaction input port and `(bind ...)` it as
@@ -509,15 +515,17 @@ Shipped binding shape:
     (input addr req_addr)))
 ```
 
-The first binding surface is scalar-only and width-checked. `do` lowers input
-bindings in the state that starts the child and copies output bindings under
-the generated child-done guard. `spawn` lowers through hidden generated-top
-handoff ports and reviewable parent binding DTs. Rule `trigger` supports input
-bindings only; each rule owns a distinct payload source and the trigger fan-in
-DT routes payloads under the matching per-rule trigger pulse. Rule-trigger
-output bindings, expression-valued bindings, explicit snapshot-vs-live timing
-selection, richer report fields, and broader static conflict diagnostics
-remain backlog.
+The first binding surface is scalar-only and width-checked. Local `do` lowers
+input bindings in the state that starts the child and copies output bindings
+under the generated child-done guard. Parameterized/generated `do` lowers
+through explicit generated-top handoff ports and a parent-owned
+`do_port_binding` DT whose output copy is done-gated. `spawn` lowers through
+hidden generated-top handoff ports and reviewable parent binding DTs. Rule
+`trigger` supports input bindings only; each rule owns a distinct payload
+source and the trigger fan-in DT routes payloads under the matching per-rule
+trigger pulse. Rule-trigger output bindings, expression-valued bindings,
+explicit snapshot-vs-live timing selection, richer report fields, and broader
+static conflict diagnostics remain backlog.
 
 Actor pin binding now uses the same assignment/conflict path as ordinary ISF
 drives where it has shipped coverage. Spawn output bindings carry parent

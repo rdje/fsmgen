@@ -2,15 +2,34 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF blocking do parameter overrides
+- Active R14 task-tree slice: `ISF-TRANSACTION-ACTIVATION.3` is complete in
+  [docs/tasks/ISF-TRANSACTION-ACTIVATION.md](docs/tasks/ISF-TRANSACTION-ACTIVATION.md).
+- Blocking `(do child (params ...))` now lowers through a generated child
+  activation instance, applies static parameter overrides in the generated top,
+  and waits for that instance's `done` handoff.
+- Generated blocking `do` port bindings are reviewable in scheduled `.fsm` as
+  parent-owned `do_port_binding` DTs with done-gated output copies.
+- Schedule reports now expose `activation_generated_top` when generated child
+  activation is not spawn-only, and generated-composition instances include
+  `activation_kind`.
+- The mdBook, ISF spec, public contract docs, roadmap status, task tree, and
+  live docs are synchronized for the shipped behavior. The next frontier is
+  `ISF-TRANSACTION-ACTIVATION.4`.
+- Validation passed: changed-module Perl syntax checks, focused
+  composition/report tests, `./bin/ci-regression isf --no-book`,
+  `mdbook build docs/book`, and `git diff --check`.
+
 ## 2026-05-15: R14 — ISF task-like transaction activation boundary
 - Active R14 task-tree slice: `ISF-TRANSACTION-ACTIVATION.1` is complete in
   [docs/tasks/ISF-TRANSACTION-ACTIVATION.md](docs/tasks/ISF-TRANSACTION-ACTIVATION.md).
 - The mdBook/spec wording now states the current transaction-as-task boundary:
   ports are formal data/control ports, `(bind ...)` entries pass scalar actual
   signals at shipped activation sites, and generated hardware remains static.
-- General activation-site parameter overrides are not shipped except for the
-  existing spawned-child specialization path. They remain backlog under the new
-  task tree.
+- At that slice, general activation-site parameter overrides were not shipped
+  except for existing spawned-child specialization. Blocking `do` parameter
+  overrides have since shipped in `ISF-TRANSACTION-ACTIVATION.3`; rule
+  `trigger` and other forms remain backlog.
 - `ISF-TRANSACTION-ACTIVATION.2` is also complete: future general
   activation-site parameter overrides use `(params (NAME value) ...)` as static
   specialization syntax, distinct from runtime port actuals in `(bind ...)`.

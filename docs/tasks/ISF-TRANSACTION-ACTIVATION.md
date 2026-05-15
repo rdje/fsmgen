@@ -34,9 +34,9 @@ signals or parameter values through explicit source syntax.
   transaction ports and explicit activation-site `(bind ...)` actuals are
   shipped for `do`, `spawn`, and rule `trigger` in the documented subset.
 - The book and spec clearly state the current parameter boundary: spawned child
-  transactions support per-instance `(params ...)` overrides; general
-  activation-site parameter overrides for `do`, rule `trigger`, and other
-  activation forms remain backlog until implemented.
+  transactions and blocking `do` child activations support per-instance
+  `(params ...)` overrides through generated child specialization; rule
+  `trigger` and other activation forms remain backlog until implemented.
 - Future implementation leaves define exact source shapes, diagnostics,
   lowering, report metadata, and tests before changing parser/scheduler code.
 - The task tree remains synchronized with `docs/TASK_TREE.md`, the mdBook
@@ -73,14 +73,19 @@ signals or parameter values through explicit source syntax.
   Commit: `ISF-TRANSACTION-ACTIVATION.2: specify activation params`
 
 - ID: `ISF-TRANSACTION-ACTIVATION.3`
-  Status: `pending`
-  Goal: `Implement the next agreed parameter-override activation site.`
-  Acceptance: The selected activation site parses, validates, lowers to
-  reviewable `.fsm` or generated composition artifacts, reports bounded
-  provenance, rejects malformed overrides, and reaches HDL generation where
-  applicable.
-  Verification: `pending`
-  Commit: `pending`
+  Status: `done`
+  Goal: `Implement blocking do parameter overrides.`
+  Acceptance: Blocking `(do child (params ...))` parses, validates, lowers to
+  reviewable scheduled `.fsm` plus generated composition-top artifacts, reports
+  bounded activation and parameter provenance, rejects malformed overrides, and
+  reaches HDL generation.
+  Verification: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`;
+  `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`;
+  `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`;
+  `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm`;
+  focused ISF composition/report tests; `./bin/ci-regression isf --no-book`;
+  `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-TRANSACTION-ACTIVATION.3: ship do parameter overrides`
 
 - ID: `ISF-TRANSACTION-ACTIVATION.4`
   Status: `pending`
@@ -95,7 +100,7 @@ signals or parameter values through explicit source syntax.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TRANSACTION-ACTIVATION.3` | `pending` | The syntax contract is specified; implementation must choose and ship the next activation site. |
+| 1 | `ISF-TRANSACTION-ACTIVATION.4` | `pending` | Blocking `do` parameter overrides are shipped; the remaining tree frontier is to publish closure and decide whether rule-trigger parameter overrides are next. |
 
 ## Decisions
 
@@ -116,11 +121,22 @@ signals or parameter values through explicit source syntax.
   at different sites, the future lowerer must specialize distinct logical
   transaction instances or cloned scheduled regions. It must not assign mutable
   runtime parameter signals.
+- `2026-05-15`: Blocking `(do child (params ...))` is the first general
+  activation-site parameter override beyond spawn. It elaborates a generated
+  child activation instance with deterministic name
+  `{parent}_{child}_do_{ordinal}`, applies the override in the generated top,
+  and keeps the parent waiting on that instance's `done` handoff.
+- `2026-05-15`: A plain `(do child)` remains an in-parent blocking call when
+  the child transaction is local. If that child transaction is already emitted
+  as a generated child because another activation site needs generated
+  specialization, the plain `do` also uses a generated child activation
+  instance so the scheduled parent never references a skipped local child body.
 
 ## Open Questions
 
-- Which activation site should receive implementation first:
-  blocking `do`, rule `trigger`, or another form?
+- Whether rule `trigger` parameter overrides should be implemented next, and
+  whether direct transaction activation needs a distinct source form before it
+  can participate in the same static-specialization contract.
 
 ## Blockers
 
@@ -132,6 +148,7 @@ signals or parameter values through explicit source syntax.
 | --- | --- | --- | --- |
 | `2026-05-15` | `ISF-TRANSACTION-ACTIVATION.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-TRANSACTION-ACTIVATION.2` | `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-TRANSACTION-ACTIVATION.3` | `perl -Iperl -c` for changed ISF modules; `prove t/1204-isf-child-composition-clause-boundary.t t/1215-isf-spawn-parameter-binding.t t/1216-isf-generated-composition-top.t t/1217-isf-generated-composition-schedule-report.t t/1158-isf-public-report-dt-kind-metadata-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1241-isf-transaction-port-bindings.t t/1243-isf-port-binding-schedule-report.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -139,6 +156,7 @@ signals or parameter values through explicit source syntax.
 | --- | --- | --- |
 | `ISF-TRANSACTION-ACTIVATION.1` | `ISF-TRANSACTION-ACTIVATION.1: document task-like activation` | Formalized current activation boundary; tree remains active. |
 | `ISF-TRANSACTION-ACTIVATION.2` | `ISF-TRANSACTION-ACTIVATION.2: specify activation params` | Specified planned `(params ...)` activation syntax and static specialization semantics. |
+| `ISF-TRANSACTION-ACTIVATION.3` | `ISF-TRANSACTION-ACTIVATION.3: ship do parameter overrides` | Shipped blocking `do` parameter overrides through generated child activation instances. |
 
 ## Changelog
 
@@ -148,3 +166,5 @@ signals or parameter values through explicit source syntax.
   advances to `ISF-TRANSACTION-ACTIVATION.2`.
 - `2026-05-15`: Completed `ISF-TRANSACTION-ACTIVATION.2`; active frontier
   advances to `ISF-TRANSACTION-ACTIVATION.3`.
+- `2026-05-15`: Completed `ISF-TRANSACTION-ACTIVATION.3`; active frontier
+  advances to `ISF-TRANSACTION-ACTIVATION.4`.

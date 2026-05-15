@@ -1,6 +1,31 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF blocking do parameter overrides
+- Completed `ISF-TRANSACTION-ACTIVATION.3` for blocking `do` parameter
+  overrides.
+- Updated
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so `(do child (params ...))` validates the same static parameter override
+  shape as spawn, emits a generated child activation instance, starts and awaits
+  that instance, and preserves explicit port-binding handoffs.
+- Updated generated composition reporting in
+  [perl/FSM/Scheduler/ISF/Emitter/JSON.pm](perl/FSM/Scheduler/ISF/Emitter/JSON.pm)
+  and
+  [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm)
+  so generated tops distinguish `spawn_generated_top` from
+  `activation_generated_top`, instances expose `activation_kind`, and DT kind
+  metadata includes `spawn_port_binding` and `do_port_binding`.
+- Updated
+  [perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm](perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm)
+  so generated blocking `do` instances use explicit bind/start/done wiring
+  without spawn-style public input auto-fanout.
+- Added HDL-backed coverage for parameterized blocking `do` in
+  [t/1215-isf-spawn-parameter-binding.t](t/1215-isf-spawn-parameter-binding.t)
+  and refreshed child-target, child-composition boundary, generated-composition
+  report, and DT-kind public contract tests.
+- Synchronized the mdBook, ISF spec, public interface contract, roadmap status,
+  task tree, and live docs for the new generated activation surface.
 ### R14 — ISF task-like transaction activation boundary
 - Activated
   [docs/tasks/ISF-TRANSACTION-ACTIVATION.md](docs/tasks/ISF-TRANSACTION-ACTIVATION.md)
@@ -8,8 +33,10 @@ This is the persistent technical change history for FSMGen.
   transaction activation model and future activation-site parameter overrides.
 - Clarified in the mdBook and ISF spec that transaction ports plus explicit
   `(bind ...)` actuals are shipped for the documented scalar activation subset,
-  while general parameter overrides at `do`, rule `trigger`, and other
-  activation sites remain future work beyond spawned-child specialization.
+  and initially recorded general parameter overrides beyond spawned-child
+  specialization as follow-up work. Blocking `do` parameter overrides have
+  since shipped in `ISF-TRANSACTION-ACTIVATION.3`; rule `trigger` and other
+  activation forms remain backlog.
 - Completed `ISF-TRANSACTION-ACTIVATION.2`: future general activation-site
   parameter overrides use `(params (NAME value) ...)` as static specialization
   syntax, and runtime-varying data remains in transaction ports plus `(bind ...)`.

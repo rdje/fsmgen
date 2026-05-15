@@ -12,18 +12,18 @@ top wiring. Today the task-like port model is shipped for scalar `(ports ...)`
 bindings on `do`, `spawn`, and rule `trigger` activation sites. Rule triggers
 bind transaction inputs only; output bindings require a caller that waits for
 completion, such as `do` or the shipped spawn handoff path. Spawned child
-transactions also support per-instance parameter overrides through `(params
-...)`. Those parameter overrides are compile-time specialization of the static
-child instance, not runtime payload actuals. A fully general parameter-override
-model for `do`, rule `trigger`, or every transaction activation form remains
-future work and should not be assumed from the task analogy.
+transactions and generated blocking `do` activations support per-instance
+parameter overrides through `(params ...)`. Those parameter overrides are
+compile-time specialization of a static child instance, not runtime payload
+actuals. A fully general parameter-override model for rule `trigger` or every
+transaction activation form remains future work and should not be assumed from
+the task analogy.
 
 Parameter overrides and port bindings must stay separate in authored intent.
 Use `(bind (input port signal) ...)` for runtime data/control values that can
 change from cycle to cycle. Use `(params (NAME value) ...)` only for static
-specialization values once an activation form explicitly supports that surface.
-When general activation-site parameters ship, the planned source shape is to
-reuse the existing spawn-style `params` block on each activation site:
+specialization values on activation forms that explicitly support that surface:
+spawned children and blocking `do` generated child activations today.
 
 ```lisp
 (do read_word
@@ -32,19 +32,20 @@ reuse the existing spawn-style `params` block on each activation site:
   (bind
     (input addr req_addr)))
 
-(rule launch ready
-  (trigger read_word
-    (params
-      (WIDTH 16))
-    (bind
-      (input addr req_addr))))
+(spawn read_word as r0
+  (params
+    (WIDTH 16))
+  (bind
+    (input addr req_addr)))
 ```
 
-The lowering contract for that future surface is specialization, not assignment.
-Two activation sites that pass different parameter values to the same
-transaction must lower to distinct specialized transaction instances or cloned
-scheduled regions. They must not share one mutable parameter signal written at
-runtime.
+The lowering contract for this surface is specialization, not assignment. A
+parameterized blocking `do` elaborates a generated child activation instance,
+applies the override in the generated composition top, starts that instance,
+and waits for its `done` handoff. Two activation sites that pass different
+parameter values to the same transaction must lower to distinct specialized
+transaction instances or cloned scheduled regions. They must not share one
+mutable parameter signal written at runtime.
 
 ## How Transactions Become Hardware
 

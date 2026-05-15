@@ -646,15 +646,17 @@ through explicit `(bind ...)` blocks. The compiler owns the lower-level
 handoff signals, mux selectors, and generated-top bridge wiring. This is still
 static hardware, not a stack-allocated SV task call: every activation lowers
 to scheduled `.fsm` states, persistent handoff signals, and reviewable
-assignments. Parameter overrides are currently narrower than port bindings:
-spawned child transactions support transaction-local `params` and per-instance
-`(params (NAME value) ...)` overrides through the generated composition path,
-and those overrides specialize the static spawned child instance. General
-parameter overrides at `do`, rule `trigger`, or every transaction activation
-site remain future work and must not be inferred from the task-like analogy.
+assignments. Parameter overrides are narrower than port bindings: spawned child
+transactions and blocking `do` generated child activations support
+transaction-local `params` and per-instance `(params (NAME value) ...)`
+overrides through the generated composition path, and those overrides
+specialize static child instances. General parameter overrides at rule
+`trigger` or every transaction activation site remain future work and must not
+be inferred from the task-like analogy.
 
-The planned general activation-site parameter shape, when implemented, is the
-same explicit block already used by spawned children:
+The activation-site parameter shape is the same explicit block already used by
+spawned children. It is shipped for spawn and blocking `do`; the trigger form
+below documents the intended future spelling, not shipped behavior:
 
 ```lisp
 (do child
@@ -672,11 +674,12 @@ same explicit block already used by spawned children:
 
 Those `params` values are static specialization values, not runtime payload
 actuals. Runtime-varying data/control values must use transaction ports and
-`(bind ...)`. If two activation sites override the same transaction parameter
-with different values, the eventual implementation must specialize distinct
-logical child instances or cloned scheduled regions. It must not lower the
-parameter as a mutable runtime signal shared by every activation of the
-transaction.
+`(bind ...)`. A parameterized blocking `do` elaborates a generated child
+activation instance and waits for that instance's `done` handoff. If two
+activation sites override the same transaction parameter with different
+values, the implementation must specialize distinct logical child instances or
+cloned scheduled regions. It must not lower the parameter as a mutable runtime
+signal shared by every activation of the transaction.
 
 Current transaction clauses:
 - `(on port body...)`
@@ -698,8 +701,8 @@ Current transaction clauses:
 - `(assemble part... as var)`
 - `(extract word as field...)`
 - `(extract word as field... (widths N...))`
-- `(do transaction)`
-- `(spawn transaction as instance)`
+- `(do transaction [(params (NAME value) ...)] [(bind ...)])`
+- `(spawn transaction as instance [(params (NAME value) ...)] [(bind ...)])`
 - `(await_all done_port)`
 - `(await_any done_port)`
 - `(complete port)`
@@ -804,10 +807,14 @@ output, declared storage signal, or known transaction variable in the caller's
 scope. Expression-valued bindings remain deferred until the syntax has an
 explicit width contract.
 
-`(do ...)` bindings lower into the scheduled parent `.fsm` state that starts
-and awaits the child transaction. Transaction input bindings are emitted before
-the generated `child_start`; output bindings copy the child output port to the
-bound actor signal under the generated `child_done` guard.
+Local `(do ...)` bindings lower into the scheduled parent `.fsm` state that
+starts and awaits the child transaction. Transaction input bindings are
+emitted before the generated `child_start`; output bindings copy the child
+output port to the bound actor signal under the generated `child_done` guard.
+Parameterized/generated `(do ...)` bindings lower through explicit
+generated-top handoff ports and a parent-owned `do_port_binding` DT. Input
+bindings are same-cycle parent handoff assignments; output bindings copy the
+generated child output under the generated instance's `done` guard.
 
 `(spawn ...)` bindings lower through hidden generated-top handoff ports. Input
 bindings create a hidden parent output handoff and a visible child input port;
@@ -1208,13 +1215,24 @@ separate width evidence for its insertion position.
 
 ```lisp
 (do child_transaction)
+
+(do child_transaction
+  (params
+    (WIDTH 16))
+  (bind
+    (input addr req_addr)
+    (output data resp)))
 ```
 
 Current lowering:
-- The parent emits an await-shaped state guarded by `child_transaction_done`.
-- The child idle state is rewired to wait on `child_transaction_start`.
-- `do` is structurally validated as `(do transaction)` with one scalar child
-  transaction operand before child-target resolution.
+- Local `do` emits an await-shaped parent state guarded by
+  `child_transaction_done`.
+- Local `do` rewires the child idle state to wait on
+  `child_transaction_start`.
+- `do` is structurally validated as
+  `(do transaction [(params (NAME value) ...)] [(bind ...)])` with one scalar
+  child transaction operand and at most one `params` block plus at most one
+  `bind` block before child-target resolution.
 - The `child_transaction` target must name a declared transaction in the same
   actor. Forward references are accepted; missing targets fail before
   scheduled `.fsm` emission.
@@ -1224,6 +1242,21 @@ Current lowering:
   the completion-pulse contract and avoiding sticky done bits across repeated
   blocking calls.
 - The parent `do` state asserts `child_transaction_start` directly.
+- Parameterized `do` is a generated child activation. It emits the child as a
+  separate scheduled module, creates a deterministic generated instance named
+  `{parent}_{child}_do_{ordinal}`, applies static parameter overrides on the
+  generated top `?fsmc` instance, asserts `{instance}_start`, and awaits
+  `{instance}_done`.
+- Parameterized/generated `do` port bindings use explicit generated-top
+  handoffs. Input handoffs are parent-owned combinational assignments; output
+  handoffs are copied under the generated instance's `done` guard. The
+  generated top does not auto-fanout unrelated actor public inputs into a
+  generated `do` child; authors must bind intended payload ports explicitly.
+- If a plain `(do child)` targets a child transaction that is already generated
+  because another activation site needs generated specialization, that plain
+  `do` also uses a generated child activation instance. This keeps the parent
+  from referencing a child body that was skipped from the parent scheduled
+  module.
 
 ### 8.2 Spawn
 
@@ -1259,31 +1292,33 @@ Current lowering:
 Focused regressions cover both synchronization forms.
 
 Top-level generated-child instantiation is now shipped for the covered
-spawned-child fixture set. Spawn parameter declaration, validation, scheduled
-child `+params` emission, per-instance override preservation, and generated-top
-application now all flow through the normal composition pipeline. The public
-contract is:
+spawn and parameterized blocking `do` fixture set. Spawn and generated `do`
+parameter declaration, validation, scheduled child `+params` emission,
+per-instance override preservation, and generated-top application now all flow
+through the normal composition pipeline. The public contract is:
 
-- Multi-file spawn actors expose an explicit generated `?top` source over the
-  scheduled parent module and spawned child modules.
+- Multi-file generated-child actors expose an explicit generated `?top` source
+  over the scheduled parent module and child modules.
 - The scheduled parent module keeps the actor name. The generated top uses a
   distinct deterministic name, initially `<actor_name>_top`.
 - The generated top re-exports the actor public interface. Per-instance
   `instance_start`/`instance_done` handoff signals are internal top wiring, not
   public top ports.
 - The scheduled parent exposes `instance_start` as an output port and
-  `instance_done` as an input port for each spawned instance. Each spawned
+  `instance_done` as an input port for each generated instance. Each generated
   child exposes `start` as an input and `done` as an output.
 - The generated top wires `parent.instance_start` to `instance.start`,
-  `instance.done` to `parent.instance_done`, and child named-drive handoff
-  outputs to parent per-instance handoff inputs.
+  `instance.done` to `parent.instance_done`, explicit port-binding handoffs,
+  and child named-drive handoff outputs to parent per-instance handoff inputs.
 - A spawned child returns to its `start`-guarded idle state after completion and
   must not re-enter the body until the next start pulse.
-- Spawn instance names are actor-local identities and must be unique. Multiple
-  instances of one child transaction share the same child module with distinct
-  instance names.
-- Spawn parameter overrides are emitted on the generated `?fsmc` instance
-  through the existing composition `(params ...)` override surface.
+- Spawn instance names are actor-local identities and must be unique. Generated
+  `do` instance names use `{parent}_{child}_do_{ordinal}` and share the same
+  actor-local uniqueness rule. Multiple instances of one child transaction
+  share the same child module with distinct instance names.
+- Spawn and generated `do` parameter overrides are emitted on the generated
+  `?fsmc` instance through the existing composition `(params ...)` override
+  surface.
 
 `spawn` is static HDL composition plus runtime activation. The generated child
 instance exists for the lifetime of the generated top. Executing the spawn site
@@ -1294,7 +1329,8 @@ reject or sequence any path that could start a still-busy child before its
 fresh done pulse is observed.
 
 Parameterized spawn uses one optional nested `params` block after the instance
-name:
+name. Parameterized blocking `do` uses the same `params` block after the child
+transaction name:
 
 ```lisp
 (transaction child_worker
@@ -1307,45 +1343,50 @@ name:
   (spawn child_worker as w0
     (params
       (WIDTH 16)
-      (LANES (8'hA5 8'h3C)))))
+      (LANES (8'hA5 8'h3C))))
+  (do child_worker
+    (params
+      (WIDTH 32))))
 ```
 
-The shipped parameter-binding surface is spawn-only; `(do child)` remains
-unparameterized. Child transaction parameter declarations must use unique
-HDL-identifier-compatible names. Spawn overrides must use unique names declared
-by the child transaction; missing overrides use child defaults. Scalar numeric
+The shipped parameter-binding surface covers spawn and blocking `do` generated
+child activations. Child transaction parameter declarations must use unique
+HDL-identifier-compatible names. Overrides must use unique names declared by
+the child transaction; missing overrides use child defaults. Scalar numeric
 and exact-width literal overrides are width-flexible. Aggregate/list defaults
 require compatible aggregate/list override shape. Symbolic top constants are
 not accepted until ISF has an explicit constant/symbol surface. Malformed
-forms, duplicate instance names, duplicate parameters, unknown targets, unknown
-override names, unsupported value shapes, parameter declarations on
-non-spawned transactions, and parameter blocks on `(do child)` fail before
-misleading scheduled artifacts are emitted. The scheduled child `.fsm` carries
-the child transaction defaults in a direct `+params` block, and the parent
-lowerer IR preserves each spawn instance's override list. The generated top
-emits those overrides as `?fsmc` instance `(params ...)` blocks, so the
-existing composition pipeline applies them to the spawned child instances.
+forms, duplicate generated instance names, duplicate parameters, unknown
+targets, unknown override names, unsupported value shapes, and parameter
+declarations on non-generated transactions fail before misleading scheduled
+artifacts are emitted. The scheduled child `.fsm` carries the child
+transaction defaults in a direct `+params` block, and the parent lowerer IR
+preserves each generated instance's override list. The generated top emits
+those overrides as `?fsmc` instance `(params ...)` blocks, so the existing
+composition pipeline applies them to the generated child instances.
 
 ### 8.3 Generated Composition Schedule Report Projection
 
 The accepted schedule-report projection for generated ISF composition is a
 top-level `generated_composition` field. Successful reports keep the ordinary
 transaction, storage, and DT summaries parent-scoped, while this field exposes
-bounded generated-top discovery metadata for spawned-child composition.
+bounded generated-top discovery metadata for generated-child composition.
 
 For actors without a generated composition top, `generated_composition` is
-`null`. For spawned-child actors, the field is an object with these bounded
+`null`. For generated-child actors, the field is an object with these bounded
 keys:
-- `kind`: currently `spawn_generated_top`.
+- `kind`: `spawn_generated_top` when every generated child activation is spawn,
+  or `activation_generated_top` when another activation kind such as blocking
+  `do` participates in the generated top.
 - `top_module`: generated top module name, initially `<actor>_top`.
 - `top_fsm`: generated top `.fsm` basename, initially `<actor>_top.fsm`.
 - `parent`: object with `module` and `scheduled_fsm` for the scheduled parent.
-- `children`: array of spawned child module summaries. Each child entry exposes
+- `children`: array of generated child module summaries. Each child entry exposes
   `transaction`, `module`, `scheduled_fsm`, and `parameters`; parameter entries
   expose `name` and stringified `default`.
-- `instances`: array of spawned instance summaries. Each instance entry exposes
-  `instance`, `child`, `start`, `done`, `parameter_bindings`, and
-  `drive_handoffs`.
+- `instances`: array of generated instance summaries. Each instance entry
+  exposes `instance`, `child`, `activation_kind`, `start`, `done`,
+  `parameter_bindings`, and `drive_handoffs`.
 
 Instance `start` and `done` entries expose the parent and child port names used
 by the generated top. `parameter_bindings` entries expose `name`, `source`
@@ -1362,13 +1403,13 @@ that evolves with FSMGen, not a frozen full schedule-report schema.
 
 Generated composition diagnostics must be targeted before scheduled artifacts
 or generated tops become misleading. Diagnostics in this family should name the
-transaction, spawn instance, child transaction, parameter, or generated handoff
-that failed. The current accepted diagnostic families cover malformed spawn
-syntax, unknown child targets, duplicate instance names, parent actor naming
-conflicts, malformed or duplicate parameter declarations/overrides, unknown
-override names, aggregate/scalar shape mismatches, parameter declarations on
-non-spawned transactions, parameterized `(do child)`, and generated handoff
-port-name conflicts.
+transaction, generated instance, child transaction, parameter, or generated
+handoff that failed. The current accepted diagnostic families cover malformed
+spawn and `do` syntax, unknown child targets, duplicate instance names, parent
+actor naming conflicts, malformed or duplicate parameter
+declarations/overrides, unknown override names, aggregate/scalar shape
+mismatches, parameter declarations on non-generated transactions, and generated
+handoff port-name conflicts.
 
 If an actor interface already declares a port name reserved for a generated
 handoff, lowering fails before the generated top is emitted. Spawn start/done
@@ -2034,9 +2075,10 @@ Focused tests:
   `(set ...)`, `(update ...)`, `(drive ...)`, rule actions, or `(complete ...)`
   because the old keyword does not carry enough timing intent.
 - Broader generated-child top instantiation surfaces beyond the covered ISF
-  spawn pattern. The current generated top covers scheduled parent/child
-  wiring, start/done handoff, named-drive handoff, and spawn parameter
-  overrides for the shipped fixture set.
+  spawn and parameterized blocking `do` patterns. The current generated top
+  covers scheduled parent/child wiring, start/done handoff, explicit
+  port-binding handoffs, named-drive handoff, and spawn/generated-`do`
+  parameter overrides for the shipped fixture set.
 - Enforced resource arbitration beyond the shipped priority-arbitrated
   `rule_slot` case: `round_robin`, `output_bundle`, `interface_bundle`,
   `named_drive`, `transaction_start`, `child_instance`, `storage_port`,

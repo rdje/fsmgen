@@ -171,14 +171,17 @@ sub _emit_toplink_block {
         my $instance = $spawn->{instance};
         my $child = $spawn->{child};
         my $child_ports = $child_ports_by_name{$child} || {};
+        my $activation_kind = $spawn->{activation_kind} // 'spawn';
 
-        for my $port (@{$ir->{ports} || []}) {
-            next if $port->{isf_handoff};
-            next unless $port->{direction} eq 'input';
-            my $name = $port->{name};
-            next unless exists $child_ports->{$name};
-            next unless ($child_ports->{$name}{direction} || '') eq 'input';
-            push @links, "/$name/$instance.$name/";
+        if ($activation_kind eq 'spawn') {
+            for my $port (@{$ir->{ports} || []}) {
+                next if $port->{isf_handoff};
+                next unless $port->{direction} eq 'input';
+                my $name = $port->{name};
+                next unless exists $child_ports->{$name};
+                next unless ($child_ports->{$name}{direction} || '') eq 'input';
+                push @links, "/$name/$instance.$name/";
+            }
         }
 
         for my $binding (@{$spawn->{port_bindings} || []}) {

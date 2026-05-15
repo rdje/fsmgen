@@ -4,7 +4,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
 - Next decision point: select or activate the next user-visible `R14` feature
   tree before implementing more ISF behavior. `ISF-TRANSACTION-ACTIVATION` is
-  now active with `ISF-TRANSACTION-ACTIVATION.3` as the current frontier.
+  now active with `ISF-TRANSACTION-ACTIVATION.4` as the current frontier.
   Standalone public interface stabilization/audit work is on hold for now;
   keep the public contract synchronized only as part of shipping each feature.
 - Repo-local task trees now live at [docs/TASK_TREE.md](docs/TASK_TREE.md),
@@ -75,8 +75,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   hardware-task-like only in the bounded sense: they consume cycles, may declare
   `(ports ...)` formal data/control ports, and can receive scalar actual
   signals through explicit `(bind ...)` blocks at shipped activation sites.
-  General activation-site parameter overrides remain backlog beyond spawned
-  child specialization. The active frontier advances to
+  At the time of this slice, general activation-site parameter overrides
+  remained backlog beyond spawned child specialization. The active frontier
+  advances to
   `ISF-TRANSACTION-ACTIVATION.2`.
 - `ISF-TRANSACTION-ACTIVATION.2` is complete. Planned general activation-site
   parameter overrides reuse the explicit `(params (NAME value) ...)` block, but
@@ -85,6 +86,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   Activation sites with different parameter values must eventually lower to
   distinct specialized transaction instances or cloned scheduled regions. The
   active frontier advances to `ISF-TRANSACTION-ACTIVATION.3`.
+- `ISF-TRANSACTION-ACTIVATION.3` is complete. Blocking
+  `(do child (params ...))` now elaborates a generated child activation
+  instance, applies static parameter overrides in the generated top, starts and
+  awaits that instance through explicit handoff ports, and reports
+  `activation_generated_top` plus per-instance `activation_kind`. Plain
+  unparameterized `do` remains local unless its child transaction is already a
+  generated child. The active frontier advances to
+  `ISF-TRANSACTION-ACTIVATION.4`.
 - `ISF-LIBRARIES` is complete. The public term is "library"; implementation
   may reuse package/import infrastructure, but the feature target is reusable
   ISF design intent such as actors and transaction patterns. The shipped tree

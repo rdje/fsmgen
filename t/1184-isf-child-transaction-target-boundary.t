@@ -51,8 +51,13 @@ ISF
     ok($result->{files}{'child.fsm'}, 'spawned child file is emitted');
     like(
         $result->{files}{'child_forward_refs.fsm'},
-        qr/\(= \(child_start 1\)\)/,
-        'blocking do target is wired in the parent file',
+        qr/\(= \(parent_child_do_0_start> 1\)\)/,
+        'blocking do to a generated child asserts its generated instance start',
+    );
+    like(
+        $result->{files}{'child_forward_refs.fsm'},
+        qr/<parent_child_do_0_done/,
+        'blocking do to a generated child awaits its generated instance done',
     );
     like(
         $result->{files}{'child_forward_refs.fsm'},
@@ -84,6 +89,27 @@ ISF
     (on start)
     (spawn missing as worker)
     (await_all done)
+    (complete done)))
+ISF
+};
+
+subtest 'generated child activation instance collisions fail closed' => sub {
+    assert_lower_rejected(<<'ISF', 'generated do and spawn instance collision', qr/duplicate generated child instance 'parent_child_do_0'/);
+(actor generated_do_instance_conflict
+  (clock clk)
+  (interface
+    (input start)
+    (output done))
+  (transaction parent
+    (on start)
+    (do child)
+    (spawn child as w0)
+    (spawn other as parent_child_do_0)
+    (await_all done)
+    (complete done))
+  (transaction child
+    (complete done))
+  (transaction other
     (complete done)))
 ISF
 };

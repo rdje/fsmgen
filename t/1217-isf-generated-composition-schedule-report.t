@@ -109,6 +109,7 @@ ISF
     );
     is($w0->{instance}, 'w0', 'first instance keeps authored name');
     is($w0->{child}, 'worker', 'first instance names child module');
+    is($w0->{activation_kind}, 'spawn', 'first instance reports spawn activation kind');
     is_deeply(
         sorted([keys %{$w0->{start}}]),
         sorted(isf_public_interface_schedule_report_generated_composition_link_keys()),

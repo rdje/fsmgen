@@ -82,6 +82,66 @@ ISF
         $observed{$kind} = 1;
     }
 
+    my $spawn_binding_report = report_for_source(<<'ISF');
+(actor spawn_port_binding_kind
+  (clock clk)
+  (interface
+    (input start)
+    (input req_addr (width 8))
+    (output done)
+    (output resp (width 8)))
+  (transaction child
+    (ports
+      (input addr (width 8))
+      (output data (width 8)))
+    (update data addr)
+    (complete done))
+  (transaction main
+    (on start)
+    (spawn child as w0
+      (bind
+        (input addr req_addr)
+        (output data resp)))
+    (complete done)))
+ISF
+    for my $dt (@{$spawn_binding_report->{dt_blocks} || []}) {
+        my $kind = $dt->{kind};
+        ok($advertised{$kind}, "spawn binding report DT '$dt->{name}' kind '$kind' is advertised");
+        $observed{$kind} = 1;
+    }
+
+    my $do_binding_report = report_for_source(<<'ISF');
+(actor do_port_binding_kind
+  (clock clk)
+  (interface
+    (input start)
+    (input req_addr (width 8))
+    (output done)
+    (output resp (width 8)))
+  (transaction child
+    (params
+      (WIDTH 8))
+    (ports
+      (input addr (width 8))
+      (output data (width 8)))
+    (update data addr)
+    (complete done))
+  (transaction main
+    (on start)
+    (do child
+      (params
+        (WIDTH 16))
+      (bind
+        (input addr req_addr)
+        (output data resp)))
+    (complete done)))
+ISF
+    for my $dt (@{$do_binding_report->{dt_blocks} || []}) {
+        my $kind = $dt->{kind};
+        ok($advertised{$kind}, "do binding report DT '$dt->{name}' kind '$kind' is advertised");
+        $observed{$kind} = 1;
+    }
+
     is_deeply(
         sorted([keys %observed]),
         sorted(isf_public_interface_schedule_report_dt_kind_values()),

@@ -23,7 +23,7 @@ evidence for one top-level task.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-TRANSACTION-ACTIVATION` | `active` | `R14` | `ISF-TRANSACTION-ACTIVATION.3` | [docs/tasks/ISF-TRANSACTION-ACTIVATION.md](docs/tasks/ISF-TRANSACTION-ACTIVATION.md) |
+| `ISF-TRANSACTION-ACTIVATION` | `active` | `R14` | `ISF-TRANSACTION-ACTIVATION.4` | [docs/tasks/ISF-TRANSACTION-ACTIVATION.md](docs/tasks/ISF-TRANSACTION-ACTIVATION.md) |
 | `ISF-PUBLIC-CONTRACT` | `active` | `R14` | `ISF-PUBLIC-CONTRACT.1` | [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md) |
 
 ## Proposed Task Trees
@@ -65,7 +65,7 @@ as done work unless a future task reopens them.
 | ISF objective family | Owning tree |
 | --- | --- |
 | Same-cycle output conflicts, fan-in, and fail-closed drive policy | `ISF-CONFLICTS` |
-| Generated-child top instantiation and spawn parameter binding | `ISF-COMPOSITION` |
+| Generated-child top instantiation, spawn parameter binding, and generated blocking `do` activations | `ISF-COMPOSITION`, `ISF-TRANSACTION-ACTIVATION` |
 | Resource arbitration and priority enforcement | `ISF-RESOURCE-PRIORITY` |
 | Shareable resource kind catalog and public resource registry | `ISF-RESOURCE-CATALOG` |
 | Expression-valued rule assignments and rule action widening | `ISF-RULE-ACTIONS` |

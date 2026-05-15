@@ -222,11 +222,14 @@ including contextual diagnostics for generated handoff port-name conflicts.
 The accepted generated-composition report projection is a top-level
 `generated_composition` field and is checked by
 [t/1217-isf-generated-composition-schedule-report.t](../t/1217-isf-generated-composition-schedule-report.t).
-Non-generated-top reports use JSON null, while spawned-child reports use a
+Non-generated-top reports use JSON null, while generated-child reports use a
 bounded object with `kind`, `top_module`, `top_fsm`, `parent`, `children`, and
-`instances`. Parent entries expose `module` and `scheduled_fsm`; child entries
-expose `transaction`, `module`, `scheduled_fsm`, and `parameters`; instance
-entries expose `instance`, `child`, `start`, `done`, `parameter_bindings`, and
+`instances`. The `kind` value is `spawn_generated_top` for spawn-only generated
+tops and `activation_generated_top` when another activation kind such as
+blocking `do` participates. Parent entries expose `module` and
+`scheduled_fsm`; child entries expose `transaction`, `module`, `scheduled_fsm`,
+and `parameters`; instance entries expose `instance`, `child`,
+`activation_kind`, `start`, `done`, `parameter_bindings`, and
 `drive_handoffs`. Parameter binding entries expose `name`, `source`, and
 stringified `value`; drive handoff entries expose `drive`, `request`, and
 `payloads`, with each payload naming the drive `parameter`, child/parent ports,
@@ -512,9 +515,11 @@ so the generated internal `child_done` signal remains a one-cycle delayed pulse
 through scheduled `.fsm` parsing and HDL generation.
 The child transaction target boundary is checked by
 [t/1184-isf-child-transaction-target-boundary.t](../t/1184-isf-child-transaction-target-boundary.t)
-so `(do child)` and `(spawn child as instance)` must resolve `child` to a
-declared same-actor transaction before scheduled `.fsm` emission, while
-forward references remain accepted.
+so `(do child ...)` and `(spawn child as instance ...)` must resolve `child`
+to a declared same-actor transaction before scheduled `.fsm` emission, while
+forward references remain accepted. Parameterized/generated `do` uses a
+generated child activation instance; local unparameterized `do` keeps the
+rewired child-completion pulse path.
 The deprecated handshake compatibility boundary is checked by
 [t/1178-isf-handshake-compatibility-boundary.t](../t/1178-isf-handshake-compatibility-boundary.t)
 so `(handshake name (valid signal) (ready signal))` metadata requires exactly
@@ -618,19 +623,20 @@ so `(await_all done_port)` and `(await_any done_port)` require exactly one
 scalar done-port operand before sync-state emission.
 The child-composition clause boundary is checked by
 [t/1204-isf-child-composition-clause-boundary.t](../t/1204-isf-child-composition-clause-boundary.t)
-so `(do transaction)` and `(spawn transaction as instance [(params (NAME value)
-...)])` require exact scalar child/instance operands before child-target
-resolution or spawned-child collection.
-Spawn parameter binding is checked by
+so `(do transaction [(params (NAME value) ...)] [(bind ...)])` and
+`(spawn transaction as instance [(params (NAME value) ...)] [(bind ...)])`
+require exact scalar child/instance operands before child-target resolution or
+generated-child collection.
+Spawn and blocking `do` parameter binding are checked by
 [t/1215-isf-spawn-parameter-binding.t](../t/1215-isf-spawn-parameter-binding.t).
-Generated composition-top wiring for spawned children is checked by
+Generated composition-top wiring for generated child activations is checked by
 [t/1216-isf-generated-composition-top.t](../t/1216-isf-generated-composition-top.t).
-The shipped surface preserves validated per-instance spawn overrides in
-lowerer metadata, emits child transaction defaults into spawned-child
-scheduled `.fsm` `+params` blocks, rejects duplicate instances, duplicate
-parameters, unknown overrides, unsupported symbolic values, and aggregate
-shape mismatches, rejects parameter declarations on non-spawned transactions,
-and keeps parameterized `(do child)` unsupported.
+The shipped surface preserves validated per-instance spawn and generated `do`
+overrides in lowerer metadata, emits child transaction defaults into generated
+child scheduled `.fsm` `+params` blocks, rejects duplicate instances,
+duplicate parameters, unknown overrides, unsupported symbolic values, and
+aggregate shape mismatches, and rejects parameter declarations on
+non-generated transactions.
 The switch-clause boundary is checked by
 [t/1205-isf-switch-clause-boundary.t](../t/1205-isf-switch-clause-boundary.t)
 so `(switch signal (value body...)...)` requires one scalar signal, one or more
@@ -967,11 +973,13 @@ Blocking `(do child)` lowering also uses `<1` for the internal
 That keeps each parent-visible child completion as a pulse, so repeated `do`
 calls wait for fresh child completions instead of observing a sticky
 already-done bit.
-Blocking `(do child)` and parallel `(spawn child as instance)` lowering now
-also require the child target to resolve to a declared transaction in the same
-actor before scheduled `.fsm` text is emitted. Forward references are accepted,
-but missing child targets fail closed so they cannot synthesize dead
+Blocking `(do child ...)` and parallel `(spawn child as instance ...)`
+lowering also require the child target to resolve to a declared transaction in
+the same actor before scheduled `.fsm` text is emitted. Forward references are
+accepted, but missing child targets fail closed so they cannot synthesize dead
 `child_start`/`child_done` or `instance_start`/`instance_done` paths.
+Parameterized/generated `do` activations use generated instance handoffs such
+as `{parent}_{child}_do_{ordinal}_start` and `_done`.
 Spawned child instances are static generated HDL. Runtime spawn states only
 activate the persistent child instance through its start path, and child
 completion returns that instance to start-gated idle. Future spawn-in-repeat
@@ -1059,9 +1067,9 @@ assignment forms in the matching scheduled `.fsm` DT block. It is not an
 assignment payload list. The machine-readable contract advertises this through
 `schedule_report_dt_assignments_shape`.
 For each `dt_blocks` entry, `kind` is currently one of `drive`,
-`latency_counter`, `rule`, `rule_trigger_fanin`, or
-`temporal_contract_monitor`. The machine-readable contract advertises this
-through `schedule_report_dt_kind_values`.
+`do_port_binding`, `latency_counter`, `rule`, `rule_trigger_fanin`,
+`spawn_port_binding`, or `temporal_contract_monitor`. The machine-readable
+contract advertises this through `schedule_report_dt_kind_values`.
 
 For each `inferred_storage` entry, `kind` is currently one of `counter` or
 `register`. Optional `role` values describe the stable scheduler purpose when

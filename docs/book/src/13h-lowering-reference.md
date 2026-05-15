@@ -564,6 +564,9 @@ Max violation via watchdog timeout (if no `(await ...)` in transaction).
 
 ## `(do child)` → Handshake
 
+Local blocking `do` lowers by rewiring the child transaction inside the parent
+scheduled module.
+
 **In parent**:
 ```lisp
 (parent_do_1
@@ -589,14 +592,54 @@ The internal `{child}_done` handoff is pulse-shaped for the same reason as the
 public completion output: a parent may call the same child again, and a sticky
 done bit would let the next `(do child)` observe an old completion.
 
+Parameterized blocking `do` lowers through a generated child activation
+instance instead of a local child handshake:
+
+```lisp
+(do child
+  (params
+    (WIDTH 16))
+  (bind
+    (input addr req_addr)
+    (output data resp)))
+```
+
+Representative parent `.fsm`:
+
+```lisp
+(parent_do_1
+  (= (parent_child_do_0_start> 1))
+  (<parent_child_do_0_done
+    (-> parent_next_2)))
+
+(-parent_child_do_0_port_bindings
+  (= (parent_child_do_0_addr> req_addr))
+  (= (resp> parent_child_do_0_data) <parent_child_do_0_done))
+```
+
+Representative generated top `.fsm`:
+
+```lisp
+(?fsmc:parent_child_do_0 child
+  (params
+    (WIDTH 16)))
+```
+
+The generated instance name is `{parent}_{child}_do_{ordinal}`. Input bindings
+are parent-owned handoff assignments. Output bindings are guarded by the
+generated instance's `done` pulse. The generated top applies static parameter
+overrides and wires only the explicit activation handoffs; unlike spawn, it
+does not auto-fanout unrelated public actor inputs into the child instance.
+
 Spawn lowering writes separate child `.fsm` files, a parent `.fsm` with
 per-instance handoff ports, and a generated `<actor>_top.fsm` composition
-source when `--outdir DIR` is used. Spawn parameter declarations lower into
-child `+params` blocks, and spawn override lists are validated, preserved in
-the parent lowerer IR, and applied through generated `?fsmc` `(params ...)`
-blocks in the top. The generated top wires parent start outputs, parent done
-inputs, child `start`/`done` ports, and named-drive handoff signals through the
-existing composition pipeline.
+source when `--outdir DIR` is used. Spawn and parameterized `do` parameter
+declarations lower into child `+params` blocks, and override lists are
+validated, preserved in the parent lowerer IR, and applied through generated
+`?fsmc` `(params ...)` blocks in the top. The generated top wires parent start
+outputs, parent done inputs, child `start`/`done` ports, explicit port-binding
+handoffs, and named-drive handoff signals through the existing composition
+pipeline.
 
 The generated child instance is static HDL. A spawn state activates that
 instance through its start path; the child terminal state returns to the

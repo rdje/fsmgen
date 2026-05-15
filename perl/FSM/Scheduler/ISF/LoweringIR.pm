@@ -61,12 +61,12 @@ my %TRANSACTION_CONTEXT_LABEL = (
 
 sub build_module($self, $actor) {
     $self->_validate_child_transaction_refs($actor);
-    my %spawned = $self->_collect_spawn_refs($actor);
-    $self->_validate_transaction_parameter_clauses($actor, \%spawned);
+    my %generated_children = $self->_collect_generated_child_transaction_refs($actor);
+    $self->_validate_transaction_parameter_clauses($actor, \%generated_children);
     $self->_validate_transaction_port_bindings($actor);
 
     my %child_irs;
-    for my $cname (sort keys %spawned) {
+    for my $cname (sort keys %generated_children) {
         my ($ct) = grep { $_->{name} eq $cname } @{$actor->{transactions}};
         next unless $ct;
         $child_irs{$cname} = $self->_build_child_ir($ct, $actor, $cname);
@@ -83,7 +83,7 @@ sub build_module($self, $actor) {
         push @library_instances, _library_instance_metadata($use);
     }
 
-    my $parent_ir = $self->_build_parent_ir($actor, \%spawned);
+    my $parent_ir = $self->_build_parent_ir($actor, \%generated_children);
     $parent_ir->{children} = \%child_irs;
     $parent_ir->{library_uses} = \@library_instances;
     return $parent_ir;
@@ -171,7 +171,7 @@ sub _build_library_child_ir($self, $use, $parent_actor) {
 
 # --- Parent IR (composition top, non-spawned transactions only) ---
 
-sub _build_parent_ir($self, $actor, $spawned) {
+sub _build_parent_ir($self, $actor, $generated_children) {
     my @ports  = @{$self->_build_ports($actor)};
     my %ctrs;
     my @states;
@@ -188,8 +188,9 @@ sub _build_parent_ir($self, $actor, $spawned) {
     my $ti = 0;
 
     for my $tx (@{$actor->{transactions}}) {
-        next if $spawned->{$tx->{name}};
-        my ($ss, $cs, $ds, $do, $sp, $contracts, $widths, $roles, $accesses) = $self->_build_transaction($tx, $actor, $ti++);
+        next if $generated_children->{$tx->{name}};
+        my ($ss, $cs, $ds, $do, $sp, $contracts, $widths, $roles, $accesses) =
+            $self->_build_transaction($tx, $actor, $ti++, $generated_children);
         _merge_signal_widths(\%signal_widths, $widths, $tx->{name});
         _merge_storage_roles(\%storage_roles, $roles, $tx->{name});
         my %tx_drive_uses = _collect_named_drive_call_names($tx->{clauses}, $actor->{drives} || {});
@@ -200,8 +201,14 @@ sub _build_parent_ir($self, $actor, $spawned) {
         }
         push @dts, @$ds;
         push @temporal_contracts, @$contracts;
-        for my $c (@$do)  { $ctrs{"${c}_start"} = 1; $ctrs{"${c}_done"} = 1; }
+        for my $d (@$do)  {
+            next if ref($d) eq 'HASH' && $d->{generated_child};
+            my $c = ref($d) eq 'HASH' ? $d->{child} : $d;
+            $ctrs{"${c}_start"} = 1;
+            $ctrs{"${c}_done"} = 1;
+        }
         for my $s (@$sp)  {
+            my $activation_kind = $s->{activation_kind} // 'spawn';
             $ctrs{"$s->{instance}_start"} = 1;
             $ctrs{"$s->{instance}_done"} = 1;
             _ensure_port(
@@ -209,14 +216,14 @@ sub _build_parent_ir($self, $actor, $spawned) {
                 "$s->{instance}_start",
                 'output',
                 1,
-                "Transaction '$tx->{name}': spawn instance '$s->{instance}' generated start handoff",
+                "Transaction '$tx->{name}': $activation_kind instance '$s->{instance}' generated start handoff",
             );
             _ensure_port(
                 \@ports,
                 "$s->{instance}_done",
                 'input',
                 1,
-                "Transaction '$tx->{name}': spawn instance '$s->{instance}' generated done handoff",
+                "Transaction '$tx->{name}': $activation_kind instance '$s->{instance}' generated done handoff",
             );
             my $child_tx = $transaction_by_name{$s->{child}};
             my @port_binding_assignments;
@@ -232,13 +239,13 @@ sub _build_parent_ir($self, $actor, $spawned) {
                         $parent_port,
                         'output',
                         $port->{width},
-                        "Transaction '$tx->{name}': spawn instance '$s->{instance}' input binding '$binding->{port}' generated payload handoff",
+                        "Transaction '$tx->{name}': $activation_kind instance '$s->{instance}' input binding '$binding->{port}' generated payload handoff",
                     );
                     push @port_binding_assignments, {
                         lhs         => $parent_port,
                         rhs         => $binding->{actor_signal},
                         op          => '=',
-                        source_kind => 'spawn_input_binding',
+                        source_kind => "${activation_kind}_input_binding",
                     };
                 } else {
                     _ensure_port(
@@ -246,14 +253,17 @@ sub _build_parent_ir($self, $actor, $spawned) {
                         $parent_port,
                         'input',
                         $port->{width},
-                        "Transaction '$tx->{name}': spawn instance '$s->{instance}' output binding '$binding->{port}' generated payload handoff",
+                        "Transaction '$tx->{name}': $activation_kind instance '$s->{instance}' output binding '$binding->{port}' generated payload handoff",
                     );
-                    push @port_binding_assignments, {
+                    my %assignment = (
                         lhs         => $binding->{actor_signal},
                         rhs         => $parent_port,
                         op          => '=',
-                        source_kind => 'spawn_output_binding',
-                    };
+                        source_kind => "${activation_kind}_output_binding",
+                    );
+                    $assignment{guard} = { port => "$s->{instance}_done" }
+                        if $activation_kind eq 'do';
+                    push @port_binding_assignments, \%assignment;
                 }
                 $ctrs{$parent_port} = $port->{width};
                 $storage_roles{$parent_port} = 'transaction_port_binding';
@@ -268,9 +278,10 @@ sub _build_parent_ir($self, $actor, $spawned) {
             if (@port_binding_assignments) {
                 push @dts, {
                     name              => "$s->{instance}_port_bindings",
-                    kind              => 'spawn_port_binding',
+                    kind              => "${activation_kind}_port_binding",
                     owner             => $tx->{name},
                     owner_kind        => 'transaction',
+                    activation_kind   => $activation_kind,
                     spawn_instance    => $s->{instance},
                     child_transaction => $s->{child},
                     assignments       => \@port_binding_assignments,
@@ -297,7 +308,7 @@ sub _build_parent_ir($self, $actor, $spawned) {
                     "${prefix}_start",
                     'input',
                     1,
-                    "Transaction '$tx->{name}': spawn instance '$s->{instance}' named drive '$drive_name' generated request handoff",
+                    "Transaction '$tx->{name}': $activation_kind instance '$s->{instance}' named drive '$drive_name' generated request handoff",
                 );
                 $ctrs{"${prefix}_start"} = 1;
                 $storage_roles{"${prefix}_start"} = 'drive_request';
@@ -308,7 +319,7 @@ sub _build_parent_ir($self, $actor, $spawned) {
                         "${prefix}_$param",
                         'input',
                         $width,
-                        "Transaction '$tx->{name}': spawn instance '$s->{instance}' named drive '$drive_name' parameter '$param' generated payload handoff",
+                        "Transaction '$tx->{name}': $activation_kind instance '$s->{instance}' named drive '$drive_name' parameter '$param' generated payload handoff",
                     );
                     $ctrs{"${prefix}_$param"} = $width;
                     $storage_roles{"${prefix}_$param"} = 'drive_payload';
@@ -335,8 +346,8 @@ sub _build_parent_ir($self, $actor, $spawned) {
     }
 
     push @dts, $self->_build_rules($actor, \%ctrs, \@bank_accesses);
-    $self->_wire_do_children(\@states, \%ctrs, $actor);
-    my $local_drive_filter = keys(%$spawned) ? \%local_drive_uses : undef;
+    $self->_wire_do_children(\@states, \%ctrs, $actor, $generated_children);
+    my $local_drive_filter = keys(%$generated_children) ? \%local_drive_uses : undef;
     $self->_build_drive_dts($actor, \@dts, \%ctrs, $local_drive_filter, \%spawn_drive_sources, \%storage_roles);
 
     my $ir = {
@@ -367,12 +378,24 @@ sub _build_parent_ir($self, $actor, $spawned) {
     return $ir;
 }
 
-sub _collect_spawn_refs($self, $actor) {
+sub _collect_generated_child_transaction_refs($self, $actor) {
+    return _generated_child_transaction_refs($actor);
+}
+
+sub _generated_child_transaction_refs {
+    my ($actor) = @_;
     my %s;
     for my $tx (@{$actor->{transactions}}) {
         for my $c (@{$tx->{clauses}}) {
-            next unless ref($c) eq 'ARRAY' && $c->[0] eq 'spawn';
-            $s{$c->[1]} = 1;
+            next unless ref($c) eq 'ARRAY' && @$c;
+            next unless defined($c->[0]) && !ref($c->[0]);
+            if ($c->[0] eq 'spawn') {
+                $s{$c->[1]} = 1;
+                next;
+            }
+            if ($c->[0] eq 'do' && @{_do_parameter_overrides($c, $tx->{name}, 'transaction body')}) {
+                $s{$c->[1]} = 1;
+            }
         }
     }
     return %s;
@@ -381,7 +404,9 @@ sub _collect_spawn_refs($self, $actor) {
 sub _validate_child_transaction_refs($self, $actor) {
     my %transactions = map { $_->{name} => 1 } @{$actor->{transactions} || []};
     my %transaction_by_name = map { $_->{name} => $_ } @{$actor->{transactions} || []};
-    my %spawn_instances;
+    my %generated_children;
+    my %generated_instances;
+    my @child_refs;
 
     for my $tx (@{$actor->{transactions} || []}) {
         my $tx_name = $tx->{name};
@@ -399,40 +424,77 @@ sub _validate_child_transaction_refs($self, $actor) {
             confess "Transaction '$tx_name': $keyword target '$target' is not a declared transaction\n"
                 unless $transactions{$target};
 
-            next unless $keyword eq 'spawn';
-            confess "Transaction '$tx_name': spawn target '$target' conflicts with parent actor module name '$actor->{actor_name}'\n"
-                if $target eq $actor->{actor_name};
-
-            my $instance = $clause->[3];
-            confess "Transaction '$tx_name': spawn instance '$instance' conflicts with parent actor instance name '$actor->{actor_name}'\n"
-                if $instance eq $actor->{actor_name};
-            confess "Transaction '$tx_name': duplicate spawn instance '$instance' in actor '$actor->{actor_name}'\n"
-                if $spawn_instances{$instance}++;
-
-            my %declared_params = map {
-                $_->{name} => $_
-            } @{_transaction_param_declarations($transaction_by_name{$target})};
-            for my $override (@{_spawn_parameter_overrides($clause, $tx_name, 'transaction body')}) {
-                my $name = $override->{name};
-                confess "Transaction '$tx_name': spawn instance '$instance' overrides unknown parameter '$name' on child '$target'\n"
-                    unless exists $declared_params{$name};
-                confess "Transaction '$tx_name': spawn instance '$instance' parameter '$name' shape does not match child '$target' declaration\n"
-                    unless _param_values_shape_compatible($declared_params{$name}{value}, $override->{value});
+            if ($keyword eq 'spawn') {
+                confess "Transaction '$tx_name': spawn target '$target' conflicts with parent actor module name '$actor->{actor_name}'\n"
+                    if $target eq $actor->{actor_name};
+                $generated_children{$target} = 1;
             }
+            $generated_children{$target} = 1
+                if $keyword eq 'do' && @{_do_parameter_overrides($clause, $tx_name, 'transaction body')};
+
+            push @child_refs, {
+                tx      => $tx,
+                tx_name => $tx_name,
+                clause  => $clause,
+                keyword => $keyword,
+                target  => $target,
+            };
+        }
+    }
+
+    for my $ref (@child_refs) {
+        my $tx       = $ref->{tx};
+        my $tx_name  = $ref->{tx_name};
+        my $clause   = $ref->{clause};
+        my $keyword  = $ref->{keyword};
+        my $target   = $ref->{target};
+        my $generated_activation = $keyword eq 'spawn' || ($keyword eq 'do' && $generated_children{$target});
+        next unless $generated_activation;
+
+        confess "Transaction '$tx_name': $keyword target '$target' conflicts with parent actor module name '$actor->{actor_name}'\n"
+            if $target eq $actor->{actor_name};
+
+        my $instance = $keyword eq 'spawn'
+            ? $clause->[3]
+            : _generated_do_instance_name($tx_name, $target, _do_clause_ordinal($tx, $clause));
+
+        confess "Transaction '$tx_name': $keyword instance '$instance' conflicts with parent actor instance name '$actor->{actor_name}'\n"
+            if $instance eq $actor->{actor_name};
+        if (my $previous = $generated_instances{$instance}) {
+            my $duplicate_label = $keyword eq 'spawn' && $previous->{keyword} eq 'spawn'
+                ? 'duplicate spawn instance'
+                : 'duplicate generated child instance';
+            confess "Transaction '$tx_name': $duplicate_label '$instance' in actor '$actor->{actor_name}'\n";
+        }
+        $generated_instances{$instance} = {
+            keyword => $keyword,
+            owner   => $tx_name,
+            target  => $target,
+        };
+
+        my %declared_params = map {
+            $_->{name} => $_
+        } @{_transaction_param_declarations($transaction_by_name{$target})};
+        for my $override (@{_activation_parameter_overrides($clause, $tx_name, 'transaction body')}) {
+            my $name = $override->{name};
+            confess "Transaction '$tx_name': $keyword instance '$instance' overrides unknown parameter '$name' on child '$target'\n"
+                unless exists $declared_params{$name};
+            confess "Transaction '$tx_name': $keyword instance '$instance' parameter '$name' shape does not match child '$target' declaration\n"
+                unless _param_values_shape_compatible($declared_params{$name}{value}, $override->{value});
         }
     }
 
     return 1;
 }
 
-sub _validate_transaction_parameter_clauses($self, $actor, $spawned) {
+sub _validate_transaction_parameter_clauses($self, $actor, $generated_children) {
     for my $tx (@{$actor->{transactions} || []}) {
         my $params = _transaction_param_declarations($tx);
         next unless @$params;
 
         my $tx_name = $tx->{name};
-        confess "Transaction '$tx_name': params are supported only on spawned child transactions\n"
-            unless $spawned->{$tx_name};
+        confess "Transaction '$tx_name': params are supported only on generated child transactions\n"
+            unless $generated_children->{$tx_name};
     }
     return 1;
 }
@@ -485,21 +547,29 @@ sub _validate_transaction_port_bindings($self, $actor) {
 sub _transaction_port_binding_metadata {
     my ($actor) = @_;
     my %transaction_by_name = map { $_->{name} => $_ } @{$actor->{transactions} || []};
+    my %generated_children = _generated_child_transaction_refs($actor);
     my @metadata;
 
     for my $tx (@{$actor->{transactions} || []}) {
         my $owner = $tx->{name};
+        my $do_ordinal = 0;
         for my $clause (@{$tx->{clauses} || []}) {
             next unless ref($clause) eq 'ARRAY' && @$clause;
             my $keyword = $clause->[0];
             next unless defined($keyword) && !ref($keyword) && ($keyword eq 'do' || $keyword eq 'spawn');
             my $target = $clause->[1];
             next unless defined($target) && !ref($target) && exists $transaction_by_name{$target};
+            my $current_do_ordinal;
+            if ($keyword eq 'do') {
+                $current_do_ordinal = $do_ordinal++;
+            }
 
             my $bindings = _activation_bindings_from_clause($clause, $owner, 'transaction body');
             next unless @$bindings;
             my %target_ports = _transaction_port_map($transaction_by_name{$target});
-            my $instance = $keyword eq 'spawn' ? ($clause->[3] // "${owner}_spawn") : undef;
+            my $instance = $keyword eq 'spawn'
+                ? ($clause->[3] // "${owner}_spawn")
+                : ($generated_children{$target} ? _generated_do_instance_name($owner, $target, $current_do_ordinal) : undef);
             for my $binding (@$bindings) {
                 push @metadata, _transaction_port_binding_entry(
                     binding            => $binding,
@@ -562,10 +632,10 @@ sub _transaction_port_binding_entry {
         instance           => $instance,
         parent_port        => defined($instance) ? "${instance}_$port" : undef,
         child_port         => defined($instance) ? $port : undef,
-        start_signal       => $site_kind eq 'spawn' ? "${instance}_start" : "${target}_start",
+        start_signal       => defined($instance) ? "${instance}_start" : "${target}_start",
         done_signal        => $site_kind eq 'rule_trigger'
             ? undef
-            : ($site_kind eq 'spawn' ? "${instance}_done" : "${target}_done"),
+            : (defined($instance) ? "${instance}_done" : "${target}_done"),
         trigger_source     => $site_kind eq 'rule_trigger' ? _rule_trigger_source_name($args{owner}, $target) : undef,
         payload_source     => $site_kind eq 'rule_trigger' && $role eq 'input'
             ? _rule_trigger_payload_source_name($args{owner}, $target, $port)
@@ -1049,10 +1119,11 @@ sub _literal_repeat_count_width {
 }
 
 # --- Transaction → IR states ---
-sub _build_transaction($self, $tx, $actor, $txi) {
+sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
     my $tn  = $tx->{name};
     my $wd  = $actor->{watchdog};
     my $drives = $actor->{drives} || {};
+    $generated_children ||= {};
     _validate_supported_transaction_clauses($tx->{clauses}, $tn, 'transaction');
     my $widths = _build_signal_width_map($actor, $tx);
     my @st;
@@ -1067,6 +1138,7 @@ sub _build_transaction($self, $tx, $actor, $txi) {
     my %contract_names;
     my %storage_roles;
     my $si  = 0; my $ha = 0; my $wdc; my $lat;
+    my $do_ordinal = 0;
 
     my %transaction_ports = _transaction_port_map($tx);
     for my $port (values %transaction_ports) {
@@ -1142,7 +1214,12 @@ sub _build_transaction($self, $tx, $actor, $txi) {
         elsif ($k eq 'repeat')   { my ($rs,$rc,$rw) = _ir_repeat($cl,$tn,\$si,\@ps,$wd,$drives,$widths,$actor,\@bank_accesses); push @st,@$rs; _register_counter_width(\%ct,$rc,$rw); $storage_roles{$rc} = 'repeat_counter'; }
         elsif ($k eq 'latency')  { $lat = _parse_latency($cl, $tn); }
         elsif ($k eq 'params')   { next; }
-        elsif ($k eq 'do')       { push @doc, $cl->[1]; push @st, _ir_do($cl,$tn,$si++); }
+        elsif ($k eq 'do')       {
+            my $do_ref = _do_ref_from_clause($cl, $tn, $do_ordinal++, $generated_children);
+            push @doc, $do_ref;
+            push @spc, _clone_isf_value($do_ref) if $do_ref->{generated_child};
+            push @st, _ir_do($cl, $tn, $si++, $do_ref);
+        }
         elsif ($k eq 'spawn')    { push @spc, _spawn_ref_from_clause($cl,$tn); push @dps, "$spc[-1]{instance}_done"; push @st, _ir_spawn($cl,$tn,$si++); }
         elsif ($k eq 'await_all') { push @st, _ir_sync_all($tn,$si++,\@dps); @dps = (); }
         elsif ($k eq 'await_any') { push @st, _ir_sync_any($tn,$si++,\@dps); @dps = (); }
@@ -1463,11 +1540,33 @@ sub _validate_child_action_clause {
     my $keyword = $clause->[0];
 
     if ($keyword eq 'do') {
-        confess "Transaction '$tn': do requires '(do transaction [(bind ...)])' in $label\n"
-            unless (@$clause == 2 || @$clause == 3)
+        confess "Transaction '$tn': do requires '(do transaction [(params (NAME value) ...)] [(bind ...)])' in $label\n"
+            unless @$clause >= 2
                 && defined($clause->[1])
                 && !ref($clause->[1])
                 && length($clause->[1]);
+
+        my %seen_subclause;
+        for my $subclause (@{$clause}[2 .. $#$clause]) {
+            confess "Transaction '$tn': do subclauses must be '(params ...)' or '(bind ...)' in $label\n"
+                unless ref($subclause) eq 'ARRAY'
+                    && @$subclause
+                    && defined($subclause->[0])
+                    && !ref($subclause->[0])
+                    && length($subclause->[0]);
+            my $head = $subclause->[0];
+            confess "Transaction '$tn': do has duplicate '$head' subclause in $label\n"
+                if $seen_subclause{$head}++;
+            if ($head eq 'params') {
+                _parse_activation_params_clause($subclause, $tn, 'do', $clause->[1], $label);
+                next;
+            }
+            if ($head eq 'bind') {
+                _parse_activation_bind_clause($subclause, "Transaction '$tn': do target '$clause->[1]'");
+                next;
+            }
+            confess "Transaction '$tn': do has unsupported '$head' subclause in $label\n";
+        }
         _activation_bindings_from_clause($clause, $tn, $label);
         return 1;
     }
@@ -1496,7 +1595,7 @@ sub _validate_child_action_clause {
         confess "Transaction '$tn': spawn has duplicate '$head' subclause in $label\n"
             if $seen_subclause{$head}++;
         if ($head eq 'params') {
-            _parse_spawn_params_clause($subclause, $tn, $clause->[3], $label);
+            _parse_activation_params_clause($subclause, $tn, 'spawn', $clause->[3], $label);
             next;
         }
         if ($head eq 'bind') {
@@ -1575,23 +1674,68 @@ sub _spawn_ref_from_clause {
     return $ref;
 }
 
+sub _do_ref_from_clause {
+    my ($clause, $tn, $ordinal, $generated_children) = @_;
+    my $child = $clause->[1];
+    my $generated_child = $generated_children && $generated_children->{$child} ? 1 : 0;
+    my $ref = {
+        child           => $child,
+        activation_kind => 'do',
+        generated_child => $generated_child,
+    };
+
+    my $overrides = _do_parameter_overrides($clause, $tn, 'transaction body');
+    if ($generated_child) {
+        my $instance = _generated_do_instance_name($tn, $child, $ordinal);
+        $ref->{instance} = $instance;
+        $ref->{parameter_overrides} = $overrides;
+        my $port_bindings = _activation_bindings_from_clause($clause, $tn, 'transaction body');
+        $ref->{port_bindings} = $port_bindings if @$port_bindings;
+    }
+
+    return $ref;
+}
+
 sub _spawn_parameter_overrides {
     my ($clause, $tn, $label) = @_;
-    return [] unless ref($clause) eq 'ARRAY' && @$clause >= 5;
-    for my $subclause (@{$clause}[4 .. $#$clause]) {
+    return _activation_parameter_overrides($clause, $tn, $label);
+}
+
+sub _do_parameter_overrides {
+    my ($clause, $tn, $label) = @_;
+    return _activation_parameter_overrides($clause, $tn, $label);
+}
+
+sub _activation_parameter_overrides {
+    my ($clause, $tn, $label) = @_;
+    return [] unless ref($clause) eq 'ARRAY' && @$clause;
+    my $keyword = $clause->[0];
+    return [] unless defined($keyword) && !ref($keyword) && ($keyword eq 'spawn' || $keyword eq 'do');
+    my $start = $keyword eq 'spawn' ? 4 : 2;
+    return [] if $#$clause < $start;
+
+    my $instance = $keyword eq 'spawn'
+        ? $clause->[3]
+        : $clause->[1];
+    for my $subclause (@{$clause}[$start .. $#$clause]) {
         next unless ref($subclause) eq 'ARRAY'
             && @$subclause
             && defined($subclause->[0])
             && !ref($subclause->[0])
             && $subclause->[0] eq 'params';
-        return _parse_spawn_params_clause($subclause, $tn, $clause->[3], $label);
+        return _parse_activation_params_clause($subclause, $tn, $keyword, $instance, $label);
     }
     return [];
 }
 
 sub _parse_spawn_params_clause {
     my ($params_clause, $tn, $instance, $label) = @_;
-    confess "Transaction '$tn': spawn params require '(params (NAME value) ...)' in $label\n"
+    return _parse_activation_params_clause($params_clause, $tn, 'spawn', $instance, $label);
+}
+
+sub _parse_activation_params_clause {
+    my ($params_clause, $tn, $activation_kind, $instance, $label) = @_;
+    confess "Transaction '$tn': $activation_kind params require '(params (NAME value) ...)' in $label\n"
         unless ref($params_clause) eq 'ARRAY'
             && @$params_clause >= 2
             && defined($params_clause->[0])
@@ -1601,16 +1745,16 @@ sub _parse_spawn_params_clause {
     my @overrides;
     my %seen;
     for my $entry (@{$params_clause}[1 .. $#$params_clause]) {
-        confess "Transaction '$tn': spawn params entries require '(NAME value)' in $label\n"
+        confess "Transaction '$tn': $activation_kind params entries require '(NAME value)' in $label\n"
             unless ref($entry) eq 'ARRAY' && @$entry == 2;
         my ($name, $value) = @$entry;
-        confess "Transaction '$tn': spawn parameter override names must be scalar HDL identifiers\n"
+        confess "Transaction '$tn': $activation_kind parameter override names must be scalar HDL identifiers\n"
             unless _is_hdl_identifier($name);
-        confess "Transaction '$tn': spawn instance '$instance' has duplicate parameter override '$name'\n"
+        confess "Transaction '$tn': $activation_kind instance '$instance' has duplicate parameter override '$name'\n"
             if $seen{$name}++;
         _validate_isf_param_value(
             $value,
-            "Transaction '$tn': spawn instance '$instance' parameter '$name'",
+            "Transaction '$tn': $activation_kind instance '$instance' parameter '$name'",
         );
         push @overrides, {
             name  => $name,
@@ -1619,6 +1763,26 @@ sub _parse_spawn_params_clause {
     }
 
     return \@overrides;
+}
+
+sub _generated_do_instance_name {
+    my ($owner, $child, $ordinal) = @_;
+    return "${owner}_${child}_do_$ordinal";
+}
+
+sub _do_clause_ordinal {
+    my ($tx, $target_clause) = @_;
+    my $ordinal = 0;
+    for my $clause (@{$tx->{clauses} || []}) {
+        next unless ref($clause) eq 'ARRAY'
+            && @$clause
+            && defined($clause->[0])
+            && !ref($clause->[0])
+            && $clause->[0] eq 'do';
+        return $ordinal if $clause == $target_clause;
+        ++$ordinal;
+    }
+    return 0;
 }
 
 sub _activation_bindings_from_clause {
@@ -1639,7 +1803,7 @@ sub _activation_bindings_from_clause {
                 && !ref($subclause->[0])
                 && length($subclause->[0]);
         my $head = $subclause->[0];
-        next if $keyword eq 'spawn' && $head eq 'params';
+        next if ($keyword eq 'spawn' || $keyword eq 'do') && $head eq 'params';
         confess "Transaction '$owner': activation has duplicate '(bind ...)' subclause in $label\n"
             if $head eq 'bind' && $saw_bind++;
         confess "Transaction '$owner': activation supports only '(bind ...)' subclauses in $label\n"
@@ -2595,20 +2759,30 @@ sub _unsigned_width_for_max {
 }
 sub _ir_placeholder{ my ($cl,$tn,$i)=@_; {name=>"${tn}_$cl->[0]_$i",kind=>'sequential',assignments=>[],transitions=>[]} }
 sub _ir_do {
-    my ($cl, $tn, $i) = @_;
+    my ($cl, $tn, $i, $do_ref) = @_;
     my $c = $cl->[1];
-    my @bindings = @{_activation_bindings_from_clause($cl, $tn, 'transaction body')};
-    my @assignments = (
-        _activation_input_assignments(\@bindings, 'do_input_binding'),
-        { lhs => "${c}_start", rhs => 1, op => '=', source_kind => 'do_start' },
-        _activation_output_assignments(\@bindings, "${c}_done", 'do_output_binding'),
-    );
+    my $prefix = (ref($do_ref) eq 'HASH' && $do_ref->{generated_child})
+        ? $do_ref->{instance}
+        : $c;
+    my @assignments;
+    if (ref($do_ref) eq 'HASH' && $do_ref->{generated_child}) {
+        @assignments = (
+            { lhs => "${prefix}_start", rhs => 1, op => '=', source_kind => 'do_start' },
+        );
+    } else {
+        my @bindings = @{_activation_bindings_from_clause($cl, $tn, 'transaction body')};
+        @assignments = (
+            _activation_input_assignments(\@bindings, 'do_input_binding'),
+            { lhs => "${prefix}_start", rhs => 1, op => '=', source_kind => 'do_start' },
+            _activation_output_assignments(\@bindings, "${prefix}_done", 'do_output_binding'),
+        );
+    }
     return {
         name        => "${tn}_do_$i",
         kind        => 'await',
         assignments => \@assignments,
         transitions => [],
-        guard       => { port => "${c}_done" },
+        guard       => { port => "${prefix}_done" },
     };
 }
 
@@ -4364,10 +4538,11 @@ sub _parse_latency {
 sub _parse_await_wd { my($cl)=@_; for my $i(2..$#$cl){my$x=$cl->[$i];return$x->[1]if ref($x)eq'ARRAY'&&$x->[0]eq'watchdog'} undef }
 
 sub _wire_do_children {
-    my ($self,$st,$ctrs,$actor)=@_;
+    my ($self,$st,$ctrs,$actor,$generated_children)=@_;
+    $generated_children ||= {};
     my %ctx = map { $_->{name} => 1 } @{$actor->{transactions}};
     my %need;
-    for my $tx(@{$actor->{transactions}}){for my $cl(@{$tx->{clauses}}){next unless ref($cl)eq'ARRAY'&&$cl->[0]eq'do';$need{$cl->[1]}=1 if$ctx{$cl->[1]}}}
+    for my $tx(@{$actor->{transactions}}){for my $cl(@{$tx->{clauses}}){next unless ref($cl)eq'ARRAY'&&$cl->[0]eq'do';next if $generated_children->{$cl->[1]};$need{$cl->[1]}=1 if$ctx{$cl->[1]}}}
     for my $c (sort keys %need) {my $s="${c}_start";my $d="${c}_done";
         my($en)=grep{$_->{name}=~/^${c}_idle_/}@$st;if($en){$en->{guard}={port=>$s};$en->{transitions}=[];my($nx)=grep{$_->{name}=~/^${c}_/&&$_->{kind}ne'entry'&&$_->{name}!~/_timeout$/}@$st;push @{$en->{transitions}},{target=>$nx->{name},condition=>$en->{guard}}if$nx}
         my($tm)=grep{$_->{name}=~/^${c}_(?:done|complete)_/&&$_->{kind}eq'terminal'}@$st;unshift @{$tm->{assignments}},{lhs=>$d,rhs=>1,op=>'<1'}if$tm}

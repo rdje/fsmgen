@@ -363,9 +363,15 @@ sub _generated_composition_summary($self, $ir) {
     my $children = $ir->{children} || {};
 
     my %spawn_child = map { $_->{child} => 1 } @spawn_instances;
+    my $has_non_spawn_activation = grep {
+        ($_->{activation_kind} // 'spawn') ne 'spawn'
+    } @spawn_instances;
+    my $composition_kind = $has_non_spawn_activation
+        ? 'activation_generated_top'
+        : 'spawn_generated_top';
 
     return {
-        kind       => 'spawn_generated_top',
+        kind       => $composition_kind,
         top_module => "${actor_name}_top",
         top_fsm    => "${actor_name}_top.fsm",
         parent     => {
@@ -445,6 +451,7 @@ sub _generated_composition_instance_summary($self, $spawn, $child_ir) {
     return {
         instance           => $instance,
         child              => $child,
+        activation_kind    => $spawn->{activation_kind} // 'spawn',
         start              => {
             parent_port => "${instance}_start",
             child_port  => 'start',

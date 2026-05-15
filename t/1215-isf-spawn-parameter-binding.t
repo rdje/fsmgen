@@ -3,7 +3,10 @@ use strict;
 use warnings;
 use Test::More;
 use File::Spec;
+use File::Temp qw(tempdir);
 use FindBin;
+use IPC::Cmd qw(run);
+use JSON::PP qw(decode_json);
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
@@ -71,6 +74,123 @@ ISF
     like($parent_fsm, qr/\(= \(w1_start> 1\)\)/, 'parent exposes the second spawn instance start');
     like($child_fsm, qr/\(\+params\s+\(WIDTH 8\)\s+\(LANES \(8'h00 8'h00\)\)\s+\)/s, 'child .fsm emits transaction parameter defaults');
     like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\(LANES \(8'hA5 8'h3C\)\)\s+\)\s+\)/s, 'generated top applies per-instance spawn parameter overrides');
+};
+
+subtest 'parameterized do lowers through a generated child activation instance' => sub {
+    my $source = <<'ISF';
+(actor parameterized_do_binding
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input req_addr (width 8))
+    (output done)
+    (output resp (width 8)))
+  (transaction parent
+    (on start)
+    (do worker
+      (params
+        (WIDTH 16))
+      (bind
+        (input addr req_addr)
+        (output data resp)))
+    (complete done))
+  (transaction worker
+    (params
+      (WIDTH 8))
+    (ports
+      (input addr (width 8))
+      (output data (width 8)))
+    (update data addr)
+    (complete done)))
+ISF
+
+    my $actor = parse_source($source);
+    my $ir = FSM::Scheduler::ISF::LoweringIR->new()->build_module($actor);
+    is(scalar(@{$ir->{spawn_instances}}), 1, 'parameterized do contributes one generated activation instance');
+    my $instance = $ir->{spawn_instances}[0];
+    is($instance->{activation_kind}, 'do', 'generated instance preserves do activation provenance');
+    is($instance->{child}, 'worker', 'generated do instance targets the child transaction module');
+    is($instance->{instance}, 'parent_worker_do_0', 'generated do instance name is deterministic');
+    is_deeply(
+        $instance->{parameter_overrides},
+        [ { name => 'WIDTH', value => '16' } ],
+        'generated do instance preserves parameter overrides',
+    );
+    is_deeply(
+        $instance->{port_bindings},
+        [
+            {
+                role         => 'input',
+                child_port   => 'addr',
+                parent_port  => 'parent_worker_do_0_addr',
+                actor_signal => 'req_addr',
+                width        => 8,
+            },
+            {
+                role         => 'output',
+                child_port   => 'data',
+                parent_port  => 'parent_worker_do_0_data',
+                actor_signal => 'resp',
+                width        => 8,
+            },
+        ],
+        'generated do instance exposes reviewable port-binding handoffs',
+    );
+
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    my $parent_fsm = $lowered->{files}{'parameterized_do_binding.fsm'};
+    my $child_fsm = $lowered->{files}{'worker.fsm'};
+    my $top_fsm = $lowered->{files}{'parameterized_do_binding_top.fsm'};
+
+    ok(defined($parent_fsm), 'parent scheduled .fsm is emitted');
+    ok(defined($child_fsm), 'parameterized do child scheduled .fsm is emitted');
+    ok(defined($top_fsm), 'generated top .fsm is emitted for parameterized do');
+    like($parent_fsm, qr/\(= \(parent_worker_do_0_start> 1\)\)/, 'parent do state starts the generated do instance');
+    like($parent_fsm, qr/<parent_worker_do_0_done/, 'parent do state awaits the generated do instance completion');
+    like($parent_fsm, qr/\(-parent_worker_do_0_port_bindings\s+\(= \(parent_worker_do_0_addr> req_addr\)\)\s+\(= \(resp> parent_worker_do_0_data\) <parent_worker_do_0_done\)\s+\)/s,
+        'parent .fsm keeps do input and done-gated output bindings reviewable');
+    like($child_fsm, qr/\(\+params\s+\(WIDTH 8\)\s+\)/s, 'generated do child emits transaction parameter defaults');
+    like($top_fsm, qr/\(\?fsmc:parent_worker_do_0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
+        'generated top applies the do parameter override');
+    like($top_fsm, qr{/parameterized_do_binding\.parent_worker_do_0_start/parent_worker_do_0\.start/}, 'generated top wires do start handoff');
+    like($top_fsm, qr{/parent_worker_do_0\.done/parameterized_do_binding\.parent_worker_do_0_done/}, 'generated top wires do done handoff');
+
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $source_path = File::Spec->catfile($tempdir, 'parameterized_do_binding.isf');
+    my $hdl_path = File::Spec->catfile($tempdir, 'parameterized_do_binding.sv');
+    write_file($source_path, $source);
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => [
+            './bin/fsmgen',
+            '--quiet',
+            '--outdir',
+            $tempdir,
+            '--output',
+            $hdl_path,
+            $source_path,
+        ],
+    );
+    ok($success, 'parameterized do generated top reaches HDL generation');
+    is(join('', @{$stderr_buf || []}), '', 'parameterized do HDL generation keeps stderr clean');
+    like(slurp($hdl_path), qr/\bmodule\s+parameterized_do_binding_top\b/, 'HDL contains parameterized do generated top module');
+
+    my $report = decode_json(FSM::Scheduler::ISF->new()->report($actor));
+    is($report->{generated_composition}{kind}, 'activation_generated_top', 'report identifies a general activation generated top');
+    is($report->{generated_composition}{instances}[0]{activation_kind}, 'do', 'report preserves do activation kind');
+    is_deeply(
+        $report->{generated_composition}{instances}[0]{parameter_bindings},
+        [ { name => 'WIDTH', source => 'override', value => '16' } ],
+        'report exposes generated do parameter binding provenance',
+    );
+    is_deeply(
+        [ map { $_->{site_kind} . ':' . ($_->{instance} // '') . ':' . $_->{port} } @{$report->{transaction_port_bindings}} ],
+        [
+            'do:parent_worker_do_0:addr',
+            'do:parent_worker_do_0:data',
+        ],
+        'report exposes generated do transaction port-binding provenance',
+    );
 };
 
 subtest 'spawn parameter bindings fail closed for unsupported or ambiguous shapes' => sub {
@@ -258,7 +378,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'non-spawned transaction parameter declaration', qr/params are supported only on spawned child transactions/);
+    assert_lower_rejected(<<'ISF', 'non-generated transaction parameter declaration', qr/params are supported only on generated child transactions/);
 (actor non_spawned_transaction_parameter
   (clock clk)
   (interface (input start) (output done))
@@ -269,15 +389,33 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'parameterized do remains unsupported', qr/activation supports only '\(bind \.\.\.\)' subclauses/);
-(actor parameterized_do
+    assert_lower_rejected(<<'ISF', 'unknown do override name', qr/do instance 'parent_worker_do_0' overrides unknown parameter 'MODE'/);
+(actor unknown_do_parameter
   (clock clk)
   (interface (input start) (output done))
   (transaction parent
     (on start)
     (do worker
       (params
-        (WIDTH 16)))
+        (MODE 1)))
+    (complete done))
+  (transaction worker
+    (params
+      (WIDTH 8))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'multiple do parameter blocks', qr/do has duplicate 'params' subclause/);
+(actor multiple_do_parameter_blocks
+  (clock clk)
+  (interface (input start) (output done))
+  (transaction parent
+    (on start)
+    (do worker
+      (params
+        (WIDTH 16))
+      (params
+        (WIDTH 32)))
     (complete done))
   (transaction worker
     (params
@@ -310,4 +448,19 @@ sub assert_lower_rejected {
     ok(!$ok, "$label is rejected during lowering");
     ok(!ref($diagnostic), "$label diagnostic is scalar");
     like($diagnostic, $diagnostic_re, "$label diagnostic is targeted");
+}
+
+sub write_file {
+    my ($path, $text) = @_;
+    open my $fh, '>', $path or die "cannot write $path: $!";
+    print {$fh} $text;
+    close $fh or die "cannot close $path: $!";
+}
+
+sub slurp {
+    my ($path) = @_;
+    open my $fh, '<', $path or die "cannot read $path: $!";
+    my $text = do { local $/; <$fh> };
+    close $fh or die "cannot close $path: $!";
+    return $text;
 }
