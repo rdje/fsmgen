@@ -94,12 +94,67 @@ changing the exact timing meaning of the shipped wait construct.
   Commit: `ISF-DYNAMIC-WAIT.3.2: ship runtime scalar waits`
 
 - ID: `ISF-DYNAMIC-WAIT.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Expand runtime dynamic wait contexts after the first lowering works.`
+  Children: `ISF-DYNAMIC-WAIT.3.3.1`, `ISF-DYNAMIC-WAIT.3.3.2`,
+  `ISF-DYNAMIC-WAIT.3.3.3`, `ISF-DYNAMIC-WAIT.3.3.4`,
+  `ISF-DYNAMIC-WAIT.3.3.5`, `ISF-DYNAMIC-WAIT.3.3.6`
+
+- ID: `ISF-DYNAMIC-WAIT.3.3.1`
+  Status: `done`
+  Goal: `Split the post-first-runtime expansion into executable leaves.`
+  Acceptance: The task tree, roadmap, mdBook backlog, and live docs name the
+  remaining runtime dynamic wait expansion families and identify the next
+  implementation frontier.
+  Verification: `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-DYNAMIC-WAIT.3.3.1: split dynamic wait expansion`
+
+- ID: `ISF-DYNAMIC-WAIT.3.3.2`
+  Status: `pending`
+  Goal: `Support consecutive top-level runtime scalar waits.`
+  Acceptance: A dynamic wait may be followed immediately by another dynamic
+  wait; the first wait's final sampled-counter edge must split into the second
+  wait's zero-bypass and positive sampled-counter paths without rereading the
+  first wait count or adding an active cycle.
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-DYNAMIC-WAIT.3.3.3`
+  Status: `pending`
+  Goal: `Support additional top-level predecessor kinds.`
+  Acceptance: Runtime waits after `await`, `stage`, `repeat_check`,
+  `sync_all`, and `sync_any` either lower through exact combined predecessor
+  conditions and counter loads or remain fail-closed with targeted diagnostics
+  and book coverage for each predecessor kind.
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-DYNAMIC-WAIT.3.3.4`
+  Status: `pending`
+  Goal: `Support inline dynamic waits in branch and loop bodies.`
+  Acceptance: Dynamic waits inside shipped `when`, `switch`, `repeat`,
+  `while`, and `until` bodies either preserve branch/loop exit semantics with
+  exact zero-bypass behavior or remain fail-closed with targeted diagnostics
+  and book coverage for each inline context.
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-DYNAMIC-WAIT.3.3.5`
+  Status: `pending`
+  Goal: `Preserve pending samples across runtime dynamic wait bypass paths.`
   Acceptance: Pending-sample preservation, branch/switch/repeat/loop contexts,
-  and any expression-valued count expansion are either implemented with exact
-  bypass semantics or remain explicitly fail-closed with diagnostics and book
-  coverage.
+  and zero/positive runtime wait paths either share one exact sample
+  materialization contract or remain explicitly fail-closed with diagnostics
+  and book coverage.
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-DYNAMIC-WAIT.3.3.6`
+  Status: `pending`
+  Goal: `Evaluate expression-valued runtime wait counts.`
+  Acceptance: Expression-valued count expansion has a width/type/snapshot
+  contract and either ships through a generated count temporary or stays
+  fail-closed with diagnostics and book coverage.
   Verification: `pending`
   Commit: `pending`
 
@@ -107,7 +162,7 @@ changing the exact timing meaning of the shipped wait construct.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-DYNAMIC-WAIT.3.3` | `pending` | The first runtime scalar implementation is shipped; broader contexts can now be expanded one by one. |
+| 1 | `ISF-DYNAMIC-WAIT.3.3.2` | `pending` | Consecutive top-level dynamic waits are the smallest next predecessor-edge expansion after the first lowering. |
 
 ## Decisions
 
@@ -149,6 +204,10 @@ changing the exact timing meaning of the shipped wait construct.
 - `2026-05-15`: The first shipped runtime wait state is a one-state sampled
   counter loop: the state decrements the generated counter, exits when the
   sampled value is `1`, and loops while the sampled value is greater than `1`.
+- `2026-05-15`: Expand runtime dynamic waits from smaller predecessor-edge
+  problems outward. Consecutive top-level dynamic waits come before inline
+  branch/loop waits and pending-sample support because they reuse the existing
+  top-level state shape while exercising a real dynamic predecessor split.
 
 ## Open Questions
 
@@ -167,6 +226,7 @@ changing the exact timing meaning of the shipped wait construct.
 | `2026-05-15` | `ISF-DYNAMIC-WAIT.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1244-isf-wait-clause-lowering.t t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-DYNAMIC-WAIT.3.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-DYNAMIC-WAIT.3.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-DYNAMIC-WAIT.3.3.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -176,6 +236,7 @@ changing the exact timing meaning of the shipped wait construct.
 | `ISF-DYNAMIC-WAIT.2` | `ISF-DYNAMIC-WAIT.2: ship symbolic waits` | Ships actor constants as the static symbolic source for wait counts. |
 | `ISF-DYNAMIC-WAIT.3.1` | `ISF-DYNAMIC-WAIT.3.1: split runtime waits` | Splits runtime dynamic waits into a bypass-capable first implementation and later context expansion. |
 | `ISF-DYNAMIC-WAIT.3.2` | `ISF-DYNAMIC-WAIT.3.2: ship runtime scalar waits` | Ships the first top-level known-width runtime scalar wait lowering and report metadata. |
+| `ISF-DYNAMIC-WAIT.3.3.1` | `ISF-DYNAMIC-WAIT.3.3.1: split dynamic wait expansion` | Splits context expansion into executable leaves. |
 
 ## Changelog
 
@@ -191,3 +252,5 @@ changing the exact timing meaning of the shipped wait construct.
 - `2026-05-15`: Completed `ISF-DYNAMIC-WAIT.3.2`; top-level known-width
   runtime scalar waits now lower through predecessor-edge counter load/bypass
   and the current frontier advances to `ISF-DYNAMIC-WAIT.3.3`.
+- `2026-05-15`: Split `ISF-DYNAMIC-WAIT.3.3` into executable expansion leaves;
+  the next implementation frontier is consecutive top-level dynamic waits.

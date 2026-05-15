@@ -19,6 +19,12 @@ This is the persistent technical change history for FSMGen.
   expose `count_kind`, `count_source`, `counter_signal`, and `counter_width`.
 - Refreshed wait lowering tests, the ISF public contract, mdBook, ISF spec,
   feature backlog, roadmap, task tree, and live docs.
+### R14 — ISF dynamic wait expansion split
+- Split `ISF-DYNAMIC-WAIT.3.3` into executable child leaves for consecutive
+  dynamic waits, additional top-level predecessor kinds, inline dynamic waits,
+  pending-sample preservation, and expression-valued count evaluation.
+- Updated the roadmap, task tree, mdBook backlog, and live docs so the next
+  implementation frontier is `ISF-DYNAMIC-WAIT.3.3.2`.
 ### R14 — ISF runtime dynamic wait split
 - Split `ISF-DYNAMIC-WAIT.3` into executable child leaves before attempting
   runtime scalar wait lowering.

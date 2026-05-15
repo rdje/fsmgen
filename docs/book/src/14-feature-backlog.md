@@ -417,6 +417,12 @@ Remaining backlog: runtime scalar waits after pending samples, inside
 edge split is not implemented yet, after another dynamic wait, and with
 expression-valued or parameter-backed counts.
 
+Expansion order is tracked under `ISF-DYNAMIC-WAIT.3.3`: first consecutive
+top-level dynamic waits, then additional top-level predecessor kinds such as
+`await` and `stage`, then inline branch/loop bodies, then pending-sample
+preservation, and finally expression-valued runtime counts once their
+width/type/snapshot contract is specified.
+
 ### Transaction Dynamic Loops
 
 Status: shipped base surface; nested/child loop combinations remain backlog.

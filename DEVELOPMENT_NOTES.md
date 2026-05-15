@@ -14,6 +14,16 @@ This document captures engineering rationale, design constraints, and working de
 - Pending samples and predecessor kinds with nontrivial existing transitions
   remain fail-closed because they need explicit edge splitting that preserves
   both the zero bypass path and the positive sampled-counter path.
+## 2026-05-15: dynamic wait expansion order
+- Runtime dynamic wait expansion should proceed from smaller predecessor-edge
+  problems to larger control-flow problems.
+- Consecutive top-level dynamic waits are the next useful target because the
+  second wait's predecessor is a generated dynamic wait state. Supporting that
+  exercises dynamic-predecessor splitting without introducing branch, loop, or
+  pending-sample semantics at the same time.
+- Inline branch/loop contexts and pending samples should stay separate leaves;
+  they need different proof obligations for shared post states and sample
+  materialization timing.
 ## 2026-05-15: actor constants are structural, params remain overrideable
 - Static symbolic waits need a symbol source whose value is known before the
   scheduler emits states. Actor-level `(constants ...)` provides that source.

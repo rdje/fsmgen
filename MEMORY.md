@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF dynamic wait expansion split
+- Split `ISF-DYNAMIC-WAIT.3.3` into executable child leaves.
+- The next frontier is `ISF-DYNAMIC-WAIT.3.3.2`: consecutive top-level runtime
+  scalar waits.
+- Later leaves track additional top-level predecessor kinds, inline
+  branch/loop contexts, pending-sample preservation, and expression-valued
+  runtime counts.
 ## 2026-05-15: ISF actor constants and symbolic waits
 - Completed `ISF-DYNAMIC-WAIT.2` in
   [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md).
@@ -12,8 +19,8 @@ This is the live continuity document for fast session recovery after crashes, re
   chains; resolved zero counts remain transparent no-ops.
 - Actor/transaction `params` are deliberately not wait-count sources because
   they are overrideable after scheduled states are emitted.
-- The current frontier is `ISF-DYNAMIC-WAIT.3.3`, broader runtime dynamic wait
-  contexts after the first scalar lowering.
+- The current frontier is `ISF-DYNAMIC-WAIT.3.3.2`, consecutive top-level
+  runtime scalar waits.
 ## 2026-05-15: ISF bounded runtime scalar waits
 - Completed `ISF-DYNAMIC-WAIT.3.2` in
   [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md).

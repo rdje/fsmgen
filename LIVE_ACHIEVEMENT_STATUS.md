@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF dynamic wait expansion split
+- Completed R14 task-tree slice: `ISF-DYNAMIC-WAIT.3.3.1`.
+- `ISF-DYNAMIC-WAIT.3.3` is now an active container for the remaining runtime
+  dynamic wait expansion work.
+- The next frontier is `ISF-DYNAMIC-WAIT.3.3.2`, consecutive top-level runtime
+  scalar waits.
+- Later leaves track additional top-level predecessor kinds, inline
+  branch/loop bodies, pending-sample preservation, and expression-valued count
+  evaluation.
+
 ## 2026-05-15: R14 — ISF bounded runtime scalar waits
 - Completed R14 task-tree slice: `ISF-DYNAMIC-WAIT.3.2`.
 - Top-level `(wait count_signal)` now accepts known-width runtime scalar count
