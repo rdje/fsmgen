@@ -603,7 +603,9 @@ The sample-clause boundary is checked by
 [t/1195-isf-sample-clause-boundary.t](../t/1195-isf-sample-clause-boundary.t)
 so standalone samples and `(on ...)` inline samples must use exactly
 `(sample port as name)` with scalar names. Unsupported `(on ...)` body forms
-fail closed instead of being ignored.
+fail closed instead of being ignored. Direct `(on ...)` activation is not a
+parameter-override site; `(on start (params ...))` stays outside the public
+syntax and must fail closed like any other unsupported entry-body form.
 The complete-clause boundary is checked by
 [t/1196-isf-complete-clause-boundary.t](../t/1196-isf-complete-clause-boundary.t)
 so `(complete port)` must name exactly one scalar completion target before

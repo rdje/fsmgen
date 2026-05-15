@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF direct activation parameter boundary specified
+- Completed `ISF-ACTIVATION-PARAM-OVERRIDES.4`.
+- Specified direct `(on ...)` activation as fail-closed for activation-site
+  `(params ...)`: `(on start (params ...))` is not public syntax and must not
+  specialize hardware or create runtime parameter assignment semantics.
+- Recorded the rationale in the ISF spec and mdBook: `(on ...)` is the
+  transaction's own entry guard, not a caller-owned generated activation
+  instance. Transaction-local `params` remain definition defaults.
+- Documented the author guidance: runtime-varying entry data should use
+  transaction ports, `(sample ...)`, or supported activation-site `(bind ...)`
+  payloads, while static specialization belongs on generated activation forms
+  such as `spawn`, parameterized blocking `do`, and parameterized rule
+  `trigger`.
+- This is specification-only. Compiler behavior, accepted public syntax,
+  schedule-report shape, and HDL output are unchanged.
 ### R14 — ISF rule-trigger parameter overrides shipped
 - Completed `ISF-ACTIVATION-PARAM-OVERRIDES.3`.
 - Rule actions now accept

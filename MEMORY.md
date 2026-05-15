@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF direct activation parameter boundary specified
+- Completed `ISF-ACTIVATION-PARAM-OVERRIDES.4` in
+  [docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md](docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md).
+- Direct `(on ...)` activation is specified as fail-closed for activation-site
+  `(params ...)`: `(on start (params ...))` is not public syntax and must not
+  be interpreted as static specialization or runtime parameter assignment.
+- The rationale is that `(on ...)` is the transaction's own entry guard, not a
+  caller-owned generated activation instance. Transaction-local `params`
+  remain definition defaults; per-activation static specialization belongs on
+  generated activation forms such as `spawn`, parameterized blocking `do`, and
+  parameterized rule `trigger`.
+- Runtime-varying entry values should use transaction ports, `(sample ...)`,
+  or supported activation-site `(bind ...)` payloads.
+- This slice is specification-only. Compiler behavior, accepted syntax,
+  report shape, and HDL output are unchanged.
+- The current frontier is `ISF-ACTIVATION-PARAM-OVERRIDES.5`, implementing or
+  test-closing the direct activation parameter boundary.
 ## 2026-05-16: ISF rule-trigger parameter overrides shipped
 - Completed `ISF-ACTIVATION-PARAM-OVERRIDES.3` in
   [docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md](docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md).

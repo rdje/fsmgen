@@ -252,6 +252,12 @@ Explicit `async`/`active_low`/`active_high` override.
 
 **Implicit signals**: `can_accept` (1, combinational, asserted in idle).
 
+`(on ...)` is the transaction's own entry guard, not a generated activation
+instance. It does not accept `(params ...)`; nested body clauses are limited to
+`(sample port as name)`. Static specialization must happen through generated
+activation forms such as `spawn`, parameterized blocking `do`, or
+parameterized rule `trigger`.
+
 ## `(drive name args...)` -> One State + Non-State DT
 
 **ISF**:

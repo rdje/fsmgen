@@ -890,9 +890,13 @@ transaction-local `params` and per-instance `(params (NAME value) ...)`
 overrides through the generated composition path, and those overrides
 specialize static child instances. Parameterized rule triggers use the same
 static-specialization model: they specialize generated child activation
-instances rather than mutate a shared transaction body. General parameter
-overrides at every transaction activation site remain future work and must not
-be inferred from the task-like analogy.
+instances rather than mutate a shared transaction body. Direct `(on ...)`
+entry activation does not accept activation-site parameter overrides: it is the
+transaction's own guard, not a separate caller-owned instance. Parameter
+declarations on a directly entered transaction still apply as defaults for
+that transaction definition; per-activation specialization requires a
+generated activation form such as `spawn`, parameterized blocking `do`, or
+parameterized rule `trigger`.
 
 The activation-site parameter shape is the same explicit block already used by
 spawned children. It is shipped for spawn, blocking `do`, and rule `trigger`:
@@ -927,6 +931,15 @@ site, applies the overrides on that generated `?fsmc` instance, and preserves
 the shipped rule-trigger pulse and input payload timing through generated
 handoff DTs. Rule-trigger output bindings remain unsupported because rules do
 not wait for transaction completion.
+
+Direct `(on ...)` activation has no corresponding `(params ...)` source shape.
+The only legal nested body clauses in `(on port body...)` are
+`(sample port as name)` entries. A source such as
+`(on start (params (WIDTH 16)))` is unsupported and must fail closed instead of
+being interpreted as either a runtime assignment or a static specialization
+site. Authors who need runtime-varying values at entry should sample or read
+ports; authors who need static specialization should move the reusable work
+behind a generated activation site.
 
 Current transaction clauses:
 - `(on port body...)`
@@ -970,6 +983,9 @@ diagnostics.
 The only supported inline body clauses inside `(on ...)` are
 `(sample port as name)` forms; other activation-body forms fail closed during
 lowering instead of being ignored.
+`(on ...)` does not accept `(params ...)` because it is not a separate
+activation instance. Transaction-local `params` on the same transaction remain
+definition defaults, not per-entry overrides.
 
 The scheduler also creates `can_accept` and asserts it in entry states. This is
 the current replacement for the old handshake-ready spelling. Deprecated

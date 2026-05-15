@@ -12,8 +12,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   behavior and does not move the active R14 frontier.
 - Next decision point: continue the active
   `ISF-ACTIVATION-PARAM-OVERRIDES` task tree. The current frontier is
-  `ISF-ACTIVATION-PARAM-OVERRIDES.4`, specifying the direct transaction
-  activation parameter boundary after rule-trigger parameter overrides shipped.
+  `ISF-ACTIVATION-PARAM-OVERRIDES.5`, implementing/test-closing the direct
+  transaction activation parameter boundary after the specification slice
+  selected fail-closed direct `(on ...)` parameter handling.
   `ISF-DYNAMIC-WAIT.2` shipped statically resolved symbolic wait counts from
   actor constants, `ISF-DYNAMIC-WAIT.3.1` split the runtime work around the
   zero-count bypass requirement, `ISF-DYNAMIC-WAIT.3.2` shipped the first
@@ -77,6 +78,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   pulse and input-payload timing. The generated top applies overrides through
   `?fsmc` params; schedule JSON reports `activation_kind => trigger` and
   parameter binding provenance. Rule-trigger output bindings remain rejected.
+  `ISF-ACTIVATION-PARAM-OVERRIDES.4` specified that direct `(on ...)`
+  activation is not a parameter-override site because it is the transaction's
+  own entry guard rather than a caller-owned generated instance. `(on start
+  (params ...))` must fail closed; runtime-varying entry data belongs in
+  transaction ports, `(sample ...)`, or supported `(bind ...)` payloads.
   Standalone public interface stabilization/audit work remains feature-driven;
   the completed `ISF-PUBLIC-CONTRACT` tree now supplies the synchronization
   checklist for future feature trees.

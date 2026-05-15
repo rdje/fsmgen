@@ -146,8 +146,9 @@ own specialization contract before becoming valid parameter values.
 Status: partially shipped. The original `ISF-TRANSACTION-ACTIVATION` tree is
 closed for spawn and blocking `do`; the active
 `ISF-ACTIVATION-PARAM-OVERRIDES` tree owns the remaining rule-trigger and
-direct-activation work. Rule-trigger parameter overrides are now shipped;
-direct transaction activation parameter behavior remains backlog in this tree.
+direct-activation work. Rule-trigger parameter overrides are now shipped. Direct
+`(on ...)` activation is specified as unsupported for activation-site
+`(params ...)`; implementation/test closure remains in this tree.
 
 Goal: extend the task-like transaction activation model so activation sites can
 override declared transaction parameters where that is semantically valid.
@@ -159,9 +160,11 @@ transactions and blocking `do` child activations support per-instance
 `(params (NAME value) ...)` overrides through generated composition.
 Parameterized rule triggers now use the same generated-composition
 specialization model. Parameter overrides on direct transaction activation or
-other future activation forms still need
-explicit source shape, compile-time versus runtime interpretation, diagnostics,
-lowering, report metadata, and HDL proof before they are public syntax.
+other future activation forms are not public syntax. For direct `(on ...)`,
+there is deliberately no source shape: the entry guard belongs to the
+transaction definition, not to a caller-owned instance that can be specialized.
+Runtime-varying values should use transaction ports, `(sample ...)`, or
+activation-site `(bind ...)` where supported.
 
 Source shape: reuse the existing explicit spawn-style
 `(params (NAME value) ...)` block on activation sites that support static
@@ -193,6 +196,11 @@ drives the instance start and input handoff ports under that source. The
 generated top applies the static `(params ...)` overrides on the child
 `?fsmc` instance. The rule wires but does not await the generated child `done`
 handoff, and output bindings remain unsupported.
+
+Direct `(on port body...)` remains the entry/idle-state guard and accepts only
+`(sample port as name)` nested body clauses. `(on start (params (WIDTH 16)))`
+must fail closed instead of being interpreted as a static specialization or a
+runtime parameter assignment.
 
 If two activation sites pass different parameter values to the same
 transaction, the lowerer must elaborate distinct logical child instances or

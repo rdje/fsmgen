@@ -20,16 +20,17 @@ parameter overrides through `(params ...)`. Those parameter overrides are
 compile-time specialization of a static child instance, not runtime payload
 actuals. Parameterized rule triggers now use the same specialization model:
 they elaborate generated child activation instances instead of writing mutable
-parameter signals into a shared transaction body. A fully general
-parameter-override model for every transaction activation form remains future
-work and should not be assumed from the task analogy.
+parameter signals into a shared transaction body. Direct `(on ...)` entry
+activation is explicitly not a parameter-override site because it is the
+transaction's own guard, not a caller-owned generated instance.
 
 Parameter overrides and port bindings must stay separate in authored intent.
 Use `(bind (input port expr) ...)` for runtime data/control values that can
 change from cycle to cycle. Use `(params (NAME value) ...)` only for static
 specialization values on activation forms that explicitly support that surface:
 spawned children, blocking `do` generated child activations, and
-parameterized rule triggers.
+parameterized rule triggers. Use transaction ports and `(sample ...)` or
+activation-site `(bind ...)` entries for runtime-varying values.
 
 ```lisp
 (do read_word
@@ -91,6 +92,12 @@ as activation with identical semantics — useful for expression conditions:
 The only supported inline body clauses inside `(on ...)` are
 `(sample port as name)` forms. Other body forms are rejected instead of being
 silently ignored.
+`(params ...)` is not a legal `(on ...)` body clause. A direct entry guard has
+no per-call instance to specialize; transaction-local `params` on that
+transaction remain definition defaults. If an author needs a statically
+specialized child instance, use a generated activation form (`spawn`,
+parameterized blocking `do`, or parameterized rule `trigger`) and pass runtime
+data through ports or bindings.
 
 **Timing**: 0 active cycles (waits). Fires in 1 cycle when condition is met.
 

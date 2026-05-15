@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: direct entry params stay fail-closed
+- `ISF-ACTIVATION-PARAM-OVERRIDES.4` deliberately does not create a
+  `(on ... (params ...))` surface. Direct entry activation has no caller-owned
+  activation instance, so accepting parameter overrides there would either
+  require cloning the transaction body behind an implicit instance or risk
+  confusing static parameters with runtime payloads.
+- Keeping `(on ...)` limited to the guard plus `(sample ...)` clauses preserves
+  the existing entry-state model and gives authors a clear split: use
+  transaction ports and samples for runtime entry data, and use generated
+  activation forms when a child transaction needs static specialization.
+- The follow-on implementation/closure leaf should prove the existing
+  fail-closed behavior with a focused regression and sharpen diagnostics only
+  if the current message is too indirect.
 ## 2026-05-16: parameterized rule triggers use explicit handoffs
 - `ISF-ACTIVATION-PARAM-OVERRIDES.3` implements rule-trigger parameter
   overrides by reusing the generated-child activation path rather than cloning

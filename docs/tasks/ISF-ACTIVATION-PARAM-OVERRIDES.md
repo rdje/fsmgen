@@ -74,11 +74,11 @@ direct transaction activation boundary.
   Commit: `ISF-ACTIVATION-PARAM-OVERRIDES.3: ship trigger params`
 
 - ID: `ISF-ACTIVATION-PARAM-OVERRIDES.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Specify the direct transaction activation parameter boundary.`
   Acceptance: `The task tree, spec, and mdBook define whether direct `(on ...)` activation can legally carry static parameter overrides, what syntax is accepted or rejected, and how authors should model runtime-varying values.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-ACTIVATION-PARAM-OVERRIDES.4: specify direct activation params`
 
 - ID: `ISF-ACTIVATION-PARAM-OVERRIDES.5`
   Status: `pending`
@@ -91,7 +91,7 @@ direct transaction activation boundary.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTIVATION-PARAM-OVERRIDES.4` | `pending` | Rule-trigger parameter overrides are shipped; the direct transaction activation parameter boundary is the remaining tree decision. |
+| 1 | `ISF-ACTIVATION-PARAM-OVERRIDES.5` | `pending` | The direct transaction activation parameter boundary is specified; implementation/test closure remains. |
 
 ## Decisions
 
@@ -139,6 +139,14 @@ direct transaction activation boundary.
   public contract metadata. The public contract advertised
   [t/1248-isf-rule-trigger-parameter-binding.t](../../t/1248-isf-rule-trigger-parameter-binding.t)
   in `tested_by`.
+- `2026-05-16`: Direct `(on ...)` activation is not an activation-site
+  parameter override surface. It is the transaction's own entry guard, not a
+  caller-owned generated instance, so `(on start (params ...))` must fail
+  closed rather than specializing hardware or creating mutable runtime
+  parameter signals. Runtime-varying entry values belong in transaction ports,
+  `(sample ...)`, or supported activation-site `(bind ...)` payloads. Static
+  specialization belongs on generated activation forms such as `spawn`,
+  parameterized blocking `do`, and parameterized rule `trigger`.
 
 ## Focused Test Plan
 
@@ -163,11 +171,20 @@ direct transaction activation boundary.
   implementation leaf records why an existing bounded report field already
   covers it without widening the public contract.
 
+`ISF-ACTIVATION-PARAM-OVERRIDES.5` should cover at least:
+
+- Direct `(on start (params ...))` fails before scheduled artifacts with the
+  existing direct-entry body diagnostic or a sharper equivalent.
+- Legal `(on start (sample ...))` behavior remains unchanged.
+- Transaction-local `params` continue to work as definition defaults only for
+  generated transaction instances; a non-generated direct transaction still
+  rejects parameter declarations under the existing generated-child boundary.
+- Docs, schedule-report/public-contract text, and tests all match the
+  fail-closed direct-activation decision from this specification leaf.
+
 ## Open Questions
 
-- The exact direct activation source surface is still unsettled. It does not
-  block rule-trigger specification because `(on ...)` has no activation-site
-  list shape equivalent to `do`, `spawn`, or rule action clauses today.
+- None.
 
 ## Blockers
 
@@ -180,6 +197,7 @@ direct transaction activation boundary.
 | `2026-05-16` | `ISF-ACTIVATION-PARAM-OVERRIDES.1` | `git diff --check` | `passed` |
 | `2026-05-16` | `ISF-ACTIVATION-PARAM-OVERRIDES.2` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-16` | `ISF-ACTIVATION-PARAM-OVERRIDES.3` | `perl -Iperl -c` for changed parser/lowering/contract modules and new/updated tests; focused trigger/composition/public-contract `prove` set; broader `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-16` | `ISF-ACTIVATION-PARAM-OVERRIDES.4` | `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -188,7 +206,7 @@ direct transaction activation boundary.
 | `ISF-ACTIVATION-PARAM-OVERRIDES.1` | `ISF-ACTIVATION-PARAM-OVERRIDES.1: open activation params tree` | Tree-opening slice; no compiler behavior change. |
 | `ISF-ACTIVATION-PARAM-OVERRIDES.2` | `ISF-ACTIVATION-PARAM-OVERRIDES.2: specify trigger params` | Selected generated child activation as the rule-trigger parameter override contract; implementation remains pending. |
 | `ISF-ACTIVATION-PARAM-OVERRIDES.3` | `ISF-ACTIVATION-PARAM-OVERRIDES.3: ship trigger params` | Shipped generated-child rule-trigger parameter overrides; direct activation remains pending. |
-| `ISF-ACTIVATION-PARAM-OVERRIDES.4` | `pending` | Pending. |
+| `ISF-ACTIVATION-PARAM-OVERRIDES.4` | `ISF-ACTIVATION-PARAM-OVERRIDES.4: specify direct activation params` | Selected a fail-closed boundary for direct `(on ...)` activation parameters. |
 | `ISF-ACTIVATION-PARAM-OVERRIDES.5` | `pending` | Pending. |
 
 ## Changelog
@@ -200,3 +218,5 @@ direct transaction activation boundary.
   frontier advances to `ISF-ACTIVATION-PARAM-OVERRIDES.3`.
 - `2026-05-16`: Completed `ISF-ACTIVATION-PARAM-OVERRIDES.3`; the active
   frontier advances to `ISF-ACTIVATION-PARAM-OVERRIDES.4`.
+- `2026-05-16`: Completed `ISF-ACTIVATION-PARAM-OVERRIDES.4`; the active
+  frontier advances to `ISF-ACTIVATION-PARAM-OVERRIDES.5`.

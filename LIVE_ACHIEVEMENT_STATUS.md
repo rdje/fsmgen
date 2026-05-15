@@ -2,6 +2,23 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF direct activation parameter boundary specified
+- Completed R14 task-tree slice: `ISF-ACTIVATION-PARAM-OVERRIDES.4`.
+- Direct `(on ...)` activation is specified as fail-closed for activation-site
+  `(params ...)`. `(on start (params ...))` is not public syntax and must not
+  specialize hardware or create runtime parameter assignment semantics.
+- The boundary is intentional: `(on ...)` is the transaction's own entry guard,
+  not a caller-owned generated activation instance. Transaction-local `params`
+  remain definition defaults.
+- Runtime-varying entry values should use transaction ports, `(sample ...)`,
+  or supported activation-site `(bind ...)` payloads. Static per-activation
+  specialization belongs on generated activation forms such as `spawn`,
+  parameterized blocking `do`, and parameterized rule `trigger`.
+- This slice is specification-only. Compiler behavior, accepted syntax,
+  report shape, and HDL output are unchanged.
+- The active frontier advances to `ISF-ACTIVATION-PARAM-OVERRIDES.5`,
+  implementing or test-closing the direct activation parameter boundary.
+
 ## 2026-05-16: R14 — ISF rule-trigger parameter overrides shipped
 - Completed R14 task-tree slice: `ISF-ACTIVATION-PARAM-OVERRIDES.3`.
 - Rule actions now accept
