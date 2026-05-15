@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: consecutive runtime waits are recursive edge splits
+- Back-to-back runtime waits are not handled by entering the second wait state
+  unconditionally. If the first runtime count is zero, the first wait consumes
+  no active cycle, so the same predecessor edge must immediately evaluate the
+  second wait's count and either load its counter or bypass it too.
+- If the first wait is active, the second wait's decision belongs on the first
+  wait state's final sampled-counter edge (`counter == 1`). That edge is the
+  only point where the first wait is complete without rereading the first
+  count source.
+- The implementation keeps this as one shared helper for entering a dynamic
+  wait. Positive count paths load the target wait counter and transition to
+  that wait state; zero-count paths recurse into the following dynamic wait or
+  transition to the lexical post-wait target.
+- Flattening generated `(& ...)` guards is part of the same quality boundary:
+  recursive zero-bypass chains should stay reviewable in the scheduled `.fsm`
+  artifact.
 ## 2026-05-15: runtime wait count sampling belongs on the predecessor edge
 - The runtime wait count cannot be snapshotted inside the generated wait state.
   If the source changes between the predecessor cycle and the first wait state,

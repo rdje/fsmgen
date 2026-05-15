@@ -400,6 +400,10 @@ state-producing clause. The runtime scalar lowering splits the predecessor
 edge: zero bypasses the generated wait state, and positive counts load a
 generated counter before entering the wait state. The wait state decrements the
 sampled counter and loops until the sampled value reaches `1`.
+Consecutive top-level runtime waits are shipped: a zero bypass from one wait
+immediately evaluates the next wait, and the final sampled-counter edge of an
+active wait splits into the following wait's positive sampled-counter and zero
+bypass paths.
 Successful reports expose bounded `transaction_waits[]` entries with
 transaction name, `cycles`, `count_kind`, `count_source`, entry state, exit
 state, optional counter signal, and optional counter width. Static waits keep
@@ -414,14 +418,15 @@ dynamic contexts fail closed today.
 
 Remaining backlog: runtime scalar waits after pending samples, inside
 `when`/`switch`/`repeat`/`while`/`until` bodies, after predecessor kinds whose
-edge split is not implemented yet, after another dynamic wait, and with
-expression-valued or parameter-backed counts.
+edge split is not implemented yet, and with expression-valued or
+parameter-backed counts.
 
-Expansion order is tracked under `ISF-DYNAMIC-WAIT.3.3`: first consecutive
-top-level dynamic waits, then additional top-level predecessor kinds such as
-`await` and `stage`, then inline branch/loop bodies, then pending-sample
-preservation, and finally expression-valued runtime counts once their
-width/type/snapshot contract is specified.
+Expansion order is tracked under `ISF-DYNAMIC-WAIT.3.3`: consecutive
+top-level dynamic waits are shipped, so the next frontier is additional
+top-level predecessor kinds such as `await` and `stage`, then inline
+branch/loop bodies, then pending-sample preservation, and finally
+expression-valued runtime counts once their width/type/snapshot contract is
+specified.
 
 ### Transaction Dynamic Loops
 

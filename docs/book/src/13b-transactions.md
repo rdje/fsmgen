@@ -237,7 +237,10 @@ iterate any authored actions.
   unconditionally, one per cycle for static counts.
 - `wait count_signal`: at top level only, bypass on a runtime zero count;
   otherwise snapshot `count_signal` on the predecessor edge and consume exactly
-  that many active wait cycles with a generated counter.
+  that many active wait cycles with a generated counter. Consecutive top-level
+  runtime waits are allowed; a zero bypass from one wait immediately evaluates
+  the next wait's zero/positive split, and the final sampled-counter edge of
+  an active wait does the same for the following wait.
 
 Pending samples immediately before a positive static wait piggyback onto the
 first wait state, using the same sample materialization rule as drive/await

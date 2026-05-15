@@ -1083,11 +1083,19 @@ the sampled counter is `1`, and loops while it is greater than `1`. A sampled
 runtime value of `K > 0` therefore consumes exactly `K` active wait cycles, and
 later changes to `count_signal` do not affect that wait occurrence.
 
-The first runtime scalar implementation is deliberately narrow. Runtime waits
-inside `when`, `switch`, `repeat`, `while`, or `until` bodies remain rejected.
-Runtime waits after pending samples, after predecessor states whose edge split
-is not implemented yet, after another dynamic wait, and counts expressed as
-list expressions or parameter-backed values also remain rejected.
+Consecutive top-level runtime scalar waits are supported by carrying the same
+edge split through the wait chain. If the first runtime count is zero, the
+activation edge immediately evaluates the next runtime wait's zero-bypass or
+positive sampled-counter path. If the first wait is active, its final sampled
+counter cycle (`counter == 1`) performs that same split for the next wait
+without rereading the first count source and without adding an extra active
+cycle.
+
+The current runtime scalar implementation is still deliberately narrow.
+Runtime waits inside `when`, `switch`, `repeat`, `while`, or `until` bodies
+remain rejected. Runtime waits after pending samples, after predecessor states
+whose edge split is not implemented yet, and counts expressed as list
+expressions or parameter-backed values also remain rejected.
 
 Diagnostics:
 - `(wait)` and `(wait N extra)` are malformed arity.
@@ -2160,9 +2168,8 @@ Focused tests:
 - Unconditional transaction delay beyond the shipped non-negative literal,
   actor-constant, and bounded top-level runtime scalar `(wait N)` shapes:
   pending-sample preservation, inline dynamic wait contexts, expression-valued
-  counts, parameter-backed counts, consecutive dynamic waits, and additional
-  predecessor-edge splits remain deferred until their timing and diagnostics
-  are implemented.
+  counts, parameter-backed counts, and additional predecessor-edge splits
+  remain deferred until their timing and diagnostics are implemented.
 - Transaction binding surfaces beyond scalar and expression-valued `do`,
   `spawn`, and rule-trigger input bindings. Rule-trigger output bindings,
   explicit snapshot-vs-live timing selection, broader static conflict

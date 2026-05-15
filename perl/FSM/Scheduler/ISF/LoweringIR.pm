@@ -3800,13 +3800,59 @@ sub _combine_assignment_guard_with_priority_suppressors {
 }
 
 sub _combine_condition_exprs {
-    my @conditions = grep {
+    my @raw_conditions = grep {
         defined($_) && length($_) && $_ ne '1'
     } @_;
 
+    my @conditions = map { _condition_and_terms($_) } @raw_conditions;
     return '1' unless @conditions;
     return $conditions[0] if @conditions == 1;
     return '(& ' . join(' ', @conditions) . ')';
+}
+
+sub _condition_and_terms {
+    my ($condition) = @_;
+    return () unless defined($condition) && !ref($condition) && length($condition);
+    return () if $condition eq '1';
+
+    my @terms = _split_top_level_and_expr($condition);
+    return map { _condition_and_terms($_) } @terms
+        if @terms > 1 || (@terms == 1 && $terms[0] ne $condition);
+    return ($condition);
+}
+
+sub _split_top_level_and_expr {
+    my ($condition) = @_;
+    return ($condition)
+        unless defined($condition)
+            && !ref($condition)
+            && $condition =~ /\A\(&\s+(.+)\)\z/s;
+
+    my $body = $1;
+    my @terms;
+    my $term = '';
+    my $depth = 0;
+
+    for my $idx (0 .. length($body) - 1) {
+        my $char = substr($body, $idx, 1);
+        if ($char =~ /\s/ && $depth == 0) {
+            push @terms, $term if length $term;
+            $term = '';
+            next;
+        }
+
+        $term .= $char;
+        if ($char eq '(') {
+            $depth++;
+        } elsif ($char eq ')') {
+            $depth--;
+            return ($condition) if $depth < 0;
+        }
+    }
+
+    return ($condition) if $depth != 0;
+    push @terms, $term if length $term;
+    return @terms ? @terms : ($condition);
 }
 
 sub _guard_condition_expr {
@@ -4587,7 +4633,7 @@ sub _link_states {
         next unless $s->{dynamic_wait_entry};
 
         my $exit_target = $i < $#$st ? $st->[$i + 1]{name} : $e;
-        confess "Transaction '$tn': consecutive runtime dynamic waits are not supported in the first dynamic-wait slice\n"
+        $s->{dynamic_wait_next_wait_state} = $st->[$i + 1]
             if $i < $#$st && $st->[$i + 1]{dynamic_wait_entry};
         $s->{dynamic_wait_exit_target} = $exit_target;
     }
@@ -4639,10 +4685,20 @@ sub _link_dynamic_wait_state {
     confess "Runtime dynamic wait state '$state->{name}' has no exit target\n"
         unless defined($exit_target) && length($exit_target);
 
-    push @{$state->{transitions}}, {
-        target    => $exit_target,
-        condition => { signal => $counter, op => '=', value => 1 },
-    };
+    my $final_cycle_condition = "(== $counter 1)";
+    my $next_dynamic_wait = $state->{dynamic_wait_next_wait_state};
+    if ($next_dynamic_wait) {
+        _link_dynamic_wait_entry_edge(
+            $state,
+            $next_dynamic_wait,
+            $final_cycle_condition,
+        );
+    } else {
+        push @{$state->{transitions}}, {
+            target    => $exit_target,
+            condition => { signal => $counter, op => '=', value => 1 },
+        };
+    }
     push @{$state->{transitions}}, {
         target    => $state->{name},
         condition => { signal => $counter, op => '>', value => 1 },
@@ -4653,8 +4709,6 @@ sub _link_dynamic_wait_predecessor {
     my ($tn, $state, $wait_state) = @_;
     my $kind = $state->{kind} // '';
     my $source = $wait_state->{wait_count_source};
-    my $counter = $wait_state->{wait_counter};
-    my $exit_target = $wait_state->{dynamic_wait_exit_target};
 
     my $supported =
         $kind eq 'entry'
@@ -4668,6 +4722,15 @@ sub _link_dynamic_wait_predecessor {
     my $base_condition = $kind eq 'entry'
         ? (_guard_condition_expr($state->{guard}) // '1')
         : '1';
+    _link_dynamic_wait_entry_edge($state, $wait_state, $base_condition);
+}
+
+sub _link_dynamic_wait_entry_edge {
+    my ($state, $wait_state, $base_condition) = @_;
+    my $source = $wait_state->{wait_count_source};
+    my $counter = $wait_state->{wait_counter};
+    my $exit_target = $wait_state->{dynamic_wait_exit_target};
+
     my $enter_condition = _combine_condition_exprs($base_condition, $source);
     my $bypass_condition = _combine_condition_exprs($base_condition, "(== $source 0)");
 
@@ -4682,10 +4745,16 @@ sub _link_dynamic_wait_predecessor {
         target    => $wait_state->{name},
         condition => { expr => $enter_condition },
     };
-    push @{$state->{transitions}}, {
-        target    => $exit_target,
-        condition => { expr => $bypass_condition },
-    };
+
+    my $next_dynamic_wait = $wait_state->{dynamic_wait_next_wait_state};
+    if ($next_dynamic_wait) {
+        _link_dynamic_wait_entry_edge($state, $next_dynamic_wait, $bypass_condition);
+    } else {
+        push @{$state->{transitions}}, {
+            target    => $exit_target,
+            condition => { expr => $bypass_condition },
+        };
+    }
 }
 
 sub _inj_watchdog {

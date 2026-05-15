@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF consecutive runtime scalar waits
+- Updated
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so consecutive top-level runtime scalar waits share the dynamic wait
+  load-or-bypass helper.
+- The zero-bypass edge of an earlier runtime wait now recursively evaluates the
+  following wait's zero/positive split, and the final sampled-counter edge of
+  an active wait performs the same split without rereading the earlier count
+  source.
+- Added focused wait lowering coverage in
+  [t/1244-isf-wait-clause-lowering.t](t/1244-isf-wait-clause-lowering.t)
+  for activation-edge cascading, active-wait final-edge splitting, report
+  metadata, and HDL generation.
+- Refreshed the ISF spec, public contract doc, mdBook, feature backlog,
+  roadmap, task tree, and live docs. The active dynamic-wait frontier advances
+  to `ISF-DYNAMIC-WAIT.3.3.3`.
 ### R14 — ISF bounded runtime scalar waits
 - Updated
   [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)

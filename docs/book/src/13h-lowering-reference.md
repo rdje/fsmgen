@@ -294,14 +294,50 @@ entered, it reads only the sampled counter: a sampled value of `1` exits after
 one active cycle, while values greater than `1` decrement and loop until the
 counter reaches `1`.
 
+Consecutive top-level runtime scalar waits reuse the same split on both the
+activation edge and the first wait's final sampled-counter edge. For:
+
+```lisp
+(wait first_cycles)
+(wait second_cycles)
+```
+
+the predecessor of `first_cycles` contains a positive edge for the first wait,
+plus a zero edge that immediately evaluates `second_cycles`:
+
+```lisp
+(main_idle_0
+  (<- (main_wait_1_cnt first_cycles) <(& start first_cycles))
+  (<- (main_wait_2_cnt second_cycles) <(& start (== first_cycles 0) second_cycles))
+  (-> main_wait_1 <(& start first_cycles))
+  (-> main_wait_2 <(& start (== first_cycles 0) second_cycles))
+  (-> main_drive_3 <(& start (== first_cycles 0) (== second_cycles 0))))
+```
+
+When the first wait has actually been entered, its final sampled-counter edge
+performs the same split for the second wait:
+
+```lisp
+(main_wait_1
+  (-- main_wait_1_cnt)
+  (<- (main_wait_2_cnt second_cycles) <(& (== main_wait_1_cnt 1) second_cycles))
+  (-> main_wait_2 <(& (== main_wait_1_cnt 1) second_cycles))
+  (-> main_drive_3 <(& (== main_wait_1_cnt 1) (== second_cycles 0)))
+  (?main_wait_1_cnt
+    (>1 (-> main_wait_1))))
+```
+
+The second count is sampled only on the edge that enters the second wait. The
+first count source is not reread after the first wait starts.
+
 Runtime scalar wait report entries use `count_kind` `runtime_scalar`, keep
 `cycles` null because the exact count is runtime data, name the source signal
 in `count_source`, and expose the generated counter through `counter_signal`
 and `counter_width`.
 
 Runtime waits remain fail-closed in inline bodies, after pending samples, after
-predecessor states whose edge split is not implemented yet, after another
-dynamic wait, and for expression-valued or parameter-backed counts.
+predecessor states whose edge split is not implemented yet, and for
+expression-valued or parameter-backed counts.
 
 **Timing**: exactly `N` active transaction cycles, no external condition.
 **Cycles**: `N`.

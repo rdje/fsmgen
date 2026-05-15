@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF consecutive runtime scalar waits
+- Completed `ISF-DYNAMIC-WAIT.3.3.2` in
+  [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md).
+- Consecutive top-level `(wait first_count)` / `(wait second_count)` runtime
+  scalar waits are now supported.
+- The predecessor zero-bypass path for the first wait recursively evaluates
+  the second wait's zero/positive split, so a zero first count never enters the
+  second wait with an uninitialized counter.
+- When the first wait is active, its final sampled-counter edge
+  (`counter == 1`) splits into the second wait's positive counter-load path or
+  zero bypass without rereading the first count source.
+- The current frontier is `ISF-DYNAMIC-WAIT.3.3.3`, additional top-level
+  predecessor kinds.
 ## 2026-05-15: ISF dynamic wait expansion split
 - Split `ISF-DYNAMIC-WAIT.3.3` into executable child leaves.
 - The next frontier is `ISF-DYNAMIC-WAIT.3.3.2`: consecutive top-level runtime
@@ -19,8 +32,9 @@ This is the live continuity document for fast session recovery after crashes, re
   chains; resolved zero counts remain transparent no-ops.
 - Actor/transaction `params` are deliberately not wait-count sources because
   they are overrideable after scheduled states are emitted.
-- The current frontier is `ISF-DYNAMIC-WAIT.3.3.2`, consecutive top-level
-  runtime scalar waits.
+- Consecutive top-level runtime scalar waits later shipped under
+  `ISF-DYNAMIC-WAIT.3.3.2`; the current frontier is recorded in the latest
+  dynamic-wait entry above.
 ## 2026-05-15: ISF bounded runtime scalar waits
 - Completed `ISF-DYNAMIC-WAIT.3.2` in
   [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md).
@@ -36,9 +50,10 @@ This is the live continuity document for fast session recovery after crashes, re
   `counter_width`; runtime scalar waits keep `cycles` null and name their
   generated `counter_signal`.
 - Pending samples before runtime waits, inline dynamic wait contexts,
-  consecutive dynamic waits, unsupported predecessor kinds, count expressions,
-  and parameter-backed counts remain fail-closed. The next frontier is
-  `ISF-DYNAMIC-WAIT.3.3`.
+  unsupported predecessor kinds, count expressions, and parameter-backed counts
+  remain fail-closed. Consecutive runtime waits later shipped under
+  `ISF-DYNAMIC-WAIT.3.3.2`; the current frontier is recorded in the latest
+  dynamic-wait entry above.
 ## 2026-05-15: ISF runtime dynamic wait split
 - Split `ISF-DYNAMIC-WAIT.3` into executable leaves in
   [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md).

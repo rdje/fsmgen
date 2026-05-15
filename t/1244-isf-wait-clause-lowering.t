@@ -320,6 +320,95 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'wait_dynamic');
 };
 
+subtest 'consecutive runtime scalar waits split load and bypass edges' => sub {
+    my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-pair');
+(actor wait_dynamic_pair
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input first_cycles (width 4))
+    (input second_cycles (width 3))
+    (output flag)
+    (output done))
+  (drive tick
+    (flag 1))
+  (transaction main
+    (on start)
+    (wait first_cycles)
+    (wait second_cycles)
+    (drive tick)
+    (complete done)))
+ISF
+
+    my $fsm = $lowered->{files}{'wait_dynamic_pair.fsm'};
+    my $idle = state_block($fsm, 'main_idle_0');
+    like($idle, qr/\(<- \(main_wait_1_cnt first_cycles\) <\(& start first_cycles\)\)/,
+        'first wait positive path samples the first runtime count at activation');
+    like($idle, qr/\(-> main_wait_1 <\(& start first_cycles\)\)/,
+        'first wait positive path enters the first generated wait state');
+    like($idle, qr/\(<- \(main_wait_2_cnt second_cycles\) <\(& start \(== first_cycles 0\) second_cycles\)\)/,
+        'first wait zero-bypass samples the second runtime count without an active first wait cycle');
+    like($idle, qr/\(-> main_wait_2 <\(& start \(== first_cycles 0\) second_cycles\)\)/,
+        'first wait zero-bypass can enter the second wait directly');
+    like($idle, qr/\(-> main_drive_3 <\(& start \(== first_cycles 0\) \(== second_cycles 0\)\)\)/,
+        'both zero counts bypass both generated wait states on the activation edge');
+
+    my $first_wait = state_block($fsm, 'main_wait_1');
+    like($first_wait, qr/\(-- main_wait_1_cnt\)/,
+        'first wait decrements only its sampled counter while active');
+    like($first_wait, qr/\(<- \(main_wait_2_cnt second_cycles\) <\(& \(== main_wait_1_cnt 1\) second_cycles\)\)/,
+        'first wait final cycle samples the second runtime count on the positive second-count path');
+    like($first_wait, qr/\(-> main_wait_2 <\(& \(== main_wait_1_cnt 1\) second_cycles\)\)/,
+        'first wait final cycle can enter the second wait without rereading the first count source');
+    like($first_wait, qr/\(-> main_drive_3 <\(& \(== main_wait_1_cnt 1\) \(== second_cycles 0\)\)\)/,
+        'first wait final cycle can bypass a zero second count');
+    like($first_wait, qr/\?main_wait_1_cnt[\s\S]*\(>1 \(-> main_wait_1\)\)/,
+        'first wait still loops while its sampled counter is greater than one');
+
+    my $second_wait = state_block($fsm, 'main_wait_2');
+    like($second_wait, qr/\(-- main_wait_2_cnt\)/,
+        'second wait decrements its sampled counter while active');
+    like($second_wait, qr/\?main_wait_2_cnt[\s\S]*\(=1 \(-> main_drive_3\)\)/,
+        'second sampled count of one exits to the following transaction clause');
+    like($second_wait, qr/\?main_wait_2_cnt[\s\S]*\(>1 \(-> main_wait_2\)\)/,
+        'second sampled counts greater than one loop in the second wait state');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'first_cycles',
+                entry_state    => 'main_wait_1',
+                exit_state     => 'main_wait_2',
+                counter_signal => 'main_wait_1_cnt',
+                counter_width  => 4,
+            },
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'second_cycles',
+                entry_state    => 'main_wait_2',
+                exit_state     => 'main_drive_3',
+                counter_signal => 'main_wait_2_cnt',
+                counter_width  => 3,
+            },
+        ],
+        'dynamic wait report exposes both consecutive runtime waits',
+    );
+    is_deeply(
+        $report->{transactions}[0]{states},
+        [qw(main_idle_0 main_wait_1 main_wait_2 main_drive_3 main_done_4)],
+        'transaction state summary keeps consecutive runtime wait states in emitted order',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_pair');
+};
+
 subtest 'malformed wait clauses fail before scheduled emission' => sub {
     assert_lower_rejected(<<'ISF', 'missing wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant_or_runtime_scalar\)' in transaction body/);
 (actor wait_missing_count

@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF consecutive runtime scalar waits
+- Completed R14 task-tree slice: `ISF-DYNAMIC-WAIT.3.3.2`.
+- Consecutive top-level runtime scalar waits now lower through recursive
+  zero-bypass handling and active-wait final-edge splitting.
+- If the first runtime count is zero, the activation edge evaluates the next
+  wait's zero/positive paths instead of entering it with an uninitialized
+  counter.
+- If the first wait is active, its final sampled-counter edge loads or bypasses
+  the following wait without rereading the first count source.
+- The active frontier advances to `ISF-DYNAMIC-WAIT.3.3.3`, additional
+  top-level predecessor kinds.
+
 ## 2026-05-15: R14 — ISF dynamic wait expansion split
 - Completed R14 task-tree slice: `ISF-DYNAMIC-WAIT.3.3.1`.
 - `ISF-DYNAMIC-WAIT.3.3` is now an active container for the remaining runtime
