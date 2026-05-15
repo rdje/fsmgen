@@ -882,7 +882,7 @@ sub _parse_interface($self, $clause) {
 }
 
 sub _parse_storage($self, $clause, $actor_name) {
-    confess "Error: actor '$actor_name' storage requires '(storage (state name (width N)) ...)' entries\n"
+    confess "Error: actor '$actor_name' storage requires '(storage (var name (width N)) ...)' entries\n"
         unless @$clause >= 2;
 
     my @entries;
@@ -893,9 +893,10 @@ sub _parse_storage($self, $clause, $actor_name) {
         confess "Error: actor '$actor_name' storage entries must be list forms\n"
             unless ref($entry) eq 'ARRAY' && @$entry;
 
-        my ($kind, $name, @options) = @$entry;
-        confess "Error: actor '$actor_name' storage entry kind must be 'state' or 'bank'\n"
-            unless defined($kind) && !ref($kind) && ($kind eq 'state' || $kind eq 'bank');
+        my ($authored_kind, $name, @options) = @$entry;
+        my $kind = _normalize_storage_kind($authored_kind);
+        confess "Error: actor '$actor_name' storage entry kind must be 'var', 'variable', 'state', or 'bank'\n"
+            unless defined($kind);
         confess "Error: actor '$actor_name' storage '$kind' entry requires a scalar HDL identifier name\n"
             unless _is_hdl_identifier($name);
         confess "Error: actor '$actor_name' has duplicate storage name '$name'\n"
@@ -961,6 +962,14 @@ sub _parse_storage($self, $clause, $actor_name) {
     }
 
     return \@entries;
+}
+
+sub _normalize_storage_kind {
+    my ($kind) = @_;
+    return undef unless defined($kind) && !ref($kind);
+    return 'state' if $kind eq 'var' || $kind eq 'variable' || $kind eq 'state';
+    return 'bank' if $kind eq 'bank';
+    return undef;
 }
 
 sub _parse_storage_positive_integer_option {

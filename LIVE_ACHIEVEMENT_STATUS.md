@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF storage variable aliases
+- Active R14 task-tree slice: `ISF-STORAGE-VAR-ALIASES.1` adds scalar storage
+  aliases for actor-owned storage declarations.
+- `(var name (width N))` and `(variable name (width N))` now parse and lower
+  like the older `(state name (width N))` form.
+- `(var ...)` is the preferred source spelling for new scalar actor-owned
+  storage; `(state ...)` remains accepted and `(register ...)` remains
+  rejected.
+- The aliases reuse the existing scheduled `.fsm`, schedule-report
+  `actor_storage`, and HDL generation paths.
+- Focused validation passed for parser syntax, storage lowering/reporting/HDL,
+  and singleton actor-clause preservation.
+
 ## 2026-05-15: R14 — ISF library system-port remapping
 - Active R14 task-tree slice:
   `ISF-LIBRARY-SYSTEM-BINDINGS.1` supports reusable-library clock/reset
@@ -293,8 +306,10 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - `full` and `empty` are maintained by the actor from occupancy. The fixture
   updates `wr_ptr`, `rd_ptr`, `occupancy`, `full`, and `empty` for idle,
   push-only, pop-only, and push+pop cases.
-- Authored scalar storage uses `(state ...)`; `(register ...)` source is not
-  accepted. The report's `kind: register` remains generated storage-class
+- That slice authored scalar storage with `(state ...)`. The later
+  `ISF-STORAGE-VAR-ALIASES` slice made `(var ...)` the preferred scalar
+  source spelling, while keeping `(state ...)` accepted and `(register ...)`
+  rejected. The report's `kind: register` remains generated storage-class
   metadata.
 - The next active R14 frontier is `ISF-LIBRARIES.4.4.4`, the FIFO data-buffer
   access contract needed before a real reusable FIFO library fixture.

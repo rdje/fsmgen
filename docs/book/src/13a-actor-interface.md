@@ -76,17 +76,19 @@ the interface block itself is a singleton actor clause.
 
 ```lisp
 (storage
-  (state rd_ptr (width 2))
-  (state wr_ptr (width 2))
+  (var rd_ptr (width 2))
+  (variable wr_ptr (width 2))
   (state occupancy (width 3))
   (bank data (width 8) (depth 4)))
 ```
 
-The first shipped actor-owned storage forms are fixed-width internal
-state values and fixed-depth banks. A state entry lowers to one internal
-storage signal with the authored name. A bank lowers to deterministic scalar element
-names in the scheduled `.fsm` review artifact: `data_0`, `data_1`, `data_2`,
-and `data_3` for the example above.
+The shipped actor-owned storage forms are fixed-width internal scalar
+variables and fixed-depth banks. The preferred scalar spelling is
+`(var name (width N))`; `(variable ...)` and the older `(state ...)` spelling
+are accepted aliases that normalize to the same scalar storage kind. A scalar
+entry lowers to one internal storage signal with the authored name. A bank
+lowers to deterministic scalar element names in the scheduled `.fsm` review
+artifact: `data_0`, `data_1`, `data_2`, and `data_3` for the example above.
 
 This scalarized representation is deliberate for the first reusable FIFO work.
 It lets the `DEPTH=4` fixture use four concrete storage entries, 2-bit
@@ -108,8 +110,8 @@ evidence to later lowering, and appears in schedule reports as `kind:
 register`, `role: actor_storage`, with positive integer `width`. Used storage
 signals reach SystemVerilog through the normal scalar assignment path.
 The report `kind` is the generated storage class; authored scalar storage uses
-the ISF source word `state`, and `(register ...)` is not an accepted storage
-entry spelling.
+the normalized scalar storage kind, and `(register ...)` is not an accepted
+storage entry spelling.
 
 ### Complete Example — APB Interface
 

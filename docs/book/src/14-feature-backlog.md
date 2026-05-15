@@ -850,13 +850,15 @@ Shipped actor-owned storage model:
 ```lisp
 (actor fifo
   (storage
-    (state rd_ptr (width 2))
-    (state wr_ptr (width 2))
+    (var rd_ptr (width 2))
+    (var wr_ptr (width 2))
     (state occupancy (width 3)))
   ...)
 ```
 
-`(state name (width N))` declares one fixed-width internal actor state value.
+`(var name (width N))` declares one fixed-width internal actor scalar storage
+value. `(variable ...)` and the older `(state ...)` spelling are accepted
+aliases that normalize to the same scalar storage kind.
 `(bank name (width N) (depth N))` remains the fixed-depth actor-owned storage
 form. The FIFO-controller matrix does not use an internal bank, but the
 shipped data-path probe now exercises a depth-4 bank through explicit
@@ -876,8 +878,9 @@ review artifact by guarded updates to `data_0`, `data_1`, `data_2`, and
 through mux-equivalent guarded assignments from the scalarized entry family.
 Rules and supported transaction contexts accept these forms for declared
 actor-owned banks.
-`store` is intentionally bank-entry-only; scalar storage uses the existing
-rule assignment and transaction `update` surfaces.
+`store` is intentionally bank-entry-only; scalar actor-owned storage declared
+with `(var ...)`, `(variable ...)`, or the older `(state ...)` spelling uses
+the existing rule assignment and transaction `update` surfaces.
 
 The first same-cycle store/load policy is read-before-write. A load observes
 the current cycle's bank value, while a store updates the selected entry for

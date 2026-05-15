@@ -715,7 +715,7 @@ sub isf_public_interface_actor_shell_required_keys {
 }
 
 sub isf_public_interface_actor_shell_value_shape {
-    return 'actor_name is scalar; transactions is an array reference; interface is a hash reference; storage is an optional array reference for authored state and bank declarations when actor-owned storage is declared';
+    return 'actor_name is scalar; transactions is an array reference; interface is a hash reference; storage is an optional array reference for authored scalar storage and bank declarations when actor-owned storage is declared';
 }
 
 sub isf_public_interface_actor_shell_actor_name_shape {

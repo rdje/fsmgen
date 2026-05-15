@@ -38,6 +38,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-STORAGE-VAR-ALIASES` | `done` | `R14` | `closed` | [docs/tasks/ISF-STORAGE-VAR-ALIASES.md](docs/tasks/ISF-STORAGE-VAR-ALIASES.md) |
 | `ISF-LIBRARY-SYSTEM-BINDINGS` | `done` | `R14` | `closed` | [docs/tasks/ISF-LIBRARY-SYSTEM-BINDINGS.md](docs/tasks/ISF-LIBRARY-SYSTEM-BINDINGS.md) |
 | `ISF-TRANSACTION-ACTIVATION` | `done` | `R14` | `closed` | [docs/tasks/ISF-TRANSACTION-ACTIVATION.md](docs/tasks/ISF-TRANSACTION-ACTIVATION.md) |
 | `ISF-SETTER-SYNTAX` | `done` | `R14` | `closed` | [docs/tasks/ISF-SETTER-SYNTAX.md](docs/tasks/ISF-SETTER-SYNTAX.md) |
@@ -76,6 +77,7 @@ as done work unless a future task reopens them.
 | Realistic protocol fixtures, strict-mode checks, and end-to-end coverage | `ISF-FIXTURES` |
 | Reusable ISF libraries/imports for generic actors and transactions | `ISF-LIBRARIES` |
 | Reusable-library clock/reset name remapping inside the single-clock-domain ISF model | `ISF-LIBRARY-SYSTEM-BINDINGS` |
+| Actor-owned scalar storage source vocabulary | `ISF-STORAGE-VAR-ALIASES` |
 | Transaction ports, activation bindings, and actor top-level pin access | `ISF-PORT-BINDING` |
 | Scalar setter syntax shared by rules and transactions | `ISF-SETTER-SYNTAX` |
 | Task-like transaction activation semantics and parameter overrides | `ISF-TRANSACTION-ACTIVATION` |

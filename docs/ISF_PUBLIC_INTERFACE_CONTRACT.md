@@ -142,9 +142,10 @@ for sampled aliases, extracted fields, assembled targets, explicit-width
 shift registers, and completion pulses.
 Actor-owned fixed storage declarations are checked by
 [t/1232-isf-actor-storage-declarations.t](../t/1232-isf-actor-storage-declarations.t)
-for parser shape, authored `(state ...)` scalar storage, scalarized bank
-lowering, `actor_storage` report metadata, fail-closed diagnostics, and
-SystemVerilog generation for used storage.
+for parser shape, authored `(var ...)` / `(variable ...)` / `(state ...)`
+scalar storage aliases, scalarized bank lowering, `actor_storage` report
+metadata, fail-closed diagnostics, and SystemVerilog generation for used
+storage.
 Rule expression guards are checked by
 [t/1233-isf-rule-expression-guards.t](../t/1233-isf-rule-expression-guards.t)
 for shorthand and long-form guard normalization, scheduled `.fsm` DT-DTE
@@ -783,10 +784,11 @@ Actor roots may also carry parser-validated actor-owned storage declarations
 through a singleton `(storage ...)` clause. That field is not a required actor
 shell key, but the advertised value-shape string records that `storage` is an
 optional array reference when present. The shipped storage entries are
-fixed-width authored `state` declarations and fixed-depth `bank` declarations
-whose scalarized element names are scheduler input. Schedule reports still use
-coarse `kind: register` for generated storage class; that report value is not
-the source vocabulary.
+fixed-width scalar declarations authored with preferred `(var ...)`,
+verbose `(variable ...)`, or older `(state ...)` spelling, plus fixed-depth
+`bank` declarations whose scalarized element names are scheduler input.
+Schedule reports still use coarse `kind: register` for generated storage
+class; that report value is not the source vocabulary.
 The bank access forms `(store <bank-name> <index> <value>)` and
 `(load <bank-name> <index> as <target>)` are now public parser support for
 declared actor-owned banks in rules and supported transaction contexts. The

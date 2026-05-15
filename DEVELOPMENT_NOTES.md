@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: ISF storage var aliases
+- `var` is the better source word for actor-owned scalar storage because ISF is
+  intentionally above raw HDL vocabulary. The scheduler still decides the
+  generated storage class; authors should not have to write `register` to get
+  persistence.
+- The aliases are normalized at parse time to the existing `state` storage kind
+  so the lowerer, schedule-report storage metadata, bank-access checks, and HDL
+  backend do not need a second scalar-storage representation.
+- Keeping `(state ...)` accepted avoids churn in existing fixtures and docs,
+  but new examples should prefer `(var ...)`. `(register ...)` stays rejected
+  because schedule-report `kind: register` describes backend implementation
+  class, not ISF source intent.
 ## 2026-05-15: ISF library system-port remapping
 - The remapping feature is intentionally a composition-boundary name binding.
   A reusable actor may call its clock `lib_clk` and an importing actor may bind
@@ -395,7 +407,9 @@ This document captures engineering rationale, design constraints, and working de
   selected when occupancy is zero. The matrix enumerates the five occupancy
   values for idle, push-only, pop-only, and push+pop, then enumerates pointer
   wrap rules for accepted write and read sides.
-- Authored scalar storage now uses `(state name (width N))`. We rejected
+- That slice authored scalar storage with `(state name (width N))`. The later
+  `ISF-STORAGE-VAR-ALIASES` slice made `(var ...)` the preferred scalar source
+  spelling, while keeping `(state ...)` accepted. We continue to reject
   `(register ...)` as source vocabulary because the actor is describing
   persistent intent-level state, while `kind: register` in schedule reports is
   only the backend storage class after lowering.

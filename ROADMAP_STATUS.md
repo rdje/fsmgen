@@ -18,6 +18,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `+system` now accepts HDL-compatible authored clock identifiers. This is
   still single-clock-domain ISF behavior; multi-clock, asynchronous, and
   interacting clock-domain semantics remain future work.
+- ISF actor storage vocabulary update: scalar actor-owned storage now prefers
+  `(var name (width N))`, with `(variable ...)` and older `(state ...)`
+  accepted as aliases that normalize to the same scalar storage kind.
+  `(register ...)` remains rejected as source vocabulary.
 - Composition ergonomics update: `?ports` now accepts verbose
   `(input NAME ...)` and `(output NAME ...)` declarations as aliases for the
   compact port-token syntax. Verbose `(width TOKEN)` uses the same width
@@ -50,8 +54,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-RULE-ACTIONS`, `ISF-RESOURCE-CATALOG`, `ISF-RESOURCE-PRIORITY`,
   `ISF-CONFLICTS`, `ISF-COMPOSITION`, `ISF-FIXTURES`,
   `ISF-CONTROL-FLOW`, `ISF-SETTER-SYNTAX`, and
-  `ISF-COMPATIBILITY`, plus `ISF-LIBRARY-SYSTEM-BINDINGS`, are listed in the
-  task-tree completed table.
+  `ISF-COMPATIBILITY`, plus `ISF-LIBRARY-SYSTEM-BINDINGS` and
+  `ISF-STORAGE-VAR-ALIASES`, are listed in the task-tree completed table.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
   guide for installing the same task-tree tracking workflow in another
   project.
@@ -201,9 +205,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   generated composition top, instantiate the importing actor and the library
   child actor, link bound library inputs/outputs directly to top ports, and
   reach SystemVerilog generation through the existing composition pipeline.
-  Same-name clock/reset bindings use existing system-port auto-wiring;
-  system-name remapping fails closed before backend parsing. The active
-  frontier advances to `ISF-LIBRARIES.4.2`.
+  Same-name clock/reset bindings used existing system-port auto-wiring in that
+  slice; system-name remapping later shipped in
+  `ISF-LIBRARY-SYSTEM-BINDINGS`. The active frontier advances to
+  `ISF-LIBRARIES.4.2`.
 - `ISF-LIBRARIES.4.2` is complete. The real FIFO fixture requirements are now
   formalized before source is shipped. A depth-1 placeholder is rejected as a
   FIFO. The first reusable FIFO fixture target is `DEPTH=4`, with four storage
@@ -213,8 +218,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   ordered control flow, not a model for same-cycle FIFO port concurrency. The
   active frontier advances to `ISF-LIBRARIES.4.3`.
 - `ISF-LIBRARIES.4.3` is complete. ISF actors now support singleton
-  `(storage ...)` clauses with fixed-width `(state name (width N))`
-  declarations and fixed-depth `(bank name (width N) (depth N))` declarations.
+  `(storage ...)` clauses with fixed-width scalar storage declarations and
+  fixed-depth `(bank name (width N) (depth N))` declarations. The preferred
+  current scalar spelling is `(var name (width N))`; `(state ...)` is an older
+  accepted alias.
   Banks scalarize deterministically to `<name>_0` through
   `<name>_<depth-1>` in scheduled `.fsm`, declared storage width evidence is
   emitted through `+size`, schedule reports expose role `actor_storage`, and
@@ -246,9 +253,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `full` and `empty` actor-maintained from occupancy, updates `wr_ptr`,
   `rd_ptr`, `occupancy`, `full`, and `empty` for idle, push-only, pop-only,
   and push+pop cases, and explicitly avoids inventing scalarized data-bank
-  storage or hidden `data_out` transfer semantics. Authored scalar storage is
-  now `(state ...)`; `(register ...)` source is rejected while schedule
-  reports continue to use `kind: register` for generated storage class. The
+  storage or hidden `data_out` transfer semantics. Authored scalar storage now
+  prefers `(var ...)`, with `(state ...)` kept as an accepted alias;
+  `(register ...)` source is rejected while schedule reports continue to use
+  `kind: register` for generated storage class. The
   active frontier advances to `ISF-LIBRARIES.4.4.4`, the FIFO data-buffer
   access contract needed before the reusable FIFO library fixture.
 - `ISF-LIBRARIES.4.4.4` is complete. The FIFO data-buffer access contract now

@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF storage var aliases
+- Created
+  [docs/tasks/ISF-STORAGE-VAR-ALIASES.md](docs/tasks/ISF-STORAGE-VAR-ALIASES.md)
+  for the actor-owned scalar storage vocabulary cleanup.
+- `(storage (var name (width N)))` and
+  `(storage (variable name (width N)))` are now accepted aliases for scalar
+  actor-owned storage. They normalize to the existing internal `state` storage
+  kind so scheduled `.fsm`, schedule reports, and HDL generation reuse the
+  shipped storage path.
+- `(var ...)` is now the preferred scalar storage spelling for new ISF source.
+  The older `(state ...)` spelling remains accepted; `(register ...)` remains
+  rejected because schedule-report `kind: register` is backend storage class,
+  not source vocabulary.
+- Focused validation passed for parser syntax, public contract syntax,
+  actor-owned storage lowering/HDL generation, and singleton actor-clause
+  preservation.
 ## 2026-05-15: ISF library system-port remapping
 - Created
   [docs/tasks/ISF-LIBRARY-SYSTEM-BINDINGS.md](docs/tasks/ISF-LIBRARY-SYSTEM-BINDINGS.md)
@@ -378,9 +394,11 @@ This is the live continuity document for fast session recovery after crashes, re
 - The fixture models controller state only: `wr_ptr`, `rd_ptr`, `occupancy`,
   and actor-maintained `full`/`empty`. It deliberately does not invent a
   `data_0` bank or a hidden `data_out` datapath.
-- Authored scalar actor-owned storage now uses `(state name (width N))`.
-  `(register ...)` source is rejected; report `kind: register` remains the
-  lower-level generated storage class.
+- That slice authored scalar actor-owned storage with
+  `(state name (width N))`. The later `ISF-STORAGE-VAR-ALIASES` slice made
+  `(var ...)` the preferred scalar source spelling, while keeping
+  `(state ...)` accepted. `(register ...)` source remains rejected; report
+  `kind: register` remains the lower-level generated storage class.
 - The disjoint-rule proof now recognizes equality facts such as
   `(== occupancy 0)` versus `(== occupancy 1)`, so the controller matrix can
   prove mutually exclusive occupancy and pointer cases without priority

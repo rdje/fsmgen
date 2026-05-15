@@ -346,8 +346,10 @@ reusable ISF design intent, not only scalar constants or types.
   depth-4 fixture both are 2-bit pointers and wrap from entry 3 back to entry
   0.
 - The first actor-owned storage surface is shipped as a singleton
-  `(storage ...)` actor clause. `(state name (width N))` declares fixed
-  internal state such as `rd_ptr`, `wr_ptr`, or `occupancy`.
+  `(storage ...)` actor clause. The current preferred scalar spelling is
+  `(var name (width N))`; `(variable ...)` and the older `(state ...)`
+  spelling declare the same fixed internal scalar storage such as `rd_ptr`,
+  `wr_ptr`, or `occupancy`.
   `(bank name (width N) (depth N))` declares fixed-depth actor-owned storage
   and currently scalarizes to `<name>_0` through `<name>_<depth-1>` in the
   scheduled `.fsm` review artifact. The first FIFO target uses this to model
@@ -782,10 +784,10 @@ Remaining boundary:
   push+pop, and idle cycles as distinct real-world request cases. Any ISF
   fixture that only exercises one side, or treats simultaneous requests as an
   artifact of branch order, is not acceptable.
-- `2026-05-15`: Authored actor-owned scalar storage uses `(state ...)`, not
-  `(register ...)`. The schedule report may still classify the generated
-  storage as coarse `kind: register` because that is backend storage class,
-  not source vocabulary.
+- `2026-05-15`: Authored actor-owned scalar storage originally shipped with
+  `(state ...)` and rejected `(register ...)`. The later
+  `ISF-STORAGE-VAR-ALIASES` slice keeps `(state ...)` accepted but makes
+  `(var ...)` the preferred scalar source vocabulary.
 - `2026-05-15`: The first executable FIFO matrix is a controller matrix, not
   a full FIFO datapath. It must not invent `data_0` entries or hidden buffer
   transfer semantics. Real pointer-selected buffer write/read syntax is a
@@ -858,10 +860,10 @@ Remaining boundary:
 | `ISF-LIBRARIES.3` | `ISF-LIBRARIES.3: implement library import resolution` | Parser/lowerer resolve exported library actors from source-dir/FSMLIB/cwd roots, emit specialized child scheduled `.fsm`, and project `library_uses` report metadata. |
 | `ISF-LIBRARIES.4.1` | `ISF-LIBRARIES.4.1: wire library generated tops` | Generated top wiring for resolved library actor instances; same-name system ports use auto-wiring. Remapping is a later `ISF-LIBRARY-SYSTEM-BINDINGS` follow-up. |
 | `ISF-LIBRARIES.4.2` | `ISF-LIBRARIES.4.2: specify real FIFO requirements` | Rejected a depth-1 placeholder as a FIFO, captured same-cycle push/pop semantics, and split missing storage/concurrency support into follow-up leaves. |
-| `ISF-LIBRARIES.4.3` | `ISF-LIBRARIES.4.3: add actor storage declarations` | Singleton `(storage ...)` actor clauses with authored fixed-width state values and fixed-depth scalarized banks for the first depth-4 FIFO target. |
+| `ISF-LIBRARIES.4.3` | `ISF-LIBRARIES.4.3: add actor storage declarations` | Singleton `(storage ...)` actor clauses with authored fixed-width scalar storage and fixed-depth scalarized banks for the first depth-4 FIFO target. |
 | `ISF-LIBRARIES.4.4.1` | `ISF-LIBRARIES.4.4.1: support rule expression guards` | Scalar or list-expression rule guards lower once as non-state DT DTEs for direct FIFO fire predicates. |
 | `ISF-LIBRARIES.4.4.2` | `ISF-LIBRARIES.4.4.2: accept disjoint rule writes` | Conservative direct-fact disjointness proof accepts FIFO-style same-target rule writes without priority boilerplate while preserving fail-closed overlap diagnostics. |
-| `ISF-LIBRARIES.4.4.3` | `ISF-LIBRARIES.4.4.3: prove FIFO controller matrix` | Depth-4 FIFO controller matrix with real interface, authored state storage, actor-maintained full/empty flags, pointer/occupancy updates, and HDL reachability. |
+| `ISF-LIBRARIES.4.4.3` | `ISF-LIBRARIES.4.4.3: prove FIFO controller matrix` | Depth-4 FIFO controller matrix with real interface, authored scalar storage, actor-maintained full/empty flags, pointer/occupancy updates, and HDL reachability. |
 | `ISF-LIBRARIES.4.4.4` | `ISF-LIBRARIES.4.4.4: specify FIFO data-buffer access` | Selected store/load bank access syntax, scalarized lowering model, and read-before-write same-cycle policy. |
 | `ISF-LIBRARIES.4.4.5` | `ISF-LIBRARIES.4.4.5: implement bank access` | Implemented rule/transaction store/load bank access, bounded `bank_accesses` report metadata, fail-closed diagnostics, and depth-4 FIFO data-path HDL reachability. |
 | `ISF-LIBRARIES.4.5` | `ISF-LIBRARIES.4.5: add FIFO library fixture` | Added the fixed-shape importable FIFO actor library source, top-level use fixture, and focused import/lowering/report regression. |
@@ -892,9 +894,13 @@ Remaining boundary:
   fire together.
 - `2026-05-15`: Proved the depth-4 FIFO controller matrix through scheduled
   `.fsm`, schedule JSON, and SystemVerilog generation, switched authored
-  scalar storage vocabulary to `(state ...)`, and logged that real FIFO
+  scalar storage vocabulary to the first shipped `(state ...)` spelling, and
+  logged that real FIFO
   data-buffer access remains the next required feature before a reusable FIFO
   library fixture.
+- `2026-05-15`: Later `ISF-STORAGE-VAR-ALIASES` work made `(var ...)` and
+  `(variable ...)` accepted scalar storage aliases, with `(var ...)` preferred
+  for new source while `(state ...)` remains accepted.
 - `2026-05-15`: Specified FIFO data-buffer access as
   `(store <bank-name> <index> <value>)` and
   `(load <bank-name> <index> as <target>)`, with scalarized guarded lowering

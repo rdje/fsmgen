@@ -18,7 +18,12 @@ subtest 'actor-owned storage declarations lower to deterministic scalar storage'
     my $actor = FSM::Adapter::ISF->new()->parse_source($source, 'storage-fixture.isf');
 
     ok(ref($actor->{storage}) eq 'ARRAY', 'parser returns actor storage array');
-    is(scalar(@{$actor->{storage}}), 4, 'parser records three state entries and one bank');
+    is(scalar(@{$actor->{storage}}), 4, 'parser records three scalar storage entries and one bank');
+    is_deeply(
+        [map { $_->{kind} } @{$actor->{storage}}],
+        [qw(state state state bank)],
+        'var and variable aliases normalize to the scalar state storage kind',
+    );
 
     my ($bank) = grep { $_->{kind} eq 'bank' && $_->{name} eq 'data' } @{$actor->{storage}};
     ok($bank, 'parser records the data storage bank');
@@ -89,7 +94,7 @@ subtest 'actor-owned storage declarations fail closed for unsupported shapes' =>
     (complete done)))
 ISF
 
-    assert_parse_rejected(<<'ISF', qr/storage entry kind must be 'state' or 'bank'/, 'register spelling is not accepted');
+    assert_parse_rejected(<<'ISF', qr/storage entry kind must be 'var', 'variable', 'state', or 'bank'/, 'register spelling is not accepted');
 (actor rejected_register_storage
   (clock clk)
   (interface (input start) (output done))
@@ -149,8 +154,8 @@ sub storage_fixture_source {
     (input wdata (width 8))
     (output done))
   (storage
-    (state rd_ptr (width 2))
-    (state wr_ptr (width 2))
+    (var rd_ptr (width 2))
+    (variable wr_ptr (width 2))
     (state occupancy (width 3))
     (bank data (width 8) (depth 4)))
   (transaction main

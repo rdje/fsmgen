@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF storage variable aliases
+- Added
+  [docs/tasks/ISF-STORAGE-VAR-ALIASES.md](docs/tasks/ISF-STORAGE-VAR-ALIASES.md)
+  to track actor-owned scalar storage vocabulary cleanup.
+- Updated
+  [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm) so
+  `(storage (var NAME (width N)))` and
+  `(storage (variable NAME (width N)))` parse as aliases for scalar
+  actor-owned storage. The aliases normalize to the existing `state` storage
+  kind for scheduler compatibility.
+- Refreshed
+  [t/1232-isf-actor-storage-declarations.t](t/1232-isf-actor-storage-declarations.t)
+  to prove alias normalization, scheduled `.fsm` width emission, schedule
+  report `actor_storage` metadata, HDL generation, and continued
+  fail-closed `(register ...)` diagnostics.
+- Synchronized the mdBook, ISF spec, public contract docs, public contract
+  shape text, roadmap, task tree, and live docs. `(var ...)` is now the
+  preferred scalar source spelling, `(variable ...)` and `(state ...)` remain
+  accepted aliases, and `(register ...)` remains rejected.
 ### R14 — ISF library system-port remapping
 - Added
   [docs/tasks/ISF-LIBRARY-SYSTEM-BINDINGS.md](docs/tasks/ISF-LIBRARY-SYSTEM-BINDINGS.md)
@@ -377,9 +396,12 @@ This is the persistent technical change history for FSMGen.
 - The fixture uses the real controller interface: `write_req`, `data_in`, and
   `read_req` inputs; `full`, `empty`, and `data_out` outputs. `full` and
   `empty` are actor-maintained flags derived from occupancy.
-- Authored actor-owned scalar storage now uses `(state name (width N))`;
-  `(register ...)` source is rejected. Schedule reports still use
-  `kind: register` as the lower-level generated storage class.
+- That slice authored actor-owned scalar storage with
+  `(state name (width N))`. The later `ISF-STORAGE-VAR-ALIASES` slice made
+  `(var ...)` the preferred scalar source spelling, while keeping
+  `(state ...)` accepted. `(register ...)` source remains rejected. Schedule
+  reports still use `kind: register` as the lower-level generated storage
+  class.
 - The rule disjointness proof now recognizes equality facts, allowing
   occupancy and pointer matrix rules with guards such as `(== occupancy 3)`
   and `(== wr_ptr 2)` to prove same-target writes mutually exclusive.
