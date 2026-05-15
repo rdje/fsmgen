@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF non-literal wait-count contract
+- Completed R14 task-tree slice: `ISF-DYNAMIC-WAIT.1`.
+- Added
+  [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md)
+  as the active feature tree for symbolic and runtime dynamic transaction
+  wait counts.
+- Static symbolic counts are specified as compile-time counts that must
+  resolve before lowering and then behave exactly like literal waits.
+- Runtime scalar dynamic counts remain implementation backlog until the lowerer
+  can preserve zero-count fallthrough, snapshot positive counts, use known
+  counter widths/reset behavior, and expose dynamic report metadata.
+- The active frontier is `ISF-DYNAMIC-WAIT.2`.
+
 ## 2026-05-15: R14 — ISF activation input binding expressions
 - Completed R14 task-tree slice: `ISF-ACTIVATION-BIND-EXPRESSIONS.1`.
 - Activation input bindings now accept scalar signals, numeric/exact-width

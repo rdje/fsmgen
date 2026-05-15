@@ -252,6 +252,16 @@ Schedule reports expose each authored wait through `transaction_waits[]` with
 Only waits with `N > 0` create report entries. `counter_signal` is null for
 the current fixed-chain lowering.
 
+Non-literal counts are not accepted by the shipped lowerer yet. The active
+`ISF-DYNAMIC-WAIT` contract divides them into two future classes. A symbolic
+count that resolves before lowering to a non-negative integer must lower
+exactly like the literal form. A runtime scalar count must preserve the same
+effective timing: if the sampled value is zero, it must bypass the wait without
+an active wait cycle; if the sampled value is positive, the wait must consume
+exactly that many active cycles using known-width generated state or equivalent
+logic. A dynamic implementation must also report explicit count-kind and
+counter/source metadata instead of pretending the `cycles` integer is known.
+
 **Timing**: exactly `N` active transaction cycles, no external condition.
 **Cycles**: `N`.
 

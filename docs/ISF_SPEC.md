@@ -1015,10 +1015,9 @@ does not create one child instance per iteration.
 
 `(wait N)` is the shipped unconditional transaction-local delay, distinct from
 `(await cond)` and `(repeat count body...)`. It does not test an external
-condition and it does not repeat a body. The current surface is limited to
-non-negative integer literals: `N` must be a literal integer greater than or
-equal to 0. Dynamic counts and symbolic counts remain deferred until their
-width, reset, latency, and report contracts are specified.
+condition and it does not repeat a body. The current shipped surface is
+limited to non-negative integer literals: `N` must be a literal integer
+greater than or equal to 0.
 
 Cycle semantics:
 - `wait 0` means no delay. It emits no wait state, consumes no active
@@ -1057,6 +1056,23 @@ rather than raw lowering internals. Each entry contains `transaction`,
 `cycles`, `entry_state`, `exit_state`, and `counter_signal`. Only waits with
 `N > 0` create entries. For the current fixed-state-chain lowering,
 `counter_signal` is JSON null.
+
+Planned non-literal count contract:
+- A symbolic count must resolve before lowering to a non-negative integer
+  constant. Once resolved, it is not dynamic hardware; it lowers exactly like
+  the existing literal wait surface. A resolved zero remains transparent and
+  creates no wait report entry.
+- A runtime scalar dynamic count is evaluated at the wait-entry boundary for
+  the current occurrence. For positive counts, the value is snapshotted into a
+  generated counter or equivalent schedule so later source changes do not alter
+  that wait. A runtime zero must bypass the wait with no active wait cycle and
+  must preserve pending samples for the next state-producing clause.
+- Dynamic counts require known unsigned widths. Unknown-width sources, signed
+  negative values, list-expression counts, and wider expression forms remain
+  rejected until their type and timing contracts are specified.
+- A dynamic wait report must distinguish runtime counts from exact static
+  counts. Static waits keep integer `cycles`; dynamic waits need explicit
+  count-kind, count-source, and counter metadata when they ship.
 
 ### 7.7 Inline Control Flow
 

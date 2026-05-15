@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: non-literal waits must preserve literal wait timing
+- The important contract of `(wait count)` is the effective count, not the
+  spelling of the count. A symbolic count that resolves to `3` and a literal
+  `(wait 3)` should generate the same scheduled behavior.
+- Runtime dynamic waits are harder because `count == 0` must remain a true
+  fallthrough, not a hidden one-cycle decision state. Until the lowerer can
+  preserve that bypass in every context where waits are accepted, runtime
+  dynamic counts should fail closed.
+- Dynamic counts should be snapshotted when a wait occurrence is entered.
+  Otherwise the source signal could change while the transaction is waiting
+  and turn an exact-cycle delay into a level-sensitive stall.
+- Reports need to keep exact static counts separate from runtime dynamic
+  counts. Reusing the integer `cycles` field for an unknown runtime value
+  would make downstream consumers think the latency is fixed when it is not.
 ## 2026-05-15: activation input bindings carry expressions, output bindings name destinations
 - Activation input bindings are runtime payload connections. They can safely
   accept scalar signals, exact literals, and normal list expressions because

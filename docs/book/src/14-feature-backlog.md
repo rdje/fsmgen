@@ -369,7 +369,8 @@ behavior, and richer stage report families for future stage kinds.
 
 ### Transaction Unconditional Wait
 
-Status: shipped base surface; dynamic counts remain backlog.
+Status: shipped base surface; symbolic and dynamic counts are tracked by the
+active `ISF-DYNAMIC-WAIT` task tree.
 
 Goal: support an unconditional cycle delay such as `(wait N)` inside a
 transaction body.
@@ -394,9 +395,28 @@ transaction name, cycle count, entry state, exit state, and optional counter
 signal; `counter_signal` is currently JSON null.
 
 Malformed waits such as missing counts, extra operands, negative counts,
-non-integer counts, list-expression counts, or dynamic signal counts fail
-closed. Remaining backlog: dynamic counts and symbolic counts need explicit
-width, reset, latency, and report semantics before they can ship.
+non-integer counts, list-expression counts, or unresolved/dynamic signal counts
+fail closed today.
+
+Planned non-literal contract:
+- A statically resolved symbolic count is a compile-time count. The symbol must
+  resolve before lowering to a non-negative integer constant. After resolution,
+  it lowers exactly like the shipped literal surface, including transparent
+  `wait 0` fallthrough and integer `cycles` report metadata.
+- A runtime scalar dynamic count is a runtime payload. It must be sampled at
+  the wait-entry boundary for the current wait occurrence; later changes to the
+  source signal must not change the already-entered wait.
+- A runtime count of zero must preserve the wait contract: no active wait
+  cycle and pending samples remain pending for the next state-producing clause.
+  If a lowering context cannot preserve that bypass behavior, the source must
+  fail closed rather than introduce a hidden one-cycle wait.
+- Dynamic counts require known unsigned widths, reset behavior for any
+  generated counter, explicit min/max latency accounting, and report metadata
+  that distinguishes dynamic counts from exact integer `cycles`.
+
+Remaining backlog: implement the symbolic count leaf first, then runtime
+scalar dynamic counts once the bypass-capable lowering and report shape are
+proved.
 
 ### Transaction Dynamic Loops
 

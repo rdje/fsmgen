@@ -2,9 +2,11 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
-- Next decision point: select or activate the next user-visible feature tree
-  before implementing more ISF behavior. `ISF-ACTIVATION-BIND-EXPRESSIONS` is
-  now closed after shipping expression-valued activation input bindings,
+- Next decision point: continue the active `ISF-DYNAMIC-WAIT` feature tree.
+  `ISF-DYNAMIC-WAIT.1` specified the non-literal wait-count contract and the
+  current frontier is `ISF-DYNAMIC-WAIT.2`: statically resolved symbolic wait
+  counts. `ISF-ACTIVATION-BIND-EXPRESSIONS` is now closed after shipping
+  expression-valued activation input bindings,
   `ISF-LIBRARY-SYSTEM-BINDINGS` is closed after shipping reusable-library
   system-port remapping, and `ISF-TRANSACTION-ACTIVATION` is closed after
   publishing the shipped spawn/blocking-`do` activation-parameter boundary.
@@ -12,6 +14,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   need a fresh explicit tree/leaf before implementation.
   Standalone public interface stabilization/audit work is on hold for now;
   keep the public contract synchronized only as part of shipping each feature.
+- ISF dynamic wait contract update: non-literal transaction waits are now
+  task-tree managed under `ISF-DYNAMIC-WAIT`. Static symbolic counts must
+  resolve before lowering to non-negative integer constants and then inherit
+  literal wait lowering, including transparent zero-count behavior. Runtime
+  scalar dynamic counts remain a later leaf: they must snapshot the count at
+  wait entry, preserve `count == 0` as no active wait cycle, use known counter
+  widths and reset semantics, and expose explicit dynamic report metadata
+  before parser acceptance becomes public.
 - ISF activation binding expression update: activation input bindings for
   shipped `do`, generated `do`/`spawn`, and rule-trigger sites now accept
   scalar actor-side signals, numeric/exact-width literals, and non-empty
@@ -96,6 +106,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   active cycle, preserves pending samples for the next state-producing clause,
   and creates no report entry. Dynamic counts remain deferred until width,
   reset, latency, and report semantics are specified.
+- `ISF-DYNAMIC-WAIT.1` is complete. The planned non-literal wait surface now
+  has a written contract: static symbolic counts are compile-time counts that
+  lower exactly like literals after resolution, while runtime scalar counts
+  must preserve exact zero-count fallthrough, snapshot positive counts, use
+  known widths, and report dynamic metadata before they can ship. The active
+  frontier advances to `ISF-DYNAMIC-WAIT.2`.
 - Top-level transaction-local `(while cond body...)` and
   `(until cond body...)` loops are shipped. `while` lowers as a pre-test
   zero-or-more loop with entry and back-edge decision states; `until` lowers

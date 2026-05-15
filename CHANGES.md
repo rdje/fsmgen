@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF non-literal wait-count contract
+- Added
+  [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md)
+  as the active task tree for symbolic and runtime dynamic transaction wait
+  counts.
+- Completed the specification leaf `ISF-DYNAMIC-WAIT.1`. The next frontier is
+  static symbolic wait counts that resolve before lowering and then reuse the
+  literal wait-chain or transparent zero-wait behavior.
+- Documented the future runtime dynamic count obligations: wait-entry
+  snapshot semantics, exact zero-count bypass, known unsigned counter widths,
+  reset behavior, pending-sample preservation, and explicit dynamic report
+  metadata.
+- Synchronized the mdBook, ISF spec, roadmap status, task tree, README, and
+  live docs for the planned feature boundary.
 ### R14 — ISF activation input binding expressions
 - Added
   [docs/tasks/ISF-ACTIVATION-BIND-EXPRESSIONS.md](docs/tasks/ISF-ACTIVATION-BIND-EXPRESSIONS.md)

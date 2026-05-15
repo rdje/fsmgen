@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF non-literal wait-count contract
+- Created
+  [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md)
+  to track symbolic and dynamic transaction wait counts.
+- Completed `ISF-DYNAMIC-WAIT.1` as a specification slice. The current
+  frontier is `ISF-DYNAMIC-WAIT.2`, statically resolved symbolic wait counts.
+- Static symbolic counts must resolve before lowering to non-negative integer
+  constants and then inherit the existing literal wait semantics, including
+  transparent `wait 0` behavior.
+- Runtime scalar dynamic counts remain future implementation work. They must
+  snapshot the count at wait entry, preserve `count == 0` as no active wait
+  cycle, use known counter widths/reset behavior, and report dynamic metadata
+  before parser acceptance becomes public.
 ## 2026-05-15: ISF activation input binding expressions
 - Created
   [docs/tasks/ISF-ACTIVATION-BIND-EXPRESSIONS.md](docs/tasks/ISF-ACTIVATION-BIND-EXPRESSIONS.md)
