@@ -2,8 +2,10 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
-- Next decision point: continue `R14` by selecting or activating the next
-  user-visible ISF feature tree from the documented limitation/backlog set.
+- Next decision point: continue `R14` with
+  [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md),
+  starting at `ISF-PORT-BINDING.1` to specify transaction ports,
+  activation-time bindings, and actor pin access before implementation.
   Standalone public interface stabilization/audit work is on hold for now;
   keep the public contract synchronized only as part of shipping each feature.
 - Repo-local task trees now live at [docs/TASK_TREE.md](docs/TASK_TREE.md),
@@ -11,7 +13,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   active tree, it should pick the first eligible leaf from that tree's current
   frontier. The ongoing/unresolved R14 ISF objective families are now covered
   by active, proposed, or completed task trees in
-  [docs/TASK_TREE.md](docs/TASK_TREE.md). `ISF-LIBRARIES` is now closed and
+  [docs/TASK_TREE.md](docs/TASK_TREE.md). The first active feature tree is now
+  [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md), whose
+  current frontier is `ISF-PORT-BINDING.1`. `ISF-LIBRARIES` is closed and
   listed in the completed table. The public-contract tree remains
   cross-cutting and should not displace feature delivery unless the selected
   feature changes a public surface. The completed `ISF-LIBRARIES`,
@@ -204,6 +208,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantics, tests, and limitations. The next R14 PNT step should activate or
   select the next user-visible feature tree rather than standalone public
   contract stabilization.
+- `ISF-PORT-BINDING` is now the active R14 feature tree for transaction ports,
+  activation-time bindings, and actor top-level pin access. The first frontier
+  leaf is `ISF-PORT-BINDING.1`, which must specify source syntax, direction
+  rules, width checks, same-cycle visibility, actor pin read/write policy,
+  conflict handling, report fields, diagnostics, and `.fsm` lowering before
+  parser or scheduler implementation starts.
 - `ISF-RESOURCE-PRIORITY.1` is complete. The current inventory records that
   `(resources ...)` is validated metadata only, accepted arbiters are
   `priority` and `round_robin`, and successful resource arbitration is not yet
@@ -4866,9 +4876,10 @@ Left:
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the first feature-eligible tree in [docs/TASK_TREE.md](docs/TASK_TREE.md)
-  when selecting the next PNT slice. `ISF-LIBRARIES` is closed; the next step
-  is to activate or select the next user-visible R14 feature tree while
-  keeping `ISF-PUBLIC-CONTRACT` cross-cutting and feature-driven.
+  when selecting the next PNT slice. The current first feature tree is
+  [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md), whose
+  frontier is `ISF-PORT-BINDING.1`; keep `ISF-PUBLIC-CONTRACT`
+  cross-cutting and feature-driven.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

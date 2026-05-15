@@ -73,6 +73,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-SCHEDULE-REPORTS.md` — active `R14` task tree for schedule-report storage classes and schema stabilization.
 - `docs/tasks/ISF-FIXTURE-COVERAGE.md` — active `R14` task tree for realistic fixtures and strict-mode coverage.
 - `docs/tasks/ISF-COMPATIBILITY-SURFACE.md` — active `R14` task tree for legacy handshake and removed assign compatibility policy.
+- `docs/tasks/ISF-PORT-BINDING.md` — active `R14` task tree for transaction ports and actor pin access.
 - `docs/tasks/ISF-CONTROL-FLOW.md` — proposed `R14` task tree for transaction-local waits and dynamic loops.
 - `docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md` — active `R14` task tree for ISF spec, book, manifest, and contract synchronization.
 - `docs/tasks/FSMGEN-IR-AUDIT.md` — proposed architecture task tree for current IR inventory and consolidation policy.

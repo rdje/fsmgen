@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF transaction-port binding task tree
+- Activated
+  [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md) as the
+  next feature tree for transaction ports, activation-time bindings, and actor
+  top-level pin access.
+- Captured the initial design direction: this should be an ISF-level authoring
+  surface that lowers to explicit `.fsm`, not raw low-level handoff wiring.
+- The first frontier is `ISF-PORT-BINDING.1`, which will specify source syntax
+  candidates, direction and width checks, same-cycle visibility, actor
+  input/output pin policy, conflict behavior, schedule-report fields,
+  diagnostics, and lowering before implementation.
 ### R14 — ISF library catalog contract synchronization
 - Completed `ISF-LIBRARIES.5` and closed the `ISF-LIBRARIES` task tree.
 - Added [docs/ISF_LIBRARY_CATALOG.md](docs/ISF_LIBRARY_CATALOG.md), the live

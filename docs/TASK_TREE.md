@@ -23,6 +23,7 @@ evidence for one top-level task.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-PORT-BINDING` | `active` | `R14` | `ISF-PORT-BINDING.1` | [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md) |
 | `ISF-PUBLIC-CONTRACT` | `active` | `R14` | `ISF-PUBLIC-CONTRACT.1` | [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md) |
 
 ## Proposed Task Trees
@@ -71,6 +72,7 @@ as done work unless a future task reopens them.
 | Schedule-report storage classes and schedule JSON stabilization | `ISF-SCHEDULE-REPORTS` |
 | Realistic protocol fixtures, strict-mode checks, and end-to-end coverage | `ISF-FIXTURES` |
 | Reusable ISF libraries/imports for generic actors and transactions | `ISF-LIBRARIES` |
+| Transaction ports, activation bindings, and actor top-level pin access | `ISF-PORT-BINDING` |
 | Legacy handshake metadata and removed transaction `assign` compatibility | `ISF-COMPATIBILITY` |
 | Transaction-local unconditional waits and dynamic loops | `ISF-CONTROL-FLOW` |
 | ISF spec, mdBook, public interface contract, and manifest synchronization | `ISF-PUBLIC-CONTRACT` |

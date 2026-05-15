@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF transaction-port binding task tree
+- Active R14 task-tree setup: `ISF-PORT-BINDING` is now active.
+- [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md) tracks
+  transaction ports, activation-time bindings, and actor top-level pin access.
+- The feature direction is ISF-level syntax lowering to explicit `.fsm`, with
+  direction/width checks, same-cycle visibility, conflict behavior,
+  diagnostics, and schedule-report provenance to be specified before
+  implementation.
+- The next active R14 frontier is `ISF-PORT-BINDING.1`.
+
 ## 2026-05-15: R14 — ISF library catalog contract synchronization
 - Active R14 task-tree slice: `ISF-LIBRARIES.5` is complete, and the
   `ISF-LIBRARIES` task tree is closed.

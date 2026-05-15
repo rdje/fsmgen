@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: ISF transaction-port and actor-pin access direction
+- Transaction port binding should be an ISF-level feature. Authors should not
+  need to write raw `.fsm` handoff signals just to pass data between a parent
+  rule/transaction and a child transaction.
+- The lower-level representation still matters: every accepted binding must
+  lower to explicit scheduled `.fsm` signals, guards, assignments, and mux
+  selectors so the review artifact remains authoritative.
+- Direction is the core contract. Transaction inputs are driven by the
+  activation/binding context and read by the transaction. Transaction outputs
+  are driven by the transaction and read by the activation/binding context.
+- Actor input pins should be read-only from ISF because they are external
+  observations. Actor output pins can be written, but only through the same
+  assignment and conflict rules used for other driven LHS values.
+- Same-cycle visibility is the main semantic risk. The specification slice
+  must decide whether an activation-time input binding is visible in the
+  first active transaction state, one cycle later, or through an explicit
+  author-selected timing form.
 ## 2026-05-15: ISF library catalog contract synchronization
 - The reusable-library catalog is intentionally both human-readable and
   machine-discoverable. Human readers need source paths, semantics, tests, and

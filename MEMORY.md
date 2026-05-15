@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF transaction-port and actor-pin task tree
+- Activated `ISF-PORT-BINDING` in
+  [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md) from the
+  transaction-port and actor top-level pin access discussion.
+- The feature direction is ISF-level syntax with explicit `.fsm` lowering, not
+  raw low-level authoring. Transaction ports need direction, width, lifetime,
+  binding, same-cycle visibility, conflict, diagnostics, and report semantics
+  before implementation.
+- Actor input pins are readable observations; actor output pins are writable
+  targets only through the existing assignment/conflict model.
+- The active R14 frontier is `ISF-PORT-BINDING.1`, specifying the public
+  source and runtime contract before parser or scheduler changes.
 ## 2026-05-15: ISF library catalog contract synchronization
 - Completed `ISF-LIBRARIES.5` in
   [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md), closing the
