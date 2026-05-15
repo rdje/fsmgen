@@ -1,12 +1,30 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF FIFO data-buffer access implementation
+- Completed `ISF-LIBRARIES.4.4.5` by adding executable bank access support
+  for the FIFO datapath surface.
+- Rules and supported transaction contexts now accept
+  `(store <bank-name> <index> <value>)` and
+  `(load <bank-name> <index> as <target>)` for declared actor-owned banks.
+- Lowering emits scalarized guarded `.fsm` assignments for fixed-depth banks;
+  for the depth-4 FIFO data-path fixture, access is reviewable through
+  `data_0` through `data_3`.
+- Schedule reports now expose bounded `bank_accesses` metadata with access
+  kind, owner, container, bank, index, scalarized entries, width/depth, value
+  or target, and read-before-write policy.
+- Added [isf/fifo_data_path.isf](isf/fifo_data_path.isf) and
+  [t/1236-isf-bank-access-lowering.t](t/1236-isf-bank-access-lowering.t)
+  to prove parser/lowerer/report diagnostics and SystemVerilog reachability.
+- Logged ISF enum/type/aggregate parity as backlog: it should reuse the
+  existing `.fsm` type machinery rather than create a parallel ISF type
+  system.
 ### R14 — ISF FIFO data-buffer access contract
 - Completed `ISF-LIBRARIES.4.4.4` by specifying the source syntax and
   lowering contract needed before the reusable FIFO library can model actual
   data storage.
-- Selected `(store bank index value)` for actor-owned bank writes and
-  `(load bank index as target)` for actor-owned bank reads.
+- Selected `(store <bank-name> <index> <value>)` for actor-owned bank writes
+  and `(load <bank-name> <index> as <target>)` for actor-owned bank reads.
 - The specified lowering keeps the existing scalarized `.fsm` review artifact:
   a depth-4 bank maps store/load through guarded access to `data_0` through
   `data_3` rather than hidden dynamic array behavior.

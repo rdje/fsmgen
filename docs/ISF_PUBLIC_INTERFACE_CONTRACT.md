@@ -152,6 +152,12 @@ for the real controller interface, actor-maintained full/empty flags,
 pointer/occupancy state updates, equality-based disjoint-rule proof, scheduled
 `.fsm`, schedule report, and SystemVerilog reachability without inventing a
 FIFO data-bank datapath.
+Actor-owned bank access is checked by
+[t/1236-isf-bank-access-lowering.t](../t/1236-isf-bank-access-lowering.t)
+for `(store <bank-name> <index> <value>)` and
+`(load <bank-name> <index> as <target>)` parsing,
+scalarized guarded lowering, bounded `bank_accesses` report metadata,
+fail-closed diagnostics, and depth-4 FIFO data-path HDL reachability.
 The transaction-summary metadata is checked by
 [t/1149-isf-public-transaction-metadata-audit.t](../t/1149-isf-public-transaction-metadata-audit.t)
 to keep transaction `states` and `count` shapes exact across direct and
@@ -702,11 +708,16 @@ fixed-width authored `state` declarations and fixed-depth `bank` declarations
 whose scalarized element names are scheduler input. Schedule reports still use
 coarse `kind: register` for generated storage class; that report value is not
 the source vocabulary.
-The planned bank access forms `(store bank index value)` and
-`(load bank index as target)` are not public parser support yet. They are
-specified as the next FIFO data-buffer implementation surface and must update
-this contract, manifest metadata, diagnostics, schedule-report visibility, and
-tests when they ship.
+The bank access forms `(store <bank-name> <index> <value>)` and
+`(load <bank-name> <index> as <target>)` are now public parser support for
+declared actor-owned banks in rules and supported transaction contexts. The
+second item is the authored bank name; actors may declare multiple banks. They
+lower to scalarized guarded `.fsm` assignments and successful reports expose
+bounded `bank_accesses` metadata with the access kind, owner, container, bank
+name, index token, width/depth, scalarized entries, value or target, and
+the read-before-write same-cycle policy.
+`store` is bank-entry-only public syntax. Scalar storage updates remain the
+ordinary rule assignment and transaction `update` surfaces.
 The current public parser handoff also advertises one bounded subshape inside
 that shell: `interface` contains `inputs` and `outputs` arrays, and each public
 port entry has unique non-empty scalar `name` plus positive integer `width`,
@@ -962,6 +973,7 @@ resource_arbitration entries: resource, kind, arbiter, user, user_kind, suppress
 library_uses entries: library, alias, export, kind, instance, module, scheduled_fsm, parameters, bindings
 library_uses parameter entries: name, source, value
 library_uses binding entries: role, library_name, parent_name, width
+bank_accesses entries: kind, owner, owner_kind, container_kind, container_name, bank, index, width, depth, scalar_entries, same_cycle_policy, value, target
 ```
 
 For each `dt_blocks` entry, `assignments` is a non-negative integer count of
@@ -985,6 +997,16 @@ known ISF width evidence. The machine-readable contract advertises these
 through `schedule_report_storage_kind_values`,
 `schedule_report_storage_role_values`, and
 `schedule_report_storage_width_shape`.
+
+For each `bank_accesses` entry, `kind` is `store` or `load`;
+`same_cycle_policy` is currently `read_before_write`; `scalar_entries` lists
+the deterministic scalarized storage entries used in the scheduled `.fsm`;
+`value` is populated for stores and JSON null for loads; `target` is populated
+for loads and JSON null for stores. The machine-readable contract advertises
+the exact key set and value families through
+`schedule_report_bank_access_keys`,
+`schedule_report_bank_access_kind_values`, and
+`schedule_report_bank_access_policy_values`.
 
 For each `transactions` entry, `states` is an array of scheduled state names
 belonging to that transaction in emitted order, and `count` is a non-negative

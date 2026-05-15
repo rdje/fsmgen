@@ -335,7 +335,7 @@ with `library`, `alias`, `export`, `kind`, `instance`, `module`,
 `library_name`, `parent_name`, and `width`; clock/reset bindings use JSON null
 for `library_name`, and reset/clock width is `1`.
 
-Current boundary: `ISF-LIBRARIES.4.4.4` resolves reusable actors, validates
+Current boundary: `ISF-LIBRARIES.4.4.5` resolves reusable actors, validates
 parameters and bindings, emits child scheduled `.fsm` artifacts, wires library
 actor instances into generated tops for same-name system ports, reaches
 SystemVerilog generation for the covered generated-top path, reports bounded
@@ -345,9 +345,10 @@ guards be scalar or list expressions for direct FIFO fire predicates, and
 accepts same-target rule writes when direct contradictory guard facts prove
 that the writes cannot fire in the same cycle. A depth-4 FIFO-controller
 matrix now lowers through scheduled `.fsm`, schedule JSON, and SystemVerilog
-with actor-maintained pointer/occupancy/full/empty state. The next FIFO
-datapath surface is now specified as `(store bank index value)` and
-`(load bank index as target)`, but those forms are not implemented yet.
+with actor-maintained pointer/occupancy/full/empty state. The first FIFO
+datapath surface now implements `(store <bank-name> <index> <value>)` and
+`(load <bank-name> <index> as <target>)` for actor-owned fixed-depth banks in rules and
+supported transaction contexts.
 
 No FIFO library fixture is shipped yet. A depth-1 element is not considered a
 FIFO for this library catalog; it is a register/holding element and would hide
@@ -482,30 +483,42 @@ The report `kind` is the generated storage class; authored scalar storage uses
 the ISF source word `state`, and `(register ...)` is rejected as a storage
 entry spelling.
 
-### 5.2 Planned Actor-Owned Bank Access
+### 5.2 Actor-Owned Bank Access
 
-The first selected source surface for actor-owned bank data access is explicit
+The first shipped source surface for actor-owned bank data access is explicit
 action syntax:
 
 ```lisp
-(store bank index value)
-(load bank index as target)
+(store <bank-name> <index> <value>)
+(load <bank-name> <index> as <target>)
 ```
 
-This surface is specified for the next FIFO implementation slice, but parser
-and lowerer support are not shipped yet.
+Rules and supported transaction contexts accept these actions when
+`<bank-name>` names a declared actor-owned `(bank ...)` storage entry. The
+word `bank` in the grammar is a placeholder for an authored bank name; it is
+not a literal token. An actor may declare multiple banks, and the second item
+in each `store` or `load` selects which bank is accessed.
+`store` is bank-only: it writes a selected entry of a declared bank. Scalar
+actor-owned storage is currently written with ordinary rule assignments such
+as `(wr_ptr 1)` or transaction `(update wr_ptr expr)`, not with `store`. Those
+two scalar setter spellings are current surface syntax, not a fundamental
+runtime split: a rule assignment is actor-level concurrent logic guarded by
+the rule's non-state DT enable, while transaction `update` is an ordered
+transaction step that becomes part of the transaction state sequence. A future
+explicit setter such as `(set lhs expr)` can be shared by both regions if the
+lowering keeps that regional meaning precise.
 
 `(store data wr_ptr data_in)` means: write `data_in` into the actor-owned bank
-entry selected by `wr_ptr`. For a fixed-depth scalarized bank, lowering should
-emit one guarded update per bank entry. With depth 4, the scheduled `.fsm`
-review artifact should make the selected entry visible through guards
-equivalent to `wr_ptr == 0`, `wr_ptr == 1`, `wr_ptr == 2`, and `wr_ptr == 3`
-on `data_0`, `data_1`, `data_2`, and `data_3`.
+entry selected by `wr_ptr`. For a fixed-depth scalarized bank, lowering emits
+one guarded update per bank entry. With depth 4, the scheduled `.fsm` review
+artifact makes the selected entry visible through guards equivalent to
+`wr_ptr == 0`, `wr_ptr == 1`, `wr_ptr == 2`, and `wr_ptr == 3` on `data_0`,
+`data_1`, `data_2`, and `data_3`.
 
 `(load data rd_ptr as data_out)` means: read the actor-owned bank entry
-selected by `rd_ptr` into `data_out`. Lowering should use the same scalarized
-entry family to build a mux-equivalent set of guarded assignments from
-`data_0` through `data_3` into the target.
+selected by `rd_ptr` into `data_out`. Lowering uses the same scalarized entry
+family to build a mux-equivalent set of guarded assignments from `data_0`
+through `data_3` into the target.
 
 The first timing contract is read-before-write for same-cycle store and load
 against the same bank. A load observes the current bank entry value from the
@@ -513,19 +526,21 @@ cycle snapshot. A store updates the selected bank entry for the following
 cycle. If a later design needs write-first behavior, bypass behavior, or a
 collision diagnostic, that must be an explicit future option or construct.
 
-The first implementation should require:
+The first implementation requires:
 - `bank` names a declared actor-owned `(bank ...)`;
-- `index` is a scalar expression whose value domain is checked against the
-  fixed bank depth where possible;
+- `index` is a scalar signal or literal token whose value domain is checked
+  against the fixed bank depth where possible;
 - `value` has bank-entry width or enough width evidence to reject mismatch
   before scheduled `.fsm` emission;
 - `target` is a scalar storage or interface target with width compatible with
-  the bank entry;
+  the bank entry when width evidence is available;
 - malformed arity, unknown banks, non-bank storage names, unsupported dynamic
   depth, width mismatch, and unsupported same-target conflicts fail closed with
   targeted diagnostics; and
-- schedule reports expose enough bounded metadata for downstream consumers to
-  see that a generated storage entry participates in actor-owned bank access.
+- schedule reports expose bounded `bank_accesses` metadata so downstream
+  consumers can see which owner accesses a generated storage bank, the
+  selected index token, scalarized entries, width/depth, and the
+  read-before-write same-cycle policy.
 
 ## 6. Drive Definitions and Calls
 
@@ -1650,15 +1665,15 @@ Focused tests:
 - [t/1233-isf-rule-expression-guards.t](../t/1233-isf-rule-expression-guards.t)
 - [t/1234-isf-disjoint-rule-writes.t](../t/1234-isf-disjoint-rule-writes.t)
 - [t/1235-isf-fifo-same-cycle-update-matrix.t](../t/1235-isf-fifo-same-cycle-update-matrix.t)
+- [t/1236-isf-bank-access-lowering.t](../t/1236-isf-bank-access-lowering.t)
 
 ## 12. Explicitly Deferred
 
 - Reusable ISF library behavior beyond the shipped resolver/review-artifact,
   same-name generated-top, actor-owned fixed-storage, and expression-valued
-  rule-guard/disjoint-rule/FIFO-controller-matrix slices: implementation of
-  the specified `(store bank index value)` and
-  `(load bank index as target)` bank-access forms, the real reusable FIFO actor
-  fixture with data-storage datapath, standalone transaction/drive exports,
+  rule-guard/disjoint-rule/FIFO-controller-matrix/bank-access slices: the real
+  reusable FIFO actor fixture with data-storage datapath,
+  standalone transaction/drive exports,
   symbolic constants, derived parameter expressions,
   parameter-derived storage dimensions, clock/reset name remapping,
   memory-array backend emission, and library actors that import other

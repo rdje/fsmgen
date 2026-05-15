@@ -26,7 +26,7 @@ my $RESOURCE_KIND_SYNTAX    = join('|', @RESOURCE_KINDS);
 my %RESOURCE_ARBITERS = map { $_ => 1 } @RESOURCE_ARBITERS;
 my %RESOURCE_KINDS    = map { $_ => 1 } @RESOURCE_KINDS;
 my %RULE_ASSIGNMENT_FORBIDDEN_EXPR_HEADS = map { $_ => 1 } qw(
-    when switch repeat do spawn complete
+    when switch repeat do spawn complete store load
 );
 my %RULE_GUARD_SHORTHAND_EXPR_HEADS = map { $_ => 1 } qw(
     & | ! ~ ^ = == != < > <= >= !| ~|
@@ -48,7 +48,7 @@ my %RULE_GUARD_SHORTHAND_EXPR_HEADS = map { $_ => 1 } qw(
 #     transactions  => [ { name => ..., clauses => [...] }, ... ],
 #     rules         => [ { name => ..., when => ..., actions => [...] }, ... ],
 #     resources     => [ { name => ..., arbiter => ..., kind => ..., users => [...] }, ... ],
-#     storage       => [ { kind => "register"|"bank", name => ..., width => ..., depth => ..., signals => [...] }, ... ],
+#     storage       => [ { kind => "state"|"bank", name => ..., width => ..., depth => ..., signals => [...] }, ... ],
 #     priorities    => [ ... ],
 #     imports       => [ ... ],
 #     library_uses  => [ ... ],
@@ -1131,6 +1131,30 @@ sub _parse_rule_action($self, $action, $rule_name) {
     }
     if ($keyword eq 'priority') {
         return $self->_parse_rule_priority($action, $rule_name);
+    }
+    if ($keyword eq 'store') {
+        confess "Error: rule '$rule_name' store action requires '(store <bank-name> <index> <value>)'\n"
+            unless @$action == 4
+                && _is_hdl_identifier($action->[1])
+                && defined($action->[2])
+                && !ref($action->[2])
+                && length($action->[2])
+                && defined($action->[3]);
+        $self->_validate_rule_assignment_expr($action->[3], $rule_name);
+        return 1;
+    }
+    if ($keyword eq 'load') {
+        confess "Error: rule '$rule_name' load action requires '(load <bank-name> <index> as <target>)'\n"
+            unless @$action == 5
+                && _is_hdl_identifier($action->[1])
+                && defined($action->[2])
+                && !ref($action->[2])
+                && length($action->[2])
+                && defined($action->[3])
+                && !ref($action->[3])
+                && $action->[3] eq 'as'
+                && _is_hdl_identifier($action->[4]);
+        return 1;
     }
 
     confess "Error: rule '$rule_name' assignment actions require '(port expr)'\n"

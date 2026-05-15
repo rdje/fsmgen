@@ -390,6 +390,49 @@ or source/field width disagreement fail closed before scheduled `.fsm`
 emission, so accepted `extract` source no longer emits placeholder slice
 bounds.
 
+## `(store <bank-name> <index> <value>)` / `(load <bank-name> <index> as <target>)` → Scalarized Bank Access
+
+**ISF**:
+```lisp
+(store data wr_ptr data_in)
+(load data rd_ptr as data_out)
+```
+
+Here `data` is the declared bank name. Actors may declare more than one bank;
+the second item in the action selects the bank being accessed.
+`store` is not a general scalar assignment form; it only writes a selected
+entry of a declared bank. Use ordinary rule assignments or transaction
+`update` for scalar actor-owned storage.
+Rule assignments and transaction `update` are separate because they live in
+different scheduling regions: rules are actor-level concurrent non-state DTs,
+while transaction updates are ordered transaction states.
+
+**Generated .fsm** for a depth-4 bank:
+```lisp
+(-accepted_push <push_fire
+  (<- (data_0 data_in) <(== wr_ptr 0))
+  (<- (data_1 data_in) <(== wr_ptr 1))
+  (<- (data_2 data_in) <(== wr_ptr 2))
+  (<- (data_3 data_in) <(== wr_ptr 3)))
+
+(-accepted_pop <pop_fire
+  (<- (data_out> data_0) <(== rd_ptr 0))
+  (<- (data_out> data_1) <(== rd_ptr 1))
+  (<- (data_out> data_2) <(== rd_ptr 2))
+  (<- (data_out> data_3) <(== rd_ptr 3)))
+```
+
+**Timing**: read-before-write for same-cycle store/load on one bank. `load`
+selects from the current cycle's scalarized bank values. `store` selects the
+next value for the matching scalarized bank entry. Write-first or bypass
+behavior requires a future explicit option.
+**Implicit signals**: none beyond the declared scalarized bank entries.
+
+Malformed access, unknown banks, non-bank storage names, literal indexes
+outside fixed depth, and known width mismatches fail before scheduled `.fsm`
+is accepted. Successful schedule reports include bounded `bank_accesses`
+metadata for downstream tools.
+
 ## `(latency (min N) (max M))` → Verification Logic
 
 **ISF**:

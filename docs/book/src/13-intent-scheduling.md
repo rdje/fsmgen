@@ -257,17 +257,19 @@ limitations are:
   reachability for the covered generated-top path, bounded `library_uses`
   report metadata, actor-owned fixed storage declarations, and
   expression-valued rule guards for direct fire predicates, plus a
-  conservative disjoint-rule proof for same-target FIFO-style rule writes. A
-  FIFO fixture is not shipped yet: a depth-1 placeholder is not treated as a
-  FIFO in this project, and transaction `(when ...)` control flow is not
-  enough to model the independent write/read sides of a real FIFO. The first
-  real fixture target is a 4-entry FIFO. It must cover push-only, pop-only,
-  simultaneous push+pop, and idle cycles with fire predicates derived from the
-  same pre-cycle state. Depth 4 is the concrete review target for scalarized
-  storage entries, 2-bit pointer wrap, occupancy values 0 through 4, and
-  full/empty derivation. Complete same-cycle FIFO update semantics,
-  parameter-driven interface/storage widths, arbitrary-depth generation beyond
-  the first `DEPTH=4` fixture, automatic non-zero reset values, standalone
+  conservative disjoint-rule proof for same-target FIFO-style rule writes,
+  and pointer-selected `(store <bank-name> <index> <value>)` /
+  `(load <bank-name> <index> as <target>)` access for actor-owned banks. A FIFO fixture
+  is not shipped yet: a depth-1 placeholder is not treated as a FIFO in this
+  project, and transaction `(when ...)` control flow is not enough to model
+  the independent write/read sides of a real FIFO. The first real fixture
+  target is a 4-entry FIFO. It must cover push-only, pop-only, simultaneous
+  push+pop, and idle cycles with fire predicates derived from the same
+  pre-cycle state. Depth 4 is the concrete review target for scalarized
+  storage entries, pointer-selected bank access, 2-bit pointer wrap, occupancy
+  values 0 through 4, and full/empty derivation. Parameter-driven
+  interface/storage widths, arbitrary-depth generation beyond the first
+  `DEPTH=4` fixture, automatic non-zero reset values, standalone
   transaction/drive exports, symbolic constants, derived parameter
   expressions, and clock/reset name remapping remain backlog work.
 - `(do ...)` and `(spawn ...)` targets must resolve to declared same-actor

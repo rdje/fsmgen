@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md), whose current
-  frontier is `ISF-LIBRARIES.4.4.5`. The public-contract tree remains
+  frontier is `ISF-LIBRARIES.4.5`. The public-contract tree remains
   cross-cutting and should not displace feature delivery unless the selected
   feature changes a public surface. The completed
   `ISF-SCHEDULE-REPORTS`, `ISF-DATA-WIDTHS`, `ISF-STAGES-CONTRACTS`,
@@ -162,12 +162,23 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   active frontier advances to `ISF-LIBRARIES.4.4.4`, the FIFO data-buffer
   access contract needed before the reusable FIFO library fixture.
 - `ISF-LIBRARIES.4.4.4` is complete. The FIFO data-buffer access contract now
-  selects `(store bank index value)` for actor-owned bank writes and
-  `(load bank index as target)` for actor-owned bank reads. The specified
+  selects `(store <bank-name> <index> <value>)` for actor-owned bank writes
+  and `(load <bank-name> <index> as <target>)` for actor-owned bank reads. The specified
   lowering keeps depth-4 access reviewable through guarded scalarized entries
   such as `data_0` through `data_3`, and the first same-cycle store/load
   policy is read-before-write. The active frontier advances to
   `ISF-LIBRARIES.4.4.5`, implementing that bank access surface.
+- `ISF-LIBRARIES.4.4.5` is complete. Rules and supported transaction contexts
+  now accept `(store <bank-name> <index> <value>)` and
+  `(load <bank-name> <index> as <target>)` for declared actor-owned banks.
+  Lowering emits per-entry guarded scalarized
+  `.fsm` assignments, the first same-cycle policy remains read-before-write,
+  successful schedule reports expose bounded `bank_accesses` metadata, and
+  the depth-4 FIFO data-path probe reaches SystemVerilog generation. ISF
+  enum/type/aggregate parity is logged as backlog and should reuse the
+  existing `.fsm` type machinery. The active frontier advances to
+  `ISF-LIBRARIES.4.5`, authoring the first reusable FIFO actor library
+  fixture.
 - `ISF-RESOURCE-PRIORITY.1` is complete. The current inventory records that
   `(resources ...)` is validated metadata only, accepted arbiters are
   `priority` and `round_robin`, and successful resource arbitration is not yet

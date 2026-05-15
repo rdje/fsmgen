@@ -1,10 +1,31 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF FIFO data-buffer access implementation
+- Completed `ISF-LIBRARIES.4.4.5` in
+  [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md).
+- Rules and supported transaction contexts now accept
+  `(store <bank-name> <index> <value>)` and
+  `(load <bank-name> <index> as <target>)` for declared actor-owned
+  fixed-depth banks. The second item is the bank name, so an actor can access
+  more than one declared bank.
+- The lowerer emits reviewable scalarized guarded assignments, so a depth-4
+  bank access is visible through `data_0` through `data_3` selectors in the
+  scheduled `.fsm`.
+- Same-cycle store/load uses read-before-write semantics. Successful schedule
+  reports expose bounded `bank_accesses` metadata, and malformed access,
+  unknown banks, non-bank storage names, out-of-range literal indexes, and
+  known width mismatches fail closed.
+- The next active R14 frontier is `ISF-LIBRARIES.4.5`, authoring the first
+  reusable FIFO actor library fixture against the shipped storage and
+  bank-access surface.
+- ISF enum/type/aggregate parity should be added later by reusing the `.fsm`
+  type machinery rather than inventing a parallel ISF type system.
 ## 2026-05-15: ISF FIFO data-buffer access contract
 - Completed `ISF-LIBRARIES.4.4.4` in
   [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md).
-- Selected `(store bank index value)` and `(load bank index as target)` as
-  the first actor-owned bank access source forms for the FIFO datapath.
+- Selected `(store <bank-name> <index> <value>)` and
+  `(load <bank-name> <index> as <target>)` as the first actor-owned bank
+  access source forms for the FIFO datapath.
 - Store lowers, once implemented, to per-entry guarded updates of scalarized
   bank entries such as `data_0` through `data_3`; load lowers to a
   mux-equivalent set of guarded assignments from those entries to the target.

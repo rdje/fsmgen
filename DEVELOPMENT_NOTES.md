@@ -1,10 +1,38 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: ISF FIFO data-buffer access implementation
+- Store/load bank access is implemented as ordinary lowering into the same IR
+  assignment model used by rules and transaction states. There is no special
+  backend-only memory path in this slice.
+- `store` is intentionally bank-entry-only. Scalar storage writes keep using
+  rule assignments and transaction `update`, which avoids overloading one
+  verb with two timing/addressing meanings.
+- For dynamic indexes, lowering emits one guarded assignment per scalarized
+  bank entry. This keeps the review artifact readable and lets existing
+  selector/conflict analysis see the same mux structure that HDL generation
+  will use.
+- Assignment-level index guards are merged into conflict-provenance terms so
+  the checker can recognize that `load data rd_ptr as data_out` writes the
+  same target through mutually exclusive index cases.
+- The first report shape is a bounded `bank_accesses` array rather than raw
+  assignment provenance. It gives downstream consumers the public facts they
+  need without freezing the LoweringIR hash.
+- ISF should eventually support enums, aggregate variables, and declared
+  types, but that should reuse `.fsm` type and package machinery. A parallel
+  ISF-only type system would make IAL0 and IAL1 diverge unnecessarily.
+- Rule scalar assignments and transaction scalar `update` should probably
+  converge on one explicit setter spelling. `(set lhs expr)` is a strong
+  candidate because it is short and region-neutral, provided the book defines
+  it as scheduling an assignment in the current ISF region. The runtime
+  regions remain different: rule setters lower under the rule DTE, while
+  transaction setters lower as transaction steps. Existing `(update lhs expr)`
+  can remain an alias while the source API is still evolving.
 ## 2026-05-15: ISF FIFO data-buffer access contract
 - The FIFO datapath needs source-level bank access, not hard-coded `data_0`
   fixture hacks. The selected first surface is action-oriented:
-  `(store bank index value)` for writes and `(load bank index as target)` for
-  reads.
+  `(store <bank-name> <index> <value>)` for writes and
+  `(load <bank-name> <index> as <target>)` for reads. The bank name is the
+  second action item, which keeps multi-bank actors explicit.
 - Keeping store/load as explicit actions makes timing easier to specify than
   introducing a general dynamic bank expression immediately. Expression-level
   bank references can still be added later after the action semantics and

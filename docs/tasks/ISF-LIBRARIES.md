@@ -236,17 +236,29 @@ reusable ISF design intent, not only scalar constants or types.
   Commit: `ISF-LIBRARIES.4.4.4: specify FIFO data-buffer access`
 
 - ID: `ISF-LIBRARIES.4.4.5`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement actor-owned FIFO data-buffer access.`
-  Acceptance: Rules and supported transaction contexts accept `(store bank
-  index value)` and `(load bank index as target)` for declared fixed-depth
+  Acceptance: Rules and supported transaction contexts accept
+  `(store <bank-name> <index> <value>)` and
+  `(load <bank-name> <index> as <target>)` for declared fixed-depth
   actor-owned banks, lower them to reviewable scalarized `.fsm` assignments
   under per-entry index guards, preserve read-before-write same-cycle
   semantics, report actor-owned bank access metadata, reject malformed or
   unsupported bank/index/value/target shapes with targeted diagnostics, and
   reach SystemVerilog generation for a depth-4 FIFO data path.
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -I perl -c perl/FSM/Adapter/ISF/Parser.pm`;
+  `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`;
+  `perl -I perl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`;
+  `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`;
+  `prove -I perl t/1236-isf-bank-access-lowering.t`;
+  `prove -I perl t/1116-isf-public-schedule-report-key-family-audit.t
+  t/1140-isf-public-schedule-report-metadata-audit.t
+  t/1144-isf-public-tested-by-metadata-audit.t
+  t/1183-ci-regression-tier-selection.t
+  t/1232-isf-actor-storage-declarations.t
+  t/1235-isf-fifo-same-cycle-update-matrix.t
+  t/1236-isf-bank-access-lowering.t`
+  Commit: `ISF-LIBRARIES.4.4.5: implement bank access`
 
 - ID: `ISF-LIBRARIES.4.5`
   Status: `pending`
@@ -281,7 +293,7 @@ reusable ISF design intent, not only scalar constants or types.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-LIBRARIES.4.4.5` | `pending` | The data-buffer syntax and lowering contract are specified; the next slice needs executable parser/lowerer/report/test support before the reusable FIFO library fixture can model data storage. |
+| 1 | `ISF-LIBRARIES.4.5` | `pending` | Store/load bank access now lowers through `.fsm` and HDL; the next slice can author the first reusable FIFO actor library fixture against the shipped surface. |
 
 ## Design Notes
 
@@ -351,13 +363,25 @@ reusable ISF design intent, not only scalar constants or types.
   transfer yet.
 - The selected actor-owned data-buffer access syntax is explicit action form,
   not hidden dynamic array syntax. `(store data wr_ptr data_in)` writes the
-  selected bank entry, and `(load data rd_ptr as data_out)` reads the selected
-  bank entry into a target.
+  selected entry of the declared bank named `data`, and
+  `(load data rd_ptr as data_out)` reads the selected entry of that bank into
+  a target. The grammar placeholders are
+  `(store <bank-name> <index> <value>)` and
+  `(load <bank-name> <index> as <target>)`; actors may declare more than one
+  bank.
+- `store` is bank-entry-only. Scalar actor-owned storage remains updated with
+  ordinary rule assignments such as `(wr_ptr 1)` or transaction
+  `(update wr_ptr expr)`.
 - A fixed-depth bank access lowers through the existing scalarized review
   artifact. For depth 4, store lowers to guarded updates of `data_0` through
   `data_3`, each guarded by the host rule/transaction enable and the matching
   index equality. Load lowers to a mux-equivalent set of guarded target
   assignments from those same scalarized entries.
+- Rules and supported transaction contexts now accept these forms. The
+  scheduler validates that the referenced name is a declared actor-owned bank,
+  rejects literal indexes outside the fixed depth, checks value/target width
+  when width evidence is available, and reports each successful access in the
+  bounded `bank_accesses` schedule-report array.
 - Same-cycle store and load against the same bank use read-before-write
   semantics in the first contract: load observes the current bank entry value
   from the cycle snapshot, while store updates the selected entry for the next
@@ -721,8 +745,9 @@ Remaining boundary:
   a full FIFO datapath. It must not invent `data_0` entries or hidden buffer
   transfer semantics. Real pointer-selected buffer write/read syntax is a
   separate feature before the reusable FIFO library fixture can be honest.
-- `2026-05-15`: Use `(store bank index value)` and
-  `(load bank index as target)` for the first actor-owned bank access surface.
+- `2026-05-15`: Use `(store <bank-name> <index> <value>)` and
+  `(load <bank-name> <index> as <target>)` for the first actor-owned bank
+  access surface.
   The first same-cycle collision policy is read-before-write.
 
 ## Open Questions
@@ -734,17 +759,17 @@ Remaining boundary:
 - Which library catalog metadata should be machine-readable at first ship:
   source path, exported definitions, parameter schemas, tests, limitations, or
   all of those?
+- Should scalar assignment syntax converge on `(set lhs expr)` across rules
+  and transactions, with `(lhs expr)` retained as rule shorthand and existing
+  transaction `(update lhs expr)` retained as an alias while the ISF source API
+  evolves?
 
 ## Blockers
 
-- The real FIFO fixture is blocked on implementation of the specified
-  actor-owned data-buffer access forms. The syntax and lowering contract are
-  now selected, but parser, lowerer, report, diagnostics, and regression
-  support for `(store bank index value)` and `(load bank index as target)` are
-  not shipped yet. Parameter-driven widths/depths beyond the bounded
-  `DEPTH=4` target and non-zero reset-value policy also remain deferred.
-  Fixed actor-owned storage declarations and pointer/occupancy controller
-  updates are now shipped.
+- Parameter-driven widths/depths beyond the bounded `DEPTH=4` target and
+  non-zero reset-value policy remain deferred. Fixed actor-owned storage,
+  pointer/occupancy controller updates, and pointer-selected bank store/load
+  access are now shipped for the depth-4 FIFO path.
 
 ## Verification Log
 
@@ -765,6 +790,7 @@ Remaining boundary:
 | `2026-05-15` | `ISF-LIBRARIES.4.4.2` | `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -I perl t/1234-isf-disjoint-rule-writes.t t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed; focused 3 files, 9 tests; ISF tier 142 files, 479 tests` |
 | `2026-05-15` | `ISF-LIBRARIES.4.4.3` | `perl -I perl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -I perl t/1192-isf-singleton-actor-clause-boundary.t t/1232-isf-actor-storage-declarations.t t/1234-isf-disjoint-rule-writes.t t/1235-isf-fifo-same-cycle-update-matrix.t t/1144-isf-public-tested-by-metadata-audit.t t/1160-isf-public-actor-shell-value-shape-audit.t t/1183-ci-regression-tier-selection.t`; `./bin/fsmgen --emit-schedule-json isf/fifo_controller.isf`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed; focused 7 files, 19 tests; ISF tier 143 files, 481 tests` |
 | `2026-05-15` | `ISF-LIBRARIES.4.4.4` | `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-LIBRARIES.4.4.5` | `perl -I perl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -I perl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -I perl t/1236-isf-bank-access-lowering.t`; `prove -I perl t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1232-isf-actor-storage-declarations.t t/1235-isf-fifo-same-cycle-update-matrix.t t/1236-isf-bank-access-lowering.t` | `passed; focused 7 files, 16 tests` |
 
 ## Commit Log
 
@@ -781,6 +807,7 @@ Remaining boundary:
 | `ISF-LIBRARIES.4.4.2` | `ISF-LIBRARIES.4.4.2: accept disjoint rule writes` | Conservative direct-fact disjointness proof accepts FIFO-style same-target rule writes without priority boilerplate while preserving fail-closed overlap diagnostics. |
 | `ISF-LIBRARIES.4.4.3` | `ISF-LIBRARIES.4.4.3: prove FIFO controller matrix` | Depth-4 FIFO controller matrix with real interface, authored state storage, actor-maintained full/empty flags, pointer/occupancy updates, and HDL reachability. |
 | `ISF-LIBRARIES.4.4.4` | `ISF-LIBRARIES.4.4.4: specify FIFO data-buffer access` | Selected store/load bank access syntax, scalarized lowering model, and read-before-write same-cycle policy. |
+| `ISF-LIBRARIES.4.4.5` | `ISF-LIBRARIES.4.4.5: implement bank access` | Implemented rule/transaction store/load bank access, bounded `bank_accesses` report metadata, fail-closed diagnostics, and depth-4 FIFO data-path HDL reachability. |
 
 ## Changelog
 
@@ -809,6 +836,10 @@ Remaining boundary:
   scalar storage vocabulary to `(state ...)`, and logged that real FIFO
   data-buffer access remains the next required feature before a reusable FIFO
   library fixture.
-- `2026-05-15`: Specified FIFO data-buffer access as `(store bank index
-  value)` and `(load bank index as target)`, with scalarized guarded lowering
+- `2026-05-15`: Specified FIFO data-buffer access as
+  `(store <bank-name> <index> <value>)` and
+  `(load <bank-name> <index> as <target>)`, with scalarized guarded lowering
   and read-before-write same-cycle semantics.
+- `2026-05-15`: Implemented the first store/load bank access surface for
+  rules and supported transaction contexts, with depth-4 FIFO data-path
+  coverage through scheduled `.fsm`, schedule reports, and HDL generation.

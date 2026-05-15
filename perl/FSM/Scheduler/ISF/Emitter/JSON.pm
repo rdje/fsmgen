@@ -30,6 +30,7 @@ sub emit($self, $ir) {
         transactions   => $self->_transaction_summary($ir),
         transaction_stages => $self->_transaction_stage_summary($ir),
         temporal_contracts => $self->_temporal_contract_summary($ir),
+        bank_accesses  => $self->_bank_access_summary($ir),
         dt_blocks      => $self->_dt_summary($ir),
         generated_composition => $self->_generated_composition_summary($ir),
         library_uses   => $self->_library_use_summary($ir),
@@ -168,7 +169,7 @@ sub _transaction_summary($self, $ir) {
 
     # Group states by transaction prefix
     for my $s (@{$ir->{states}}) {
-        my ($tx_name) = ($s->{name} =~ /^(\w+?)_(?:idle|drive|await|done|repeat|sample|max_chk|when|switch|update|shift|asm|ext|extract|do|spawn|phase|stage|contract)_/);
+        my ($tx_name) = ($s->{name} =~ /^(\w+?)_(?:idle|drive|await|done|repeat|sample|max_chk|when|switch|update|shift|asm|ext|extract|store|load|do|spawn|phase|stage|contract)_/);
         ($tx_name) = ($s->{name} =~ /^(\w+)_timeout$/) unless $tx_name;
         push @{$tx_states{$tx_name}}, $s->{name};
     }
@@ -225,6 +226,29 @@ sub _temporal_contract_summary($self, $ir) {
     }
 
     return \@contracts;
+}
+
+sub _bank_access_summary($self, $ir) {
+    return [
+        map {
+            my %entry = (
+                kind              => $_->{kind},
+                owner             => $_->{owner},
+                owner_kind        => $_->{owner_kind},
+                container_kind    => $_->{container_kind},
+                container_name    => $_->{container_name},
+                bank              => $_->{bank},
+                index             => $_->{index},
+                width             => $_->{width},
+                depth             => $_->{depth},
+                scalar_entries    => [ @{$_->{scalar_entries} || []} ],
+                same_cycle_policy => $_->{same_cycle_policy},
+                value             => exists($_->{value}) ? $_->{value} : undef,
+                target            => exists($_->{target}) ? $_->{target} : undef,
+            );
+            \%entry;
+        } @{$ir->{bank_accesses} || []}
+    ];
 }
 
 sub _dt_summary($self, $ir) {

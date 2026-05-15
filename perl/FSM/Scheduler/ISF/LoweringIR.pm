@@ -15,24 +15,25 @@ my %SUPPORTED_TRANSACTION_CLAUSES = (
         map { $_ => 1 } qw(
             on drive await sample update phase shift_left shift_right assemble
             extract complete when switch repeat latency do spawn await_all
-            await_any params stage contract
+            await_any params stage contract store load
         )
     },
     when => {
         map { $_ => 1 } qw(
             drive await sample complete repeat update shift_left shift_right
-            assemble extract when
+            assemble extract when store load
         )
     },
     switch => {
         map { $_ => 1 } qw(
             drive await sample repeat update shift_left shift_right assemble
-            extract when
+            extract when store load
         )
     },
     repeat => {
         map { $_ => 1 } qw(
             drive await sample update shift_left shift_right assemble extract
+            store load
         )
     },
 );
@@ -76,7 +77,7 @@ sub build_module($self, $actor) {
 # --- Child IR (separate module) ---
 
 sub _build_child_ir($self, $tx, $actor, $cname) {
-    my ($states, $ctrs, $dts, $do_children, $spawn_refs, $contracts, $signal_widths, $storage_roles) =
+    my ($states, $ctrs, $dts, $do_children, $spawn_refs, $contracts, $signal_widths, $storage_roles, $bank_accesses) =
         $self->_build_transaction($tx, $actor, 0);
     $states = [@$states]; $ctrs = { %$ctrs }; $dts = [@$dts];
     my %module_signal_widths = _declared_storage_signal_widths($actor);
@@ -104,6 +105,7 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
         storage_roles => \%module_storage_roles,
         children   => {},
         temporal_contracts => $contracts,
+        bank_accesses => $bank_accesses,
     };
 
     # Inject entry state if missing (spawn targets need start handshake)
@@ -161,6 +163,7 @@ sub _build_parent_ir($self, $actor, $spawned) {
     my @dts;
     my @spawn_instances;
     my @temporal_contracts;
+    my @bank_accesses;
     my %signal_widths = _declared_storage_signal_widths($actor);
     my %storage_roles = _declared_storage_roles($actor);
     my %local_drive_uses;
@@ -170,7 +173,7 @@ sub _build_parent_ir($self, $actor, $spawned) {
 
     for my $tx (@{$actor->{transactions}}) {
         next if $spawned->{$tx->{name}};
-        my ($ss, $cs, $ds, $do, $sp, $contracts, $widths, $roles) = $self->_build_transaction($tx, $actor, $ti++);
+        my ($ss, $cs, $ds, $do, $sp, $contracts, $widths, $roles, $accesses) = $self->_build_transaction($tx, $actor, $ti++);
         _merge_signal_widths(\%signal_widths, $widths, $tx->{name});
         _merge_storage_roles(\%storage_roles, $roles, $tx->{name});
         my %tx_drive_uses = _collect_named_drive_call_names($tx->{clauses}, $actor->{drives} || {});
@@ -250,9 +253,10 @@ sub _build_parent_ir($self, $actor, $spawned) {
             $s->{drive_handoffs} = \@drive_handoffs;
         }
         push @spawn_instances, map { _clone_isf_value($_) } @$sp;
+        push @bank_accesses, @$accesses;
     }
 
-    push @dts, $self->_build_rules($actor, \%ctrs);
+    push @dts, $self->_build_rules($actor, \%ctrs, \@bank_accesses);
     $self->_wire_do_children(\@states, \%ctrs, $actor);
     my $local_drive_filter = keys(%$spawned) ? \%local_drive_uses : undef;
     $self->_build_drive_dts($actor, \@dts, \%ctrs, $local_drive_filter, \%spawn_drive_sources, \%storage_roles);
@@ -273,6 +277,7 @@ sub _build_parent_ir($self, $actor, $spawned) {
         children   => {},
         spawn_instances => \@spawn_instances,
         temporal_contracts => \@temporal_contracts,
+        bank_accesses => \@bank_accesses,
     };
     $ir->{resource_arbitration} = _apply_rule_slot_resource_arbitration($ir, $actor);
     $ir->{priority_resolution} = _merge_priority_resolution(
@@ -830,6 +835,7 @@ sub _build_transaction($self, $tx, $actor, $txi) {
     my @spc;
     my @dps;
     my @contracts;
+    my @bank_accesses;
     my %contract_names;
     my %storage_roles;
     my $si  = 0; my $ha = 0; my $wdc; my $lat;
@@ -866,17 +872,23 @@ sub _build_transaction($self, $tx, $actor, $txi) {
         elsif ($k eq 'shift_right') { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_shift_right($cl,$tn,$si++,$widths); }
         elsif ($k eq 'assemble')    { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_assemble($cl,$tn,$si++); }
         elsif ($k eq 'extract')     { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_extract($cl,$tn,$si++,$widths); }
+        elsif ($k eq 'store' || $k eq 'load') {
+            _push_sample_state(\@st, $tn, \@ps, \$si);
+            my ($state, $accesses) = _ir_bank_access($cl, $tn, $si++, $actor, $widths, 'transaction');
+            push @st, $state;
+            push @bank_accesses, @$accesses;
+        }
         elsif ($k eq 'complete') { push @st, _ir_complete($cl, $tn, $si++); }
         elsif ($k eq 'when' && !@st) { push @st, _ir_when_activation($cl,$tn,$si++); }
         elsif ($k eq 'when')     {
-            my ($ws) = _expand_when($cl,$tn,\$si,\@ps,$drives,$wd,$widths,\%ct,\%storage_roles);
+            my ($ws) = _expand_when($cl,$tn,\$si,\@ps,$drives,$wd,$widths,\%ct,\%storage_roles,$actor,\@bank_accesses);
             push @st, @$ws;
         }
         elsif ($k eq 'switch')   {
-            my ($ss) = _expand_switch($cl,$tn,\$si,\@ps,$drives,$wd,$widths,\%ct,\%storage_roles);
+            my ($ss) = _expand_switch($cl,$tn,\$si,\@ps,$drives,$wd,$widths,\%ct,\%storage_roles,$actor,\@bank_accesses);
             push @st, @$ss;
         }
-        elsif ($k eq 'repeat')   { my ($rs,$rc,$rw) = _ir_repeat($cl,$tn,\$si,\@ps,$wd,$drives,$widths); push @st,@$rs; _register_counter_width(\%ct,$rc,$rw); $storage_roles{$rc} = 'repeat_counter'; }
+        elsif ($k eq 'repeat')   { my ($rs,$rc,$rw) = _ir_repeat($cl,$tn,\$si,\@ps,$wd,$drives,$widths,$actor,\@bank_accesses); push @st,@$rs; _register_counter_width(\%ct,$rc,$rw); $storage_roles{$rc} = 'repeat_counter'; }
         elsif ($k eq 'latency')  { $lat = _parse_latency($cl, $tn); }
         elsif ($k eq 'params')   { next; }
         elsif ($k eq 'do')       { push @doc, $cl->[1]; push @st, _ir_do($cl,$tn,$si++); }
@@ -908,7 +920,7 @@ sub _build_transaction($self, $tx, $actor, $txi) {
     _link_states(\@st, $tn);
     $ct{can_accept} = 1;
     for my $s (@st) { next unless $s->{kind} eq 'entry'; unshift @{$s->{assignments}}, { lhs => 'can_accept', rhs => 1, op => '=' }; }
-    return (\@st, \%ct, \@dt, \@doc, \@spc, \@contracts, { %{$widths || {}} }, \%storage_roles);
+    return (\@st, \%ct, \@dt, \@doc, \@spc, \@contracts, { %{$widths || {}} }, \%storage_roles, \@bank_accesses);
 }
 
 sub _merge_signal_widths {
@@ -973,6 +985,8 @@ sub _validate_supported_transaction_clauses {
             _validate_sample_clause($clause, $tn, $label);
         } elsif ($keyword eq 'update') {
             _validate_update_clause($clause, $tn, $label);
+        } elsif ($keyword eq 'store' || $keyword eq 'load') {
+            _validate_bank_access_clause($clause, $tn, $label);
         } elsif ($keyword eq 'shift_left' || $keyword eq 'shift_right') {
             _validate_shift_clause($clause, $tn, $label);
         } elsif ($keyword eq 'when') {
@@ -1392,6 +1406,41 @@ sub _validate_update_clause {
     return 1;
 }
 
+sub _validate_bank_access_clause {
+    my ($clause, $tn, $label) = @_;
+    my $keyword = $clause->[0];
+
+    if ($keyword eq 'store') {
+        confess "Transaction '$tn': store requires '(store <bank-name> <index> <value>)' in $label\n"
+            unless @$clause == 4
+                && defined($clause->[1])
+                && !ref($clause->[1])
+                && length($clause->[1])
+                && defined($clause->[2])
+                && !ref($clause->[2])
+                && length($clause->[2])
+                && defined($clause->[3]);
+        return 1;
+    }
+
+    confess "Transaction '$tn': load requires '(load <bank-name> <index> as <target>)' in $label\n"
+        unless @$clause == 5
+            && defined($clause->[1])
+            && !ref($clause->[1])
+            && length($clause->[1])
+            && defined($clause->[2])
+            && !ref($clause->[2])
+            && length($clause->[2])
+            && defined($clause->[3])
+            && !ref($clause->[3])
+            && $clause->[3] eq 'as'
+            && defined($clause->[4])
+            && !ref($clause->[4])
+            && length($clause->[4]);
+
+    return 1;
+}
+
 sub _validate_complete_clause {
     my ($clause, $tn, $label) = @_;
 
@@ -1531,6 +1580,28 @@ sub _ir_await {
 }
 sub _ir_complete{ my ($cl,$tn,$i)=@_; {name=>"${tn}_done_$i",kind=>'terminal',assignments=>[{lhs=>$cl->[1],rhs=>1,op=>'<1',source_kind=>'complete_pulse'}],transitions=>[]} }
 sub _ir_update   { my ($cl,$tn,$i)=@_; my$rhs=_format_isf_expr($cl->[2]); {name=>"${tn}_update_$i",kind=>'sequential',assignments=>[{lhs=>$cl->[1],rhs=>$rhs,op=>'<-',source_kind=>'update'}],transitions=>[]} }
+sub _ir_bank_access {
+    my ($cl, $tn, $i, $actor, $widths, $owner_kind) = @_;
+    my $spec = _parse_bank_access_for_lowering($cl, $actor, $widths, $tn, 'transaction');
+    my @assignments = _bank_access_assignments($spec);
+    my $kind = $spec->{kind};
+    my $state = {
+        name        => "${tn}_${kind}_$i",
+        kind        => "bank_$kind",
+        assignments => \@assignments,
+        transitions => [],
+    };
+
+    return ($state, [
+        _bank_access_metadata(
+            $spec,
+            owner      => $tn,
+            owner_kind => $owner_kind || 'transaction',
+            container_kind => 'state',
+            container_name => $state->{name},
+        )
+    ]);
+}
 sub _ir_shift_left { my ($cl,$tn,$i)=@_; my$reg=$cl->[1];my$bit=$cl->[2]; {name=>"${tn}_shift_$i",kind=>'sequential',assignments=>[{lhs=>$reg,rhs=>"(| (<< $reg 1) $bit)",op=>'<-',source_kind=>'shift'}],transitions=>[]} }
 sub _ir_shift_right {
     my ($cl, $tn, $i, $widths) = @_;
@@ -1611,6 +1682,168 @@ sub _format_isf_expr {
     my ($expr) = @_;
     return $expr unless ref($expr) eq 'ARRAY';
     return '(' . join(' ', map { _format_isf_expr($_) } @$expr) . ')';
+}
+
+sub _parse_bank_access_for_lowering {
+    my ($cl, $actor, $widths, $owner, $owner_kind) = @_;
+    my $kind = $cl->[0];
+    my %banks = _actor_bank_storage_by_name($actor);
+    my $bank_name = $cl->[1];
+    my $bank = $banks{$bank_name};
+    my $context = "$owner_kind '$owner'";
+
+    confess "$context: $kind references unknown actor-owned bank '$bank_name'\n"
+        unless $bank;
+
+    my $index = $cl->[2];
+    my $literal_index = _literal_integer_value($index);
+    confess "$context: $kind index '$index' is outside bank '$bank_name' depth $bank->{depth}\n"
+        if defined($literal_index)
+            && ($literal_index < 0 || $literal_index >= $bank->{depth});
+
+    my %spec = (
+        kind          => $kind,
+        bank          => $bank,
+        bank_name     => $bank_name,
+        index         => $index,
+        index_text    => _format_isf_expr($index),
+        literal_index => $literal_index,
+    );
+
+    if ($kind eq 'store') {
+        my $value = $cl->[3];
+        $spec{value} = $value;
+        $spec{value_text} = _format_isf_expr($value);
+        _validate_bank_access_width(
+            $context,
+            $kind,
+            "store value",
+            $spec{value_text},
+            _known_expr_width($value, $widths),
+            $bank->{width},
+            $bank_name,
+        );
+        return \%spec;
+    }
+
+    my $target = $cl->[4];
+    confess "$context: load target must be a scalar HDL identifier\n"
+        unless _is_hdl_identifier($target);
+    $spec{target} = $target;
+    _validate_bank_access_width(
+        $context,
+        $kind,
+        "load target",
+        $target,
+        _known_expr_width($target, $widths),
+        $bank->{width},
+        $bank_name,
+    );
+    $widths->{$target} = $bank->{width}
+        if ref($widths) eq 'HASH' && !exists($widths->{$target});
+    return \%spec;
+}
+
+sub _actor_bank_storage_by_name {
+    my ($actor) = @_;
+    return map {
+        (($_->{kind} // '') eq 'bank') ? ($_->{name} => $_) : ()
+    } @{$actor->{storage} || []};
+}
+
+sub _bank_access_assignments {
+    my ($spec) = @_;
+    my @assignments;
+    my @signals = @{$spec->{bank}{signals} || []};
+
+    for my $signal (@signals) {
+        my $entry_index = $signal->{index};
+        next if defined($spec->{literal_index}) && $spec->{literal_index} != $entry_index;
+
+        my %assignment = (
+            op          => '<-',
+            source_kind => "bank_$spec->{kind}",
+            bank        => $spec->{bank_name},
+            bank_index  => $entry_index,
+            index       => $spec->{index_text},
+        );
+
+        if ($spec->{kind} eq 'store') {
+            $assignment{lhs} = $signal->{name};
+            $assignment{rhs} = $spec->{value_text};
+        } else {
+            $assignment{lhs} = $spec->{target};
+            $assignment{rhs} = $signal->{name};
+        }
+
+        $assignment{guard} = _bank_entry_guard($spec->{index_text}, $entry_index)
+            unless defined($spec->{literal_index});
+        push @assignments, \%assignment;
+    }
+
+    return @assignments;
+}
+
+sub _bank_entry_guard {
+    my ($index, $entry_index) = @_;
+    return { expr => "(== $index $entry_index)", expr_ast => ['==', $index, $entry_index] };
+}
+
+sub _bank_access_metadata {
+    my ($spec, %extra) = @_;
+    my %metadata = (
+        kind             => $spec->{kind},
+        bank             => $spec->{bank_name},
+        index            => $spec->{index_text},
+        width            => $spec->{bank}{width},
+        depth            => $spec->{bank}{depth},
+        scalar_entries   => [ map { $_->{name} } @{$spec->{bank}{signals} || []} ],
+        same_cycle_policy => 'read_before_write',
+        %extra,
+    );
+    $metadata{value} = $spec->{value_text} if $spec->{kind} eq 'store';
+    $metadata{target} = $spec->{target} if $spec->{kind} eq 'load';
+    return \%metadata;
+}
+
+sub _validate_bank_access_width {
+    my ($context, $kind, $role, $name, $known_width, $bank_width, $bank_name) = @_;
+    return 1 unless defined($known_width) && $known_width > 0;
+    confess "$context: $kind $role '$name' width $known_width does not match bank '$bank_name' entry width $bank_width\n"
+        unless $known_width == $bank_width;
+    return 1;
+}
+
+sub _known_expr_width {
+    my ($expr, $widths) = @_;
+    return undef unless defined($expr);
+    if (!ref($expr)) {
+        return $widths->{$expr}
+            if ref($widths) eq 'HASH' && exists($widths->{$expr});
+        return 0 + $1 if $expr =~ /\A([1-9][0-9]*)'[bBoOdDhH][0-9a-fA-F_xXzZ]+\z/;
+    }
+    return undef;
+}
+
+sub _literal_integer_value {
+    my ($value) = @_;
+    return undef unless defined($value) && !ref($value);
+    return 0 + $value if $value =~ /\A\d+\z/;
+    return undef unless $value =~ /\A\d+'([bBoOdDhH])([0-9a-fA-F_]+)\z/;
+
+    my ($base_code, $digits) = (lc($1), $2);
+    return undef if $digits =~ /[xXzZ]/;
+    $digits =~ s/_//g;
+    my %base = (b => 2, o => 8, d => 10, h => 16);
+    return undef unless exists $base{$base_code};
+
+    my $result = 0;
+    for my $digit (split //, $digits) {
+        my $value = $digit =~ /\A[0-9]\z/ ? 0 + $digit : 10 + ord(lc($digit)) - ord('a');
+        return undef if $value >= $base{$base_code};
+        $result = $result * $base{$base_code} + $value;
+    }
+    return $result;
 }
 sub _ir_sample_state { my ($tn,$ps,$i)=@_; my @a; for(@$ps){push @a,{lhs=>$_->[3],rhs=>$_->[1],op=>'<=',source_kind=>'sample_capture'}} {name=>"${tn}_sample_$i",kind=>'sequential',assignments=>\@a,transitions=>[]} }
 sub _ir_phase { my ($cl,$tn,$i)=@_; my $name=$cl->[1]; {name=>"${tn}_phase_$i",kind=>'sequential',assignments=>[],transitions=>[],phase_name=>$name} }
@@ -1786,15 +2019,16 @@ sub _ir_placeholder{ my ($cl,$tn,$i)=@_; {name=>"${tn}_$cl->[0]_$i",kind=>'seque
 sub _ir_do       { my ($cl,$tn,$i)=@_; my $c=$cl->[1]; {name=>"${tn}_do_$i",kind=>'await',assignments=>[{lhs=>"${c}_start",rhs=>1,op=>'=',source_kind=>'do_start'}],transitions=>[],guard=>{port=>"${c}_done"}} }
 sub _ir_spawn    { my ($cl,$tn,$i)=@_; my $inst=$cl->[3]||"${tn}_$i"; {name=>"${tn}_spawn_$i",kind=>'sequential',assignments=>[{lhs=>"${inst}_start",rhs=>1,op=>'=',source_kind=>'spawn_start'}],transitions=>[]} }
 sub _ir_when     { my ($cl,$tn,$i)=@_; {name=>"${tn}_when_$i",kind=>'branch',condition=>$cl->[1],body_clauses=>[@{$cl}[2..$#$cl]],assignments=>[],transitions=>[]} }
-sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_roles)=@_; my @s; my $bstate=_ir_when($cl,$tn,$$ir++); push @s,$bstate; my @body_states; my @lp;
+sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_roles,$actor,$bank_accesses)=@_; my @s; my $bstate=_ir_when($cl,$tn,$$ir++); push @s,$bstate; my @body_states; my @lp;
     for my $bc(@{$bstate->{body_clauses}}){next unless ref($bc)eq'ARRAY';my$bk=$bc->[0];
         if($bk eq'drive'){my$n=$bc->[1];confess qq{drive $n not defined} unless !ref($n)&&$drives->{$n};push @body_states,_ir_named_drive_call($bc,$tn,$$ir++,$drives->{$n},[splice @lp])}
         elsif($bk eq'await'){push @body_states,_ir_await($bc,$tn,$$ir++,$wd,[splice @lp])}
         elsif($bk eq'sample'){push @lp,$bc}
         elsif($bk eq'complete'){push @body_states,_ir_complete($bc,$tn,$$ir++)}
-        elsif($bk eq'repeat'){my($rs,$rc,$rw)=_ir_repeat($bc,$tn,$ir,\@lp,$wd,$drives,$widths);push @body_states,@$rs;_register_counter_width($counters,$rc,$rw) if $counters;$storage_roles->{$rc}='repeat_counter' if ref($storage_roles)eq'HASH'}
+        elsif($bk eq'repeat'){my($rs,$rc,$rw)=_ir_repeat($bc,$tn,$ir,\@lp,$wd,$drives,$widths,$actor,$bank_accesses);push @body_states,@$rs;_register_counter_width($counters,$rc,$rw) if $counters;$storage_roles->{$rc}='repeat_counter' if ref($storage_roles)eq'HASH'}
         elsif($bk eq'update'||$bk eq'shift_left'||$bk eq'shift_right'||$bk eq'assemble'||$bk eq'extract'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_data_op($bk,$bc,$tn,$$ir++,$widths)}
-        elsif($bk eq'when'){my($ws)=_expand_when($bc,$tn,$ir,\@lp,$drives,$wd,$widths,$counters,$storage_roles);push @body_states,@$ws}}
+        elsif($bk eq'store'||$bk eq'load'){_push_sample_state(\@body_states,$tn,\@lp,$ir);my($state,$accesses)=_ir_bank_access($bc,$tn,$$ir++,$actor,$widths,'transaction');push @body_states,$state;push @$bank_accesses,@$accesses if ref($bank_accesses)eq'ARRAY'}
+        elsif($bk eq'when'){my($ws)=_expand_when($bc,$tn,$ir,\@lp,$drives,$wd,$widths,$counters,$storage_roles,$actor,$bank_accesses);push @body_states,@$ws}}
     if(@lp){push @body_states,_ir_sample_state($tn,\@lp,$$ir++)}
     if(@body_states){$bstate->{true_target}=$body_states[0]{name};$bstate->{branch_state_names}=[map { $_->{name} } @body_states];push @s,@body_states}
     return (\@s);
@@ -1813,7 +2047,7 @@ sub _canonical_switch_value_key {
     return defined($value) ? "$value" : '';
 }
 
-sub _expand_switch { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_roles)=@_; my $signal=$cl->[1]; my @branches; my @branch_state_names; my @branch_end_names; my %seen_val; my @s;
+sub _expand_switch { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_roles,$actor,$bank_accesses)=@_; my $signal=$cl->[1]; my @branches; my @branch_state_names; my @branch_end_names; my %seen_val; my @s;
     for my $i(2..$#$cl){my$br=$cl->[$i];next unless ref($br)eq'ARRAY'&&@$br>=2;my$val=$br->[0];my@bc=@{$br}[1..$#$br];
         my $seen_key = _canonical_switch_value_key($val);
         confess "Switch '$tn': duplicate value '$val'\n" if$seen_val{$seen_key}++;my@body_states;my@lp;
@@ -1821,9 +2055,10 @@ sub _expand_switch { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_
             if($bk2 eq'drive'){my$n=$bc2->[1];confess qq{drive $n not defined} unless !ref($n)&&$drives->{$n};push @body_states,_ir_named_drive_call($bc2,$tn,$$ir++,$drives->{$n},[splice @lp])}
             elsif($bk2 eq'await'){push @body_states,_ir_await($bc2,$tn,$$ir++,$wd,[splice @lp])}
             elsif($bk2 eq'sample'){push @lp,$bc2}
-            elsif($bk2 eq'repeat'){my($rs,$rc,$rw)=_ir_repeat($bc2,$tn,$ir,\@lp,$wd,$drives,$widths);push @body_states,@$rs;_register_counter_width($counters,$rc,$rw) if $counters;$storage_roles->{$rc}='repeat_counter' if ref($storage_roles)eq'HASH'}
+            elsif($bk2 eq'repeat'){my($rs,$rc,$rw)=_ir_repeat($bc2,$tn,$ir,\@lp,$wd,$drives,$widths,$actor,$bank_accesses);push @body_states,@$rs;_register_counter_width($counters,$rc,$rw) if $counters;$storage_roles->{$rc}='repeat_counter' if ref($storage_roles)eq'HASH'}
             elsif($bk2 eq'update'||$bk2 eq'shift_left'||$bk2 eq'shift_right'||$bk2 eq'assemble'||$bk2 eq'extract'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_data_op($bk2,$bc2,$tn,$$ir++,$widths)}
-            elsif($bk2 eq'when'){my($ws)=_expand_when($bc2,$tn,$ir,\@lp,$drives,$wd,$widths,$counters,$storage_roles);push @body_states,@$ws}}
+            elsif($bk2 eq'store'||$bk2 eq'load'){_push_sample_state(\@body_states,$tn,\@lp,$ir);my($state,$accesses)=_ir_bank_access($bc2,$tn,$$ir++,$actor,$widths,'transaction');push @body_states,$state;push @$bank_accesses,@$accesses if ref($bank_accesses)eq'ARRAY'}
+            elsif($bk2 eq'when'){my($ws)=_expand_when($bc2,$tn,$ir,\@lp,$drives,$wd,$widths,$counters,$storage_roles,$actor,$bank_accesses);push @body_states,@$ws}}
         if(@lp||!@body_states){push @body_states,_ir_sample_state($tn,\@lp,$$ir++)if@lp;push @body_states,{name=>"${tn}_switch_${val}_" . $$ir++,kind=>'sequential',assignments=>[],transitions=>[]}unless@body_states}
         push @branches,{value=>$val,body_start=>$body_states[0]{name}};
         push @branch_state_names, map { $_->{name} } @body_states;
@@ -1837,14 +2072,15 @@ sub _ir_sync_all { my ($tn,$i,$dps)=@_; {name=>"${tn}_await_all_$i",kind=>'sync_
 sub _ir_sync_any { my ($tn,$i,$dps)=@_; {name=>"${tn}_await_any_$i",kind=>'sync_any',assignments=>[],transitions=>[],done_ports=>[@$dps]} }
 
 sub _ir_repeat {
-    my ($cl,$tn,$ir,$ps,$wd,$drives,$widths)=@_; my $ctr="${tn}_cnt"; my @s; my @lp;
+    my ($cl,$tn,$ir,$ps,$wd,$drives,$widths,$actor,$bank_accesses)=@_; my $ctr="${tn}_cnt"; my @s; my @lp;
     my $width = _repeat_count_width($cl->[1], $widths);
     push @s, {name=>"${tn}_repeat_init_".$$ir++,kind=>'sequential',assignments=>[{lhs=>$ctr,rhs=>$cl->[1],op=>'<='}],transitions=>[]};
     for my $bc(@{$cl}[2..$#$cl]){next unless ref($bc)eq'ARRAY';my $bk=$bc->[0];
         if($bk eq'drive'){my$n=$bc->[1];if(!ref($n)&&$drives->{$n}){push @s,_ir_named_drive_call($bc,$tn,$$ir++,$drives->{$n},[splice @lp])}else{push @s,_ir_drive($bc,$tn,[splice @lp],$$ir++)}}
         elsif($bk eq'await'){push @s,_ir_await($bc,$tn,$$ir++,$wd,[splice @lp])}
         elsif($bk eq'sample'){push @lp,$bc}
-        elsif($bk eq'update'||$bk eq'shift_left'||$bk eq'shift_right'||$bk eq'assemble'||$bk eq'extract'){_push_sample_state(\@s,$tn,\@lp,$ir);push @s,_ir_data_op($bk,$bc,$tn,$$ir++,$widths)}}
+        elsif($bk eq'update'||$bk eq'shift_left'||$bk eq'shift_right'||$bk eq'assemble'||$bk eq'extract'){_push_sample_state(\@s,$tn,\@lp,$ir);push @s,_ir_data_op($bk,$bc,$tn,$$ir++,$widths)}
+        elsif($bk eq'store'||$bk eq'load'){_push_sample_state(\@s,$tn,\@lp,$ir);my($state,$accesses)=_ir_bank_access($bc,$tn,$$ir++,$actor,$widths,'transaction');push @s,$state;push @$bank_accesses,@$accesses if ref($bank_accesses)eq'ARRAY'}}
     if(@lp){push @s,_ir_sample_state($tn,\@lp,$$ir++)}
     my $fb=$s[0]{name};
     push @s, {name=>"${tn}_repeat_check_".$$ir++,kind=>'repeat_check',assignments=>[{lhs=>$ctr,rhs=>"(- $ctr 1)",op=>'<-'}],transitions=>[],loop_target=>$fb,counter=>$ctr};
@@ -2399,6 +2635,38 @@ sub _guard_condition_expr {
     return undef;
 }
 
+sub _guard_literal_terms {
+    my ($guard) = @_;
+    return _condition_literal_terms($guard->{expr_ast})
+        if $guard && ref($guard) eq 'HASH' && exists $guard->{expr_ast};
+    my $condition = _guard_condition_expr($guard);
+    return {} unless defined($condition);
+    return _condition_literal_terms($condition);
+}
+
+sub _merge_literal_term_sets {
+    my @sets = grep { defined $_ } @_;
+    return undef unless @sets;
+
+    my %merged;
+    for my $terms (@sets) {
+        next unless ref($terms) eq 'HASH';
+        return { __unsat => 1 } if $terms->{__unsat};
+        for my $signal (sort keys %$terms) {
+            next if $signal eq '__unsat';
+            if (exists($merged{$signal})) {
+                return { __unsat => 1 }
+                    if $signal =~ /\Aeq:/ && $merged{$signal} ne $terms->{$signal};
+                return { __unsat => 1 }
+                    if $signal !~ /\Aeq:/ && $merged{$signal} != $terms->{$signal};
+            }
+            $merged{$signal} = $terms->{$signal};
+        }
+    }
+
+    return \%merged;
+}
+
 sub _condition_literal_terms {
     my ($condition) = @_;
     return {} unless defined($condition);
@@ -2581,6 +2849,7 @@ sub _state_assignment_provenance {
         operator         => $assignment->{op},
         rhs              => $assignment->{rhs},
         domain           => _assignment_domain_hint($assignment, $source_kind),
+        condition_terms   => _guard_literal_terms($assignment->{guard}),
         assignment_index => $assignment_index,
         priority_suppressed_by => _assignment_priority_suppressed_by($assignment),
         resource_suppressed_by => _assignment_resource_suppressed_by($assignment),
@@ -2606,7 +2875,10 @@ sub _dt_assignment_provenance {
         operator         => $assignment->{op},
         rhs              => $assignment->{rhs},
         domain           => _assignment_domain_hint($assignment, $source_kind),
-        condition_terms   => (($dt->{kind} // '') eq 'rule' ? $dt->{dte_guard_terms} : undef),
+        condition_terms   => _merge_literal_term_sets(
+            (($dt->{kind} // '') eq 'rule' ? $dt->{dte_guard_terms} : _guard_literal_terms($dt->{dte_guard})),
+            _guard_literal_terms($assignment->{guard}),
+        ),
         assignment_index => $assignment_index,
         priority_suppressed_by => _assignment_priority_suppressed_by($assignment),
         resource_suppressed_by => _assignment_resource_suppressed_by($assignment),
@@ -2623,7 +2895,7 @@ sub _dt_assignment_provenance {
 sub _transaction_owner_from_state_name {
     my ($name) = @_;
     return undef unless defined $name;
-    return $1 if $name =~ /^(.+)_(?:idle|drive|await|done|repeat|sample|max_chk|when|switch|update|shift|asm|ext|extract|do|spawn|phase|stage|contract)_/;
+    return $1 if $name =~ /^(.+)_(?:idle|drive|await|done|repeat|sample|max_chk|when|switch|update|shift|asm|ext|extract|store|load|do|spawn|phase|stage|contract)_/;
     return $1 if $name =~ /^(.+)_timeout$/;
     return undef;
 }
@@ -3133,10 +3405,11 @@ sub _inj_latency {
 }
 
 sub _build_rules {
-    my ($self, $actor, $ctrs) = @_;
+    my ($self, $actor, $ctrs, $bank_accesses) = @_;
     my @d;
     my %fanin_by_transaction;
     my %seen_fanin_source;
+    my $widths = _build_signal_width_map($actor, { clauses => [] });
 
     for my $r (@{$actor->{rules} || []}) {
         my $c = $self->_rule_cond($r->{when});
@@ -3157,6 +3430,16 @@ sub _build_rules {
                     unless $seen_fanin_source{"$target\0$source"}++;
             } elsif ($a0 eq 'priority') {
                 # Parsed metadata; arbitration enforcement is a later slice.
+            } elsif ($a0 eq 'store' || $a0 eq 'load') {
+                my $spec = _parse_bank_access_for_lowering($ac, $actor, $widths, $r->{name}, 'rule');
+                push @a, _bank_access_assignments($spec);
+                push @$bank_accesses, _bank_access_metadata(
+                    $spec,
+                    owner          => $r->{name},
+                    owner_kind     => 'rule',
+                    container_kind => 'dt',
+                    container_name => $r->{name},
+                ) if ref($bank_accesses) eq 'ARRAY';
             } else {
                 push @a, { lhs => $a0, rhs => _format_isf_expr($ac->[1]), op => '<-', source_kind => 'rule_action' };
             }

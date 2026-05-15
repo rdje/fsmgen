@@ -1,0 +1,25 @@
+;; Depth-4 FIFO data-path probe.
+;;
+;; This fixture exercises the first actor-owned bank access surface. It keeps
+;; pointer and occupancy maintenance outside the fixture so the test focuses on
+;; lowering `(store <bank-name> <index> <value>)` and
+;; `(load <bank-name> <index> as <target>)`.
+(actor fifo_data_path
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input write_req)
+    (input data_in (width 8))
+    (input read_req)
+    (output data_out (width 8)))
+  (storage
+    (state wr_ptr (width 2))
+    (state rd_ptr (width 2))
+    (state occupancy (width 3))
+    (bank data (width 8) (depth 4)))
+
+  (rule accepted_push (& write_req (| (! (== occupancy 4)) read_req))
+    (store data wr_ptr data_in))
+
+  (rule accepted_pop (& read_req (! (== occupancy 0)))
+    (load data rd_ptr as data_out)))

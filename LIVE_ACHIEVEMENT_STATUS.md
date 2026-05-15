@@ -2,10 +2,25 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF FIFO data-buffer access implementation
+- Active R14 task-tree slice: `ISF-LIBRARIES.4.4.5` is complete.
+- `(store <bank-name> <index> <value>)` and
+  `(load <bank-name> <index> as <target>)` now parse and lower for declared
+  actor-owned fixed-depth banks in rules and supported transaction contexts.
+- Depth-4 bank access lowers to guarded scalarized assignments over entries
+  such as `data_0` through `data_3`, preserving read-before-write same-cycle
+  semantics.
+- Schedule reports now expose bounded `bank_accesses` metadata, and malformed
+  access shapes, unknown banks, non-bank storage names, out-of-range literal
+  indexes, and known width mismatches fail closed.
+- The next active R14 frontier is `ISF-LIBRARIES.4.5`, the first reusable
+  FIFO actor library fixture.
+
 ## 2026-05-15: R14 — ISF FIFO data-buffer access contract
 - Active R14 task-tree slice: `ISF-LIBRARIES.4.4.4` is complete.
 - The FIFO datapath access syntax is specified as
-  `(store bank index value)` and `(load bank index as target)`.
+  `(store <bank-name> <index> <value>)` and
+  `(load <bank-name> <index> as <target>)`.
 - The planned lowering uses the existing scalarized bank entries, so a
   depth-4 bank remains reviewable through guarded access to `data_0` through
   `data_3`.

@@ -92,8 +92,10 @@ This scalarized representation is deliberate for the first reusable FIFO work.
 It lets the `DEPTH=4` fixture use four concrete storage entries, 2-bit
 pointers, and 3-bit occupancy state while staying on the existing scalar
 signal/flop backend path. Parameter-derived widths/depths, symbolic
-dimensions, indexed bank access syntax, and memory-array backend emission are
-future generalizations.
+dimensions, and memory-array backend emission are future generalizations.
+Pointer-selected access is available through explicit action forms such as
+`(store data wr_ptr data_in)` and `(load data rd_ptr as data_out)`, which
+lower through guarded scalarized entries.
 
 `(storage ...)` is a singleton actor clause. Storage names and scalarized
 element names must not collide with interface ports, actor clock/reset signals,

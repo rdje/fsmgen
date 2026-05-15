@@ -18,6 +18,9 @@ use FSM::Support::ISFPublicInterfaceContract qw(
     isf_public_interface_schedule_report_compile_issue_severity_values
     isf_public_interface_schedule_report_compile_issue_source_keys
     isf_public_interface_schedule_report_compile_issues_success_shape
+    isf_public_interface_schedule_report_bank_access_keys
+    isf_public_interface_schedule_report_bank_access_kind_values
+    isf_public_interface_schedule_report_bank_access_policy_values
     isf_public_interface_schedule_report_dt_keys
     isf_public_interface_schedule_report_fanin_group_kind_values
     isf_public_interface_schedule_report_fanin_group_optional_keys
@@ -133,6 +136,10 @@ sub assert_schedule_report_metadata {
                 isf_public_interface_schedule_report_compile_issue_source_keys(),
         ],
         [
+            schedule_report_bank_access_keys =>
+                isf_public_interface_schedule_report_bank_access_keys(),
+        ],
+        [
             schedule_report_fanin_group_required_keys =>
                 isf_public_interface_schedule_report_fanin_group_required_keys(),
         ],
@@ -231,6 +238,24 @@ sub assert_schedule_report_metadata {
     assert_unique_scalar_list(
         $contract->{schedule_report_compile_issue_proof_status_values},
         "$label compile issue proof status values",
+    );
+    is_deeply(
+        $contract->{schedule_report_bank_access_kind_values},
+        isf_public_interface_schedule_report_bank_access_kind_values(),
+        "$label bank access kind values are exact",
+    );
+    assert_unique_scalar_list(
+        $contract->{schedule_report_bank_access_kind_values},
+        "$label bank access kind values",
+    );
+    is_deeply(
+        $contract->{schedule_report_bank_access_policy_values},
+        isf_public_interface_schedule_report_bank_access_policy_values(),
+        "$label bank access policy values are exact",
+    );
+    assert_unique_scalar_list(
+        $contract->{schedule_report_bank_access_policy_values},
+        "$label bank access policy values",
     );
     is_deeply(
         $contract->{schedule_report_fanin_group_kind_values},

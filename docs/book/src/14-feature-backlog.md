@@ -174,6 +174,50 @@ and platform/resource mapping decisions that choose among legal ISF schedules
 or resource allocations. Aliases, macros, wrappers, and sugar without a
 distinct runtime model should stay inside IAL1 or remain out of the language.
 
+### ISF Enum, Type, And Aggregate Parity
+
+Status: backlog.
+
+Goal: let ISF use the same enum, type, and aggregate variable capability that
+`.fsm` already exposes, without inventing a second type system.
+
+Current boundary: ISF still uses mostly scalar width evidence and scalarized
+actor-owned storage in the shipped parser/lowering path. Long term, ISF
+should be able to reference enum and aggregate types from the same `.fsm` and
+package-backed type machinery used by IAL0. The staged path should be:
+reference existing enum/aggregate type declarations first, allow actor ports,
+parameters, and actor-owned variables to carry those types second, then add
+aggregate field/slice/update lowering with explicit cycle semantics and
+schedule-report visibility.
+
+The lowering artifact remains the contract. ISF enum/aggregate source should
+lower to reviewable `.fsm` text that uses the established type and aggregate
+semantics, not to hidden backend-only structure. Diagnostics must reject
+unknown types, incompatible enum values, aggregate shape mismatches, and
+ambiguous partial updates before HDL generation.
+
+### ISF Scalar Setter Syntax Unification
+
+Status: backlog.
+
+Goal: use one explicit scalar setter vocabulary across rules and transactions.
+
+Current boundary: transaction scalar updates use `(update lhs expr)`, while
+rule scalar updates use terse action form `(lhs expr)`. That spelling
+difference is not fundamental; it comes from the two surfaces growing at
+different times. A future unification may choose `(set lhs expr)` as the
+canonical explicit setter because it is short and works naturally in both
+rules and transactions. If `set` is adopted, the book must define it precisely:
+it schedules an assignment in the current ISF region. In a rule it still lowers
+under the rule non-state DT DTE; in a transaction it still lowers as an ordered
+transaction state. The runtime regions stay different, but the setter verb can
+be shared.
+
+Compatibility policy remains open. The likely path is to keep `(lhs expr)` as
+rule shorthand and keep existing transaction `(update lhs expr)` as an alias
+while the API is still evolving, then decide later which spellings remain
+permanent syntax.
+
 ### Enforced Resource Arbitration
 
 Status: backlog.
@@ -610,9 +654,9 @@ Shipped actor-owned storage model:
 
 `(state name (width N))` declares one fixed-width internal actor state value.
 `(bank name (width N) (depth N))` remains the fixed-depth actor-owned storage
-form, but the FIFO-controller matrix does not use an internal bank. Data
-storage and data muxing belong to the later reusable FIFO fixture/datapath
-work.
+form. The FIFO-controller matrix does not use an internal bank, but the
+shipped data-path probe now exercises a depth-4 bank through explicit
+store/load access.
 
 Selected data-buffer access surface:
 
@@ -622,16 +666,25 @@ Selected data-buffer access surface:
 ```
 
 `store` writes a value into the actor-owned bank entry selected by the index.
-For the first depth-4 implementation it should lower through the existing
-scalarized review artifact by guarded updates to `data_0`, `data_1`,
-`data_2`, and `data_3`. `load` reads the selected bank entry into a scalar
-target, again through mux-equivalent guarded assignments from the scalarized
-entry family. These forms are specified but not implemented yet.
+For the first depth-4 implementation it lowers through the existing scalarized
+review artifact by guarded updates to `data_0`, `data_1`, `data_2`, and
+`data_3`. `load` reads the selected bank entry into a scalar target, again
+through mux-equivalent guarded assignments from the scalarized entry family.
+Rules and supported transaction contexts accept these forms for declared
+actor-owned banks.
+`store` is intentionally bank-entry-only; scalar storage uses the existing
+rule assignment and transaction `update` surfaces.
 
 The first same-cycle store/load policy is read-before-write. A load observes
 the current cycle's bank value, while a store updates the selected entry for
 the next cycle. Write-first collision behavior, explicit bypassing, or
 collision diagnostics need their own future option or construct.
+
+Successful schedule reports expose bounded `bank_accesses` metadata for these
+forms: access kind, owner, container, bank name, index expression, width,
+depth, scalarized entries, value or target, and the same-cycle policy. The
+shipped index is a scalar signal or literal token; full list-expression indexes
+remain future work.
 
 The first FIFO fixture must be a real FIFO actor, not a depth-1 placeholder.
 A depth-1 element may be useful as a register slice or holding element, but it
