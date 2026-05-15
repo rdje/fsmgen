@@ -37,9 +37,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-CLOCK-DOMAINS.2` selected actor-scoped named domains as the future
   source model without shipping parser/lowering support, and
   `ISF-CLOCK-DOMAINS.3` selected per-domain reset ownership for that future
-  model. Existing `(clock name)` and actor-level `(reset ...)` remain the only
-  accepted clock/reset syntax today. The current frontier is
-  `ISF-CLOCK-DOMAINS.4`, cross-domain interaction primitives.
+  model, and `ISF-CLOCK-DOMAINS.4` selected an acknowledged single-bit event
+  channel as the first future legal crossing primitive. Existing `(clock
+  name)` and actor-level `(reset ...)` remain the only accepted clock/reset
+  syntax today; no `(clock-domains ...)` or `(crossings ...)` source is
+  accepted yet. The current frontier is `ISF-CLOCK-DOMAINS.5`, lowering
+  multi-domain ISF into explicit scheduled artifacts.
   `ISF-ACTIVATION-BIND-EXPRESSIONS` is now closed after shipping
   expression-valued activation input bindings,
   `ISF-LIBRARY-SYSTEM-BINDINGS` is closed after shipping reusable-library
@@ -153,7 +156,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   direct unowned crossings remain fail-closed. Domain resets are owned inside
   domain entries; synchronous resets are sampled on the owning domain clock,
   and asynchronous resets are direct external reset pins, not DT-generated
-  logic.
+  logic. The first planned crossing primitive is an acknowledged single-bit
+  event channel with generated source-domain `ready`, generated
+  destination-domain pulse, one outstanding event, and no payload.
 - Composition ergonomics update: `?ports` now accepts verbose
   `(input NAME ...)` and `(output NAME ...)` declarations as aliases for the
   compact port-token syntax. Verbose `(width TOKEN)` uses the same width
@@ -192,8 +197,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   task-tree completed table. The completed `COMPOSITION-WIRING-LISPISH` tree
   records the shipped `R11` canonical explicit-link list syntax.
   The active `ISF-CLOCK-DOMAINS` tree owns future multi-clock/CDC semantics;
-  its public source model and reset ownership are selected, and legal crossing
-  primitives are the next implementation frontier.
+  its public source model, reset ownership, and first legal crossing primitive
+  are selected, and lowering artifact structure is the next implementation
+  frontier.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
   guide for installing the same task-tree tracking workflow in another
   project.

@@ -33,11 +33,11 @@ single-domain signal-name bindings. They are not clock-domain-crossing
 constructs, and they do not specify synchronizers, handshakes, dual-clock
 storage, or any other CDC behavior.
 
-Multi-clock, asynchronous, and interacting clock-domain semantics are a
-separate proposed feature tree. Before ISF can accept that source, the
-language must define how domains are declared, how ports/children/rules or
-transactions belong to domains, which crossings are legal, what lowers to
-scheduled `.fsm`, and what diagnostics/report metadata prove the behavior.
+Multi-clock, asynchronous, and interacting clock-domain semantics are owned by
+the active `ISF-CLOCK-DOMAINS` feature tree. The future source model, reset
+ownership, and first event crossing primitive are selected below, but ISF still
+cannot accept that source until lowering artifacts, diagnostics, report
+metadata, and fixtures are defined and implemented.
 
 The selected future source model is actor-scoped named domains, but it is not
 implemented yet. The planned authoring shape is an actor-level
@@ -93,6 +93,24 @@ for that domain's clocked state; ISF rules, transactions, drives, and DTs must
 not generate or gate arbitrary asynchronous reset trees. Reusing one reset
 signal across multiple domains is only a shared external reset pin when kind
 and polarity match exactly, not a CDC primitive or data synchronizer.
+
+The first selected future crossing primitive is an acknowledged single-bit
+event channel. It is not accepted syntax yet, but the planned shape is:
+
+```lisp
+(crossings
+  (event rx_done
+    (from bus  rx_done_bus)
+    (to   core rx_done_core)
+    (ready rx_done_ready)))
+```
+
+The source side requests an event only when the generated source-domain
+`ready` signal is true. The destination side receives a generated one-cycle
+pulse after synchronizer and acknowledgement latency; no same-cycle timing is
+promised. The primitive carries no payload. Direct cross-domain reads, writes,
+triggers, activations, child bindings, or reset assertion/deassertion events
+remain illegal until a shipped crossing primitive owns that path.
 
 ## Watchdog
 

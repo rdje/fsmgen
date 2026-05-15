@@ -503,9 +503,9 @@ Selected future source model, not implemented yet:
   duplicate domain names, duplicate or missing default domain markers in a
   multi-domain actor, duplicate clock names that pretend to be distinct
   domains, and any direct unowned crossing are rejected before lowering.
-- Legal CDC primitives, report metadata, and lowering artifacts remain future
-  leaves of the `ISF-CLOCK-DOMAINS` task tree. Reset ownership is selected
-  below.
+- Report metadata and lowering artifacts remain future leaves of the
+  `ISF-CLOCK-DOMAINS` task tree. Reset ownership and the first legal crossing
+  primitive are selected below.
 
 Selected future reset ownership model, not implemented yet:
 - Existing actor-level `(clock clk)` plus optional actor-level `(reset ...)`
@@ -538,6 +538,40 @@ Selected future reset ownership model, not implemented yet:
   actor-level `(reset ...)` mixed with `(clock-domains ...)`, expression-valued
   reset names, conflicting reset reuse, DT-generated async reset gating, and
   treating reset assertion/deassertion as an ordinary cross-domain event.
+
+Selected future crossing primitive, not implemented yet:
+- The first legal cross-domain interaction is an acknowledged single-bit event
+  channel. It carries no data payload:
+
+```lisp
+(crossings
+  (event rx_done
+    (from bus  rx_done_bus)
+    (to   core rx_done_core)
+    (ready rx_done_ready)))
+```
+
+- `(crossings ...)` is actor-scoped and references only domains declared in
+  `(clock-domains ...)`.
+- `(from DOMAIN SIGNAL)` names the source-domain event request signal.
+- `(to DOMAIN SIGNAL)` names the generated destination-domain one-cycle event
+  pulse.
+- `(ready SIGNAL)` names the generated source-domain ready signal. Source
+  logic may request a new event only when ready is true.
+- Source and destination domains must be different declared domains.
+- The primitive has at most one outstanding event. After an accepted source
+  event, ready deasserts until an acknowledgement returns from the destination
+  domain.
+- The destination pulse occurs after synchronizer/acknowledgement latency. No
+  same-cycle relationship is promised between source request and destination
+  pulse.
+- The primitive owns its generated request toggle, destination synchronizer,
+  destination pulse, acknowledgement synchronizer, and source ready logic.
+- Payload transfer, multi-bit data, level sampling, reset crossing, and
+  FIFO-like storage remain outside this first primitive.
+- Direct cross-domain reads, writes, triggers, activations, parent/child
+  bindings, and reset assertion/deassertion events remain rejected unless a
+  shipped crossing primitive or protocol actor owns that path.
 
 Watchdog rules:
 - `(watchdog N)` is the actor default for every `(await ...)`.

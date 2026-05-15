@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: first CDC primitive is an acknowledged event
+- `ISF-CLOCK-DOMAINS.4` selects an acknowledged single-bit event channel as the
+  first future legal crossing because it is small enough to specify precisely
+  and avoids pretending a raw pulse synchronizer can safely preserve arbitrary
+  event rates.
+- The generated source-domain `ready` signal is part of the contract. The
+  primitive is single-outstanding and payload-free, so multi-bit data, level
+  sampling, and FIFO-like storage stay out of scope until separate source and
+  lowering rules exist.
+- Reset assertion/deassertion is explicitly not modeled as a data event. Reset
+  fanout remains part of reset ownership, not CDC event semantics.
 ## 2026-05-15: clock-domain resets are domain-owned
 - `ISF-CLOCK-DOMAINS.3` keeps reset ownership inside the future domain entries
   instead of treating reset as a global actor afterthought. That gives each

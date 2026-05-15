@@ -67,11 +67,11 @@ asynchronous, and interacting clock-domain designs.
   Commit: `ISF-CLOCK-DOMAINS.3: specify domain reset ownership`
 
 - ID: `ISF-CLOCK-DOMAINS.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Specify cross-domain interaction primitives.`
   Acceptance: `The first shipped CDC surface identifies legal crossings, such as synchronized single-bit events, handshakes, or dual-clock FIFO-like actors, and rejects unowned direct crossings.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-CLOCK-DOMAINS.4: specify event crossing primitive`
 
 - ID: `ISF-CLOCK-DOMAINS.5`
   Status: `pending`
@@ -91,7 +91,7 @@ asynchronous, and interacting clock-domain designs.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-CLOCK-DOMAINS.4` | `pending` | Cross-domain behavior needs explicit legal primitives before generated RTL can be considered meaningful. |
+| 1 | `ISF-CLOCK-DOMAINS.5` | `pending` | The source, reset, and first crossing semantics are selected; lowering must next define reviewable domain-specific artifacts. |
 
 ## Selected Source Model
 
@@ -146,9 +146,9 @@ Malformed combinations fail closed:
   without a shipped CDC primitive or protocol actor.
 - Any attempt to use DT logic as asynchronous reset gating.
 
-This source model deliberately leaves crossing primitives, report metadata, and
-lowering artifacts to `ISF-CLOCK-DOMAINS.4` through `ISF-CLOCK-DOMAINS.6`.
-Reset ownership is selected below.
+This source model deliberately leaves report metadata and lowering artifacts to
+`ISF-CLOCK-DOMAINS.5` and `ISF-CLOCK-DOMAINS.6`. Reset ownership and the first
+legal crossing primitive are selected below.
 
 ## Selected Reset Ownership Model
 
@@ -200,9 +200,64 @@ Malformed reset combinations fail closed:
 - Any attempt to treat reset assertion/deassertion as an ordinary
   cross-domain data event.
 
-This reset model deliberately does not select legal CDC primitives, report
-metadata, or lowering artifact structure. Those remain owned by
-`ISF-CLOCK-DOMAINS.4` through `ISF-CLOCK-DOMAINS.6`.
+This reset model deliberately leaves report metadata and lowering artifact
+structure to `ISF-CLOCK-DOMAINS.5` and `ISF-CLOCK-DOMAINS.6`. The first legal
+CDC primitive is selected below.
+
+## Selected Crossing Primitive
+
+`ISF-CLOCK-DOMAINS.4` selects the first legal cross-domain interaction
+primitive without shipping parser or lowering support yet. Existing ISF still
+has no accepted cross-domain source syntax.
+
+The first planned crossing is an acknowledged single-bit event channel:
+
+```lisp
+(crossings
+  (event rx_done
+    (from bus  rx_done_bus)
+    (to   core rx_done_core)
+    (ready rx_done_ready)))
+```
+
+Rules for the planned event primitive:
+
+- `(crossings ...)` is actor-scoped and references only domains declared in
+  `(clock-domains ...)`.
+- `(event NAME ...)` crosses one control event from a source domain to a
+  destination domain. It carries no data payload.
+- `(from DOMAIN SIGNAL)` names the source-domain event request signal.
+- `(to DOMAIN SIGNAL)` names the generated destination-domain one-cycle event
+  pulse.
+- `(ready SIGNAL)` names the generated source-domain ready signal. Source
+  logic may request a new event only when this ready signal is true.
+- The source and destination domains must be different declared domains.
+- The primitive has at most one outstanding event. After an accepted source
+  event, `ready` deasserts until an acknowledgement returns from the
+  destination domain.
+- The destination pulse occurs after synchronizer/acknowledgement latency.
+  No same-cycle relationship is promised between the source request and
+  destination pulse.
+- The primitive owns its generated request toggle, destination synchronizer,
+  destination pulse, acknowledgement synchronizer, and source ready logic.
+- Payload transfer, multi-bit data, level sampling, reset crossing, and
+  FIFO-like storage are not part of this first primitive.
+
+Unowned crossings fail closed:
+
+- Reading a signal, storage entry, port, transaction state, or generated helper
+  from a different domain without an event primitive or future legal crossing.
+- Writing or driving a target owned by another domain.
+- Triggering or activating a transaction in another domain without a legal
+  crossing.
+- Binding a parent and child port across different domains without a crossing
+  primitive or future protocol actor owning that path.
+- Treating a reset assertion/deassertion as an event primitive.
+
+Future crossing surfaces, such as acknowledged level handshakes, request/data
+channels, and dual-clock FIFO-like actors, remain backlog until their source
+syntax, runtime semantics, lowering, diagnostics, reports, and fixtures are
+specified.
 
 ## Decisions
 
@@ -222,12 +277,13 @@ metadata, or lowering artifact structure. Those remain owned by
 - `2026-05-15`: Future multi-domain resets are domain-owned. Synchronous
   resets are sampled on the owning domain clock; asynchronous resets are direct
   external reset pins and must not be generated or gated through ISF DT logic.
+- `2026-05-15`: The first future legal CDC primitive is an acknowledged
+  single-bit event channel with source-domain ready, destination-domain pulse,
+  and no data payload. Ordinary cross-domain reads/writes/triggers/bindings
+  remain fail-closed.
 
 ## Open Questions
 
-- Which CDC primitive ships first: event synchronizer, level handshake,
-  request/acknowledge channel, dual-clock FIFO, or another actor-library
-  pattern?
 - How should schedule reports summarize domains and crossings without exposing
   unstable internal lowering objects?
 - How should generated HDL validation distinguish simulation-only assertions
@@ -235,8 +291,7 @@ metadata, or lowering artifact structure. Those remain owned by
 
 ## Blockers
 
-- None for the current frontier. Selecting the first legal crossing primitive
-  is the purpose of `ISF-CLOCK-DOMAINS.4`.
+- None for the current frontier.
 
 ## Verification Log
 
@@ -245,6 +300,7 @@ metadata, or lowering artifact structure. Those remain owned by
 | `2026-05-15` | `ISF-CLOCK-DOMAINS.1` | `./bin/ci-regression quick`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-CLOCK-DOMAINS.2` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-CLOCK-DOMAINS.3` | `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-CLOCK-DOMAINS.4` | `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -253,6 +309,7 @@ metadata, or lowering artifact structure. Those remain owned by
 | `ISF-CLOCK-DOMAINS.1` | `ISF-CLOCK-DOMAINS.1: capture multi-clock backlog` | Documents the shipped single-clock boundary and proposed multi-clock/CDC design tree. |
 | `ISF-CLOCK-DOMAINS.2` | `ISF-CLOCK-DOMAINS.2: specify domain source model` | Selects actor-scoped named domains as the future source model without shipping parser/lowering support. |
 | `ISF-CLOCK-DOMAINS.3` | `ISF-CLOCK-DOMAINS.3: specify domain reset ownership` | Selects per-domain reset ownership and forbids DT-generated asynchronous reset glue without shipping parser/lowering support. |
+| `ISF-CLOCK-DOMAINS.4` | `ISF-CLOCK-DOMAINS.4: specify event crossing primitive` | Selects an acknowledged single-bit event channel as the first legal future crossing primitive. |
 
 ## Changelog
 
@@ -264,3 +321,6 @@ metadata, or lowering artifact structure. Those remain owned by
 - `2026-05-15`: Completed `ISF-CLOCK-DOMAINS.3`, selecting per-domain reset
   ownership for the future source model; current frontier advances to
   `ISF-CLOCK-DOMAINS.4`.
+- `2026-05-15`: Completed `ISF-CLOCK-DOMAINS.4`, selecting the acknowledged
+  single-bit event channel as the first legal future CDC primitive; current
+  frontier advances to `ISF-CLOCK-DOMAINS.5`.

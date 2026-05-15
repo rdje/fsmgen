@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF event crossing primitive selected
+- Completed `ISF-CLOCK-DOMAINS.4` in
+  [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md).
+- The first future legal CDC primitive is an acknowledged single-bit event
+  channel declared in actor-scoped `(crossings ...)` source.
+- The planned primitive has a source-domain event request, generated
+  source-domain `ready`, generated destination-domain one-cycle pulse,
+  synchronizer/acknowledgement latency, one outstanding event, and no data
+  payload.
+- Direct cross-domain reads, writes, triggers, activations, parent/child
+  bindings, and reset assertion/deassertion events remain fail-closed unless a
+  shipped primitive or protocol actor owns that path.
+- The current R14 frontier is `ISF-CLOCK-DOMAINS.5`, lowering multi-domain ISF
+  into explicit scheduled artifacts.
 ## 2026-05-15: ISF clock-domain reset ownership selected
 - Completed `ISF-CLOCK-DOMAINS.3` in
   [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md).

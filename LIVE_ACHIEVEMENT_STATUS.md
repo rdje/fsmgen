@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF event crossing primitive selected
+- Completed R14 task-tree slice: `ISF-CLOCK-DOMAINS.4`.
+- The first future legal CDC primitive is an acknowledged single-bit event
+  channel in actor-scoped `(crossings ...)` source.
+- It has source-domain event request, generated source-domain `ready`,
+  generated destination-domain one-cycle pulse, one outstanding event, and no
+  payload.
+- Direct cross-domain reads, writes, triggers, activations, child bindings, and
+  reset assertion/deassertion events remain fail-closed unless a shipped
+  primitive owns that path.
+- This was specification-only; parser/lowering behavior is unchanged.
+- The active frontier advances to `ISF-CLOCK-DOMAINS.5`, lowering artifacts.
+
 ## 2026-05-15: R14 — ISF clock-domain reset ownership selected
 - Completed R14 task-tree slice: `ISF-CLOCK-DOMAINS.3`.
 - Future multi-domain reset ownership lives inside `(clock-domains ...)`

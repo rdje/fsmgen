@@ -1016,9 +1016,6 @@ semantics.
 
 The future feature must still define at least:
 
-- which crossings are legal, such as synchronized single-bit events,
-  handshakes, request/acknowledge channels, or dual-clock FIFO-style actors;
-- which direct crossings fail closed;
 - how the scheduler emits reviewable domain-specific `.fsm` artifacts or a
   documented multi-domain artifact; and
 - what bounded schedule-report metadata and fixtures prove the behavior.
@@ -1051,6 +1048,17 @@ Each domain owns zero or one reset. Synchronous resets are sampled on the
 owning domain clock; asynchronous resets are direct external reset pins, not
 DT-generated logic. Reusing one reset signal across domains is only legal when
 kind and polarity match exactly, and it is reset fanout rather than data CDC.
+
+Crossing decision: the first legal future crossing primitive is an
+acknowledged single-bit event channel declared in actor-scoped
+`(crossings ...)` source. It has a source-domain event request, generated
+source-domain `ready`, and generated destination-domain one-cycle pulse. It
+owns its request toggle, destination synchronizer, acknowledgement path, and
+source ready logic. It carries no payload and promises no same-cycle timing.
+Direct cross-domain reads, writes, triggers, activations, parent/child
+bindings, and reset assertion/deassertion events remain fail-closed unless a
+shipped primitive or protocol actor owns that path. Payload handshakes and
+dual-clock FIFO-like actors remain future backlog.
 
 ## Backends And Validation
 

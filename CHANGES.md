@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF event crossing primitive selected
+- Completed `ISF-CLOCK-DOMAINS.4`.
+- Selected an acknowledged single-bit event channel as the first future legal
+  cross-domain interaction primitive in
+  [docs/ISF_SPEC.md](docs/ISF_SPEC.md),
+  [docs/book/src/13a-actor-interface.md](docs/book/src/13a-actor-interface.md),
+  [docs/book/src/14-feature-backlog.md](docs/book/src/14-feature-backlog.md),
+  and [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md).
+- The planned primitive has source-domain request, generated source-domain
+  `ready`, generated destination-domain pulse, acknowledgement latency, one
+  outstanding event, and no payload.
+- This is specification-only. Existing shipped parser/lowering behavior is
+  unchanged.
+- The active R14 frontier advances to `ISF-CLOCK-DOMAINS.5`, lowering
+  multi-domain ISF into explicit scheduled artifacts.
 ### R14 — ISF clock-domain reset ownership selected
 - Completed `ISF-CLOCK-DOMAINS.3`.
 - Specified future per-domain reset ownership in
