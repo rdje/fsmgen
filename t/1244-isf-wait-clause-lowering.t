@@ -625,6 +625,68 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'wait_dynamic_when');
 };
 
+subtest 'runtime scalar waits lower inside repeat bodies' => sub {
+    my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-repeat');
+(actor wait_dynamic_repeat
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (output flag)
+    (output done))
+  (drive tick
+    (flag 1))
+  (transaction main
+    (on start)
+    (repeat 2
+      (wait cycles)
+      (drive tick))
+    (complete done)))
+ISF
+
+    my $fsm = $lowered->{files}{'wait_dynamic_repeat.fsm'};
+    my $repeat_init = state_block($fsm, 'main_repeat_init_1');
+    like($repeat_init, qr/\(<= \(main_cnt 2\)\)/,
+        'repeat init still samples the repeat count');
+    like($repeat_init, qr/\(<- \(main_wait_2_cnt cycles\) <cycles\)/,
+        'repeat body positive path samples the runtime wait count');
+    like($repeat_init, qr/\(-> main_wait_2 <cycles\)/,
+        'repeat body positive path enters the dynamic wait');
+    like($repeat_init, qr/\(-> main_drive_3 <\(== cycles 0\)\)/,
+        'repeat body zero path bypasses to the following body state');
+
+    my $wait = state_block($fsm, 'main_wait_2');
+    like($wait, qr/\(-- main_wait_2_cnt\)/, 'repeat-body dynamic wait decrements its sampled counter');
+    like($wait, qr/\?main_wait_2_cnt[\s\S]*\(=1 \(-> main_drive_3\)\)/,
+        'repeat-body sampled count of one exits to the following body state');
+
+    my $repeat_check = state_block($fsm, 'main_repeat_check_4');
+    like($repeat_check, qr/\?main_cnt[\s\S]*\(=1 \(-> main_repeat_init_1\)\)/,
+        'repeat loop-back edge remains available after the body');
+    like($repeat_check, qr/\?main_cnt[\s\S]*\(=0 \(-> main_done_5\)\)/,
+        'repeat exit edge remains available after the body');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'main_wait_2',
+                exit_state     => 'main_drive_3',
+                counter_signal => 'main_wait_2_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'repeat-body dynamic wait report exposes runtime count metadata',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_repeat');
+};
+
 subtest 'malformed wait clauses fail before scheduled emission' => sub {
     assert_lower_rejected(<<'ISF', 'missing wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant_or_runtime_scalar\)' in transaction body/);
 (actor wait_missing_count
@@ -695,14 +757,15 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'repeat dynamic wait count', qr/\ATransaction 'main': runtime dynamic wait count 'cycles' is not supported in repeat body in the current dynamic-wait slice/);
-(actor wait_repeat_dynamic_count
+    assert_lower_rejected(<<'ISF', 'pending sample before repeat dynamic wait', qr/\ATransaction 'main': runtime dynamic wait count 'cycles' in repeat body cannot follow pending samples yet/);
+(actor wait_repeat_dynamic_after_sample
   (clock clk)
   (reset (rst_n async active_low))
-  (interface (input start) (input cycles (width 4)) (output done))
+  (interface (input start) (input cycles (width 4)) (input din (width 8)) (output done))
   (transaction main
     (on start)
     (repeat 1
+      (sample din as hold)
       (wait cycles))
     (complete done)))
 ISF

@@ -272,9 +272,9 @@ report the resolved integer in `cycles`; runtime scalar waits report
 `cycles` as null and expose the source/counter metadata instead. Malformed
 waits such as `(wait)`, `(wait 1 2)`, `(wait -1)`, unknown-width dynamic
 counts, expression counts, parameter-backed counts, and unsupported runtime
-contexts fail closed. Inline dynamic waits are supported in `when` bodies when
-no pending sample crosses the wait. Inline dynamic waits in `switch`,
-`repeat`, `while`, and `until` bodies currently remain fail-closed with
+contexts fail closed. Inline dynamic waits are supported in `when` and
+`repeat` bodies when no pending sample crosses the wait. Inline dynamic waits
+in `switch`, `while`, and `until` bodies currently remain fail-closed with
 diagnostics that name the rejected body context.
 
 ## `(complete port)` — Terminal State

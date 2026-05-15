@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF repeat-body dynamic waits
+- Completed R14 task-tree slice: `ISF-DYNAMIC-WAIT.3.3.4.3`.
+- Runtime scalar waits in `repeat` bodies now lower for the no-pending-sample
+  subset.
+- Repeat-body generated dynamic wait counters are registered alongside the
+  repeat counter, and repeat-check loop-back/exit behavior remains intact.
+- Pending samples before a `repeat`-body dynamic wait remain fail-closed.
+- The active frontier advances to `ISF-DYNAMIC-WAIT.3.3.4.4`, dynamic waits in
+  `switch` branches.
+
 ## 2026-05-15: R14 — ISF when-body dynamic waits
 - Completed R14 task-tree slice: `ISF-DYNAMIC-WAIT.3.3.4.2`.
 - Runtime scalar waits in `when` bodies now lower for the no-pending-sample

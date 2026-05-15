@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: repeat-body dynamic waits share repeat counter registration
+- Dynamic waits in a repeat body are generated inside `_ir_repeat`, so their
+  counters must be returned to the caller together with the repeat counter.
+  Otherwise the scheduled `.fsm` can mention the wait counter without a width
+  declaration or storage-role report entry.
+- The repeat body itself is still a linear state chain. A dynamic wait at the
+  start of the body uses the repeat-init state as its predecessor, adding the
+  runtime wait counter load/bypass transitions beside the repeat counter load.
+- Pending samples before a repeat-body dynamic wait remain rejected until the
+  shared pending-sample preservation leaf defines how samples behave across
+  repeat body zero-bypass and positive wait-entry paths.
 ## 2026-05-15: when-body dynamic waits use branch true-edge splitting
 - A dynamic wait that is the first state in a `when` body cannot be entered by
   the old branch true-target edge because that would skip the counter load.

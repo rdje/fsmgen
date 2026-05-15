@@ -376,11 +376,24 @@ The false edge still skips the entire body. The true/positive edge enters the
 wait with a sampled counter, and the true/zero edge bypasses the wait to the
 following body state.
 
-Runtime waits remain fail-closed in inline `switch`, `repeat`, `while`, and
-`until` bodies, with diagnostics that name the rejected body context. They
-also remain fail-closed after pending samples, after predecessor states whose
-edge split is not implemented yet, including loop decision states, and for
-expression-valued or parameter-backed counts.
+Runtime waits in `repeat` bodies are also supported when no pending sample must
+cross the wait. The generated dynamic wait counter is registered with the
+repeat body's other counters, and the repeat-check loop-back/exit edges remain
+unchanged after the body:
+
+```lisp
+(main_repeat_init_1
+  (<= (main_cnt 2))
+  (<- (main_wait_2_cnt cycles) <cycles)
+  (-> main_wait_2 <cycles)
+  (-> main_drive_3 <(== cycles 0)))
+```
+
+Runtime waits remain fail-closed in inline `switch`, `while`, and `until`
+bodies, with diagnostics that name the rejected body context. They also remain
+fail-closed after pending samples, after predecessor states whose edge split is
+not implemented yet, including loop decision states, and for expression-valued
+or parameter-backed counts.
 
 **Timing**: exactly `N` active transaction cycles, no external condition.
 **Cycles**: `N`.

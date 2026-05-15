@@ -1105,7 +1105,10 @@ collected done signals.
 Runtime waits inside `when` bodies are supported when no pending sample must
 cross the dynamic wait. The branch true edge is split into positive-count
 counter load and zero-count bypass paths, and the false edge still skips the
-whole `when` body. Runtime waits inside `switch`, `repeat`, `while`, or
+whole `when` body. Runtime waits inside `repeat` bodies are also supported
+when no pending sample must cross the dynamic wait; generated dynamic wait
+counters are registered alongside the repeat counter, and the repeat-check
+loop-back/exit edges remain intact. Runtime waits inside `switch`, `while`, or
 `until` bodies remain rejected with diagnostics that name the rejected body
 context. Runtime waits after pending samples, after predecessor states whose
 edge split is not implemented yet, including loop decision states, and counts

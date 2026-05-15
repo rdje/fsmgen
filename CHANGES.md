@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF repeat-body dynamic waits
+- Updated
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so runtime scalar waits in `repeat` bodies lower for the no-pending-sample
+  subset.
+- Extended repeat lowering so generated dynamic wait counters inside repeat
+  bodies are returned and registered alongside the repeat counter.
+- Added focused HDL-reaching coverage in
+  [t/1244-isf-wait-clause-lowering.t](t/1244-isf-wait-clause-lowering.t)
+  for repeat-body positive-count entry, zero-count bypass, report metadata,
+  and repeat-check loop/exit preservation.
+- Refreshed the ISF spec, public contract doc, mdBook, feature backlog,
+  roadmap, task tree, and live docs. The active dynamic-wait frontier advances
+  to `ISF-DYNAMIC-WAIT.3.3.4.4`.
 ### R14 — ISF when-body dynamic waits
 - Updated
   [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)

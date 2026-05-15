@@ -1124,6 +1124,22 @@ sub _register_counter_width {
         if !defined($counters->{$name}) || $counters->{$name} < $width;
 }
 
+sub _register_repeat_counters {
+    my ($counters, $storage_roles, $repeat_counter, $repeat_width, $dynamic_wait_counters) = @_;
+    _register_counter_width($counters, $repeat_counter, $repeat_width)
+        if $counters;
+    $storage_roles->{$repeat_counter} = 'repeat_counter'
+        if ref($storage_roles) eq 'HASH';
+
+    for my $entry (@{$dynamic_wait_counters || []}) {
+        next unless ref($entry) eq 'HASH';
+        _register_counter_width($counters, $entry->{name}, $entry->{width})
+            if $counters;
+        $storage_roles->{$entry->{name}} = 'dynamic_wait_counter'
+            if ref($storage_roles) eq 'HASH';
+    }
+}
+
 sub _repeat_count_width {
     my ($count, $widths) = @_;
     return 8 if ref($count);
@@ -1257,7 +1273,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
             my ($ss) = _expand_switch($cl,$tn,\$si,\@ps,$drives,$wd,$widths,\%ct,\%storage_roles,$actor,\@bank_accesses);
             push @st, @$ss;
         }
-        elsif ($k eq 'repeat')   { my ($rs,$rc,$rw) = _ir_repeat($cl,$tn,\$si,\@ps,$wd,$drives,$widths,$actor,\@bank_accesses); push @st,@$rs; _register_counter_width(\%ct,$rc,$rw); $storage_roles{$rc} = 'repeat_counter'; }
+        elsif ($k eq 'repeat')   { my ($rs,$rc,$rw,$rdw) = _ir_repeat($cl,$tn,\$si,\@ps,$wd,$drives,$widths,$actor,\@bank_accesses); push @st,@$rs; _register_repeat_counters(\%ct,\%storage_roles,$rc,$rw,$rdw); }
         elsif ($k eq 'latency')  { $lat = _parse_latency($cl, $tn); }
         elsif ($k eq 'params')   { next; }
         elsif ($k eq 'do')       {
@@ -3132,7 +3148,7 @@ sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_ro
             }
         }
         elsif($bk eq'complete'){push @body_states,_ir_complete($bc,$tn,$$ir++)}
-        elsif($bk eq'repeat'){my($rs,$rc,$rw)=_ir_repeat($bc,$tn,$ir,\@lp,$wd,$drives,$widths,$actor,$bank_accesses);push @body_states,@$rs;_register_counter_width($counters,$rc,$rw) if $counters;$storage_roles->{$rc}='repeat_counter' if ref($storage_roles)eq'HASH'}
+        elsif($bk eq'repeat'){my($rs,$rc,$rw,$rdw)=_ir_repeat($bc,$tn,$ir,\@lp,$wd,$drives,$widths,$actor,$bank_accesses);push @body_states,@$rs;_register_repeat_counters($counters,$storage_roles,$rc,$rw,$rdw)}
         elsif($bk eq'update'||$bk eq'set'||$bk eq'shift_left'||$bk eq'shift_right'||$bk eq'assemble'||$bk eq'extract'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_data_op($bk,$bc,$tn,$$ir++,$widths)}
         elsif($bk eq'store'||$bk eq'load'){_push_sample_state(\@body_states,$tn,\@lp,$ir);my($state,$accesses)=_ir_bank_access($bc,$tn,$$ir++,$actor,$widths,'transaction');push @body_states,$state;push @$bank_accesses,@$accesses if ref($bank_accesses)eq'ARRAY'}
         elsif($bk eq'when'){my($ws)=_expand_when($bc,$tn,$ir,\@lp,$drives,$wd,$widths,$counters,$storage_roles,$actor,$bank_accesses);push @body_states,@$ws}}
@@ -3167,7 +3183,7 @@ sub _expand_switch { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_
                     push @body_states,@{_ir_wait($bc2,$tn,$ir,[splice @lp],$actor,'switch body')};
                 }
             }
-            elsif($bk2 eq'repeat'){my($rs,$rc,$rw)=_ir_repeat($bc2,$tn,$ir,\@lp,$wd,$drives,$widths,$actor,$bank_accesses);push @body_states,@$rs;_register_counter_width($counters,$rc,$rw) if $counters;$storage_roles->{$rc}='repeat_counter' if ref($storage_roles)eq'HASH'}
+            elsif($bk2 eq'repeat'){my($rs,$rc,$rw,$rdw)=_ir_repeat($bc2,$tn,$ir,\@lp,$wd,$drives,$widths,$actor,$bank_accesses);push @body_states,@$rs;_register_repeat_counters($counters,$storage_roles,$rc,$rw,$rdw)}
             elsif($bk2 eq'update'||$bk2 eq'set'||$bk2 eq'shift_left'||$bk2 eq'shift_right'||$bk2 eq'assemble'||$bk2 eq'extract'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_data_op($bk2,$bc2,$tn,$$ir++,$widths)}
             elsif($bk2 eq'store'||$bk2 eq'load'){_push_sample_state(\@body_states,$tn,\@lp,$ir);my($state,$accesses)=_ir_bank_access($bc2,$tn,$$ir++,$actor,$widths,'transaction');push @body_states,$state;push @$bank_accesses,@$accesses if ref($bank_accesses)eq'ARRAY'}
             elsif($bk2 eq'when'){my($ws)=_expand_when($bc2,$tn,$ir,\@lp,$drives,$wd,$widths,$counters,$storage_roles,$actor,$bank_accesses);push @body_states,@$ws}}
@@ -3208,10 +3224,9 @@ sub _expand_loop_body {
         } elsif ($bk eq 'complete') {
             push @states, _ir_complete($bc, $tn, $$ir++);
         } elsif ($bk eq 'repeat') {
-            my ($rs, $rc, $rw) = _ir_repeat($bc, $tn, $ir, \@lp, $wd, $drives, $widths, $actor, $bank_accesses);
+            my ($rs, $rc, $rw, $rdw) = _ir_repeat($bc, $tn, $ir, \@lp, $wd, $drives, $widths, $actor, $bank_accesses);
             push @states, @$rs;
-            _register_counter_width($counters, $rc, $rw) if $counters;
-            $storage_roles->{$rc} = 'repeat_counter' if ref($storage_roles) eq 'HASH';
+            _register_repeat_counters($counters, $storage_roles, $rc, $rw, $rdw);
         } elsif ($bk eq 'update' || $bk eq 'set' || $bk eq 'shift_left' || $bk eq 'shift_right' || $bk eq 'assemble' || $bk eq 'extract') {
             _push_sample_state(\@states, $tn, \@lp, $ir);
             push @states, _ir_data_op($bk, $bc, $tn, $$ir++, $widths);
@@ -3234,7 +3249,7 @@ sub _expand_loop_body {
 }
 
 sub _ir_repeat {
-    my ($cl,$tn,$ir,$ps,$wd,$drives,$widths,$actor,$bank_accesses)=@_; my $ctr="${tn}_cnt"; my @s; my @lp;
+    my ($cl,$tn,$ir,$ps,$wd,$drives,$widths,$actor,$bank_accesses)=@_; my $ctr="${tn}_cnt"; my @s; my @lp; my @dynamic_wait_counters;
     my $width = _repeat_count_width($cl->[1], $widths);
     push @s, {name=>"${tn}_repeat_init_".$$ir++,kind=>'sequential',assignments=>[{lhs=>$ctr,rhs=>$cl->[1],op=>'<='}],transitions=>[]};
     for my $bc(@{$cl}[2..$#$cl]){next unless ref($bc)eq'ARRAY';my $bk=$bc->[0];
@@ -3242,8 +3257,17 @@ sub _ir_repeat {
         elsif($bk eq'await'){push @s,_ir_await($bc,$tn,$$ir++,$wd,[splice @lp])}
         elsif($bk eq'sample'){push @lp,$bc}
         elsif($bk eq'wait'){
-            if (_wait_cycles($bc,$tn,'repeat body',$actor,$widths) > 0) {
-                push @s,@{_ir_wait($bc,$tn,$ir,[splice @lp],$actor,'repeat body')};
+            my $wait = _wait_count_spec($bc,$tn,'repeat body',$actor,$widths,1);
+            if ($wait->{kind} eq 'static') {
+                if ($wait->{cycles} > 0) {
+                    push @s,@{_ir_wait($bc,$tn,$ir,[splice @lp],$actor,'repeat body',$wait)};
+                }
+            } else {
+                confess "Transaction '$tn': runtime dynamic wait count '$wait->{source}' in repeat body cannot follow pending samples yet\n"
+                    if @lp;
+                my ($states,$counter,$counter_width)=_ir_dynamic_wait($bc,$tn,$ir,$wait);
+                push @s,@$states;
+                push @dynamic_wait_counters,{name=>$counter,width=>$counter_width};
             }
         }
         elsif($bk eq'update'||$bk eq'set'||$bk eq'shift_left'||$bk eq'shift_right'||$bk eq'assemble'||$bk eq'extract'){_push_sample_state(\@s,$tn,\@lp,$ir);push @s,_ir_data_op($bk,$bc,$tn,$$ir++,$widths)}
@@ -3251,7 +3275,7 @@ sub _ir_repeat {
     if(@lp){push @s,_ir_sample_state($tn,\@lp,$$ir++)}
     my $fb=$s[0]{name};
     push @s, {name=>"${tn}_repeat_check_".$$ir++,kind=>'repeat_check',assignments=>[{lhs=>$ctr,rhs=>"(- $ctr 1)",op=>'<-'}],transitions=>[],loop_target=>$fb,counter=>$ctr};
-    return (\@s,$ctr,$width);
+    return (\@s,$ctr,$width,\@dynamic_wait_counters);
 }
 
 sub _apply_rule_slot_resource_arbitration {

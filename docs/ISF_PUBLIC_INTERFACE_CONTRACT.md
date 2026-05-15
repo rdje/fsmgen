@@ -356,8 +356,9 @@ exit, `await_all`, and `await_any` predecessors, reaches HDL generation,
 exposes `actor_constants[]` and `transaction_waits[]` provenance, and rejects
 malformed, unknown, parameter-backed, expression-valued, or unsupported
 dynamic counts. Inline `when` body dynamic waits are covered for the
-no-pending-sample subset. Unsupported inline dynamic wait contexts are covered
-for `switch`, `repeat`, `while`, and `until` bodies with diagnostics that name
+no-pending-sample subset, and inline `repeat` body dynamic waits are covered
+for the no-pending-sample subset. Unsupported inline dynamic wait contexts are
+covered for `switch`, `while`, and `until` bodies with diagnostics that name
 the rejected body context.
 The transaction loop boundary is checked by
 [t/1245-isf-transaction-loop-lowering.t](../t/1245-isf-transaction-loop-lowering.t)
