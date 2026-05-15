@@ -287,7 +287,7 @@ sub extract_ast_structure {
         };
     } elsif ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
         # Include the actual signal name in the structural identity
-        my $signal_name = eval { $ast->signal_name() } || "unknown_signal";
+        my $signal_name = $self->extract_signal_name_from_ast_node($ast) || "unknown_signal";
         return { 
             type => "signal_ref",
             signal => $signal_name  # This makes different signals have different structural IDs

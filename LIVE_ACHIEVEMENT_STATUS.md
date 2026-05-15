@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF FIFO library HDL proof
+- Active R14 task-tree slice: `ISF-LIBRARIES.4.6` is complete.
+- [isf/fifo_library_use.isf](isf/fifo_library_use.isf) now reaches CLI
+  SystemVerilog generation through the generated top path.
+- The HDL proof checks the generated top module, specialized FIFO child,
+  fixed parameter bindings, scalarized data entries, and pointer-gated
+  accepted push/pop selectors.
+- The slice fixed AST factorization structural identity so `CoreAST`
+  signal references keep their concrete signal names and same-shape helpers
+  do not collapse unrelated signals.
+- The next active R14 frontier is `ISF-LIBRARIES.5`, public library
+  catalog/contract synchronization for the shipped FIFO fixture.
+
 ## 2026-05-15: R14 — ISF reusable FIFO library fixture
 - Active R14 task-tree slice: `ISF-LIBRARIES.4.5` is complete.
 - [isf/common/fifo.isf](isf/common/fifo.isf) now exports the first reusable

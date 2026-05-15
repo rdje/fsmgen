@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md), whose current
-  frontier is `ISF-LIBRARIES.4.6`. The public-contract tree remains
+  frontier is `ISF-LIBRARIES.5`. The public-contract tree remains
   cross-cutting and should not displace feature delivery unless the selected
   feature changes a public surface. The completed
   `ISF-SCHEDULE-REPORTS`, `ISF-DATA-WIDTHS`, `ISF-STAGES-CONTRACTS`,
@@ -190,6 +190,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   interface/storage elaboration remains deferred. The active frontier
   advances to `ISF-LIBRARIES.4.6`, proving the reusable FIFO fixture through
   generated top HDL and focused generated-artifact checks.
+- `ISF-LIBRARIES.4.6` is complete. The fixed FIFO library fixture now reaches
+  CLI generated-top SystemVerilog. The HDL proof checks the generated top
+  module, specialized FIFO child, fixed parameter bindings, scalarized FIFO
+  entries, and pointer-gated accepted push/pop selectors. This slice also
+  fixed AST factorization structural identity so `CoreAST::SignalRef` nodes
+  include their actual signal names, preventing same-shape helpers from
+  collapsing unrelated signals. The active frontier advances to
+  `ISF-LIBRARIES.5`, synchronizing public library catalog and contract
+  metadata for the shipped FIFO fixture.
 - `ISF-RESOURCE-PRIORITY.1` is complete. The current inventory records that
   `(resources ...)` is validated metadata only, accepted arbiters are
   `priority` and `round_robin`, and successful resource arbitration is not yet

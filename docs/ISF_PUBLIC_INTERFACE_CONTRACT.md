@@ -164,6 +164,11 @@ for file-backed import of [isf/common/fifo.isf](../isf/common/fifo.isf),
 specialized child scheduled `.fsm` emission, generated top wiring, fixed
 parameter provenance, same-cycle full push/pop case visibility, bank-backed
 accepted push/pop artifacts, and `library_uses` report metadata.
+Generated-top SystemVerilog for that FIFO fixture is checked by
+[t/1238-isf-fifo-library-hdl-generation.t](../t/1238-isf-fifo-library-hdl-generation.t)
+for FIFO child parameter bindings, scalarized data entries, pointer-gated
+accepted push/pop selectors, and AST factorization preserving distinct
+`CoreAST` signal identities.
 The transaction-summary metadata is checked by
 [t/1149-isf-public-transaction-metadata-audit.t](../t/1149-isf-public-transaction-metadata-audit.t)
 to keep transaction `states` and `count` shapes exact across direct and

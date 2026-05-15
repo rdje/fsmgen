@@ -351,7 +351,10 @@ datapath surface now implements `(store <bank-name> <index> <value>)` and
 supported transaction contexts. The first reusable FIFO library fixture is
 now shipped as [isf/common/fifo.isf](../isf/common/fifo.isf), exported as
 `common.fifo.fifo`, with [isf/fifo_library_use.isf](../isf/fifo_library_use.isf)
-as the file-backed import/use fixture.
+as the file-backed import/use fixture. That fixture reaches generated-top
+SystemVerilog through the CLI and checks the specialized FIFO child parameter
+bindings, scalarized data entries, pointer-gated accepted push/pop selectors,
+and generated top wiring.
 
 A depth-1 element is not considered a FIFO for this library catalog; it is a
 register/holding element and would hide the real storage and concurrency
@@ -1675,6 +1678,7 @@ Focused tests:
 - [t/1235-isf-fifo-same-cycle-update-matrix.t](../t/1235-isf-fifo-same-cycle-update-matrix.t)
 - [t/1236-isf-bank-access-lowering.t](../t/1236-isf-bank-access-lowering.t)
 - [t/1237-isf-fifo-library-fixture.t](../t/1237-isf-fifo-library-fixture.t)
+- [t/1238-isf-fifo-library-hdl-generation.t](../t/1238-isf-fifo-library-hdl-generation.t)
 
 ## 12. Explicitly Deferred
 

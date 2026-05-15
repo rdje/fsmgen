@@ -532,7 +532,8 @@ actor-owned state/banks, author rule fire predicates as expressions, accept
 same-target rule writes when direct contradictory guard facts prove
 disjointness, prove a depth-4 FIFO-controller same-cycle update matrix, and
 author a reusable fixed-shape FIFO actor source with bank-backed accepted
-push/pop data movement. Clock/reset name remapping remains fail-closed.
+push/pop data movement that reaches generated-top SystemVerilog. Clock/reset
+name remapping remains fail-closed.
 
 Shipped source model for actor exports:
 
@@ -568,7 +569,9 @@ Shipped use model for actor exports:
 The first repo-local reusable FIFO fixture uses that model through
 `isf/common/fifo.isf` and `isf/fifo_library_use.isf`. The library exports
 `common.fifo.fifo`; the top-level fixture imports it as `fifo_lib` and binds
-the public FIFO ports to instance `u_fifo`.
+the public FIFO ports to instance `u_fifo`. The generated HDL proof checks
+the specialized child module, fixed parameter bindings, scalarized data
+entries, pointer-gated accepted push/pop selectors, and generated top wiring.
 
 Imports are actor-scoped in the first shipped model. Imported definitions stay
 namespaced by default; `as alias` creates a local namespace alias, not
@@ -715,9 +718,10 @@ chain of `when` branches to model FIFO ports would be misleading. Disjoint-rule
 proof for same-target FIFO-style rule writes is shipped for direct
 contradictory guard facts, such as one case requiring
 `(== occupancy 1)` while another requires `(== occupancy 2)`. Same-cycle
-two-port controller semantics are now proven on actor-owned state. The next
-FIFO slice must prove the reusable fixture through generated top HDL and
-broader generated-artifact checks.
+two-port controller semantics are now proven on actor-owned state, and the
+fixed reusable FIFO fixture reaches generated-top SystemVerilog. The remaining
+library work should synchronize public catalog/contract metadata for shipped
+reusable definitions.
 
 ## Backends And Validation
 

@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF FIFO library HDL proof and factorization fix
+- Completed `ISF-LIBRARIES.4.6` in
+  [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md).
+- The fixed FIFO library fixture now reaches CLI SystemVerilog generation
+  through the generated top path. The emitted HDL contains the generated top
+  module, specialized `fifo_library_use__u_fifo` child, fixed parameter
+  bindings, scalarized data entries, and pointer-gated accepted push/pop
+  selectors.
+- The HDL probe exposed a real AST factorization defect: `CoreAST::SignalRef`
+  nodes did not contribute their concrete signal names to factorization
+  structural identity. That allowed second-pass helper expressions to collapse
+  unrelated same-shape signals such as `write_req` and `read_req`.
+- [perl/FSM/HDL/ASTFactorization.pm](perl/FSM/HDL/ASTFactorization.pm) now
+  extracts signal names through the common signal-name helper for structural
+  identity, and
+  [t/1238-isf-fifo-library-hdl-generation.t](t/1238-isf-fifo-library-hdl-generation.t)
+  locks the FIFO HDL proof and the factorization identity regression.
+- The next active R14 frontier is `ISF-LIBRARIES.5`, synchronizing the
+  public library catalog/contract metadata for the shipped FIFO fixture.
 ## 2026-05-15: ISF reusable FIFO library fixture
 - Completed `ISF-LIBRARIES.4.5` in
   [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md).

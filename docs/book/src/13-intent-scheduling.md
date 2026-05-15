@@ -265,7 +265,8 @@ limitations are:
   fixed to `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and `OCC_WIDTH=3`, and
   covers push-only, pop-only, simultaneous push+pop, idle cycles,
   pointer-selected bank access, 2-bit pointer wrap, occupancy values 0
-  through 4, and full/empty derivation. Parameter-driven
+  through 4, and full/empty derivation. It also reaches generated-top
+  SystemVerilog through the CLI. Parameter-driven
   interface/storage widths, arbitrary-depth generation beyond the first
   `DEPTH=4` fixture, automatic non-zero reset values, standalone
   transaction/drive exports, symbolic constants, derived parameter

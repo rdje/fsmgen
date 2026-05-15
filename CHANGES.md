@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF FIFO library HDL proof
+- Completed `ISF-LIBRARIES.4.6` by proving the fixed FIFO library fixture
+  through CLI generated-top SystemVerilog.
+- Added [t/1238-isf-fifo-library-hdl-generation.t](t/1238-isf-fifo-library-hdl-generation.t)
+  to check generated top output, specialized FIFO child parameter bindings,
+  scalarized FIFO entries, pointer-gated accepted push/pop selectors, and the
+  ISF tier selection metadata.
+- Fixed AST factorization structural identity in
+  [perl/FSM/HDL/ASTFactorization.pm](perl/FSM/HDL/ASTFactorization.pm) so
+  `CoreAST::SignalRef` nodes include their actual signal names. This prevents
+  same-shape but different-signal helpers from collapsing during
+  post-substitution factorization.
+- The active R14 PNT frontier advances to `ISF-LIBRARIES.5`, synchronizing
+  the public library catalog/contract metadata for the shipped FIFO fixture.
 ### R14 — ISF reusable FIFO library fixture
 - Completed `ISF-LIBRARIES.4.5` by adding the first importable FIFO actor
   library fixture.

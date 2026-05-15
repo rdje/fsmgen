@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: ISF FIFO library HDL proof and AST factorization identity
+- The FIFO library HDL proof intentionally checks generated SystemVerilog, not
+  only scheduled `.fsm`, because this is the point where expression
+  factorization, generated-top composition, parameter bindings, and selector
+  wiring meet.
+- The probe exposed that `CoreAST::SignalRef` did not implement
+  `signal_name`, while AST factorization structural identity was trying that
+  method directly. Different `CoreAST` signal references could therefore
+  fall back to `unknown_signal` and become structurally indistinguishable
+  when their surrounding expression shape matched.
+- Structural identity now uses the same signal-name extraction helper used by
+  factorization naming. That keeps `write_req`, `read_req`, `wr_ptr`, `rd_ptr`,
+  and `occupancy` distinct even after intermediate-signal substitution.
+- The regression checks the old failure mode directly: a helper named
+  `not_write_req_and_not_read_req` must be driven by `not_write_req &
+  not_read_req`, not by `not_read_req & not_read_req`, and pointer/occupancy
+  helpers must not reuse `rd_ptr` identities.
 ## 2026-05-15: ISF reusable FIFO library fixture
 - The first reusable FIFO library fixture is fixed-shape on purpose:
   `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and `OCC_WIDTH=3`. Those

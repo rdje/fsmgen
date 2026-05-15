@@ -94,7 +94,7 @@ reusable ISF design intent, not only scalar constants or types.
   Commit: `ISF-LIBRARIES.3: implement library import resolution`
 
 - ID: `ISF-LIBRARIES.4`
-  Status: `active`
+  Status: `done`
   Goal: `Ship the first real reusable FIFO library actor.`
   Acceptance: `A parameterized 4-entry FIFO actor library fixture can be
   imported, specialized, lowered to scheduled `.fsm`, and
@@ -273,14 +273,18 @@ reusable ISF design intent, not only scalar constants or types.
   Commit: `ISF-LIBRARIES.4.5: add FIFO library fixture`
 
 - ID: `ISF-LIBRARIES.4.6`
-  Status: `pending`
+  Status: `done`
   Goal: `Prove FIFO fixture lowering and HDL generation.`
   Acceptance: `The FIFO fixture lowers through library import, generated top,
   scheduled `.fsm`, schedule report, and SystemVerilog generation with focused
   checks for multi-entry storage, push/pop behavior, full/empty flags, reset,
   and same-cycle read/write behavior.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -I perl -c perl/FSM/HDL/ASTFactorization.pm`;
+  `prove -I perl t/1238-isf-fifo-library-hdl-generation.t`;
+  `prove -I perl t/1144-isf-public-tested-by-metadata-audit.t
+  t/1183-ci-regression-tier-selection.t
+  t/1238-isf-fifo-library-hdl-generation.t`
+  Commit: `ISF-LIBRARIES.4.6: prove FIFO library HDL`
 
 - ID: `ISF-LIBRARIES.5`
   Status: `pending`
@@ -295,7 +299,7 @@ reusable ISF design intent, not only scalar constants or types.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-LIBRARIES.4.6` | `pending` | The fixed-shape FIFO library fixture now exists and imports through the shipped library surface; the next slice should prove generated top HDL and broaden generated-artifact checks around that reusable fixture. |
+| 1 | `ISF-LIBRARIES.5` | `pending` | The reusable FIFO library fixture now parses, lowers, reports, and reaches generated-top HDL; the next slice should synchronize public library catalog and contract metadata for the shipped reusable definition. |
 
 ## Design Notes
 
@@ -412,6 +416,15 @@ reusable ISF design intent, not only scalar constants or types.
 - [isf/fifo_library_use.isf](../../isf/fifo_library_use.isf) is the top-level
   import/use fixture. It binds the fixed FIFO interface to `u_fifo` through
   the shipped actor library-use surface.
+- The generated-top HDL proof is part of the FIFO fixture contract, not only
+  a backend smoke. It verifies that the specialized FIFO child module, fixed
+  parameter bindings, scalarized data entries, pointer-gated accepted
+  push/pop selectors, and generated top wiring survive the `.fsm` to
+  SystemVerilog boundary.
+- AST factorization structural identity must preserve concrete `CoreAST`
+  signal names. If a structural hash treats all `CoreAST::SignalRef` leaves
+  as the same placeholder, same-shape helpers can collapse unrelated signals
+  such as `write_req` and `read_req` after substitution.
 
 ## ISF-LIBRARIES.1 Public Library / Import Model
 
@@ -771,6 +784,9 @@ Remaining boundary:
   `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, `OCC_WIDTH=3` source intent.
   The fixture imports and binds through the shipped library-use surface, but
   parameter-driven interface/storage elaboration remains deferred.
+- `2026-05-15`: Prove the reusable FIFO fixture through generated-top
+  SystemVerilog and fix AST factorization structural identity so `CoreAST`
+  signal references keep their concrete signal names.
 
 ## Open Questions
 
@@ -814,6 +830,7 @@ Remaining boundary:
 | `2026-05-15` | `ISF-LIBRARIES.4.4.4` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-LIBRARIES.4.4.5` | `perl -I perl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -I perl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -I perl t/1236-isf-bank-access-lowering.t`; `prove -I perl t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1232-isf-actor-storage-declarations.t t/1235-isf-fifo-same-cycle-update-matrix.t t/1236-isf-bank-access-lowering.t` | `passed; focused 7 files, 16 tests` |
 | `2026-05-15` | `ISF-LIBRARIES.4.5` | `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -I perl t/1237-isf-fifo-library-fixture.t`; `prove -I perl t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1237-isf-fifo-library-fixture.t`; `./bin/fsmgen --emit-schedule-json isf/fifo_library_use.isf`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed; focused 3 files, 9 tests; ISF tier 145 files, 485 tests` |
+| `2026-05-15` | `ISF-LIBRARIES.4.6` | `perl -I perl -c perl/FSM/HDL/ASTFactorization.pm`; `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -I perl t/1238-isf-fifo-library-hdl-generation.t`; `prove -I perl t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1238-isf-fifo-library-hdl-generation.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed; focused 3 files, 9 tests; ISF tier 146 files, 487 tests` |
 
 ## Commit Log
 
@@ -832,6 +849,7 @@ Remaining boundary:
 | `ISF-LIBRARIES.4.4.4` | `ISF-LIBRARIES.4.4.4: specify FIFO data-buffer access` | Selected store/load bank access syntax, scalarized lowering model, and read-before-write same-cycle policy. |
 | `ISF-LIBRARIES.4.4.5` | `ISF-LIBRARIES.4.4.5: implement bank access` | Implemented rule/transaction store/load bank access, bounded `bank_accesses` report metadata, fail-closed diagnostics, and depth-4 FIFO data-path HDL reachability. |
 | `ISF-LIBRARIES.4.5` | `ISF-LIBRARIES.4.5: add FIFO library fixture` | Added the fixed-shape importable FIFO actor library source, top-level use fixture, and focused import/lowering/report regression. |
+| `ISF-LIBRARIES.4.6` | `ISF-LIBRARIES.4.6: prove FIFO library HDL` | Proved generated-top SystemVerilog for the fixed FIFO library fixture and fixed CoreAST signal identity in AST factorization. |
 
 ## Changelog
 
@@ -870,3 +888,6 @@ Remaining boundary:
 - `2026-05-15`: Added the first importable FIFO actor library fixture and
   top-level library-use source. The fixture is fixed-shape and documents that
   parameter-driven widths/depths remain a later feature.
+- `2026-05-15`: Proved the FIFO library fixture through generated-top
+  SystemVerilog and fixed AST factorization structural identity so `CoreAST`
+  signal references keep distinct concrete names.
