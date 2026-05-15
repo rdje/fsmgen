@@ -98,13 +98,13 @@ asynchronous, and interacting clock-domain designs.
   Commit: `ISF-CLOCK-DOMAINS.5.2: partition domain lowering IR`
 
 - ID: `ISF-CLOCK-DOMAINS.5.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Emit domain-specific scheduled .fsm artifacts.`
   Acceptance: `Each domain emits a single-clock scheduled .fsm artifact with
   the domain clock/reset and only domain-local state, rules, transactions,
   and generated helper signals.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -c bin/fsmgen`; `perl -Iperl -c perl/FSM/Scheduler/ISF.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1117-isf-public-lower-result-files-audit.t t/1139-isf-public-lower-result-metadata-audit.t t/1142-isf-public-guidance-metadata-audit.t t/1153-isf-public-cli-success-metadata-audit.t t/1165-isf-public-actor-shell-timing-shape-audit.t t/1247-isf-clock-domain-partition.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-CLOCK-DOMAINS.5.3: emit domain scheduled artifacts`
 
 - ID: `ISF-CLOCK-DOMAINS.5.4`
   Status: `pending`
@@ -126,7 +126,7 @@ asynchronous, and interacting clock-domain designs.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-CLOCK-DOMAINS.5.3` | `pending` | Domain partitioning is validated; the next executable leaf is emitting domain-specific scheduled .fsm artifacts. |
+| 1 | `ISF-CLOCK-DOMAINS.5.4` | `pending` | Domain scheduled artifacts now emit; the next executable leaf is the generated multi-domain top and event-crossing artifact. |
 
 ## Selected Source Model
 
@@ -175,9 +175,9 @@ Rules for the implemented parser metadata:
 - A single-domain `(clock-domains ...)` block has an implicit default and can
   still lower through the existing single-clock scheduled `.fsm` path. A
   multi-domain source builds a validated internal domain partition, then
-  public `lower(...)` and `report(...)` fail closed until
-  `ISF-CLOCK-DOMAINS.5.3`, `.5.4`, and `.6` ship the artifacts and report
-  projection.
+  public `lower(...)` emits one scheduled `.fsm` artifact per declared domain.
+  Public `report(...)`, generated top wiring, and CDC artifacts remain blocked
+  until `ISF-CLOCK-DOMAINS.5.4` and `.6` ship those leaves.
 
 Malformed combinations fail closed:
 
@@ -308,18 +308,19 @@ specified.
 ## Selected Lowering Artifact Strategy
 
 `ISF-CLOCK-DOMAINS.5.1` selected the future lowering artifact strategy.
-`ISF-CLOCK-DOMAINS.5.2` now ships the internal domain partition and
-fail-closed direct-crossing checks before emission.
+`ISF-CLOCK-DOMAINS.5.2` ships the internal domain partition and fail-closed
+direct-crossing checks before emission. `ISF-CLOCK-DOMAINS.5.3` emits the
+domain-local scheduled `.fsm` artifacts from that partition.
 
-Rules for the current partition plus future lowering:
+Rules for the current partition and emitted domain artifacts:
 
 - Multi-domain actors are partitioned by declared domain in `LoweringIR`,
   grouping interface endpoints, storage entries, transactions, rules, reusable
   library uses, and generated child activations.
 - Direct cross-domain reads, writes, triggers, activations, bindings, and
   multi-domain drive reuse are rejected before emission.
-- Future artifact leaves will emit one scheduled `.fsm` artifact per declared
-  domain named `<actor>__domain_<domain>.fsm`.
+- Public `lower(...)` emits one scheduled `.fsm` artifact per declared domain
+  named `<actor>__domain_<domain>.fsm`.
 - A domain `.fsm` remains a normal single-clock scheduled module. Its `+system`
   clause uses only the domain clock and that domain's reset policy.
 - Domain artifacts contain only domain-owned interface endpoints, storage,
@@ -336,8 +337,9 @@ Rules for the current partition plus future lowering:
   destination synchronizer, destination pulse, acknowledgement synchronizer,
   and source ready logic. It is not lowered as an ordinary single-domain `.fsm`
   state chain.
-- Schedule-report metadata for domains, generated top wiring, and crossing
-  artifacts is owned by `ISF-CLOCK-DOMAINS.6`.
+- Generated top wiring and crossing artifacts are owned by
+  `ISF-CLOCK-DOMAINS.5.4`; schedule-report metadata for domains, generated
+  top wiring, and crossing artifacts is owned by `ISF-CLOCK-DOMAINS.6`.
 
 This strategy keeps the existing `.fsm` scheduled artifact meaning intact:
 `.fsm` remains a reviewable single-clock scheduled module unless a future leaf
@@ -374,8 +376,11 @@ explicitly defines a new multi-clock `.fsm` structure.
   `(domain NAME)` ownership annotations for ports, storage, transactions,
   rules, reusable `use` instances, and generated child activations.
   `LoweringIR` builds an internal domain partition and rejects unowned direct
-  cross-domain access before emission. Multi-domain public `lower(...)` and
-  `report(...)` remain blocked until the artifact and report leaves ship.
+  cross-domain access before emission.
+- `2026-05-15`: Public multi-domain `lower(...)` now emits one normal
+  single-clock scheduled `.fsm` artifact per declared domain from the
+  validated partition. Public `report(...)`, generated top wiring, and CDC
+  artifacts remain later leaves.
 
 ## Open Questions
 
@@ -398,6 +403,7 @@ explicitly defines a new multi-clock `.fsm` structure.
 | `2026-05-15` | `ISF-CLOCK-DOMAINS.4` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-CLOCK-DOMAINS.5.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-CLOCK-DOMAINS.5.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1204-isf-child-composition-clause-boundary.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1162-isf-public-actor-shell-interface-shape-audit.t t/1163-isf-public-actor-shell-transaction-shape-audit.t t/1165-isf-public-actor-shell-timing-shape-audit.t t/1166-isf-public-actor-shell-rule-shape-audit.t t/1230-isf-library-import-resolution.t t/1215-isf-spawn-parameter-binding.t t/1241-isf-transaction-port-bindings.t t/1232-isf-actor-storage-declarations.t t/1247-isf-clock-domain-partition.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-CLOCK-DOMAINS.5.3` | `perl -c bin/fsmgen`; `perl -Iperl -c perl/FSM/Scheduler/ISF.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1117-isf-public-lower-result-files-audit.t t/1139-isf-public-lower-result-metadata-audit.t t/1142-isf-public-guidance-metadata-audit.t t/1153-isf-public-cli-success-metadata-audit.t t/1165-isf-public-actor-shell-timing-shape-audit.t t/1247-isf-clock-domain-partition.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -409,6 +415,7 @@ explicitly defines a new multi-clock `.fsm` structure.
 | `ISF-CLOCK-DOMAINS.4` | `ISF-CLOCK-DOMAINS.4: specify event crossing primitive` | Selects an acknowledged single-bit event channel as the first legal future crossing primitive. |
 | `ISF-CLOCK-DOMAINS.5.1` | `ISF-CLOCK-DOMAINS.5.1: specify lowering artifacts` | Selects per-domain scheduled .fsm artifacts plus explicit generated top and CDC artifacts as the future lowering strategy. |
 | `ISF-CLOCK-DOMAINS.5.2` | `ISF-CLOCK-DOMAINS.5.2: partition domain lowering IR` | Adds parser metadata, internal domain partitioning, and fail-closed direct crossing checks while keeping multi-domain public emission/reporting blocked. |
+| `ISF-CLOCK-DOMAINS.5.3` | `ISF-CLOCK-DOMAINS.5.3: emit domain scheduled artifacts` | Emits per-domain scheduled .fsm artifacts while keeping report projection and generated multi-domain top/CDC artifacts blocked. |
 
 ## Changelog
 
@@ -430,3 +437,6 @@ explicitly defines a new multi-clock `.fsm` structure.
   domain metadata, building an internal domain partition, and rejecting
   unowned direct cross-domain references before emission; current frontier
   advances to `ISF-CLOCK-DOMAINS.5.3`.
+- `2026-05-15`: Completed `ISF-CLOCK-DOMAINS.5.3`, emitting one
+  domain-local scheduled `.fsm` artifact per declared domain; current frontier
+  advances to `ISF-CLOCK-DOMAINS.5.4`.

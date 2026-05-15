@@ -38,9 +38,9 @@ storage, or any other CDC behavior.
 Multi-clock, asynchronous, and interacting clock-domain semantics are owned by
 the active `ISF-CLOCK-DOMAINS` feature tree. The parser now accepts the
 selected actor-scoped named-domain metadata and the scheduler builds an
-internal domain partition, but multi-domain public `lower(...)` and
-`report(...)` calls still fail closed until the later artifact and report
-leaves ship.
+internal domain partition. Multi-domain public `lower(...)` now emits one
+domain scheduled `.fsm` artifact per declared domain, while `report(...)`,
+generated top wiring, and CDC artifacts remain later leaves.
 
 The selected authoring shape is an actor-level `(clock-domains ...)` block:
 
@@ -120,8 +120,8 @@ remain illegal until a shipped crossing primitive owns that path.
 
 The selected lowering strategy keeps each future emitted domain as its own
 single-clock scheduled `.fsm` artifact named `<actor>__domain_<domain>.fsm`.
-The current implementation stops at the validated partition and fail-closed
-cross-domain checks for multi-domain actors. Generated top wiring, CDC
+The current implementation emits those domain artifacts after validated
+partitioning and fail-closed cross-domain checks. Generated top wiring, CDC
 primitive artifacts, and schedule-report projection remain later leaves;
 ordinary `.fsm` modules are not silently widened into multi-clock scheduled
 modules.

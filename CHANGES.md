@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF domain scheduled artifacts emitted
+- Completed `ISF-CLOCK-DOMAINS.5.3`.
+- Multi-domain public `lower(...)` now emits one scheduled `.fsm` artifact per
+  declared domain, using `<actor>__domain_<domain>.fsm` names and the selected
+  domain clock/reset.
+- Domain artifacts are built from filtered domain-local actors so ports,
+  storage, transactions, rules, and generated handoff helpers do not leak
+  between domains after the partition validation passes.
+- Public `report(...)`, generated multi-domain top wiring, and CDC artifacts
+  remain blocked. The CLI HDL path now reports the missing generated top/HDL
+  entry explicitly for multi-domain sources.
+- Updated public contract metadata, mdBook chapters, spec, task tree, and
+  focused regressions. The active R14 frontier advances to
+  `ISF-CLOCK-DOMAINS.5.4`, generated multi-domain top and event-crossing
+  artifact emission.
 ### R14 — ISF clock-domain partitioning handoff shipped
 - Completed `ISF-CLOCK-DOMAINS.5.2`.
 - Added parser support for selected `(clock-domains ...)` metadata and

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: domain artifacts ship before generated multi-domain top
+- `ISF-CLOCK-DOMAINS.5.3` emits the reviewable single-clock scheduled `.fsm`
+  artifacts selected by the lowering strategy without pretending the full
+  multi-domain design is HDL-ready.
+- The scheduler builds each domain artifact from a filtered single-domain actor
+  clone after validating the original multi-domain partition. That reuses the
+  existing scheduled `.fsm` emitter and keeps the artifact boundary aligned
+  with current one-clock module semantics.
+- Public `report(...)` waits for the bounded domain/crossing projection in
+  `ISF-CLOCK-DOMAINS.6`, and generated top/CDC emission stays in
+  `ISF-CLOCK-DOMAINS.5.4`. The CLI HDL path therefore fails explicitly when a
+  multi-domain source has domain artifacts but no generated top entry.
 ## 2026-05-15: domain partitioning ships before multi-domain emission
 - `ISF-CLOCK-DOMAINS.5.2` deliberately stops at parser metadata, internal IR
   partitioning, and fail-closed crossing checks. That keeps the selected source

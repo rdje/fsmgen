@@ -551,7 +551,16 @@ if ($fsm_file =~ /\.isf$/i) {
     my $files = $result->{files};
     my $entry_basename = exists $files->{"$actor->{actor_name}_top.fsm"}
         ? "$actor->{actor_name}_top.fsm"
-        : "$actor->{actor_name}.fsm";
+        : exists $files->{"$actor->{actor_name}.fsm"}
+            ? "$actor->{actor_name}.fsm"
+            : undef;
+
+    if (!defined $entry_basename) {
+        die normalize_cli_error_text(
+            "ISF multi-domain lowering emitted domain scheduled .fsm artifacts, "
+            . "but generated top/HDL entry emission is not implemented yet\n",
+        );
+    }
 
     my $dir = $outdir || undef;
 

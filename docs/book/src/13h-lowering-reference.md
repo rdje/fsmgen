@@ -28,9 +28,9 @@ This chapter shows the exact generated `.fsm` for each construct.
 
 Single-domain `(clock-domains ...)` actors lower through the same one-clock
 scheduled `.fsm` path using the declared domain clock/reset. Multi-domain
-actors currently stop after validated domain partitioning; public lowering
-rejects them until the planned `<actor>__domain_<domain>.fsm` artifacts,
-generated top wiring, and explicit CDC artifacts are implemented.
+actors emit validated per-domain scheduled `.fsm` artifacts named
+`<actor>__domain_<domain>.fsm`. Generated top wiring, explicit CDC artifacts,
+and schedule-report projection remain future leaves.
 
 ## Interface → +size
 

@@ -1012,14 +1012,15 @@ asynchronous boundaries, and interacting domains.
 Current boundary: legacy `(clock name)` actors and reusable-library
 clock/reset bindings remain one-clock-domain scheduled artifacts. The parser
 now accepts actor-scoped `(clock-domains ...)` metadata and the scheduler can
-partition accepted actors by domain, but public multi-domain `lower(...)` and
-`report(...)` calls still fail closed until the artifact and report leaves
-ship. Different clock signal names, library clock/reset bindings, and
-generated-top system-port links are not CDC semantics by themselves.
+partition accepted actors by domain. Public multi-domain `lower(...)` now
+emits domain-specific scheduled `.fsm` artifacts, while `report(...)`,
+generated top wiring, and CDC artifacts remain future leaves. Different clock
+signal names, library clock/reset bindings, and generated-top system-port
+links are not CDC semantics by themselves.
 
 The future feature must still define at least:
 
-- emitted domain-specific scheduled `.fsm` artifacts and generated top wiring;
+- generated top wiring and explicit CDC artifacts;
 - what bounded schedule-report metadata and fixtures prove the behavior.
 
 Until that contract ships, direct same-cycle reads or writes across domains
@@ -1065,16 +1066,15 @@ bindings, and reset assertion/deassertion events remain fail-closed unless a
 shipped primitive or protocol actor owns that path. Payload handshakes and
 dual-clock FIFO-like actors remain future backlog.
 
-Lowering decision: current multi-domain lowering stops at a validated
-domain-local internal partition and fail-closed cross-domain checks. Future
-artifact emission keeps domain behavior in normal single-clock scheduled
+Lowering decision: current multi-domain lowering validates a domain-local
+partition, rejects unowned crossings, and emits normal single-clock scheduled
 `.fsm` artifacts named `<actor>__domain_<domain>.fsm`. The generated top owns
-only inter-module wiring. Acknowledged event crossings emit explicit generated
-CDC artifacts with source and destination clocks/resets, request toggle,
-destination synchronizer, destination pulse, acknowledgement synchronizer, and
-source ready logic. Normal scheduled `.fsm` modules are not silently widened
-into multi-clock modules. Bounded schedule-report metadata and fixtures remain
-future work.
+only inter-module wiring and remains future work. Acknowledged event crossings
+emit explicit generated CDC artifacts with source and destination
+clocks/resets, request toggle, destination synchronizer, destination pulse,
+acknowledgement synchronizer, and source ready logic. Normal scheduled `.fsm`
+modules are not silently widened into multi-clock modules. Bounded
+schedule-report metadata and fixtures remain future work.
 
 ## Backends And Validation
 

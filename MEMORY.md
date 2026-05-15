@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF domain scheduled artifacts shipped
+- Completed `ISF-CLOCK-DOMAINS.5.3` in
+  [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md).
+- Public multi-domain `FSM::Scheduler::ISF->lower(...)` now emits one
+  domain-local scheduled `.fsm` artifact per declared domain, named
+  `<actor>__domain_<domain>.fsm`.
+- Each emitted domain artifact uses the declared domain clock/reset and filters
+  interface endpoints, storage, transactions, rules, and generated helper
+  signals to that domain.
+- Public `report(...)`, generated multi-domain top wiring, and CDC artifacts
+  remain blocked for later leaves. The CLI HDL path fails with a targeted
+  generated-top diagnostic instead of trying to compile a missing entry file.
+- The current frontier is `ISF-CLOCK-DOMAINS.5.4`, generated multi-domain top
+  and event-crossing artifact emission.
 ## 2026-05-15: ISF clock-domain partitioning handoff shipped
 - Completed `ISF-CLOCK-DOMAINS.5.2` in
   [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md).

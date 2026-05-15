@@ -3,7 +3,9 @@ use strict;
 use warnings;
 use Test::More;
 use File::Spec;
+use File::Temp qw(tempdir);
 use FindBin;
+use IPC::Cmd qw(run);
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
@@ -79,15 +81,33 @@ ISF
     );
     is($domain{bus}{scheduled_fsm}, 'clock_domain_partition__domain_bus.fsm', 'partition names the planned bus-domain artifact');
 
-    assert_lower_rejected(
-        $source,
-        'multi-domain lower blocks before existing emitters',
-        qr/FSM::Scheduler::ISF->lower validated the multi-domain partition .* not implemented yet/,
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    is_deeply(
+        sorted([keys %{$lowered->{files}}]),
+        [qw(clock_domain_partition__domain_bus.fsm clock_domain_partition__domain_core.fsm)],
+        'multi-domain lower emits one scheduled .fsm artifact per declared domain',
     );
+    my $core_fsm = $lowered->{files}{'clock_domain_partition__domain_core.fsm'};
+    like($core_fsm, qr/\A\(\?fsm:clock_domain_partition__domain_core\b/, 'core artifact uses the domain module name');
+    like($core_fsm, qr/\(clock clk\)/, 'core artifact uses the core clock');
+    like($core_fsm, qr/\(sreset rst_n\)/, 'core artifact uses the core reset');
+    like($core_fsm, qr/\(start 1\)/, 'core artifact contains the core input');
+    like($core_fsm, qr/\(core_reg 1\)/, 'core artifact contains core-owned storage');
+    like($core_fsm, qr/\bh0_start\b/, 'core artifact contains same-domain generated activation helpers');
+    unlike($core_fsm, qr/\bbus_clk\b|\bbus_evt\b|\bbus_done\b|\bbus_reg\b/, 'core artifact excludes bus-domain signals');
+
+    my $bus_fsm = $lowered->{files}{'clock_domain_partition__domain_bus.fsm'};
+    like($bus_fsm, qr/\A\(\?fsm:clock_domain_partition__domain_bus\b/, 'bus artifact uses the domain module name');
+    like($bus_fsm, qr/\(clock bus_clk\)/, 'bus artifact uses the bus clock');
+    like($bus_fsm, qr/\(areset bus_rst_n\)/, 'bus artifact uses the bus reset');
+    like($bus_fsm, qr/\(bus_evt 1\)/, 'bus artifact contains the bus input');
+    like($bus_fsm, qr/\(bus_reg 1\)/, 'bus artifact contains bus-owned storage');
+    unlike($bus_fsm, qr/\bclk\b|\bstart\b|\bcore_done\b|\bcore_reg\b|\bh0_start\b/, 'bus artifact excludes core-domain signals and helpers');
+
     assert_report_rejected(
         $source,
         'multi-domain report blocks until report projection ships',
-        qr/FSM::Scheduler::ISF->report validated the multi-domain partition .* not implemented yet/,
+        qr/FSM::Scheduler::ISF->report validated the multi-domain partition .* schedule-report projection is not implemented yet/,
     );
 };
 
@@ -113,6 +133,41 @@ ISF
     ok(defined($fsm), 'single-domain clock-domains actor still emits the normal scheduled .fsm');
     like($fsm, qr/\(clock clk\)/, 'scheduled .fsm uses the domain clock');
     like($fsm, qr/\(sreset rst_n\)/, 'scheduled .fsm uses the domain reset');
+};
+
+subtest 'multi-domain CLI HDL generation waits for generated top emission' => sub {
+    my $dir = tempdir(CLEANUP => 1);
+    my $path = File::Spec->catfile($dir, 'multi_domain_cli_boundary.isf');
+    write_file($path, <<'ISF');
+(actor multi_domain_cli_boundary
+  (clock-domains
+    (domain core (clock clk) :default)
+    (domain bus (clock bus_clk)))
+  (interface
+    (input start (domain core))
+    (input bus_evt (domain bus))
+    (output done (domain core))
+    (output bus_done (domain bus)))
+  (transaction core_tx
+    (domain core)
+    (on start)
+    (complete done))
+  (transaction bus_tx
+    (domain bus)
+    (on bus_evt)
+    (complete bus_done)))
+ISF
+
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', $path],
+    );
+    ok(!$success, 'multi-domain CLI HDL generation fails until generated top emission ships');
+    is(join('', @{$stdout_buf || []}), '', 'multi-domain CLI boundary keeps stdout empty');
+    like(
+        join('', @{$stderr_buf || []}),
+        qr/generated top\/HDL entry emission is not implemented yet/,
+        'multi-domain CLI diagnostic points at the unshipped generated top entry',
+    );
 };
 
 subtest 'direct unowned cross-domain references fail closed before emission' => sub {
@@ -231,4 +286,16 @@ sub assert_report_rejected {
     ok(!$ok, "$label is rejected");
     ok(!ref($diagnostic), "$label diagnostic is scalar");
     like($diagnostic, $diagnostic_re, "$label diagnostic is targeted");
+}
+
+sub sorted {
+    my ($values) = @_;
+    return [sort @{$values || []}];
+}
+
+sub write_file {
+    my ($path, $content) = @_;
+    open my $fh, '>', $path or die "Cannot write $path: $!\n";
+    print {$fh} $content;
+    close $fh or die "Cannot close $path: $!\n";
 }

@@ -16,7 +16,7 @@ my $expected_guidance = [
     'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
     'Treat the contract as live: exact metadata audits describe the current advertised surface, not a promise that ISF or the schedule-report schema is frozen.',
     'The public in-process seam is the parser/scheduler facade pair, not the raw parser AST or LoweringIR internals.',
-    'The lower(...) result currently advertises the files map as scheduled module, specialized library-child module, and generated composition-top .fsm artifacts; the whole result hash is not yet a broad API.',
+    'The lower(...) result currently advertises the files map as scheduled module, multi-domain domain scheduled module, specialized library-child module, and generated composition-top .fsm artifacts; the whole result hash is not yet a broad API.',
     'The library catalog path list and shipped_library_definitions entries are live discovery metadata for reusable ISF definitions; add or change entries only with source, limitations, and tests updated together.',
     'The schedule report currently advertises only the named top-level and summary key families; wider schema promises must be documented and regression-backed before downstream tools rely on them.',
     'The live human contract documents must evolve in the same slices that change supported ISF syntax, facade behavior, lower result shape, or schedule-report shape.',

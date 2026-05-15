@@ -465,8 +465,9 @@ Multi-clock boundary:
   not create a second clock domain and they do not model clock-domain crossing
   behavior.
 - ISF now accepts parser metadata for named domains and builds an internal
-  scheduler partition, but public multi-domain `.fsm` emission and
-  schedule-report projection remain unshipped.
+  scheduler partition. Public `lower(...)` emits one domain scheduled `.fsm`
+  artifact per declared domain, but generated multi-domain top wiring, CDC
+  artifacts, and schedule-report projection remain unshipped.
 - Direct reads or writes between domains are not accepted by implication. A
   shipped CDC primitive or protocol actor must provide specified runtime
   behavior, lowering, diagnostics, and report metadata before such crossings
@@ -533,12 +534,12 @@ Selected source model and current implementation status:
   domains, and any direct unowned crossing are rejected before lowering.
 - Single-domain `(clock-domains ...)` sources can still lower through the
   existing single-clock scheduled `.fsm` path. Multi-domain sources build a
-  validated internal domain partition, then public `lower(...)` and
-  `report(...)` fail closed until domain-specific artifacts and report
-  projection ship in later leaves.
-- Report metadata and multi-domain artifact emission remain future leaves of
-  the `ISF-CLOCK-DOMAINS` task tree. Reset ownership and the first legal
-  crossing primitive are selected below.
+  validated internal domain partition, then public `lower(...)` returns
+  domain-specific scheduled `.fsm` artifacts named
+  `<actor>__domain_<domain>.fsm`.
+- Report metadata, generated top wiring, and CDC artifact emission remain
+  future leaves of the `ISF-CLOCK-DOMAINS` task tree. Reset ownership and the
+  first legal crossing primitive are selected below.
 
 Selected reset ownership model and current implementation status:
 - Existing actor-level `(clock clk)` plus optional actor-level `(reset ...)`
@@ -612,8 +613,8 @@ Selected lowering artifact strategy and current implementation status:
   generated child activations by declared domain. It rejects direct unowned
   cross-domain reads, writes, triggers, activations, bindings, and multi-domain
   drive reuse before emission.
-- The planned multi-domain artifact emission will emit one domain-local
-  scheduled `.fsm` artifact per declared domain, named
+- Current multi-domain artifact emission emits one domain-local scheduled
+  `.fsm` artifact per declared domain, named
   `<actor>__domain_<domain>.fsm`.
 - Each domain `.fsm` remains a normal single-clock scheduled module. Its
   `+system` clause uses only the domain clock and that domain's reset policy.

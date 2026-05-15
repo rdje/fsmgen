@@ -44,10 +44,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   and CDC artifacts. `ISF-CLOCK-DOMAINS.5.2` now accepts selected
   `(clock-domains ...)` metadata, partitions accepted actors by domain in
   `LoweringIR`, and rejects direct unowned cross-domain references before
-  emission. Multi-domain public `lower(...)` and `report(...)` remain blocked
-  until domain-specific artifacts and report projection ship. The current
-  frontier is `ISF-CLOCK-DOMAINS.5.3`, domain-specific scheduled `.fsm`
-  emission.
+  emission. `ISF-CLOCK-DOMAINS.5.3` now emits one domain-local scheduled
+  `.fsm` artifact per declared domain from public `lower(...)`, while
+  `report(...)`, generated top wiring, and CDC artifacts remain blocked. The
+  current frontier is `ISF-CLOCK-DOMAINS.5.4`, the generated multi-domain top
+  and event-crossing artifact.
   `ISF-ACTIVATION-BIND-EXPRESSIONS` is now closed after shipping
   expression-valued activation input bindings,
   `ISF-LIBRARY-SYSTEM-BINDINGS` is closed after shipping reusable-library
@@ -164,10 +165,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   logic. The first planned crossing primitive is an acknowledged single-bit
   event channel with generated source-domain `ready`, generated
   destination-domain pulse, one outstanding event, and no payload. Current
-  lowering validates the domain partition and blocks multi-domain emission;
-  future leaves emit one normal single-clock `.fsm` artifact per domain and
-  move multi-domain top wiring plus CDC primitive logic into explicit
-  generated artifacts.
+  lowering validates the domain partition, rejects unowned crossings, and
+  emits one normal single-clock `.fsm` artifact per domain. Future leaves move
+  multi-domain top wiring plus CDC primitive logic into explicit generated
+  artifacts and add bounded report projection.
 - Composition ergonomics update: `?ports` now accepts verbose
   `(input NAME ...)` and `(output NAME ...)` declarations as aliases for the
   compact port-token syntax. Verbose `(width TOKEN)` uses the same width

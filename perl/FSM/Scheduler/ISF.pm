@@ -57,7 +57,11 @@ sub lower($self, @args) {
     fsm_trace_enter("Scheduler lower: $actor->{actor_name}", 2);
 
     my $ir     = $self->{ir}->build_module($actor);
-    _confess_unemitted_multi_domain($ir, 'lower');
+    if (_is_multi_domain_ir($ir)) {
+        my $files = $self->_emit_multi_domain_scheduled_artifacts($actor, $ir);
+        fsm_trace_exit("Scheduler lower completed", 2);
+        return { files => $files };
+    }
     my %files;
 
     # Emit parent
@@ -83,7 +87,7 @@ sub report($self, @args) {
     fsm_trace_enter("Scheduler report: $actor->{actor_name}", 2);
 
     my $ir   = $self->{ir}->build_module($actor);
-    _confess_unemitted_multi_domain($ir, 'report');
+    _confess_unprojected_multi_domain_report($ir);
     my $json = $self->{json_emitter}->emit($ir);
 
     fsm_trace_exit("Scheduler report completed", 2);
@@ -112,11 +116,135 @@ sub _validate_actor_arg($method, @args) {
     return ($actor);
 }
 
-sub _confess_unemitted_multi_domain($ir, $method) {
+sub _is_multi_domain_ir($ir) {
     my $partition = $ir->{domain_partition};
-    return 1 unless ref($partition) eq 'HASH' && ($partition->{kind} // '') eq 'multi_domain';
+    return ref($partition) eq 'HASH' && ($partition->{kind} // '') eq 'multi_domain';
+}
 
-    confess "FSM::Scheduler::ISF->$method validated the multi-domain partition for actor '$ir->{actor_name}', but multi-domain .fsm artifact emission and schedule-report projection are not implemented yet\n";
+sub _confess_unprojected_multi_domain_report($ir) {
+    return 1 unless _is_multi_domain_ir($ir);
+
+    confess "FSM::Scheduler::ISF->report validated the multi-domain partition for actor '$ir->{actor_name}', but multi-domain schedule-report projection is not implemented yet\n";
+}
+
+sub _emit_multi_domain_scheduled_artifacts($self, $actor, $ir) {
+    my $partition = $ir->{domain_partition};
+    confess "FSM::Scheduler::ISF->lower expected a validated multi-domain partition for actor '$actor->{actor_name}'\n"
+        unless ref($partition) eq 'HASH' && ref($partition->{domains}) eq 'ARRAY';
+
+    my %files;
+    for my $domain (@{$partition->{domains}}) {
+        my $file_name = $domain->{scheduled_fsm};
+        confess "FSM::Scheduler::ISF->lower domain '$domain->{name}' is missing its scheduled .fsm artifact name\n"
+            unless defined($file_name) && !ref($file_name) && length($file_name);
+        confess "FSM::Scheduler::ISF->lower duplicate scheduled .fsm artifact '$file_name'\n"
+            if exists $files{$file_name};
+
+        my $domain_actor = _domain_actor_for_scheduled_artifact($actor, $domain, $partition->{default_domain});
+        my $domain_ir = $self->{ir}->build_module($domain_actor);
+        $files{$file_name} = $self->{fsm_emitter}->emit($domain_ir);
+    }
+
+    return \%files;
+}
+
+sub _domain_actor_for_scheduled_artifact($actor, $domain, $default_domain) {
+    my $domain_name = $domain->{name};
+    confess "FSM::Scheduler::ISF->lower domain metadata is missing a scalar domain name\n"
+        unless defined($domain_name) && !ref($domain_name) && length($domain_name);
+
+    my $module_name = $domain->{scheduled_fsm};
+    $module_name =~ s/\.fsm\z//;
+
+    my %transaction_names = map {
+        $_->{name} => 1
+    } grep {
+        _entry_domain($_, $default_domain) eq $domain_name
+    } @{$actor->{transactions} || []};
+    my %rule_names = map {
+        $_->{name} => 1
+    } grep {
+        _entry_domain($_, $default_domain) eq $domain_name
+    } @{$actor->{rules} || []};
+    my %owner_names = (%transaction_names, %rule_names);
+
+    my %domain_actor = %{_clone_isf_value($actor)};
+    $domain_actor{actor_name} = $module_name;
+    $domain_actor{clock} = $domain->{clock};
+    $domain_actor{reset} = _clone_isf_value($domain->{reset});
+    $domain_actor{clock_domains} = undef;
+    $domain_actor{interface} = {
+        inputs => [
+            map { _clone_isf_value($_) }
+            grep { _entry_domain($_, $default_domain) eq $domain_name }
+            @{$actor->{interface}{inputs} || []}
+        ],
+        outputs => [
+            map { _clone_isf_value($_) }
+            grep { _entry_domain($_, $default_domain) eq $domain_name }
+            @{$actor->{interface}{outputs} || []}
+        ],
+    };
+    $domain_actor{storage} = [
+        map { _clone_isf_value($_) }
+        grep { _entry_domain($_, $default_domain) eq $domain_name }
+        @{$actor->{storage} || []}
+    ];
+    $domain_actor{transactions} = [
+        map { _clone_isf_value($_) }
+        grep { _entry_domain($_, $default_domain) eq $domain_name }
+        @{$actor->{transactions} || []}
+    ];
+    $domain_actor{rules} = [
+        map { _clone_isf_value($_) }
+        grep { _entry_domain($_, $default_domain) eq $domain_name }
+        @{$actor->{rules} || []}
+    ];
+    $domain_actor{library_uses} = [
+        map { _clone_isf_value($_) }
+        grep { _entry_domain($_, $default_domain) eq $domain_name }
+        @{$actor->{library_uses} || []}
+    ];
+    $domain_actor{resources} = _domain_resources($actor, \%rule_names);
+    $domain_actor{priorities} = _domain_priorities($actor, \%owner_names);
+
+    return \%domain_actor;
+}
+
+sub _entry_domain($entry, $default_domain) {
+    return ref($entry) eq 'HASH' && defined($entry->{domain})
+        ? $entry->{domain}
+        : $default_domain;
+}
+
+sub _domain_resources($actor, $rule_names) {
+    my @resources;
+    for my $resource (@{$actor->{resources} || []}) {
+        my $copy = _clone_isf_value($resource);
+        if (ref($copy->{users}) eq 'ARRAY') {
+            $copy->{users} = [ grep { $rule_names->{$_} } @{$copy->{users}} ];
+            next unless @{$copy->{users}};
+        }
+        push @resources, $copy;
+    }
+    return \@resources;
+}
+
+sub _domain_priorities($actor, $owner_names) {
+    my @priorities;
+    for my $priority (@{$actor->{priorities} || []}) {
+        next unless ref($priority) eq 'ARRAY' && @$priority >= 3;
+        next unless $owner_names->{$priority->[0]} && $owner_names->{$priority->[2]};
+        push @priorities, _clone_isf_value($priority);
+    }
+    return \@priorities;
+}
+
+sub _clone_isf_value($value) {
+    return $value unless ref($value);
+    return [ map { _clone_isf_value($_) } @$value ] if ref($value) eq 'ARRAY';
+    return { map { $_ => _clone_isf_value($value->{$_}) } keys %$value } if ref($value) eq 'HASH';
+    confess "FSM::Scheduler::ISF cannot clone unsupported reference value\n";
 }
 
 1;

@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF domain scheduled artifacts emitted
+- Completed R14 task-tree slice: `ISF-CLOCK-DOMAINS.5.3`.
+- Public multi-domain `lower(...)` now emits one domain-local scheduled `.fsm`
+  artifact per declared domain, named `<actor>__domain_<domain>.fsm`.
+- Domain artifacts use the domain clock/reset and contain only domain-local
+  ports, storage, transactions, rules, and generated helper signals.
+- Public `report(...)`, generated multi-domain top wiring, and CDC artifacts
+  remain blocked for later leaves.
+- The active frontier advances to `ISF-CLOCK-DOMAINS.5.4`, generated
+  multi-domain top and event-crossing artifact emission.
+
 ## 2026-05-15: R14 — ISF clock-domain partitioning handoff shipped
 - Completed R14 task-tree slice: `ISF-CLOCK-DOMAINS.5.2`.
 - Parser accepts selected `(clock-domains ...)` metadata and `(domain NAME)`
