@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: ISF port binding authoring boundary
+- Transaction-port connectivity belongs at the ISF level because authors are
+  describing hardware intent between rules, transactions, variables, storage,
+  and actor pins. Requiring authored generated payload wires or generated-top
+  bridge nets would leak the lowering strategy into the source language.
+- The low-level representation is still part of the contract. Accepted
+  bindings must lower to explicit scheduled `.fsm` assignments, guards, mux
+  selectors, and generated-top wiring so reviewers and downstream tools can
+  inspect the real handoff behavior.
+- Actor input/output policy remains unchanged: actor inputs are readable
+  observations, actor outputs are writable LHS targets through the normal
+  assignment/conflict model, and actor output readback stays rejected until it
+  has its own explicit contract.
+- The book now records this distinction directly in the transaction-port
+  backlog section, while the spec and public contract wording were corrected
+  to reflect that bounded binding provenance has already shipped.
 ## 2026-05-15: ISF port binding schedule-report projection
 - The public report field is intentionally a summary named
   `transaction_port_bindings`, not a dump of parser clauses or LoweringIR

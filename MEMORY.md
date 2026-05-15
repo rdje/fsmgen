@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF port binding authoring boundary
+- Completed `ISF-PUBLIC-CONTRACT.7` in
+  [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md)
+  as a documentation-only clarification.
+- [docs/book/src/14-feature-backlog.md](docs/book/src/14-feature-backlog.md)
+  now explicitly states that transaction-port connectivity is an ergonomic ISF
+  authoring surface: authors declare transaction ports and bind them at use
+  sites, while the compiler owns generated `.fsm` handoff signals, guards,
+  mux selectors, and generated-top bridge wiring.
+- [docs/ISF_SPEC.md](docs/ISF_SPEC.md) and
+  [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md)
+  were aligned with the shipped port-binding status: bounded binding
+  provenance is shipped, while expression-valued bindings, rule-trigger
+  output bindings, explicit snapshot-vs-live timing, and richer conflict/report
+  surfaces remain deferred follow-on work.
+- R14 feature delivery remains focused on the next user-visible feature tree;
+  the public-contract tree's normal frontier remains `ISF-PUBLIC-CONTRACT.1`.
 ## 2026-05-15: ISF port binding schedule-report projection
 - Completed `ISF-PORT-BINDING.5` in
   [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md), closing

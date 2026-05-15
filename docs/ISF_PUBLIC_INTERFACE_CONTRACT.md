@@ -1238,8 +1238,8 @@ These are not stable public interfaces yet:
   bindings plus the first conflict/runtime coverage for binding-generated
   assignments. Expression-valued bindings, rule-trigger output bindings,
   explicit snapshot-vs-live timing selection, broader static conflict
-  diagnostics, and richer report fields remain active design work under
-  `ISF-PORT-BINDING`.
+  diagnostics, and richer report fields remain deferred follow-on
+  port-binding work.
 - `FSM::Scheduler::ISF::LoweringIR` internals.
 - Emitter-private state objects.
 - Any unadvertised keys in the lower-result hash or schedule report.

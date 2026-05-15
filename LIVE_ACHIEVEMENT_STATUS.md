@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF port binding authoring boundary
+- Active R14 task-tree slice: `ISF-PUBLIC-CONTRACT.7` is complete as a
+  documentation-only clarification.
+- The mdBook now states that transaction-port connectivity is authored with
+  ISF `(ports ...)` and `(bind ...)` forms, while generated `.fsm` handoff
+  signals, mux selectors, and generated-top bridge nets remain compiler-owned
+  lowering artifacts.
+- The ISF spec and public contract wording are aligned with the closed
+  `ISF-PORT-BINDING` tree and the shipped bounded
+  `transaction_port_bindings[]` report surface.
+- The next R14 feature candidate remains `ISF-CONTROL-FLOW`, currently
+  proposed, for `(wait N)`, `(while ...)`, and `(until ...)`.
+
 ## 2026-05-15: R14 — ISF port binding schedule-report projection
 - Active R14 task-tree slice: `ISF-PORT-BINDING.5` is complete, closing
   `ISF-PORT-BINDING`.

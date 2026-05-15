@@ -355,10 +355,10 @@ becomes a support claim.
 
 ### Transaction Ports And Actor Pin Access
 
-Status: active task tree; transaction `(ports ...)` declarations, first scalar
-activation bindings, first actor-pin conflict/runtime coverage, and bounded
-schedule-report binding provenance are shipped. Richer binding/report surfaces
-remain backlog.
+Status: shipped base surface; the `ISF-PORT-BINDING` task tree is complete.
+Transaction `(ports ...)` declarations, first scalar activation bindings,
+first actor-pin conflict/runtime coverage, and bounded schedule-report binding
+provenance are shipped. Richer binding/report surfaces remain backlog.
 
 Goal: make it easy to connect actor variables, actor-owned storage, and actor
 top-level pins to transaction ports so rules and transactions can exchange
@@ -371,6 +371,38 @@ direction and width. Activation sites need explicit bindings. Actor input pins
 are readable observations and should not be writable from ISF. Actor output
 pins are writable targets, but they must use the same assignment, fan-in,
 priority/resource, and runtime-conflict rules as any other driven LHS.
+
+Authoring boundary: users should describe the transaction boundary and the
+use-site binding, not generated payload wires, bridge ports, start payload
+signals, or generated-top handoff nets. For example, a data-bearing
+transaction declares local ports, and the caller binds those ports to actor
+variables, actor-owned storage, or actor interface pins:
+
+```lisp
+(transaction apb_read
+  (ports
+    (input  addr (width 32))
+    (output data (width 32))
+    (output done))
+  ...)
+
+(do apb_read
+  (bind
+    (input  addr req_addr)
+    (output data read_data)
+    (output done read_done)))
+
+(rule launch_read ready
+  (trigger apb_read
+    (bind
+      (input addr req_addr))))
+```
+
+The compiler owns the lower-level materialization: generated `.fsm` handoff
+signals, guards, mux selectors, assignments, generated-top bridge nets, and
+the schedule-report provenance that lets reviewers inspect the result. That
+keeps the author-facing model ergonomic while preserving the `.fsm` review
+artifact as the authoritative low-level representation.
 
 Shipped declaration shape:
 
@@ -415,7 +447,7 @@ handoff ports and reviewable parent binding DTs. Rule `trigger` supports input
 bindings only; each rule owns a distinct payload source and the trigger fan-in
 DT routes payloads under the matching per-rule trigger pulse. Rule-trigger
 output bindings, expression-valued bindings, explicit snapshot-vs-live timing
-selection, schedule-report projection, and broader static conflict diagnostics
+selection, richer report fields, and broader static conflict diagnostics
 remain backlog.
 
 Actor pin binding now uses the same assignment/conflict path as ordinary ISF

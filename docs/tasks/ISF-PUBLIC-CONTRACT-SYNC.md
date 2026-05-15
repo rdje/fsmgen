@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `R14`
 - Created: `2026-05-14`
-- Last updated: `2026-05-14`
+- Last updated: `2026-05-15`
 - Owner: repo-local workflow
 
 ## Goal
@@ -43,7 +43,8 @@ primary R14 focus.
   Goal: `Keep ISF specs, book, public contract, manifest, and tests synchronized.`
   Children: `ISF-PUBLIC-CONTRACT.1`, `ISF-PUBLIC-CONTRACT.2`,
   `ISF-PUBLIC-CONTRACT.3`, `ISF-PUBLIC-CONTRACT.4`,
-  `ISF-PUBLIC-CONTRACT.5`, `ISF-PUBLIC-CONTRACT.6`
+  `ISF-PUBLIC-CONTRACT.5`, `ISF-PUBLIC-CONTRACT.6`,
+  `ISF-PUBLIC-CONTRACT.7`
 
 - ID: `ISF-PUBLIC-CONTRACT.1`
   Status: `pending`
@@ -98,6 +99,17 @@ primary R14 focus.
   Verification: `mdbook build docs/book; git diff --check`
   Commit: `ISF-PUBLIC-CONTRACT.6: document intent abstraction layers`
 
+- ID: `ISF-PUBLIC-CONTRACT.7`
+  Status: `done`
+  Goal: `Clarify the transaction-port authoring boundary in the book.`
+  Acceptance: `The mdBook explains that transaction-port connectivity is an
+  ergonomic ISF authoring surface that lowers into explicit scheduled .fsm
+  handoff wiring, not a request for authors to write generated payload wires
+  or generated-top bridge nets directly; companion spec/contract wording is
+  kept aligned with the shipped port-binding surface.`
+  Verification: `mdbook build docs/book; git diff --check`
+  Commit: `ISF-PUBLIC-CONTRACT.7: clarify port binding authoring boundary`
+
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
@@ -136,6 +148,8 @@ primary R14 focus.
 | `2026-05-14` | `ISF-PUBLIC-CONTRACT.5` | `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-PUBLIC-CONTRACT.6` | `mdbook build docs/book` | `passed` |
 | `2026-05-14` | `ISF-PUBLIC-CONTRACT.6` | `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-PUBLIC-CONTRACT.7` | `mdbook build docs/book` | `passed` |
+| `2026-05-15` | `ISF-PUBLIC-CONTRACT.7` | `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -144,6 +158,7 @@ primary R14 focus.
 | `ISF-PUBLIC-CONTRACT` | `R14: map ISF objectives to task trees` | Initial tree creation belongs to the ISF objective task-tree coverage slice. |
 | `ISF-PUBLIC-CONTRACT.5` | `ISF-PUBLIC-CONTRACT.5: document construct semantics invariant` | Records that every shipped ISF construct must have explicit source, lowering, runtime, diagnostic, visibility, and regression semantics. |
 | `ISF-PUBLIC-CONTRACT.6` | `ISF-PUBLIC-CONTRACT.6: document intent abstraction layers` | Records `.fsm` as IAL0, current `.isf` as IAL1, and the criteria/backlog for possible IAL2 exploration. |
+| `ISF-PUBLIC-CONTRACT.7` | `ISF-PUBLIC-CONTRACT.7: clarify port binding authoring boundary` | Records that transaction-port connectivity is authored in ISF and lowered to reviewable `.fsm` handoff wiring. |
 
 ## Changelog
 
@@ -152,3 +167,6 @@ primary R14 focus.
   invariant; current frontier remains `ISF-PUBLIC-CONTRACT.1`.
 - `2026-05-14`: Completed `ISF-PUBLIC-CONTRACT.6` as a documentation-only
   terminology/backlog slice; current frontier remains `ISF-PUBLIC-CONTRACT.1`.
+- `2026-05-15`: Completed `ISF-PUBLIC-CONTRACT.7` as a documentation-only
+  port-binding authoring-boundary clarification; current frontier remains
+  `ISF-PUBLIC-CONTRACT.1`.

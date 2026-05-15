@@ -695,15 +695,18 @@ activation guard. It may also appear later as inline branching.
 Transaction port declarations and the first activation-time scalar bindings
 are now accepted. Actor pin access is available through those bindings:
 actor inputs may be read, actor outputs may be written, and actor output
-readback is rejected. Schedule-report projection and broader binding shapes are
-still active design work under
+readback is rejected. Bounded schedule-report binding provenance is shipped;
+broader binding shapes remain deferred follow-on work after
 [docs/tasks/ISF-PORT-BINDING.md](tasks/ISF-PORT-BINDING.md).
 
 The public direction remains an ISF-level surface, not an author-facing escape
 hatch to low-level `.fsm` handoff wiring. A transaction declares directional
 data/control ports locally. Activation sites bind those ports to scalar actor
 variables, actor-owned storage, or actor top-level pins with exact direction
-and width checks.
+and width checks. Authors should not manually create transaction payload wires,
+bridge ports, generated-top handoff nets, or start-payload signals just to
+connect transactions; the compiler lowers the ISF boundary into explicit
+scheduled `.fsm` handoff assignments and reviewable generated-top wiring.
 
 Shipped transaction declaration shape:
 

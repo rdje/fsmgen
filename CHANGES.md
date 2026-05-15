@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF port binding authoring boundary
+- Completed `ISF-PUBLIC-CONTRACT.7` as a documentation-only clarification of
+  the transaction-port authoring boundary.
+- Updated [docs/book/src/14-feature-backlog.md](docs/book/src/14-feature-backlog.md)
+  so the transaction-port section states that authors use ISF `(ports ...)`
+  and `(bind ...)` forms, while generated payload wires, handoff signals,
+  mux selectors, and generated-top bridge nets remain compiler-owned
+  lowering artifacts.
+- Aligned [docs/ISF_SPEC.md](docs/ISF_SPEC.md) and
+  [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md)
+  with the closed `ISF-PORT-BINDING` tree and the shipped bounded
+  `transaction_port_bindings[]` report provenance surface.
 ### R14 — ISF port binding schedule-report projection
 - Completed `ISF-PORT-BINDING.5` and closed the transaction-port binding task
   tree.
