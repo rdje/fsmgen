@@ -343,11 +343,13 @@ The transaction-port binding schedule-report projection is checked by
 [t/1243-isf-port-binding-schedule-report.t](../t/1243-isf-port-binding-schedule-report.t)
 so successful in-process and CLI reports expose bounded binding provenance
 without exporting raw `LoweringIR` assignment internals.
-The positive-literal transaction wait boundary is checked by
+The literal transaction wait boundary is checked by
 [t/1244-isf-wait-clause-lowering.t](../t/1244-isf-wait-clause-lowering.t)
-so `(wait N)` accepts positive integer literals in transaction body contexts,
-lowers to reviewable fixed wait-state chains, reaches HDL generation, exposes
-`transaction_waits[]`, and rejects malformed or unsupported counts.
+so `(wait N)` accepts non-negative integer literals in transaction body
+contexts, lowers positive counts to reviewable fixed wait-state chains,
+treats `(wait 0)` as a transparent no-op, reaches HDL generation, exposes
+`transaction_waits[]` for positive counts, and rejects malformed or
+unsupported counts.
 The transaction loop boundary is checked by
 [t/1245-isf-transaction-loop-lowering.t](../t/1245-isf-transaction-loop-lowering.t)
 so top-level transaction `(while cond body...)` lowers as a pre-test
@@ -1119,7 +1121,8 @@ name, `cycles` is the exact positive literal wait count, `entry_state` is the
 first generated wait state, `exit_state` is the following scheduled state
 after the wait chain, and `counter_signal` is currently JSON null because the
 shipped lowering emits fixed wait-state chains rather than hidden wait
-counters. The machine-readable contract advertises these through
+counters. `(wait 0)` is a no-op and does not create a report entry. The
+machine-readable contract advertises these through
 `schedule_report_transaction_wait_keys`.
 
 For each `transaction_loops` entry, `transaction` is the authored transaction
@@ -1298,12 +1301,12 @@ These are not stable public interfaces yet:
   explicit snapshot-vs-live timing selection, broader static conflict
   diagnostics, and richer report fields remain deferred follow-on
   port-binding work.
-- Transaction control-flow behavior beyond shipped positive-literal
+- Transaction control-flow behavior beyond shipped non-negative-literal
   `(wait N)` and top-level transaction `(while cond body...)` /
-  `(until cond body...)` remains non-public. Dynamic/symbolic/zero-count
-  waits, nested loops, and loop bodies containing child activation, stages, or
-  contracts need parser, lowering, report, and regression-backed contracts
-  before downstream users can rely on them.
+  `(until cond body...)` remains non-public. Dynamic/symbolic waits, nested
+  loops, and loop bodies containing child activation, stages, or contracts
+  need parser, lowering, report, and regression-backed contracts before
+  downstream users can rely on them.
 - `FSM::Scheduler::ISF::LoweringIR` internals.
 - Emitter-private state objects.
 - Any unadvertised keys in the lower-result hash or schedule report.

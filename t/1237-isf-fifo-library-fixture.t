@@ -40,12 +40,12 @@ subtest 'fixed-shape FIFO library fixture imports and specializes one actor' => 
 
     my $top_fsm = $lowered->{files}{'fifo_library_use_top.fsm'};
     like($top_fsm, qr/\(\?fsmc:u_fifo fifo_library_use__u_fifo\b/, 'generated top instantiates the specialized FIFO child');
-    like($top_fsm, qr{/write_req/u_fifo\.write_req/}, 'generated top wires FIFO write request input');
-    like($top_fsm, qr{/data_in/u_fifo\.data_in/}, 'generated top wires FIFO data input');
-    like($top_fsm, qr{/read_req/u_fifo\.read_req/}, 'generated top wires FIFO read request input');
-    like($top_fsm, qr{/u_fifo\.full/full/}, 'generated top wires FIFO full output');
-    like($top_fsm, qr{/u_fifo\.empty/empty/}, 'generated top wires FIFO empty output');
-    like($top_fsm, qr{/u_fifo\.data_out/data_out/}, 'generated top wires FIFO data output');
+    like($top_fsm, qr/\(write_req u_fifo\.write_req\)/, 'generated top wires FIFO write request input');
+    like($top_fsm, qr/\(data_in u_fifo\.data_in\)/, 'generated top wires FIFO data input');
+    like($top_fsm, qr/\(read_req u_fifo\.read_req\)/, 'generated top wires FIFO read request input');
+    like($top_fsm, qr/\(u_fifo\.full full\)/, 'generated top wires FIFO full output');
+    like($top_fsm, qr/\(u_fifo\.empty empty\)/, 'generated top wires FIFO empty output');
+    like($top_fsm, qr/\(u_fifo\.data_out data_out\)/, 'generated top wires FIFO data output');
 };
 
 subtest 'FIFO library use is visible in the public schedule report' => sub {

@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF zero-count wait semantics
+- Created
+  [docs/tasks/ISF-WAIT-ZERO.md](docs/tasks/ISF-WAIT-ZERO.md)
+  to track the zero-count transaction wait follow-up.
+- `(wait 0)` is now accepted wherever shipped literal transaction waits are
+  accepted. It emits no generated wait state, consumes no active transaction
+  cycle, and creates no `transaction_waits[]` report entry.
+- Pending samples before `(wait 0)` remain pending and attach to the next
+  state-producing clause, including inline transaction bodies.
+- Dynamic and symbolic wait counts remain deferred.
 ## 2026-05-15: package imports remain namespaced
 - Clarified the mdBook package and external-RTL metadata sections: `+import`
   brings a package namespace into scope, not every member as an unqualified

@@ -218,7 +218,7 @@ ask the counter to decrement at zero.
 ```
 
 **Timing**: exactly `N` active transaction cycles. The current public surface
-requires `N` to be a positive integer literal.
+requires `N` to be a non-negative integer literal.
 
 `(wait N)` is different from `(await port)`: it does not check a signal, does
 not consume an await watchdog, and does not have an early-exit condition. It
@@ -226,15 +226,19 @@ is also different from `(repeat count body...)`: it has no body and does not
 iterate any authored actions.
 
 **Cycle-by-cycle**:
+- `wait 0`: emit no wait state, consume no active transaction cycle, and
+  advance directly to the following transaction clause.
 - `wait 1`: occupy one generated wait state for one active cycle, then advance
   on that state's transition to the next transaction clause.
 - `wait N`: emit `N` generated wait states and advance through them
   unconditionally, one per cycle.
 
-Pending samples immediately before the wait piggyback onto the first wait
-state, using the same sample materialization rule as drive/await piggybacking.
-The shipped lowering does not introduce a hidden wait counter; the scheduled
-`.fsm` review artifact shows the exact fixed state chain.
+Pending samples immediately before a positive wait piggyback onto the first
+wait state, using the same sample materialization rule as drive/await
+piggybacking. Pending samples immediately before `(wait 0)` are preserved and
+materialize on the next state-producing clause. The shipped lowering does not
+introduce a hidden wait counter; the scheduled `.fsm` review artifact shows
+the exact fixed state chain for positive waits.
 
 **Generated .fsm** for `(wait 2)` followed by `(drive tick)`:
 
@@ -248,9 +252,10 @@ The shipped lowering does not introduce a hidden wait counter; the scheduled
 
 Successful schedule reports include `transaction_waits[]` entries with
 `transaction`, `cycles`, `entry_state`, `exit_state`, and `counter_signal`.
-For the current fixed-state-chain lowering, `counter_signal` is JSON null.
-Malformed waits such as `(wait)`, `(wait 0)`, `(wait 1 2)`, `(wait count)`,
-and `(wait (expr))` fail closed.
+Only waits with `N > 0` create report entries. For the current
+fixed-state-chain lowering, `counter_signal` is JSON null. Malformed waits
+such as `(wait)`, `(wait 1 2)`, `(wait -1)`, `(wait count)`, and
+`(wait (expr))` fail closed.
 
 ## `(complete port)` — Terminal State
 

@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: ISF wait zero is transparent
+- `(wait 0)` is a scheduling no-op, not a one-cycle wait and not an error.
+  That keeps the literal wait surface mathematically consistent: positive
+  counts create exactly that many active wait cycles, and zero creates none.
+- A zero wait must not drain pending samples. Samples are not assignments until
+  they are materialized on a state-producing clause, so the scheduler preserves
+  them across `(wait 0)` and lets the next drive/await/data-state boundary
+  carry the same sample behavior it would have had without the wait.
+- Schedule reports intentionally omit zero waits. `transaction_waits[]` is a
+  provenance surface for generated wait regions; a zero wait creates no region
+  to name, no exit edge to summarize, and no counter.
 ## 2026-05-15: package scoping remains explicit
 - Package imports intentionally expose a namespace, not unqualified package
   members. This keeps package ownership visible in source and avoids accidental

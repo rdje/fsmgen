@@ -378,23 +378,25 @@ Shipped contract: `(wait N)` advances only after exactly `N` active
 transaction clock cycles, without checking an external condition. It is
 different from `(await cond)`, which waits for a signal condition, and
 different from `(repeat N body...)`, which repeats a body. The current surface
-requires `N` to be a positive integer literal. `wait 1` occupies one generated
-wait state for one active cycle and advances on the next state transition;
-`wait N` contributes exactly `N` active cycles wherever it executes, including
-inside `when`, `switch`, and `repeat` bodies.
+requires `N` to be a non-negative integer literal. `wait 0` is a transparent
+no-op that emits no wait state, consumes no active transaction cycle, and
+creates no report entry. `wait 1` occupies one generated wait state for one
+active cycle and advances on the next state transition; `wait N` contributes
+exactly `N` active cycles wherever it executes, including inside `when`,
+`switch`, and `repeat` bodies.
 
 The current lowering is a reviewable fixed scheduled-state chain. No hidden
-wait counter is introduced for the positive-literal surface. Pending samples
-before the wait piggyback onto the first wait state. Successful reports expose
-bounded `transaction_waits[]` entries with transaction name, cycle count, entry
-state, exit state, and optional counter signal; `counter_signal` is currently
-JSON null.
+wait counter is introduced for the literal-count surface. Pending samples
+before a positive wait piggyback onto the first wait state; pending samples
+before `(wait 0)` remain pending for the next state-producing clause.
+Successful reports expose bounded `transaction_waits[]` entries with
+transaction name, cycle count, entry state, exit state, and optional counter
+signal; `counter_signal` is currently JSON null.
 
-Malformed waits such as missing counts, extra operands, zero/negative counts,
+Malformed waits such as missing counts, extra operands, negative counts,
 non-integer counts, list-expression counts, or dynamic signal counts fail
-closed. Remaining backlog: dynamic counts, symbolic counts, and zero-count
-behavior need explicit width, reset, latency, and report semantics before they
-can ship.
+closed. Remaining backlog: dynamic counts and symbolic counts need explicit
+width, reset, latency, and report semantics before they can ship.
 
 ### Transaction Dynamic Loops
 

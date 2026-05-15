@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF zero-count wait semantics
+- Completed R14 task-tree slice: `ISF-WAIT-ZERO.1` defines and implements
+  `(wait 0)`.
+- `(wait 0)` is accepted in top-level and inline transaction wait contexts as
+  a transparent no-op.
+- It emits no generated wait state, consumes no active transaction cycle, and
+  creates no `transaction_waits[]` report entry.
+- Pending samples before `(wait 0)` are preserved for the next
+  state-producing clause.
+- Dynamic and symbolic wait counts remain backlog.
+
 ## 2026-05-15: R11 — Lisp-ish ?wiring forms
 - Active task-tree slice: `COMPOSITION-WIRING-LISPISH.1` ships canonical
   explicit composition link forms.

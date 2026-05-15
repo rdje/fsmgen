@@ -87,8 +87,9 @@ semantics with `(await ...)`, `(repeat ...)`, or rule guards.
 - `(wait N)` is an exact-cycle transaction delay with no external condition.
   The first proposed surface should use a positive integer literal count so
   the scheduled `.fsm` review artifact is fixed and easy to inspect.
-- Dynamic wait counts are useful but need zero-count, counter-width, reset,
-  latency, and schedule-report semantics before they can ship.
+- Dynamic wait counts are useful but need counter-width, reset, latency, and
+  schedule-report semantics before they can ship. Zero-count wait behavior
+  later shipped under `ISF-WAIT-ZERO`.
 - `(while cond body...)` is shipped as a pre-test loop. Generated entry and
   back-edge decision states sample `cond` before each possible iteration;
   false exits.
@@ -116,8 +117,8 @@ semantics with `(await ...)`, `(repeat ...)`, or rule guards.
   body-first one-or-more loops unless a later specification leaf changes the
   contract before implementation.
 - `2026-05-15`: Activate this tree for R14 PNT. The first shipped wait surface
-  is `(wait N)` with positive integer literal `N >= 1`; dynamic counts and
-  zero-count behavior remain deferred.
+  is `(wait N)` with positive integer literal `N >= 1`; dynamic counts remain
+  deferred, and zero-count behavior later shipped under `ISF-WAIT-ZERO`.
 - `2026-05-15`: `wait 1` means one active transaction cycle in a generated
   wait region, then advance on the next state transition. `wait N` contributes
   exactly `N` active cycles wherever it executes, including inside future
@@ -130,6 +131,9 @@ semantics with `(await ...)`, `(repeat ...)`, or rule guards.
 - `2026-05-15`: Positive-literal `(wait N)` now lowers as a fixed generated
   wait-state chain with no hidden counter; `transaction_waits[]` reports the
   exact count, entry state, exit state, and a null `counter_signal`.
+- `2026-05-15`: Zero-count wait behavior later shipped under
+  `ISF-WAIT-ZERO`: `(wait 0)` is a no-op with no generated wait state and no
+  `transaction_waits[]` entry.
 - `2026-05-15`: Top-level transaction `(while cond body...)` and
   `(until cond body...)` now lower to explicit scheduled loop decision/body
   regions. `transaction_loops[]` reports transaction, kind, condition,
@@ -138,8 +142,8 @@ semantics with `(await ...)`, `(repeat ...)`, or rule guards.
 
 ## Deferred Follow-Up
 
-- Dynamic `(wait count)`, symbolic wait counts, and zero-count waits remain
-  deferred until width, reset, latency, and report semantics are specified.
+- Dynamic `(wait count)` and symbolic wait counts remain deferred until width,
+  reset, latency, and report semantics are specified.
 - Loop bodies containing `do`, `spawn`, `await_all`, `await_any`, `stage`,
   `contract`, or nested `while`/`until` remain deferred until re-entry,
   child-lifetime, and report semantics are specified.

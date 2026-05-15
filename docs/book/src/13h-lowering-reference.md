@@ -228,13 +228,15 @@ Timeout state:
   (-> main_drive_3))
 ```
 
-The current shipped surface requires `N` to be a positive integer literal.
-Lowering emits exactly `N` generated `*_wait_*` states, each advancing
-unconditionally to the next wait state or the following transaction clause.
-No hidden wait counter is introduced for this positive-literal surface.
+The current shipped surface requires `N` to be a non-negative integer literal.
+For `N > 0`, lowering emits exactly `N` generated `*_wait_*` states, each
+advancing unconditionally to the next wait state or the following transaction
+clause. `(wait 0)` emits no generated state, consumes no active transaction
+cycle, and falls through to the following transaction clause. No hidden wait
+counter is introduced for this literal-count surface.
 
-If samples are pending before the wait, they are emitted in the first wait
-state:
+If samples are pending before a positive wait, they are emitted in the first
+wait state:
 
 ```lisp
 (main_wait_1
@@ -242,9 +244,13 @@ state:
   (-> main_wait_2))
 ```
 
+If samples are pending before `(wait 0)`, they stay pending and are emitted on
+the next state-producing clause instead.
+
 Schedule reports expose each authored wait through `transaction_waits[]` with
 `transaction`, `cycles`, `entry_state`, `exit_state`, and `counter_signal`.
-`counter_signal` is null for the current fixed-chain lowering.
+Only waits with `N > 0` create report entries. `counter_signal` is null for
+the current fixed-chain lowering.
 
 **Timing**: exactly `N` active transaction cycles, no external condition.
 **Cycles**: `N`.

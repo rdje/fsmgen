@@ -1007,12 +1007,13 @@ does not create one child instance per iteration.
 `(wait N)` is the shipped unconditional transaction-local delay, distinct from
 `(await cond)` and `(repeat count body...)`. It does not test an external
 condition and it does not repeat a body. The current surface is limited to
-positive integer literals: `N` must be a literal integer greater than or equal
-to 1. Dynamic counts, symbolic counts, and zero-count waits remain deferred
-until their width, no-op/diagnostic, reset, latency, and report contracts are
-specified.
+non-negative integer literals: `N` must be a literal integer greater than or
+equal to 0. Dynamic counts and symbolic counts remain deferred until their
+width, reset, latency, and report contracts are specified.
 
 Cycle semantics:
+- `wait 0` means no delay. It emits no wait state, consumes no active
+  transaction cycle, and advances directly to the following transaction clause.
 - `wait 1` means the transaction occupies one generated wait region for one
   active clock cycle, then advances on the next state transition.
 - `wait N` contributes exactly `N` active transaction cycles every time the
@@ -1024,25 +1025,29 @@ Cycle semantics:
   accounting or transaction-level monitors that count active transaction
   cycles.
 
-The current lowering is a reviewable fixed scheduled-state chain. `(wait N)`
-emits `N` generated `*_wait_*` states; each state advances unconditionally to
-the next wait state or to the following transaction clause. No hidden wait
-counter is introduced for the positive-literal surface. Pending samples
-collected before the wait piggyback onto the first generated wait state using
-the same sample-assignment behavior as drive/await piggybacking. The wait
-surface is accepted at the top level of a transaction body and inside the
+The current lowering is a reviewable fixed scheduled-state chain for positive
+counts. `(wait N)` emits `N` generated `*_wait_*` states when `N > 0`; each
+state advances unconditionally to the next wait state or to the following
+transaction clause. `(wait 0)` emits no generated state and no
+`transaction_waits[]` entry. No hidden wait counter is introduced for this
+literal-count surface. Pending samples collected before a positive wait
+piggyback onto the first generated wait state using the same sample-assignment
+behavior as drive/await piggybacking. Pending samples collected before a zero
+wait are preserved and materialize on the next state-producing clause. The
+wait surface is accepted at the top level of a transaction body and inside the
 currently shipped inline body contexts: `when`, `switch`, and `repeat` bodies.
 
 Diagnostics:
 - `(wait)` and `(wait N extra)` are malformed arity.
-- `(wait 0)`, negative literals, non-integer literals, list expressions, and
-  named dynamic counts are unsupported for the first shipped surface.
+- Negative literals, non-integer literals, list expressions, and named dynamic
+  counts are unsupported for the first shipped surface.
 - Waits outside transaction body contexts are invalid.
 
 Successful schedule reports expose a bounded `transaction_waits[]` summary
 rather than raw lowering internals. Each entry contains `transaction`,
-`cycles`, `entry_state`, `exit_state`, and `counter_signal`. For the current
-fixed-state-chain lowering, `counter_signal` is JSON null.
+`cycles`, `entry_state`, `exit_state`, and `counter_signal`. Only waits with
+`N > 0` create entries. For the current fixed-state-chain lowering,
+`counter_signal` is JSON null.
 
 ### 7.7 Inline Control Flow
 
@@ -1772,12 +1777,13 @@ The `transactions` array is sorted lexically by transaction name, and each
 transaction's `states` array keeps scheduled `.fsm` state emission order. The
 capability-manifest ISF public contract advertises this through
 `schedule_report_transaction_ordering`.
-The `transaction_waits` array reports the shipped positive-literal `(wait N)`
-surface. Each entry contains the authored transaction name, exact cycle count,
-entry wait state, exit state after the wait chain, and optional
-`counter_signal`. The current fixed-state-chain lowering reports
-`counter_signal` as JSON null. The capability-manifest ISF public contract
-advertises the keys through `schedule_report_transaction_wait_keys`.
+The `transaction_waits` array reports the shipped literal `(wait N)` surface
+for waits with `N > 0`. Each entry contains the authored transaction name,
+exact cycle count, entry wait state, exit state after the wait chain, and
+optional `counter_signal`. `(wait 0)` is a transparent no-op and creates no
+entry. The current fixed-state-chain lowering reports `counter_signal` as JSON
+null. The capability-manifest ISF public contract advertises the keys through
+`schedule_report_transaction_wait_keys`.
 The `transaction_loops` array reports the shipped top-level `while`/`until`
 loop subset. Each entry contains the authored transaction name, loop `kind`,
 normalized `condition`, loop entry state, generated decision states, body
@@ -2082,10 +2088,10 @@ Focused tests:
   symbolic constants, derived parameter expressions,
   parameter-derived storage dimensions, memory-array backend emission, and
   library actors that import other libraries.
-- Unconditional transaction delay beyond the shipped positive-literal
+- Unconditional transaction delay beyond the shipped non-negative literal
   `(wait N)` shape:
-  dynamic counts, symbolic counts, and zero-count behavior remain deferred
-  until width, reset, latency, and report semantics are specified.
+  dynamic and symbolic counts remain deferred until width, reset, latency, and
+  report semantics are specified.
 - Transaction binding surfaces beyond scalar `do`, `spawn`, and rule-trigger
   input bindings. Expression-valued bindings, rule-trigger output bindings,
   explicit snapshot-vs-live timing selection, broader static conflict

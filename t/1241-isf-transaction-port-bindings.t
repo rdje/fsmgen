@@ -95,8 +95,8 @@ ISF
     like($child_fsm, qr/\(data 8\)/, 'spawned child exposes declared output transaction port');
 
     my $top = $lowered->{files}{'spawn_port_binding_top.fsm'};
-    like($top, qr{/spawn_port_binding\.w0_addr/w0\.addr/}, 'generated top wires parent input handoff to child input port');
-    like($top, qr{/w0\.data/spawn_port_binding\.w0_data/}, 'generated top wires child output port to parent output handoff');
+    like($top, qr/\(spawn_port_binding\.w0_addr w0\.addr\)/, 'generated top wires parent input handoff to child input port');
+    like($top, qr/\(w0\.data spawn_port_binding\.w0_data\)/, 'generated top wires child output port to parent output handoff');
 };
 
 subtest 'rule trigger input bindings fan into transaction ports with per-rule payload signals' => sub {

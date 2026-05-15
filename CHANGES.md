@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF zero-count wait semantics
+- Added
+  [docs/tasks/ISF-WAIT-ZERO.md](docs/tasks/ISF-WAIT-ZERO.md)
+  to track the zero-count transaction wait follow-up.
+- Updated
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so `(wait 0)` is accepted in top-level and inline transaction wait contexts
+  as a transparent no-op.
+- Positive waits still lower to fixed wait-state chains and report through
+  `transaction_waits[]`; zero waits emit no state, consume no active cycle,
+  preserve pending samples for the next state-producing clause, and create no
+  report entry.
+- Aligned stale ISF generated-top regression expectations with the shipped
+  canonical `?wiring` list-link syntax so the broader ISF gate checks the
+  current artifact shape.
+- Refreshed wait lowering tests, the mdBook, ISF spec, public contract docs,
+  roadmap status, task tree, and live docs.
 ### Docs — package import scope stays namespaced
 - Updated the mdBook package chapter to state that `+import` brings the package
   namespace into scope without flattening package members into unqualified local

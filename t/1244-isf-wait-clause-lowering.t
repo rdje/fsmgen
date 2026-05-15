@@ -126,8 +126,77 @@ ISF
     is_deeply([map { $_->{cycles} } @{$report->{transaction_waits}}], [1, 1, 1], 'nested waits keep exact one-cycle counts');
 };
 
+subtest 'zero wait is a transparent no-op that preserves pending samples' => sub {
+    my ($lowered, $report) = lower_source(<<'ISF', 'wait-zero');
+(actor wait_zero
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input din (width 8))
+    (output done)
+    (output out (width 8)))
+  (drive (out val)
+    (out val))
+  (transaction main
+    (on start)
+    (sample din as hold)
+    (wait 0)
+    (drive out hold)
+    (complete done)))
+ISF
+
+    my $fsm = $lowered->{files}{'wait_zero.fsm'};
+    unlike($fsm, qr/\bmain_wait_/, 'zero wait emits no generated wait states');
+
+    my $drive = state_block($fsm, 'main_drive_1');
+    like($drive, qr/\(<= \(hold din\)\)/, 'pending sample survives the zero wait and piggybacks onto the following state');
+    like($drive, qr/\(= \(out_start 1\)\)/, 'following drive still executes immediately after the entry state');
+    like($drive, qr/\(= \(out_val hold\)\)/, 'following drive still receives the sampled value');
+
+    is_deeply($report->{transaction_waits}, [], 'zero wait does not create a wait report entry');
+    is_deeply(
+        $report->{transactions}[0]{states},
+        [qw(main_idle_0 main_drive_1 main_done_2)],
+        'transaction state summary has no zero-wait state gap',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_zero');
+
+    ($lowered, $report) = lower_source(<<'ISF', 'wait-zero-inline');
+(actor wait_zero_inline
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cond)
+    (input din (width 8))
+    (output done)
+    (output out (width 8)))
+  (drive (out val)
+    (out val))
+  (transaction main
+    (on start)
+    (when cond
+      (sample din as hold)
+      (wait 0)
+      (drive out hold))
+    (complete done)))
+ISF
+
+    $fsm = $lowered->{files}{'wait_zero_inline.fsm'};
+    unlike($fsm, qr/\bmain_wait_/, 'inline zero wait emits no generated wait states');
+
+    my $inline_drive = state_block($fsm, 'main_drive_2');
+    like($inline_drive, qr/\(<= \(hold din\)\)/, 'inline pending sample survives the zero wait');
+    like($inline_drive, qr/\(= \(out_start 1\)\)/, 'inline following drive remains the first body state');
+    is_deeply($report->{transaction_waits}, [], 'inline zero wait does not create a wait report entry');
+
+    assert_fsm_reaches_hdl($fsm, 'wait_zero_inline');
+};
+
 subtest 'malformed wait clauses fail before scheduled emission' => sub {
-    assert_lower_rejected(<<'ISF', 'missing wait count', qr/\ATransaction 'main': wait requires '\(wait positive_integer_literal\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'missing wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal\)' in transaction body/);
 (actor wait_missing_count
   (clock clk)
   (reset (rst_n async active_low))
@@ -138,7 +207,7 @@ subtest 'malformed wait clauses fail before scheduled emission' => sub {
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'extra wait operand', qr/\ATransaction 'main': wait requires '\(wait positive_integer_literal\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'extra wait operand', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal\)' in transaction body/);
 (actor wait_extra_operand
   (clock clk)
   (reset (rst_n async active_low))
@@ -149,18 +218,18 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'zero wait count', qr/\ATransaction 'main': wait requires '\(wait positive_integer_literal\)' in transaction body/);
-(actor wait_zero_count
+    assert_lower_rejected(<<'ISF', 'negative wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal\)' in transaction body/);
+(actor wait_negative_count
   (clock clk)
   (reset (rst_n async active_low))
   (interface (input start) (output done))
   (transaction main
     (on start)
-    (wait 0)
+    (wait -1)
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'dynamic wait count', qr/\ATransaction 'main': wait requires '\(wait positive_integer_literal\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'dynamic wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal\)' in transaction body/);
 (actor wait_dynamic_count
   (clock clk)
   (reset (rst_n async active_low))
@@ -171,7 +240,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'nested wait list count', qr/\ATransaction 'main': wait requires '\(wait positive_integer_literal\)' in when body/);
+    assert_lower_rejected(<<'ISF', 'nested wait list count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal\)' in when body/);
 (actor wait_nested_list_count
   (clock clk)
   (reset (rst_n async active_low))

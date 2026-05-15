@@ -79,11 +79,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - All `R14` / ISF work is now task-tree-managed by default: every ISF task,
   slice, or PNT-selected activity must be attached to an existing active ISF
   task tree or create a new `docs/tasks/*.md` tree before implementation.
-- Positive-literal transaction-local `(wait N)` is shipped: an unconditional
-  exact-cycle delay with a positive integer literal count that lowers to a
-  fixed generated wait-state chain and reports through `transaction_waits[]`.
-  Dynamic counts remain deferred until zero-count, width, reset, latency, and
-  report semantics are specified.
+- Non-negative literal transaction-local `(wait N)` is shipped: an
+  unconditional exact-cycle delay whose positive counts lower to fixed
+  generated wait-state chains and report through `transaction_waits[]`.
+  `(wait 0)` is a transparent no-op that emits no wait state, consumes no
+  active cycle, preserves pending samples for the next state-producing clause,
+  and creates no report entry. Dynamic counts remain deferred until width,
+  reset, latency, and report semantics are specified.
 - Top-level transaction-local `(while cond body...)` and
   `(until cond body...)` loops are shipped. `while` lowers as a pre-test
   zero-or-more loop with entry and back-edge decision states; `until` lowers
@@ -91,21 +93,27 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   decision states, loop bodies use the shipped inline-body subset, and
   reports expose bounded `transaction_loops[]` entries. Nested loops,
   child activation inside loop bodies, stages/contracts inside loop bodies,
-  and dynamic/symbolic/zero-count waits remain backlog.
+  and dynamic/symbolic waits remain backlog.
 - `ISF-CONTROL-FLOW.1` is complete. `(wait N)` is now specified as an
   unconditional exact-cycle transaction delay with positive integer literal
   `N >= 1` for the first implementation; `wait 1` occupies one active cycle
-  before advancing. Dynamic counts, symbolic counts, and zero-count behavior
-  remain deferred. `(while cond body...)` is specified as a pre-test
-  zero-or-more loop, and `(until cond body...)` as a body-first one-or-more
-  loop; conditions are sampled only in generated decision states. The active
-  frontier advances to `ISF-CONTROL-FLOW.2`.
+  before advancing. Dynamic counts and symbolic counts remain deferred;
+  zero-count wait behavior later shipped under `ISF-WAIT-ZERO`.
+  `(while cond body...)` is specified as a pre-test zero-or-more loop, and
+  `(until cond body...)` as a body-first one-or-more loop; conditions are
+  sampled only in generated decision states. The active frontier advances to
+  `ISF-CONTROL-FLOW.2`.
 - `ISF-CONTROL-FLOW.2` is complete. Positive-literal `(wait N)` is accepted
   in transaction body contexts, including shipped `when`, `switch`, and
   `repeat` inline bodies. It emits one generated wait state per requested
   cycle, rejects malformed/dynamic counts, reaches SystemVerilog generation,
   and exposes bounded `transaction_waits[]` report entries. The active
   frontier advances to `ISF-CONTROL-FLOW.3`.
+- `ISF-WAIT-ZERO.1` is complete. `(wait 0)` is now accepted in top-level and
+  inline transaction wait contexts as a no-op: it emits no scheduled wait
+  state, consumes no active transaction cycle, preserves pending samples for
+  the next state-producing clause, and does not create a
+  `transaction_waits[]` entry.
 - `ISF-CONTROL-FLOW.3` is complete and the control-flow tree is closed.
   Top-level transaction `while`/`until` loops now lower to explicit scheduled
   decision/body regions, reject malformed empty or unsupported bodies before
@@ -5049,9 +5057,11 @@ Done:
   `+params`, spawn overrides validate against those declarations, and
   per-instance override metadata is preserved for the generated-top handoff.
 - `ISF-CONTROL-FLOW` is closed after shipping positive-literal `(wait N)` and
-  top-level transaction `while`/`until` loops. Waits report through
-  `transaction_waits[]`; loops report through `transaction_loops[]`; dynamic
-  wait counts and richer loop-body combinations remain backlog.
+  top-level transaction `while`/`until` loops. `ISF-WAIT-ZERO` later extended
+  literal waits so `(wait 0)` is a no-op with no scheduled state or report
+  entry. Positive waits report through `transaction_waits[]`; loops report
+  through `transaction_loops[]`; dynamic wait counts and richer loop-body
+  combinations remain backlog.
 - `ISF-SETTER-SYNTAX` is closed after shipping `(set lhs expr)` in rule and
   transaction contexts, preserving transaction `(update lhs expr)` as the older
   transaction-local spelling and rule `(lhs expr)` as shorthand.

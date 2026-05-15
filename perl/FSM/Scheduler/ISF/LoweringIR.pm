@@ -1162,7 +1162,11 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
         }
         elsif ($k eq 'await')    { $ha=1; $wdc="${tn}_wd"; my $wd_override = _parse_await_wd($cl); push @st, _ir_await($cl, $tn, $si++, $wd_override || $wd, [splice @ps]); }
         elsif ($k eq 'sample')   { push @ps, $cl; }
-        elsif ($k eq 'wait')     { push @st, @{_ir_wait($cl, $tn, \$si, [splice @ps])}; }
+        elsif ($k eq 'wait') {
+            if (_wait_cycles($cl, $tn, 'transaction body') > 0) {
+                push @st, @{_ir_wait($cl, $tn, \$si, [splice @ps])};
+            }
+        }
         elsif ($k eq 'while') {
             push @st, @{
                 _ir_while(
@@ -2026,13 +2030,20 @@ sub _validate_loop_clause {
 sub _validate_wait_clause {
     my ($clause, $tn, $label) = @_;
 
-    confess "Transaction '$tn': wait requires '(wait positive_integer_literal)' in $label\n"
+    confess "Transaction '$tn': wait requires '(wait non_negative_integer_literal)' in $label\n"
         unless @$clause == 2
             && defined($clause->[1])
             && !ref($clause->[1])
-            && $clause->[1] =~ /\A[1-9]\d*\z/;
+            && $clause->[1] =~ /\A(?:0|[1-9]\d*)\z/;
 
     return 1;
+}
+
+sub _wait_cycles {
+    my ($clause, $tn, $label) = @_;
+
+    _validate_wait_clause($clause, $tn, $label);
+    return 0 + $clause->[1];
 }
 
 sub _validate_update_clause {
@@ -2223,8 +2234,10 @@ sub _ir_await {
 }
 sub _ir_wait {
     my ($cl, $tn, $ir, $pending_samples) = @_;
-    my $cycles = int($cl->[1]);
+    my $cycles = _wait_cycles($cl, $tn, 'transaction body');
     my @states;
+
+    return \@states if $cycles == 0;
 
     for my $cycle (1 .. $cycles) {
         my @assignments = $cycle == 1 ? _sample_assignments($pending_samples || []) : ();
@@ -2827,7 +2840,11 @@ sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_ro
         if($bk eq'drive'){my$n=$bc->[1];confess qq{drive $n not defined} unless !ref($n)&&$drives->{$n};push @body_states,_ir_named_drive_call($bc,$tn,$$ir++,$drives->{$n},[splice @lp])}
         elsif($bk eq'await'){push @body_states,_ir_await($bc,$tn,$$ir++,$wd,[splice @lp])}
         elsif($bk eq'sample'){push @lp,$bc}
-        elsif($bk eq'wait'){push @body_states,@{_ir_wait($bc,$tn,$ir,[splice @lp])}}
+        elsif($bk eq'wait'){
+            if (_wait_cycles($bc,$tn,'when body') > 0) {
+                push @body_states,@{_ir_wait($bc,$tn,$ir,[splice @lp])};
+            }
+        }
         elsif($bk eq'complete'){push @body_states,_ir_complete($bc,$tn,$$ir++)}
         elsif($bk eq'repeat'){my($rs,$rc,$rw)=_ir_repeat($bc,$tn,$ir,\@lp,$wd,$drives,$widths,$actor,$bank_accesses);push @body_states,@$rs;_register_counter_width($counters,$rc,$rw) if $counters;$storage_roles->{$rc}='repeat_counter' if ref($storage_roles)eq'HASH'}
         elsif($bk eq'update'||$bk eq'set'||$bk eq'shift_left'||$bk eq'shift_right'||$bk eq'assemble'||$bk eq'extract'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_data_op($bk,$bc,$tn,$$ir++,$widths)}
@@ -2859,7 +2876,11 @@ sub _expand_switch { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_
             if($bk2 eq'drive'){my$n=$bc2->[1];confess qq{drive $n not defined} unless !ref($n)&&$drives->{$n};push @body_states,_ir_named_drive_call($bc2,$tn,$$ir++,$drives->{$n},[splice @lp])}
             elsif($bk2 eq'await'){push @body_states,_ir_await($bc2,$tn,$$ir++,$wd,[splice @lp])}
             elsif($bk2 eq'sample'){push @lp,$bc2}
-            elsif($bk2 eq'wait'){push @body_states,@{_ir_wait($bc2,$tn,$ir,[splice @lp])}}
+            elsif($bk2 eq'wait'){
+                if (_wait_cycles($bc2,$tn,'switch body') > 0) {
+                    push @body_states,@{_ir_wait($bc2,$tn,$ir,[splice @lp])};
+                }
+            }
             elsif($bk2 eq'repeat'){my($rs,$rc,$rw)=_ir_repeat($bc2,$tn,$ir,\@lp,$wd,$drives,$widths,$actor,$bank_accesses);push @body_states,@$rs;_register_counter_width($counters,$rc,$rw) if $counters;$storage_roles->{$rc}='repeat_counter' if ref($storage_roles)eq'HASH'}
             elsif($bk2 eq'update'||$bk2 eq'set'||$bk2 eq'shift_left'||$bk2 eq'shift_right'||$bk2 eq'assemble'||$bk2 eq'extract'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_data_op($bk2,$bc2,$tn,$$ir++,$widths)}
             elsif($bk2 eq'store'||$bk2 eq'load'){_push_sample_state(\@body_states,$tn,\@lp,$ir);my($state,$accesses)=_ir_bank_access($bc2,$tn,$$ir++,$actor,$widths,'transaction');push @body_states,$state;push @$bank_accesses,@$accesses if ref($bank_accesses)eq'ARRAY'}
@@ -2894,7 +2915,9 @@ sub _expand_loop_body {
         } elsif ($bk eq 'sample') {
             push @lp, $bc;
         } elsif ($bk eq 'wait') {
-            push @states, @{_ir_wait($bc, $tn, $ir, [splice @lp])};
+            if (_wait_cycles($bc, $tn, 'loop body') > 0) {
+                push @states, @{_ir_wait($bc, $tn, $ir, [splice @lp])};
+            }
         } elsif ($bk eq 'complete') {
             push @states, _ir_complete($bc, $tn, $$ir++);
         } elsif ($bk eq 'repeat') {
@@ -2931,7 +2954,11 @@ sub _ir_repeat {
         if($bk eq'drive'){my$n=$bc->[1];if(!ref($n)&&$drives->{$n}){push @s,_ir_named_drive_call($bc,$tn,$$ir++,$drives->{$n},[splice @lp])}else{push @s,_ir_drive($bc,$tn,[splice @lp],$$ir++)}}
         elsif($bk eq'await'){push @s,_ir_await($bc,$tn,$$ir++,$wd,[splice @lp])}
         elsif($bk eq'sample'){push @lp,$bc}
-        elsif($bk eq'wait'){push @s,@{_ir_wait($bc,$tn,$ir,[splice @lp])}}
+        elsif($bk eq'wait'){
+            if (_wait_cycles($bc,$tn,'repeat body') > 0) {
+                push @s,@{_ir_wait($bc,$tn,$ir,[splice @lp])};
+            }
+        }
         elsif($bk eq'update'||$bk eq'set'||$bk eq'shift_left'||$bk eq'shift_right'||$bk eq'assemble'||$bk eq'extract'){_push_sample_state(\@s,$tn,\@lp,$ir);push @s,_ir_data_op($bk,$bc,$tn,$$ir++,$widths)}
         elsif($bk eq'store'||$bk eq'load'){_push_sample_state(\@s,$tn,\@lp,$ir);my($state,$accesses)=_ir_bank_access($bc,$tn,$$ir++,$actor,$widths,'transaction');push @s,$state;push @$bank_accesses,@$accesses if ref($bank_accesses)eq'ARRAY'}}
     if(@lp){push @s,_ir_sample_state($tn,\@lp,$$ir++)}
